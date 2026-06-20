@@ -1,6 +1,6 @@
 name: Allow only develop into main
 
-on:
+'on':
   pull_request_target:
     branches:
       - main
