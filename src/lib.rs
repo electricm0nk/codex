@@ -4,3 +4,4 @@
 //! bounded slice (GE03-E1-F1) implements the PCC entry-file parse shape.
 
 pub mod pcgen_import;
+pub mod rules_core;
