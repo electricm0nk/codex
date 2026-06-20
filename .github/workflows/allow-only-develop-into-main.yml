@@ -1,0 +1,34 @@
+name: Allow only develop into main
+
+'on':
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+      - ready_for_review
+
+permissions: {}
+
+jobs:
+  verify-source-branch:
+    name: Verify source branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure PR source branch is develop
+        env:
+          SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
+          TARGET_BRANCH: ${{ github.event.pull_request.base.ref }}
+        run: |
+          if [ "$TARGET_BRANCH" != "main" ]; then
+            echo "This check only applies to pull requests targeting main."
+            exit 0
+          fi
+
+          if [ "$SOURCE_BRANCH" != "develop" ]; then
+            echo "Pull requests into main must come from develop. Got: $SOURCE_BRANCH"
+            exit 1
+          fi
