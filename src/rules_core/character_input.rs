@@ -5,6 +5,9 @@
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CharacterInput {
+    /// Optional case identity for the chosen-input record (e.g. the GE-06
+    /// deterministic pilot case). Absent for fixtures that do not name one.
+    pub case_id: Option<String>,
     pub source_package_id: String,
     pub chosen: ChosenCharacterState,
     pub selection_provenance: Vec<SelectionProvenance>,
@@ -46,7 +49,25 @@ pub struct SkillAllocation {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EquipmentSelection {
     pub item_id: String,
+    /// Backward-compatible flag: true only when the selection is equipped/active.
+    /// Derived from `active_state`; retained for the GE-04 record shape.
     pub equipped_or_active: bool,
+    /// Chosen active state of the selection for baseline outputs. Distinguishes
+    /// equipped/active, absent, and selected-but-inactive. This represents the
+    /// chosen state only; it does not compute any equipment effect.
+    pub active_state: ActiveState,
+}
+
+/// The chosen active state of a selection for baseline outputs. Represented only;
+/// no equipment effect, encumbrance, or inventory behavior is computed here.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ActiveState {
+    /// Equipped/worn/primary and active for baseline outputs.
+    EquippedActive,
+    /// Absent / none for this slice.
+    Absent,
+    /// Selected but inactive for baseline outputs (e.g. Power Attack).
+    SelectedInactive,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -87,6 +108,7 @@ pub enum DiagnosticSeverity {
 
 #[derive(Default)]
 struct ParsedFixture {
+    case_id: Option<String>,
     source_package_id: Option<String>,
     race_id: Option<String>,
     class_levels: Vec<CharacterClassLevel>,
@@ -136,6 +158,7 @@ pub fn load_character_input_fixture(input: &str) -> CharacterInputLoadResult {
     if parsed.diagnostics.is_empty() {
         CharacterInputLoadResult {
             character_input: Some(CharacterInput {
+                case_id: parsed.case_id,
                 source_package_id: parsed.source_package_id.expect("validated source package"),
                 chosen: ChosenCharacterState {
                     race_id: parsed.race_id.expect("validated race"),
@@ -160,6 +183,7 @@ pub fn load_character_input_fixture(input: &str) -> CharacterInputLoadResult {
 
 fn apply_fixture_field(key: &str, value: &str, parsed: &mut ParsedFixture) {
     match key {
+        "case_id" => parsed.case_id = Some(value.to_owned()),
         "source_package_id" => parsed.source_package_id = Some(value.to_owned()),
         "race_id" => parsed.race_id = Some(value.to_owned()),
         "class_level" => apply_class_level(value, parsed),
@@ -278,10 +302,30 @@ fn apply_equipment_selection(value: &str, parsed: &mut ParsedFixture) {
         return;
     };
 
+    let Some(active_state) = active_state_from_token(state) else {
+        parsed.diagnostics.push(diagnostic(
+            "equipment_selections",
+            format!("invalid character input equipment selection '{value}' has an unsupported state"),
+        ));
+        return;
+    };
+
     parsed.equipment_selections.push(EquipmentSelection {
         item_id: item_id.to_owned(),
-        equipped_or_active: matches!(state, "equipped" | "active"),
+        equipped_or_active: matches!(active_state, ActiveState::EquippedActive),
+        active_state,
     });
+}
+
+fn active_state_from_token(state: &str) -> Option<ActiveState> {
+    match state {
+        "equipped" | "active" | "equipped_worn_active" | "equipped_primary_active" => {
+            Some(ActiveState::EquippedActive)
+        }
+        "selected_inactive" => Some(ActiveState::SelectedInactive),
+        "absent" => Some(ActiveState::Absent),
+        _ => None,
+    }
 }
 
 fn apply_selected_choice(value: &str, parsed: &mut ParsedFixture) {
