@@ -19,7 +19,7 @@
 //! unsupported input yields claim-blocking diagnostics and withheld explanations
 //! rather than fabricated values.
 
-use super::character_input::{AbilityScores, ActiveState, CharacterInput};
+use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
 
 /// Result of the GE-06 pilot deterministic compute surface, accumulating the
 /// base chassis, baseline combat, and total-save outputs proven across slices.
@@ -39,6 +39,10 @@ pub struct PilotBaseChassisComputation {
     /// Total saving throws (Fighter base save + relevant ability modifier). Zero
     /// when the Fighter level-1 chassis is absent or unsupported.
     pub total_saves: BaseSaves,
+    /// Selected deterministic Climb / Intimidate / Swim skill modifiers. All zero
+    /// when the deterministic selected-skill or Chain Shirt posture is absent or
+    /// widened beyond this slice.
+    pub selected_skill_modifiers: SelectedSkillModifiers,
     pub explanations: Vec<ComputationExplanation>,
     pub diagnostics: Vec<ComputationDiagnostic>,
 }
@@ -60,6 +64,14 @@ pub struct BaseSaves {
     pub fortitude: i16,
     pub reflex: i16,
     pub will: i16,
+}
+
+/// Selected deterministic skill modifiers bounded to the GE-06 pilot slice.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct SelectedSkillModifiers {
+    pub climb: i16,
+    pub intimidate: i16,
+    pub swim: i16,
 }
 
 /// A machine-checkable record explaining why a single computed value exists.
@@ -104,6 +116,19 @@ const CHAIN_SHIRT_MAX_DEX: i16 = 4;
 const DODGE_AC_BONUS: i16 = 1;
 const WEAPON_FOCUS_TO_HIT_BONUS: i16 = 1;
 
+// Grounded selected-skill contributors (source evidence only; not oracle-checked):
+//   cr_skills.lst:10   Climb      -> KEYSTAT:STR, ACHECK:YES, BONUS:SKILL|Climb|3|TYPE=ClassSkill
+//   cr_skills.lst:42   Intimidate -> KEYSTAT:CHA (no ACHECK), BONUS:SKILL|Intimidate|3|TYPE=ClassSkill
+//   cr_skills.lst:102  Swim       -> KEYSTAT:STR, ACHECK:YES, BONUS:SKILL|Swim|3|TYPE=ClassSkill
+//   cr_abilities_class.lst:2835   Fighter class skills include Climb, Intimidate, Swim
+//   cr_equip_arms_armor.lst:40    Chain Shirt -> ACCHECK:-2
+const CLIMB_SKILL_ID: &str = "skill:climb";
+const INTIMIDATE_SKILL_ID: &str = "skill:intimidate";
+const SWIM_SKILL_ID: &str = "skill:swim";
+const SELECTED_SKILL_RANK: u8 = 1;
+const CLASS_SKILL_BONUS: i16 = 3;
+const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
+
 /// Compute the GE-06 pilot base chassis from a loaded character input.
 pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisComputation {
     let mut explanations = Vec::new();
@@ -131,6 +156,13 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
+    let selected_skill_modifiers = compute_selected_skill_modifiers(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
+
     PilotBaseChassisComputation {
         ability_modifiers,
         base_attack_bonus,
@@ -138,6 +170,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         baseline_melee_attack_bonus,
         baseline_armor_class,
         total_saves,
+        selected_skill_modifiers,
         explanations,
         diagnostics,
     }
@@ -323,6 +356,150 @@ fn compute_total_saves(
     });
 
     total_saves
+}
+
+/// Compute the selected deterministic Climb / Intimidate / Swim skill modifiers,
+/// or block the claim if the selected-skill or Chain Shirt posture is absent or
+/// widened beyond this slice.
+///
+/// This is intentionally not a skill engine. It computes only the three selected
+/// Fighter class skills from the accepted deterministic rank allocations, applying
+/// the already-grounded Chain Shirt armor-check penalty to the armor-check skills
+/// (Climb, Swim) only. It does not handle other skills, arbitrary classes,
+/// feat/racial/item skill bonuses, encumbrance, or speed-dependent adjustments.
+/// Any deviation from the exact supported posture is refused with a claim-blocking
+/// diagnostic and withheld selected-skill explanations rather than fabricated
+/// totals.
+fn compute_selected_skill_modifiers(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> SelectedSkillModifiers {
+    let unmet = unmet_selected_skill_posture_conditions(input);
+
+    if !unmet.is_empty() {
+        diagnostics.push(ComputationDiagnostic {
+            id: "skill.selected_modifier.unsupported".to_owned(),
+            message: format!(
+                "selected skill modifiers are only computed for the exact GE-06 deterministic \
+                 Fighter level-1 Climb/Intimidate/Swim rank-1 posture with the grounded Chain Shirt \
+                 armor-check penalty; unmet conditions: {}",
+                unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+        return SelectedSkillModifiers::default();
+    }
+
+    let rank = i16::from(SELECTED_SKILL_RANK);
+
+    // Climb (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
+    let climb = rank
+        + ability_modifiers.strength
+        + CLASS_SKILL_BONUS
+        + CHAIN_SHIRT_ARMOR_CHECK_PENALTY;
+    explanations.push(ComputationExplanation {
+        id: "skill.selected_modifier.climb".to_owned(),
+        value: climb,
+        detail: format!(
+            "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + class-skill bonus \
+             ({:+}) + Chain Shirt armor-check penalty ({:+}) = {climb}",
+            ability_modifiers.strength, CLASS_SKILL_BONUS, CHAIN_SHIRT_ARMOR_CHECK_PENALTY
+        ),
+    });
+
+    // Intimidate (CHA, not an armor-check skill): rank + CHA + class-skill.
+    let intimidate = rank + ability_modifiers.charisma + CLASS_SKILL_BONUS;
+    explanations.push(ComputationExplanation {
+        id: "skill.selected_modifier.intimidate".to_owned(),
+        value: intimidate,
+        detail: format!(
+            "Selected Intimidate modifier: rank {rank} + Charisma modifier ({:+}) + class-skill \
+             bonus ({:+}) = {intimidate}",
+            ability_modifiers.charisma, CLASS_SKILL_BONUS
+        ),
+    });
+
+    // Swim (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
+    let swim = rank
+        + ability_modifiers.strength
+        + CLASS_SKILL_BONUS
+        + CHAIN_SHIRT_ARMOR_CHECK_PENALTY;
+    explanations.push(ComputationExplanation {
+        id: "skill.selected_modifier.swim".to_owned(),
+        value: swim,
+        detail: format!(
+            "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + class-skill bonus \
+             ({:+}) + Chain Shirt armor-check penalty ({:+}) = {swim}",
+            ability_modifiers.strength, CLASS_SKILL_BONUS, CHAIN_SHIRT_ARMOR_CHECK_PENALTY
+        ),
+    });
+
+    SelectedSkillModifiers {
+        climb,
+        intimidate,
+        swim,
+    }
+}
+
+/// Return the list of unmet conditions for the exact deterministic selected-skill
+/// posture. An empty list means the posture is fully supported.
+///
+/// The bounded posture requires the Fighter level-1 chassis, exactly the three
+/// selected class skills (Climb, Intimidate, Swim) each at rank 1 with no other
+/// skill allocations, and the grounded Chain Shirt armor-check posture that the
+/// Climb/Swim totals depend on.
+fn unmet_selected_skill_posture_conditions(input: &CharacterInput) -> Vec<String> {
+    let allocations = &input.chosen.skill_allocations;
+    let mut unmet = Vec::new();
+
+    if !has_fighter_level_1(input) {
+        unmet.push(format!("missing {FIGHTER_CLASS_ID} level 1 chassis"));
+    }
+
+    let expected = [CLIMB_SKILL_ID, INTIMIDATE_SKILL_ID, SWIM_SKILL_ID];
+    for skill_id in expected {
+        require_selected_skill_rank(allocations, skill_id, &mut unmet);
+    }
+
+    // Refuse any widening beyond exactly the three selected skills.
+    for allocation in allocations {
+        if !expected.contains(&allocation.skill_id.as_str()) {
+            unmet.push(format!(
+                "skill allocation {} is outside the selected Climb/Intimidate/Swim slice",
+                allocation.skill_id
+            ));
+        }
+    }
+
+    // Climb and Swim totals depend on the grounded Chain Shirt armor-check posture.
+    require_active_state(
+        input,
+        CHAIN_SHIRT_ITEM_ID,
+        ActiveState::EquippedActive,
+        &mut unmet,
+    );
+
+    unmet
+}
+
+/// Record an unmet condition unless the named skill is allocated exactly the
+/// supported deterministic rank.
+fn require_selected_skill_rank(
+    allocations: &[SkillAllocation],
+    skill_id: &str,
+    unmet: &mut Vec<String>,
+) {
+    let actual = allocations
+        .iter()
+        .find(|a| a.skill_id == skill_id)
+        .map(|a| a.ranks);
+    if actual != Some(SELECTED_SKILL_RANK) {
+        unmet.push(format!(
+            "{skill_id} must be allocated rank {SELECTED_SKILL_RANK} for the selected-skill slice, got {actual:?}"
+        ));
+    }
 }
 
 /// Compute the deterministic baseline melee attack bonus and armor class, or
