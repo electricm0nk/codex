@@ -190,6 +190,17 @@ fn assign_modifier(modifiers: &mut AbilityModifiers, ability: &str, modifier: i1
     }
 }
 
+/// Whether the chosen input includes the supported Fighter level-1 chassis that
+/// every GE-06 pilot computation in this surface is grounded against. Anything
+/// else (no Fighter, or Fighter at a level other than 1) is unsupported here.
+fn has_fighter_level_1(input: &CharacterInput) -> bool {
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .any(|cl| cl.class_id == FIGHTER_CLASS_ID && cl.level == 1)
+}
+
 /// Compute the Fighter level-1 base chassis, or block the claim if the input is
 /// not the supported Fighter level 1 chassis for this narrow slice.
 fn compute_fighter_chassis(
@@ -197,13 +208,7 @@ fn compute_fighter_chassis(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> (i16, BaseSaves) {
-    let has_fighter_level_1 = input
-        .chosen
-        .class_levels
-        .iter()
-        .any(|cl| cl.class_id == FIGHTER_CLASS_ID && cl.level == 1);
-
-    if !has_fighter_level_1 {
+    if !has_fighter_level_1(input) {
         diagnostics.push(ComputationDiagnostic {
             id: "class_chassis.unsupported".to_owned(),
             message: format!(
@@ -273,13 +278,7 @@ fn compute_total_saves(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> BaseSaves {
-    let has_fighter_level_1 = input
-        .chosen
-        .class_levels
-        .iter()
-        .any(|cl| cl.class_id == FIGHTER_CLASS_ID && cl.level == 1);
-
-    if !has_fighter_level_1 {
+    if !has_fighter_level_1(input) {
         diagnostics.push(ComputationDiagnostic {
             id: "defense.total_save.unsupported".to_owned(),
             message: format!(
@@ -398,11 +397,7 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
     let chosen = &input.chosen;
     let mut unmet = Vec::new();
 
-    let has_fighter_level_1 = chosen
-        .class_levels
-        .iter()
-        .any(|cl| cl.class_id == FIGHTER_CLASS_ID && cl.level == 1);
-    if !has_fighter_level_1 {
+    if !has_fighter_level_1(input) {
         unmet.push(format!("missing {FIGHTER_CLASS_ID} level 1 chassis"));
     }
 
