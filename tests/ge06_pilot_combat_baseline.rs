@@ -119,3 +119,33 @@ fn unsupported_loadout_posture_blocks_combat_totals() {
     assert_eq!(computation.base_attack_bonus, 1);
     assert_eq!(computation.ability_modifiers.strength, 3);
 }
+
+#[test]
+fn wrong_fighter_level_blocks_combat_totals() {
+    // The deterministic baseline is grounded only at Fighter level 1. A Fighter at
+    // a different level must be treated as an unsupported posture, not silently
+    // computed, even though every other loadout/feat/choice condition still holds.
+    let mutated =
+        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:fighter:2");
+    assert!(
+        mutated.contains("class_level=class:fighter:2"),
+        "test setup should have mutated the Fighter level"
+    );
+    let input = load(&mutated);
+
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "wrong Fighter level must produce a claim-blocking diagnostic: {:?}",
+        computation.diagnostics
+    );
+    assert!(
+        !computation.explanations.iter().any(|e| {
+            e.id == "combat.baseline_melee_attack_bonus"
+                || e.id == "defense.baseline_armor_class"
+        }),
+        "wrong Fighter level must withhold combat/defense explanations: {:?}",
+        computation.explanations
+    );
+}

@@ -107,3 +107,33 @@ fn unsupported_chassis_blocks_total_saves() {
     // Ability modifiers remain class-independent and still compute.
     assert_eq!(computation.ability_modifiers.constitution, 2);
 }
+
+#[test]
+fn wrong_fighter_level_blocks_total_saves() {
+    // Total saves are grounded only at Fighter level 1. A Fighter at a different
+    // level must be claim-blocked rather than silently computed, just like a
+    // non-Fighter class.
+    let mutated =
+        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:fighter:2");
+    assert!(
+        mutated.contains("class_level=class:fighter:2"),
+        "test setup should have mutated the Fighter level"
+    );
+    let input = load(&mutated);
+
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "wrong Fighter level must produce a claim-blocking diagnostic: {:?}",
+        computation.diagnostics
+    );
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("defense.total_save.")),
+        "wrong Fighter level must withhold total-save explanations: {:?}",
+        computation.explanations
+    );
+}
