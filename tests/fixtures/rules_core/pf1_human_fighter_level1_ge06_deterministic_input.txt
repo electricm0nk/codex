@@ -1,0 +1,29 @@
+# GE06-E2-F1a deterministic pilot character input fixture.
+# Represents the accepted GE-06 deterministic PF1 Core Rulebook Human Fighter
+# level 1 pilot input contract as chosen input only. It names selections; it does
+# not contain derived, computed, or parity values.
+case_id=pf1-crb-human-fighter-level1
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/GE-06-pilot-vertical-slice-pf1-human-fighter/artifacts/ge06-e1-f1-final-deterministic-pilot-input-contract-2026-06-21.md
