@@ -1,0 +1,41 @@
+# GE05-E2-F1 golden-case fixture for the PF1 Core Rulebook Human Fighter level 1 pilot.
+#
+# This fixture binds old-system PCGen runtime evidence (GE05-E1-F2 attempt 3) to an
+# as-yet-unresolved Codex/new-system output. It deliberately does NOT claim parity:
+# the new-system output is unresolved and the current claim status is not OracleChecked.
+# It records provisional, non-canonical assumptions rather than promoting them to truth.
+
+case_id=pf1-crb-human-fighter-level1
+case_version=0
+scope=PF1 Core Rulebook Human Fighter level 1 pilot oracle-comparison case; broad Pathfinder/PCGen parity is out of scope
+
+source_system=pathfinder-1e
+source_package=core_rulebook
+source_campaign=Core Rulebook
+source_game_mode=Pathfinder_RPG
+
+character_input_ref=fixture:rules_core/pf1_human_fighter_level1_minimal_character_input
+
+legacy_route=headless Gradle run batch export via code/testsuite/base-xml.ftl
+legacy_evidence_kind=runtime_behavior_evidence
+legacy_raw_output_ref=/tmp/codex-ge05-e1-f2/pf1-crb-human-fighter-level1-attempt3.xml
+legacy_raw_output_retention=local_generated_only
+legacy_raw_output_sha256=3c0e38e7837dbcd6c5003ba100eb35e3f0992366d086228c4706d6f165d281e1
+legacy_reduced_facts_ref=programs/codex/requirements/GE-05-oracle-validation-and-parity-harness/artifacts/ge05-e1-f2-runtime-output-attempt-3-2026-06-20.md
+
+codex_output_state=unresolved
+
+dimension=loaded_content_summary:candidate
+dimension=derived_values:candidate
+dimension=choice_or_prerequisite_outcome:candidate
+dimension=exportable_summary:not_yet_grounded
+
+normalization_ref=unresolved-pending-ge05-e3
+
+claim_target=oracle_checked
+current_claim_status=not_yet_grounded
+
+provisional=human_ability_bonus:+2 Strength
+provisional=final_equipment_loadout:unresolved
+provisional=skill_allocation:unresolved
+provisional=additional_feat_slot_closure:unresolved

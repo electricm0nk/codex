@@ -3,5 +3,6 @@
 //! This crate currently exposes the GE-03 PCGen import bridge. The first
 //! bounded slice (GE03-E1-F1) implements the PCC entry-file parse shape.
 
+pub mod oracle_validation;
 pub mod pcgen_import;
 pub mod rules_core;
