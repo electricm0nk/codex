@@ -1,23 +1,34 @@
-//! GE06-E2-F2a base rules-core computation slice.
+//! GE-06 pilot deterministic rules-core computation surface.
 //!
-//! Computes only the first base outputs from a loaded [`CharacterInput`]:
-//! ability modifiers, Fighter level-1 base attack bonus, and Fighter level-1
-//! base saves, each with a machine-checkable explanation record.
+//! Computes and explains the bounded set of outputs accumulated across the GE-06
+//! pilot slices for the accepted PF1 Human Fighter level-1 deterministic input:
 //!
-//! This is intentionally not the rules engine. It does not compute armor class,
-//! attack bonus, skill modifiers, equipment effects, feat prerequisites, or any
-//! oracle parity. Class chassis support is limited to Fighter level 1; any other
-//! input yields a claim-blocking diagnostic rather than fabricated values.
+//! - ability modifiers (`floor(score/2) - 5`)
+//! - Fighter level-1 base attack bonus
+//! - Fighter level-1 base saves
+//! - baseline melee attack bonus for the deterministic Longsword loadout
+//! - baseline armor class for the deterministic Chain Shirt / Dodge / no-shield posture
+//! - total Fortitude / Reflex / Will saves (base save + relevant ability modifier)
+//!
+//! Each computed value carries a machine-checkable explanation record. This is
+//! intentionally not a full rules engine: it does not compute feat-, item-, or
+//! condition-based save modifiers, weapon damage, active Power Attack math,
+//! initiative, skill modifiers, armor-check penalties, equipment effects beyond
+//! the deterministic baseline, feat prerequisites, or any oracle parity. Support
+//! is limited to the accepted deterministic Fighter level-1 pilot posture;
+//! unsupported input yields claim-blocking diagnostics and withheld explanations
+//! rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput};
 
-/// Result of the GE06-E2-F2a base chassis computation.
+/// Result of the GE-06 pilot deterministic compute surface, accumulating the
+/// base chassis, baseline combat, and total-save outputs proven across slices.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PilotBaseChassisComputation {
     pub ability_modifiers: AbilityModifiers,
     /// Class/base attack bonus only. Zero when the chassis is unsupported.
     pub base_attack_bonus: i16,
-    /// Class/base save bonuses only (no ability modifiers added in this slice).
+    /// Class/base save bonuses only (no ability modifiers added to these).
     pub base_saves: BaseSaves,
     /// Baseline melee attack bonus for the deterministic Longsword loadout. Zero
     /// when the required deterministic combat posture is absent or unsupported.
@@ -25,6 +36,9 @@ pub struct PilotBaseChassisComputation {
     /// Baseline armor class for the deterministic Chain Shirt / Dodge / no-shield
     /// posture. Zero when that posture is absent or unsupported.
     pub baseline_armor_class: i16,
+    /// Total saving throws (Fighter base save + relevant ability modifier). Zero
+    /// when the Fighter level-1 chassis is absent or unsupported.
+    pub total_saves: BaseSaves,
     pub explanations: Vec<ComputationExplanation>,
     pub diagnostics: Vec<ComputationDiagnostic>,
 }
@@ -109,12 +123,21 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
+    let total_saves = compute_total_saves(
+        input,
+        &ability_modifiers,
+        &base_saves,
+        &mut explanations,
+        &mut diagnostics,
+    );
+
     PilotBaseChassisComputation {
         ability_modifiers,
         base_attack_bonus,
         base_saves,
         baseline_melee_attack_bonus,
         baseline_armor_class,
+        total_saves,
         explanations,
         diagnostics,
     }
@@ -234,6 +257,73 @@ fn compute_fighter_chassis(
     });
 
     (base_attack_bonus, base_saves)
+}
+
+/// Compute total saving throws as the grounded Fighter level-1 base save plus the
+/// relevant ability modifier, or block the claim if the Fighter level-1 chassis
+/// is absent.
+///
+/// This is intentionally narrow: it adds only the single ability modifier each
+/// save uses (Fortitude/CON, Reflex/DEX, Will/WIS). It does not add feat-, item-,
+/// or condition-based save modifiers.
+fn compute_total_saves(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    base_saves: &BaseSaves,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> BaseSaves {
+    let has_fighter_level_1 = input
+        .chosen
+        .class_levels
+        .iter()
+        .any(|cl| cl.class_id == FIGHTER_CLASS_ID && cl.level == 1);
+
+    if !has_fighter_level_1 {
+        diagnostics.push(ComputationDiagnostic {
+            id: "defense.total_save.unsupported".to_owned(),
+            message: format!(
+                "total saving throws are only computed from the grounded {FIGHTER_CLASS_ID} level 1 \
+                 base saves; chosen class levels {:?} do not provide them, so no total saves were computed",
+                input.chosen.class_levels
+            ),
+            claim_blocking: true,
+        });
+        return BaseSaves::default();
+    }
+
+    let total_saves = BaseSaves {
+        fortitude: base_saves.fortitude + ability_modifiers.constitution,
+        reflex: base_saves.reflex + ability_modifiers.dexterity,
+        will: base_saves.will + ability_modifiers.wisdom,
+    };
+
+    explanations.push(ComputationExplanation {
+        id: "defense.total_save.fortitude".to_owned(),
+        value: total_saves.fortitude,
+        detail: format!(
+            "Total Fortitude save: Fighter base Fortitude save (+{}) + Constitution modifier (+{}) = {}",
+            base_saves.fortitude, ability_modifiers.constitution, total_saves.fortitude
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "defense.total_save.reflex".to_owned(),
+        value: total_saves.reflex,
+        detail: format!(
+            "Total Reflex save: Fighter base Reflex save (+{}) + Dexterity modifier (+{}) = {}",
+            base_saves.reflex, ability_modifiers.dexterity, total_saves.reflex
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "defense.total_save.will".to_owned(),
+        value: total_saves.will,
+        detail: format!(
+            "Total Will save: Fighter base Will save (+{}) + Wisdom modifier (+{}) = {}",
+            base_saves.will, ability_modifiers.wisdom, total_saves.will
+        ),
+    });
+
+    total_saves
 }
 
 /// Compute the deterministic baseline melee attack bonus and armor class, or
