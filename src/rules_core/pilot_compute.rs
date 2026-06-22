@@ -129,6 +129,63 @@ const SELECTED_SKILL_RANK: u8 = 1;
 const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
+/// Simple integrated status for the GE-06 pilot headless receipt: whether the
+/// path produced computed evidence or is blocked. This distinguishes evidence
+/// from a blocker posture; it is not an oracle-checked parity verdict.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum HeadlessReceiptStatus {
+    /// The integrated deterministic path produced computed evidence with no
+    /// claim-blocking diagnostics.
+    Computed,
+    /// The integrated deterministic path is blocked; at least one claim-blocking
+    /// diagnostic is present and no success state is fabricated.
+    Blocked,
+}
+
+/// One bounded, library-first, headless receipt for the accepted deterministic
+/// GE-06 pilot path. It preserves case and source-package identity, a simple
+/// computed/blocked status, and the full underlying computation (already-grounded
+/// outputs, explanations, and diagnostics) for later parity or UI consumers.
+///
+/// This is headless computed evidence only; it must not be relabeled as
+/// oracle-checked parity.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PilotHeadlessReceipt {
+    /// Case identity carried from the loaded input (absent when the input names none).
+    pub case_id: Option<String>,
+    /// Source package identity carried from the loaded input.
+    pub source_package_id: String,
+    /// Whether the integrated path produced evidence or is blocked.
+    pub status: HeadlessReceiptStatus,
+    /// The underlying pilot computation, preserving the already-grounded outputs,
+    /// explanation records, and claim-blocking diagnostics unchanged.
+    pub computation: PilotBaseChassisComputation,
+}
+
+/// Build the GE-06 pilot headless receipt from a loaded character input.
+///
+/// This runs the existing deterministic compute surface and wraps it in one
+/// bounded receipt shape, deriving the integrated status from the computation's
+/// claim-blocking diagnostics: any claim-blocking diagnostic blocks the path,
+/// otherwise the path is computed. It adds no new computed value, fabricates no
+/// success state, and discards none of the existing explanations or diagnostics.
+pub fn build_pilot_headless_receipt(input: &CharacterInput) -> PilotHeadlessReceipt {
+    let computation = compute_pilot_base_chassis(input);
+
+    let status = if computation.diagnostics.iter().any(|d| d.claim_blocking) {
+        HeadlessReceiptStatus::Blocked
+    } else {
+        HeadlessReceiptStatus::Computed
+    };
+
+    PilotHeadlessReceipt {
+        case_id: input.case_id.clone(),
+        source_package_id: input.source_package_id.clone(),
+        status,
+        computation,
+    }
+}
+
 /// Compute the GE-06 pilot base chassis from a loaded character input.
 pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisComputation {
     let mut explanations = Vec::new();
