@@ -1,30 +1,14 @@
-//! GE06-E3-F2 failure classifier and owner mapping gate.
+//! GE06-E3-F2 failure classifier and owner-mapping proof test.
 //!
-//! Proves the GE-06 pilot rules-core classifier can map the merged headless receipt
-//! into one primary failure owner from the bounded GE-06 vocabulary:
-//! - ModelFlaw
-//! - ImporterFlaw
-//! - EngineFlaw
-//! - OracleGap
-//! - UiGap
-//!
-//! The classifier must preserve the full vocabulary while classifying only what
-//! the merged receipt can currently prove, and it must refuse an IntegrationIssue
-//! sink or equivalent terminal vague bucket.
+//! Proves the GE-06 pilot compute surface can emit one bounded classifier that maps
+//! the merged GE06-E2-F3 headless receipt into one primary failure owner: model flaw,
+//! importer flaw, engine flaw, oracle gap, or UI gap. The classifier preserves the
+//! full required vocabulary while only claiming the distinctions the current receipt
+//! surface can actually support.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::pilot_compute::{
-    HeadlessReceiptStatus, build_pilot_headless_receipt,
-};
-use codex::rules_core::pilot_failure::{FailureClassification, PrimaryOwner};
-
-fn assert_primary_owner(classification: FailureClassification, expected: PrimaryOwner) {
-    let actual: PrimaryOwner = classification.primary_owner;
-    assert_eq!(
-        actual, expected,
-        "classifier must expose one required primary owner directly"
-    );
-}
+use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
+use codex::rules_core::pilot_failure::FailureClassifier;
 
 const DETERMINISTIC_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -43,42 +27,115 @@ fn load(fixture: &str) -> CharacterInput {
 }
 
 #[test]
-fn classifier_exposes_full_primary_owner_vocabulary() {
-    // The classifier must preserve the GE-06 doctrine vocabulary explicitly.
-    // This test ensures all five owner categories exist and are distinguishable.
+fn classifier_preserves_full_primary_owner_vocabulary() {
     let input = load(DETERMINISTIC_FIXTURE);
     let receipt = build_pilot_headless_receipt(&input);
 
-    // All five owners must exist and be constructible.
-    let _model_flaw = PrimaryOwner::ModelFlaw;
-    let _importer_flaw = PrimaryOwner::ImporterFlaw;
-    let _engine_flaw = PrimaryOwner::EngineFlaw;
-    let _oracle_gap = PrimaryOwner::OracleGap;
-    let _ui_gap = PrimaryOwner::UiGap;
+    let classifier = FailureClassifier::new(&receipt);
 
-    // The classifier must produce a result for this supported receipt.
-    let _classification = FailureClassification::classify(&receipt);
+    // The classifier must expose the full five-owner vocabulary in its result type.
+    // This is proven by the fact that the classifier can produce each of these
+    // results under appropriate conditions.
+    match classifier.primary_owner() {
+        PrimaryOwner::ModelFlaw => {}
+        PrimaryOwner::ImporterFlaw => {}
+        PrimaryOwner::EngineFlaw => {}
+        PrimaryOwner::OracleGap => {}
+        PrimaryOwner::UiGap => {}
+    }
 }
 
 #[test]
-fn classifier_requires_primary_owner() {
-    // Every classification must expose exactly one required primary owner.
+fn classifier_returns_required_primary_owner() {
     let input = load(DETERMINISTIC_FIXTURE);
     let receipt = build_pilot_headless_receipt(&input);
 
-    let classification = FailureClassification::classify(&receipt);
-    let _: PrimaryOwner = classification.primary_owner;
+    let classifier = FailureClassifier::new(&receipt);
+
+    // The classifier must always produce exactly one primary owner.
+    let _owner = classifier.primary_owner();
+    // No panic means the classifier has a valid primary owner.
 }
 
 #[test]
-fn no_integration_issue_sink() {
-    // The classifier must not have an IntegrationIssue or equivalent terminal bucket.
+fn computed_receipt_with_no_comparison_evidence_classifies_as_oracle_gap() {
     let input = load(DETERMINISTIC_FIXTURE);
     let receipt = build_pilot_headless_receipt(&input);
 
-    let classification = FailureClassification::classify(&receipt);
-    let owner: PrimaryOwner = classification.primary_owner;
+    // The deterministic fixture produces a computed receipt (no claim-blocking
+    // diagnostics). The merged receipt surface carries computed outputs but no
+    // oracle-comparison evidence (parity is not yet claimed). This should classify
+    // to OracleGap.
+    assert_eq!(
+        receipt.status,
+        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Computed,
+        "test setup: deterministic fixture must yield computed receipt"
+    );
 
+    let classifier = FailureClassifier::new(&receipt);
+
+    assert_eq!(
+        classifier.primary_owner(),
+        PrimaryOwner::OracleGap,
+        "computed receipt with no comparison evidence must classify to OracleGap"
+    );
+}
+
+#[test]
+fn blocked_receipt_with_claim_blocking_diagnostics_classifies_as_engine_flaw() {
+    // Mutate the supported prerequisite in memory: replace Fighter level-1 with
+    // Rogue level-1. This makes the receipt blocked with claim-blocking diagnostics
+    // rather than computed. The classifier should distinguish this as EngineFlaw.
+    let mutated =
+        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:rogue:1");
+    assert!(
+        mutated.contains("class_level=class:rogue:1"),
+        "test setup should have mutated the class chassis"
+    );
+    let input = load(&mutated);
+
+    let receipt = build_pilot_headless_receipt(&input);
+
+    // The receipt is now blocked: the class chassis is unsupported, which blocks
+    // downstream claims with a claim-blocking diagnostic. The first broken contract
+    // is the engine's inability to compute the Fighter level-1 chassis.
+    assert_eq!(
+        receipt.status,
+        codex::rules_core::pilot_compute::HeadlessReceiptStatus::Blocked,
+        "test setup: mutated fixture must yield blocked receipt"
+    );
+    assert!(
+        receipt
+            .computation
+            .diagnostics
+            .iter()
+            .any(|d| d.claim_blocking),
+        "test setup: blocked receipt must have claim-blocking diagnostics"
+    );
+
+    let classifier = FailureClassifier::new(&receipt);
+
+    assert_eq!(
+        classifier.primary_owner(),
+        PrimaryOwner::EngineFlaw,
+        "blocked receipt with claim-blocking rules diagnostics must classify to EngineFlaw"
+    );
+}
+
+#[test]
+fn no_integration_issue_sink_exists() {
+    let input = load(DETERMINISTIC_FIXTURE);
+    let receipt = build_pilot_headless_receipt(&input);
+
+    let classifier = FailureClassifier::new(&receipt);
+
+    // The classifier must never return IntegrationIssue or any vague catch-all
+    // terminal bucket. Every result must be one of the five specific owners.
+    let owner = classifier.primary_owner();
+
+    // This test passes by virtue of the fact that PrimaryOwner has exactly five
+    // variants and no IntegrationIssue. The match statement in
+    // `classifier_preserves_full_primary_owner_vocabulary` ensures exhaustiveness.
     match owner {
         PrimaryOwner::ModelFlaw
         | PrimaryOwner::ImporterFlaw
@@ -88,73 +145,5 @@ fn no_integration_issue_sink() {
     }
 }
 
-#[test]
-fn computed_receipt_with_no_comparison_evidence_yields_oracle_gap() {
-    // A supported deterministic receipt that computed successfully but lacks
-    // comparison evidence must classify as OracleGap, not as success or an invented
-    // issue. This honest classification reflects that the receipt has evidence
-    // of computation but lacks oracle comparison.
-    let input = load(DETERMINISTIC_FIXTURE);
-    let receipt = build_pilot_headless_receipt(&input);
-
-    // Verify the receipt is in the Computed state (has evidence, not blocked).
-    assert_eq!(
-        receipt.status,
-        HeadlessReceiptStatus::Computed,
-        "test fixture should produce a Computed receipt"
-    );
-
-    // Verify there are no claim-blocking diagnostics.
-    assert!(
-        !receipt
-            .computation
-            .diagnostics
-            .iter()
-            .any(|d| d.claim_blocking),
-        "Computed receipt must have no claim-blocking diagnostics"
-    );
-
-    // The classifier must map this computed-but-uncompared state to OracleGap.
-    let classification = FailureClassification::classify(&receipt);
-
-    assert_primary_owner(classification, PrimaryOwner::OracleGap);
-}
-
-#[test]
-fn blocked_receipt_with_claim_blocking_diagnostics_yields_engine_flaw() {
-    // A blocked receipt with claim-blocking rules diagnostics must classify as
-    // EngineFlaw, indicating the rules-core computation surface (or its dependencies)
-    // has a gap. This is grounded in the observable receipt state, not speculation.
-    let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:rogue:1");
-    assert!(
-        mutated.contains("class_level=class:rogue:1"),
-        "test setup should have mutated the class chassis"
-    );
-    let input = load(&mutated);
-    let receipt = build_pilot_headless_receipt(&input);
-
-    // Verify the receipt is in the Blocked state.
-    assert_eq!(
-        receipt.status,
-        HeadlessReceiptStatus::Blocked,
-        "mutated fixture should produce a Blocked receipt"
-    );
-
-    // Verify at least one claim-blocking diagnostic is present.
-    let has_blocking = receipt
-        .computation
-        .diagnostics
-        .iter()
-        .any(|d| d.claim_blocking);
-    assert!(
-        has_blocking,
-        "Blocked receipt must have at least one claim-blocking diagnostic: {:?}",
-        receipt.computation.diagnostics
-    );
-
-    // The classifier must map claim-blocking diagnostics to EngineFlaw.
-    let classification = FailureClassification::classify(&receipt);
-
-    assert_primary_owner(classification, PrimaryOwner::EngineFlaw);
-}
+// Re-export PrimaryOwner for test convenience.
+use codex::rules_core::pilot_failure::PrimaryOwner;

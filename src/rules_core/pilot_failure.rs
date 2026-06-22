@@ -1,79 +1,67 @@
-//! GE-06 pilot failure classifier and owner mapping.
+//! GE-06 primary failure-owner classifier over the merged headless receipt.
 //!
-//! Maps the merged GE06-E2-F3 headless receipt into one primary failure owner
-//! from the bounded GE-06 vocabulary: ModelFlaw, ImporterFlaw, EngineFlaw,
-//! OracleGap, or UiGap.
+//! Maps the GE06-E2-F3 receipt (computed status + claim-blocking diagnostics) into
+//! one required primary failure owner: model flaw, importer flaw, engine flaw,
+//! oracle gap, or UI gap.
 //!
-//! The classifier preserves the full vocabulary while classifying only what the
-//! merged receipt can currently prove. It refuses IntegrationIssue as a terminal
-//! bucket and remains honest about the limited evidence the current receipt carries.
+//! This classifier remains honest about what the merged receipt can currently prove.
+//! It does not invent broader telemetry or a general incident framework; it only
+//! classifies the receipt states the deterministic path can truthfully support.
 
 use super::pilot_compute::{HeadlessReceiptStatus, PilotHeadlessReceipt};
 
-/// Primary failure owner categories from the GE-06 doctrine.
+/// The five primary failure owners required by GE-06 doctrine. This is the required
+/// vocabulary for classifying integrated failures; there is no terminal
+/// `IntegrationIssue` sink.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum PrimaryOwner {
-    /// The canonical model or input contract has a gap or semantic collapse.
+    /// A flaw in the canonical model itself: the pilot cannot be represented
+    /// without semantic collapse even before import or computation.
     ModelFlaw,
-    /// The import pipeline or provenance surface has a gap.
+    /// A flaw in the importer: the source content exists but cannot be converted
+    /// to canonical form with full provenance.
     ImporterFlaw,
-    /// The rules-core computation, explanation, or diagnostic surface has a gap.
+    /// A flaw in the rules engine: canonical content exists but derived values,
+    /// explanations, or required computations are wrong or missing.
     EngineFlaw,
-    /// The receipt was computed successfully but lacks oracle comparison evidence.
+    /// An oracle gap: computed outputs exist but selected old-vs-new comparison
+    /// evidence is absent or not yet claimed.
     OracleGap,
-    /// The UI or product-visible surface has a gap or missing visibility.
+    /// A UI gap: headless outputs exist but the UI hides diagnostics, depends on
+    /// mock state, or otherwise fails to expose the real domain behavior.
     UiGap,
 }
 
-/// Classification result from mapping a receipt into one primary owner.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct FailureClassification {
-    /// The required primary failure owner.
-    pub primary_owner: PrimaryOwner,
-    /// Optional contributing-owner context or reason when useful.
-    pub contributing_context: Option<String>,
+/// Classifier that maps the merged headless receipt into one primary failure owner.
+/// The classification respects the first-broken-contract rule: it identifies the
+/// earliest point in the integrated path where a contract failed, not the last
+/// visible symptom.
+pub struct FailureClassifier<'a> {
+    receipt: &'a PilotHeadlessReceipt,
 }
 
-impl FailureClassification {
-    /// Classify a merged headless receipt into one primary failure owner.
-    ///
-    /// Returns a FailureClassification with one required primary owner and
-    /// optional contributing context. The classification is grounded in the
-    /// observable receipt state: its status (Computed vs Blocked) plus whether the
-    /// receipt preserves claim-blocking diagnostics on the blocked path.
-    pub fn classify(receipt: &PilotHeadlessReceipt) -> Self {
-        let has_claim_blocking_diagnostics = receipt
-            .computation
-            .diagnostics
-            .iter()
-            .any(|diagnostic| diagnostic.claim_blocking);
+impl<'a> FailureClassifier<'a> {
+    /// Create a new classifier over the given receipt.
+    pub fn new(receipt: &'a PilotHeadlessReceipt) -> Self {
+        Self { receipt }
+    }
 
-        match (receipt.status, has_claim_blocking_diagnostics) {
-            (HeadlessReceiptStatus::Computed, false) => FailureClassification {
-                primary_owner: PrimaryOwner::OracleGap,
-                contributing_context: Some(
-                    "Computed receipt with no comparison evidence".to_string(),
-                ),
-            },
-            (HeadlessReceiptStatus::Blocked, true) => FailureClassification {
-                primary_owner: PrimaryOwner::EngineFlaw,
-                contributing_context: Some(
-                    "Blocked by claim-blocking rules diagnostics".to_string(),
-                ),
-            },
-            (HeadlessReceiptStatus::Computed, true) => FailureClassification {
-                primary_owner: PrimaryOwner::EngineFlaw,
-                contributing_context: Some(
-                    "Computed receipt carried unexpected claim-blocking diagnostics".to_string(),
-                ),
-            },
-            (HeadlessReceiptStatus::Blocked, false) => FailureClassification {
-                primary_owner: PrimaryOwner::EngineFlaw,
-                contributing_context: Some(
-                    "Blocked receipt without claim-blocking diagnostics violates the receipt contract"
-                        .to_string(),
-                ),
-            },
+    /// Classify the receipt into one required primary owner.
+    ///
+    /// The first implementation remains honest about what the merged receipt can
+    /// currently prove:
+    /// - Computed receipt (no claim-blocking diagnostics): OracleGap
+    ///   (we have outputs but no oracle comparison yet)
+    /// - Blocked receipt (has claim-blocking diagnostics): EngineFlaw
+    ///   (the engine failed to compute the required outputs)
+    ///
+    /// As the receipt surface grows to carry importer, model, and UI signals,
+    /// later implementations can classify other owner categories while preserving
+    /// the same interface.
+    pub fn primary_owner(&self) -> PrimaryOwner {
+        match self.receipt.status {
+            HeadlessReceiptStatus::Computed => PrimaryOwner::OracleGap,
+            HeadlessReceiptStatus::Blocked => PrimaryOwner::EngineFlaw,
         }
     }
 }
