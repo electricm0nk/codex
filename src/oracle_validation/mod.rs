@@ -5,3 +5,4 @@
 //! intentionally out of scope for this slice and live in later GE-05 slices.
 
 pub mod golden_fixture;
+pub mod selected_parity_dimensions;
