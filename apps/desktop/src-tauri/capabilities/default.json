@@ -1,0 +1,6 @@
+{
+  "identifier": "default",
+  "description": "Default capability for the Codex desktop shell scaffold.",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}
