@@ -1,9 +1,10 @@
-# GE05-E2-F1 golden-case fixture for the PF1 Core Rulebook Human Fighter level 1 pilot.
+# GE05-E2-F2 governed golden-case fixture for the PF1 Core Rulebook Human Fighter
+# level 1 pilot.
 #
-# This fixture binds old-system PCGen runtime evidence (GE05-E1-F2 attempt 3) to an
-# as-yet-unresolved Codex/new-system output. It deliberately does NOT claim parity:
-# the new-system output is unresolved and the current claim status is not OracleChecked.
-# It records provisional, non-canonical assumptions rather than promoting them to truth.
+# This fixture preserves the exact GE05-E1-F2 legacy oracle evidence while grounding
+# inherited character inputs from the accepted GE-06 deterministic input contract.
+# It deliberately does NOT claim parity: Codex/new-system output remains unresolved,
+# the current claim status is below OracleChecked, and known-gap posture stays explicit.
 
 case_id=pf1-crb-human-fighter-level1
 case_version=0
@@ -14,7 +15,7 @@ source_package=core_rulebook
 source_campaign=Core Rulebook
 source_game_mode=Pathfinder_RPG
 
-character_input_ref=fixture:rules_core/pf1_human_fighter_level1_minimal_character_input
+character_input_ref=fixture:rules_core/pf1_human_fighter_level1_ge06_deterministic_input
 
 legacy_route=headless Gradle run batch export via code/testsuite/base-xml.ftl
 legacy_evidence_kind=runtime_behavior_evidence
@@ -31,11 +32,8 @@ dimension=choice_or_prerequisite_outcome:candidate
 dimension=exportable_summary:not_yet_grounded
 
 normalization_ref=unresolved-pending-ge05-e3
+known_gap_ref=gap-class:codex-output-unavailable
+known_gap_ref=gap-class:non-comparable-output
 
 claim_target=oracle_checked
 current_claim_status=not_yet_grounded
-
-provisional=human_ability_bonus:+2 Strength
-provisional=final_equipment_loadout:unresolved
-provisional=skill_allocation:unresolved
-provisional=additional_feat_slot_closure:unresolved
