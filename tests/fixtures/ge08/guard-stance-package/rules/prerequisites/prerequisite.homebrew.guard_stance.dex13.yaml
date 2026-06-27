@@ -1,0 +1,3 @@
+stable_id: prerequisite.homebrew.guard_stance.dex13
+owning_feat_id: feat.homebrew.guard_stance
+predicate: DEX >= 13
