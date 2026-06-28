@@ -1,0 +1,6 @@
+stable_id: effect.homebrew.guard_stance.ac_bonus
+owning_feat_id: feat.homebrew.guard_stance
+target_family: attack_bonus
+modifier_type: dodge
+modifier_value: 1
+stacking_posture: bounded-proof

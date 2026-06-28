@@ -1,0 +1,10 @@
+stable_id: feat.homebrew.guard_stance
+package_id: pf1.homebrew.proof.guard-stance
+display_name: Guard Stance
+object_kind: Feat
+substitutes_for: dodge
+effect_ids:
+  - effect.homebrew.guard_stance.ac_bonus
+prerequisite_ids:
+  - prerequisite.homebrew.guard_stance.dex13
+semantic_intent: substitute for Dodge in the GE-06 proof case with one bounded armor class bonus
