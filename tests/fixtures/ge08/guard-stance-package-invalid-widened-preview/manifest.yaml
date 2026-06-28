@@ -1,0 +1,18 @@
+schema_version: 1
+package_id: pf1.homebrew.proof.guard-stance
+package_title: Guard Stance Proof Package
+game_system_id: pf1
+package_version: 0.1.0
+depends_on:
+  - pf1.crb
+supported_object_kinds:
+  - Feat
+  - Effect
+  - Prerequisite
+validation_state: invalid
+provenance_policy: package-local
+proof_binding:
+  case_id: pf1-crb-human-fighter-level1-homebrew-feat-proof
+  slot: human_bonus_feat
+  remove: dodge
+  add: homebrew_guard_stance

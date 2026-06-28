@@ -1,0 +1,6 @@
+diagnostics:
+  - class: InvalidPackage
+    severity: Error
+    message: proof package is missing its authored effect record
+    subject_ref: effect
+    claim_blocking: true
