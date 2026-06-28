@@ -3,6 +3,7 @@
 mod ge08_workbench;
 
 use serde::Serialize;
+use std::path::PathBuf;
 
 use ge08_workbench::{
     Ge08AuthoredRecords, Ge08AuthoredRecord, Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot,
@@ -21,6 +22,25 @@ struct PilotShellSnapshot {
     explanation_refs: Vec<String>,
     data_source: String,
     note: String,
+}
+
+fn codex_repo_root() -> Result<PathBuf, String> {
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .and_then(|p| p.parent())
+        .and_then(|p| p.parent())
+        .map(PathBuf::from)
+        .ok_or_else(|| "cannot determine codex repo root from CARGO_MANIFEST_DIR".to_string())
+}
+
+fn resolve_package_path(package_root: &str) -> Result<PathBuf, String> {
+    let requested = PathBuf::from(package_root);
+
+    if requested.is_absolute() {
+        return Ok(requested);
+    }
+
+    Ok(codex_repo_root()?.join(requested))
 }
 
 #[tauri::command]
@@ -46,8 +66,7 @@ fn load_ge08_authoring_workbench_snapshot(
 ) -> Result<Ge08AuthoringWorkbenchSnapshot, String> {
     use codex::homebrew_authoring::preview_bridge::PreviewBridge;
 
-    let repo_root = std::env::current_dir().map_err(|e| format!("cannot determine repo root: {}", e))?;
-    let package_path = repo_root.join(&request.package_root);
+    let package_path = resolve_package_path(&request.package_root)?;
 
     if !package_path.exists() {
         return Err(format!(
@@ -188,4 +207,22 @@ fn main() {
         .invoke_handler(tauri::generate_handler![load_pilot_shell_snapshot, load_ge08_authoring_workbench_snapshot])
         .run(tauri::generate_context!())
         .expect("error while running codex desktop shell scaffold");
+}
+
+#[cfg(test)]
+mod path_resolution_tests {
+    use super::resolve_package_path;
+
+    #[test]
+    fn resolves_repo_relative_fixture_from_src_tauri_runtime() {
+        let resolved = resolve_package_path("tests/fixtures/ge08/guard-stance-package")
+            .expect("fixture path should resolve from repo root");
+
+        assert!(
+            resolved.ends_with("tests/fixtures/ge08/guard-stance-package"),
+            "resolved path should end with the repo fixture path, got {}",
+            resolved.display()
+        );
+        assert!(resolved.exists(), "resolved fixture path should exist: {}", resolved.display());
+    }
 }
