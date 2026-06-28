@@ -13,7 +13,7 @@ The primary durable conduct file is `./AGENTS.md`.
 
 ## Activation rules
 
-- Do not start code-writing from a raw grand epic or source STC alone.
+- Do not start code-writing from a raw spec domain or source STC alone.
 - Do not proceed without an explicit bounded execution brief.
 - Keep context lean: load the smallest authoritative surface that answers the current question.
 - Stay inside the granted write scope.

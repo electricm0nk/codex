@@ -12,7 +12,7 @@ Use the execution handoff or other explicitly cited implementation brief for tas
 
 - Treat this repository as the implementation surface unless the handoff explicitly grants write authority elsewhere.
 - Treat the execution handoff as the bounded code-writing brief.
-- Treat the source STC, grand epic, or other upstream planning artifacts as requirements inputs, not as permission to improvise implementation scope.
+- Treat the source STC, spec domain, or other upstream planning artifacts as requirements inputs, not as permission to improvise implementation scope.
 - Prefer the smallest compliant change.
 - If required context, scope, or write authority is unclear, stop and report the missing truth instead of guessing.
 
