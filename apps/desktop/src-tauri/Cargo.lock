@@ -322,9 +322,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "codex"
+version = "0.1.0"
+
+[[package]]
 name = "codex_desktop_shell_scaffold"
 version = "0.0.0"
 dependencies = [
+ "codex",
  "serde",
  "serde_json",
  "tauri",
