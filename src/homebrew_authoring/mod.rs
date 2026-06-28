@@ -7,6 +7,7 @@
 
 pub mod package_manifest;
 pub mod package_store;
+pub mod preview_bridge;
 
 use std::collections::BTreeSet;
 
