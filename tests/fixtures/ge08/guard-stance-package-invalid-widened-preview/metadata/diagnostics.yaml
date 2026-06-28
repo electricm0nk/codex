@@ -1,0 +1,6 @@
+diagnostics:
+  - class: InvalidPackage
+    severity: Error
+    message: proof effect must target armor_class
+    subject_ref: effect.target_family
+    claim_blocking: true
