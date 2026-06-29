@@ -5,6 +5,11 @@ import {
 } from './sd11/loadSd11TesterWorkbenchSurfaceRuntime';
 import type { Sd11TesterWorkbenchSurface } from './sd11/loadSd11TesterWorkbenchSurface';
 import { createReferenceListKey } from './referenceListKey';
+import {
+  captureAutoEvidence,
+  sharedAutoCapturedFields,
+  REDACTION_POLICY_NOTICE,
+} from './sd11/feedback/evidence';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -77,6 +82,56 @@ function EvidenceList(props: {
         </li>
       ))}
     </ul>
+  );
+}
+
+function FeedbackEvidencePanel(props: { surface: Sd11TesterWorkbenchSurface }) {
+  const auto = captureAutoEvidence(props.surface);
+  const autoValueByKey: Record<string, string> = {
+    buildLabel: auto.buildLabel,
+    channelSupportLabel: auto.channelSupportLabel,
+    platformLabel: auto.platformLabel,
+    currentWorkflow: auto.currentWorkflow,
+    dataSourceIdentity: auto.dataSourceIdentity,
+    diagnostics:
+      auto.diagnostics.length || auto.blockedClaims.length
+        ? `${auto.diagnostics.length} diagnostic(s) · ${auto.blockedClaims.length} blocked claim(s)`
+        : '—',
+    explanationRefs: auto.explanationRefs.length ? `${auto.explanationRefs.length} explanation ref(s)` : '—',
+    provenanceRefs: auto.provenanceRefs.length ? `${auto.provenanceRefs.length} provenance ref(s)` : '—',
+  };
+
+  return (
+    <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+      <h2 style={{ marginTop: 0 }}>Feedback evidence capture &amp; redaction</h2>
+      <p style={{ color: '#475569', lineHeight: 1.6 }}>
+        Shared substrate for the upcoming GitHub bug-report and enhancement-request flows. The auto-captured
+        backbone below is reused by both flows without schema drift; tester-entered narrative fields are added
+        by each composer, and attachments are never captured silently.
+      </p>
+
+      <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginTop: '1rem' }}>
+        {sharedAutoCapturedFields().map((field) => (
+          <AppCard
+            key={field.key}
+            label={`${field.label} · auto-captured`}
+            value={autoValueByKey[field.key] ?? '—'}
+            detail={field.note}
+          />
+        ))}
+      </div>
+
+      <div style={{ backgroundColor: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+        <p style={{ color: '#64748b', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+          Attachment &amp; redaction policy
+        </p>
+        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
+        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+          Attachments captured in this substrate slice: none. No screenshot, log, or save file is collected without
+          explicit tester confirmation and a recorded redaction declaration.
+        </p>
+      </div>
+    </section>
   );
 }
 
@@ -232,6 +287,8 @@ export default function App() {
               Operator provenance remains {surface.status.channel.operatorPromotionPath}.
             </p>
           </section>
+
+          <FeedbackEvidencePanel surface={surface} />
 
           <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
             <h2 style={{ marginTop: 0 }}>Bounded truth and next surface</h2>
