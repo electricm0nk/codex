@@ -64,7 +64,7 @@ jobs:
 
       - name: Install npm dependencies
         working-directory: apps/desktop
-        run: npm install
+        run: npm ci
 
       - name: Build Linux artifact set
         working-directory: apps/desktop
