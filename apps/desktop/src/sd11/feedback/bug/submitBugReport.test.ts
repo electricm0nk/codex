@@ -100,6 +100,7 @@ async function main() {
   await transportThrowPreservesDraft();
   await transportFailurePreservesDraft();
   await okWithoutHandleNeverCountsAsSuccess();
+  await nonHttpIssueHandleNeverCountsAsSuccess();
   await realHandleIsTheOnlySuccessPath();
   copyablePayloadCarriesTheStructuredReport();
   failedSubmissionCopyablePayloadMatchesTheStructuredDraft();
@@ -178,6 +179,27 @@ async function okWithoutHandleNeverCountsAsSuccess() {
   assertEqual(outcome.status, 'draft-preserved', 'ok-without-handle is not a real submission');
   assertEqual(outcome.claimedSubmitted, false, 'ok-without-handle does not claim success');
   assertEqual(outcome.resultHandle, null, 'ok-without-handle yields no result handle');
+}
+
+async function nonHttpIssueHandleNeverCountsAsSuccess() {
+  // Counterfeit guard, mirroring the enhancement flow: a transport that returns
+  // ok=true with a non-http(s) handle must never be claimed as filed, because the
+  // handle is rendered into an <a href> in the UI. Protects against javascript:/
+  // file:/garbage URLs being presented as a real issue link.
+  const scriptUrlOutcome = await submitBugReport({
+    composed: completeComposed(),
+    transport: async () => ({ ok: true, issueUrl: 'javascript:alert(1)' }),
+  });
+  assertEqual(scriptUrlOutcome.status, 'draft-preserved', 'a javascript: handle is not a real submission');
+  assertEqual(scriptUrlOutcome.claimedSubmitted, false, 'a javascript: handle never claims success');
+  assertEqual(scriptUrlOutcome.resultHandle, null, 'a javascript: handle yields no result handle');
+
+  const garbageUrlOutcome = await submitBugReport({
+    composed: completeComposed(),
+    transport: async () => ({ ok: true, issueUrl: 'not a url' }),
+  });
+  assertEqual(garbageUrlOutcome.status, 'draft-preserved', 'an unparseable handle is not a real submission');
+  assertEqual(garbageUrlOutcome.claimedSubmitted, false, 'an unparseable handle never claims success');
 }
 
 async function realHandleIsTheOnlySuccessPath() {

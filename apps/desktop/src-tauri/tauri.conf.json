@@ -30,7 +30,7 @@
       "icons/icon.png"
     ],
     "linux": {
-      "deb": {}
+      "deb": {},
       "appimage": {}
     }
   }

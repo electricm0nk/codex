@@ -114,9 +114,24 @@ export async function submitBugReport(
     };
   }
 
-  const issueUrl = result.issueUrl?.trim() ?? '';
+  const rawIssueUrl = result.issueUrl?.trim() ?? '';
+  let issueUrl = '';
+  if (rawIssueUrl.length > 0) {
+    try {
+      const parsed = new URL(rawIssueUrl);
+      if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+        issueUrl = parsed.toString();
+      }
+    } catch {
+      issueUrl = '';
+    }
+  }
   if (!result.ok || issueUrl.length === 0) {
-    const detail = result.error ? `: ${result.error}` : '';
+    const detail = result.error
+      ? `: ${result.error}`
+      : rawIssueUrl.length
+        ? ': invalid issueUrl returned by transport'
+        : '';
     return {
       ...base,
       status: 'draft-preserved',
