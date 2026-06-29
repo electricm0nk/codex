@@ -185,13 +185,11 @@ export default function App() {
             <div style={{ marginTop: '1rem' }}>
               <h3 style={{ marginBottom: '0.5rem' }}>Provenance references</h3>
               {surface.provenanceRefs.length ? (
-                <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
-                  {surface.provenanceRefs.map((reference) => (
-                    <li key={reference.label} style={{ marginBottom: '0.45rem' }}>
+                  {surface.provenanceRefs.map((reference, index) => (
+                    <li key={`${reference.label}-${index}`} style={{ marginBottom: '0.45rem' }}>
                       <strong>{reference.label}</strong>
                       <span style={{ color: '#475569' }}> — {reference.detail}</span>
                     </li>
-                  ))}
                 </ul>
               ) : (
                 <p style={{ color: '#475569', margin: 0 }}>No provenance references were returned for the current bounded snapshot.</p>
