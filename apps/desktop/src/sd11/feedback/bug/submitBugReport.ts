@@ -15,7 +15,7 @@ import type { ComposedBugReport, GithubBugIssueDraft } from './composeBugReport'
 /** Result returned by an injected GitHub bug-report transport. */
 export interface BugReportTransportResult {
   ok: boolean;
-  /** Real, confirmed issue URL. Success is only claimed when this is present. */
+  /** Real, confirmed issue URL. Success is only claimed when ok is true and this is present. */
   issueUrl?: string | null;
   issueNumber?: number | null;
   error?: string | null;
