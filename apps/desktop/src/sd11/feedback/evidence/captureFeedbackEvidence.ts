@@ -185,8 +185,14 @@ function resolveFieldValue(
       return auto.currentWorkflow;
     case 'dataSourceIdentity':
       return auto.dataSourceIdentity;
-    case 'diagnostics':
-      return auto.diagnostics.length ? `${auto.diagnostics.length} diagnostic(s)` : null;
+    case 'diagnostics': {
+      const diagnosticCount = auto.diagnostics.length;
+      const blockedCount = auto.blockedClaims.length;
+      if (diagnosticCount === 0 && blockedCount === 0) {
+        return null;
+      }
+      return `${diagnosticCount} diagnostic(s) · ${blockedCount} blocked claim(s)`;
+    }
     case 'explanationRefs':
       return auto.explanationRefs.length ? `${auto.explanationRefs.length} explanation ref(s)` : null;
     case 'provenanceRefs':
