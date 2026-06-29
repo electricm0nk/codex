@@ -4,6 +4,7 @@ import {
   loadSd11TesterWorkbenchSurfaceRuntime,
 } from './sd11/loadSd11TesterWorkbenchSurfaceRuntime';
 import type { Sd11TesterWorkbenchSurface } from './sd11/loadSd11TesterWorkbenchSurface';
+import { createReferenceListKey } from './referenceListKey';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -69,7 +70,7 @@ function EvidenceList(props: {
   return (
     <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
       {props.items.map((reference) => (
-        <li key={`${reference.label}-${reference.machineRef}`} style={{ marginBottom: '0.6rem' }}>
+        <li key={createReferenceListKey(reference.label, reference.machineRef)} style={{ marginBottom: '0.6rem' }}>
           <strong>{reference.label}</strong>
           <div style={{ color: '#475569', marginTop: '0.2rem' }}>{reference.detail}</div>
           <code style={{ color: '#334155', fontSize: '0.8rem' }}>{reference.machineRef}</code>
@@ -117,9 +118,9 @@ export default function App() {
       {surface ? (
         <>
           <section style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginTop: '2rem' }}>
-            <AppCard label="Build" value={surface.buildLabel} detail={surface.updateStatusLabel} />
-            <AppCard label="Channel" value={surface.channelLabel} detail="Tester-facing channel language over the develop → uat → main operator path." />
-            <AppCard label="Platform" value={surface.platformLabel} detail={surface.supportTierLabel} />
+            <AppCard label="Build" value={surface.status.build.label} detail={surface.status.update.label} />
+            <AppCard label="Channel" value={surface.status.channel.testerFacingLabel} detail={surface.status.channel.audience} />
+            <AppCard label="Platform" value={surface.platformLabel} detail={surface.status.support.currentPlatformSupportLabel} />
             <AppCard label="Workflow" value={surface.workflowName} detail={surface.workflowState} />
             <AppCard label="Data truth" value={surface.dataTruthLabel} detail="Real bounded snapshot when available, explicit fallback when it is not." />
           </section>
@@ -213,8 +214,23 @@ export default function App() {
 
           <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
             <h2 style={{ marginTop: 0 }}>Update and support posture</h2>
-            <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: '0.75rem' }}>{surface.updateStatusLabel}</p>
-            <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: 0 }}>{surface.supportTierLabel}</p>
+            <div style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+              <AppCard label="Tester track" value={surface.status.channel.testerFacingLabel} detail={surface.status.channel.detail} />
+              <AppCard label="Support matrix" value={surface.status.support.tierMatrixLabel} detail={surface.status.support.currentPlatformSupportLabel} />
+              <AppCard label="Update status" value={surface.status.update.label} detail={`${surface.status.channel.testerFacingLabel} tester track on ${surface.status.support.currentPlatformSupportLabel}`} />
+              <AppCard
+                label="Issue payload status"
+                value={surface.status.issueCapture.testerFacingChannelSupportLabel}
+                detail="Structured status object reused for later evidence capture."
+              />
+            </div>
+            <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: '0.75rem', marginTop: '1rem' }}>
+              {surface.status.support.platformSupportDetail}
+            </p>
+            <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: '0.75rem' }}>{surface.status.update.detail}</p>
+            <p style={{ color: '#64748b', lineHeight: 1.6, marginBottom: 0 }}>
+              Operator provenance remains {surface.status.channel.operatorPromotionPath}.
+            </p>
           </section>
 
           <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>

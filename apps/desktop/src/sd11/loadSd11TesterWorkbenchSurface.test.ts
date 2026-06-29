@@ -128,8 +128,16 @@ async function verifiesRealGe08SnapshotSurface() {
   );
   assertEqual(
     model.updateStatusLabel,
-    'Alpha tester track on Linux-first support posture',
+    'alpha tester track on Linux first-class',
     'update status label'
+  );
+  assertEqual(model.status.channel.operatorBranch, 'develop', 'status operator branch');
+  assertEqual(model.status.channel.operatorPromotionPath, 'develop -> uat -> main', 'status promotion path');
+  assertEqual(model.status.support.platformTier, 'first-class', 'status platform tier');
+  assertEqual(
+    model.status.issueCapture.testerFacingChannelSupportLabel,
+    'alpha · Linux first-class',
+    'status issue-capture label'
   );
 }
 
@@ -170,6 +178,12 @@ async function verifiesExplicitFallbackSurface() {
     'fallback explanation ref detail'
   );
   assertEqual(model.provenanceRefs.length, 0, 'fallback provenance refs');
+  assertEqual(model.status.support.platformTier, 'first-class', 'fallback status platform tier');
+  assertEqual(
+    model.status.issueCapture.testerFacingChannelSupportLabel,
+    'alpha · Linux first-class',
+    'fallback status issue-capture label'
+  );
   assertEqual(
     model.fallbackNotice,
     'GE08 authoring workbench unavailable: Tauri runtime not available for GE08 authoring workbench. This fallback exists because the real bounded snapshot could not load and the UI must not counterfeit product truth.',
