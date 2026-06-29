@@ -16,6 +16,11 @@ import {
   submitBugReport,
   type BugReportSubmissionOutcome,
 } from './sd11/feedback/bug';
+import {
+  composeEnhancementRequest,
+  submitEnhancementRequest,
+  type EnhancementRequestSubmissionOutcome,
+} from './sd11/feedback/enhancement';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -380,6 +385,206 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
   );
 }
 
+function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
+  const [title, setTitle] = useState('');
+  const [testerGoal, setTesterGoal] = useState('');
+  const [currentFriction, setCurrentFriction] = useState('');
+  const [requestedCapability, setRequestedCapability] = useState('');
+  const [affectedSurface, setAffectedSurface] = useState('');
+  const [outcome, setOutcome] = useState<EnhancementRequestSubmissionOutcome | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const composed = useMemo(() => {
+    const payload = assembleFeedbackEvidence({
+      flow: 'enhancement',
+      surface: props.surface,
+      testerInput: { testerGoal, currentFriction, requestedCapability, affectedSurface },
+    });
+    return composeEnhancementRequest({ title, payload });
+  }, [props.surface, title, testerGoal, currentFriction, requestedCapability, affectedSurface]);
+
+  // No GitHub transport is wired in this slice. We never improvise secret-bearing
+  // auth, so submission preserves a governed draft instead of counterfeiting success.
+  async function onPrepareSubmission() {
+    setSubmitting(true);
+    setCopied(false);
+    try {
+      const result = await submitEnhancementRequest({ composed, transport: null });
+      setOutcome(result);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  async function onCopyPayload() {
+    if (!outcome) {
+      return;
+    }
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        await navigator.clipboard.writeText(outcome.copyablePayload);
+        setCopied(true);
+      }
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  return (
+    <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+      <h2 style={{ marginTop: 0 }}>Request an enhancement</h2>
+      <p style={{ color: '#475569', lineHeight: 1.6 }}>
+        This is the governed <strong>enhancement-request</strong> flow: it captures a real blocked workflow or
+        missing capability with structured, required fields and composes a GitHub issue per the SD-11
+        enhancement-request intake contract. It is deliberately separate from bug reports, which are not handled
+        here, and it is bounded structured intake — not a general roadmap idea box. Goal, friction, requested
+        capability, and affected surface are kept distinct so triage can tell what the tester wanted from what
+        blocked them and what should change.
+      </p>
+
+      <BugReportField
+        label="Issue title (summarize the missing capability or blocked workflow)"
+        value={title}
+        placeholder="e.g. Add duplicate-and-edit so repeated package authoring is not a full wizard each time"
+        onChange={(value) => setTitle(value)}
+      />
+      <BugReportField
+        label="Tester goal (what you were trying to accomplish)"
+        value={testerGoal}
+        placeholder="Describe the outcome you were working toward."
+        onChange={(value) => setTesterGoal(value)}
+        multiline
+      />
+      <BugReportField
+        label="Current friction or limitation (what blocked or slowed that goal)"
+        value={currentFriction}
+        placeholder="Describe what got in the way."
+        onChange={(value) => setCurrentFriction(value)}
+        multiline
+      />
+      <BugReportField
+        label="Requested capability or improvement (what should exist or work differently)"
+        value={requestedCapability}
+        placeholder="Describe the change you are asking for."
+        onChange={(value) => setRequestedCapability(value)}
+        multiline
+      />
+      <BugReportField
+        label="Affected surface (workbench area, workflow slice, or update/support surface)"
+        value={affectedSurface}
+        placeholder="e.g. GE08 authoring workbench"
+        onChange={(value) => setAffectedSurface(value)}
+      />
+
+      <div style={{ backgroundColor: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+        <p style={{ color: '#64748b', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+          Auto-captured metadata · attached to every request
+        </p>
+        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+          Labels: {composed.draft.labels.join(', ')}
+        </p>
+        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
+      </div>
+
+      {composed.problems.length ? (
+        <div style={{ backgroundColor: '#fffbeb', border: '1px solid #fde68a', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+          <p style={{ color: '#92400e', fontWeight: 700, margin: 0 }}>Still required before this request can be submitted</p>
+          <ul style={{ color: '#92400e', margin: '0.45rem 0 0', paddingLeft: '1.2rem' }}>
+            {composed.problems.map((problem) => (
+              <li key={problem} style={{ marginBottom: '0.3rem' }}>{problem}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      <button
+        type="button"
+        onClick={onPrepareSubmission}
+        disabled={submitting}
+        style={{
+          backgroundColor: composed.submittable ? '#0f766e' : '#64748b',
+          border: 'none',
+          borderRadius: 8,
+          color: '#ffffff',
+          cursor: submitting ? 'wait' : 'pointer',
+          fontWeight: 700,
+          marginTop: '1rem',
+          padding: '0.6rem 1rem',
+        }}
+      >
+        {composed.submittable ? 'Prepare enhancement request submission' : 'Preserve draft (not yet submittable)'}
+      </button>
+
+      <h3 style={{ marginBottom: '0.4rem', marginTop: '1.25rem' }}>Composed issue preview</h3>
+      <pre
+        style={{
+          backgroundColor: '#0f172a',
+          borderRadius: 12,
+          color: '#e2e8f0',
+          fontSize: '0.8rem',
+          lineHeight: 1.5,
+          margin: 0,
+          overflowX: 'auto',
+          padding: '1rem',
+          whiteSpace: 'pre-wrap',
+        }}
+      >
+        {composed.draft.markdownBody}
+      </pre>
+
+      {outcome ? (
+        <div
+          style={{
+            backgroundColor: '#f8fafc',
+            border: `1px solid ${outcomeTone(outcome.status)}`,
+            borderRadius: 12,
+            marginTop: '1rem',
+            padding: '0.9rem 1rem',
+          }}
+        >
+          <p style={{ color: outcomeTone(outcome.status), fontWeight: 700, margin: 0 }}>
+            Submission status: {outcome.status}
+          </p>
+          <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{outcome.message}</p>
+          {outcome.resultHandle ? (
+            <p style={{ color: '#0f766e', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+              Filed issue: <a href={outcome.resultHandle.issueUrl}>{outcome.resultHandle.issueUrl}</a>
+            </p>
+          ) : (
+            <p style={{ color: '#7c2d12', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+              No issue handle was returned, so no successful submission is claimed. Your structured request is
+              preserved below — copy it to file the issue manually without losing any evidence.
+            </p>
+          )}
+          <button
+            type="button"
+            onClick={onCopyPayload}
+            style={{
+              backgroundColor: '#334155',
+              border: 'none',
+              borderRadius: 8,
+              color: '#ffffff',
+              cursor: 'pointer',
+              fontWeight: 700,
+              marginTop: '0.6rem',
+              padding: '0.45rem 0.85rem',
+            }}
+          >
+            {copied ? 'Copied governed draft' : 'Copy governed draft'}
+          </button>
+          <textarea
+            readOnly
+            value={outcome.copyablePayload}
+            rows={10}
+            style={{ ...bugFieldStyle(), fontFamily: 'monospace', marginTop: '0.6rem' }}
+          />
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
 export default function App() {
   const [surface, setSurface] = useState<Sd11TesterWorkbenchSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -536,6 +741,8 @@ export default function App() {
           <FeedbackEvidencePanel surface={surface} />
 
           <BugReportComposer surface={surface} />
+
+          <EnhancementRequestComposer surface={surface} />
 
           <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
             <h2 style={{ marginTop: 0 }}>Bounded truth and next surface</h2>
