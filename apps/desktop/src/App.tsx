@@ -96,9 +96,9 @@ export default function App() {
       {surface ? (
         <>
           <section style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginTop: '2rem' }}>
-            <AppCard label="Build" value={surface.buildLabel} detail={surface.updateStatusLabel} />
-            <AppCard label="Channel" value={surface.channelLabel} detail="Tester-facing channel language over the develop → uat → main operator path." />
-            <AppCard label="Platform" value={surface.platformLabel} detail={surface.supportTierLabel} />
+            <AppCard label="Build" value={surface.status.build.label} detail={surface.status.update.label} />
+            <AppCard label="Channel" value={surface.status.channel.testerFacingLabel} detail={surface.status.channel.audience} />
+            <AppCard label="Platform" value={surface.platformLabel} detail={surface.status.support.currentPlatformSupportLabel} />
             <AppCard label="Workflow" value={surface.workflowName} detail={surface.workflowState} />
             <AppCard label="Data truth" value={surface.dataTruthLabel} detail="Real bounded snapshot when available, explicit fallback when it is not." />
           </section>
@@ -128,7 +128,7 @@ export default function App() {
               {surface.diagnostics.length ? (
                 surface.diagnostics.map((diagnostic, index) => (
                   <div
-                    key={`${diagnostic.label}-${index}`}
+                    key={`${diagnostic.classLabel}-${index}`}
                     style={{
                       backgroundColor: '#f8fafc',
                       border: '1px solid #cbd5e1',
@@ -137,7 +137,12 @@ export default function App() {
                     }}
                   >
                     <p style={{ color: toneColor(diagnostic.severity), fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
-                      {diagnostic.label}
+                      {diagnostic.classLabel}
+                    </p>
+                    <p style={{ color: '#64748b', fontSize: '0.875rem', margin: '0.35rem 0 0' }}>
+                      {diagnostic.severityLabel}
+                      {diagnostic.subjectRef ? ` · ${diagnostic.subjectRef}` : ''}
+                      {diagnostic.claimBlocking ? ' · claim-blocking' : ''}
                     </p>
                     <p style={{ margin: '0.45rem 0 0' }}>{diagnostic.message}</p>
                   </div>
@@ -165,7 +170,10 @@ export default function App() {
                 {surface.explanationRefs.length ? (
                   <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                     {surface.explanationRefs.map((reference) => (
-                      <li key={reference} style={{ marginBottom: '0.45rem' }}>{reference}</li>
+                      <li key={reference.label} style={{ marginBottom: '0.45rem' }}>
+                        <strong>{reference.label}</strong>
+                        <span style={{ color: '#475569' }}> — {reference.detail}</span>
+                      </li>
                     ))}
                   </ul>
                 ) : (
@@ -173,12 +181,43 @@ export default function App() {
                 )}
               </div>
             </div>
+
+            <div style={{ marginTop: '1rem' }}>
+              <h3 style={{ marginBottom: '0.5rem' }}>Provenance references</h3>
+              {surface.provenanceRefs.length ? (
+                <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
+                  {surface.provenanceRefs.map((reference) => (
+                    <li key={reference.label} style={{ marginBottom: '0.45rem' }}>
+                      <strong>{reference.label}</strong>
+                      <span style={{ color: '#475569' }}> — {reference.detail}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p style={{ color: '#475569', margin: 0 }}>No provenance references were returned for the current bounded snapshot.</p>
+              )}
+            </div>
           </section>
 
           <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
             <h2 style={{ marginTop: 0 }}>Update and support posture</h2>
-            <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: '0.75rem' }}>{surface.updateStatusLabel}</p>
-            <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: 0 }}>{surface.supportTierLabel}</p>
+            <div style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+              <AppCard label="Tester track" value={surface.status.channel.testerFacingLabel} detail={surface.status.channel.detail} />
+              <AppCard label="Support matrix" value={surface.status.support.tierMatrixLabel} detail={surface.status.support.currentPlatformSupportLabel} />
+              <AppCard label="Update status" value={surface.status.update.label} detail={surface.updateStatusLabel} />
+              <AppCard
+                label="Issue payload status"
+                value={surface.status.issueCapture.testerFacingChannelSupportLabel}
+                detail="Structured status object reused for later evidence capture."
+              />
+            </div>
+            <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: '0.75rem', marginTop: '1rem' }}>
+              {surface.status.support.platformSupportDetail}
+            </p>
+            <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: '0.75rem' }}>{surface.status.update.detail}</p>
+            <p style={{ color: '#64748b', lineHeight: 1.6, marginBottom: 0 }}>
+              Operator provenance remains {surface.status.channel.operatorPromotionPath}.
+            </p>
           </section>
 
           <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>

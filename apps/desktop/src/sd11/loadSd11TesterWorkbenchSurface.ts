@@ -1,5 +1,9 @@
 import type { Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot } from '../boundary/loadGe08AuthoringWorkbench';
 import type { PilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
+import {
+  createSd11WorkbenchStatus,
+  type Sd11WorkbenchStatus,
+} from './status/createSd11WorkbenchStatus';
 
 export interface Sd11WorkbenchRuntimeContext {
   buildVersion: string;
@@ -19,9 +23,17 @@ export interface Sd11WorkbenchSummaryRow {
 }
 
 export interface Sd11WorkbenchDiagnostic {
-  label: string;
-  message: string;
+  classLabel: string;
   severity: 'info' | 'warning' | 'error';
+  severityLabel: 'Info' | 'Warning' | 'Error';
+  message: string;
+  subjectRef: string | null;
+  claimBlocking: boolean;
+}
+
+export interface Sd11WorkbenchReference {
+  label: string;
+  detail: string;
 }
 
 export interface Sd11TesterWorkbenchSurface {
@@ -42,8 +54,10 @@ export interface Sd11TesterWorkbenchSurface {
   summaryRows: Sd11WorkbenchSummaryRow[];
   diagnostics: Sd11WorkbenchDiagnostic[];
   blockedClaims: string[];
-  explanationRefs: string[];
+  explanationRefs: Sd11WorkbenchReference[];
+  provenanceRefs: Sd11WorkbenchReference[];
   notes: string[];
+  status: Sd11WorkbenchStatus;
 }
 
 const DEFAULT_REQUEST: Ge08AuthoringWorkbenchRequest = {
@@ -67,15 +81,17 @@ function mapGe08Snapshot(
   context: Sd11WorkbenchRuntimeContext,
   snapshot: Ge08AuthoringWorkbenchSnapshot
 ): Sd11TesterWorkbenchSurface {
+  const status = createSd11WorkbenchStatus(context);
+
   return {
     surfaceLabel: 'SD-11 tester workbench',
     headline: 'Bounded tester workbench over a real desktop command surface',
     lead:
       'This frame is the first SD-11 tester workbench slice: it presents one real bounded workflow over the Tauri command boundary, keeps diagnostics visible, and refuses to pretend broader product readiness.',
-    buildLabel: `codex-desktop-shell-scaffold@${context.buildVersion}`,
-    channelLabel: 'alpha',
-    platformLabel: context.platformLabel,
-    supportTierLabel: 'Linux first-class · macOS second-class · Windows third-class',
+    buildLabel: status.build.label,
+    channelLabel: status.channel.testerFacingLabel,
+    platformLabel: status.support.platformLabel,
+    supportTierLabel: status.support.tierMatrixLabel,
     workflowName: 'GE08 Guard Stance authoring workbench',
     workflowState: `${snapshot.packageState} / ${snapshot.preview.previewStatus}`,
     dataTruthLabel: 'Real Tauri command snapshot',
@@ -104,15 +120,24 @@ function mapGe08Snapshot(
       },
     ],
     diagnostics: snapshot.preview.diagnostics.map((diagnostic) => ({
-      label: diagnostic.class,
-      message: diagnostic.message,
+      classLabel: diagnostic.class,
       severity: normaliseSeverity(diagnostic.severity),
+      severityLabel: diagnostic.severity,
+      message: diagnostic.message,
+      subjectRef: diagnostic.subjectRef,
+      claimBlocking: diagnostic.claimBlocking,
     })),
     blockedClaims: snapshot.preview.blockedClaims,
-    explanationRefs: snapshot.preview.explanationRefs.map(
-      (reference) => `${reference.nodeKind}:${reference.refId} — ${reference.detail}`
-    ),
+    explanationRefs: snapshot.preview.explanationRefs.map((reference) => ({
+      label: `${reference.nodeKind}:${reference.refId}`,
+      detail: reference.detail,
+    })),
+    provenanceRefs: snapshot.preview.provenanceRefs.map((reference) => ({
+      label: reference.stableId,
+      detail: `${reference.sourcePackageId} · ${reference.authoredPath}`,
+    })),
     notes: [snapshot.note],
+    status,
   };
 }
 
@@ -121,18 +146,23 @@ function mapPilotFallback(
   snapshot: PilotShellSnapshot,
   failure: string
 ): Sd11TesterWorkbenchSurface {
+  const status = createSd11WorkbenchStatus(context);
+
   return {
     surfaceLabel: 'SD-11 tester workbench',
     headline: 'Bounded tester workbench fallback over the pilot seam',
     lead:
       'The preferred GE08 workbench could not load, so the app drops to an explicitly labeled fallback. The fallback exists to preserve truthful runtime seams and must not masquerade as full product state.',
-    buildLabel: `codex-desktop-shell-scaffold@${context.buildVersion}`,
-    channelLabel: 'alpha',
-    platformLabel: context.platformLabel,
-    supportTierLabel: 'Linux first-class · macOS second-class · Windows third-class',
+    buildLabel: status.build.label,
+    channelLabel: status.channel.testerFacingLabel,
+    platformLabel: status.support.platformLabel,
+    supportTierLabel: status.support.tierMatrixLabel,
     workflowName: 'GE07 pilot snapshot seam',
     workflowState: snapshot.receiptStatus,
-    dataTruthLabel: snapshot.dataSource === 'tauri-command' ? 'Explicit fallback over a Tauri pilot seam' : 'Explicit fallback placeholder',
+    dataTruthLabel:
+      snapshot.dataSource === 'tauri-command'
+        ? 'Explicit fallback over a Tauri pilot seam'
+        : 'Explicit fallback placeholder',
     fallbackNotice:
       `GE08 authoring workbench unavailable: ${failure}. This fallback exists because the real bounded snapshot could not load and the UI must not counterfeit product truth.`,
     boundedScopeNotice:
@@ -155,13 +185,21 @@ function mapPilotFallback(
       },
     ],
     diagnostics: snapshot.diagnostics.map((message) => ({
-      label: 'Fallback',
-      message,
+      classLabel: 'Fallback',
       severity: 'warning',
+      severityLabel: 'Warning',
+      message,
+      subjectRef: null,
+      claimBlocking: false,
     })),
     blockedClaims: [],
-    explanationRefs: snapshot.explanationRefs,
+    explanationRefs: snapshot.explanationRefs.map((reference) => ({
+      label: reference,
+      detail: 'Fallback explanation reference preserved for later evidence capture.',
+    })),
+    provenanceRefs: [],
     notes: [snapshot.note],
+    status,
   };
 }
 

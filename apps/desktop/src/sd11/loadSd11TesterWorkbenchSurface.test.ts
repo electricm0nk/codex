@@ -110,15 +110,34 @@ async function verifiesRealGe08SnapshotSurface() {
     'Preview is bounded to the current GE08 package.',
     'diagnostic message'
   );
+  assertEqual(model.diagnostics[0]?.classLabel, 'Advisory', 'diagnostic class label');
+  assertEqual(model.diagnostics[0]?.severityLabel, 'Warning', 'diagnostic severity label');
+  assertEqual(model.diagnostics[0]?.subjectRef, 'preview.guard_stance', 'diagnostic subject ref');
+  assertEqual(model.diagnostics[0]?.claimBlocking, false, 'diagnostic claim-blocking flag');
+  assertEqual(model.explanationRefs[0]?.label, 'rule:guard-stance-ac', 'explanation ref label');
   assertEqual(
-    model.explanationRefs[0],
-    'rule:guard-stance-ac — Baseline armor class derives from the guarded stance package preview.',
-    'explanation ref'
+    model.explanationRefs[0]?.detail,
+    'Baseline armor class derives from the guarded stance package preview.',
+    'explanation ref detail'
+  );
+  assertEqual(model.provenanceRefs[0]?.label, 'feat.guard_stance', 'provenance ref label');
+  assertEqual(
+    model.provenanceRefs[0]?.detail,
+    'guard-stance · feat/guard-stance.json',
+    'provenance ref detail'
   );
   assertEqual(
     model.updateStatusLabel,
     'Alpha tester track on Linux-first support posture',
     'update status label'
+  );
+  assertEqual(model.status.channel.operatorBranch, 'develop', 'status operator branch');
+  assertEqual(model.status.channel.operatorPromotionPath, 'develop -> uat -> main', 'status promotion path');
+  assertEqual(model.status.support.platformTier, 'first-class', 'status platform tier');
+  assertEqual(
+    model.status.issueCapture.testerFacingChannelSupportLabel,
+    'alpha · Linux first-class',
+    'status issue-capture label'
   );
 }
 
@@ -149,8 +168,22 @@ async function verifiesExplicitFallbackSurface() {
   assertEqual(model.dataTruthLabel, 'Explicit fallback placeholder', 'fallback data truth');
   assertEqual(model.summaryRows[0]?.label, 'Case', 'fallback summary row label');
   assertEqual(model.summaryRows[0]?.value, 'ge07-e1-scaffold-placeholder', 'fallback summary row value');
-  assertEqual(model.diagnostics[0]?.label, 'Fallback', 'fallback diagnostic label');
-  assertEqual(model.explanationRefs[0], 'future/load_pilot_shell_snapshot', 'fallback explanation ref');
+  assertEqual(model.diagnostics[0]?.classLabel, 'Fallback', 'fallback diagnostic class label');
+  assertEqual(model.diagnostics[0]?.severityLabel, 'Warning', 'fallback diagnostic severity label');
+  assertEqual(model.diagnostics[0]?.message, 'Real GE08 data could not load in this slice.', 'fallback diagnostic message');
+  assertEqual(model.explanationRefs[0]?.label, 'future/load_pilot_shell_snapshot', 'fallback explanation ref label');
+  assertEqual(
+    model.explanationRefs[0]?.detail,
+    'Fallback explanation reference preserved for later evidence capture.',
+    'fallback explanation ref detail'
+  );
+  assertEqual(model.provenanceRefs.length, 0, 'fallback provenance refs');
+  assertEqual(model.status.support.platformTier, 'first-class', 'fallback status platform tier');
+  assertEqual(
+    model.status.issueCapture.testerFacingChannelSupportLabel,
+    'alpha · Linux first-class',
+    'fallback status issue-capture label'
+  );
   assertEqual(
     model.fallbackNotice,
     'GE08 authoring workbench unavailable: Tauri runtime not available for GE08 authoring workbench. This fallback exists because the real bounded snapshot could not load and the UI must not counterfeit product truth.',
