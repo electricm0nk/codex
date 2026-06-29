@@ -4,6 +4,7 @@ import {
   loadSd11TesterWorkbenchSurfaceRuntime,
 } from './sd11/loadSd11TesterWorkbenchSurfaceRuntime';
 import type { Sd11TesterWorkbenchSurface } from './sd11/loadSd11TesterWorkbenchSurface';
+import { createReferenceListKey } from './referenceListKey';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -169,8 +170,8 @@ export default function App() {
                 <h3 style={{ marginBottom: '0.5rem' }}>Explanation references</h3>
                 {surface.explanationRefs.length ? (
                   <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
-                    {surface.explanationRefs.map((reference) => (
-                      <li key={reference.label} style={{ marginBottom: '0.45rem' }}>
+                    {surface.explanationRefs.map((reference, index) => (
+                      <li key={createReferenceListKey(reference.label, index)} style={{ marginBottom: '0.45rem' }}>
                         <strong>{reference.label}</strong>
                         <span style={{ color: '#475569' }}> — {reference.detail}</span>
                       </li>
@@ -185,11 +186,13 @@ export default function App() {
             <div style={{ marginTop: '1rem' }}>
               <h3 style={{ marginBottom: '0.5rem' }}>Provenance references</h3>
               {surface.provenanceRefs.length ? (
+                <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                   {surface.provenanceRefs.map((reference, index) => (
                     <li key={`${reference.label}-${index}`} style={{ marginBottom: '0.45rem' }}>
                       <strong>{reference.label}</strong>
                       <span style={{ color: '#475569' }}> — {reference.detail}</span>
                     </li>
+                  ))}
                 </ul>
               ) : (
                 <p style={{ color: '#475569', margin: 0 }}>No provenance references were returned for the current bounded snapshot.</p>
