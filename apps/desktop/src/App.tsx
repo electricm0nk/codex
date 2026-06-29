@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import desktopPackage from '../package.json';
 import {
   loadSd11TesterWorkbenchSurfaceRuntime,
@@ -6,10 +6,16 @@ import {
 import type { Sd11TesterWorkbenchSurface } from './sd11/loadSd11TesterWorkbenchSurface';
 import { createReferenceListKey } from './referenceListKey';
 import {
+  assembleFeedbackEvidence,
   captureAutoEvidence,
   sharedAutoCapturedFields,
   REDACTION_POLICY_NOTICE,
 } from './sd11/feedback/evidence';
+import {
+  composeBugReport,
+  submitBugReport,
+  type BugReportSubmissionOutcome,
+} from './sd11/feedback/bug';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -131,6 +137,245 @@ function FeedbackEvidencePanel(props: { surface: Sd11TesterWorkbenchSurface }) {
           explicit tester confirmation and a recorded redaction declaration.
         </p>
       </div>
+    </section>
+  );
+}
+
+function bugFieldStyle(): CSSProperties {
+  return {
+    border: '1px solid #cbd5e1',
+    borderRadius: 8,
+    fontFamily: 'inherit',
+    fontSize: '0.9rem',
+    marginTop: '0.35rem',
+    padding: '0.55rem 0.65rem',
+    width: '100%',
+  };
+}
+
+function BugReportField(props: {
+  label: string;
+  value: string;
+  placeholder: string;
+  onChange: (value: string) => void;
+  multiline?: boolean;
+}) {
+  const sharedProps = {
+    value: props.value,
+    placeholder: props.placeholder,
+    onChange: (event: { target: { value: string } }) => props.onChange(event.target.value),
+    style: bugFieldStyle(),
+  };
+
+  return (
+    <label style={{ display: 'block', marginTop: '0.9rem' }}>
+      <span style={{ color: '#334155', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+        {props.label}
+      </span>
+      {props.multiline ? <textarea rows={3} {...sharedProps} /> : <input type="text" {...sharedProps} />}
+    </label>
+  );
+}
+
+function outcomeTone(status: BugReportSubmissionOutcome['status']): string {
+  if (status === 'submitted') {
+    return '#0f766e';
+  }
+
+  if (status === 'blocked-incomplete') {
+    return '#b91c1c';
+  }
+
+  return '#b45309';
+}
+
+function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
+  const [title, setTitle] = useState('');
+  const [observedBehavior, setObservedBehavior] = useState('');
+  const [expectedBehavior, setExpectedBehavior] = useState('');
+  const [reproductionSteps, setReproductionSteps] = useState('');
+  const [outcome, setOutcome] = useState<BugReportSubmissionOutcome | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const composed = useMemo(() => {
+    const payload = assembleFeedbackEvidence({
+      flow: 'bug',
+      surface: props.surface,
+      testerInput: { observedBehavior, expectedBehavior, reproductionSteps },
+    });
+    return composeBugReport({ title, payload });
+  }, [props.surface, title, observedBehavior, expectedBehavior, reproductionSteps]);
+
+  // No GitHub transport is wired in this slice. We never improvise secret-bearing
+  // auth, so submission preserves a governed draft instead of counterfeiting success.
+  async function onPrepareSubmission() {
+    setSubmitting(true);
+    setCopied(false);
+    try {
+      const result = await submitBugReport({ composed, transport: null });
+      setOutcome(result);
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  async function onCopyPayload() {
+    if (!outcome) {
+      return;
+    }
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        await navigator.clipboard.writeText(outcome.copyablePayload);
+        setCopied(true);
+      }
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  return (
+    <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+      <h2 style={{ marginTop: 0 }}>Report a bug</h2>
+      <p style={{ color: '#475569', lineHeight: 1.6 }}>
+        This is the governed <strong>bug-report</strong> flow: it captures an observable failure with structured,
+        required fields and composes a GitHub issue per the SD-11 bug-report intake contract. It is deliberately
+        separate from enhancement requests, which are not handled here. Observed and expected behavior are kept
+        distinct so triage can tell what happened from what the tester believed should happen.
+      </p>
+
+      <BugReportField
+        label="Issue title (summarize the observable failure, not a guessed cause)"
+        value={title}
+        placeholder="e.g. Preview fails to render baseline AC after loading a package"
+        onChange={(value) => setTitle(value)}
+      />
+      <BugReportField
+        label="Observed behavior (what happened)"
+        value={observedBehavior}
+        placeholder="Describe exactly what the app did."
+        onChange={(value) => setObservedBehavior(value)}
+        multiline
+      />
+      <BugReportField
+        label="Expected behavior (what you believed should happen)"
+        value={expectedBehavior}
+        placeholder="Describe what you expected instead."
+        onChange={(value) => setExpectedBehavior(value)}
+        multiline
+      />
+      <BugReportField
+        label="Reproduction steps (step-ordered when reproducible)"
+        value={reproductionSteps}
+        placeholder={'1. …\n2. …\n3. …'}
+        onChange={(value) => setReproductionSteps(value)}
+        multiline
+      />
+
+      <div style={{ backgroundColor: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+        <p style={{ color: '#64748b', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+          Auto-captured metadata · attached to every report
+        </p>
+        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+          Labels: {composed.draft.labels.join(', ')}
+        </p>
+        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
+      </div>
+
+      {composed.problems.length ? (
+        <div style={{ backgroundColor: '#fffbeb', border: '1px solid #fde68a', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+          <p style={{ color: '#92400e', fontWeight: 700, margin: 0 }}>Still required before this report can be submitted</p>
+          <ul style={{ color: '#92400e', margin: '0.45rem 0 0', paddingLeft: '1.2rem' }}>
+            {composed.problems.map((problem) => (
+              <li key={problem} style={{ marginBottom: '0.3rem' }}>{problem}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      <button
+        type="button"
+        onClick={onPrepareSubmission}
+        disabled={submitting}
+        style={{
+          backgroundColor: composed.submittable ? '#0f766e' : '#64748b',
+          border: 'none',
+          borderRadius: 8,
+          color: '#ffffff',
+          cursor: submitting ? 'wait' : 'pointer',
+          fontWeight: 700,
+          marginTop: '1rem',
+          padding: '0.6rem 1rem',
+        }}
+      >
+        {composed.submittable ? 'Prepare bug report submission' : 'Preserve draft (not yet submittable)'}
+      </button>
+
+      <h3 style={{ marginBottom: '0.4rem', marginTop: '1.25rem' }}>Composed issue preview</h3>
+      <pre
+        style={{
+          backgroundColor: '#0f172a',
+          borderRadius: 12,
+          color: '#e2e8f0',
+          fontSize: '0.8rem',
+          lineHeight: 1.5,
+          margin: 0,
+          overflowX: 'auto',
+          padding: '1rem',
+          whiteSpace: 'pre-wrap',
+        }}
+      >
+        {composed.draft.markdownBody}
+      </pre>
+
+      {outcome ? (
+        <div
+          style={{
+            backgroundColor: '#f8fafc',
+            border: `1px solid ${outcomeTone(outcome.status)}`,
+            borderRadius: 12,
+            marginTop: '1rem',
+            padding: '0.9rem 1rem',
+          }}
+        >
+          <p style={{ color: outcomeTone(outcome.status), fontWeight: 700, margin: 0 }}>
+            Submission status: {outcome.status}
+          </p>
+          <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{outcome.message}</p>
+          {outcome.resultHandle ? (
+            <p style={{ color: '#0f766e', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+              Filed issue: <a href={outcome.resultHandle.issueUrl}>{outcome.resultHandle.issueUrl}</a>
+            </p>
+          ) : (
+            <p style={{ color: '#7c2d12', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+              No issue handle was returned, so no successful submission is claimed. Your structured report is
+              preserved below — copy it to file the issue manually without losing any evidence.
+            </p>
+          )}
+          <button
+            type="button"
+            onClick={onCopyPayload}
+            style={{
+              backgroundColor: '#334155',
+              border: 'none',
+              borderRadius: 8,
+              color: '#ffffff',
+              cursor: 'pointer',
+              fontWeight: 700,
+              marginTop: '0.6rem',
+              padding: '0.45rem 0.85rem',
+            }}
+          >
+            {copied ? 'Copied governed draft' : 'Copy governed draft'}
+          </button>
+          <textarea
+            readOnly
+            value={outcome.copyablePayload}
+            rows={10}
+            style={{ ...bugFieldStyle(), fontFamily: 'monospace', marginTop: '0.6rem' }}
+          />
+        </div>
+      ) : null}
     </section>
   );
 }
@@ -289,6 +534,8 @@ export default function App() {
           </section>
 
           <FeedbackEvidencePanel surface={surface} />
+
+          <BugReportComposer surface={surface} />
 
           <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
             <h2 style={{ marginTop: 0 }}>Bounded truth and next surface</h2>
