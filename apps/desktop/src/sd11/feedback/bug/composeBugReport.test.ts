@@ -1,5 +1,5 @@
 import { composeBugReport, BUG_ISSUE_LABEL } from './composeBugReport';
-import { assembleFeedbackEvidence } from '../evidence';
+import { assembleFeedbackEvidence, type EvidenceAttachment } from '../evidence';
 import type { Sd11TesterWorkbenchSurface } from '../../loadSd11TesterWorkbenchSurface';
 
 function assertEqual<T>(actual: T, expected: T, message: string) {
@@ -87,14 +87,29 @@ function completeBugPayload(surface: Sd11TesterWorkbenchSurface) {
 }
 
 async function main() {
+  draftCarriesRequiredStructuredIssueFields();
   draftHasBugTypeAndRequiredLabels();
   bodyHasSevenSectionsInContractOrder();
+  fallbackDataSourceIsPreservedInBuildContext();
   observedAndExpectedStayDistinct();
   submittableOnlyWhenCompleteAndTitled();
   emptyTitleBlocksSubmissionButStillDrafts();
   redactedTesterFieldIsMarkedNotDropped();
   diagnosticsAndAttachmentSectionsReflectEvidence();
+  attachmentsAndRedactionDeclarationAreIntegrated();
+  unresolvedAttachmentBlocksSubmissionButStillDrafts();
   enhancementPayloadIsRejected();
+}
+
+function draftCarriesRequiredStructuredIssueFields() {
+  const surface = makeSurface();
+  const composed = composeBugReport({ title: 'Preview crashes on baseline AC', payload: completeBugPayload(surface) });
+
+  assertEqual(composed.draft.title, 'Preview crashes on baseline AC', 'draft title is preserved');
+  assertEqual(composed.draft.issueType, 'bug', 'draft issue type is bug');
+  assert(Array.isArray(composed.draft.labels), 'draft carries structured labels');
+  assertEqual(typeof composed.draft.markdownBody, 'string', 'draft carries rendered markdown body');
+  assertEqual(composed.draft.sections.length, 7, 'draft carries structured sections');
 }
 
 function draftHasBugTypeAndRequiredLabels() {
@@ -135,6 +150,17 @@ function bodyHasSevenSectionsInContractOrder() {
   assert(composed.draft.markdownBody.includes('codex-desktop-shell-scaffold@0.0.0-test'), 'build label present in body');
   assert(composed.draft.markdownBody.includes('alpha'), 'channel label present in body');
   assert(composed.draft.markdownBody.includes('Linux'), 'platform present in body');
+}
+
+function fallbackDataSourceIsPreservedInBuildContext() {
+  const surface = makeSurface({ fallbackNotice: 'Tauri command unavailable; using sample fixture' });
+  const composed = composeBugReport({ title: 'Preview uses fallback data', payload: completeBugPayload(surface) });
+  const metadata = composed.draft.sections.find((s) => s.heading === 'Current build / channel / platform / workflow');
+
+  assert(
+    !!metadata && metadata.body.includes('Real Tauri command snapshot (fallback: Tauri command unavailable; using sample fixture)'),
+    'fallback data-source identity is preserved in the build/channel/platform/workflow section'
+  );
 }
 
 function observedAndExpectedStayDistinct() {
@@ -211,6 +237,81 @@ function diagnosticsAndAttachmentSectionsReflectEvidence() {
 
   const attachments = composed.draft.sections.find((s) => s.heading === 'Attachments / redactions');
   assert(!!attachments && /no attachments/i.test(attachments.body), 'no-attachment state stated honestly');
+}
+
+function attachmentsAndRedactionDeclarationAreIntegrated() {
+  const surface = makeSurface();
+  const screenshot: EvidenceAttachment = {
+    id: 'shot-1',
+    label: 'preview-redacted.png',
+    kind: 'screenshot',
+    mayContainSensitiveData: true,
+    testerConfirmedInclude: false,
+    redacted: true,
+  };
+  const log: EvidenceAttachment = {
+    id: 'log-1',
+    label: 'renderer.log',
+    kind: 'log',
+    mayContainSensitiveData: false,
+    testerConfirmedInclude: true,
+    redacted: false,
+  };
+  const payload = assembleFeedbackEvidence({
+    flow: 'bug',
+    surface,
+    testerInput: {
+      observedBehavior: 'crash',
+      expectedBehavior: 'no crash',
+      reproductionSteps: '1. open 2. compute',
+    },
+    attachments: [screenshot, log],
+    redaction: { declared: true, statement: 'Screenshot scrubbed; log reviewed for secrets.' },
+  });
+  const composed = composeBugReport({ title: 'Preview crashes', payload });
+  const attachments = composed.draft.sections.find((s) => s.heading === 'Attachments / redactions');
+
+  assertEqual(composed.submittable, true, 'resolved attachments with declaration remain submittable');
+  assert(!!attachments && attachments.body.includes('preview-redacted.png (screenshot) — redacted'), 'redacted attachment is listed');
+  assert(!!attachments && attachments.body.includes('renderer.log (log) — included'), 'included attachment is listed');
+  assert(
+    !!attachments && attachments.body.includes('Redaction declaration: Screenshot scrubbed; log reviewed for secrets.'),
+    'redaction declaration is rendered with attachments'
+  );
+}
+
+function unresolvedAttachmentBlocksSubmissionButStillDrafts() {
+  const surface = makeSurface();
+  const payload = assembleFeedbackEvidence({
+    flow: 'bug',
+    surface,
+    testerInput: {
+      observedBehavior: 'crash',
+      expectedBehavior: 'no crash',
+      reproductionSteps: '1. open 2. compute',
+    },
+    attachments: [
+      {
+        id: 'shot-1',
+        label: 'preview-sensitive.png',
+        kind: 'screenshot',
+        mayContainSensitiveData: true,
+        testerConfirmedInclude: false,
+        redacted: false,
+      },
+    ],
+    redaction: { declared: false, statement: null },
+  });
+  const composed = composeBugReport({ title: 'Preview crashes', payload });
+  const attachments = composed.draft.sections.find((s) => s.heading === 'Attachments / redactions');
+
+  assertEqual(composed.submittable, false, 'unresolved attachment blocks submission');
+  assert(composed.problems.some((p) => p.includes('preview-sensitive.png')), 'unresolved attachment problem is surfaced');
+  assert(
+    composed.problems.some((p) => p.includes('redaction declaration')),
+    'missing redaction declaration problem is surfaced'
+  );
+  assert(!!attachments && attachments.body.includes('preview-sensitive.png'), 'draft still preserves attachment context');
 }
 
 function enhancementPayloadIsRejected() {

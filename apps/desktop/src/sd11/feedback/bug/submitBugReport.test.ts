@@ -96,11 +96,13 @@ function incompleteComposed(): ComposedBugReport {
 async function main() {
   await incompleteReportIsBlockedNotSubmitted();
   await noTransportPreservesDraftWithoutClaimingSuccess();
+  await transportReceivesStructuredDraftPayload();
   await transportThrowPreservesDraft();
   await transportFailurePreservesDraft();
   await okWithoutHandleNeverCountsAsSuccess();
   await realHandleIsTheOnlySuccessPath();
   copyablePayloadCarriesTheStructuredReport();
+  failedSubmissionCopyablePayloadMatchesTheStructuredDraft();
 }
 
 async function incompleteReportIsBlockedNotSubmitted() {
@@ -125,6 +127,24 @@ async function noTransportPreservesDraftWithoutClaimingSuccess() {
   assertEqual(outcome.claimedSubmitted, false, 'no transport never claims success');
   assertEqual(outcome.resultHandle, null, 'no transport yields no result handle');
   assert(outcome.copyablePayload.includes('Preview crashes on baseline AC'), 'copyable payload carries the title');
+}
+
+async function transportReceivesStructuredDraftPayload() {
+  const composed = completeComposed();
+  let received: ComposedBugReport['draft'] | null = null;
+  const outcome = await submitBugReport({
+    composed,
+    transport: async (draft) => {
+      received = draft;
+      return { ok: true, issueUrl: 'https://github.com/x/codex/issues/7', issueNumber: 7 };
+    },
+  });
+
+  assertEqual(outcome.status, 'submitted', 'transport with handle submits');
+  assertEqual(received, composed.draft, 'transport receives the structured draft object');
+  assertEqual(received!.issueType, 'bug', 'transport draft carries issue type');
+  assert(received!.sections.some((section) => section.heading === 'Observed behavior'), 'transport draft carries structured sections');
+  assert(received!.labels.includes('bug'), 'transport draft carries labels');
 }
 
 async function transportThrowPreservesDraft() {
@@ -178,6 +198,15 @@ function copyablePayloadCarriesTheStructuredReport() {
   assert(rendered.includes('Preview crashes on baseline AC'), 'copyable payload carries the title');
   assert(rendered.includes('## Observed behavior'), 'copyable payload preserves structured sections');
   assert(rendered.toLowerCase().includes('bug'), 'copyable payload records the bug labels');
+}
+
+function failedSubmissionCopyablePayloadMatchesTheStructuredDraft() {
+  const composed = completeComposed();
+  const rendered = renderCopyableBugPayload(composed.draft);
+
+  assert(rendered.includes(composed.draft.markdownBody), 'copyable payload embeds the markdown draft');
+  assert(rendered.includes(`Labels: ${composed.draft.labels.join(', ')}`), 'copyable payload embeds labels');
+  assert(rendered.includes('## Expected behavior'), 'copyable payload keeps expected behavior separate');
 }
 
 main().catch((error: unknown) => {
