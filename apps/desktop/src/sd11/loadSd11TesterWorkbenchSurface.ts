@@ -1,5 +1,14 @@
 import type { Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot } from '../boundary/loadGe08AuthoringWorkbench';
 import type { PilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
+import {
+  buildFallbackDiagnostics,
+  buildFallbackExplanationRefs,
+  buildGe08Diagnostics,
+  buildGe08ExplanationRefs,
+  buildGe08ProvenanceRefs,
+  type Sd11WorkbenchDiagnostic,
+  type Sd11WorkbenchReference,
+} from './diagnostics/buildSd11WorkbenchEvidence';
 
 export interface Sd11WorkbenchRuntimeContext {
   buildVersion: string;
@@ -16,12 +25,6 @@ export interface Sd11WorkbenchDependencies {
 export interface Sd11WorkbenchSummaryRow {
   label: string;
   value: string;
-}
-
-export interface Sd11WorkbenchDiagnostic {
-  label: string;
-  message: string;
-  severity: 'info' | 'warning' | 'error';
 }
 
 export interface Sd11TesterWorkbenchSurface {
@@ -42,7 +45,8 @@ export interface Sd11TesterWorkbenchSurface {
   summaryRows: Sd11WorkbenchSummaryRow[];
   diagnostics: Sd11WorkbenchDiagnostic[];
   blockedClaims: string[];
-  explanationRefs: string[];
+  explanationRefs: Sd11WorkbenchReference[];
+  provenanceRefs: Sd11WorkbenchReference[];
   notes: string[];
 }
 
@@ -103,15 +107,10 @@ function mapGe08Snapshot(
         value: formatBaselineArmorClass(snapshot.preview.baselineArmorClass),
       },
     ],
-    diagnostics: snapshot.preview.diagnostics.map((diagnostic) => ({
-      label: diagnostic.class,
-      message: diagnostic.message,
-      severity: normaliseSeverity(diagnostic.severity),
-    })),
+    diagnostics: buildGe08Diagnostics(snapshot.preview.diagnostics),
     blockedClaims: snapshot.preview.blockedClaims,
-    explanationRefs: snapshot.preview.explanationRefs.map(
-      (reference) => `${reference.nodeKind}:${reference.refId} — ${reference.detail}`
-    ),
+    explanationRefs: buildGe08ExplanationRefs(snapshot.preview.explanationRefs),
+    provenanceRefs: buildGe08ProvenanceRefs(snapshot.preview.provenanceRefs),
     notes: [snapshot.note],
   };
 }
@@ -154,13 +153,10 @@ function mapPilotFallback(
         value: snapshot.dataSource,
       },
     ],
-    diagnostics: snapshot.diagnostics.map((message) => ({
-      label: 'Fallback',
-      message,
-      severity: 'warning',
-    })),
+    diagnostics: buildFallbackDiagnostics(snapshot.diagnostics),
     blockedClaims: [],
-    explanationRefs: snapshot.explanationRefs,
+    explanationRefs: buildFallbackExplanationRefs(snapshot.explanationRefs),
+    provenanceRefs: [],
     notes: [snapshot.note],
   };
 }
@@ -173,18 +169,6 @@ function formatBaselineArmorClass(
   }
 
   return `Blocked: ${baselineArmorClass.reason}`;
-}
-
-function normaliseSeverity(severity: string): 'info' | 'warning' | 'error' {
-  if (severity === 'Warning') {
-    return 'warning';
-  }
-
-  if (severity === 'Error') {
-    return 'error';
-  }
-
-  return 'info';
 }
 
 function formatError(cause: unknown): string {
