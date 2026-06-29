@@ -14,7 +14,7 @@ export interface EvidenceAttachment {
   kind: AttachmentKind;
   /** Whether this attachment could contain user-sensitive data. */
   mayContainSensitiveData: boolean;
-  /** Explicit tester confirmation to include the attachment as-is. */
+  /** Explicit tester confirmation to include the attachment. */
   testerConfirmedInclude: boolean;
   /** Whether the attachment content has been scrubbed/redacted. */
   redacted: boolean;
