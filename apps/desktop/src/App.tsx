@@ -202,7 +202,7 @@ export default function App() {
             <div style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
               <AppCard label="Tester track" value={surface.status.channel.testerFacingLabel} detail={surface.status.channel.detail} />
               <AppCard label="Support matrix" value={surface.status.support.tierMatrixLabel} detail={surface.status.support.currentPlatformSupportLabel} />
-              <AppCard label="Update status" value={surface.status.update.label} detail={surface.updateStatusLabel} />
+              <AppCard label="Update status" value={surface.status.update.label} detail={`${surface.status.channel.testerFacingLabel} tester track on ${surface.status.support.currentPlatformSupportLabel}`} />
               <AppCard
                 label="Issue payload status"
                 value={surface.status.issueCapture.testerFacingChannelSupportLabel}
