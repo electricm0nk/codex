@@ -131,10 +131,15 @@ async function draftPreservedWhenTransportThrows() {
 }
 
 async function draftPreservedWhenNoIssueHandle() {
-  const transport: EnhancementRequestTransport = async () => ({ ok: true, issueUrl: '   ' });
-  const outcome = await submitEnhancementRequest({ composed: completeComposed(), transport });
-  assertEqual(outcome.status, 'draft-preserved', 'a missing issue handle preserves the draft');
-  assertEqual(outcome.claimedSubmitted, false, 'no success without a real issue handle');
+  const whitespaceTransport: EnhancementRequestTransport = async () => ({ ok: true, issueUrl: '   ' });
+  const whitespaceOutcome = await submitEnhancementRequest({ composed: completeComposed(), transport: whitespaceTransport });
+  assertEqual(whitespaceOutcome.status, 'draft-preserved', 'a missing issue handle preserves the draft');
+  assertEqual(whitespaceOutcome.claimedSubmitted, false, 'no success without a real issue handle');
+
+  const invalidUrlTransport: EnhancementRequestTransport = async () => ({ ok: true, issueUrl: 'javascript:alert(1)' });
+  const invalidOutcome = await submitEnhancementRequest({ composed: completeComposed(), transport: invalidUrlTransport });
+  assertEqual(invalidOutcome.status, 'draft-preserved', 'an invalid issue handle preserves the draft');
+  assertEqual(invalidOutcome.claimedSubmitted, false, 'no success without a valid issue URL');
 }
 
 async function submittedOnlyWithRealHandle() {
