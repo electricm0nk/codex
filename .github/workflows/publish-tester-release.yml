@@ -151,8 +151,8 @@ jobs:
           | Platform | Tier | Update posture |
           |---|---|---|
           | Linux | First-class | Manual install only -- update checks not yet wired in this slice |
-          | macOS | Second-class | Manual download only -- automatic updates not yet available |
-          | Windows | Third-class | Explicitly bounded -- automatic updates not available in this tranche |
+          | macOS | Second-class | Not shipped in this release unit -- automatic updates not yet available |
+          | Windows | Third-class | Not shipped in this release unit -- automatic updates not available |
 
           ## Release assets
 
