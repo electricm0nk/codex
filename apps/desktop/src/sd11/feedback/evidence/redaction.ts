@@ -69,7 +69,7 @@ export function evaluateAttachment(attachment: EvidenceAttachment): AttachmentDe
     return {
       attachment,
       outcome: 'requires-confirmation',
-      reason: 'No attachment is included without explicit tester confirmation.',
+      reason: 'Unredacted attachments are not included without explicit tester confirmation.',
     };
   }
 
