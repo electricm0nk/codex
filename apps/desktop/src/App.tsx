@@ -93,6 +93,12 @@ function FeedbackEvidencePanel(props: { surface: Sd11TesterWorkbenchSurface }) {
     platformLabel: auto.platformLabel,
     currentWorkflow: auto.currentWorkflow,
     dataSourceIdentity: auto.dataSourceIdentity,
+    diagnostics:
+      auto.diagnostics.length || auto.blockedClaims.length
+        ? `${auto.diagnostics.length} diagnostic(s) · ${auto.blockedClaims.length} blocked claim(s)`
+        : '—',
+    explanationRefs: auto.explanationRefs.length ? `${auto.explanationRefs.length} explanation ref(s)` : '—',
+    provenanceRefs: auto.provenanceRefs.length ? `${auto.provenanceRefs.length} provenance ref(s)` : '—',
   };
 
   return (
