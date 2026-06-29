@@ -13,10 +13,20 @@ function assertNotEqual<T>(actual: T, expected: T, message: string) {
 }
 
 function main() {
-  const firstKey = createReferenceListKey('rule:guard-stance-ac', 0);
-  const duplicateLabelKey = createReferenceListKey('rule:guard-stance-ac', 1);
+  const firstKey = createReferenceListKey(
+    'rule:guard-stance-ac',
+    'rule:guard-stance-ac'
+  );
+  const duplicateLabelKey = createReferenceListKey(
+    'rule:guard-stance-ac',
+    'rule:guard-stance-ac:variant'
+  );
 
-  assertEqual(firstKey, 'rule:guard-stance-ac-0', 'first key includes the index');
+  assertEqual(
+    firstKey,
+    'rule:guard-stance-ac-rule:guard-stance-ac',
+    'first key includes the discriminator'
+  );
   assertNotEqual(firstKey, duplicateLabelKey, 'duplicate labels get unique keys');
 }
 

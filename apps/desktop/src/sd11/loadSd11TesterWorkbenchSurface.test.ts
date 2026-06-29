@@ -128,7 +128,7 @@ async function verifiesRealGe08SnapshotSurface() {
   );
   assertEqual(
     model.updateStatusLabel,
-    'Alpha tester track on Linux-first support posture',
+    'alpha tester track on Linux first-class',
     'update status label'
   );
   assertEqual(model.status.channel.operatorBranch, 'develop', 'status operator branch');

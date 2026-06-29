@@ -1,3 +1,6 @@
-export function createReferenceListKey(label: string, index: number): string {
-  return `${label}-${index}`;
+export function createReferenceListKey(
+  label: string,
+  discriminator: string | number
+): string {
+  return `${label}-${discriminator}`;
 }

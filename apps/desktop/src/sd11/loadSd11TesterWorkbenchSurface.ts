@@ -1,6 +1,15 @@
 import type { Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot } from '../boundary/loadGe08AuthoringWorkbench';
 import type { PilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
 import {
+  buildFallbackDiagnostics,
+  buildFallbackExplanationRefs,
+  buildGe08Diagnostics,
+  buildGe08ExplanationRefs,
+  buildGe08ProvenanceRefs,
+  type Sd11WorkbenchDiagnostic,
+  type Sd11WorkbenchReference,
+} from './diagnostics/buildSd11WorkbenchEvidence';
+import {
   createSd11WorkbenchStatus,
   type Sd11WorkbenchStatus,
 } from './status/createSd11WorkbenchStatus';
@@ -20,20 +29,6 @@ export interface Sd11WorkbenchDependencies {
 export interface Sd11WorkbenchSummaryRow {
   label: string;
   value: string;
-}
-
-export interface Sd11WorkbenchDiagnostic {
-  classLabel: string;
-  severity: 'info' | 'warning' | 'error';
-  severityLabel: 'Info' | 'Warning' | 'Error';
-  message: string;
-  subjectRef: string | null;
-  claimBlocking: boolean;
-}
-
-export interface Sd11WorkbenchReference {
-  label: string;
-  detail: string;
 }
 
 export interface Sd11TesterWorkbenchSurface {
@@ -100,7 +95,7 @@ function mapGe08Snapshot(
       'Bounded scope only: this slice proves the GE08 authoring workflow, not a full character-builder surface, GitHub submission transport, or updater mechanics.',
     feedbackStatusNotice:
       'Feedback intake is intentionally deferred in this slice. The frame keeps diagnostics, workflow identity, and support-tier truth visible so later GitHub flows can consume honest evidence.',
-    updateStatusLabel: 'Alpha tester track on Linux-first support posture',
+    updateStatusLabel: `${status.channel.testerFacingLabel} tester track on ${status.support.currentPlatformSupportLabel}`,
     summaryRows: [
       {
         label: 'Package',
@@ -119,23 +114,10 @@ function mapGe08Snapshot(
         value: formatBaselineArmorClass(snapshot.preview.baselineArmorClass),
       },
     ],
-    diagnostics: snapshot.preview.diagnostics.map((diagnostic) => ({
-      classLabel: diagnostic.class,
-      severity: normaliseSeverity(diagnostic.severity),
-      severityLabel: diagnostic.severity,
-      message: diagnostic.message,
-      subjectRef: diagnostic.subjectRef,
-      claimBlocking: diagnostic.claimBlocking,
-    })),
+    diagnostics: buildGe08Diagnostics(snapshot.preview.diagnostics),
     blockedClaims: snapshot.preview.blockedClaims,
-    explanationRefs: snapshot.preview.explanationRefs.map((reference) => ({
-      label: `${reference.nodeKind}:${reference.refId}`,
-      detail: reference.detail,
-    })),
-    provenanceRefs: snapshot.preview.provenanceRefs.map((reference) => ({
-      label: reference.stableId,
-      detail: `${reference.sourcePackageId} · ${reference.authoredPath}`,
-    })),
+    explanationRefs: buildGe08ExplanationRefs(snapshot.preview.explanationRefs),
+    provenanceRefs: buildGe08ProvenanceRefs(snapshot.preview.provenanceRefs),
     notes: [snapshot.note],
     status,
   };
@@ -169,7 +151,7 @@ function mapPilotFallback(
       'Bounded scope only: this fallback preserves the pilot runtime seam and visible failure context. It does not claim the broader tester workbench, GitHub feedback transport, or updater behavior are implemented.',
     feedbackStatusNotice:
       'Feedback intake remains deferred. Use the visible fallback reason, diagnostics, and workflow identity as the current evidence surface until the richer SD-11 flows land.',
-    updateStatusLabel: 'Alpha tester track on Linux-first support posture',
+    updateStatusLabel: `${status.channel.testerFacingLabel} tester track on ${status.support.currentPlatformSupportLabel}`,
     summaryRows: [
       {
         label: 'Case',
@@ -184,19 +166,9 @@ function mapPilotFallback(
         value: snapshot.dataSource,
       },
     ],
-    diagnostics: snapshot.diagnostics.map((message) => ({
-      classLabel: 'Fallback',
-      severity: 'warning',
-      severityLabel: 'Warning',
-      message,
-      subjectRef: null,
-      claimBlocking: false,
-    })),
+    diagnostics: buildFallbackDiagnostics(snapshot.diagnostics),
     blockedClaims: [],
-    explanationRefs: snapshot.explanationRefs.map((reference) => ({
-      label: reference,
-      detail: 'Fallback explanation reference preserved for later evidence capture.',
-    })),
+    explanationRefs: buildFallbackExplanationRefs(snapshot.explanationRefs),
     provenanceRefs: [],
     notes: [snapshot.note],
     status,
@@ -211,18 +183,6 @@ function formatBaselineArmorClass(
   }
 
   return `Blocked: ${baselineArmorClass.reason}`;
-}
-
-function normaliseSeverity(severity: string): 'info' | 'warning' | 'error' {
-  if (severity === 'Warning') {
-    return 'warning';
-  }
-
-  if (severity === 'Error') {
-    return 'error';
-  }
-
-  return 'info';
 }
 
 function formatError(cause: unknown): string {

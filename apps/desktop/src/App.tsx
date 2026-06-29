@@ -59,6 +59,27 @@ function AppCard(props: { label: string; value: string; detail?: string }) {
   );
 }
 
+function EvidenceList(props: {
+  emptyMessage: string;
+  items: Array<{ label: string; detail: string; machineRef: string }>;
+}) {
+  if (!props.items.length) {
+    return <p style={{ color: '#475569', margin: 0 }}>{props.emptyMessage}</p>;
+  }
+
+  return (
+    <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
+      {props.items.map((reference) => (
+        <li key={createReferenceListKey(reference.label, reference.machineRef)} style={{ marginBottom: '0.6rem' }}>
+          <strong>{reference.label}</strong>
+          <div style={{ color: '#475569', marginTop: '0.2rem' }}>{reference.detail}</div>
+          <code style={{ color: '#334155', fontSize: '0.8rem' }}>{reference.machineRef}</code>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function App() {
   const [surface, setSurface] = useState<Sd11TesterWorkbenchSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -138,14 +159,19 @@ export default function App() {
                     }}
                   >
                     <p style={{ color: toneColor(diagnostic.severity), fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
-                      {diagnostic.classLabel}
-                    </p>
-                    <p style={{ color: '#64748b', fontSize: '0.875rem', margin: '0.35rem 0 0' }}>
-                      {diagnostic.severityLabel}
-                      {diagnostic.subjectRef ? ` · ${diagnostic.subjectRef}` : ''}
-                      {diagnostic.claimBlocking ? ' · claim-blocking' : ''}
+                      {diagnostic.severityLabel} · {diagnostic.classLabel}
                     </p>
                     <p style={{ margin: '0.45rem 0 0' }}>{diagnostic.message}</p>
+                    {diagnostic.subjectRef ? (
+                      <p style={{ color: '#475569', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
+                        Subject reference: <code>{diagnostic.subjectRef}</code>
+                      </p>
+                    ) : null}
+                    {diagnostic.claimBlocking ? (
+                      <p style={{ color: '#7c2d12', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
+                        This diagnostic blocks at least one claim in the bounded snapshot.
+                      </p>
+                    ) : null}
                   </div>
                 ))
               ) : (
@@ -156,6 +182,9 @@ export default function App() {
             <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', marginTop: '1rem' }}>
               <div>
                 <h3 style={{ marginBottom: '0.5rem' }}>Blocked claims</h3>
+                <p style={{ color: '#475569', fontSize: '0.875rem', lineHeight: 1.5, marginTop: 0 }}>
+                  Runtime-blocked claims stay separate from broad unsupported-scope messaging so testers can tell a bounded workflow failure from an out-of-scope request.
+                </p>
                 {surface.blockedClaims.length ? (
                   <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
                     {surface.blockedClaims.map((claim) => (
@@ -168,35 +197,18 @@ export default function App() {
               </div>
               <div>
                 <h3 style={{ marginBottom: '0.5rem' }}>Explanation references</h3>
-                {surface.explanationRefs.length ? (
-                  <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
-                    {surface.explanationRefs.map((reference, index) => (
-                      <li key={createReferenceListKey(reference.label, index)} style={{ marginBottom: '0.45rem' }}>
-                        <strong>{reference.label}</strong>
-                        <span style={{ color: '#475569' }}> — {reference.detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p style={{ color: '#475569', margin: 0 }}>No explanation references were returned for the current bounded snapshot.</p>
-                )}
+                <EvidenceList
+                  emptyMessage="No explanation references were returned for the current bounded snapshot."
+                  items={surface.explanationRefs}
+                />
               </div>
-            </div>
-
-            <div style={{ marginTop: '1rem' }}>
-              <h3 style={{ marginBottom: '0.5rem' }}>Provenance references</h3>
-              {surface.provenanceRefs.length ? (
-                <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
-                  {surface.provenanceRefs.map((reference, index) => (
-                    <li key={`${reference.label}-${index}`} style={{ marginBottom: '0.45rem' }}>
-                      <strong>{reference.label}</strong>
-                      <span style={{ color: '#475569' }}> — {reference.detail}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p style={{ color: '#475569', margin: 0 }}>No provenance references were returned for the current bounded snapshot.</p>
-              )}
+              <div>
+                <h3 style={{ marginBottom: '0.5rem' }}>Provenance references</h3>
+                <EvidenceList
+                  emptyMessage="No provenance references were returned for the current bounded snapshot."
+                  items={surface.provenanceRefs}
+                />
+              </div>
             </div>
           </section>
 
