@@ -1,9 +1,12 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod ge08_workbench;
+mod sd11_update_action;
 
 use serde::Serialize;
 use std::path::PathBuf;
+
+use sd11_update_action::{resolve_sd11_update_action, Sd11UpdateActionRequest, Sd11UpdateReleaseTruth};
 
 use ge08_workbench::{
     Ge08AuthoredRecords, Ge08AuthoredRecord, Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot,
@@ -202,9 +205,18 @@ fn load_ge08_authoring_workbench_snapshot(
     })
 }
 
+#[tauri::command]
+fn sd11_update_action(request: Sd11UpdateActionRequest) -> Sd11UpdateReleaseTruth {
+    resolve_sd11_update_action(request)
+}
+
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![load_pilot_shell_snapshot, load_ge08_authoring_workbench_snapshot])
+        .invoke_handler(tauri::generate_handler![
+            load_pilot_shell_snapshot,
+            load_ge08_authoring_workbench_snapshot,
+            sd11_update_action
+        ])
         .run(tauri::generate_context!())
         .expect("error while running codex desktop shell scaffold");
 }
