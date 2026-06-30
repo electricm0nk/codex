@@ -51,12 +51,34 @@ function deriveFromManifest(
   const evidenceNotes = manifest.notes.slice();
   const operatorPromotionPathReference = manifest.operatorPromotionPathReference;
 
+  const mismatches: string[] = [];
+  if (manifest.platform.toLowerCase() !== context.platformLabel.toLowerCase()) {
+    mismatches.push(`platform=${manifest.platform} (expected ${context.platformLabel})`);
+  }
+  if (manifest.channel !== context.testerChannelLabel) {
+    mismatches.push(`channel=${manifest.channel} (expected ${context.testerChannelLabel})`);
+  }
+  if (manifest.supportTier !== context.platformTier) {
+    mismatches.push(`supportTier=${manifest.supportTier} (expected ${context.platformTier})`);
+  }
+
+  if (mismatches.length) {
+    return baseResult(context, {
+      state: 'check-failed',
+      headline: 'Update check failed',
+      detail:
+        `Governed release truth did not match the running build context (${mismatches.join(', ')}). ` +
+        'Refusing to classify update state against a mismatched manifest.',
+      operatorPromotionPathReference,
+      evidenceNotes,
+    });
+  }
+
   const withResult = (
     partial: Pick<Sd11UpdateActionResult, 'state' | 'headline' | 'detail'> &
       Partial<Sd11UpdateActionResult>
   ): Sd11UpdateActionResult =>
     baseResult(context, { operatorPromotionPathReference, evidenceNotes, ...partial });
-
   // Withdrawn takes precedence: a withdrawn build must surface a recovery/replacement path,
   // never normal update state.
   if (manifest.lifecycleState === 'withdrawn' || manifest.eligibilityState === 'withdrawn') {
