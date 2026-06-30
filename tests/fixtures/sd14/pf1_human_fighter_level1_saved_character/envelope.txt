@@ -1,0 +1,9 @@
+character_id = sd14.fixture.pf1-human-fighter-level1
+revision_id = sd14.fixture.pf1-human-fighter-level1.rev.1
+revision_kind = authoritative
+saved_at = 2026-06-30T00:00:00Z
+schema_version = 1
+app_or_runtime_version = codex-dev
+content_or_rules_provenance = pf1.core_rulebook
+latest_authoritative_revision_ref = sd14.fixture.pf1-human-fighter-level1.rev.1
+display_label = PF1 Human Fighter Level 1

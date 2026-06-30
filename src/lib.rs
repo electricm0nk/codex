@@ -7,3 +7,4 @@ pub mod homebrew_authoring;
 pub mod oracle_validation;
 pub mod pcgen_import;
 pub mod rules_core;
+pub mod saved_character;

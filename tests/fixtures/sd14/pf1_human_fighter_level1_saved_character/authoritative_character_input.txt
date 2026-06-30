@@ -1,0 +1,17 @@
+# SD-14 authoritative character input for the PF1 Human Fighter Level 1 saved character fixture.
+# This file carries chosen input state only. It does not contain derived values.
+case_id=sd14.fixture.pf1-human-fighter-level1
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:climb:1
+equipment=item:longsword:equipped
+choice=choice:bonus_feat:feat:power_attack
+provenance=fixture:pf1-human-fighter-level1
