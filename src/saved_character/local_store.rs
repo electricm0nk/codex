@@ -32,6 +32,31 @@ impl SavedCharacterStore {
     ) -> Result<(), SavedCharacterStoreError> {
         fs::create_dir_all(root).map_err(|err| io_error(root, err))?;
 
+        let ensure_single_line = |field: &str, value: &str| -> Result<(), SavedCharacterStoreError> {
+            if value.contains('\n') || value.contains('\r') {
+                return Err(SavedCharacterStoreError {
+                    message: format!(
+                        "{field} contains a newline/carriage return; cannot be persisted in envelope.txt"
+                    ),
+                });
+            }
+            Ok(())
+        };
+
+        ensure_single_line("character_id", &envelope.character_id)?;
+        ensure_single_line("revision_id", &envelope.revision_id)?;
+        ensure_single_line("saved_at", &envelope.saved_at)?;
+        ensure_single_line("app_or_runtime_version", &envelope.app_or_runtime_version)?;
+        ensure_single_line(
+            "content_or_rules_provenance",
+            &envelope.content_or_rules_provenance,
+        )?;
+        ensure_single_line(
+            "latest_authoritative_revision_ref",
+            &envelope.latest_authoritative_revision_ref,
+        )?;
+        ensure_single_line("display_label", &envelope.display_label)?;
+
         let envelope_path = root.join(ENVELOPE_FILE);
         fs::write(&envelope_path, render_envelope(envelope))
             .map_err(|err| io_error(&envelope_path, err))?;
