@@ -1,20 +1,19 @@
-//! SD13-E1-F1 — Machine-usable support-state matrix and seeded current truth.
+//! SD13-E1-F1 support-state matrix carrier proof.
 //!
-//! Pins the smallest typed SD-13 control-plane surface: a support-state matrix
-//! whose rows keep support state and evidence tier as separate axes, limited to
-//! the three SD-13 row types (`race`, `class`, `interaction`). These tests pin
-//! the deterministic current-truth seed exactly as grounded by the SD-13 packet
-//! and the existing GE-06 repo evidence. They do not assert race semantics,
-//! class progression, spell burden, claim composition, or any broader breadth.
+//! Proves the seeded SD-13 support-state matrix carries the exact current-truth
+//! rows authorized by the SD-13 packet and the live GE-06 evidence, with support
+//! state and evidence tier preserved as separate axes. It deliberately asserts
+//! only documentary/control-plane truth: no rules computation, no promotion logic,
+//! no serialization, and no broader roster support claim.
 
-use codex::oracle_validation::support_state_matrix::{
-    seeded_sd13_e1_f1_current_truth, EvidenceTier, MatrixSubjectType, SupportState,
-    SupportStateMatrix,
+use codex::rules_core::support_state_matrix::{
+    EvidenceTier, MatrixSubjectType, SupportState, SupportStateMatrix, SupportStateRow,
+    seeded_sd13_e1_f1_current_truth,
 };
 
-/// Every seeded row id, in roster order: 7 race, 12 class, 2 interaction.
+/// The exact, ordered set of seeded row ids. The seed must expose these and no
+/// others, with Fighter level 1 and Fighter levels 2-10 kept as separate rows.
 const EXPECTED_ROW_IDS: [&str; 21] = [
-    // race rows
     "race.human.pilot_semantics",
     "race.dwarf.bounded_semantics",
     "race.elf.bounded_semantics",
@@ -22,7 +21,6 @@ const EXPECTED_ROW_IDS: [&str; 21] = [
     "race.half_elf.bounded_semantics",
     "race.half_orc.bounded_semantics",
     "race.halfling.bounded_semantics",
-    // class rows
     "class.fighter.level_1_pilot",
     "class.fighter.levels_2_10",
     "class.rogue.bounded_progression",
@@ -35,52 +33,76 @@ const EXPECTED_ROW_IDS: [&str; 21] = [
     "class.ranger.hybrid_chassis_and_spell_burden",
     "class.sorcerer.progression_and_spell_burden",
     "class.wizard.progression_and_spell_burden",
-    // interaction rows
     "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
     "interaction.non_human_any_class.progression_pressure",
 ];
 
-fn seed() -> SupportStateMatrix {
+fn matrix() -> SupportStateMatrix {
     seeded_sd13_e1_f1_current_truth()
 }
 
+fn row<'a>(matrix: &'a SupportStateMatrix, row_id: &str) -> &'a SupportStateRow {
+    matrix
+        .row(row_id)
+        .unwrap_or_else(|| panic!("expected seeded row '{row_id}'"))
+}
+
 #[test]
-fn seed_returns_exactly_twenty_one_rows_split_seven_twelve_two() {
-    let matrix = seed();
-    assert_eq!(matrix.rows.len(), 21, "seed must hold exactly 21 rows");
+fn seed_contains_exactly_twenty_one_rows() {
+    let matrix = matrix();
+    assert_eq!(
+        matrix.rows.len(),
+        21,
+        "seed must contain exactly 21 rows, got {}",
+        matrix.rows.len()
+    );
+}
 
-    let races = matrix
-        .rows
-        .iter()
-        .filter(|r| r.subject_type == MatrixSubjectType::Race)
-        .count();
-    let classes = matrix
-        .rows
-        .iter()
-        .filter(|r| r.subject_type == MatrixSubjectType::Class)
-        .count();
-    let interactions = matrix
-        .rows
-        .iter()
-        .filter(|r| r.subject_type == MatrixSubjectType::Interaction)
-        .count();
-
-    assert_eq!(races, 7, "expected 7 race rows");
-    assert_eq!(classes, 12, "expected 12 class rows");
-    assert_eq!(interactions, 2, "expected 2 interaction rows");
+#[test]
+fn seed_has_seven_race_twelve_class_two_interaction_rows() {
+    let matrix = matrix();
+    let count = |subject_type: MatrixSubjectType| {
+        matrix
+            .rows
+            .iter()
+            .filter(|r| r.subject_type == subject_type)
+            .count()
+    };
+    assert_eq!(count(MatrixSubjectType::Race), 7, "expected 7 race rows");
+    assert_eq!(count(MatrixSubjectType::Class), 12, "expected 12 class rows");
+    assert_eq!(
+        count(MatrixSubjectType::Interaction),
+        2,
+        "expected 2 interaction rows"
+    );
 }
 
 #[test]
 fn seed_exposes_exact_row_ids_and_no_extras() {
-    let matrix = seed();
+    let matrix = matrix();
 
-    let actual: Vec<&str> = matrix.rows.iter().map(|r| r.row_id.as_str()).collect();
+    let actual: Vec<&str> = matrix.rows.iter().map(|r| r.row_id).collect();
     assert_eq!(
-        actual, EXPECTED_ROW_IDS,
-        "seed row ids must match the SD-13 handoff exactly, in roster order"
+        actual.len(),
+        EXPECTED_ROW_IDS.len(),
+        "row count must match the expected id set"
     );
 
-    // No duplicate row ids.
+    for expected in EXPECTED_ROW_IDS {
+        assert!(
+            matrix.rows.iter().any(|r| r.row_id == expected),
+            "missing expected row id '{expected}'"
+        );
+    }
+
+    for actual_id in &actual {
+        assert!(
+            EXPECTED_ROW_IDS.contains(actual_id),
+            "unexpected row id '{actual_id}' is not in the authorized seed"
+        );
+    }
+
+    // No duplicate ids may sneak in to inflate breadth truth.
     let mut sorted = actual.clone();
     sorted.sort_unstable();
     sorted.dedup();
@@ -88,163 +110,179 @@ fn seed_exposes_exact_row_ids_and_no_extras() {
 }
 
 #[test]
-fn human_pilot_race_row_is_partial_and_computed() {
-    let matrix = seed();
-    let row = matrix
-        .row("race.human.pilot_semantics")
-        .expect("Human pilot race row must exist");
-
-    assert_eq!(row.subject_type, MatrixSubjectType::Race);
-    assert_eq!(row.subject_id, "race:human");
-    assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+fn human_race_row_is_partial_and_computed() {
+    let matrix = matrix();
+    let human = row(&matrix, "race.human.pilot_semantics");
+    assert_eq!(human.subject_type, MatrixSubjectType::Race);
+    assert_eq!(human.subject_id, "race:human");
+    assert_eq!(human.support_state, SupportState::Partial);
+    assert_eq!(human.evidence_tier, EvidenceTier::Computed);
     assert!(
-        !row.grounding_ref.trim().is_empty(),
-        "grounding_ref must cite real evidence"
+        !human.grounding_ref.is_empty(),
+        "computed Human row must cite grounding evidence"
     );
 }
 
 #[test]
 fn fighter_level_1_row_is_partial_and_computed() {
-    let matrix = seed();
-    let row = matrix
-        .row("class.fighter.level_1_pilot")
-        .expect("Fighter level-1 row must exist");
-
-    assert_eq!(row.subject_type, MatrixSubjectType::Class);
-    assert_eq!(row.subject_id, "class:fighter");
-    assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    let matrix = matrix();
+    let fighter = row(&matrix, "class.fighter.level_1_pilot");
+    assert_eq!(fighter.subject_type, MatrixSubjectType::Class);
+    assert_eq!(fighter.subject_id, "class:fighter");
+    assert_eq!(fighter.support_state, SupportState::Partial);
+    assert_eq!(fighter.evidence_tier, EvidenceTier::Computed);
+    assert!(
+        !fighter.grounding_ref.is_empty(),
+        "computed Fighter level-1 row must cite grounding evidence"
+    );
 }
 
 #[test]
-fn fighter_levels_2_10_row_is_blocked_computed_with_nonempty_blocker_note() {
-    let matrix = seed();
-    let row = matrix
-        .row("class.fighter.levels_2_10")
-        .expect("Fighter levels-2-10 row must exist");
-
-    assert_eq!(row.subject_type, MatrixSubjectType::Class);
-    assert_eq!(row.subject_id, "class:fighter");
-    assert_eq!(row.support_state, SupportState::Blocked);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
-
-    let note = row
-        .blocker_or_lossiness_note
-        .as_deref()
-        .expect("Blocked row must carry a blocker note");
-    assert!(!note.trim().is_empty(), "blocker note must be non-empty");
+fn fighter_levels_2_10_row_is_blocked_and_computed_with_blocker_note() {
+    let matrix = matrix();
+    let blocked = row(&matrix, "class.fighter.levels_2_10");
+    assert_eq!(blocked.subject_type, MatrixSubjectType::Class);
+    assert_eq!(blocked.subject_id, "class:fighter");
+    assert_eq!(blocked.support_state, SupportState::Blocked);
+    assert_eq!(blocked.evidence_tier, EvidenceTier::Computed);
+    assert!(
+        !blocked.blocker_or_lossiness_note.is_empty(),
+        "blocked Fighter levels-2-10 row must carry a non-empty blocker note"
+    );
+    assert!(
+        blocked.grounding_ref.contains("ge06"),
+        "blocked Fighter row must cite the exact GE-06 test that claim-blocks it: {}",
+        blocked.grounding_ref
+    );
 }
 
 #[test]
-fn rogue_row_is_blocked_computed_with_nonempty_blocker_note() {
-    let matrix = seed();
-    let row = matrix
-        .row("class.rogue.bounded_progression")
-        .expect("Rogue row must exist");
-
-    assert_eq!(row.subject_type, MatrixSubjectType::Class);
-    assert_eq!(row.subject_id, "class:rogue");
-    assert_eq!(row.support_state, SupportState::Blocked);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
-
-    let note = row
-        .blocker_or_lossiness_note
-        .as_deref()
-        .expect("Blocked row must carry a blocker note");
-    assert!(!note.trim().is_empty(), "blocker note must be non-empty");
+fn rogue_row_is_blocked_and_computed_with_blocker_note() {
+    let matrix = matrix();
+    let rogue = row(&matrix, "class.rogue.bounded_progression");
+    assert_eq!(rogue.subject_type, MatrixSubjectType::Class);
+    assert_eq!(rogue.subject_id, "class:rogue");
+    assert_eq!(rogue.support_state, SupportState::Blocked);
+    assert_eq!(rogue.evidence_tier, EvidenceTier::Computed);
+    assert!(
+        !rogue.blocker_or_lossiness_note.is_empty(),
+        "blocked Rogue row must carry a non-empty blocker note"
+    );
+    assert!(
+        rogue.grounding_ref.contains("ge06_pilot_total_saves"),
+        "blocked Rogue row must cite the GE-06 total-save test that claim-blocks it: {}",
+        rogue.grounding_ref
+    );
 }
 
 #[test]
-fn fighter_level_1_and_levels_2_10_are_not_collapsed() {
-    let matrix = seed();
-    let level_1 = matrix.row("class.fighter.level_1_pilot").unwrap();
-    let levels_2_10 = matrix.row("class.fighter.levels_2_10").unwrap();
-
+fn fighter_level_1_and_levels_2_10_remain_separate_rows() {
+    let matrix = matrix();
+    let level_1 = row(&matrix, "class.fighter.level_1_pilot");
+    let levels_2_10 = row(&matrix, "class.fighter.levels_2_10");
     assert_ne!(
         level_1.row_id, levels_2_10.row_id,
-        "Fighter level 1 and levels 2-10 must remain distinct rows"
+        "Fighter level 1 and levels 2-10 must not collapse into one row"
     );
     assert_ne!(
         level_1.support_state, levels_2_10.support_state,
-        "the two Fighter rows must carry distinct support states"
+        "Fighter level 1 (partial) and levels 2-10 (blocked) must keep distinct states"
     );
 }
 
 #[test]
 fn every_non_human_race_row_is_unverified_and_observed() {
-    let matrix = seed();
-    for row in matrix
+    let matrix = matrix();
+    let non_human_races: Vec<&SupportStateRow> = matrix
         .rows
         .iter()
         .filter(|r| r.subject_type == MatrixSubjectType::Race)
-        .filter(|r| r.subject_id != "race:human")
-    {
+        .filter(|r| r.row_id != "race.human.pilot_semantics")
+        .collect();
+
+    assert_eq!(
+        non_human_races.len(),
+        6,
+        "there must be 6 non-Human race rows"
+    );
+    for race in non_human_races {
         assert_eq!(
-            row.support_state,
+            race.support_state,
             SupportState::Unverified,
-            "non-Human race row {} must be Unverified",
-            row.row_id
+            "non-Human race row '{}' must be Unverified",
+            race.row_id
         );
         assert_eq!(
-            row.evidence_tier,
+            race.evidence_tier,
             EvidenceTier::Observed,
-            "non-Human race row {} must be Observed",
-            row.row_id
+            "non-Human race row '{}' must be Observed",
+            race.row_id
         );
     }
 }
 
 #[test]
 fn every_non_fighter_non_rogue_class_row_is_unverified_and_observed() {
-    let matrix = seed();
-    for row in matrix
+    let matrix = matrix();
+    let other_classes: Vec<&SupportStateRow> = matrix
         .rows
         .iter()
         .filter(|r| r.subject_type == MatrixSubjectType::Class)
-        .filter(|r| {
-            r.row_id != "class.fighter.level_1_pilot"
-                && r.row_id != "class.fighter.levels_2_10"
-                && r.row_id != "class.rogue.bounded_progression"
-        })
-    {
+        .filter(|r| r.subject_id != "class:fighter" && r.subject_id != "class:rogue")
+        .collect();
+
+    assert_eq!(
+        other_classes.len(),
+        9,
+        "there must be 9 non-Fighter/non-Rogue class rows"
+    );
+    for class in other_classes {
         assert_eq!(
-            row.support_state,
+            class.support_state,
             SupportState::Unverified,
-            "class row {} must be Unverified",
-            row.row_id
+            "class row '{}' must be Unverified",
+            class.row_id
         );
         assert_eq!(
-            row.evidence_tier,
+            class.evidence_tier,
             EvidenceTier::Observed,
-            "class row {} must be Observed",
-            row.row_id
+            "class row '{}' must be Observed",
+            class.row_id
         );
     }
 }
 
 #[test]
-fn human_interaction_row_is_partial_computed_and_non_human_is_unverified_observed() {
-    let matrix = seed();
-
-    let human = matrix
-        .row("interaction.human_bonus_feat_ability_bonus.pilot_pressure")
-        .expect("Human interaction row must exist");
-    assert_eq!(human.subject_type, MatrixSubjectType::Interaction);
-    assert_eq!(human.support_state, SupportState::Partial);
-    assert_eq!(human.evidence_tier, EvidenceTier::Computed);
-
-    let non_human = matrix
-        .row("interaction.non_human_any_class.progression_pressure")
-        .expect("non-Human interaction row must exist");
-    assert_eq!(non_human.subject_type, MatrixSubjectType::Interaction);
-    assert_eq!(non_human.support_state, SupportState::Unverified);
-    assert_eq!(non_human.evidence_tier, EvidenceTier::Observed);
+fn human_interaction_row_is_partial_and_computed() {
+    let matrix = matrix();
+    let interaction = row(
+        &matrix,
+        "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
+    );
+    assert_eq!(interaction.subject_type, MatrixSubjectType::Interaction);
+    assert_eq!(
+        interaction.subject_id,
+        "interaction:human-bonus-feat-ability-bonus"
+    );
+    assert_eq!(interaction.support_state, SupportState::Partial);
+    assert_eq!(interaction.evidence_tier, EvidenceTier::Computed);
 }
 
 #[test]
-fn seed_has_no_supported_rows() {
-    let matrix = seed();
+fn non_human_interaction_row_is_unverified_and_observed() {
+    let matrix = matrix();
+    let interaction = row(
+        &matrix,
+        "interaction.non_human_any_class.progression_pressure",
+    );
+    assert_eq!(interaction.subject_type, MatrixSubjectType::Interaction);
+    assert_eq!(interaction.support_state, SupportState::Unverified);
+    assert_eq!(interaction.evidence_tier, EvidenceTier::Observed);
+}
+
+#[test]
+fn seed_contains_no_supported_rows() {
+    let matrix = matrix();
     assert!(
         !matrix
             .rows
@@ -255,9 +293,28 @@ fn seed_has_no_supported_rows() {
 }
 
 #[test]
-fn only_pilot_truth_rows_rise_above_observed() {
-    let matrix = seed();
-    let allowed_above_observed = [
+fn seed_contains_no_lossy_rows() {
+    let matrix = matrix();
+    assert!(
+        !matrix
+            .rows
+            .iter()
+            .any(|r| r.support_state == SupportState::Lossy),
+        "the initial seed must not contain any Lossy rows"
+    );
+}
+
+#[test]
+fn only_pilot_grounded_rows_rise_above_observed() {
+    let matrix = matrix();
+    let above_observed: Vec<&str> = matrix
+        .rows
+        .iter()
+        .filter(|r| r.evidence_tier != EvidenceTier::Observed)
+        .map(|r| r.row_id)
+        .collect();
+
+    let expected_above_observed = [
         "race.human.pilot_semantics",
         "class.fighter.level_1_pilot",
         "class.fighter.levels_2_10",
@@ -265,72 +322,72 @@ fn only_pilot_truth_rows_rise_above_observed() {
         "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
     ];
 
-    for row in &matrix.rows {
-        if row.evidence_tier != EvidenceTier::Observed {
-            assert!(
-                allowed_above_observed.contains(&row.row_id.as_str()),
-                "row {} must not rise above Observed",
-                row.row_id
-            );
-        }
+    assert_eq!(
+        above_observed.len(),
+        expected_above_observed.len(),
+        "only the pilot-grounded rows may rise above Observed, got {above_observed:?}"
+    );
+    for id in expected_above_observed {
+        assert!(
+            above_observed.contains(&id),
+            "expected row '{id}' to rise above Observed"
+        );
     }
 }
 
 #[test]
-fn every_blocked_row_carries_a_nonempty_blocker_note() {
-    let matrix = seed();
-    for row in matrix
+fn every_blocked_row_carries_a_non_empty_blocker_note() {
+    let matrix = matrix();
+    for blocked in matrix
         .rows
         .iter()
         .filter(|r| r.support_state == SupportState::Blocked)
     {
-        let note = row
-            .blocker_or_lossiness_note
-            .as_deref()
-            .unwrap_or_else(|| panic!("Blocked row {} must carry a blocker note", row.row_id));
         assert!(
-            !note.trim().is_empty(),
-            "Blocked row {} blocker note must be non-empty",
-            row.row_id
+            !blocked.blocker_or_lossiness_note.is_empty(),
+            "blocked row '{}' must carry a non-empty blocker note",
+            blocked.row_id
         );
     }
 }
 
 #[test]
-fn every_row_carries_dimension_grounding_and_next_uplift() {
-    let matrix = seed();
-    for row in &matrix.rows {
-        assert!(
-            !row.dimension.trim().is_empty(),
-            "row {} must declare a dimension",
-            row.row_id
-        );
-        assert!(
-            !row.grounding_ref.trim().is_empty(),
-            "row {} must cite a grounding_ref",
-            row.row_id
-        );
-        assert!(
-            !row.next_required_uplift.trim().is_empty(),
-            "row {} must declare a next_required_uplift",
-            row.row_id
-        );
+fn lookup_helper_retrieves_anchor_rows_by_id() {
+    let matrix = matrix();
+    for id in [
+        "race.human.pilot_semantics",
+        "class.fighter.level_1_pilot",
+        "class.rogue.bounded_progression",
+        "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
+    ] {
+        let found = matrix.row(id).unwrap_or_else(|| panic!("lookup must find '{id}'"));
+        assert_eq!(found.row_id, id, "lookup must return the requested row");
     }
-}
-
-#[test]
-fn lookup_helper_retrieves_key_rows_and_misses_unknown_ids() {
-    let matrix = seed();
-
-    assert!(matrix.row("race.human.pilot_semantics").is_some());
-    assert!(matrix.row("class.fighter.level_1_pilot").is_some());
-    assert!(matrix.row("class.rogue.bounded_progression").is_some());
-    assert!(matrix
-        .row("interaction.human_bonus_feat_ability_bonus.pilot_pressure")
-        .is_some());
 
     assert!(
-        matrix.row("class.fighter.level_99_unreal").is_none(),
+        matrix.row("class.nonexistent.row").is_none(),
         "lookup must return None for an unknown row id"
     );
+}
+
+#[test]
+fn every_row_carries_grounding_and_next_uplift() {
+    let matrix = matrix();
+    for r in &matrix.rows {
+        assert!(
+            !r.grounding_ref.is_empty(),
+            "row '{}' must cite a grounding reference",
+            r.row_id
+        );
+        assert!(
+            !r.dimension.is_empty(),
+            "row '{}' must name a semantic/progression dimension",
+            r.row_id
+        );
+        assert!(
+            !r.next_required_uplift.is_empty(),
+            "row '{}' must name its next required uplift",
+            r.row_id
+        );
+    }
 }
