@@ -134,10 +134,22 @@ fn sd14_fixture_round_trip_matches_constructed_pilot_envelope() {
     assert_eq!(from_fixture.character_id, constructed.character_id);
     assert_eq!(from_fixture.revision_id, constructed.revision_id);
     assert_eq!(from_fixture.revision_kind, constructed.revision_kind);
+    assert_eq!(from_fixture.saved_at, constructed.saved_at);
     assert_eq!(from_fixture.schema_version, constructed.schema_version);
+    assert_eq!(
+        from_fixture.app_or_runtime_version,
+        constructed.app_or_runtime_version
+    );
+    assert_eq!(
+        from_fixture.content_or_rules_provenance,
+        constructed.content_or_rules_provenance
+    );
+    assert_eq!(
+        from_fixture.latest_authoritative_revision_ref,
+        constructed.latest_authoritative_revision_ref
+    );
     assert_eq!(from_fixture.display_label, constructed.display_label);
     assert_eq!(from_fixture.character_input, constructed.character_input);
-}
 
 #[test]
 fn sd14_missing_envelope_file_fails_honestly() {
