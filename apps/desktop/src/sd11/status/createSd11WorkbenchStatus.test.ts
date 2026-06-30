@@ -20,7 +20,7 @@ function verifiesLinuxAlphaStatusTruth() {
   assertEqual(status.build.label, 'codex-desktop-shell-scaffold@0.0.0-test', 'build label');
   assertEqual(status.channel.testerFacingLabel, 'alpha', 'tester-facing channel');
   assertEqual(status.channel.operatorBranch, 'develop', 'operator branch');
-  assertEqual(status.channel.operatorPromotionPath, 'develop -> uat -> main', 'operator promotion path');
+  assertEqual(status.channel.operatorPromotionPath, 'develop -> main', 'operator promotion path');
   assertEqual(
     status.channel.audience,
     'fastest-moving tester track; highest churn; acceptable for close/internal testers',
@@ -33,8 +33,8 @@ function verifiesLinuxAlphaStatusTruth() {
     'Linux first-class · macOS second-class · Windows third-class',
     'support tier matrix'
   );
-  assertEqual(status.update.state, 'not-yet-supported', 'update state');
-  assertEqual(status.update.label, 'Update checks not yet wired in this slice', 'update label');
+  assertEqual(status.update.state, 'check-ready', 'update state');
+  assertEqual(status.update.label, 'Bounded update check available', 'update label');
   assertEqual(status.issueCapture.testerFacingChannelSupportLabel, 'alpha · Linux first-class', 'issue capture label');
 }
 

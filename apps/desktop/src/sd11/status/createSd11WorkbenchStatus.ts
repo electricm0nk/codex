@@ -1,5 +1,10 @@
 export type Sd11SupportTier = 'first-class' | 'second-class' | 'third-class' | 'unknown';
-export type Sd11UpdateState = 'not-yet-supported';
+// `not-yet-supported` is retained only so adjacent feedback-slice fixtures keep typechecking;
+// this slice's live status posture is `check-ready`.
+export type Sd11UpdateState = 'check-ready' | 'not-yet-supported';
+// Accepted SD-12 operator promotion truth is `develop -> main`. The legacy `develop -> uat -> main`
+// literal is retained as a type member only so adjacent feedback-slice fixtures keep typechecking.
+export type Sd11OperatorPromotionPath = 'develop -> main' | 'develop -> uat -> main';
 
 export interface Sd11WorkbenchStatusContext {
   buildVersion: string;
@@ -14,7 +19,7 @@ export interface Sd11WorkbenchBuildStatus {
 export interface Sd11WorkbenchChannelStatus {
   testerFacingLabel: 'alpha';
   operatorBranch: 'develop';
-  operatorPromotionPath: 'develop -> uat -> main';
+  operatorPromotionPath: Sd11OperatorPromotionPath;
   audience: string;
   detail: string;
 }
@@ -36,7 +41,7 @@ export interface Sd11WorkbenchUpdateStatus {
 export interface Sd11WorkbenchIssueCaptureStatus {
   testerFacingChannelSupportLabel: string;
   operatorBranch: 'develop';
-  operatorPromotionPath: 'develop -> uat -> main';
+  operatorPromotionPath: Sd11OperatorPromotionPath;
   platformLabel: string;
   platformTier: Sd11SupportTier;
 }
@@ -52,13 +57,13 @@ export interface Sd11WorkbenchStatus {
 const BUILD_PREFIX = 'codex-desktop-shell-scaffold';
 const TESTER_CHANNEL: Sd11WorkbenchChannelStatus['testerFacingLabel'] = 'alpha';
 const OPERATOR_BRANCH: Sd11WorkbenchChannelStatus['operatorBranch'] = 'develop';
-const OPERATOR_PROMOTION_PATH: Sd11WorkbenchChannelStatus['operatorPromotionPath'] = 'develop -> uat -> main';
+const OPERATOR_PROMOTION_PATH: Sd11WorkbenchChannelStatus['operatorPromotionPath'] = 'develop -> main';
 const CHANNEL_AUDIENCE = 'fastest-moving tester track; highest churn; acceptable for close/internal testers';
-const CHANNEL_DETAIL = 'Tester-facing channel language over the develop → uat → main operator path.';
+const CHANNEL_DETAIL = 'Tester-facing channel language over the develop → main operator path.';
 const SUPPORT_TIER_MATRIX_LABEL = 'Linux first-class · macOS second-class · Windows third-class';
-const UPDATE_LABEL = 'Update checks not yet wired in this slice';
+const UPDATE_LABEL = 'Bounded update check available';
 const UPDATE_DETAIL =
-  'This slice exposes current build, channel, and support truth now. Update availability and outcome will land later without leaking raw branch names as the primary tester UX.';
+  'Run a bounded check against governed SD-12 release truth. SD-11 consumes release truth as a client; it never authors releases, applies installers, or surfaces raw branch names as the primary tester UX. Outcomes stay honest and platform-aware: up-to-date, update-available, manual-only, blocked, withdrawn, unsupported, check-failed, or no official release for this build.';
 
 export function createSd11WorkbenchStatus(
   context: Sd11WorkbenchStatusContext
@@ -86,7 +91,7 @@ export function createSd11WorkbenchStatus(
       platformSupportDetail: describePlatformSupport(context.platformLabel, platformTier),
     },
     update: {
-      state: 'not-yet-supported',
+      state: 'check-ready',
       label: UPDATE_LABEL,
       detail: UPDATE_DETAIL,
     },

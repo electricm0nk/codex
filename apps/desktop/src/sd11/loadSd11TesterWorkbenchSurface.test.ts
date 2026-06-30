@@ -132,7 +132,7 @@ async function verifiesRealGe08SnapshotSurface() {
     'update status label'
   );
   assertEqual(model.status.channel.operatorBranch, 'develop', 'status operator branch');
-  assertEqual(model.status.channel.operatorPromotionPath, 'develop -> uat -> main', 'status promotion path');
+  assertEqual(model.status.channel.operatorPromotionPath, 'develop -> main', 'status promotion path');
   assertEqual(model.status.support.platformTier, 'first-class', 'status platform tier');
   assertEqual(
     model.status.issueCapture.testerFacingChannelSupportLabel,
