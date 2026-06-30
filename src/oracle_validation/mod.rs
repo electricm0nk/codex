@@ -6,3 +6,4 @@
 
 pub mod golden_fixture;
 pub mod selected_parity_dimensions;
+pub mod support_state_matrix;
