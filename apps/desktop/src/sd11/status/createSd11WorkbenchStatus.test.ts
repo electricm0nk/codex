@@ -11,11 +11,49 @@ async function main() {
   verifiesWindowsSupportAsymmetry();
 }
 
+function noOfficialReleaseTruth() {
+  return {
+    truth: {
+      kind: 'no-official-release' as const,
+      reason: 'Feature/local builds are not governed tester release units.',
+      buildLabel: 'codex-desktop-shell-scaffold@0.0.0-test',
+      version: '0.0.0-test',
+    },
+    updateAction: {
+      state: 'no-official-release-for-this-build' as const,
+      headline: 'No official tester release for this build',
+      detail: 'This is a local, non-governed build, so no governed update outcome is claimed.',
+      platformLabel: 'Linux',
+      platformTier: 'first-class' as const,
+      testerChannelLabel: 'alpha' as const,
+      automaticEligible: false,
+      manualReason: null,
+      replacementTarget: null,
+      recoveryDirection: null,
+      checkedBuildLabel: 'codex-desktop-shell-scaffold@0.0.0-test',
+      checkedVersion: '0.0.0-test',
+      operatorPromotionPathReference: null,
+      evidenceNotes: [],
+    },
+    issueCapture: {
+      releaseUnitId: null,
+      sourceRevision: null,
+      manifestPath: null,
+      updateEligibilityState: 'no-official-release',
+      trustGateStatus: 'not-applicable-no-governed-release',
+      replacementReleaseId: null,
+      officialSurface:
+        'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+      localBuildAuthority: 'Feature/local build — no governed release unit was proven.',
+    },
+  };
+}
+
 function verifiesLinuxAlphaStatusTruth() {
   const status = createSd11WorkbenchStatus({
     buildVersion: '0.0.0-test',
     platformLabel: 'Linux',
-  });
+  }, noOfficialReleaseTruth());
 
   assertEqual(status.build.label, 'codex-desktop-shell-scaffold@0.0.0-test', 'build label');
   assertEqual(status.channel.testerFacingLabel, 'alpha', 'tester-facing channel');
@@ -33,9 +71,14 @@ function verifiesLinuxAlphaStatusTruth() {
     'Linux first-class · macOS second-class · Windows third-class',
     'support tier matrix'
   );
-  assertEqual(status.update.state, 'check-ready', 'update state');
-  assertEqual(status.update.label, 'Bounded update check available', 'update label');
+  assertEqual(status.update.state, 'no-official-release-for-this-build', 'update state');
+  assertEqual(status.update.label, 'No official tester release for this build', 'update label');
   assertEqual(status.issueCapture.testerFacingChannelSupportLabel, 'alpha · Linux first-class', 'issue capture label');
+  assertEqual(
+    status.issueCapture.releaseTruth?.updateEligibilityState,
+    'no-official-release',
+    'issue-capture release eligibility state'
+  );
 }
 
 function verifiesWindowsSupportAsymmetry() {

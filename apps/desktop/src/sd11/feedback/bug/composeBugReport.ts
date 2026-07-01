@@ -160,6 +160,14 @@ function renderMetadataList(auto: AutoCapturedEvidence): string {
     `- Platform: ${auto.platformLabel}`,
     `- Current bounded workflow: ${auto.currentWorkflow}`,
     `- Data-source identity: ${auto.dataSourceIdentity}`,
+    `- Governed release unit id: ${auto.releaseUnitId ?? '_Not recorded_'}`,
+    `- Source revision / provenance handle: ${auto.sourceRevision ?? '_Not recorded_'}`,
+    `- Manifest surface / asset path: ${auto.manifestPath ?? '_Not recorded_'}`,
+    `- Update eligibility state: ${auto.updateEligibilityState ?? '_Not recorded_'}`,
+    `- Trust-gate status: ${auto.trustGateStatus ?? '_Not recorded_'}`,
+    `- Replacement release id: ${auto.replacementReleaseId ?? '_Not recorded_'}`,
+    `- Official release-truth surface: ${auto.officialSurface ?? '_Not recorded_'}`,
+    `- Local build authority posture: ${auto.localBuildAuthority ?? '_Not recorded_'}`,
   ].join('\n');
 }
 

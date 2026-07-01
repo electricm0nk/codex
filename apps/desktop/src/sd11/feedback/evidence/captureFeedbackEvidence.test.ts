@@ -71,6 +71,17 @@ function makeSurface(overrides: Partial<Sd11TesterWorkbenchSurface> = {}): Sd11T
         operatorPromotionPath: 'develop -> uat -> main',
         platformLabel: 'Linux',
         platformTier: 'first-class',
+        releaseTruth: {
+          releaseUnitId: 'alpha-v0.0.0-test-1234abcd',
+          sourceRevision: '1234abcd',
+          manifestPath: 'release asset: update-manifest-stub.json',
+          updateEligibilityState: 'manual-only',
+          trustGateStatus: 'governed-manual-only',
+          replacementReleaseId: 'alpha-v0.0.1-test-9876fedc',
+          officialSurface:
+            'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+          localBuildAuthority: 'governed-release-unit',
+        },
       },
     },
     ...overrides,
@@ -93,6 +104,9 @@ function autoEvidenceResolvesFromSurface() {
   assertEqual(auto.platformLabel, 'Linux', 'auto platform label');
   assertEqual(auto.currentWorkflow, 'GE08 Guard Stance authoring workbench / Authored / Computed', 'auto workflow');
   assertEqual(auto.dataSourceIdentity, 'Real Tauri command snapshot', 'auto data source identity');
+  assertEqual(auto.releaseUnitId, 'alpha-v0.0.0-test-1234abcd', 'auto release unit id');
+  assertEqual(auto.updateEligibilityState, 'manual-only', 'auto update eligibility state');
+  assertEqual(auto.trustGateStatus, 'governed-manual-only', 'auto trust-gate status');
   assertEqual(auto.diagnostics.length, 1, 'diagnostics carried through');
 }
 
