@@ -19,7 +19,11 @@
 //! milestone tranche from level 1 to levels 2 and 3 only: the level-2 bonus-feat
 //! progression seam and the level-3 armor-training seam are surfaced explicitly,
 //! but nothing here grounds level-4+ Fighter burden, a general feat-effect engine,
-//! spellcasting, multiclassing, or non-Fighter classes. Unsupported input yields
+//! spellcasting, multiclassing, or non-Fighter positive support. The SD13-E3-F6 slice
+//! additionally recognizes the deterministic Human Paladin level-1 and Human Ranger
+//! level-1 hybrid chassis as direct runtime evidence, but keeps both explicitly
+//! claim-blocked on their still-missing non-spell class-feature burden and later spell
+//! burden; it grounds no hybrid class-feature or spell math. Unsupported input yields
 //! claim-blocking diagnostics and withheld explanations rather than fabricated
 //! values.
 
@@ -99,6 +103,14 @@ pub struct ComputationDiagnostic {
 }
 
 const FIGHTER_CLASS_ID: &str = "class:fighter";
+
+// SD13-E3-F6 hybrid chassis baseline identities. Paladin and Ranger are hybrid
+// (martial + later spellcasting) classes; this slice recognizes only their bounded
+// single-class level-1 chassis as direct runtime evidence and grounds no class-feature
+// or spell math for either.
+const PALADIN_CLASS_ID: &str = "class:paladin";
+const RANGER_CLASS_ID: &str = "class:ranger";
+const HYBRID_BASELINE_LEVEL: u8 = 1;
 
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
@@ -252,6 +264,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     );
 
     explain_fighter_class_features(input, &mut explanations);
+
+    explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
 
     explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
@@ -604,6 +618,116 @@ fn explain_fighter_class_features(
             ),
         });
     }
+}
+
+/// A hybrid (martial + later spellcasting) class this slice recognizes at its bounded
+/// single-class level-1 chassis boundary only.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum HybridClass {
+    Paladin,
+    Ranger,
+}
+
+/// Return the hybrid class when the chosen input is exactly a single-class Paladin or
+/// Ranger at the bounded hybrid baseline level (1). Returns `None` for any other class,
+/// a multiclass mix, or a level-2+ hybrid this slice deliberately does not recognize —
+/// each of which stays blocked exactly as before.
+fn hybrid_level1_class(input: &CharacterInput) -> Option<HybridClass> {
+    match input.chosen.class_levels.as_slice() {
+        [class_level] if class_level.level == HYBRID_BASELINE_LEVEL => {
+            match class_level.class_id.as_str() {
+                PALADIN_CLASS_ID => Some(HybridClass::Paladin),
+                RANGER_CLASS_ID => Some(HybridClass::Ranger),
+                _ => None,
+            }
+        }
+        _ => None,
+    }
+}
+
+/// Surface direct SD13-E3-F6 runtime evidence for the deterministic Human Paladin
+/// level-1 and Human Ranger level-1 hybrid chassis, while keeping both explicitly
+/// claim-blocked on their still-missing burdens.
+///
+/// This deliberately does not compute a supported hybrid chassis. It grounds no base
+/// attack/save progression, no smite / lay-on-hands / divine-grace / mercy execution,
+/// no favored-enemy / combat-style / tracking execution, and no spell posture. It only:
+/// - leaves one chassis-recognition explanation so the `class:paladin:1` / `class:ranger:1`
+///   identity is acknowledged as a hybrid martial baseline rather than an undocumented
+///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits two claim-blocking diagnostics naming the still-missing non-spell class-feature
+///   burden family and the later hybrid spell burden explicitly, rather than hiding behind
+///   a generic "unsupported hybrid" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks these inputs; this seam
+/// keeps that blocked posture but makes the hybrid class identity and its named burdens
+/// legible on the runtime path.
+fn explain_hybrid_level1_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(hybrid) = hybrid_level1_class(input) else {
+        return;
+    };
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    let (class_id, class_name, chassis_id, feature_id, feature_burden, spell_id) = match hybrid {
+        HybridClass::Paladin => (
+            PALADIN_CLASS_ID,
+            "Paladin",
+            "class_chassis.hybrid_baseline.paladin",
+            "class_feature.hybrid.paladin.unsupported",
+            "smite evil, lay on hands, divine grace, and mercy",
+            "class_spell.hybrid.paladin.unsupported",
+        ),
+        HybridClass::Ranger => (
+            RANGER_CLASS_ID,
+            "Ranger",
+            "class_chassis.hybrid_baseline.ranger",
+            "class_feature.hybrid.ranger.unsupported",
+            "favored enemy, combat style, and skill/tracking",
+            "class_spell.hybrid.ranger.unsupported",
+        ),
+    };
+
+    // Direct runtime evidence: recognize the deterministic Human hybrid level-1 chassis
+    // identity. This is a recognition record only; it fabricates no mechanical value.
+    explanations.push(ComputationExplanation {
+        id: chassis_id.to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human {class_name} level {HYBRID_BASELINE_LEVEL} hybrid chassis: \
+             the {class_id}:{HYBRID_BASELINE_LEVEL} class identity is acknowledged as a hybrid martial \
+             baseline on the rules-core seam rather than an undocumented packet placeholder. This is a \
+             bounded chassis-recognition record only; it grounds no {class_name} class-feature math and \
+             no spell posture, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the non-spell class-feature burden family explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: feature_id.to_owned(),
+        message: format!(
+            "{class_name} level {HYBRID_BASELINE_LEVEL} remains blocked on its non-spell class-feature \
+             burden: {feature_burden} are not implemented in this bounded hybrid chassis baseline, so no \
+             {class_name} class-feature support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the later hybrid spell burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: spell_id.to_owned(),
+        message: format!(
+            "{class_name} remains blocked on its later hybrid spell burden: spell slots, spell source, \
+             and spells known/prepared posture are out of scope for this level-{HYBRID_BASELINE_LEVEL} \
+             chassis baseline and are deferred to the SD13-E4 spellcasting slice"
+        ),
+        claim_blocking: true,
+    });
 }
 
 /// Compute total saving throws as the grounded Fighter level 1–3 base save plus the

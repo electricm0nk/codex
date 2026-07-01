@@ -234,19 +234,76 @@ fn every_non_human_race_row_is_unverified_and_observed() {
 }
 
 #[test]
-fn every_non_fighter_non_rogue_class_row_is_unverified_and_observed() {
+fn paladin_and_ranger_hybrid_rows_are_blocked_and_computed_with_named_burdens() {
+    // SD13-E3-F6 moves both hybrid rows off the pure Unverified/Observed placeholder to
+    // a still-blocked computed posture that names the class-feature and spell burdens.
     let matrix = matrix();
+    let cases = [
+        (
+            "class.paladin.hybrid_chassis_and_spell_burden",
+            "class:paladin",
+            ["smite", "lay on hands", "divine grace", "mercy"],
+        ),
+        (
+            "class.ranger.hybrid_chassis_and_spell_burden",
+            "class:ranger",
+            ["favored enemy", "combat style", "tracking", "spell"],
+        ),
+    ];
+    for (row_id, subject_id, tokens) in cases {
+        let hybrid = row(&matrix, row_id);
+        assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
+        assert_eq!(hybrid.subject_id, subject_id);
+        // Blocked/Computed only: never Partial and never Supported for this slice.
+        assert_eq!(hybrid.support_state, SupportState::Blocked);
+        assert_ne!(hybrid.support_state, SupportState::Partial);
+        assert_ne!(hybrid.support_state, SupportState::Supported);
+        assert_eq!(hybrid.evidence_tier, EvidenceTier::Computed);
+        assert!(
+            hybrid
+                .grounding_ref
+                .contains("sd13_hybrid_level1_chassis_baseline"),
+            "hybrid row '{row_id}' must cite the SD13-F6 proof surface: {}",
+            hybrid.grounding_ref
+        );
+        assert!(
+            !hybrid.blocker_or_lossiness_note.is_empty(),
+            "blocked hybrid row '{row_id}' must carry a non-empty blocker note"
+        );
+        // The note must name the later spell burden and the class-specific feature burden.
+        assert!(
+            hybrid.blocker_or_lossiness_note.contains("spell"),
+            "hybrid row '{row_id}' note must name the later spell burden: {}",
+            hybrid.blocker_or_lossiness_note
+        );
+        for token in tokens {
+            assert!(
+                hybrid.blocker_or_lossiness_note.contains(token),
+                "hybrid row '{row_id}' note must name the '{token}' burden: {}",
+                hybrid.blocker_or_lossiness_note
+            );
+        }
+    }
+}
+
+#[test]
+fn every_remaining_unproven_class_row_is_unverified_and_observed() {
+    // After SD13-E3-F6, Fighter (level 1 + levels 2-10), Rogue, Paladin, and Ranger all
+    // carry runtime evidence. The remaining seven core class rows must still be pure
+    // roster-scope placeholders with no runtime evidence.
+    let matrix = matrix();
+    let proven_subjects = ["class:fighter", "class:rogue", "class:paladin", "class:ranger"];
     let other_classes: Vec<&SupportStateRow> = matrix
         .rows
         .iter()
         .filter(|r| r.subject_type == MatrixSubjectType::Class)
-        .filter(|r| r.subject_id != "class:fighter" && r.subject_id != "class:rogue")
+        .filter(|r| !proven_subjects.contains(&r.subject_id))
         .collect();
 
     assert_eq!(
         other_classes.len(),
-        9,
-        "there must be 9 non-Fighter/non-Rogue class rows"
+        7,
+        "there must be 7 remaining unproven core class rows"
     );
     for class in other_classes {
         assert_eq!(
@@ -379,13 +436,15 @@ fn only_pilot_grounded_rows_rise_above_observed() {
         "class.fighter.level_1_pilot",
         "class.fighter.levels_2_10",
         "class.rogue.bounded_progression",
+        "class.paladin.hybrid_chassis_and_spell_burden",
+        "class.ranger.hybrid_chassis_and_spell_burden",
         "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
     ];
 
     assert_eq!(
         above_observed.len(),
         expected_above_observed.len(),
-        "only the pilot-grounded rows may rise above Observed, got {above_observed:?}"
+        "only the pilot-grounded and hybrid-baseline rows may rise above Observed, got {above_observed:?}"
     );
     for id in expected_above_observed {
         assert!(
@@ -465,12 +524,14 @@ fn every_row_carries_grounding_and_next_uplift() {
 // ---------------------------------------------------------------------------
 
 /// The rows anchored to a live, re-runnable proof surface. These are exactly the
-/// pilot-grounded rows that rise above `Observed` evidence.
-const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 5] = [
+/// pilot-grounded and hybrid-baseline rows that rise above `Observed` evidence.
+const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 7] = [
     "race.human.pilot_semantics",
     "class.fighter.level_1_pilot",
     "class.fighter.levels_2_10",
     "class.rogue.bounded_progression",
+    "class.paladin.hybrid_chassis_and_spell_burden",
+    "class.ranger.hybrid_chassis_and_spell_burden",
     "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
 ];
 
