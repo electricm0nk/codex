@@ -18,6 +18,10 @@
 //!   and the level-3 armor-training seam), while levels 4-10 remain out of proof,
 //! - Rogue level 1 is `Blocked` / `Computed` because the live GE-06 test explicitly
 //!   claim-blocks it, keeping it an explicit negative-control seam,
+//! - the Paladin and Ranger hybrid rows are `Blocked` / `Computed`: the SD13-E3-F6
+//!   slice proves the deterministic Human Paladin level-1 and Human Ranger level-1
+//!   hybrid chassis are recognized on the compute seam, but both stay blocked on the
+//!   named non-spell class-feature burden and the later spell burden,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
 //! - every other core race, core class, and the broader non-Human interaction row
 //!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime
@@ -176,6 +180,11 @@ const GE06_VIEW_MODEL_TEST: &str = "tests/ge06_pilot_view_model.rs";
 /// SD13-E3 dedicated proof surface for the bounded Fighter levels-2-and-3 milestone
 /// tranche (base progression, level-2 bonus-feat seam, level-3 armor-training seam).
 const SD13_FIGHTER_LEVEL2_LEVEL3_TEST: &str = "tests/sd13_fighter_level2_level3_progression.rs";
+
+/// SD13-E3-F6 dedicated proof surface for the bounded Paladin and Ranger level-1 hybrid
+/// chassis baseline: direct computed chassis-recognition evidence that stays explicitly
+/// blocked on the named non-spell class-feature burden and the later spell burden.
+const SD13_HYBRID_LEVEL1_TEST: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
@@ -386,25 +395,39 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:paladin",
-                dimension: "bounded class progression and hybrid spell burden",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E3 then SD13-E4",
+                dimension: "bounded hybrid class progression: the deterministic Human \
+                            Paladin level-1 chassis baseline, with the non-spell \
+                            class-feature burden and the later spell burden still blocked",
+                support_state: SupportState::Blocked,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_HYBRID_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E3-F6 leaves direct computed evidence that the \
+                    deterministic Human Paladin level-1 hybrid chassis is recognized on the compute \
+                    seam, but the row stays blocked: the non-spell class-feature burden (smite evil, \
+                    lay on hands, divine grace, mercy) is not implemented, and the later paladin spell \
+                    burden (spell slots, spell source, spells known/prepared) is deferred to SD13-E4. \
+                    No Paladin level 2+ is proven",
+                next_required_uplift: "SD13-E3 paladin class-feature slice, then SD13-E4 spell burden",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:ranger",
-                dimension: "bounded class progression and hybrid spell burden",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E3 then SD13-E4",
+                dimension: "bounded hybrid class progression: the deterministic Human \
+                            Ranger level-1 chassis baseline, with the non-spell \
+                            class-feature burden and the later spell burden still blocked",
+                support_state: SupportState::Blocked,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_HYBRID_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E3-F6 leaves direct computed evidence that the \
+                    deterministic Human Ranger level-1 hybrid chassis is recognized on the compute \
+                    seam, but the row stays blocked: the non-spell class-feature burden (favored enemy, \
+                    combat style, skill/tracking) is not implemented, and the later ranger spell burden \
+                    (spell slots, spell source, spells known/prepared) is deferred to SD13-E4. No Ranger \
+                    level 2+ is proven",
+                next_required_uplift: "SD13-E3 ranger class-feature slice, then SD13-E4 spell burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",
