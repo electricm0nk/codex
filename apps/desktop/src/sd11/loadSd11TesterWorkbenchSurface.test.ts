@@ -11,6 +11,44 @@ async function main() {
   await verifiesExplicitFallbackSurface();
 }
 
+function noOfficialReleaseTruth() {
+  return {
+    truth: {
+      kind: 'no-official-release' as const,
+      reason: 'Feature/local builds are not governed tester release units.',
+      buildLabel: 'codex-desktop-shell-scaffold@0.0.0-test',
+      version: '0.0.0-test',
+    },
+    updateAction: {
+      state: 'no-official-release-for-this-build' as const,
+      headline: 'No official tester release for this build',
+      detail: 'This is a local, non-governed build, so no governed update outcome is claimed.',
+      platformLabel: 'Linux',
+      platformTier: 'first-class' as const,
+      testerChannelLabel: 'alpha' as const,
+      automaticEligible: false,
+      manualReason: null,
+      replacementTarget: null,
+      recoveryDirection: null,
+      checkedBuildLabel: 'codex-desktop-shell-scaffold@0.0.0-test',
+      checkedVersion: '0.0.0-test',
+      operatorPromotionPathReference: null,
+      evidenceNotes: [],
+    },
+    issueCapture: {
+      releaseUnitId: null,
+      sourceRevision: null,
+      manifestPath: null,
+      updateEligibilityState: 'no-official-release',
+      trustGateStatus: 'not-applicable-no-governed-release',
+      replacementReleaseId: null,
+      officialSurface:
+        'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+      localBuildAuthority: 'Feature/local build — no governed release unit was proven.',
+    },
+  };
+}
+
 async function verifiesRealGe08SnapshotSurface() {
   const model = await loadSd11TesterWorkbenchSurface(
     {
@@ -18,6 +56,7 @@ async function verifiesRealGe08SnapshotSurface() {
       platformLabel: 'Linux',
     },
     {
+      loadSd12ReleaseTruth: async () => noOfficialReleaseTruth(),
       loadGe08AuthoringWorkbench: async () => ({
         packageRoot: 'tests/fixtures/ge08/guard-stance-package',
         packageState: 'valid',
@@ -128,9 +167,10 @@ async function verifiesRealGe08SnapshotSurface() {
   );
   assertEqual(
     model.updateStatusLabel,
-    'alpha tester track on Linux first-class',
+    'No official tester release for this build',
     'update status label'
   );
+  assertEqual(model.status.update.state, 'no-official-release-for-this-build', 'status update state');
   assertEqual(model.status.channel.operatorBranch, 'develop', 'status operator branch');
   assertEqual(model.status.channel.operatorPromotionPath, 'develop -> main', 'status promotion path');
   assertEqual(model.status.support.platformTier, 'first-class', 'status platform tier');
@@ -138,6 +178,11 @@ async function verifiesRealGe08SnapshotSurface() {
     model.status.issueCapture.testerFacingChannelSupportLabel,
     'alpha · Linux first-class',
     'status issue-capture label'
+  );
+  assertEqual(
+    model.status.issueCapture.releaseTruth?.officialSurface,
+    'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+    'status issue-capture official surface'
   );
 }
 
@@ -148,6 +193,7 @@ async function verifiesExplicitFallbackSurface() {
       platformLabel: 'Linux',
     },
     {
+      loadSd12ReleaseTruth: async () => noOfficialReleaseTruth(),
       loadGe08AuthoringWorkbench: async () => {
         throw new Error('Tauri runtime not available for GE08 authoring workbench');
       },

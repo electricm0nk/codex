@@ -37,6 +37,14 @@ export interface AutoCapturedEvidence {
   platformLabel: string;
   currentWorkflow: string;
   dataSourceIdentity: string;
+  releaseUnitId: string | null;
+  sourceRevision: string | null;
+  manifestPath: string | null;
+  updateEligibilityState: string | null;
+  trustGateStatus: string | null;
+  replacementReleaseId: string | null;
+  officialSurface: string | null;
+  localBuildAuthority: string | null;
   diagnostics: Sd11WorkbenchDiagnostic[];
   blockedClaims: string[];
   explanationRefs: Sd11WorkbenchReference[];
@@ -91,6 +99,7 @@ export function captureAutoEvidence(surface: Sd11TesterWorkbenchSurface): AutoCa
   const dataSourceIdentity = surface.fallbackNotice
     ? `${surface.dataTruthLabel} (fallback: ${surface.fallbackNotice})`
     : surface.dataTruthLabel;
+  const releaseTruth = surface.status.issueCapture.releaseTruth;
 
   return {
     buildLabel: surface.buildLabel,
@@ -98,6 +107,14 @@ export function captureAutoEvidence(surface: Sd11TesterWorkbenchSurface): AutoCa
     platformLabel: surface.platformLabel,
     currentWorkflow: `${surface.workflowName} / ${surface.workflowState}`,
     dataSourceIdentity,
+    releaseUnitId: releaseTruth?.releaseUnitId ?? null,
+    sourceRevision: releaseTruth?.sourceRevision ?? null,
+    manifestPath: releaseTruth?.manifestPath ?? null,
+    updateEligibilityState: releaseTruth?.updateEligibilityState ?? null,
+    trustGateStatus: releaseTruth?.trustGateStatus ?? null,
+    replacementReleaseId: releaseTruth?.replacementReleaseId ?? null,
+    officialSurface: releaseTruth?.officialSurface ?? null,
+    localBuildAuthority: releaseTruth?.localBuildAuthority ?? null,
     diagnostics: surface.diagnostics,
     blockedClaims: surface.blockedClaims,
     explanationRefs: surface.explanationRefs,
@@ -185,6 +202,22 @@ function resolveFieldValue(
       return auto.currentWorkflow;
     case 'dataSourceIdentity':
       return auto.dataSourceIdentity;
+    case 'releaseUnitId':
+      return auto.releaseUnitId;
+    case 'sourceRevision':
+      return auto.sourceRevision;
+    case 'manifestPath':
+      return auto.manifestPath;
+    case 'updateEligibilityState':
+      return auto.updateEligibilityState;
+    case 'trustGateStatus':
+      return auto.trustGateStatus;
+    case 'replacementReleaseId':
+      return auto.replacementReleaseId;
+    case 'officialSurface':
+      return auto.officialSurface;
+    case 'localBuildAuthority':
+      return auto.localBuildAuthority;
     case 'diagnostics': {
       const diagnosticCount = auto.diagnostics.length;
       const blockedCount = auto.blockedClaims.length;

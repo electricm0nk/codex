@@ -65,9 +65,20 @@ function makeSurface(overrides: Partial<Sd11TesterWorkbenchSurface> = {}): Sd11T
       issueCapture: {
         testerFacingChannelSupportLabel: 'alpha · Linux first-class',
         operatorBranch: 'develop',
-        operatorPromotionPath: 'develop -> uat -> main',
+        operatorPromotionPath: 'develop -> main',
         platformLabel: 'Linux',
         platformTier: 'first-class',
+        releaseTruth: {
+          releaseUnitId: 'alpha-v0.0.0-test-1234abcd',
+          sourceRevision: '1234abcd',
+          manifestPath: 'release asset: update-manifest-stub.json',
+          updateEligibilityState: 'manual-only',
+          trustGateStatus: 'governed-manual-only',
+          replacementReleaseId: 'alpha-v0.0.1-test-9876fedc',
+          officialSurface:
+            'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+          localBuildAuthority: 'governed-release-unit',
+        },
       },
     },
     ...overrides,
@@ -150,6 +161,14 @@ function bodyHasSevenSectionsInContractOrder() {
   assert(composed.draft.markdownBody.includes('codex-desktop-shell-scaffold@0.0.0-test'), 'build label present in body');
   assert(composed.draft.markdownBody.includes('alpha'), 'channel label present in body');
   assert(composed.draft.markdownBody.includes('Linux'), 'platform present in body');
+  assert(
+    composed.draft.markdownBody.includes('Governed release unit id: alpha-v0.0.0-test-1234abcd'),
+    'release unit id present in body'
+  );
+  assert(
+    composed.draft.markdownBody.includes('Official release-truth surface: GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command'),
+    'official release-truth surface present in body'
+  );
 }
 
 function fallbackDataSourceIsPreservedInBuildContext() {

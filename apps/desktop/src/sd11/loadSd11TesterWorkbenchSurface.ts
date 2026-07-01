@@ -1,3 +1,7 @@
+import type {
+  Sd12ReleaseTruthRequest,
+  Sd12ReleaseTruthSnapshot,
+} from '../boundary/loadSd12ReleaseTruth';
 import type { Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot } from '../boundary/loadGe08AuthoringWorkbench';
 import type { PilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
 import {
@@ -11,6 +15,7 @@ import {
 } from './diagnostics/buildSd11WorkbenchEvidence';
 import {
   createSd11WorkbenchStatus,
+  formatSd11WorkbenchBuildLabel,
   type Sd11WorkbenchStatus,
 } from './status/createSd11WorkbenchStatus';
 
@@ -24,6 +29,9 @@ export interface Sd11WorkbenchDependencies {
     request: Ge08AuthoringWorkbenchRequest
   ) => Promise<Ge08AuthoringWorkbenchSnapshot>;
   loadPilotShellSnapshot: () => Promise<PilotShellSnapshot>;
+  loadSd12ReleaseTruth: (
+    request: Sd12ReleaseTruthRequest
+  ) => Promise<Sd12ReleaseTruthSnapshot>;
 }
 
 export interface Sd11WorkbenchSummaryRow {
@@ -63,20 +71,85 @@ export async function loadSd11TesterWorkbenchSurface(
   context: Sd11WorkbenchRuntimeContext,
   dependencies: Sd11WorkbenchDependencies
 ): Promise<Sd11TesterWorkbenchSurface> {
+  const releaseTruthRequest = buildReleaseTruthRequest(context);
+  const releaseTruthPromise = dependencies.loadSd12ReleaseTruth(releaseTruthRequest).catch((cause: unknown) => {
+    const reason = `Release-truth bridge failed: ${formatError(cause)}`;
+    const normalised = releaseTruthRequest.platformLabel.trim().toLowerCase();
+    const platformTier =
+      normalised === 'linux'
+        ? 'first-class'
+        : normalised === 'macos'
+          ? 'second-class'
+          : normalised === 'windows'
+            ? 'third-class'
+            : 'unknown';
+
+    return {
+      truth: {
+        kind: 'check-failed' as const,
+        reason,
+        buildLabel: releaseTruthRequest.buildLabel,
+        version: releaseTruthRequest.buildVersion,
+      },
+      updateAction: {
+        state: 'check-failed' as const,
+        headline: 'Update check failed',
+        detail: reason,
+        platformLabel: releaseTruthRequest.platformLabel,
+        platformTier,
+        testerChannelLabel: releaseTruthRequest.testerChannelLabel,
+        automaticEligible: false,
+        manualReason: null,
+        replacementTarget: null,
+        recoveryDirection: null,
+        checkedBuildLabel: releaseTruthRequest.buildLabel,
+        checkedVersion: releaseTruthRequest.buildVersion,
+        operatorPromotionPathReference: null,
+        evidenceNotes: [],
+      },
+      issueCapture: {
+        releaseUnitId: null,
+        sourceRevision: null,
+        manifestPath: null,
+        updateEligibilityState: 'check-failed',
+        trustGateStatus: 'unverified-runtime-check-failed',
+        replacementReleaseId: null,
+        officialSurface:
+          'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+        localBuildAuthority: reason,
+      },
+    };
+  });
   try {
-    const snapshot = await dependencies.loadGe08AuthoringWorkbench(DEFAULT_REQUEST);
-    return mapGe08Snapshot(context, snapshot);
+    const [snapshot, releaseTruth] = await Promise.all([
+      dependencies.loadGe08AuthoringWorkbench(DEFAULT_REQUEST),
+      releaseTruthPromise,
+    ]);
+    return mapGe08Snapshot(context, snapshot, releaseTruth);
   } catch (cause: unknown) {
-    const fallbackSnapshot = await dependencies.loadPilotShellSnapshot();
-    return mapPilotFallback(context, fallbackSnapshot, formatError(cause));
+    const [fallbackSnapshot, releaseTruth] = await Promise.all([
+      dependencies.loadPilotShellSnapshot(),
+      releaseTruthPromise,
+    ]);
+    return mapPilotFallback(context, fallbackSnapshot, formatError(cause), releaseTruth);
   }
+}
+
+function buildReleaseTruthRequest(context: Sd11WorkbenchRuntimeContext): Sd12ReleaseTruthRequest {
+  return {
+    buildVersion: context.buildVersion,
+    buildLabel: formatSd11WorkbenchBuildLabel(context.buildVersion),
+    platformLabel: context.platformLabel,
+    testerChannelLabel: 'alpha',
+  };
 }
 
 function mapGe08Snapshot(
   context: Sd11WorkbenchRuntimeContext,
-  snapshot: Ge08AuthoringWorkbenchSnapshot
+  snapshot: Ge08AuthoringWorkbenchSnapshot,
+  releaseTruth: Sd12ReleaseTruthSnapshot
 ): Sd11TesterWorkbenchSurface {
-  const status = createSd11WorkbenchStatus(context);
+  const status = createSd11WorkbenchStatus(context, releaseTruth);
 
   return {
     surfaceLabel: 'SD-11 tester workbench',
@@ -94,8 +167,8 @@ function mapGe08Snapshot(
     boundedScopeNotice:
       'Bounded scope only: this slice proves the GE08 authoring workflow, not a full character-builder surface, GitHub submission transport, or updater mechanics.',
     feedbackStatusNotice:
-      'Feedback intake is intentionally deferred in this slice. The frame keeps diagnostics, workflow identity, and support-tier truth visible so later GitHub flows can consume honest evidence.',
-    updateStatusLabel: `${status.channel.testerFacingLabel} tester track on ${status.support.currentPlatformSupportLabel}`,
+      'Feedback intake is intentionally deferred in this slice. The frame keeps diagnostics, workflow identity, and synchronized release-truth evidence visible so later GitHub flows can consume honest evidence.',
+    updateStatusLabel: status.update.label,
     summaryRows: [
       {
         label: 'Package',
@@ -126,9 +199,10 @@ function mapGe08Snapshot(
 function mapPilotFallback(
   context: Sd11WorkbenchRuntimeContext,
   snapshot: PilotShellSnapshot,
-  failure: string
+  failure: string,
+  releaseTruth: Sd12ReleaseTruthSnapshot
 ): Sd11TesterWorkbenchSurface {
-  const status = createSd11WorkbenchStatus(context);
+  const status = createSd11WorkbenchStatus(context, releaseTruth);
 
   return {
     surfaceLabel: 'SD-11 tester workbench',
@@ -150,8 +224,8 @@ function mapPilotFallback(
     boundedScopeNotice:
       'Bounded scope only: this fallback preserves the pilot runtime seam and visible failure context. It does not claim the broader tester workbench, GitHub feedback transport, or updater behavior are implemented.',
     feedbackStatusNotice:
-      'Feedback intake remains deferred. Use the visible fallback reason, diagnostics, and workflow identity as the current evidence surface until the richer SD-11 flows land.',
-    updateStatusLabel: `${status.channel.testerFacingLabel} tester track on ${status.support.currentPlatformSupportLabel}`,
+      'Feedback intake remains deferred. Use the visible fallback reason, diagnostics, workflow identity, and synchronized release-truth evidence as the current evidence surface until the richer SD-11 flows land.',
+    updateStatusLabel: status.update.label,
     summaryRows: [
       {
         label: 'Case',

@@ -37,6 +37,14 @@ export type EvidenceFieldKey =
   | 'platformLabel'
   | 'currentWorkflow'
   | 'dataSourceIdentity'
+  | 'releaseUnitId'
+  | 'sourceRevision'
+  | 'manifestPath'
+  | 'updateEligibilityState'
+  | 'trustGateStatus'
+  | 'replacementReleaseId'
+  | 'officialSurface'
+  | 'localBuildAuthority'
   | 'observedBehavior'
   | 'expectedBehavior'
   | 'reproductionSteps'
@@ -112,6 +120,78 @@ export const SHARED_EVIDENCE_FIELDS: EvidenceFieldDescriptor[] = [
     appliesTo: BOTH,
     redactable: false,
     note: 'Distinguishes real command data from placeholder/fallback state.',
+  },
+  {
+    key: 'releaseUnitId',
+    label: 'Governed release unit id',
+    captureMode: 'auto-captured',
+    requirement: 'optional',
+    appliesTo: BOTH,
+    redactable: false,
+    note: 'Present only when the release-truth bridge can name a governed release unit.',
+  },
+  {
+    key: 'sourceRevision',
+    label: 'Source revision / provenance handle',
+    captureMode: 'auto-captured',
+    requirement: 'optional',
+    appliesTo: BOTH,
+    redactable: false,
+    note: 'Present only when the release-truth bridge can preserve official source revision identity.',
+  },
+  {
+    key: 'manifestPath',
+    label: 'Manifest surface / asset path',
+    captureMode: 'auto-captured',
+    requirement: 'optional',
+    appliesTo: BOTH,
+    redactable: false,
+    note: 'Present only when the bridge can name the governed manifest surface honestly.',
+  },
+  {
+    key: 'updateEligibilityState',
+    label: 'Update eligibility state',
+    captureMode: 'auto-captured',
+    requirement: 'required',
+    appliesTo: BOTH,
+    redactable: false,
+    note: 'The SD-12 control-plane posture consumed by the SD-11 surface.',
+  },
+  {
+    key: 'trustGateStatus',
+    label: 'Trust-gate status',
+    captureMode: 'auto-captured',
+    requirement: 'required',
+    appliesTo: BOTH,
+    redactable: false,
+    note: 'Whether the governed trust/eligibility gate was satisfied, withheld, blocked, or not applicable.',
+  },
+  {
+    key: 'replacementReleaseId',
+    label: 'Replacement release id',
+    captureMode: 'auto-captured',
+    requirement: 'optional',
+    appliesTo: BOTH,
+    redactable: false,
+    note: 'Present when a recovery or superseding governed release is named.',
+  },
+  {
+    key: 'officialSurface',
+    label: 'Official release-truth surface',
+    captureMode: 'auto-captured',
+    requirement: 'required',
+    appliesTo: BOTH,
+    redactable: false,
+    note: 'Names the accepted governed publication/control-plane surface this payload relies on.',
+  },
+  {
+    key: 'localBuildAuthority',
+    label: 'Local build authority posture',
+    captureMode: 'auto-captured',
+    requirement: 'required',
+    appliesTo: BOTH,
+    redactable: false,
+    note: 'Preserves why a local/non-governed build may not claim governed release truth.',
   },
   {
     key: 'observedBehavior',
