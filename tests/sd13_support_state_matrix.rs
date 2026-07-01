@@ -7,8 +7,8 @@
 //! no serialization, and no broader roster support claim.
 
 use codex::rules_core::support_state_matrix::{
-    EvidenceTier, MatrixSubjectType, SupportState, SupportStateMatrix, SupportStateRow,
-    seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, MatrixSubjectType, SupportState, SupportStateMatrix,
+    SupportStateRow, seeded_sd13_e1_f1_current_truth,
 };
 
 /// The exact, ordered set of seeded row ids. The seed must expose these and no
@@ -435,6 +435,114 @@ fn every_row_carries_grounding_and_next_uplift() {
         assert!(
             !r.next_required_uplift.is_empty(),
             "row '{}' must name its next required uplift",
+            r.row_id
+        );
+    }
+}
+
+// ---------------------------------------------------------------------------
+// SD13-E7-F13 evidence-freshness / breadth-claim audit truth.
+//
+// The carrier is the authority surface for freshness truth. This first honest
+// slice records no calendar timestamp or SLA. It carries only the conservative
+// distinction the seeded truth can actually prove per row: whether a row is
+// anchored to a live, re-runnable proof surface it could be refreshed from, or
+// whether it rests only on bounded roster-scope naming with no runtime evidence
+// yet. Neither posture asserts a row is currently fresh; the whole surface stays
+// refresh-required until a later slice records real refresh checkpoints.
+// ---------------------------------------------------------------------------
+
+/// The rows anchored to a live, re-runnable proof surface. These are exactly the
+/// pilot-grounded rows that rise above `Observed` evidence.
+const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 5] = [
+    "race.human.pilot_semantics",
+    "class.fighter.level_1_pilot",
+    "class.fighter.levels_2_10",
+    "class.rogue.bounded_progression",
+    "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
+];
+
+#[test]
+fn every_row_carries_an_evidence_freshness_posture() {
+    let matrix = matrix();
+    for r in &matrix.rows {
+        assert!(
+            matches!(
+                r.evidence_freshness,
+                EvidenceFreshness::RefreshableFromLiveProof
+                    | EvidenceFreshness::AwaitingInitialEvidence
+            ),
+            "row '{}' must carry a bounded evidence-freshness posture",
+            r.row_id
+        );
+    }
+}
+
+#[test]
+fn pilot_grounded_rows_are_refreshable_from_live_proof() {
+    let matrix = matrix();
+    let refreshable: Vec<&str> = matrix
+        .rows
+        .iter()
+        .filter(|r| r.evidence_freshness == EvidenceFreshness::RefreshableFromLiveProof)
+        .map(|r| r.row_id)
+        .collect();
+
+    assert_eq!(
+        refreshable.len(),
+        EXPECTED_REFRESHABLE_FROM_LIVE_PROOF.len(),
+        "only the pilot-grounded rows may be refreshable from a live proof, got {refreshable:?}"
+    );
+    for id in EXPECTED_REFRESHABLE_FROM_LIVE_PROOF {
+        assert!(
+            refreshable.contains(&id),
+            "expected row '{id}' to be refreshable from a live proof surface"
+        );
+    }
+}
+
+#[test]
+fn observed_rows_await_initial_evidence() {
+    let matrix = matrix();
+    for r in &matrix.rows {
+        if r.evidence_tier == EvidenceTier::Observed {
+            assert_eq!(
+                r.evidence_freshness,
+                EvidenceFreshness::AwaitingInitialEvidence,
+                "roster-only row '{}' has no runtime evidence to refresh and must await initial evidence",
+                r.row_id
+            );
+        }
+    }
+}
+
+#[test]
+fn freshness_tracks_live_proof_grounding_not_optimism() {
+    // The refreshable-from-live-proof set must coincide exactly with the rows that
+    // rise above `Observed` evidence: freshness is grounded in whether a live proof
+    // exists, never invented to imply readiness.
+    let matrix = matrix();
+    for r in &matrix.rows {
+        let above_observed = r.evidence_tier != EvidenceTier::Observed;
+        let refreshable = r.evidence_freshness == EvidenceFreshness::RefreshableFromLiveProof;
+        assert_eq!(
+            above_observed, refreshable,
+            "row '{}' freshness must track its live-proof grounding: above_observed={above_observed}, refreshable={refreshable}",
+            r.row_id
+        );
+    }
+}
+
+#[test]
+fn no_row_claims_confirmed_fresh_evidence() {
+    // This first slice can prove no completed refresh checkpoint for any row, so the
+    // carrier must not expose any posture that implies a row is currently fresh /
+    // refresh-confirmed. Both allowed postures are explicitly refresh-required.
+    let matrix = matrix();
+    for r in &matrix.rows {
+        assert!(
+            !r.evidence_freshness.is_refresh_confirmed(),
+            "row '{}' must not claim confirmed-fresh evidence in the first audit slice",
             r.row_id
         );
     }
