@@ -150,6 +150,7 @@ fn sd14_fixture_round_trip_matches_constructed_pilot_envelope() {
     );
     assert_eq!(from_fixture.display_label, constructed.display_label);
     assert_eq!(from_fixture.character_input, constructed.character_input);
+}
 
 #[test]
 fn sd14_missing_envelope_file_fails_honestly() {
