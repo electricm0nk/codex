@@ -722,6 +722,109 @@ function UpdateActionPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
   );
 }
 
+function supportStateTone(state: string): 'info' | 'warning' | 'error' {
+  if (state === 'supported') {
+    return 'info';
+  }
+  if (state === 'blocked') {
+    return 'error';
+  }
+  // partial, lossy, unverified, and any unexpected token all surface as debt.
+  return 'warning';
+}
+
+function SupportDebtPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
+  const debt = props.surface.supportDebt;
+
+  if (!debt) {
+    return null;
+  }
+
+  return (
+    <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+      <h2 style={{ marginTop: 0 }}>{debt.sectionLabel}</h2>
+      <p style={{ color: '#475569', lineHeight: 1.6 }}>{debt.lead}</p>
+
+      {debt.unavailableNotice ? (
+        <div style={{ backgroundColor: '#fff7ed', border: '1px solid #fdba74', borderRadius: 12, padding: '0.9rem 1rem' }}>
+          <p style={{ color: '#7c2d12', margin: 0 }}>{debt.unavailableNotice}</p>
+        </div>
+      ) : (
+        <>
+          {debt.stateCounts.length ? (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+              {debt.stateCounts.map((tally) => (
+                <span
+                  key={tally.supportState}
+                  style={{
+                    backgroundColor: '#f1f5f9',
+                    border: `1px solid ${toneColor(supportStateTone(tally.supportState))}`,
+                    borderRadius: 999,
+                    color: toneColor(supportStateTone(tally.supportState)),
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.04em',
+                    padding: '0.2rem 0.6rem',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {tally.supportState}: {tally.count}
+                </span>
+              ))}
+            </div>
+          ) : null}
+
+          <div style={{ display: 'grid', gap: '0.75rem' }}>
+            {debt.rows.map((row) => (
+              <div
+                key={row.rowId}
+                style={{
+                  backgroundColor: '#f8fafc',
+                  border: `1px solid ${toneColor(supportStateTone(row.supportState))}`,
+                  borderRadius: 12,
+                  padding: '0.9rem 1rem',
+                }}
+              >
+                <p
+                  style={{
+                    color: toneColor(supportStateTone(row.supportState)),
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.08em',
+                    margin: 0,
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {row.supportState} · evidence: {row.evidenceTier}
+                </p>
+                <p style={{ color: '#0f172a', fontSize: '1rem', fontWeight: 700, margin: '0.35rem 0 0' }}>
+                  {row.subjectId} <span style={{ color: '#64748b', fontWeight: 400 }}>({row.subjectType})</span>
+                </p>
+                <p style={{ color: '#475569', margin: '0.3rem 0 0' }}>{row.dimension}</p>
+                <p style={{ color: '#334155', lineHeight: 1.6, margin: '0.5rem 0 0' }}>{row.testerFacingStateLabel}</p>
+                {row.hasDebtNote ? (
+                  <p style={{ color: '#7c2d12', lineHeight: 1.6, margin: '0.5rem 0 0' }}>
+                    <strong>Blocker / lossiness:</strong> {row.blockerOrLossinessNote}
+                  </p>
+                ) : null}
+                <p style={{ color: '#475569', fontSize: '0.85rem', margin: '0.5rem 0 0' }}>
+                  Grounding: <code style={{ color: '#334155' }}>{row.groundingRef}</code>
+                </p>
+                <p style={{ color: '#475569', fontSize: '0.85rem', margin: '0.3rem 0 0' }}>
+                  Next uplift: {row.nextRequiredUplift}
+                </p>
+                <p style={{ margin: '0.4rem 0 0' }}>
+                  <code style={{ color: '#94a3b8', fontSize: '0.75rem' }}>{row.rowId}</code>
+                </p>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </section>
+  );
+}
+
 export default function App() {
   const [surface, setSurface] = useState<Sd11TesterWorkbenchSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -874,6 +977,8 @@ export default function App() {
               Operator provenance remains {surface.status.channel.operatorPromotionPath}.
             </p>
           </section>
+
+          <SupportDebtPanel surface={surface} />
 
           <UpdateActionPanel surface={surface} />
 

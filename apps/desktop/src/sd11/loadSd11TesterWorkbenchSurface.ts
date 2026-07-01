@@ -4,6 +4,10 @@ import type {
 } from '../boundary/loadSd12ReleaseTruth';
 import type { Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot } from '../boundary/loadGe08AuthoringWorkbench';
 import type { PilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
+import type {
+  Sd13SupportStateMatrixSnapshot,
+  Sd13SupportStateRow,
+} from '../boundary/loadSd13SupportStateMatrix';
 import {
   buildFallbackDiagnostics,
   buildFallbackExplanationRefs,
@@ -16,6 +20,7 @@ import {
 import {
   createSd11WorkbenchStatus,
   formatSd11WorkbenchBuildLabel,
+  type Sd11SupportTier,
   type Sd11WorkbenchStatus,
 } from './status/createSd11WorkbenchStatus';
 
@@ -32,6 +37,55 @@ export interface Sd11WorkbenchDependencies {
   loadSd12ReleaseTruth: (
     request: Sd12ReleaseTruthRequest
   ) => Promise<Sd12ReleaseTruthSnapshot>;
+  /**
+   * Read-only SD-13 support-state bridge. Optional so SD-11 callers that predate
+   * this slice remain valid; when absent, the support/debt section reports an
+   * explicit unavailable notice instead of fabricating support labels.
+   */
+  loadSd13SupportStateMatrix?: () => Promise<Sd13SupportStateMatrixSnapshot>;
+}
+
+/**
+ * One read-only SD-13 support/debt row projected for tester presentation.
+ *
+ * Every field mirrors the SD-13 matrix truth verbatim. `hasDebtNote` is a pure
+ * convenience flag derived from the presence of a blocker/lossiness note; it does
+ * not alter, hide, or promote any state.
+ */
+export interface Sd11SupportDebtRow {
+  rowId: string;
+  subjectType: string;
+  subjectId: string;
+  dimension: string;
+  supportState: string;
+  evidenceTier: string;
+  testerFacingStateLabel: string;
+  groundingRef: string;
+  blockerOrLossinessNote: string;
+  nextRequiredUplift: string;
+  hasDebtNote: boolean;
+}
+
+/** A per-state tally used only to orient testers; it never suppresses rows. */
+export interface Sd11SupportDebtStateCount {
+  supportState: string;
+  count: number;
+}
+
+/**
+ * Bounded SD-13 support/debt presentation structure derived from the matrix.
+ *
+ * This is intentionally separate from feedback evidence capture and from
+ * update/support-tier status. It is read-only truth presentation only.
+ */
+export interface Sd11SupportDebtPresentation {
+  sectionLabel: string;
+  lead: string;
+  dataSource: string | null;
+  note: string | null;
+  rows: Sd11SupportDebtRow[];
+  stateCounts: Sd11SupportDebtStateCount[];
+  unavailableNotice: string | null;
 }
 
 export interface Sd11WorkbenchSummaryRow {
@@ -59,8 +113,89 @@ export interface Sd11TesterWorkbenchSurface {
   blockedClaims: string[];
   explanationRefs: Sd11WorkbenchReference[];
   provenanceRefs: Sd11WorkbenchReference[];
+  /**
+   * SD-13 support/debt presentation. Optional in the type so SD-11 surface
+   * literals that predate this slice stay valid; the live loader always
+   * populates it.
+   */
+  supportDebt?: Sd11SupportDebtPresentation;
   notes: string[];
   status: Sd11WorkbenchStatus;
+}
+
+const SUPPORT_DEBT_SECTION_LABEL = 'SD-13 core roster support and debt';
+const SUPPORT_DEBT_LEAD =
+  'Read-only SD-13 support-state and debt truth for the current bounded PF1 Core Rulebook roster. ' +
+  'Support state, evidence tier, blocker/lossiness notes, grounding references, and next uplifts come ' +
+  'straight from the SD-13 support-state matrix. Nothing here is promoted by app, build, or platform ' +
+  'success, and no blocked, partial, lossy, or unverified row is hidden.';
+
+function mapSupportDebtRow(row: Sd13SupportStateRow): Sd11SupportDebtRow {
+  return {
+    rowId: row.rowId,
+    subjectType: row.subjectType,
+    subjectId: row.subjectId,
+    dimension: row.dimension,
+    supportState: row.supportState,
+    evidenceTier: row.evidenceTier,
+    testerFacingStateLabel: row.testerFacingStateLabel,
+    groundingRef: row.groundingRef,
+    blockerOrLossinessNote: row.blockerOrLossinessNote,
+    nextRequiredUplift: row.nextRequiredUplift,
+    hasDebtNote: row.blockerOrLossinessNote.trim().length > 0,
+  };
+}
+
+function buildSupportDebtStateCounts(rows: Sd11SupportDebtRow[]): Sd11SupportDebtStateCount[] {
+  const order = ['supported', 'partial', 'lossy', 'blocked', 'unverified'];
+  const counts = new Map<string, number>();
+  for (const row of rows) {
+    counts.set(row.supportState, (counts.get(row.supportState) ?? 0) + 1);
+  }
+
+  const ordered: Sd11SupportDebtStateCount[] = [];
+  for (const state of order) {
+    const count = counts.get(state);
+    if (count) {
+      ordered.push({ supportState: state, count });
+    }
+  }
+  // Preserve any unexpected state token rather than silently dropping it.
+  for (const [state, count] of counts) {
+    if (!order.includes(state)) {
+      ordered.push({ supportState: state, count });
+    }
+  }
+  return ordered;
+}
+
+function buildSupportDebtPresentation(
+  snapshot: Sd13SupportStateMatrixSnapshot
+): Sd11SupportDebtPresentation {
+  const rows = snapshot.rows.map(mapSupportDebtRow);
+  return {
+    sectionLabel: SUPPORT_DEBT_SECTION_LABEL,
+    lead: SUPPORT_DEBT_LEAD,
+    dataSource: snapshot.dataSource,
+    note: snapshot.note,
+    rows,
+    stateCounts: buildSupportDebtStateCounts(rows),
+    unavailableNotice: null,
+  };
+}
+
+function buildUnavailableSupportDebt(reason: string): Sd11SupportDebtPresentation {
+  return {
+    sectionLabel: SUPPORT_DEBT_SECTION_LABEL,
+    lead: SUPPORT_DEBT_LEAD,
+    dataSource: null,
+    note: null,
+    rows: [],
+    stateCounts: [],
+    unavailableNotice:
+      `SD-13 support-state matrix unavailable: ${reason}. This section shows nothing rather than ` +
+      'inventing local support labels; SD-13 truth must load through the read-only bridge before it can be presented.',
+  };
 }
 
 const DEFAULT_REQUEST: Ge08AuthoringWorkbenchRequest = {
@@ -75,7 +210,7 @@ export async function loadSd11TesterWorkbenchSurface(
   const releaseTruthPromise = dependencies.loadSd12ReleaseTruth(releaseTruthRequest).catch((cause: unknown) => {
     const reason = `Release-truth bridge failed: ${formatError(cause)}`;
     const normalised = releaseTruthRequest.platformLabel.trim().toLowerCase();
-    const platformTier =
+    const platformTier: Sd11SupportTier =
       normalised === 'linux'
         ? 'first-class'
         : normalised === 'macos'
@@ -120,18 +255,41 @@ export async function loadSd11TesterWorkbenchSurface(
       },
     };
   });
+  const supportDebtPromise = loadSupportDebtPresentation(dependencies);
+
   try {
     const [snapshot, releaseTruth] = await Promise.all([
       dependencies.loadGe08AuthoringWorkbench(DEFAULT_REQUEST),
       releaseTruthPromise,
     ]);
-    return mapGe08Snapshot(context, snapshot, releaseTruth);
+    return mapGe08Snapshot(context, snapshot, releaseTruth, await supportDebtPromise);
   } catch (cause: unknown) {
     const [fallbackSnapshot, releaseTruth] = await Promise.all([
       dependencies.loadPilotShellSnapshot(),
       releaseTruthPromise,
     ]);
-    return mapPilotFallback(context, fallbackSnapshot, formatError(cause), releaseTruth);
+    return mapPilotFallback(context, fallbackSnapshot, formatError(cause), releaseTruth, await supportDebtPromise);
+  }
+}
+
+/**
+ * Load the SD-13 support/debt presentation as read-only truth. The dependency is
+ * optional so existing SD-11 callers that predate this slice keep compiling; when
+ * it is absent or fails, the section renders an explicit unavailable notice rather
+ * than inventing local support labels.
+ */
+async function loadSupportDebtPresentation(
+  dependencies: Sd11WorkbenchDependencies
+): Promise<Sd11SupportDebtPresentation> {
+  if (!dependencies.loadSd13SupportStateMatrix) {
+    return buildUnavailableSupportDebt('no SD-13 support-state bridge was provided to the workbench');
+  }
+
+  try {
+    const snapshot = await dependencies.loadSd13SupportStateMatrix();
+    return buildSupportDebtPresentation(snapshot);
+  } catch (cause: unknown) {
+    return buildUnavailableSupportDebt(formatError(cause));
   }
 }
 
@@ -147,7 +305,8 @@ function buildReleaseTruthRequest(context: Sd11WorkbenchRuntimeContext): Sd12Rel
 function mapGe08Snapshot(
   context: Sd11WorkbenchRuntimeContext,
   snapshot: Ge08AuthoringWorkbenchSnapshot,
-  releaseTruth: Sd12ReleaseTruthSnapshot
+  releaseTruth: Sd12ReleaseTruthSnapshot,
+  supportDebt: Sd11SupportDebtPresentation
 ): Sd11TesterWorkbenchSurface {
   const status = createSd11WorkbenchStatus(context, releaseTruth);
 
@@ -191,6 +350,7 @@ function mapGe08Snapshot(
     blockedClaims: snapshot.preview.blockedClaims,
     explanationRefs: buildGe08ExplanationRefs(snapshot.preview.explanationRefs),
     provenanceRefs: buildGe08ProvenanceRefs(snapshot.preview.provenanceRefs),
+    supportDebt,
     notes: [snapshot.note],
     status,
   };
@@ -200,7 +360,8 @@ function mapPilotFallback(
   context: Sd11WorkbenchRuntimeContext,
   snapshot: PilotShellSnapshot,
   failure: string,
-  releaseTruth: Sd12ReleaseTruthSnapshot
+  releaseTruth: Sd12ReleaseTruthSnapshot,
+  supportDebt: Sd11SupportDebtPresentation
 ): Sd11TesterWorkbenchSurface {
   const status = createSd11WorkbenchStatus(context, releaseTruth);
 
@@ -244,6 +405,7 @@ function mapPilotFallback(
     blockedClaims: [],
     explanationRefs: buildFallbackExplanationRefs(snapshot.explanationRefs),
     provenanceRefs: [],
+    supportDebt,
     notes: [snapshot.note],
     status,
   };
