@@ -64,6 +64,50 @@ pub enum MatrixSubjectType {
     Interaction,
 }
 
+/// Bounded evidence-freshness posture for a single row (SD13-E7-F13).
+///
+/// This is the audit axis for the first breadth-claim / evidence-refresh slice.
+/// It is deliberately kept independent from both [`SupportState`] and
+/// [`EvidenceTier`]: it records whether a row's breadth claim can currently be
+/// trusted as *refreshed against its grounding evidence*, not how supported the
+/// claim is or how strong the evidence tier is.
+///
+/// This first slice records no calendar timestamp or SLA policy. It carries only
+/// the conservative, honest distinction the seeded truth can actually prove, and
+/// **no variant asserts a row is currently fresh**. Every variant is explicitly
+/// refresh-required until a later slice records real refresh checkpoints, so the
+/// downstream audit surface can only ever conclude "refresh-required" from this
+/// seed — never "all fresh" and never a bare "all stale forever" divorced from
+/// per-row grounding.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum EvidenceFreshness {
+    /// The row is anchored to a live, re-runnable proof surface (an executable
+    /// GE-06 test or the deterministic compute seam). Its evidence *could* be
+    /// refreshed by re-running the cited proof, but this slice records no
+    /// completed refresh checkpoint, so the breadth claim still requires an
+    /// explicit refresh audit before it may be trusted as current.
+    RefreshableFromLiveProof,
+    /// The row rests only on bounded SD-13 roster-scope naming with no runtime
+    /// evidence yet. There is nothing to refresh from: it is awaiting its first
+    /// grounding evidence, not merely a stale re-audit.
+    AwaitingInitialEvidence,
+}
+
+impl EvidenceFreshness {
+    /// Whether this posture asserts the row is currently fresh / refresh-confirmed.
+    ///
+    /// Both variants introduced by the first slice are refresh-required, so this is
+    /// always `false` today. It exists so downstream audit derivation reads a real
+    /// property instead of a hard-coded constant, and so a later slice that adds a
+    /// genuine refreshed-checkpoint variant only has to flip it here.
+    pub fn is_refresh_confirmed(self) -> bool {
+        match self {
+            EvidenceFreshness::RefreshableFromLiveProof => false,
+            EvidenceFreshness::AwaitingInitialEvidence => false,
+        }
+    }
+}
+
 /// A single typed support-state matrix row.
 ///
 /// String fields are `&'static str` because the seed is a fixed, deterministic,
@@ -80,6 +124,9 @@ pub struct SupportStateRow {
     pub dimension: &'static str,
     pub support_state: SupportState,
     pub evidence_tier: EvidenceTier,
+    /// Bounded evidence-freshness / breadth-claim audit posture (SD13-E7-F13).
+    /// Carrier-owned truth; downstream layers project it, never invent it.
+    pub evidence_freshness: EvidenceFreshness,
     /// Real doc or repo evidence grounding the row. Never chat prose or invented
     /// receipts.
     pub grounding_ref: &'static str,
@@ -147,6 +194,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             selections exercised by the GE-06 deterministic proof",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: PILOT_COMPUTE_MODULE,
                 blocker_or_lossiness_note: "the deterministic pilot grounds only the named \
                     Human ability-bonus and bonus-feat pressure; Human size, speed, senses, \
@@ -161,6 +209,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded race semantics",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E2 race-semantic slice",
@@ -172,6 +221,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded race semantics",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E2 race-semantic slice",
@@ -183,6 +233,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded race semantics",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E2 race-semantic slice",
@@ -194,6 +245,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded race semantics",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E2 race-semantic slice",
@@ -205,6 +257,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded race semantics",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E2 race-semantic slice",
@@ -216,6 +269,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded race semantics",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E2 race-semantic slice",
@@ -228,6 +282,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "class progression through level 1 deterministic pilot surface",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: GE06_VIEW_MODEL_TEST,
                 blocker_or_lossiness_note: "only the bounded Fighter level-1 deterministic \
                     pilot surface is proven; mandatory level-10 milestones remain unclassified",
@@ -242,6 +297,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             for levels 2 and 3 only, with levels 4-10 still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_FIGHTER_LEVEL2_LEVEL3_TEST,
                 blocker_or_lossiness_note: "SD13-E3 proves only Fighter levels 2 and 3: base \
                     attack / base save progression, the level-2 bonus-feat progression seam, and \
@@ -259,6 +315,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded class progression",
                 support_state: SupportState::Blocked,
                 evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: GE06_TOTAL_SAVES_TEST,
                 blocker_or_lossiness_note: "tests/ge06_pilot_total_saves.rs \
                     (unsupported_chassis_blocks_total_saves) explicitly claim-blocks \
@@ -272,6 +329,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded class progression",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E3 martial progression slice",
@@ -283,6 +341,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded class progression and spell burden",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E4 spellcasting slice",
@@ -294,6 +353,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded class progression and spell burden",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E4 spellcasting slice",
@@ -305,6 +365,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded class progression and spell burden",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E4 spellcasting slice",
@@ -316,6 +377,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded class progression",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E3 martial progression slice",
@@ -327,6 +389,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded class progression and hybrid spell burden",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E3 then SD13-E4",
@@ -338,6 +401,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded class progression and hybrid spell burden",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E3 then SD13-E4",
@@ -349,6 +413,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded class progression and spell burden",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E4 spellcasting slice",
@@ -360,6 +425,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded class progression and spell burden",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "SD13-E4 spellcasting slice",
@@ -373,6 +439,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             on the deterministic pilot path",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: GE06_INPUT_CONTRACT_TEST,
                 blocker_or_lossiness_note: "only the named deterministic Human Fighter pilot \
                     seam is grounded: the human_bonus_feat -> feat:dodge and \
@@ -387,6 +454,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "race/class interaction pressure beyond the pilot",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
+                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
                 next_required_uplift: "add named interaction rows only where separate \

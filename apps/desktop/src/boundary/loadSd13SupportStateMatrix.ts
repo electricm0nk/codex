@@ -28,6 +28,14 @@ export interface Sd13SupportStateRow {
   dimension: string;
   supportState: string;
   evidenceTier: string;
+  /**
+   * SD13-E7-F13 evidence-freshness token projected verbatim from the SD-13
+   * carrier (`refreshable-from-live-proof` | `awaiting-initial-evidence`). It is
+   * never reinterpreted here; the carrier owns freshness truth.
+   */
+  evidenceFreshness: string;
+  /** SD-13-owned refresh-audit wording; both current postures are refresh-required. */
+  refreshAuditLabel: string;
   testerFacingStateLabel: string;
   groundingRef: string;
   blockerOrLossinessNote: string;

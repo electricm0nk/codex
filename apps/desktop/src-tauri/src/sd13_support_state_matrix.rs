@@ -18,7 +18,8 @@
 use serde::Serialize;
 
 use codex::rules_core::support_state_matrix::{
-    seeded_sd13_e1_f1_current_truth, EvidenceTier, MatrixSubjectType, SupportState, SupportStateRow,
+    seeded_sd13_e1_f1_current_truth, EvidenceFreshness, EvidenceTier, MatrixSubjectType,
+    SupportState, SupportStateRow,
 };
 
 /// A single presentation row derived read-only from one seeded SD-13 matrix row.
@@ -39,6 +40,13 @@ pub struct Sd13SupportStateRow {
     pub support_state: String,
     /// Raw evidence-tier token on the Codex quality-gate scale.
     pub evidence_tier: String,
+    /// Raw evidence-freshness token projected verbatim from the SD-13 carrier
+    /// (`refreshable-from-live-proof` | `awaiting-initial-evidence`). This is the
+    /// SD13-E7-F13 breadth-claim audit axis; it is never reinterpreted here.
+    pub evidence_freshness: String,
+    /// SD-13-owned refresh-audit wording derived from `evidence_freshness` only.
+    /// Both current postures stay explicitly refresh-required.
+    pub refresh_audit_label: String,
     /// SD-13-approved tester-facing wording derived from `support_state` only.
     pub tester_facing_state_label: String,
     /// Real doc/repo grounding reference for the row.
@@ -76,6 +84,16 @@ const BLOCKED_LABEL: &str = "Blocked by known missing semantics in the current b
 const UNVERIFIED_LABEL: &str =
     "Included in the bounded roadmap scope, but not yet verified for this support level.";
 
+/// SD-13 refresh-audit wording for rows anchored to a live, re-runnable proof.
+const REFRESHABLE_FROM_LIVE_PROOF_LABEL: &str =
+    "Refresh required: anchored to a live, re-runnable proof surface, but no evidence-refresh \
+checkpoint has been recorded for the current bounded slice, so the breadth claim is not yet \
+confirmed fresh.";
+/// SD-13 refresh-audit wording for rows with no runtime evidence to refresh yet.
+const AWAITING_INITIAL_EVIDENCE_LABEL: &str =
+    "Refresh required: rests only on bounded roster-scope naming with no runtime evidence yet, so \
+there is no refreshed evidence backing any breadth claim for this row.";
+
 fn support_state_token(state: SupportState) -> &'static str {
     match state {
         SupportState::Supported => "supported",
@@ -105,6 +123,25 @@ fn subject_type_token(subject_type: MatrixSubjectType) -> &'static str {
     }
 }
 
+/// Project the carrier's evidence-freshness posture verbatim as a stable token.
+/// This is a direct mapping, not a heuristic: the carrier owns the freshness truth.
+fn evidence_freshness_token(freshness: EvidenceFreshness) -> &'static str {
+    match freshness {
+        EvidenceFreshness::RefreshableFromLiveProof => "refreshable-from-live-proof",
+        EvidenceFreshness::AwaitingInitialEvidence => "awaiting-initial-evidence",
+    }
+}
+
+/// The SD-13-owned refresh-audit wording for a freshness posture. Derived from the
+/// freshness axis alone so no UI-local optimism can leak in; both current postures
+/// stay explicitly refresh-required.
+fn refresh_audit_label(freshness: EvidenceFreshness) -> &'static str {
+    match freshness {
+        EvidenceFreshness::RefreshableFromLiveProof => REFRESHABLE_FROM_LIVE_PROOF_LABEL,
+        EvidenceFreshness::AwaitingInitialEvidence => AWAITING_INITIAL_EVIDENCE_LABEL,
+    }
+}
+
 /// The SD-13-approved tester-facing wording for a support state. This is the only
 /// place wording is derived, and it is derived from state alone so no UI-local
 /// optimism can leak in.
@@ -126,6 +163,8 @@ fn present_row(row: &SupportStateRow) -> Sd13SupportStateRow {
         dimension: row.dimension.to_string(),
         support_state: support_state_token(row.support_state).to_string(),
         evidence_tier: evidence_tier_token(row.evidence_tier).to_string(),
+        evidence_freshness: evidence_freshness_token(row.evidence_freshness).to_string(),
+        refresh_audit_label: refresh_audit_label(row.evidence_freshness).to_string(),
         tester_facing_state_label: tester_facing_state_label(row.support_state).to_string(),
         grounding_ref: row.grounding_ref.to_string(),
         blocker_or_lossiness_note: row.blocker_or_lossiness_note.to_string(),
@@ -299,6 +338,75 @@ mod tests {
                 "row '{}' has unexpected subject-type token '{}'",
                 r.row_id,
                 r.subject_type
+            );
+        }
+    }
+
+    #[test]
+    fn every_row_projects_a_canonical_evidence_freshness_token() {
+        let snapshot = snapshot();
+        let allowed = ["refreshable-from-live-proof", "awaiting-initial-evidence"];
+        for r in &snapshot.rows {
+            assert!(
+                allowed.contains(&r.evidence_freshness.as_str()),
+                "row '{}' has unexpected evidence-freshness token '{}'",
+                r.row_id,
+                r.evidence_freshness
+            );
+            assert!(
+                !r.refresh_audit_label.is_empty(),
+                "row '{}' must carry non-empty refresh-audit wording",
+                r.row_id
+            );
+        }
+    }
+
+    #[test]
+    fn evidence_freshness_token_is_projected_verbatim_from_the_carrier() {
+        // The bridge must project the carrier's freshness posture unchanged, not
+        // reinterpret it. The five pilot-grounded rows are refreshable-from-live-proof;
+        // the roster-only rows await initial evidence.
+        let snapshot = snapshot();
+        let refreshable = [
+            "race.human.pilot_semantics",
+            "class.fighter.level_1_pilot",
+            "class.fighter.levels_2_10",
+            "class.rogue.bounded_progression",
+            "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
+        ];
+        for r in &snapshot.rows {
+            let expected = if refreshable.contains(&r.row_id.as_str()) {
+                "refreshable-from-live-proof"
+            } else {
+                "awaiting-initial-evidence"
+            };
+            assert_eq!(
+                r.evidence_freshness, expected,
+                "row '{}' freshness token must be projected verbatim",
+                r.row_id
+            );
+        }
+    }
+
+    #[test]
+    fn no_projected_row_claims_confirmed_fresh_evidence() {
+        // The first slice records no completed refresh checkpoint, so no projected
+        // row may imply current freshness: every refresh-audit label is explicitly
+        // refresh-required and no freshness token collapses into a "fresh" claim.
+        let snapshot = snapshot();
+        for r in &snapshot.rows {
+            assert_ne!(
+                r.evidence_freshness, "fresh",
+                "row '{}' must not project a bare 'fresh' claim",
+                r.row_id
+            );
+            assert!(
+                r.refresh_audit_label
+                    .to_lowercase()
+                    .contains("refresh required"),
+                "row '{}' refresh-audit wording must stay refresh-required, got '{}'",
+                r.row_id,
+                r.refresh_audit_label
             );
         }
     }
