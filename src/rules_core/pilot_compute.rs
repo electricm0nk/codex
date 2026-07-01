@@ -606,9 +606,9 @@ fn explain_fighter_class_features(
     }
 }
 
-/// Compute total saving throws as the grounded Fighter level-1 base save plus the
-/// relevant ability modifier, or block the claim if the Fighter level-1 chassis
-/// is absent.
+/// Compute total saving throws as the grounded Fighter level 1–3 base save plus the
+/// relevant ability modifier, or block the claim if a supported Fighter chassis
+/// (levels 1–3) is absent.
 ///
 /// This is intentionally narrow: it adds only the single ability modifier each
 /// save uses (Fortitude/CON, Reflex/DEX, Will/WIS). It does not add feat-, item-,
