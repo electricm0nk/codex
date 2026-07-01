@@ -2,11 +2,13 @@
 
 mod ge08_workbench;
 mod sd11_update_action;
+mod sd13_support_state_matrix;
 
 use serde::Serialize;
 use std::path::PathBuf;
 
 use sd11_update_action::{resolve_sd11_update_action, Sd11UpdateActionRequest, Sd11UpdateReleaseTruth};
+use sd13_support_state_matrix::{load_sd13_support_state_matrix_snapshot, Sd13SupportStateMatrixSnapshot};
 
 use ge08_workbench::{
     Ge08AuthoredRecords, Ge08AuthoredRecord, Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot,
@@ -210,12 +212,20 @@ fn sd11_update_action(request: Sd11UpdateActionRequest) -> Sd11UpdateReleaseTrut
     resolve_sd11_update_action(request)
 }
 
+/// Read-only SD-13 support-state/debt bridge for the SD-11 tester workbench.
+/// Returns the seeded SD-13 matrix truth verbatim; no filtering or promotion.
+#[tauri::command]
+fn load_sd13_support_state_matrix() -> Sd13SupportStateMatrixSnapshot {
+    load_sd13_support_state_matrix_snapshot()
+}
+
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             load_pilot_shell_snapshot,
             load_ge08_authoring_workbench_snapshot,
-            sd11_update_action
+            sd11_update_action,
+            load_sd13_support_state_matrix
         ])
         .run(tauri::generate_context!())
         .expect("error while running codex desktop shell scaffold");
