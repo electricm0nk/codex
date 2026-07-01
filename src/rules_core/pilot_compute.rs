@@ -15,9 +15,13 @@
 //! condition-based save modifiers, weapon damage, active Power Attack math,
 //! initiative, skill modifiers, armor-check penalties, equipment effects beyond
 //! the deterministic baseline, feat prerequisites, or any oracle parity. Support
-//! is limited to the accepted deterministic Fighter level-1 pilot posture;
-//! unsupported input yields claim-blocking diagnostics and withheld explanations
-//! rather than fabricated values.
+//! is the bounded deterministic Human Fighter posture widened across the SD13-E3
+//! milestone tranche from level 1 to levels 2 and 3 only: the level-2 bonus-feat
+//! progression seam and the level-3 armor-training seam are surfaced explicitly,
+//! but nothing here grounds level-4+ Fighter burden, a general feat-effect engine,
+//! spellcasting, multiclassing, or non-Fighter classes. Unsupported input yields
+//! claim-blocking diagnostics and withheld explanations rather than fabricated
+//! values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
 
@@ -137,6 +141,25 @@ const SELECTED_SKILL_RANK: u8 = 1;
 const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
+// Bounded SD13-E3 Fighter milestone widening. The accepted level-1 pilot is now
+// joined by levels 2 and 3 only. Nothing here grounds level 4+ Fighter burden,
+// repeated bonus-feat cadence, weapon training, later armor-training ranks, or any
+// non-Fighter positive support.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 3;
+
+// Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
+// feat at level 2; this slice surfaces the named selection as an explicit seam only
+// and grounds no general feat-effect or prerequisite engine.
+const FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_2";
+
+// Fighter armor training 1, gained at level 3. It reduces the worn armor's
+// armor-check penalty by 1 (to a minimum of 0) and raises its maximum Dexterity
+// bonus by 1. Grounded from cr_abilities_class.lst Fighter armor training; not
+// oracle-checked parity.
+const FIGHTER_ARMOR_TRAINING_1_LEVEL: u8 = 3;
+const ARMOR_TRAINING_1_ARMOR_CHECK_REDUCTION: i16 = 1;
+const ARMOR_TRAINING_1_MAX_DEX_INCREASE: i16 = 1;
+
 /// Simple integrated status for the GE-06 pilot headless receipt: whether the
 /// path produced computed evidence or is blocked. This distinguishes evidence
 /// from a blocker posture; it is not an oracle-checked parity verdict.
@@ -227,6 +250,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut explanations,
         &mut diagnostics,
     );
+
+    explain_fighter_class_features(input, &mut explanations);
 
     explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
@@ -402,78 +427,185 @@ fn ability_modifier_for(modifiers: &AbilityModifiers, ability: &str) -> i16 {
     }
 }
 
-/// Whether the chosen input includes the supported Fighter level-1 chassis that
-/// every GE-06 pilot computation in this surface is grounded against. Anything
-/// else (no Fighter, or Fighter at a level other than 1) is unsupported here.
-fn has_fighter_level_1(input: &CharacterInput) -> bool {
-    input
-        .chosen
-        .class_levels
-        .iter()
-        .any(|cl| cl.class_id == FIGHTER_CLASS_ID && cl.level == 1)
+/// The bounded Fighter milestone level this surface grounds, if any. Returns the
+/// single Fighter level when the chosen input is exactly a single-class Fighter at
+/// one of the supported milestone levels (1, 2, or 3). Returns `None` for no
+/// Fighter, a non-Fighter class, a multiclass mix, or a level-4+ Fighter this slice
+/// does not yet ground — each of which stays claim-blocked as before.
+fn supported_fighter_level(input: &CharacterInput) -> Option<u8> {
+    let mut fighter_level = None;
+    for class_level in &input.chosen.class_levels {
+        if class_level.class_id == FIGHTER_CLASS_ID
+            && (1..=MAX_SUPPORTED_FIGHTER_LEVEL).contains(&class_level.level)
+        {
+            fighter_level = Some(class_level.level);
+        } else {
+            return None;
+        }
+    }
+    fighter_level
 }
 
-/// Compute the Fighter level-1 base chassis, or block the claim if the input is
-/// not the supported Fighter level 1 chassis for this narrow slice.
+/// Fighter armor-training profile for a given Fighter level. Armor training 1 is
+/// gained at level 3; before that there is no armor-training effect.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct FighterArmorTraining {
+    /// Armor-training rank (0 before level 3, 1 from level 3 in this slice).
+    rank: u8,
+    /// Reduction applied to the worn armor's armor-check penalty (moves it toward 0).
+    armor_check_reduction: i16,
+    /// Increase applied to the worn armor's maximum Dexterity bonus.
+    max_dex_increase: i16,
+}
+
+fn fighter_armor_training(level: u8) -> FighterArmorTraining {
+    if level >= FIGHTER_ARMOR_TRAINING_1_LEVEL {
+        FighterArmorTraining {
+            rank: 1,
+            armor_check_reduction: ARMOR_TRAINING_1_ARMOR_CHECK_REDUCTION,
+            max_dex_increase: ARMOR_TRAINING_1_MAX_DEX_INCREASE,
+        }
+    } else {
+        FighterArmorTraining {
+            rank: 0,
+            armor_check_reduction: 0,
+            max_dex_increase: 0,
+        }
+    }
+}
+
+/// The effective Chain Shirt armor-check penalty at a Fighter level, after any
+/// armor-training reduction. Capped at 0 so the reduction never turns the penalty
+/// into a bonus.
+fn effective_chain_shirt_armor_check_penalty(level: u8) -> i16 {
+    (CHAIN_SHIRT_ARMOR_CHECK_PENALTY + fighter_armor_training(level).armor_check_reduction).min(0)
+}
+
+/// Compute the bounded Fighter base chassis for the supported milestone levels
+/// (1, 2, or 3), or block the claim if the input is not a supported single-class
+/// Fighter posture for this narrow slice.
 fn compute_fighter_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> (i16, BaseSaves) {
-    if !has_fighter_level_1(input) {
+    let Some(level) = supported_fighter_level(input) else {
         diagnostics.push(ComputationDiagnostic {
             id: "class_chassis.unsupported".to_owned(),
             message: format!(
-                "base class chassis is only supported for {FIGHTER_CLASS_ID} level 1; \
-                 chosen class levels {:?} do not provide it, so no chassis values were computed",
+                "base class chassis is only supported for a single-class {FIGHTER_CLASS_ID} at \
+                 levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL}; chosen class levels {:?} do not provide it, \
+                 so no chassis values were computed",
                 input.chosen.class_levels
             ),
             claim_blocking: true,
         });
         return (0, BaseSaves::default());
-    }
+    };
 
-    // Grounded Fighter level-1 base values from cr_classes.lst:139.
-    //   BONUS:COMBAT|BASEAB|classlevel              -> 1
-    //   BONUS:SAVE|BASE.Fortitude|classlevel/2+2    -> 2
-    //   BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 -> 0
-    let base_attack_bonus = 1;
+    // Grounded Fighter base progression from cr_classes.lst:139, evaluated at the
+    // chosen level:
+    //   BONUS:COMBAT|BASEAB|classlevel                -> level (full base attack)
+    //   BONUS:SAVE|BASE.Fortitude|classlevel/2+2      -> level/2 + 2 (good save)
+    //   BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 -> level/3 (poor saves)
+    let level_value = i16::from(level);
+    let base_attack_bonus = level_value;
     let base_saves = BaseSaves {
-        fortitude: 2,
-        reflex: 0,
-        will: 0,
+        fortitude: level_value / 2 + 2,
+        reflex: level_value / 3,
+        will: level_value / 3,
     };
 
     explanations.push(ComputationExplanation {
         id: "class_chassis.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
-        detail: "Fighter level 1 base attack bonus from cr_classes.lst:139 \
-                 BONUS:COMBAT|BASEAB|classlevel = 1"
-            .to_owned(),
+        detail: format!(
+            "Fighter level {level} base attack bonus from cr_classes.lst:139 \
+             BONUS:COMBAT|BASEAB|classlevel = {base_attack_bonus}"
+        ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.base_save.fortitude".to_owned(),
         value: base_saves.fortitude,
-        detail: "Fighter level 1 base Fortitude save from cr_classes.lst:139 \
-                 BONUS:SAVE|BASE.Fortitude|classlevel/2+2 = 2"
-            .to_owned(),
+        detail: format!(
+            "Fighter level {level} base Fortitude save from cr_classes.lst:139 \
+             BONUS:SAVE|BASE.Fortitude|classlevel/2+2 = {}",
+            base_saves.fortitude
+        ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.base_save.reflex".to_owned(),
         value: base_saves.reflex,
-        detail: "Fighter level 1 base Reflex save from cr_classes.lst:139 \
-                 BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 = 0"
-            .to_owned(),
+        detail: format!(
+            "Fighter level {level} base Reflex save from cr_classes.lst:139 \
+             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 = {}",
+            base_saves.reflex
+        ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.base_save.will".to_owned(),
         value: base_saves.will,
-        detail: "Fighter level 1 base Will save from cr_classes.lst:139 \
-                 BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 = 0"
-            .to_owned(),
+        detail: format!(
+            "Fighter level {level} base Will save from cr_classes.lst:139 \
+             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 = {}",
+            base_saves.will
+        ),
     });
 
     (base_attack_bonus, base_saves)
+}
+
+/// Make the bounded Fighter milestone class features for this slice explicit rather
+/// than leaving them incidental: the level-2 bonus-feat progression seam and the
+/// level-3 armor-training seam.
+///
+/// This adds no general feat-effect or prerequisite engine. The level-2 bonus-feat
+/// seam names the chosen selection only and contributes no computed mechanical value.
+/// The level-3 armor-training seam names the concrete armor-check-penalty reduction
+/// and maximum-Dexterity increase that the bounded selected-skill and armor-class
+/// outputs already apply, so the derived-output change is legible instead of folklore.
+fn explain_fighter_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let Some(level) = supported_fighter_level(input) else {
+        return;
+    };
+
+    if level >= 2 {
+        if let Some(selection) =
+            human_choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)
+        {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.fighter.level_2_bonus_feat".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Fighter level 2 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. This slice grounds the bonus-feat slot, not a \
+                     general feat-effect or prerequisite engine, so it contributes no computed \
+                     mechanical value (+0)"
+                ),
+            });
+        }
+    }
+
+    let armor_training = fighter_armor_training(level);
+    if armor_training.rank > 0 {
+        let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
+        let raised_max_dex = CHAIN_SHIRT_MAX_DEX + armor_training.max_dex_increase;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.armor_training".to_owned(),
+            value: i16::from(armor_training.rank),
+            detail: format!(
+                "Fighter level {FIGHTER_ARMOR_TRAINING_1_LEVEL} Armor Training 1 (armor training, \
+                 cr_abilities_class.lst Fighter): reduces the worn Chain Shirt armor-check penalty by \
+                 {ARMOR_TRAINING_1_ARMOR_CHECK_REDUCTION} (from {CHAIN_SHIRT_ARMOR_CHECK_PENALTY:+} to \
+                 {reduced_penalty:+}) and raises the maximum Dexterity bonus by \
+                 {ARMOR_TRAINING_1_MAX_DEX_INCREASE} (from {CHAIN_SHIRT_MAX_DEX} to {raised_max_dex})"
+            ),
+        });
+    }
 }
 
 /// Compute total saving throws as the grounded Fighter level-1 base save plus the
@@ -490,12 +622,13 @@ fn compute_total_saves(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> BaseSaves {
-    if !has_fighter_level_1(input) {
+    if supported_fighter_level(input).is_none() {
         diagnostics.push(ComputationDiagnostic {
             id: "defense.total_save.unsupported".to_owned(),
             message: format!(
-                "total saving throws are only computed from the grounded {FIGHTER_CLASS_ID} level 1 \
-                 base saves; chosen class levels {:?} do not provide them, so no total saves were computed",
+                "total saving throws are only computed from the grounded {FIGHTER_CLASS_ID} \
+                 levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} base saves; chosen class levels {:?} do not \
+                 provide them, so no total saves were computed",
                 input.chosen.class_levels
             ),
             claim_blocking: true,
@@ -573,18 +706,29 @@ fn compute_selected_skill_modifiers(
 
     let rank = i16::from(SELECTED_SKILL_RANK);
 
+    // The Chain Shirt armor-check penalty applied to Climb/Swim is reduced by Fighter
+    // armor training from level 3, so the armor-check skills rise at that milestone.
+    // The posture check above guarantees a supported Fighter level here.
+    let level = supported_fighter_level(input).unwrap_or(1);
+    let armor_check_penalty = effective_chain_shirt_armor_check_penalty(level);
+    let armor_check_detail = if fighter_armor_training(level).armor_check_reduction > 0 {
+        format!(
+            "Chain Shirt armor-check penalty ({armor_check_penalty:+}, reduced from \
+             {CHAIN_SHIRT_ARMOR_CHECK_PENALTY:+} by Fighter armor training)"
+        )
+    } else {
+        format!("Chain Shirt armor-check penalty ({armor_check_penalty:+})")
+    };
+
     // Climb (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
-    let climb = rank
-        + ability_modifiers.strength
-        + CLASS_SKILL_BONUS
-        + CHAIN_SHIRT_ARMOR_CHECK_PENALTY;
+    let climb = rank + ability_modifiers.strength + CLASS_SKILL_BONUS + armor_check_penalty;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.climb".to_owned(),
         value: climb,
         detail: format!(
             "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + class-skill bonus \
-             ({:+}) + Chain Shirt armor-check penalty ({:+}) = {climb}",
-            ability_modifiers.strength, CLASS_SKILL_BONUS, CHAIN_SHIRT_ARMOR_CHECK_PENALTY
+             ({:+}) + {armor_check_detail} = {climb}",
+            ability_modifiers.strength, CLASS_SKILL_BONUS
         ),
     });
 
@@ -601,17 +745,14 @@ fn compute_selected_skill_modifiers(
     });
 
     // Swim (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
-    let swim = rank
-        + ability_modifiers.strength
-        + CLASS_SKILL_BONUS
-        + CHAIN_SHIRT_ARMOR_CHECK_PENALTY;
+    let swim = rank + ability_modifiers.strength + CLASS_SKILL_BONUS + armor_check_penalty;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.swim".to_owned(),
         value: swim,
         detail: format!(
             "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + class-skill bonus \
-             ({:+}) + Chain Shirt armor-check penalty ({:+}) = {swim}",
-            ability_modifiers.strength, CLASS_SKILL_BONUS, CHAIN_SHIRT_ARMOR_CHECK_PENALTY
+             ({:+}) + {armor_check_detail} = {swim}",
+            ability_modifiers.strength, CLASS_SKILL_BONUS
         ),
     });
 
@@ -633,8 +774,10 @@ fn unmet_selected_skill_posture_conditions(input: &CharacterInput) -> Vec<String
     let allocations = &input.chosen.skill_allocations;
     let mut unmet = Vec::new();
 
-    if !has_fighter_level_1(input) {
-        unmet.push(format!("missing {FIGHTER_CLASS_ID} level 1 chassis"));
+    if supported_fighter_level(input).is_none() {
+        unmet.push(format!(
+            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} chassis"
+        ));
     }
 
     let expected = [CLIMB_SKILL_ID, INTIMIDATE_SKILL_ID, SWIM_SKILL_ID];
@@ -726,9 +869,13 @@ fn compute_combat_baseline(
     });
 
     // Baseline armor class: 10 + Chain Shirt armor bonus + capped DEX + Dodge,
-    // with no shield (absent posture contributes 0).
+    // with no shield (absent posture contributes 0). Fighter armor training from
+    // level 3 raises the Chain Shirt maximum Dexterity bonus; the posture check
+    // above guarantees a supported Fighter level here.
+    let level = supported_fighter_level(input).unwrap_or(1);
+    let effective_max_dex = CHAIN_SHIRT_MAX_DEX + fighter_armor_training(level).max_dex_increase;
     let dexterity_modifier = ability_modifiers.dexterity;
-    let dexterity_contribution = dexterity_modifier.min(CHAIN_SHIRT_MAX_DEX);
+    let dexterity_contribution = dexterity_modifier.min(effective_max_dex);
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
@@ -739,7 +886,7 @@ fn compute_combat_baseline(
         value: armor_class,
         detail: format!(
             "Baseline armor class: base {ARMOR_CLASS_BASE} + Chain Shirt armor bonus (+{CHAIN_SHIRT_ARMOR_BONUS}) \
-             + Dexterity contribution (+{dexterity_contribution}, DEX modifier +{dexterity_modifier} within MAXDEX:4) \
+             + Dexterity contribution (+{dexterity_contribution}, DEX modifier +{dexterity_modifier} within MAXDEX:{effective_max_dex}) \
              + Dodge (+{DODGE_AC_BONUS}); shield is absent (+0) = {armor_class}"
         ),
     });
@@ -753,8 +900,10 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
     let chosen = &input.chosen;
     let mut unmet = Vec::new();
 
-    if !has_fighter_level_1(input) {
-        unmet.push(format!("missing {FIGHTER_CLASS_ID} level 1 chassis"));
+    if supported_fighter_level(input).is_none() {
+        unmet.push(format!(
+            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} chassis"
+        ));
     }
 
     require_active_state(

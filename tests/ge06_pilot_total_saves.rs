@@ -110,13 +110,13 @@ fn unsupported_chassis_blocks_total_saves() {
 
 #[test]
 fn wrong_fighter_level_blocks_total_saves() {
-    // Total saves are grounded only at Fighter level 1. A Fighter at a different
-    // level must be claim-blocked rather than silently computed, just like a
-    // non-Fighter class.
+    // Total saves are grounded only across the bounded Fighter milestone levels 1-3.
+    // A Fighter above that bounded tranche (level 4+) must be claim-blocked rather
+    // than silently computed, just like a non-Fighter class.
     let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:fighter:2");
+        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:fighter:4");
     assert!(
-        mutated.contains("class_level=class:fighter:2"),
+        mutated.contains("class_level=class:fighter:4"),
         "test setup should have mutated the Fighter level"
     );
     let input = load(&mutated);
