@@ -112,6 +112,13 @@ const PALADIN_CLASS_ID: &str = "class:paladin";
 const RANGER_CLASS_ID: &str = "class:ranger";
 const HYBRID_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
+// caster; this slice recognizes only its bounded single-class level-1 identity as direct
+// runtime evidence and grounds no bloodline power and no spell math (spell slots, spells
+// known, spell DCs, bonus spells, or prepared posture) for it.
+const SORCERER_CLASS_ID: &str = "class:sorcerer";
+const SORCERER_BASELINE_LEVEL: u8 = 1;
+
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
 // grounds no non-Human race semantics and no broader Human racial trait burden.
@@ -266,6 +273,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_fighter_class_features(input, &mut explanations);
 
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
+
+    explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
@@ -726,6 +735,88 @@ fn explain_hybrid_level1_chassis(
              and spells known/prepared posture are out of scope for this level-{HYBRID_BASELINE_LEVEL} \
              chassis baseline and are deferred to the SD13-E4 spellcasting slice"
         ),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Sorcerer at the bounded
+/// spell baseline level (1). Returns `false` for any other class, a multiclass mix, or a
+/// level-2+ Sorcerer this slice deliberately does not recognize — each of which stays
+/// blocked exactly as before.
+fn is_single_class_sorcerer_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == SORCERER_CLASS_ID
+                && class_level.level == SORCERER_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Sorcerer
+/// level-1 spell-bearing baseline, while keeping it explicitly claim-blocked on its two
+/// still-missing burdens.
+///
+/// This deliberately does not compute a supported spell surface. It grounds no bloodline
+/// power, no bloodline arcana, and no spell math whatsoever — no spell slots, spells
+/// known, spell DCs, bonus spells, prepared posture, or school choice. It only:
+/// - leaves one recognition explanation so the `class:sorcerer:1` identity is acknowledged
+///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the bloodline burden and the
+///   spontaneous known-spell / slot posture burden explicitly, rather than hiding behind a
+///   generic "unsupported caster" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Sorcerer spell-bearing identity and its two
+/// named burdens legible on the runtime path.
+fn explain_sorcerer_level1_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_sorcerer_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Sorcerer level-1
+    // spell-bearing identity. This is a recognition record only; it fabricates no spell math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.sorcerer".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Sorcerer level {SORCERER_BASELINE_LEVEL} spell-bearing \
+             baseline: the {SORCERER_CLASS_ID}:{SORCERER_BASELINE_LEVEL} class identity is acknowledged \
+             as a spontaneous arcane spell-bearing class on the rules-core seam rather than an \
+             undocumented packet placeholder. This is a bounded recognition record only; it grounds no \
+             bloodline power and no spell math (spell slots, spells known, spell DCs, bonus spells, or \
+             prepared posture), so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the bloodline burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.sorcerer.bloodline.unsupported".to_owned(),
+        message: format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline burden: the \
+             bloodline selection, its level-1 bloodline power, bloodline arcana, and bloodline bonus \
+             spells/feats/skills are not implemented in this bounded spell baseline, so no Sorcerer \
+             bloodline support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the spontaneous known-spell / slot posture burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
+        message:
+            "Sorcerer remains blocked on its spontaneous known-spell / slot posture burden: \
+             spontaneous casting, spells known, spell slots per day, bonus spell slots from a high \
+             ability score, and spell save DCs are out of scope for this level-1 spell baseline and \
+             no spell math is fabricated"
+                .to_owned(),
         claim_blocking: true,
     });
 }
