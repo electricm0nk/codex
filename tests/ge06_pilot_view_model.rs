@@ -98,6 +98,37 @@ fn supported_deterministic_pilot_projects_computed_view_model() {
 }
 
 #[test]
+fn computed_view_model_exposes_explicit_human_race_seam() {
+    let input = load(DETERMINISTIC_FIXTURE);
+    let receipt = build_pilot_headless_receipt(&input);
+
+    let view_model = PilotViewModel::from_receipt(&receipt);
+
+    // The explicit Human race-seam explanations must propagate through the bounded
+    // view-model projection.
+    for id in ["race.human.ability_bonus_target", "race.human.bonus_feat_grant"] {
+        assert!(
+            has_explanation(&view_model, id),
+            "computed view model must expose race-seam explanation id '{id}', got {:?}",
+            view_model.explanations
+        );
+    }
+
+    // The bounded Human race-semantics note propagates as a non-claim-blocking
+    // diagnostic and must not fabricate a blocked posture.
+    assert!(
+        view_model
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "race.human.bounded_semantics" && !d.claim_blocking),
+        "view model must carry the bounded, non-claim-blocking Human race note: {:?}",
+        view_model.diagnostics
+    );
+    assert_eq!(view_model.status, HeadlessReceiptStatus::Computed);
+    assert_eq!(view_model.primary_owner, PrimaryOwner::OracleGap);
+}
+
+#[test]
 fn blocked_receipt_projects_blocked_view_model_without_faux_success_snapshot() {
     let mutated =
         DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:rogue:1");

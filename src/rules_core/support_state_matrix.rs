@@ -108,9 +108,9 @@ const SD13_ROSTER_MATRIX_DOC: &str = "programs/codex/requirements/\
 SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/\
 core-roster-and-support-state-matrix.md";
 
-/// The accepted GE-06 deterministic Human Fighter level-1 input fixture.
-const GE06_DETERMINISTIC_FIXTURE: &str =
-    "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt";
+/// The live compute seam that now makes the grounded Human race pressure explicit by
+/// emitting named Human ability-bonus and bonus-feat explanation records.
+const PILOT_COMPUTE_MODULE: &str = "src/rules_core/pilot_compute.rs";
 
 /// GE-06 deterministic pilot input contract proof (race/class identity, Human
 /// bonus-feat and ability-bonus selections).
@@ -139,15 +139,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.human.pilot_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:human",
-                dimension: "bounded pilot race semantics actually exercised by the \
-                            GE-06 deterministic proof",
+                dimension: "bounded Human pilot race semantics: the named Human \
+                            ability-bonus (Strength) and Human bonus-feat (Dodge) \
+                            selections exercised by the GE-06 deterministic proof",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
-                grounding_ref: GE06_DETERMINISTIC_FIXTURE,
-                blocker_or_lossiness_note: "current evidence proves only the bounded \
-                    Human seam exercised by the deterministic pilot, not the full \
-                    Human race burden",
-                next_required_uplift: "classify remaining Human race semantics explicitly",
+                grounding_ref: PILOT_COMPUTE_MODULE,
+                blocker_or_lossiness_note: "the deterministic pilot grounds only the named \
+                    Human ability-bonus and bonus-feat pressure; Human size, speed, senses, \
+                    extra skill ranks, and the remaining racial trait burden are still unverified",
+                next_required_uplift: "classify the remaining Human racial trait burden \
+                    (size, speed, senses, skill ranks) explicitly",
             },
             SupportStateRow {
                 row_id: "race.dwarf.bounded_semantics",
@@ -361,13 +363,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
                 subject_type: MatrixSubjectType::Interaction,
                 subject_id: "interaction:human-bonus-feat-ability-bonus",
-                dimension: "race/class interaction pressure on the deterministic pilot path",
+                dimension: "named Human bonus-feat and ability-bonus interaction pressure \
+                            on the deterministic pilot path",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 grounding_ref: GE06_INPUT_CONTRACT_TEST,
-                blocker_or_lossiness_note: "only the deterministic Human Fighter pilot \
-                    seam (human_bonus_feat and human_ability_bonus selections) is grounded, \
-                    not the general interaction-row model",
+                blocker_or_lossiness_note: "only the named deterministic Human Fighter pilot \
+                    seam is grounded: the human_bonus_feat -> feat:dodge and \
+                    human_ability_bonus -> ability:strength selections now surfaced as explicit \
+                    compute explanations; the general interaction-row model is not",
                 next_required_uplift: "SD13-E2 / SD13-E3 coupling",
             },
             SupportStateRow {

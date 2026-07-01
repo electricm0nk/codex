@@ -96,6 +96,14 @@ pub struct ComputationDiagnostic {
 
 const FIGHTER_CLASS_ID: &str = "class:fighter";
 
+// Grounded Human pilot race seam identities. These name the already-accepted
+// deterministic Human selections; this slice makes their pressure explicit but
+// grounds no non-Human race semantics and no broader Human racial trait burden.
+const HUMAN_RACE_ID: &str = "race:human";
+const HUMAN_ABILITY_BONUS_CHOICE_ID: &str = "choice:human_ability_bonus";
+const HUMAN_BONUS_FEAT_CHOICE_ID: &str = "choice:human_bonus_feat";
+const ABILITY_SELECTION_PREFIX: &str = "ability:";
+
 // Grounded deterministic combat-baseline contributors and posture identities.
 const LONGSWORD_ITEM_ID: &str = "item:longsword";
 const CHAIN_SHIRT_ITEM_ID: &str = "item:chain_shirt";
@@ -220,6 +228,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
+    explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
+
     PilotBaseChassisComputation {
         ability_modifiers,
         base_attack_bonus,
@@ -277,6 +287,118 @@ fn assign_modifier(modifiers: &mut AbilityModifiers, ability: &str, modifier: i1
         "wisdom" => modifiers.wisdom = modifier,
         "charisma" => modifiers.charisma = modifier,
         _ => unreachable!("ability set is fixed and fully matched"),
+    }
+}
+
+/// Make the already-grounded Human pilot race seam explicit instead of leaving it an
+/// incidental side effect of the numeric outputs.
+///
+/// This adds no new computed mechanic and no new input surface. It derives strictly
+/// from existing chosen input — the `race:human` identity and the named
+/// `choice:human_ability_bonus` and `choice:human_bonus_feat` selections — and from the
+/// already-computed deterministic outputs — the ability modifiers and the grounded
+/// Dodge armor-class contribution. It thereby surfaces the named Human ability-bonus and
+/// bonus-feat interaction pressure as legible explanation records.
+///
+/// Non-Human races receive only a bounded, non-claim-blocking note that their race
+/// semantics remain unverified; this slice grounds no non-Human race truth and no
+/// broader Human racial trait burden (size, speed, senses, extra skill ranks).
+fn explain_human_race_seam(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        diagnostics.push(ComputationDiagnostic {
+            id: "race.semantics.unverified".to_owned(),
+            message: format!(
+                "race semantics are grounded only for {HUMAN_RACE_ID} on the deterministic pilot seam; \
+                 chosen race {} has no grounded race semantics in this slice",
+                input.chosen.race_id
+            ),
+            claim_blocking: false,
+        });
+        return;
+    }
+
+    // Human ability-bonus interaction: the named choice targets one ability. Surface its
+    // pressure through the already-computed modifier for exactly that ability.
+    if let Some(selection) = human_choice_selection(input, HUMAN_ABILITY_BONUS_CHOICE_ID) {
+        let ability = selection
+            .strip_prefix(ABILITY_SELECTION_PREFIX)
+            .unwrap_or(selection);
+        let modifier = ability_modifier_for(ability_modifiers, ability);
+        explanations.push(ComputationExplanation {
+            id: "race.human.ability_bonus_target".to_owned(),
+            value: modifier,
+            detail: format!(
+                "Human ability-bonus selection ({HUMAN_ABILITY_BONUS_CHOICE_ID} -> {selection}) targets \
+                 {ability}; the chosen {ability} score yields modifier {modifier:+}"
+            ),
+        });
+    }
+
+    // Human bonus-feat interaction: the named choice grants a feat. Surface the grounded
+    // Dodge armor-class contribution the deterministic baseline already relies on.
+    if let Some(selection) = human_choice_selection(input, HUMAN_BONUS_FEAT_CHOICE_ID) {
+        let (value, detail) = if selection == DODGE_FEAT_ID {
+            (
+                DODGE_AC_BONUS,
+                format!(
+                    "Human bonus-feat selection ({HUMAN_BONUS_FEAT_CHOICE_ID} -> {selection}) grants Dodge, \
+                     the deterministic Dodge feat contributing {DODGE_AC_BONUS:+} to the baseline armor class"
+                ),
+            )
+        } else {
+            (
+                0,
+                format!(
+                    "Human bonus-feat selection ({HUMAN_BONUS_FEAT_CHOICE_ID} -> {selection}) is a named Human \
+                     bonus feat, but only the deterministic Dodge grant has a grounded computed contribution"
+                ),
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "race.human.bonus_feat_grant".to_owned(),
+            value,
+            detail,
+        });
+    }
+
+    // Bounded honesty: only the named seam is grounded. This is explicit but
+    // non-claim-blocking so the deterministic pilot still reports computed evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.human.bounded_semantics".to_owned(),
+        message: "Human race semantics are grounded only for the deterministic pilot's named \
+                  ability-bonus and bonus-feat selections; Human size, speed, senses, extra skill \
+                  ranks, and the remaining racial trait burden remain unverified"
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+/// Return the selection id chosen for the named choice set, if present.
+fn human_choice_selection<'a>(input: &'a CharacterInput, choice_set_id: &str) -> Option<&'a str> {
+    input
+        .chosen
+        .selected_choices
+        .iter()
+        .find(|c| c.choice_set_id == choice_set_id)
+        .map(|c| c.selection_id.as_str())
+}
+
+/// Look up the already-computed modifier for a named ability. Unknown ability names
+/// contribute nothing rather than fabricating a value.
+fn ability_modifier_for(modifiers: &AbilityModifiers, ability: &str) -> i16 {
+    match ability {
+        "strength" => modifiers.strength,
+        "dexterity" => modifiers.dexterity,
+        "constitution" => modifiers.constitution,
+        "intelligence" => modifiers.intelligence,
+        "wisdom" => modifiers.wisdom,
+        "charisma" => modifiers.charisma,
+        _ => 0,
     }
 }
 

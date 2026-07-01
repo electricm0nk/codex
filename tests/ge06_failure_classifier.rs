@@ -123,6 +123,33 @@ fn blocked_receipt_with_claim_blocking_diagnostics_classifies_as_engine_flaw() {
 }
 
 #[test]
+fn bounded_human_race_note_stays_non_blocking_and_keeps_oracle_gap() {
+    let input = load(DETERMINISTIC_FIXTURE);
+    let receipt = build_pilot_headless_receipt(&input);
+
+    // The explicit Human race seam must surface a bounded race-semantics note, but as a
+    // non-claim-blocking diagnostic so it cannot flip a computed receipt into a blocker
+    // and mis-own the failure.
+    let race_note = receipt
+        .computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "race.human.bounded_semantics")
+        .expect("computed receipt must carry the bounded Human race-semantics note");
+    assert!(
+        !race_note.claim_blocking,
+        "bounded Human race-semantics note must not be claim-blocking: {race_note:?}"
+    );
+
+    let classifier = FailureClassifier::new(&receipt);
+    assert_eq!(
+        classifier.primary_owner(),
+        PrimaryOwner::OracleGap,
+        "the bounded Human race note must not change the computed-receipt owner mapping"
+    );
+}
+
+#[test]
 fn no_integration_issue_sink_exists() {
     let input = load(DETERMINISTIC_FIXTURE);
     let receipt = build_pilot_headless_receipt(&input);

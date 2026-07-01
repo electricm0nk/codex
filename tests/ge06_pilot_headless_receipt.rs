@@ -107,6 +107,71 @@ fn supported_deterministic_pilot_yields_computed_receipt() {
 }
 
 #[test]
+fn computed_receipt_exposes_explicit_human_race_seam() {
+    let input = load(DETERMINISTIC_FIXTURE);
+
+    let receipt = build_pilot_headless_receipt(&input);
+
+    // The receipt must make the grounded Human race seam explicit rather than leaving
+    // it an incidental side effect of the numeric outputs.
+    assert!(
+        has_explanation(&receipt, "race.human.ability_bonus_target"),
+        "computed receipt must expose the Human ability-bonus race explanation, got {:?}",
+        receipt.computation.explanations
+    );
+    assert!(
+        has_explanation(&receipt, "race.human.bonus_feat_grant"),
+        "computed receipt must expose the Human bonus-feat race explanation, got {:?}",
+        receipt.computation.explanations
+    );
+
+    let ability = receipt
+        .computation
+        .explanations
+        .iter()
+        .find(|e| e.id == "race.human.ability_bonus_target")
+        .expect("ability-bonus race explanation present");
+    // Derived strictly from the chosen human_ability_bonus -> ability:strength selection
+    // and the already-computed Strength modifier (+3).
+    assert_eq!(ability.value, 3);
+    assert!(
+        ability.detail.contains("human_ability_bonus")
+            && ability.detail.contains("strength"),
+        "ability-bonus detail must name the chosen Human ability-bonus seam: {}",
+        ability.detail
+    );
+
+    let bonus_feat = receipt
+        .computation
+        .explanations
+        .iter()
+        .find(|e| e.id == "race.human.bonus_feat_grant")
+        .expect("bonus-feat race explanation present");
+    // Derived strictly from the chosen human_bonus_feat -> feat:dodge selection and the
+    // already-grounded Dodge armor-class contribution (+1).
+    assert_eq!(bonus_feat.value, 1);
+    assert!(
+        bonus_feat.detail.contains("human_bonus_feat")
+            && bonus_feat.detail.contains("Dodge"),
+        "bonus-feat detail must name the chosen Human bonus-feat Dodge seam: {}",
+        bonus_feat.detail
+    );
+
+    // Making broader Human race semantics absent must be explicit but non-blocking, so
+    // the deterministic pilot still reports a computed receipt.
+    assert!(
+        receipt
+            .computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "race.human.bounded_semantics" && !d.claim_blocking),
+        "receipt must carry a bounded, non-claim-blocking Human race-semantics note: {:?}",
+        receipt.computation.diagnostics
+    );
+    assert_eq!(receipt.status, HeadlessReceiptStatus::Computed);
+}
+
+#[test]
 fn broken_prerequisite_yields_blocked_receipt() {
     // Mutate one supported prerequisite in memory: replace the Fighter level-1
     // chassis with a Rogue level-1 chassis. The integrated receipt must report a
