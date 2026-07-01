@@ -433,17 +433,15 @@ fn ability_modifier_for(modifiers: &AbilityModifiers, ability: &str) -> i16 {
 /// Fighter, a non-Fighter class, a multiclass mix, or a level-4+ Fighter this slice
 /// does not yet ground — each of which stays claim-blocked as before.
 fn supported_fighter_level(input: &CharacterInput) -> Option<u8> {
-    let mut fighter_level = None;
-    for class_level in &input.chosen.class_levels {
-        if class_level.class_id == FIGHTER_CLASS_ID
-            && (1..=MAX_SUPPORTED_FIGHTER_LEVEL).contains(&class_level.level)
+    match input.chosen.class_levels.as_slice() {
+        [class_level]
+            if class_level.class_id == FIGHTER_CLASS_ID
+                && (1..=MAX_SUPPORTED_FIGHTER_LEVEL).contains(&class_level.level) =>
         {
-            fighter_level = Some(class_level.level);
-        } else {
-            return None;
+            Some(class_level.level)
         }
+        _ => None,
     }
-    fighter_level
 }
 
 /// Fighter armor-training profile for a given Fighter level. Armor training 1 is
