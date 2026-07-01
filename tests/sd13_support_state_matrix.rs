@@ -138,21 +138,30 @@ fn fighter_level_1_row_is_partial_and_computed() {
 }
 
 #[test]
-fn fighter_levels_2_10_row_is_blocked_and_computed_with_blocker_note() {
+fn fighter_levels_2_10_row_is_partial_and_computed_and_names_what_remains() {
     let matrix = matrix();
-    let blocked = row(&matrix, "class.fighter.levels_2_10");
-    assert_eq!(blocked.subject_type, MatrixSubjectType::Class);
-    assert_eq!(blocked.subject_id, "class:fighter");
-    assert_eq!(blocked.support_state, SupportState::Blocked);
-    assert_eq!(blocked.evidence_tier, EvidenceTier::Computed);
+    let partial = row(&matrix, "class.fighter.levels_2_10");
+    assert_eq!(partial.subject_type, MatrixSubjectType::Class);
+    assert_eq!(partial.subject_id, "class:fighter");
+    // The SD13-E3 tranche moves the row from Blocked to a bounded Partial posture,
+    // but it must never be silently promoted to Supported.
+    assert_eq!(partial.support_state, SupportState::Partial);
+    assert_ne!(partial.support_state, SupportState::Supported);
+    assert_eq!(partial.evidence_tier, EvidenceTier::Computed);
     assert!(
-        !blocked.blocker_or_lossiness_note.is_empty(),
-        "blocked Fighter levels-2-10 row must carry a non-empty blocker note"
+        !partial.blocker_or_lossiness_note.is_empty(),
+        "partial Fighter levels-2-10 row must carry a non-empty note on what remains unproven"
+    );
+    // The note must explicitly name that levels 4-10 remain out of proof after the slice.
+    assert!(
+        partial.blocker_or_lossiness_note.contains("4-10"),
+        "partial Fighter row must name the still-unproven levels 4-10: {}",
+        partial.blocker_or_lossiness_note
     );
     assert!(
-        blocked.grounding_ref.contains("ge06"),
-        "blocked Fighter row must cite the exact GE-06 test that claim-blocks it: {}",
-        blocked.grounding_ref
+        partial.grounding_ref.contains("sd13_fighter_level2_level3_progression"),
+        "partial Fighter row must cite the SD13-E3 tranche proof surface: {}",
+        partial.grounding_ref
     );
 }
 
@@ -184,9 +193,12 @@ fn fighter_level_1_and_levels_2_10_remain_separate_rows() {
         level_1.row_id, levels_2_10.row_id,
         "Fighter level 1 and levels 2-10 must not collapse into one row"
     );
+    // After the SD13-E3 tranche both rows are Partial/Computed, but they must remain
+    // distinct rows describing distinct bounded progression dimensions: the level-1
+    // pilot surface versus the levels-2-3 milestone proof with levels 4-10 unproven.
     assert_ne!(
-        level_1.support_state, levels_2_10.support_state,
-        "Fighter level 1 (partial) and levels 2-10 (blocked) must keep distinct states"
+        level_1.dimension, levels_2_10.dimension,
+        "Fighter level-1 and levels-2-10 rows must keep distinct progression dimensions"
     );
 }
 

@@ -1,0 +1,34 @@
+# SD13-E3-F5 deterministic Human Fighter level 3 progression fixture.
+# Widens the accepted GE-06 deterministic PF1 Core Rulebook Human Fighter pilot to
+# level 3 as chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice seam and
+# the deterministic Longsword / Chain Shirt / no-shield posture. The level-3 armor
+# training milestone is an automatic Fighter class feature, so it needs no new choice
+# selection; the fixture adds only the level bump over the level-2 tranche.
+case_id=pf1-crb-human-fighter-level3
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:3
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+feat=feat:toughness
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+choice=choice:fighter_bonus_feat_2:feat:toughness
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e3-r2-martial-and-skill-driven-level-10-progression-execution-handoff-2026-07-01.md

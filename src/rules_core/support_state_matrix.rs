@@ -13,8 +13,11 @@
 //! GE-06 repo evidence:
 //! - the Human pilot race seam and the Fighter level-1 pilot chassis are `Partial`
 //!   / `Computed` (proven, but with named missing semantics),
-//! - Fighter levels 2-10 and Rogue level 1 are `Blocked` / `Computed` because the
-//!   live GE-06 tests explicitly claim-block them,
+//! - the Fighter levels-2-10 row is `Partial` / `Computed`: the SD13-E3 tranche now
+//!   proves Fighter levels 2 and 3 (base progression, the level-2 bonus-feat seam,
+//!   and the level-3 armor-training seam), while levels 4-10 remain out of proof,
+//! - Rogue level 1 is `Blocked` / `Computed` because the live GE-06 test explicitly
+//!   claim-blocks it, keeping it an explicit negative-control seam,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
 //! - every other core race, core class, and the broader non-Human interaction row
 //!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime
@@ -167,12 +170,12 @@ const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 /// level 2.
 const GE06_TOTAL_SAVES_TEST: &str = "tests/ge06_pilot_total_saves.rs";
 
-/// GE-06 baseline combat values proof. Also claim-blocks Fighter level 2 for
-/// combat/defense surfaces.
-const GE06_COMBAT_BASELINE_TEST: &str = "tests/ge06_pilot_combat_baseline.rs";
-
 /// GE-06 pilot view-model projection proof over the bounded computed snapshot.
 const GE06_VIEW_MODEL_TEST: &str = "tests/ge06_pilot_view_model.rs";
+
+/// SD13-E3 dedicated proof surface for the bounded Fighter levels-2-and-3 milestone
+/// tranche (base progression, level-2 bonus-feat seam, level-3 armor-training seam).
+const SD13_FIGHTER_LEVEL2_LEVEL3_TEST: &str = "tests/sd13_fighter_level2_level3_progression.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
@@ -290,17 +293,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.fighter.levels_2_10",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
-                dimension: "class progression through levels 2-10",
-                support_state: SupportState::Blocked,
+                dimension: "class progression across levels 2-10: bounded milestone proof \
+                            for levels 2 and 3 only, with levels 4-10 still unproven",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: GE06_COMBAT_BASELINE_TEST,
-                blocker_or_lossiness_note: "GE-06 tests explicitly claim-block \
-                    class:fighter:2 (wrong_fighter_level_blocks_combat_totals in \
-                    tests/ge06_pilot_combat_baseline.rs and \
-                    wrong_fighter_level_blocks_total_saves in tests/ge06_pilot_total_saves.rs), \
-                    so levels 2-10 cannot be claimed",
-                next_required_uplift: "SD13-E3 martial progression slice",
+                grounding_ref: SD13_FIGHTER_LEVEL2_LEVEL3_TEST,
+                blocker_or_lossiness_note: "SD13-E3 proves only Fighter levels 2 and 3: base \
+                    attack / base save progression, the level-2 bonus-feat progression seam, and \
+                    the level-3 armor-training seam over the deterministic Human loadout. Levels \
+                    4-10 remain out of proof, along with level-4 ability-score progression, the \
+                    repeated bonus-feat cadence, weapon training, later armor-training ranks, and \
+                    any general feat-effect/prerequisite engine",
+                next_required_uplift: "later SD13-E3 slice widening Fighter beyond level 3 toward \
+                    the level-10 milestones",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",
