@@ -670,6 +670,9 @@ fn explain_hybrid_level1_chassis(
     let Some(hybrid) = hybrid_level1_class(input) else {
         return;
     };
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
 
     let (class_id, class_name, chassis_id, feature_id, feature_burden, spell_id) = match hybrid {
         HybridClass::Paladin => (
