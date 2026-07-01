@@ -764,7 +764,7 @@ fn compute_selected_skill_modifiers(
 /// Return the list of unmet conditions for the exact deterministic selected-skill
 /// posture. An empty list means the posture is fully supported.
 ///
-/// The bounded posture requires the Fighter level-1 chassis, exactly the three
+/// The bounded posture requires a Fighter level 1–3 chassis, exactly the three
 /// selected class skills (Climb, Intimidate, Swim) each at rank 1 with no other
 /// skill allocations, and the grounded Chain Shirt armor-check posture that the
 /// Climb/Swim totals depend on.
