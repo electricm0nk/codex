@@ -137,6 +137,14 @@ const WEAPON_FOCUS_FEAT_ID: &str = "feat:weapon_focus";
 const FIGHTER_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat";
 const WEAPON_FOCUS_LONGSWORD_SELECTION: &str = "feat:weapon_focus:weapon:longsword";
 
+// SD13-E5-F9 canonical Human Fighter feat-choice seam. These name the exact accepted
+// deterministic feat-choice selections on the level-1/2/3 seam. This slice preserves
+// these selections and claim-blocks any deviation of the named slots; it grounds no
+// general feat-effect or prerequisite engine and no alternative feat legality.
+const LEVEL_1_CHARACTER_FEAT_CHOICE_ID: &str = "choice:level_1_character_feat";
+const POWER_ATTACK_FEAT_SELECTION: &str = "feat:power_attack";
+const TOUGHNESS_FEAT_SELECTION: &str = "feat:toughness";
+
 // Grounded numeric contributors (source evidence only; not oracle-checked parity):
 //   cr_equip_arms_armor.lst:40  Chain Shirt -> BONUS:COMBAT|AC|4|TYPE=Armor, MAXDEX:4
 //   cr_feats.lst:53             Dodge       -> BONUS:COMBAT|AC|1|TYPE=Dodge
@@ -277,6 +285,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
+
+    validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
     PilotBaseChassisComputation {
         ability_modifiers,
@@ -626,6 +636,66 @@ fn explain_fighter_class_features(
                  {ARMOR_TRAINING_1_MAX_DEX_INCREASE} (from {CHAIN_SHIRT_MAX_DEX} to {raised_max_dex})"
             ),
         });
+    }
+}
+
+/// The canonical Human Fighter feat-choice selections this slice preserves on the
+/// deterministic level-1/2/3 seam, as `(choice_set_id, canonical_selection_id)` pairs.
+/// Any named slot present but deviating from its canonical selection is claim-blocked.
+/// A slot absent for the chosen level (e.g. the level-2 bonus feat at level 1) is not
+/// fabricated.
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 4] = [
+    (LEVEL_1_CHARACTER_FEAT_CHOICE_ID, POWER_ATTACK_FEAT_SELECTION),
+    (HUMAN_BONUS_FEAT_CHOICE_ID, DODGE_FEAT_ID),
+    (FIGHTER_BONUS_FEAT_CHOICE_ID, WEAPON_FOCUS_LONGSWORD_SELECTION),
+    (FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID, TOUGHNESS_FEAT_SELECTION),
+];
+
+/// Claim-block non-canonical feat-choice mutations on the deterministic Human Fighter
+/// levels 1-3 seam, while preserving the accepted canonical selections exactly.
+///
+/// This is deliberately not a general feat legality or prerequisite engine. It only knows
+/// the exact accepted deterministic feat-choice selections on the bounded Human Fighter
+/// seam. When one of those named choice slots is present but deviates from its canonical
+/// selection, it emits a claim-blocking diagnostic that names the offending choice identity
+/// and states plainly that alternative feat/prerequisite legality is outside this bounded
+/// proof without a general engine — instead of letting the non-canonical build ride through
+/// as a fabricated computed success.
+///
+/// It runs only for a supported single-class Human Fighter (levels 1-3); any other posture
+/// is already claim-blocked upstream and is left untouched here. It grounds no alternative
+/// feat effect and does not touch the read-only canonical Human ability-bonus target.
+fn validate_fighter_feat_choice_legality(
+    input: &CharacterInput,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if supported_fighter_level(input).is_none() {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    for (choice_set_id, canonical_selection) in CANONICAL_FIGHTER_FEAT_CHOICES {
+        let Some(selection) = human_choice_selection(input, choice_set_id) else {
+            // The slot is absent for this level; do not fabricate a required choice.
+            continue;
+        };
+        if selection != canonical_selection {
+            diagnostics.push(ComputationDiagnostic {
+                id: format!("feat_choice.non_canonical.{choice_set_id}"),
+                message: format!(
+                    "feat-choice slot {choice_set_id} on the deterministic Human Fighter levels \
+                     1-{MAX_SUPPORTED_FIGHTER_LEVEL} seam must be the canonical {canonical_selection}; \
+                     chosen selection {selection} is a non-canonical feat choice. This bounded slice \
+                     preserves only the accepted canonical Human Fighter feat-choice path and grounds \
+                     no general feat-effect or prerequisite engine, so alternative feat/prerequisite \
+                     legality is outside this proof and the non-canonical build is claim-blocked \
+                     rather than computed as a legal build"
+                ),
+                claim_blocking: true,
+            });
+        }
     }
 }
 
