@@ -22,10 +22,14 @@
 //!   slice proves the deterministic Human Paladin level-1 and Human Ranger level-1
 //!   hybrid chassis are recognized on the compute seam, but both stay blocked on the
 //!   named non-spell class-feature burden and the later spell burden,
+//! - the Sorcerer row is `Blocked` / `Computed`: the SD13-E4-F7 slice proves the
+//!   deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is
+//!   recognized on the compute seam, but it stays blocked on the bloodline burden and the
+//!   spontaneous known-spell / slot posture burden, and fabricates no spell math,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
-//! - every other core race, core class, and the broader non-Human interaction row
-//!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime
-//!   evidence yet).
+//! - every other core race, core class (including Bard and Wizard), and the broader
+//!   non-Human interaction row remain `Unverified` / `Observed` (named by SD-13 scope
+//!   only, no runtime evidence yet).
 
 /// Current support state for a single matrix row. Kept independent from
 /// [`EvidenceTier`]: how strong the evidence is does not by itself decide whether
@@ -185,6 +189,12 @@ const SD13_FIGHTER_LEVEL2_LEVEL3_TEST: &str = "tests/sd13_fighter_level2_level3_
 /// chassis baseline: direct computed chassis-recognition evidence that stays explicitly
 /// blocked on the named non-spell class-feature burden and the later spell burden.
 const SD13_HYBRID_LEVEL1_TEST: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs";
+
+/// SD13-E4-F7 dedicated proof surface for the bounded Human Sorcerer level-1 spell
+/// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
+/// that stays explicitly blocked on the bloodline burden and the spontaneous
+/// known-spell / slot posture burden.
+const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
@@ -433,13 +443,22 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.sorcerer.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:sorcerer",
-                dimension: "bounded class progression and spell burden",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E4 spellcasting slice",
+                dimension: "bounded spell-bearing class progression: the deterministic Human \
+                            Sorcerer level-1 spell baseline, with the bloodline burden and the \
+                            spontaneous known-spell / slot posture burden still blocked",
+                support_state: SupportState::Blocked,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_SORCERER_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
+                    deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is \
+                    recognized on the compute seam, but the row stays blocked: the bloodline burden \
+                    (bloodline selection, level-1 bloodline power, bloodline arcana, bonus \
+                    spells/feats/skills) is not implemented, and the spontaneous spell burden \
+                    (spontaneous spells known, spell slots per day, bonus spell slots, spell save DCs) \
+                    is not computed. No spell math is fabricated and no Sorcerer level 2+ is proven",
+                next_required_uplift: "SD13-E4 Sorcerer bloodline and spontaneous spell-slot slice, \
+                    then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.wizard.progression_and_spell_burden",

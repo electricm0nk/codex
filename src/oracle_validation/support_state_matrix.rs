@@ -120,10 +120,11 @@ fn unverified_row(
 
 /// The deterministic SD13-E1-F1 current-truth seed.
 ///
-/// Exactly 21 rows: 7 race, 12 class, 2 interaction, in roster order. Only the
-/// Human pilot race row, Fighter level-1 row, Fighter levels-2-10 row, Rogue
-/// row, and Human interaction row rise above `Observed`; none is `Supported`.
-/// Grounding references cite real SD-13 docs and existing GE-06 repo evidence.
+/// Exactly 21 rows: 7 race, 12 class, 2 interaction, in roster order. The Human
+/// pilot race row, Fighter level-1 row, Fighter levels-2-10 row, Rogue row, the
+/// Paladin and Ranger hybrid rows (SD13-E3-F6), the Sorcerer spell-baseline row
+/// (SD13-E4-F7), and the Human interaction row rise above `Observed`; none is
+/// `Supported`. Grounding references cite real SD-13 docs and existing repo evidence.
 pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
     let rows = vec![
         // --- Race rows (7) ---
@@ -265,27 +266,57 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
             "bounded class progression",
             "SD13-E3 martial progression slice",
         ),
-        unverified_row(
-            "class.paladin.hybrid_chassis_and_spell_burden",
-            MatrixSubjectType::Class,
-            "class:paladin",
-            "bounded class progression and hybrid spell burden",
-            "SD13-E3 then SD13-E4",
-        ),
-        unverified_row(
-            "class.ranger.hybrid_chassis_and_spell_burden",
-            MatrixSubjectType::Class,
-            "class:ranger",
-            "bounded class progression and hybrid spell burden",
-            "SD13-E3 then SD13-E4",
-        ),
-        unverified_row(
-            "class.sorcerer.progression_and_spell_burden",
-            MatrixSubjectType::Class,
-            "class:sorcerer",
-            "bounded class progression and spell burden",
-            "SD13-E4 spellcasting slice",
-        ),
+        // SD13-E3-F6 accepted hybrid truth, mirrored here so the oracle-validation carrier
+        // does not lag the rules-core carrier and leave contradictory Paladin/Ranger rows.
+        SupportStateRow {
+            row_id: "class.paladin.hybrid_chassis_and_spell_burden".to_owned(),
+            subject_type: MatrixSubjectType::Class,
+            subject_id: "class:paladin".to_owned(),
+            dimension: "bounded hybrid class progression: the deterministic Human Paladin level-1 chassis baseline, with the non-spell class-feature burden and the later spell burden still blocked"
+                .to_owned(),
+            support_state: SupportState::Blocked,
+            evidence_tier: EvidenceTier::Computed,
+            grounding_ref: "tests/sd13_hybrid_level1_chassis_baseline.rs".to_owned(),
+            blocker_or_lossiness_note: Some(
+                "SD13-E3-F6 leaves direct computed evidence that the deterministic Human Paladin level-1 hybrid chassis is recognized on the compute seam, but the row stays blocked: the non-spell class-feature burden (smite evil, lay on hands, divine grace, mercy) is not implemented, and the later paladin spell burden (spell slots, spell source, spells known/prepared) is deferred to SD13-E4. No Paladin level 2+ is proven."
+                    .to_owned(),
+            ),
+            next_required_uplift: "SD13-E3 paladin class-feature slice, then SD13-E4 spell burden"
+                .to_owned(),
+        },
+        SupportStateRow {
+            row_id: "class.ranger.hybrid_chassis_and_spell_burden".to_owned(),
+            subject_type: MatrixSubjectType::Class,
+            subject_id: "class:ranger".to_owned(),
+            dimension: "bounded hybrid class progression: the deterministic Human Ranger level-1 chassis baseline, with the non-spell class-feature burden and the later spell burden still blocked"
+                .to_owned(),
+            support_state: SupportState::Blocked,
+            evidence_tier: EvidenceTier::Computed,
+            grounding_ref: "tests/sd13_hybrid_level1_chassis_baseline.rs".to_owned(),
+            blocker_or_lossiness_note: Some(
+                "SD13-E3-F6 leaves direct computed evidence that the deterministic Human Ranger level-1 hybrid chassis is recognized on the compute seam, but the row stays blocked: the non-spell class-feature burden (favored enemy, combat style, skill/tracking) is not implemented, and the later ranger spell burden (spell slots, spell source, spells known/prepared) is deferred to SD13-E4. No Ranger level 2+ is proven."
+                    .to_owned(),
+            ),
+            next_required_uplift: "SD13-E3 ranger class-feature slice, then SD13-E4 spell burden"
+                .to_owned(),
+        },
+        // SD13-E4-F7 accepted Sorcerer spell-baseline truth, aligned with the rules-core carrier.
+        SupportStateRow {
+            row_id: "class.sorcerer.progression_and_spell_burden".to_owned(),
+            subject_type: MatrixSubjectType::Class,
+            subject_id: "class:sorcerer".to_owned(),
+            dimension: "bounded spell-bearing class progression: the deterministic Human Sorcerer level-1 spell baseline, with the bloodline burden and the spontaneous known-spell / slot posture burden still blocked"
+                .to_owned(),
+            support_state: SupportState::Blocked,
+            evidence_tier: EvidenceTier::Computed,
+            grounding_ref: "tests/sd13_sorcerer_level1_spell_baseline.rs".to_owned(),
+            blocker_or_lossiness_note: Some(
+                "SD13-E4-F7 leaves direct computed evidence that the deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is recognized on the compute seam, but the row stays blocked: the bloodline burden (bloodline selection, level-1 bloodline power, bloodline arcana, bonus spells/feats/skills) is not implemented, and the spontaneous spell burden (spontaneous spells known, spell slots per day, bonus spell slots, spell save DCs) is not computed. No spell math is fabricated and no Sorcerer level 2+ is proven."
+                    .to_owned(),
+            ),
+            next_required_uplift: "SD13-E4 Sorcerer bloodline and spontaneous spell-slot slice, then level-2+ progression"
+                .to_owned(),
+        },
         unverified_row(
             "class.wizard.progression_and_spell_burden",
             MatrixSubjectType::Class,
