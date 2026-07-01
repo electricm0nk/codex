@@ -253,6 +253,54 @@ fn every_non_fighter_non_rogue_class_row_is_unverified_and_observed() {
 }
 
 #[test]
+fn human_race_row_makes_named_pilot_seam_explicit() {
+    let matrix = matrix();
+    let human = row(&matrix, "race.human.pilot_semantics");
+    // The Human race row must ground to the live compute surface that now makes the
+    // race seam explicit, not merely to chosen-input fixture text.
+    assert!(
+        human.grounding_ref.contains("pilot_compute"),
+        "Human race row must ground to the compute surface that makes the seam explicit: {}",
+        human.grounding_ref
+    );
+    // The dimension must name the two grounded Human pilot pressures explicitly so the
+    // seam is legible rather than incidental.
+    assert!(
+        human.dimension.contains("ability-bonus") && human.dimension.contains("bonus-feat"),
+        "Human race row dimension must name the ability-bonus and bonus-feat seam: {}",
+        human.dimension
+    );
+    // The broader Human racial burden must stay visibly unverified.
+    assert!(
+        !human.blocker_or_lossiness_note.is_empty(),
+        "Human race row must keep a non-empty note about the still-unverified Human burden"
+    );
+}
+
+#[test]
+fn human_interaction_row_names_both_pressures_and_stays_distinct_from_race() {
+    let matrix = matrix();
+    let interaction = row(
+        &matrix,
+        "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
+    );
+    let human = row(&matrix, "race.human.pilot_semantics");
+    // The named interaction seam must stay a distinct subject from the Human race row.
+    assert_eq!(interaction.subject_type, MatrixSubjectType::Interaction);
+    assert_ne!(
+        interaction.subject_id, human.subject_id,
+        "named interaction truth must stay distinct from the Human race row"
+    );
+    // The dimension itself must explicitly name both Human pressures, not leave them
+    // implied only by the blocker note.
+    assert!(
+        interaction.dimension.contains("bonus-feat") && interaction.dimension.contains("ability-bonus"),
+        "interaction row dimension must explicitly name both named Human pressures: {}",
+        interaction.dimension
+    );
+}
+
+#[test]
 fn human_interaction_row_is_partial_and_computed() {
     let matrix = matrix();
     let interaction = row(
