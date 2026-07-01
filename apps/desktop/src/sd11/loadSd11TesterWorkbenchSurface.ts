@@ -71,8 +71,55 @@ export async function loadSd11TesterWorkbenchSurface(
   context: Sd11WorkbenchRuntimeContext,
   dependencies: Sd11WorkbenchDependencies
 ): Promise<Sd11TesterWorkbenchSurface> {
-  const releaseTruthPromise = dependencies.loadSd12ReleaseTruth(buildReleaseTruthRequest(context));
+  const releaseTruthRequest = buildReleaseTruthRequest(context);
+  const releaseTruthPromise = dependencies.loadSd12ReleaseTruth(releaseTruthRequest).catch((cause: unknown) => {
+    const reason = `Release-truth bridge failed: ${formatError(cause)}`;
+    const normalised = releaseTruthRequest.platformLabel.trim().toLowerCase();
+    const platformTier =
+      normalised === 'linux'
+        ? 'first-class'
+        : normalised === 'macos'
+          ? 'second-class'
+          : normalised === 'windows'
+            ? 'third-class'
+            : 'unknown';
 
+    return {
+      truth: {
+        kind: 'check-failed' as const,
+        reason,
+        buildLabel: releaseTruthRequest.buildLabel,
+        version: releaseTruthRequest.buildVersion,
+      },
+      updateAction: {
+        state: 'check-failed' as const,
+        headline: 'Update check failed',
+        detail: reason,
+        platformLabel: releaseTruthRequest.platformLabel,
+        platformTier,
+        testerChannelLabel: releaseTruthRequest.testerChannelLabel,
+        automaticEligible: false,
+        manualReason: null,
+        replacementTarget: null,
+        recoveryDirection: null,
+        checkedBuildLabel: releaseTruthRequest.buildLabel,
+        checkedVersion: releaseTruthRequest.buildVersion,
+        operatorPromotionPathReference: null,
+        evidenceNotes: [],
+      },
+      issueCapture: {
+        releaseUnitId: null,
+        sourceRevision: null,
+        manifestPath: null,
+        updateEligibilityState: 'check-failed',
+        trustGateStatus: 'unverified-runtime-check-failed',
+        replacementReleaseId: null,
+        officialSurface:
+          'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+        localBuildAuthority: reason,
+      },
+    };
+  });
   try {
     const [snapshot, releaseTruth] = await Promise.all([
       dependencies.loadGe08AuthoringWorkbench(DEFAULT_REQUEST),
