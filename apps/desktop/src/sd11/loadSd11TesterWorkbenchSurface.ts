@@ -128,7 +128,8 @@ const SUPPORT_DEBT_LEAD =
   'Read-only SD-13 support-state and debt truth for the current bounded PF1 Core Rulebook roster. ' +
   'Support state, evidence tier, blocker/lossiness notes, grounding references, and next uplifts come ' +
   'straight from the SD-13 support-state matrix. Nothing here is promoted by app, build, or platform ' +
-  'success, and no blocked, partial, lossy, or unverified row is hidden.';
+  'success, and no blocked, partial, lossy, or unverified row is hidden. SD13-E6-F12 remains deferred; ' +
+  'this section does not capture evidence, submit issues, persist support truth, or alter update behavior.';
 
 function mapSupportDebtRow(row: Sd13SupportStateRow): Sd11SupportDebtRow {
   return {

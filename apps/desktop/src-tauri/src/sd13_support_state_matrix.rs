@@ -10,6 +10,10 @@
 //! upstream carrier keeps them, so a `Computed`/`Partial` row is never silently
 //! read as `Supported`. The tester-facing wording is drawn from the SD-13
 //! support-language contract, not invented in the UI.
+//!
+//! SD13-E6-F12 remains explicitly deferred: this bridge presents the current
+//! matrix debt only and does not add evidence capture, issue submission, or
+//! persistence/update coupling.
 
 use serde::Serialize;
 

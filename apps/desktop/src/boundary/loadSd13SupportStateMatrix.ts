@@ -8,6 +8,10 @@ import { invoke } from '@tauri-apps/api/core';
  * truth verbatim. It performs no rules computation, filtering, promotion, or
  * feedback/issue-transport work, and it must never treat app/build success as
  * proof that a roster row is `supported`.
+ *
+ * SD13-E6-F12 remains explicitly deferred: this boundary does not capture
+ * evidence, submit issues, persist support truth, or couple matrix debt to
+ * update behavior.
  */
 
 export type Sd13SupportStateToken =
