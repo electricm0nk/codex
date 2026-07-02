@@ -5,16 +5,13 @@
 //! produce a stable authored-source diff, and refuse export when the package is
 //! not yet valid.
 
-#[path = "../src/homebrew_authoring/mod.rs"]
-mod homebrew_authoring;
-
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use homebrew_authoring::package_manifest::PackageValidationState;
-use homebrew_authoring::package_store::PackageStore;
-use homebrew_authoring::SourcePackage;
+use codex::homebrew_authoring::package_manifest::PackageValidationState;
+use codex::homebrew_authoring::package_store::PackageStore;
+use codex::homebrew_authoring::SourcePackage;
 
 fn fixture_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/ge08/guard-stance-package")

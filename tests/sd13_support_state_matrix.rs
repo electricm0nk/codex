@@ -146,7 +146,6 @@ fn fighter_levels_2_10_row_is_partial_and_computed_and_names_what_remains() {
     // The SD13-E3 tranche moves the row from Blocked to a bounded Partial posture,
     // but it must never be silently promoted to Supported.
     assert_eq!(partial.support_state, SupportState::Partial);
-    assert_ne!(partial.support_state, SupportState::Supported);
     assert_eq!(partial.evidence_tier, EvidenceTier::Computed);
     assert!(
         !partial.blocker_or_lossiness_note.is_empty(),
