@@ -1,10 +1,5 @@
 import { loadSd11TesterWorkbenchSurface } from './loadSd11TesterWorkbenchSurface';
-
-function assertEqual<T>(actual: T, expected: T, message: string) {
-  if (actual !== expected) {
-    throw new Error(`${message}: expected ${String(expected)}, got ${String(actual)}`);
-  }
-}
+import { assertEqual } from '../testSupport/asserts';
 
 async function main() {
   await verifiesRealGe08SnapshotSurface();

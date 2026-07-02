@@ -8,7 +8,7 @@
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
-use codex::rules_core::pilot_failure::FailureClassifier;
+use codex::rules_core::pilot_failure::{FailureClassifier, PrimaryOwner};
 
 const DETERMINISTIC_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -24,37 +24,6 @@ fn load(fixture: &str) -> CharacterInput {
     result
         .character_input
         .expect("valid fixture should produce a character input record")
-}
-
-#[test]
-fn classifier_preserves_full_primary_owner_vocabulary() {
-    let input = load(DETERMINISTIC_FIXTURE);
-    let receipt = build_pilot_headless_receipt(&input);
-
-    let classifier = FailureClassifier::new(&receipt);
-
-    // The classifier must expose the full five-owner vocabulary in its result type.
-    // This is proven by the fact that the classifier can produce each of these
-    // results under appropriate conditions.
-    match classifier.primary_owner() {
-        PrimaryOwner::ModelFlaw => {}
-        PrimaryOwner::ImporterFlaw => {}
-        PrimaryOwner::EngineFlaw => {}
-        PrimaryOwner::OracleGap => {}
-        PrimaryOwner::UiGap => {}
-    }
-}
-
-#[test]
-fn classifier_returns_required_primary_owner() {
-    let input = load(DETERMINISTIC_FIXTURE);
-    let receipt = build_pilot_headless_receipt(&input);
-
-    let classifier = FailureClassifier::new(&receipt);
-
-    // The classifier must always produce exactly one primary owner.
-    let _owner = classifier.primary_owner();
-    // No panic means the classifier has a valid primary owner.
 }
 
 #[test]
@@ -148,29 +117,3 @@ fn bounded_human_race_note_stays_non_blocking_and_keeps_oracle_gap() {
         "the bounded Human race note must not change the computed-receipt owner mapping"
     );
 }
-
-#[test]
-fn no_integration_issue_sink_exists() {
-    let input = load(DETERMINISTIC_FIXTURE);
-    let receipt = build_pilot_headless_receipt(&input);
-
-    let classifier = FailureClassifier::new(&receipt);
-
-    // The classifier must never return IntegrationIssue or any vague catch-all
-    // terminal bucket. Every result must be one of the five specific owners.
-    let owner = classifier.primary_owner();
-
-    // This test passes by virtue of the fact that PrimaryOwner has exactly five
-    // variants and no IntegrationIssue. The match statement in
-    // `classifier_preserves_full_primary_owner_vocabulary` ensures exhaustiveness.
-    match owner {
-        PrimaryOwner::ModelFlaw
-        | PrimaryOwner::ImporterFlaw
-        | PrimaryOwner::EngineFlaw
-        | PrimaryOwner::OracleGap
-        | PrimaryOwner::UiGap => {}
-    }
-}
-
-// Re-export PrimaryOwner for test convenience.
-use codex::rules_core::pilot_failure::PrimaryOwner;

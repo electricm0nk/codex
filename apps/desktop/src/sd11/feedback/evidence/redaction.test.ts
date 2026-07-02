@@ -5,18 +5,7 @@ import {
   REDACTION_POLICY_NOTICE,
   type EvidenceAttachment,
 } from './redaction';
-
-function assertEqual<T>(actual: T, expected: T, message: string) {
-  if (actual !== expected) {
-    throw new Error(`${message}: expected ${String(expected)}, got ${String(actual)}`);
-  }
-}
-
-function assert(condition: boolean, message: string) {
-  if (!condition) {
-    throw new Error(message);
-  }
-}
+import { assert, assertEqual } from '../../../testSupport/asserts';
 
 const baseAttachment: EvidenceAttachment = {
   id: 'a1',

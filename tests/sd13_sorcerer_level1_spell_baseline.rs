@@ -308,11 +308,7 @@ fn matrix_sorcerer_row_is_blocked_computed_and_names_both_burdens() {
 
     // Moves off the pure Unverified/Observed placeholder, but only to Blocked/Computed.
     assert_eq!(sorcerer.support_state, SupportState::Blocked);
-    assert_ne!(sorcerer.support_state, SupportState::Unverified);
-    assert_ne!(sorcerer.support_state, SupportState::Partial);
-    assert_ne!(sorcerer.support_state, SupportState::Supported);
     assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
-    assert_ne!(sorcerer.evidence_tier, EvidenceTier::Observed);
     assert_eq!(
         sorcerer.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

@@ -5,18 +5,7 @@ import {
   evidenceFieldByKey,
   type EvidenceFieldDescriptor,
 } from './evidenceFields';
-
-function assertEqual<T>(actual: T, expected: T, message: string) {
-  if (actual !== expected) {
-    throw new Error(`${message}: expected ${String(expected)}, got ${String(actual)}`);
-  }
-}
-
-function assert(condition: boolean, message: string) {
-  if (!condition) {
-    throw new Error(message);
-  }
-}
+import { assert, assertEqual } from '../../../testSupport/asserts';
 
 async function main() {
   catalogHasNoDuplicateKeys();
@@ -53,7 +42,17 @@ function bugAndEnhancementShareTheSameAutoCaptureSchema() {
     .sort();
   assertEqual(
     backbone.join(','),
-    ['buildLabel', 'channelSupportLabel', 'currentWorkflow', 'dataSourceIdentity', 'platformLabel'].sort().join(','),
+    [
+      'buildLabel',
+      'channelSupportLabel',
+      'currentWorkflow',
+      'dataSourceIdentity',
+      'localBuildAuthority',
+      'officialSurface',
+      'platformLabel',
+      'trustGateStatus',
+      'updateEligibilityState',
+    ].sort().join(','),
     'shared required auto backbone'
   );
 }

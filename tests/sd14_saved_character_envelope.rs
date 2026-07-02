@@ -259,3 +259,80 @@ fn sd14_envelope_missing_revision_id_fails_honestly() {
         err.message
     );
 }
+
+#[test]
+fn sd14_save_rejects_selected_choice_that_cannot_round_trip() {
+    // The fixture grammar renders a selected choice as
+    // `choice={choice_set_id}:{selection_id}` and the loader re-splits on colons,
+    // taking the first two segments as choice_set_id and the rest as selection_id.
+    // A choice whose ids do not match that segment shape would save fine and then
+    // reload as a *different* choice (or fail to load at all). Save must refuse it.
+    let root = fresh_temp_dir("sd14-choice-grammar");
+
+    // Loses a segment on reload: ("choice:fighter:bonus_feat", "feat:dodge")
+    // would come back as ("choice:fighter", "bonus_feat:feat:dodge").
+    let mut envelope = pilot_envelope();
+    envelope.character_input.chosen.selected_choices.push(
+        codex::rules_core::character_input::SelectedChoice {
+            choice_set_id: "choice:fighter:bonus_feat".to_owned(),
+            selection_id: "feat:dodge".to_owned(),
+        },
+    );
+    let err = SavedCharacterStore::save(&envelope, &root)
+        .expect_err("a selected choice that cannot round-trip must be rejected at save time");
+    assert!(
+        err.message.contains("choice_set_id"),
+        "error must name the offending field: {}",
+        err.message
+    );
+
+    // Too few segments in total: ("choice:bonus_feat", "dodge") saves as a line the
+    // loader rejects as incomplete.
+    let mut envelope = pilot_envelope();
+    envelope.character_input.chosen.selected_choices.push(
+        codex::rules_core::character_input::SelectedChoice {
+            choice_set_id: "choice:bonus_feat".to_owned(),
+            selection_id: "dodge".to_owned(),
+        },
+    );
+    let err = SavedCharacterStore::save(&envelope, &root)
+        .expect_err("a selected choice the loader would reject must be rejected at save time");
+    assert!(
+        err.message.contains("selection_id"),
+        "error must name the offending field: {}",
+        err.message
+    );
+
+    fs::remove_dir_all(&root).ok();
+}
+
+#[test]
+fn sd14_save_rejects_newlines_in_character_input_payload_strings() {
+    // envelope.txt metadata is already newline-checked; the character-input payload
+    // must be too, otherwise one field value can inject arbitrary key=value lines
+    // (e.g. a feat id that overrides race_id on reload).
+    let root = fresh_temp_dir("sd14-newline-injection");
+
+    let mut envelope = pilot_envelope();
+    envelope
+        .character_input
+        .chosen
+        .selected_feats
+        .push("feat:power_attack\nrace_id=race:orc".to_owned());
+
+    let err = SavedCharacterStore::save(&envelope, &root)
+        .expect_err("a payload string containing a newline must be rejected at save time");
+    assert!(
+        err.message.contains("newline"),
+        "error must explain the newline rejection: {}",
+        err.message
+    );
+
+    // The malicious payload must not have been persisted.
+    assert!(
+        !root.join("authoritative_character_input.txt").exists(),
+        "no character-input file may be written when validation fails"
+    );
+
+    fs::remove_dir_all(&root).ok();
+}

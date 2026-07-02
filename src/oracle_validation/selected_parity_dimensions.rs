@@ -43,7 +43,19 @@ impl SelectedParityDimensions {
     /// Projects a merged headless receipt into selected parity dimensions for
     /// the mandatory pilot dimensions only.
     pub fn from_receipt(receipt: &PilotHeadlessReceipt) -> Self {
-        let mut dimensions = Vec::new();
+        let computation = &receipt.computation;
+        let numeric_dimensions: [(&str, i16); 8] = [
+            ("combat.baseline_melee_attack_bonus", computation.baseline_melee_attack_bonus),
+            ("defense.baseline_armor_class", computation.baseline_armor_class),
+            ("defense.total_save.fortitude", computation.total_saves.fortitude),
+            ("defense.total_save.reflex", computation.total_saves.reflex),
+            ("defense.total_save.will", computation.total_saves.will),
+            ("skill.selected_modifier.climb", computation.selected_skill_modifiers.climb),
+            ("skill.selected_modifier.intimidate", computation.selected_skill_modifiers.intimidate),
+            ("skill.selected_modifier.swim", computation.selected_skill_modifiers.swim),
+        ];
+
+        let mut dimensions = Vec::with_capacity(numeric_dimensions.len() + 1);
 
         // character.identity dimension: preserves pilot identity from the receipt
         if let Some(case_id) = &receipt.case_id {
@@ -55,69 +67,14 @@ impl SelectedParityDimensions {
             });
         }
 
-        // combat.baseline_melee_attack_bonus
-        dimensions.push(SelectedDimension {
-            id: "combat.baseline_melee_attack_bonus".to_string(),
-            value_string: None,
-            value_i16: Some(receipt.computation.baseline_melee_attack_bonus),
-            source_package_id: receipt.source_package_id.clone(),
-        });
-
-        // defense.baseline_armor_class
-        dimensions.push(SelectedDimension {
-            id: "defense.baseline_armor_class".to_string(),
-            value_string: None,
-            value_i16: Some(receipt.computation.baseline_armor_class),
-            source_package_id: receipt.source_package_id.clone(),
-        });
-
-        // defense.total_save.fortitude
-        dimensions.push(SelectedDimension {
-            id: "defense.total_save.fortitude".to_string(),
-            value_string: None,
-            value_i16: Some(receipt.computation.total_saves.fortitude),
-            source_package_id: receipt.source_package_id.clone(),
-        });
-
-        // defense.total_save.reflex
-        dimensions.push(SelectedDimension {
-            id: "defense.total_save.reflex".to_string(),
-            value_string: None,
-            value_i16: Some(receipt.computation.total_saves.reflex),
-            source_package_id: receipt.source_package_id.clone(),
-        });
-
-        // defense.total_save.will
-        dimensions.push(SelectedDimension {
-            id: "defense.total_save.will".to_string(),
-            value_string: None,
-            value_i16: Some(receipt.computation.total_saves.will),
-            source_package_id: receipt.source_package_id.clone(),
-        });
-
-        // skill.selected_modifier.climb
-        dimensions.push(SelectedDimension {
-            id: "skill.selected_modifier.climb".to_string(),
-            value_string: None,
-            value_i16: Some(receipt.computation.selected_skill_modifiers.climb),
-            source_package_id: receipt.source_package_id.clone(),
-        });
-
-        // skill.selected_modifier.intimidate
-        dimensions.push(SelectedDimension {
-            id: "skill.selected_modifier.intimidate".to_string(),
-            value_string: None,
-            value_i16: Some(receipt.computation.selected_skill_modifiers.intimidate),
-            source_package_id: receipt.source_package_id.clone(),
-        });
-
-        // skill.selected_modifier.swim
-        dimensions.push(SelectedDimension {
-            id: "skill.selected_modifier.swim".to_string(),
-            value_string: None,
-            value_i16: Some(receipt.computation.selected_skill_modifiers.swim),
-            source_package_id: receipt.source_package_id.clone(),
-        });
+        dimensions.extend(numeric_dimensions.into_iter().map(|(id, value)| {
+            SelectedDimension {
+                id: id.to_string(),
+                value_string: None,
+                value_i16: Some(value),
+                source_package_id: receipt.source_package_id.clone(),
+            }
+        }));
 
         Self {
             dimensions,

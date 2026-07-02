@@ -3,6 +3,7 @@ import type {
   Sd11TesterChannelLabel,
   Sd11UpdateReleaseTruth,
 } from '../sd11/update/updateActionModel';
+import { formatError, hasTauriRuntime } from './runtime';
 
 /**
  * Narrow read-only boundary for the SD-11 check/update action.
@@ -18,14 +19,6 @@ export interface Sd11UpdateActionRequest {
   buildLabel: string;
   platformLabel: string;
   testerChannelLabel: Sd11TesterChannelLabel;
-}
-
-function hasTauriRuntime(): boolean {
-  return typeof window !== 'undefined' && ('__TAURI_INTERNALS__' in window || '__TAURI__' in window);
-}
-
-function formatError(cause: unknown): string {
-  return cause instanceof Error ? cause.message : String(cause);
 }
 
 export async function loadSd11UpdateAction(

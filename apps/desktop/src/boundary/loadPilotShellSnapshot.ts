@@ -1,4 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
+import { formatError, hasTauriRuntime } from './runtime';
 
 export type ReceiptStatus = 'Computed' | 'Blocked' | 'Unknown/Unavailable';
 
@@ -26,14 +27,6 @@ const scaffoldPlaceholder: PilotShellSnapshot = {
   dataSource: 'scaffold-placeholder',
   note: 'Future slices should replace this placeholder with a read-only Tauri command backed by the headless core.',
 };
-
-function hasTauriRuntime(): boolean {
-  return typeof window !== 'undefined' && ('__TAURI_INTERNALS__' in window || '__TAURI__' in window);
-}
-
-function formatError(cause: unknown): string {
-  return cause instanceof Error ? cause.message : String(cause);
-}
 
 export async function loadPilotShellSnapshot(): Promise<PilotShellSnapshot> {
   if (!hasTauriRuntime()) {

@@ -11,6 +11,7 @@
  */
 
 import type { ComposedBugReport, GithubBugIssueDraft } from './composeBugReport';
+import { formatError } from '../../../boundary/runtime';
 
 /** Result returned by an injected GitHub bug-report transport. */
 export interface BugReportTransportResult {
@@ -152,6 +153,3 @@ export async function submitBugReport(
   };
 }
 
-function formatError(cause: unknown): string {
-  return cause instanceof Error ? cause.message : String(cause);
-}

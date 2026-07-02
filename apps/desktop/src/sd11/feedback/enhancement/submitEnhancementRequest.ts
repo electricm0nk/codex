@@ -14,6 +14,7 @@
  */
 
 import type { ComposedEnhancementRequest, GithubEnhancementIssueDraft } from './composeEnhancementRequest';
+import { formatError } from '../../../boundary/runtime';
 
 /** Result returned by an injected GitHub enhancement-request transport. */
 export interface EnhancementRequestTransportResult {
@@ -132,7 +133,7 @@ export async function submitEnhancementRequest(
   if (!result.ok || issueUrl.length === 0) {
     const detail = result.error
       ? `: ${result.error}`
-      : rawIssueUrl.length
+      : result.ok && rawIssueUrl.length
         ? ': invalid issueUrl returned by transport'
         : '';
     return {
@@ -155,6 +156,3 @@ export async function submitEnhancementRequest(
   };
 }
 
-function formatError(cause: unknown): string {
-  return cause instanceof Error ? cause.message : String(cause);
-}

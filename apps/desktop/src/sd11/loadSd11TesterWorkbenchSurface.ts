@@ -23,6 +23,7 @@ import {
   type Sd11SupportTier,
   type Sd11WorkbenchStatus,
 } from './status/createSd11WorkbenchStatus';
+import { formatError } from '../boundary/runtime';
 
 export interface Sd11WorkbenchRuntimeContext {
   buildVersion: string;
@@ -613,6 +614,3 @@ function formatBaselineArmorClass(
   return `Blocked: ${baselineArmorClass.reason}`;
 }
 
-function formatError(cause: unknown): string {
-  return cause instanceof Error ? cause.message : String(cause);
-}

@@ -193,7 +193,6 @@ fn broken_prerequisite_yields_blocked_receipt() {
 
     // The integrated path is blocked, not computed.
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
-    assert_ne!(receipt.status, HeadlessReceiptStatus::Computed);
 
     // At least one claim-blocking diagnostic is preserved.
     assert!(

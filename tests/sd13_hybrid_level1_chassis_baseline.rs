@@ -304,8 +304,6 @@ fn matrix_paladin_row_is_blocked_computed_and_names_both_burdens() {
 
     // Moves off the pure Unverified/Observed placeholder, but only to Blocked/Computed.
     assert_eq!(paladin.support_state, SupportState::Blocked);
-    assert_ne!(paladin.support_state, SupportState::Partial);
-    assert_ne!(paladin.support_state, SupportState::Supported);
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         paladin.evidence_freshness,
@@ -337,8 +335,6 @@ fn matrix_ranger_row_is_blocked_computed_and_names_both_burdens() {
         .expect("ranger hybrid row must exist");
 
     assert_eq!(ranger.support_state, SupportState::Blocked);
-    assert_ne!(ranger.support_state, SupportState::Partial);
-    assert_ne!(ranger.support_state, SupportState::Supported);
     assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         ranger.evidence_freshness,

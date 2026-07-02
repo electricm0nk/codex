@@ -55,7 +55,7 @@ fn supported_deterministic_pilot_yields_selected_dimensions() {
             .dimensions
             .iter()
             .find(|d| d.id == id)
-            .expect(&format!("dimension {id} should exist"))
+            .unwrap_or_else(|| panic!("dimension {id} should exist"))
     };
 
     // character.identity preserves pilot identity from the merged receipt.

@@ -36,6 +36,7 @@ pub struct PackageStore;
 impl PackageStore {
     pub fn save(package: &SourcePackage, root: &Path) -> Result<(), PackageStoreError> {
         let normalized = package.normalized_for_persistence();
+        validate_persistable(&normalized)?;
         fs::create_dir_all(root).map_err(|err| io_error(root, err))?;
         ensure_layout(root)?;
         clear_known_record_files(root)?;
@@ -75,21 +76,15 @@ impl PackageStore {
         let left_map = file_map(&left.normalized_for_persistence());
         let right_map = file_map(&right.normalized_for_persistence());
 
-        let mut changed_files = Vec::new();
-        let mut keys = left_map.keys().cloned().collect::<Vec<_>>();
-        for key in right_map.keys() {
-            if !keys.iter().any(|existing| existing == key) {
-                keys.push(key.clone());
-            }
-        }
-        keys.sort();
-        keys.dedup();
+        // BTreeMap keys are already sorted; a set union keeps the diff ordered.
+        let keys: std::collections::BTreeSet<&String> =
+            left_map.keys().chain(right_map.keys()).collect();
 
-        for key in keys {
-            if left_map.get(&key) != right_map.get(&key) {
-                changed_files.push(key);
-            }
-        }
+        let changed_files = keys
+            .into_iter()
+            .filter(|key| left_map.get(*key) != right_map.get(*key))
+            .cloned()
+            .collect();
 
         PackageDiff { changed_files }
     }
@@ -176,6 +171,90 @@ fn file_map(package: &SourcePackage) -> BTreeMap<String, String> {
     }
 
     files
+}
+
+/// Rejects a package whose rendered `key: value` lines the loader could not
+/// read back. `save()` deliberately persists Draft/Invalid packages, so an
+/// empty or multi-line string value would leave an unloadable bundle on disk
+/// with no warning at write time.
+fn validate_persistable(package: &SourcePackage) -> Result<(), PackageStoreError> {
+    let field = |name: &str, value: &str| -> Result<(), PackageStoreError> {
+        if value.contains('\n') || value.contains('\r') {
+            return Err(parse_error(format!(
+                "{name} contains a newline/carriage return and cannot be persisted"
+            )));
+        }
+        if value.trim().is_empty() {
+            return Err(parse_error(format!(
+                "{name} is empty and would not survive a save/load round trip"
+            )));
+        }
+        Ok(())
+    };
+
+    let manifest = &package.manifest;
+    field("manifest package_id", &manifest.package_id)?;
+    field("manifest package_title", &manifest.package_title)?;
+    field("manifest game_system_id", &manifest.game_system_id)?;
+    field("manifest package_version", &manifest.package_version)?;
+    for dependency in &manifest.depends_on {
+        field("manifest depends_on entry", dependency)?;
+    }
+    for kind in &manifest.supported_object_kinds {
+        field("manifest supported_object_kinds entry", kind)?;
+    }
+    field("manifest provenance_policy", &manifest.provenance_policy)?;
+    field("manifest proof_binding case_id", &manifest.proof_binding.case_id)?;
+    field("manifest proof_binding slot", &manifest.proof_binding.slot)?;
+    field("manifest proof_binding remove", &manifest.proof_binding.remove)?;
+    field("manifest proof_binding add", &manifest.proof_binding.add)?;
+
+    if let Some(feat) = &package.feat {
+        field("feat stable_id", &feat.stable_id)?;
+        field("feat package_id", &feat.package_id)?;
+        field("feat display_name", &feat.display_name)?;
+        field("feat object_kind", &feat.object_kind)?;
+        field("feat substitutes_for", &feat.substitutes_for)?;
+        for effect_id in &feat.effect_ids {
+            field("feat effect_ids entry", effect_id)?;
+        }
+        for prerequisite_id in &feat.prerequisite_ids {
+            field("feat prerequisite_ids entry", prerequisite_id)?;
+        }
+        field("feat semantic_intent", &feat.semantic_intent)?;
+    }
+
+    if let Some(effect) = &package.effect {
+        field("effect stable_id", &effect.stable_id)?;
+        field("effect owning_feat_id", &effect.owning_feat_id)?;
+        field("effect target_family", &effect.target_family)?;
+        field("effect modifier_type", &effect.modifier_type)?;
+        field("effect stacking_posture", &effect.stacking_posture)?;
+    }
+
+    if let Some(prerequisite) = &package.prerequisite {
+        field("prerequisite stable_id", &prerequisite.stable_id)?;
+        field("prerequisite owning_feat_id", &prerequisite.owning_feat_id)?;
+        field("prerequisite predicate", &prerequisite.predicate)?;
+    }
+
+    for entry in &package.provenance {
+        field("provenance stable_id", &entry.stable_id)?;
+        field("provenance source_package_id", &entry.source_package_id)?;
+        field("provenance canonical_target_id", &entry.canonical_target_id)?;
+        field("provenance canonical_target_field", &entry.canonical_target_field)?;
+        field("provenance authored_path", &entry.authored_path)?;
+        field("provenance source_system", &entry.source_system)?;
+        field("provenance support", &entry.support)?;
+    }
+
+    for diagnostic in &package.diagnostics {
+        field("diagnostic class", &diagnostic.class)?;
+        field("diagnostic message", &diagnostic.message)?;
+        field("diagnostic subject_ref", &diagnostic.subject_ref)?;
+    }
+
+    Ok(())
 }
 
 fn render_manifest(manifest: &PackageManifest) -> String {
@@ -317,7 +396,9 @@ fn parse_manifest(text: &str) -> Result<PackageManifest, PackageStoreError> {
         } else if line == "supported_object_kinds:" {
             section = ManifestSection::SupportedKinds;
         } else if let Some(value) = line.strip_prefix("validation_state: ") {
-            validation_state = PackageValidationState::parse(value);
+            validation_state = Some(PackageValidationState::parse(value).ok_or_else(|| {
+                parse_error(format!("manifest validation_state '{value}' is unsupported"))
+            })?);
             section = ManifestSection::TopLevel;
         } else if let Some(value) = line.strip_prefix("provenance_policy: ") {
             provenance_policy = Some(value.to_owned());
@@ -504,9 +585,10 @@ fn parse_provenance(text: &str) -> Result<Vec<ProvenanceEntry>, PackageStoreErro
             if let Some(parsed) = current.take() {
                 entries.push(parsed.finish()?);
             }
-            let mut next = ParsedProvenanceEntry::default();
-            next.stable_id = Some(value.to_owned());
-            current = Some(next);
+            current = Some(ParsedProvenanceEntry {
+                stable_id: Some(value.to_owned()),
+                ..Default::default()
+            });
         } else if let Some(rest) = line.strip_prefix("    ") {
             let (key, value) = split_field(rest)?;
             let Some(current) = current.as_mut() else {
@@ -542,9 +624,10 @@ fn parse_diagnostics(text: &str) -> Result<Vec<PackageDiagnostic>, PackageStoreE
             if let Some(parsed) = current.take() {
                 diagnostics.push(parsed.finish()?);
             }
-            let mut next = ParsedDiagnostic::default();
-            next.class = Some(value.to_owned());
-            current = Some(next);
+            current = Some(ParsedDiagnostic {
+                class: Some(value.to_owned()),
+                ..Default::default()
+            });
         } else if let Some(rest) = line.strip_prefix("    ") {
             let (key, value) = split_field(rest)?;
             let Some(current) = current.as_mut() else {

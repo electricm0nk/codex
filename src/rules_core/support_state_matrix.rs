@@ -175,7 +175,7 @@ const PILOT_COMPUTE_MODULE: &str = "src/rules_core/pilot_compute.rs";
 const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 
 /// GE-06 total saving throws proof. Also claim-blocks Rogue level 1 and Fighter
-/// level 2.
+/// level 4.
 const GE06_TOTAL_SAVES_TEST: &str = "tests/ge06_pilot_total_saves.rs";
 
 /// GE-06 pilot view-model projection proof over the bounded computed snapshot.

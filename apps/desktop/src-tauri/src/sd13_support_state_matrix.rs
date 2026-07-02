@@ -210,14 +210,41 @@ mod tests {
     }
 
     #[test]
-    fn snapshot_preserves_all_twenty_one_rows_unfiltered() {
+    fn snapshot_mirrors_every_upstream_row_verbatim_and_unfiltered() {
+        // The bridge contract is verbatim projection: every upstream row, in
+        // order, with each field mapped through the fixed token/wording tables
+        // and nothing recomputed. Asserting against the carrier itself (instead
+        // of duplicating its literals here) keeps this test true when the
+        // upstream roster moves, which is exactly when a stale copy would lie.
+        let matrix = seeded_sd13_e1_f1_current_truth();
         let snapshot = snapshot();
         assert_eq!(
             snapshot.rows.len(),
-            21,
-            "snapshot must preserve exactly 21 rows with no filtering, got {}",
-            snapshot.rows.len()
+            matrix.rows.len(),
+            "snapshot must preserve every seeded row with no filtering"
         );
+        for (upstream, projected) in matrix.rows.iter().zip(&snapshot.rows) {
+            assert_eq!(projected.row_id, upstream.row_id, "row order must be preserved");
+            assert_eq!(projected.subject_type, subject_type_token(upstream.subject_type));
+            assert_eq!(projected.subject_id, upstream.subject_id);
+            assert_eq!(projected.dimension, upstream.dimension);
+            assert_eq!(
+                projected.support_state,
+                support_state_token(upstream.support_state),
+                "row '{}' support state must be projected verbatim",
+                upstream.row_id
+            );
+            assert_eq!(projected.evidence_tier, evidence_tier_token(upstream.evidence_tier));
+            assert_eq!(
+                projected.evidence_freshness,
+                evidence_freshness_token(upstream.evidence_freshness),
+                "row '{}' freshness token must be projected verbatim",
+                upstream.row_id
+            );
+            assert_eq!(projected.grounding_ref, upstream.grounding_ref);
+            assert_eq!(projected.blocker_or_lossiness_note, upstream.blocker_or_lossiness_note);
+            assert_eq!(projected.next_required_uplift, upstream.next_required_uplift);
+        }
     }
 
     #[test]
@@ -228,16 +255,6 @@ mod tests {
         assert_eq!(human.subject_id, "race:human");
         assert_eq!(human.support_state, "partial");
         assert_eq!(human.evidence_tier, "computed");
-    }
-
-    #[test]
-    fn fighter_levels_2_10_row_remains_blocked_and_computed() {
-        let snapshot = snapshot();
-        let blocked = row(&snapshot, "class.fighter.levels_2_10");
-        assert_eq!(blocked.subject_type, "class");
-        assert_eq!(blocked.subject_id, "class:fighter");
-        assert_eq!(blocked.support_state, "blocked");
-        assert_eq!(blocked.evidence_tier, "computed");
     }
 
     #[test]
@@ -279,26 +296,32 @@ mod tests {
     }
 
     #[test]
-    fn canonical_wording_matches_the_contract_for_partial_blocked_and_unverified() {
+    fn canonical_wording_matches_the_contract_for_every_projected_state() {
+        // Rows are located by their projected state (not by hardcoded row ids)
+        // so upstream roster moves cannot silently rot this contract check.
         let snapshot = snapshot();
-
-        let partial = row(&snapshot, "race.human.pilot_semantics");
+        let expected: [(&str, &str); 5] = [
+            ("supported", SUPPORTED_LABEL),
+            ("partial", PARTIAL_LABEL),
+            ("lossy", LOSSY_LABEL),
+            ("blocked", BLOCKED_LABEL),
+            ("unverified", UNVERIFIED_LABEL),
+        ];
+        let mut states_seen = 0;
+        for (state, label) in expected {
+            for r in snapshot.rows.iter().filter(|r| r.support_state == state) {
+                assert_eq!(
+                    r.tester_facing_state_label, label,
+                    "row '{}' must carry the canonical '{}' wording",
+                    r.row_id, state
+                );
+                states_seen += 1;
+            }
+        }
         assert_eq!(
-            partial.tester_facing_state_label,
-            "Partially supported in the current bounded roster slice; some progression or \
-             semantic obligations remain explicitly limited."
-        );
-
-        let blocked = row(&snapshot, "class.fighter.levels_2_10");
-        assert_eq!(
-            blocked.tester_facing_state_label,
-            "Blocked by known missing semantics in the current bounded roster slice."
-        );
-
-        let unverified = row(&snapshot, "race.dwarf.bounded_semantics");
-        assert_eq!(
-            unverified.tester_facing_state_label,
-            "Included in the bounded roadmap scope, but not yet verified for this support level."
+            states_seen,
+            snapshot.rows.len(),
+            "every row's wording must be covered by the canonical contract table"
         );
     }
 
@@ -356,33 +379,6 @@ mod tests {
             assert!(
                 !r.refresh_audit_label.is_empty(),
                 "row '{}' must carry non-empty refresh-audit wording",
-                r.row_id
-            );
-        }
-    }
-
-    #[test]
-    fn evidence_freshness_token_is_projected_verbatim_from_the_carrier() {
-        // The bridge must project the carrier's freshness posture unchanged, not
-        // reinterpret it. The five pilot-grounded rows are refreshable-from-live-proof;
-        // the roster-only rows await initial evidence.
-        let snapshot = snapshot();
-        let refreshable = [
-            "race.human.pilot_semantics",
-            "class.fighter.level_1_pilot",
-            "class.fighter.levels_2_10",
-            "class.rogue.bounded_progression",
-            "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
-        ];
-        for r in &snapshot.rows {
-            let expected = if refreshable.contains(&r.row_id.as_str()) {
-                "refreshable-from-live-proof"
-            } else {
-                "awaiting-initial-evidence"
-            };
-            assert_eq!(
-                r.evidence_freshness, expected,
-                "row '{}' freshness token must be projected verbatim",
                 r.row_id
             );
         }

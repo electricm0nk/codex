@@ -90,10 +90,6 @@ fn loads_governed_pf1_human_fighter_fixture_with_deterministic_input_and_explici
         fixture.legacy_oracle.evidence_kind,
         OracleEvidenceKind::RuntimeBehaviorEvidence
     );
-    assert_ne!(
-        fixture.legacy_oracle.evidence_kind,
-        OracleEvidenceKind::StaticSourceTruth
-    );
 
     // Raw-output retention posture and SHA-256 are preserved exactly.
     assert_eq!(
@@ -108,7 +104,6 @@ fn loads_governed_pf1_human_fighter_fixture_with_deterministic_input_and_explici
     // Codex/new-system output is still unresolved; parity is not claimed.
     assert_eq!(fixture.codex_output.state, CodexOutputState::Unresolved);
     assert!(!fixture.parity_claimed());
-    assert_ne!(fixture.current_claim_status, ClaimTier::OracleChecked);
     assert_eq!(fixture.claim_target, ClaimTier::OracleChecked);
 
     // Closed pilot-input selections are no longer carried as provisional truth.
