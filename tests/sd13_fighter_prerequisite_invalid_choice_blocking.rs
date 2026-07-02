@@ -44,9 +44,9 @@ fn load(fixture: &str) -> CharacterInput {
 }
 
 /// Return the claim-blocking diagnostics that name the non-canonical feat-choice seam.
-fn feat_choice_blocks<'a>(
-    computation: &'a PilotBaseChassisComputation,
-) -> Vec<&'a codex::rules_core::pilot_compute::ComputationDiagnostic> {
+fn feat_choice_blocks(
+    computation: &PilotBaseChassisComputation,
+) -> Vec<&codex::rules_core::pilot_compute::ComputationDiagnostic> {
     computation
         .diagnostics
         .iter()

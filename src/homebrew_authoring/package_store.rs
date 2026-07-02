@@ -76,21 +76,15 @@ impl PackageStore {
         let left_map = file_map(&left.normalized_for_persistence());
         let right_map = file_map(&right.normalized_for_persistence());
 
-        let mut changed_files = Vec::new();
-        let mut keys = left_map.keys().cloned().collect::<Vec<_>>();
-        for key in right_map.keys() {
-            if !keys.iter().any(|existing| existing == key) {
-                keys.push(key.clone());
-            }
-        }
-        keys.sort();
-        keys.dedup();
+        // BTreeMap keys are already sorted; a set union keeps the diff ordered.
+        let keys: std::collections::BTreeSet<&String> =
+            left_map.keys().chain(right_map.keys()).collect();
 
-        for key in keys {
-            if left_map.get(&key) != right_map.get(&key) {
-                changed_files.push(key);
-            }
-        }
+        let changed_files = keys
+            .into_iter()
+            .filter(|key| left_map.get(*key) != right_map.get(*key))
+            .cloned()
+            .collect();
 
         PackageDiff { changed_files }
     }
@@ -591,9 +585,10 @@ fn parse_provenance(text: &str) -> Result<Vec<ProvenanceEntry>, PackageStoreErro
             if let Some(parsed) = current.take() {
                 entries.push(parsed.finish()?);
             }
-            let mut next = ParsedProvenanceEntry::default();
-            next.stable_id = Some(value.to_owned());
-            current = Some(next);
+            current = Some(ParsedProvenanceEntry {
+                stable_id: Some(value.to_owned()),
+                ..Default::default()
+            });
         } else if let Some(rest) = line.strip_prefix("    ") {
             let (key, value) = split_field(rest)?;
             let Some(current) = current.as_mut() else {
@@ -629,9 +624,10 @@ fn parse_diagnostics(text: &str) -> Result<Vec<PackageDiagnostic>, PackageStoreE
             if let Some(parsed) = current.take() {
                 diagnostics.push(parsed.finish()?);
             }
-            let mut next = ParsedDiagnostic::default();
-            next.class = Some(value.to_owned());
-            current = Some(next);
+            current = Some(ParsedDiagnostic {
+                class: Some(value.to_owned()),
+                ..Default::default()
+            });
         } else if let Some(rest) = line.strip_prefix("    ") {
             let (key, value) = split_field(rest)?;
             let Some(current) = current.as_mut() else {

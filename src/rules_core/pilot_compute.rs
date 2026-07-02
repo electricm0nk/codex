@@ -382,7 +382,7 @@ fn explain_human_race_seam(
 
     // Human ability-bonus interaction: the named choice targets one ability. Surface its
     // pressure through the already-computed modifier for exactly that ability.
-    if let Some(selection) = human_choice_selection(input, HUMAN_ABILITY_BONUS_CHOICE_ID) {
+    if let Some(selection) = choice_selection(input, HUMAN_ABILITY_BONUS_CHOICE_ID) {
         let ability = selection
             .strip_prefix(ABILITY_SELECTION_PREFIX)
             .unwrap_or(selection);
@@ -399,7 +399,7 @@ fn explain_human_race_seam(
 
     // Human bonus-feat interaction: the named choice grants a feat. Surface the grounded
     // Dodge armor-class contribution the deterministic baseline already relies on.
-    if let Some(selection) = human_choice_selection(input, HUMAN_BONUS_FEAT_CHOICE_ID) {
+    if let Some(selection) = choice_selection(input, HUMAN_BONUS_FEAT_CHOICE_ID) {
         let (value, detail) = if selection == DODGE_FEAT_ID {
             (
                 DODGE_AC_BONUS,
@@ -437,7 +437,7 @@ fn explain_human_race_seam(
 }
 
 /// Return the selection id chosen for the named choice set, if present.
-fn human_choice_selection<'a>(input: &'a CharacterInput, choice_set_id: &str) -> Option<&'a str> {
+fn choice_selection<'a>(input: &'a CharacterInput, choice_set_id: &str) -> Option<&'a str> {
     input
         .chosen
         .selected_choices
@@ -603,9 +603,9 @@ fn explain_fighter_class_features(
         return;
     };
 
-    if level >= 2 {
-        if let Some(selection) =
-            human_choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)
+    if level >= 2
+        && let Some(selection) =
+            choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)
         {
             explanations.push(ComputationExplanation {
                 id: "class_feature.fighter.level_2_bonus_feat".to_owned(),
@@ -619,7 +619,6 @@ fn explain_fighter_class_features(
                 ),
             });
         }
-    }
 
     let armor_training = fighter_armor_training(level);
     if armor_training.rank > 0 {
@@ -677,7 +676,7 @@ fn validate_fighter_feat_choice_legality(
     }
 
     for (choice_set_id, canonical_selection) in CANONICAL_FIGHTER_FEAT_CHOICES {
-        let Some(selection) = human_choice_selection(input, choice_set_id) else {
+        let Some(selection) = choice_selection(input, choice_set_id) else {
             // The slot is absent for this level; do not fabricate a required choice.
             continue;
         };
@@ -1216,11 +1215,7 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
         unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
     }
 
-    let fighter_bonus_selection = chosen
-        .selected_choices
-        .iter()
-        .find(|c| c.choice_set_id == FIGHTER_BONUS_FEAT_CHOICE_ID)
-        .map(|c| c.selection_id.as_str());
+    let fighter_bonus_selection = choice_selection(input, FIGHTER_BONUS_FEAT_CHOICE_ID);
     if fighter_bonus_selection != Some(WEAPON_FOCUS_LONGSWORD_SELECTION) {
         unmet.push(format!(
             "{FIGHTER_BONUS_FEAT_CHOICE_ID} selection must be {WEAPON_FOCUS_LONGSWORD_SELECTION}, got {fighter_bonus_selection:?}"
