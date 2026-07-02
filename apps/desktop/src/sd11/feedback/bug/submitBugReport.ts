@@ -129,7 +129,7 @@ export async function submitBugReport(
   if (!result.ok || issueUrl.length === 0) {
     const detail = result.error
       ? `: ${result.error}`
-      : rawIssueUrl.length
+      : result.ok && rawIssueUrl.length
         ? ': invalid issueUrl returned by transport'
         : '';
     return {
