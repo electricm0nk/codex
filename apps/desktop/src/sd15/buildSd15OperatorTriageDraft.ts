@@ -324,26 +324,26 @@ export function buildSd15OperatorTriageDraft(
     kind: 'sd15-operator-triage-receipt-draft',
     receiptIdentity: {
       receiptId: blankToNull(operator.receiptId),
-      intakeHandle: nullableToNull(operator.intakeHandle),
+      intakeHandle: blankToNull(operator.intakeHandle),
       createdAt: blankToNull(operator.createdAt),
       lastUpdatedAt: blankToNull(operator.lastUpdatedAt),
-      supersedesReceiptId: nullableToNull(operator.supersedesReceiptId),
-      evidenceOwner: nullableToNull(operator.evidenceOwner),
+      supersedesReceiptId: blankToNull(operator.supersedesReceiptId),
+      evidenceOwner: blankToNull(operator.evidenceOwner),
     },
     buildProvenanceContext: {
       buildLabelOrVersion: auto.buildLabel,
       testerChannelSupportLabel: auto.channelSupportLabel,
-      operatorProvenanceHandle: nullableToNull(operator.operatorProvenanceHandle),
-      commitOrBuildIdentity: nullableToNull(operator.commitOrBuildIdentity),
-      publicationOrAcquisitionHandle: nullableToNull(operator.publicationOrAcquisitionHandle),
-      rollbackWithdrawalContext: nullableToNull(operator.rollbackWithdrawalContext),
+      operatorProvenanceHandle: blankToNull(operator.operatorProvenanceHandle),
+      commitOrBuildIdentity: blankToNull(operator.commitOrBuildIdentity),
+      publicationOrAcquisitionHandle: blankToNull(operator.publicationOrAcquisitionHandle),
+      rollbackWithdrawalContext: blankToNull(operator.rollbackWithdrawalContext),
     },
     platformInstallContext: {
       platformOs: auto.platformLabel,
-      platformArchitecture: nullableToNull(operator.platformArchitecture),
-      packageInstallContext: nullableToNull(operator.packageInstallContext),
-      environmentKind: nullableToNull(operator.environmentKind),
-      environmentIdentityHandle: nullableToNull(operator.environmentIdentityHandle),
+      platformArchitecture: blankToNull(operator.platformArchitecture),
+      packageInstallContext: blankToNull(operator.packageInstallContext),
+      environmentKind: blankToNull(operator.environmentKind),
+      environmentIdentityHandle: blankToNull(operator.environmentIdentityHandle),
     },
     workflowAndAuthorityContext: {
       boundedWorkflowUnderTest: auto.currentWorkflow,
@@ -354,13 +354,13 @@ export function buildSd15OperatorTriageDraft(
       outcomeState,
       outcomeStateInput,
       adjacentAuthorityReferences,
-      sd13SupportStateContext: nullableToNull(operator.sd13SupportStateContext),
-      sd14PersistenceMigrationContext: nullableToNull(operator.sd14PersistenceMigrationContext),
+      sd13SupportStateContext: blankToNull(operator.sd13SupportStateContext),
+      sd14PersistenceMigrationContext: blankToNull(operator.sd14PersistenceMigrationContext),
     },
     claimStatement: {
       observedBehavior: fieldValue(evidence, 'observedBehavior'),
       expectedBehavior: fieldValue(evidence, 'expectedBehavior'),
-      claimSummary: nullableToNull(operator.claimSummary),
+      claimSummary: blankToNull(operator.claimSummary),
     },
     reproductionAndDiagnostics: {
       reproductionStatus,
@@ -368,7 +368,7 @@ export function buildSd15OperatorTriageDraft(
       reproductionStepsOrImpossibilityNote: blankToNull(operator.reproductionStepsOrImpossibilityNote),
       diagnosticsSummary: summarizeDiagnostics(evidence),
       evidenceSufficiencyNote: blankToNull(operator.evidenceSufficiencyNote),
-      nextRequiredSurface: nullableToNull(operator.nextRequiredSurface),
+      nextRequiredSurface: blankToNull(operator.nextRequiredSurface),
     },
     attachmentsAndRedaction: {
       redactionPosture: describeRedaction(evidence),
@@ -487,11 +487,11 @@ function buildPartitions(
 
   const operatorAdded: Sd15PartitionEntry[] = [
     operatorEntry('receiptId', 'Receipt id', blankToNull(operator.receiptId)),
-    operatorEntry('intakeHandle', 'Intake handle', nullableToNull(operator.intakeHandle)),
+    operatorEntry('intakeHandle', 'Intake handle', blankToNull(operator.intakeHandle)),
     operatorEntry('createdAt', 'Created at', blankToNull(operator.createdAt)),
     operatorEntry('lastUpdatedAt', 'Last updated at', blankToNull(operator.lastUpdatedAt)),
-    operatorEntry('supersedesReceiptId', 'Supersedes receipt id', nullableToNull(operator.supersedesReceiptId)),
-    operatorEntry('evidenceOwner', 'Evidence owner', nullableToNull(operator.evidenceOwner)),
+    operatorEntry('supersedesReceiptId', 'Supersedes receipt id', blankToNull(operator.supersedesReceiptId)),
+    operatorEntry('evidenceOwner', 'Evidence owner', blankToNull(operator.evidenceOwner)),
     operatorEntry('primaryClass', 'Primary SD-15 class', resolved.primaryClassInput),
     operatorEntry('outcomeState', 'Outcome state', resolved.outcomeStateInput),
     operatorEntry(
@@ -499,25 +499,25 @@ function buildPartitions(
       'Adjacent-authority references',
       resolved.adjacentAuthorityReferences.length > 0 ? resolved.adjacentAuthorityReferences.join('; ') : null
     ),
-    operatorEntry('sd13SupportStateContext', 'SD-13 support-state context', nullableToNull(operator.sd13SupportStateContext)),
+    operatorEntry('sd13SupportStateContext', 'SD-13 support-state context', blankToNull(operator.sd13SupportStateContext)),
     operatorEntry(
       'sd14PersistenceMigrationContext',
       'SD-14 persistence/migration context',
-      nullableToNull(operator.sd14PersistenceMigrationContext)
+      blankToNull(operator.sd14PersistenceMigrationContext)
     ),
-    operatorEntry('operatorProvenanceHandle', 'Operator provenance handle', nullableToNull(operator.operatorProvenanceHandle)),
-    operatorEntry('commitOrBuildIdentity', 'Commit or build identity', nullableToNull(operator.commitOrBuildIdentity)),
+    operatorEntry('operatorProvenanceHandle', 'Operator provenance handle', blankToNull(operator.operatorProvenanceHandle)),
+    operatorEntry('commitOrBuildIdentity', 'Commit or build identity', blankToNull(operator.commitOrBuildIdentity)),
     operatorEntry(
       'publicationOrAcquisitionHandle',
       'Publication or acquisition handle',
-      nullableToNull(operator.publicationOrAcquisitionHandle)
+      blankToNull(operator.publicationOrAcquisitionHandle)
     ),
-    operatorEntry('rollbackWithdrawalContext', 'Rollback / withdrawal context', nullableToNull(operator.rollbackWithdrawalContext)),
-    operatorEntry('platformArchitecture', 'Platform architecture', nullableToNull(operator.platformArchitecture)),
-    operatorEntry('packageInstallContext', 'Package / install context', nullableToNull(operator.packageInstallContext)),
-    operatorEntry('environmentKind', 'Environment kind', nullableToNull(operator.environmentKind)),
-    operatorEntry('environmentIdentityHandle', 'Environment identity handle', nullableToNull(operator.environmentIdentityHandle)),
-    operatorEntry('claimSummary', 'Claim summary', nullableToNull(operator.claimSummary)),
+    operatorEntry('rollbackWithdrawalContext', 'Rollback / withdrawal context', blankToNull(operator.rollbackWithdrawalContext)),
+    operatorEntry('platformArchitecture', 'Platform architecture', blankToNull(operator.platformArchitecture)),
+    operatorEntry('packageInstallContext', 'Package / install context', blankToNull(operator.packageInstallContext)),
+    operatorEntry('environmentKind', 'Environment kind', blankToNull(operator.environmentKind)),
+    operatorEntry('environmentIdentityHandle', 'Environment identity handle', blankToNull(operator.environmentIdentityHandle)),
+    operatorEntry('claimSummary', 'Claim summary', blankToNull(operator.claimSummary)),
     operatorEntry('reproductionStatus', 'Reproduction status', resolved.reproductionStatusInput),
     operatorEntry(
       'reproductionStepsOrImpossibilityNote',
@@ -525,7 +525,7 @@ function buildPartitions(
       blankToNull(operator.reproductionStepsOrImpossibilityNote)
     ),
     operatorEntry('evidenceSufficiencyNote', 'Evidence sufficiency note', blankToNull(operator.evidenceSufficiencyNote)),
-    operatorEntry('nextRequiredSurface', 'Next required surface', nullableToNull(operator.nextRequiredSurface)),
+    operatorEntry('nextRequiredSurface', 'Next required surface', blankToNull(operator.nextRequiredSurface)),
   ];
 
   return { testerSupplied, autoCaptured, operatorAdded };
@@ -739,10 +739,6 @@ function blankToNull(value: string | null | undefined): string | null {
   }
   const trimmed = value.trim();
   return trimmed.length === 0 ? null : trimmed;
-}
-
-function nullableToNull(value: string | null | undefined): string | null {
-  return blankToNull(value);
 }
 
 function isOutcomeState(value: string): value is Sd15OutcomeState {

@@ -1,4 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
+import { formatError, hasTauriRuntime } from './runtime';
 
 /**
  * Read-only desktop boundary over the SD-13 support-state matrix.
@@ -13,13 +14,6 @@ import { invoke } from '@tauri-apps/api/core';
  * evidence, submit issues, persist support truth, or couple matrix debt to
  * update behavior.
  */
-
-export type Sd13SupportStateToken =
-  | 'supported'
-  | 'partial'
-  | 'lossy'
-  | 'blocked'
-  | 'unverified';
 
 export interface Sd13SupportStateRow {
   rowId: string;
@@ -46,14 +40,6 @@ export interface Sd13SupportStateMatrixSnapshot {
   rows: Sd13SupportStateRow[];
   dataSource: string;
   note: string;
-}
-
-function hasTauriRuntime(): boolean {
-  return typeof window !== 'undefined' && ('__TAURI_INTERNALS__' in window || '__TAURI__' in window);
-}
-
-function formatError(cause: unknown): string {
-  return cause instanceof Error ? cause.message : String(cause);
 }
 
 export async function loadSd13SupportStateMatrix(): Promise<Sd13SupportStateMatrixSnapshot> {

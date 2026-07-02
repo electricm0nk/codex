@@ -92,8 +92,10 @@ function EvidenceList(props: {
 
   return (
     <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
-      {props.items.map((reference) => (
-        <li key={createReferenceListKey(reference.label, reference.machineRef)} style={{ marginBottom: '0.6rem' }}>
+      {props.items.map((reference, index) => (
+        // GE08 refs can share label and machineRef while differing in detail,
+        // so the list index keeps sibling keys unique.
+        <li key={createReferenceListKey(reference.label, `${reference.machineRef}#${index}`)} style={{ marginBottom: '0.6rem' }}>
           <strong>{reference.label}</strong>
           <div style={{ color: '#475569', marginTop: '0.2rem' }}>{reference.detail}</div>
           <code style={{ color: '#334155', fontSize: '0.8rem' }}>{reference.machineRef}</code>
@@ -111,6 +113,14 @@ function FeedbackEvidencePanel(props: { surface: Sd11TesterWorkbenchSurface }) {
     platformLabel: auto.platformLabel,
     currentWorkflow: auto.currentWorkflow,
     dataSourceIdentity: auto.dataSourceIdentity,
+    releaseUnitId: auto.releaseUnitId ?? '—',
+    sourceRevision: auto.sourceRevision ?? '—',
+    manifestPath: auto.manifestPath ?? '—',
+    updateEligibilityState: auto.updateEligibilityState ?? '—',
+    trustGateStatus: auto.trustGateStatus ?? '—',
+    replacementReleaseId: auto.replacementReleaseId ?? '—',
+    officialSurface: auto.officialSurface ?? '—',
+    localBuildAuthority: auto.localBuildAuthority ?? '—',
     diagnostics:
       auto.diagnostics.length || auto.blockedClaims.length
         ? `${auto.diagnostics.length} diagnostic(s) · ${auto.blockedClaims.length} blocked claim(s)`

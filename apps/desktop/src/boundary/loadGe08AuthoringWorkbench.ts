@@ -1,4 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
+import { formatError, hasTauriRuntime } from './runtime';
 
 export type PackageState = 'draft' | 'valid' | 'invalid' | 'deferred';
 export type PreviewStatus = 'success' | 'blocked' | 'unsupported';
@@ -101,14 +102,6 @@ export interface Ge08AuthoringWorkbenchSnapshot {
   lifecycleGateState: Ge08LifecycleGateState;
   dataSource: 'ge08-headless-preview-bridge' | 'tauri-unavailable';
   note: string;
-}
-
-function hasTauriRuntime(): boolean {
-  return typeof window !== 'undefined' && ('__TAURI_INTERNALS__' in window || '__TAURI__' in window);
-}
-
-function formatError(cause: unknown): string {
-  return cause instanceof Error ? cause.message : String(cause);
 }
 
 export async function loadGe08AuthoringWorkbench(

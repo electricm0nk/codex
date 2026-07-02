@@ -42,7 +42,7 @@ async function main() {
   await nonHttpIssueHandleNeverCountsAsSuccess();
   await realHandleIsTheOnlySuccessPath();
   copyablePayloadCarriesTheStructuredReport();
-  failedSubmissionCopyablePayloadMatchesTheStructuredDraft();
+  await failedSubmissionCopyablePayloadMatchesTheStructuredDraft();
 }
 
 async function incompleteReportIsBlockedNotSubmitted() {
@@ -158,16 +158,25 @@ function copyablePayloadCarriesTheStructuredReport() {
   const rendered = renderCopyableBugPayload(composed.draft);
   assert(rendered.includes('Preview crashes on baseline AC'), 'copyable payload carries the title');
   assert(rendered.includes('## Observed behavior'), 'copyable payload preserves structured sections');
-  assert(rendered.toLowerCase().includes('bug'), 'copyable payload records the bug labels');
+  assert(rendered.includes('Labels: bug'), 'copyable payload records the bug labels');
 }
 
-function failedSubmissionCopyablePayloadMatchesTheStructuredDraft() {
+async function failedSubmissionCopyablePayloadMatchesTheStructuredDraft() {
   const composed = completeComposed();
-  const rendered = renderCopyableBugPayload(composed.draft);
+  const outcome = await submitBugReport({
+    composed,
+    transport: async () => ({ ok: false, error: 'unauthorized' }),
+  });
 
-  assert(rendered.includes(composed.draft.markdownBody), 'copyable payload embeds the markdown draft');
-  assert(rendered.includes(`Labels: ${composed.draft.labels.join(', ')}`), 'copyable payload embeds labels');
-  assert(rendered.includes('## Expected behavior'), 'copyable payload keeps expected behavior separate');
+  assertEqual(outcome.status, 'draft-preserved', 'failed submission preserves the draft');
+  assertEqual(
+    outcome.copyablePayload,
+    renderCopyableBugPayload(composed.draft),
+    'failed-submission copyable payload matches the structured draft'
+  );
+  assert(outcome.copyablePayload.includes(composed.draft.markdownBody), 'copyable payload embeds the markdown draft');
+  assert(outcome.copyablePayload.includes(`Labels: ${composed.draft.labels.join(', ')}`), 'copyable payload embeds labels');
+  assert(outcome.copyablePayload.includes('## Expected behavior'), 'copyable payload keeps expected behavior separate');
 }
 
 main().catch((error: unknown) => {

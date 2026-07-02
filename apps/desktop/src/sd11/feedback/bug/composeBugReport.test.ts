@@ -78,7 +78,7 @@ function bodyHasSevenSectionsInContractOrder() {
   }
   // Build metadata must never be omitted when available.
   assert(composed.draft.markdownBody.includes('codex-desktop-shell-scaffold@0.0.0-test'), 'build label present in body');
-  assert(composed.draft.markdownBody.includes('alpha'), 'channel label present in body');
+  assert(composed.draft.markdownBody.includes('alpha · Linux first-class'), 'channel/support label present in body');
   assert(composed.draft.markdownBody.includes('Linux'), 'platform present in body');
   assert(
     composed.draft.markdownBody.includes('Governed release unit id: alpha-v0.0.0-test-1234abcd'),
