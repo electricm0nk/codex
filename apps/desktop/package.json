@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "test": "node scripts/run-tests.mjs",
     "build": "vite build",
-    "tauri:check": "$HOME/.cargo/bin/cargo check --manifest-path src-tauri/Cargo.toml"
+    "tauri:check": "cargo check --manifest-path src-tauri/Cargo.toml"
   },
   "dependencies": {
     "react": "^18.3.1",

@@ -35,7 +35,7 @@ From the live repo and desktop workspace:
 ## Repository layout
 
 ```text
-repos/codex/
+codex/
   src/
     pcgen_import/        # GE-03 importer foothold
     rules_core/          # GE-06 bounded pilot computation surfaces
@@ -129,9 +129,9 @@ apps/desktop/src-tauri/target/debug/codex_desktop_shell_scaffold
 
 ### Core proof harness
 
+From the repo root:
+
 ```bash
-cd /home/ubuntu/workspace/repos/codex
-. "$HOME/.cargo/env"
 cargo test
 ```
 
@@ -145,8 +145,9 @@ cargo test ge08_
 ### Desktop/frontend verification
 
 ```bash
-cd /home/ubuntu/workspace/repos/codex/apps/desktop
+cd apps/desktop
 npm run typecheck
+npm test
 npm run build
 npm run tauri:check
 npx tauri build --debug
@@ -166,14 +167,14 @@ npx tauri build --debug
 From a **graphical Linux desktop session**:
 
 ```bash
-cd /home/ubuntu/workspace/repos/codex/apps/desktop
+cd apps/desktop
 npx tauri dev
 ```
 
 Or run the built binary directly:
 
 ```bash
-/home/ubuntu/workspace/repos/codex/apps/desktop/src-tauri/target/debug/codex_desktop_shell_scaffold
+apps/desktop/src-tauri/target/debug/codex_desktop_shell_scaffold
 ```
 
 Expected current behavior:
@@ -259,11 +260,12 @@ Expected working behavior after the fix:
 
 ## Related authority surfaces
 
-Inside the lab workspace, the broader program-level governance and demo/onboarding packet live under:
+The broader program-level governance and demo/onboarding packet live in the lab
+workspace outside this repository. Only the artifacts a bounded slice needs are
+mirrored here; currently that is:
 
 ```text
-programs/codex/
-programs/codex/requirements/GE-10-demo-proof-and-onboarding/
+programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/
 ```
 
 Those surfaces are the planning and onboarding control plane. This repo is the implementation and proof surface.
