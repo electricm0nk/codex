@@ -4,12 +4,7 @@ import type {
   Sd11UpdateManifestView,
   Sd11UpdateReleaseTruth,
 } from './updateActionModel';
-
-function assertEqual<T>(actual: T, expected: T, message: string) {
-  if (actual !== expected) {
-    throw new Error(`${message}: expected ${String(expected)}, got ${String(actual)}`);
-  }
-}
+import { assertEqual } from '../../testSupport/asserts';
 
 function assertContains(actual: string, needle: string, message: string) {
   if (!actual.includes(needle)) {

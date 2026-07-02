@@ -6,69 +6,8 @@ import {
 import { composeEnhancementRequest } from './composeEnhancementRequest';
 import { assembleFeedbackEvidence } from '../evidence';
 import type { Sd11TesterWorkbenchSurface } from '../../loadSd11TesterWorkbenchSurface';
-
-function assertEqual<T>(actual: T, expected: T, message: string) {
-  if (actual !== expected) {
-    throw new Error(`${message}: expected ${String(expected)}, got ${String(actual)}`);
-  }
-}
-
-function assert(condition: boolean, message: string) {
-  if (!condition) {
-    throw new Error(message);
-  }
-}
-
-function makeSurface(overrides: Partial<Sd11TesterWorkbenchSurface> = {}): Sd11TesterWorkbenchSurface {
-  return {
-    surfaceLabel: 'SD-11 tester workbench',
-    headline: 'Bounded tester workbench',
-    lead: 'lead',
-    buildLabel: 'codex-desktop-shell-scaffold@0.0.0-test',
-    channelLabel: 'alpha',
-    platformLabel: 'Linux',
-    supportTierLabel: 'Linux first-class · macOS second-class · Windows third-class',
-    workflowName: 'GE08 Guard Stance authoring workbench',
-    workflowState: 'Authored / Computed',
-    dataTruthLabel: 'Real Tauri command snapshot',
-    fallbackNotice: null,
-    boundedScopeNotice: 'bounded',
-    feedbackStatusNotice: 'feedback',
-    updateStatusLabel: 'alpha tester track on Linux first-class',
-    summaryRows: [],
-    diagnostics: [],
-    blockedClaims: [],
-    explanationRefs: [],
-    provenanceRefs: [],
-    notes: ['note'],
-    status: {
-      build: { label: 'codex-desktop-shell-scaffold@0.0.0-test', version: '0.0.0-test' },
-      channel: {
-        testerFacingLabel: 'alpha',
-        operatorBranch: 'develop',
-        operatorPromotionPath: 'develop -> uat -> main',
-        audience: 'audience',
-        detail: 'detail',
-      },
-      support: {
-        platformLabel: 'Linux',
-        platformTier: 'first-class',
-        currentPlatformSupportLabel: 'Linux first-class',
-        tierMatrixLabel: 'Linux first-class · macOS second-class · Windows third-class',
-        platformSupportDetail: 'detail',
-      },
-      update: { state: 'not-yet-supported', label: 'Update checks not yet wired in this slice', detail: 'detail' },
-      issueCapture: {
-        testerFacingChannelSupportLabel: 'alpha · Linux first-class',
-        operatorBranch: 'develop',
-        operatorPromotionPath: 'develop -> uat -> main',
-        platformLabel: 'Linux',
-        platformTier: 'first-class',
-      },
-    },
-    ...overrides,
-  };
-}
+import { assert, assertEqual } from '../../../testSupport/asserts';
+import { makeSurface } from '../../../testSupport/makeSurface';
 
 function completeComposed(overrides: Partial<Sd11TesterWorkbenchSurface> = {}) {
   const surface = makeSurface(overrides);
