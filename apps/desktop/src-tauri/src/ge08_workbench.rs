@@ -5,6 +5,11 @@
 //! the first proof package.
 
 use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
+
+use codex::homebrew_authoring::package_manifest::PackageValidationState;
+use codex::homebrew_authoring::package_store::PackageStore;
+use codex::homebrew_authoring::preview_bridge::{ArmorClassPreview, PreviewBridge, PreviewStatus};
 
 /// Request to load the GE08 authoring workbench snapshot.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -52,8 +57,12 @@ pub struct Ge08SelectedSlotResolution {
 }
 
 /// Baseline armor class preview result (computed or blocked).
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "kind", rename_all = "camelCase")]
+///
+/// The `kind` tag stays PascalCase (`Computed` / `Blocked`): the TS boundary
+/// (`loadGe08AuthoringWorkbench.ts`) matches on those exact strings, and a
+/// container-level `rename_all` would rename the variant tags, not the fields.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "kind")]
 pub enum Ge08BaselineArmorClass {
     Computed { value: i16 },
     Blocked { reason: String },
@@ -145,42 +154,278 @@ pub struct Ge08PreviewEnvelope {
     pub blocked_claims: Vec<String>,
 }
 
+/// Resolve the codex repo root for repo-relative package paths.
+///
+/// Order of truth: the `CODEX_REPO_ROOT` environment variable (set by an
+/// operator or launcher when the app runs outside a source checkout), then the
+/// compile-time `CARGO_MANIFEST_DIR` walk that works for dev builds and tests.
+/// The compile-time path is baked at build time and does not exist on tester
+/// machines running a published bundle, which is why the env override exists.
+pub fn codex_repo_root() -> Result<PathBuf, String> {
+    if let Ok(root) = std::env::var("CODEX_REPO_ROOT") {
+        return Ok(PathBuf::from(root));
+    }
+
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .and_then(|p| p.parent())
+        .and_then(|p| p.parent())
+        .map(PathBuf::from)
+        .ok_or_else(|| "cannot determine codex repo root from CARGO_MANIFEST_DIR".to_string())
+}
+
+/// Resolve a requested package root: absolute paths pass through, repo-relative
+/// paths anchor at the codex repo root.
+pub fn resolve_package_path(package_root: &str) -> Result<PathBuf, String> {
+    let requested = PathBuf::from(package_root);
+
+    if requested.is_absolute() {
+        return Ok(requested);
+    }
+
+    Ok(codex_repo_root()?.join(requested))
+}
+
+/// Build the GE08 authoring workbench snapshot from the headless substrate.
+///
+/// This is the whole command behavior behind `load_ge08_authoring_workbench_snapshot`;
+/// the Tauri command in `main.rs` is a thin wrapper so this mapping (including
+/// the lifecycle gate derivation) stays testable without a webview.
+pub fn build_ge08_workbench_snapshot(
+    request: Ge08AuthoringWorkbenchRequest,
+) -> Result<Ge08AuthoringWorkbenchSnapshot, String> {
+    let package_path = resolve_package_path(&request.package_root)?;
+
+    if !package_path.exists() {
+        return Err(format!(
+            "package root does not exist: {} (resolved to {})",
+            request.package_root,
+            package_path.display()
+        ));
+    }
+
+    let envelope = PreviewBridge::preview_from_root(&package_path)
+        .map_err(|e| format!("failed to load/preview package: {}", e))?;
+
+    let package = PackageStore::load(&package_path)
+        .map_err(|e| format!("failed to load package source: {}", e))?;
+
+    let (actual_state, _diags) = package.recompute_validation();
+    let baseline_ac = match envelope.baseline_armor_class {
+        ArmorClassPreview::Computed(value) => Ge08BaselineArmorClass::Computed { value },
+        ArmorClassPreview::Blocked(reason) => Ge08BaselineArmorClass::Blocked { reason },
+    };
+
+    let export_allowed = actual_state == PackageValidationState::Valid;
+    let preview_allowed = export_allowed && envelope.preview_status != PreviewStatus::Blocked;
+
+    Ok(Ge08AuthoringWorkbenchSnapshot {
+        package_root: request.package_root,
+        package_state: actual_state.as_str().to_string(),
+        package_manifest: Ge08PackageManifest {
+            package_id: package.manifest.package_id,
+            package_title: package.manifest.package_title,
+            package_version: package.manifest.package_version,
+            depends_on: package.manifest.depends_on,
+            supported_object_kinds: package.manifest.supported_object_kinds,
+        },
+        active_record_ref: request.active_record_ref,
+        authored_records: Ge08AuthoredRecords {
+            feat: package.feat.map(|f| Ge08AuthoredRecord {
+                stable_id: f.stable_id,
+                owning_feat_id: None,
+                display_name: f.display_name,
+                object_kind: f.object_kind,
+                target_family: None,
+                modifier_type: None,
+                modifier_value: None,
+                predicate: None,
+            }),
+            effect: package.effect.map(|e| Ge08AuthoredRecord {
+                stable_id: e.stable_id,
+                owning_feat_id: Some(e.owning_feat_id),
+                display_name: e.target_family.clone(),
+                object_kind: "effect".to_string(),
+                target_family: Some(e.target_family),
+                modifier_type: Some(e.modifier_type),
+                modifier_value: Some(e.modifier_value),
+                predicate: None,
+            }),
+            prerequisite: package.prerequisite.map(|p| Ge08AuthoredRecord {
+                stable_id: p.stable_id,
+                owning_feat_id: Some(p.owning_feat_id),
+                display_name: p.predicate.clone(),
+                object_kind: "prerequisite".to_string(),
+                target_family: None,
+                modifier_type: None,
+                modifier_value: None,
+                predicate: Some(p.predicate),
+            }),
+        },
+        preview: Ge08PreviewEnvelope {
+            case_id: envelope.case_id,
+            preview_status: match envelope.preview_status {
+                PreviewStatus::Success => "success".to_string(),
+                PreviewStatus::Blocked => "blocked".to_string(),
+                PreviewStatus::Unsupported => "unsupported".to_string(),
+            },
+            selected_slot_resolution: Ge08SelectedSlotResolution {
+                slot: envelope.selected_slot_resolution.slot,
+                removed: envelope.selected_slot_resolution.removed,
+                added: envelope.selected_slot_resolution.added,
+                resolved_feat_id: envelope.selected_slot_resolution.resolved_feat_id,
+            },
+            baseline_armor_class: baseline_ac,
+            diagnostics: envelope
+                .diagnostics
+                .iter()
+                .map(|d| Ge08Diagnostic {
+                    class: d.class.clone(),
+                    severity: d.severity.as_str().to_string(),
+                    message: d.message.clone(),
+                    subject_ref: d.subject_ref.clone(),
+                    claim_blocking: d.claim_blocking,
+                })
+                .collect(),
+            provenance_refs: envelope
+                .provenance_refs
+                .iter()
+                .map(|p| Ge08ProvenanceRef {
+                    stable_id: p.stable_id.clone(),
+                    source_package_id: p.source_package_id.clone(),
+                    authored_path: p.authored_path.clone(),
+                })
+                .collect(),
+            explanation_refs: envelope
+                .explanation_refs
+                .iter()
+                .map(|e| Ge08ExplanationRef {
+                    node_kind: e.node_kind.clone(),
+                    ref_id: e.ref_id.clone(),
+                    detail: e.detail.clone(),
+                })
+                .collect(),
+            oracle_dimension_status: envelope
+                .oracle_dimension_status
+                .iter()
+                .map(|o| Ge08OracleDimensionStatus {
+                    dimension: o.dimension.clone(),
+                    status: o.status.clone(),
+                })
+                .collect(),
+            blocked_claims: envelope.blocked_claims,
+        },
+        lifecycle_gate_state: Ge08LifecycleGateState {
+            save_allowed: true,
+            preview_allowed,
+            export_allowed,
+            diff_mode: "deferred".to_string(),
+        },
+        data_source: "ge08-headless-preview-bridge".to_string(),
+        note: "Real GE-08 authoring workbench snapshot from headless substrate.".to_string(),
+    })
+}
+
 #[cfg(test)]
 mod tests {
+    use super::*;
+
+    fn snapshot_for(fixture: &str) -> Ge08AuthoringWorkbenchSnapshot {
+        build_ge08_workbench_snapshot(Ge08AuthoringWorkbenchRequest {
+            package_root: format!("tests/fixtures/ge08/{fixture}"),
+            active_record_ref: None,
+        })
+        .unwrap_or_else(|err| panic!("fixture '{fixture}' should build a snapshot: {err}"))
+    }
+
     #[test]
     fn valid_guard_stance_package_yields_success() {
-        // This test demonstrates the contract: a valid guard-stance package
-        // should produce a snapshot with packageState: "valid", previewStatus: "success",
-        // real selected-slot resolution, non-empty provenance refs, non-empty explanation refs,
-        // and export allowed.
-        //
-        // This test will fail initially and is used to drive the implementation of
-        // the load_ge08_authoring_workbench_snapshot command.
+        let snapshot = snapshot_for("guard-stance-package");
 
-        // The test body will be implemented once the command is wired up.
-        // For now, this serves as a documentation of the contract.
+        assert_eq!(snapshot.package_state, "valid");
+        assert_eq!(snapshot.preview.preview_status, "success");
+        assert_eq!(
+            snapshot.preview.baseline_armor_class,
+            Ge08BaselineArmorClass::Computed { value: 17 }
+        );
+        assert_eq!(snapshot.preview.selected_slot_resolution.slot, "human_bonus_feat");
+        assert_eq!(
+            snapshot.preview.selected_slot_resolution.resolved_feat_id,
+            "feat.homebrew.guard_stance"
+        );
+        assert!(!snapshot.preview.provenance_refs.is_empty());
+        assert!(!snapshot.preview.explanation_refs.is_empty());
+        assert!(snapshot.lifecycle_gate_state.export_allowed);
+        assert!(snapshot.lifecycle_gate_state.preview_allowed);
     }
 
     #[test]
     fn missing_effect_yields_blocked_with_diagnostics() {
-        // This test demonstrates the blocked-path contract: when a package
-        // is missing required authored structure (like the effect), the result
-        // should be previewStatus: "blocked", include diagnostics with
-        // claim_blocking: true, preserve provenance/explanation refs, and refuse
-        // export.
+        let snapshot = snapshot_for("guard-stance-package-invalid-missing-effect");
+
+        assert_eq!(snapshot.preview.preview_status, "blocked");
+        assert!(
+            snapshot.preview.diagnostics.iter().any(|d| d.claim_blocking),
+            "blocked preview must carry claim-blocking diagnostics"
+        );
+        assert!(
+            matches!(
+                snapshot.preview.baseline_armor_class,
+                Ge08BaselineArmorClass::Blocked { .. }
+            ),
+            "blocked preview must not fabricate a computed armor class"
+        );
+        assert!(!snapshot.preview.blocked_claims.is_empty());
+        assert!(!snapshot.lifecycle_gate_state.export_allowed);
     }
 
     #[test]
     fn widened_package_yields_unsupported() {
-        // This test demonstrates handling of packages that widen beyond the
-        // first-proof scope (e.g., targeting an unaccepted derived family).
-        // The result should be previewStatus: "unsupported" with diagnostics
-        // preserved and export refused.
+        let snapshot = snapshot_for("guard-stance-package-invalid-widened-preview");
+
+        assert_eq!(snapshot.preview.preview_status, "unsupported");
+        assert!(
+            !snapshot.preview.diagnostics.is_empty(),
+            "widened preview must preserve diagnostics"
+        );
+        assert!(!snapshot.lifecycle_gate_state.export_allowed);
     }
 
     #[test]
     fn lifecycle_gates_prevent_export_when_invalid() {
-        // This test demonstrates that lifecycle gates respect package validation
-        // state and refuse export_allowed when the package is invalid/deferred.
+        for fixture in [
+            "guard-stance-package-invalid-missing-effect",
+            "guard-stance-package-invalid-widened-preview",
+        ] {
+            let snapshot = snapshot_for(fixture);
+            assert_ne!(snapshot.package_state, "valid");
+            assert!(
+                !snapshot.lifecycle_gate_state.export_allowed,
+                "invalid package '{fixture}' must refuse export"
+            );
+            assert!(
+                !snapshot.lifecycle_gate_state.preview_allowed,
+                "invalid package '{fixture}' must refuse preview gating"
+            );
+        }
+    }
+
+    #[test]
+    fn baseline_armor_class_wire_shape_matches_the_ts_boundary() {
+        // loadGe08AuthoringWorkbench.ts matches kind === 'Computed' | 'Blocked';
+        // this pins the serialized tag casing so the boundary cannot silently
+        // fall through to the Blocked rendering branch for computed values.
+        let computed = serde_json::to_value(Ge08BaselineArmorClass::Computed { value: 17 })
+            .expect("computed AC should serialize");
+        assert_eq!(computed, serde_json::json!({ "kind": "Computed", "value": 17 }));
+
+        let blocked = serde_json::to_value(Ge08BaselineArmorClass::Blocked {
+            reason: "missing effect".to_string(),
+        })
+        .expect("blocked AC should serialize");
+        assert_eq!(
+            blocked,
+            serde_json::json!({ "kind": "Blocked", "reason": "missing effect" })
+        );
     }
 }
