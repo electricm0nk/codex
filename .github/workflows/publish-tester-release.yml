@@ -15,20 +15,60 @@ permissions:
   contents: write
 
 jobs:
-  publish-tester-release:
-    name: Publish tester release (${{ github.ref_name }})
+  test:
+    name: Test before publish
     runs-on: ubuntu-latest
 
     steps:
-      - name: Assert governed publication source
-        run: |
-          if [ "$GITHUB_REF_NAME" != "develop" ] && [ "$GITHUB_REF_NAME" != "main" ]; then
-            echo "ERROR: '$GITHUB_REF_NAME' is not a governed publication source."
-            echo "Only 'develop' (alpha) and 'main' (stable) may create official tester-channel releases."
-            echo "beta is reserved until a governed candidate promotion surface exists."
-            exit 1
-          fi
+      - uses: actions/checkout@v4
 
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            . -> target
+            apps/desktop/src-tauri -> target
+
+      - name: Run core crate tests
+        run: cargo test --locked
+
+      - name: Run desktop shell tests
+        working-directory: apps/desktop/src-tauri
+        run: cargo test --locked
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install npm dependencies
+        working-directory: apps/desktop
+        run: npm ci
+
+      - name: Typecheck frontend
+        working-directory: apps/desktop
+        run: npm run typecheck
+
+      - name: Run frontend tests
+        working-directory: apps/desktop
+        run: npm test
+
+  publish-tester-release:
+    name: Publish tester release (${{ github.ref_name }})
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
       - name: Resolve publication channel
         id: channel
         run: |
@@ -87,12 +127,6 @@ jobs:
           echo "deb_name=$(basename "$DEB")" >> "$GITHUB_OUTPUT"
           echo "appimage_name=$(basename "$APPIMAGE")" >> "$GITHUB_OUTPUT"
 
-      - name: Compute checksums
-        working-directory: release-staging
-        run: |
-          sha256sum ./*.deb ./*.AppImage > checksums.sha256
-          cat checksums.sha256
-
       - name: Write provenance receipt
         working-directory: release-staging
         run: |
@@ -121,6 +155,12 @@ jobs:
             "update_check_wired": false
           }
           EOF
+
+      - name: Compute checksums
+        working-directory: release-staging
+        run: |
+          sha256sum ./*.deb ./*.AppImage provenance.json update-manifest-stub.json > checksums.sha256
+          cat checksums.sha256
 
       - name: Derive release tag and title
         id: release_meta
@@ -179,23 +219,17 @@ jobs:
           TITLE="${{ steps.release_meta.outputs.title }}"
           PRERELEASE="${{ steps.channel.outputs.prerelease }}"
 
+          EXTRA_FLAGS=()
           if [ "$PRERELEASE" = "true" ]; then
-            gh release create "$TAG" \
-              --title "$TITLE" \
-              --notes-file release-notes.md \
-              --prerelease \
-              release-staging/*.deb \
-              release-staging/*.AppImage \
-              release-staging/checksums.sha256 \
-              release-staging/provenance.json \
-              release-staging/update-manifest-stub.json
-          else
-            gh release create "$TAG" \
-              --title "$TITLE" \
-              --notes-file release-notes.md \
-              release-staging/*.deb \
-              release-staging/*.AppImage \
-              release-staging/checksums.sha256 \
-              release-staging/provenance.json \
-              release-staging/update-manifest-stub.json
+            EXTRA_FLAGS+=(--prerelease)
           fi
+
+          gh release create "$TAG" \
+            --title "$TITLE" \
+            --notes-file release-notes.md \
+            "${EXTRA_FLAGS[@]}" \
+            release-staging/*.deb \
+            release-staging/*.AppImage \
+            release-staging/checksums.sha256 \
+            release-staging/provenance.json \
+            release-staging/update-manifest-stub.json
