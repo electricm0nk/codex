@@ -50,4 +50,4 @@
 
 ## Authority
 
-This document is the SD-13 source-of-truth roster authority for `Unverified` + `Observed` breadth rows in `src/oracle_validation/support_state_matrix.rs`. Rows citing this artifact as `grounding_ref` have been included in the bounded roster but not yet verified by direct test evidence.
+This document is the SD-13 source-of-truth roster authority for `Unverified` + `Observed` breadth rows in `src/rules_core/support_state_matrix.rs`. Rows citing this artifact as `grounding_ref` have been included in the bounded roster but not yet verified by direct test evidence.
