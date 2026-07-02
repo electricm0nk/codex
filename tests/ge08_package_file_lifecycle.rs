@@ -81,3 +81,60 @@ fn ge08_guard_stance_package_round_trip() {
         diff.changed_files
     );
 }
+
+#[test]
+fn ge08_save_rejects_values_the_loader_cannot_read_back() {
+    // save() deliberately persists Draft/Invalid packages, so every rendered
+    // `key: value` line must stay loadable. An empty or multi-line value renders
+    // a line the parser rejects, leaving an unloadable bundle on disk with no
+    // warning at write time.
+    let root = fresh_temp_dir("ge08-save-honesty");
+
+    // Empty scalar value: renders "provenance_policy: " which the loader
+    // refuses as "unsupported manifest line".
+    let mut package = SourcePackage::guard_stance_proof();
+    package.manifest.provenance_policy = String::new();
+    let err = PackageStore::save(&package, &root)
+        .expect_err("an empty provenance_policy must be rejected at save time");
+    assert!(
+        err.message.contains("provenance_policy"),
+        "error must name the offending field: {}",
+        err.message
+    );
+
+    // Multi-line value: the second line is garbage to the record parser.
+    let mut package = SourcePackage::guard_stance_proof();
+    if let Some(feat) = package.feat.as_mut() {
+        feat.display_name = "Guard\nStance".to_owned();
+    }
+    let err = PackageStore::save(&package, &root)
+        .expect_err("a multi-line display_name must be rejected at save time");
+    assert!(
+        err.message.contains("display_name"),
+        "error must name the offending field: {}",
+        err.message
+    );
+
+    fs::remove_dir_all(&root).ok();
+}
+
+#[test]
+fn ge08_invalid_validation_state_is_reported_as_invalid_not_missing() {
+    let root = fresh_temp_dir("ge08-invalid-validation-state");
+    PackageStore::save(&SourcePackage::guard_stance_proof(), &root)
+        .expect("proof package should save");
+
+    let manifest_path = root.join("manifest.yaml");
+    let corrupted = read(&manifest_path).replace("validation_state: valid", "validation_state: bogus");
+    fs::write(&manifest_path, corrupted).expect("manifest should be writable");
+
+    let err = PackageStore::load(&root)
+        .expect_err("an unrecognized validation_state must fail to load");
+    assert!(
+        err.message.contains("bogus"),
+        "the error must name the invalid value, not claim the field is missing: {}",
+        err.message
+    );
+
+    fs::remove_dir_all(&root).ok();
+}

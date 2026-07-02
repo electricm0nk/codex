@@ -57,6 +57,8 @@ impl SavedCharacterStore {
         )?;
         ensure_single_line("display_label", &envelope.display_label)?;
 
+        validate_character_input(&envelope.character_input)?;
+
         let envelope_path = root.join(ENVELOPE_FILE);
         fs::write(&envelope_path, render_envelope(envelope))
             .map_err(|err| io_error(&envelope_path, err))?;
@@ -111,6 +113,73 @@ impl SavedCharacterStore {
             character_input,
         })
     }
+}
+
+// --- Save-time validation ---
+
+/// Rejects a `CharacterInput` whose rendered fixture lines the loader could not
+/// read back as the same record. The fixture grammar is line- and colon-based,
+/// so every persisted string must be single-line, and a selected choice must
+/// match the loader's segment shape (`choice_set_id` = exactly two
+/// colon-segments, `selection_id` = at least two) or it would reload as a
+/// different choice — or not at all.
+fn validate_character_input(input: &CharacterInput) -> Result<(), SavedCharacterStoreError> {
+    let single_line = |field: &str, value: &str| -> Result<(), SavedCharacterStoreError> {
+        if value.contains('\n') || value.contains('\r') {
+            return Err(SavedCharacterStoreError {
+                message: format!(
+                    "character input {field} contains a newline/carriage return; cannot be \
+                     persisted in authoritative_character_input.txt"
+                ),
+            });
+        }
+        Ok(())
+    };
+
+    if let Some(case_id) = &input.case_id {
+        single_line("case_id", case_id)?;
+    }
+    single_line("source_package_id", &input.source_package_id)?;
+    single_line("race_id", &input.chosen.race_id)?;
+    for cl in &input.chosen.class_levels {
+        single_line("class_level class_id", &cl.class_id)?;
+    }
+    for feat in &input.chosen.selected_feats {
+        single_line("selected feat", feat)?;
+    }
+    for skill in &input.chosen.skill_allocations {
+        single_line("skill allocation skill_id", &skill.skill_id)?;
+    }
+    for eq in &input.chosen.equipment_selections {
+        single_line("equipment selection item_id", &eq.item_id)?;
+    }
+    for choice in &input.chosen.selected_choices {
+        single_line("selected choice choice_set_id", &choice.choice_set_id)?;
+        single_line("selected choice selection_id", &choice.selection_id)?;
+        if choice.choice_set_id.split(':').count() != 2 {
+            return Err(SavedCharacterStoreError {
+                message: format!(
+                    "selected choice choice_set_id '{}' must have exactly two colon-segments \
+                     to round-trip through the fixture grammar",
+                    choice.choice_set_id
+                ),
+            });
+        }
+        if choice.selection_id.split(':').count() < 2 {
+            return Err(SavedCharacterStoreError {
+                message: format!(
+                    "selected choice selection_id '{}' must have at least two colon-segments \
+                     to round-trip through the fixture grammar",
+                    choice.selection_id
+                ),
+            });
+        }
+    }
+    for prov in &input.selection_provenance {
+        single_line("selection provenance source_ref", &prov.source_ref)?;
+    }
+
+    Ok(())
 }
 
 // --- Rendering ---
