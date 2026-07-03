@@ -41,6 +41,7 @@ export function Sd16PendingRollbackPanel({
         )}
       </dl>
       <p
+        id="sd16-pending-rollback-source-note"
         data-testid="sd16-pending-rollback-source-note"
         style={{
           margin: '8px 0 0 0',
