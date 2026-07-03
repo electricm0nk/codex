@@ -31,12 +31,6 @@ function render(deps: Sd16UpdateControllerDeps, checkInProgress: boolean): strin
   );
 }
 
-function withInstalledField(overrides: Partial<Sd16UpdateControllerDeps['installed']> = {}) {
-  return {
-    ...buildUnwiredUpdateDeps(),
-    ...overrides,
-  };
-}
 
 function withLastCheck(overrides: Partial<Sd16LastCheckState>): Sd16LastCheckState {
   return { ...emptyLastCheckState(), ...overrides };
