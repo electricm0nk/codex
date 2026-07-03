@@ -453,8 +453,7 @@ def _check_beta_release_exists(release_url: str | None) -> GateCheck:
     return GateCheck(
         "G_BETA_RELEASE_EXISTS",
         False,
-        "no beta release URL provided; pass --release-url (beta lane "
-        "context)",
+        "no beta release URL provided; pass --beta-release-url or --release-url",
     )
 
 
