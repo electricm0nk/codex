@@ -178,7 +178,7 @@ jobs:
       - name: Compute checksums
         working-directory: release-staging
         run: |
-          sha256sum ./*.deb ./*.AppImage provenance.json update-manifest.json > checksums.sha256
+          sha256sum ./*.deb ./*.AppImage provenance.json update-manifest.json update-manifest-stub.json > checksums.sha256
           cat checksums.sha256
 
       - name: Derive release tag and title
