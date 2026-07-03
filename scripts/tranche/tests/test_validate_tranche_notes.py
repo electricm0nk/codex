@@ -91,7 +91,7 @@ class _Workspace:
         self,
         *,
         tranche_id: str = "2.5",
-        release_notes_path: str = "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+        release_notes_path: str = "release-notes.md",
         channel: str = "alpha",
         promotion_branch: str = "develop",
         notes_subdir: str | None = None,
