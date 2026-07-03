@@ -102,13 +102,28 @@ assert_rejected \
 # --- direct script invocation (the CI step body) ---------------------------
 
 assert_eq "direct invocation accepts good PR (develop into test)" \
-  "0" "$(EXPECTED_SOURCE=develop SOURCE_BRANCH=develop HEAD_REPO="$BASE_REPO" BASE_REPO="$BASE_REPO" bash "$GUARD" >/dev/null 2>&1; echo $?)"
+  "0" "$(
+    set +e
+    EXPECTED_SOURCE=develop SOURCE_BRANCH=develop HEAD_REPO="$BASE_REPO" BASE_REPO="$BASE_REPO" bash "$GUARD" >/dev/null 2>&1
+    status=$?
+    echo "$status"
+  )"
 
 assert_eq "direct invocation rejects bad PR (develop into main)" \
-  "1" "$(EXPECTED_SOURCE=test SOURCE_BRANCH=develop HEAD_REPO="$BASE_REPO" BASE_REPO="$BASE_REPO" bash "$GUARD" >/dev/null 2>&1; echo $?)"
+  "1" "$(
+    set +e
+    EXPECTED_SOURCE=test SOURCE_BRANCH=develop HEAD_REPO="$BASE_REPO" BASE_REPO="$BASE_REPO" bash "$GUARD" >/dev/null 2>&1
+    status=$?
+    echo "$status"
+  )"
 
 assert_eq "direct invocation rejects fork (test into main from fork)" \
-  "1" "$(EXPECTED_SOURCE=test SOURCE_BRANCH=test HEAD_REPO="forker/codex" BASE_REPO="$BASE_REPO" bash "$GUARD" >/dev/null 2>&1; echo $?)"
+  "1" "$(
+    set +e
+    EXPECTED_SOURCE=test SOURCE_BRANCH=test HEAD_REPO="forker/codex" BASE_REPO="$BASE_REPO" bash "$GUARD" >/dev/null 2>&1
+    status=$?
+    echo "$status"
+  )"
 
 echo
 echo "branch promotion guard tests: $PASSED passed, $FAILED failed"
