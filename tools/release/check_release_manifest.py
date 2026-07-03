@@ -89,11 +89,11 @@ def _check_notes(notes_text: str, manifest_path: Path) -> list[str]:
     if not notes_text or not notes_text.strip():
         errors.append(f"{manifest_path}: release-notes file is empty")
         return errors
-    missing = [s for s in REQUIRED_NOTES_SECTIONS if s not in notes_text]
-    if missing:
-        errors.append(
-            f"{manifest_path}: release-notes missing required sections: {', '.join(missing)}"
-        )
+    missing = [
+        s
+        for s in REQUIRED_NOTES_SECTIONS
+        if re.search(rf"(?m)^##\s+{re.escape(s)}\s*$", notes_text) is None
+    ]
     return errors
 
 
