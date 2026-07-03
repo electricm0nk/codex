@@ -627,13 +627,12 @@ def _merge_loader_problems(
     each gate was not evaluable."""
     new_checks: list[GateCheck] = []
     for c in report.checks:
-        if c.gate == "G_PR_BODY_KEYS" and pr_body_problems:
+        if c.gate in {"G_PR_BODY_KEYS", "G_TRANSITION_STATEMENT"} and pr_body_problems:
             new_checks.append(
                 GateCheck(
                     gate=c.gate,
                     passed=False,
-                    detail="PR body loader failures: "
-                    + "; ".join(pr_body_problems),
+                    detail="PR body loader failures: " + "; ".join(pr_body_problems),
                 )
             )
         elif c.gate == "G_NOTES_VALIDATED" and notes_problems:
