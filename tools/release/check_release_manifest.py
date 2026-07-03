@@ -67,13 +67,11 @@ def _git_text(repo_root: Path, rel_path: str) -> str | None:
       4. HEAD                       — last resort, treats current tip as base
     """
     base_ref = os.environ.get("GITHUB_BASE_REF")
-    candidates = []
+    candidates: list[str] = []
     if base_ref:
-        candidates.append(f"origin/{base_ref}")
-        candidates.append(base_ref)
+        candidates.extend([f"origin/{base_ref}", base_ref, "HEAD~1", "HEAD"])
     else:
-        candidates.append("HEAD~1")
-        candidates.append("HEAD")
+        candidates.extend(["HEAD~1", "HEAD"])
     for ref in candidates:
         try:
             out = subprocess.check_output(
