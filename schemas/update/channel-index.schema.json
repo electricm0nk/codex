@@ -63,7 +63,11 @@
       "description": "Reserved signature field. Cryptographic signing is deferred for Tranche 2.5 (AV-SCH-3); null is accepted, a populated object is reserved for a future contract bump.",
       "oneOf": [
         { "type": "null" },
-        { "type": "object" }
+        {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        }
       ]
     }
   },
