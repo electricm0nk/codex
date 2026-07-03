@@ -16,8 +16,8 @@ name: Allow only test into main
 #
 # The actual policy logic lives in `tools/ci/branch-promotion-guard.sh` so it
 # can be unit-tested without GitHub. The unit tests live at
-# `tests/sd16-e5-f1/test_branch_promotion_guard.sh` and run in CI as part of
-# the regular test pipeline.
+# `tests/sd16-e5-f1/test_branch_promotion_guard.sh` (run manually, or wire into
+# a CI workflow that runs on push/pull_request).
 
 'on':
   pull_request_target:
