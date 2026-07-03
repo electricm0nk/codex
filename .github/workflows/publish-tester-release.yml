@@ -173,6 +173,7 @@ jobs:
             ]
           }
           EOF
+          cp update-manifest.json update-manifest-stub.json
 
       - name: Compute checksums
         working-directory: release-staging
