@@ -345,12 +345,13 @@ export async function fetchUpdateManifest(
  * identity, eligibility, optional notes, reserved signature).
  */
 export function validateManifestShape(raw: unknown, atUrl: string): FetchResult<Sd16UpdateManifestFile> {
-  if (raw === null || typeof raw !== 'object') {
+  if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) {
+    const got = raw === null ? 'null' : Array.isArray(raw) ? 'array' : typeof raw;
     return {
       ok: false,
       failure: {
         kind: 'invalid-manifest',
-        reason: `expected a JSON object at ${atUrl}, got ${raw === null ? 'null' : typeof raw}`,
+        reason: `expected a JSON object at ${atUrl}, got ${got}`,
         url: atUrl,
       },
     };
