@@ -115,10 +115,11 @@
           "pattern": "^\\.github/workflows/[A-Za-z0-9._-]+\\.ya?ml$"
         },
         "run_id": {
-          "type": "string",
           "description": "GitHub Actions run identifier.",
-          "pattern": "^[0-9]+$",
-          "minLength": 1
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            { "type": "string", "pattern": "^[0-9]+$", "minLength": 1 }
+          ]
         },
         "run_attempt": {
           "type": "integer",
