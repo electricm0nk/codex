@@ -259,11 +259,11 @@ export function validateChannelIndexShape(raw: unknown, atUrl: string): FetchRes
       },
     };
   }
-  // signature is reserved (signing deferred); must be null or absent.
+  // signature is reserved (signing deferred); must be null or a JSON object (or absent).
   if (
     obj.signature !== undefined &&
     obj.signature !== null &&
-    typeof obj.signature !== 'object'
+    (typeof obj.signature !== 'object' || Array.isArray(obj.signature))
   ) {
     return {
       ok: false,
