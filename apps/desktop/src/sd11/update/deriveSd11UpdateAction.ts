@@ -34,11 +34,12 @@ export function deriveSd11UpdateAction(
   }
 
   if (truth.kind === 'check-failed') {
+    const reason = sanitizeReportableOutput(truth.reason);
     return baseResult(context, {
       state: 'check-failed',
       headline: 'Update check failed',
       detail:
-        `The bounded update check could not complete and no success is claimed. Reason: ${truth.reason}. ` +
+        `The bounded update check could not complete and no success is claimed. Reason: ${reason}. ` +
         `Re-run the check once the desktop runtime boundary can prove official release truth.`,
     });
   }

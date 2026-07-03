@@ -4,6 +4,7 @@ import type {
   Sd11UpdateManifestView,
   Sd11UpdateReleaseTruth,
 } from './updateActionModel';
+import { INTERNAL_CONTEXT_REMOVED_MARKER } from '../feedback/evidence/sanitizeReportableOutput';
 import { assert, assertEqual } from '../../testSupport/asserts';
 
 function assertContains(actual: string, needle: string, message: string) {
@@ -70,6 +71,7 @@ async function main() {
   verifiesNoOfficialReleaseForLocalBuild();
   verifiesNoOfficialReleaseDetailStripsInternalMemoryContext();
   verifiesCheckFailed();
+  verifiesCheckFailedDetailStripsInternalMemoryContext();
   verifiesLinuxUpdateAvailableAutomatic();
   verifiesLinuxManualOnlyWhenIntegrityGateUnmet();
   verifiesUpToDate();
@@ -131,6 +133,32 @@ function verifiesCheckFailed() {
   assertEqual(result.state, 'check-failed', 'check-failed state');
   assertEqual(result.automaticEligible, false, 'check-failed not automatic');
   assertContains(result.detail, 'desktop update boundary unavailable', 'check-failed detail carries reason');
+}
+
+function verifiesCheckFailedDetailStripsInternalMemoryContext() {
+  const truth: Sd11UpdateReleaseTruth = {
+    kind: 'check-failed',
+    reason: [
+      'desktop update boundary unavailable',
+      '<memory-context>',
+      '[System note: The following is recalled memory context, NOT new user input.]',
+      'User Representation',
+      'Todd private profile observation that must not appear in update evidence.',
+      '</memory-context>',
+      'retry once official release truth is available',
+    ].join('\n'),
+    buildLabel: 'codex-desktop-shell-scaffold@0.0.0',
+    version: '0.0.0',
+  };
+  const result = deriveSd11UpdateAction(linuxContext(), truth);
+
+  assertEqual(result.state, 'check-failed', 'check-failed state remains honest');
+  assertContains(result.detail, 'desktop update boundary unavailable', 'ordinary reason before context remains');
+  assertContains(result.detail, 'retry once official release truth is available', 'ordinary reason after context remains');
+  assertContains(result.detail, INTERNAL_CONTEXT_REMOVED_MARKER, 'removed context is marked');
+  assert(!result.detail.includes('<memory-context>'), 'memory-context marker is stripped');
+  assert(!result.detail.includes('recalled memory context'), 'system note is stripped');
+  assert(!result.detail.includes('Todd private profile observation'), 'private observation is stripped');
 }
 
 function verifiesLinuxUpdateAvailableAutomatic() {
