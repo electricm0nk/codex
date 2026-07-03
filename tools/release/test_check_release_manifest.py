@@ -103,10 +103,24 @@ class TmpRepo(unittest.TestCase):
         # Init a minimal git repo so `_git_text` can resolve the merge-base ref.
         subprocess.check_output(["git", "-C", str(self.workdir), "init", "-q"])
         subprocess.check_output(
-            ["git", "-C", str(self.workdir), "config", "user.email", "todd@hintzmann.net"]
+            [
+                "git",
+                "-C",
+                str(self.workdir),
+                "config",
+                "user.email",
+                "ci@example.invalid",
+            ]
         )
         subprocess.check_output(
-            ["git", "-C", str(self.workdir), "config", "user.name", "Todd Hintzmann"]
+            [
+                "git",
+                "-C",
+                str(self.workdir),
+                "config",
+                "user.name",
+                "Codex CI",
+            ]
         )
         subprocess.check_output(["git", "-C", str(self.workdir), "checkout", "-q", "-b", "main"])
         # Initial empty commit so refs exist.
