@@ -709,7 +709,6 @@ def _build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("--beta-release-url", default=None)
     p.add_argument("--provenance-url", default=None)
     p.add_argument("--alpha-tag", default=None)
-    p.add_argument("--beta-tag", default=None)
     p.add_argument(
         "--self-test",
         action="store_true",
