@@ -338,7 +338,7 @@ jobs:
           echo "channel-index: prepared channels/${CHANNEL}.json (channel=${CHANNEL}, tag=${TAG}, tranche=${TRANCHE_ID}, published_at=${PUBLISHED_AT})"
 
       - name: Update channel index on update-index branch
-        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main')
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml') != ''
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
