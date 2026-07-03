@@ -26,6 +26,9 @@
       "deb",
       "appimage"
     ],
+    "resources": [
+      "resources/ge08/guard-stance-package/"
+    ],
     "icon": [
       "icons/icon.png"
     ],

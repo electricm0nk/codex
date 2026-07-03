@@ -99,7 +99,7 @@ export async function submitEnhancementRequest(
       status: 'draft-preserved',
       message:
         'No GitHub submission transport is configured in this build. The complete structured ' +
-        'draft is preserved for manual filing or copy — no submission was performed and none is claimed.',
+        'draft is preserved for manual GitHub issue filing or copy — no submission was performed and none is claimed.',
       problems: [],
     };
   }

@@ -367,7 +367,7 @@ function buildUnavailableBreadthClaimAudit(reason: string): Sd11BreadthClaimAudi
 }
 
 const DEFAULT_REQUEST: Ge08AuthoringWorkbenchRequest = {
-  packageRoot: 'tests/fixtures/ge08/guard-stance-package',
+  packageRoot: 'resources/ge08/guard-stance-package',
 };
 
 export async function loadSd11TesterWorkbenchSurface(

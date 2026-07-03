@@ -5,11 +5,16 @@
 //! the first proof package.
 
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use codex::homebrew_authoring::package_manifest::PackageValidationState;
 use codex::homebrew_authoring::package_store::PackageStore;
 use codex::homebrew_authoring::preview_bridge::{ArmorClassPreview, PreviewBridge, PreviewStatus};
+
+const PACKAGED_RESOURCE_PREFIX: &str = "resources/";
+const LINUX_PRODUCT_RESOURCE_DIR_NAME: &str = "Codex Desktop Shell Scaffold";
+const LINUX_DEB_RESOURCE_DIR_NAME: &str = "codex-desktop-shell-scaffold";
+const LINUX_BINARY_RESOURCE_DIR_NAME: &str = "codex_desktop_shell_scaffold";
 
 /// Request to load the GE08 authoring workbench snapshot.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -175,7 +180,8 @@ pub fn codex_repo_root() -> Result<PathBuf, String> {
 }
 
 /// Resolve a requested package root: absolute paths pass through, repo-relative
-/// paths anchor at the codex repo root.
+/// paths anchor at the codex repo root, and packaged resource paths anchor at
+/// the Tauri resource directory (with a source-tree fallback for tests/dev).
 pub fn resolve_package_path(package_root: &str) -> Result<PathBuf, String> {
     let requested = PathBuf::from(package_root);
 
@@ -183,7 +189,78 @@ pub fn resolve_package_path(package_root: &str) -> Result<PathBuf, String> {
         return Ok(requested);
     }
 
+    if package_root.starts_with(PACKAGED_RESOURCE_PREFIX) {
+        return resolve_packaged_resource_path(package_root);
+    }
+
     Ok(codex_repo_root()?.join(requested))
+}
+
+fn resolve_packaged_resource_path(package_root: &str) -> Result<PathBuf, String> {
+    let candidates = packaged_resource_candidates(package_root);
+    if candidates.is_empty() {
+        return Err("cannot determine packaged resource directory".to_string());
+    }
+
+    for candidate in &candidates {
+        if candidate.exists() {
+            return Ok(candidate.clone());
+        }
+    }
+
+    // Return the first governed packaged-resource candidate so a genuine miss
+    // reports a useful installed-resource path rather than falling back to the
+    // source-only tests/fixtures location that caused the alpha tester defect.
+    Ok(candidates[0].clone())
+}
+
+fn packaged_resource_candidates(package_root: &str) -> Vec<PathBuf> {
+    let mut roots = Vec::new();
+
+    if let Ok(resource_dir) = std::env::var("CODEX_DESKTOP_RESOURCE_DIR") {
+        roots.push(PathBuf::from(resource_dir));
+    }
+
+    if let Ok(exe) = std::env::current_exe() {
+        if let Some(exe_dir) = exe.parent() {
+            // Tauri Linux resource layout from an installed deb resolves from
+            // `/usr/bin/<binary>` to `/usr/lib/<product name>`; debug/dev builds
+            // may also copy resources beside the binary.
+            roots.push(exe_dir.join(format!("../lib/{LINUX_PRODUCT_RESOURCE_DIR_NAME}")));
+            roots.push(exe_dir.join(format!("../lib/{LINUX_DEB_RESOURCE_DIR_NAME}")));
+            roots.push(exe_dir.join(format!("../lib/{LINUX_BINARY_RESOURCE_DIR_NAME}")));
+            roots.push(exe_dir.to_path_buf());
+            roots.push(exe_dir.join("resources"));
+        }
+    }
+
+    if let Ok(appdir) = std::env::var("APPDIR") {
+        let appdir = Path::new(&appdir);
+        roots.push(appdir.join(format!("usr/lib/{LINUX_PRODUCT_RESOURCE_DIR_NAME}")));
+        roots.push(appdir.join(format!("usr/lib/{LINUX_DEB_RESOURCE_DIR_NAME}")));
+        roots.push(appdir.join(format!("usr/lib/{LINUX_BINARY_RESOURCE_DIR_NAME}")));
+    }
+
+    // Debian/install fallback documented by Tauri for Linux resource_dir.
+    roots.push(PathBuf::from(format!(
+        "/usr/lib/{LINUX_PRODUCT_RESOURCE_DIR_NAME}"
+    )));
+    roots.push(PathBuf::from(format!(
+        "/usr/lib/{LINUX_DEB_RESOURCE_DIR_NAME}"
+    )));
+    roots.push(PathBuf::from(format!(
+        "/usr/lib/{LINUX_BINARY_RESOURCE_DIR_NAME}"
+    )));
+
+    // Source-tree/test fallback: Tauri copies resources from src-tauri/resources
+    // for bundled builds, while cargo unit tests run directly from src-tauri.
+    roots.push(PathBuf::from(env!("CARGO_MANIFEST_DIR")));
+
+    let mut candidates = Vec::new();
+    for root in roots {
+        candidates.push(root.join(package_root));
+    }
+    candidates
 }
 
 /// Build the GE08 authoring workbench snapshot from the headless substrate.
@@ -348,7 +425,10 @@ mod tests {
             snapshot.preview.baseline_armor_class,
             Ge08BaselineArmorClass::Computed { value: 17 }
         );
-        assert_eq!(snapshot.preview.selected_slot_resolution.slot, "human_bonus_feat");
+        assert_eq!(
+            snapshot.preview.selected_slot_resolution.slot,
+            "human_bonus_feat"
+        );
         assert_eq!(
             snapshot.preview.selected_slot_resolution.resolved_feat_id,
             "feat.homebrew.guard_stance"
@@ -360,12 +440,33 @@ mod tests {
     }
 
     #[test]
+    fn packaged_guard_stance_resource_yields_success_without_repo_fixture_path() {
+        let snapshot = build_ge08_workbench_snapshot(Ge08AuthoringWorkbenchRequest {
+            package_root: "resources/ge08/guard-stance-package".to_string(),
+            active_record_ref: None,
+        })
+        .expect("packaged GE08 resource should build a snapshot without tests/fixtures");
+
+        assert_eq!(snapshot.package_root, "resources/ge08/guard-stance-package");
+        assert_eq!(snapshot.package_state, "valid");
+        assert_eq!(snapshot.preview.preview_status, "success");
+        assert_eq!(
+            snapshot.preview.baseline_armor_class,
+            Ge08BaselineArmorClass::Computed { value: 17 }
+        );
+    }
+
+    #[test]
     fn missing_effect_yields_blocked_with_diagnostics() {
         let snapshot = snapshot_for("guard-stance-package-invalid-missing-effect");
 
         assert_eq!(snapshot.preview.preview_status, "blocked");
         assert!(
-            snapshot.preview.diagnostics.iter().any(|d| d.claim_blocking),
+            snapshot
+                .preview
+                .diagnostics
+                .iter()
+                .any(|d| d.claim_blocking),
             "blocked preview must carry claim-blocking diagnostics"
         );
         assert!(
@@ -417,7 +518,10 @@ mod tests {
         // fall through to the Blocked rendering branch for computed values.
         let computed = serde_json::to_value(Ge08BaselineArmorClass::Computed { value: 17 })
             .expect("computed AC should serialize");
-        assert_eq!(computed, serde_json::json!({ "kind": "Computed", "value": 17 }));
+        assert_eq!(
+            computed,
+            serde_json::json!({ "kind": "Computed", "value": 17 })
+        );
 
         let blocked = serde_json::to_value(Ge08BaselineArmorClass::Blocked {
             reason: "missing effect".to_string(),
