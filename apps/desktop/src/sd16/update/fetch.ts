@@ -395,7 +395,7 @@ export function validateManifestShape(raw: unknown, atUrl: string): FetchResult<
       },
     };
   }
-  if (obj.artifact === null || typeof obj.artifact !== 'object') {
+  if (obj.artifact === null || typeof obj.artifact !== 'object' || Array.isArray(obj.artifact)) {
     return {
       ok: false,
       failure: {
