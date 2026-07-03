@@ -235,3 +235,139 @@ jobs:
             release-staging/checksums.sha256 \
             release-staging/provenance.json \
             release-staging/update-manifest-stub.json
+
+      # Channel-index update: the only legitimate writer of the protected
+      # `update-index` branch in the normal path. Pushes channels/<channel>.json
+      # containing the published manifest URL, release tag, publication
+      # timestamp, and tranche id. Restricted to push events on develop/main
+      # so workflow_dispatch / pull_request / fork reruns cannot poison the
+      # index. Fails closed when no tranche manifest matches the source
+      # branch -- never writes a partial index. Two-step design: the
+      # preparation step stages the JSON into the workspace and exports
+      # metadata via $GITHUB_ENV; the action step picks it up and pushes it
+      # directly to update-index (push-to-current-branch + branch=
+      # update-index; this is NOT a PR -- the channel index is a continuous
+      # pointer, not a review artifact).
+      - name: Prepare channel index payload
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main')
+        id: channel_index_prep
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHANNEL: ${{ steps.channel.outputs.channel }}
+          TAG: ${{ steps.release_meta.outputs.tag }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CHANNEL:-}" ] || [ -z "${TAG:-}" ]; then
+            echo "::error::channel-index: missing CHANNEL or TAG from upstream steps"
+            exit 1
+          fi
+
+          # Resolve tranche_id. Prefer the E1 locate_manifest step output if
+          # present; otherwise walk programs/codex/requirements/SD-16-...
+          # for a manifest.yaml whose promotion_branch matches the source
+          # branch. Fail closed if nothing matches.
+          TRANCHE_ID=""
+          MANIFEST_PATH="${{ steps.locate_manifest.outputs.manifest }}"
+          if [ -n "${MANIFEST_PATH:-}" ] && [ -f "${MANIFEST_PATH}" ]; then
+            TRANCHE_ID="$(awk -F': *' '/^tranche_id:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "${MANIFEST_PATH}")"
+          fi
+          if [ -z "${TRANCHE_ID}" ]; then
+            FOUND="$(find programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-* -maxdepth 2 -name 'manifest.yaml' 2>/dev/null | while read -r f; do
+              PB="$(awk -F': *' '/^promotion_branch:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "$f")"
+              if [ "${PB}" = "${GITHUB_REF_NAME}" ]; then
+                echo "$f"
+                exit 0
+              fi
+            done | head -1 || true)"
+            if [ -n "${FOUND:-}" ] && [ -f "${FOUND}" ]; then
+              TRANCHE_ID="$(awk -F': *' '/^tranche_id:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "${FOUND}")"
+            fi
+          fi
+          if [ -z "${TRANCHE_ID}" ]; then
+            echo "::error::channel-index: no tranche manifest found for promotion_branch=${GITHUB_REF_NAME} (looked in steps.locate_manifest.outputs.manifest and programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml)"
+            exit 1
+          fi
+
+          # Resolve publication timestamp from the live release API so the
+          # same tag always produces the same index payload (idempotent).
+          PUBLISHED_AT="$(gh release view "${TAG}" --json publishedAt --jq '.publishedAt')"
+          if [ -z "${PUBLISHED_AT}" ] || [ "${PUBLISHED_AT}" = "null" ]; then
+            echo "::error::channel-index: gh release view returned no publishedAt for tag=${TAG}"
+            exit 1
+          fi
+
+          MANIFEST_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${TAG}/update-manifest-stub.json"
+          NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG}"
+
+          # Deterministic JSON payload (sorted keys via jq -S). signature is
+          # reserved (Tranche 2.5 does not sign channel indexes).
+          INDEX_JSON="$(jq -n \
+            --arg sv "v1" \
+            --arg ch "${CHANNEL}" \
+            --arg tag "${TAG}" \
+            --arg pa "${PUBLISHED_AT}" \
+            --arg mu "${MANIFEST_URL}" \
+            --arg nu "${NOTES_URL}" \
+            --arg tid "${TRANCHE_ID}" \
+            '{channel: $ch, release: {manifest_url: $mu, notes_url: $nu, published_at: $pa, tag: $tag, tranche_id: $tid}, schema_version: $sv, signature: null}' \
+            | jq -S .)"
+
+          # Stage into the workspace so peter-evans/create-pull-request can
+          # commit and push it. The action uses add-paths to include only
+          # channels/${CHANNEL}.json in the update-index commit.
+          mkdir -p channels
+          printf '%s\n' "${INDEX_JSON}" > "channels/${CHANNEL}.json"
+
+          # Self-check: the staged file must parse as JSON.
+          python3 -c "import json; json.load(open('channels/${CHANNEL}.json'))"
+
+          # Export to subsequent steps via $GITHUB_ENV (so the action step
+          # can reference them as ${{ env.* }}).
+          {
+            echo "CHANNEL=${CHANNEL}"
+            echo "TAG=${TAG}"
+            echo "PUBLISHED_AT=${PUBLISHED_AT}"
+            echo "MANIFEST_URL=${MANIFEST_URL}"
+            echo "NOTES_URL=${NOTES_URL}"
+            echo "TRANCHE_ID=${TRANCHE_ID}"
+            echo "COMMIT_MESSAGE=channel-index: ${CHANNEL} ${TAG} (tranche ${TRANCHE_ID})"
+          } >> "${GITHUB_ENV}"
+
+          echo "channel-index: prepared channels/${CHANNEL}.json (channel=${CHANNEL}, tag=${TAG}, tranche=${TRANCHE_ID}, published_at=${PUBLISHED_AT})"
+
+      - name: Update channel index on update-index branch
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main')
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update-index
+          push-to-current-branch: true
+          commit-message: "${{ env.COMMIT_MESSAGE }}"
+          title: "channel-index: ${{ env.CHANNEL }} ${{ env.TAG }}"
+          body: |
+            Automated channel-index update from the release lane.
+
+            - channel: ${{ env.CHANNEL }}
+            - tag: ${{ env.TAG }}
+            - published_at: ${{ env.PUBLISHED_AT }}
+            - manifest_url: ${{ env.MANIFEST_URL }}
+            - notes_url: ${{ env.NOTES_URL }}
+            - tranche_id: ${{ env.TRANCHE_ID }}
+            - source_branch: ${{ github.ref_name }}
+            - source_sha: ${{ github.sha }}
+            - run_id: ${{ github.run_id }}
+
+            This commit is the canonical channel pointer for ${{ env.CHANNEL }}.
+            No review is required -- channel indexes are continuous pointers,
+            not review artifacts. The release-lane guard restricts this
+            writer to push events on develop/main; workflow_dispatch,
+            pull_request, and fork-triggered reruns skip this step.
+          add-paths: |
+            channels/${{ env.CHANNEL }}.json
+          # No reviewers, no assignees, no labels -- this is not a PR review.
+          # The action will commit and push to update-index directly because
+          # push-to-current-branch=true and branch=update-index. On the
+          # first publication, the action creates update-index and the
+          # channels/ directory in the same commit.
