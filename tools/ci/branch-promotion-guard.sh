@@ -18,7 +18,9 @@
 # `verify_promotion_source` function. Drift between this file and the
 # workflows fails the test suite.
 
-set -euo pipefail
+if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
+  set -euo pipefail
+fi
 
 # verify_promotion_source <expected_source_branch> <source_branch> <head_repo> <base_repo>
 #
