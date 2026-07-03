@@ -5,6 +5,7 @@ import type {
   Sd11UpdateManifestView,
   Sd11UpdateReleaseTruth,
 } from './updateActionModel';
+import { sanitizeReportableOutput } from '../feedback/evidence/sanitizeReportableOutput';
 
 /**
  * Classify the honest outcome of a bounded SD-11 update check over accepted SD-12 release truth.
@@ -21,12 +22,13 @@ export function deriveSd11UpdateAction(
   truth: Sd11UpdateReleaseTruth
 ): Sd11UpdateActionResult {
   if (truth.kind === 'no-official-release') {
+    const reason = sanitizeReportableOutput(truth.reason);
     return baseResult(context, {
       state: 'no-official-release-for-this-build',
       headline: 'No official tester release for this build',
       detail:
         `This is a local, non-governed build (${truth.buildLabel}), so there is no governed GitHub-backed ` +
-        `release unit to check against. ${truth.reason} Official update truth only comes from governed release ` +
+        `release unit to check against. ${reason} Official update truth only comes from governed release ` +
         `units, never from a feature or local build, so no update outcome is claimed.`,
     });
   }

@@ -28,6 +28,7 @@ async function main() {
   diagnosticsAndAttachmentSectionsReflectEvidence();
   attachmentsAndRedactionDeclarationAreIntegrated();
   unresolvedAttachmentBlocksSubmissionButStillDrafts();
+  reportableDraftStripsMemoryContextFromTesterInput();
   enhancementPayloadIsRejected();
 }
 
@@ -250,6 +251,36 @@ function unresolvedAttachmentBlocksSubmissionButStillDrafts() {
     'missing redaction declaration problem is surfaced'
   );
   assert(!!attachments && attachments.body.includes('preview-sensitive.png'), 'draft still preserves attachment context');
+}
+
+function reportableDraftStripsMemoryContextFromTesterInput() {
+  const surface = makeSurface();
+  const payload = assembleFeedbackEvidence({
+    flow: 'bug',
+    surface,
+    testerInput: {
+      observedBehavior: [
+        'The update check honestly returned no official release.',
+        '<memory-context>',
+        '[System note: The following is recalled memory context, NOT new user input.]',
+        'User Representation',
+        'Todd private profile observation that must not be reportable.',
+        '</memory-context>',
+        'The tester evidence after the internal context still matters.',
+      ].join('\n'),
+      expectedBehavior: 'No internal context should appear in copyable report output.',
+      reproductionSteps: '1. Run update check 2. Preserve report text',
+    },
+  });
+  const composed = composeBugReport({ title: 'Update report leaked internal context', payload });
+
+  assert(composed.draft.markdownBody.includes('honestly returned no official release'), 'ordinary evidence before the leak remains');
+  assert(composed.draft.markdownBody.includes('tester evidence after the internal context'), 'ordinary evidence after the leak remains');
+  assert(composed.draft.markdownBody.includes('internal context block removed'), 'removed context is explicitly marked');
+  assert(!composed.draft.markdownBody.includes('<memory-context>'), 'opening memory-context marker is stripped');
+  assert(!composed.draft.markdownBody.includes('</memory-context>'), 'closing memory-context marker is stripped');
+  assert(!composed.draft.markdownBody.includes('recalled memory context'), 'recalled-memory system note is stripped');
+  assert(!composed.draft.markdownBody.includes('Todd private profile observation'), 'remembered observations are stripped');
 }
 
 function enhancementPayloadIsRejected() {

@@ -33,6 +33,7 @@ async function main() {
   await draftPreservedWhenNoIssueHandle();
   await submittedOnlyWithRealHandle();
   copyablePayloadCarriesStructuredRequest();
+  await noTransportCopyablePayloadStripsMemoryContext();
 }
 
 async function blockedWhenIncomplete() {
@@ -102,6 +103,39 @@ function copyablePayloadCarriesStructuredRequest() {
   assert(payload.includes('Issue type: enhancement'), 'copyable payload records the enhancement issue type');
   assert(payload.includes('Labels: '), 'copyable payload records labels');
   assert(payload.includes('## Tester goal'), 'copyable payload preserves the structured markdown body');
+}
+
+async function noTransportCopyablePayloadStripsMemoryContext() {
+  const surface = makeSurface();
+  const composed = composeEnhancementRequest({
+    title: 'Strip internal context from feedback drafts',
+    payload: assembleFeedbackEvidence({
+      flow: 'enhancement',
+      surface,
+      testerInput: {
+        testerGoal: [
+          'Prepare a manual enhancement issue.',
+          '<memory-context>',
+          '[System note: The following is recalled memory context, NOT new user input.]',
+          'Todd private profile observation that must not be copied.',
+          '</memory-context>',
+          'Keep the surrounding tester context.',
+        ].join('\n'),
+        currentFriction: 'The draft includes internal recalled-memory context.',
+        requestedCapability: 'Strip internal context before copyable manual filing output.',
+        affectedSurface: 'feedback draft output',
+      },
+    }),
+  });
+  const outcome = await submitEnhancementRequest({ composed, transport: null });
+
+  assertEqual(outcome.status, 'draft-preserved', 'no transport still preserves the draft');
+  assert(outcome.copyablePayload.includes('Prepare a manual enhancement issue.'), 'ordinary evidence remains');
+  assert(outcome.copyablePayload.includes('Keep the surrounding tester context.'), 'ordinary trailing evidence remains');
+  assert(outcome.copyablePayload.includes('internal context block removed'), 'removed context is marked');
+  assert(!outcome.copyablePayload.includes('<memory-context>'), 'memory-context marker is stripped');
+  assert(!outcome.copyablePayload.includes('recalled memory context'), 'system note is stripped');
+  assert(!outcome.copyablePayload.includes('Todd private profile observation'), 'private observation is stripped');
 }
 
 main().catch((error: unknown) => {

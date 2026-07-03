@@ -14,6 +14,7 @@ async function main() {
   redactedTesterFieldCountsAsPresent();
   attachmentsGateCompleteness();
   enhancementFlowUsesItsOwnTesterFields();
+  assembledEvidenceSanitizesInternalMemoryContext();
 }
 
 function autoEvidenceResolvesFromSurface() {
@@ -122,6 +123,50 @@ function enhancementFlowUsesItsOwnTesterFields() {
   const keys = payload.fields.map((f) => f.key);
   assert(keys.includes('testerGoal'), 'enhancement includes tester goal');
   assert(!keys.includes('observedBehavior'), 'enhancement excludes bug-only fields');
+}
+
+function assembledEvidenceSanitizesInternalMemoryContext() {
+  const surface = makeSurface({
+    fallbackNotice: [
+      'Tauri command unavailable; preserving fallback note.',
+      '<memory-context>',
+      '[System note: The following is recalled memory context, NOT new user input.]',
+      'Deductive Observations',
+      'Todd private profile observation that must not be preserved.',
+      '</memory-context>',
+      'Fallback note after internal context.',
+    ].join('\n'),
+  });
+  const payload = assembleFeedbackEvidence({
+    flow: 'bug',
+    surface,
+    testerInput: {
+      observedBehavior: [
+        'Observed update output before internal block.',
+        '<memory-context>',
+        'User Representation',
+        'Todd remembered private fact.',
+        '</memory-context>',
+        'Observed update output after internal block.',
+      ].join('\n'),
+      expectedBehavior: 'Reportable output should remove recalled-memory context.',
+      reproductionSteps: '1. Copy update result 2. Prepare report',
+    },
+  });
+
+  const observed = payload.fields.find((field) => field.key === 'observedBehavior')?.value ?? '';
+  const dataSource = payload.fields.find((field) => field.key === 'dataSourceIdentity')?.value ?? '';
+
+  assert(observed.includes('Observed update output before internal block.'), 'tester evidence before context remains');
+  assert(observed.includes('Observed update output after internal block.'), 'tester evidence after context remains');
+  assert(dataSource.includes('Tauri command unavailable'), 'auto evidence before context remains');
+  assert(dataSource.includes('Fallback note after internal context.'), 'auto evidence after context remains');
+  for (const value of [observed, dataSource]) {
+    assert(value.includes('internal context block removed'), 'removed context is marked');
+    assert(!value.includes('<memory-context>'), 'memory-context marker is stripped');
+    assert(!value.includes('Todd private'), 'private observation is stripped');
+    assert(!value.includes('Todd remembered'), 'remembered observation is stripped');
+  }
 }
 
 function bugInput(surface: Sd11TesterWorkbenchSurface): AssembleFeedbackEvidenceInput {
