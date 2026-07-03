@@ -314,9 +314,9 @@ jobs:
             '{channel: $ch, release: {manifest_url: $mu, notes_url: $nu, published_at: $pa, tag: $tag, tranche_id: $tid}, schema_version: $sv, signature: null}' \
             | jq -S .)"
 
-          # Stage into the workspace so peter-evans/create-pull-request can
-          # commit and push it. The action uses add-paths to include only
-          # channels/${CHANNEL}.json in the update-index commit.
+          # Stage into the workspace first, then serialize the payload into
+          # $GITHUB_ENV so the update-index writer can restore it after
+          # checking out the target branch.
           mkdir -p channels
           printf '%s\n' "${INDEX_JSON}" > "channels/${CHANNEL}.json"
 
@@ -333,41 +333,45 @@ jobs:
             echo "NOTES_URL=${NOTES_URL}"
             echo "TRANCHE_ID=${TRANCHE_ID}"
             echo "COMMIT_MESSAGE=channel-index: ${CHANNEL} ${TAG} (tranche ${TRANCHE_ID})"
+            echo "CHANNEL_INDEX_JSON_B64=$(printf '%s' "${INDEX_JSON}" | base64 -w0)"
           } >> "${GITHUB_ENV}"
 
           echo "channel-index: prepared channels/${CHANNEL}.json (channel=${CHANNEL}, tag=${TAG}, tranche=${TRANCHE_ID}, published_at=${PUBLISHED_AT})"
 
       - name: Update channel index on update-index branch
         if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml') != ''
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: update-index
-          push-to-current-branch: true
-          commit-message: "${{ env.COMMIT_MESSAGE }}"
-          title: "channel-index: ${{ env.CHANNEL }} ${{ env.TAG }}"
-          body: |
-            Automated channel-index update from the release lane.
+        run: |
+          set -euo pipefail
 
-            - channel: ${{ env.CHANNEL }}
-            - tag: ${{ env.TAG }}
-            - published_at: ${{ env.PUBLISHED_AT }}
-            - manifest_url: ${{ env.MANIFEST_URL }}
-            - notes_url: ${{ env.NOTES_URL }}
-            - tranche_id: ${{ env.TRANCHE_ID }}
-            - source_branch: ${{ github.ref_name }}
-            - source_sha: ${{ github.sha }}
-            - run_id: ${{ github.run_id }}
+          if [ -z "${CHANNEL:-}" ] || [ -z "${COMMIT_MESSAGE:-}" ] || [ -z "${CHANNEL_INDEX_JSON_B64:-}" ]; then
+            echo "::error::channel-index: missing CHANNEL, COMMIT_MESSAGE, or CHANNEL_INDEX_JSON_B64"
+            exit 1
+          fi
 
-            This commit is the canonical channel pointer for ${{ env.CHANNEL }}.
-            No review is required -- channel indexes are continuous pointers,
-            not review artifacts. The release-lane guard restricts this
-            writer to push events on develop/main; workflow_dispatch,
-            pull_request, and fork-triggered reruns skip this step.
-          add-paths: |
-            channels/${{ env.CHANNEL }}.json
-          # No reviewers, no assignees, no labels -- this is not a PR review.
-          # The action will commit and push to update-index directly because
-          # push-to-current-branch=true and branch=update-index. On the
-          # first publication, the action creates update-index and the
-          # channels/ directory in the same commit.
+          FILE="channels/${CHANNEL}.json"
+
+          git reset --hard HEAD
+          git clean -fd
+
+          if git ls-remote --exit-code --heads origin update-index >/dev/null 2>&1; then
+            git fetch origin update-index:refs/remotes/origin/update-index
+            git checkout -B update-index refs/remotes/origin/update-index
+          else
+            git checkout --orphan update-index
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
+
+          mkdir -p channels
+          printf '%s' "${CHANNEL_INDEX_JSON_B64}" | base64 -d > "${FILE}"
+          python3 -c "import json; json.load(open('${FILE}'))"
+
+          git add "${FILE}"
+          if git diff --cached --quiet; then
+            echo "channel-index: no changes for ${FILE}; update-index is already current"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "${COMMIT_MESSAGE}"
+          git push origin HEAD:update-index
