@@ -56,6 +56,8 @@ async function draftPreservedWhenNoTransport() {
   assertEqual(outcome.status, 'draft-preserved', 'no transport preserves the draft');
   assertEqual(outcome.claimedSubmitted, false, 'no submission is claimed without a transport');
   assertEqual(outcome.resultHandle, null, 'no result handle without a transport');
+  assert(outcome.message.includes('manual GitHub issue filing'), 'no transport directs the tester to manual filing');
+  assert(outcome.message.includes('none is claimed'), 'no transport message refuses claimed submission');
   assert(outcome.copyablePayload.includes('Add duplicate-and-edit'), 'copyable payload carries the title');
 }
 

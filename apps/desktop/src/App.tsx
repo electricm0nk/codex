@@ -330,7 +330,7 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
           padding: '0.6rem 1rem',
         }}
       >
-        {composed.submittable ? 'Prepare bug report submission' : 'Preserve draft (not yet submittable)'}
+        {composed.submittable ? 'Prepare bug draft for manual filing' : 'Preserve bug draft (not yet submittable)'}
       </button>
 
       <h3 style={{ marginBottom: '0.4rem', marginTop: '1.25rem' }}>Composed issue preview</h3>
@@ -530,7 +530,9 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
           padding: '0.6rem 1rem',
         }}
       >
-        {composed.submittable ? 'Prepare enhancement request submission' : 'Preserve draft (not yet submittable)'}
+        {composed.submittable
+          ? 'Prepare enhancement draft for manual filing'
+          : 'Preserve enhancement draft (not yet submittable)'}
       </button>
 
       <h3 style={{ marginBottom: '0.4rem', marginTop: '1.25rem' }}>Composed issue preview</h3>

@@ -121,11 +121,13 @@ jobs:
           [ -n "$APPIMAGE" ] || { echo "ERROR: No .AppImage artifact found. E1 Linux artifact set may not yet be complete."; exit 1; }
 
           mkdir -p ../../release-staging
-          cp "$DEB" ../../release-staging/
-          cp "$APPIMAGE" ../../release-staging/
+          DEB_NAME=$(basename "$DEB" | tr ' ' '.')
+          APPIMAGE_NAME=$(basename "$APPIMAGE" | tr ' ' '.')
+          cp "$DEB" "../../release-staging/$DEB_NAME"
+          cp "$APPIMAGE" "../../release-staging/$APPIMAGE_NAME"
 
-          echo "deb_name=$(basename "$DEB")" >> "$GITHUB_OUTPUT"
-          echo "appimage_name=$(basename "$APPIMAGE")" >> "$GITHUB_OUTPUT"
+          echo "deb_name=$DEB_NAME" >> "$GITHUB_OUTPUT"
+          echo "appimage_name=$APPIMAGE_NAME" >> "$GITHUB_OUTPUT"
 
       - name: Write provenance receipt
         working-directory: release-staging
