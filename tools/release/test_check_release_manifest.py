@@ -135,11 +135,15 @@ class TmpRepo(unittest.TestCase):
         )
         subprocess.check_output(
             [
-                "git", "-C", str(self.workdir), "commit", "-q",
-                "-m", message,
-                "--author=Todd Hintzmann <todd@hintzmann.net>",
+                "git",
+                "-C",
+                str(self.workdir),
+                "commit",
+                "-q",
+                "-m",
+                message,
+                "--author=Codex CI <ci@example.invalid>",
             ]
-        )
 
     def test_valid_manifest_passes(self):
         notes = self.workdir / VALID_MANIFEST["release_notes_path"]
