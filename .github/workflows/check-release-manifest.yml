@@ -50,15 +50,15 @@ jobs:
         id: detect
         env:
           BASE_REF: ${{ github.event.pull_request.base.ref }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           set -euo pipefail
-          BASE="${BASE_REF:-HEAD~1}"
-          git fetch origin "${BASE}" 2>/dev/null || true
+          BASE="${BASE_SHA:-HEAD~1}"
 
           changed_files=$(git diff --name-only --diff-filter=ACMRT "${BASE}...HEAD" -- \
             'release-manifest.json' \
             'tools/release/release-manifest.*.json' \
-            'programs/codex/requirements/*/release-manifest.json' || true)
+            'programs/codex/requirements/*/release-manifest.json')
 
           if [ -z "${changed_files}" ]; then
             echo "manifests_changed=false" >> "$GITHUB_OUTPUT"
