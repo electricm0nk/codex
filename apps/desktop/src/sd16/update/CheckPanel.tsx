@@ -54,12 +54,14 @@ export function Sd16CheckPanel({ deps, checkInProgress, onCheck }: Sd16CheckPane
         id={CHECK_BUTTON_ID}
         data-testid="sd16-check-button"
         type="button"
-        disabled={checkInProgress || controller === undefined}
+        disabled={
+          checkInProgress ||
+          lastCheck.indexStatus === 'in-progress' ||
+          lastCheck.manifestStatus === 'in-progress'
+        }
         style={buttonStyle}
         onClick={() => onCheck(channel)}
       >
-        {checkInProgress ? 'Checking…' : 'Check'}
-      </button>
       <div
         id={RELEASE_NOTES_ID}
         data-testid="sd16-release-notes"
