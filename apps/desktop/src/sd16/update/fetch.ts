@@ -437,7 +437,7 @@ export function validateManifestShape(raw: unknown, atUrl: string): FetchResult<
   if (
     obj.signature !== undefined &&
     obj.signature !== null &&
-    typeof obj.signature !== 'object'
+    (typeof obj.signature !== 'object' || Array.isArray(obj.signature))
   ) {
     return {
       ok: false,
