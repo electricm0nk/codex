@@ -249,7 +249,7 @@ jobs:
       # update-index; this is NOT a PR -- the channel index is a continuous
       # pointer, not a review artifact).
       - name: Prepare channel index payload
-        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main')
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml') != ''
         id: channel_index_prep
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
