@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/electricm0nk/codex/tools/release/release-manifest.schema.json",
+  "title": "Codex Release Manifest",
+  "description": "Bound manifest that the publish lane must carry. SD-16 / Tranche 2.x doctrine requires both tranche_id and release_notes_path to be present, structurally valid, and consistent before any tester-channel publication can succeed. The publish workflow must refuse to attach a release whose manifest does not satisfy this schema.",
+  "type": "object",
+  "required": ["schema_version", "tranche_id", "release_notes_path", "channel", "platform_artifacts"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Manifest schema version. v1 enforces tranche_id + release_notes_path binding.",
+      "enum": ["v1"]
+    },
+    "tranche_id": {
+      "type": "string",
+      "description": "Identifier of the governing tranche (e.g. 'tranche-2.5'). Must match a directory under programs/codex/requirements/.",
+      "pattern": "^tranche-[0-9]+(\\.[0-9]+)+$"
+    },
+    "release_notes_path": {
+      "type": "string",
+      "description": "Repo-relative path to the canonical tranche release-notes.md file. Must begin with 'programs/codex/requirements/' and end with 'release-notes.md'. The referenced file MUST exist on the merged branch and contain every required section (Summary, User-Visible Changes, Defects Fixed, Operational Notes, Verification Evidence, Known Issues, Update Eligibility).",
+      "pattern": "^programs/codex/requirements/.+/release-notes\\.md$"
+    },
+    "channel": {
+      "type": "string",
+      "description": "Release channel this manifest binds.",
+      "enum": ["alpha", "beta", "stable"]
+    },
+    "spec_domain_id": {
+      "type": "string",
+      "description": "Optional explicit SD-NN reference for the spec domain this release primarily delivers. Must match the dirname under programs/codex/requirements/ that release_notes_path points into.",
+      "pattern": "^SD-[0-9]+$"
+    },
+    "platform_artifacts": {
+      "type": "array",
+      "description": "Per-platform artifact declarations. Each entry must reference an artifact actually produced by the publish lane (deb / AppImage / etc).",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["platform", "tier", "artifacts"],
+        "additionalProperties": false,
+        "properties": {
+          "platform": {
+            "type": "string",
+            "enum": ["linux"]
+          },
+          "tier": {
+            "type": "string",
+            "enum": ["first-class", "second-class", "third-class"]
+          },
+          "update_eligibility": {
+            "type": "string",
+            "description": "Per-platform update eligibility outcome. Only Linux first-class may be 'automatic' on this tranche.",
+            "enum": ["automatic", "manual-only", "unsupported", "withdrawn", "blocked"]
+          },
+          "artifacts": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["name", "format"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^.+\\.(deb|AppImage|tar\\.gz|zip)$"
+                },
+                "format": {
+                  "type": "string",
+                  "enum": ["deb", "AppImage", "tar.gz", "zip"]
+                },
+                "checksum_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "publication_run_id": {
+      "type": "string",
+      "description": "CI run id that produced this manifest. Usually left blank in source-controlled manifests and rewritten by the publish workflow."
+    }
+  }
+}

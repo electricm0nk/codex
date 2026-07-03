@@ -106,6 +106,10 @@ jobs:
         working-directory: apps/desktop
         run: npm ci
 
+      - name: Validate tranche release notes
+        run: |
+          python scripts/tranche/validate-tranche-notes.py --release-notes-path programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md
+
       - name: Build Linux artifact set
         working-directory: apps/desktop
         run: npx tauri build --bundles deb,appimage --ci
@@ -145,23 +149,36 @@ jobs:
           }
           EOF
 
-      - name: Write update manifest stub
+      - name: Write update manifest
         working-directory: release-staging
         run: |
-          cat > update-manifest-stub.json << EOF
+          cat > update-manifest.json << EOF
           {
-            "schema_version": "stub-v0",
-            "note": "Update manifest implementation is reserved for SD-12-E3. This stub preserves the publication-unit contract shape without claiming live updater support.",
+            "schema_version": "v1",
+            "tranche_id": "tranche-2.5",
+            "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
             "channel": "${{ steps.channel.outputs.channel }}",
-            "source_revision": "${GITHUB_SHA}",
-            "update_check_wired": false
+            "spec_domain_id": "SD-16",
+            "publication_run_id": "${{ github.run_id }}",
+            "platform_artifacts": [
+              {
+                "platform": "linux",
+                "tier": "first-class",
+                "update_eligibility": "automatic",
+                "artifacts": [
+                  { "name": "${{ steps.stage.outputs.deb_name }}", "format": "deb" },
+                  { "name": "${{ steps.stage.outputs.appimage_name }}", "format": "AppImage" }
+                ]
+              }
+            ]
           }
           EOF
+          cp update-manifest.json update-manifest-stub.json
 
       - name: Compute checksums
         working-directory: release-staging
         run: |
-          sha256sum ./*.deb ./*.AppImage provenance.json update-manifest-stub.json > checksums.sha256
+          sha256sum ./*.deb ./*.AppImage provenance.json update-manifest.json update-manifest-stub.json > checksums.sha256
           cat checksums.sha256
 
       - name: Derive release tag and title
@@ -375,3 +392,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "${COMMIT_MESSAGE}"
           git push origin HEAD:update-index
+            release-staging/update-manifest.json
