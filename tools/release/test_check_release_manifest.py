@@ -148,8 +148,9 @@ class TmpRepo(unittest.TestCase):
 
         res = _shell("release-manifest.json", cwd=self.workdir, env={"GITHUB_BASE_REF": "main"}, validator=self.workdir / "tools" / "release" / "check_release_manifest.py")
         self.assertEqual(res.returncode, 2, msg=res.stderr or res.stdout)
-        self.assertTrue(
-            "schema validation failed" in res.stderr and "tranche_id" in res.stderr,
+        self.assertRegex(
+            res.stderr,
+            r"(schema validation failed: .*tranche_id|missing required field 'tranche_id')",
             msg=res.stderr,
         )
 
