@@ -285,7 +285,7 @@ export function validateChannelIndexShape(raw: unknown, atUrl: string): FetchRes
       trancheId: rel.tranche_id,
       ...(rel.notes_url !== undefined ? { notesUrl: rel.notes_url } : {}),
     },
-    signature: (obj.signature ?? null) as null,
+    signature: obj.signature ?? null,
   };
   return { ok: true, value: parsed };
 }
