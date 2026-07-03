@@ -1,0 +1,307 @@
+name: Promotion gate evidence check
+
+# SD-16 E5-F3a: self-blocking CI gate that runs on PRs targeting the
+# beta (test) and stable (main) channels. The gate emits an evidence-
+# rich PR comment summarising every required promotion precondition
+# (Release Notes Requirements, Branch and Channel Requirements,
+# Promotion Gate Requirements, Release Lane Requirements) and refuses
+# to allow merge if any precondition fails.
+#
+# The companion script scripts/release/check_promotion_evidence.py
+# owns the actual gate evaluation; this workflow only orchestrates
+# fetching the inputs, running the checker, posting the comment, and
+# setting the GitHub commit status. The companion workflow
+# allow-only-develop-into-main.yml (E5-F1, branch governance) and
+# promotion-source-guard.yml (E2, branch-source guard) still own their
+# surfaces unchanged.
+
+on:
+  pull_request_target:
+    branches:
+      - test
+      - main
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+      - ready_for_review
+
+permissions: {}
+
+jobs:
+  promotion-gate:
+    name: Verify promotion evidence (${{ github.base_ref }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Need programs/codex/requirements/... to read the canonical
+          # release notes + tranche manifest. pull_request_target
+          # already grants read access to PR-head refs.
+          fetch-depth: 1
+
+      - name: Determine promotion lane
+        id: lane
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
+        run: |
+          set -eu
+          case "$BASE_BRANCH" in
+            test)
+              echo "lane=beta" >> "$GITHUB_OUTPUT"
+              ;;
+            main)
+              echo "lane=stable" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "Unexpected base branch: $BASE_BRANCH" >&2
+              exit 2
+              ;;
+          esac
+          echo "Promotion lane for base=$BASE_BRANCH is $(cat $GITHUB_OUTPUT | tail -1 | cut -d= -f2)"
+
+      - name: Run checker self-tests
+        id: self-tests
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          set -eu
+          python3 scripts/release/check_promotion_evidence.py --self-test
+          echo "self_tests_passed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch PR body via REST
+        id: pr-body
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_BODY_URL: ${{ github.event.pull_request.url }}
+        run: |
+          set -eu
+          # pull_request_target's event body can be truncated for long
+          # PR descriptions, so the workflow asks the REST API for
+          # the canonical body. The API returns JSON; the body is
+          # plain text embedded under .body.
+          json="$(curl -fsSL -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "$PR_BODY_URL")"
+          printf '%s' "$json" > pr_body.json
+          printf '%s' "$json" | jq -r '.body // ""' > pr_body.txt
+          echo "Fetched PR body of $(wc -c < pr_body.txt) bytes"
+
+      - name: Resolve alpha/beta release references (best-effort)
+        id: refs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          LANE: ${{ steps.lane.outputs.lane }}
+        run: |
+          set -eu
+          releases_json="$(curl -fsSL -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/${REPO}/releases?per_page=30")"
+          printf '%s' "$releases_json" > releases.json
+          if [ "$LANE" = "beta" ]; then
+            url="$(jq -r '[.[] | select((.tag_name // "") | startswith("alpha/"))] | sort_by(.published_at) | reverse | (.[0].html_url // empty)' < releases.json)"
+            tag="$(jq -r '[.[] | select((.tag_name // "") | startswith("alpha/"))] | sort_by(.published_at) | reverse | (.[0].tag_name // empty)' < releases.json)"
+            if [ -n "$url" ] && [ "$url" != "null" ]; then
+              echo "alpha_release_url=$url" >> "$GITHUB_OUTPUT"
+            fi
+            if [ -n "$tag" ] && [ "$tag" != "null" ]; then
+              echo "alpha_tag=$tag" >> "$GITHUB_OUTPUT"
+            fi
+            echo "alpha_release_url=${url:-<none>} alpha_tag=${tag:-<none>}"
+          else
+            url="$(jq -r '[.[] | select((.tag_name // "") | startswith("beta/"))] | sort_by(.published_at) | reverse | (.[0].html_url // empty)' < releases.json)"
+            tag="$(jq -r '[.[] | select((.tag_name // "") | startswith("beta/"))] | sort_by(.published_at) | reverse | (.[0].tag_name // empty)' < releases.json)"
+            if [ -n "$url" ] && [ "$url" != "null" ]; then
+              echo "beta_release_url=$url" >> "$GITHUB_OUTPUT"
+            fi
+            if [ -n "$tag" ] && [ "$tag" != "null" ]; then
+              echo "beta_tag=$tag" >> "$GITHUB_OUTPUT"
+            fi
+            echo "beta_release_url=${url:-<none>} beta_tag=${tag:-<none>}"
+          fi
+
+      - name: Fetch provenance.json (stable lane only)
+        id: prov
+        if: steps.lane.outputs.lane == 'stable'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -eu
+          url="$(jq -r '[.[] | select((.tag_name // "") | startswith("beta/"))] | sort_by(.published_at) | reverse | (.[0].assets[]? | select(.name == "provenance.json") | .url) // empty' < releases.json)"
+          if [ -z "$url" ] || [ "$url" = "null" ]; then
+            echo "No provenance.json asset on the most recent beta release."
+            echo "provenance_status=missing" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if curl -fsSL -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              -H "Accept: application/octet-stream" \
+              -L -o provenance.json "$url"; then
+            echo "provenance_status=downloaded" >> "$GITHUB_OUTPUT"
+            echo "Downloaded provenance.json from beta release assets."
+          else
+            echo "Failed to download provenance.json; gate records the gap."
+            echo "provenance_status=failed" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run promotion evidence checker
+        id: gate
+        env:
+          LANE: ${{ steps.lane.outputs.lane }}
+          NOTES_FILE: programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md
+          MANIFEST_FILE: programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-manifest.json
+        run: |
+          # The checker exits non-zero when blocked; capture both the
+          # stdout report and the rc without tripping set -e.
+          set +e
+          args=(--lane "$LANE" --pr-body-file pr_body.txt)
+          args+=(--notes-file "$NOTES_FILE")
+          if [ -f "$MANIFEST_FILE" ]; then
+            args+=(--manifest-file "$MANIFEST_FILE")
+          else
+            echo "::warning::Tranche manifest not present at $MANIFEST_FILE (E1-F1 ship-line; gate proceeds but logs the gap)."
+          fi
+          if [ "$LANE" = "beta" ]; then
+            if [ -n "${{ steps.refs.outputs.alpha_release_url }}" ]; then
+              args+=(--release-url "${{ steps.refs.outputs.alpha_release_url }}")
+            elif [ -n "${{ steps.refs.outputs.alpha_tag }}" ]; then
+              args+=(--alpha-tag "${{ steps.refs.outputs.alpha_tag }}")
+            fi
+            # Beta lane: the previous run's ACTIONS workflow URL is the
+            # best stand-in for shell-consumed evidence until the
+            # real shell PR lands (the E6 lane will swap this for a
+            # real shell-consumed evidence URL). Today the gate falls
+            # through with empty shell-consumed evidence, which is
+            # correct: a missing evidence link MUST fail the gate.
+          else
+            if [ -n "${{ steps.refs.outputs.beta_release_url }}" ]; then
+              args+=(--beta-release-url "${{ steps.refs.outputs.beta_release_url }}")
+              args+=(--release-url "${{ steps.refs.outputs.beta_release_url }}")
+            fi
+            if [ -f provenance.json ]; then
+              args+=(--provenance-url "provenance.json")
+            fi
+            # Beta verification evidence + shell-consumed beta evidence
+            # are operator-supplied in the PR body; the checker reads
+            # those from the body keys (G_BETA_VERIFIED +
+            # G_SHELL_CONSUMED_BETA mirror G_SHELL_CONSUMED_ALPHA for
+            # the stable lane but feed from the PR body keys rather
+            # than from a CLI flag). Today the gate falls through with
+            # empty evidence which is correct: a missing evidence link
+            # MUST fail the gate.
+          fi
+          python3 scripts/release/check_promotion_evidence.py \
+              "${args[@]}" > gate_report.txt 2>&1
+          rc=$?
+          set -e
+          echo "--- gate_report.txt (last 100 lines) ---"
+          tail -100 gate_report.txt || true
+          if [ "$rc" -eq 0 ]; then
+            echo "gate_status=ready" >> "$GITHUB_OUTPUT"
+          else
+            echo "gate_status=blocked" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build PR comment body
+        if: always()
+        id: comment
+        env:
+          LANE: ${{ steps.lane.outputs.lane }}
+          STATUS: ${{ steps.gate.outputs.gate_status }}
+          BASE_BRANCH: ${{ github.base_ref }}
+        run: |
+          set -eu
+          status_emoji="$( [ "$STATUS" = "ready" ] && echo ':white_check_mark:' || echo ':no_entry:' )"
+          {
+            printf '%s' "$status_emoji"
+            printf ' **Promotion Gate -- lane=`%s` -- base=%s -- status=%s**\n\n' "$LANE" "$BASE_BRANCH" "$STATUS"
+            printf '> Generated by `promotion-gates.yml` (SD-16 E5-F3a) at %s UTC.\n\n' "$(date -u +%FT%TZ)"
+            printf 'Doctrine reference: `programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/technical-requirements.md` §"Promotion Gate Requirements".\n\n'
+            printf '```\n'
+            tail -60 gate_report.txt
+            printf '\n```\n'
+            if [ "$STATUS" = "blocked" ]; then
+              printf '\n### Why this blocks merge\n\n'
+              printf 'Merging this PR would publish an unverified release. Reopen the PR after addressing each FAIL line. The local helpers `scripts/release/promote-alpha-to-beta.sh` and `scripts/release/promote-beta-to-stable.sh` (E6-F1) produce a clean body so this gate can pass.\n'
+            fi
+          } > comment.md
+          echo "Comment body length: $(wc -c < comment.md) bytes"
+
+      - name: Post / update PR comment
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_HTML_URL: ${{ github.event.pull_request.html_url }}
+          STATUS: ${{ steps.gate.outputs.gate_status }}
+          LANE: ${{ steps.lane.outputs.lane }}
+        run: |
+          set -eu
+          marker='<!-- promotion-gate-evidence -->'
+          tmp="$(mktemp)"
+          { printf '%s\n' "$marker"; cat comment.md; } > "$tmp"
+          mv "$tmp" comment.md
+
+          list_json="$(curl -fsSL -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/${REPO}/issues/${PR_NUMBER}/comments?per_page=100")"
+          echo "$list_json" > comments.json
+          existing_id="$(jq -r --arg marker "$marker" \
+              '[.[] | select((.body // "") | startswith($marker))] | (.[0].id // empty)' \
+              < comments.json)"
+          body_json="$(jq -nc --rawfile body comment.md '{body:$body}')"
+          if [ -n "$existing_id" ]; then
+            curl -fsSL -X PATCH -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+                -H "Accept: application/vnd.github+json" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "https://api.github.com/repos/${REPO}/issues/comments/${existing_id}" \
+                -d "$body_json" > /dev/null
+            echo "Updated existing gate comment id=$existing_id"
+          else
+            curl -fsSL -X POST -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+                -H "Accept: application/vnd.github+json" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "https://api.github.com/repos/${REPO}/issues/${PR_NUMBER}/comments" \
+                -d "$body_json" > /dev/null
+            echo "Posted new gate comment"
+          fi
+
+      - name: Set commit status (branch-protection enforcement)
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          STATUS: ${{ steps.gate.outputs.gate_status }}
+        run: |
+          set -eu
+          state="$([ "$STATUS" = "ready" ] && echo success || echo failure)"
+          body="$(jq -nc \
+              --arg state "$state" \
+              --arg desc "Promotion gate ${STATUS}" \
+              --arg ctx 'sd16-e5-f3a/promotion-gate' \
+              '{state:$state,description:$desc,context:$ctx}')"
+          curl -fsSL -X POST -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/${REPO}/statuses/${HEAD_SHA}" \
+              -d "$body" > /dev/null || echo "Failed to set commit status (will not block PR; check branch protection rule)"
+          echo "Set commit status=$state on sha=${HEAD_SHA}"
+
+      - name: Fail the job when the gate is blocked
+        if: steps.gate.outputs.gate_status == 'blocked'
+        run: |
+          echo "Promotion gate is blocked; refusing to allow merge."
+          echo "Resolve every FAIL line in the gate comment and re-push."
+          exit 1
