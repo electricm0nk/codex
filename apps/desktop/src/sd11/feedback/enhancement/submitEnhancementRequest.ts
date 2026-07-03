@@ -15,6 +15,7 @@
 
 import type { ComposedEnhancementRequest, GithubEnhancementIssueDraft } from './composeEnhancementRequest';
 import { formatError } from '../../../boundary/runtime';
+import { sanitizeReportableOutput } from '../evidence/sanitizeReportableOutput';
 
 /** Result returned by an injected GitHub enhancement-request transport. */
 export interface EnhancementRequestTransportResult {
@@ -56,13 +57,13 @@ export interface SubmitEnhancementRequestInput {
 
 /** Render a copyable plain-text payload that preserves the structured request. */
 export function renderCopyableEnhancementPayload(draft: GithubEnhancementIssueDraft): string {
-  return [
+  return sanitizeReportableOutput([
     `Title: ${draft.title}`,
     `Issue type: ${draft.issueType}`,
     `Labels: ${draft.labels.join(', ')}`,
     '',
     draft.markdownBody,
-  ].join('\n');
+  ].join('\n'));
 }
 
 /**

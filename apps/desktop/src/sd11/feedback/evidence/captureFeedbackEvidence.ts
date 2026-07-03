@@ -30,6 +30,7 @@ import {
   type EvidenceAttachment,
   type RedactionDeclaration,
 } from './redaction';
+import { sanitizeReportableOutput } from './sanitizeReportableOutput';
 
 export interface AutoCapturedEvidence {
   buildLabel: string;
@@ -97,28 +98,34 @@ const NO_REDACTION: RedactionDeclaration = { declared: false, statement: null };
 /** Resolve the auto-captured evidence backbone from the live workbench surface. */
 export function captureAutoEvidence(surface: Sd11TesterWorkbenchSurface): AutoCapturedEvidence {
   const dataSourceIdentity = surface.fallbackNotice
-    ? `${surface.dataTruthLabel} (fallback: ${surface.fallbackNotice})`
-    : surface.dataTruthLabel;
+    ? sanitizeReportableOutput(`${surface.dataTruthLabel} (fallback: ${surface.fallbackNotice})`)
+    : sanitizeReportableOutput(surface.dataTruthLabel);
   const releaseTruth = surface.status.issueCapture.releaseTruth;
 
   return {
-    buildLabel: surface.buildLabel,
-    channelSupportLabel: surface.status.issueCapture.testerFacingChannelSupportLabel,
-    platformLabel: surface.platformLabel,
-    currentWorkflow: `${surface.workflowName} / ${surface.workflowState}`,
+    buildLabel: sanitizeReportableOutput(surface.buildLabel),
+    channelSupportLabel: sanitizeReportableOutput(surface.status.issueCapture.testerFacingChannelSupportLabel),
+    platformLabel: sanitizeReportableOutput(surface.platformLabel),
+    currentWorkflow: sanitizeReportableOutput(`${surface.workflowName} / ${surface.workflowState}`),
     dataSourceIdentity,
-    releaseUnitId: releaseTruth?.releaseUnitId ?? null,
-    sourceRevision: releaseTruth?.sourceRevision ?? null,
-    manifestPath: releaseTruth?.manifestPath ?? null,
-    updateEligibilityState: releaseTruth?.updateEligibilityState ?? null,
-    trustGateStatus: releaseTruth?.trustGateStatus ?? null,
-    replacementReleaseId: releaseTruth?.replacementReleaseId ?? null,
-    officialSurface: releaseTruth?.officialSurface ?? null,
-    localBuildAuthority: releaseTruth?.localBuildAuthority ?? null,
-    diagnostics: surface.diagnostics,
-    blockedClaims: surface.blockedClaims,
-    explanationRefs: surface.explanationRefs,
-    provenanceRefs: surface.provenanceRefs,
+    releaseUnitId: sanitizeNullable(releaseTruth?.releaseUnitId ?? null),
+    sourceRevision: sanitizeNullable(releaseTruth?.sourceRevision ?? null),
+    manifestPath: sanitizeNullable(releaseTruth?.manifestPath ?? null),
+    updateEligibilityState: sanitizeNullable(releaseTruth?.updateEligibilityState ?? null),
+    trustGateStatus: sanitizeNullable(releaseTruth?.trustGateStatus ?? null),
+    replacementReleaseId: sanitizeNullable(releaseTruth?.replacementReleaseId ?? null),
+    officialSurface: sanitizeNullable(releaseTruth?.officialSurface ?? null),
+    localBuildAuthority: sanitizeNullable(releaseTruth?.localBuildAuthority ?? null),
+    diagnostics: surface.diagnostics.map((diagnostic) => ({
+      ...diagnostic,
+      classLabel: sanitizeReportableOutput(diagnostic.classLabel),
+      severityLabel: sanitizeReportableOutput(diagnostic.severityLabel),
+      message: sanitizeReportableOutput(diagnostic.message),
+      subjectRef: sanitizeNullable(diagnostic.subjectRef ?? null),
+    })),
+    blockedClaims: surface.blockedClaims.map(sanitizeReportableOutput),
+    explanationRefs: surface.explanationRefs.map(sanitizeReference),
+    provenanceRefs: surface.provenanceRefs.map(sanitizeReference),
   };
 }
 
@@ -132,7 +139,7 @@ export function assembleFeedbackEvidence(
 ): FeedbackEvidencePayload {
   const auto = captureAutoEvidence(input.surface);
   const attachments = input.attachments ?? [];
-  const redaction = input.redaction ?? NO_REDACTION;
+  const redaction = sanitizeRedactionDeclaration(input.redaction ?? NO_REDACTION);
   const redactedFields = new Set(input.redactedFields ?? []);
 
   const problems: string[] = [];
@@ -256,5 +263,25 @@ function normalise(value: string | undefined): string | null {
     return null;
   }
   const trimmed = value.trim();
-  return trimmed.length === 0 ? null : trimmed;
+  return trimmed.length === 0 ? null : sanitizeReportableOutput(trimmed);
+}
+
+function sanitizeNullable(value: string | null): string | null {
+  return value === null ? null : sanitizeReportableOutput(value);
+}
+
+function sanitizeRedactionDeclaration(redaction: RedactionDeclaration): RedactionDeclaration {
+  return {
+    declared: redaction.declared,
+    statement: sanitizeNullable(redaction.statement),
+  };
+}
+
+function sanitizeReference(reference: Sd11WorkbenchReference): Sd11WorkbenchReference {
+  return {
+    ...reference,
+    label: sanitizeReportableOutput(reference.label),
+    detail: sanitizeReportableOutput(reference.detail),
+    machineRef: sanitizeReportableOutput(reference.machineRef),
+  };
 }

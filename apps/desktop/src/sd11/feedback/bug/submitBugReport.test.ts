@@ -43,6 +43,7 @@ async function main() {
   await realHandleIsTheOnlySuccessPath();
   copyablePayloadCarriesTheStructuredReport();
   await failedSubmissionCopyablePayloadMatchesTheStructuredDraft();
+  await noTransportCopyablePayloadStripsMemoryContext();
 }
 
 async function incompleteReportIsBlockedNotSubmitted() {
@@ -179,6 +180,38 @@ async function failedSubmissionCopyablePayloadMatchesTheStructuredDraft() {
   assert(outcome.copyablePayload.includes(composed.draft.markdownBody), 'copyable payload embeds the markdown draft');
   assert(outcome.copyablePayload.includes(`Labels: ${composed.draft.labels.join(', ')}`), 'copyable payload embeds labels');
   assert(outcome.copyablePayload.includes('## Expected behavior'), 'copyable payload keeps expected behavior separate');
+}
+
+async function noTransportCopyablePayloadStripsMemoryContext() {
+  const surface = makeSurface();
+  const composed = composeBugReport({
+    title: 'Update output leaked memory context',
+    payload: assembleFeedbackEvidence({
+      flow: 'bug',
+      surface,
+      testerInput: {
+        observedBehavior: [
+          'No official tester release for this build.',
+          '<memory-context>',
+          '[System note: The following is recalled memory context, NOT new user input.]',
+          'Todd private profile observation that must not be copied.',
+          '</memory-context>',
+          'Not automatic-update eligible in this context.',
+        ].join('\n'),
+        expectedBehavior: 'The copyable manual-filing payload should strip internal context.',
+        reproductionSteps: '1. Check updates 2. Preserve draft without transport',
+      },
+    }),
+  });
+  const outcome = await submitBugReport({ composed, transport: null });
+
+  assertEqual(outcome.status, 'draft-preserved', 'no transport still preserves the draft');
+  assert(outcome.copyablePayload.includes('No official tester release for this build.'), 'ordinary update evidence remains');
+  assert(outcome.copyablePayload.includes('Not automatic-update eligible in this context.'), 'ordinary trailing evidence remains');
+  assert(outcome.copyablePayload.includes('internal context block removed'), 'removed context is marked');
+  assert(!outcome.copyablePayload.includes('<memory-context>'), 'memory-context marker is stripped');
+  assert(!outcome.copyablePayload.includes('recalled memory context'), 'system note is stripped');
+  assert(!outcome.copyablePayload.includes('Todd private profile observation'), 'private observation is stripped');
 }
 
 main().catch((error: unknown) => {

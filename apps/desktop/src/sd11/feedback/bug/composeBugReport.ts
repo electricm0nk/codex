@@ -19,6 +19,7 @@ import type {
   CapturedEvidenceField,
   FeedbackEvidencePayload,
 } from '../evidence';
+import { sanitizeReportableOutput } from '../evidence/sanitizeReportableOutput';
 
 /** The minimum-required GitHub label for every bug report. */
 export const BUG_ISSUE_LABEL = 'bug';
@@ -66,7 +67,7 @@ export function composeBugReport(input: BugReportComposeInput): ComposedBugRepor
     );
   }
 
-  const title = input.title.trim();
+  const title = sanitizeReportableOutput(input.title.trim());
   const problems: string[] = [...input.payload.problems];
 
   if (title.length === 0) {
@@ -121,7 +122,7 @@ function buildLabels(auto: AutoCapturedEvidence): string[] {
 function buildSections(title: string, payload: FeedbackEvidencePayload): GithubIssueSection[] {
   const auto = payload.auto;
 
-  return [
+  return sanitizeSections([
     {
       heading: 'Summary',
       body: title.length > 0 ? title : '_No summary title provided yet._',
@@ -150,7 +151,7 @@ function buildSections(title: string, payload: FeedbackEvidencePayload): GithubI
       heading: 'Attachments / redactions',
       body: renderAttachments(payload),
     },
-  ];
+  ]);
 }
 
 function renderMetadataList(auto: AutoCapturedEvidence): string {
@@ -256,7 +257,14 @@ function renderAttachments(payload: FeedbackEvidencePayload): string {
 }
 
 function renderMarkdownBody(sections: GithubIssueSection[]): string {
-  return sections.map((section) => `## ${section.heading}\n\n${section.body}`).join('\n\n');
+  return sanitizeReportableOutput(sections.map((section) => `## ${section.heading}\n\n${section.body}`).join('\n\n'));
+}
+
+function sanitizeSections(sections: GithubIssueSection[]): GithubIssueSection[] {
+  return sections.map((section) => ({
+    heading: sanitizeReportableOutput(section.heading),
+    body: sanitizeReportableOutput(section.body),
+  }));
 }
 
 function slug(value: string): string {

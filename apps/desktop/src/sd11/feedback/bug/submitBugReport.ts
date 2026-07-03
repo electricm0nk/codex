@@ -12,6 +12,7 @@
 
 import type { ComposedBugReport, GithubBugIssueDraft } from './composeBugReport';
 import { formatError } from '../../../boundary/runtime';
+import { sanitizeReportableOutput } from '../evidence/sanitizeReportableOutput';
 
 /** Result returned by an injected GitHub bug-report transport. */
 export interface BugReportTransportResult {
@@ -53,13 +54,13 @@ export interface SubmitBugReportInput {
 
 /** Render a copyable plain-text payload that preserves the structured report. */
 export function renderCopyableBugPayload(draft: GithubBugIssueDraft): string {
-  return [
+  return sanitizeReportableOutput([
     `Title: ${draft.title}`,
     `Issue type: ${draft.issueType}`,
     `Labels: ${draft.labels.join(', ')}`,
     '',
     draft.markdownBody,
-  ].join('\n');
+  ].join('\n'));
 }
 
 /**
