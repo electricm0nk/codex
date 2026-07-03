@@ -144,10 +144,7 @@ const SUPPORTED_CHANNELS: ReadonlySet<Sd16ChannelLabel> = new Set<Sd16ChannelLab
 ]);
 
 function isSd16ChannelLabel(value: unknown): value is Sd16ChannelLabel {
-  return (
-    typeof value === 'string' &&
-    (SUPPORTED_CHANNELS as Set<string>).has(value)
-  );
+  return value === 'alpha' || value === 'beta' || value === 'stable';
 }
 
 function isNonEmptyString(value: unknown): value is string {
