@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codex.electricm0nk/schemas/update/channel-index.schema.json",
+  "title": "Codex Channel Index",
+  "description": "Pointer and quick eligibility summary for a single channel (alpha|beta|stable). Points at the full update-manifest.json. Does NOT duplicate manifest fields (AV-SCH-4).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "channel",
+    "version",
+    "tag",
+    "release_url",
+    "manifest_url",
+    "publication_timestamp",
+    "tranche_id"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Semantic version of this channel-index contract. Bump on any field-list or cross-field-rule change (per F1 closure schema-version discipline).",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "const": "1.0.0"
+    },
+    "channel": {
+      "type": "string",
+      "enum": ["alpha", "beta", "stable"],
+      "description": "The single channel this index file describes. One channel per file."
+    },
+    "version": {
+      "type": "string",
+      "description": "Release version string for the artifact pointed at by this channel index.",
+      "minLength": 1
+    },
+    "tag": {
+      "type": "string",
+      "description": "Release tag, prefixed by the channel. Must satisfy cross-field rule tag.split('/')[0] == channel.",
+      "pattern": "^(alpha|beta|stable)/",
+      "minLength": 1
+    },
+    "release_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL to the release page or release notes for the artifact referenced by this index."
+    },
+    "manifest_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the update-manifest.json for this release. Must end with .json (AV-SCH-8, schema-side half).",
+      "pattern": "\\.json$"
+    },
+    "publication_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 UTC timestamp marking when this index was published."
+    },
+    "tranche_id": {
+      "type": "string",
+      "description": "Identifier of the tranche that produced this release. Locked to STC-CODEX-SD-16 for the duration of this contract.",
+      "const": "STC-CODEX-SD-16"
+    },
+    "signature": {
+      "description": "Reserved signature field. Cryptographic signing is deferred for Tranche 2.5 (AV-SCH-3); null is accepted, a populated object is reserved for a future contract bump.",
+      "oneOf": [
+        { "type": "null" },
+        { "type": "object" }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "description": "Cross-field rule: tag prefix must equal channel (F1 closure §Channel index contract).",
+      "if": { "properties": { "channel": { "const": "alpha" } }, "required": ["channel", "tag"] },
+      "then": { "properties": { "tag": { "pattern": "^alpha/" } } }
+    },
+    {
+      "if": { "properties": { "channel": { "const": "beta" } }, "required": ["channel", "tag"] },
+      "then": { "properties": { "tag": { "pattern": "^beta/" } } }
+    },
+    {
+      "if": { "properties": { "channel": { "const": "stable" } }, "required": ["channel", "tag"] },
+      "then": { "properties": { "tag": { "pattern": "^stable/" } } }
+    }
+  ]
+}
