@@ -35,7 +35,7 @@
     "tag": {
       "type": "string",
       "description": "Release tag, prefixed by the channel. Must satisfy cross-field rule tag.split('/')[0] == channel.",
-      "pattern": "^(alpha|beta|stable)/",
+      "pattern": "^(alpha|beta|stable)/.+$",
       "minLength": 1
     },
     "release_url": {
