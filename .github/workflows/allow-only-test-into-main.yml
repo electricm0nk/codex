@@ -1,0 +1,93 @@
+name: Allow only test into main
+
+# Enforce the canonical release-channel branch governance for the stable surface:
+# Pull requests into `main` (stable) MUST come from this repository's `test`
+# (beta) branch. A fork branch named `test` must not satisfy the policy.
+#
+# This replaces the older `allow-only-develop-into-main.yml` policy now that
+# the alpha → beta → stable promotion chain is:
+#
+#   feature/*  -->  develop  (alpha)
+#   develop    -->  test     (beta)
+#   test       -->  main     (stable)
+#
+# Branch-protection rulesets that block direct pushes to `main` are configured
+# on GitHub.com; this workflow is the second enforcement layer.
+#
+# The actual policy logic lives in `tools/ci/branch-promotion-guard.sh` so it
+# can be unit-tested without GitHub. The unit tests live at
+# `tests/sd16-e5-f1/test_branch_promotion_guard.sh` (run manually, or wire into
+# a CI workflow that runs on push/pull_request).
+
+'on':
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+      - ready_for_review
+  delete:
+
+permissions: {}
+
+jobs:
+  verify-source-branch:
+    if: github.event_name == 'pull_request_target'
+    name: Verify source branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ensure PR source branch is test in this repository
+        env:
+          EXPECTED_SOURCE: test
+          SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPO: ${{ github.repository }}
+        run: bash tools/ci/branch-promotion-guard.sh
+
+  restore-test-branch:
+    if: github.event_name == 'delete' && github.event.ref_type == 'branch' && github.event.ref == 'test'
+    name: Restore test branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Recreate test from main
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: mainRef } = await github.rest.git.getRef({
+              owner,
+              repo,
+              ref: 'heads/main'
+            });
+
+            try {
+              await github.rest.git.getRef({
+                owner,
+                repo,
+                ref: 'heads/test'
+              });
+
+              core.info('test already exists; nothing to restore.');
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+
+              await github.rest.git.createRef({
+                owner,
+                repo,
+                ref: 'refs/heads/test',
+                sha: mainRef.object.sha
+              });
+
+              core.info(`Recreated test at ${mainRef.object.sha}.`);
+            }
