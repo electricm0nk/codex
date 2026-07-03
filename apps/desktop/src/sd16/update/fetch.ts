@@ -195,7 +195,7 @@ export function validateChannelIndexShape(raw: unknown, atUrl: string): FetchRes
       },
     };
   }
-  if (obj.release === null || typeof obj.release !== 'object') {
+  if (obj.release === null || typeof obj.release !== 'object' || Array.isArray(obj.release)) {
     return {
       ok: false,
       failure: {
