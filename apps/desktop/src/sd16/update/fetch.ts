@@ -463,7 +463,7 @@ export function validateManifestShape(raw: unknown, atUrl: string): FetchResult<
       path: artifactStrings.path,
     },
     ...(obj.notes_url !== undefined ? { notesUrl: obj.notes_url } : {}),
-    signature: (obj.signature ?? null) as null,
+    signature: obj.signature ?? null,
   };
   return { ok: true, value: parsed };
 }
