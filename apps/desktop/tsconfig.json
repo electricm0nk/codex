@@ -16,5 +16,10 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "vite.config.ts"]
+  "include": [
+    "src",
+    "vite.config.ts",
+    "../../schemas/update/*.json",
+    "../../tests/fixtures/update/**/*.json"
+  ]
 }
