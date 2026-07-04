@@ -163,7 +163,7 @@ jobs:
           #   RELEASE_TAG  = GitHub release tag `${channel}-${version}-${shortsha}`
           #                   (the existing form; used by gh release create
           #                    and F3c's MANIFEST_URL)
-          VERSION=$(node -p "require('./apps/desktop/package.json').version")
+          VERSION=$(node -p "require('${GITHUB_WORKSPACE}/apps/desktop/package.json').version")
           SHORT_SHA="${GITHUB_SHA:0:8}"
           CHANNEL="${{ steps.channel.outputs.channel }}"
           MANIFEST_TAG="${CHANNEL}/v${VERSION}-${SHORT_SHA}"
@@ -203,6 +203,11 @@ jobs:
 
           echo "manifest-tag=${MANIFEST_TAG}" >> "${GITHUB_OUTPUT}"
           echo "release-tag=${RELEASE_TAG}" >> "${GITHUB_OUTPUT}"
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m ensurepip --upgrade || true
+          python3 -m pip install --quiet --no-cache-dir jsonschema==4.21.1
 
       - name: Validate update manifest
         working-directory: release-staging

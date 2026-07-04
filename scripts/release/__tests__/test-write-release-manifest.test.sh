@@ -64,8 +64,8 @@ test_bad_hash_fixture_rejected() {
     --schema "${SCHEMA_PATH}"
   rc=$?
   set -e
-  if [ "${rc}" -eq 0 ]; then
-    echo "FAIL: validator accepted manifest-bad-hash.json (rc=0); expected non-zero" >&2
+  if [ "${rc}" -ne 2 ]; then
+    echo "FAIL: validator rejected manifest-bad-hash.json with rc=${rc}; expected rc=2" >&2
     exit 1
   fi
   echo "OK: bad-hash fixture rejected with rc=${rc}"

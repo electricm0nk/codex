@@ -51,7 +51,7 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, NoReturn
 
 SCHEMA_VERSION = "1.0.0"
 TRANCHE_ID = "STC-CODEX-SD-16"
@@ -61,7 +61,7 @@ SOURCE_COMMIT_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 TAG_PATTERN = re.compile(r"^(alpha|beta|stable)/.+$")
 
 
-def _fail(msg: str) -> "NoReturn":  # type: ignore[name-defined]
+def _fail(msg: str) -> NoReturn:
     print(f"FAIL: {msg}", file=sys.stderr)
     raise SystemExit(2)
 
@@ -92,7 +92,9 @@ def _appimage_identity(name: str, path: Path) -> tuple[str, int]:
     if size < 1:
         _fail(f"AppImage artifact is empty: {path}")
     h = hashlib.sha256()
-    h.update(path.read_bytes())
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            h.update(chunk)
     return (h.hexdigest(), size)
 
 
