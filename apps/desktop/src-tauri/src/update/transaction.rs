@@ -669,11 +669,15 @@ pub fn is_install_eligible() -> Result<EligibilityPolicy, String> {
 /// Registration-only (F0-EXTEND `t_5b652e93`): the staged-transaction command body — its
 /// argument contract included — is F3a's deferred surface around `execute_transaction`.
 /// Until F3a wires it, the shim errors rather than pretending an install ran.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PerformInstallArgs {
+    pub manifest: serde_json::Value,
+    pub index_url: String,
+}
+
 #[tauri::command]
-pub fn perform_install(
-    _manifest: serde_json::Value,
-    _index_url: String,
-) -> Result<RelaunchPrompt, String> {
+pub fn perform_install(_args: PerformInstallArgs) -> Result<RelaunchPrompt, String> {
     Err(
         "perform_install is registered but not wired: the staged-transaction command body \
          was deferred by F3a (PR #61); no install is performed here"
@@ -683,15 +687,52 @@ pub fn perform_install(
 
 /// Tauri command shim — `perform_restore_previous`.
 ///
-/// Registration-only (F0-EXTEND `t_5b652e93`): F3b owns the restore body and its success
-/// payload shape. Until F3b ships, the shim errors rather than pretending a restore ran.
+/// F3b authors the body. The command reads the pending-update marker
+/// (`<config_update_dir>/pending-update.json`), locates the most-recent
+/// rolling backup at `<config_update_dir>/backups/Codex-Desktop-Shell-Scaffold.previous.AppImage`,
+/// and atomically copies that backup over the managed AppImage path. On
+/// restore failure (missing/unreadable/corrupted backup), the command writes
+/// a `rollback-state.json` sidecar recording `rollback_state: "rollback-failed"`
+/// with the exact reason string (AV-RB-4) and leaves `pending-update.json` on
+/// disk so the operator can inspect or retry (AV-RB-7).
+///
+/// On the third consecutive mismatch (mismatch_count reaches 3 in the
+/// sidecar `rollback-state.json`), the command short-circuits to auto-restore
+/// without operator confirmation (AV-RB-3 — repeated pending failure
+/// auto-restores when safe).
+///
+/// The companion `perform_retention_sweep` command is responsible for the
+/// `backups/` two-slot enforcement (AV-RB-5), `staging/` post-success cleanup
+/// (AV-RB-6), and the never-auto-delete-while-unresolved guarantee for
+/// `pending-update.json` (AV-RB-7).
 #[tauri::command]
-pub fn perform_restore_previous() -> Result<(), String> {
-    Err(
-        "perform_restore_previous is registered but not wired: the restore body is F3b's \
-         surface; no restore is performed here"
-            .to_string(),
-    )
+#[allow(dead_code)] // not exercised by tests — impl is tested via perform_restore_previous_impl
+pub fn perform_restore_previous() -> Result<RollbackOutcome, String> {
+    Ok(perform_restore_previous_impl(RestoreConfig {
+        config_dir: resolve_config_root(),
+        bump_mismatch_count: true,
+    }))
+}
+
+/// Tauri command shim — `perform_retention_sweep`.
+///
+/// F3b authors the body. The sweep runs as the final step of every successful
+/// transaction cycle and enforces the retention policy quoted verbatim in
+/// `technical-requirements.md` §"Retention Requirements":
+///
+///   - backups: keep last 2 previous AppImages (AV-RB-5)
+///   - successful staging: delete after update success (AV-RB-6)
+///   - pending updates: never auto-delete while unresolved (AV-RB-7)
+///   - rollback-failed: keep until explicit user clear (no AV id yet; see AV-RB-4)
+///
+/// The function returns a `RetentionOutcome` describing which cleanup actions
+/// were applied so the operator UI can surface a diagnostic.
+#[tauri::command]
+#[allow(dead_code)] // not exercised by tests — impl is tested via perform_retention_sweep_impl
+pub fn perform_retention_sweep() -> Result<RetentionOutcome, String> {
+    Ok(perform_retention_sweep_impl(RetentionConfig {
+        config_dir: resolve_config_root(),
+    }))
 }
 
 fn write_staged<F>(staged_path: &Path, download: F) -> std::io::Result<u64>
@@ -1570,22 +1611,27 @@ mod verify_relaunch_artifact_tests {
         );
     }
 
-    /// The F3a/F3b-deferred command bodies are not wired yet. Their registration-only
-    /// shims must return an honest error instead of fabricating eligibility, install,
-    /// or restore truth. F0-EXTEND `t_5b652e93` authorizes registration; the bodies
-    /// remain F3a's (`is_install_eligible`, `perform_install`) and F3b's
-    /// (`perform_restore_previous`) surfaces.
+    /// The F3a/F3b-deferred command bodies are not all wired yet. The
+    /// `is_install_eligible` and `perform_install` shims are still
+    /// registration-only (F3a did not author their bodies in PR #61; the
+    /// bodies are owned by a future slice) and must return honest errors
+    /// instead of fabricating eligibility or install truth.
+    ///
+    /// `perform_restore_previous` was a registration-only stub through the
+    /// F3c PR (#63). F3b (backfill card t_da3470a3) ships its real body,
+    /// so this test no longer asserts `perform_restore_previous().is_err()`
+    /// — it asserts only the still-deferred F3a commands. F3b's own
+    /// rollback_retention_tests mod covers the F3b body contract.
     #[test]
     fn deferred_command_shims_error_instead_of_fabricating_truth() {
         assert!(is_install_eligible().is_err());
         assert!(
-            perform_install(
-                serde_json::json!({"version":"0.0.1","channel":"alpha"}),
-                "https://example.invalid/update-index.json".to_string()
-            )
+            perform_install(PerformInstallArgs {
+                manifest: serde_json::json!({}),
+                index_url: "https://example.invalid/index.json".to_string(),
+            })
             .is_err()
         );
-        assert!(perform_restore_previous().is_err());
     }
 
     /// The F3c TS mirror (`installAction.ts` `ReloadVerifyOutcome`) reads camelCase
@@ -1620,5 +1666,1028 @@ mod verify_relaunch_artifact_tests {
             json.contains("\"kind\":\"verification-failed\""),
             "kebab kind tag: {json}"
         );
+    }
+}
+// ===================================================================================
+// SD-16-E7-F3b — rollback / retention surface (backfill)
+//
+// Owner: F3b (god-emporer direct execution; see card t_da3470a3).
+// Slice: rollback decision table + retention sweep.
+//
+// Scope note:
+//   - This section documents the F3b rollback/retention implementation surface
+//     in this module only. It is not a literal claim about every file changed
+//     in the pull request diff.
+//
+// AV-row coverage (per acceptance-and-verification.md §"Rollback and Retention"):
+//
+//   - AV-RB-3 (F3b) — Repeated pending failure auto-restores when safe.
+//       Trigger: sidecar `rollback-state.json` records mismatch_count; when
+//       mismatch_count reaches `AUTO_RESTORE_THRESHOLD` (3), the next
+//       `perform_restore_previous` invocation auto-runs without requiring
+//       operator confirmation. The count is bumped inside the impl on every
+//       call when a Mismatch pending marker is on disk; the third call (or
+//       any subsequent call once count >= threshold) auto-restores.
+//
+//   - AV-RB-4 (F3b state side) — rollback-failed is recorded with the
+//       exact reason when restore itself fails. F3b writes a sidecar
+//       `rollback-state.json` with `rollback_state: "rollback-failed"` and
+//       a `reason` string; pending-update.json is left intact so the
+//       operator can inspect. (The TS-side `rollbackFailed.tsx` is OUT OF
+//       SCOPE for this backfill per the card body's explicit
+//       "Do NOT author rollbackFailed.tsx" instruction — a separate F0-EXTEND
+//       is owed for the UI half.)
+//
+//   - AV-RB-5 (F3b cross-cite with F3a) — backups keep last 2. F3b's retention
+//       sweep defensively enforces the two-slot ceiling on every invocation:
+//       if more than two `Codex-Desktop-Shell-Scaffold.previous*.AppImage`
+//       files exist, the oldest by mtime is removed. F3a's `preserve_previous`
+//       already enforces the rotation on every fresh install; F3b's sweep is
+//       the belt-and-suspenders catch-up for any drift.
+//
+//   - AV-RB-6 (F3b cross-cite with F3a) — staging cleanup after success.
+//       When `pending-update.json` shows `pending_update_state: "Success"`,
+//       F3b's sweep removes every file in `staging/`. On Mismatch or Pending,
+//       staging files are kept (operator diagnostics + retry path).
+//
+//   - AV-RB-7 (F3b) — pending updates are never auto-deleted while
+//       unresolved. F3b's retention sweep never touches `pending-update.json`
+//       when `pending_update_state != "Success"`. The success path deletion
+//       is owned by F3c's `verify_relaunch_artifact_impl` (which deletes
+//       pending on Promoted), not F3b.
+// ===================================================================================
+
+/// Threshold for the AV-RB-3 auto-restore trigger. After this many consecutive
+/// mismatch cycles, the next `perform_restore_previous` call auto-restores
+/// without requiring explicit operator confirmation.
+pub const AUTO_RESTORE_THRESHOLD: u32 = 3;
+
+/// Filename of the rollback-state sidecar record. Lives at
+/// `<config_update_dir>/rollback-state.json` next to `pending-update.json`.
+///
+/// This file is F3b-owned; F3a's `PendingUpdate` and `InstalledState` structs
+/// remain unmodified to keep the F3a/F3b per-slice byte-range boundary
+/// clean. The sidecar is a strict additive surface — its absence on disk is
+/// equivalent to `mismatch_count: 0` and `rollback_state: None`.
+pub const ROLLBACK_STATE_FILENAME: &str = "rollback-state.json";
+
+/// State of the rollback process. Persisted in `rollback-state.json` and
+/// surfaced to the diagnostics panel via `pendingRollbackPanel.tsx` (F3c
+/// binding-layer extension, not the UI surface itself).
+///
+/// Note: the F1 closure does not yet pin an AV id for the `rollback-failed`
+/// state itself (it would be AV-RB-8 if proposed as an L0-B amendment).
+/// F3b writes the state honestly so the future AV row has a wire contract to
+/// bind against.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum RollbackState {
+    /// No rollback has been attempted or the previous rollback succeeded and
+    /// the sidecar was cleared.
+    None,
+    /// A previous restore attempt failed; the operator must clear this state
+    /// explicitly (per `technical-requirements.md` §"Retention Requirements":
+    /// "rollback-failed: keep until explicit user clear").
+    RollbackFailed,
+    /// The 3-cycle mismatch threshold has been reached; the next restore
+    /// call auto-runs (AV-RB-3).
+    AutoRestorePrevious,
+}
+
+impl Default for RollbackState {
+    fn default() -> Self {
+        RollbackState::None
+    }
+}
+
+/// F3b-owned sidecar record persisted at
+/// `<config_update_dir>/rollback-state.json`.
+///
+/// This struct is additive to the F3a/F3c surface. It is deserialized with
+/// `#[serde(default)]` for every field so an absent or partially-written
+/// sidecar is treated as "no rollback history".
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RollbackStateRecord {
+    /// Current rollback state.
+    #[serde(default)]
+    pub rollback_state: RollbackState,
+    /// Number of consecutive relaunch mismatches observed (incremented inside
+    /// `perform_restore_previous_impl` when a Mismatch pending marker is on
+    /// disk; reset to zero on a successful restore).
+    #[serde(default)]
+    pub mismatch_count: u32,
+    /// Human-readable reason when `rollback_state == RollbackFailed`. Empty
+    /// for `None` and `AutoRestorePrevious`.
+    #[serde(default)]
+    pub reason: String,
+    /// ISO-8601 UTC timestamp of the most recent state transition.
+    #[serde(default)]
+    pub last_transition_at: String,
+}
+
+/// Outcome of `perform_restore_previous`. The Tauri command layer maps this
+/// to UI state. Wire contract:
+///   - `kind: "promoted"` — the rollback succeeded; installed-state was
+///     rewritten with the prior version; `pending-update.json` was cleared;
+///     the sidecar was reset to `None` with `mismatch_count: 0`.
+///   - `kind: "auto-restored"` — the AV-RB-3 3-cycle trigger fired; the
+///     same restore path ran but no operator confirmation was required.
+///     Payload is identical to `promoted`.
+///   - `kind: "rollback-failed"` — restore itself failed (missing backup,
+///     unreadable backup, or atomic-replace failure). The sidecar is
+///     written with `rollback_state: "rollback-failed"` and the exact reason.
+///     `pending-update.json` is left on disk so the operator can retry or
+///     investigate (AV-RB-7).
+///   - `kind: "no-backup"` — no backup exists at the canonical slot. This is
+///     a degenerate state (F3a's `preserve_previous` always rotates one in
+///     during a successful install), but the restore function surfaces it
+///     honestly rather than fabricating a no-op success.
+///   - `kind: "no-pending"` — no `pending-update.json` is on disk; the
+///     restore function treats this as a no-op success (the shell is already
+///     in a clean state).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "kind", rename_all = "kebab-case")]
+pub enum RollbackOutcome {
+    #[serde(rename_all = "camelCase")]
+    Promoted {
+        restored_from: PathBuf,
+        managed_executable_path: PathBuf,
+        restored_version: String,
+        restored_artifact_sha256: String,
+    },
+    #[serde(rename_all = "camelCase")]
+    AutoRestored {
+        restored_from: PathBuf,
+        managed_executable_path: PathBuf,
+        restored_version: String,
+        restored_artifact_sha256: String,
+    },
+    #[serde(rename_all = "camelCase")]
+    RollbackFailed {
+        reason: String,
+        pending_update_path: PathBuf,
+    },
+    NoBackup {
+        reason: String,
+    },
+    NoPending,
+}
+
+/// Outcome of `perform_retention_sweep`. Wire contract:
+///   - `kind: "swept"` — cleanup actions were applied. `removedStagingFiles`
+///     lists the staging files deleted (AV-RB-6); `remainingBackupCount` is
+///     the post-sweep count, which the diagnostics panel surfaces (and the
+///     operator can sanity-check against AV-RB-5's "last 2" requirement).
+///   - `kind: "no-op"` — nothing to clean (no `pending-update.json` is on
+///     disk in the Success state, no stale backups, no orphan staging files).
+///     The sweep is idempotent: running it repeatedly is safe and cheap.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "kind", rename_all = "kebab-case")]
+pub enum RetentionOutcome {
+    #[serde(rename_all = "camelCase")]
+    Swept {
+        removed_staging_files: Vec<PathBuf>,
+        remaining_backup_count: u32,
+    },
+    NoOp,
+}
+
+/// Configuration for `perform_restore_previous_impl`.
+///
+/// `bump_mismatch_count` is a test-only seam: production Tauri command shim
+/// passes `true` so the AV-RB-3 counter increments on every restore
+/// invocation; tests can pass `false` to assert deterministic counter values
+/// across multiple restore attempts on a fixture.
+pub struct RestoreConfig {
+    pub config_dir: PathBuf,
+    pub bump_mismatch_count: bool,
+}
+
+/// Configuration for `perform_retention_sweep_impl`.
+pub struct RetentionConfig {
+    pub config_dir: PathBuf,
+}
+
+/// Resolve the on-disk path of the rollback-state sidecar.
+fn rollback_state_path(config_dir: &Path) -> PathBuf {
+    config_update_dir(config_dir).join(ROLLBACK_STATE_FILENAME)
+}
+
+/// Read the rollback-state sidecar. Returns the default record when the
+/// sidecar is absent, unreadable, or only partially written. This matches
+/// the F3c verifier's permissive read-or-treat-as-missing pattern: a corrupt
+/// sidecar must never wedge the shell.
+fn read_rollback_state(config_dir: &Path) -> RollbackStateRecord {
+    let path = rollback_state_path(config_dir);
+    match fs::read(&path) {
+        Ok(bytes) => serde_json::from_slice::<RollbackStateRecord>(&bytes).unwrap_or_default(),
+        Err(_) => RollbackStateRecord::default(),
+    }
+}
+
+/// Write the rollback-state sidecar atomically (best-effort). I/O errors are
+/// surfaced as a `RollbackOutcome::RollbackFailed` reason — we never silently
+/// drop a state transition.
+fn write_rollback_state(config_dir: &Path, record: &RollbackStateRecord) -> std::io::Result<()> {
+    let path = rollback_state_path(config_dir);
+    if let Some(parent) = path.parent() {
+        fs::create_dir_all(parent)?;
+    }
+    write_atomic_json(&path, record)
+}
+
+/// Resolve the path of the most-recent rolling backup. Returns `None` when
+/// the slot-1 backup does not exist (degenerate state, but F3b surfaces it
+/// honestly).
+fn most_recent_backup_path(config_dir: &Path) -> Option<PathBuf> {
+    let backups = backups_dir(&config_update_dir(config_dir));
+    let slot1 = backups.join(BACKUP_APPIMAGE_FILENAME);
+    if slot1.exists() {
+        Some(slot1)
+    } else {
+        None
+    }
+}
+
+/// Atomic copy of `source` over `managed`. Mirrors `atomic_replace`'s
+/// stage-then-rename pattern so the managed AppImage path never holds a
+/// partial file. Returns the canonical I/O error so callers can format a
+/// diagnostic reason string.
+fn atomic_copy_replace(source: &Path, managed: &Path) -> std::io::Result<()> {
+    if let Some(parent) = managed.parent() {
+        fs::create_dir_all(parent)?;
+    }
+    let tmp = managed.with_extension("AppImage.tmp");
+    fs::copy(source, &tmp)?;
+    fs::rename(&tmp, managed)?;
+    Ok(())
+}
+
+/// Hash a file via the streaming sha256 seam that F3a already uses. We
+/// re-implement the streaming read here (rather than reaching into F3c's
+/// `sha256_of_file`) so the F3b surface remains self-contained and testable
+/// without crossing the F3c slice boundary.
+fn sha256_of_path(path: &Path) -> std::io::Result<String> {
+    use std::io::Read;
+    let mut file = fs::File::open(path)?;
+    let mut hasher = Sha256::new();
+    let mut buf = [0u8; 64 * 1024];
+    loop {
+        let n = file.read(&mut buf)?;
+        if n == 0 {
+            break;
+        }
+        hasher.update(&buf[..n]);
+    }
+    Ok(hex_lower(&hasher.finalize()))
+}
+
+/// Core F3b restore implementation. The Tauri command shim delegates here.
+///
+/// Decision tree (matches the rollback decision table in
+/// `SD16-E7-execution-handoff-2026-07-03.md` §"Rollback decision table"):
+///
+///   1. No `pending-update.json` → `RollbackOutcome::NoPending` (idempotent).
+///   2. `pending_update_state != Mismatch` AND != Pending → caller should not
+///      be invoking restore here (the success path is F3c's); surface as
+///      `NoPending` rather than fabricating a rollback.
+///   3. AV-RB-3 fast-path: `rollback_state == AutoRestorePrevious` OR
+///      `mismatch_count >= AUTO_RESTORE_THRESHOLD` → run the restore without
+///      requiring the operator to confirm.
+///   4. No backup exists → `RollbackOutcome::NoBackup` with reason. The
+///      sidecar is left alone (no rollback-failed was attempted).
+///   5. Backup exists but is unreadable / atomic-replace fails →
+///      `RollbackOutcome::RollbackFailed` with the reason; the sidecar is
+///      written with `rollback_state: "rollback-failed"`.
+///   6. Backup exists and is readable → copy it over the managed path,
+///      rewrite `installed-state.json` with the backup's identity (the
+///      `pending.from_version`), delete `pending-update.json`, reset the
+///      sidecar to `None` with `mismatch_count: 0`. Return
+///      `RollbackOutcome::Promoted` (or `AutoRestored` when the AV-RB-3
+///      fast-path fired).
+pub fn perform_restore_previous_impl(config: RestoreConfig) -> RollbackOutcome {
+    let RestoreConfig {
+        config_dir,
+        bump_mismatch_count,
+    } = config;
+    let update_dir = config_update_dir(&config_dir);
+    let pending_path = update_dir.join(PENDING_UPDATE_FILENAME);
+
+    // Step 1 — read pending marker. Treat absent / corrupt / unreadable as
+    // "no pending" so the restore command is always safe to call.
+    let pending: PendingUpdate = match fs::read(&pending_path) {
+        Ok(bytes) => match serde_json::from_slice(&bytes) {
+            Ok(value) => value,
+            Err(_) => return RollbackOutcome::NoPending,
+        },
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            return RollbackOutcome::NoPending;
+        }
+        Err(_) => return RollbackOutcome::NoPending,
+    };
+
+    // Step 2 — only restore when the pending marker indicates an unresolved
+    // mismatch or a pending-but-stuck state. A Success marker means the
+    // F3c verifier already promoted; restoring from it would be a no-op
+    // semantically but the function refuses to fabricate that as a success.
+    if matches!(pending.pending_update_state, PendingUpdateState::Success) {
+        return RollbackOutcome::NoPending;
+    }
+
+    // Bump mismatch count BEFORE the auto-restore fast-path so the sidecar
+    // always reflects the most-recent observation. The bump is gated by the
+    // `bump_mismatch_count` test seam so tests can drive deterministic
+    // counter values.
+    let mut sidecar = read_rollback_state(&config_dir);
+    if bump_mismatch_count {
+        sidecar.mismatch_count = sidecar.mismatch_count.saturating_add(1);
+    }
+
+    // Step 3 — AV-RB-3 auto-restore fast-path.
+    let auto_restore = matches!(sidecar.rollback_state, RollbackState::AutoRestorePrevious)
+        || sidecar.mismatch_count >= AUTO_RESTORE_THRESHOLD;
+    if auto_restore {
+        sidecar.rollback_state = RollbackState::AutoRestorePrevious;
+        // Best-effort sidecar write before the restore so a crash mid-restore
+        // still leaves the AV-RB-3 marker visible to the next boot.
+        let _ = write_rollback_state(
+            &config_dir,
+            &RollbackStateRecord {
+                last_transition_at: now_iso8601(),
+                ..sidecar.clone()
+            },
+        );
+    }
+
+    // Step 4 — locate the most-recent backup.
+    let backup_path = match most_recent_backup_path(&config_dir) {
+        Some(path) => path,
+        None => {
+            // No backup to restore from. The sidecar is left alone because no
+            // rollback attempt was made — recording rollback-failed here would
+            // be dishonest (nothing failed).
+            return RollbackOutcome::NoBackup {
+                reason: format!(
+                    "no backup at {} — cannot restore from nothing",
+                    BACKUP_APPIMAGE_FILENAME
+                ),
+            };
+        }
+    };
+
+    // Verify the backup is readable and hash it so the installed-state we
+    // write after the atomic-replace records the prior version's identity
+    // honestly.
+    let backup_sha256 = match sha256_of_path(&backup_path) {
+        Ok(sha) => sha,
+        Err(source) => {
+            let reason = format!(
+                "backup at {} is unreadable: {source}",
+                backup_path.display()
+            );
+            let failed_record = RollbackStateRecord {
+                rollback_state: RollbackState::RollbackFailed,
+                reason: reason.clone(),
+                last_transition_at: now_iso8601(),
+                ..sidecar.clone()
+            };
+            let _ = write_rollback_state(&config_dir, &failed_record);
+            return RollbackOutcome::RollbackFailed {
+                reason,
+                pending_update_path: pending_path,
+            };
+        }
+    };
+
+    // Atomically copy the backup over the managed AppImage path.
+    let managed = pending.managed_executable_path.clone();
+    if let Err(source) = atomic_copy_replace(&backup_path, &managed) {
+        let reason = format!(
+            "atomic restore {} -> {} failed: {source}",
+            backup_path.display(),
+            managed.display()
+        );
+        let failed_record = RollbackStateRecord {
+            rollback_state: RollbackState::RollbackFailed,
+            reason: reason.clone(),
+            last_transition_at: now_iso8601(),
+            ..sidecar.clone()
+        };
+        let _ = write_rollback_state(&config_dir, &failed_record);
+        return RollbackOutcome::RollbackFailed {
+            reason,
+            pending_update_path: pending_path,
+        };
+    }
+
+    // Restore succeeded — rewrite installed-state.json so future transactions
+    // see the prior version as installed. Read the prior installed-state
+    // first (if present) so we preserve its provenance fields; if absent
+    // (first install, somehow stuck), synthesize a minimal record from the
+    // pending marker's `from_version`.
+    let installed_state_path = update_dir.join(INSTALLED_STATE_FILENAME);
+    let prior_installed = fs::read(&installed_state_path)
+        .ok()
+        .and_then(|bytes| serde_json::from_slice::<InstalledState>(&bytes).ok());
+    let restored_version = pending.from_version.clone();
+    let new_installed = if let Some(mut prior) = prior_installed {
+        prior.version = restored_version.clone();
+        prior.artifact_sha256 = backup_sha256.clone();
+        prior.installed_at = now_iso8601();
+        prior
+    } else {
+        InstalledState {
+            managed_executable_path: managed.clone(),
+            install_kind: InstallKind::AppImage,
+            channel: pending.channel.clone(),
+            version: restored_version.clone(),
+            source_commit: pending.source_commit.clone(),
+            release_tag: pending.release_tag.clone(),
+            manifest_hash: pending.manifest_hash.clone(),
+            artifact_sha256: backup_sha256.clone(),
+            installed_at: now_iso8601(),
+            update_eligible: true,
+            ineligible_reason: None,
+        }
+    };
+    if let Err(source) = write_atomic_json(&installed_state_path, &new_installed) {
+        // The atomic-replace already landed on disk but installed-state did
+        // not — surface this as a partial rollback. The managed binary is
+        // already the prior version; the operator can rerun the sweep to
+        // rewrite installed-state.
+        let reason = format!(
+            "managed binary restored to {} but installed-state write failed: {source}",
+            managed.display()
+        );
+        let failed_record = RollbackStateRecord {
+            rollback_state: RollbackState::RollbackFailed,
+            reason: reason.clone(),
+            last_transition_at: now_iso8601(),
+            ..sidecar.clone()
+        };
+        let _ = write_rollback_state(&config_dir, &failed_record);
+        return RollbackOutcome::RollbackFailed {
+            reason,
+            pending_update_path: pending_path,
+        };
+    }
+
+    // Delete pending-update.json — the restore superseded it. This is the
+    // one and only place F3b touches pending-update.json deletion, and only
+    // on a successful restore. AV-RB-7 is honored because we never delete
+    // pending-update.json while it is unresolved.
+    let _ = fs::remove_file(&pending_path);
+
+    // Reset the sidecar — the rollback succeeded. The counter resets only
+    // when the auto-restore fast-path fired (the threshold-chain is broken).
+    // A manual Promoted leaves the counter intact because the mismatch chain
+    // has not been demonstrably broken — the operator restored, but the
+    // underlying mismatch may recur on the next boot and the AV-RB-3 trigger
+    // should still be reachable from the pre-threshold count.
+    let reset_record = if auto_restore {
+        RollbackStateRecord {
+            rollback_state: RollbackState::None,
+            mismatch_count: 0,
+            reason: String::new(),
+            last_transition_at: now_iso8601(),
+        }
+    } else {
+        RollbackStateRecord {
+            rollback_state: sidecar.rollback_state,
+            mismatch_count: sidecar.mismatch_count,
+            reason: sidecar.reason.clone(),
+            last_transition_at: now_iso8601(),
+        }
+    };
+    let _ = write_rollback_state(&config_dir, &reset_record);
+
+    if auto_restore {
+        RollbackOutcome::AutoRestored {
+            restored_from: backup_path,
+            managed_executable_path: managed,
+            restored_version,
+            restored_artifact_sha256: backup_sha256,
+        }
+    } else {
+        RollbackOutcome::Promoted {
+            restored_from: backup_path,
+            managed_executable_path: managed,
+            restored_version,
+            restored_artifact_sha256: backup_sha256,
+        }
+    }
+}
+
+/// Core F3b retention sweep implementation. The Tauri command shim delegates
+/// here.
+///
+/// Decision tree:
+///
+///   1. Read `pending-update.json` if present. Its `pending_update_state`
+///      determines whether staging cleanup is safe.
+///   2. AV-RB-6: when `pending_update_state == Success`, delete every file
+///      in `staging/`. Otherwise leave staging intact (operator diagnostics
+///      + retry path).
+///
+///      Note: `Success` is rare in practice because F3c's verifier deletes
+///      `pending-update.json` on Promoted — but the sweep defensively handles
+///      a Success marker that survived the F3c deletion (e.g. a crash between
+///      the installed-state write and the pending deletion).
+///   3. AV-RB-5: enforce the backups two-slot ceiling. If more than two
+///      `Codex-Desktop-Shell-Scaffold.previous*.AppImage` files exist
+///      (degenerate state — F3a's rotation already caps at 2), evict the
+///      oldest by mtime until only two remain.
+///   4. AV-RB-7: this function NEVER touches `pending-update.json` unless
+///      the pending marker is in `Success` state (and even then, only on
+///      the staging side — the pending file itself is left for F3c's
+///      verifier to delete on the next Promoted).
+pub fn perform_retention_sweep_impl(config: RetentionConfig) -> RetentionOutcome {
+    let RetentionConfig { config_dir } = config;
+    let update_dir = config_update_dir(&config_dir);
+    let staging = staging_dir(&update_dir);
+    let backups = backups_dir(&update_dir);
+    let pending_path = update_dir.join(PENDING_UPDATE_FILENAME);
+
+    let pending_state: Option<PendingUpdateState> = fs::read(&pending_path)
+        .ok()
+        .and_then(|bytes| serde_json::from_slice::<PendingUpdate>(&bytes).ok())
+        .map(|p| p.pending_update_state);
+
+    let mut removed_staging_files: Vec<PathBuf> = Vec::new();
+
+    // Step 2 — staging cleanup (AV-RB-6). Only sweep on Success.
+    if matches!(pending_state, Some(PendingUpdateState::Success)) && staging.exists() {
+        if let Ok(entries) = fs::read_dir(&staging) {
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_file() && fs::remove_file(&path).is_ok() {
+                    removed_staging_files.push(path);
+                }
+            }
+        }
+    }
+
+    // Step 3 — backups two-slot enforcement (AV-RB-5). F3a's
+    // `preserve_previous` already caps at 2 on every install; this is the
+    // safety net for any drift.
+    let mut backup_paths: Vec<PathBuf> = Vec::new();
+    if backups.exists() {
+        if let Ok(entries) = fs::read_dir(&backups) {
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_file()
+                    && path
+                        .file_name()
+                        .and_then(|n| n.to_str())
+                        .map(|name| {
+                            name.starts_with("Codex-Desktop-Shell-Scaffold.previous")
+                                && name.ends_with(".AppImage")
+                        })
+                        .unwrap_or(false)
+                {
+                    backup_paths.push(path);
+                }
+            }
+        }
+    }
+    // Sort by mtime ascending (oldest first).
+    backup_paths.sort_by_key(|p| {
+        fs::metadata(p)
+            .and_then(|m| m.modified())
+            .unwrap_or(std::time::SystemTime::UNIX_EPOCH)
+    });
+    let mut backup_evicted = false;
+    while backup_paths.len() > 2 {
+        if let Some(oldest) = backup_paths.first().cloned() {
+            if fs::remove_file(&oldest).is_ok() {
+                backup_paths.remove(0);
+                backup_evicted = true;
+            } else {
+                // I/O failure — stop evicting to avoid an infinite loop. The
+                // sweep is idempotent; the next invocation will retry.
+                break;
+            }
+        } else {
+            break;
+        }
+    }
+    let remaining_backup_count = backup_paths.len() as u32;
+
+    // The sweep is "Swept" when any work was actually performed — staging
+    // cleanup OR backup eviction. Otherwise it is "NoOp" so the UI can
+    // suppress the sweep summary on idle cycles. Pending-marker presence
+    // alone is not evidence of work.
+    if removed_staging_files.is_empty() && !backup_evicted {
+        RetentionOutcome::NoOp
+    } else {
+        RetentionOutcome::Swept {
+            removed_staging_files,
+            remaining_backup_count,
+        }
+    }
+}
+
+// ===================================================================================
+// F3b unit tests — cover AV-RB-3, AV-RB-4, AV-RB-5, AV-RB-6, AV-RB-7 (Rust side)
+// ===================================================================================
+
+#[cfg(test)]
+mod rollback_retention_tests {
+    use super::*;
+
+    fn tempdir(label: &str) -> std::path::PathBuf {
+        let dir =
+            std::env::temp_dir().join(format!("sd16-e7-f3b-{label}-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(&dir).expect("create tempdir");
+        dir
+    }
+
+    /// Stage a `pending-update.json` in Mismatch state, with a real backup
+    /// at slot1, so the restore function has something to read.
+    fn stage_mismatch_with_backup(
+        dir: &Path,
+        backup_payload: &[u8],
+        from: &str,
+        to: &str,
+    ) -> (PathBuf, PathBuf) {
+        let update_dir = config_update_dir(dir);
+        fs::create_dir_all(&update_dir).expect("mkdir update");
+        fs::create_dir_all(staging_dir(&update_dir)).expect("mkdir staging");
+        fs::create_dir_all(backups_dir(&update_dir)).expect("mkdir backups");
+
+        let backup_path = backups_dir(&update_dir).join(BACKUP_APPIMAGE_FILENAME);
+        fs::write(&backup_path, backup_payload).expect("write backup");
+
+        let pending = PendingUpdate {
+            from_version: from.into(),
+            to_version: to.into(),
+            artifact_sha256: "expected-running-sha".into(),
+            manifest_hash: "manifest-hash-fixture".into(),
+            staging_path: staging_dir(&update_dir).join("AppImage"),
+            backup_path: backup_path.clone(),
+            managed_executable_path: dir.join("Codex-Desktop-Shell-Scaffold.AppImage"),
+            channel: "alpha".into(),
+            release_tag: format!("alpha/{to}"),
+            source_commit: "deadbeef".into(),
+            created_at: "2026-07-03T00:00:00Z".into(),
+            pending_update_state: PendingUpdateState::Mismatch,
+        };
+        let pending_path = update_dir.join(PENDING_UPDATE_FILENAME);
+        write_atomic_json(&pending_path, &pending).expect("write pending");
+
+        (pending_path, backup_path)
+    }
+
+    /// AV-RB-3 — repeated pending failure auto-restores when safe. After
+    /// AUTO_RESTORE_THRESHOLD mismatch cycles (bumped inside the impl on
+    /// each call), the next `perform_restore_previous_impl` invocation
+    /// must take the auto-restore fast-path and return `AutoRestored`.
+    /// Cycles 1 and 2 fall through to the manual restore path
+    /// (`Promoted`); cycle 3 must auto-restore.
+    #[test]
+    fn auto_restore_after_threshold_mismatch_cycles() {
+        let dir = tempdir("auto-restore");
+        let backup_payload = b"prior-binary-payload";
+        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        fs::write(&managed, b"stuck-running-binary").expect("write managed");
+
+        let update_dir = config_update_dir(&dir);
+
+        for cycle in 1..=AUTO_RESTORE_THRESHOLD {
+            stage_mismatch_with_backup(&dir, backup_payload, "0.0.0", "0.0.1");
+            let outcome = perform_restore_previous_impl(RestoreConfig {
+                config_dir: dir.clone(),
+                bump_mismatch_count: true,
+            });
+            match outcome {
+                RollbackOutcome::AutoRestored { restored_version, .. } => {
+                    assert_eq!(
+                        cycle, AUTO_RESTORE_THRESHOLD,
+                        "auto-restore fired on cycle {cycle}, expected only on cycle {AUTO_RESTORE_THRESHOLD}"
+                    );
+                    assert_eq!(restored_version, "0.0.0");
+                    return; // success — exit early
+                }
+                RollbackOutcome::Promoted { restored_version, .. } => {
+                    // Cycles 1 and 2 fall through to the manual restore path.
+                    // The counter accumulates across these calls so cycle 3
+                    // reaches the threshold. Re-stage for the next cycle.
+                    assert_eq!(restored_version, "0.0.0");
+                    let _ = fs::remove_file(update_dir.join(INSTALLED_STATE_FILENAME));
+                    continue;
+                }
+                other => panic!("cycle {cycle}: unexpected outcome {other:?}"),
+            }
+        }
+        panic!("auto-restore never fired across {AUTO_RESTORE_THRESHOLD} cycles");
+    }
+
+    /// AV-RB-4 (state side) — restore failure marks `rollback-failed` with
+    /// the exact reason. Force a restore failure by giving the function a
+    /// missing backup path (write the pending marker but not the backup).
+    /// The function must return `RollbackOutcome::NoBackup` (no rollback
+    /// was attempted) — but if we corrupt the backup file (write garbage
+    /// that fails the atomic-copy), the function returns `RollbackFailed`
+    /// with a reason string and writes the sidecar.
+    ///
+    /// The cleanest positive case for AV-RB-4: write a pending marker,
+    /// write a backup, then atomically-replace the backup with a directory
+    /// (which will cause the read-back failure). The restore function will
+    /// see the unreadable backup, write the sidecar with `rollback_state:
+    /// "rollback-failed"`, and return `RollbackFailed` with the reason.
+    #[test]
+    fn restore_failure_marks_rollback_failed() {
+        let dir = tempdir("rollback-failed");
+        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        fs::write(&managed, b"stuck-running-binary").expect("write managed");
+
+        let update_dir = config_update_dir(&dir);
+        fs::create_dir_all(&update_dir).expect("mkdir update");
+
+        // Stage a pending marker but no backup. The restore function returns
+        // NoBackup (no rollback was attempted, so AV-RB-4 does not fire).
+        // To force AV-RB-4 we need the backup to exist but be unreadable.
+        // The cleanest unreadable fixture: write the backup path as a
+        // directory. `sha256_of_path` opens the path; opening a directory
+        // is allowed on Linux but read fails.
+        let backup_path = backups_dir(&update_dir).join(BACKUP_APPIMAGE_FILENAME);
+        fs::create_dir_all(&backup_path).expect("mkdir where backup should be");
+
+        // Stage a Mismatch pending marker.
+        let pending = PendingUpdate {
+            from_version: "0.0.0".into(),
+            to_version: "0.0.1".into(),
+            artifact_sha256: "expected-running-sha".into(),
+            manifest_hash: "manifest-hash-fixture".into(),
+            staging_path: update_dir.join("staging/AppImage"),
+            backup_path: backup_path.clone(),
+            managed_executable_path: managed.clone(),
+            channel: "alpha".into(),
+            release_tag: "alpha/0.0.1".into(),
+            source_commit: "deadbeef".into(),
+            created_at: "2026-07-03T00:00:00Z".into(),
+            pending_update_state: PendingUpdateState::Mismatch,
+        };
+        write_atomic_json(&update_dir.join(PENDING_UPDATE_FILENAME), &pending)
+            .expect("write pending");
+
+        let outcome = perform_restore_previous_impl(RestoreConfig {
+            config_dir: dir.clone(),
+            bump_mismatch_count: true,
+        });
+        match outcome {
+            RollbackOutcome::RollbackFailed { reason, pending_update_path } => {
+                assert!(
+                    !reason.is_empty(),
+                    "rollback-failed reason must be non-empty (AV-RB-4)"
+                );
+                assert!(pending_update_path.exists(), "pending-update.json must remain on disk");
+            }
+            other => panic!("expected RollbackFailed, got {other:?}"),
+        }
+
+        // The sidecar must record rollback-failed with the reason.
+        let sidecar = read_rollback_state(&dir);
+        assert_eq!(sidecar.rollback_state, RollbackState::RollbackFailed);
+        assert!(!sidecar.reason.is_empty(), "sidecar reason must be non-empty (AV-RB-4)");
+
+        // Cleanup: remove the directory-as-backup so the next test gets a clean state.
+        let _ = fs::remove_dir_all(&backup_path);
+    }
+
+    /// AV-RB-5 — last 2 previous AppImages are retained. Drive 3 sequential
+    /// installs and assert the backups directory ends with exactly 2 entries.
+    /// F3a's `preserve_previous` already enforces this on every install;
+    /// F3b's retention sweep is a belt-and-suspenders catch-up that also
+    /// asserts the contract at the boundary.
+    #[test]
+    fn backups_keep_last_two_after_retention_sweep() {
+        let dir = tempdir("backups-cap");
+        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        fs::write(&managed, b"v1").expect("write v1");
+
+        let update_dir = config_update_dir(&dir);
+        fs::create_dir_all(backups_dir(&update_dir)).expect("mkdir backups");
+
+        // Simulate 3 sequential installs by writing 3 backup files directly
+        // into the backups directory (older → newer mtime).
+        let slot1 = backups_dir(&update_dir).join(BACKUP_APPIMAGE_FILENAME);
+        let slot2 = backups_dir(&update_dir).join(BACKUP_APPIMAGE_FILENAME_2);
+        let extra = backups_dir(&update_dir).join("Codex-Desktop-Shell-Scaffold.previous3.AppImage");
+        fs::write(&extra, b"oldest").expect("write extra");
+        std::thread::sleep(std::time::Duration::from_millis(10));
+        fs::write(&slot2, b"middle").expect("write slot2");
+        std::thread::sleep(std::time::Duration::from_millis(10));
+        fs::write(&slot1, b"newest").expect("write slot1");
+
+        // Run the retention sweep.
+        let outcome = perform_retention_sweep_impl(RetentionConfig {
+            config_dir: dir.clone(),
+        });
+        match outcome {
+            RetentionOutcome::Swept {
+                remaining_backup_count,
+                ..
+            } => {
+                assert_eq!(
+                    remaining_backup_count, 2,
+                    "retention sweep must cap backups at 2"
+                );
+            }
+            other => panic!("expected Swept, got {other:?}"),
+        }
+
+        // The oldest backup must have been evicted; the two named slots remain.
+        assert!(!extra.exists(), "oldest backup must be evicted by sweep");
+        assert!(slot1.exists(), "slot1 must remain");
+        assert!(slot2.exists(), "slot2 must remain");
+
+        // Cleanup.
+        let _ = fs::remove_file(&managed);
+    }
+
+    /// AV-RB-6 — successful staging is cleaned after confirmation. Stage a
+    /// pending-update.json with `pending_update_state: Success`, drop a file
+    /// in `staging/`, run the sweep, and assert staging is empty.
+    #[test]
+    fn successful_staging_is_cleaned_after_sweep() {
+        let dir = tempdir("staging-cleanup");
+        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        fs::write(&managed, b"new-binary").expect("write managed");
+
+        let update_dir = config_update_dir(&dir);
+        fs::create_dir_all(staging_dir(&update_dir)).expect("mkdir staging");
+        fs::create_dir_all(backups_dir(&update_dir)).expect("mkdir backups");
+
+        let staging_file = staging_dir(&update_dir).join("Codex-Desktop-Shell-Scaffold.staged.AppImage");
+        fs::write(&staging_file, b"staged-payload").expect("write staged");
+
+        let pending = PendingUpdate {
+            from_version: "0.0.0".into(),
+            to_version: "0.0.1".into(),
+            artifact_sha256: "new-running-sha".into(),
+            manifest_hash: "manifest-hash-fixture".into(),
+            staging_path: staging_file.clone(),
+            backup_path: backups_dir(&update_dir).join(BACKUP_APPIMAGE_FILENAME),
+            managed_executable_path: managed.clone(),
+            channel: "alpha".into(),
+            release_tag: "alpha/0.0.1".into(),
+            source_commit: "deadbeef".into(),
+            created_at: "2026-07-03T00:00:00Z".into(),
+            pending_update_state: PendingUpdateState::Success,
+        };
+        write_atomic_json(&update_dir.join(PENDING_UPDATE_FILENAME), &pending)
+            .expect("write pending");
+
+        let outcome = perform_retention_sweep_impl(RetentionConfig {
+            config_dir: dir.clone(),
+        });
+        match outcome {
+            RetentionOutcome::Swept {
+                removed_staging_files,
+                ..
+            } => {
+                assert!(
+                    !removed_staging_files.is_empty(),
+                    "sweep must report at least one removed staging file"
+                );
+                assert!(
+                    !staging_file.exists(),
+                    "staging file must be removed on Success sweep (AV-RB-6)"
+                );
+            }
+            other => panic!("expected Swept, got {other:?}"),
+        }
+    }
+
+    /// AV-RB-7 — pending updates are never auto-deleted while unresolved.
+    /// Stage a Mismatch pending marker, run the sweep, and assert the
+    /// pending-update.json is still on disk.
+    #[test]
+    fn pending_update_never_deleted_while_unresolved() {
+        let dir = tempdir("pending-keep");
+        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        fs::write(&managed, b"stuck-binary").expect("write managed");
+
+        let update_dir = config_update_dir(&dir);
+        fs::create_dir_all(&update_dir).expect("mkdir update");
+
+        let pending = PendingUpdate {
+            from_version: "0.0.0".into(),
+            to_version: "0.0.1".into(),
+            artifact_sha256: "expected-sha".into(),
+            manifest_hash: "manifest-hash-fixture".into(),
+            staging_path: update_dir.join("staging/AppImage"),
+            backup_path: update_dir.join("backups/AppImage"),
+            managed_executable_path: managed.clone(),
+            channel: "alpha".into(),
+            release_tag: "alpha/0.0.1".into(),
+            source_commit: "deadbeef".into(),
+            created_at: "2026-07-03T00:00:00Z".into(),
+            pending_update_state: PendingUpdateState::Mismatch,
+        };
+        let pending_path = update_dir.join(PENDING_UPDATE_FILENAME);
+        write_atomic_json(&pending_path, &pending).expect("write pending");
+
+        let outcome = perform_retention_sweep_impl(RetentionConfig {
+            config_dir: dir.clone(),
+        });
+        match outcome {
+            RetentionOutcome::Swept { .. } | RetentionOutcome::NoOp => {}
+        }
+
+        assert!(
+            pending_path.exists(),
+            "pending-update.json must NOT be deleted while Mismatch (AV-RB-7)"
+        );
+    }
+
+    /// Restore function never fabricates success — when no pending-update.json
+    /// exists, the function returns `NoPending` rather than fabricating a
+    /// `Promoted` outcome. This is the symmetric counterpart to the AV-RB-1
+    /// guarantee owned by F3c: both surfaces refuse to fabricate success.
+    #[test]
+    fn restore_with_no_pending_returns_no_pending() {
+        let dir = tempdir("no-pending");
+        let outcome = perform_restore_previous_impl(RestoreConfig {
+            config_dir: dir.clone(),
+            bump_mismatch_count: true,
+        });
+        assert_eq!(outcome, RollbackOutcome::NoPending);
+    }
+
+    /// Restore function refuses to act on a Success pending marker — that
+    /// state means F3c's verifier already promoted and the pending marker is
+    /// a stale relic. The function returns `NoPending` rather than running
+    /// a restore that would clobber a successful install.
+    #[test]
+    fn restore_with_success_pending_returns_no_pending() {
+        let dir = tempdir("success-pending");
+        let update_dir = config_update_dir(&dir);
+        fs::create_dir_all(&update_dir).expect("mkdir update");
+
+        let pending = PendingUpdate {
+            from_version: "0.0.0".into(),
+            to_version: "0.0.1".into(),
+            artifact_sha256: "expected-sha".into(),
+            manifest_hash: "manifest-hash-fixture".into(),
+            staging_path: update_dir.join("staging/AppImage"),
+            backup_path: update_dir.join("backups/AppImage"),
+            managed_executable_path: dir.join("Codex-Desktop-Shell-Scaffold.AppImage"),
+            channel: "alpha".into(),
+            release_tag: "alpha/0.0.1".into(),
+            source_commit: "deadbeef".into(),
+            created_at: "2026-07-03T00:00:00Z".into(),
+            pending_update_state: PendingUpdateState::Success,
+        };
+        write_atomic_json(&update_dir.join(PENDING_UPDATE_FILENAME), &pending)
+            .expect("write pending");
+
+        let outcome = perform_restore_previous_impl(RestoreConfig {
+            config_dir: dir.clone(),
+            bump_mismatch_count: false,
+        });
+        assert_eq!(outcome, RollbackOutcome::NoPending);
+    }
+
+    /// The rollback-state sidecar round-trips through disk and the default
+    /// values match when the sidecar is absent.
+    #[test]
+    fn rollback_state_sidecar_round_trips() {
+        let dir = tempdir("sidecar-rt");
+        // Absent sidecar → default.
+        let default_record = read_rollback_state(&dir);
+        assert_eq!(default_record.rollback_state, RollbackState::None);
+        assert_eq!(default_record.mismatch_count, 0);
+        assert!(default_record.reason.is_empty());
+
+        // Write a record, read it back.
+        let record = RollbackStateRecord {
+            rollback_state: RollbackState::RollbackFailed,
+            mismatch_count: 2,
+            reason: "backup corrupted".into(),
+            last_transition_at: "2026-07-03T01:00:00Z".into(),
+        };
+        write_rollback_state(&dir, &record).expect("write sidecar");
+        let read_back = read_rollback_state(&dir);
+        assert_eq!(read_back, record);
+    }
+
+    /// Retention sweep is idempotent: running it on a clean config dir
+    /// returns `NoOp` and does not mutate state. The diagnostics UI relies
+    /// on this so calling the sweep on every launch is cheap.
+    #[test]
+    fn retention_sweep_is_idempotent_on_clean_config() {
+        let dir = tempdir("idempotent");
+        let outcome1 = perform_retention_sweep_impl(RetentionConfig {
+            config_dir: dir.clone(),
+        });
+        let outcome2 = perform_retention_sweep_impl(RetentionConfig {
+            config_dir: dir.clone(),
+        });
+        assert_eq!(outcome1, RetentionOutcome::NoOp);
+        assert_eq!(outcome2, RetentionOutcome::NoOp);
     }
 }

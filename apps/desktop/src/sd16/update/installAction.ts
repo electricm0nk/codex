@@ -2,17 +2,17 @@
  * SD-16-E7-F3c shell-side install action bridge.
  *
  * The desktop shell mounts a `#install-relaunch-prompt` DOM hook whenever the
- * staged-transaction Tauri command reports `must_relaunch: true`. This module
- * is the single seam between the React UI and the Rust staged transaction.
+ * staged-transaction Tauri command returns a relaunch prompt payload. This
+ * module is the single seam between the React UI and the Rust staged transaction.
  *
  * The F2 handoff scoped this surface to F3a (the transaction owner). F3a's
  * PR #61 shipped the Rust side but did not author this TypeScript bridge, so
  * F3c authors it from scratch against the Rust surface F3a already merged.
  * The deviation is recorded in the F3c receipt.
  *
- * F3c extends the wire contract with a relaunch-prompt side-effect: when
- * `must_relaunch` is true, this module mounts the `#install-relaunch-prompt`
- * DOM element with the running-artifact verification seam exposed. The
+ * F3c extends the wire contract with a relaunch-prompt side-effect: this
+ * module mounts the `#install-relaunch-prompt` DOM element with the
+ * running-artifact verification seam exposed. The
  * `#install-relaunch-prompt` hook is the canonical DOM contract surface that
  * `restoreOffer.tsx` and F3b's `perform_restore_previous` integration depend
  * on.
@@ -31,13 +31,11 @@ import { formatError, hasTauriRuntime } from "../../boundary/runtime";
  * This is the frontend bridge contract consumed by the SD-16 update UI.
  */
 export interface PerformInstallResponse {
-  mustRelaunch: boolean;
-  newArtifactSha256: string;
-  newManagedExecutablePath: string;
-  previousBackupPath: string;
-  pendingStatePath: string;
+  pendingUpdatePath: string;
+  managedExecutablePath: string;
   fromVersion: string;
   toVersion: string;
+  artifactSha256: string;
 }
 
 /**
@@ -65,27 +63,25 @@ export const INSTALL_RELAUNCH_PROMPT_ID = "install-relaunch-prompt";
 
 /**
  * Sentinel response used when the Tauri runtime is not available (e.g. unit
- * tests in a node tsx host). Returning a `must_relaunch: false` sentinel keeps
+ * tests in a node tsx host). Returning an empty prompt-shaped payload keeps
  * the UI honest: it surfaces "no install in flight" rather than fabricating
- * a prompt.
+ * a real relaunch transition.
  */
 export const NO_TAURI_RUNTIME_RESPONSE: PerformInstallResponse = {
-  mustRelaunch: false,
-  newArtifactSha256: "",
-  newManagedExecutablePath: "",
-  previousBackupPath: "",
-  pendingStatePath: "",
+  pendingUpdatePath: "",
+  managedExecutablePath: "",
   fromVersion: "",
   toVersion: "",
+  artifactSha256: "",
 };
 
 /**
  * Call the staged-transaction Tauri command.
  *
  * F3c is the sole author of this surface today (F3a shipped Rust without the
- * TS bridge). On a successful staged transaction with `must_relaunch: true`,
- * the function mounts the `#install-relaunch-prompt` DOM hook with the prior
- * and target versions so the operator can confirm the relaunch.
+ * TS bridge). On a successful staged transaction, the function mounts the
+ * `#install-relaunch-prompt` DOM hook with the prior and target versions so
+ * the operator can confirm the relaunch.
  *
  * When the Tauri runtime is absent (vite dev, vitest), the function returns
  * the no-runtime sentinel rather than throwing — the UI must surface a
@@ -103,9 +99,7 @@ export async function performInstall(
       manifest,
       indexUrl,
     });
-    if (response.mustRelaunch) {
-      mountRelaunchPrompt(response);
-    }
+    mountRelaunchPrompt(response);
     return response;
   } catch (cause: unknown) {
     throw new Error(`perform_install failed: ${formatError(cause)}`);
@@ -133,11 +127,10 @@ export function mountRelaunchPrompt(response: PerformInstallResponse): void {
   hook.id = INSTALL_RELAUNCH_PROMPT_ID;
   hook.setAttribute("data-from-version", response.fromVersion);
   hook.setAttribute("data-to-version", response.toVersion);
-  hook.setAttribute("data-pending-state-path", response.pendingStatePath);
-  hook.setAttribute("data-managed-executable-path", response.newManagedExecutablePath);
-  hook.setAttribute("data-new-artifact-sha256", response.newArtifactSha256);
-  hook.setAttribute("data-previous-backup-path", response.previousBackupPath);
-  hook.setAttribute("data-must-relaunch", response.mustRelaunch ? "true" : "false");
+  hook.setAttribute("data-pending-state-path", response.pendingUpdatePath);
+  hook.setAttribute("data-managed-executable-path", response.managedExecutablePath);
+  hook.setAttribute("data-new-artifact-sha256", response.artifactSha256);
+  hook.setAttribute("data-must-relaunch", "true");
   hook.textContent = `Relaunch required to finish update ${response.fromVersion} → ${response.toVersion}`;
   document.body.appendChild(hook);
 }
@@ -147,26 +140,20 @@ export function mountRelaunchPrompt(response: PerformInstallResponse): void {
  * the DOM hook would carry without touching the real DOM. Keeping it pure
  * makes the wire contract testable in node tsx without a jsdom dependency.
  *
- * The renderer reflects the response's `mustRelaunch` flag. The DOM hook is
- * only mounted when `mustRelaunch` is true; for `mustRelaunch: false` the
- * markup is still useful as a representation of "no relaunch is required" so
- * tests can assert on the wire contract end-to-end.
+ * `perform_install` returns a relaunch prompt payload, so this renderer always
+ * emits `data-must-relaunch="true"`.
  */
 export function buildRelaunchPromptMarkup(response: PerformInstallResponse): string {
-  const mustRelaunchAttr = response.mustRelaunch ? "true" : "false";
   const attrs = [
     `id="${INSTALL_RELAUNCH_PROMPT_ID}"`,
     `data-from-version="${escapeAttr(response.fromVersion)}"`,
     `data-to-version="${escapeAttr(response.toVersion)}"`,
-    `data-pending-state-path="${escapeAttr(response.pendingStatePath)}"`,
-    `data-managed-executable-path="${escapeAttr(response.newManagedExecutablePath)}"`,
-    `data-new-artifact-sha256="${escapeAttr(response.newArtifactSha256)}"`,
-    `data-previous-backup-path="${escapeAttr(response.previousBackupPath)}"`,
-    `data-must-relaunch="${mustRelaunchAttr}"`,
+    `data-pending-state-path="${escapeAttr(response.pendingUpdatePath)}"`,
+    `data-managed-executable-path="${escapeAttr(response.managedExecutablePath)}"`,
+    `data-new-artifact-sha256="${escapeAttr(response.artifactSha256)}"`,
+    'data-must-relaunch="true"',
   ].join(" ");
-  const text = response.mustRelaunch
-    ? `Relaunch required to finish update ${escapeText(response.fromVersion)} → ${escapeText(response.toVersion)}`
-    : `Install completed without relaunch`;
+  const text = `Relaunch required to finish update ${escapeText(response.fromVersion)} → ${escapeText(response.toVersion)}`;
   return `<div ${attrs}>${text}</div>`;
 }
 
@@ -178,13 +165,11 @@ export function makePerformInstallResponseFixture(
   overrides: Partial<PerformInstallResponse> = {},
 ): PerformInstallResponse {
   return {
-    mustRelaunch: true,
-    newArtifactSha256: "abc123sha",
-    newManagedExecutablePath: "/opt/codex/Codex-Desktop-Shell-Scaffold.AppImage",
-    previousBackupPath: "/home/ubuntu/.config/codex-desktop-shell-scaffold/update/backups/Codex-Desktop-Shell-Scaffold.previous.AppImage",
-    pendingStatePath: "/home/ubuntu/.config/codex-desktop-shell-scaffold/update/pending-update.json",
+    pendingUpdatePath: "/home/ubuntu/.config/codex-desktop-shell-scaffold/update/pending-update.json",
+    managedExecutablePath: "/opt/codex/Codex-Desktop-Shell-Scaffold.AppImage",
     fromVersion: "0.0.0",
     toVersion: "0.0.1",
+    artifactSha256: "abc123sha",
     ...overrides,
   };
 }

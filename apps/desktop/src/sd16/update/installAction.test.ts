@@ -83,9 +83,8 @@ function installTauriRuntime(): { stub: InvokeStub; restore: () => void } {
 async function main(): Promise<void> {
   await testPerformInstallForwardsManifestAndIndexUrl();
   await testPerformInstallReturnsResponseVerbatim();
-  await testPerformInstallMountsRelaunchPromptOnMustRelaunch();
-  await testPerformInstallDoesNotMountOnMustRelaunchFalse();
-  await testMountRelaunchPromptReflectsMustRelaunchFlag();
+  await testPerformInstallMountsRelaunchPromptOnSuccess();
+  await testPerformInstallReturnsNoRuntimeSentinel();
   await testMountRelaunchPromptIsIdempotent();
   await testBuildRelaunchPromptMarkupCarriesAllHookAttributes();
 }
@@ -93,7 +92,7 @@ async function main(): Promise<void> {
 async function testPerformInstallForwardsManifestAndIndexUrl(): Promise<void> {
   const { stub, restore } = installTauriRuntime();
   try {
-    stub.setResponse(makePerformInstallResponseFixture({ mustRelaunch: false }));
+    stub.setResponse(makePerformInstallResponseFixture());
     const manifest = { version: "0.0.2", channel: "alpha" };
     await performInstall(manifest, "https://example.invalid/alpha/index.json");
     assertEqual(stub.calls.length, 1, "performInstall must invoke exactly once");
@@ -121,10 +120,9 @@ async function testPerformInstallReturnsResponseVerbatim(): Promise<void> {
   const { stub, restore } = installTauriRuntime();
   try {
     const fixture = makePerformInstallResponseFixture({
-      mustRelaunch: true,
       fromVersion: "0.0.5",
       toVersion: "0.0.6",
-      newArtifactSha256: "deadbeef",
+      artifactSha256: "deadbeef",
     });
     stub.setResponse(fixture);
     const response = await performInstall({ version: "0.0.6" }, "https://x/index.json");
@@ -134,12 +132,11 @@ async function testPerformInstallReturnsResponseVerbatim(): Promise<void> {
   }
 }
 
-async function testPerformInstallMountsRelaunchPromptOnMustRelaunch(): Promise<void> {
+async function testPerformInstallMountsRelaunchPromptOnSuccess(): Promise<void> {
   const { stub, restore } = installTauriRuntime();
   try {
     stub.setResponse(
       makePerformInstallResponseFixture({
-        mustRelaunch: true,
         fromVersion: "0.0.0",
         toVersion: "0.0.1",
       }),
@@ -167,71 +164,21 @@ async function testPerformInstallMountsRelaunchPromptOnMustRelaunch(): Promise<v
   }
 }
 
-async function testPerformInstallDoesNotMountOnMustRelaunchFalse(): Promise<void> {
-  const { stub, restore } = installTauriRuntime();
-  try {
-    stub.setResponse(makePerformInstallResponseFixture({ mustRelaunch: false }));
-    await performInstall({ version: "0.0.1" }, "https://x/index.json");
-    const markup = buildRelaunchPromptMarkup(
-      makePerformInstallResponseFixture({ mustRelaunch: false }),
-    );
-    assert(
-      !markup.includes('data-must-relaunch="true"'),
-      "when mustRelaunch=false the markup must not claim relaunch-required",
-    );
-  } finally {
-    restore();
-  }
-}
-
-async function testMountRelaunchPromptReflectsMustRelaunchFlag(): Promise<void> {
-  const globalRecord = globalThis as Record<string, unknown>;
-  const previousDocument = globalRecord.document;
-  const appended: Array<{ id: string; attrs: Record<string, string> }> = [];
-  try {
-    const fakeDocument = {
-      getElementById(id: string) {
-        return (appended.find((entry) => entry.id === id) as unknown as { remove: () => void }) ?? null;
-      },
-      createElement() {
-        const attrs: Record<string, string> = {};
-        const element = {
-          id: "",
-          attrs,
-          textContent: "",
-          setAttribute(name: string, value: string) {
-            attrs[name] = value;
-          },
-          remove() {
-            const index = appended.findIndex((entry) => entry.id === element.id);
-            if (index >= 0) appended.splice(index, 1);
-          },
-        };
-        return element;
-      },
-      body: {
-        appendChild(element: { id: string; attrs: Record<string, string> }) {
-          appended.push(element);
-        },
-      },
-    };
-    globalRecord.document = fakeDocument as unknown as Document;
-
-    mountRelaunchPrompt(makePerformInstallResponseFixture({ mustRelaunch: false }));
-
-    assertEqual(appended.length, 1, "mountRelaunchPrompt must append one hook element");
-    assertEqual(
-      appended[0]!.attrs["data-must-relaunch"],
-      "false",
-      "mountRelaunchPrompt must reflect mustRelaunch=false in the DOM contract",
-    );
-  } finally {
-    if (previousDocument === undefined) {
-      delete globalRecord.document;
-    } else {
-      globalRecord.document = previousDocument;
-    }
-  }
+async function testPerformInstallReturnsNoRuntimeSentinel(): Promise<void> {
+  const response = await performInstall({ version: "0.0.1" }, "https://x/index.json");
+  assertEqual(
+    response.pendingUpdatePath,
+    "",
+    "no-runtime host must return empty pendingUpdatePath",
+  );
+  assertEqual(
+    response.managedExecutablePath,
+    "",
+    "no-runtime host must return empty managedExecutablePath",
+  );
+  assertEqual(response.artifactSha256, "", "no-runtime host must return empty artifactSha256");
+  assertEqual(response.fromVersion, "", "no-runtime host must return empty fromVersion");
+  assertEqual(response.toVersion, "", "no-runtime host must return empty toVersion");
 }
 
 async function testMountRelaunchPromptIsIdempotent(): Promise<void> {
@@ -248,11 +195,9 @@ async function testMountRelaunchPromptIsIdempotent(): Promise<void> {
 
 async function testBuildRelaunchPromptMarkupCarriesAllHookAttributes(): Promise<void> {
   const response: PerformInstallResponse = {
-    mustRelaunch: true,
-    newArtifactSha256: "sha-of-new-artifact",
-    newManagedExecutablePath: "/opt/codex/Codex.AppImage",
-    previousBackupPath: "/home/x/.config/codex-desktop-shell-scaffold/update/backups/Codex-Desktop-Shell-Scaffold.previous.AppImage",
-    pendingStatePath: "/home/x/.config/codex-desktop-shell-scaffold/update/pending-update.json",
+    artifactSha256: "sha-of-new-artifact",
+    managedExecutablePath: "/opt/codex/Codex.AppImage",
+    pendingUpdatePath: "/home/x/.config/codex-desktop-shell-scaffold/update/pending-update.json",
     fromVersion: "0.0.1",
     toVersion: "0.0.2",
   };
@@ -264,7 +209,6 @@ async function testBuildRelaunchPromptMarkupCarriesAllHookAttributes(): Promise<
     'data-pending-state-path="/home/x/.config/codex-desktop-shell-scaffold/update/pending-update.json"',
     'data-managed-executable-path="/opt/codex/Codex.AppImage"',
     'data-new-artifact-sha256="sha-of-new-artifact"',
-    'data-previous-backup-path="/home/x/.config/codex-desktop-shell-scaffold/update/backups/Codex-Desktop-Shell-Scaffold.previous.AppImage"',
     'data-must-relaunch="true"',
   ];
   for (const fragment of expected) {
