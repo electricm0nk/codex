@@ -1,8 +1,10 @@
 /**
-<<<<<<< HEAD
- * SD16-E6-F3b — public barrel for the shell update eligibility + diagnostics
- * surface. F3a (fetch/parse) and F3c (UI) import the types and helpers from
- * here rather than reaching into individual modules.
+ * SD-16-E6 barrel.
+ *
+ * Exports the public surface of F3b (eligibility + diagnostics model) and
+ * F3c (shell-update-UI). The runtime (F4 wiring) imports the page-level
+ * entry `Sd16UpdateUi`; downstream F3a / F3b modules import the controller
+ * types to satisfy the seam.
  */
 
 export {
@@ -37,13 +39,6 @@ export type {
   PendingUpdateState,
   RollbackState,
 } from './diagnostics';
-=======
- * SD-16-E6-F3c barrel.
- *
- * Exports the public surface of the F3c shell-update-UI slice. The runtime
- * (F4 wiring) imports the page-level entry `Sd16UpdateUi`; downstream
- * F3a / F3b modules import the controller types to satisfy the seam.
- */
 
 export {
   Sd16ChannelSelector,
@@ -93,4 +88,3 @@ export {
   type Sd16UpdateController,
   type Sd16UpdateControllerDeps,
 } from './updateModel';
->>>>>>> origin/develop
