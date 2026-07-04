@@ -441,8 +441,8 @@ where
 /// command layer, which calls `verify_relaunch_artifact`. Three outcomes:
 ///
 /// - `Promoted`: the running hash matches the staged artifact's expected sha256. The pending
-///   record is rewritten to `Success`, a fresh `installed-state.json` is written so future
-///   transactions see the new version as installed, and `pending-update.json` is deleted.
+///   update is promoted: a fresh `installed-state.json` is written so future transactions see
+///   the new version as installed, and `pending-update.json` is deleted.
 /// - `VerificationFailed`: the running hash does not match. The pending record's
 ///   `pending_update_state` is set to `Mismatch` (it stays on disk so the operator can offer
 ///   restore via `restoreOffer.tsx` and F3b's `perform_restore_previous`). Installed-state is

@@ -28,8 +28,7 @@ import { formatError, hasTauriRuntime } from "../../boundary/runtime";
 /**
  * Response shape returned by the staged-transaction Tauri command.
  *
- * Mirrors the Rust `RelaunchPrompt` struct in
- * `apps/desktop/src-tauri/src/update/transaction.rs`.
+ * This is the frontend bridge contract consumed by the SD-16 update UI.
  */
 export interface PerformInstallResponse {
   pendingUpdatePath: string;
