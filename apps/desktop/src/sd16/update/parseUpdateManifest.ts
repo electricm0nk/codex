@@ -112,8 +112,8 @@ export function parseUpdateManifest(rawText: string): ParseUpdateManifestResult 
   }
 
   const ok = validateUpdateManifest(parsed);
-  if (!ok && validateUpdateManifest.errors) {
-    return { ok: false, errors: validateUpdateManifest.errors };
+  if (!ok) {
+    return { ok: false, errors: validateUpdateManifest.errors ?? [] };
   }
 
   return {
