@@ -3,6 +3,7 @@
 mod ge08_workbench;
 mod sd11_update_action;
 mod sd13_support_state_matrix;
+mod update;
 
 use serde::Serialize;
 
