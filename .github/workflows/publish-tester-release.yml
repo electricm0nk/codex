@@ -213,6 +213,8 @@ jobs:
         working-directory: release-staging
         run: |
           set -euo pipefail
+          python3 -m ensurepip --upgrade || true
+          python3 -m pip install --quiet --no-cache-dir jsonschema==4.21.1
           python3 ../scripts/release/validate_manifest.py \
             --manifest update-manifest.json \
             --schema ../schemas/update/update-manifest.schema.json
