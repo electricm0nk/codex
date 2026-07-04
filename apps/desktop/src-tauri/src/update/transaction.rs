@@ -28,8 +28,12 @@ use std::path::{Path, PathBuf};
 /// Filename of the AppImage artifact staged for inspection before replace.
 const STAGED_APPIMAGE_FILENAME: &str = "Codex-Desktop-Shell-Scaffold.staged.AppImage";
 
-/// Filename of the rolling backup of the previous managed AppImage.
+/// Filename of the most-recent rolling backup of the previous managed AppImage (slot 1).
 const BACKUP_APPIMAGE_FILENAME: &str = "Codex-Desktop-Shell-Scaffold.previous.AppImage";
+
+/// Filename of the older rolling backup (slot 2). Slot 1 is shifted here before slot 1 is
+/// overwritten, capping the backup set at two entries.
+const BACKUP_APPIMAGE_FILENAME_2: &str = "Codex-Desktop-Shell-Scaffold.previous2.AppImage";
 
 /// Subdirectory (under the config update dir) that holds staged downloads and the rolling
 /// previous-binary backup.
@@ -349,9 +353,9 @@ where
         return TransactionOutcome::Aborted(abort);
     }
 
-    // Step 4 — preserve previous binary by rotating into backups. This slice does not yet
-    // implement the "last 2" retention policy; the backup slot is rotated as a single rolling
-    // slot. A later slice (E7-Fn retention) extends this to multi-slot retention.
+    // Step 4 — preserve previous binary by rotating into backups (two-slot retention).
+    // Slot 1 (`.previous.AppImage`) is shifted into slot 2 (`.previous2.AppImage`) first, then
+    // the current managed binary is copied into slot 1. This caps the backup set at two entries.
     if let Err(abort) =
         preserve_previous(&update_dir, &config.running_build.managed_executable_path)
     {
@@ -574,14 +578,26 @@ fn preserve_previous(
             backups.display()
         ),
     })?;
-    let backup_path = backups.join(BACKUP_APPIMAGE_FILENAME);
+    let slot1 = backups.join(BACKUP_APPIMAGE_FILENAME);
+    let slot2 = backups.join(BACKUP_APPIMAGE_FILENAME_2);
+    // Shift slot 1 → slot 2 before overwriting slot 1.
+    if slot1.exists() {
+        fs::rename(&slot1, &slot2).map_err(|source| TransactionAbort {
+            code: TransactionAbortCode::BackupRotationFailed,
+            reason: format!(
+                "could not rotate {} -> {}: {source}",
+                slot1.display(),
+                slot2.display()
+            ),
+        })?;
+    }
     if managed_executable_path.exists() {
-        fs::copy(managed_executable_path, &backup_path).map_err(|source| TransactionAbort {
+        fs::copy(managed_executable_path, &slot1).map_err(|source| TransactionAbort {
             code: TransactionAbortCode::BackupRotationFailed,
             reason: format!(
                 "could not copy {} -> {}: {source}",
                 managed_executable_path.display(),
-                backup_path.display()
+                slot1.display()
             ),
         })?;
     }
@@ -1016,5 +1032,60 @@ mod tests {
             other => panic!("expected RelaunchPrompt, got {other:?}"),
         }
         assert_eq!(fs::read(&managed).expect("read"), artifact);
+    }
+}
+
+// -- unit tests for preserve_previous rotation logic -----------------------------------
+#[cfg(test)]
+mod preserve_previous_tests {
+    use super::*;
+
+    fn tempdir(label: &str) -> std::path::PathBuf {
+        let dir = std::env::temp_dir()
+            .join(format!("sd16-preserve-{label}-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(&dir).expect("create tempdir");
+        dir
+    }
+
+    /// Calling preserve_previous twice rotates slot1 into slot2 and writes the newer
+    /// binary into slot1, capping backups at two entries.
+    #[test]
+    fn backup_rotation_caps_at_two_slots() {
+        let dir = tempdir("two-slot");
+        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+
+        // First generation: write "v1" as the managed binary.
+        fs::write(&managed, b"binary-v1").expect("write v1");
+        preserve_previous(&dir, &managed).expect("first rotation");
+
+        let backups = backups_dir(&dir);
+        let slot1 = backups.join(BACKUP_APPIMAGE_FILENAME);
+        let slot2 = backups.join(BACKUP_APPIMAGE_FILENAME_2);
+        assert_eq!(fs::read(&slot1).expect("slot1 after first"), b"binary-v1");
+        assert!(!slot2.exists(), "slot2 must not exist after first rotation");
+
+        // Second generation: update managed binary to "v2".
+        fs::write(&managed, b"binary-v2").expect("write v2");
+        preserve_previous(&dir, &managed).expect("second rotation");
+
+        assert_eq!(fs::read(&slot1).expect("slot1 after second"), b"binary-v2");
+        assert_eq!(
+            fs::read(&slot2).expect("slot2 after second"),
+            b"binary-v1",
+            "slot2 must hold the previously-slot1 binary"
+        );
+
+        // Third generation: update managed binary to "v3" — slot2 must be overwritten,
+        // keeping total backup count at two.
+        fs::write(&managed, b"binary-v3").expect("write v3");
+        preserve_previous(&dir, &managed).expect("third rotation");
+
+        assert_eq!(fs::read(&slot1).expect("slot1 after third"), b"binary-v3");
+        assert_eq!(
+            fs::read(&slot2).expect("slot2 after third"),
+            b"binary-v2",
+            "oldest backup (v1) must be dropped; slot2 holds v2"
+        );
     }
 }
