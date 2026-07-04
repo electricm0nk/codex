@@ -441,8 +441,8 @@ where
 /// command layer, which calls `verify_relaunch_artifact`. Three outcomes:
 ///
 /// - `Promoted`: the running hash matches the staged artifact's expected sha256. The pending
-///   record is rewritten to `Success`, a fresh `installed-state.json` is written so future
-///   transactions see the new version as installed, and `pending-update.json` is deleted.
+///   update is promoted: a fresh `installed-state.json` is written so future transactions see
+///   the new version as installed, and `pending-update.json` is deleted.
 /// - `VerificationFailed`: the running hash does not match. The pending record's
 ///   `pending_update_state` is set to `Mismatch` (it stays on disk so the operator can offer
 ///   restore via `restoreOffer.tsx` and F3b's `perform_restore_previous`). Installed-state is
@@ -670,7 +670,10 @@ pub fn is_install_eligible() -> Result<EligibilityPolicy, String> {
 /// argument contract included — is F3a's deferred surface around `execute_transaction`.
 /// Until F3a wires it, the shim errors rather than pretending an install ran.
 #[tauri::command]
-pub fn perform_install() -> Result<RelaunchPrompt, String> {
+pub fn perform_install(
+    _manifest: serde_json::Value,
+    _index_url: String,
+) -> Result<RelaunchPrompt, String> {
     Err(
         "perform_install is registered but not wired: the staged-transaction command body \
          was deferred by F3a (PR #61); no install is performed here"
@@ -1575,7 +1578,13 @@ mod verify_relaunch_artifact_tests {
     #[test]
     fn deferred_command_shims_error_instead_of_fabricating_truth() {
         assert!(is_install_eligible().is_err());
-        assert!(perform_install().is_err());
+        assert!(
+            perform_install(
+                serde_json::json!({"version":"0.0.1","channel":"alpha"}),
+                "https://example.invalid/update-index.json".to_string()
+            )
+            .is_err()
+        );
         assert!(perform_restore_previous().is_err());
     }
 

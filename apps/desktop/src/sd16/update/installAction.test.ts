@@ -85,6 +85,7 @@ async function main(): Promise<void> {
   await testPerformInstallReturnsResponseVerbatim();
   await testPerformInstallMountsRelaunchPromptOnMustRelaunch();
   await testPerformInstallDoesNotMountOnMustRelaunchFalse();
+  await testMountRelaunchPromptReflectsMustRelaunchFlag();
   await testMountRelaunchPromptIsIdempotent();
   await testBuildRelaunchPromptMarkupCarriesAllHookAttributes();
 }
@@ -180,6 +181,56 @@ async function testPerformInstallDoesNotMountOnMustRelaunchFalse(): Promise<void
     );
   } finally {
     restore();
+  }
+}
+
+async function testMountRelaunchPromptReflectsMustRelaunchFlag(): Promise<void> {
+  const globalRecord = globalThis as Record<string, unknown>;
+  const previousDocument = globalRecord.document;
+  const appended: Array<{ id: string; attrs: Record<string, string> }> = [];
+  try {
+    const fakeDocument = {
+      getElementById(id: string) {
+        return (appended.find((entry) => entry.id === id) as unknown as { remove: () => void }) ?? null;
+      },
+      createElement() {
+        const attrs: Record<string, string> = {};
+        const element = {
+          id: "",
+          attrs,
+          textContent: "",
+          setAttribute(name: string, value: string) {
+            attrs[name] = value;
+          },
+          remove() {
+            const index = appended.findIndex((entry) => entry.id === element.id);
+            if (index >= 0) appended.splice(index, 1);
+          },
+        };
+        return element;
+      },
+      body: {
+        appendChild(element: { id: string; attrs: Record<string, string> }) {
+          appended.push(element);
+        },
+      },
+    };
+    globalRecord.document = fakeDocument as unknown as Document;
+
+    mountRelaunchPrompt(makePerformInstallResponseFixture({ mustRelaunch: false }));
+
+    assertEqual(appended.length, 1, "mountRelaunchPrompt must append one hook element");
+    assertEqual(
+      appended[0]!.attrs["data-must-relaunch"],
+      "false",
+      "mountRelaunchPrompt must reflect mustRelaunch=false in the DOM contract",
+    );
+  } finally {
+    if (previousDocument === undefined) {
+      delete globalRecord.document;
+    } else {
+      globalRecord.document = previousDocument;
+    }
   }
 }
 

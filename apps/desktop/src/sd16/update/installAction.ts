@@ -28,8 +28,7 @@ import { formatError, hasTauriRuntime } from "../../boundary/runtime";
 /**
  * Response shape returned by the staged-transaction Tauri command.
  *
- * Mirrors the Rust `RelaunchPrompt` struct in
- * `apps/desktop/src-tauri/src/update/transaction.rs`.
+ * This is the frontend bridge contract consumed by the SD-16 update UI.
  */
 export interface PerformInstallResponse {
   mustRelaunch: boolean;
@@ -138,7 +137,7 @@ export function mountRelaunchPrompt(response: PerformInstallResponse): void {
   hook.setAttribute("data-managed-executable-path", response.newManagedExecutablePath);
   hook.setAttribute("data-new-artifact-sha256", response.newArtifactSha256);
   hook.setAttribute("data-previous-backup-path", response.previousBackupPath);
-  hook.setAttribute("data-must-relaunch", "true");
+  hook.setAttribute("data-must-relaunch", response.mustRelaunch ? "true" : "false");
   hook.textContent = `Relaunch required to finish update ${response.fromVersion} → ${response.toVersion}`;
   document.body.appendChild(hook);
 }
