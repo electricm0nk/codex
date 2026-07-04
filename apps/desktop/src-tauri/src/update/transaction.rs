@@ -293,7 +293,27 @@ pub fn execute_transaction<F>(config: TransactionConfig<F>) -> TransactionOutcom
 where
     F: FnOnce(&mut dyn Write) -> std::io::Result<u64>,
 {
-    let update_dir = config_update_dir(&config.config_dir);
+    let TransactionConfig {
+        config_dir,
+        manifest,
+        running_build,
+        installed_state,
+        download,
+    } = config;
+    let update_dir = config_update_dir(&config_dir);
+
+    // Eligibility guard — reject ineligible manifests before touching the filesystem,
+    // consistent with the doc comment on ManifestIdentity.eligibility_policy.
+    if !manifest.eligibility_policy.update_eligible {
+        return TransactionOutcome::Aborted(TransactionAbort {
+            code: TransactionAbortCode::ManifestIneligible,
+            reason: manifest
+                .eligibility_policy
+                .ineligible_reason
+                .clone()
+                .unwrap_or_else(|| "manifest marked update_eligible=false".to_string()),
+        });
+    }
 
     // Step 1 — create config-dir staging directory. If the directory cannot be created, abort
     // before any download.
@@ -318,16 +338,6 @@ where
 
     let staged_path = staging_dir(&update_dir).join(STAGED_APPIMAGE_FILENAME);
 
-    // Destructure all fields up-front so that `download` (FnOnce) can be consumed without
-    // partially moving `config` and causing use-after-move errors for the remaining fields.
-    let TransactionConfig {
-        download,
-        manifest,
-        running_build,
-        installed_state,
-        ..
-    } = config;
-
     // Step 2 — download AppImage to staging. Any failure here leaves no trace other than a
     // partially-written file (acceptable; the next attempt will overwrite).
     if let Err(source) = write_staged(&staged_path, download) {
@@ -351,8 +361,7 @@ where
         }
     }
 
-    // Step 3 — verify file presence, hash, executable bit, manifest identity, and current
-    // executable identity.
+    // Step 3 — verify file presence, hash, executable bit, and current executable identity.
     if let Some(abort) = verify_staged(&staged_path, &manifest) {
         return TransactionOutcome::Aborted(abort);
     }
@@ -515,17 +524,6 @@ fn verify_staged(staged_path: &Path, manifest: &ManifestIdentity) -> Option<Tran
                 ),
             });
         }
-    }
-
-    if !manifest.eligibility_policy.update_eligible {
-        return Some(TransactionAbort {
-            code: TransactionAbortCode::ManifestIneligible,
-            reason: manifest
-                .eligibility_policy
-                .ineligible_reason
-                .clone()
-                .unwrap_or_else(|| "manifest marked update_eligible=false".to_string()),
-        });
     }
 
     None
@@ -901,7 +899,7 @@ mod tests {
     }
 
     #[test]
-    fn ineligible_manifest_aborts_before_replace() {
+    fn ineligible_manifest_aborts_before_download() {
         let dir = tempdir("ineligible");
         let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
         fs::write(&managed, b"old").expect("write old binary");
@@ -917,11 +915,7 @@ mod tests {
             manifest,
             running_build: make_running(&dir),
             installed_state: Some(make_installed(&dir)),
-            download: |w| {
-                w.write_all(artifact)
-                    .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?;
-                Ok(artifact.len() as u64)
-            },
+            download: |_w| panic!("download must not be called for ineligible manifest"),
         });
         match outcome {
             TransactionOutcome::Aborted(abort) => {
