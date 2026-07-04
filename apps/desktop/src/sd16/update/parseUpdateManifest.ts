@@ -72,7 +72,7 @@ export interface UpdateManifestFile {
   workflow_provenance: WorkflowProvenance;
   eligibility: Eligibility;
   promotion_lineage: PromotionLineage;
-  signature: null | Record<string, unknown>;
+  signature?: null | Record<string, never>;
 }
 
 export type ParseUpdateManifestFailure = {
