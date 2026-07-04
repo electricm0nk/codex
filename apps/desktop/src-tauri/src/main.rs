@@ -3,6 +3,7 @@
 mod ge08_workbench;
 mod sd11_update_action;
 mod sd13_support_state_matrix;
+mod sd16_browser_handoff;
 mod update;
 
 use serde::Serialize;
@@ -73,6 +74,7 @@ fn main() {
             load_ge08_authoring_workbench_snapshot,
             sd11_update_action,
             load_sd13_support_state_matrix,
+            sd16_browser_handoff::sd16_browser_handoff,
             is_install_eligible,
             perform_install,
             perform_restore_previous,
