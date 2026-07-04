@@ -318,9 +318,18 @@ where
 
     let staged_path = staging_dir(&update_dir).join(STAGED_APPIMAGE_FILENAME);
 
+    // Destructure all fields up-front so that `download` (FnOnce) can be consumed without
+    // partially moving `config` and causing use-after-move errors for the remaining fields.
+    let TransactionConfig {
+        download,
+        manifest,
+        running_build,
+        installed_state,
+        ..
+    } = config;
+
     // Step 2 — download AppImage to staging. Any failure here leaves no trace other than a
     // partially-written file (acceptable; the next attempt will overwrite).
-    let TransactionConfig { download, .. } = config;
     if let Err(source) = write_staged(&staged_path, download) {
         return TransactionOutcome::Aborted(TransactionAbort {
             code: TransactionAbortCode::StagedFileMissing,
@@ -344,11 +353,11 @@ where
 
     // Step 3 — verify file presence, hash, executable bit, manifest identity, and current
     // executable identity.
-    if let Some(abort) = verify_staged(&staged_path, &config.manifest) {
+    if let Some(abort) = verify_staged(&staged_path, &manifest) {
         return TransactionOutcome::Aborted(abort);
     }
     if let Some(abort) =
-        verify_current_executable_identity(&config.running_build, config.installed_state.as_ref())
+        verify_current_executable_identity(&running_build, installed_state.as_ref())
     {
         return TransactionOutcome::Aborted(abort);
     }
@@ -356,9 +365,7 @@ where
     // Step 4 — preserve previous binary by rotating into backups (two-slot retention).
     // Slot 1 (`.previous.AppImage`) is shifted into slot 2 (`.previous2.AppImage`) first, then
     // the current managed binary is copied into slot 1. This caps the backup set at two entries.
-    if let Err(abort) =
-        preserve_previous(&update_dir, &config.running_build.managed_executable_path)
-    {
+    if let Err(abort) = preserve_previous(&update_dir, &running_build.managed_executable_path) {
         return TransactionOutcome::Aborted(abort);
     }
 
@@ -366,20 +373,19 @@ where
     // something to confirm.
     let backup_path = backups_dir(&update_dir).join(BACKUP_APPIMAGE_FILENAME);
     let pending = PendingUpdate {
-        from_version: config
-            .installed_state
+        from_version: installed_state
             .as_ref()
             .map(|s| s.version.clone())
             .unwrap_or_else(|| "unknown".to_string()),
-        to_version: config.manifest.version.clone(),
-        artifact_sha256: config.manifest.artifact_sha256.clone(),
-        manifest_hash: config.manifest.manifest_hash.clone(),
+        to_version: manifest.version.clone(),
+        artifact_sha256: manifest.artifact_sha256.clone(),
+        manifest_hash: manifest.manifest_hash.clone(),
         staging_path: staged_path.clone(),
         backup_path: backup_path.clone(),
-        managed_executable_path: config.running_build.managed_executable_path.clone(),
-        channel: config.manifest.channel.clone(),
-        release_tag: config.manifest.release_tag.clone(),
-        source_commit: config.manifest.source_commit.clone(),
+        managed_executable_path: running_build.managed_executable_path.clone(),
+        channel: manifest.channel.clone(),
+        release_tag: manifest.release_tag.clone(),
+        source_commit: manifest.source_commit.clone(),
         created_at: now_iso8601(),
         pending_update_state: PendingUpdateState::Pending,
     };
@@ -396,7 +402,7 @@ where
 
     // Step 6 — atomically replace the managed AppImage. On failure, the pending-update.json is
     // intentionally left in place so the relaunch verifier can surface a recovery state.
-    let managed = config.running_build.managed_executable_path.clone();
+    let managed = running_build.managed_executable_path.clone();
     if let Err(source) = atomic_replace(&staged_path, &managed) {
         return TransactionOutcome::Aborted(TransactionAbort {
             code: TransactionAbortCode::AtomicReplaceFailed,
