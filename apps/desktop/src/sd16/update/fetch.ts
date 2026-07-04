@@ -104,6 +104,7 @@ export type FetchLike = (
   ok: boolean;
   status: number;
   text(): Promise<string>;
+  arrayBuffer?(): Promise<ArrayBuffer>;
 }>;
 
 const defaultFetchImpl: FetchLike = async (input, init) => {
@@ -121,6 +122,7 @@ const defaultFetchImpl: FetchLike = async (input, init) => {
     ok: res.ok,
     status: res.status,
     text: () => Promise.resolve(res.text()),
+    arrayBuffer: () => Promise.resolve(res.arrayBuffer()),
   };
 };
 

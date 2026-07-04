@@ -12,7 +12,8 @@
 //   - EXCLUDE secrets, tokens, raw full logs, and any agent-context
 //     markers (per AV-PAY-4).
 //
-// Pure function: no I/O, no throws, deterministic on the same input.
+// Pure function: no I/O, deterministic on the same input, and throws if
+// forbidden tokens are detected while assembling the payload.
 
 import type { ControlledDefectVerdict } from '../update/controlledDefect';
 
@@ -47,7 +48,7 @@ const LABELS = ['area:shell-update', 'controlled-defect', 'sd-16-e8'] as const;
 
 /**
  * Tokens that MUST NEVER appear in the rendered body. The first match
- * throws at build time, so the operator-driven E5 lane cannot
+ * throws during payload assembly, so the operator-driven E5 lane cannot
  * accidentally file a payload that includes a secret or full raw log.
  */
 const FORBIDDEN_TOKENS: readonly string[] = [

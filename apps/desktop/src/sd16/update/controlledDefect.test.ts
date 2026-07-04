@@ -22,6 +22,7 @@ import type { FetchLike } from './fetch';
 interface Stub {
   url: string;
   responded: string;
+  bytes?: Uint8Array;
   status: number;
 }
 
@@ -42,6 +43,8 @@ function makeFetchImpl(stubs: Stub[]): FetchLike {
       ok: expected.status >= 200 && expected.status < 300,
       status: expected.status,
       text: async () => expected.responded,
+      arrayBuffer: async () =>
+        (expected.bytes ?? new TextEncoder().encode(expected.responded)).slice().buffer,
     };
   };
 }
@@ -50,7 +53,8 @@ function makeFetchImpl(stubs: Stub[]): FetchLike {
 function makeStubSha256(answers: Record<string, string>) {
   return async (bytes: Uint8Array): Promise<string> => {
     const text = new TextDecoder().decode(bytes);
-    const found = answers[text];
+    const asHex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+    const found = answers[text] ?? answers[asHex];
     if (typeof found === 'string') {
       return found;
     }
@@ -218,6 +222,40 @@ async function verifiesHexCaseIsNormalised() {
   assertEqual(result.declared, DECLARED, 'verdict.declared should be normalised to lowercase');
 }
 
+async function verifiesDigestUsesRawBytes() {
+  const bytes = Uint8Array.from([0xff, 0x00, 0x61, 0x62, 0x80]);
+  const result = await decideControlledDefect(
+    { manifestUrl: MANIFEST_URL, manifest: MANIFEST_WITH_SHA },
+    deps(
+      [{ url: APPIMAGE_URL, responded: 'WRONG-TEXT-BODY', bytes, status: 200 }],
+      { 'ff00616280': DECLARED }
+    )
+  );
+  assertEqual(result.match, true, 'verdict.match should hash the raw AppImage bytes');
+  assertEqual(result.actual, DECLARED, 'verdict.actual should come from the raw bytes digest');
+}
+
+async function verifiesParsedManifestArtifactShapeIsAccepted() {
+  const body = 'PARSED-MANIFEST-BODY';
+  const result = await decideControlledDefect(
+    {
+      manifestUrl: MANIFEST_URL,
+      manifest: {
+        artifact: {
+          artifactSha256: DECLARED,
+          path: 'codex.AppImage',
+        },
+      },
+    },
+    deps(
+      [{ url: APPIMAGE_URL, responded: body, status: 200 }],
+      { [body]: DECLARED }
+    )
+  );
+  assertEqual(result.match, true, 'parsed manifest artifact shape should be accepted');
+  assertEqual(result.reason, null, 'parsed manifest verdict should not include a reason on match');
+}
+
 async function main() {
   await verifiesControlledMismatchReturnsChecksumMismatch();
   await verifiesCorrectedMatchReturnsTrue();
@@ -227,6 +265,8 @@ async function main() {
   await verifiesManifestWithInvalidShaReturnsChecksumMissingField();
   await verifiesManifestWithoutArtifactPathReturnsChecksumMissingField();
   await verifiesHexCaseIsNormalised();
+  await verifiesDigestUsesRawBytes();
+  await verifiesParsedManifestArtifactShapeIsAccepted();
   console.log('controlledDefect.test.ts: all assertions passed');
 }
 

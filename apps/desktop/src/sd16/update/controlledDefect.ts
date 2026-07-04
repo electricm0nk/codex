@@ -52,14 +52,18 @@ import type { FetchLike } from './fetch';
 export interface ControlledDefectManifest {
   artifact_sha256?: string;
   artifact_path?: string;
+  artifact?: {
+    artifactSha256?: string;
+    artifact_sha256?: string;
+    path?: string;
+  };
 }
 
 export type ControlledDefectReason =
   | 'checksum-mismatch'
   | 'checksum-network-error'
   | 'checksum-missing-field'
-  | 'checksum-http-error'
-  | 'checksum-invalid-json';
+  | 'checksum-http-error';
 
 export interface ControlledDefectVerdict {
   /** Whether the AppImage bytes' SHA-256 matches the manifest. */
@@ -114,7 +118,8 @@ function resolveAppImageUrl(
   manifestUrl: string,
   appimageBaseUrl: string | undefined
 ): string | null {
-  const path = manifest.artifact_path;
+  const path =
+    typeof manifest.artifact_path === 'string' ? manifest.artifact_path : manifest.artifact?.path;
   if (typeof path !== 'string' || path.length === 0) {
     return null;
   }
@@ -145,7 +150,12 @@ export async function decideControlledDefect(
   input: ControlledDefectInput,
   deps: ControlledDefectDeps
 ): Promise<ControlledDefectVerdict> {
-  const declaredRaw = input.manifest.artifact_sha256;
+  const declaredRaw =
+    typeof input.manifest.artifact_sha256 === 'string'
+      ? input.manifest.artifact_sha256
+      : typeof input.manifest.artifact?.artifactSha256 === 'string'
+        ? input.manifest.artifact.artifactSha256
+        : input.manifest.artifact?.artifact_sha256;
   if (typeof declaredRaw !== 'string' || !isHex64(normaliseHex(declaredRaw))) {
     return {
       match: false,
@@ -168,7 +178,7 @@ export async function decideControlledDefect(
     };
   }
 
-  let response: { ok: boolean; status: number; text(): Promise<string> };
+  let response: Awaited<ReturnType<FetchLike>>;
   try {
     response = await deps.fetchImpl(appimageUrl);
   } catch {
@@ -192,9 +202,11 @@ export async function decideControlledDefect(
 
   let actual: string;
   try {
-    const body = await response.text();
-    const bytes = new TextEncoder().encode(body);
-    actual = await deps.sha256(bytes);
+    const body = await response.arrayBuffer?.();
+    if (!(body instanceof ArrayBuffer)) {
+      throw new Error('AppImage response body is not readable as raw bytes');
+    }
+    actual = await deps.sha256(new Uint8Array(body));
   } catch {
     return {
       match: false,

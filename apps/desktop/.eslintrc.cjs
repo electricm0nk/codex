@@ -21,15 +21,23 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    // Forbids any `fetch(<string>)` whose first argument literal
-    // targets the GitHub Releases API or the repo issues/releases
-    // REST surface. The matcher is structural: it scans the literal
-    // argument for the forbidden substrings. Template literals are
-    // also covered where the static parts include the substrings.
+    // Forbids any `fetch(...)` whose first argument targets the
+    // GitHub Releases API or the repo issues/releases REST surface.
+    // The matcher is structural: it only inspects `arguments[0]`,
+    // with separate selectors for string literals and template
+    // literals whose static leading segment includes the forbidden
+    // substrings.
     'no-restricted-syntax': [
       'error',
       {
-        selector: "CallExpression[callee.name='fetch'] Literal[value=/(^https?:\\/\\/(api\\.)?github\\.com\\/repos\\/|\\/releases)/i]",
+        selector:
+          "CallExpression[callee.name='fetch'][arguments.0.type='Literal'][arguments.0.value=/(^https?:\\/\\/(api\\.)?github\\.com\\/repos\\/|\\/releases)/i]",
+        message:
+          'SD-16 AV-UI-7: the shell must not call fetch() against api.github.com/repos or /releases. Discovery goes through the protected update-index branch.',
+      },
+      {
+        selector:
+          "CallExpression[callee.name='fetch'][arguments.0.type='TemplateLiteral'][arguments.0.quasis.0.value.raw=/(^https?:\\/\\/(api\\.)?github\\.com\\/repos\\/|\\/releases)/i]",
         message:
           'SD-16 AV-UI-7: the shell must not call fetch() against api.github.com/repos or /releases. Discovery goes through the protected update-index branch.',
       },
