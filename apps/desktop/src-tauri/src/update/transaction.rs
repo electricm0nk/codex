@@ -451,8 +451,8 @@ fn verify_staged(staged_path: &Path, manifest: &ManifestIdentity) -> Option<Tran
         });
     }
 
-    let bytes = match fs::read(staged_path) {
-        Ok(b) => b,
+    let mut file = match fs::File::open(staged_path) {
+        Ok(f) => f,
         Err(source) => {
             return Some(TransactionAbort {
                 code: TransactionAbortCode::StagedFileMissing,
@@ -460,8 +460,26 @@ fn verify_staged(staged_path: &Path, manifest: &ManifestIdentity) -> Option<Tran
             });
         }
     };
+
+    use std::io::Read;
     let mut hasher = Sha256::new();
-    hasher.update(&bytes);
+    let mut buf = [0u8; 64 * 1024];
+    loop {
+        let n = match file.read(&mut buf) {
+            Ok(n) => n,
+            Err(source) => {
+                return Some(TransactionAbort {
+                    code: TransactionAbortCode::StagedFileMissing,
+                    reason: format!("read staged {} failed: {source}", staged_path.display()),
+                });
+            }
+        };
+        if n == 0 {
+            break;
+        }
+        hasher.update(&buf[..n]);
+    }
+
     let actual = hex_lower(&hasher.finalize());
     if actual != manifest.artifact_sha256 {
         return Some(TransactionAbort {
@@ -472,7 +490,6 @@ fn verify_staged(staged_path: &Path, manifest: &ManifestIdentity) -> Option<Tran
             ),
         });
     }
-
     // Executable bit — POSIX only. We deliberately do not rely on metadata.permissions() alone
     // because it is platform-specific; instead we use PermissionsExt on unix.
     #[cfg(unix)]
