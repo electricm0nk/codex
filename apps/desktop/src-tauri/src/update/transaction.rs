@@ -1579,11 +1579,16 @@ mod verify_relaunch_artifact_tests {
     fn deferred_command_shims_error_instead_of_fabricating_truth() {
         assert!(is_install_eligible().is_err());
         assert!(
+<<<<<<< HEAD
             perform_install(
                 serde_json::json!({"version":"0.0.1","channel":"alpha"}),
                 "https://example.invalid/update-index.json".to_string()
             )
             .is_err()
+=======
+            perform_install(serde_json::json!({}), "https://example.invalid/index.json".into())
+                .is_err()
+>>>>>>> 8447c6b (fix review feedback for install bridge and relaunch docs)
         );
         assert!(perform_restore_previous().is_err());
     }
