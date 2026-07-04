@@ -325,29 +325,23 @@ jobs:
             exit 1
           fi
 
-          # Resolve tranche_id. Prefer the E1 locate_manifest step output if
-          # present; otherwise walk programs/codex/requirements/SD-16-...
-          # for a manifest.yaml whose promotion_branch matches the source
-          # branch. Fail closed if nothing matches.
+          # Resolve tranche_id by walking
+          # programs/codex/requirements/SD-16-feedback-loop-and-self-
+          # update-hardening for a manifest.yaml whose promotion_branch
+          # matches the source branch. Fail closed if nothing matches.
           TRANCHE_ID=""
-          MANIFEST_PATH="${{ steps.locate_manifest.outputs.manifest }}"
-          if [ -n "${MANIFEST_PATH:-}" ] && [ -f "${MANIFEST_PATH}" ]; then
-            TRANCHE_ID="$(awk -F': *' '/^tranche_id:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "${MANIFEST_PATH}")"
-          fi
-          if [ -z "${TRANCHE_ID}" ]; then
-            FOUND="$(find programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-* -maxdepth 2 -name 'manifest.yaml' 2>/dev/null | while read -r f; do
-              PB="$(awk -F': *' '/^promotion_branch:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "$f")"
-              if [ "${PB}" = "${GITHUB_REF_NAME}" ]; then
-                echo "$f"
-                exit 0
-              fi
-            done | head -1 || true)"
-            if [ -n "${FOUND:-}" ] && [ -f "${FOUND}" ]; then
-              TRANCHE_ID="$(awk -F': *' '/^tranche_id:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "${FOUND}")"
+          FOUND="$(find programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-* -maxdepth 2 -name 'manifest.yaml' 2>/dev/null | while read -r f; do
+            PB="$(awk -F': *' '/^promotion_branch:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "$f")"
+            if [ "${PB}" = "${GITHUB_REF_NAME}" ]; then
+              echo "$f"
+              exit 0
             fi
+          done | head -1 || true)"
+          if [ -n "${FOUND:-}" ] && [ -f "${FOUND}" ]; then
+            TRANCHE_ID="$(awk -F': *' '/^tranche_id:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "${FOUND}")"
           fi
           if [ -z "${TRANCHE_ID}" ]; then
-            echo "::error::channel-index: no tranche manifest found for promotion_branch=${GITHUB_REF_NAME} (looked in steps.locate_manifest.outputs.manifest and programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml)"
+            echo "::error::channel-index: no tranche manifest found for promotion_branch=${GITHUB_REF_NAME} (looked in programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml)"
             exit 1
           fi
 
@@ -436,4 +430,3 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "${COMMIT_MESSAGE}"
           git push origin HEAD:update-index
-            release-staging/update-manifest.json
