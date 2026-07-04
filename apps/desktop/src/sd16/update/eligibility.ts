@@ -82,11 +82,17 @@ export function decideEligibility(input: EligibilityInput): EligibilityDecision 
   const { installedState, manifest, fetchOutcomes } = input;
 
   // 1..2 — the fetch must succeed before anything downstream can be trusted.
-  if (fetchOutcomes.indexStatus !== 'ok') {
-    return unknown(`channel index fetch failed: ${fetchOutcomes.indexStatus}`);
+  if (fetchOutcomes.indexStatus === 'failed') {
+    return unknown(`channel index fetch failed: ${fetchOutcomes.indexFetchError ?? fetchOutcomes.indexStatus}`);
   }
-  if (fetchOutcomes.manifestStatus !== 'ok') {
-    return unknown(`manifest fetch failed: ${fetchOutcomes.manifestStatus}`);
+  if (fetchOutcomes.indexStatus === 'schema-invalid') {
+    return unknown(`channel-index.schema.json: ${fetchOutcomes.indexSchemaError ?? 'schema invalid'}`);
+  }
+  if (fetchOutcomes.manifestStatus === 'failed') {
+    return unknown(`manifest fetch failed: ${fetchOutcomes.manifestFetchError ?? fetchOutcomes.manifestStatus}`);
+  }
+  if (fetchOutcomes.manifestStatus === 'schema-invalid') {
+    return unknown(`update-manifest.schema.json: ${fetchOutcomes.manifestSchemaError ?? 'schema invalid'}`);
   }
 
   // 3..4 — schema validation must pass before the parsed values are trusted.
