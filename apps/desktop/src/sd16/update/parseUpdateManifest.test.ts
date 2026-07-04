@@ -51,8 +51,10 @@ const UPDATE_MANIFEST_JSON = `{
   "signature": null
 }`;
 
-const MISSING_SIGNATURE_ALLOWED_JSON = UPDATE_MANIFEST_JSON; // structural twin; signature is already null and accepted
-
+const MISSING_SIGNATURE_ALLOWED_JSON = UPDATE_MANIFEST_JSON.replace(
+  /\n  },\n  "signature": null\n}/,
+  '\n  }\n}',
+);
 const BAD_PATH_JSON = `{
   "schema_version": "1.0.0",
   "channel": "alpha",
