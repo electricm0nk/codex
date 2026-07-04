@@ -106,6 +106,10 @@ jobs:
         working-directory: apps/desktop
         run: npm ci
 
+      - name: Validate tranche release notes
+        run: |
+          python scripts/tranche/validate-tranche-notes.py --release-notes-path programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md
+
       - name: Build Linux artifact set
         working-directory: apps/desktop
         run: npx tauri build --bundles deb,appimage --ci
@@ -145,23 +149,36 @@ jobs:
           }
           EOF
 
-      - name: Write update manifest stub
+      - name: Write update manifest
         working-directory: release-staging
         run: |
-          cat > update-manifest-stub.json << EOF
+          cat > update-manifest.json << EOF
           {
-            "schema_version": "stub-v0",
-            "note": "Update manifest implementation is reserved for SD-12-E3. This stub preserves the publication-unit contract shape without claiming live updater support.",
+            "schema_version": "v1",
+            "tranche_id": "tranche-2.5",
+            "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
             "channel": "${{ steps.channel.outputs.channel }}",
-            "source_revision": "${GITHUB_SHA}",
-            "update_check_wired": false
+            "spec_domain_id": "SD-16",
+            "publication_run_id": "${{ github.run_id }}",
+            "platform_artifacts": [
+              {
+                "platform": "linux",
+                "tier": "first-class",
+                "update_eligibility": "automatic",
+                "artifacts": [
+                  { "name": "${{ steps.stage.outputs.deb_name }}", "format": "deb" },
+                  { "name": "${{ steps.stage.outputs.appimage_name }}", "format": "AppImage" }
+                ]
+              }
+            ]
           }
           EOF
+          cp update-manifest.json update-manifest-stub.json
 
       - name: Compute checksums
         working-directory: release-staging
         run: |
-          sha256sum ./*.deb ./*.AppImage provenance.json update-manifest-stub.json > checksums.sha256
+          sha256sum ./*.deb ./*.AppImage provenance.json update-manifest.json update-manifest-stub.json > checksums.sha256
           cat checksums.sha256
 
       - name: Derive release tag and title
@@ -235,3 +252,144 @@ jobs:
             release-staging/checksums.sha256 \
             release-staging/provenance.json \
             release-staging/update-manifest-stub.json
+
+      # Channel-index update: the only legitimate writer of the protected
+      # `update-index` branch in the normal path. Pushes channels/<channel>.json
+      # containing the published manifest URL, release tag, publication
+      # timestamp, and tranche id. Restricted to push events on develop/main
+      # so workflow_dispatch / pull_request / fork reruns cannot poison the
+      # index. Fails closed when no tranche manifest matches the source
+      # branch -- never writes a partial index. Two-step design: the
+      # preparation step stages the JSON into the workspace and exports
+      # metadata via $GITHUB_ENV; the action step picks it up and pushes it
+      # directly to update-index (push-to-current-branch + branch=
+      # update-index; this is NOT a PR -- the channel index is a continuous
+      # pointer, not a review artifact).
+      - name: Prepare channel index payload
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml') != ''
+        id: channel_index_prep
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHANNEL: ${{ steps.channel.outputs.channel }}
+          TAG: ${{ steps.release_meta.outputs.tag }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CHANNEL:-}" ] || [ -z "${TAG:-}" ]; then
+            echo "::error::channel-index: missing CHANNEL or TAG from upstream steps"
+            exit 1
+          fi
+
+          # Resolve tranche_id. Prefer the E1 locate_manifest step output if
+          # present; otherwise walk programs/codex/requirements/SD-16-...
+          # for a manifest.yaml whose promotion_branch matches the source
+          # branch. Fail closed if nothing matches.
+          TRANCHE_ID=""
+          MANIFEST_PATH="${{ steps.locate_manifest.outputs.manifest }}"
+          if [ -n "${MANIFEST_PATH:-}" ] && [ -f "${MANIFEST_PATH}" ]; then
+            TRANCHE_ID="$(awk -F': *' '/^tranche_id:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "${MANIFEST_PATH}")"
+          fi
+          if [ -z "${TRANCHE_ID}" ]; then
+            FOUND="$(find programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-* -maxdepth 2 -name 'manifest.yaml' 2>/dev/null | while read -r f; do
+              PB="$(awk -F': *' '/^promotion_branch:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "$f")"
+              if [ "${PB}" = "${GITHUB_REF_NAME}" ]; then
+                echo "$f"
+                exit 0
+              fi
+            done | head -1 || true)"
+            if [ -n "${FOUND:-}" ] && [ -f "${FOUND}" ]; then
+              TRANCHE_ID="$(awk -F': *' '/^tranche_id:/{gsub(/["'\'' ]/,"",$2); print $2; exit}' "${FOUND}")"
+            fi
+          fi
+          if [ -z "${TRANCHE_ID}" ]; then
+            echo "::error::channel-index: no tranche manifest found for promotion_branch=${GITHUB_REF_NAME} (looked in steps.locate_manifest.outputs.manifest and programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml)"
+            exit 1
+          fi
+
+          # Resolve publication timestamp from the live release API so the
+          # same tag always produces the same index payload (idempotent).
+          PUBLISHED_AT="$(gh release view "${TAG}" --json publishedAt --jq '.publishedAt')"
+          if [ -z "${PUBLISHED_AT}" ] || [ "${PUBLISHED_AT}" = "null" ]; then
+            echo "::error::channel-index: gh release view returned no publishedAt for tag=${TAG}"
+            exit 1
+          fi
+
+          MANIFEST_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${TAG}/update-manifest-stub.json"
+          NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG}"
+
+          # Deterministic JSON payload (sorted keys via jq -S). signature is
+          # reserved (Tranche 2.5 does not sign channel indexes).
+          INDEX_JSON="$(jq -n \
+            --arg sv "v1" \
+            --arg ch "${CHANNEL}" \
+            --arg tag "${TAG}" \
+            --arg pa "${PUBLISHED_AT}" \
+            --arg mu "${MANIFEST_URL}" \
+            --arg nu "${NOTES_URL}" \
+            --arg tid "${TRANCHE_ID}" \
+            '{channel: $ch, release: {manifest_url: $mu, notes_url: $nu, published_at: $pa, tag: $tag, tranche_id: $tid}, schema_version: $sv, signature: null}' \
+            | jq -S .)"
+
+          # Stage into the workspace first, then serialize the payload into
+          # $GITHUB_ENV so the update-index writer can restore it after
+          # checking out the target branch.
+          mkdir -p channels
+          printf '%s\n' "${INDEX_JSON}" > "channels/${CHANNEL}.json"
+
+          # Self-check: the staged file must parse as JSON.
+          python3 -c "import json; json.load(open('channels/${CHANNEL}.json'))"
+
+          # Export to subsequent steps via $GITHUB_ENV (so the action step
+          # can reference them as ${{ env.* }}).
+          {
+            echo "CHANNEL=${CHANNEL}"
+            echo "TAG=${TAG}"
+            echo "PUBLISHED_AT=${PUBLISHED_AT}"
+            echo "MANIFEST_URL=${MANIFEST_URL}"
+            echo "NOTES_URL=${NOTES_URL}"
+            echo "TRANCHE_ID=${TRANCHE_ID}"
+            echo "COMMIT_MESSAGE=channel-index: ${CHANNEL} ${TAG} (tranche ${TRANCHE_ID})"
+            echo "CHANNEL_INDEX_JSON_B64=$(printf '%s' "${INDEX_JSON}" | base64 -w0)"
+          } >> "${GITHUB_ENV}"
+
+          echo "channel-index: prepared channels/${CHANNEL}.json (channel=${CHANNEL}, tag=${TAG}, tranche=${TRANCHE_ID}, published_at=${PUBLISHED_AT})"
+
+      - name: Update channel index on update-index branch
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml') != ''
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CHANNEL:-}" ] || [ -z "${COMMIT_MESSAGE:-}" ] || [ -z "${CHANNEL_INDEX_JSON_B64:-}" ]; then
+            echo "::error::channel-index: missing CHANNEL, COMMIT_MESSAGE, or CHANNEL_INDEX_JSON_B64"
+            exit 1
+          fi
+
+          FILE="channels/${CHANNEL}.json"
+
+          git reset --hard HEAD
+          git clean -fd
+
+          if git ls-remote --exit-code --heads origin update-index >/dev/null 2>&1; then
+            git fetch origin update-index:refs/remotes/origin/update-index
+            git checkout -B update-index refs/remotes/origin/update-index
+          else
+            git checkout --orphan update-index
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
+
+          mkdir -p channels
+          printf '%s' "${CHANNEL_INDEX_JSON_B64}" | base64 -d > "${FILE}"
+          python3 -c "import json; json.load(open('${FILE}'))"
+
+          git add "${FILE}"
+          if git diff --cached --quiet; then
+            echo "channel-index: no changes for ${FILE}; update-index is already current"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "${COMMIT_MESSAGE}"
+          git push origin HEAD:update-index
+            release-staging/update-manifest.json
