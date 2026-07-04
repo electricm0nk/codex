@@ -149,31 +149,68 @@ jobs:
           }
           EOF
 
-      - name: Write update manifest
+      - name: Generate update manifest
+        id: generate_manifest
         working-directory: release-staging
         run: |
-          cat > update-manifest.json << EOF
-          {
-            "schema_version": "v1",
-            "tranche_id": "tranche-2.5",
-            "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
-            "channel": "${{ steps.channel.outputs.channel }}",
-            "spec_domain_id": "SD-16",
-            "publication_run_id": "${{ github.run_id }}",
-            "platform_artifacts": [
-              {
-                "platform": "linux",
-                "tier": "first-class",
-                "update_eligibility": "automatic",
-                "artifacts": [
-                  { "name": "${{ steps.stage.outputs.deb_name }}", "format": "deb" },
-                  { "name": "${{ steps.stage.outputs.appimage_name }}", "format": "AppImage" }
-                ]
-              }
-            ]
-          }
-          EOF
+          set -euo pipefail
+
+          # Two tag forms coexist for backward compatibility with deployed
+          # tooling (F3c's channel-index URL uses the release tag verbatim):
+          #   MANIFEST_TAG = schema-conformant `${channel}/${version}-${shortsha}`
+          #                   (satisfies schemas/update/update-manifest.schema.json
+          #                    tag pattern `^(alpha|beta|stable)/.+$`)
+          #   RELEASE_TAG  = GitHub release tag `${channel}-${version}-${shortsha}`
+          #                   (the existing form; used by gh release create
+          #                    and F3c's MANIFEST_URL)
+          VERSION=$(node -p "require('./apps/desktop/package.json').version")
+          SHORT_SHA="${GITHUB_SHA:0:8}"
+          CHANNEL="${{ steps.channel.outputs.channel }}"
+          MANIFEST_TAG="${CHANNEL}/v${VERSION}-${SHORT_SHA}"
+          RELEASE_TAG="${CHANNEL}-v${VERSION}-${SHORT_SHA}"
+          APPIMAGE_NAME="${{ steps.stage.outputs.appimage_name }}"
+          APPIMAGE_PATH="${GITHUB_WORKSPACE}/release-staging/${APPIMAGE_NAME}"
+          APPIMAGE_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/${APPIMAGE_NAME}"
+          RELEASE_NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}"
+
+          python3 ../scripts/release/write_release_manifest.py \
+            --repo-root "${GITHUB_WORKSPACE}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --channel "${CHANNEL}" \
+            --tag "${MANIFEST_TAG}" \
+            --version "${VERSION}" \
+            --source-branch "${GITHUB_REF_NAME}" \
+            --source-commit "${GITHUB_SHA}" \
+            --release-notes-path "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md" \
+            --appimage-name "${APPIMAGE_NAME}" \
+            --appimage-path "${APPIMAGE_PATH}" \
+            --appimage-url "${APPIMAGE_URL}" \
+            --workflow ".github/workflows/publish-tester-release.yml" \
+            --run-id "${GITHUB_RUN_ID}" \
+            --run-attempt "${GITHUB_RUN_ATTEMPT}" \
+            --release-notes-url "${RELEASE_NOTES_URL}" \
+            --min-supported-version "${VERSION}" \
+            --appimage-install "true" \
+            --required-install-kind "appimage" \
+            --output update-manifest.json
+
+          # Legacy alias for F3c's channel-index URL: F3c is merged and
+          # references `update-manifest-stub.json`. The stub is now a
+          # verbatim copy of the schema-valid manifest under the legacy
+          # filename, so the index's MANIFEST_URL still resolves to a
+          # manifest that satisfies the schema.
           cp update-manifest.json update-manifest-stub.json
+
+          echo "manifest-tag=${MANIFEST_TAG}" >> "${GITHUB_OUTPUT}"
+          echo "release-tag=${RELEASE_TAG}" >> "${GITHUB_OUTPUT}"
+
+      - name: Validate update manifest
+        working-directory: release-staging
+        run: |
+          set -euo pipefail
+          python3 ../scripts/release/validate_manifest.py \
+            --manifest update-manifest.json \
+            --schema ../schemas/update/update-manifest.schema.json
 
       - name: Compute checksums
         working-directory: release-staging
