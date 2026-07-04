@@ -19,7 +19,7 @@
   "include": [
     "src",
     "vite.config.ts",
-    "../../../../../schemas/update/*.json",
-    "../../../../../tests/fixtures/update/**/*.json"
+    "../../schemas/update/*.json",
+    "../../tests/fixtures/update/**/*.json"
   ]
 }
