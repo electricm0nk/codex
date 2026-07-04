@@ -1,9 +1,8 @@
 /**
  * SD16-E6-F3b — shell update diagnostics model.
  *
- * Three pure typed shapes whose field names match `technical-requirements.md`
- * §"Diagnostics Requirements" verbatim, plus deterministic default factories and
- * render helpers. F3b owns the data-model surface; F3c renders it into the
+ * Three pure typed shapes whose field names match the SD16 "Diagnostics Requirements"
+ * contract verbatim, plus deterministic default factories and render helpers.
  * `#installed-panel`, `#last-check-panel`, and `#pending-rollback-panel` DOM
  * hooks. The `pending/rollback.*` group has a soft dependency on E7 (E6 -> E8
  * gate): the contract is that every key is surfaced with a deterministic
