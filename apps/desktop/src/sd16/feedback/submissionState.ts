@@ -47,7 +47,7 @@ export function reduceSubmissionState(
         : state;
     case 'URL_BUILT':
       return state.kind === 'opening'
-        ? { kind: 'awaiting-issue-url', title: event.title }
+        ? { kind: 'awaiting-issue-url', title: state.title }
         : state;
     case 'BROWSER_OPENED':
       if (state.kind !== 'awaiting-issue-url') {

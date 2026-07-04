@@ -82,21 +82,27 @@ pub enum IssueUrlError {
     UrlValidation { reason: String },
 }
 
-/// Minimal RFC 3986 percent-encoder for the reserved characters that would
-/// otherwise break the query string. `%` MUST be escaped first so the escapes
-/// introduced for the other characters are not themselves double-encoded.
-/// (F3a owns the `percent-encoding` crate; F3b adds no dependency and inlines
-/// this narrow encoder instead.)
+/// Minimal RFC 3986 percent-encoder: every byte outside the unreserved set
+/// (ALPHA / DIGIT / `-` / `.` / `_` / `~`) is emitted as `%XX`. Operates on
+/// raw bytes so multi-byte UTF-8 sequences are encoded byte-by-byte, keeping
+/// the output ASCII-safe. (F3a owns the `percent-encoding` crate; F3b adds no
+/// dependency and inlines this narrow encoder instead.)
 fn percent_encode(input: &str) -> String {
-    input
-        .replace('%', "%25")
-        .replace(' ', "%20")
-        .replace('&', "%26")
-        .replace('=', "%3D")
-        .replace('#', "%23")
-        .replace('?', "%3F")
-        .replace('+', "%2B")
-        .replace(',', "%2C")
+    const HEX: &[u8] = b"0123456789ABCDEF";
+    let mut output = String::with_capacity(input.len() * 3);
+    for byte in input.bytes() {
+        match byte {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'.' | b'_' | b'~' => {
+                output.push(byte as char);
+            }
+            _ => {
+                output.push('%');
+                output.push(HEX[(byte >> 4) as usize] as char);
+                output.push(HEX[(byte & 0xf) as usize] as char);
+            }
+        }
+    }
+    output
 }
 
 /// GitHub owner rule: non-empty, <= 39 chars, ASCII alphanumeric plus `-`/`_`.
@@ -242,7 +248,7 @@ mod tests {
             url.starts_with("https://github.com/electricm0nk/codex/issues/new?"),
             "url shape: {url}"
         );
-        assert!(url.contains("title=Shell%20defect:%20crash%20on%20open"), "title enc: {url}");
+        assert!(url.contains("title=Shell%20defect%3A%20crash%20on%20open"), "title enc: {url}");
         assert!(url.contains("body=version%3D2.5.0"), "body enc: {url}");
         assert!(url.contains("labels=codex-shell-defect%2Ctranche-2.5"), "labels enc: {url}");
         assert!(validate_github_issues_url(&url).is_ok(), "built url must validate: {url}");
