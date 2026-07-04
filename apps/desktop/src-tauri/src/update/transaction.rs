@@ -638,13 +638,32 @@ fn hex_lower(bytes: &[u8]) -> String {
 }
 
 fn now_iso8601() -> String {
-    // Deterministic-ish UTC timestamp. The transaction does not depend on wall-clock for any
-    // decision logic; this is only a human-readable marker on pending-update.json. We use
-    // SystemTime::now() so the value is honest, but tests assert the field is non-empty.
-    let dur = std::time::SystemTime::now()
+    // RFC 3339 / ISO-8601 UTC timestamp for the pending-update.json marker.
+    // The transaction does not depend on wall-clock for any decision logic; this is only a
+    // human-readable field. We avoid external crates by using the civil_from_days algorithm
+    // (Howard Hinnant) to convert epoch seconds to a calendar date.
+    let secs = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
-        .unwrap_or_default();
-    format!("epoch:{}", dur.as_secs())
+        .unwrap_or_default()
+        .as_secs();
+
+    let sec = (secs % 60) as u32;
+    let min = ((secs / 60) % 60) as u32;
+    let hour = ((secs / 3600) % 24) as u32;
+
+    // civil_from_days: convert days-since-1970-01-01 to (year, month, day)
+    let z = (secs / 86400) as i64 + 719_468;
+    let era = z.div_euclid(146_097);
+    let doe = (z - era * 146_097) as u64;
+    let yoe = (doe - doe / 1_460 + doe / 36_524 - doe / 146_096) / 365;
+    let y = yoe as i64 + era * 400;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let day = doy - (153 * mp + 2) / 5 + 1;
+    let month = if mp < 10 { mp + 3 } else { mp - 9 };
+    let year = if month <= 2 { y + 1 } else { y };
+
+    format!("{:04}-{:02}-{:02}T{:02}:{:02}:{:02}Z", year, month, day, hour, min, sec)
 }
 
 #[cfg(test)]
