@@ -184,7 +184,7 @@ export function test_parseUpdateManifest_invalid_json_returns_typed_error(): voi
 
 function run(): void {
   test_av_sch_2_update_manifest_positive();
-  test_av_sch_3_update_manifest_signature_null_accepted();
+  test_av_sch_3_update_manifest_signature_missing_accepted();
   test_av_sch_5_manifest_tranche_id_and_path_locked_at_parse();
   test_av_sch_6_manifest_rejects_bad_path();
   test_parseUpdateManifest_invalid_json_returns_typed_error();
