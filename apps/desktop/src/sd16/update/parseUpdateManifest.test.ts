@@ -120,7 +120,7 @@ export function test_av_sch_2_update_manifest_positive(): void {
 
 // ---------- AV-SCH-3 ----------
 
-export function test_av_sch_3_update_manifest_signature_null_accepted(): void {
+export function test_av_sch_3_update_manifest_signature_missing_accepted(): void {
   const result = parseUpdateManifest(MISSING_SIGNATURE_ALLOWED_JSON);
   assert(
     result.ok,
@@ -131,8 +131,8 @@ export function test_av_sch_3_update_manifest_signature_null_accepted(): void {
   if (result.ok) {
     assertEqual(
       result.data.signature,
-      null,
-      'AV-SCH-3: signature:null is allowed and must round-trip, not be coerced',
+      undefined,
+      'AV-SCH-3: signature may be omitted; missing signature must round-trip as undefined',
     );
   }
 }
