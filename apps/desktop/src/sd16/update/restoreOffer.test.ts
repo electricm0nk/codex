@@ -4,7 +4,7 @@ import {
   RESTORE_OFFER_ID,
   buildRestoreOfferMarkup,
 } from './restoreOffer';
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert } from '../../testSupport/asserts';
 
 function assertContains(actual: string, needle: string, message: string) {
   if (!actual.includes(needle)) {

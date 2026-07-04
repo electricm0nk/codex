@@ -669,8 +669,15 @@ pub fn is_install_eligible() -> Result<EligibilityPolicy, String> {
 /// Registration-only (F0-EXTEND `t_5b652e93`): the staged-transaction command body — its
 /// argument contract included — is F3a's deferred surface around `execute_transaction`.
 /// Until F3a wires it, the shim errors rather than pretending an install ran.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PerformInstallArgs {
+    pub manifest: serde_json::Value,
+    pub index_url: String,
+}
+
 #[tauri::command]
-pub fn perform_install() -> Result<RelaunchPrompt, String> {
+pub fn perform_install(_args: PerformInstallArgs) -> Result<RelaunchPrompt, String> {
     Err(
         "perform_install is registered but not wired: the staged-transaction command body \
          was deferred by F3a (PR #61); no install is performed here"
@@ -685,7 +692,7 @@ pub fn perform_install() -> Result<RelaunchPrompt, String> {
 /// rolling backup at `<config_update_dir>/backups/Codex-Desktop-Shell-Scaffold.previous.AppImage`,
 /// and atomically copies that backup over the managed AppImage path. On
 /// restore failure (missing/unreadable/corrupted backup), the command writes
-/// a `rollback-state.json` sidecar recording `rollback_state: "rollback_failed"`
+/// a `rollback-state.json` sidecar recording `rollback_state: "rollback-failed"`
 /// with the exact reason string (AV-RB-4) and leaves `pending-update.json` on
 /// disk so the operator can inspect or retry (AV-RB-7).
 ///
@@ -716,7 +723,7 @@ pub fn perform_restore_previous() -> Result<RollbackOutcome, String> {
 ///   - backups: keep last 2 previous AppImages (AV-RB-5)
 ///   - successful staging: delete after update success (AV-RB-6)
 ///   - pending updates: never auto-delete while unresolved (AV-RB-7)
-///   - rollback_failed: keep until explicit user clear (no AV id yet; see AV-RB-4)
+///   - rollback-failed: keep until explicit user clear (no AV id yet; see AV-RB-4)
 ///
 /// The function returns a `RetentionOutcome` describing which cleanup actions
 /// were applied so the operator UI can surface a diagnostic.
@@ -1618,7 +1625,13 @@ mod verify_relaunch_artifact_tests {
     #[test]
     fn deferred_command_shims_error_instead_of_fabricating_truth() {
         assert!(is_install_eligible().is_err());
-        assert!(perform_install().is_err());
+        assert!(
+            perform_install(PerformInstallArgs {
+                manifest: serde_json::json!({}),
+                index_url: "https://example.invalid/index.json".to_string(),
+            })
+            .is_err()
+        );
     }
 
     /// The F3c TS mirror (`installAction.ts` `ReloadVerifyOutcome`) reads camelCase
@@ -1661,22 +1674,10 @@ mod verify_relaunch_artifact_tests {
 // Owner: F3b (god-emporer direct execution; see card t_da3470a3).
 // Slice: rollback decision table + retention sweep.
 //
-// Files touched (this append-only edit):
-//   - apps/desktop/src-tauri/src/update/transaction.rs  (append below)
-//
-// Files NOT touched (per the F3b exact allowed write scope):
-//   - apps/desktop/src-tauri/src/main.rs                 (F3c already registered
-//                                                       `perform_restore_previous`
-//                                                       and the `mod update;`
-//                                                       line — no further main.rs
-//                                                       edit is required for F3b)
-//   - apps/desktop/src-tauri/src/update/mod.rs          (F3c left it alone; F3b
-//                                                       honors that)
-//   - Any F3a function, helper, or struct (FROZEN at origin/develop @ a6c387f)
-//   - Any F3c function or helper (`verify_relaunch_artifact_impl`,
-//     `verify_relaunch_artifact`, `sha256_of_file`, `ReloadVerifyOutcome`,
-//     `ReloadVerifyConfig` — F3c surface, FROZEN at
-//     feat/sd16-e7-f3c-shell-relaunch-flow @ b73593e)
+// Scope note:
+//   - This section documents the F3b rollback/retention implementation surface
+//     in this module only. It is not a literal claim about every file changed
+//     in the pull request diff.
 //
 // AV-row coverage (per acceptance-and-verification.md §"Rollback and Retention"):
 //
@@ -1688,9 +1689,9 @@ mod verify_relaunch_artifact_tests {
 //       call when a Mismatch pending marker is on disk; the third call (or
 //       any subsequent call once count >= threshold) auto-restores.
 //
-//   - AV-RB-4 (F3b state side) — rollback_failed is recorded with the
+//   - AV-RB-4 (F3b state side) — rollback-failed is recorded with the
 //       exact reason when restore itself fails. F3b writes a sidecar
-//       `rollback-state.json` with `rollback_state: "rollback_failed"` and
+//       `rollback-state.json` with `rollback_state: "rollback-failed"` and
 //       a `reason` string; pending-update.json is left intact so the
 //       operator can inspect. (The TS-side `rollbackFailed.tsx` is OUT OF
 //       SCOPE for this backfill per the card body's explicit
@@ -1734,7 +1735,7 @@ pub const ROLLBACK_STATE_FILENAME: &str = "rollback-state.json";
 /// surfaced to the diagnostics panel via `pendingRollbackPanel.tsx` (F3c
 /// binding-layer extension, not the UI surface itself).
 ///
-/// Note: the F1 closure does not yet pin an AV id for the `rollback_failed`
+/// Note: the F1 closure does not yet pin an AV id for the `rollback-failed`
 /// state itself (it would be AV-RB-8 if proposed as an L0-B amendment).
 /// F3b writes the state honestly so the future AV row has a wire contract to
 /// bind against.
@@ -1746,7 +1747,7 @@ pub enum RollbackState {
     None,
     /// A previous restore attempt failed; the operator must clear this state
     /// explicitly (per `technical-requirements.md` §"Retention Requirements":
-    /// "rollback_failed: keep until explicit user clear").
+    /// "rollback-failed: keep until explicit user clear").
     RollbackFailed,
     /// The 3-cycle mismatch threshold has been reached; the next restore
     /// call auto-runs (AV-RB-3).
@@ -1955,10 +1956,10 @@ fn sha256_of_path(path: &Path) -> std::io::Result<String> {
 ///      `mismatch_count >= AUTO_RESTORE_THRESHOLD` → run the restore without
 ///      requiring the operator to confirm.
 ///   4. No backup exists → `RollbackOutcome::NoBackup` with reason. The
-///      sidecar is left alone (no rollback_failed was attempted).
+///      sidecar is left alone (no rollback-failed was attempted).
 ///   5. Backup exists but is unreadable / atomic-replace fails →
 ///      `RollbackOutcome::RollbackFailed` with the reason; the sidecar is
-///      written with `rollback_state: "rollback_failed"`.
+///      written with `rollback_state: "rollback-failed"`.
 ///   6. Backup exists and is readable → copy it over the managed path,
 ///      rewrite `installed-state.json` with the backup's identity (the
 ///      `pending.from_version`), delete `pending-update.json`, reset the
@@ -2024,7 +2025,7 @@ pub fn perform_restore_previous_impl(config: RestoreConfig) -> RollbackOutcome {
         Some(path) => path,
         None => {
             // No backup to restore from. The sidecar is left alone because no
-            // rollback attempt was made — recording rollback_failed here would
+            // rollback attempt was made — recording rollback-failed here would
             // be dishonest (nothing failed).
             return RollbackOutcome::NoBackup {
                 reason: format!(
@@ -2383,7 +2384,7 @@ mod rollback_retention_tests {
         panic!("auto-restore never fired across {AUTO_RESTORE_THRESHOLD} cycles");
     }
 
-    /// AV-RB-4 (state side) — restore failure marks `rollback_failed` with
+    /// AV-RB-4 (state side) — restore failure marks `rollback-failed` with
     /// the exact reason. Force a restore failure by giving the function a
     /// missing backup path (write the pending marker but not the backup).
     /// The function must return `RollbackOutcome::NoBackup` (no rollback
@@ -2440,14 +2441,14 @@ mod rollback_retention_tests {
             RollbackOutcome::RollbackFailed { reason, pending_update_path } => {
                 assert!(
                     !reason.is_empty(),
-                    "rollback_failed reason must be non-empty (AV-RB-4)"
+                    "rollback-failed reason must be non-empty (AV-RB-4)"
                 );
                 assert!(pending_update_path.exists(), "pending-update.json must remain on disk");
             }
             other => panic!("expected RollbackFailed, got {other:?}"),
         }
 
-        // The sidecar must record rollback_failed with the reason.
+        // The sidecar must record rollback-failed with the reason.
         let sidecar = read_rollback_state(&dir);
         assert_eq!(sidecar.rollback_state, RollbackState::RollbackFailed);
         assert!(!sidecar.reason.is_empty(), "sidecar reason must be non-empty (AV-RB-4)");
