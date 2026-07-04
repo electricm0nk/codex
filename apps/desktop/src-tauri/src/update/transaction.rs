@@ -433,6 +433,267 @@ where
     })
 }
 
+// ─── F3c — relaunch verifier ────────────────────────────────────────────
+
+/// Outcome of the relaunch verifier.
+///
+/// The shell computes its own running artifact hash on startup and forwards it to the Tauri
+/// command layer, which calls `verify_relaunch_artifact`. Three outcomes:
+///
+/// - `Promoted`: the running hash matches the staged artifact's expected sha256. The pending
+///   update is promoted: a fresh `installed-state.json` is written so future transactions see
+///   the new version as installed, and `pending-update.json` is deleted.
+/// - `VerificationFailed`: the running hash does not match. The pending record's
+///   `pending_update_state` is set to `Mismatch` (it stays on disk so the operator can offer
+///   restore via `restoreOffer.tsx` and F3b's `perform_restore_previous`). Installed-state is
+///   NOT rewritten — the previous build is still authoritative.
+/// - `NoPendingUpdate`: there is no `pending-update.json` on disk. The shell simply continues
+///   with the existing installed-state.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "kind", rename_all = "kebab-case")]
+pub enum ReloadVerifyOutcome {
+    #[serde(rename_all = "camelCase")]
+    Promoted {
+        installed_state_path: PathBuf,
+        promoted_version: String,
+    },
+    #[serde(rename_all = "camelCase")]
+    VerificationFailed {
+        expected: String,
+        actual: String,
+    },
+    NoPendingUpdate,
+}
+
+/// Configuration for the relaunch verifier.
+///
+/// `running_artifact_sha256` is an injected closure that returns the sha256 of the running
+/// binary, hex-encoded (lowercase). The transaction never hashes the binary itself — that is
+/// the Tauri command boundary's concern. Tests supply a fixture closure so the test never
+/// touches a real binary.
+pub struct ReloadVerifyConfig<F>
+where
+    F: FnOnce() -> std::io::Result<String>,
+{
+    pub config_dir: PathBuf,
+    pub running_artifact_sha256: F,
+}
+
+/// Verify the running artifact against the staged `pending-update.json`.
+///
+/// On match, promote the pending record into a fresh `installed-state.json` and clear the
+/// pending file. On mismatch, leave the pending record (with `pending_update_state = Mismatch`)
+/// so `restoreOffer.tsx` can surface the prior version. The verifier never fabricates success:
+/// an injected closure returning an unexpected value is treated as a hash mismatch.
+///
+/// Named with the `_impl` suffix so the Tauri command shim (`verify_relaunch_artifact`)
+/// below can occupy the canonical name in this module's value namespace without colliding
+/// with this unit-testable function.
+pub fn verify_relaunch_artifact_impl<F>(config: ReloadVerifyConfig<F>) -> ReloadVerifyOutcome
+where
+    F: FnOnce() -> std::io::Result<String>,
+{
+    let ReloadVerifyConfig {
+        config_dir,
+        running_artifact_sha256,
+    } = config;
+    let update_dir = config_update_dir(&config_dir);
+    let pending_path = update_dir.join(PENDING_UPDATE_FILENAME);
+
+    let raw = match fs::read(&pending_path) {
+        Ok(bytes) => bytes,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            return ReloadVerifyOutcome::NoPendingUpdate;
+        }
+        Err(_error) => {
+            // Treat any non-NotFound read error as "no pending update" so a corrupt or
+            // unreadable pending file does not wedge the shell on every relaunch. The shell
+            // will surface the missing pending state honestly via the diagnostics panel.
+            return ReloadVerifyOutcome::NoPendingUpdate;
+        }
+    };
+
+    let pending: PendingUpdate = match serde_json::from_slice(&raw) {
+        Ok(value) => value,
+        Err(_) => return ReloadVerifyOutcome::NoPendingUpdate,
+    };
+
+    let actual = match running_artifact_sha256() {
+        Ok(value) => value,
+        Err(_) => {
+            // The caller could not compute the running hash — fall back to a verification
+            // failure so the operator is prompted to restore rather than have us claim a
+            // promotion we did not actually verify.
+            return ReloadVerifyOutcome::VerificationFailed {
+                expected: pending.artifact_sha256.clone(),
+                actual: "<compute-error>".to_string(),
+            };
+        }
+    };
+
+    if actual != pending.artifact_sha256 {
+        // Mismatch — rewrite pending state to Mismatch so subsequent UI surfaces the
+        // restore offer, but leave installed-state untouched. The pending record stays on
+        // disk for `restoreOffer.tsx` and F3b's `perform_restore_previous`.
+        let mut flagged = pending.clone();
+        flagged.pending_update_state = PendingUpdateState::Mismatch;
+        let _ = write_atomic_json(&pending_path, &flagged);
+        return ReloadVerifyOutcome::VerificationFailed {
+            expected: pending.artifact_sha256,
+            actual,
+        };
+    }
+
+    // Match — promote. Rewrite pending state to Success, write installed-state.json with the
+    // new version, then remove pending-update.json so the next relaunch is clean.
+    let mut promoted = pending.clone();
+    promoted.pending_update_state = PendingUpdateState::Success;
+    let installed_state = InstalledState {
+        managed_executable_path: promoted.managed_executable_path.clone(),
+        install_kind: InstallKind::AppImage,
+        channel: promoted.channel.clone(),
+        version: promoted.to_version.clone(),
+        source_commit: promoted.source_commit.clone(),
+        release_tag: promoted.release_tag.clone(),
+        manifest_hash: promoted.manifest_hash.clone(),
+        artifact_sha256: promoted.artifact_sha256.clone(),
+        installed_at: now_iso8601(),
+        update_eligible: true,
+        ineligible_reason: None,
+    };
+    let installed_state_path = update_dir.join(INSTALLED_STATE_FILENAME);
+    if write_atomic_json(&installed_state_path, &installed_state).is_err() {
+        // If we cannot write installed-state.json we do not promote: leave pending in place
+        // and surface as a verification failure so the operator can investigate.
+        return ReloadVerifyOutcome::VerificationFailed {
+            expected: promoted.artifact_sha256,
+            actual,
+        };
+    }
+    let _ = fs::remove_file(&pending_path);
+
+    ReloadVerifyOutcome::Promoted {
+        installed_state_path,
+        promoted_version: promoted.to_version,
+    }
+}
+
+/// Tauri command shim — `verify_relaunch_artifact`.
+///
+/// The shim owns the two boundary concerns the transaction module refuses to own: hashing
+/// the running binary (`std::env::current_exe()` streamed through `sha256_of_file`) and
+/// resolving the config root (see `resolve_config_root`). Verification truth itself comes
+/// from `verify_relaunch_artifact_impl`, whose inline tests (AV-INST-6, AV-RB-1) prove the
+/// contract this shim forwards to. Failures to identify or read the running binary surface
+/// as `VerificationFailed` — never as a fabricated promotion.
+#[tauri::command]
+pub fn verify_relaunch_artifact() -> ReloadVerifyOutcome {
+    let exe = match std::env::current_exe() {
+        Ok(path) => path,
+        Err(_) => {
+            return ReloadVerifyOutcome::VerificationFailed {
+                expected: "<unknown>".to_string(),
+                actual: "<current_exe-error>".to_string(),
+            };
+        }
+    };
+    let running_sha256 = match sha256_of_file(&exe) {
+        Ok(digest) => digest,
+        Err(_) => {
+            return ReloadVerifyOutcome::VerificationFailed {
+                expected: "<unknown>".to_string(),
+                actual: "<read-error>".to_string(),
+            };
+        }
+    };
+    verify_relaunch_artifact_impl(ReloadVerifyConfig {
+        config_dir: resolve_config_root(),
+        running_artifact_sha256: || Ok(running_sha256),
+    })
+}
+
+/// Resolve the config ROOT that `config_update_dir` hangs the
+/// `codex-desktop-shell-scaffold/update/` tree off.
+///
+/// `CODEX_CONFIG_DIR` overrides the root — the ops/integration-test redirect seam,
+/// following the `CODEX_REPO_ROOT` / `CODEX_DESKTOP_RESOURCE_DIR` env idiom in
+/// `ge08_workbench.rs`. The default is `$HOME/.config`, so the pending record resolves to
+/// `~/.config/codex-desktop-shell-scaffold/update/pending-update.json`.
+fn resolve_config_root() -> PathBuf {
+    if let Ok(dir) = std::env::var("CODEX_CONFIG_DIR") {
+        return PathBuf::from(dir);
+    }
+    match std::env::var("HOME") {
+        Ok(home) => PathBuf::from(home).join(".config"),
+        Err(_) => PathBuf::from(".config"),
+    }
+}
+
+/// Stream a file through sha256, returning the lowercase-hex digest.
+///
+/// Extracted as a shared seam so the `verify_relaunch_artifact` shim and its inline test
+/// hash through the exact same code path — the test proves the seam without needing a real
+/// AppImage binary.
+fn sha256_of_file(path: &Path) -> std::io::Result<String> {
+    use std::io::Read;
+    let mut file = fs::File::open(path)?;
+    let mut hasher = Sha256::new();
+    let mut buf = [0u8; 64 * 1024];
+    loop {
+        let n = file.read(&mut buf)?;
+        if n == 0 {
+            break;
+        }
+        hasher.update(&buf[..n]);
+    }
+    Ok(hex_lower(&hasher.finalize()))
+}
+
+/// Tauri command shim — `is_install_eligible`.
+///
+/// F3a's PR #61 deferred the Tauri command layer; F0-EXTEND `t_5b652e93` authorizes F3c to
+/// register the command surface. The eligibility probe body remains F3a's deferred
+/// surface, so until it ships this shim returns an honest wiring error instead of
+/// fabricating an eligibility verdict.
+#[tauri::command]
+pub fn is_install_eligible() -> Result<EligibilityPolicy, String> {
+    Err(
+        "is_install_eligible is registered but not wired: the eligibility probe body was \
+         deferred by F3a (PR #61); no eligibility truth is fabricated here"
+            .to_string(),
+    )
+}
+
+/// Tauri command shim — `perform_install`.
+///
+/// Registration-only (F0-EXTEND `t_5b652e93`): the staged-transaction command body — its
+/// argument contract included — is F3a's deferred surface around `execute_transaction`.
+/// Until F3a wires it, the shim errors rather than pretending an install ran.
+#[tauri::command]
+pub fn perform_install(
+    _manifest: serde_json::Value,
+    _index_url: String,
+) -> Result<RelaunchPrompt, String> {
+    Err(
+        "perform_install is registered but not wired: the staged-transaction command body \
+         was deferred by F3a (PR #61); no install is performed here"
+            .to_string(),
+    )
+}
+
+/// Tauri command shim — `perform_restore_previous`.
+///
+/// Registration-only (F0-EXTEND `t_5b652e93`): F3b owns the restore body and its success
+/// payload shape. Until F3b ships, the shim errors rather than pretending a restore ran.
+#[tauri::command]
+pub fn perform_restore_previous() -> Result<(), String> {
+    Err(
+        "perform_restore_previous is registered but not wired: the restore body is F3b's \
+         surface; no restore is performed here"
+            .to_string(),
+    )
+}
+
 fn write_staged<F>(staged_path: &Path, download: F) -> std::io::Result<u64>
 where
     F: FnOnce(&mut dyn Write) -> std::io::Result<u64>,
@@ -561,8 +822,7 @@ fn verify_current_executable_identity(
             code: TransactionAbortCode::CurrentExecutableIdentityMismatch,
             reason: format!(
                 "running executable sha256 {} differs from installed-state artifact_sha256 {}",
-                running.artifact_sha256,
-                installed.artifact_sha256
+                running.artifact_sha256, installed.artifact_sha256
             ),
         });
     }
@@ -667,7 +927,10 @@ fn now_iso8601() -> String {
     let month = if mp < 10 { mp + 3 } else { mp - 9 };
     let year = if month <= 2 { y + 1 } else { y };
 
-    format!("{:04}-{:02}-{:02}T{:02}:{:02}:{:02}Z", year, month, day, hour, min, sec)
+    format!(
+        "{:04}-{:02}-{:02}T{:02}:{:02}:{:02}Z",
+        year, month, day, hour, min, sec
+    )
 }
 
 #[cfg(test)]
@@ -1060,8 +1323,8 @@ mod preserve_previous_tests {
     use super::*;
 
     fn tempdir(label: &str) -> std::path::PathBuf {
-        let dir = std::env::temp_dir()
-            .join(format!("sd16-preserve-{label}-{}", std::process::id()));
+        let dir =
+            std::env::temp_dir().join(format!("sd16-preserve-{label}-{}", std::process::id()));
         let _ = fs::remove_dir_all(&dir);
         fs::create_dir_all(&dir).expect("create tempdir");
         dir
@@ -1105,6 +1368,257 @@ mod preserve_previous_tests {
             fs::read(&slot2).expect("slot2 after third"),
             b"binary-v2",
             "oldest backup (v1) must be dropped; slot2 holds v2"
+        );
+    }
+}
+
+// -- unit tests for F3c verify_relaunch_artifact_impl --------------------------------
+#[cfg(test)]
+mod verify_relaunch_artifact_tests {
+    use super::*;
+
+    fn tempdir(label: &str) -> std::path::PathBuf {
+        let dir = std::env::temp_dir().join(format!("sd16-verify-{label}-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(&dir).expect("create tempdir");
+        dir
+    }
+
+    /// Write a fresh `pending-update.json` for the given `expected` sha256 so the verifier
+    /// has something to read.
+    fn write_pending(dir: &Path, expected_sha: &str, from: &str, to: &str) {
+        let update_dir = config_update_dir(dir);
+        fs::create_dir_all(&update_dir).expect("mkdir update");
+        let pending = PendingUpdate {
+            from_version: from.into(),
+            to_version: to.into(),
+            artifact_sha256: expected_sha.into(),
+            manifest_hash: "manifest-hash-fixture".into(),
+            staging_path: update_dir.join("staging/AppImage"),
+            backup_path: update_dir.join("backups/AppImage"),
+            managed_executable_path: dir.join("Codex-Desktop-Shell-Scaffold.AppImage"),
+            channel: "alpha".into(),
+            release_tag: format!("alpha/{to}"),
+            source_commit: "deadbeef".into(),
+            created_at: "2026-07-03T00:00:00Z".into(),
+            pending_update_state: PendingUpdateState::Pending,
+        };
+        write_atomic_json(&update_dir.join(PENDING_UPDATE_FILENAME), &pending).expect("write");
+    }
+
+    /// AV-INST-6 — relaunch verification confirms a running artifact whose hash matches the
+    /// staged `pending-update.json`. The verifier must promote: rewrite pending state to
+    /// Success, write a fresh `installed-state.json`, and delete `pending-update.json`.
+    #[test]
+    fn relaunch_verification_match_promotes_installed_state() {
+        let dir = tempdir("match");
+        write_pending(&dir, "expected-sha", "0.0.0", "0.0.1");
+
+        let outcome = verify_relaunch_artifact_impl(ReloadVerifyConfig {
+            config_dir: dir.clone(),
+            running_artifact_sha256: || Ok("expected-sha".to_string()),
+        });
+        match outcome {
+            ReloadVerifyOutcome::Promoted {
+                installed_state_path,
+                promoted_version,
+            } => {
+                assert_eq!(promoted_version, "0.0.1");
+                assert!(installed_state_path.ends_with(INSTALLED_STATE_FILENAME));
+                let installed: InstalledState =
+                    serde_json::from_slice(&fs::read(&installed_state_path).expect("read"))
+                        .expect("parse");
+                assert_eq!(installed.version, "0.0.1");
+                assert_eq!(installed.artifact_sha256, "expected-sha");
+                assert_eq!(installed.channel, "alpha");
+                assert_eq!(installed.install_kind, InstallKind::AppImage);
+                assert!(installed.update_eligible);
+                assert!(installed.ineligible_reason.is_none());
+            }
+            other => panic!("expected Promoted, got {other:?}"),
+        }
+        let update_dir = config_update_dir(&dir);
+        assert!(
+            !update_dir.join(PENDING_UPDATE_FILENAME).exists(),
+            "pending-update.json must be removed on promotion"
+        );
+    }
+
+    /// AV-RB-1 — relaunch verification detects a hash mismatch. The verifier must NOT mark
+    /// success: it must return `VerificationFailed`, leave `installed-state.json` alone
+    /// (or absent if first install), and flag the pending record so the restoreOffer UI
+    /// can surface the prior version.
+    #[test]
+    fn relaunch_verification_mismatch_does_not_mark_success() {
+        let dir = tempdir("mismatch");
+        write_pending(&dir, "expected-sha", "0.0.0", "0.0.1");
+
+        let outcome = verify_relaunch_artifact_impl(ReloadVerifyConfig {
+            config_dir: dir.clone(),
+            running_artifact_sha256: || Ok("different-running-sha".to_string()),
+        });
+        match outcome {
+            ReloadVerifyOutcome::VerificationFailed { expected, actual } => {
+                assert_eq!(expected, "expected-sha");
+                assert_eq!(actual, "different-running-sha");
+            }
+            other => panic!("expected VerificationFailed, got {other:?}"),
+        }
+
+        // pending-update.json must remain on disk with `pending_update_state = Mismatch` so
+        // the restoreOffer UI and F3b's `perform_restore_previous` can recover.
+        let update_dir = config_update_dir(&dir);
+        let pending_path = update_dir.join(PENDING_UPDATE_FILENAME);
+        assert!(
+            pending_path.exists(),
+            "pending-update.json must remain on disk on mismatch"
+        );
+        let flagged: PendingUpdate =
+            serde_json::from_slice(&fs::read(&pending_path).expect("read")).expect("parse");
+        assert_eq!(flagged.pending_update_state, PendingUpdateState::Mismatch);
+
+        // installed-state.json must NOT have been written — first install would have nothing
+        // on disk, and a previous install must keep its prior installed-state untouched.
+        assert!(
+            !update_dir.join(INSTALLED_STATE_FILENAME).exists(),
+            "installed-state.json must not be written on mismatch"
+        );
+    }
+
+    /// When no pending-update.json is on disk (clean relaunch, or after a successful prior
+    /// promotion cleared it), the verifier must return `NoPendingUpdate` and not touch any
+    /// files.
+    #[test]
+    fn relaunch_verification_no_pending_returns_no_pending_update() {
+        let dir = tempdir("no-pending");
+
+        let outcome = verify_relaunch_artifact_impl(ReloadVerifyConfig {
+            config_dir: dir.clone(),
+            running_artifact_sha256: || Ok("any-sha".to_string()),
+        });
+        assert_eq!(outcome, ReloadVerifyOutcome::NoPendingUpdate);
+
+        let update_dir = config_update_dir(&dir);
+        assert!(
+            !update_dir.join(PENDING_UPDATE_FILENAME).exists(),
+            "verifier must not write pending-update.json when none was on disk"
+        );
+        assert!(
+            !update_dir.join(INSTALLED_STATE_FILENAME).exists(),
+            "verifier must not write installed-state.json when there was no pending"
+        );
+    }
+
+    /// Defensive: a tampered or unreadable `pending-update.json` must be treated as
+    /// `NoPendingUpdate` so a corrupt marker never wedges the shell on every relaunch.
+    #[test]
+    fn relaunch_verification_unreadable_pending_falls_back_to_no_pending() {
+        let dir = tempdir("corrupt");
+        let update_dir = config_update_dir(&dir);
+        fs::create_dir_all(&update_dir).expect("mkdir");
+        fs::write(
+            update_dir.join(PENDING_UPDATE_FILENAME),
+            b"not-json-{garbage",
+        )
+        .expect("write garbage");
+
+        let outcome = verify_relaunch_artifact_impl(ReloadVerifyConfig {
+            config_dir: dir.clone(),
+            running_artifact_sha256: || Ok("any-sha".to_string()),
+        });
+        assert_eq!(outcome, ReloadVerifyOutcome::NoPendingUpdate);
+    }
+
+    /// If the running-hash closure returns an I/O error (e.g. the binary could not be read),
+    /// the verifier must not promote; it must surface a verification failure with the
+    /// expected sha so the operator is prompted to restore.
+    #[test]
+    fn relaunch_verification_running_hash_error_returns_verification_failed() {
+        let dir = tempdir("hash-error");
+        write_pending(&dir, "expected-sha", "0.0.0", "0.0.1");
+
+        let outcome = verify_relaunch_artifact_impl(ReloadVerifyConfig {
+            config_dir: dir.clone(),
+            running_artifact_sha256: || {
+                Err(std::io::Error::new(
+                    std::io::ErrorKind::PermissionDenied,
+                    "binary unreadable",
+                ))
+            },
+        });
+        match outcome {
+            ReloadVerifyOutcome::VerificationFailed { expected, actual } => {
+                assert_eq!(expected, "expected-sha");
+                assert_eq!(actual, "<compute-error>");
+            }
+            other => panic!("expected VerificationFailed, got {other:?}"),
+        }
+    }
+
+    /// F3c hashing seam: the Tauri shim streams the running binary through
+    /// `sha256_of_file`. Hashing an empty file must yield the well-known empty-input
+    /// sha256, proving the seam compiles and works without a real AppImage fixture.
+    #[test]
+    fn sha256_of_file_roundtrip_on_empty_file() {
+        let dir = tempdir("sha-empty");
+        let path = dir.join("empty.bin");
+        fs::write(&path, b"").expect("write empty file");
+        let digest = sha256_of_file(&path).expect("hash empty file");
+        assert_eq!(
+            digest,
+            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        );
+    }
+
+    /// The F3a/F3b-deferred command bodies are not wired yet. Their registration-only
+    /// shims must return an honest error instead of fabricating eligibility, install,
+    /// or restore truth. F0-EXTEND `t_5b652e93` authorizes registration; the bodies
+    /// remain F3a's (`is_install_eligible`, `perform_install`) and F3b's
+    /// (`perform_restore_previous`) surfaces.
+    #[test]
+    fn deferred_command_shims_error_instead_of_fabricating_truth() {
+        assert!(is_install_eligible().is_err());
+        assert!(
+            perform_install(
+                serde_json::json!({"version":"0.0.1","channel":"alpha"}),
+                "https://example.invalid/update-index.json".to_string()
+            )
+            .is_err()
+        );
+        assert!(perform_restore_previous().is_err());
+    }
+
+    /// The F3c TS mirror (`installAction.ts` `ReloadVerifyOutcome`) reads camelCase
+    /// fields under kebab-case `kind` tags — the module-wide wire convention. Pin the
+    /// serialized shape so the Rust and TS halves of F3c cannot drift.
+    #[test]
+    fn reload_verify_outcome_serializes_kebab_kinds_with_camel_fields() {
+        let promoted = ReloadVerifyOutcome::Promoted {
+            installed_state_path: PathBuf::from("/tmp/installed-state.json"),
+            promoted_version: "0.0.1".to_string(),
+        };
+        let json = serde_json::to_string(&promoted).expect("serialize promoted");
+        assert!(
+            json.contains("\"kind\":\"promoted\""),
+            "kebab kind tag: {json}"
+        );
+        assert!(
+            json.contains("\"installedStatePath\":"),
+            "camelCase installedStatePath: {json}"
+        );
+        assert!(
+            json.contains("\"promotedVersion\":\"0.0.1\""),
+            "camelCase promotedVersion: {json}"
+        );
+
+        let failed = ReloadVerifyOutcome::VerificationFailed {
+            expected: "aaa".to_string(),
+            actual: "bbb".to_string(),
+        };
+        let json = serde_json::to_string(&failed).expect("serialize failed");
+        assert!(
+            json.contains("\"kind\":\"verification-failed\""),
+            "kebab kind tag: {json}"
         );
     }
 }

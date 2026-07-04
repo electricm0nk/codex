@@ -16,14 +16,32 @@ export const PENDING_ROLLBACK_PANEL_ID = 'pending-rollback-panel';
  */
 export function Sd16PendingRollbackPanel({
   deps,
+  stateSource = 'unwired',
+  promotedVersion = '',
 }: {
   deps: Sd16UpdateControllerDeps;
+  /**
+   * F3c binding layer (AV-DIAG-3, joint with E6): which runtime surface
+   * produced the pending/rollback values. `pending-update` means F3a's
+   * `pending-update.json`; `installed-state` means `installed-state.json`;
+   * `unwired` means no runtime data is bound and the values are E6's
+   * deterministic placeholders.
+   */
+  stateSource?: 'pending-update' | 'installed-state' | 'unwired';
+  /**
+   * Version promoted by the last relaunch verification (F3c's
+   * `verify_relaunch_artifact` `promoted` outcome). Empty until the shell
+   * wires the verification result through.
+   */
+  promotedVersion?: string;
 }) {
   const { pendingRollback } = deps;
   return (
     <section
       id={PENDING_ROLLBACK_PANEL_ID}
       data-testid="sd16-pending-rollback-panel"
+      data-state-source={stateSource}
+      data-promoted-version={promotedVersion}
       style={SD16_UI_PANEL_STYLE}
     >
       <h2 style={SD16_UI_PANEL_TITLE_STYLE}>Pending / Rollback</h2>

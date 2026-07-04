@@ -115,10 +115,31 @@ function testEmptyStateSurfacesDeterministicPlaceholders() {
   );
 }
 
+/**
+ * F3c extension (AV-DIAG-3, joint with E6): the panel carries the F3c
+ * binding-layer attributes. With E6's unwired deps the state source must
+ * default to "unwired" and the promoted version must be present-but-empty,
+ * so operator tooling can detect "not wired" without guessing.
+ */
+function testF3cStateSourceBindingDefaultsToUnwired() {
+  const html = render(buildUnwiredUpdateDeps());
+  assertContains(
+    html,
+    'data-state-source="unwired"',
+    'AV-DIAG-3 (F3c): panel must default data-state-source to "unwired" for E6 unwired deps',
+  );
+  assertContains(
+    html,
+    'data-promoted-version=""',
+    'AV-DIAG-3 (F3c): panel must expose an empty data-promoted-version until runtime data is wired',
+  );
+}
+
 testPanelRendersWithCanonicalId();
 testAllFivePendingRollbackFieldsExposed();
 testE7PlaceholderNoteIsVisibleUntilE7Lands();
 testSuppliedStateRendersValues();
 testEmptyStateSurfacesDeterministicPlaceholders();
+testF3cStateSourceBindingDefaultsToUnwired();
 
-console.log('pendingRollbackPanel.test.ts: 5/5 assertions passed');
+console.log('pendingRollbackPanel.test.ts: 6/6 assertions passed');
