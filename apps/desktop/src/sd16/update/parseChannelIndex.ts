@@ -97,8 +97,8 @@ export function parseChannelIndex(rawText: string): ParseChannelIndexResult {
   }
 
   const ok = validateChannelIndex(parsed);
-  if (!ok && validateChannelIndex.errors) {
-    return { ok: false, errors: validateChannelIndex.errors };
+  if (!ok) {
+    return { ok: false, errors: validateChannelIndex.errors ?? [] };
   }
 
   // Deep-clone via structured clone so downstream mutators cannot
