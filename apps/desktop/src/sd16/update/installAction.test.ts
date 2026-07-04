@@ -87,7 +87,6 @@ async function main(): Promise<void> {
   await testPerformInstallDoesNotMountOnMustRelaunchFalse();
   await testMountRelaunchPromptReflectsMustRelaunchFlag();
   await testMountRelaunchPromptIsIdempotent();
-  await testMountRelaunchPromptReflectsMustRelaunchFlag();
   await testBuildRelaunchPromptMarkupCarriesAllHookAttributes();
 }
 
