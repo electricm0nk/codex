@@ -1,10 +1,44 @@
 /**
- * SD-16-E6-F3c barrel.
+ * SD-16-E6 barrel.
  *
- * Exports the public surface of the F3c shell-update-UI slice. The runtime
- * (F4 wiring) imports the page-level entry `Sd16UpdateUi`; downstream
- * F3a / F3b modules import the controller types to satisfy the seam.
+ * Exports the public surface of F3b (eligibility + diagnostics model) and
+ * F3c (shell-update-UI). The runtime (F4 wiring) imports the page-level
+ * entry `Sd16UpdateUi`; downstream F3a / F3b modules import the controller
+ * types to satisfy the seam.
  */
+
+export {
+  compareVersions,
+  decideEligibility,
+} from './eligibility';
+export type {
+  ChannelLabel,
+  EligibilityDecision,
+  EligibilityInput,
+  EligibilityResult,
+  FetchStatus,
+  InstallKind,
+} from './eligibility';
+
+export {
+  DIAGNOSTIC_PLACEHOLDER,
+  defaultInstalledDiagnostics,
+  defaultLastCheckDiagnostics,
+  defaultPendingRollbackDiagnostics,
+  renderInstalledDiagnostics,
+  renderLastCheckDiagnostics,
+  renderPendingRollbackDiagnostics,
+} from './diagnostics';
+export type {
+  InstalledDiagnostics,
+  InstalledDiagnosticsView,
+  LastCheckDiagnostics,
+  LastCheckDiagnosticsView,
+  PendingRollbackDiagnostics,
+  PendingRollbackDiagnosticsView,
+  PendingUpdateState,
+  RollbackState,
+} from './diagnostics';
 
 export {
   Sd16ChannelSelector,

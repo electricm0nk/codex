@@ -62,6 +62,8 @@ export function Sd16CheckPanel({ deps, checkInProgress, onCheck }: Sd16CheckPane
         style={buttonStyle}
         onClick={() => onCheck(channel)}
       >
+        {checkInProgress ? 'Checking\u2026' : 'Check'}
+      </button>
       <div
         id={RELEASE_NOTES_ID}
         data-testid="sd16-release-notes"
