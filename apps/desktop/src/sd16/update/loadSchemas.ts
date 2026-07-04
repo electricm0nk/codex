@@ -49,18 +49,8 @@ export function loadUpdateManifestSchema(): LoadedJsonSchema {
   return updateManifestSchema as LoadedJsonSchema;
 }
 
-// Run the guard synchronously at first import so any divergence surfaces
-// immediately. Importing this module from anywhere in the app triggers it.
-// See `__fixtures__/schemas-guard.ts` for the assertion contract.
-//
-// Using a lazy side-effect import (vs. an eager top-level import) keeps
-// loadSchemas itself a pure data module that can be unit-tested in
-// isolation; the guard lives behind its own symbol.
-void import('./__fixtures__/schemas-guard').then(({ assertCanonicalSchemasLoaded }) => {
-  assertCanonicalSchemasLoaded();
-});
+import { assertCanonicalSchemasLoaded } from './__fixtures__/schemas-guard';
 
-// Re-export the guard API so callers (including the parseChannelIndex
-// and parseUpdateManifest modules) can re-verify at boot-time if they
-// want explicit fail-loud semantics.
-export { assertCanonicalSchemasLoaded } from './__fixtures__/schemas-guard';
+assertCanonicalSchemasLoaded();
+
+export { assertCanonicalSchemasLoaded };
