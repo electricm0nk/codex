@@ -57,7 +57,7 @@ export interface ChannelIndexFile {
   manifest_url: string;
   publication_timestamp: string;
   tranche_id: string;
-  signature: null | Record<string, unknown>;
+  signature?: null | Record<string, never>;
 }
 
 export type ParseChannelIndexFailure = {
