@@ -9,6 +9,9 @@ use serde::Serialize;
 
 use sd11_update_action::{resolve_sd11_update_action, Sd11UpdateActionRequest, Sd11UpdateReleaseTruth};
 use sd13_support_state_matrix::{load_sd13_support_state_matrix_snapshot, Sd13SupportStateMatrixSnapshot};
+use update::transaction::{
+    is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
+};
 
 use ge08_workbench::{
     build_ge08_workbench_snapshot, Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot,
@@ -69,7 +72,11 @@ fn main() {
             load_pilot_shell_snapshot,
             load_ge08_authoring_workbench_snapshot,
             sd11_update_action,
-            load_sd13_support_state_matrix
+            load_sd13_support_state_matrix,
+            is_install_eligible,
+            perform_install,
+            perform_restore_previous,
+            verify_relaunch_artifact
         ])
         .run(tauri::generate_context!())
         .expect("error while running codex desktop shell scaffold");
