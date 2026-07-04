@@ -552,7 +552,8 @@ fn verify_current_executable_identity(
         return Some(TransactionAbort {
             code: TransactionAbortCode::CurrentExecutableIdentityMismatch,
             reason: format!(
-                "running executable sha256 differs from installed-state artifact_sha256 {}",
+                "running executable sha256 {} differs from installed-state artifact_sha256 {}",
+                running.artifact_sha256,
                 installed.artifact_sha256
             ),
         });
