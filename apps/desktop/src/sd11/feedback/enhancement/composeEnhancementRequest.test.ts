@@ -101,7 +101,7 @@ function bodyHasSevenSectionsInContractOrder() {
     'release unit id present in body'
   );
   assert(
-    composed.draft.markdownBody.includes('Official release-truth surface: GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command'),
+    composed.draft.markdownBody.includes('Official release-truth surface: GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via apps/desktop/src/boundary/loadSd11UpdateAction.ts over the F3a fetch pipeline'),
     'official release-truth surface present in body'
   );
 }

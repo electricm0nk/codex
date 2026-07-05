@@ -418,7 +418,7 @@ export async function loadSd11TesterWorkbenchSurface(
         trustGateStatus: 'unverified-runtime-check-failed',
         replacementReleaseId: null,
         officialSurface:
-          'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+          'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via apps/desktop/src/boundary/loadSd11UpdateAction.ts over the F3a fetch pipeline',
         localBuildAuthority: reason,
       },
     };
