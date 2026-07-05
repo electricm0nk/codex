@@ -31,7 +31,7 @@ export interface Sd12ReleaseTruthSnapshot {
 export type Sd12ReleaseTruthRequest = Sd11UpdateActionRequest;
 
 const OFFICIAL_SURFACE =
-  'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command';
+  'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via apps/desktop/src/boundary/loadSd11UpdateAction.ts over the F3a fetch pipeline';
 
 export async function loadSd12ReleaseTruth(
   request: Sd12ReleaseTruthRequest
