@@ -1,14 +1,12 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod ge08_workbench;
-mod sd11_update_action;
 mod sd13_support_state_matrix;
 mod sd16_browser_handoff;
 mod update;
 
 use serde::Serialize;
 
-use sd11_update_action::{resolve_sd11_update_action, Sd11UpdateActionRequest, Sd11UpdateReleaseTruth};
 use sd13_support_state_matrix::{load_sd13_support_state_matrix_snapshot, Sd13SupportStateMatrixSnapshot};
 use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
@@ -55,11 +53,6 @@ fn load_ge08_authoring_workbench_snapshot(
     build_ge08_workbench_snapshot(request)
 }
 
-#[tauri::command]
-fn sd11_update_action(request: Sd11UpdateActionRequest) -> Sd11UpdateReleaseTruth {
-    resolve_sd11_update_action(request)
-}
-
 /// Read-only SD-13 support-state/debt bridge for the SD-11 tester workbench.
 /// Returns the seeded SD-13 matrix truth verbatim; no filtering or promotion.
 #[tauri::command]
@@ -72,7 +65,6 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             load_pilot_shell_snapshot,
             load_ge08_authoring_workbench_snapshot,
-            sd11_update_action,
             load_sd13_support_state_matrix,
             sd16_browser_handoff::sd16_browser_handoff,
             is_install_eligible,
