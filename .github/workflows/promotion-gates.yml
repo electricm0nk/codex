@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # Need programs/codex/requirements/... to read the canonical
           # release notes + tranche manifest. pull_request_target
