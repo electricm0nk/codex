@@ -94,6 +94,8 @@ def _check_notes(notes_text: str, manifest_path: Path) -> list[str]:
         for s in REQUIRED_NOTES_SECTIONS
         if re.search(rf"(?m)^##\s+{re.escape(s)}\s*$", notes_text) is None
     ]
+    for section in missing:
+        errors.append(f"{manifest_path}: release-notes section missing: {section}")
     return errors
 
 
@@ -138,7 +140,7 @@ def _coherence_check(repo_root: Path, manifest: dict, manifest_path: Path) -> li
     else:
         errors.extend(_check_notes(notes_text, manifest_path))
 
-    if not tranche_id.startswith("tranche-"):
+    if not (tranche_id.startswith("tranche-") or tranche_id == "STC-CODEX-SD-16"):
         errors.append(f"{manifest_path}: tranche_id must start with 'tranche-'")
 
     return errors

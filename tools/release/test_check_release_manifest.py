@@ -144,6 +144,7 @@ class TmpRepo(unittest.TestCase):
                 message,
                 "--author=Codex CI <ci@example.invalid>",
             ]
+        )
 
     def test_valid_manifest_passes(self):
         notes = self.workdir / VALID_MANIFEST["release_notes_path"]

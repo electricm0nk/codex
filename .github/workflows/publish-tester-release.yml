@@ -219,10 +219,17 @@ jobs:
             --manifest update-manifest.json \
             --schema ../schemas/update/update-manifest.schema.json
 
+      - name: Validate release manifest (gate)
+        working-directory: release-staging
+        run: |
+          set -euo pipefail
+          python3 ../tools/release/check_release_manifest_against_dev_schema.py \
+            update-manifest.json
+
       - name: Compute checksums
         working-directory: release-staging
         run: |
-          sha256sum ./*.deb ./*.AppImage provenance.json update-manifest.json update-manifest-stub.json > checksums.sha256
+          sha256sum ./*.deb ./*.AppImage provenance.json update-manifest.json update-manifest-stub.json channels/*.json > checksums.sha256
           cat checksums.sha256
 
       - name: Derive release tag and title
@@ -234,45 +241,12 @@ jobs:
           echo "tag=${CHANNEL}-v${VERSION}-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
           echo "title=${CHANNEL} v${VERSION} (${SHORT_SHA})" >> "$GITHUB_OUTPUT"
 
-      - name: Write release notes
+      - name: Stage tranche release notes
         run: |
-          CHANNEL="${{ steps.channel.outputs.channel }}"
-          DEB_NAME="${{ steps.stage.outputs.deb_name }}"
-          APPIMAGE_NAME="${{ steps.stage.outputs.appimage_name }}"
-          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-
-          cat > release-notes.md << NOTES_EOF
-          ## Tester release -- channel: ${CHANNEL}
-
-          **Tester channel:** ${CHANNEL}
-          **Operator branch:** ${GITHUB_REF_NAME}
-          **Source revision:** ${GITHUB_SHA}
-          **Publication run:** ${RUN_URL}
-
-          ## Platform scope
-
-          | Platform | Tier | Update posture |
-          |---|---|---|
-          | Linux | First-class | Manual install only -- update checks not yet wired in this slice |
-          | macOS | Second-class | Not shipped in this release unit -- automatic updates not yet available |
-          | Windows | Third-class | Not shipped in this release unit -- automatic updates not available |
-
-          ## Release assets
-
-          - ${DEB_NAME} -- install-oriented Linux artifact
-          - ${APPIMAGE_NAME} -- recovery/manual Linux artifact
-          - checksums.sha256 -- SHA-256 checksums for all distributed assets
-          - provenance.json -- build provenance and source-revision receipt
-          - update-manifest-stub.json -- update manifest placeholder; full implementation reserved for SD-12-E3
-
-          ## Channel notes
-
-          - alpha builds originate from develop (fastest-moving tester track; highest churn)
-          - stable builds originate from main (safest supported tester track)
-          - beta is reserved until a governed candidate promotion surface exists in repo/workflow truth
-
-          Update checks are not yet wired. Manual installation is required for this release.
-          NOTES_EOF
+          set -euo pipefail
+          mkdir -p release-staging
+          cp programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md \
+             release-staging/release-notes.md
 
       - name: Create release and upload assets
         env:
@@ -289,13 +263,14 @@ jobs:
 
           gh release create "$TAG" \
             --title "$TITLE" \
-            --notes-file release-notes.md \
+            --notes-file release-staging/release-notes.md \
             "${EXTRA_FLAGS[@]}" \
             release-staging/*.deb \
             release-staging/*.AppImage \
             release-staging/checksums.sha256 \
             release-staging/provenance.json \
-            release-staging/update-manifest-stub.json
+            release-staging/update-manifest-stub.json \
+            release-staging/channels/*.json
 
       # Channel-index update: the only legitimate writer of the protected
       # `update-index` branch in the normal path. Pushes channels/<channel>.json
@@ -430,3 +405,26 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "${COMMIT_MESSAGE}"
           git push origin HEAD:update-index
+
+      # F4: schema-conformant channel-index pointer. Overwrites the legacy
+      # shape produced by `Prepare channel index payload` so the release
+      # asset bundle contains a channels/<channel>.json that satisfies
+      # schemas/update/channel-index.schema.json. The `update-index` branch
+      # update above is unchanged (still uses $GITHUB_ENV payload); F4
+      # only fixes the on-disk release asset.
+      - name: Emit alpha channel index
+        env:
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          CHANNEL: ${{ steps.channel.outputs.channel }}
+          RELEASE_TAG: ${{ steps.release_meta.outputs.tag }}
+        run: |
+          set -euo pipefail
+          mkdir -p release-staging/channels
+          python3 tools/release/emit_channel_index.py \
+            --channel "${CHANNEL}" \
+            --manifest release-staging/update-manifest.json \
+            --output release-staging/channels/${CHANNEL}.json \
+            --release-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}" \
+            --manifest-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/update-manifest.json" \
+            --published-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
