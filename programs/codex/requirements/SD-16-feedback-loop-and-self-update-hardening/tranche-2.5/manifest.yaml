@@ -1,0 +1,22 @@
+# Tranche 2.5 manifest for SD-16 feedback-loop-and-self-update-hardening.
+#
+# Bound to the publish-tester-release workflow's "Prepare channel index payload"
+# step on origin/develop. The channel-index prep step reads the following
+# fields from this file (see .github/workflows/publish-tester-release.yml):
+#
+#   tranche_id        : written into channels/<channel>.json as release.tranche_id
+#   promotion_branch  : must equal the source branch being released from
+#                       (e.g. develop for alpha, main for stable)
+#
+# The release-notes.md file at the parent directory is the canonical
+# release-notes artifact referenced by every PR in this tranche.
+# See sd16-e1-f3 (commit b7d3d6f) and sd16-e4-f3b (commit 088c3f0) for
+# the spec-side decisions that bind this manifest to the release lane.
+
+schema_version: v1
+tranche_id: tranche-2.5
+spec_domain_id: SD-16
+channel: alpha
+promotion_branch: develop
+release_notes_path: programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md
+update_eligibility: automatic
