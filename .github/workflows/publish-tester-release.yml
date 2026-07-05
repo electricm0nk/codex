@@ -365,7 +365,7 @@ jobs:
           # AND stages the manifest content onto the protected update-index branch
           # under manifests/<MANIFEST_TAG>/update-manifest.json so the pointer
           # resolves to a real, CORS-reachable asset.
-          MIRROR_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/raw/update-index/manifests/${MANIFEST_TAG}/update-manifest.json"
+          MIRROR_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/update-index/manifests/${MANIFEST_TAG}/update-manifest.json"
           MANIFEST_SRC="${GITHUB_WORKSPACE}/release-staging/update-manifest.json"
 
           if [ ! -f "${MANIFEST_SRC}" ]; then
