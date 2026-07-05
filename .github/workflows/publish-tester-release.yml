@@ -316,12 +316,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHANNEL: ${{ steps.channel.outputs.channel }}
           TAG: ${{ steps.release_meta.outputs.tag }}
+          MANIFEST_TAG: ${{ steps.generate_manifest.outputs.manifest-tag }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
           set -euo pipefail
 
-          if [ -z "${CHANNEL:-}" ] || [ -z "${TAG:-}" ]; then
-            echo "::error::channel-index: missing CHANNEL or TAG from upstream steps"
+          if [ -z "${CHANNEL:-}" ] || [ -z "${TAG:-}" ] || [ -z "${MANIFEST_TAG:-}" ]; then
+            echo "::error::channel-index: missing CHANNEL, TAG, or MANIFEST_TAG from upstream steps"
             exit 1
           fi
 
@@ -356,18 +357,46 @@ jobs:
           MANIFEST_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${TAG}/update-manifest-stub.json"
           NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG}"
 
+          # SD16-E4-F6: CORS-friendly mirror URL. raw.githubusercontent.com
+          # sends Access-Control-Allow-Origin: *, unlike github.com/.../releases/download/...
+          # (which 302-redirects to release-assets.githubusercontent.com and ships no
+          # CORS headers — that path is what currently breaks the Tauri webview fetch).
+          # F6 rewrites the channel-index pointer's manifest_url to the mirrored URL
+          # AND stages the manifest content onto the protected update-index branch
+          # under manifests/<MANIFEST_TAG>/update-manifest.json so the pointer
+          # resolves to a real, CORS-reachable asset.
+          MIRROR_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/raw/update-index/manifests/${MANIFEST_TAG}/update-manifest.json"
+          MANIFEST_SRC="${GITHUB_WORKSPACE}/release-staging/update-manifest.json"
+
+          if [ ! -f "${MANIFEST_SRC}" ]; then
+            echo "::error::channel-index: expected manifest source not found at ${MANIFEST_SRC} (was the Generate update manifest step skipped or did it fail?)"
+            exit 1
+          fi
+
           # Deterministic JSON payload (sorted keys via jq -S). signature is
-          # reserved (Tranche 2.5 does not sign channel indexes).
+          # reserved (Tranche 2.5 does not sign channel indexes). F6 rewrites
+          # the .release.manifest_url field from the github.com release-download
+          # URL to the mirrored raw.githubusercontent.com URL.
           INDEX_JSON="$(jq -n \
             --arg sv "v1" \
             --arg ch "${CHANNEL}" \
             --arg tag "${TAG}" \
             --arg pa "${PUBLISHED_AT}" \
-            --arg mu "${MANIFEST_URL}" \
+            --arg mu "${MIRROR_URL}" \
             --arg nu "${NOTES_URL}" \
             --arg tid "${TRANCHE_ID}" \
             '{channel: $ch, release: {manifest_url: $mu, notes_url: $nu, published_at: $pa, tag: $tag, tranche_id: $tid}, schema_version: $sv, signature: null}' \
             | jq -S .)"
+
+          # F6: stage the manifest mirror under manifests/<MANIFEST_TAG>/ so the
+          # same git add that ships channels/${CHANNEL}.json onto update-index
+          # also ships manifests/<MANIFEST_TAG>/update-manifest.json in the same
+          # commit. We mirror the content (not symlink) and validate it parses
+          # before staging so a corrupted source payload fails closed here
+          # rather than poisoning the protected update-index branch.
+          mkdir -p "manifests/${MANIFEST_TAG}"
+          cp "${MANIFEST_SRC}" "manifests/${MANIFEST_TAG}/update-manifest.json"
+          python3 -c "import json; json.load(open('manifests/${MANIFEST_TAG}/update-manifest.json'))"
 
           # Stage into the workspace first, then serialize the payload into
           # $GITHUB_ENV so the update-index writer can restore it after
@@ -378,32 +407,45 @@ jobs:
           # Self-check: the staged file must parse as JSON.
           python3 -c "import json; json.load(open('channels/${CHANNEL}.json'))"
 
+          # Serialize the mirror content the same way (base64 into $GITHUB_ENV)
+          # so the update step can restore it after `git reset --hard` +
+          # `git checkout update-index` discards local untracked files.
+          MANIFEST_CONTENT_B64="$(base64 -w0 "manifests/${MANIFEST_TAG}/update-manifest.json")"
+          if [ -z "${MANIFEST_CONTENT_B64}" ]; then
+            echo "::error::channel-index: failed to base64-encode the staged manifest mirror at manifests/${MANIFEST_TAG}/update-manifest.json"
+            exit 1
+          fi
+
           # Export to subsequent steps via $GITHUB_ENV (so the action step
           # can reference them as ${{ env.* }}).
           {
             echo "CHANNEL=${CHANNEL}"
             echo "TAG=${TAG}"
+            echo "MANIFEST_TAG=${MANIFEST_TAG}"
             echo "PUBLISHED_AT=${PUBLISHED_AT}"
             echo "MANIFEST_URL=${MANIFEST_URL}"
+            echo "MIRROR_URL=${MIRROR_URL}"
             echo "NOTES_URL=${NOTES_URL}"
             echo "TRANCHE_ID=${TRANCHE_ID}"
             echo "COMMIT_MESSAGE=channel-index: ${CHANNEL} ${TAG} (tranche ${TRANCHE_ID})"
             echo "CHANNEL_INDEX_JSON_B64=$(printf '%s' "${INDEX_JSON}" | base64 -w0)"
+            echo "MANIFEST_CONTENT_B64=${MANIFEST_CONTENT_B64}"
           } >> "${GITHUB_ENV}"
 
-          echo "channel-index: prepared channels/${CHANNEL}.json (channel=${CHANNEL}, tag=${TAG}, tranche=${TRANCHE_ID}, published_at=${PUBLISHED_AT})"
+          echo "channel-index: prepared channels/${CHANNEL}.json (channel=${CHANNEL}, tag=${TAG}, tranche=${TRANCHE_ID}, published_at=${PUBLISHED_AT}, mirror_url=${MIRROR_URL})"
 
       - name: Update channel index on update-index branch
         if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml') != ''
         run: |
           set -euo pipefail
 
-          if [ -z "${CHANNEL:-}" ] || [ -z "${COMMIT_MESSAGE:-}" ] || [ -z "${CHANNEL_INDEX_JSON_B64:-}" ]; then
-            echo "::error::channel-index: missing CHANNEL, COMMIT_MESSAGE, or CHANNEL_INDEX_JSON_B64"
+          if [ -z "${CHANNEL:-}" ] || [ -z "${COMMIT_MESSAGE:-}" ] || [ -z "${CHANNEL_INDEX_JSON_B64:-}" ] || [ -z "${MANIFEST_TAG:-}" ] || [ -z "${MANIFEST_CONTENT_B64:-}" ]; then
+            echo "::error::channel-index: missing CHANNEL, COMMIT_MESSAGE, CHANNEL_INDEX_JSON_B64, MANIFEST_TAG, or MANIFEST_CONTENT_B64"
             exit 1
           fi
 
           FILE="channels/${CHANNEL}.json"
+          MIRROR_FILE="manifests/${MANIFEST_TAG}/update-manifest.json"
 
           git reset --hard HEAD
           git clean -fd
@@ -420,9 +462,17 @@ jobs:
           printf '%s' "${CHANNEL_INDEX_JSON_B64}" | base64 -d > "${FILE}"
           python3 -c "import json; json.load(open('${FILE}'))"
 
-          git add "${FILE}"
+          # SD16-E4-F6: restore the mirrored manifest so the same commit that
+          # adds channels/${CHANNEL}.json to update-index also adds the CORS-friendly
+          # mirror at manifests/<MANIFEST_TAG>/update-manifest.json that the
+          # rewritten channel-index pointer now references.
+          mkdir -p "manifests/${MANIFEST_TAG}"
+          printf '%s' "${MANIFEST_CONTENT_B64}" | base64 -d > "${MIRROR_FILE}"
+          python3 -c "import json; json.load(open('${MIRROR_FILE}'))"
+
+          git add "${FILE}" "${MIRROR_FILE}"
           if git diff --cached --quiet; then
-            echo "channel-index: no changes for ${FILE}; update-index is already current"
+            echo "channel-index: no changes for ${FILE} and ${MIRROR_FILE}; update-index is already current"
             exit 0
           fi
 
