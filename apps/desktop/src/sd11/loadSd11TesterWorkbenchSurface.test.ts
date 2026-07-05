@@ -38,7 +38,7 @@ function noOfficialReleaseTruth() {
       trustGateStatus: 'not-applicable-no-governed-release',
       replacementReleaseId: null,
       officialSurface:
-        'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+        'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via apps/desktop/src/boundary/loadSd11UpdateAction.ts over the F3a fetch pipeline',
       localBuildAuthority: 'Feature/local build — no governed release unit was proven.',
     },
   };
@@ -185,7 +185,7 @@ async function verifiesRealGe08SnapshotSurface() {
   );
   assertEqual(
     model.status.issueCapture.releaseTruth?.officialSurface,
-    'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+    'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via apps/desktop/src/boundary/loadSd11UpdateAction.ts over the F3a fetch pipeline',
     'status issue-capture official surface'
   );
 }

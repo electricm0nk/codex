@@ -80,7 +80,7 @@ export function makeSurface(
           trustGateStatus: 'governed-manual-only',
           replacementReleaseId: 'alpha-v0.0.1-test-9876fedc',
           officialSurface:
-            'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via the sd11_update_action Tauri command',
+            'GitHub release assets published by .github/workflows/publish-tester-release.yml and consumed via apps/desktop/src/boundary/loadSd11UpdateAction.ts over the F3a fetch pipeline',
           localBuildAuthority: 'governed-release-unit',
         },
       },
