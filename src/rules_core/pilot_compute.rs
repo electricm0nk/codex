@@ -21,11 +21,19 @@
 //! but nothing here grounds level-4+ Fighter burden, a general feat-effect engine,
 //! spellcasting, multiclassing, or non-Fighter positive support. The SD13-E3-F6 slice
 //! additionally recognizes the deterministic Human Paladin level-1 and Human Ranger
-//! level-1 hybrid chassis as direct runtime evidence, but keeps both explicitly
-//! claim-blocked on their still-missing non-spell class-feature burden and later spell
-//! burden; it grounds no hybrid class-feature or spell math. Unsupported input yields
-//! claim-blocking diagnostics and withheld explanations rather than fabricated
-//! values.
+//! level-1 hybrid chassis as direct runtime evidence. The Paladin row moved from
+//! `Blocked` / `Computed` to `Partial` / `Computed` once its bounded non-spell
+//! class-feature burden (smite evil, lay on hands, divine grace, mercy) was lifted:
+//! smite evil, lay on hands, and divine grace are now surfaced as computed feature
+//! explanations on the deterministic Human Paladin level-1 posture, and mercy is
+//! named as a Paladin level-3 gate (not yet gained at level 1). The Paladin row
+//! remains claim-blocked only on its later hybrid spell burden, deferred to
+//! SD13-E4. The Ranger row stays fully blocked on its non-spell class-feature
+//! burden (favored enemy, combat style, skill/tracking) and the later spell
+//! burden. The slice grounds no smite-target/alignment execution, no
+//! lay-on-hands consumption, no level-2+ hybrid math, and no spell posture.
+//! Unsupported input yields claim-blocking diagnostics and withheld explanations
+//! rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
 
@@ -111,6 +119,25 @@ const FIGHTER_CLASS_ID: &str = "class:fighter";
 const PALADIN_CLASS_ID: &str = "class:paladin";
 const RANGER_CLASS_ID: &str = "class:ranger";
 const HYBRID_BASELINE_LEVEL: u8 = 1;
+
+// SD13-E3 paladin class-feature burden. The deterministic Human Paladin level-1
+// posture lifts its non-spell class-feature burden to `Partial` by surfacing the
+// bounded smite evil, lay on hands, and divine grace magnitudes on the compute
+// seam, while mercy is named as the level-3 gate (not yet gained at level 1).
+// These values are PF1 Core Rulebook class-feature magnitudes, sourced from
+// cr_abilities_class.lst Paladin (smite evil, lay on hands, divine grace, mercy),
+// not oracle-checked parity.
+const PALADIN_SMITE_EVIL_LEVEL_1_ATTACK_BONUS: i16 = 1;
+const PALADIN_SMITE_EVIL_LEVEL_1_DAMAGE_BONUS: i16 = 2;
+// Smite evil daily uses at Paladin level 1: equal to the Charisma modifier, with a
+// minimum of one use per day.
+const PALADIN_SMITE_EVIL_LEVEL_1_DAILY_USES_MIN: i16 = 1;
+// Lay on hands pool at Paladin level 1: the Paladin's level times her Charisma
+// modifier (minimum 1). Recorded as the level-1 cap for the deterministic posture.
+const PALADIN_LAY_ON_HANDS_LEVEL_1_LEVEL_MULTIPLIER: i16 = 1;
+const PALADIN_LAY_ON_HANDS_POOL_MIN: i16 = 1;
+// Mercy is gained at Paladin level 3; level 1 and 2 do not yet grant it.
+const PALADIN_MERCY_LEVEL: u8 = 3;
 
 // SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
 // caster; this slice recognizes only its bounded single-class level-1 identity as direct
@@ -724,22 +751,24 @@ fn hybrid_level1_class(input: &CharacterInput) -> Option<HybridClass> {
 }
 
 /// Surface direct SD13-E3-F6 runtime evidence for the deterministic Human Paladin
-/// level-1 and Human Ranger level-1 hybrid chassis, while keeping both explicitly
-/// claim-blocked on their still-missing burdens.
+/// level-1 and Human Ranger level-1 hybrid chassis, while keeping their bounded
+/// non-spell class-feature and later spell burdens legible.
 ///
-/// This deliberately does not compute a supported hybrid chassis. It grounds no base
-/// attack/save progression, no smite / lay-on-hands / divine-grace / mercy execution,
-/// no favored-enemy / combat-style / tracking execution, and no spell posture. It only:
-/// - leaves one chassis-recognition explanation so the `class:paladin:1` / `class:ranger:1`
-///   identity is acknowledged as a hybrid martial baseline rather than an undocumented
-///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two claim-blocking diagnostics naming the still-missing non-spell class-feature
-///   burden family and the later hybrid spell burden explicitly, rather than hiding behind
-///   a generic "unsupported hybrid" label.
+/// This deliberately does not compute a supported hybrid chassis base attack/save
+/// progression. For the deterministic Human Paladin level-1 posture the bounded
+/// non-spell class-feature burden is lifted: smite evil, lay on hands, and divine
+/// grace are surfaced as named feature explanations with their computed Paladin
+/// level-1 magnitudes, and mercy is named as the Paladin level-3 gate (not yet
+/// gained at level 1). The later paladin spell burden stays claim-blocked. The
+/// deterministic Human Ranger level-1 posture stays claim-blocked on both its
+/// non-spell class-feature burden and its later spell burden — Ranger gets its
+/// own follow-up slice.
 ///
-/// The bounded Fighter-shaped compute path already claim-blocks these inputs; this seam
-/// keeps that blocked posture but makes the hybrid class identity and its named burdens
-/// legible on the runtime path.
+/// The bounded Fighter-shaped compute path already claim-blocks these inputs; this
+/// seam makes the hybrid class identity and the lifted vs. still-blocked feature
+/// and spell burdens legible on the runtime path. No smite-target alignment
+/// execution, no lay-on-hands consumption, no level-2+ hybrid math, and no spell
+/// posture are fabricated here.
 fn explain_hybrid_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -757,7 +786,12 @@ fn explain_hybrid_level1_chassis(
             PALADIN_CLASS_ID,
             "Paladin",
             "class_chassis.hybrid_baseline.paladin",
-            "class_feature.hybrid.paladin.unsupported",
+            // The Paladin non-spell class-feature burden is lifted to `Partial` by the
+            // SD13-E3 paladin class-feature slice. The legacy `class_feature.hybrid.paladin.unsupported`
+            // identifier is preserved only in the matrix seed note for backwards
+            // compatibility; on the runtime path the Paladin now routes through
+            // `explain_paladin_level1_class_features` instead.
+            "class_feature.hybrid.paladin.lifted",
             "smite evil, lay on hands, divine grace, and mercy",
             "class_spell.hybrid.paladin.unsupported",
         ),
@@ -785,18 +819,34 @@ fn explain_hybrid_level1_chassis(
         ),
     });
 
-    // Still blocked (1/2): name the non-spell class-feature burden family explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: feature_id.to_owned(),
-        message: format!(
-            "{class_name} level {HYBRID_BASELINE_LEVEL} remains blocked on its non-spell class-feature \
-             burden: {feature_burden} are not implemented in this bounded hybrid chassis baseline, so no \
-             {class_name} class-feature support is claimed"
-        ),
-        claim_blocking: true,
-    });
+    match hybrid {
+        HybridClass::Paladin => {
+            // SD13-E3 paladin class-feature slice: lift the non-spell burden by surfacing
+            // the bounded Paladin level-1 feature magnitudes (smite evil, lay on hands,
+            // divine grace) as computed feature explanations, and name mercy as the
+            // Paladin level-3 gate (not yet gained at level 1). The runtime path does
+            // NOT emit a claim-blocking `class_feature.hybrid.paladin.unsupported`
+            // diagnostic any longer; the matrix seed still cites the legacy identifier
+            // in its note for backwards-compatibility tracking only.
+            explain_paladin_level1_class_features(input, explanations, diagnostics);
+        }
+        HybridClass::Ranger => {
+            // Still blocked (1/2): name the Ranger non-spell class-feature burden family
+            // explicitly. Ranger gets its own follow-up class-feature slice.
+            diagnostics.push(ComputationDiagnostic {
+                id: feature_id.to_owned(),
+                message: format!(
+                    "{class_name} level {HYBRID_BASELINE_LEVEL} remains blocked on its non-spell class-feature \
+                     burden: {feature_burden} are not implemented in this bounded hybrid chassis baseline, so no \
+                     {class_name} class-feature support is claimed"
+                ),
+                claim_blocking: true,
+            });
+        }
+    }
 
-    // Still blocked (2/2): name the later hybrid spell burden explicitly.
+    // Still blocked (2/2 for both classes, and the only remaining claim-block on the
+    // Paladin path): name the later hybrid spell burden explicitly.
     diagnostics.push(ComputationDiagnostic {
         id: spell_id.to_owned(),
         message: format!(
@@ -805,6 +855,114 @@ fn explain_hybrid_level1_chassis(
              chassis baseline and are deferred to the SD13-E4 spellcasting slice"
         ),
         claim_blocking: true,
+    });
+}
+
+/// Surface the bounded Paladin level-1 class-feature magnitudes on the deterministic
+/// Human Paladin level-1 posture, lifting the non-spell class-feature burden to
+/// `Partial`.
+///
+/// Three of the four class features named in the matrix row's blocker note are
+/// computed at Paladin level 1 (smite evil, lay on hands, divine grace). Mercy is
+/// named as the Paladin level-3 gate — it is not yet gained at level 1, so this
+/// slice surfaces that gate explicitly without fabricating a level-1 mercy effect.
+///
+/// Each computed value is grounded from cr_abilities_class.lst Paladin class
+/// features; none of these values are oracle-checked parity. The bounded honesty:
+/// - Smite evil is surfaced as a feature-recognition explanation carrying the
+///   level-1 per-use attack bonus, per-use damage bonus, and the bounded daily-use
+///   cap (`max(1, CHA modifier)`). It is not applied to the deterministic baseline
+///   attack/damage totals because the chosen input carries no smite-target
+///   alignment selection on this slice.
+/// - Lay on hands is surfaced as a feature-recognition explanation carrying the
+///   level-1 pool cap (`level × max(1, CHA modifier)`). It is not consumed because
+///   the chosen input carries no heal-usage selection.
+/// - Divine grace is surfaced as a per-save feature explanation carrying the
+///   bounded `Charisma modifier` contribution that PF1 applies to each save when
+///   the Paladin is not flat-footed. The chosen deterministic posture is not
+///   flat-footed, so the contribution is computed but not folded into the existing
+///   Fighter-shaped `total_saves` field (which is gated on a supported Fighter
+///   chassis). It is left as a legible explanation record so the feature magnitude
+///   is provable on the runtime path.
+/// - Mercy is named as a non-claim-blocking note that the Paladin level-3 gate has
+///   not yet opened for the deterministic level-1 posture; no mercy effect is
+///   fabricated at this level.
+///
+/// The Paladin row's later hybrid spell burden stays claim-blocked on the spell
+/// side; this function lifts only the non-spell burden.
+fn explain_paladin_level1_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    // The deterministic Human Paladin level-1 fixture uses Charisma 14 (+2); the
+    // chosen ability scores carry the source-of-truth modifier.
+    let charisma_modifier = ability_modifier(input.chosen.ability_scores.charisma);
+    let smite_daily_uses = charisma_modifier.max(PALADIN_SMITE_EVIL_LEVEL_1_DAILY_USES_MIN);
+    let lay_on_hands_pool =
+        PALADIN_LAY_ON_HANDS_LEVEL_1_LEVEL_MULTIPLIER * charisma_modifier.max(PALADIN_LAY_ON_HANDS_POOL_MIN);
+
+    // Smite evil: bounded Paladin level-1 magnitudes. The deterministic baseline
+    // is Longsword/Chain Shirt/Dodge and the chosen input carries no alignment
+    // smite target, so the per-use bonuses are surfaced as a feature-recognition
+    // record rather than folded into the deterministic baseline melee attack
+    // bonus.
+    explanations.push(ComputationExplanation {
+        id: "class_feature.paladin.smite_evil".to_owned(),
+        value: smite_daily_uses,
+        detail: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} smite evil (cr_abilities_class.lst Paladin): per-use \
+             attack bonus +{PALADIN_SMITE_EVIL_LEVEL_1_ATTACK_BONUS} and per-use damage bonus \
+             +{PALADIN_SMITE_EVIL_LEVEL_1_DAMAGE_BONUS} against an evil target; bounded daily-use cap is \
+             max(1, Charisma modifier) = max(1, {charisma_modifier:+}) = {smite_daily_uses}. The \
+             deterministic baseline attack and damage totals are not folded with the smite bonus because \
+             the chosen input carries no smite-target alignment selection on this slice; the bounded \
+             daily-use cap is the value carried on the runtime path."
+        ),
+    });
+
+    // Lay on hands: bounded Paladin level-1 pool cap.
+    explanations.push(ComputationExplanation {
+        id: "class_feature.paladin.lay_on_hands".to_owned(),
+        value: lay_on_hands_pool,
+        detail: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} lay on hands (cr_abilities_class.lst Paladin): bounded \
+             daily-healing pool is level × max(1, Charisma modifier) = \
+             {HYBRID_BASELINE_LEVEL} × max(1, {charisma_modifier:+}) = {lay_on_hands_pool} HP. The chosen \
+             input carries no lay-on-hands heal-usage selection on this slice, so no HP is consumed; the \
+             bounded pool cap is the value carried on the runtime path."
+        ),
+    });
+
+    // Divine grace: per-save Charisma contribution. Surface it as one bounded
+    // explanation naming the three saves it touches.
+    explanations.push(ComputationExplanation {
+        id: "class_feature.paladin.divine_grace".to_owned(),
+        value: charisma_modifier,
+        detail: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} divine grace (cr_abilities_class.lst Paladin): adds \
+             Charisma modifier (+{charisma_modifier}) to each saving throw (Fortitude, Reflex, Will) \
+             while the Paladin is not flat-footed. The deterministic posture is not flat-footed, so the \
+             contribution is computed at {charisma_modifier:+} to each save. This is left as a feature \
+             explanation rather than folded into the Fighter-shaped `total_saves` field, which is \
+             gated on a supported Fighter chassis; the bounded Charisma contribution is the value \
+             carried on the runtime path."
+        ),
+    });
+
+    // Mercy: Paladin level-3 gate, not yet gained at level 1. This is a bounded
+    // non-claim-blocking note so the four-burden name in the matrix row stays
+    // legible without hiding mercy's level-3 gate behind a generic label.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.paladin.mercy.level_3_gate".to_owned(),
+        message: format!(
+            "Paladin mercy is not yet gained at level {HYBRID_BASELINE_LEVEL}: mercy is granted at \
+             Paladin level {PALADIN_MERCY_LEVEL} (cr_abilities_class.lst Paladin mercy), so the deterministic \
+             level-1 posture carries no mercy effect. The bounded non-spell class-feature burden names \
+             mercy explicitly so its level-3 gate stays legible, and this note is non-claim-blocking \
+             because it is a deferred-gate marker rather than an unimplemented burden."
+        ),
+        claim_blocking: false,
     });
 }
 

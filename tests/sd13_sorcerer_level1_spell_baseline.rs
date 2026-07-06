@@ -355,19 +355,30 @@ fn matrix_keeps_bard_and_wizard_unverified_observed() {
 }
 
 #[test]
-fn matrix_preserves_paladin_and_ranger_hybrid_blocked_computed_truth() {
+fn matrix_preserves_paladin_partial_and_ranger_blocked_hybrid_truth() {
+    // The Sorcerer slice does not disturb the hybrid rows. Paladin is now
+    // `Partial` (its non-spell class-feature burden was lifted by the SD13-E3
+    // paladin class-feature slice); Ranger stays `Blocked` (it gets its own
+    // follow-up class-feature slice).
     let matrix = seeded_sd13_e1_f1_current_truth();
-    for row_id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
-        "class.ranger.hybrid_chassis_and_spell_burden",
-    ] {
+    let cases = [
+        (
+            "class.paladin.hybrid_chassis_and_spell_burden",
+            SupportState::Partial,
+        ),
+        (
+            "class.ranger.hybrid_chassis_and_spell_burden",
+            SupportState::Blocked,
+        ),
+    ];
+    for (row_id, expected_state) in cases {
         let row = matrix
             .row(row_id)
             .unwrap_or_else(|| panic!("row {row_id} must exist"));
         assert_eq!(
-            row.support_state,
-            SupportState::Blocked,
-            "hybrid row {row_id} must stay Blocked after the Sorcerer slice"
+            row.support_state, expected_state,
+            "hybrid row {row_id} must be {expected_state:?} after the Sorcerer slice, got {:?}",
+            row.support_state
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }

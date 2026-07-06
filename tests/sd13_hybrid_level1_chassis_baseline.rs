@@ -1,18 +1,25 @@
-//! SD13-E3-F6 Paladin and Ranger level-1 hybrid chassis baseline proof.
+//! SD13-E3-F6 Paladin and Ranger level-1 hybrid chassis baseline proof, with the
+//! SD13-E3 paladin class-feature follow-up slice wired in.
 //!
-//! Proves the first truthful SD13-F6 slice: the live rules-core surface ingests
+//! Proves the truthful SD13-F6 slice: the live rules-core surface ingests
 //! deterministic Human `class:paladin:1` and `class:ranger:1` inputs, leaves direct
 //! computed evidence that acknowledges each hybrid level-1 chassis identity rather
-//! than treating it as an undocumented packet placeholder, and yet stays explicitly
-//! claim-blocked on the still-missing non-spell class-feature burden and the later
-//! hybrid spell burden. It also pins the matrix reclassification of both hybrid rows
-//! from `Unverified` / `Observed` to `Blocked` / `Computed`.
+//! than treating it as an undocumented packet placeholder. The Paladin row moved
+//! from `Blocked` / `Computed` to `Partial` / `Computed` once the SD13-E3
+//! paladin class-feature follow-up slice lifted its bounded non-spell
+//! class-feature burden: smite evil, lay on hands, and divine grace are surfaced
+//! as computed Paladin level-1 feature explanations, and mercy is named as the
+//! Paladin level-3 gate (not yet gained at level 1). The Paladin row remains
+//! claim-blocked only on its later hybrid spell burden, deferred to SD13-E4.
+//! The Ranger row stays `Blocked` / `Computed` on its non-spell class-feature
+//! burden and later spell burden; Ranger gets its own follow-up class-feature
+//! slice.
 //!
 //! It is intentionally not a hybrid class engine. It grounds no Paladin/Ranger level
-//! 2+, no smite / lay-on-hands / divine-grace / mercy execution, no favored-enemy /
-//! combat-style / tracking execution, and no spell-slot / known-or-prepared posture.
-//! It also preserves the accepted Fighter 1-3 truth, the Rogue blocked negative
-//! control, and the Human race/interaction truth.
+//! 2+, no smite-target alignment execution, no lay-on-hands consumption, no
+//! favored-enemy / combat-style / tracking execution, and no spell-slot /
+//! known-or-prepared posture. It also preserves the accepted Fighter 1-3 truth,
+//! the Rogue blocked negative control, and the Human race/interaction truth.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -141,20 +148,126 @@ fn ranger_level1_leaves_direct_chassis_recognition_evidence() {
 // ----- Still blocked: honest, class-specific burden diagnostics -----
 
 #[test]
-fn paladin_level1_stays_blocked_naming_class_feature_and_spell_burden() {
+fn paladin_level1_lifts_non_spell_class_feature_burden_with_named_features() {
+    // SD13-E3 paladin class-feature slice lifted the non-spell class-feature
+    // burden for the deterministic Human Paladin level-1 posture. Three of the
+    // four features named in the matrix row's blocker note are now surfaced as
+    // computed Paladin level-1 feature explanations; mercy is named as the
+    // Paladin level-3 gate (not yet gained at level 1).
     let input = load(PALADIN_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The non-spell class-feature burden must be named explicitly, not hidden behind a
-    // generic "unsupported hybrid" label.
-    let feature = claim_blocking(&computation, "class_feature.hybrid.paladin.unsupported");
-    for token in ["smite", "lay on hands", "divine grace", "mercy"] {
+    // Smite evil is now a computed Paladin level-1 feature explanation. The
+    // chosen Charisma 14 yields a +2 Charisma modifier, so the bounded daily-use
+    // cap is max(1, +2) = 2.
+    let smite = explanation(&computation, "class_feature.paladin.smite_evil");
+    assert_eq!(
+        smite.value, 2,
+        "paladin smite evil must carry the bounded daily-use cap as its computed value, got {}",
+        smite.value
+    );
+    for token in ["smite evil", "+1", "+2", "daily-use cap"] {
         assert!(
-            feature.message.contains(token),
-            "paladin feature blocker must name the '{token}' burden: {}",
-            feature.message
+            smite.detail.contains(token),
+            "paladin smite evil detail must name '{token}': {}",
+            smite.detail
         );
     }
+
+    // Lay on hands is now a computed Paladin level-1 feature explanation. With
+    // Charisma +2 and level 1 the pool cap is 1 × max(1, +2) = 2 HP.
+    let lay_on_hands = explanation(&computation, "class_feature.paladin.lay_on_hands");
+    assert_eq!(
+        lay_on_hands.value, 2,
+        "paladin lay on hands must carry the bounded pool cap as its computed value, got {}",
+        lay_on_hands.value
+    );
+    assert!(
+        lay_on_hands.detail.contains("lay on hands")
+            && lay_on_hands.detail.contains("daily-healing pool"),
+        "paladin lay on hands detail must name the pool: {}",
+        lay_on_hands.detail
+    );
+
+    // Divine grace is now a computed Paladin level-1 feature explanation. It
+    // adds the Charisma modifier (+2) to each saving throw.
+    let divine_grace = explanation(&computation, "class_feature.paladin.divine_grace");
+    assert_eq!(
+        divine_grace.value, 2,
+        "paladin divine grace must carry the Charisma modifier as its computed value, got {}",
+        divine_grace.value
+    );
+    for token in ["divine grace", "Charisma modifier", "saving throw"] {
+        assert!(
+            divine_grace.detail.contains(token),
+            "paladin divine grace detail must name '{token}': {}",
+            divine_grace.detail
+        );
+    }
+
+    // Mercy is named as the Paladin level-3 gate (not yet gained at level 1).
+    // The diagnostic must be present, non-claim-blocking, and name mercy and
+    // the level-3 gate.
+    let mercy = computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.paladin.mercy.level_3_gate")
+        .unwrap_or_else(|| {
+            panic!(
+                "paladin mercy level-3 gate diagnostic must exist: {:?}",
+                computation.diagnostics
+            )
+        });
+    assert!(
+        !mercy.claim_blocking,
+        "paladin mercy level-3 gate must be non-claim-blocking: {mercy:?}"
+    );
+    for token in ["mercy", "level 3", "level 1"] {
+        assert!(
+            mercy.message.contains(token),
+            "paladin mercy gate must name '{token}': {}",
+            mercy.message
+        );
+    }
+
+    // The legacy `class_feature.hybrid.paladin.unsupported` claim-block must
+    // NOT appear on the runtime path any longer — that burden is lifted.
+    assert!(
+        computation
+            .diagnostics
+            .iter()
+            .all(|d| d.id != "class_feature.hybrid.paladin.unsupported"),
+        "paladin non-spell class-feature burden must be lifted; the legacy unsupported \
+         diagnostic must not appear: {:?}",
+        computation.diagnostics
+    );
+
+    // The hybrid class-feature explanations (smite / lay-on-hands / divine-grace /
+    // mercy gate) must each name the four-burden tokens somewhere on the runtime
+    // path so the matrix row's blocker-note names stay legible on the path.
+    let all_text: String = computation
+        .explanations
+        .iter()
+        .map(|e| e.detail.as_str())
+        .chain(computation.diagnostics.iter().map(|d| d.message.as_str()))
+        .collect::<Vec<&str>>()
+        .join(" ");
+    for token in ["smite", "lay on hands", "divine grace", "mercy"] {
+        assert!(
+            all_text.contains(token),
+            "paladin level-1 path must still name the '{token}' feature burden: {all_text}"
+        );
+    }
+}
+
+#[test]
+fn paladin_level1_stays_blocked_on_later_spell_burden_only() {
+    // After the non-spell class-feature burden is lifted, the deterministic
+    // Human Paladin level-1 posture stays claim-blocked ONLY on the later
+    // hybrid spell burden. The integrated receipt remains Blocked; the
+    // view-model snapshot stays withheld.
+    let input = load(PALADIN_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
 
     // The later spell burden must be named explicitly and stay claim-blocking.
     let spell = claim_blocking(&computation, "class_spell.hybrid.paladin.unsupported");
@@ -163,8 +276,16 @@ fn paladin_level1_stays_blocked_naming_class_feature_and_spell_burden() {
         "paladin spell blocker must name the later spell burden: {}",
         spell.message
     );
+    for token in ["spell slots", "spells known/prepared"] {
+        assert!(
+            spell.message.contains(token),
+            "paladin spell blocker must name the '{token}' later-hybrid burden: {}",
+            spell.message
+        );
+    }
 
-    // The integrated posture is blocked, never a counterfeit computed success.
+    // The integrated posture is blocked (still spell-blocked) — never a
+    // counterfeit computed success.
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
 
@@ -173,7 +294,7 @@ fn paladin_level1_stays_blocked_naming_class_feature_and_spell_burden() {
     assert_eq!(view_model.primary_owner, PrimaryOwner::EngineFlaw);
     assert!(
         view_model.snapshot.is_none(),
-        "blocked hybrid baseline must not emit a computed snapshot"
+        "spell-blocked paladin baseline must not emit a computed snapshot"
     );
 }
 
@@ -296,14 +417,16 @@ fn paladin_level_2_is_not_promoted_by_this_slice() {
 // ----- Control plane: the matrix reclassifies both hybrid rows to Blocked/Computed -----
 
 #[test]
-fn matrix_paladin_row_is_blocked_computed_and_names_both_burdens() {
+fn matrix_paladin_row_is_partial_computed_after_non_spell_burden_lift() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid row must exist");
 
-    // Moves off the pure Unverified/Observed placeholder, but only to Blocked/Computed.
-    assert_eq!(paladin.support_state, SupportState::Blocked);
+    // SD13-E3 paladin class-feature slice lifted the non-spell class-feature
+    // burden, so the paladin row moves from Blocked/Computed to Partial/Computed
+    // while still citing the same SD13-F6 hybrid proof surface.
+    assert_eq!(paladin.support_state, SupportState::Partial);
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         paladin.evidence_freshness,
@@ -316,13 +439,16 @@ fn matrix_paladin_row_is_blocked_computed_and_names_both_burdens() {
         "paladin row must cite the SD13-F6 hybrid proof surface: {}",
         paladin.grounding_ref
     );
-    // The note must name both the non-spell class-feature burden and the later spell burden.
+    // The note must still name the four non-spell class-feature burdens (so the
+    // lift-to-partial transition stays auditable) AND the remaining later spell
+    // burden. The legacy `class_feature.hybrid.paladin.unsupported` identifier is
+    // preserved for backwards-compatibility tracking.
     let note = paladin.blocker_or_lossiness_note;
-    assert!(!note.is_empty(), "paladin blocked row must carry a note");
+    assert!(!note.is_empty(), "paladin partial row must carry a note");
     for token in ["smite", "lay on hands", "divine grace", "mercy", "spell"] {
         assert!(
             note.contains(token),
-            "paladin blocked note must name the '{token}' burden: {note}"
+            "paladin partial note must name the '{token}' burden: {note}"
         );
     }
 }

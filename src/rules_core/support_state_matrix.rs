@@ -407,18 +407,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Paladin level-1 chassis baseline, with the non-spell \
-                            class-feature burden and the later spell burden still blocked",
-                support_state: SupportState::Blocked,
+                            class-feature burden lifted to Partial and the later spell \
+                            burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_HYBRID_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E3-F6 leaves direct computed evidence that the \
+                blocker_or_lossiness_note: "SD13-E3-F6 left direct computed evidence that the \
                     deterministic Human Paladin level-1 hybrid chassis is recognized on the compute \
-                    seam, but the row stays blocked: the non-spell class-feature burden (smite evil, \
-                    lay on hands, divine grace, mercy) is not implemented, and the later paladin spell \
-                    burden (spell slots, spell source, spells known/prepared) is deferred to SD13-E4. \
-                    No Paladin level 2+ is proven",
-                next_required_uplift: "SD13-E3 paladin class-feature slice, then SD13-E4 spell burden",
+                    seam, but the row stayed blocked: the non-spell class-feature burden (smite evil, \
+                    lay on hands, divine grace, mercy) was not implemented, and the later paladin spell \
+                    burden (spell slots, spell source, spells known/prepared) was deferred to SD13-E4. \
+                    The SD13-E3 paladin class-feature follow-up slice lifted the non-spell class-feature \
+                    burden: smite evil (bounded daily-use cap max(1, CHA modifier)), lay on hands \
+                    (bounded daily-healing pool = level × max(1, CHA modifier)), and divine grace \
+                    (Charisma modifier added to each saving throw while not flat-footed) are now \
+                    surfaced as computed Paladin level-1 feature explanations on the runtime path, \
+                    and mercy is named as the Paladin level-3 gate (not yet gained at level 1). The \
+                    legacy runtime identifier `class_feature.hybrid.paladin.unsupported` is preserved \
+                    here for backwards-compatibility tracking. The row remains claim-blocked only on \
+                    the later hybrid spell burden (deferred to SD13-E4). No Paladin level 2+ is proven",
+                next_required_uplift: "SD13-E4 paladin spell burden slice, then Paladin level 2+",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",

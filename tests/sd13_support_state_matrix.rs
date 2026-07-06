@@ -233,29 +233,40 @@ fn every_non_human_race_row_is_unverified_and_observed() {
 }
 
 #[test]
-fn paladin_and_ranger_hybrid_rows_are_blocked_and_computed_with_named_burdens() {
-    // SD13-E3-F6 moves both hybrid rows off the pure Unverified/Observed placeholder to
-    // a still-blocked computed posture that names the class-feature and spell burdens.
+fn paladin_hybrid_row_is_partial_computed_and_ranger_row_is_blocked_computed() {
+    // After SD13-E3-F6, both hybrid rows moved off the pure Unverified/Observed
+    // placeholder to a posture that cites the SD13-F6 hybrid proof surface.
+    // After the SD13-E3 paladin class-feature follow-up slice, the Paladin row
+    // lifted its non-spell class-feature burden and moved to Partial/Computed;
+    // the Ranger row stays Blocked/Computed (it gets its own follow-up
+    // class-feature slice).
     let matrix = matrix();
     let cases = [
         (
             "class.paladin.hybrid_chassis_and_spell_burden",
             "class:paladin",
+            SupportState::Partial,
             ["smite", "lay on hands", "divine grace", "mercy"],
         ),
         (
             "class.ranger.hybrid_chassis_and_spell_burden",
             "class:ranger",
+            SupportState::Blocked,
             ["favored enemy", "combat style", "tracking", "spell"],
         ),
     ];
-    for (row_id, subject_id, tokens) in cases {
+    for (row_id, subject_id, expected_state, tokens) in cases {
         let hybrid = row(&matrix, row_id);
         assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
         assert_eq!(hybrid.subject_id, subject_id);
-        // Blocked/Computed only: never Partial and never Supported for this slice.
-        assert_eq!(hybrid.support_state, SupportState::Blocked);
-        assert_ne!(hybrid.support_state, SupportState::Partial);
+        // Per-slice state: Paladin is now Partial (non-spell burden lifted);
+        // Ranger stays Blocked (non-spell burden not lifted yet).
+        assert_eq!(
+            hybrid.support_state, expected_state,
+            "hybrid row '{row_id}' must be {expected_state:?} for this slice, got {:?}",
+            hybrid.support_state
+        );
+        // Neither row is promoted to Supported in this slice.
         assert_ne!(hybrid.support_state, SupportState::Supported);
         assert_eq!(hybrid.evidence_tier, EvidenceTier::Computed);
         assert!(
@@ -267,7 +278,7 @@ fn paladin_and_ranger_hybrid_rows_are_blocked_and_computed_with_named_burdens() 
         );
         assert!(
             !hybrid.blocker_or_lossiness_note.is_empty(),
-            "blocked hybrid row '{row_id}' must carry a non-empty blocker note"
+            "hybrid row '{row_id}' must carry a non-empty blocker note"
         );
         // The note must name the later spell burden and the class-specific feature burden.
         assert!(
