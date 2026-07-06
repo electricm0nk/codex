@@ -178,12 +178,16 @@ const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 /// level 4.
 const GE06_TOTAL_SAVES_TEST: &str = "tests/ge06_pilot_total_saves.rs";
 
-/// GE-06 pilot view-model projection proof over the bounded computed snapshot.
-const GE06_VIEW_MODEL_TEST: &str = "tests/ge06_pilot_view_model.rs";
-
 /// SD13-E3 dedicated proof surface for the bounded Fighter levels-2-and-3 milestone
 /// tranche (base progression, level-2 bonus-feat seam, level-3 armor-training seam).
 const SD13_FIGHTER_LEVEL2_LEVEL3_TEST: &str = "tests/sd13_fighter_level2_level3_progression.rs";
+
+/// SD13-E3-F5 dedicated proof surface for the bounded Fighter level-1 mandatory
+/// milestone classification: enumerates which level-1 mandatory milestones the
+/// deterministic pilot surface has proven (computed) and which remain unproven
+/// for the level-10 progression matrix.
+const SD13_FIGHTER_LEVEL1_MILESTONE_TEST: &str =
+    "tests/sd13_fighter_level1_mandatory_milestone_classification.rs";
 
 /// SD13-E3-F6 dedicated proof surface for the bounded Paladin and Ranger level-1 hybrid
 /// chassis baseline: direct computed chassis-recognition evidence that stays explicitly
@@ -302,11 +306,33 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: GE06_VIEW_MODEL_TEST,
-                blocker_or_lossiness_note: "only the bounded Fighter level-1 deterministic \
-                    pilot surface is proven; mandatory level-10 milestones remain unclassified",
-                next_required_uplift: "widen beyond level 1 and classify mandatory \
-                    level-10 milestones",
+                grounding_ref: SD13_FIGHTER_LEVEL1_MILESTONE_TEST,
+                blocker_or_lossiness_note: "SD13-E3-F5 widens the Fighter level-1 deterministic \
+                    pilot surface into a bounded mandatory-milestone classification: the proven \
+                    (computed) level-1 surface covers ability modifier, base attack bonus, base \
+                    saving throws (fortitude/reflex/will), total saves with contributors, baseline \
+                    melee attack bonus with contributors, defense.baseline_armor_class with \
+                    contributors, selected skill modifier (class-skill + chosen rank + ability \
+                    modifier + bounded armor-check penalty), pilot view-model projection, the \
+                    Human race ability-bonus target and bonus-feat grant seams, prerequisite / \
+                    invalid-choice blocking for the canonical Human Fighter feat selection, and \
+                    explicit claim-blocking on missing chassis / wrong Fighter level / unsupported \
+                    loadout. Remaining unproven Fighter level-1 mandatory milestones for the \
+                    level-10 progression matrix are: hit point computation (Fighter d10 HD at \
+                    level 1), a general class skill rank allocation engine beyond the named \
+                    selected-skill seam, a general feat selection engine beyond the canonical \
+                    Human Fighter choice seam, equipment / weapon / armor effects beyond the \
+                    bounded baseline AC + BAB seam, a general feat prerequisite engine, and the \
+                    level-1 prerequisites of the level-10 progression milestones (level-1 bonus- \
+                    feat selection into the repeated bonus-feat cadence, level-1 BAB into the \
+                    level-10 BAB climb, level-1 base saves into the level-10 save climb, and the \
+                    level-1 armor / weapon selection that seeds armor-training and weapon-training \
+                    progression at higher levels)",
+                next_required_uplift: "SD13-E3 slice widening the bounded Fighter surface \
+                    beyond level 1 toward the level-10 progression milestones (base attack \
+                    bonus climb, base save climb, bonus-feat cadence, armor-training ranks, \
+                    weapon-training ranks, and ability-score progression), per the bounded \
+                    milestones enumerated in the L2-10 row",
             },
             SupportStateRow {
                 row_id: "class.fighter.levels_2_10",
