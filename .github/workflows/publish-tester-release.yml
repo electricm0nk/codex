@@ -290,7 +290,7 @@ jobs:
             --manifest release-staging/update-manifest.json \
             --output release-staging/channels/${CHANNEL}.json \
             --release-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}" \
-            --manifest-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/update-manifest.json" \
+            --manifest-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/update-manifest-stub.json" \
             --published-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
       # Channel-index update: the only legitimate writer of the protected
