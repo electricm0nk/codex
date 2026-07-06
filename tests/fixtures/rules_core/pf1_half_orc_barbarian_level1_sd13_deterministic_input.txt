@@ -1,0 +1,31 @@
+# SD13-E2-R3 deterministic Half-Orc Barbarian level 1 interaction pressure fixture.
+# Represents a deterministic PF1 Core Rulebook Half-Orc Barbarian level 1 chosen input
+# only. It names selections; it does not contain derived, computed, or parity values.
+#
+# This fixture exists to prove the generalized race + class interaction-pressure model
+# on a non-Human and non-Fighter combination. The deterministic pilot grounds no
+# Half-Orc racial traits (ability-bonus selection, ferocity, darkvision, intimidation,
+# or any other racial trait) and no Barbarian level-1 class chassis. It only needs the
+# minimum race + class identity + ability scores to exercise the bounded interaction
+# posture seam.
+#
+# No Human-specific race choices (`choice:human_ability_bonus`, `choice:human_bonus_feat`)
+# are present because the chosen race is not Human. No `choice:fighter_bonus_feat`,
+# `choice:fighter_bonus_feat_2`, or `choice:level_1_character_feat` selections are
+# present because the chosen class is not Fighter. The deterministic pilot's
+# claim-blocking posture for this input remains `class_chassis.unsupported` (Barbarian
+# is not in the bounded fighter-shaped chassis seam) and `race.semantics.unverified`
+# (Half-Orc race semantics are unverified). The generalized interaction-pressure model
+# runs alongside these and declares the bounded posture record and posture diagnostic
+# without asserting any computed mechanical value.
+case_id=pf1-crb-half-orc-barbarian-level1
+source_package_id=pf1.core_rulebook
+race_id=race:half-orc
+class_level=class:barbarian:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

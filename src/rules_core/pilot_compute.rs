@@ -284,7 +284,18 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
-    explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
+    explain_human_race_seam(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
+
+    // SD13-E2-R3: surface the generalized race + class interaction-pressure model on
+    // the bounded pilot chassis path. This runs for every chosen race + class
+    // combination (Human Fighter included) so the same shape of posture record and
+    // posture diagnostic is emitted whether the path is grounded or unverified.
+    explain_interaction_pressure(input, &mut explanations, &mut diagnostics);
 
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
@@ -361,6 +372,94 @@ fn assign_modifier(modifiers: &mut AbilityModifiers, ability: &str, modifier: i1
 /// Non-Human races receive only a bounded, non-claim-blocking note that their race
 /// semantics remain unverified; this slice grounds no non-Human race truth and no
 /// broader Human racial trait burden (size, speed, senses, extra skill ranks).
+fn explain_interaction_pressure(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let chosen_race = input.chosen.race_id.as_str();
+    let chosen_classes: Vec<String> = input
+        .chosen
+        .class_levels
+        .iter()
+        .map(|cl| format!("{}@{}", cl.class_id, cl.level))
+        .collect();
+
+    // Always-emitted posture record. The value is +0 by design — this declaration
+    // generalizes the same shape of explanation across any race + class combination
+    // without fabricating a mechanical pressure contribution.
+    explanations.push(ComputationExplanation {
+        id: "interaction.bounded_posture".to_owned(),
+        value: 0,
+        detail: format!(
+            "Bounded race + class interaction pressure declared on the generalized pilot \
+             seam: chosen race `{chosen_race}` with chosen class levels \
+             [{}] leave the same shape of bounded posture record whether the combination is \
+             grounded (Human Fighter levels 1-3) or unverified (any other race + class). The \
+             recorded value is +0 by design: this is a posture declaration, not a fabricated \
+             mechanical pressure contribution. Race- and class-specific seams (Human race, \
+             Fighter chassis, Paladin / Ranger hybrid chassis, Sorcerer spell baseline) carry \
+             their own pressed-down pressure records; this record only states that the chosen \
+             race + class combination has reached the bounded interaction posture seam",
+            chosen_classes.join(", ")
+        ),
+    });
+
+    // Non-claim-blocking posture diagnostic. For the bounded Human Fighter pilot path the
+    // diagnostic names the two grounded race-specific surfaces (Human ability-bonus and
+    // Human bonus-feat) and the grounded Fighter base chassis surfaces, with every other
+    // race + class pressure surface named as unverified. For any other combination the
+    // diagnostic names only the unverified surfaces. Either way, this diagnostic is
+    // non-claim-blocking so the deterministic pilot still reports computed evidence when
+    // race- or class-specific seams have claim-blocked outputs.
+    let is_human_fighter_pilot = chosen_race == HUMAN_RACE_ID
+        && matches!(
+            input.chosen.class_levels.as_slice(),
+            [cl] if cl.class_id == FIGHTER_CLASS_ID
+                && (1..=MAX_SUPPORTED_FIGHTER_LEVEL).contains(&cl.level)
+        );
+
+    let detail = if is_human_fighter_pilot {
+        format!(
+            "The race + class interaction posture is grounded only for the deterministic \
+             Human Fighter levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} pilot path: race-specific \
+             pressure surfaces `choice:human_ability_bonus -> ability:*` (Human ability-bonus \
+             target) and `choice:human_bonus_feat -> feat:dodge` (Human bonus-feat grant, \
+             the deterministic Dodge armor-class contribution) are grounded via \
+             race.human.ability_bonus_target / race.human.bonus_feat_grant; class-specific \
+             pressure surfaces Fighter base attack bonus / saves (cr_classes.lst:139, \
+             Fighter levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL}), Fighter level-2 bonus-feat \
+             progression seam, and Fighter level-3 armor-training seam are grounded via \
+             the Fighter chassis and class-feature seams. All other race-specific race \
+             semantics for {HUMAN_RACE_ID} (size, speed, senses, extra skill ranks, \
+             remaining racial trait burden) and all non-Fighter class-specific pressure \
+             surfaces remain unverified in this slice"
+        )
+    } else {
+        format!(
+            "The race + class interaction posture is bounded but unverified for the chosen \
+             `{chosen_race}` + [{}] combination: race-specific pressure surfaces for \
+             `{chosen_race}` (ability-bonus selection, bonus-feat selection, and every \
+             other racial trait) are unverified in this slice, and class-specific pressure \
+             surfaces for the chosen class levels (base attack bonus, base saves, \
+             class-feature burden, spell burden, and any later-level cadence) are \
+             unverified in this slice. The deterministic pilot grounds only the bounded \
+             Human + single-class Fighter levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} interaction \
+             seam; this input intentionally leaves only the bounded posture record on the \
+             compute seam and grounds no race- or class-specific pressure for \
+             `{chosen_race}` + [{}]",
+            chosen_classes.join(", "),
+            chosen_classes.join(", ")
+        )
+    };
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "interaction.bounded".to_owned(),
+        message: detail,
+        claim_blocking: false,
+    });
+}
+
 fn explain_human_race_seam(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -604,21 +703,20 @@ fn explain_fighter_class_features(
     };
 
     if level >= 2
-        && let Some(selection) =
-            choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)
-        {
-            explanations.push(ComputationExplanation {
-                id: "class_feature.fighter.level_2_bonus_feat".to_owned(),
-                value: 0,
-                detail: format!(
-                    "Fighter level 2 grants an additional bonus feat; the named selection \
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_2_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 2 grants an additional bonus feat; the named selection \
                      ({FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
                      explicit progression seam only. This slice grounds the bonus-feat slot, not a \
                      general feat-effect or prerequisite engine, so it contributes no computed \
                      mechanical value (+0)"
-                ),
-            });
-        }
+            ),
+        });
+    }
 
     let armor_training = fighter_armor_training(level);
     if armor_training.rank > 0 {
@@ -644,10 +742,19 @@ fn explain_fighter_class_features(
 /// A slot absent for the chosen level (e.g. the level-2 bonus feat at level 1) is not
 /// fabricated.
 const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 4] = [
-    (LEVEL_1_CHARACTER_FEAT_CHOICE_ID, POWER_ATTACK_FEAT_SELECTION),
+    (
+        LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
+        POWER_ATTACK_FEAT_SELECTION,
+    ),
     (HUMAN_BONUS_FEAT_CHOICE_ID, DODGE_FEAT_ID),
-    (FIGHTER_BONUS_FEAT_CHOICE_ID, WEAPON_FOCUS_LONGSWORD_SELECTION),
-    (FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID, TOUGHNESS_FEAT_SELECTION),
+    (
+        FIGHTER_BONUS_FEAT_CHOICE_ID,
+        WEAPON_FOCUS_LONGSWORD_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID,
+        TOUGHNESS_FEAT_SELECTION,
+    ),
 ];
 
 /// Claim-block non-canonical feat-choice mutations on the deterministic Human Fighter
@@ -1158,10 +1265,8 @@ fn compute_combat_baseline(
     let effective_max_dex = CHAIN_SHIRT_MAX_DEX + fighter_armor_training(level).max_dex_increase;
     let dexterity_modifier = ability_modifiers.dexterity;
     let dexterity_contribution = dexterity_modifier.min(effective_max_dex);
-    let armor_class = ARMOR_CLASS_BASE
-        + CHAIN_SHIRT_ARMOR_BONUS
-        + dexterity_contribution
-        + DODGE_AC_BONUS;
+    let armor_class =
+        ARMOR_CLASS_BASE + CHAIN_SHIRT_ARMOR_BONUS + dexterity_contribution + DODGE_AC_BONUS;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -1211,7 +1316,11 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
     if !chosen.selected_feats.iter().any(|f| f == DODGE_FEAT_ID) {
         unmet.push(format!("missing selected feat {DODGE_FEAT_ID}"));
     }
-    if !chosen.selected_feats.iter().any(|f| f == WEAPON_FOCUS_FEAT_ID) {
+    if !chosen
+        .selected_feats
+        .iter()
+        .any(|f| f == WEAPON_FOCUS_FEAT_ID)
+    {
         unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
     }
 
