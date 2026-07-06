@@ -1,11 +1,11 @@
 {
   "channel": "alpha",
-  "manifest_url": "https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/alpha/v0.0.53-0913f821/update-manifest.json",
-  "publication_timestamp": "2026-07-06T18:21:47Z",
-  "release_url": "https://github.com/electricm0nk/codex/releases/tag/alpha-v0.0.53-0913f821",
+  "manifest_url": "https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/alpha/v0.0.54-c78287ce/update-manifest.json",
+  "publication_timestamp": "2026-07-06T18:57:50Z",
+  "release_url": "https://github.com/electricm0nk/codex/releases/tag/alpha-v0.0.54-c78287ce",
   "schema_version": "1.0.0",
   "signature": null,
-  "tag": "alpha/v0.0.53-0913f821",
+  "tag": "alpha/v0.0.54-c78287ce",
   "tranche_id": "STC-CODEX-SD-16",
-  "version": "0.0.53"
+  "version": "0.0.54"
 }
