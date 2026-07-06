@@ -627,3 +627,247 @@ fn no_row_claims_confirmed_fresh_evidence() {
         );
     }
 }
+
+// ---------------------------------------------------------------------------
+// SD13-E2-F15 non-Human interaction seam verdict.
+//
+// This block records the first-slice decision for
+// `interaction.non_human_any_class.progression_pressure`: at this stage, no named
+// non-Human interaction row is required. The verdict is pinned in two places —
+// the carrier's blocker/lossiness note (which now carries the explicit
+// non-named-row rationale instead of staying empty) and these tests, which
+// assert the audit basis directly from the carrier so a future slice cannot
+// silently reintroduce a named non-Human interaction row without first
+// overturning the audit.
+// ---------------------------------------------------------------------------
+
+/// The SD13-E2-F15 verdict token: phrases that, taken together, prove the
+/// blocker note names both the absence of any named non-Human interaction row
+/// and the warrant condition under which one would become required. If a
+/// future slice removes the non-named-row verdict, every one of these tokens
+/// should disappear from the note — and these tests will fire.
+const NON_HUMAN_NO_NAMED_ROW_VERDICT_TOKENS: &[&str] = &[
+    "no named non-Human interaction row",
+    "Unverified/Observed",
+    "Human deterministic pilot surface",
+    "Human interaction row",
+    "becomes warranted only when",
+];
+
+/// Audit-basis tokens that name the specific rows the verdict rests on. Each
+/// non-Human race row id and each Computed class row id must appear so the
+/// verdict is traceable to a real row, not generic prose.
+const NON_HUMAN_VERDICT_AUDIT_BASIS_TOKENS: &[&str] = &[
+    "race.dwarf",
+    "race.elf",
+    "race.gnome",
+    "race.half_elf",
+    "race.half_orc",
+    "race.halfling",
+    "class.fighter.level_1_pilot",
+    "class.fighter.levels_2_10",
+    "class.rogue.bounded_progression",
+    "class.paladin.hybrid_chassis_and_spell_burden",
+    "class.ranger.hybrid_chassis_and_spell_burden",
+    "class.sorcerer.progression_and_spell_burden",
+];
+
+#[test]
+fn non_human_interaction_row_carries_non_empty_explicit_verdict_note() {
+    // The verdict must be visible in the carrier itself, not only in prose
+    // elsewhere. A future slice that empties the note is silently overturning
+    // the audit and must be caught here.
+    let matrix = matrix();
+    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    assert!(
+        !non_human.blocker_or_lossiness_note.is_empty(),
+        "non-Human interaction row must carry a non-empty blocker/lossiness note \
+         recording the explicit no-named-row verdict, got an empty note"
+    );
+}
+
+#[test]
+fn non_human_interaction_row_verdict_names_the_no_named_row_decision() {
+    let matrix = matrix();
+    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    for token in NON_HUMAN_NO_NAMED_ROW_VERDICT_TOKENS {
+        assert!(
+            non_human.blocker_or_lossiness_note.contains(token),
+            "non-Human interaction row blocker note must name verdict token '{token}': {}",
+            non_human.blocker_or_lossiness_note
+        );
+    }
+}
+
+#[test]
+fn non_human_interaction_row_verdict_traces_to_real_audit_basis_rows() {
+    // The verdict must rest on real matrix rows, not invented rationale. Every
+    // non-Human race row id and every Computed class row id must appear in the
+    // blocker note so a future reader can trace each claim back to a real row.
+    let matrix = matrix();
+    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    for token in NON_HUMAN_VERDICT_AUDIT_BASIS_TOKENS {
+        assert!(
+            non_human.blocker_or_lossiness_note.contains(token),
+            "non-Human interaction row blocker note must name real audit-basis row '{token}': {}",
+            non_human.blocker_or_lossiness_note
+        );
+    }
+}
+
+#[test]
+fn non_human_interaction_row_verdict_cites_human_interaction_row_as_already_named() {
+    // The Human interaction row is the only race/class pressure the
+    // deterministic compute surface exposes today. The verdict must explicitly
+    // name it so a future slice cannot claim the Human interaction row was
+    // overlooked when deciding no non-Human interaction row is required.
+    let matrix = matrix();
+    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    let human_interaction = row(
+        &matrix,
+        "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
+    );
+    assert!(
+        non_human
+            .blocker_or_lossiness_note
+            .contains(human_interaction.row_id),
+        "non-Human interaction row blocker note must cite the existing Human interaction \
+         row id '{}' as the only already-named race/class pressure: {}",
+        human_interaction.row_id,
+        non_human.blocker_or_lossiness_note
+    );
+}
+
+#[test]
+fn non_human_interaction_row_stays_unverified_and_observed() {
+    // The verdict is "no named row is required at this stage", which means the
+    // row itself remains the Unverified/Observed placeholder. A future slice
+    // that flips the row to Computed without first overturning the verdict in
+    // the blocker note would be silently claiming a named interaction exists,
+    // and must be caught here.
+    let matrix = matrix();
+    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    assert_eq!(
+        non_human.support_state,
+        SupportState::Unverified,
+        "non-Human interaction row must stay Unverified while the verdict stands"
+    );
+    assert_eq!(
+        non_human.evidence_tier,
+        EvidenceTier::Observed,
+        "non-Human interaction row must stay Observed while the verdict stands"
+    );
+    assert_eq!(
+        non_human.evidence_freshness,
+        EvidenceFreshness::AwaitingInitialEvidence,
+        "non-Human interaction row must stay AwaitingInitialEvidence while the verdict stands"
+    );
+}
+
+#[test]
+fn non_human_interaction_row_subject_id_remains_a_generic_placeholder() {
+    // The verdict forbids adding a named non-Human interaction row at this
+    // stage. The existing row's subject_id is therefore still the generic
+    // "non-human-any-class-progression" placeholder, not a specific named
+    // race/class pair (e.g. race.dwarf:race.dwarf+class.fighter.level_1_pilot).
+    let matrix = matrix();
+    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    assert_eq!(
+        non_human.subject_id, "interaction:non-human-any-class-progression",
+        "non-Human interaction row subject_id must remain the generic placeholder until a \
+         future slice proves a specific non-Human race/class pair at the compute surface: {}",
+        non_human.subject_id
+    );
+}
+
+#[test]
+fn non_human_interaction_row_verdict_does_not_silently_add_a_named_pair_row() {
+    // The interaction row count must stay at exactly 2: the Human interaction
+    // row plus this generic non-Human placeholder. If a future slice adds a
+    // named race/class interaction row without first overturning the verdict,
+    // the count check (combined with the subject_id check) catches the
+    // silent introduction.
+    let matrix = matrix();
+    let interaction_rows: Vec<&SupportStateRow> = matrix
+        .rows
+        .iter()
+        .filter(|r| r.subject_type == MatrixSubjectType::Interaction)
+        .collect();
+
+    assert_eq!(
+        interaction_rows.len(),
+        2,
+        "interaction row count must stay at 2 while the verdict stands, got {}: {:?}",
+        interaction_rows.len(),
+        interaction_rows.iter().map(|r| r.row_id).collect::<Vec<_>>()
+    );
+
+    let row_ids: std::collections::BTreeSet<&str> =
+        interaction_rows.iter().map(|r| r.row_id).collect();
+    assert!(
+        row_ids.contains("interaction.human_bonus_feat_ability_bonus.pilot_pressure"),
+        "Human interaction row must remain one of the two interaction rows"
+    );
+    assert!(
+        row_ids.contains("interaction.non_human_any_class.progression_pressure"),
+        "non-Human interaction row must remain one of the two interaction rows"
+    );
+
+    // No third interaction row may claim a specific non-Human race/class pair
+    // while the verdict stands. Pin the absence explicitly so a future slice
+    // that adds one is forced to overturn the verdict first.
+    for r in &interaction_rows {
+        let subject_is_specific_non_human_pair = r.subject_id.starts_with("interaction:")
+            && r.subject_id != "interaction:human-bonus-feat-ability-bonus"
+            && r.subject_id != "interaction:non-human-any-class-progression";
+        assert!(
+            !subject_is_specific_non_human_pair,
+            "no additional named non-Human interaction row is permitted while the verdict \
+             stands; found subject_id '{}' on row '{}'",
+            r.subject_id,
+            r.row_id
+        );
+    }
+}
+
+#[test]
+fn non_human_interaction_row_next_uplift_states_the_warrant_condition() {
+    // The next_required_uplift must encode the future warrant condition: a
+    // named non-Human interaction row becomes required only when a non-Human
+    // race trait is proven at the compute surface AND a class row exposes a
+    // distinct non-Human race x class pressure the separate rows do not
+    // already absorb. This pins the doctrinal boundary so a future slice that
+    // weakens the warrant (e.g. "add rows later") is caught here.
+    let matrix = matrix();
+    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    let uplift = non_human.next_required_uplift;
+    for token in [
+        "named non-Human interaction row",
+        "SD13-E2",
+        "non-Human race trait",
+        "compute surface",
+        "separate race and class rows",
+    ] {
+        assert!(
+            uplift.contains(token),
+            "non-Human interaction row next_required_uplift must name warrant token '{token}': {}",
+            uplift
+        );
+    }
+}
+
+#[test]
+fn non_human_interaction_row_verdict_keeps_row_anchored_to_roster_matrix_doc() {
+    // The verdict is documentary/control-plane truth, not a runtime result.
+    // The grounding_ref must continue to cite the SD-13 roster matrix
+    // authority — i.e. no compute seam has been introduced for a non-Human
+    // race/class interaction while the verdict stands.
+    let matrix = matrix();
+    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    assert!(
+        non_human.grounding_ref.contains("core-roster-and-support-state-matrix.md"),
+        "non-Human interaction row must stay anchored to the SD-13 roster matrix doc while \
+         the verdict stands, got: {}",
+        non_human.grounding_ref
+    );
+}

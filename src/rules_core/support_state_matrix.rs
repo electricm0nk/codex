@@ -498,9 +498,51 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "add named interaction rows only where separate \
-                    race and class rows are insufficient",
+                // SD13-E2-F15 first-slice verdict: no named non-Human interaction row
+                // is required at this stage. The audit basis is the SD-13 carrier
+                // itself, not invented semantics:
+                //   * every non-Human race row (race.dwarf / race.elf / race.gnome /
+                //     race.half_elf / race.half_orc / race.halfling) is
+                //     Unverified/Observed with no computed race semantics, so there
+                //     is no non-Human race trait to compute a pressure against;
+                //   * every class row that has Computed evidence is either Blocked on
+                //     a chassis burden (Rogue, Paladin, Ranger, Sorcerer) or Partial
+                //     only on the deterministic Human pilot surface (Fighter L1 and
+                //     Fighter L2-10, Fighter levels-2-3 milestone proof over the
+                //     Human loadout), so there is no non-Human class seam that the
+                //     separate class row does not already cover;
+                //   * the only Human-named interaction row
+                //     (interaction.human_bonus_feat_ability_bonus.pilot_pressure)
+                //     is already Partial/Computed and is explicitly distinct from
+                //     this row, so no collapse is needed;
+                // therefore no race x class seam is currently under-captured by the
+                // separate race and class rows, and adding a named non-Human
+                // interaction row today would invent a pressure the carrier cannot
+                // ground. A named non-Human interaction row becomes warranted only
+                // when a non-Human race trait is proven at the compute surface
+                // (the SD13-E2 race-semantic slice) and a class row exposes a
+                // distinct non-Human race x class pressure that the separate rows
+                // do not already absorb.
+                blocker_or_lossiness_note: "no named non-Human interaction row is required \
+                    at this stage: every non-Human race row (race.dwarf, race.elf, race.gnome, \
+                    race.half_elf, race.half_orc, race.halfling) is Unverified/Observed with \
+                    no computed race semantics; every class row that has Computed evidence \
+                    (class.fighter.level_1_pilot, class.fighter.levels_2_10, \
+                    class.rogue.bounded_progression, \
+                    class.paladin.hybrid_chassis_and_spell_burden, \
+                    class.ranger.hybrid_chassis_and_spell_burden, \
+                    class.sorcerer.progression_and_spell_burden) is Blocked on chassis or \
+                    Partial only on the Human deterministic pilot surface; and the named \
+                    Human interaction row interaction.human_bonus_feat_ability_bonus.pilot_pressure \
+                    already covers the only race/class pressure the deterministic compute \
+                    surface exposes today; a named non-Human interaction row becomes warranted \
+                    only when a non-Human race trait is proven at the compute surface and a \
+                    class row exposes a distinct non-Human race x class pressure the separate \
+                    rows do not already absorb",
+                next_required_uplift: "add a named non-Human interaction row only when the \
+                    SD13-E2 race-semantic slice proves a non-Human race trait at the compute \
+                    surface and a class row exposes a distinct non-Human race x class pressure \
+                    that the separate race and class rows do not already absorb",
             },
         ],
     }
