@@ -269,8 +269,7 @@ jobs:
             release-staging/*.AppImage \
             release-staging/checksums.sha256 \
             release-staging/provenance.json \
-            release-staging/update-manifest-stub.json \
-            release-staging/channels/*.json
+            release-staging/update-manifest-stub.json
 
       # Channel-index update: the only legitimate writer of the protected
       # `update-index` branch in the normal path. Pushes channels/<channel>.json
