@@ -196,6 +196,20 @@ const SD13_HYBRID_LEVEL1_TEST: &str = "tests/sd13_hybrid_level1_chassis_baseline
 /// known-spell / slot posture burden.
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
+/// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
+/// classification: the deterministic pilot still produces computed outputs
+/// through a `race:gnome` chassis, the Gnome race seam receives the same
+/// non-claim-blocking `race.semantics.unverified` diagnostic the seam emits
+/// for every non-Human race, and no Gnome-specific trait math is fabricated.
+#[allow(dead_code)]
+const SD13_RACE_GNOME_BOUNDED_SEMANTICS_TEST: &str =
+    "tests/sd13_race_gnome_bounded_semantics.rs";
+
+/// Live compute seam that emits the bounded, non-claim-blocking
+/// `race.semantics.unverified` diagnostic for any non-Human race (including
+/// `race:gnome`) and grounds no non-Human race-specific explanation records.
+const PILOT_COMPUTE_RACE_SEAM: &str = "src/rules_core/pilot_compute.rs";
+
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
 /// Returns exactly 21 rows: 7 race, 12 class, and 2 interaction. The content is
@@ -249,13 +263,25 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.gnome.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:gnome",
-                dimension: "bounded race semantics",
+                dimension: "bounded Gnome race semantics: the deterministic pilot
+                            still produces computed outputs through a `race:gnome`
+                            chassis, but the Gnome race seam receives only the
+                            same non-claim-blocking `race.semantics.unverified`
+                            diagnostic the seam emits for every non-Human race;
+                            no Gnome-specific trait math is fabricated",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E2 race-semantic slice",
+                grounding_ref: PILOT_COMPUTE_RACE_SEAM,
+                blocker_or_lossiness_note: "the bounded Gnome classification
+                    grounds only the negative-control seam: Gnome small-size,
+                    slow-speed, low-light vision, defensive training, illusion
+                    resistance, hatred, keen senses, and every other Gnome
+                    racial trait burden remain unverified; the deterministic
+                    pilot still computes through a Gnome chassis but
+                    fabricates no Gnome trait math",
+                next_required_uplift: "later SD13-E2 race-semantic slice that
+                    grounds one or more Gnome trait surfaces",
             },
             SupportStateRow {
                 row_id: "race.half_elf.bounded_semantics",
