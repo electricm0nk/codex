@@ -62,6 +62,7 @@ fn load_sd13_support_state_matrix() -> Sd13SupportStateMatrixSnapshot {
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             load_pilot_shell_snapshot,
             load_ge08_authoring_workbench_snapshot,

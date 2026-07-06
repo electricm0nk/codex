@@ -13,14 +13,20 @@ import {
 } from './sd11/feedback/evidence';
 import {
   composeBugReport,
+  renderCopyableBugPayload,
   submitBugReport,
   type BugReportSubmissionOutcome,
 } from './sd11/feedback/bug';
 import {
   composeEnhancementRequest,
+  renderCopyableEnhancementPayload,
   submitEnhancementRequest,
   type EnhancementRequestSubmissionOutcome,
 } from './sd11/feedback/enhancement';
+import {
+  runBrowserHandoff,
+  type BrowserHandoffOutcome,
+} from './sd16/feedback/browserHandoff';
 import { loadSd11UpdateAction } from './boundary/loadSd11UpdateAction';
 import {
   deriveSd11UpdateAction,
@@ -211,12 +217,101 @@ function outcomeTone(status: BugReportSubmissionOutcome['status']): string {
   return '#b45309';
 }
 
+/**
+ * Honest browser-handoff outcome surface, shared by the bug and enhancement
+ * composers. `confirmed` means exactly "a prefilled GitHub issue form was
+ * opened in the tester's browser" — never that an issue was submitted. Every
+ * outcome keeps the governed draft copyable so no evidence is lost.
+ */
+function BrowserHandoffResultPanel(props: { handoff: BrowserHandoffOutcome; copyablePayload: string }) {
+  const [copied, setCopied] = useState(false);
+  const confirmed = props.handoff.ui.status === 'confirmed';
+  const tone = confirmed ? '#0f766e' : '#b45309';
+
+  async function onCopyPayload() {
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        await navigator.clipboard.writeText(props.copyablePayload);
+        setCopied(true);
+      }
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  return (
+    <div
+      style={{
+        backgroundColor: '#f8fafc',
+        border: `1px solid ${tone}`,
+        borderRadius: 12,
+        marginTop: '1rem',
+        padding: '0.9rem 1rem',
+      }}
+    >
+      <p style={{ color: tone, fontWeight: 700, margin: 0 }}>
+        Browser handoff: {confirmed ? 'prefilled issue form opened' : 'failed'}
+      </p>
+      {confirmed ? (
+        <>
+          <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+            A prefilled GitHub issue form was opened in your browser. Review it and press
+            &ldquo;Create&rdquo; there to file the issue — the shell only confirms the form was
+            opened; it does not claim the issue was submitted.
+          </p>
+          {props.handoff.ui.url ? (
+            <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0', wordBreak: 'break-all' }}>
+              Opened URL: <code>{props.handoff.ui.url}</code>
+            </p>
+          ) : null}
+        </>
+      ) : (
+        <>
+          <p style={{ color: '#7c2d12', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+            The prefilled GitHub issue form could not be opened
+            {props.handoff.ui.reason ? ` (${props.handoff.ui.reason})` : ''}. Nothing was filed and
+            no submission is claimed. Your structured draft is preserved below.
+          </p>
+          {props.handoff.manualUrl ? (
+            <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0', wordBreak: 'break-all' }}>
+              Open the validated prefilled form manually: <code>{props.handoff.manualUrl}</code>
+            </p>
+          ) : null}
+        </>
+      )}
+      <button
+        type="button"
+        onClick={onCopyPayload}
+        style={{
+          backgroundColor: '#334155',
+          border: 'none',
+          borderRadius: 8,
+          color: '#ffffff',
+          cursor: 'pointer',
+          fontWeight: 700,
+          marginTop: '0.6rem',
+          padding: '0.45rem 0.85rem',
+        }}
+      >
+        {copied ? 'Copied governed draft' : 'Copy governed draft'}
+      </button>
+      <textarea
+        readOnly
+        value={props.copyablePayload}
+        rows={10}
+        style={{ ...bugFieldStyle(), fontFamily: 'monospace', marginTop: '0.6rem' }}
+      />
+    </div>
+  );
+}
+
 function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
   const [title, setTitle] = useState('');
   const [observedBehavior, setObservedBehavior] = useState('');
   const [expectedBehavior, setExpectedBehavior] = useState('');
   const [reproductionSteps, setReproductionSteps] = useState('');
   const [outcome, setOutcome] = useState<BugReportSubmissionOutcome | null>(null);
+  const [handoff, setHandoff] = useState<BrowserHandoffOutcome | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -229,14 +324,22 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
     return composeBugReport({ title, payload });
   }, [props.surface, title, observedBehavior, expectedBehavior, reproductionSteps]);
 
-  // No GitHub transport is wired in this slice. We never improvise secret-bearing
-  // auth, so submission preserves a governed draft instead of counterfeiting success.
+  // Submittable drafts go through the governed browser handoff (SD-16 F4):
+  // the Rust boundary builds + validates a prefilled GitHub issue URL and
+  // opens it in the OS browser. No secret-bearing auth is ever improvised,
+  // and no submission is claimed — filing completes in the browser.
+  // Non-submittable drafts keep the honest blocked-incomplete preservation.
   async function onPrepareSubmission() {
     setSubmitting(true);
     setCopied(false);
     try {
-      const result = await submitBugReport({ composed, transport: null });
-      setOutcome(result);
+      if (composed.submittable) {
+        setOutcome(null);
+        setHandoff(await runBrowserHandoff(composed.draft));
+      } else {
+        setHandoff(null);
+        setOutcome(await submitBugReport({ composed, transport: null }));
+      }
     } finally {
       setSubmitting(false);
     }
@@ -330,7 +433,7 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
           padding: '0.6rem 1rem',
         }}
       >
-        {composed.submittable ? 'Prepare bug draft for manual filing' : 'Preserve bug draft (not yet submittable)'}
+        {composed.submittable ? 'Open prefilled GitHub issue form' : 'Preserve bug draft (not yet submittable)'}
       </button>
 
       <h3 style={{ marginBottom: '0.4rem', marginTop: '1.25rem' }}>Composed issue preview</h3>
@@ -398,6 +501,13 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
           />
         </div>
       ) : null}
+
+      {handoff ? (
+        <BrowserHandoffResultPanel
+          handoff={handoff}
+          copyablePayload={renderCopyableBugPayload(composed.draft)}
+        />
+      ) : null}
     </section>
   );
 }
@@ -409,6 +519,7 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
   const [requestedCapability, setRequestedCapability] = useState('');
   const [affectedSurface, setAffectedSurface] = useState('');
   const [outcome, setOutcome] = useState<EnhancementRequestSubmissionOutcome | null>(null);
+  const [handoff, setHandoff] = useState<BrowserHandoffOutcome | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -421,14 +532,22 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
     return composeEnhancementRequest({ title, payload });
   }, [props.surface, title, testerGoal, currentFriction, requestedCapability, affectedSurface]);
 
-  // No GitHub transport is wired in this slice. We never improvise secret-bearing
-  // auth, so submission preserves a governed draft instead of counterfeiting success.
+  // Submittable drafts go through the governed browser handoff (SD-16 F4):
+  // the Rust boundary builds + validates a prefilled GitHub issue URL and
+  // opens it in the OS browser. No secret-bearing auth is ever improvised,
+  // and no submission is claimed — filing completes in the browser.
+  // Non-submittable drafts keep the honest blocked-incomplete preservation.
   async function onPrepareSubmission() {
     setSubmitting(true);
     setCopied(false);
     try {
-      const result = await submitEnhancementRequest({ composed, transport: null });
-      setOutcome(result);
+      if (composed.submittable) {
+        setOutcome(null);
+        setHandoff(await runBrowserHandoff(composed.draft));
+      } else {
+        setHandoff(null);
+        setOutcome(await submitEnhancementRequest({ composed, transport: null }));
+      }
     } finally {
       setSubmitting(false);
     }
@@ -531,7 +650,7 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
         }}
       >
         {composed.submittable
-          ? 'Prepare enhancement draft for manual filing'
+          ? 'Open prefilled GitHub issue form'
           : 'Preserve enhancement draft (not yet submittable)'}
       </button>
 
@@ -599,6 +718,13 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
             style={{ ...bugFieldStyle(), fontFamily: 'monospace', marginTop: '0.6rem' }}
           />
         </div>
+      ) : null}
+
+      {handoff ? (
+        <BrowserHandoffResultPanel
+          handoff={handoff}
+          copyablePayload={renderCopyableEnhancementPayload(composed.draft)}
+        />
       ) : null}
     </section>
   );
