@@ -5,6 +5,9 @@ branch: feat/sd13-class-cleric-bounded-burden
 branch_base_sha: c78287cce76d3cce10fe814806558976fcfd70543 (origin/develop)
 merge_target: develop
 pr_draft: feat(sd13-e4-f8): cleric level-1 prepared divine spell-burden slice (to be opened)
+pr_url: https://github.com/electricm0nk/codex/pull/98
+pr_head_sha: 882ecd6dca75e3a5e1ad6ba90128116568c6c5d0
+pr_status: open / mergeable (refs/pull/98/merge resolves to f7ea7964b246f9d104626e4bb90f52b79578d2c2)
 generated_by: tech-priest (Magos Ferrix-9) on 2026-07-06
 kanban_card: t_6577e5bf
 parent_card: t_5d57e115
