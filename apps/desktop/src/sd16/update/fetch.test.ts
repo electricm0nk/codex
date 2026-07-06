@@ -9,7 +9,6 @@ import {
   type FetchLike,
   type FetchResult,
   type Sd16ChannelIndexFile,
-  type Sd16UpdateManifestFile,
 } from './fetch';
 
 // ---------- helpers ----------
@@ -65,41 +64,72 @@ function expectFailure<T>(
   return result.failure;
 }
 
-// The fetcher/validator operates on the wire format (snake_case) that the
-// E4 release lane writes onto the `update-index` branch; the parsed result
-// surfaces camelCase TS types.
+// The fetcher/validator operates on the canonical wire format defined by
+// `schemas/update/channel-index.schema.json` and
+// `schemas/update/update-manifest.schema.json` — the same contract the E4
+// release lane validates before publishing to the `update-index` branch.
+const SHA40 = 'abcdef0123456789abcdef0123456789abcdef01';
+const SHA64 = 'abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789';
+
+const MANIFEST_URL =
+  'https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/alpha/v0.1.0-abc12345/update-manifest.json';
+
 const VALID_CHANNEL_WIRE = {
-  schema_version: 'v1',
+  schema_version: '1.0.0',
   channel: 'alpha' as const,
-  release: {
-    tag: 'alpha-v0.1.0-abc1234',
-    published_at: '2026-07-03T12:00:00Z',
-    manifest_url:
-      'https://github.com/electricm0nk/codex/releases/download/alpha-v0.1.0-abc1234/update-manifest.json',
-    tranche_id: 'codex-tranche-2-5',
-  },
+  version: '0.1.0',
+  tag: 'alpha/v0.1.0-abc12345',
+  release_url: 'https://github.com/electricm0nk/codex/releases/tag/alpha-v0.1.0-abc12345',
+  manifest_url: MANIFEST_URL,
+  publication_timestamp: '2026-07-03T12:00:00Z',
+  tranche_id: 'STC-CODEX-SD-16',
   signature: null,
 };
 
 const VALID_MANIFEST_WIRE = {
-  schema_version: 'v1',
+  schema_version: '1.0.0',
   channel: 'alpha' as const,
-  eligibility: 'automatic' as const,
-  artifact: {
-    release_id: 'rel-001',
-    version: '0.1.0',
-    build_label: 'codex-desktop-shell-scaffold@0.1.0',
-    commit_or_provenance_handle: 'abc1234',
-    published_at: '2026-07-03T12:00:00Z',
-    artifact_sha256:
-      '0000000000000000000000000000000000000000000000000000000000000000',
-    path: 'Codex-0.1.0-x86_64.AppImage',
+  version: '0.1.0',
+  tag: 'alpha/v0.1.0-abc12345',
+  tranche_id: 'STC-CODEX-SD-16',
+  source_branch: 'develop',
+  source_commit: SHA40,
+  release_notes_path:
+    'programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md',
+  release_notes_url:
+    'https://github.com/electricm0nk/codex/releases/tag/alpha-v0.1.0-abc12345',
+  release_notes_hash: SHA64,
+  linux_appimage: {
+    name: 'Codex.Desktop.Shell.Scaffold_0.1.0_amd64.AppImage',
+    url: 'https://github.com/electricm0nk/codex/releases/download/alpha-v0.1.0-abc12345/Codex.Desktop.Shell.Scaffold_0.1.0_amd64.AppImage',
+    sha256: SHA64,
+    size_bytes: 77662712,
+  },
+  workflow_provenance: {
+    workflow: '.github/workflows/publish-tester-release.yml',
+    run_id: 28808170752,
+    run_attempt: 1,
+  },
+  eligibility: {
+    min_supported_version: '0.0.0',
+    appimage_install: true,
+    required_install_kind: 'appimage' as const,
+  },
+  promotion_lineage: {
+    source_branch: 'develop',
+    source_commit: SHA40,
+    promoted_at: '2026-07-03T12:00:00Z',
   },
   signature: null,
 };
 
-const MANIFEST_URL =
-  'https://github.com/electricm0nk/codex/releases/download/alpha-v0.1.0-abc1234/update-manifest.json';
+function channelText(overrides: Record<string, unknown> = {}): string {
+  return JSON.stringify({ ...VALID_CHANNEL_WIRE, ...overrides });
+}
+
+function manifestText(overrides: Record<string, unknown> = {}): string {
+  return JSON.stringify({ ...VALID_MANIFEST_WIRE, ...overrides });
+}
 
 // ---------- URL + pure-validator tests ----------
 
@@ -122,40 +152,53 @@ function verifiesChannelIndexUrlShape() {
 }
 
 function verifiesValidChannelIndexShapeAccepted() {
-  const result = validateChannelIndexShape(VALID_CHANNEL_WIRE, channelIndexUrl('alpha'));
+  const result = validateChannelIndexShape(channelText(), channelIndexUrl('alpha'));
   const value = expectOk(result, 'valid channel should pass validator');
   assertEqual(value.channel, 'alpha', 'channel preserved');
-  assertEqual(value.release.tag, 'alpha-v0.1.0-abc1234', 'tag preserved');
-  assertEqual(value.release.manifestUrl, MANIFEST_URL, 'manifestUrl preserved');
-  assertEqual(value.release.trancheId, 'codex-tranche-2-5', 'trancheId preserved');
+  assertEqual(value.tag, 'alpha/v0.1.0-abc12345', 'tag preserved');
+  assertEqual(value.manifest_url, MANIFEST_URL, 'manifest_url preserved');
+  assertEqual(value.tranche_id, 'STC-CODEX-SD-16', 'tranche_id preserved');
+  assertEqual(value.version, '0.1.0', 'version preserved');
 }
 
-function verifiesInvalidChannelIndexRejectsBadSchemaVersion() {
+function verifiesChannelIndexRejectsLegacySchemaVersion() {
+  // "v1" was the pre-E3 placeholder literal; the canonical contract is the
+  // semver string "1.0.0". A legacy index must fail closed.
   const result = validateChannelIndexShape(
-    { ...VALID_CHANNEL_WIRE, schema_version: 'v2' },
+    channelText({ schema_version: 'v1' }),
     channelIndexUrl('alpha')
   );
-  expectFailure(result, 'invalid-channel-index', 'bad schema_version');
+  expectFailure(result, 'invalid-channel-index', 'legacy schema_version');
 }
 
-function verifiesInvalidChannelIndexRejectsMissingManifestUrl() {
-  const raw = {
+function verifiesChannelIndexRejectsLegacyNestedShape() {
+  // The pre-F4 wire format nested the pointer under `release`; the canonical
+  // channel-index contract is flat. The legacy shape must fail closed.
+  const legacy = JSON.stringify({
     schema_version: 'v1',
     channel: 'alpha',
     release: {
-      tag: 'alpha-v0.1.0-abc1234',
+      tag: 'alpha-v0.1.0-abc12345',
       published_at: '2026-07-03T12:00:00Z',
+      manifest_url: MANIFEST_URL,
       tranche_id: 'codex-tranche-2-5',
     },
     signature: null,
-  };
-  const result = validateChannelIndexShape(raw, channelIndexUrl('alpha'));
+  });
+  const result = validateChannelIndexShape(legacy, channelIndexUrl('alpha'));
+  expectFailure(result, 'invalid-channel-index', 'legacy nested shape');
+}
+
+function verifiesInvalidChannelIndexRejectsMissingManifestUrl() {
+  const wire = { ...VALID_CHANNEL_WIRE } as Record<string, unknown>;
+  delete wire.manifest_url;
+  const result = validateChannelIndexShape(JSON.stringify(wire), channelIndexUrl('alpha'));
   expectFailure(result, 'invalid-channel-index', 'missing manifest_url');
 }
 
 function verifiesInvalidChannelIndexRejectsUnknownChannel() {
   const result = validateChannelIndexShape(
-    { ...VALID_CHANNEL_WIRE, channel: 'rc' },
+    channelText({ channel: 'rc' }),
     channelIndexUrl('alpha')
   );
   expectFailure(result, 'invalid-channel-index', 'unknown channel');
@@ -163,55 +206,54 @@ function verifiesInvalidChannelIndexRejectsUnknownChannel() {
 
 function verifiesInvalidChannelIndexRejectsBadSignatureType() {
   const result = validateChannelIndexShape(
-    { ...VALID_CHANNEL_WIRE, signature: 42 },
+    channelText({ signature: 42 }),
     channelIndexUrl('alpha')
   );
   expectFailure(result, 'invalid-channel-index', 'bad signature type');
 }
 
 function verifiesValidManifestShapeAccepted() {
-  const result = validateManifestShape(VALID_MANIFEST_WIRE, MANIFEST_URL);
+  const result = validateManifestShape(manifestText(), MANIFEST_URL);
   const value = expectOk(result, 'valid manifest should pass validator');
-  assertEqual(value.eligibility, 'automatic', 'eligibility preserved');
-  assertEqual(value.artifact.artifactSha256.length, 64, 'sha256 length');
+  assertEqual(value.version, '0.1.0', 'version preserved');
+  assertEqual(value.linux_appimage.sha256.length, 64, 'sha256 length');
+  assertEqual(value.eligibility.appimage_install, true, 'eligibility preserved');
+  assertEqual(value.eligibility.min_supported_version, '0.0.0', 'min_supported_version preserved');
+  assertEqual(value.source_commit, SHA40, 'source_commit preserved');
 }
 
-function verifiesInvalidManifestRejectsBadEligibility() {
+function verifiesManifestRejectsLegacySchemaVersion() {
   const result = validateManifestShape(
-    { ...VALID_MANIFEST_WIRE, eligibility: 'definitely-yes' },
+    manifestText({ schema_version: 'v1' }),
     MANIFEST_URL
   );
-  expectFailure(result, 'invalid-manifest', 'bad eligibility');
+  expectFailure(result, 'invalid-manifest', 'legacy schema_version');
 }
 
-function verifiesInvalidManifestRejectsEmptyArtifactSha256() {
+function verifiesInvalidManifestRejectsMissingLinuxAppimage() {
+  const wire = { ...VALID_MANIFEST_WIRE } as Record<string, unknown>;
+  delete wire.linux_appimage;
+  const result = validateManifestShape(JSON.stringify(wire), MANIFEST_URL);
+  expectFailure(result, 'invalid-manifest', 'missing linux_appimage');
+}
+
+function verifiesInvalidManifestRejectsMalformedSha256() {
   const result = validateManifestShape(
-    {
-      ...VALID_MANIFEST_WIRE,
-      artifact: { ...VALID_MANIFEST_WIRE.artifact, artifact_sha256: '' },
-    },
+    manifestText({
+      linux_appimage: { ...VALID_MANIFEST_WIRE.linux_appimage, sha256: '' },
+    }),
     MANIFEST_URL
   );
   expectFailure(result, 'invalid-manifest', 'empty sha256');
 }
 
-function verifiesInvalidManifestRejectsMissingArtifactSha256() {
-  const raw = {
-    schema_version: 'v1',
-    channel: 'alpha',
-    eligibility: 'automatic',
-    artifact: {
-      release_id: 'rel-001',
-      version: '0.1.0',
-      build_label: 'codex-desktop-shell-scaffold@0.1.0',
-      commit_or_provenance_handle: 'abc1234',
-      published_at: '2026-07-03T12:00:00Z',
-      path: 'Codex-0.1.0-x86_64.AppImage',
-    },
-    signature: null,
-  };
-  const result = validateManifestShape(raw, MANIFEST_URL);
-  expectFailure(result, 'invalid-manifest', 'missing sha256');
+function verifiesInvalidManifestRejectsChannelTagMismatch() {
+  // Cross-field rule from the canonical schema: tag prefix must equal channel.
+  const result = validateManifestShape(
+    manifestText({ tag: 'beta/v0.1.0-abc12345' }),
+    MANIFEST_URL
+  );
+  expectFailure(result, 'invalid-manifest', 'channel/tag prefix mismatch');
 }
 
 // ---------- fetcher tests (network stubbed) ----------
@@ -221,14 +263,14 @@ async function verifiesFetcherSucceedsOnValidChannel() {
     fetchImpl: makeFetchImpl([
       {
         url: channelIndexUrl('alpha'),
-        responded: JSON.stringify(VALID_CHANNEL_WIRE),
+        responded: channelText(),
         status: 200,
       },
     ]),
   });
   const value = expectOk(result, 'channel fetcher should succeed');
   assertEqual(value.channel, 'alpha', 'channel in result');
-  assertEqual(value.release.trancheId, 'codex-tranche-2-5', 'trancheId in result');
+  assertEqual(value.tranche_id, 'STC-CODEX-SD-16', 'tranche_id in result');
 }
 
 async function verifiesFetcherRejectsHttpError() {
@@ -259,12 +301,7 @@ async function verifiesFetcherRejectsInvalidShape() {
     fetchImpl: makeFetchImpl([
       {
         url: channelIndexUrl('alpha'),
-        responded: JSON.stringify({
-          schema_version: 'v9',
-          channel: 'alpha',
-          release: null,
-          signature: null,
-        }),
+        responded: channelText({ schema_version: 'v9' }),
         status: 200,
       },
     ]),
@@ -286,13 +323,13 @@ async function verifiesManifestFetcherSucceedsOnValidManifest() {
     fetchImpl: makeFetchImpl([
       {
         url: MANIFEST_URL,
-        responded: JSON.stringify(VALID_MANIFEST_WIRE),
+        responded: manifestText(),
         status: 200,
       },
     ]),
   });
   const value = expectOk(result, 'manifest fetcher should succeed');
-  assertEqual(value.artifact.version, '0.1.0', 'manifest version preserved');
+  assertEqual(value.version, '0.1.0', 'manifest version preserved');
 }
 
 async function verifiesManifestFetcherRejectsInvalidShape() {
@@ -300,12 +337,7 @@ async function verifiesManifestFetcherRejectsInvalidShape() {
     fetchImpl: makeFetchImpl([
       {
         url: MANIFEST_URL,
-        responded: JSON.stringify({
-          schema_version: 'v1',
-          channel: 'alpha',
-          artifact: null,
-          signature: null,
-        }),
+        responded: manifestText({ linux_appimage: null }),
         status: 200,
       },
     ]),
@@ -322,35 +354,36 @@ async function verifiesManifestFetchesOnlyManifestUrl() {
   // Defense-in-depth: the shell must NOT make GitHub Releases scanning
   // calls during discovery. We pin this via the URL contract — fetchChannelIndex
   // only ever asks for the channel index on the update-index branch, and
-  // fetchUpdateManifest only ever asks for the URL the index already named.
-  const updateIndexCalls: string[] = [];
+  // fetchUpdateManifest only ever asks for the URL the index already named
+  // (the F6 CORS-friendly mirror, also on the update-index branch).
+  const channelCalls: string[] = [];
   const manifestCalls: string[] = [];
   const routingFetch: FetchLike = async (input) => {
     const url = typeof input === 'string' ? input : String(input);
-    if (url.startsWith('https://raw.githubusercontent.com/electricm0nk/codex/update-index/')) {
-      updateIndexCalls.push(url);
+    if (url.includes('/update-index/channels/')) {
+      channelCalls.push(url);
       return {
         ok: true,
         status: 200,
-        text: async () => JSON.stringify(VALID_CHANNEL_WIRE),
+        text: async () => channelText(),
       };
     }
     manifestCalls.push(url);
     return {
       ok: true,
       status: 200,
-      text: async () => JSON.stringify(VALID_MANIFEST_WIRE),
+      text: async () => manifestText(),
     };
   };
 
   const channelResult = await fetchChannelIndex('alpha', { fetchImpl: routingFetch });
   const channelValue = expectOk(channelResult, 'channel fetcher ok in fan-out test');
-  const manifestResult = await fetchUpdateManifest(channelValue.release.manifestUrl, {
+  const manifestResult = await fetchUpdateManifest(channelValue.manifest_url, {
     fetchImpl: routingFetch,
   });
   expectOk(manifestResult, 'manifest fetcher ok in fan-out test');
 
-  assertEqual(updateIndexCalls.length, 1, 'exactly one update-index call');
+  assertEqual(channelCalls.length, 1, 'exactly one channel-index call');
   assertEqual(manifestCalls.length, 1, 'exactly one manifest call');
   assertEqual(
     manifestCalls[0],
@@ -358,13 +391,14 @@ async function verifiesManifestFetchesOnlyManifestUrl() {
     'manifest call resolved via the index.manifest_url'
   );
   // Guard against GitHub Releases API scanning creeping in.
+  const allCalls = [...channelCalls, ...manifestCalls];
   assert(
-    !updateIndexCalls.some((u) => u.includes('/releases/')),
+    !allCalls.some((u) => u.includes('/releases/')),
     'discovery must not call the GitHub Releases API'
   );
   assert(
-    !manifestCalls.some((u) => u.includes('/repos/')),
-    'manifest fetch must not call GitHub repo APIs'
+    !allCalls.some((u) => u.includes('/repos/')),
+    'discovery must not call GitHub repo APIs'
   );
 }
 
@@ -372,14 +406,16 @@ async function main() {
   // pure-validator tests
   verifiesChannelIndexUrlShape();
   verifiesValidChannelIndexShapeAccepted();
-  verifiesInvalidChannelIndexRejectsBadSchemaVersion();
+  verifiesChannelIndexRejectsLegacySchemaVersion();
+  verifiesChannelIndexRejectsLegacyNestedShape();
   verifiesInvalidChannelIndexRejectsMissingManifestUrl();
   verifiesInvalidChannelIndexRejectsUnknownChannel();
   verifiesInvalidChannelIndexRejectsBadSignatureType();
   verifiesValidManifestShapeAccepted();
-  verifiesInvalidManifestRejectsBadEligibility();
-  verifiesInvalidManifestRejectsEmptyArtifactSha256();
-  verifiesInvalidManifestRejectsMissingArtifactSha256();
+  verifiesManifestRejectsLegacySchemaVersion();
+  verifiesInvalidManifestRejectsMissingLinuxAppimage();
+  verifiesInvalidManifestRejectsMalformedSha256();
+  verifiesInvalidManifestRejectsChannelTagMismatch();
 
   // fetcher tests
   await verifiesFetcherSucceedsOnValidChannel();

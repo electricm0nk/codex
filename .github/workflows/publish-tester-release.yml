@@ -110,6 +110,37 @@ jobs:
         run: |
           python scripts/tranche/validate-tranche-notes.py --release-notes-path programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md
 
+      # SD16: derive a monotonically increasing build version so every
+      # release is distinguishable by version, not only by its SHA suffix.
+      # The repo keeps "0.0.0" as the committed placeholder; the publish
+      # lane owns the real version. GITHUB_RUN_NUMBER increments on every
+      # run of this workflow, so versions are strictly increasing per
+      # channel lane. The stamp happens BEFORE `tauri build` so the built
+      # app self-reports the same version the release tag and the update
+      # manifest carry.
+      - name: Stamp build version
+        id: stamp_version
+        working-directory: apps/desktop
+        run: |
+          set -euo pipefail
+          VERSION="0.0.${GITHUB_RUN_NUMBER}"
+          node - "$VERSION" <<'EOF'
+          const fs = require('fs');
+          const version = process.argv[2];
+          for (const p of ['package.json', 'src-tauri/tauri.conf.json']) {
+            const doc = JSON.parse(fs.readFileSync(p, 'utf8'));
+            doc.version = version;
+            fs.writeFileSync(p, JSON.stringify(doc, null, 2) + '\n');
+          }
+          EOF
+          STAMPED=$(node -p "require('./package.json').version")
+          if [ "${STAMPED}" != "${VERSION}" ]; then
+            echo "::error::version stamp failed: package.json reports ${STAMPED}, expected ${VERSION}"
+            exit 1
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Stamped build version ${VERSION}"
+
       - name: Build Linux artifact set
         working-directory: apps/desktop
         run: npx tauri build --bundles deb,appimage --ci
@@ -189,7 +220,7 @@ jobs:
             --run-id "${GITHUB_RUN_ID}" \
             --run-attempt "${GITHUB_RUN_ATTEMPT}" \
             --release-notes-url "${RELEASE_NOTES_URL}" \
-            --min-supported-version "${VERSION}" \
+            --min-supported-version "0.0.0" \
             --appimage-install "true" \
             --required-install-kind "appimage" \
             --output update-manifest.json
@@ -270,6 +301,18 @@ jobs:
             release-staging/checksums.sha256 \
             release-staging/provenance.json \
             release-staging/update-manifest-stub.json
+
+      # SD16 gate hardening: the two channel-index steps below are gated on
+      # hashFiles('...tranche-*/manifest.yaml') != '' and would be SILENTLY
+      # SKIPPED if that glob ever stops matching — the job would go green
+      # while the channel index quietly stops moving (the classic
+      # silent-success-but-published-nothing pitfall). This step inverts the
+      # gate and fails the job loudly instead.
+      - name: Assert channel-index gate preconditions
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml') == ''
+        run: |
+          echo "::error::channel-index: no tranche manifest matched programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml — the channel-index steps would be silently skipped and the update-index branch would never move. Failing loudly instead."
+          exit 1
 
       # F4: Emit a schema-conformant channel-index pointer into
       # release-staging/channels/<channel>.json for this workflow run.
@@ -369,20 +412,27 @@ jobs:
             exit 1
           fi
 
-          # Deterministic JSON payload (sorted keys via jq -S). signature is
-          # reserved (Tranche 2.5 does not sign channel indexes). F6 rewrites
-          # the .release.manifest_url field from the github.com release-download
-          # URL to the mirrored raw.githubusercontent.com URL.
-          INDEX_JSON="$(jq -n \
-            --arg sv "v1" \
-            --arg ch "${CHANNEL}" \
-            --arg tag "${TAG}" \
-            --arg pa "${PUBLISHED_AT}" \
-            --arg mu "${MIRROR_URL}" \
-            --arg nu "${NOTES_URL}" \
-            --arg tid "${TRANCHE_ID}" \
-            '{channel: $ch, release: {manifest_url: $mu, notes_url: $nu, published_at: $pa, tag: $tag, tranche_id: $tid}, schema_version: $sv, signature: null}' \
-            | jq -S .)"
+          # Emit the canonical channel-index payload via the F4 emitter so
+          # the file that ships to update-index conforms to
+          # schemas/update/channel-index.schema.json — the same contract the
+          # shell's discovery path (parseChannelIndex.ts) validates against.
+          # The emitter reads the schema-valid manifest, derives the index
+          # fields (version, channel-prefixed tag, tranche id), and
+          # validates its own output against the schema before writing —
+          # a malformed payload fails closed here rather than poisoning the
+          # protected update-index branch. F6: --manifest-url points at the
+          # mirrored raw.githubusercontent.com URL rather than the
+          # github.com release-download URL (which is not CORS-reachable
+          # from the Tauri webview).
+          mkdir -p channels
+          python3 tools/release/emit_channel_index.py \
+            --channel "${CHANNEL}" \
+            --manifest "${MANIFEST_SRC}" \
+            --output "channels/${CHANNEL}.json" \
+            --release-url "${NOTES_URL}" \
+            --manifest-url "${MIRROR_URL}" \
+            --published-at "${PUBLISHED_AT}"
+          INDEX_JSON="$(cat "channels/${CHANNEL}.json")"
 
           # F6: stage the manifest mirror under manifests/<MANIFEST_TAG>/ so the
           # same git add that ships channels/${CHANNEL}.json onto update-index

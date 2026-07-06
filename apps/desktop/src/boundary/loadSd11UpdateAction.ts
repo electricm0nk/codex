@@ -3,6 +3,7 @@ import type {
   Sd16UpdateManifestFile,
   FetchFailure,
 } from '../sd16/update/fetch';
+import { compareVersions } from '../sd16/update/eligibility';
 import { formatError, hasTauriRuntime } from './runtime';
 import type {
   Sd11TesterChannelLabel,
@@ -41,7 +42,7 @@ export async function loadSd11UpdateAction(
       return translateFailure(indexResult.failure, request);
     }
     const manifestResult = await fetchUpdateManifest(
-      indexResult.value.release.manifestUrl
+      indexResult.value.manifest_url
     );
     if (!manifestResult.ok) {
       return translateFailure(manifestResult.failure, request);
@@ -92,38 +93,59 @@ function translateManifest(
   manifest: Sd16UpdateManifestFile,
   request: Sd11UpdateActionRequest
 ): Sd11UpdateManifestView {
-  // Map F3a's Sd16UpdateManifestFile into the consumer-side Sd11UpdateManifestView.
-  // F3a already produced schema-valid typed output; this translation is a
-  // pure field rename + integrity-derivation step.
+  // Map the canonical schema-valid update manifest into the consumer-side
+  // Sd11UpdateManifestView. The current build is the RUNNING build (from the
+  // request), and the latest eligible build is the manifest's release —
+  // collapsed back onto the current build when the manifest offers nothing
+  // newer, so deriveSd11UpdateAction classifies equal identities as
+  // up-to-date and distinct identities as update-available.
   const currentBuild: Sd11UpdateBuildIdentity = {
-    releaseId: manifest.artifact.path, // F3a uses `path` as the release id
-    version: manifest.artifact.version,
-    buildLabel: manifest.artifact.buildLabel,
-    commitOrProvenanceHandle: manifest.artifact.commitOrProvenanceHandle,
-    publishedAt: manifest.artifact.publishedAt,
+    releaseId: request.buildLabel,
+    version: request.buildVersion,
+    buildLabel: request.buildLabel,
+    commitOrProvenanceHandle: 'running-build',
+    publishedAt: 'running-build',
   };
-  const latestEligibleBuild: Sd11UpdateBuildIdentity = currentBuild;
+  const manifestBuild: Sd11UpdateBuildIdentity = {
+    releaseId: manifest.tag,
+    version: manifest.version,
+    buildLabel: manifest.linux_appimage.name,
+    commitOrProvenanceHandle: manifest.source_commit,
+    publishedAt: manifest.promotion_lineage.promoted_at,
+  };
+  const manifestIsNewer = compareVersions(manifest.version, request.buildVersion) > 0;
+  const latestEligibleBuild = manifestIsNewer ? manifestBuild : currentBuild;
+
+  // The manifest's eligibility policy: AppImage self-update must be enabled
+  // and the running build must be at or above the manifest's version floor.
+  const meetsVersionFloor =
+    compareVersions(request.buildVersion, manifest.eligibility.min_supported_version) >= 0;
+  const eligibilityState: Sd11ManifestEligibilityState =
+    manifest.eligibility.appimage_install && meetsVersionFloor ? 'automatic' : 'manual-only';
+
   const integrity: Sd11UpdateIntegrityMaterial = {
-    checksumAvailable: isNonEmptyString(manifest.artifact.artifactSha256),
-    provenanceAvailable: isNonEmptyString(manifest.artifact.commitOrProvenanceHandle),
-    manifestAssetResolved: true, // F3a only returns ok=true after successful manifest fetch
-    linuxArtifactPresent: isNonEmptyString(manifest.artifact.path),
-    recoveryPostureDefined: isNonEmptyString(manifest.notesUrl ?? null),
+    checksumAvailable: isNonEmptyString(manifest.linux_appimage.sha256),
+    provenanceAvailable:
+      isNonEmptyString(manifest.source_commit) &&
+      isNonEmptyString(manifest.workflow_provenance.workflow),
+    manifestAssetResolved: true, // fetch.ts only returns ok=true after a successful, schema-valid manifest fetch
+    linuxArtifactPresent: isNonEmptyString(manifest.linux_appimage.url),
+    recoveryPostureDefined: isNonEmptyString(manifest.release_notes_url),
   };
   return {
-    manifestVersion: manifest.schemaVersion,
+    manifestVersion: manifest.schema_version,
     channel: manifest.channel,
-    operatorPromotionPathReference: 'develop -> main', // per F3a's hard-coded operator path
-    platform: 'linux', // F3a is Linux-first-class per F3a contract; UI handles tier
-    supportTier: 'first-class', // F3a manifest is Linux-only; tier matches the support matrix
+    operatorPromotionPathReference: `${manifest.promotion_lineage.source_branch} -> ${manifest.channel}`,
+    platform: 'linux', // the canonical manifest is Linux-first-class per its contract; UI handles tier
+    supportTier: 'first-class',
     currentBuild,
     latestEligibleBuild,
-    lifecycleState: 'active' as Sd11ReleaseLifecycleState, // F3a manifest does not carry lifecycle; default active
-    eligibilityState: manifest.eligibility as Sd11ManifestEligibilityState,
+    lifecycleState: 'active' as Sd11ReleaseLifecycleState, // the manifest does not carry lifecycle; default active
+    eligibilityState,
     integrity,
     replacementReleaseId: null,
     recoveryTarget: null,
-    notes: manifest.notesUrl ? [manifest.notesUrl] : [],
+    notes: [manifest.release_notes_url],
   };
 }
 

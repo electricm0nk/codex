@@ -1,86 +1,58 @@
-// SD16-E6-F3a — channel index + update manifest fetch with schema-shape validation.
+// SD16-E6-F3a — channel index + update manifest fetch with canonical
+// JSON-Schema validation.
 //
-// This module is the FIRST slice of the shell-side update discovery path for
-// Tranche 2.5. It is intentionally narrow: it fetches (1) the channel index
-// pointer file from the protected `update-index` branch on origin, and (2) the
-// update manifest that index points at, then validates that the JSON returned
-// matches the field-level contract documented in
-// `programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/`
-// (the README and the E6 readiness closure). It does NOT issue any
-// `fetch("/repos/.../releases")` style GitHub Releases API call (E6 is the
-// shell's discovery surface; the release lane — E4 — publishes the release
-// and writes the channel index).
+// This module is the shell-side update discovery path for Tranche 2.5. It
+// fetches (1) the channel index pointer file from the protected
+// `update-index` branch on origin, and (2) the update manifest that index
+// points at (the F6 CORS-friendly mirror, also on `update-index`), then
+// validates both against the canonical contracts in `schemas/update/`:
+//   - `channel-index.schema.json`
+//   - `update-manifest.schema.json`
+// It does NOT issue any `fetch("/repos/.../releases")` style GitHub
+// Releases API call (E6 is the shell's discovery surface; the release lane
+// — E4 — publishes the release and writes the channel index).
 //
-// The schema authoring and the JSON-Schema -> validator wiring live on the
-// E3 epic and have not yet landed in origin/develop at the time this slice
-// was authored. To keep the contract honest and to give downstream slices
-// (F3b eligibility + diagnostics, F3c UI integration) a stable typed
-// surface to build on, this module ships a self-contained pure-TS shape
-// validator that mirrors the documented field-level contract. When E3 lands
-// the actual JSON Schemas, this module is the single seam to swap to ajv
-// without touching F3b/F3c — they consume the parsed types, not the
-// validation internals.
+// Validation is delegated to the E3-backfill ajv parsers
+// (`parseChannelIndex.ts` / `parseUpdateManifest.ts`), which compile the
+// canonical schemas directly. This module was originally shipped with a
+// self-contained pure-TS shape validator mirroring a pre-E3 draft of the
+// contract; that placeholder is gone — the schemas are the single source
+// of truth, and the E4 release lane validates against the same documents
+// before publishing, so producer and consumer cannot drift apart again.
 //
 // Design tenets (carry into the wider E6 surface):
-//   - Fail closed: any non-200 response, malformed JSON, or shape mismatch
-//     returns a discriminated `FetchFailure` rather than throwing. UI/Install
-//     gating uses the failure reason verbatim to render a deterministic
-//     reason to the user.
+//   - Fail closed: any non-200 response, malformed JSON, or schema
+//     violation returns a discriminated `FetchFailure` rather than
+//     throwing. UI/Install gating uses the failure reason verbatim to
+//     render a deterministic reason to the user.
 //   - Pure and testable: every fetch goes through a `fetchImpl` indirection
 //     defaulting to the platform `fetch`. Tests inject a stub so the network
 //     is never touched under `npm test`.
 //   - Explicit Result type: no exceptions on the surface. Internal failures
 //     during JSON parsing become typed results, not thrown `SyntaxError`s.
-//   - No `any` and no runtime JSON Schema engine — only structural checks
-//     against typed field shapes. Reserved signature field is allowed to be
-//     null or absent (signing is deferred per Non-Goals).
 //   - No reliance on Node-only globals: this module is also valid in the
 //     Tauri webview context (the browser `fetch` is a superset of what we
 //     need; if a host has no `fetch`, the injected `fetchImpl` is the
 //     escape hatch).
 
+import type { ErrorObject } from 'ajv/dist/2020';
+import {
+  parseChannelIndex,
+  type ChannelIndexFile,
+  type ChannelLabel,
+} from './parseChannelIndex';
+import { parseUpdateManifest, type UpdateManifestFile } from './parseUpdateManifest';
+
 // ---------- channel + manifest field contracts ----------
+//
+// The wire types are the canonical snake_case shapes pinned by the ajv
+// parsers. Downstream slices (F3b eligibility + diagnostics, F3c UI
+// integration, the SD-11 boundary) consume these re-exported aliases so
+// the schema contract has exactly one TS surface.
 
-export type Sd16ChannelLabel = 'alpha' | 'beta' | 'stable';
-
-export interface Sd16ChannelReleasePointer {
-  tag: string;
-  publishedAt: string; // ISO-8601 UTC
-  manifestUrl: string;
-  trancheId: string;
-  notesUrl?: string;
-}
-
-export interface Sd16ChannelIndexFile {
-  schemaVersion: 'v1';
-  channel: Sd16ChannelLabel;
-  release: Sd16ChannelReleasePointer;
-  signature: null | unknown; // reserved; signing deferred per Non-Goals
-}
-
-export interface Sd16UpdateManifestArtifact {
-  releaseId: string;
-  version: string;
-  buildLabel: string;
-  commitOrProvenanceHandle: string;
-  publishedAt: string; // ISO-8601 UTC
-  artifactSha256: string;
-  path: string;
-}
-
-export interface Sd16UpdateManifestFile {
-  schemaVersion: 'v1';
-  channel: Sd16ChannelLabel;
-  artifact: Sd16UpdateManifestArtifact;
-  eligibility:
-    | 'automatic'
-    | 'manual-only'
-    | 'unsupported'
-    | 'withdrawn'
-    | 'blocked';
-  notesUrl?: string;
-  signature: null | unknown; // reserved; signing deferred per Non-Goals
-}
+export type Sd16ChannelLabel = ChannelLabel;
+export type Sd16ChannelIndexFile = ChannelIndexFile;
+export type Sd16UpdateManifestFile = UpdateManifestFile;
 
 // ---------- discriminated results ----------
 
@@ -139,12 +111,6 @@ export function channelIndexUrl(channel: Sd16ChannelLabel): string {
   return `${RAW_BASE_URL}/${channel}.json`;
 }
 
-const SUPPORTED_CHANNELS: ReadonlySet<Sd16ChannelLabel> = new Set<Sd16ChannelLabel>([
-  'alpha',
-  'beta',
-  'stable',
-]);
-
 function isSd16ChannelLabel(value: unknown): value is Sd16ChannelLabel {
   return value === 'alpha' || value === 'beta' || value === 'stable';
 }
@@ -154,139 +120,55 @@ function isNonEmptyString(value: unknown): value is string {
 }
 
 /**
- * Validate the structural shape of a fetched channel index. Returns a
- * human-readable reason on failure (used by UI surfaces for deterministic
- * disabled-reason badges). Mirrors the documented channel-index shape from
- * the E6 readiness closure + the E4 channel-index implementation, minus
- * the JSON Schema engine that E3 has not yet wired.
+ * Render the first ajv error into the deterministic human-readable reason
+ * UI surfaces show verbatim (disabled-reason badges, check-failed detail).
  */
-export function validateChannelIndexShape(raw: unknown, atUrl: string): FetchResult<Sd16ChannelIndexFile> {
-  if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) {
-    const got = raw === null ? 'null' : Array.isArray(raw) ? 'array' : typeof raw;
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-channel-index',
-        reason: `expected a JSON object at ${atUrl}, got ${got}`,
-        url: atUrl,
-      },
-    };
+function renderSchemaErrors(errors: ReadonlyArray<ErrorObject>): string {
+  const first = errors[0];
+  if (!first) {
+    return 'schema validation failed';
   }
-  const obj = raw as Record<string, unknown>;
+  const where = first.instancePath === '' ? '(root)' : first.instancePath;
+  return `${where} ${first.message ?? 'schema validation failed'}`;
+}
 
-  if (obj.schema_version !== 'v1') {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-channel-index',
-        reason: `schema_version must be the literal string "v1" at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  if (!isSd16ChannelLabel(obj.channel)) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-channel-index',
-        reason: `channel must be one of "alpha" | "beta" | "stable" at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  if (obj.release === null || typeof obj.release !== 'object' || Array.isArray(obj.release)) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-channel-index',
-        reason: `release must be an object at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  const rel = obj.release as Record<string, unknown>;
-  if (!isNonEmptyString(rel.tag)) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-channel-index',
-        reason: `release.tag must be a non-empty string at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  if (!isNonEmptyString(rel.published_at)) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-channel-index',
-        reason: `release.published_at must be a non-empty ISO-8601 string at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  if (!isNonEmptyString(rel.manifest_url)) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-channel-index',
-        reason: `release.manifest_url must be a non-empty string at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  if (!isNonEmptyString(rel.tranche_id)) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-channel-index',
-        reason: `release.tranche_id must be a non-empty string at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  if (
-    rel.notes_url !== undefined &&
-    typeof rel.notes_url !== 'string'
-  ) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-channel-index',
-        reason: `release.notes_url, if present, must be a string at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  // signature is reserved (signing deferred); must be null or a JSON object (or absent).
-  if (
-    obj.signature !== undefined &&
-    obj.signature !== null &&
-    (typeof obj.signature !== 'object' || Array.isArray(obj.signature))
-  ) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-channel-index',
-        reason: `signature, if present, must be null or an object (signing reserved) at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
+/** Extract the synthetic json-parse error the ajv parsers emit on bad JSON. */
+function jsonParseError(errors: ReadonlyArray<ErrorObject>): ErrorObject | undefined {
+  return errors.find((e) => e.keyword === 'json-parse');
+}
 
-  const parsed: Sd16ChannelIndexFile = {
-    schemaVersion: 'v1',
-    channel: obj.channel,
-    release: {
-      tag: rel.tag,
-      publishedAt: rel.published_at,
-      manifestUrl: rel.manifest_url,
-      trancheId: rel.tranche_id,
-      ...(rel.notes_url !== undefined ? { notesUrl: rel.notes_url } : {}),
-    },
-    signature: obj.signature ?? null,
-  };
-  return { ok: true, value: parsed };
+/**
+ * Validate raw channel-index response text against the canonical
+ * `channel-index.schema.json`. Returns a human-readable reason on failure
+ * (used by UI surfaces for deterministic disabled-reason badges).
+ */
+export function validateChannelIndexShape(
+  rawText: string,
+  atUrl: string
+): FetchResult<Sd16ChannelIndexFile> {
+  const parsed = parseChannelIndex(rawText);
+  if (!parsed.ok) {
+    const parseFailure = jsonParseError(parsed.errors);
+    if (parseFailure) {
+      return {
+        ok: false,
+        failure: {
+          kind: 'invalid-json',
+          reason: parseFailure.message ?? 'invalid JSON',
+          url: atUrl,
+        },
+      };
+    }
+    return {
+      ok: false,
+      failure: {
+        kind: 'invalid-channel-index',
+        reason: `channel-index.schema.json: ${renderSchemaErrors(parsed.errors)} at ${atUrl}`,
+        url: atUrl,
+      },
+    };
+  }
+  return { ok: true, value: parsed.data };
 }
 
 /**
@@ -339,139 +221,43 @@ export async function fetchUpdateManifest(
 // ---------- update manifest ----------
 
 /**
- * Validate the structural shape of a fetched update manifest. Mirrors the
- * documented update-manifest shape from the E6 readiness closure (release
- * identity, eligibility, optional notes, reserved signature).
+ * Validate raw update-manifest response text against the canonical
+ * `update-manifest.schema.json`.
  */
-export function validateManifestShape(raw: unknown, atUrl: string): FetchResult<Sd16UpdateManifestFile> {
-  if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) {
-    const got = raw === null ? 'null' : Array.isArray(raw) ? 'array' : typeof raw;
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-manifest',
-        reason: `expected a JSON object at ${atUrl}, got ${got}`,
-        url: atUrl,
-      },
-    };
-  }
-  const obj = raw as Record<string, unknown>;
-
-  if (obj.schema_version !== 'v1') {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-manifest',
-        reason: `schema_version must be the literal string "v1" at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  if (!isSd16ChannelLabel(obj.channel)) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-manifest',
-        reason: `channel must be one of "alpha" | "beta" | "stable" at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  const allowedEligibility = new Set<string>([
-    'automatic',
-    'manual-only',
-    'unsupported',
-    'withdrawn',
-    'blocked',
-  ]);
-  if (typeof obj.eligibility !== 'string' || !allowedEligibility.has(obj.eligibility)) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-manifest',
-        reason: `eligibility must be one of "automatic" | "manual-only" | "unsupported" | "withdrawn" | "blocked" at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  if (obj.artifact === null || typeof obj.artifact !== 'object' || Array.isArray(obj.artifact)) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-manifest',
-        reason: `artifact must be an object at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-  const art = obj.artifact as Record<string, unknown>;
-  const artifactStrings: Record<string, string> = {};
-  for (const key of ['release_id', 'version', 'build_label', 'commit_or_provenance_handle', 'published_at', 'artifact_sha256', 'path']) {
-    const v = art[key];
-    if (!isNonEmptyString(v)) {
+export function validateManifestShape(
+  rawText: string,
+  atUrl: string
+): FetchResult<Sd16UpdateManifestFile> {
+  const parsed = parseUpdateManifest(rawText);
+  if (!parsed.ok) {
+    const parseFailure = jsonParseError(parsed.errors);
+    if (parseFailure) {
       return {
         ok: false,
         failure: {
-          kind: 'invalid-manifest',
-          reason: `artifact.${key} must be a non-empty string at ${atUrl}`,
+          kind: 'invalid-json',
+          reason: parseFailure.message ?? 'invalid JSON',
           url: atUrl,
         },
       };
     }
-    artifactStrings[key] = v;
-  }
-  if (
-    obj.notes_url !== undefined &&
-    typeof obj.notes_url !== 'string'
-  ) {
     return {
       ok: false,
       failure: {
         kind: 'invalid-manifest',
-        reason: `notes_url, if present, must be a string at ${atUrl}`,
+        reason: `update-manifest.schema.json: ${renderSchemaErrors(parsed.errors)} at ${atUrl}`,
         url: atUrl,
       },
     };
   }
-  if (
-    obj.signature !== undefined &&
-    obj.signature !== null &&
-    (typeof obj.signature !== 'object' || Array.isArray(obj.signature))
-  ) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-manifest',
-        reason: `signature, if present, must be null or an object (signing reserved) at ${atUrl}`,
-        url: atUrl,
-      },
-    };
-  }
-
-  const parsed: Sd16UpdateManifestFile = {
-    schemaVersion: 'v1',
-    channel: obj.channel,
-    eligibility: obj.eligibility as Sd16UpdateManifestFile['eligibility'],
-    artifact: {
-      releaseId: artifactStrings.release_id,
-      version: artifactStrings.version,
-      buildLabel: artifactStrings.build_label,
-      commitOrProvenanceHandle: artifactStrings.commit_or_provenance_handle,
-      publishedAt: artifactStrings.published_at,
-      artifactSha256: artifactStrings.artifact_sha256,
-      path: artifactStrings.path,
-    },
-    ...(obj.notes_url !== undefined ? { notesUrl: obj.notes_url } : {}),
-    signature: obj.signature ?? null,
-  };
-  return { ok: true, value: parsed };
+  return { ok: true, value: parsed.data };
 }
 
 // ---------- shared HTTP + JSON + validate plumbing ----------
 
 async function fetchAndValidate<T>(
   url: string,
-  validator: (raw: unknown, atUrl: string) => FetchResult<T>,
+  validator: (rawText: string, atUrl: string) => FetchResult<T>,
   fetchImpl: FetchLike = defaultFetchImpl
 ): Promise<FetchResult<T>> {
   let res: Awaited<ReturnType<FetchLike>>;
@@ -501,18 +287,5 @@ async function fetchAndValidate<T>(
     };
   }
   const text = await res.text();
-  let raw: unknown;
-  try {
-    raw = JSON.parse(text);
-  } catch (err) {
-    return {
-      ok: false,
-      failure: {
-        kind: 'invalid-json',
-        reason: err instanceof Error ? err.message : String(err),
-        url,
-      },
-    };
-  }
-  return validator(raw, url);
+  return validator(text, url);
 }
