@@ -119,6 +119,14 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const SORCERER_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E4-F-Cleric spell-bearing baseline identity. Cleric is a prepared full divine
+// caster; this slice recognizes only its bounded single-class level-1 identity as direct
+// runtime evidence and grounds no deity/domain resolution, no domain mechanics, and no
+// spell math (spell slots, orisons, spells prepared, spell DCs, bonus spells, or
+// channel-energy posture) for it.
+const CLERIC_CLASS_ID: &str = "class:cleric";
+const CLERIC_BASELINE_LEVEL: u8 = 1;
+
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
 // grounds no non-Human race semantics and no broader Human racial trait burden.
@@ -283,6 +291,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
 
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+
+    explain_cleric_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
@@ -886,6 +896,90 @@ fn explain_sorcerer_level1_spell_baseline(
              ability score, and spell save DCs are out of scope for this level-1 spell baseline and \
              no spell math is fabricated"
                 .to_owned(),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Cleric at the bounded
+/// spell baseline level (1). Returns `false` for any other class, a multiclass mix, or a
+/// level-2+ Cleric this slice deliberately does not recognize — each of which stays
+/// blocked exactly as before.
+fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == CLERIC_CLASS_ID
+                && class_level.level == CLERIC_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4-F-Cleric runtime evidence for the deterministic Human Cleric
+/// level-1 spell-bearing baseline, while keeping it explicitly claim-blocked on its two
+/// still-missing burdens.
+///
+/// This deliberately does not compute a supported spell surface. It grounds no deity
+/// resolution, no domain selection mechanics, no domain power, no channel-energy
+/// posture, and no spell math whatsoever — no spell slots, orisons, spells prepared,
+/// spell DCs, bonus spells, or prepared posture. It only:
+/// - leaves one recognition explanation so the `class:cleric:1` identity is acknowledged
+///   as a prepared divine spell-bearing class rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the deity/domain burden and
+///   the divine prepared spell posture burden explicitly, rather than hiding behind a
+///   generic "unsupported caster" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Cleric spell-bearing identity and its two
+/// named burdens legible on the runtime path.
+fn explain_cleric_level1_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_cleric_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Cleric level-1
+    // spell-bearing identity. This is a recognition record only; it fabricates no spell math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.cleric".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Cleric level {CLERIC_BASELINE_LEVEL} spell-bearing \
+             baseline: the {CLERIC_CLASS_ID}:{CLERIC_BASELINE_LEVEL} class identity is acknowledged \
+             as a prepared divine spell-bearing class on the rules-core seam rather than an \
+             undocumented packet placeholder. This is a bounded recognition record only; it grounds \
+             no deity resolution, no domain mechanics, and no spell math (orisons, spell slots, \
+             spells prepared, spell DCs, bonus spells, or channel-energy posture), so it carries no \
+             fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the deity/domain burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.cleric.deity_domain.unsupported".to_owned(),
+        message: format!(
+            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its deity/domain burden: the \
+             deity selection, the chosen deity's favored weapon, the domain selection, the domain \
+             power, and any other deity- or domain-granted class features are not implemented in \
+             this bounded spell baseline, so no Cleric deity/domain support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the divine prepared spell posture burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.cleric.prepared.unsupported".to_owned(),
+        message: format!(
+            "Cleric remains blocked on its divine prepared spell posture burden: orisons, spells \
+             prepared, spell slots per day, bonus spell slots from a high Wisdom score, and spell \
+             save DCs are out of scope for this level-{CLERIC_BASELINE_LEVEL} spell baseline and no \
+             spell math is fabricated"
+        ),
         claim_blocking: true,
     });
 }
