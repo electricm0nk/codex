@@ -126,7 +126,7 @@ fn half_orc_row_blocker_note_is_non_empty_and_names_missing_burden() {
         "ferocity",
         "darkvision",
         "weapon familiarity",
-        "orcfu",
+        "orc",
         "size",
         "speed",
         "skill",
@@ -138,7 +138,7 @@ fn half_orc_row_blocker_note_is_non_empty_and_names_missing_burden() {
         named_at_least_one,
         "Half-Orc blocker note must name at least one Half-Orc-specific semantic \
          burden (one of: ability / ferocity / darkvision / weapon familiarity / \
-         orcfu / size / speed / skill), got: {}",
+         orc / size / speed / skill), got: {}",
         half_orc.blocker_or_lossiness_note
     );
 }
@@ -312,3 +312,4 @@ fn half_orc_fighter_pilot_receipt_remains_computed_with_only_race_gap() {
         );
     }
 }
+

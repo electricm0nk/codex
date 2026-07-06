@@ -2,15 +2,15 @@
 #
 # Deterministic Half-Orc Fighter level-1 character input chosen to drive the
 # `race.semantics.unverified` diagnostic in `pilot_compute.rs`. The fixture
-# carries a Half-Orc race identity (not Human) and a deterministic Human
-# loadout: the rest of the bounded non-race seam (Fighter chassis, ability
-# modifiers, base saves, total saves, deterministic combat baseline) still
-# grounds a `Computed` receipt because the race semantic gap is intentionally
-# non-claim-blocking. There is no Half-Orc-specific ability-bonus or bonus-feat
-# selection: Half-Orc has no equivalent of the Human ability-bonus or bonus-feat
-# pressure, so the deterministic Half-Orc pilot compute path receives only the
-# generic `race.semantics.unverified` diagnostic and no Human race explanation
-# records.
+# carries a Half-Orc race identity (not Human) with NO Human-specific race
+# semantics: the bounded non-race seam (Fighter chassis, ability modifiers,
+# base saves, total saves, deterministic combat baseline) still grounds a
+# `Computed` receipt because the race semantic gap is intentionally
+# non-claim-blocking. There is no Half-Orc-specific ability-bonus or
+# bonus-feat selection in this fixture (Half-Orc has no equivalent of the
+# Human ability-bonus or bonus-feat pressure), so the deterministic Half-Orc
+# pilot compute path receives only the generic `race.semantics.unverified`
+# diagnostic and no Human race explanation records.
 case_id=pf1-crb-half-orc-fighter-level1
 source_package_id=pf1.core_rulebook
 race_id=race:half-orc

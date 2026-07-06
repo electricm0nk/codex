@@ -299,14 +299,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     row stays Unverified rather than Blocked because the Half-Orc \
                     loadout still produces a Computed pilot receipt — only the \
                     race semantic gap is non-claim-blocking",
-                next_required_uplift: "SD13-E2 Half-Orc race-semantic slice: name \
-                    the bounded Half-Orc trait set, add a deterministic Half-Orc \
-                    Fighter level-1 pilot fixture, and emit a Half-Orc-specific \
-                    race-semantics diagnostic in pilot_compute.rs that names the \
-                    grounded subset (e.g. ability modifier, darkvision) versus the \
-                    still-unverified subset (size, ferocity, weapon familiarity, \
-                    skill bonus) so the row can advance from Unverified to Partial \
-                    only when a live Half-Orc proof surface exists",
+                next_required_uplift: "SD13-E2 Half-Orc race-semantic slice: emit a \
+                    Half-Orc-specific race-semantics diagnostic in pilot_compute.rs \
+                    that names the grounded subset (e.g. ability modifier, \
+                    darkvision) versus the still-unverified subset (size, ferocity, \
+                    weapon familiarity, skill bonus, favored-class, racial \
+                    archetype) so the row can advance from Unverified to Partial \
+                    only when a live Half-Orc proof surface exists with at least \
+                    one grounded Half-Orc trait computed end-to-end",
             },
             SupportStateRow {
                 row_id: "race.halfling.bounded_semantics",
