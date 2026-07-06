@@ -112,12 +112,44 @@ const PALADIN_CLASS_ID: &str = "class:paladin";
 const RANGER_CLASS_ID: &str = "class:ranger";
 const HYBRID_BASELINE_LEVEL: u8 = 1;
 
-// SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
-// caster; this slice recognizes only its bounded single-class level-1 identity as direct
-// runtime evidence and grounds no bloodline power and no spell math (spell slots, spells
-// known, spell DCs, bonus spells, or prepared posture) for it.
+// SD13-E4-F8 Sorcerer level-1 bloodline and spontaneous spell-slot slice. Sorcerer is
+// a spontaneous full arcane caster; this slice proves its bounded single-class level-1
+// identity (the SD13-E4-F7 spell baseline) and additionally lifts the level-1 bloodline
+// burden and the spontaneous known-spell / slot posture burden to direct computed
+// evidence with bounded PF1 Core Rulebook magnitudes. It grounds no level-2+ Sorcerer
+// progression, no bloodline arcana (level-3+ power), no bonus spells/feats/skills from
+// bloodline beyond the level-1 power, no school choice, no sorcerer metamagic, no
+// sorcery points, and no multiclass spell progression.
+//
+// PF1 Core Rulebook source evidence (not oracle-checked parity):
+//   cr_abilities_class.lst Sorcerer Level 1: spells known 4, spells per day 3 (1st)
+//   cr_abilities_class.lst Arcane bloodline level-1 power: Arcane Bond (familiar or item)
+//   cr_abilities_class.lst High Ability Scores sidebar (page 71): spontaneous casters
+//     convert the high-stat bonus-spells bracket into additional spells known and
+//     additional slots per day at the highest castable level.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const SORCERER_BASELINE_LEVEL: u8 = 1;
+const SORCERER_BLOODLINE_CHOICE_ID: &str = "choice:sorcerer_bloodline";
+const ARCANE_BLOODLINE_SELECTION: &str = "bloodline:arcane";
+// Sorcerer level-1 base spells known (Sorcerer table).
+const SORCERER_LEVEL_1_SPELLS_KNOWN_BASE: i16 = 4;
+// Sorcerer level-1 base spells per day at the 1st level (Sorcerer table).
+const SORCERER_LEVEL_1_SPELLS_PER_DAY_BASE: i16 = 3;
+// Highest spell level a Sorcerer level 1 can cast (1st-level spells only).
+const SORCERER_LEVEL_1_HIGHEST_SPELL_LEVEL: i16 = 1;
+// Base DC component (10) plus per-spell-level increment (1).
+const SPELL_SAVE_DC_BASE: i16 = 10;
+// Bonus spells per day from a high casting stat: CHA 14 -> +1, CHA 16 -> +2, CHA 17
+// falls in the +2 bracket (the bonus-spells table is keyed on the integer stat, so
+// 14/16/18 are the breakpoints and odd stats inherit the lower even bracket).
+fn cha_bonus_spells_bracket(charisma_score: i16) -> i16 {
+    match charisma_score {
+        s if s >= 18 => 3,
+        s if s >= 16 => 2,
+        s if s >= 14 => 1,
+        _ => 0,
+    }
+}
 
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
@@ -821,23 +853,39 @@ fn is_single_class_sorcerer_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Sorcerer
-/// level-1 spell-bearing baseline, while keeping it explicitly claim-blocked on its two
-/// still-missing burdens.
+/// Surface direct SD13-E4-F8 runtime evidence for the deterministic Human Sorcerer
+/// level-1 bloodline + spontaneous spell-slot slice, while keeping it explicitly
+/// claim-blocked on the still-missing level-2+ progression and broader spell-support
+/// gap.
 ///
-/// This deliberately does not compute a supported spell surface. It grounds no bloodline
-/// power, no bloodline arcana, and no spell math whatsoever — no spell slots, spells
-/// known, spell DCs, bonus spells, prepared posture, or school choice. It only:
-/// - leaves one recognition explanation so the `class:sorcerer:1` identity is acknowledged
-///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
-///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two distinct claim-blocking diagnostics naming the bloodline burden and the
-///   spontaneous known-spell / slot posture burden explicitly, rather than hiding behind a
-///   generic "unsupported caster" label.
+/// The SD13-E4-F7 spell baseline recognized the deterministic Human Sorcerer level-1
+/// identity as direct runtime evidence and explicitly claim-blocked the bloodline burden
+/// and the spontaneous known-spell / slot posture burden. This follow-up slice lifts
+/// both burdens to direct computed evidence with bounded PF1 Core Rulebook magnitudes,
+/// and reduces the diagnostic surface to a single remaining-gap diagnostic that names
+/// only the level-2+ progression and broader spell-support surface as out of scope.
+///
+/// The slice proves only what CRB allows:
+/// - bloodline selection (the fixture's Arcane bloodline) and its level-1 bloodline
+///   power (Arcane Bond — familiar or bonded item) as direct recognition evidence
+///   (a selection, not a numeric bonus at level 1, so the explanation carries +0);
+/// - Sorcerer level-1 spells known = 4 (Sorcerer table) + the high-CHA bonus bracket
+///   (CHA 17 -> +2) = 6 spells known;
+/// - Sorcerer level-1 spells per day = 3 (Sorcerer table) + the high-CHA bonus bracket
+///   (CHA 17 -> +2) = 5 first-level slots;
+/// - Sorcerer level-1 spell save DC for a 1st-level spell = 10 + 1 + 3 = 14
+///   (10 base + 1 spell level + 3 CHA modifier).
+///
+/// It does not compute, and stays claim-blocked on:
+/// - Sorcerer level-2+ class progression (level-2 spells known/per day, level-3
+///   bloodline arcana, level-9 bloodline capstone, etc.);
+/// - bonus spells/feats/skills from bloodline beyond the level-1 Arcane Bond power;
+/// - school choice, sorcerer metamagic, sorcery points, multiclass spell progression,
+///   and any general spell-support surface beyond the named CRB level-1 magnitudes.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
-/// keeps that blocked posture but makes the Sorcerer spell-bearing identity and its two
-/// named burdens legible on the runtime path.
+/// keeps that blocked posture but makes the Sorcerer level-1 bloodline + spontaneous
+/// math legible on the runtime path, while naming the only remaining gap.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -850,8 +898,10 @@ fn explain_sorcerer_level1_spell_baseline(
         return;
     }
 
-    // Direct runtime evidence: recognize the deterministic Human Sorcerer level-1
-    // spell-bearing identity. This is a recognition record only; it fabricates no spell math.
+    // Direct runtime evidence (1/4): recognize the deterministic Human Sorcerer level-1
+    // spell-bearing identity. This is a recognition record only; it fabricates no spell
+    // math and is preserved from the SD13-E4-F7 baseline as the foundation this slice
+    // builds on.
     explanations.push(ComputationExplanation {
         id: "class_chassis.spell_baseline.sorcerer".to_owned(),
         value: 0,
@@ -860,32 +910,121 @@ fn explain_sorcerer_level1_spell_baseline(
              baseline: the {SORCERER_CLASS_ID}:{SORCERER_BASELINE_LEVEL} class identity is acknowledged \
              as a spontaneous arcane spell-bearing class on the rules-core seam rather than an \
              undocumented packet placeholder. This is a bounded recognition record only; it grounds no \
-             bloodline power and no spell math (spell slots, spells known, spell DCs, bonus spells, or \
-             prepared posture), so it carries no fabricated mechanical value (+0)"
+             level-2+ progression, no school choice, no sorcerer metamagic, and no sorcery points, so \
+             it carries no fabricated mechanical value (+0)"
         ),
     });
 
-    // Still blocked (1/2): name the bloodline burden explicitly.
+    // Bloodline slice (direct runtime evidence (2/4)): the chosen bloodline + its
+    // level-1 bloodline power. The Arcane bloodline's level-1 power is Arcane Bond
+    // (familiar or bonded item) — a selection, not a numeric bonus, so it carries +0.
+    // If no bloodline is selected, the slice stays claim-blocked on the bloodline
+    // burden with the original blanket diagnostic.
+    match choice_selection(input, SORCERER_BLOODLINE_CHOICE_ID) {
+        None => {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_feature.sorcerer.bloodline.unsupported".to_owned(),
+                message: format!(
+                    "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline burden: \
+                     no bloodline selection was provided for {SORCERER_BLOODLINE_CHOICE_ID}, so no \
+                     bloodline or bloodline power support is claimed"
+                ),
+                claim_blocking: true,
+            });
+        }
+        Some(selection) => {
+            let (bloodline_name, bloodline_power_name, power_id) = if selection
+                == ARCANE_BLOODLINE_SELECTION
+            {
+                ("Arcane", "Arcane Bond (familiar or bonded item)", "class_feature.sorcerer.bloodline.arcane.arcane_bond")
+            } else {
+                // The slice recognizes the selection but only grounds the Arcane level-1
+                // power in this fixture. Other bloodlines are surfaced as direct evidence
+                // (the selection is honored) with their level-1 power named as out of scope
+                // for the bounded math on this slice.
+                let bloodline_name = selection
+                    .strip_prefix("bloodline:")
+                    .unwrap_or(selection);
+                (
+                    bloodline_name,
+                    "level-1 bloodline power (out of scope for the bounded math on this slice)",
+                    "class_feature.sorcerer.bloodline.other.level_1_power",
+                )
+            };
+            explanations.push(ComputationExplanation {
+                id: power_id.to_owned(),
+                value: 0,
+                detail: format!(
+                    "Recognized deterministic Human Sorcerer level {SORCERER_BASELINE_LEVEL} {bloodline_name} \
+                     bloodline + level-1 power: the chosen {SORCERER_BLOODLINE_CHOICE_ID} -> {selection} \
+                     bloodline grants {bloodline_power_name} at level {SORCERER_BASELINE_LEVEL}. This is a \
+                     bounded recognition record only; it grounds no bloodline arcana (level-3+ power), no \
+                     bloodline bonus spells/feats/skills beyond the level-1 power, and no Sorcerer level-2+ \
+                     progression, so it carries no fabricated mechanical value (+0)"
+                ),
+            });
+        }
+    }
+
+    // Spontaneous spell-slot slice (direct runtime evidence (3/4) + (4/4)):
+    // spells known, spells per day, and spell save DC. All three are computed from
+    // CRB-cited bounded magnitudes + the deterministic CHA 17 fixture.
+    let charisma_score = input.chosen.ability_scores.charisma;
+    let cha_modifier = ability_modifier(charisma_score);
+    let cha_bonus = cha_bonus_spells_bracket(charisma_score);
+    let spells_known =
+        SORCERER_LEVEL_1_SPELLS_KNOWN_BASE + cha_bonus;
+    let spells_per_day =
+        SORCERER_LEVEL_1_SPELLS_PER_DAY_BASE + cha_bonus;
+    let spell_save_dc =
+        SPELL_SAVE_DC_BASE + SORCERER_LEVEL_1_HIGHEST_SPELL_LEVEL + cha_modifier;
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.sorcerer.spontaneous.spells_known".to_owned(),
+        value: spells_known,
+        detail: format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} spontaneous spells known: base {SORCERER_LEVEL_1_SPELLS_KNOWN_BASE} \
+             (Sorcerer spells-known table) + {cha_bonus} high-Charisma bonus bracket (CHA {charisma_score} -> \
+             CHA modifier {cha_modifier:+}, falling in the +{cha_bonus} bonus-spells bracket per the \
+             High Ability Scores sidebar for spontaneous casters) = {spells_known} spells known at level \
+             {SORCERER_BASELINE_LEVEL}"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.sorcerer.spontaneous.spells_per_day".to_owned(),
+        value: spells_per_day,
+        detail: format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} spontaneous spells per day (1st level): base \
+             {SORCERER_LEVEL_1_SPELLS_PER_DAY_BASE} (Sorcerer spells-per-day table at the 1st slot level) + \
+             {cha_bonus} high-Charisma bonus spells (CHA {charisma_score} -> {cha_bonus:+} in the bonus-spells \
+             bracket) = {spells_per_day} first-level spells per day at level {SORCERER_BASELINE_LEVEL}"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.sorcerer.spontaneous.spell_save_dc".to_owned(),
+        value: spell_save_dc,
+        detail: format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} spell save DC for a 1st-level spell: \
+             {SPELL_SAVE_DC_BASE} (base) + {SORCERER_LEVEL_1_HIGHEST_SPELL_LEVEL} (spell level) + \
+             {cha_modifier:+} (Charisma modifier from CHA {charisma_score}) = {spell_save_dc}"
+        ),
+    });
+
+    // Single remaining-gap diagnostic: the bounded slice proves only the level-1
+    // bloodline + spontaneous math. The level-2+ progression and broader spell-support
+    // surface stays claim-blocked as a single, distinct diagnostic.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.sorcerer.bloodline.unsupported".to_owned(),
+        id: "class_sorcerer.sorcerer.level_2_plus_progression_unsupported".to_owned(),
         message: format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline burden: the \
-             bloodline selection, its level-1 bloodline power, bloodline arcana, and bloodline bonus \
-             spells/feats/skills are not implemented in this bounded spell baseline, so no Sorcerer \
-             bloodline support is claimed"
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its level-2+ progression gap: \
+             Sorcerer level-2/3+ spells known and per day, level-3+ bloodline arcana (the level-3 and \
+             level-9 bloodline powers), bonus spells/feats/skills from bloodline beyond the level-1 \
+             power, school choice, sorcerer metamagic, sorcery points, multiclass spell progression, \
+             and any item/feat spell modifiers are out of scope for this bounded slice, so the \
+             level-2+ Sorcerer posture is not computed"
         ),
-        claim_blocking: true,
-    });
-
-    // Still blocked (2/2): name the spontaneous known-spell / slot posture burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
-        message:
-            "Sorcerer remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting, spells known, spell slots per day, bonus spell slots from a high \
-             ability score, and spell save DCs are out of scope for this level-1 spell baseline and \
-             no spell math is fabricated"
-                .to_owned(),
         claim_blocking: true,
     });
 }

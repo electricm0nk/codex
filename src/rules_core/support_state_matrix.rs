@@ -22,10 +22,15 @@
 //!   slice proves the deterministic Human Paladin level-1 and Human Ranger level-1
 //!   hybrid chassis are recognized on the compute seam, but both stay blocked on the
 //!   named non-spell class-feature burden and the later spell burden,
-//! - the Sorcerer row is `Blocked` / `Computed`: the SD13-E4-F7 slice proves the
+//! - the Sorcerer row is `Partial` / `Computed`: the SD13-E4-F7 slice proves the
 //!   deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is
-//!   recognized on the compute seam, but it stays blocked on the bloodline burden and the
-//!   spontaneous known-spell / slot posture burden, and fabricates no spell math,
+//!   recognized on the compute seam, and the SD13-E4-F8 follow-up slice lifts the
+//!   level-1 bloodline burden (bloodline selection + Arcane Bond level-1 power) and
+//!   the spontaneous known-spell / slot posture burden (spells known 6, spells per
+//!   day 5, spell save DC 14 for a 1st-level spell at CHA 17) to direct computed
+//!   evidence, leaving only the Sorcerer level-2+ progression and broader spell-
+//!   support surface (level-3+ bloodline arcana, school choice, sorcerer metamagic,
+//!   sorcery points, multiclass spell progression) named as the only remaining gap,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
 //! - every other core race, core class (including Bard and Wizard), and the broader
 //!   non-Human interaction row remain `Unverified` / `Observed` (named by SD-13 scope
@@ -190,11 +195,14 @@ const SD13_FIGHTER_LEVEL2_LEVEL3_TEST: &str = "tests/sd13_fighter_level2_level3_
 /// blocked on the named non-spell class-feature burden and the later spell burden.
 const SD13_HYBRID_LEVEL1_TEST: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs";
 
-/// SD13-E4-F7 dedicated proof surface for the bounded Human Sorcerer level-1 spell
-/// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
-/// that stays explicitly blocked on the bloodline burden and the spontaneous
-/// known-spell / slot posture burden.
-const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
+/// SD13-E4-F8 dedicated proof surface for the bounded Human Sorcerer level-1
+/// bloodline and spontaneous spell-slot slice: direct computed recognition of the
+/// chosen bloodline + level-1 bloodline power (Arcane -> Arcane Bond) and the
+/// spontaneous known-spell / slot posture math (spells known, slots per day,
+/// spell save DC), with a single remaining-gap diagnostic naming the level-2+
+/// Sorcerer progression and broader spell-support surface as out of scope.
+const SD13_SORCERER_BLOODLINE_AND_SPONTANEOUS_SLICE_TEST: &str =
+    "tests/sd13_sorcerer_bloodline_and_spontaneous_slice.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
@@ -444,21 +452,34 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Sorcerer level-1 spell baseline, with the bloodline burden and the \
-                            spontaneous known-spell / slot posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            Sorcerer level-1 spell baseline with the bounded level-1 bloodline \
+                            + spontaneous spell-slot math proven as direct evidence, and the \
+                            Sorcerer level-2+ progression and broader spell-support surface \
+                            (level-3+ bloodline arcana, school choice, sorcerer metamagic, \
+                            sorcery points, multiclass spell progression) named as the only \
+                            remaining gap",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_SORCERER_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
-                    deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the bloodline burden \
-                    (bloodline selection, level-1 bloodline power, bloodline arcana, bonus \
-                    spells/feats/skills) is not implemented, and the spontaneous spell burden \
-                    (spontaneous spells known, spell slots per day, bonus spell slots, spell save DCs) \
-                    is not computed. No spell math is fabricated and no Sorcerer level 2+ is proven",
-                next_required_uplift: "SD13-E4 Sorcerer bloodline and spontaneous spell-slot slice, \
-                    then level-2+ progression",
+                grounding_ref: SD13_SORCERER_BLOODLINE_AND_SPONTANEOUS_SLICE_TEST,
+                blocker_or_lossiness_note: "SD13-E4-F8 lifts the deterministic Human Sorcerer \
+                    level-1 bloodline burden and the spontaneous known-spell / slot posture \
+                    burden to direct computed evidence: the chosen bloodline (the fixture's \
+                    Arcane bloodline) and its level-1 bloodline power (Arcane Bond) are \
+                    recognized as bounded direct evidence, and the spontaneous math is computed \
+                    from CRB-cited magnitudes + the deterministic CHA 17 fixture (spells known \
+                    4 base + 2 high-CHA bonus bracket = 6; spells per day 3 base + 2 high-CHA \
+                    bonus bracket = 5 first-level slots; spell save DC for a 1st-level spell \
+                    = 10 + 1 + 3 CHA modifier = 14). The row stays Partial rather than \
+                    Supported because the bounded remaining gap is named explicitly: Sorcerer \
+                    level-2/3+ spells known and per day, level-3+ bloodline arcana (the \
+                    level-3 and level-9 bloodline powers), bonus spells/feats/skills from \
+                    bloodline beyond the level-1 Arcane Bond power, school choice, sorcerer \
+                    metamagic, sorcery points, multiclass spell progression, and any item/feat \
+                    spell modifiers are out of scope for this bounded slice",
+                next_required_uplift: "SD13-E4 Sorcerer level-2/3 progression slice: bounded \
+                    level-2 spells known/per day, level-3 bloodline arcana, and the broader \
+                    sorcerer spell-support surface (school choice, metamagic, sorcery points)",
             },
             SupportStateRow {
                 row_id: "class.wizard.progression_and_spell_burden",

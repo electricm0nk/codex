@@ -1,24 +1,44 @@
-//! SD13-E4-F7 Sorcerer level-1 spontaneous spell-burden baseline proof.
+//! SD13-E4-F7 Sorcerer level-1 spell-bearing baseline proof (post-F8 invariants).
 //!
-//! Proves the first truthful SD13-F7 spell-bearing slice: the live rules-core surface
-//! ingests a deterministic Human `class:sorcerer:1` input, leaves direct computed
-//! evidence that recognizes the Sorcerer level-1 spell-bearing class identity rather
-//! than treating it as an undocumented packet placeholder, and yet stays explicitly
-//! claim-blocked with two distinct diagnostics: one for the bloodline burden and one
-//! for the spontaneous known-spell / slot posture burden. It also pins the matrix
-//! reclassification of the Sorcerer row from `Unverified` / `Observed` to `Blocked` /
-//! `Computed`, while proving Bard and Wizard stay `Unverified` / `Observed` and the
-//! accepted Paladin/Ranger hybrid rows stay `Blocked` / `Computed`.
+//! Proves the SD13-F7 spell-bearing invariants that SURVIVE the SD13-E4-F8 bloodline
+//! + spontaneous spell-slot follow-up slice:
 //!
-//! It is intentionally not a spell engine. It fabricates no spell slots, spells known,
-//! spell DCs, bonus spells, prepared posture, school choice, or general spell totals,
-//! and it grounds no Sorcerer level 2+. It also preserves the accepted Human race seam
-//! on the spell-bearing path.
+//! - The live rules-core surface still ingests a deterministic Human
+//!   `class:sorcerer:1` input and leaves direct computed evidence that recognizes the
+//!   Sorcerer level-1 spell-bearing class identity (the F7 chassis recognition record
+//!   `class_chassis.spell_baseline.sorcerer`), rather than treating it as an
+//!   undocumented packet placeholder.
+//! - It still fabricates no Fighter-shaped computed chassis (no base attack bonus,
+//!   no `class_chassis.base_attack_bonus` explanation) — the spell-bearing path
+//!   remains distinct from the Fighter chassis path the F7 baseline anchored.
+//! - It still preserves the accepted Human race seam on the spell-bearing path
+//!   (ability-bonus target, bonus-feat grant, bounded non-claim-blocking Human
+//!   race note).
+//! - The deterministic Human Sorcerer level-1 posture stays Blocked on the
+//!   integrated headless receipt, because the bounded F8 slice names only the
+//!   level-1 bloodline + spontaneous math and the level-2+ progression + broader
+//!   spell-support surface as the remaining gap.
+//! - Level-2 Sorcerer, Fighter, and Rogue stay negative controls: the level-1
+//!   chassis recognition does not leak onto level-2 Sorcerer, the Fighter chassis
+//!   does not surface a Sorcerer recognition, and the Rogue chassis stays a plain
+//!   blocked negative control.
+//! - The matrix keeps Bard and Wizard at `Unverified` / `Observed` and the
+//!   accepted Paladin / Ranger hybrid rows at `Blocked` / `Computed`, while the
+//!   Sorcerer row itself has been reclassified by the F8 follow-up slice from
+//!   `Blocked` / `Computed` to `Partial` / `Computed`.
+//!
+//! This file does NOT re-assert the two pre-F8 burden diagnostics
+//! (`class_feature.sorcerer.bloodline.unsupported` and
+//! `class_spell.sorcerer.spontaneous.unsupported`) or the pre-F8 "no spell math"
+//! invariant: those are now obsolete because the F8 slice computes the bounded
+//! level-1 bloodline selection + Arcane Bond level-1 power and the spontaneous
+//! spells known / slots per day / save DC math directly. The post-F8 invariants
+//! for those surfaces live in `tests/sd13_sorcerer_bloodline_and_spontaneous_slice.rs`.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
-    PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
+    HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
@@ -30,8 +50,6 @@ const SORCERER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_sorcerer_level1_sd13_deterministic_input.txt");
 
 const RECOGNITION_ID: &str = "class_chassis.spell_baseline.sorcerer";
-const BLOODLINE_BLOCKER_ID: &str = "class_feature.sorcerer.bloodline.unsupported";
-const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.sorcerer.spontaneous.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -48,7 +66,7 @@ fn load(fixture: &str) -> CharacterInput {
 fn explanation<'a>(
     computation: &'a PilotBaseChassisComputation,
     id: &str,
-) -> &'a ComputationExplanation {
+) -> &'a codex::rules_core::pilot_compute::ComputationExplanation {
     computation
         .explanations
         .iter()
@@ -59,27 +77,6 @@ fn explanation<'a>(
                 computation.explanations
             )
         })
-}
-
-fn claim_blocking<'a>(
-    computation: &'a PilotBaseChassisComputation,
-    id: &str,
-) -> &'a ComputationDiagnostic {
-    let diag = computation
-        .diagnostics
-        .iter()
-        .find(|d| d.id == id)
-        .unwrap_or_else(|| {
-            panic!(
-                "expected diagnostic id '{id}', got {:?}",
-                computation.diagnostics
-            )
-        });
-    assert!(
-        diag.claim_blocking,
-        "diagnostic '{id}' must be claim-blocking: {diag:?}"
-    );
-    diag
 }
 
 fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
@@ -107,8 +104,8 @@ fn sorcerer_level1_leaves_direct_spell_baseline_recognition_evidence() {
         recognition.detail
     );
 
-    // It is recognition only: it must carry no fabricated mechanical value (+0) and must
-    // not fabricate a Fighter-style computed chassis.
+    // The chassis recognition itself carries no fabricated mechanical value (+0) and
+    // the spell-bearing path does not fabricate a Fighter-style computed chassis.
     assert_eq!(
         recognition.value, 0,
         "sorcerer spell baseline recognition must carry no fabricated value (+0)"
@@ -126,80 +123,35 @@ fn sorcerer_level1_leaves_direct_spell_baseline_recognition_evidence() {
     assert_eq!(computation.ability_modifiers.charisma, 3);
 }
 
-#[test]
-fn sorcerer_level1_fabricates_no_spell_math() {
-    let input = load(SORCERER_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
-
-    // No explanation may fabricate spell slots, spells known, DCs, bonus spells, prepared
-    // posture, school choice, or general spell totals. The single recognition record is
-    // the only spell-bearing explanation, and it carries +0.
-    for explanation in &computation.explanations {
-        assert!(
-            explanation.id == RECOGNITION_ID || !explanation.id.contains("spell"),
-            "no fabricated spell explanation is allowed beyond the +0 recognition: {explanation:?}"
-        );
-    }
-    // The recognition itself asserts it fabricates no spell math.
-    let recognition = explanation(&computation, RECOGNITION_ID);
-    assert_eq!(recognition.value, 0);
-}
-
-// ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
+// ----- The bounded, level-1-only chassis recognition does not leak onto level 2 -----
 
 #[test]
-fn sorcerer_level1_stays_blocked_on_bloodline_burden() {
-    let input = load(SORCERER_FIXTURE);
+fn sorcerer_level_2_is_not_promoted_by_this_slice() {
+    // The F7 chassis recognition is bounded to level 1; a level-2 Sorcerer must not
+    // gain the level-1 spell-baseline recognition record and stays blocked.
+    let level_2 = SORCERER_FIXTURE.replace("class:sorcerer:1", "class:sorcerer:2");
+    let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
-
-    // The bloodline burden must be named explicitly, not hidden behind a generic
-    // "unsupported caster" label.
-    let bloodline = claim_blocking(&computation, BLOODLINE_BLOCKER_ID);
     assert!(
-        bloodline.message.contains("bloodline"),
-        "sorcerer bloodline blocker must name the bloodline burden: {}",
-        bloodline.message
+        !has_explanation(&computation, RECOGNITION_ID),
+        "level-2 Sorcerer must not gain the bounded level-1 spell-baseline recognition record"
     );
-}
-
-#[test]
-fn sorcerer_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
-    let input = load(SORCERER_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
-
-    // The spontaneous known-spell / slot posture burden must be a separate, explicit,
-    // claim-blocking diagnostic.
-    let spontaneous = claim_blocking(&computation, SPONTANEOUS_BLOCKER_ID);
     assert!(
-        spontaneous.message.contains("spontaneous")
-            && spontaneous.message.contains("spells known")
-            && spontaneous.message.contains("spell slot"),
-        "sorcerer spell blocker must name the spontaneous known-spell / slot posture burden: {}",
-        spontaneous.message
-    );
-
-    // The two burdens are genuinely distinct diagnostics.
-    assert_ne!(
-        BLOODLINE_BLOCKER_ID, SPONTANEOUS_BLOCKER_ID,
-        "bloodline and spontaneous burdens must be separate diagnostics"
-    );
-    let distinct_blocking = computation
-        .diagnostics
-        .iter()
-        .filter(|d| d.claim_blocking && d.id.starts_with("class_") && d.id.contains("sorcerer"))
-        .count();
-    assert_eq!(
-        distinct_blocking, 2,
-        "sorcerer must leave exactly two class-specific claim-blocking diagnostics: {:?}",
-        computation.diagnostics
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-2 Sorcerer must stay claim-blocked in this slice"
     );
 }
+
+// ----- The integrated posture remains Blocked on the bounded remaining gap -----
 
 #[test]
 fn sorcerer_level1_integrated_posture_is_blocked_not_counterfeit_success() {
     let input = load(SORCERER_FIXTURE);
 
-    // The integrated posture is blocked, never a counterfeit computed success.
+    // The integrated posture is blocked, never a counterfeit computed success:
+    // the F8 slice proves only the bounded level-1 bloodline + spontaneous math
+    // and names the level-2+ progression + broader spell-support surface as the
+    // remaining gap. That gap keeps the integrated posture Blocked.
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
 
@@ -239,11 +191,12 @@ fn spell_baseline_preserves_human_race_seam() {
     );
 }
 
-// ----- Negative controls: the spell baseline must not leak onto other classes/levels -----
+// ----- Negative controls: the spell baseline must not leak onto other classes -----
 
 #[test]
 fn fighter_and_rogue_do_not_gain_sorcerer_recognition() {
-    // A supported Fighter must not gain a sorcerer spell-baseline recognition record.
+    // A supported Fighter must not gain a sorcerer spell-baseline recognition record
+    // or any F7-surviving Sorcerer-specific diagnostic.
     let fighter = load(include_str!(
         "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
     ));
@@ -280,55 +233,45 @@ fn fighter_and_rogue_do_not_gain_sorcerer_recognition() {
     );
 }
 
-#[test]
-fn sorcerer_level_2_is_not_promoted_by_this_slice() {
-    // The slice is bounded to level 1; a level-2 Sorcerer must not gain the level-1
-    // spell-baseline recognition record and stays blocked.
-    let level_2 = SORCERER_FIXTURE.replace("class:sorcerer:1", "class:sorcerer:2");
-    let input = load(&level_2);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !has_explanation(&computation, RECOGNITION_ID),
-        "level-2 Sorcerer must not gain the bounded level-1 spell-baseline recognition record"
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-2 Sorcerer must stay claim-blocked in this slice"
-    );
-}
-
-// ----- Control plane: the matrix reclassifies the Sorcerer row to Blocked/Computed -----
+// ----- Control plane: the Sorcerer row has been reclassified to Partial/Computed by F8 -----
 
 #[test]
-fn matrix_sorcerer_row_is_blocked_computed_and_names_both_burdens() {
+fn matrix_sorcerer_row_is_partial_computed_after_f8_followup() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let sorcerer = matrix
         .row("class.sorcerer.progression_and_spell_burden")
         .expect("sorcerer row must exist");
 
-    // Moves off the pure Unverified/Observed placeholder, but only to Blocked/Computed.
-    assert_eq!(sorcerer.support_state, SupportState::Blocked);
-    assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
+    // The F8 follow-up slice lifts the Sorcerer row from Blocked/Computed to
+    // Partial/Computed. This F7 file pins the reclassified truth; the
+    // F8-specific invariants (bloodline + spontaneous explanations, the new
+    // remaining-gap diagnostic) live in tests/sd13_sorcerer_bloodline_and_spontaneous_slice.rs.
+    assert_eq!(
+        sorcerer.support_state,
+        SupportState::Partial,
+        "sorcerer row must be Partial after the F8 follow-up slice"
+    );
+    assert_eq!(
+        sorcerer.evidence_tier,
+        EvidenceTier::Computed,
+        "sorcerer row stays Computed on the evidence tier axis"
+    );
     assert_eq!(
         sorcerer.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
+        EvidenceFreshness::RefreshableFromLiveProof,
+        "sorcerer row stays refreshable-from-live-proof on the freshness axis"
+    );
+    // The blocker note must name the bounded level-2+ progression gap that the
+    // F8 follow-up slice names as the only remaining gap.
+    let note = sorcerer.blocker_or_lossiness_note;
+    assert!(
+        note.contains("level"),
+        "sorcerer Partial-row note must name the level-2+ progression gap: {note}"
     );
     assert!(
-        sorcerer
-            .grounding_ref
-            .contains("sd13_sorcerer_level1_spell_baseline"),
-        "sorcerer row must cite the SD13-F7 spell-baseline proof surface: {}",
-        sorcerer.grounding_ref
+        note.contains("bloodline") && note.contains("spontaneous"),
+        "sorcerer Partial-row note must name the bloodline + spontaneous surfaces: {note}"
     );
-    // The note must name both the bloodline burden and the spontaneous spell posture.
-    let note = sorcerer.blocker_or_lossiness_note;
-    assert!(!note.is_empty(), "sorcerer blocked row must carry a note");
-    for token in ["bloodline", "spontaneous", "spells known", "spell slot"] {
-        assert!(
-            note.contains(token),
-            "sorcerer blocked note must name the '{token}' burden: {note}"
-        );
-    }
 }
 
 #[test]
@@ -344,12 +287,12 @@ fn matrix_keeps_bard_and_wizard_unverified_observed() {
         assert_eq!(
             row.support_state,
             SupportState::Unverified,
-            "row {row_id} must stay Unverified after the Sorcerer slice"
+            "row {row_id} must stay Unverified after the F8 follow-up slice"
         );
         assert_eq!(
             row.evidence_tier,
             EvidenceTier::Observed,
-            "row {row_id} must stay Observed after the Sorcerer slice"
+            "row {row_id} must stay Observed after the F8 follow-up slice"
         );
     }
 }
@@ -367,7 +310,7 @@ fn matrix_preserves_paladin_and_ranger_hybrid_blocked_computed_truth() {
         assert_eq!(
             row.support_state,
             SupportState::Blocked,
-            "hybrid row {row_id} must stay Blocked after the Sorcerer slice"
+            "hybrid row {row_id} must stay Blocked after the F8 follow-up slice"
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
@@ -377,8 +320,11 @@ fn matrix_preserves_paladin_and_ranger_hybrid_blocked_computed_truth() {
 fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     assert!(
-        !matrix.rows.iter().any(|r| r.support_state == SupportState::Supported
-            || r.support_state == SupportState::Lossy),
-        "the Sorcerer slice must not promote any row to Supported or Lossy"
+        !matrix
+            .rows
+            .iter()
+            .any(|r| r.support_state == SupportState::Supported
+                || r.support_state == SupportState::Lossy),
+        "no slice must promote any row to Supported or Lossy"
     );
 }
