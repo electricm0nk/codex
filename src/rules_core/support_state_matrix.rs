@@ -196,6 +196,14 @@ const SD13_HYBRID_LEVEL1_TEST: &str = "tests/sd13_hybrid_level1_chassis_baseline
 /// known-spell / slot posture burden.
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
+/// SD13-E4-F8 dedicated proof surface for the bounded Human Druid level-1
+/// divine-prepared spell-burden baseline: direct computed recognition of the
+/// divine-prepared spell-bearing class identity that stays explicitly blocked
+/// on the divine-prepared posture burden, the nature-bond burden, and the
+/// animal-companion lineage burden (each named as a separate diagnostic, distinct
+/// from any Cleric domain/bond burden).
+const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs";
+
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
 /// Returns exactly 21 rows: 7 race, 12 class, and 2 interaction. The content is
@@ -381,13 +389,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.druid.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:druid",
-                dimension: "bounded class progression and spell burden",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E4 spellcasting slice",
+                dimension: "bounded divine-prepared spell-bearing class progression: the \
+                            deterministic Human Druid level-1 divine-prepared spell baseline, \
+                            with the divine-prepared posture burden, the nature-bond burden, \
+                            and the animal-companion lineage burden still blocked",
+                support_state: SupportState::Blocked,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_DRUID_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E4-F8 leaves direct computed evidence that the \
+                    deterministic Human Druid level-1 divine-prepared spell-bearing identity is \
+                    recognized on the compute seam, but the row stays blocked: the divine-prepared \
+                    posture burden (spells prepared from the Druid spell list, spell slots per day, \
+                    bonus spell slots from a high Wisdom score, spell save DCs) is not computed, the \
+                    nature-bond burden (selecting between an animal companion and a domain) is not \
+                    implemented, and the animal-companion lineage burden (companion species, \
+                    level-1 companion stats, companion-level progression) is not computed. No \
+                    divine-prepared spell math is fabricated and no Druid level 2+ is proven. The \
+                    Druid burdens are deliberately distinct from any Cleric domain/bond burden",
+                next_required_uplift: "SD13-E4 Druid nature-bond and animal-companion lineage \
+                    slice, then divine-prepared posture / spell-slot slice, then level-2+ \
+                    progression",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",

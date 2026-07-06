@@ -1,0 +1,35 @@
+# SD13-E4-F8 deterministic Human Druid level 1 divine-prepared spell-burden baseline fixture.
+# Represents a deterministic PF1 Core Rulebook Human Druid level 1 identity as chosen
+# input only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and bonus-feat)
+# and stays a single-class, level-1-only divine-prepared spell-bearing baseline.
+#
+# It deliberately avoids every spell-support surface: no spell slots, no spells
+# known/prepared, no spell DCs, no bonus spells, no divine-prepared posture
+# (prepared list), no nature-bond selection, no animal-companion selection, no
+# animal-companion stats, no companion-level progression, no domain choice, no
+# school choice, no general spell totals. It adds only the minimum choice data
+# needed to make the Druid class identity, the divine-prepared posture burden,
+# the nature-bond burden, and the animal-companion lineage burden legible; those
+# burdens are intentionally left for the runtime and matrix to name as still
+# blocking.
+#
+# It deliberately avoids the Cleric domain/bond posture: the Druid nature-bond
+# selects between an animal companion and a domain, but neither surface is
+# grounded here, and the per-class honesty of the SD-13 matrix requires the
+# Druid burdens to be named distinctly from any Cleric burden.
+case_id=pf1-crb-human-druid-level1
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:druid:1
+ability=strength:12
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:10
+ability=wisdom:14
+ability=charisma:10
+feat=feat:dodge
+choice=choice:druid_nature_bond:nature_bond:animal_companion
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e4-r2-spellcasting-and-hybrid-level-10-progression-execution-handoff-2026-07-01.md

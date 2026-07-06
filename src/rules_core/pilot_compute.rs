@@ -119,6 +119,15 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const SORCERER_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E4-F8 divine-prepared spell-bearing baseline identity. Druid is a divine-prepared
+// full caster who also bears the nature-bond and animal-companion lineage class-feature
+// burdens; this slice recognizes only its bounded single-class level-1 identity as direct
+// runtime evidence and grounds no divine-prepared posture (spells prepared / spell slots),
+// no nature-bond selection or execution, and no animal-companion lineage or companion
+// stats. The Druid burdens are deliberately distinct from any Cleric domain/bond burden.
+const DRUID_CLASS_ID: &str = "class:druid";
+const DRUID_BASELINE_LEVEL: u8 = 1;
+
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
 // grounds no non-Human race semantics and no broader Human racial trait burden.
@@ -283,6 +292,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
 
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+
+    explain_druid_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
@@ -886,6 +897,118 @@ fn explain_sorcerer_level1_spell_baseline(
              ability score, and spell save DCs are out of scope for this level-1 spell baseline and \
              no spell math is fabricated"
                 .to_owned(),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Druid at the bounded
+/// divine-prepared baseline level (1). Returns `false` for any other class, a multiclass mix,
+/// or a level-2+ Druid this slice deliberately does not recognize — each of which stays
+/// blocked exactly as before.
+fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == DRUID_CLASS_ID
+                && class_level.level == DRUID_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4-F8 runtime evidence for the deterministic Human Druid
+/// level-1 divine-prepared spell-bearing baseline, while keeping it explicitly
+/// claim-blocked on its three distinct still-missing burdens.
+///
+/// This deliberately does not compute a supported spell surface or companion surface.
+/// It grounds no divine-prepared posture (no spells prepared, no spell slots per day,
+/// no bonus spell slots, no spell save DCs), no nature-bond selection or execution,
+/// and no animal-companion lineage, selection, or companion-level progression. It only:
+/// - leaves one recognition explanation so the `class:druid:1` identity is acknowledged
+///   as a divine-prepared spell-bearing class with the nature-bond / companion class
+///   feature burdens rather than as an undocumented packet placeholder (direct runtime
+///   evidence, carrying no fabricated mechanical value), and
+/// - emits three distinct claim-blocking diagnostics naming the divine-prepared posture
+///   burden, the nature-bond burden, and the animal-companion lineage burden
+///   explicitly, rather than hiding behind a generic "unsupported caster" label.
+///
+/// The Druid burdens are deliberately distinct from any Cleric domain/bond burden —
+/// the Druid nature-bond selects between an animal companion and a domain, but neither
+/// surface is grounded here. Confusing Druid with Cleric would silently regress the
+/// per-class honesty the SD-13 matrix enforces.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Druid divine-prepared spell-bearing
+/// identity and its three named burdens legible on the runtime path.
+fn explain_druid_level1_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_druid_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Druid level-1
+    // divine-prepared spell-bearing identity. This is a recognition record only; it
+    // fabricates no spell math and no companion math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.druid".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Druid level {DRUID_BASELINE_LEVEL} divine-prepared \
+             spell-bearing baseline: the {DRUID_CLASS_ID}:{DRUID_BASELINE_LEVEL} class identity is \
+             acknowledged as a divine-prepared spell-bearing class on the rules-core seam rather \
+             than an undocumented packet placeholder. This is a bounded recognition record only; \
+             it grounds no divine-prepared posture (no spells prepared, no spell slots, no spell \
+             save DCs), no nature-bond selection or execution, and no animal-companion lineage \
+             or companion stats, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/3): name the divine-prepared posture burden explicitly. This is
+    // distinct from any Cleric domain/bond burden: the Druid posture is divine-prepared
+    // spells (prepared list, spell slots per day, bonus spell slots, spell save DCs) but
+    // it is not a Cleric domain selection.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.druid.divine_prepared.unsupported".to_owned(),
+        message: format!(
+            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its divine-prepared posture \
+             burden: spells prepared from the Druid spell list, spell slots per day, bonus spell \
+             slots from a high Wisdom score, and spell save DCs are not implemented in this \
+             bounded divine-prepared baseline, so no divine-prepared spell math is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/3): name the nature-bond class-feature burden explicitly. The
+    // nature-bond selects between an animal companion and a domain — both options are
+    // named by the diagnostic, and neither surface is grounded in this slice. This id
+    // is deliberately distinct from any Cleric domain/bond id so the per-class honesty
+    // of the SD-13 matrix holds.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.druid.nature_bond.unsupported".to_owned(),
+        message: format!(
+            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its nature-bond burden: the \
+             nature bond selects between an animal companion and a domain, but neither the \
+             animal companion option nor the domain option is implemented in this bounded \
+             divine-prepared baseline, so no nature-bond class-feature support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (3/3): name the animal-companion lineage burden explicitly. Even
+    // when the nature-bond selects the animal-companion option, the companion's lineage
+    // and companion-level progression are out of scope for this slice.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.druid.animal_companion.unsupported".to_owned(),
+        message: format!(
+            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its animal-companion lineage \
+             burden: the animal companion's species, its level-1 companion stats, and any \
+             later companion-level progression are not implemented in this bounded \
+             divine-prepared baseline, so no animal-companion support is claimed"
+        ),
         claim_blocking: true,
     });
 }
