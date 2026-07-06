@@ -80,6 +80,10 @@ pub enum IssueUrlError {
     LabelTooLong { max: usize },
     BodyTooLong { max: usize },
     UrlValidation { reason: String },
+    /// The URL built and validated but the OS-level browser open failed. The
+    /// validated URL is carried along so the shell can offer a manual link
+    /// instead of discarding the prepared handoff.
+    BrowserOpenFailed { reason: String, url: String },
 }
 
 /// Minimal RFC 3986 percent-encoder: every byte outside the unreserved set
@@ -215,16 +219,39 @@ fn prepare_url(req: &IssueUrlRequest) -> Result<String, IssueUrlError> {
     Ok(url)
 }
 
+/// OS-free handoff core: build + re-validate the issue URL, then hand it to
+/// the injected opener. `opened: true` is returned ONLY after the opener
+/// reports success, so the TS `BROWSER_OPENED` event (which advances the
+/// reducer to `confirmed`) is backed by a real OS-level open. A failed open
+/// carries the validated URL back so the shell can offer a manual link.
+fn perform_handoff(
+    req: &IssueUrlRequest,
+    open: impl FnOnce(&str) -> Result<(), String>,
+) -> Result<IssueUrlResponse, IssueUrlError> {
+    let url = prepare_url(req)?;
+    match open(&url) {
+        Ok(()) => Ok(IssueUrlResponse { url, opened: true }),
+        Err(reason) => Err(IssueUrlError::BrowserOpenFailed { reason, url }),
+    }
+}
+
 /// Tauri command consumed by the shell when the user clicks "Report this
-/// defect". Builds + re-validates the GitHub issue URL and returns it with the
-/// `opened: true` readiness signal. F3b explicitly refuses to claim submission
-/// without proof: the actual OS browser open (and the TS `BROWSER_OPENED`
-/// event that advances the reducer to `confirmed`) is the F4 wiring slice's
-/// responsibility.
+/// defect". Builds + re-validates the GitHub issue URL, then performs the
+/// real OS browser open via `tauri-plugin-opener` (the Tauri 2 successor to
+/// the `tauri-plugin-shell` open API named by the F3b handoff). The command
+/// still refuses to claim submission: `opened: true` means the prefilled
+/// issue form was opened in the tester's browser, nothing more.
 #[tauri::command]
-pub fn sd16_browser_handoff(req: IssueUrlRequest) -> Result<IssueUrlResponse, IssueUrlError> {
-    let url = prepare_url(&req)?;
-    Ok(IssueUrlResponse { url, opened: true })
+pub fn sd16_browser_handoff(
+    app: tauri::AppHandle,
+    req: IssueUrlRequest,
+) -> Result<IssueUrlResponse, IssueUrlError> {
+    use tauri_plugin_opener::OpenerExt;
+    perform_handoff(&req, |url| {
+        app.opener()
+            .open_url(url, None::<String>)
+            .map_err(|error| error.to_string())
+    })
 }
 
 #[cfg(test)]
@@ -312,10 +339,62 @@ mod tests {
     }
 
     #[test]
-    fn handoff_command_returns_opened_true_after_validate_passes() {
-        let res = sd16_browser_handoff(valid_request()).expect("valid request");
-        assert!(res.opened, "opened must be true once url built+validated");
+    fn perform_handoff_opens_browser_and_returns_opened_true() {
+        let mut opened_with: Option<String> = None;
+        let res = perform_handoff(&valid_request(), |url| {
+            opened_with = Some(url.to_string());
+            Ok(())
+        })
+        .expect("valid request with successful open");
+        assert!(res.opened, "opened must be true only after the OS open succeeds");
         assert!(res.url.starts_with("https://github.com/electricm0nk/codex/issues/new?"));
+        assert_eq!(
+            opened_with.as_deref(),
+            Some(res.url.as_str()),
+            "the opener must receive exactly the validated URL"
+        );
+    }
+
+    #[test]
+    fn perform_handoff_surfaces_open_failure_with_url_for_manual_fallback() {
+        let err = perform_handoff(&valid_request(), |_| Err("xdg-open missing".to_string()))
+            .expect_err("failed open must not claim opened");
+        match err {
+            IssueUrlError::BrowserOpenFailed { reason, url } => {
+                assert_eq!(reason, "xdg-open missing");
+                assert!(
+                    url.starts_with("https://github.com/electricm0nk/codex/issues/new?"),
+                    "failure must carry the validated URL so the shell can offer a manual link: {url}"
+                );
+            }
+            other => panic!("expected BrowserOpenFailed, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn perform_handoff_does_not_invoke_opener_on_invalid_request() {
+        let mut invoked = false;
+        let mut req = valid_request();
+        req.title = String::new();
+        let err = perform_handoff(&req, |_| {
+            invoked = true;
+            Ok(())
+        })
+        .expect_err("invalid request must fail before any OS interaction");
+        assert_eq!(err, IssueUrlError::EmptyTitle);
+        assert!(!invoked, "the opener must never run for an unvalidated URL");
+    }
+
+    #[test]
+    fn browser_open_failed_serializes_with_kebab_kind_and_url() {
+        let json = serde_json::to_string(&IssueUrlError::BrowserOpenFailed {
+            reason: "denied".to_string(),
+            url: "https://github.com/o/r/issues/new?title=x".to_string(),
+        })
+        .expect("serialize");
+        assert!(json.contains("\"kind\":\"browser-open-failed\""), "kind tag: {json}");
+        assert!(json.contains("\"reason\":\"denied\""), "reason field: {json}");
+        assert!(json.contains("\"url\":"), "url field: {json}");
     }
 
     #[test]
