@@ -1,0 +1,34 @@
+{
+  "channel": "alpha",
+  "eligibility": {
+    "appimage_install": true,
+    "min_supported_version": "0.0.0",
+    "required_install_kind": "appimage"
+  },
+  "linux_appimage": {
+    "name": "Codex.Desktop.Shell.Scaffold_0.0.55_amd64.AppImage",
+    "sha256": "d29ae53db6424733642dddc46df207117508103c077b26976013c2d242fb26f5",
+    "size_bytes": 78694904,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.0.55-b345c827/Codex.Desktop.Shell.Scaffold_0.0.55_amd64.AppImage"
+  },
+  "promotion_lineage": {
+    "promoted_at": "2026-07-06T22:55:23Z",
+    "source_branch": "develop",
+    "source_commit": "b345c827f571d783d4b7949479cfe5e9a5a1abfe"
+  },
+  "release_notes_hash": "cf1fdd887ee4ae34c0df20cba3d8c9cef4444be603210bc2e1f93eaaa7d30bb8",
+  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_url": "https://github.com/electricm0nk/codex/releases/tag/alpha-v0.0.55-b345c827",
+  "schema_version": "1.0.0",
+  "signature": null,
+  "source_branch": "develop",
+  "source_commit": "b345c827f571d783d4b7949479cfe5e9a5a1abfe",
+  "tag": "alpha/v0.0.55-b345c827",
+  "tranche_id": "STC-CODEX-SD-16",
+  "version": "0.0.55",
+  "workflow_provenance": {
+    "run_attempt": 1,
+    "run_id": "28828667910",
+    "workflow": ".github/workflows/publish-tester-release.yml"
+  }
+}
