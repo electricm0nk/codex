@@ -230,8 +230,32 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E2 race-semantic slice",
+                blocker_or_lossiness_note: "no direct runtime evidence for any of \
+                    the seven required Dwarf race-semantic families at the live \
+                    evidence floor (2026-07-06): identity/provenance is \
+                    observed-only via the SD-13 packet roster and the typed matrix \
+                    row carrier, but ability-score modifiers (PF1 Core +2 Con / -2 \
+                    Cha or any alternative), size/speed/movement baseline, senses \
+                    (darkvision), racial bonus feats, skill or derived-stat \
+                    modifiers, prerequisite/feat/class-feature interactions, and \
+                    other core racial traits (Defensive Training, Hardy, \
+                    Stability, Hatred, Stonecunning, Greedy, weapon familiarity) \
+                    remain unproven; pilot_compute.rs explicitly gates every \
+                    non-Human race out of the compute path via \
+                    `if input.chosen.race_id != HUMAN_RACE_ID`. No Dwarf fixture \
+                    exists in tests/fixtures. Promotion above Unverified is \
+                    counterfeit breadth until a later bounded slice lands \
+                    grounded evidence for at least one of these families.",
+                next_required_uplift: "SD13-Dwarf bounded race-semantic \
+                    classification artifact at \
+                    programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-dwarf-bounded-race-semantics-classification-2026-07-06.md \
+                    names the seven required race-semantic families and the \
+                    concrete acceptance criteria (new accepted fixture family, \
+                    new typed module or expansion emitting computed evidence \
+                    / explanation / claim-blocking diagnostic, new focused test \
+                    pinning family evidence at Computed / Oracle-checked tier, \
+                    updated row state with non-empty blocker note) required \
+                    before this row may honestly move out of Unverified.",
             },
             SupportStateRow {
                 row_id: "race.elf.bounded_semantics",
