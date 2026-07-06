@@ -271,6 +271,28 @@ jobs:
             release-staging/provenance.json \
             release-staging/update-manifest-stub.json
 
+      # F4: Emit a schema-conformant channel-index pointer into
+      # release-staging/channels/<channel>.json for this workflow run.
+      # Note: this file is not uploaded by the `gh release create` step above,
+      # and it is not the pointer pushed to the protected `update-index` branch
+      # (that payload is prepared and pushed by the steps below).
+      - name: Emit alpha channel index
+        env:
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          CHANNEL: ${{ steps.channel.outputs.channel }}
+          RELEASE_TAG: ${{ steps.release_meta.outputs.tag }}
+        run: |
+          set -euo pipefail
+          mkdir -p release-staging/channels
+          python3 tools/release/emit_channel_index.py \
+            --channel "${CHANNEL}" \
+            --manifest release-staging/update-manifest.json \
+            --output release-staging/channels/${CHANNEL}.json \
+            --release-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}" \
+            --manifest-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/update-manifest-stub.json" \
+            --published-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
       # Channel-index update: the only legitimate writer of the protected
       # `update-index` branch in the normal path. Pushes channels/<channel>.json
       # containing the published manifest URL, release tag, publication
@@ -455,25 +477,4 @@ jobs:
           git commit -m "${COMMIT_MESSAGE}"
           git push origin HEAD:update-index
 
-      # F4: schema-conformant channel-index pointer. Overwrites the legacy
-      # shape produced by `Prepare channel index payload` so the release
-      # asset bundle contains a channels/<channel>.json that satisfies
-      # schemas/update/channel-index.schema.json. The `update-index` branch
-      # update above is unchanged (still uses $GITHUB_ENV payload); F4
-      # only fixes the on-disk release asset.
-      - name: Emit alpha channel index
-        env:
-          GITHUB_SERVER_URL: ${{ github.server_url }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          CHANNEL: ${{ steps.channel.outputs.channel }}
-          RELEASE_TAG: ${{ steps.release_meta.outputs.tag }}
-        run: |
-          set -euo pipefail
-          mkdir -p release-staging/channels
-          python3 tools/release/emit_channel_index.py \
-            --channel "${CHANNEL}" \
-            --manifest release-staging/update-manifest.json \
-            --output release-staging/channels/${CHANNEL}.json \
-            --release-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}" \
-            --manifest-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/update-manifest.json" \
-            --published-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
