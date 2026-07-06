@@ -156,6 +156,7 @@ No row is promoted to `Supported` or `Lossy` by this slice.
 - Branch: `feat/sd13-class-sorcerer-bloodline-spontaneous-slice`
 - Base: `origin/develop @ c78287cce76d3cce10fe814806558976fcfd70543`
 - Target: `develop`
-- PR URL: populated post-push in the run-history / kanban handoff
+- PR URL: https://github.com/electricm0nk/codex/pull/96
+- Head SHA: `33f8b052d4367b801a1f1d56de1ccd10367d3af1`
 
 Let it be recorded.
