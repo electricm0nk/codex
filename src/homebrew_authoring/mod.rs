@@ -225,7 +225,12 @@ impl SourcePackage {
                 true,
             ));
         }
-        if self.manifest.depends_on.iter().all(|value| value != PF1_CRB_PACKAGE_ID) {
+        if self
+            .manifest
+            .depends_on
+            .iter()
+            .all(|value| value != PF1_CRB_PACKAGE_ID)
+        {
             diagnostics.push(diagnostic(
                 "InvalidPackage",
                 PackageDiagnosticSeverity::Error,
@@ -235,7 +240,8 @@ impl SourcePackage {
             ));
         }
 
-        let has_any_authored_record = self.feat.is_some() || self.effect.is_some() || self.prerequisite.is_some();
+        let has_any_authored_record =
+            self.feat.is_some() || self.effect.is_some() || self.prerequisite.is_some();
         if !has_any_authored_record && self.provenance.is_empty() && diagnostics.is_empty() {
             return (PackageValidationState::Draft, Vec::new());
         }
@@ -376,7 +382,10 @@ impl SourcePackage {
 
         let expected_provenance = {
             let mut expected = vec![
-                (feat.stable_id.as_str(), "objects/feats/feat.homebrew.guard_stance.yaml"),
+                (
+                    feat.stable_id.as_str(),
+                    "objects/feats/feat.homebrew.guard_stance.yaml",
+                ),
                 (
                     effect.stable_id.as_str(),
                     "rules/effects/effect.homebrew.guard_stance.ac_bonus.yaml",
@@ -392,7 +401,11 @@ impl SourcePackage {
         };
 
         for (stable_id, authored_path) in expected_provenance {
-            match self.provenance.iter().find(|entry| entry.stable_id == stable_id) {
+            match self
+                .provenance
+                .iter()
+                .find(|entry| entry.stable_id == stable_id)
+            {
                 Some(entry) => {
                     if entry.source_package_id != self.manifest.package_id {
                         diagnostics.push(diagnostic(
@@ -410,9 +423,7 @@ impl SourcePackage {
                             "InvalidPackage",
                             PackageDiagnosticSeverity::Error,
                             "provenance.authored_path",
-                            format!(
-                                "provenance for '{stable_id}' must point at '{authored_path}'"
-                            ),
+                            format!("provenance for '{stable_id}' must point at '{authored_path}'"),
                             true,
                         ));
                     }
@@ -455,7 +466,9 @@ fn guard_stance_manifest(validation_state: PackageValidationState) -> PackageMan
     }
 }
 
-fn finalize_diagnostics(mut diagnostics: Vec<PackageDiagnostic>) -> (PackageValidationState, Vec<PackageDiagnostic>) {
+fn finalize_diagnostics(
+    mut diagnostics: Vec<PackageDiagnostic>,
+) -> (PackageValidationState, Vec<PackageDiagnostic>) {
     diagnostics.sort_by(|left, right| {
         left.subject_ref
             .cmp(&right.subject_ref)

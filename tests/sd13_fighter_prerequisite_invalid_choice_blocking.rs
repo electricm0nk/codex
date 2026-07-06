@@ -234,7 +234,11 @@ fn blocked_feat_choice_propagates_through_receipt_classifier_and_view_model() {
         "non-canonical feat-choice build must produce a blocked receipt"
     );
     assert!(
-        receipt.computation.diagnostics.iter().any(|d| d.claim_blocking),
+        receipt
+            .computation
+            .diagnostics
+            .iter()
+            .any(|d| d.claim_blocking),
         "blocked receipt must preserve a claim-blocking diagnostic: {:?}",
         receipt.computation.diagnostics
     );

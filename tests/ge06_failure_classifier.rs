@@ -10,9 +10,8 @@ use codex::rules_core::character_input::{CharacterInput, load_character_input_fi
 use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
 use codex::rules_core::pilot_failure::{FailureClassifier, PrimaryOwner};
 
-const DETERMINISTIC_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const DETERMINISTIC_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);

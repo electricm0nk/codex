@@ -305,7 +305,9 @@ fn apply_equipment_selection(value: &str, parsed: &mut ParsedFixture) {
     let Some(active_state) = active_state_from_token(state) else {
         parsed.diagnostics.push(diagnostic(
             "equipment_selections",
-            format!("invalid character input equipment selection '{value}' has an unsupported state"),
+            format!(
+                "invalid character input equipment selection '{value}' has an unsupported state"
+            ),
         ));
         return;
     };

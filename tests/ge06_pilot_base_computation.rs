@@ -10,9 +10,8 @@ use codex::rules_core::character_input::load_character_input_fixture;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 
 fn load_pilot_input() -> codex::rules_core::character_input::CharacterInput {
-    let fixture = include_str!(
-        "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-    );
+    let fixture =
+        include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
     let result = load_character_input_fixture(fixture);
     assert!(
         result.diagnostics.is_empty(),
@@ -32,7 +31,12 @@ fn explanation_value<'a>(
         .explanations
         .iter()
         .find(|e| e.id == id)
-        .unwrap_or_else(|| panic!("expected explanation with id '{id}', got {:?}", computation.explanations))
+        .unwrap_or_else(|| {
+            panic!(
+                "expected explanation with id '{id}', got {:?}",
+                computation.explanations
+            )
+        })
 }
 
 #[test]

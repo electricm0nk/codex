@@ -12,9 +12,8 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 
-const DETERMINISTIC_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const DETERMINISTIC_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -36,7 +35,12 @@ fn explanation<'a>(
         .explanations
         .iter()
         .find(|e| e.id == id)
-        .unwrap_or_else(|| panic!("expected explanation id '{id}', got {:?}", computation.explanations))
+        .unwrap_or_else(|| {
+            panic!(
+                "expected explanation id '{id}', got {:?}",
+                computation.explanations
+            )
+        })
 }
 
 #[test]
@@ -51,12 +55,30 @@ fn computes_baseline_melee_attack_bonus_with_contributors() {
     let attack = explanation(&computation, "combat.baseline_melee_attack_bonus");
     assert_eq!(attack.value, 5);
     let detail = attack.detail.as_str();
-    assert!(detail.contains("Fighter"), "attack detail must cite Fighter BAB: {detail}");
-    assert!(detail.contains("Strength"), "attack detail must cite Strength modifier: {detail}");
-    assert!(detail.contains("Weapon Focus"), "attack detail must cite Weapon Focus: {detail}");
-    assert!(detail.contains("Longsword"), "attack detail must cite the Longsword: {detail}");
-    assert!(detail.contains("Power Attack"), "attack detail must cite Power Attack: {detail}");
-    assert!(detail.contains("inactive"), "attack detail must note Power Attack inactive posture: {detail}");
+    assert!(
+        detail.contains("Fighter"),
+        "attack detail must cite Fighter BAB: {detail}"
+    );
+    assert!(
+        detail.contains("Strength"),
+        "attack detail must cite Strength modifier: {detail}"
+    );
+    assert!(
+        detail.contains("Weapon Focus"),
+        "attack detail must cite Weapon Focus: {detail}"
+    );
+    assert!(
+        detail.contains("Longsword"),
+        "attack detail must cite the Longsword: {detail}"
+    );
+    assert!(
+        detail.contains("Power Attack"),
+        "attack detail must cite Power Attack: {detail}"
+    );
+    assert!(
+        detail.contains("inactive"),
+        "attack detail must note Power Attack inactive posture: {detail}"
+    );
 }
 
 #[test]
@@ -71,12 +93,30 @@ fn computes_baseline_armor_class_with_contributors() {
     let ac = explanation(&computation, "defense.baseline_armor_class");
     assert_eq!(ac.value, 17);
     let detail = ac.detail.as_str();
-    assert!(detail.contains("10"), "ac detail must cite base 10: {detail}");
-    assert!(detail.contains("Chain Shirt"), "ac detail must cite Chain Shirt armor bonus: {detail}");
-    assert!(detail.contains("Dexterity"), "ac detail must cite Dexterity contribution: {detail}");
-    assert!(detail.contains("MAXDEX:4"), "ac detail must cite the MAXDEX:4 limit: {detail}");
-    assert!(detail.contains("Dodge"), "ac detail must cite Dodge bonus: {detail}");
-    assert!(detail.contains("shield"), "ac detail must cite the absent shield posture: {detail}");
+    assert!(
+        detail.contains("10"),
+        "ac detail must cite base 10: {detail}"
+    );
+    assert!(
+        detail.contains("Chain Shirt"),
+        "ac detail must cite Chain Shirt armor bonus: {detail}"
+    );
+    assert!(
+        detail.contains("Dexterity"),
+        "ac detail must cite Dexterity contribution: {detail}"
+    );
+    assert!(
+        detail.contains("MAXDEX:4"),
+        "ac detail must cite the MAXDEX:4 limit: {detail}"
+    );
+    assert!(
+        detail.contains("Dodge"),
+        "ac detail must cite Dodge bonus: {detail}"
+    );
+    assert!(
+        detail.contains("shield"),
+        "ac detail must cite the absent shield posture: {detail}"
+    );
 
     // The supported deterministic posture must not raise a claim-blocking diagnostic.
     assert!(
@@ -91,8 +131,10 @@ fn unsupported_loadout_posture_blocks_combat_totals() {
     // Equip the shield (the deterministic baseline requires it absent). The combat
     // baseline must refuse to fabricate totals and must withhold combat/defense
     // explanations while still emitting a claim-blocking diagnostic.
-    let mutated = DETERMINISTIC_FIXTURE
-        .replace("equipment=item:shield:absent", "equipment=item:shield:equipped_worn_active");
+    let mutated = DETERMINISTIC_FIXTURE.replace(
+        "equipment=item:shield:absent",
+        "equipment=item:shield:equipped_worn_active",
+    );
     assert!(
         mutated.contains("equipment=item:shield:equipped_worn_active"),
         "test setup should have mutated the shield posture"
@@ -108,8 +150,7 @@ fn unsupported_loadout_posture_blocks_combat_totals() {
     );
     assert!(
         !computation.explanations.iter().any(|e| {
-            e.id == "combat.baseline_melee_attack_bonus"
-                || e.id == "defense.baseline_armor_class"
+            e.id == "combat.baseline_melee_attack_bonus" || e.id == "defense.baseline_armor_class"
         }),
         "unsupported posture must withhold combat/defense explanations: {:?}",
         computation.explanations
@@ -143,8 +184,7 @@ fn wrong_fighter_level_blocks_combat_totals() {
     );
     assert!(
         !computation.explanations.iter().any(|e| {
-            e.id == "combat.baseline_melee_attack_bonus"
-                || e.id == "defense.baseline_armor_class"
+            e.id == "combat.baseline_melee_attack_bonus" || e.id == "defense.baseline_armor_class"
         }),
         "wrong Fighter level must withhold combat/defense explanations: {:?}",
         computation.explanations
