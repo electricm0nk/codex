@@ -242,8 +242,32 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E2 race-semantic slice",
+                blocker_or_lossiness_note: "no direct runtime evidence for any of \
+                    the seven required Elf race-semantic families at the live \
+                    evidence floor (2026-07-06): identity/provenance is \
+                    observed-only via the SD-13 packet roster and the typed matrix \
+                    row carrier, but ability-score modifiers (PF1 Core +2 Dex / -2 \
+                    Con and the alternate +2 Int variant), size/speed/movement \
+                    baseline (Medium, 30 ft base), senses (low-light vision), \
+                    immunity to sleep, weapon familiarity (longbow / rapier / \
+                    longsword / shortbow / shortsword), bonus languages, and other \
+                    core racial traits (keen senses, elven magic / weapon training \
+                    variants) remain unproven; pilot_compute.rs explicitly gates \
+                    every non-Human race out of the compute path via \
+                    `if input.chosen.race_id != HUMAN_RACE_ID`. No Elf fixture \
+                    exists in tests/fixtures. Promotion above Unverified is \
+                    counterfeit breadth until a later bounded slice lands \
+                    grounded evidence for at least one of these families.",
+                next_required_uplift: "SD13-Elf bounded race-semantic \
+                    classification artifact at \
+                    programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-elf-bounded-race-semantics-classification-2026-07-06.md \
+                    names the seven required race-semantic families and the \
+                    concrete acceptance criteria (new accepted fixture family, \
+                    new typed module or expansion emitting computed evidence \
+                    / explanation / claim-blocking diagnostic, new focused test \
+                    pinning family evidence at Computed / Oracle-checked tier, \
+                    updated row state with non-empty blocker note) required \
+                    before this row may honestly move out of Unverified.",
             },
             SupportStateRow {
                 row_id: "race.gnome.bounded_semantics",
