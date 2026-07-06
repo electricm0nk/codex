@@ -1,0 +1,59 @@
+name: Allow only tranche/3 as slice PR base
+
+# Tranche 3 (tranche/3) slice-base guard.
+#
+# Per devops/tranche-branch-governance: slice branches must PR into the tranche
+# branch, NEVER into develop/test/main. This workflow enforces that at PR
+# creation and re-runs on every sync. Combined with the existing
+# allow-only-develop-into-test.yml / allow-only-test-into-main.yml, the
+# complete chain becomes:
+#
+#   slice/*  ─▶ tranche/3          (this workflow)
+#   tranche/3 ─▶ develop           (open tranche PR; operator merges)
+#   develop ─▶ test                (existing allow-only-develop-into-test.yml)
+#   test    ─▶ main                (existing allow-only-test-into-main.yml)
+#
+# Tranche-bases outside tranche/3 are *known* future tranches (tranche/4, ...);
+# if/when the operator decides to start a new tranche while tranche/3 is still
+# active, this file gets a new branch entry rather than being deleted.
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+permissions: {}
+
+jobs:
+  guard:
+    name: Slice PR base = tranche/3
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Refuse non-tranche/3 base
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+        run: |
+          set -euo pipefail
+          # Tranche-branch PRs (tranche/3 itself) are exempt — those are
+          # the operator's own promote-to-develop PRs.
+          if [ "${HEAD}" = "tranche/3" ]; then
+            echo "Tranche-branch head ref=${HEAD}; base guard not applicable."
+            exit 0
+          fi
+          # Hotfix PRs from main or test targeting develop or test pass
+          # through unchanged — those are governed by the existing lane
+          # guards above. Slice PRs from a feature/* branch must hit
+          # tranche/3 exclusively.
+          case "${BASE}" in
+            tranche/3)
+              echo "Slice PR base ref OK: ${BASE} (head=${HEAD})"
+              exit 0
+              ;;
+            *)
+              echo "::error::Tranche 3 slice PRs must target tranche/3 (got base=${BASE})."
+              echo "       Reopen with base=tranche/3 or move to the right tranche for your work."
+              exit 1
+              ;;
+          esac
