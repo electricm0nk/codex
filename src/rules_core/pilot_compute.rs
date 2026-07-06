@@ -282,6 +282,16 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
 
+    // SD13-E3/E4 Paladin-only decomposition: split the F6 hybrid class-feature
+    // and spell-burden blockers into per-burden diagnostics so the chassis
+    // burden is separable from the partial-caster spell burden on the runtime
+    // path. This is an extension, never a downgrade, of the F6 surface.
+    explain_paladin_level1_chassis_and_spell_burden_separation(
+        input,
+        &mut explanations,
+        &mut diagnostics,
+    );
+
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
@@ -803,6 +813,142 @@ fn explain_hybrid_level1_chassis(
             "{class_name} remains blocked on its later hybrid spell burden: spell slots, spell source, \
              and spells known/prepared posture are out of scope for this level-{HYBRID_BASELINE_LEVEL} \
              chassis baseline and are deferred to the SD13-E4 spellcasting slice"
+        ),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Paladin at the
+/// bounded hybrid baseline level (1). Returns `false` for any other class, a
+/// multiclass mix, the Ranger hybrid (which has its own F6 class-feature
+/// decomposition lane), or any level-2+ Paladin this slice deliberately does
+/// not recognize — each of which stays blocked exactly as before.
+fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == PALADIN_CLASS_ID
+                && class_level.level == HYBRID_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E3/E4 runtime evidence for the deterministic Human
+/// Paladin level-1 chassis and spell burden as a separable pair of diagnostics.
+///
+/// This sits on top of the accepted SD13-F6 hybrid baseline: F6 already proves
+/// the deterministic Human Paladin level-1 hybrid identity is acknowledged on
+/// the compute seam and emits a single combined non-spell class-feature
+/// blocker plus a single combined later-spell blocker. This slice proves the
+/// per-burden separation Paladin actually needs:
+///
+/// - one explicit claim-blocking diagnostic per still-missing non-spell
+///   class-feature burden:
+///   * `smite evil` — alignment / target resolution, smite attack rolls and
+///     damage bonus, and smite-uses-per-day resource accounting
+///   * `lay on hands` — healing resource accounting, charismabased pool, and
+///     use-against-conditions behavior
+///   * `divine grace` — charisma-to-saves bonus, including the typing and
+///     proc-time posture that divines saves even at the deterministic seam
+///   * `mercy` — conditional save-effect and disease/poison removal mechanics
+///     that only begin at level 6 and must therefore be claimed honestly as
+///     still-blocked rather than silently allowed
+///
+/// - one explicit claim-blocking diagnostic for the partial-caster spell
+///   burden, distinct from the non-spell class-feature blockers:
+///   * Paladin is a divine partial caster in PF1 Core Rulebook (effective
+///     caster level = paladin level − 2, slots begin at level 2); the blocker
+///     names this partial-caster posture so the later SD13-E4 spell-burden
+///     closure cannot collapse Paladin into a full divine caster shape
+///     (Cleric / Druid) and so partial-caster pressure stays visible on the
+///     runtime path.
+///
+/// This deliberately does not compute a supported spell surface. It grounds
+/// no smite math, no lay-on-hands resource handling, no divine-grace
+/// computation, no mercy handling, no spell slots, no spell source lineage,
+/// no spells known or prepared posture, no deity resolution, no domain
+/// mechanics, no alignment-target resolution, and no healing accounting. It
+/// only emits the per-burden blockers that prove the F6 surface remains
+/// separable on the runtime path.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input;
+/// the F6 hybrid chassis emission already preserves a single class-feature
+/// blocker and a single spell blocker. This seam adds per-burden granularity
+/// next to the F6 surface, never replacing it, so the F6 acceptance test
+/// continues to pass.
+fn explain_paladin_level1_chassis_and_spell_burden_separation(
+    input: &CharacterInput,
+    _explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_paladin_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // The per-burden blockers ride alongside the F6 hybrid blockers. They are
+    // intentionally distinct diagnostic ids so the chassis burden is separable
+    // from the spell burden on the runtime path.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.paladin.smite_evil.unsupported".to_owned(),
+        message: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its smite evil burden: \
+             smite attack-roll bonuses, smite damage bonus, smite-uses-per-day resource \
+             accounting, and the underlying alignment-target resolution are not implemented in \
+             this bounded chassis baseline, so no Paladin smite execution is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.paladin.lay_on_hands.unsupported".to_owned(),
+        message: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its lay on hands burden: \
+             the charisma-based healing pool, the per-level heal amount, the use against poison / \
+             disease behavior, and any heal-resource accounting are not implemented in this \
+             bounded chassis baseline, so no Paladin lay on hands support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.paladin.divine_grace.unsupported".to_owned(),
+        message: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its divine grace burden: \
+             the charisma-to-saving-throw bonus and the typing/proc-time posture that applies it \
+             are not implemented in this bounded chassis baseline, so no Paladin divine grace \
+             save bonus support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.paladin.mercy.unsupported".to_owned(),
+        message: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its mercy burden: mercy \
+             is a level-6 class-feature, so the conditional save-effect and disease/poison \
+             removal mechanics are not implemented here; no Paladin mercy behavior is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // The partial-caster spell burden is its own blocker, distinct from the
+    // four non-spell class-feature blockers above. Paladin is a divine partial
+    // caster in PF1 Core Rulebook (effective caster level = paladin level - 2;
+    // first spell access at level 2 with a slowed slot progression), and the
+    // blocker must name that partial-caster posture so the later SD13-E4
+    // spell-burden closure cannot confuse Paladin with a full divine caster
+    // (Cleric / Druid).
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
+        message: format!(
+            "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
+             partial caster (effective caster level = paladin level - 2, with spell slots first \
+             available at level 2 in PF1 Core Rulebook), so spell-source lineage, spells known \
+             or prepared posture, spells-per-day progression, bonus spell slots, and spell save \
+             DCs are deferred to the SD13-E4 spellcasting slice; no partial-caster spell \
+             execution is fabricated in this bounded chassis baseline"
         ),
         claim_blocking: true,
     });
