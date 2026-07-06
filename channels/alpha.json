@@ -1,10 +1,10 @@
 {
   "channel": "alpha",
   "release": {
-    "manifest_url": "https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/alpha/v0.0.0-328c4167/update-manifest.json",
-    "notes_url": "https://github.com/electricm0nk/codex/releases/tag/alpha-v0.0.0-328c4167",
-    "published_at": "2026-07-06T16:17:32Z",
-    "tag": "alpha-v0.0.0-328c4167",
+    "manifest_url": "https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/alpha/v0.0.0-837433e3/update-manifest.json",
+    "notes_url": "https://github.com/electricm0nk/codex/releases/tag/alpha-v0.0.0-837433e3",
+    "published_at": "2026-07-06T16:54:01Z",
+    "tag": "alpha-v0.0.0-837433e3",
     "tranche_id": "tranche-2.5"
   },
   "schema_version": "v1",
