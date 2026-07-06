@@ -196,6 +196,14 @@ const SD13_HYBRID_LEVEL1_TEST: &str = "tests/sd13_hybrid_level1_chassis_baseline
 /// known-spell / slot posture burden.
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
+/// SD13-E2-F3a dedicated proof surface for the bounded Half-Elf race-semantics
+/// recognition. The chosen `race:half-elf` identity is named on the deterministic
+/// pilot seam and the receipt carries a single explicit
+/// `race.half_elf.bounded_semantics` diagnostic that names the full PF1 Half-Elf
+/// racial trait set without grounding any computed mechanic for it. No Half-Elf
+/// deterministic pilot fixture is minted.
+const SD13_HALF_ELF_RACE_TEST: &str = "tests/sd13_race_half_elf_bounded_semantics.rs";
+
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
 /// Returns exactly 21 rows: 7 race, 12 class, and 2 interaction. The content is
@@ -261,13 +269,38 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.half_elf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:half-elf",
+                // SD13-E2-F3a leaves the dimension name unchanged so downstream readers can
+                // see every race row carries the same dimension label; the per-row note and
+                // grounding carry the bounded scope.
                 dimension: "bounded race semantics",
                 support_state: SupportState::Unverified,
+                // The Half-Elf row stays Unverified/Observed because this slice grounds
+                // **recognition only**: no Half-Elf deterministic pilot fixture is minted, no
+                // computed Half-Elf mechanic is emitted, and no Half-Elf choice-target is
+                // proven. Promoting to Computed would falsely assert bounded mechanical truth
+                // that this slice deliberately does not assert.
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E2 race-semantic slice",
+                // Grounded on the bounded compute seam that recognizes `race:half-elf` as a
+                // chosen race and emits a single explicit, non-claim-blocking
+                // `race.half_elf.bounded_semantics` diagnostic; the carrier also points at
+                // the SD13-E2-F3a proof surface that pins the bounded diagnostic and the
+                // absence of any Half-Elf `ComputationExplanation`.
+                grounding_ref: SD13_HALF_ELF_RACE_TEST,
+                blocker_or_lossiness_note: "SD13-E2-F3a recognized `race:half-elf` as a chosen \
+                    race on the deterministic pilot seam but grounded **no** Half-Elf computed \
+                    mechanic: no Half-Elf ability-bonus seam (no `race.half_elf.ability_bonus_target` \
+                    analog), no sleep-immunity, low-light vision, elven blood, +2 Listen/Spot/Search \
+                    skill focus, favored-class flexibility, or multiclass adaptability mechanic is \
+                    computed, and no Half-Elf deterministic pilot fixture has been minted. The row \
+                    stays Unverified/Observed because the bounded scope is recognition, not proof",
+                next_required_uplift: "SD13-E2 race-semantic Half-Elf computed-mechanic slice: \
+                    mint a Half-Elf deterministic pilot fixture, ground an explicit \
+                    Half-Elf ability-bonus choice-target explanation parallel to the Human one, \
+                    and at least one bounded non-ability Half-Elf mechanic (the lowest-cost \
+                    available being immunity to sleep or low-light vision). Until that slice lands, \
+                    any reader treating Half-Elf as 'core supported' is asserting truth not in the \
+                    seeded matrix",
             },
             SupportStateRow {
                 row_id: "race.half_orc.bounded_semantics",

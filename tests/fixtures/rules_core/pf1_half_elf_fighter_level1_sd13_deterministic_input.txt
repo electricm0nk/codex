@@ -1,0 +1,41 @@
+# SD13-E2-F3a Half-Elf bounded race-semantics fixture.
+#
+# This fixture is **recognition-only**. Half-Elf is named as a chosen race on the
+# deterministic pilot seam so that a Half-Elf character input parses without
+# validation failure and the receipt carries a single explicit, non-claim-blocking
+# `race.half_elf.bounded_semantics` diagnostic. The fixture does not exercise any
+# Half-Elf racial mechanic: no Half-Elf ability-bonus choice is selected (so no
+# `race.half_elf.ability_bonus_target` analog is emitted), no Half-Elf sleep-immunity
+# or low-light-vision assertion is required (those traits live outside the bounded
+# compute seam in this slice), and no Half-Elf multiclass / favored-class engine
+# is exercised. The chosen human-style Fighter pilot chassis anchors the rest of the
+# fixture so the bounded pilot surface continues to behave identically when the
+# `race_id` swap is the only change.
+#
+# Acceptance of chosen input is the bounded surface; computed Half-Elf mechanics
+# are deliberately not asserted here. See
+# programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/race-bounded-semantics/half-elf-bounded-semantics.md
+# for the full bounded scope statement.
+case_id=pf1-crb-half-elf-fighter-level1
+source_package_id=pf1.core_rulebook
+race_id=race:half-elf
+class_level=class:fighter:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/race-bounded-semantics/half-elf-bounded-semantics.md

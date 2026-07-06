@@ -127,6 +127,19 @@ const HUMAN_ABILITY_BONUS_CHOICE_ID: &str = "choice:human_ability_bonus";
 const HUMAN_BONUS_FEAT_CHOICE_ID: &str = "choice:human_bonus_feat";
 const ABILITY_SELECTION_PREFIX: &str = "ability:";
 
+// SD13-E2-F3a Half-Elf bounded race seam identity. Half-Elf is recognized as a
+// chosen race on the pilot seam, but its bounded semantics stay unverified in
+// this slice: no Half-Elf ability-bonus seam, no computed mechanics for sleep
+// immunity / low-light vision / elven blood / skill focus (Listen, Spot,
+// Search) / favored class / multiclass adaptability, and no Half-Elf fixture
+// proof surface is yet minted. The bounded, non-claim-blocking
+// `race.half_elf.bounded_semantics` diagnostic makes this explicit on every
+// receipt that selects `race:half-elf`, parallel to the Human seam's bounded
+// note. See
+// programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/race-bounded-semantics/half-elf-bounded-semantics.md
+// for the bounded scope.
+const HALF_ELF_RACE_ID: &str = "race:half-elf";
+
 // Grounded deterministic combat-baseline contributors and posture identities.
 const LONGSWORD_ITEM_ID: &str = "item:longsword";
 const CHAIN_SHIRT_ITEM_ID: &str = "item:chain_shirt";
@@ -348,6 +361,39 @@ fn assign_modifier(modifiers: &mut AbilityModifiers, ability: &str, modifier: i1
     }
 }
 
+/// Dispatch race-semantics explanation by the chosen `race_id`. Today only
+/// `race:human` carries a grounded compute-surface explanation (preserving the
+/// SD13-E2-R2 precedence verbatim); `race:half-elf` carries a bounded
+/// non-claim-blocking diagnostic that names its scope without grounding any
+/// computed Half-Elf mechanic; every other race keeps the existing
+/// `race.semantics.unverified` note that names the chosen-race identity.
+fn explain_human_race_seam(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    match input.chosen.race_id.as_str() {
+        HUMAN_RACE_ID => {
+            explain_human_pilot_race_seam(input, ability_modifiers, explanations, diagnostics);
+        }
+        HALF_ELF_RACE_ID => {
+            explain_half_elf_bounded_race_seam(input, diagnostics);
+        }
+        _ => {
+            diagnostics.push(ComputationDiagnostic {
+                id: "race.semantics.unverified".to_owned(),
+                message: format!(
+                    "race semantics are grounded only for {HUMAN_RACE_ID} on the deterministic pilot seam; \
+                     chosen race {} has no grounded race semantics in this slice",
+                    input.chosen.race_id
+                ),
+                claim_blocking: false,
+            });
+        }
+    }
+}
+
 /// Make the already-grounded Human pilot race seam explicit instead of leaving it an
 /// incidental side effect of the numeric outputs.
 ///
@@ -361,25 +407,12 @@ fn assign_modifier(modifiers: &mut AbilityModifiers, ability: &str, modifier: i1
 /// Non-Human races receive only a bounded, non-claim-blocking note that their race
 /// semantics remain unverified; this slice grounds no non-Human race truth and no
 /// broader Human racial trait burden (size, speed, senses, extra skill ranks).
-fn explain_human_race_seam(
+fn explain_human_pilot_race_seam(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    if input.chosen.race_id != HUMAN_RACE_ID {
-        diagnostics.push(ComputationDiagnostic {
-            id: "race.semantics.unverified".to_owned(),
-            message: format!(
-                "race semantics are grounded only for {HUMAN_RACE_ID} on the deterministic pilot seam; \
-                 chosen race {} has no grounded race semantics in this slice",
-                input.chosen.race_id
-            ),
-            claim_blocking: false,
-        });
-        return;
-    }
-
     // Human ability-bonus interaction: the named choice targets one ability. Surface its
     // pressure through the already-computed modifier for exactly that ability.
     if let Some(selection) = choice_selection(input, HUMAN_ABILITY_BONUS_CHOICE_ID) {
@@ -432,6 +465,42 @@ fn explain_human_race_seam(
                   ability-bonus and bonus-feat selections; Human size, speed, senses, extra skill \
                   ranks, and the remaining racial trait burden remain unverified"
             .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+/// Bounded Half-Elf race-semantics seam (SD13-E2-F3a).
+///
+/// This is **recognition without grounding**. Half-Elf is named as a chosen
+/// race on the pilot seam so the receipt carries a single explicit,
+/// non-claim-blocking diagnostic that names every Half-Elf PF1 Core Rulebook
+/// racial trait (ability-bonus to one chosen ability, immunity to sleep,
+/// elven blood / low-light vision, +2 Listen/Spot/Search skill focus, favored
+/// class flexibility, multiclass adaptability). The diagnostic makes explicit
+/// that this slice grounds **no** Half-Elf computed mechanic: there is no
+/// `race.half_elf.ability_bonus_target` analog (a Half-Elf deterministic
+/// pilot fixture would mint one only after a later slice proves the
+/// chosen-target mechanic is repeatable at the chosen level), there is no
+/// computed sleep-immunity or low-light-vision emission, and there is no
+/// guarded favored-class / multiclass-feat engine. The diagnostic carries the
+/// chosen `race:half-elf` identity in its message so downstream readers can
+/// reconcile it from the receipt alone.
+fn explain_half_elf_bounded_race_seam(
+    input: &CharacterInput,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.half_elf.bounded_semantics".to_owned(),
+        message: format!(
+            "{HALF_ELF_RACE_ID} is recognized as a chosen race on the deterministic pilot seam, but \
+             this slice grounds no computed Half-Elf racial mechanic: no Half-Elf ability-bonus seam \
+             for the chosen +2 ability is emitted, no sleep-immunity, low-light vision, elven-blood, \
+             +2 Listen/Spot/Search skill focus, favored class flexibility, or multiclass adaptability \
+             mechanic is computed, and no Half-Elf deterministic pilot fixture has been minted. \
+             Only the chosen race_id {} is carried; broader PF1 Half-Elf racial semantics remain \
+             unverified on the bounded-pilot seam until a later SD13-E2 race-semantic slice lands",
+            input.chosen.race_id
+        ),
         claim_blocking: false,
     });
 }
