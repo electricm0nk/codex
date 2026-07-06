@@ -233,56 +233,105 @@ fn every_non_human_race_row_is_unverified_and_observed() {
 }
 
 #[test]
-fn paladin_and_ranger_hybrid_rows_are_blocked_and_computed_with_named_burdens() {
-    // SD13-E3-F6 moves both hybrid rows off the pure Unverified/Observed placeholder to
-    // a still-blocked computed posture that names the class-feature and spell burdens.
+fn paladin_row_stays_blocked_and_computed_with_named_burdens() {
+    // SD13-E3-F6 moved the Paladin hybrid row off the pure Unverified/Observed
+    // placeholder to a still-blocked computed posture that names the class-feature
+    // and spell burdens. SD13-E3 is now split per class: this card lifts only the
+    // Ranger non-spell burden; the Paladin non-spell burden remains blocked until
+    // the dedicated Paladin class-feature slice lifts it.
     let matrix = matrix();
-    let cases = [
-        (
-            "class.paladin.hybrid_chassis_and_spell_burden",
-            "class:paladin",
-            ["smite", "lay on hands", "divine grace", "mercy"],
-        ),
-        (
-            "class.ranger.hybrid_chassis_and_spell_burden",
-            "class:ranger",
-            ["favored enemy", "combat style", "tracking", "spell"],
-        ),
-    ];
-    for (row_id, subject_id, tokens) in cases {
-        let hybrid = row(&matrix, row_id);
-        assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
-        assert_eq!(hybrid.subject_id, subject_id);
-        // Blocked/Computed only: never Partial and never Supported for this slice.
-        assert_eq!(hybrid.support_state, SupportState::Blocked);
-        assert_ne!(hybrid.support_state, SupportState::Partial);
-        assert_ne!(hybrid.support_state, SupportState::Supported);
-        assert_eq!(hybrid.evidence_tier, EvidenceTier::Computed);
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .expect("paladin hybrid row must exist");
+    assert_eq!(paladin.subject_type, MatrixSubjectType::Class);
+    assert_eq!(paladin.subject_id, "class:paladin");
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin row must remain Blocked until the Paladin class-feature slice"
+    );
+    assert_ne!(paladin.support_state, SupportState::Partial);
+    assert_ne!(paladin.support_state, SupportState::Supported);
+    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    assert!(
+        paladin
+            .grounding_ref
+            .contains("sd13_hybrid_level1_chassis_baseline"),
+        "paladin row must cite the SD13-F6 proof surface: {}",
+        paladin.grounding_ref
+    );
+    assert!(
+        !paladin.blocker_or_lossiness_note.is_empty(),
+        "blocked paladin row must carry a non-empty blocker note"
+    );
+    assert!(
+        paladin.blocker_or_lossiness_note.contains("spell"),
+        "paladin row note must name the later spell burden: {}",
+        paladin.blocker_or_lossiness_note
+    );
+    for token in ["smite", "lay on hands", "divine grace", "mercy"] {
         assert!(
-            hybrid
-                .grounding_ref
-                .contains("sd13_hybrid_level1_chassis_baseline"),
-            "hybrid row '{row_id}' must cite the SD13-F6 proof surface: {}",
-            hybrid.grounding_ref
+            paladin.blocker_or_lossiness_note.contains(token),
+            "paladin row note must name the '{token}' burden: {}",
+            paladin.blocker_or_lossiness_note
         );
-        assert!(
-            !hybrid.blocker_or_lossiness_note.is_empty(),
-            "blocked hybrid row '{row_id}' must carry a non-empty blocker note"
-        );
-        // The note must name the later spell burden and the class-specific feature burden.
-        assert!(
-            hybrid.blocker_or_lossiness_note.contains("spell"),
-            "hybrid row '{row_id}' note must name the later spell burden: {}",
-            hybrid.blocker_or_lossiness_note
-        );
-        for token in tokens {
-            assert!(
-                hybrid.blocker_or_lossiness_note.contains(token),
-                "hybrid row '{row_id}' note must name the '{token}' burden: {}",
-                hybrid.blocker_or_lossiness_note
-            );
-        }
     }
+}
+
+#[test]
+fn ranger_row_is_partial_and_computed_and_names_only_spell_burden() {
+    // The SD13-E3 ranger class-feature slice lifted the bounded non-spell
+    // class-feature burden (favored enemy, combat style, tracking) off the
+    // claim-blocking path. The Ranger row is now Partial/Computed with only the
+    // later spell burden named in the blocker note. The Paladin row keeps its
+    // Blocked posture; see paladin_row_stays_blocked_and_computed_with_named_burdens.
+    let matrix = matrix();
+    let ranger = matrix
+        .row("class.ranger.hybrid_chassis_and_spell_burden")
+        .expect("ranger hybrid row must exist");
+    assert_eq!(ranger.subject_type, MatrixSubjectType::Class);
+    assert_eq!(ranger.subject_id, "class:ranger");
+    assert_eq!(
+        ranger.support_state,
+        SupportState::Partial,
+        "ranger row must be Partial after the class-feature slice"
+    );
+    assert_ne!(
+        ranger.support_state,
+        SupportState::Blocked,
+        "ranger row must no longer be Blocked after the class-feature slice"
+    );
+    assert_ne!(
+        ranger.support_state,
+        SupportState::Supported,
+        "ranger row must not be Supported until the spell burden is lifted"
+    );
+    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    assert!(
+        ranger
+            .grounding_ref
+            .contains("sd13_hybrid_level1_chassis_baseline"),
+        "ranger row must cite the SD13-F6 proof surface: {}",
+        ranger.grounding_ref
+    );
+    let note = ranger.blocker_or_lossiness_note;
+    assert!(
+        !note.is_empty(),
+        "ranger partial row must keep a non-empty blocker note naming the spell burden"
+    );
+    assert!(
+        note.contains("spell"),
+        "ranger partial row note must name the spell burden: {note}"
+    );
+    assert!(
+        note.contains("lift") || note.contains("lifted"),
+        "ranger partial row note must reflect the lift posture on the non-spell burden: {note}"
+    );
+    assert!(
+        !note.contains("stays blocked on the non-spell")
+            && !note.contains("non-spell class-feature burden (favored enemy, combat style, tracking) is not implemented"),
+        "ranger partial row note must not claim the non-spell burden remains a blocker: {note}"
+    );
 }
 
 #[test]

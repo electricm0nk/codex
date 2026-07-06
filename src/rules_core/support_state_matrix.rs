@@ -18,10 +18,18 @@
 //!   and the level-3 armor-training seam), while levels 4-10 remain out of proof,
 //! - Rogue level 1 is `Blocked` / `Computed` because the live GE-06 test explicitly
 //!   claim-blocks it, keeping it an explicit negative-control seam,
-//! - the Paladin and Ranger hybrid rows are `Blocked` / `Computed`: the SD13-E3-F6
-//!   slice proves the deterministic Human Paladin level-1 and Human Ranger level-1
-//!   hybrid chassis are recognized on the compute seam, but both stay blocked on the
-//!   named non-spell class-feature burden and the later spell burden,
+//! - the Paladin hybrid row is `Blocked` / `Computed`: the SD13-E3-F6 slice proves
+//!   the deterministic Human Paladin level-1 hybrid chassis is recognized on the
+//!   compute seam, but both the non-spell class-feature burden and the later spell
+//!   burden remain claim-blocking until the dedicated Paladin class-feature slice
+//!   lifts the former,
+//! - the Ranger hybrid row is `Partial` / `Computed`: the SD13-E3-F6 slice proves the
+//!   deterministic Human Ranger level-1 hybrid chassis is recognized on the compute
+//!   seam, and the SD13-E3 ranger class-feature slice lifted the bounded non-spell
+//!   class-feature burden (favored enemy, combat style, tracking) off the
+//!   claim-blocking path by surfacing each as a named recognition seam; the later
+//!   ranger spell burden (spell slots, spell source, spells known/prepared) remains
+//!   claim-blocking and is deferred to SD13-E4,
 //! - the Sorcerer row is `Blocked` / `Computed`: the SD13-E4-F7 slice proves the
 //!   deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is
 //!   recognized on the compute seam, but it stays blocked on the bloodline burden and the
@@ -425,19 +433,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Ranger level-1 chassis baseline, with the non-spell \
-                            class-feature burden and the later spell burden still blocked",
-                support_state: SupportState::Blocked,
+                            Ranger level-1 chassis baseline, with the bounded level-1 \
+                            non-spell class-feature burden lifted and the later spell \
+                            burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_HYBRID_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E3-F6 leaves direct computed evidence that the \
+                blocker_or_lossiness_note: "SD13-E3-F6 left direct computed evidence that the \
                     deterministic Human Ranger level-1 hybrid chassis is recognized on the compute \
-                    seam, but the row stays blocked: the non-spell class-feature burden (favored enemy, \
-                    combat style, skill/tracking) is not implemented, and the later ranger spell burden \
-                    (spell slots, spell source, spells known/prepared) is deferred to SD13-E4. No Ranger \
-                    level 2+ is proven",
-                next_required_uplift: "SD13-E3 ranger class-feature slice, then SD13-E4 spell burden",
+                    seam, and the SD13-E3 ranger class-feature slice lifted the bounded non-spell \
+                    class-feature burden (favored enemy, combat style, tracking) off the \
+                    claim-blocking path by surfacing each as a named recognition seam. The row \
+                    now reports Partial/Computed. The later ranger spell burden (spell slots, \
+                    spell source, spells known/prepared) is still claim-blocking and is deferred \
+                    to SD13-E4. No Ranger level 2+ is proven, no type-specific favored-enemy \
+                    bonus is resolved, no combat-style bonus-feat selection is computed, and no \
+                    Track feat effect is grounded — those remain on later SD13-E3 widening \
+                    slices or on a general feat-effect engine",
+                next_required_uplift: "SD13-E4 ranger spell burden slice, then later SD13-E3 \
+                    widening slices for Ranger level 2+ (combat style activation, favored \
+                    enemy bonus resolution, Track feat effect)",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",

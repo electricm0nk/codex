@@ -355,22 +355,43 @@ fn matrix_keeps_bard_and_wizard_unverified_observed() {
 }
 
 #[test]
-fn matrix_preserves_paladin_and_ranger_hybrid_blocked_computed_truth() {
+fn matrix_preserves_paladin_hybrid_blocked_and_ranger_hybrid_partial_truth() {
+    // The Sorcerer slice itself does not touch the Paladin or Ranger hybrid rows.
+    // The SD-13 closeout tranche (this slice + the Sorcerer slice + the Ranger
+    // class-feature slice + the Paladin class-feature slice, etc.) updates the
+    // matrix truth for the hybrid rows; this carrier test reflects the post-tranche
+    // truth that all 21 children of the SD-13 closeout parent GATE will merge.
+    //
+    // Paladin row: SD-13-E3-F6 recognized the level-1 chassis; the SD-13-E3
+    // Paladin class-feature slice (separate card in this tranche) will lift the
+    // non-spell burden. Until that slice lands, the Paladin row stays Blocked.
+    //
+    // Ranger row: SD-13-E3-F6 recognized the level-1 chassis and the SD-13-E3
+    // Ranger class-feature slice (this card) lifted the bounded non-spell burden
+    // (favored enemy, combat style, tracking) off the claim-blocking path by
+    // surfacing each as a named recognition seam. The Ranger row is now
+    // Partial/Computed with only the spell burden remaining in the blocker note.
     let matrix = seeded_sd13_e1_f1_current_truth();
-    for row_id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
-        "class.ranger.hybrid_chassis_and_spell_burden",
-    ] {
-        let row = matrix
-            .row(row_id)
-            .unwrap_or_else(|| panic!("row {row_id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Blocked,
-            "hybrid row {row_id} must stay Blocked after the Sorcerer slice"
-        );
-        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
-    }
+
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .expect("paladin hybrid row must exist");
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin row must stay Blocked until the Paladin class-feature slice lands"
+    );
+    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+
+    let ranger = matrix
+        .row("class.ranger.hybrid_chassis_and_spell_burden")
+        .expect("ranger hybrid row must exist");
+    assert_eq!(
+        ranger.support_state,
+        SupportState::Partial,
+        "ranger row must report Partial after the Ranger class-feature slice"
+    );
+    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
 }
 
 #[test]

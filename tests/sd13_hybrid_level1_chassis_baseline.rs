@@ -1,18 +1,26 @@
-//! SD13-E3-F6 Paladin and Ranger level-1 hybrid chassis baseline proof.
+//! SD13-E3-F6 Paladin and Ranger level-1 hybrid chassis baseline proof, with the
+//! bounded ranger class-feature uplift proven by the SD13-E3 ranger class-feature
+//! slice (this card).
 //!
-//! Proves the first truthful SD13-F6 slice: the live rules-core surface ingests
-//! deterministic Human `class:paladin:1` and `class:ranger:1` inputs, leaves direct
-//! computed evidence that acknowledges each hybrid level-1 chassis identity rather
-//! than treating it as an undocumented packet placeholder, and yet stays explicitly
-//! claim-blocked on the still-missing non-spell class-feature burden and the later
-//! hybrid spell burden. It also pins the matrix reclassification of both hybrid rows
-//! from `Unverified` / `Observed` to `Blocked` / `Computed`.
+//! Proves the truthful SD13-F6 slice plus the bounded ranger class-feature uplift:
+//! the live rules-core surface ingests deterministic Human `class:paladin:1` and
+//! `class:ranger:1` inputs, leaves direct computed evidence that acknowledges each
+//! hybrid level-1 chassis identity rather than treating it as an undocumented packet
+//! placeholder. For the ranger slice, the bounded level-1 non-spell class-feature
+//! burden (favored enemy, combat style, tracking) is surfaced as recognized
+//! non-claim-blocking explanation records naming each feature and its bounded
+//! level-1 status, lifting the matrix row from `Blocked` to `Partial` while keeping
+//! the later hybrid spell burden as the only claim-blocking diagnostic. The Paladin
+//! row still stays `Blocked` / `Computed` because its non-spell class-feature
+//! burden (smite, lay on hands, divine grace, mercy) is intentionally left for the
+//! Paladin class-feature slice to lift.
 //!
 //! It is intentionally not a hybrid class engine. It grounds no Paladin/Ranger level
-//! 2+, no smite / lay-on-hands / divine-grace / mercy execution, no favored-enemy /
-//! combat-style / tracking execution, and no spell-slot / known-or-prepared posture.
-//! It also preserves the accepted Fighter 1-3 truth, the Rogue blocked negative
-//! control, and the Human race/interaction truth.
+//! 2+, no smite / lay-on-hands / divine-grace / mercy execution, no combat-style
+//! execution at level 2+, no favored-terrain breadth, no animal companion, no
+//! general spell engine, and no spell-slot / known-or-prepared posture. It also
+//! preserves the accepted Fighter 1-3 truth, the Rogue blocked negative control,
+//! and the Human race/interaction truth.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -177,20 +185,82 @@ fn paladin_level1_stays_blocked_naming_class_feature_and_spell_burden() {
     );
 }
 
+// ----- Ranger class-feature uplift (this slice): non-spell burden lifted, spell burden stays blocked -----
+
 #[test]
-fn ranger_level1_stays_blocked_naming_class_feature_and_spell_burden() {
+fn ranger_level1_surfaces_favored_enemy_combat_style_and_tracking_features() {
     let input = load(RANGER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let feature = claim_blocking(&computation, "class_feature.hybrid.ranger.unsupported");
-    for token in ["favored enemy", "combat style", "tracking"] {
-        assert!(
-            feature.message.contains(token),
-            "ranger feature blocker must name the '{token}' burden: {}",
-            feature.message
-        );
-    }
+    // Favored enemy is a level-1 Ranger feature: the named selection is surfaced as
+    // an explicit, non-claim-blocking class-feature seam (recognition + bounded
+    // mechanical contribution), not hidden behind a generic unsupported-hybrid label.
+    let favored = explanation(&computation, "class_feature.ranger.favored_enemy");
+    assert!(
+        favored.detail.contains("favored enemy") && favored.detail.contains("level 1"),
+        "ranger favored-enemy seam must name the favored enemy feature at level 1: {}",
+        favored.detail
+    );
+    assert_eq!(
+        favored.value, 0,
+        "ranger favored-enemy seam must surface the bounded selection without inventing type-specific bonuses"
+    );
 
+    // Combat style is a level-2 PF1 feature; at level 1 the ranger has the named
+    // selection slot only, no computed bonus. The seam names the level-1 status
+    // honestly and contributes no fabricated mechanical value.
+    let style = explanation(&computation, "class_feature.ranger.combat_style");
+    assert!(
+        style.detail.contains("combat style"),
+        "ranger combat-style seam must name the combat style feature: {}",
+        style.detail
+    );
+    assert!(
+        style.detail.contains("level 2") || style.detail.contains("level 2+"),
+        "ranger combat-style seam must honestly name the level-2+ activation: {}",
+        style.detail
+    );
+    assert_eq!(
+        style.value, 0,
+        "ranger combat-style seam at level 1 must contribute no fabricated bonus"
+    );
+
+    // Tracking is the Track bonus feat granted at level 1; surface it as an
+    // explicit, non-claim-blocking recognition seam rather than a hidden block.
+    let tracking = explanation(&computation, "class_feature.ranger.tracking");
+    assert!(
+        tracking.detail.contains("tracking") || tracking.detail.contains("track"),
+        "ranger tracking seam must name the tracking bonus feat: {}",
+        tracking.detail
+    );
+    assert_eq!(
+        tracking.value, 0,
+        "ranger tracking seam must surface the bonus feat without inventing a feat-effect engine"
+    );
+}
+
+#[test]
+fn ranger_level1_drops_non_spell_class_feature_blocker_keeps_spell_blocker() {
+    let input = load(RANGER_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // The non-spell class-feature burden is now lifted off the claim-blocking path:
+    // no diagnostic with id `class_feature.hybrid.ranger.unsupported` may remain
+    // claim-blocking. The three features are surfaced as non-claim-blocking
+    // explanation records instead.
+    let blocking_feature = computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.hybrid.ranger.unsupported");
+    assert!(
+        blocking_feature.is_none() || !blocking_feature.unwrap().claim_blocking,
+        "ranger non-spell class-feature burden must no longer be claim-blocking, got {:?}",
+        computation.diagnostics
+    );
+
+    // The later spell burden still stays claim-blocking: it is the only remaining
+    // blocked burden on the ranger slice and will be lifted by the separate SD13-E4
+    // ranger spell-burden slice.
     let spell = claim_blocking(&computation, "class_spell.hybrid.ranger.unsupported");
     assert!(
         spell.message.contains("spell"),
@@ -198,6 +268,33 @@ fn ranger_level1_stays_blocked_naming_class_feature_and_spell_burden() {
         spell.message
     );
 
+    // A bounded, non-claim-blocking note keeps the lifted features visible as the
+    // named Ranger class-feature family, so the audit surface can still see what
+    // is recognized at level 1 and what remains unsupported at level 2+.
+    let note = computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == "class_feature.ranger.bounded_seam");
+    let note = note.unwrap_or_else(|| {
+        panic!(
+            "expected bounded non-spell class-feature seam note, got {:?}",
+            computation.diagnostics
+        )
+    });
+    assert!(
+        !note.claim_blocking,
+        "ranger bounded class-feature seam note must not be claim-blocking"
+    );
+    for token in ["favored enemy", "combat style", "tracking"] {
+        assert!(
+            note.message.contains(token),
+            "ranger bounded class-feature seam note must name the '{token}' feature: {}",
+            note.message
+        );
+    }
+
+    // The integrated posture is still blocked (by the spell burden), not a counterfeit
+    // computed success.
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
 
@@ -265,6 +362,18 @@ fn fighter_and_rogue_do_not_gain_hybrid_recognition() {
             && !has_explanation(&rogue_computation, "class_chassis.hybrid_baseline.ranger"),
         "Rogue must not surface any hybrid-baseline recognition record"
     );
+    // The ranger class-feature uplift stays ranger-only; a Rogue must not gain the
+    // favored-enemy / combat-style / tracking explanations.
+    for id in [
+        "class_feature.ranger.favored_enemy",
+        "class_feature.ranger.combat_style",
+        "class_feature.ranger.tracking",
+    ] {
+        assert!(
+            !has_explanation(&rogue_computation, id),
+            "Rogue must not surface the ranger class-feature seam '{id}'"
+        );
+    }
     assert!(
         !rogue_computation
             .diagnostics
@@ -328,13 +437,31 @@ fn matrix_paladin_row_is_blocked_computed_and_names_both_burdens() {
 }
 
 #[test]
-fn matrix_ranger_row_is_blocked_computed_and_names_both_burdens() {
+fn matrix_ranger_row_is_partial_computed_and_names_only_spell_burden() {
+    // The SD13-E3 ranger class-feature slice lifts the bounded non-spell
+    // class-feature burden (favored enemy, combat style, tracking) off the
+    // claim-blocking path; the row now reports Partial/Computed with only the
+    // later spell burden remaining in the blocker note.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must exist");
 
-    assert_eq!(ranger.support_state, SupportState::Blocked);
+    assert_eq!(
+        ranger.support_state,
+        SupportState::Partial,
+        "ranger row must be Partial after the class-feature uplift"
+    );
+    assert_ne!(
+        ranger.support_state,
+        SupportState::Blocked,
+        "ranger row must no longer stay Blocked after the class-feature uplift"
+    );
+    assert_ne!(
+        ranger.support_state,
+        SupportState::Supported,
+        "ranger row must not silently reach Supported without the spell burden"
+    );
     assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         ranger.evidence_freshness,
@@ -347,14 +474,49 @@ fn matrix_ranger_row_is_blocked_computed_and_names_both_burdens() {
         "ranger row must cite the SD13-F6 hybrid proof surface: {}",
         ranger.grounding_ref
     );
-    let note = ranger.blocker_or_lossiness_note;
-    assert!(!note.is_empty(), "ranger blocked row must carry a note");
-    for token in ["favored enemy", "combat style", "tracking", "spell"] {
+
+    // The blocker note is non-empty because the spell burden remains. The note
+        // may reference the lifted non-spell features to explain what was lifted, but
+        // it must not assert those features remain blockers — the first sentence / the
+        // primary posture of the note must be that the non-spell burden is lifted and
+        // the remaining blocker is the spell burden.
+        let note = ranger.blocker_or_lossiness_note;
         assert!(
-            note.contains(token),
-            "ranger blocked note must name the '{token}' burden: {note}"
+            !note.is_empty(),
+            "ranger partial row must keep a non-empty blocker note naming the spell burden"
         );
-    }
+        assert!(
+            note.contains("spell"),
+            "ranger partial row note must name the spell burden: {note}"
+        );
+        assert!(
+            note.contains("lift") || note.contains("lifted"),
+            "ranger partial row note must reflect the lift posture on the non-spell burden: {note}"
+        );
+        // It must not say these features are still blockers or that the row "stays
+        // blocked" on them — those phrasings would conflate the lifted non-spell burden
+        // with the remaining spell burden.
+        assert!(
+            !note.contains("stays blocked on the non-spell")
+                && !note.contains("non-spell class-feature burden (favored enemy, combat style, tracking) is not implemented"),
+            "ranger partial row note must not claim the non-spell burden remains a blocker: {note}"
+        );
+
+    // The next uplift points at the remaining burden and level-2+ widening slices.
+    // It must explicitly call out the SD13-E4 spell burden as the next blocker-
+    // posture uplift, and may reference Ranger level-2+ widening (combat style
+    // activation, favored enemy bonus resolution, Track feat effect) — but it must
+    // not say the non-spell class-feature burden is still a blocker.
+    let uplift = ranger.next_required_uplift;
+    assert!(
+        uplift.contains("spell"),
+        "ranger next uplift must point at the SD13-E4 spell burden: {uplift}"
+    );
+    assert!(
+        !uplift.contains("non-spell class-feature slice")
+            && !uplift.contains("lift the non-spell"),
+        "ranger next uplift must no longer request a non-spell class-feature lift: {uplift}"
+    );
 }
 
 #[test]

@@ -282,6 +282,13 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
 
+    // Bounded SD13-E3 ranger class-feature uplift: lift the non-spell class-feature
+    // burden (favored enemy, combat style, tracking) off the claim-blocking path for
+    // the ranger row only; the paladin row keeps its blocked posture until its own
+    // dedicated class-feature slice lifts it. See `explain_ranger_class_features` for
+    // the explicit recognition seams and bounded honesty note.
+    explain_ranger_class_features(input, &mut explanations, &mut diagnostics);
+
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
@@ -724,22 +731,24 @@ fn hybrid_level1_class(input: &CharacterInput) -> Option<HybridClass> {
 }
 
 /// Surface direct SD13-E3-F6 runtime evidence for the deterministic Human Paladin
-/// level-1 and Human Ranger level-1 hybrid chassis, while keeping both explicitly
-/// claim-blocked on their still-missing burdens.
+/// level-1 and Human Ranger level-1 hybrid chassis, while keeping the Paladin row
+/// explicitly claim-blocked on its still-missing non-spell class-feature burden and
+/// both rows explicitly claim-blocked on their later hybrid spell burden.
 ///
-/// This deliberately does not compute a supported hybrid chassis. It grounds no base
-/// attack/save progression, no smite / lay-on-hands / divine-grace / mercy execution,
-/// no favored-enemy / combat-style / tracking execution, and no spell posture. It only:
-/// - leaves one chassis-recognition explanation so the `class:paladin:1` / `class:ranger:1`
-///   identity is acknowledged as a hybrid martial baseline rather than an undocumented
-///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two claim-blocking diagnostics naming the still-missing non-spell class-feature
-///   burden family and the later hybrid spell burden explicitly, rather than hiding behind
-///   a generic "unsupported hybrid" label.
+/// For the Ranger, the bounded non-spell class-feature burden (favored enemy,
+/// combat style, tracking) is intentionally **not** emitted as a claim-blocking
+/// diagnostic here: the bounded level-1 features are surfaced as non-claim-blocking
+/// explanations by [`explain_ranger_class_features`], lifting the Ranger matrix
+/// row to `Partial` while keeping only the spell burden as the remaining
+/// claim-blocking diagnostic. The Paladin non-spell class-feature burden remains
+/// claim-blocking because its lift is intentionally out of scope for this slice.
 ///
-/// The bounded Fighter-shaped compute path already claim-blocks these inputs; this seam
-/// keeps that blocked posture but makes the hybrid class identity and its named burdens
-/// legible on the runtime path.
+/// This deliberately does not compute a supported hybrid chassis. It grounds no
+/// base attack/save progression, no smite / lay-on-hands / divine-grace / mercy
+/// execution, no favored-enemy type-specific bonus resolution, no combat-style
+/// execution, no feat-effect engine for the Track bonus feat, and no spell
+/// posture. The Ranger class-feature explanations are recognition seams only and
+/// carry no fabricated mechanical value.
 fn explain_hybrid_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -765,6 +774,12 @@ fn explain_hybrid_level1_chassis(
             RANGER_CLASS_ID,
             "Ranger",
             "class_chassis.hybrid_baseline.ranger",
+            // The Ranger non-spell feature burden is intentionally NOT emitted as a
+            // claim-blocking diagnostic here; the bounded level-1 features are
+            // surfaced non-claim-blockingly by `explain_ranger_class_features`. The
+            // Paladin feature blocker (smite / lay-on-hands / divine-grace / mercy)
+            // remains claim-blocked until the dedicated Paladin class-feature slice
+            // lifts it. The Ranger's later spell burden is still claim-blocking.
             "class_feature.hybrid.ranger.unsupported",
             "favored enemy, combat style, and skill/tracking",
             "class_spell.hybrid.ranger.unsupported",
@@ -785,18 +800,26 @@ fn explain_hybrid_level1_chassis(
         ),
     });
 
-    // Still blocked (1/2): name the non-spell class-feature burden family explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: feature_id.to_owned(),
-        message: format!(
-            "{class_name} level {HYBRID_BASELINE_LEVEL} remains blocked on its non-spell class-feature \
-             burden: {feature_burden} are not implemented in this bounded hybrid chassis baseline, so no \
-             {class_name} class-feature support is claimed"
-        ),
-        claim_blocking: true,
-    });
+    // Non-spell class-feature burden: only the Paladin path still emits this as a
+    // claim-blocking diagnostic here. The Ranger path's bounded level-1 features are
+    // surfaced non-claim-blockingly by `explain_ranger_class_features`, leaving the
+    // Ranger row liftable to `Partial` while the Paladin row stays `Blocked` until
+    // its dedicated class-feature slice lifts it.
+    if matches!(hybrid, HybridClass::Paladin) {
+        diagnostics.push(ComputationDiagnostic {
+            id: feature_id.to_owned(),
+            message: format!(
+                "{class_name} level {HYBRID_BASELINE_LEVEL} remains blocked on its non-spell class-feature \
+                 burden: {feature_burden} are not implemented in this bounded hybrid chassis baseline, so no \
+                 {class_name} class-feature support is claimed"
+            ),
+            claim_blocking: true,
+        });
+    }
 
-    // Still blocked (2/2): name the later hybrid spell burden explicitly.
+    // Still blocked: name the later hybrid spell burden explicitly. This is the only
+    // claim-blocking diagnostic emitted for the Ranger on this path; the bounded
+    // class-feature seam is handled non-claim-blockingly below.
     diagnostics.push(ComputationDiagnostic {
         id: spell_id.to_owned(),
         message: format!(
@@ -805,6 +828,107 @@ fn explain_hybrid_level1_chassis(
              chassis baseline and are deferred to the SD13-E4 spellcasting slice"
         ),
         claim_blocking: true,
+    });
+}
+
+/// Surface the bounded SD13-E3 ranger class-feature seam at level 1: favored enemy,
+/// combat style, and tracking (the Track bonus feat). Each is a recognition-only
+/// explanation that names the bounded level-1 status and contributes no fabricated
+/// mechanical value, so the Ranger matrix row lifts from `Blocked` to `Partial`
+/// while the later spell burden stays claim-blocking.
+///
+/// This is intentionally narrow:
+/// - favored enemy at level 1 is the **selection** of one creature type; no
+///   type-specific +2 bonuses are resolved against creature identifiers, no language
+///   grants are computed, and no per-type bonus table is consulted;
+/// - combat style is a **level-2 PF1 feature**; at level 1 the Ranger has the named
+///   selection slot only, no bonus is computed, and the seam names the level-2+
+///   activation honestly;
+/// - tracking is the Track bonus feat gained at level 1; this slice surfaces the
+///   recognition seam and grounds no Track feat effect (no Survival use-Survival-to-
+///   follow bonus, no automatic tracking on move actions). A Track bonus-feat
+///   explanation would still need a general feat-effect engine and is out of scope.
+///
+/// It runs only for a supported single-class Human Ranger at the bounded hybrid
+/// baseline level (1); any other posture is left untouched.
+fn explain_ranger_class_features(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !matches!(hybrid_level1_class(input), Some(HybridClass::Ranger)) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Favored enemy (level 1): the named selection is surfaced as an explicit
+    // recognition seam. No type-specific bonus is computed and no creature-type
+    // identifier is consulted.
+    explanations.push(ComputationExplanation {
+        id: "class_feature.ranger.favored_enemy".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human {RANGER_CLASS_ID} favored enemy selection at level \
+             {HYBRID_BASELINE_LEVEL}: the named favored enemy creature type is acknowledged as \
+             a level 1 Ranger class feature on the rules-core seam, but this bounded slice \
+             surfaces the selection only and grounds no type-specific +2 \
+             Bluff/Knowledge/Perception/Sense Motive/Survival bonus, no weapon-damage bonus, \
+             and no bonus-language grant. The favored enemy seam carries no fabricated \
+             mechanical value (+0)"
+        ),
+    });
+
+    // Combat style (level 2 in PF1 Core): at level 1 the Ranger has the named
+    // selection slot only. The seam names the level-2+ activation honestly and
+    // contributes no fabricated bonus at level 1.
+    explanations.push(ComputationExplanation {
+        id: "class_feature.ranger.combat_style".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human {RANGER_CLASS_ID} combat style seam: combat style \
+             activates at level 2 in PF1 Core and grants a named bonus feat selection from the \
+             Ranger combat style list (Archery, Two-Weapon Fighting, or Shield Focus). At \
+             level {HYBRID_BASELINE_LEVEL} this slice surfaces the combat style seam only and \
+             grounds no level 2+ combat style bonus feat selection and no associated feat \
+             effect. The combat style seam carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Tracking / Track bonus feat (level 1): the Ranger gains Track as a bonus feat.
+    // This slice surfaces the recognition seam only; no Track feat effect is computed.
+    explanations.push(ComputationExplanation {
+        id: "class_feature.ranger.tracking".to_owned(),
+        detail: format!(
+            "Recognized deterministic Human {RANGER_CLASS_ID} tracking seam at level \
+             {HYBRID_BASELINE_LEVEL}: the level 1 Ranger gains Track as a bonus feat, but \
+             this bounded slice surfaces the bonus feat slot only and grounds no Track \
+             feat effect (no Survival use-to-follow bonus, no free action to use Track, no \
+             reduced penalty for moving at full speed while tracking). A general \
+             feat-effect engine is required to ground the Track contribution and is out of \
+             scope for this slice. The tracking seam carries no fabricated mechanical value (+0)"
+        ),
+        value: 0,
+    });
+
+    // Bounded honesty note: keep the lifted class-feature family visible as a named
+    // audit seam so the audit surface can see what is recognized at level 1 and
+    // what remains unsupported at level 2+. Non-claim-blocking so the Ranger row
+    // lifts to `Partial` rather than staying `Blocked`.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.ranger.bounded_seam".to_owned(),
+        message: format!(
+            "Ranger level {HYBRID_BASELINE_LEVEL} non-spell class-feature burden is lifted off \
+             the claim-blocking path: favored enemy (level 1 selection), combat style (level 2+ \
+             activation surfaced as a seam), and tracking (level 1 Track bonus feat) are all \
+             recognized as named class-feature seams. This slice grounds no type-specific \
+             favored enemy bonus resolution, no combat style bonus-feat selection or effect, \
+             and no Track feat effect; those remain on later SD13-E3 widening slices or on \
+             a general feat-effect engine, but they are no longer treated as blockers of the \
+             bounded Ranger level 1 chassis"
+        ),
+        claim_blocking: false,
     });
 }
 
