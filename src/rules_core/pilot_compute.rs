@@ -119,6 +119,15 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const SORCERER_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E3 martial chassis baseline identity. Barbarian is a non-spell pure
+// martial class; this slice recognizes only its bounded single-class level-1
+// identity as direct runtime evidence and grounds no base-attack / base-save
+// progression, no fast-movement +10 ft. speed extension, no illiteracy trait
+// engine, no rage execution, no weapon familiarity, and no level-2+ martial
+// progression.
+const BARBARIAN_CLASS_ID: &str = "class:barbarian";
+const MARTIAL_BASELINE_LEVEL: u8 = 1;
+
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
 // grounds no non-Human race semantics and no broader Human racial trait burden.
@@ -281,6 +290,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_fighter_class_features(input, &mut explanations);
 
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
+
+    explain_barbarian_level1_chassis(input, &mut explanations, &mut diagnostics);
 
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
@@ -803,6 +814,133 @@ fn explain_hybrid_level1_chassis(
             "{class_name} remains blocked on its later hybrid spell burden: spell slots, spell source, \
              and spells known/prepared posture are out of scope for this level-{HYBRID_BASELINE_LEVEL} \
              chassis baseline and are deferred to the SD13-E4 spellcasting slice"
+        ),
+        claim_blocking: true,
+    });
+}
+
+/// A pure martial (non-hybrid, non-spell) class this slice recognizes at its bounded
+/// single-class level-1 chassis boundary only.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum MartialClass {
+    Barbarian,
+}
+
+/// Return the martial class when the chosen input is exactly a single-class Barbarian
+/// at the bounded martial baseline level (1). Returns `None` for any other class, a
+/// multiclass mix, or a level-2+ Barbarian this slice deliberately does not recognize —
+/// each of which stays blocked exactly as before.
+fn martial_level1_class(input: &CharacterInput) -> Option<MartialClass> {
+    match input.chosen.class_levels.as_slice() {
+        [class_level] if class_level.level == MARTIAL_BASELINE_LEVEL => {
+            match class_level.class_id.as_str() {
+                BARBARIAN_CLASS_ID => Some(MartialClass::Barbarian),
+                _ => None,
+            }
+        }
+        _ => None,
+    }
+}
+
+/// Surface direct SD13-E3 runtime evidence for the deterministic Human Barbarian
+/// level-1 martial chassis, while keeping it explicitly claim-blocked on the four
+/// still-missing named burdens.
+///
+/// This deliberately does not compute a supported martial chassis. It grounds no
+/// base-attack progression, no base-save progression, no fast-movement +10 ft. speed
+/// extension, and no illiteracy trait engine. It grounds no rage execution, no
+/// weapon familiarity, and no level-2+ martial progression. It only:
+/// - leaves one chassis-recognition explanation so the `class:barbarian:1` identity
+///   is acknowledged as a non-hybrid martial baseline rather than an undocumented
+///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical
+///   value), and
+/// - emits four claim-blocking diagnostics naming the four still-missing pillar
+///   burdens (base-attack, base-save, fast-movement, illiteracy) explicitly, rather
+///   than hiding behind a single generic "unsupported class" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Barbarian martial identity and its four
+/// named pillar burdens legible on the runtime path.
+fn explain_barbarian_level1_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(martial) = martial_level1_class(input) else {
+        return;
+    };
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Only the Barbarian is in this slice today; the match is exhaustive-by-design so
+    // a future addition (e.g. a non-hybrid Monk slice) needs an explicit arm here.
+    let MartialClass::Barbarian = martial;
+    let class_id = BARBARIAN_CLASS_ID;
+    let class_name = "Barbarian";
+    let chassis_id = "class_chassis.barbarian.bounded_progression";
+
+    // Direct runtime evidence: recognize the deterministic Human Barbarian level-1
+    // martial chassis identity. This is a recognition record only; it fabricates no
+    // mechanical value.
+    explanations.push(ComputationExplanation {
+        id: chassis_id.to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human {class_name} level {MARTIAL_BASELINE_LEVEL} martial chassis: \
+             the {class_id}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure non-hybrid \
+             martial baseline on the rules-core seam rather than an undocumented packet placeholder. This \
+             is a bounded chassis-recognition record only; it grounds no {class_name} base-attack or \
+             base-save progression, no fast-movement +10 ft. speed extension, no illiteracy trait engine, \
+             no rage execution, and no level-2+ martial progression, so it carries no fabricated \
+             mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/4): name the base-attack progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.barbarian.bounded_progression.base_attack.unsupported".to_owned(),
+        message: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its base attack progression: \
+             the full-BAB +{MARTIAL_BASELINE_LEVEL} base-attack bonus and the higher-level BAB cadence are \
+             not implemented in this bounded martial chassis baseline, so no {class_name} base-attack \
+             support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/4): name the base-save progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.barbarian.bounded_progression.base_save.unsupported".to_owned(),
+        message: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its base save progression: \
+             the good Fortitude +{}+2 and the poor Reflex / poor Will base-save cadence are not \
+             implemented in this bounded martial chassis baseline, so no {class_name} base-save support is \
+             claimed",
+            MARTIAL_BASELINE_LEVEL
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (3/4): name the fast-movement speed-extension burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.barbarian.bounded_progression.fast_movement.unsupported".to_owned(),
+        message: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its fast movement burden: \
+             the +10 ft. land speed extension applied while wearing no heavy armor is not implemented in \
+             this bounded martial chassis baseline, so no {class_name} fast-movement support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (4/4): name the illiteracy trait burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.barbarian.bounded_progression.illiteracy.unsupported".to_owned(),
+        message: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its illiteracy trait: \
+             the trait that prevents literate reading and writing of non-native languages without additional \
+             training is not implemented in this bounded martial chassis baseline, so no {class_name} \
+             illiteracy-trait support is claimed"
         ),
         claim_blocking: true,
     });

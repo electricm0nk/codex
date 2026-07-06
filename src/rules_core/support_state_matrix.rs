@@ -196,6 +196,12 @@ const SD13_HYBRID_LEVEL1_TEST: &str = "tests/sd13_hybrid_level1_chassis_baseline
 /// known-spell / slot posture burden.
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
+/// SD13-E3 dedicated proof surface for the bounded Human Barbarian level-1 martial
+/// chassis baseline: direct computed chassis-recognition evidence that stays explicitly
+/// blocked on the four named martial pillar burdens (base attack, base save,
+/// fast movement, illiteracy trait).
+const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs";
+
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
 /// Returns exactly 21 rows: 7 race, 12 class, and 2 interaction. The content is
@@ -346,12 +352,21 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:barbarian",
                 dimension: "bounded class progression",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E3 martial progression slice",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_BARBARIAN_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E3 Barbarian level-1 proof surfaces only the \
+                    bounded martial chassis-recognition record; the slice is explicitly blocked \
+                    on the four still-missing martial pillar burdens: base attack progression \
+                    (full BAB and the higher-level BAB cadence), base save progression (good \
+                    Fortitude +3 and the poor Reflex / poor Will base-save cadence), fast \
+                    movement (+10 ft. land speed extension while wearing no heavy armor), and \
+                    the illiteracy trait. No rage execution, weapon familiarity, or level-2+ \
+                    martial progression is claimed",
+                next_required_uplift: "widen beyond level 1 by grounding base-attack / base-save \
+                    progression, fast-movement speed extension, and the illiteracy trait engine, \
+                    later widening into rage execution and level-2+ martial progression",
             },
             SupportStateRow {
                 row_id: "class.bard.progression_and_spell_burden",
