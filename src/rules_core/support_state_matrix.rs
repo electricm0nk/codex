@@ -273,13 +273,40 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.half_orc.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:half-orc",
-                dimension: "bounded race semantics",
+                dimension: "bounded Half-Orc race semantics: the named Half-Orc \
+                            PF1 trait burden (Medium size, darkvision 60 ft, \
+                            ability-score modifier, weapon familiarity with greataxe \
+                            and falchion, ferocity) and any Half-Orc skill / \
+                            favored-class posture on the deterministic pilot seam",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E2 race-semantic slice",
+                blocker_or_lossiness_note: "the deterministic pilot seam in \
+                    src/rules_core/pilot_compute.rs grounds race semantics only for \
+                    race:human and emits a non-claim-blocking \
+                    race.semantics.unverified diagnostic for every other race \
+                    identity; Half-Orc race semantics have no live proof surface \
+                    yet, so the named Half-Orc trait burden remains unverified: \
+                    Medium size (no size-derived combat modifier), darkvision 60 ft \
+                    (no darkvision-based perception surface), the Half-Orc \
+                    ability-score modifier (no ability bonus applied), weapon \
+                    familiarity with greataxe / falchion (no item-level combat \
+                    modifier computed), orc ferocity (no unconscious-but-fighting \
+                    posture computed), any Half-Orc skill bonus or favored-class \
+                    posture, and any general Half-Orc character-creation option \
+                    (alternate favored class, racial archetype, age/culture). The \
+                    row stays Unverified rather than Blocked because the Half-Orc \
+                    loadout still produces a Computed pilot receipt — only the \
+                    race semantic gap is non-claim-blocking",
+                next_required_uplift: "SD13-E2 Half-Orc race-semantic slice: name \
+                    the bounded Half-Orc trait set, add a deterministic Half-Orc \
+                    Fighter level-1 pilot fixture, and emit a Half-Orc-specific \
+                    race-semantics diagnostic in pilot_compute.rs that names the \
+                    grounded subset (e.g. ability modifier, darkvision) versus the \
+                    still-unverified subset (size, ferocity, weapon familiarity, \
+                    skill bonus) so the row can advance from Unverified to Partial \
+                    only when a live Half-Orc proof surface exists",
             },
             SupportStateRow {
                 row_id: "race.halfling.bounded_semantics",
