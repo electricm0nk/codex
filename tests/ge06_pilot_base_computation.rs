@@ -105,11 +105,19 @@ fn missing_fighter_chassis_input_produces_claim_blocking_diagnostic() {
     // A loadable but non-Fighter input still yields ability modifiers, but the
     // narrow class chassis must refuse to fabricate Fighter values and must emit
     // a claim-blocking diagnostic instead.
+    //
+    // The negative-control class is `class:rogue:1`: Rogue has no dedicated
+    // chassis seam on this compute path, so this input is guaranteed to produce
+    // zero chassis-explanation records while still exercising the claim-blocked
+    // posture for a non-Fighter Human level-1 input. (The prior choice of
+    // `class:wizard:1` collided with the SD13-E4-R3 Wizard chassis-recognition
+    // seam, which deliberately emits a +0 `class_chassis.spell_baseline.wizard`
+    // recognition record alongside the Fighter-shaped claim-block.)
     let result = load_character_input_fixture(
         "case_id=non-fighter\n\
          source_package_id=pf1.core_rulebook\n\
          race_id=race:human\n\
-         class_level=class:wizard:1\n\
+         class_level=class:rogue:1\n\
          ability=strength:16\n\
          ability=dexterity:14\n\
          ability=constitution:14\n\
