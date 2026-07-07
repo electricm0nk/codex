@@ -33,11 +33,16 @@
 //! specialization burden and prepared spellbook / spells-prepared / spell-slot
 //! posture burden; it grounds no spellbook content, no spells prepared, no spell
 //! slots, no spell save DCs, no bonus spells, no school-opposition bookkeeping, and
-//! no specialty school bonus. Unsupported input yields claim-blocking diagnostics
-//! and withheld explanations rather than fabricated values. The SD13-E3 Fighter
-//! milestone tranche has since widened further still, to level 8: the level-8
-//! bonus-feat progression seam is surfaced explicitly, mirroring the level-2/4/6
-//! bonus-feat seams, and grounds no level-9+ Fighter burden.
+//! no specialty school bonus. The SD13-E3 Fighter milestone tranche has since
+//! widened further still, to level 8: the level-8 bonus-feat progression seam is
+//! surfaced explicitly, mirroring the level-2/4/6 bonus-feat seams, and grounds no
+//! level-9+ Fighter burden. The SD13-E3 Rogue pillar-grounding slice widens the
+//! deterministic Human Rogue level-1 chassis to ground base-attack progression
+//! (3/4 BAB), base-save progression (good Reflex, poor Fortitude, poor Will), and
+//! the sneak attack damage-die count (1, i.e. 1d6); only trapfinding remains
+//! claim-blocked for Rogue, and `defense.total_save.*` is still never computed for
+//! it. Unsupported input yields claim-blocking diagnostics and withheld
+//! explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
 
@@ -1430,13 +1435,12 @@ fn explain_human_trait_bundle(
     explanations.push(ComputationExplanation {
         id: "race.human.trait_bundle.senses".to_owned(),
         value: 0,
-        detail: format!(
-            "Human racial trait bundle — senses: PF1 Standard Human grants no special senses \
+        detail: "Human racial trait bundle — senses: PF1 Standard Human grants no special senses \
              (cr_races.lst race:human carries no SENSE tag for Standard Human; darkvision, \
              low-light vision, scent, and other sense bonuses are absent). This is a bounded \
              no-effect classification record on the deterministic pilot seam; it carries no \
              fabricated sense bonus and contributes no computed value (+0)"
-        ),
+            .to_owned(),
     });
 
     // ----- extra skill ranks -----
@@ -2099,14 +2103,13 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // (Cleric / Druid).
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
-        message: format!(
-            "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
+        message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
              partial caster (effective caster level = paladin level - 2, with spell slots first \
              available at level 2 in PF1 Core Rulebook), so spell-source lineage, spells known \
              or prepared posture, spells-per-day progression, bonus spell slots, and spell save \
              DCs are deferred to the SD13-E4 spellcasting slice; no partial-caster spell \
              execution is fabricated in this bounded chassis baseline"
-        ),
+            .to_owned(),
         claim_blocking: true,
     });
 }
@@ -2383,29 +2386,39 @@ fn is_single_class_rogue_level1(input: &CharacterInput) -> bool {
 }
 
 /// Surface direct SD13-E3 runtime evidence for the deterministic Human Rogue
-/// level-1 chassis, mirroring the Barbarian/Monk level-1 baseline pattern,
-/// while keeping it explicitly claim-blocked on the four still-missing named
-/// burdens.
+/// level-1 chassis, mirroring the Barbarian/Monk level-1 baseline pattern.
+/// The SD13-E3 pillar-grounding slice grounds three of the four named
+/// burdens directly (base-attack progression, base-save progression, and
+/// sneak attack die count); only trapfinding remains claim-blocked.
 ///
-/// This deliberately does not compute a supported chassis. It grounds no
-/// base-attack progression (3/4 BAB), no base-save progression (good Reflex,
-/// poor Fortitude, poor Will), no sneak attack damage-die execution, and no
-/// trapfinding Perception / Disable Device bonus. It grounds no rogue talent
-/// and no level-2+ progression. It only:
+/// This deliberately does not compute a full Rogue class engine. It grounds:
+/// - base-attack progression (3/4 BAB, `level * 3 / 4`),
+/// - base-save progression (good Reflex, poor Fortitude, poor Will), and
+/// - the sneak attack damage-die *count* only (the value `1`, i.e. `1d6`) —
+///   not damage-roll execution and not the flanking / Dexterity-denial
+///   trigger-condition engine.
+///
+/// It still grounds no trapfinding Perception / Disable Device bonus, no
+/// rogue talent, and no level-2+ progression. These new
+/// `class_chassis.rogue.*` explanation records are standalone: they are not
+/// wired into `compute_fighter_chassis`, `compute_total_saves`, or
+/// `compute_combat_baseline`, so `defense.total_save.*` is still never
+/// computed for Rogue here. It only:
 /// - leaves one chassis-recognition explanation so the `class:rogue:1`
 ///   identity is acknowledged rather than an undocumented packet placeholder
-///   (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits four claim-blocking diagnostics naming the four still-missing
-///   pillar burdens (base-attack, base-save, sneak-attack, trapfinding)
-///   explicitly, rather than hiding behind a single generic "unsupported
-///   class" label.
+///   (direct runtime evidence, carrying no fabricated mechanical value),
+/// - leaves four grounded pillar explanations (base-attack, base-save
+///   fortitude/reflex/will, sneak-attack die count), and
+/// - emits one claim-blocking diagnostic naming the sole still-missing
+///   pillar burden (trapfinding) explicitly, rather than hiding behind a
+///   single generic "unsupported class" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input
 /// (including `tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`,
 /// which keeps passing unmodified since no `defense.total_save.*` explanation
 /// is ever computed here); this seam keeps that blocked posture but makes the
-/// Rogue chassis identity and its four named pillar burdens legible on the
-/// runtime path.
+/// Rogue chassis identity, its grounded pillars, and its one remaining named
+/// pillar burden legible on the runtime path.
 fn explain_rogue_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -2428,46 +2441,65 @@ fn explain_rogue_level1_chassis(
             "Recognized deterministic Human Rogue level {ROGUE_BASELINE_LEVEL} chassis: the \
              {ROGUE_CLASS_ID}:{ROGUE_BASELINE_LEVEL} class identity is acknowledged on the \
              rules-core seam rather than an undocumented packet placeholder. This is a bounded \
-             chassis-recognition record only; it grounds no Rogue base-attack or base-save \
-             progression, no sneak attack damage-die execution, no trapfinding Perception / \
-             Disable Device bonus, no rogue talent, and no level-2+ progression, so it carries \
-             no fabricated mechanical value (+0)"
+             chassis-recognition record only; the base-attack, base-save, and sneak-attack \
+             die-count pillars are grounded separately below, but this record still grounds no \
+             trapfinding Perception / Disable Device bonus, no rogue talent, and no level-2+ \
+             progression, so it carries no fabricated mechanical value (+0)"
         ),
     });
 
-    // Still blocked (1/4): name the base-attack progression burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.rogue.bounded_progression.base_attack.unsupported".to_owned(),
-        message: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its base attack progression: \
-             the 3/4-BAB progression is not implemented in this bounded chassis baseline, so no \
-             Rogue base-attack support is claimed"
+    // Grounded (1/4): base-attack progression (3/4 BAB).
+    let level_value = i16::from(ROGUE_BASELINE_LEVEL);
+    let base_attack_bonus = level_value * 3 / 4;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+             Rogue class table's 3/4-BAB progression: level * 3 / 4 = {base_attack_bonus}"
         ),
-        claim_blocking: true,
     });
 
-    // Still blocked (2/4): name the base-save progression burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.rogue.bounded_progression.base_save.unsupported".to_owned(),
-        message: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its base save progression: \
-             the good Reflex progression and the poor Fortitude / poor Will base-save cadence \
-             are not implemented in this bounded chassis baseline, so no Rogue base-save \
-             support is claimed"
+    // Grounded (2/4): base-save progression (good Reflex, poor Fortitude, poor Will).
+    let base_save_fortitude = level_value / 3;
+    let base_save_reflex = level_value / 2 + 2;
+    let base_save_will = level_value / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.base_save.fortitude".to_owned(),
+        value: base_save_fortitude,
+        detail: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} base Fortitude save (poor) from the PF1 Core \
+             Rulebook Rogue class table: level / 3 = {base_save_fortitude}"
         ),
-        claim_blocking: true,
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.base_save.reflex".to_owned(),
+        value: base_save_reflex,
+        detail: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} base Reflex save (good) from the PF1 Core \
+             Rulebook Rogue class table: level / 2 + 2 = {base_save_reflex}"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.base_save.will".to_owned(),
+        value: base_save_will,
+        detail: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} base Will save (poor) from the PF1 Core \
+             Rulebook Rogue class table: level / 3 = {base_save_will}"
+        ),
     });
 
-    // Still blocked (3/4): name the sneak attack burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.rogue.bounded_progression.sneak_attack.unsupported".to_owned(),
-        message: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its sneak attack burden: the \
-             +1d6 extra sneak attack damage against a flanked or Dexterity-denied target is not \
-             implemented in this bounded chassis baseline, so no Rogue sneak attack support is \
-             claimed"
+    // Grounded (3/4): sneak attack damage-die count only.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.sneak_attack".to_owned(),
+        value: 1,
+        detail: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} sneak attack from the PF1 Core Rulebook Rogue \
+             class table: +1d6 sneak attack damage die at level 1, against a flanked or \
+             Dexterity-denied target. Only the die-count facet (1, i.e. 1d6) is grounded here; \
+             damage-roll execution and the flanking / Dexterity-denial trigger-condition engine \
+             are not implemented"
         ),
-        claim_blocking: true,
     });
 
     // Still blocked (4/4): name the trapfinding burden explicitly.
