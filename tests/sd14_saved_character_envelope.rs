@@ -53,6 +53,7 @@ fn pilot_envelope() -> SavedCharacterEnvelope {
         schema_version: 1,
         app_or_runtime_version: "codex-dev".to_owned(),
         content_or_rules_provenance: "pf1.core_rulebook".to_owned(),
+        game_system: "pf1".to_owned(),
         latest_authoritative_revision_ref: "sd14.fixture.pf1-human-fighter-level1.rev.1".to_owned(),
         display_label: "PF1 Human Fighter Level 1".to_owned(),
         character_input,
@@ -297,6 +298,55 @@ fn sd14_save_rejects_selected_choice_that_cannot_round_trip() {
         err.message.contains("selection_id"),
         "error must name the offending field: {}",
         err.message
+    );
+
+    fs::remove_dir_all(&root).ok();
+}
+
+#[test]
+fn sd14_save_and_load_preserves_game_system_field() {
+    let mut envelope = pilot_envelope();
+    envelope.game_system = "pf1".to_owned();
+    let root = fresh_temp_dir("sd14-game-system-round-trip");
+
+    SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+    let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+    assert_eq!(reloaded.game_system, "pf1");
+
+    fs::remove_dir_all(&root).ok();
+}
+
+#[test]
+fn sd14_legacy_schema_version_1_fixture_without_game_system_defaults_to_pf1() {
+    // The checked-in fixture predates the game_system field (schema_version = 1,
+    // no game_system line in envelope.txt). Every pre-existing saved character is
+    // PF1e, so load() must derive an honest default rather than fail to load a
+    // legacy artifact outright.
+    let root = fixture_root();
+    let envelope = SavedCharacterStore::load(&root).expect("checked-in fixture should load");
+
+    assert_eq!(envelope.schema_version, 1);
+    assert_eq!(envelope.game_system, "pf1");
+}
+
+#[test]
+fn sd14_save_rejects_newline_in_game_system() {
+    let root = fresh_temp_dir("sd14-game-system-newline");
+
+    let mut envelope = pilot_envelope();
+    envelope.game_system = "pf1\nrace_id=race:orc".to_owned();
+
+    let err = SavedCharacterStore::save(&envelope, &root)
+        .expect_err("a game_system value containing a newline must be rejected at save time");
+    assert!(
+        err.message.contains("game_system"),
+        "error must name the offending field: {}",
+        err.message
+    );
+    assert!(
+        !root.join("envelope.txt").exists(),
+        "no envelope file may be written when validation fails"
     );
 
     fs::remove_dir_all(&root).ok();

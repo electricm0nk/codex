@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "Codex Desktop Shell Scaffold",
+        "title": "Codex Character Hub",
         "width": 1280,
         "height": 800,
         "resizable": true

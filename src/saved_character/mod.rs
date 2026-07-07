@@ -26,12 +26,56 @@ pub struct SavedCharacterEnvelope {
     pub app_or_runtime_version: String,
     /// Package/content/rules lineage needed to classify compatibility honestly.
     pub content_or_rules_provenance: String,
+    /// Explicit game-system identifier (e.g. "pf1"), distinct from
+    /// `content_or_rules_provenance`'s content-package lineage. Added at
+    /// schema_version 2; envelopes saved before then have no on-disk
+    /// `game_system` line and get an honest back-compat default on load
+    /// (see `local_store::derive_legacy_game_system`).
+    pub game_system: String,
     /// Reference to the latest authoritative revision in the lineage.
     pub latest_authoritative_revision_ref: String,
     /// Human-facing summary handle for this saved character.
     pub display_label: String,
     /// The authoritative user-authored character choices.
     pub character_input: CharacterInput,
+}
+
+/// Persisted-artifact schema version written by new saves as of the addition
+/// of the `game_system` field. Older schema_version=1 envelopes remain
+/// readable via a back-compat default in `local_store::parse_envelope`.
+pub const CURRENT_SAVED_CHARACTER_SCHEMA_VERSION: u16 = 2;
+
+/// Summary of one saved character, as returned by
+/// `local_store::SavedCharacterStore::list_all`. Carries the fields a
+/// character-list UI needs without loading the full `CharacterInput` payload
+/// twice.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SavedCharacterSummary {
+    pub character_id: String,
+    pub display_label: String,
+    pub game_system: String,
+    pub schema_version: u16,
+    pub saved_at: String,
+    pub race_id: String,
+    /// Joined `class_id:level` pairs, comma-separated (Phase 1's golden path
+    /// is always single-class, but this stays correct for future multiclass).
+    pub class_summary: String,
+}
+
+/// The result of listing every saved character under a characters-root
+/// directory. One unreadable entry never fails the whole listing.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SavedCharacterListing {
+    pub characters: Vec<SavedCharacterSummary>,
+    pub unreadable_entries: Vec<SavedCharacterListingError>,
+}
+
+/// One saved-character subdirectory that could not be loaded as part of a
+/// listing, named so a caller can report which entry is corrupt.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SavedCharacterListingError {
+    pub entry_name: String,
+    pub message: String,
 }
 
 /// Classification of a saved revision's role in the character lifecycle.
