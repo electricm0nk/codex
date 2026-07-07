@@ -1,4 +1,4 @@
-# SD13-E4-F7 wizard level 1 prepared arcane spell-burden baseline fixture.
+# SD13-E4-R3 wizard level 1 prepared arcane spell-burden baseline fixture.
 # Represents a deterministic PF1 Core Rulebook Human Wizard level 1 identity as chosen
 # input only. It names selections; it does not contain derived, computed, or parity
 # values. It preserves the accepted Human race-choice seam (ability-bonus and bonus-feat)
