@@ -2,12 +2,16 @@
 //! hybrid spell burden classification slice for the deterministic Human Ranger.
 //!
 //! Closes out the Ranger row in the SD-13 support-state matrix:
-//! `class.ranger.hybrid_chassis_and_spell_burden`. The seed already places the
-//! row at `Blocked / Computed / RefreshableFromLiveProof` because the SD13-E3-F6
-//! surface proves the deterministic Human Ranger level-1 hybrid chassis identity
-//! is recognized on the compute seam. This closeout slice pins three properties
-//! as a Ranger-only typed check, independently of the Paladin slice that shares
-//! the same compute surface:
+//! `class.ranger.hybrid_chassis_and_spell_burden`. At the time this slice landed,
+//! the seed placed the row at `Blocked / Computed / RefreshableFromLiveProof`
+//! because the SD13-E3-F6 surface proves the deterministic Human Ranger level-1
+//! hybrid chassis identity is recognized on the compute seam. (A later SD13-E3
+//! Ranger decomposition slice,
+//! `sd13_ranger_level1_chassis_and_class_feature_separation.rs`, grounds Track
+//! for real and promotes the row to `Partial`; see that file for the current
+//! posture.) This closeout slice pins three properties as a Ranger-only typed
+//! check, independently of the Paladin slice that shares the same compute
+//! surface:
 //!
 //! 1. The chassis-baseline recognition (the
 //!    `class_chassis.hybrid_baseline.ranger` explanation) survives for a
@@ -309,7 +313,12 @@ fn paladin_chassis_baseline_is_not_regressed_by_ranger_closeout() {
 // ----- Matrix control plane: the Ranger row stays Blocked/Computed/Refreshable -----
 
 #[test]
-fn matrix_ranger_row_is_blocked_computed_and_names_both_burdens() {
+fn matrix_ranger_row_is_partial_computed_and_names_remaining_burdens() {
+    // The later SD13-E3 Ranger decomposition slice
+    // (sd13_ranger_level1_chassis_and_class_feature_separation.rs) grounded
+    // Track for real and intentionally promoted this row from Blocked to
+    // Partial; favored enemy, combat style, and the later spell burden remain
+    // named and unimplemented.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
@@ -317,10 +326,9 @@ fn matrix_ranger_row_is_blocked_computed_and_names_both_burdens() {
 
     assert_eq!(
         ranger.support_state,
-        SupportState::Blocked,
-        "ranger row must stay Blocked: chassis baseline proven, non-spell class-feature \
-         burden and later spell burden remain named and unimplemented. Row must not \
-         be silently promoted to Partial or Supported by this slice"
+        SupportState::Partial,
+        "ranger row is Partial: Track is grounded for real, but favored enemy, \
+         combat style, and the later spell burden remain named and unimplemented"
     );
     assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
@@ -338,30 +346,29 @@ fn matrix_ranger_row_is_blocked_computed_and_names_both_burdens() {
     let note = ranger.blocker_or_lossiness_note;
     assert!(
         !note.is_empty(),
-        "ranger blocked row must carry an explicit non-empty blocker note"
+        "ranger partial row must carry an explicit non-empty note"
     );
-    for token in ["favored enemy", "combat style", "tracking", "spell"] {
+    for token in ["favored enemy", "combat style", "SD13-E4"] {
         assert!(
             note.contains(token),
-            "ranger blocked note must name the '{token}' burden: {note}"
+            "ranger partial note must name the '{token}' burden: {note}"
         );
     }
 
-    // The next-required-uplift must point at the SD13-E3 / SD13-E4 chain so
-    // downstream tracking reads the real work, not a paraphrase.
+    // The next-required-uplift must point at the remaining favored-enemy /
+    // combat-style grounding and then the SD13-E4 spell burden.
     assert!(
-        ranger.next_required_uplift.contains("SD13-E3")
-            && ranger.next_required_uplift.contains("SD13-E4"),
-        "ranger next-required-uplift must name both SD13-E3 (class-feature slice) \
-         and SD13-E4 (spell burden): {}",
+        ranger.next_required_uplift.contains("SD13-E4"),
+        "ranger next-required-uplift must still name SD13-E4 (spell burden): {}",
         ranger.next_required_uplift
     );
 }
 
 #[test]
-fn matrix_ranger_row_is_not_misattributed_to_paladin_or_partial() {
-    // The Ranger closeout must not silently move the Paladin row, downgrade the
-    // Ranger row to partial, or fold the Ranger row into another hybrid chassis.
+fn matrix_ranger_row_is_not_misattributed_to_paladin_or_supported() {
+    // The Ranger promotion must not silently move the Paladin row or fold the
+    // Ranger row into another hybrid chassis, and must not overshoot to
+    // Supported (favored enemy and combat style are still unproven).
     let matrix = seeded_sd13_e1_f1_current_truth();
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
@@ -369,25 +376,24 @@ fn matrix_ranger_row_is_not_misattributed_to_paladin_or_partial() {
     assert_eq!(
         paladin.support_state,
         SupportState::Blocked,
-        "the Ranger closeout must not silently move the Paladin hybrid row"
+        "the Ranger promotion must not silently move the Paladin hybrid row"
     );
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
 
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must still exist");
-    assert_ne!(
+    assert_eq!(
         ranger.support_state,
         SupportState::Partial,
-        "ranger row must not be silently downgraded to Partial by this slice \
-         — both the non-spell class-feature burden and the later spell burden \
-         are still named as not implemented"
+        "ranger row is intentionally Partial after the SD13-E3 Ranger \
+         decomposition slice grounds Track for real"
     );
     assert_ne!(
         ranger.support_state,
         SupportState::Supported,
-        "ranger row must not be silently promoted to Supported — chassis baseline \
-         is proven but the spell burden is explicitly unresolved"
+        "ranger row must not be silently promoted to Supported — favored enemy, \
+         combat style, and the later spell burden remain explicitly unresolved"
     );
     assert!(
         ranger.row_id.contains("ranger"),

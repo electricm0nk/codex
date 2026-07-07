@@ -262,55 +262,85 @@ fn every_non_human_race_row_now_carries_runtime_evidence() {
 }
 
 #[test]
-fn paladin_and_ranger_hybrid_rows_are_blocked_and_computed_with_named_burdens() {
-    // SD13-E3-F6 moves both hybrid rows off the pure Unverified/Observed placeholder to
-    // a still-blocked computed posture that names the class-feature and spell burdens.
+fn paladin_hybrid_row_is_blocked_and_computed_with_named_burdens() {
+    // SD13-E3-F6 moves the Paladin hybrid row off the pure Unverified/Observed
+    // placeholder to a still-blocked computed posture that names the
+    // class-feature and spell burdens. Paladin has not been promoted.
     let matrix = matrix();
-    let cases = [
-        (
-            "class.paladin.hybrid_chassis_and_spell_burden",
-            "class:paladin",
-            ["smite", "lay on hands", "divine grace", "mercy"],
-        ),
-        (
-            "class.ranger.hybrid_chassis_and_spell_burden",
-            "class:ranger",
-            ["favored enemy", "combat style", "tracking", "spell"],
-        ),
-    ];
-    for (row_id, subject_id, tokens) in cases {
-        let hybrid = row(&matrix, row_id);
-        assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
-        assert_eq!(hybrid.subject_id, subject_id);
-        // Blocked/Computed only: never Partial and never Supported for this slice.
-        assert_eq!(hybrid.support_state, SupportState::Blocked);
-        assert_ne!(hybrid.support_state, SupportState::Partial);
-        assert_ne!(hybrid.support_state, SupportState::Supported);
-        assert_eq!(hybrid.evidence_tier, EvidenceTier::Computed);
+    let hybrid = row(&matrix, "class.paladin.hybrid_chassis_and_spell_burden");
+    assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
+    assert_eq!(hybrid.subject_id, "class:paladin");
+    assert_eq!(hybrid.support_state, SupportState::Blocked);
+    assert_ne!(hybrid.support_state, SupportState::Partial);
+    assert_ne!(hybrid.support_state, SupportState::Supported);
+    assert_eq!(hybrid.evidence_tier, EvidenceTier::Computed);
+    assert!(
+        hybrid
+            .grounding_ref
+            .contains("sd13_hybrid_level1_chassis_baseline"),
+        "paladin hybrid row must cite the SD13-F6 proof surface: {}",
+        hybrid.grounding_ref
+    );
+    assert!(
+        !hybrid.blocker_or_lossiness_note.is_empty(),
+        "blocked paladin hybrid row must carry a non-empty blocker note"
+    );
+    assert!(
+        hybrid.blocker_or_lossiness_note.contains("spell"),
+        "paladin hybrid row note must name the later spell burden: {}",
+        hybrid.blocker_or_lossiness_note
+    );
+    for token in ["smite", "lay on hands", "divine grace", "mercy"] {
         assert!(
-            hybrid
-                .grounding_ref
-                .contains("sd13_hybrid_level1_chassis_baseline"),
-            "hybrid row '{row_id}' must cite the SD13-F6 proof surface: {}",
-            hybrid.grounding_ref
-        );
-        assert!(
-            !hybrid.blocker_or_lossiness_note.is_empty(),
-            "blocked hybrid row '{row_id}' must carry a non-empty blocker note"
-        );
-        // The note must name the later spell burden and the class-specific feature burden.
-        assert!(
-            hybrid.blocker_or_lossiness_note.contains("spell"),
-            "hybrid row '{row_id}' note must name the later spell burden: {}",
+            hybrid.blocker_or_lossiness_note.contains(token),
+            "paladin hybrid row note must name the '{token}' burden: {}",
             hybrid.blocker_or_lossiness_note
         );
-        for token in tokens {
-            assert!(
-                hybrid.blocker_or_lossiness_note.contains(token),
-                "hybrid row '{row_id}' note must name the '{token}' burden: {}",
-                hybrid.blocker_or_lossiness_note
-            );
-        }
+    }
+}
+
+#[test]
+fn ranger_hybrid_row_is_partial_and_computed_with_named_burdens() {
+    // The SD13-E3 Ranger decomposition slice grounds Track for real and
+    // promotes this row from Blocked to Partial; favored enemy, combat style,
+    // and the later spell burden remain named and unproven.
+    let matrix = matrix();
+    let hybrid = row(&matrix, "class.ranger.hybrid_chassis_and_spell_burden");
+    assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
+    assert_eq!(hybrid.subject_id, "class:ranger");
+    assert_eq!(hybrid.support_state, SupportState::Partial);
+    assert_ne!(hybrid.support_state, SupportState::Blocked);
+    assert_ne!(hybrid.support_state, SupportState::Supported);
+    assert_eq!(hybrid.evidence_tier, EvidenceTier::Computed);
+    assert!(
+        hybrid
+            .grounding_ref
+            .contains("sd13_hybrid_level1_chassis_baseline"),
+        "ranger hybrid row must still cite the SD13-F6 proof surface: {}",
+        hybrid.grounding_ref
+    );
+    assert!(
+        hybrid
+            .grounding_ref
+            .contains("sd13_ranger_level1_chassis_and_class_feature_separation"),
+        "ranger hybrid row must cite its own decomposition proof surface: {}",
+        hybrid.grounding_ref
+    );
+    assert!(
+        !hybrid.blocker_or_lossiness_note.is_empty(),
+        "partial ranger hybrid row must carry a non-empty note"
+    );
+    assert!(
+        hybrid.blocker_or_lossiness_note.contains("SD13-E4"),
+        "ranger hybrid row note must still defer the spell burden to SD13-E4: {}",
+        hybrid.blocker_or_lossiness_note
+    );
+    for token in ["favored enemy", "combat style"] {
+        assert!(
+            hybrid.blocker_or_lossiness_note.contains(token),
+            "ranger hybrid row note must name the still-unproven '{token}' burden: {}",
+            hybrid.blocker_or_lossiness_note
+        );
     }
 }
 

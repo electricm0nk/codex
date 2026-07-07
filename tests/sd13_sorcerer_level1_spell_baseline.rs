@@ -382,22 +382,29 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_blocked_state() {
 }
 
 #[test]
-fn matrix_preserves_paladin_and_ranger_hybrid_blocked_computed_truth() {
+fn matrix_preserves_paladin_hybrid_blocked_computed_truth() {
     let matrix = seeded_sd13_e1_f1_current_truth();
-    for row_id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
-        "class.ranger.hybrid_chassis_and_spell_burden",
-    ] {
-        let row = matrix
-            .row(row_id)
-            .unwrap_or_else(|| panic!("row {row_id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Blocked,
-            "hybrid row {row_id} must stay Blocked after the Sorcerer slice"
-        );
-        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
-    }
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .expect("paladin row must exist");
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin hybrid row must stay Blocked after the Sorcerer slice"
+    );
+    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+
+    // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
+    // decomposition slice (Track grounded for real).
+    let ranger = matrix
+        .row("class.ranger.hybrid_chassis_and_spell_burden")
+        .expect("ranger row must exist");
+    assert_eq!(
+        ranger.support_state,
+        SupportState::Partial,
+        "ranger hybrid row must keep its later-accepted Partial posture after the Sorcerer slice"
+    );
+    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
 }
 
 #[test]

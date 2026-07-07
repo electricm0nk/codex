@@ -331,13 +331,18 @@ fn matrix_paladin_row_is_blocked_computed_and_names_both_burdens() {
 }
 
 #[test]
-fn matrix_ranger_row_is_blocked_computed_and_names_both_burdens() {
+fn matrix_ranger_row_is_partial_computed_and_names_remaining_burdens() {
+    // The SD13-E3 Ranger decomposition slice
+    // (sd13_ranger_level1_chassis_and_class_feature_separation.rs) later
+    // grounded Track for real and promoted this row from Blocked to Partial.
+    // The F6 chassis-recognition and hybrid-blocker truth this file otherwise
+    // pins is unchanged; only the row's matrix-level posture moved.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must exist");
 
-    assert_eq!(ranger.support_state, SupportState::Blocked);
+    assert_eq!(ranger.support_state, SupportState::Partial);
     assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         ranger.evidence_freshness,
@@ -347,15 +352,15 @@ fn matrix_ranger_row_is_blocked_computed_and_names_both_burdens() {
         ranger
             .grounding_ref
             .contains("sd13_hybrid_level1_chassis_baseline"),
-        "ranger row must cite the SD13-F6 hybrid proof surface: {}",
+        "ranger row must still cite the SD13-F6 hybrid proof surface: {}",
         ranger.grounding_ref
     );
     let note = ranger.blocker_or_lossiness_note;
-    assert!(!note.is_empty(), "ranger blocked row must carry a note");
-    for token in ["favored enemy", "combat style", "tracking", "spell"] {
+    assert!(!note.is_empty(), "ranger partial row must carry a note");
+    for token in ["favored enemy", "combat style", "SD13-E4"] {
         assert!(
             note.contains(token),
-            "ranger blocked note must name the '{token}' burden: {note}"
+            "ranger partial note must name the '{token}' burden: {note}"
         );
     }
 }

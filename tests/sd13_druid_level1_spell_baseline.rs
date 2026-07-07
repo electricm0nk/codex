@@ -325,7 +325,6 @@ fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_trut
     let matrix = seeded_sd13_e1_f1_current_truth();
     for row_id in [
         "class.paladin.hybrid_chassis_and_spell_burden",
-        "class.ranger.hybrid_chassis_and_spell_burden",
         "class.sorcerer.progression_and_spell_burden",
         "class.bard.progression_and_spell_burden",
         "class.wizard.progression_and_spell_burden",
@@ -341,6 +340,18 @@ fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_trut
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
+
+    // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
+    // decomposition slice (Track grounded for real).
+    let ranger = matrix
+        .row("class.ranger.hybrid_chassis_and_spell_burden")
+        .expect("ranger row must exist");
+    assert_eq!(
+        ranger.support_state,
+        SupportState::Partial,
+        "ranger row must keep its later-accepted Partial posture after the Druid slice"
+    );
+    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
 }
 
 #[test]

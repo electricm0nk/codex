@@ -26,10 +26,17 @@
 //!   (`tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`)
 //!   keeps claim-blocking it unmodified since `defense.total_save.*` is still
 //!   never computed for Rogue,
-//! - the Paladin and Ranger hybrid rows are `Blocked` / `Computed`: the SD13-E3-F6
-//!   slice proves the deterministic Human Paladin level-1 and Human Ranger level-1
-//!   hybrid chassis are recognized on the compute seam, but both stay blocked on the
-//!   named non-spell class-feature burden and the later spell burden,
+//! - the Paladin hybrid row is `Blocked` / `Computed`: the SD13-E3-F6 slice proves the
+//!   deterministic Human Paladin level-1 hybrid chassis is recognized on the compute
+//!   seam, but it stays blocked on the named non-spell class-feature burden and the
+//!   later spell burden,
+//! - the Ranger hybrid row is `Partial` / `Computed`: the SD13-E3-F6 slice proves the
+//!   deterministic Human Ranger level-1 hybrid chassis is recognized on the compute
+//!   seam, and the SD13-E3 Ranger decomposition slice grounds Track for real (the
+//!   Survival-check bonus to follow tracks, ½ ranger level minimum 1), but the
+//!   favored-enemy and combat-style pillar burdens remain named and unproven, and the
+//!   later ranger spell burden (slots, source, spells known/prepared) stays deferred
+//!   to SD13-E4,
 //! - the Sorcerer row is `Blocked` / `Computed`: the SD13-E4-F7 slice proves the
 //!   deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is
 //!   recognized on the compute seam, but it stays blocked on the bloodline burden and the
@@ -266,16 +273,20 @@ const SD13_FIGHTER_LEVEL8_TEST: &str = "tests/sd13_fighter_level8_progression.rs
 const SD13_FIGHTER_LEVEL1_MILESTONE_TEST: &str =
     "tests/sd13_fighter_level1_mandatory_milestone_classification.rs";
 
-/// SD13-E3-F6 dedicated proof surface for the bounded Paladin and Ranger level-1 hybrid
-/// chassis baseline: direct computed chassis-recognition evidence that stays explicitly
-/// blocked on the named non-spell class-feature burden and the later spell burden.
-const SD13_HYBRID_LEVEL1_TEST: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs";
-
 /// The combined grounding reference for the Paladin hybrid baseline row, citing
 /// both F6 (chassis identity) and the per-burden decomposition test as one
 /// literal. Both .contains() consumers (F6 test and this slice's test) read
 /// their respective substring from this combined grounding reference.
 const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs +      tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs";
+
+/// The combined grounding reference for the Ranger hybrid baseline row, citing
+/// both F6 (chassis identity) and the Ranger-only per-pillar decomposition +
+/// Track-grounding test as one literal, mirroring
+/// [`SD13_PALADIN_ROW_GROUNDING_REF`]. Both .contains() consumers (the F6 test
+/// and this slice's test) read their respective substring from this combined
+/// grounding reference.
+const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs + \
+    tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs";
 
 /// SD13-E4-F7 dedicated proof surface for the bounded Human Sorcerer level-1 spell
 /// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
@@ -802,19 +813,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Ranger level-1 chassis baseline, with the non-spell \
-                            class-feature burden and the later spell burden still blocked",
-                support_state: SupportState::Blocked,
+                            Ranger level-1 chassis baseline, with Track grounded for real \
+                            and the favored-enemy / combat-style pillar burdens and the \
+                            later spell burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_HYBRID_LEVEL1_TEST,
+                grounding_ref: SD13_RANGER_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3-F6 leaves direct computed evidence that the \
                     deterministic Human Ranger level-1 hybrid chassis is recognized on the compute \
-                    seam, but the row stays blocked: the non-spell class-feature burden (favored enemy, \
-                    combat style, skill/tracking) is not implemented, and the later ranger spell burden \
-                    (spell slots, spell source, spells known/prepared) is deferred to SD13-E4. No Ranger \
-                    level 2+ is proven",
-                next_required_uplift: "SD13-E3 ranger class-feature slice, then SD13-E4 spell burden",
+                    seam, AND the SD13-E3 Ranger decomposition slice grounds Track (the \
+                    skill/tracking pillar: a bonus on Survival checks to follow tracks equal to \
+                    max(ranger level / 2, 1), i.e. +1 at level 1) for real. The row is Partial, not \
+                    Supported: the favored enemy pillar (favored-enemy type and its Bluff / \
+                    Knowledge / Perception / Sense Motive / Survival / weapon-damage bonuses) and the \
+                    combat style pillar (the level-1 style choice and its level-2 bonus-feat grant) \
+                    remain named and unproven, and the later ranger spell burden (spell slots, spell \
+                    source, spells known/prepared) is still deferred to SD13-E4. No Ranger level 2+ \
+                    is proven",
+                next_required_uplift: "SD13-E3 ranger favored-enemy and combat-style grounding \
+                    slice, then SD13-E4 ranger spell burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",

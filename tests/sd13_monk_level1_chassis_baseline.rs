@@ -452,17 +452,25 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         "barbarian row must keep its accepted Partial posture after the monk slice"
     );
 
-    for id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
-        "class.ranger.hybrid_chassis_and_spell_burden",
-    ] {
-        let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Blocked,
-            "row {id} must stay Blocked after the monk slice"
-        );
-    }
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .expect("paladin row must exist");
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin row must stay Blocked after the monk slice"
+    );
+
+    // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
+    // decomposition slice (Track grounded for real).
+    let ranger = matrix
+        .row("class.ranger.hybrid_chassis_and_spell_burden")
+        .expect("ranger row must exist");
+    assert_eq!(
+        ranger.support_state,
+        SupportState::Partial,
+        "ranger row must keep its later-accepted Partial posture after the monk slice"
+    );
 
     // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
     // recognition slice.

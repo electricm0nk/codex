@@ -48,8 +48,13 @@
 //! claim-blocked. A later SD13-E3 slice widens the deterministic Human Monk
 //! level-1 chassis to ground base-attack, base-save, and AC Bonus (Wisdom-to-AC),
 //! while keeping unarmed strike / Flurry of Blows and the level-1 bonus feat grant
-//! explicitly claim-blocked. Unsupported input yields claim-blocking diagnostics
-//! and withheld explanations rather than fabricated values.
+//! explicitly claim-blocked. The SD13-E3 Ranger decomposition further splits the F6
+//! Ranger non-spell class-feature burden into three named pillars: favored enemy and
+//! combat style stay explicitly claim-blocked by their own named diagnostics, and
+//! Track (the Survival-check bonus to follow tracks, ½ ranger level minimum 1) is
+//! grounded for real as a bounded numeric value; it grounds no favored-enemy or
+//! combat-style math and no ranger spell posture. Unsupported input yields
+//! claim-blocking diagnostics and withheld explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
 
@@ -446,6 +451,17 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // burden is separable from the partial-caster spell burden on the runtime
     // path. This is an extension, never a downgrade, of the F6 surface.
     explain_paladin_level1_chassis_and_spell_burden_separation(
+        input,
+        &mut explanations,
+        &mut diagnostics,
+    );
+
+    // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
+    // class-feature blocker into three named pillars, and ground Track for
+    // real (the only one of the three with a bounded, deterministic flat
+    // numeric value). This is an extension, never a downgrade, of the F6
+    // surface, mirroring the Paladin decomposition immediately above.
+    explain_ranger_level1_chassis_and_class_feature_separation(
         input,
         &mut explanations,
         &mut diagnostics,
@@ -2123,6 +2139,118 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
              execution is fabricated in this bounded chassis baseline"
             .to_owned(),
         claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Ranger at the
+/// bounded hybrid baseline level (1). Returns `false` for any other class, a
+/// multiclass mix, the Paladin hybrid (which has its own decomposition lane), or
+/// any level-2+ Ranger this slice deliberately does not recognize — each of which
+/// stays blocked exactly as before.
+fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == RANGER_CLASS_ID
+                && class_level.level == HYBRID_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E3 runtime evidence for the deterministic Human Ranger
+/// level-1 chassis as a per-pillar decomposition of the F6 combined non-spell
+/// class-feature blocker, grounding one of the three named pillars for real.
+///
+/// This sits on top of the accepted SD13-F6 hybrid baseline: F6 already proves
+/// the deterministic Human Ranger level-1 hybrid identity is acknowledged on the
+/// compute seam and emits a single combined non-spell class-feature blocker
+/// (naming favored enemy, combat style, and skill/tracking together) plus a
+/// single combined later-spell blocker. This slice proves the per-pillar
+/// separation Ranger actually needs:
+///
+/// - two explicit claim-blocking diagnostics, one per still-missing non-spell
+///   class-feature pillar:
+///   * `favored enemy` — the chosen favored-enemy type and its associated
+///     Bluff / Knowledge / Perception / Sense Motive / Survival skill-check
+///     bonuses, and the bonus on weapon damage rolls against that favored
+///     enemy, are not implemented
+///   * `combat style` — the archery-vs-two-weapon-combat style choice is a
+///     level-1 decision, but the bonus feat the combat style actually grants
+///     is a level-2 PF1 Core Rulebook milestone; neither the level-1 style
+///     choice nor the level-2 bonus-feat grant is implemented, so nothing is
+///     fabricated at either level
+///
+/// - one grounded explanation for the third pillar, Track, computed for real:
+///   the Survival-check bonus to follow tracks equals `max(ranger level / 2, 1)`
+///   (PF1 Core Rulebook Track: +1/2 ranger level, minimum +1), which is `1` at
+///   the bounded level-1 baseline. This grounds only the flat numeric Track
+///   bonus, not a tracking-check execution engine: no full Survival check, no
+///   DC resolution, and no tracking narrative is computed.
+///
+/// This deliberately does not compute a supported class-feature surface. It
+/// grounds no favored-enemy target resolution or skill/damage math, no
+/// combat-style feat grant, no animal companion, no favored-terrain breadth,
+/// and no spell posture. It only emits the per-pillar blockers and the one
+/// grounded Track value that prove the F6 surface remains separable on the
+/// runtime path.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input;
+/// the F6 hybrid chassis emission already preserves a single class-feature
+/// blocker and a single spell blocker. This seam adds per-pillar granularity
+/// next to the F6 surface, never replacing it, so the F6 acceptance test
+/// continues to pass.
+fn explain_ranger_level1_chassis_and_class_feature_separation(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_ranger_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // The per-pillar blockers ride alongside the F6 hybrid blockers. They are
+    // intentionally distinct diagnostic ids so the chassis burden is separable
+    // from the combined F6 non-spell class-feature burden on the runtime path.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.ranger.favored_enemy.unsupported".to_owned(),
+        message: format!(
+            "Ranger level {HYBRID_BASELINE_LEVEL} remains blocked on its favored enemy burden: \
+             the chosen favored-enemy type and its associated Bluff, Knowledge, Perception, Sense \
+             Motive, and Survival skill-check bonuses, plus the bonus on weapon damage rolls against \
+             that favored enemy, are not implemented in this bounded hybrid chassis baseline, so no \
+             Ranger favored-enemy support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.ranger.combat_style.unsupported".to_owned(),
+        message: format!(
+            "Ranger level {HYBRID_BASELINE_LEVEL} remains blocked on its combat style burden: the \
+             archery-vs-two-weapon-combat style choice is a level-1 decision, but the bonus feat the \
+             combat style actually grants is a level-2 PF1 Core Rulebook milestone; neither the \
+             level-1 style choice nor the level-2 bonus-feat grant is implemented in this bounded \
+             chassis baseline, so no Ranger combat-style support is claimed at either level"
+        ),
+        claim_blocking: true,
+    });
+
+    // The third named F6 pillar, Track, is grounded for real: a bounded, flat
+    // numeric Survival bonus with no execution engine behind it.
+    let track_bonus = (i16::from(HYBRID_BASELINE_LEVEL) / 2).max(1);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.track".to_owned(),
+        value: track_bonus,
+        detail: format!(
+            "Ranger Track class feature: grants a bonus on Survival checks made to follow tracks \
+             equal to max(ranger level / 2, 1) (PF1 Core Rulebook Track: +1/2 ranger level, minimum \
+             +1). At Ranger level {HYBRID_BASELINE_LEVEL} this bonus is \
+             max({HYBRID_BASELINE_LEVEL} / 2, 1) = {track_bonus}. This grounds only the flat numeric \
+             Track bonus on Survival checks to follow tracks; it is not a tracking-check execution \
+             engine and computes no full Survival check, no DC resolution, and no tracking narrative"
+        ),
     });
 }
 
