@@ -177,29 +177,38 @@ fn level_6_propagates_computed_receipt_and_view_model() {
     );
 }
 
-// ----- Negative control: level 7 stays blocked (Armor Training 2 is out of scope) -----
+// ----- Negative control: level 7 was later widened into the supported tranche -----
 
 #[test]
-fn level_7_fighter_stays_claim_blocked() {
+fn level_7_fighter_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 7 (Armor Training 2) was the
+    // next unproven milestone and stayed claim-blocked. A later SD13-E3 slice
+    // (tests/sd13_fighter_level7_progression.rs) widened level 7 into the
+    // supported tranche; this negative control is superseded, not violated —
+    // pin the new truth here too so this file stays internally consistent.
     let level_7 = LEVEL_6_FIXTURE.replace("class:fighter:6", "class:fighter:7");
     let input = load(&level_7);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-7 Fighter must stay claim-blocked in this slice: {:?}",
+        !computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-7 Fighter is supported since the SD13-E3 level-7 slice: {:?}",
         computation.diagnostics
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "level-7 Fighter must not fabricate a base-attack-bonus explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "level-7 Fighter must surface a computed base-attack-bonus explanation"
     );
 }
 
 // ----- Control plane: the matrix widens the levels-2-10 row's proven range to level 6 -----
 
 #[test]
-fn matrix_levels_2_10_names_level_6_as_proven_and_level_7_plus_as_remaining() {
+fn matrix_levels_2_10_names_level_6_as_proven() {
+    // The row's proven range has since widened past level 6 (to level 7 —
+    // tests/sd13_fighter_level7_progression.rs), so this test only asserts that
+    // level 6's own proof landed, rather than the exact current grounding_ref or
+    // "remaining" range, which a later slice is free to move forward.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let row = matrix
         .row("class.fighter.levels_2_10")
@@ -208,24 +217,11 @@ fn matrix_levels_2_10_names_level_6_as_proven_and_level_7_plus_as_remaining() {
     assert_eq!(row.support_state, SupportState::Partial);
     assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     assert!(
-        row.grounding_ref.contains("sd13_fighter_level6_progression"),
-        "levels-2-10 row must cite the live SD13-E3 level-6 proof surface: {}",
-        row.grounding_ref
-    );
-    assert!(
         row.blocker_or_lossiness_note.contains("level-6 bonus-feat")
             || row.blocker_or_lossiness_note.contains("level 6"),
         "levels-2-10 row blocker note must name the level-6 milestone: {}",
         row.blocker_or_lossiness_note
     );
-    for token in ["7-10", "Armor Training 2"] {
-        assert!(
-            row.blocker_or_lossiness_note.contains(token),
-            "levels-2-10 row blocker note must name '{token}' among the remaining unproven \
-             levels 7-10 milestones: {}",
-            row.blocker_or_lossiness_note
-        );
-    }
 }
 
 #[test]

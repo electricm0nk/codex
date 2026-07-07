@@ -239,10 +239,10 @@ const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 /// pillar burdens (base attack, base save, sneak attack, trapfinding).
 const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs";
 
-/// SD13-E3 dedicated proof surface for the bounded Fighter level-6 milestone
-/// (level-6 bonus-feat seam). This is the most specific/current proof for the
+/// SD13-E3 dedicated proof surface for the bounded Fighter level-7 milestone
+/// (Armor Training 2 seam). This is the most specific/current proof for the
 /// levels-2-10 row's grounding_ref.
-const SD13_FIGHTER_LEVEL6_TEST: &str = "tests/sd13_fighter_level6_progression.rs";
+const SD13_FIGHTER_LEVEL7_TEST: &str = "tests/sd13_fighter_level7_progression.rs";
 
 /// SD13-E3-F5 dedicated proof surface for the bounded Fighter level-1 mandatory
 /// milestone classification: enumerates which level-1 mandatory milestones the
@@ -561,26 +561,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
                 dimension: "class progression across levels 2-10: bounded milestone proof \
-                            for levels 2 through 6 only, with levels 7-10 still unproven",
+                            for levels 2 through 7 only, with levels 8-10 still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_FIGHTER_LEVEL6_TEST,
-                blocker_or_lossiness_note: "SD13-E3 proves Fighter levels 2 through 6: base \
+                grounding_ref: SD13_FIGHTER_LEVEL7_TEST,
+                blocker_or_lossiness_note: "SD13-E3 proves Fighter levels 2 through 7: base \
                     attack / base save progression (the classlevel, classlevel/2+2, \
                     classlevel/3 formulas are level-generic), the level-2, level-4, and \
-                    level-6 bonus-feat progression seams, the level-3 armor-training seam, and \
+                    level-6 bonus-feat progression seams, the level-3 Armor Training 1 seam, \
                     the level-5 Weapon Training 1 attack-roll half (folded into the baseline \
-                    melee attack bonus for the canonical Heavy Blades group) over the \
-                    deterministic Human loadout. The Weapon Training damage-roll half stays \
-                    unproven — no damage total is computed anywhere in this codebase for any \
-                    Fighter level, so this is not a new gap. The generic PF1 level-4 \
-                    ability-score-increase milestone needs no separate seam: the chosen \
-                    ability score is trusted at face value. Levels 7-10 remain out of proof, \
-                    along with Armor Training 2 (from level 7), the repeated bonus-feat \
-                    cadence beyond level 6, and any general feat-effect/prerequisite engine",
-                next_required_uplift: "later SD13-E3 slice widening Fighter beyond level 6 \
-                    toward the level-10 milestones, starting with level 7 Armor Training 2",
+                    melee attack bonus for the canonical Heavy Blades group), and the level-7 \
+                    Armor Training 2 seam (raises the Climb/Swim selected-skill totals by +1 \
+                    each on the deterministic Chain Shirt) over the deterministic Human \
+                    loadout. The Weapon Training damage-roll half stays unproven — no damage \
+                    total is computed anywhere in this codebase for any Fighter level, so this \
+                    is not a new gap. The generic PF1 level-4 ability-score-increase milestone \
+                    needs no separate seam: the chosen ability score is trusted at face value. \
+                    Levels 8-10 remain out of proof, along with the bonus-feat cadence beyond \
+                    level 6 (next at level 8), and any general feat-effect/prerequisite engine",
+                next_required_uplift: "later SD13-E3 slice widening Fighter beyond level 7 \
+                    toward the level-10 milestones, starting with level 8's bonus feat",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",

@@ -262,12 +262,12 @@ const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
 // Bounded SD13-E3 Fighter milestone widening. The accepted level-1 pilot is now
-// joined by levels 2 through 6. Nothing here grounds level 7+ Fighter burden
-// (Armor Training 2 begins at level 7), the weapon-training damage-roll half, or
-// any non-Fighter positive support. The generic PF1 level-4 ability-score-increase
+// joined by levels 2 through 7. Nothing here grounds level 8+ Fighter burden
+// (the next bonus feat begins at level 8), the weapon-training damage-roll half,
+// or any non-Fighter positive support. The generic PF1 level-4 ability-score-increase
 // milestone needs no separate seam: the chosen ability score is trusted at face
 // value, like every other ability adjustment in this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 6;
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 7;
 
 // Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
 // feat at level 2; this slice surfaces the named selection as an explicit seam only
@@ -306,6 +306,14 @@ const HEAVY_BLADES_GROUP_SELECTION: &str = "group:heavy_blades";
 const FIGHTER_ARMOR_TRAINING_1_LEVEL: u8 = 3;
 const ARMOR_TRAINING_1_ARMOR_CHECK_REDUCTION: i16 = 1;
 const ARMOR_TRAINING_1_MAX_DEX_INCREASE: i16 = 1;
+
+// Fighter armor training 2, gained at level 7. It further reduces the worn
+// armor's armor-check penalty (to a minimum of 0, cumulative with Armor
+// Training 1) and further raises its maximum Dexterity bonus. Grounded from
+// cr_abilities_class.lst Fighter armor training; not oracle-checked parity.
+const FIGHTER_ARMOR_TRAINING_2_LEVEL: u8 = 7;
+const ARMOR_TRAINING_2_ARMOR_CHECK_REDUCTION: i16 = 2;
+const ARMOR_TRAINING_2_MAX_DEX_INCREASE: i16 = 2;
 
 /// Simple integrated status for the GE-06 pilot headless receipt: whether the
 /// path produced computed evidence or is blocked. This distinguishes evidence
@@ -1490,10 +1498,11 @@ fn supported_fighter_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Fighter armor-training profile for a given Fighter level. Armor training 1 is
-/// gained at level 3; before that there is no armor-training effect.
+/// gained at level 3, and armor training 2 at level 7; before level 3 there is no
+/// armor-training effect.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct FighterArmorTraining {
-    /// Armor-training rank (0 before level 3, 1 from level 3 in this slice).
+    /// Armor-training rank (0 before level 3, 1 from level 3, 2 from level 7).
     rank: u8,
     /// Reduction applied to the worn armor's armor-check penalty (moves it toward 0).
     armor_check_reduction: i16,
@@ -1502,7 +1511,13 @@ struct FighterArmorTraining {
 }
 
 fn fighter_armor_training(level: u8) -> FighterArmorTraining {
-    if level >= FIGHTER_ARMOR_TRAINING_1_LEVEL {
+    if level >= FIGHTER_ARMOR_TRAINING_2_LEVEL {
+        FighterArmorTraining {
+            rank: 2,
+            armor_check_reduction: ARMOR_TRAINING_2_ARMOR_CHECK_REDUCTION,
+            max_dex_increase: ARMOR_TRAINING_2_MAX_DEX_INCREASE,
+        }
+    } else if level >= FIGHTER_ARMOR_TRAINING_1_LEVEL {
         FighterArmorTraining {
             rank: 1,
             armor_check_reduction: ARMOR_TRAINING_1_ARMOR_CHECK_REDUCTION,
@@ -1684,7 +1699,25 @@ fn explain_fighter_class_features(
     }
 
     let armor_training = fighter_armor_training(level);
-    if armor_training.rank > 0 {
+    if armor_training.rank == 2 {
+        let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
+        let raised_max_dex = CHAIN_SHIRT_MAX_DEX + armor_training.max_dex_increase;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.armor_training".to_owned(),
+            value: i16::from(armor_training.rank),
+            detail: format!(
+                "Fighter level {FIGHTER_ARMOR_TRAINING_2_LEVEL} Armor Training 2 (armor training, \
+                 cr_abilities_class.lst Fighter): further reduces the worn Chain Shirt armor-check \
+                 penalty by {ARMOR_TRAINING_2_ARMOR_CHECK_REDUCTION} cumulative (from \
+                 {CHAIN_SHIRT_ARMOR_CHECK_PENALTY:+} to {reduced_penalty:+}), which raises the \
+                 armor-check-penalty-affected selected skill totals (Climb, Swim) by the same \
+                 amount, and raises the maximum Dexterity bonus by \
+                 {ARMOR_TRAINING_2_MAX_DEX_INCREASE} cumulative (from {CHAIN_SHIRT_MAX_DEX} to \
+                 {raised_max_dex}); on the deterministic +2 Dexterity contribution, this changes \
+                 no derived armor-class value on this fixture"
+            ),
+        });
+    } else if armor_training.rank == 1 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
         let raised_max_dex = CHAIN_SHIRT_MAX_DEX + armor_training.max_dex_increase;
         explanations.push(ComputationExplanation {
