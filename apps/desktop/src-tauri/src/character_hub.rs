@@ -442,7 +442,15 @@ mod tests {
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
     use std::collections::BTreeSet;
 
-    const CURATED_RACE_IDS: [&str; 4] = ["race:human", "race:half-elf", "race:half-orc", "race:gnome"];
+    const CURATED_RACE_IDS: [&str; 7] = [
+        "race:human",
+        "race:dwarf",
+        "race:elf",
+        "race:gnome",
+        "race:half-elf",
+        "race:half-orc",
+        "race:halfling",
+    ];
     const FIGHTER_CLASS_ID: &str = "class:fighter";
 
     const GENERIC_DIAGNOSTIC_IDS: [&str; 4] = [
