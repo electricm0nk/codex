@@ -4,21 +4,24 @@
 //! pattern): the live rules-core surface ingests a deterministic Human `class:monk:1`
 //! input, leaves direct computed evidence that acknowledges the bounded level-1
 //! martial chassis identity rather than treating it as an undocumented packet
-//! placeholder, and yet stays explicitly claim-blocked on the four still-missing
-//! martial burdens (base-attack progression, base-save progression, unarmed strike /
-//! Flurry of Blows, and AC Bonus / level-1 bonus feat). It also pins the matrix
+//! placeholder, and now grounds three pillar burdens directly (base-attack
+//! progression, base-save progression, and AC Bonus / Wisdom-to-AC), while staying
+//! explicitly claim-blocked on the two still-missing burdens (unarmed strike /
+//! Flurry of Blows, and the level-1 bonus feat grant). It also pins the matrix
 //! reclassification of the monk row from `Unverified` / `Observed` to `Partial` /
 //! `Computed`.
 //!
-//! It is intentionally not a martial class engine. It grounds no Fighter-shaped
-//! `level_1_pilot` base-attack/base-save chassis (Monk has 3/4 BAB and good
-//! Fortitude/Reflex/Will but the slice does not implement it), no unarmed strike
-//! damage die, no Flurry of Blows execution, no AC Bonus computation, no level-1
-//! bonus feat grant from the restricted Monk feat list, no ki pool, and no level-2+
-//! martial progression. It also preserves the accepted Fighter 1-3 truth, the Rogue
-//! blocked negative control, the Barbarian partial/computed truth, the
-//! Paladin/Ranger blocked hybrid negative controls, and the Human race/interaction
-//! truth.
+//! It is intentionally not a martial class engine. It grounds the Monk 3/4-BAB
+//! progression (`classlevel * 3 / 4`), the all-three-good base-save progression
+//! (`classlevel / 2 + 2` for Fortitude, Reflex, and Will), and the flat level-1
+//! Wisdom-to-AC value (Wisdom modifier, if positive, added to AC), but it grounds
+//! no unarmed strike damage die, no Flurry of Blows execution, no level-1 bonus
+//! feat grant from the restricted Monk feat list, no ki pool, no level-4+ AC Bonus
+//! dodge-bonus progression, no "unarmored and unencumbered" runtime state-check
+//! engine, and no level-2+ martial progression. It also preserves the accepted
+//! Fighter 1-3 truth, the Rogue blocked negative control, the Barbarian
+//! partial/computed truth, the Paladin/Ranger blocked hybrid negative controls, and
+//! the Human race/interaction truth.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -87,6 +90,10 @@ fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool 
     computation.explanations.iter().any(|e| e.id == id)
 }
 
+fn has_diagnostic(computation: &PilotBaseChassisComputation, id: &str) -> bool {
+    computation.diagnostics.iter().any(|d| d.id == id)
+}
+
 // ----- Direct runtime evidence: the martial chassis identity is acknowledged -----
 
 #[test]
@@ -113,32 +120,87 @@ fn monk_level1_leaves_direct_chassis_recognition_evidence() {
     assert_eq!(computation.ability_modifiers.wisdom, 3);
 }
 
-// ----- Still blocked: honest, class-specific burden diagnostics -----
+// ----- Grounded: base-attack, base-save, and AC Bonus pillar burdens -----
 
 #[test]
-fn monk_level1_stays_blocked_naming_four_martial_burdens() {
+fn monk_level1_grounds_base_attack_bonus() {
     let input = load(MONK_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let base_attack = claim_blocking(
-        &computation,
-        "class_feature.monk.bounded_progression.base_attack.unsupported",
+    let base_attack = explanation(&computation, "class_chassis.monk.base_attack_bonus");
+    assert_eq!(
+        base_attack.value, 0,
+        "monk level 1 base attack bonus is 3/4-BAB: 1 * 3 / 4 = 0"
     );
     assert!(
-        base_attack.message.contains("base attack"),
-        "monk base-attack blocker must name the 'base attack' burden: {}",
-        base_attack.message
+        base_attack.detail.contains("3/4-BAB"),
+        "monk base-attack explanation must name the 3/4-BAB progression: {}",
+        base_attack.detail
     );
 
-    let base_save = claim_blocking(
-        &computation,
-        "class_feature.monk.bounded_progression.base_save.unsupported",
+    assert!(
+        !has_diagnostic(
+            &computation,
+            "class_feature.monk.bounded_progression.base_attack.unsupported"
+        ),
+        "the old base-attack blocker diagnostic must no longer be emitted: {:?}",
+        computation.diagnostics
+    );
+}
+
+#[test]
+fn monk_level1_grounds_base_save_progression() {
+    let input = load(MONK_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let fortitude = explanation(&computation, "class_chassis.monk.base_save.fortitude");
+    let reflex = explanation(&computation, "class_chassis.monk.base_save.reflex");
+    let will = explanation(&computation, "class_chassis.monk.base_save.will");
+    assert_eq!(fortitude.value, 2, "monk level 1 good Fortitude: 1/2+2 = 2");
+    assert_eq!(reflex.value, 2, "monk level 1 good Reflex: 1/2+2 = 2");
+    assert_eq!(will.value, 2, "monk level 1 good Will: 1/2+2 = 2");
+    assert!(
+        fortitude.detail.contains("good") && reflex.detail.contains("good") && will.detail.contains("good"),
+        "monk base-save explanations must call out that all three saves are good: {:?} {:?} {:?}",
+        fortitude.detail,
+        reflex.detail,
+        will.detail
+    );
+
+    assert!(
+        !has_diagnostic(
+            &computation,
+            "class_feature.monk.bounded_progression.base_save.unsupported"
+        ),
+        "the old base-save blocker diagnostic must no longer be emitted: {:?}",
+        computation.diagnostics
+    );
+}
+
+#[test]
+fn monk_level1_grounds_ac_bonus() {
+    let input = load(MONK_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // WIS 17 -> +3 modifier, so AC Bonus = max(3, 0) = 3.
+    let ac_bonus = explanation(&computation, "class_chassis.monk.ac_bonus");
+    assert_eq!(
+        ac_bonus.value, 3,
+        "monk AC Bonus is the positive Wisdom modifier added to AC: max(3, 0) = 3"
     );
     assert!(
-        base_save.message.contains("base save"),
-        "monk base-save blocker must name the 'base save' burden: {}",
-        base_save.message
+        ac_bonus.detail.contains("Wisdom"),
+        "monk AC Bonus explanation must name the Wisdom bonus source: {}",
+        ac_bonus.detail
     );
+}
+
+// ----- Still blocked: unarmed strike / Flurry of Blows -----
+
+#[test]
+fn monk_level1_stays_blocked_on_unarmed_strike_and_flurry() {
+    let input = load(MONK_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
 
     let unarmed_flurry = claim_blocking(
         &computation,
@@ -151,16 +213,6 @@ fn monk_level1_stays_blocked_naming_four_martial_burdens() {
         unarmed_flurry.message
     );
 
-    let ac_bonus_feat = claim_blocking(
-        &computation,
-        "class_feature.monk.bounded_progression.ac_bonus_and_bonus_feat.unsupported",
-    );
-    assert!(
-        ac_bonus_feat.message.contains("AC Bonus") && ac_bonus_feat.message.contains("bonus feat"),
-        "monk AC-bonus/bonus-feat blocker must name both burdens: {}",
-        ac_bonus_feat.message
-    );
-
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
 
@@ -170,6 +222,38 @@ fn monk_level1_stays_blocked_naming_four_martial_burdens() {
     assert!(
         view_model.snapshot.is_none(),
         "blocked monk baseline must not emit a computed snapshot"
+    );
+}
+
+// ----- Still blocked: narrowed bonus-feat-only diagnostic -----
+
+#[test]
+fn monk_level1_stays_blocked_naming_bonus_feat_only() {
+    let input = load(MONK_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        !has_diagnostic(
+            &computation,
+            "class_feature.monk.bounded_progression.ac_bonus_and_bonus_feat.unsupported"
+        ),
+        "the old combined AC-Bonus/bonus-feat blocker diagnostic must no longer be emitted: {:?}",
+        computation.diagnostics
+    );
+
+    let bonus_feat = claim_blocking(
+        &computation,
+        "class_feature.monk.bounded_progression.bonus_feat.unsupported",
+    );
+    assert!(
+        bonus_feat.message.contains("bonus feat"),
+        "monk bonus-feat blocker must name the 'bonus feat' burden: {}",
+        bonus_feat.message
+    );
+    assert!(
+        !bonus_feat.message.contains("AC Bonus"),
+        "the narrowed bonus-feat blocker must not claim AC Bonus is unimplemented: {}",
+        bonus_feat.message
     );
 }
 
@@ -315,7 +399,7 @@ fn multiclass_monk_is_not_promoted_by_this_slice() {
 // ----- Control plane: the matrix reclassifies the monk row to Partial/Computed -----
 
 #[test]
-fn matrix_monk_row_is_partial_computed_and_names_four_burdens() {
+fn matrix_monk_row_is_partial_computed_and_names_remaining_burdens() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let monk = matrix
         .row("class.monk.bounded_progression")
@@ -335,17 +419,12 @@ fn matrix_monk_row_is_partial_computed_and_names_four_burdens() {
     );
     let note = monk.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "monk partial row must carry a note");
-    for token in [
-        "base attack",
-        "base save",
-        "unarmed strike",
-        "Flurry of Blows",
-        "AC Bonus",
-        "bonus feat",
-    ] {
+    // Base-attack, base-save, and AC Bonus are now grounded; only unarmed strike /
+    // Flurry of Blows and the bonus feat grant remain named as still-unproven.
+    for token in ["unarmed strike", "Flurry of Blows", "bonus feat"] {
         assert!(
             note.contains(token),
-            "monk partial note must name the '{token}' burden: {note}"
+            "monk partial note must name the still-unproven '{token}' burden: {note}"
         );
     }
 }

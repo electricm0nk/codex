@@ -62,9 +62,10 @@
 //!   trait burden remains unproven,
 //! - the Monk row is `Partial` / `Computed`: the SD13-E3 slice proves the
 //!   deterministic Human Monk level-1 martial chassis identity is recognized on the
-//!   compute seam (mirroring the Barbarian pattern), but four named pillar burdens
-//!   (base attack, base save, unarmed strike / Flurry of Blows, AC Bonus / bonus
-//!   feat) remain unproven,
+//!   compute seam (mirroring the Barbarian pattern), and now grounds three named
+//!   pillar burdens (base attack, base save, AC Bonus); two named pillar burdens
+//!   (unarmed strike / Flurry of Blows, and the level-1 bonus feat grant) remain
+//!   unproven,
 //! - the Dwarf row is `Partial` / `Computed`: the SD13-E2 slice proves four grounded
 //!   Dwarf racial trait dimensions (ability modifiers, size, speed, senses) are
 //!   recognized on the compute seam, but the remaining Dwarf family surface
@@ -341,9 +342,10 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs"
 
 /// SD13-E3 dedicated proof surface for the bounded Human Monk level-1 martial
 /// chassis baseline (mirroring the Barbarian pattern): direct computed
-/// chassis-recognition evidence that stays explicitly blocked on the four named
-/// martial pillar burdens (base attack, base save, unarmed strike / Flurry of
-/// Blows, AC Bonus / level-1 bonus feat).
+/// chassis-recognition evidence, now grounding three named martial pillar burdens
+/// (base attack, base save, AC Bonus) and staying explicitly blocked on the two
+/// remaining named burdens (unarmed strike / Flurry of Blows, level-1 bonus feat
+/// grant).
 const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
@@ -750,21 +752,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:monk",
                 dimension: "bounded Monk martial chassis progression: the deterministic Human \
                             Monk level-1 martial chassis identity, with base-attack, base-save, \
-                            unarmed-strike/Flurry-of-Blows, and AC-Bonus/bonus-feat burdens \
-                            still unproven",
+                            and AC Bonus now grounded, and unarmed-strike/Flurry-of-Blows and the \
+                            level-1 bonus feat grant still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_MONK_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3 leaves direct computed evidence that the \
                     deterministic Human Monk level-1 martial chassis identity is recognized on \
-                    the compute seam, but four named pillar burdens remain unproven: base attack \
+                    the compute seam, and now grounds three named pillar burdens: base attack \
                     progression (3/4 BAB), base save progression (good Fortitude, Reflex, and \
-                    Will), unarmed strike damage die and Flurry of Blows, and AC Bonus \
-                    (Wisdom-to-AC) plus the level-1 bonus feat grant. No martial math is \
-                    fabricated and no Monk level 2+ is proven",
-                next_required_uplift: "later SD13-E3 slice grounding one or more of the four \
-                    named Monk martial pillar burdens",
+                    Will), and AC Bonus (Wisdom-to-AC, the flat level-1 value only). Two named \
+                    pillar burdens remain unproven: unarmed strike damage die and Flurry of Blows, \
+                    and the level-1 bonus feat grant from the restricted Monk feat list. No \
+                    martial math beyond the three grounded pillars is fabricated and no Monk \
+                    level 2+ is proven",
+                next_required_uplift: "later SD13-E3 slice grounding one or both of the two \
+                    remaining named Monk martial pillar burdens (unarmed strike / Flurry of \
+                    Blows, and the level-1 bonus feat grant)",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
