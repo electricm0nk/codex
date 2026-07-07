@@ -21,22 +21,9 @@ on:
   pull_request:
     branches:
       - tranche/3
-    paths:
-      - 'apps/desktop/**'
-      - 'tools/release/**'
-      - 'scripts/release/**'
-      - 'programs/codex/requirements/**'
-      - '.github/workflows/tranche-3-ci.yml'
-      - '.github/workflows/allow-only-tranche-3-slice-base.yml'
   push:
     branches:
       - tranche/3
-    paths:
-      - 'apps/desktop/**'
-      - 'tools/release/**'
-      - 'scripts/release/**'
-      - 'programs/codex/requirements/**'
-      - '.github/workflows/tranche-3-ci.yml'
 
 permissions:
   contents: read
@@ -115,7 +102,6 @@ jobs:
     name: Manifest + release-notes coverage
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v7
         with:
@@ -124,10 +110,15 @@ jobs:
       - name: Detect tranche manifest + release-notes touches
         id: detect
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
           set -euo pipefail
           BASE="${BASE_SHA:-HEAD~1}"
+          # On the first push of a new branch, github.event.before is the null SHA
+          # (unknown to this checkout); fall back to HEAD~1 in that case too.
+          if [ "${BASE}" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "${BASE}^{commit}" 2>/dev/null; then
+            BASE="HEAD~1"
+          fi
           changed="$(git diff --name-only --diff-filter=ACMRT "${BASE}...HEAD" -- \
             'programs/codex/requirements/**/manifest.yaml' \
             'programs/codex/requirements/**/release-notes.md' \

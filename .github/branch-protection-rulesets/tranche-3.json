@@ -46,19 +46,14 @@
         "strict_required_status_checks_policy": true,
         "required_status_checks": [
           {
-            "context": "Tranche 3 CI / slice-tranche-base-guard",
-            "integration_id": null,
-            "_note": "Currently a no-op guard in the direct-push shape (it triggers on pull_request events only). Kept on the ruleset to preserve historical behavior if a future tranche restores per-slice branches. Remove only after also deleting .github/workflows/tranche-3-ci.yml's pull_request trigger."
-          },
-          {
             "context": "Tranche 3 CI / desktop-typecheck-and-test",
             "integration_id": null,
-            "_note": "Primary push-time gate on tranche/3. Fires from .github/workflows/tranche-3-ci.yml on push.branches=[tranche/3]. Run cargo test + npm typecheck + npm test for affected paths."
+            "_note": "Primary push-time gate on tranche/3. Fires from .github/workflows/tranche-3-ci.yml on every push to tranche/3 (no path filter). Run cargo test + npm typecheck + npm test."
           },
           {
             "context": "Tranche 3 CI / tranche-manifest-coverage",
             "integration_id": null,
-            "_note": "Manifest + release-notes validator. Also fires from push and pull_request triggers under .github/workflows/tranche-3-ci.yml. Runs tools/release/check_release_manifest.py against any touched manifest.yaml or release-notes.md under programs/codex/requirements/... ."
+            "_note": "Manifest + release-notes validator. Fires from both push and pull_request triggers under .github/workflows/tranche-3-ci.yml (the job is no longer gated to pull_request-only). Runs tools/release/check_release_manifest.py against any touched manifest.yaml or release-notes.md under programs/codex/requirements/... ."
           }
         ],
         "do_enforcement_for_required_status_checks": true

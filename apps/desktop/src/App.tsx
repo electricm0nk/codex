@@ -34,6 +34,7 @@ import {
   type Sd11UpdateCheckContext,
   type Sd11UpdateResultState,
 } from './sd11/update';
+import { CharacterHubPage } from './characterHub/CharacterHubPage';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -1065,6 +1066,7 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
 }
 
 export default function App() {
+  const [activeView, setActiveView] = useState<'hub' | 'developer'>('hub');
   const [surface, setSurface] = useState<Sd11TesterWorkbenchSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -1082,17 +1084,54 @@ export default function App() {
   return (
     <main style={{ fontFamily: 'Inter, system-ui, sans-serif', margin: '0 auto', maxWidth: 1100, padding: '3rem 1.5rem' }}>
       <header>
-        <p style={{ color: '#64748b', fontSize: '0.875rem', letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
-          {surface?.surfaceLabel ?? 'SD-11 tester workbench'}
-        </p>
-        <h1 style={{ marginBottom: '0.5rem' }}>{surface?.headline ?? 'Loading bounded tester workbench frame…'}</h1>
-        <p style={{ color: '#334155', lineHeight: 1.6, marginBottom: 0 }}>
-          {surface?.lead ??
-            'Loading the first bounded tester-facing workbench frame over the current desktop runtime seam.'}
-        </p>
+        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+          <button
+            type="button"
+            onClick={() => setActiveView('hub')}
+            style={{
+              backgroundColor: activeView === 'hub' ? '#0f172a' : 'white',
+              border: '1px solid #cbd5e1',
+              borderRadius: 8,
+              color: activeView === 'hub' ? 'white' : '#334155',
+              cursor: 'pointer',
+              padding: '0.5rem 1rem',
+            }}
+          >
+            Characters
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveView('developer')}
+            style={{
+              backgroundColor: activeView === 'developer' ? '#0f172a' : 'white',
+              border: '1px solid #cbd5e1',
+              borderRadius: 8,
+              color: activeView === 'developer' ? 'white' : '#334155',
+              cursor: 'pointer',
+              padding: '0.5rem 1rem',
+            }}
+          >
+            Developer
+          </button>
+        </div>
       </header>
 
-      {error ? (
+      {activeView === 'hub' ? <CharacterHubPage /> : null}
+
+      {activeView === 'developer' ? (
+        <>
+          <header>
+            <p style={{ color: '#64748b', fontSize: '0.875rem', letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+              {surface?.surfaceLabel ?? 'SD-11 tester workbench'}
+            </p>
+            <h1 style={{ marginBottom: '0.5rem' }}>{surface?.headline ?? 'Loading bounded tester workbench frame…'}</h1>
+            <p style={{ color: '#334155', lineHeight: 1.6, marginBottom: 0 }}>
+              {surface?.lead ??
+                'Loading the first bounded tester-facing workbench frame over the current desktop runtime seam.'}
+            </p>
+          </header>
+
+          {error ? (
         <section style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: 12, marginTop: '1.5rem', padding: '1rem 1.25rem' }}>
           <h2 style={{ color: '#991b1b', marginTop: 0 }}>Workbench load failure</h2>
           <p style={{ color: '#7f1d1d', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{error}</p>
@@ -1238,6 +1277,8 @@ export default function App() {
               ))}
             </ul>
           </section>
+            </>
+          ) : null}
         </>
       ) : null}
     </main>

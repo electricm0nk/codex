@@ -434,12 +434,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_bard_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
-    explain_human_race_seam(
-        input,
-        &ability_modifiers,
-        &mut explanations,
-        &mut diagnostics,
-    );
+    explain_human_pilot_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
     explain_human_trait_bundle(input, &mut explanations, &mut diagnostics);
 
@@ -537,10 +532,12 @@ fn assign_modifier(modifiers: &mut AbilityModifiers, ability: &str, modifier: i1
 /// Dodge armor-class contribution. It thereby surfaces the named Human ability-bonus and
 /// bonus-feat interaction pressure as legible explanation records.
 ///
-/// Non-Human races receive only a bounded, non-claim-blocking note that their race
-/// semantics remain unverified; this slice grounds no non-Human race truth and no
-/// broader Human racial trait burden (size, speed, senses, extra skill ranks).
-fn explain_human_race_seam(
+/// This function handles only the `race:human` branch of `explain_race_seam`;
+/// non-Human routing (the bounded Half-Elf diagnostic and the
+/// `race.semantics.unverified` catch-all) lives in the dispatcher. This slice
+/// grounds no broader Human racial trait burden (size, speed, senses, extra
+/// skill ranks).
+fn explain_human_pilot_race_seam(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
@@ -1361,8 +1358,9 @@ fn explain_halfling_race_seam(
 ///
 /// This function:
 ///   - runs only when `race_id == race:human`; non-Human races stay on the
-///     existing `race.semantics.unverified` diagnostic from
-///     `explain_human_race_seam`,
+///     bounded diagnostics the `explain_race_seam` dispatcher emits (the
+///     Half-Elf bounded diagnostic or the `race.semantics.unverified`
+///     catch-all),
 ///   - adds no new computed mechanical contribution; each record carries the
 ///     grounded source value as recognition and contributes nothing to the
 ///     chassis totals, selected-skill modifiers, combat baseline, or AC,

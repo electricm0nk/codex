@@ -12,13 +12,14 @@
 //! stays single-class, level-1-only, Human-only, and grounds no spell math, no
 //! school-opposition mechanics, and no specialty school bonus.
 //!
-//! It also executes the matrix reclassification this slice's proof surface pinned as
-//! its merge-receipt obligation: the in-source carrier now moves the Wizard row to
-//! `Blocked` / `Computed` / `RefreshableFromLiveProof`, grounded on this test file,
-//! with a blocker note naming both the school specialization burden and the prepared
-//! spell posture burden. Bard keeps its accepted SD13-E4-F7 posture (`Blocked` /
-//! `Computed`); the accepted Paladin / Ranger / Sorcerer hybrid and spontaneous rows
-//! stay `Blocked` / `Computed`.
+//! It also pins the matrix reclassification for the Wizard row. At slice time the
+//! in-source carrier stayed `Unverified` / `Observed` and the transition was owned
+//! by the merge receipt; that receipt obligation was executed after the tranche 2.6
+//! closeout merged to develop (2026-07-07, merge a774a2b), so the carrier row is now
+//! `Blocked` / `Computed` / `RefreshableFromLiveProof`, grounded on this proof
+//! surface, with a blocker note naming both burdens. Bard keeps its accepted
+//! SD13-E4-F7 posture (`Blocked` / `Computed`); the accepted Paladin / Ranger /
+//! Sorcerer hybrid and spontaneous rows stay `Blocked` / `Computed`.
 //!
 //! It is intentionally not a spell engine. It fabricates no spellbook content, no
 //! spells prepared, no spell slots per day, no spell DCs, no bonus spells, no
@@ -320,44 +321,60 @@ fn wizard_level_2_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the merge-receipt obligation is executed; the carrier now reflects it -----
+// ----- Control plane: the merge receipt executed; the carrier row is Blocked/Computed -----
 
 #[test]
-fn matrix_wizard_row_is_promoted_executing_the_merge_receipt_obligation() {
+fn matrix_wizard_row_is_blocked_computed_after_merge_receipt_execution() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard row must exist");
 
-    // The merge-receipt obligation this slice's proof surface pinned is now executed:
-    // the row transitions to Blocked/Computed/RefreshableFromLiveProof.
+    // The merge-receipt obligation pinned by this slice has been executed: the
+    // slice merged to develop via the tranche 2.6 closeout, so the carrier row
+    // carries the post-merge posture. Blocked, not Partial: both named burdens
+    // remain claim-blocking on the runtime path.
     assert_eq!(
         wizard.support_state,
         SupportState::Blocked,
-        "wizard row must be Blocked once the merge-receipt obligation is executed"
+        "wizard row must carry the post-merge Blocked posture (both spell burdens still claim-block)"
     );
     assert_eq!(
         wizard.evidence_tier,
         EvidenceTier::Computed,
-        "wizard row must be Computed once the merge-receipt obligation is executed"
+        "wizard row must carry Computed evidence: the prepared arcane recognition seam is live"
     );
     assert_eq!(
         wizard.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof,
-        "wizard row must be RefreshableFromLiveProof once grounded on this live test surface"
+        "wizard row must be refreshable from this re-runnable proof surface"
     );
+    // The merge receipt anchored the row on the runtime proof this slice produced.
     assert!(
         wizard
             .grounding_ref
             .contains("sd13_wizard_level1_prepared_spell_baseline"),
-        "carrier grounding_ref must cite this slice's proof surface after promotion"
+        "wizard row grounding_ref must cite this proof surface after the merge receipt: {}",
+        wizard.grounding_ref
     );
+    // The blocker note must name both burdens explicitly, mirroring the two
+    // claim-blocking diagnostics this proof surface pins.
+    let note = wizard.blocker_or_lossiness_note;
     assert!(
-        wizard.blocker_or_lossiness_note.contains("school")
-            && wizard.blocker_or_lossiness_note.contains("prepared"),
-        "wizard blocker note must name both the school specialization and prepared spell posture burdens: {}",
-        wizard.blocker_or_lossiness_note
+        !note.is_empty(),
+        "blocked wizard row must carry a blocker note"
     );
+    for token in [
+        "school specialization",
+        "spellbook",
+        "spells prepared",
+        "spell slots",
+    ] {
+        assert!(
+            note.contains(token),
+            "wizard blocker note must name the '{token}' burden: {note}"
+        );
+    }
 }
 
 #[test]

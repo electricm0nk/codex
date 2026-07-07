@@ -132,6 +132,15 @@ fn elf_row_carries_non_empty_blocker_note_naming_recognized_and_remaining_famili
             elf.blocker_or_lossiness_note
         );
     }
+    // The note must not carry the pre-PR-#95 claim that pilot_compute gates
+    // every non-Human race out via a bare Human-id check: the race seam is now
+    // the `explain_race_seam` dispatcher with a dedicated Half-Elf arm.
+    assert!(
+        !elf.blocker_or_lossiness_note
+            .contains("gates every non-Human race out of the compute path"),
+        "Elf row note must not describe the retired pre-dispatcher race gate; got '{}'",
+        elf.blocker_or_lossiness_note
+    );
 }
 
 #[test]

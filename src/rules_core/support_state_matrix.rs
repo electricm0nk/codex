@@ -37,9 +37,9 @@
 //!   posture burden, and fabricates no Bardic-class-feature math and no spell math,
 //! - the Wizard row is `Blocked` / `Computed`: the SD13-E4-R3 slice proves the
 //!   deterministic Human Wizard level-1 prepared arcane spell-bearing identity is
-//!   recognized on the compute seam, but it stays blocked on the school specialization
-//!   burden and the prepared spellbook / spell-slot posture burden, and fabricates no
-//!   spell math,
+//!   recognized on the compute seam (merge receipt executed 2026-07-07), but it stays
+//!   blocked on the school specialization burden and the prepared spellbook /
+//!   spell-slot posture burden, and fabricates no spell math,
 //! - the Cleric row is `Blocked` / `Computed`: the SD13-E4 slice proves the
 //!   deterministic Human Cleric level-1 prepared divine spell-bearing identity is
 //!   recognized on the compute seam, but it stays blocked on the domain / channel
@@ -225,9 +225,13 @@ const SD13_ROSTER_MATRIX_DOC: &str = "programs/codex/requirements/\
 SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/\
 core-roster-and-support-state-matrix.md";
 
-/// The live compute seam that now makes the grounded Human race pressure explicit by
-/// emitting named Human ability-bonus and bonus-feat explanation records.
-const PILOT_COMPUTE_MODULE: &str = "src/rules_core/pilot_compute.rs";
+/// The combined grounding reference for the Human race row, citing both the live
+/// compute seam (named Human ability-bonus and bonus-feat explanation records plus
+/// the SD13-E6-F3a trait-bundle recognition records) and the trait-bundle proof
+/// surface that pins the four classified dimensions. Both `.contains()` consumers
+/// read their respective substring from this combined literal (paladin-row idiom).
+const SD13_HUMAN_ROW_GROUNDING_REF: &str =
+    "src/rules_core/pilot_compute.rs +      tests/sd13_human_full_trait_bundle.rs";
 
 /// GE-06 deterministic pilot input contract proof (race/class identity, Human
 /// bonus-feat and ability-bonus selections).
@@ -358,16 +362,25 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "race:human",
                 dimension: "bounded Human pilot race semantics: the named Human \
                             ability-bonus (Strength) and Human bonus-feat (Dodge) \
-                            selections exercised by the GE-06 deterministic proof",
+                            selections exercised by the GE-06 deterministic proof, plus \
+                            the SD13-E6-F3a classified trait bundle (size, speed, senses, \
+                            extra skill ranks)",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: PILOT_COMPUTE_MODULE,
-                blocker_or_lossiness_note: "the deterministic pilot grounds only the named \
-                    Human ability-bonus and bonus-feat pressure; Human size, speed, senses, \
-                    extra skill ranks, and the remaining racial trait burden are still unverified",
-                next_required_uplift: "classify the remaining Human racial trait burden \
-                    (size, speed, senses, skill ranks) explicitly",
+                grounding_ref: SD13_HUMAN_ROW_GROUNDING_REF,
+                blocker_or_lossiness_note: "the deterministic pilot grounds the named Human \
+                    ability-bonus and bonus-feat pressure, and the SD13-E6-F3a trait bundle \
+                    (size, speed, senses, extra skill ranks) is classified explicitly as \
+                    recognition records that ground no numeric contribution; the remaining \
+                    PF1 Standard Human racial trait surface (alternate Human racial traits, \
+                    variant Humans, half-Human heritages, and ruleset-level effects outside \
+                    the named deterministic pilot) remains unverified",
+                next_required_uplift: "classify the remaining PF1 Standard Human racial trait \
+                    surface (alternate Human racial traits, variant Humans, half-Human \
+                    heritages) explicitly, or ground a first computed Human trait mechanic \
+                    from the classified bundle (e.g. extra skill ranks into a bounded \
+                    skill-rank engine)",
             },
             SupportStateRow {
                 row_id: "race.dwarf.bounded_semantics",
@@ -790,6 +803,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.wizard.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:wizard",
+                // The SD13-E4-R3 merge receipt executed after the tranche 2.6
+                // closeout merged to develop (2026-07-07): the row carries the
+                // post-merge posture the slice's proof surface pinned as its
+                // merge-receipt obligation.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Wizard level-1 prepared arcane spell baseline, with the school \
                             specialization burden and the prepared spellbook / spell-slot \
@@ -824,7 +841,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     seam is grounded: the human_bonus_feat -> feat:dodge and \
                     human_ability_bonus -> ability:strength selections now surfaced as explicit \
                     compute explanations; the general interaction-row model is not",
-                next_required_uplift: "SD13-E2 / SD13-E3 coupling",
+                next_required_uplift: "generalize the named Human pilot pressure into the \
+                    interaction-row model once a second computed interaction pressure exists \
+                    (per the non-Human interaction row's warrant condition)",
             },
             SupportStateRow {
                 row_id: "interaction.non_human_any_class.progression_pressure",
