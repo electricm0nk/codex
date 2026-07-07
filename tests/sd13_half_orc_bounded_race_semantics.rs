@@ -1,28 +1,23 @@
 //! SD13-E2 Half-Orc bounded race-semantics classification slice.
 //!
-//! Bounded, honest classification of the `race.half_orc.bounded_semantics` row in
-//! the SD-13 support-state matrix. This slice proves:
+//! Originally proved the bounded, honest classification of the
+//! `race.half_orc.bounded_semantics` row while it stayed `Unverified` /
+//! `Observed` / `AwaitingInitialEvidence`, with only the generic
+//! `race.semantics.unverified` diagnostic and no live Half-Orc proof surface.
 //!
-//! - the seeded Half-Orc row stays `Unverified` / `Observed` /
-//!   `AwaitingInitialEvidence` because the live `pilot_compute.rs` surface grounds
-//!   race semantics only for `race:human` and emits a non-claim-blocking
-//!   `race.semantics.unverified` diagnostic for every other race identity (including
-//!   Half-Orc),
-//! - the seeded row's `dimension`, `blocker_or_lossiness_note`, and
-//!   `next_required_uplift` carry Half-Orc-specific text (the same row shape that
-//!   the SD13-E3-F6 precedent gave the Paladin/Ranger hybrid rows), so the named
-//!   Half-Orc semantic burden is legible instead of implicit,
-//! - the live compute surface is exercised end-to-end with a deterministic
-//!   Half-Orc Fighter level-1 fixture and emits the expected
-//!   `race.semantics.unverified` diagnostic without fabricating any race trait or
-//!   numeric race-derived value.
+//! The SD13-E2 Half-Orc bounded race-semantics recognition slice
+//! (`tests/sd13_half_orc_race_semantics_recognition.rs`) executed the promotion
+//! path this file's original guards anticipated: it landed grounded evidence
+//! for four race-semantic families (chosen ability-bonus target, size, speed,
+//! senses — Darkvision) and updated the row state in the typed matrix carrier.
+//! This file now pins that promoted truth for the fixture below (a `race:half-orc`
+//! Fighter input that predates the recognition slice and carries no
+//! ability-bonus choice): the Half-Orc race seam no longer emits the generic
+//! diagnostic, and the matrix row is `Partial` / `Computed` rather than
+//! `Unverified` / `Observed`.
 //!
-//! This slice does NOT move Half-Orc to `Supported`/`Partial`/`Lossy` and does NOT
-//! implement Half-Orc race semantics in `pilot_compute.rs`. Both moves would
-//! require Half-Orc runtime evidence that does not exist on `origin/develop` and
-//! would break the existing matrix test floor. The honest classification here is
-//! `Unverified` with an explicit Half-Orc-specific blocker note, exactly as the
-//! slice's "leave unverified with explicit blocker" branch allows.
+//! It is intentionally not a Half-Orc racial trait engine. It grounds no
+//! Intimidating skill bonus, no Orc Ferocity, and no weapon familiarity math.
 
 use codex::rules_core::character_input::load_character_input_fixture;
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
@@ -44,23 +39,20 @@ fn row<'a>(matrix: &'a SupportStateMatrix, row_id: &str) -> &'a SupportStateRow 
         .unwrap_or_else(|| panic!("expected seeded row '{row_id}'"))
 }
 
-/// The Half-Orc row must keep its current `Unverified` / `Observed` /
-/// `AwaitingInitialEvidence` posture. The existing matrix test floor
-/// (`every_non_human_race_row_is_unverified_and_observed`) and
-/// `only_pilot_grounded_rows_rise_above_observed` both rely on this; the slice
-/// must not silently promote Half-Orc without runtime evidence.
+/// The SD13-E2 Half-Orc recognition slice landed grounded evidence for four
+/// race-semantic families, promoting the row from Unverified to Partial.
 #[test]
-fn half_orc_row_stays_unverified_and_observed_awaiting_initial_evidence() {
+fn half_orc_row_is_partial_computed_after_sd13_e2_recognition() {
     let matrix = matrix();
     let half_orc = row(&matrix, HALF_ORC_ROW_ID);
 
     assert_eq!(half_orc.subject_id, HALF_ORC_SUBJECT_ID);
-    assert_eq!(half_orc.support_state, SupportState::Unverified);
-    assert_eq!(half_orc.evidence_tier, EvidenceTier::Observed);
+    assert_eq!(half_orc.support_state, SupportState::Partial);
+    assert_eq!(half_orc.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         half_orc.evidence_freshness,
-        EvidenceFreshness::AwaitingInitialEvidence,
-        "Half-Orc has no live proof surface to refresh from yet"
+        EvidenceFreshness::RefreshableFromLiveProof,
+        "Half-Orc is now grounded on the live SD13-E2 recognition test surface"
     );
 }
 
@@ -165,25 +157,20 @@ fn half_orc_row_next_uplift_is_half_orc_specific() {
     );
 }
 
-/// Half-Orc has no live proof surface yet, so its `grounding_ref` must remain a
-/// roster-only reference. The matrix test floor's freshness invariant
-/// (`freshness_tracks_live_proof_grounding_not_optimism`) requires this posture:
-/// `AwaitingInitialEvidence` rows may not cite a live proof path.
+/// The SD13-E2 recognition slice upgrades the grounding_ref from the roster
+/// doc to the live, re-runnable proof surface, matching the freshness
+/// invariant (`RefreshableFromLiveProof` rows must cite a live proof path).
 #[test]
-fn half_orc_row_grounding_ref_still_points_to_roster_only() {
+fn half_orc_row_grounding_ref_cites_the_live_recognition_test_surface() {
     let matrix = matrix();
     let half_orc = row(&matrix, HALF_ORC_ROW_ID);
 
     assert!(
-        !half_orc.grounding_ref.is_empty(),
-        "Half-Orc row must cite a grounding reference (the roster doc)"
-    );
-    assert!(
         half_orc
             .grounding_ref
-            .contains("core-roster-and-support-state-matrix"),
-        "Half-Orc row has no live proof yet and must remain grounded to the \
-         SD-13 roster matrix doc, got: {}",
+            .contains("sd13_half_orc_race_semantics_recognition"),
+        "Half-Orc row must ground to the live SD13-E2 recognition test surface, \
+         got: {}",
         half_orc.grounding_ref
     );
 }
@@ -195,7 +182,7 @@ fn half_orc_row_grounding_ref_still_points_to_roster_only() {
 /// only live runtime evidence that Half-Orc is honestly unverified today; the
 /// row's `Unverified` classification is grounded by this behavior.
 #[test]
-fn half_orc_fighter_pilot_emits_race_semantics_unverified_diagnostic() {
+fn half_orc_fighter_pilot_emits_bounded_semantics_diagnostic_not_generic_unverified() {
     const HALF_ORC_FIGHTER_FIXTURE: &str = include_str!(
         "fixtures/rules_core/pf1_half_orc_fighter_level1_sd13_deterministic_input.txt"
     );
@@ -214,40 +201,37 @@ fn half_orc_fighter_pilot_emits_race_semantics_unverified_diagnostic() {
 
     let computation = compute_pilot_base_chassis(&input);
 
-    // The race semantics must be marked unverified exactly once for Half-Orc and
-    // must NOT be marked claim-blocking: the Half-Orc loadout still produces a
-    // computed pilot receipt because the rest of the deterministic path (Fighter
-    // level 1, ability modifiers, base saves, total saves, deterministic combat
-    // baseline) is grounded; only the race semantics are unverified.
-    let race_unverified_diagnostics: Vec<_> = computation
-        .diagnostics
-        .iter()
-        .filter(|d| d.id == "race.semantics.unverified")
-        .collect();
-    assert_eq!(
-        race_unverified_diagnostics.len(),
-        1,
-        "expected exactly one race.semantics.unverified diagnostic for Half-Orc, \
-         got {} (all diagnostics: {:?})",
-        race_unverified_diagnostics.len(),
+    // Since the SD13-E2 recognition slice, Half-Orc no longer receives the
+    // generic race.semantics.unverified diagnostic; it receives its own
+    // race.half_orc.bounded_semantics note instead, non-claim-blocking so the
+    // deterministic Half-Orc Fighter pilot still reports a Computed receipt.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "race.semantics.unverified"),
+        "Half-Orc must no longer surface the generic race.semantics.unverified \
+         diagnostic now that it has its own seam: {:?}",
         computation.diagnostics
     );
-    let diag = race_unverified_diagnostics[0];
-    assert!(
-        !diag.claim_blocking,
-        "race.semantics.unverified must remain non-claim-blocking so the deterministic \
-         Half-Orc Fighter pilot still reports a Computed receipt; got claim_blocking=true"
+    let bounded: Vec<_> = computation
+        .diagnostics
+        .iter()
+        .filter(|d| d.id == "race.half_orc.bounded_semantics")
+        .collect();
+    assert_eq!(
+        bounded.len(),
+        1,
+        "expected exactly one race.half_orc.bounded_semantics diagnostic, got {} \
+         (all diagnostics: {:?})",
+        bounded.len(),
+        computation.diagnostics
     );
     assert!(
-        diag.message.contains("race:half-orc"),
-        "diagnostic message must name the unverified half-orc identity, got: {}",
-        diag.message
-    );
-    assert!(
-        diag.message.contains("race:human"),
-        "diagnostic message must name the only grounded race identity (race:human), \
-         got: {}",
-        diag.message
+        !bounded[0].claim_blocking,
+        "race.half_orc.bounded_semantics must remain non-claim-blocking so the \
+         deterministic Half-Orc Fighter pilot still reports a Computed receipt; \
+         got claim_blocking=true"
     );
 }
 

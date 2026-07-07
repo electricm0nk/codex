@@ -313,13 +313,10 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         );
     }
 
-    // Half-Elf was later promoted to Partial/Computed by its own SD13-E2
-    // recognition slice; this Gnome-slice snapshot only asserts the races it
-    // did not touch.
-    for id in [
-        "race.half_orc.bounded_semantics",
-        "race.halfling.bounded_semantics",
-    ] {
+    // Half-Elf and Half-Orc were later promoted to Partial/Computed by their
+    // own SD13-E2 recognition slices; this Gnome-slice snapshot only asserts
+    // the races it did not touch.
+    for id in ["race.halfling.bounded_semantics"] {
         let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
             row.support_state,

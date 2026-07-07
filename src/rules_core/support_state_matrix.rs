@@ -70,6 +70,11 @@
 //!   target, size, speed, senses) are recognized on the compute seam, but the
 //!   remaining Half-Elf family surface (Elven Immunities, Adaptability, Keen
 //!   Senses, Multitalented) stays unproven,
+//! - the Half-Orc row is `Partial` / `Computed`: the SD13-E2 slice proves four
+//!   grounded Half-Orc racial trait dimensions (a player-chosen ability-bonus
+//!   target, size, speed, senses) are recognized on the compute seam, but the
+//!   remaining Half-Orc family surface (Intimidating, Orc Ferocity, weapon
+//!   familiarity) stays unproven,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
 //! - every other core race and core class, and the broader non-Human interaction row
 //!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime evidence
@@ -269,6 +274,13 @@ const SD13_GNOME_LEVEL1_TEST: &str = "tests/sd13_gnome_race_semantics_recognitio
 /// family surface.
 const SD13_HALF_ELF_LEVEL1_TEST: &str = "tests/sd13_half_elf_race_semantics_recognition.rs";
 
+/// SD13-E2 dedicated proof surface for the bounded Half-Orc race-semantics
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Half-Orc racial trait dimensions (chosen ability-bonus target, size, speed,
+/// senses) that stays explicitly honest about the remaining unproven Half-Orc
+/// family surface.
+const SD13_HALF_ORC_LEVEL1_TEST: &str = "tests/sd13_half_orc_race_semantics_recognition.rs";
+
 /// SD13-E4-F7 dedicated proof surface for the bounded Human Bard level-1 spell
 /// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
 /// that stays explicitly blocked on the bardic knowledge + bardic music chassis-class-feature
@@ -442,40 +454,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.half_orc.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:half-orc",
-                dimension: "bounded Half-Orc race semantics: the named Half-Orc \
-                            PF1 trait burden (Medium size, darkvision 60 ft, \
-                            ability-score modifier, weapon familiarity with greataxe \
-                            and falchion, ferocity) and any Half-Orc skill / \
-                            favored-class posture on the deterministic pilot seam",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "the deterministic pilot seam in \
-                    src/rules_core/pilot_compute.rs grounds race semantics only for \
-                    race:human and emits a non-claim-blocking \
-                    race.semantics.unverified diagnostic for every other race \
-                    identity; Half-Orc race semantics have no live proof surface \
-                    yet, so the named Half-Orc trait burden remains unverified: \
-                    Medium size (no size-derived combat modifier), darkvision 60 ft \
-                    (no darkvision-based perception surface), the Half-Orc \
-                    ability-score modifier (no ability bonus applied), weapon \
-                    familiarity with greataxe / falchion (no item-level combat \
-                    modifier computed), orc ferocity (no unconscious-but-fighting \
-                    posture computed), any Half-Orc skill bonus or favored-class \
-                    posture, and any general Half-Orc character-creation option \
-                    (alternate favored class, racial archetype, age/culture). The \
-                    row stays Unverified rather than Blocked because the Half-Orc \
-                    loadout still produces a Computed pilot receipt — only the \
-                    race semantic gap is non-claim-blocking",
-                next_required_uplift: "SD13-E2 Half-Orc race-semantic slice: emit a \
-                    Half-Orc-specific race-semantics diagnostic in pilot_compute.rs \
-                    that names the grounded subset (e.g. ability modifier, \
-                    darkvision) versus the still-unverified subset (size, ferocity, \
-                    weapon familiarity, skill bonus, favored-class, racial \
-                    archetype) so the row can advance from Unverified to Partial \
-                    only when a live Half-Orc proof surface exists with at least \
-                    one grounded Half-Orc trait computed end-to-end",
+                dimension: "bounded Half-Orc race semantics: four grounded PF1 Core Rulebook \
+                            Half-Orc racial trait dimensions (chosen ability-bonus target, \
+                            size, speed, senses) recognized on the compute seam, with the \
+                            remaining Half-Orc family surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_HALF_ORC_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Half-Orc race-semantic families are recognized on the compute seam (a \
+                    player-chosen +2 ability-bonus target, mirroring the Half-Elf mechanic's \
+                    shape; size: Medium; speed: 30 ft; senses: Darkvision 60 ft), but the \
+                    remaining families stay unproven: Intimidating (a bonus on Intimidate \
+                    checks), Orc Ferocity (fighting on for one more round below 0 hit points), \
+                    and weapon familiarity (orc double axe, falchion). No numeric mechanical \
+                    contribution is fabricated beyond the already-computed ability modifier \
+                    for the chosen target.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Half-Orc families (Intimidating, Orc Ferocity, weapon \
+                    familiarity) as a real computed contribution",
             },
             SupportStateRow {
                 row_id: "race.halfling.bounded_semantics",

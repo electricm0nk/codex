@@ -256,14 +256,14 @@ fn human_input_does_not_surface_dwarf_trait_bundle_records() {
 
 #[test]
 fn other_non_human_race_still_gets_the_generic_unverified_diagnostic() {
-    let half_orc = DWARF_FIXTURE.replace("race_id=race:dwarf", "race_id=race:half-orc");
-    let input = load(&half_orc);
+    let halfling = DWARF_FIXTURE.replace("race_id=race:dwarf", "race_id=race:halfling");
+    let input = load(&halfling);
     let computation = compute_pilot_base_chassis(&input);
 
     for id in BUNDLE_IDS {
         assert!(
             !has_explanation(&computation, id),
-            "Half-Orc input must not surface Dwarf trait bundle record '{id}', got explanations {:?}",
+            "Halfling input must not surface Dwarf trait bundle record '{id}', got explanations {:?}",
             computation.explanations
         );
     }
@@ -319,13 +319,10 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         .expect("human row must exist");
     assert_eq!(human.support_state, SupportState::Partial);
 
-    // Elf, Gnome, and Half-Elf were later promoted to Partial/Computed by their
-    // own SD13-E2 recognition slices; this Dwarf-slice snapshot only asserts the
-    // races it did not touch.
-    for id in [
-        "race.half_orc.bounded_semantics",
-        "race.halfling.bounded_semantics",
-    ] {
+    // Elf, Gnome, Half-Elf, and Half-Orc were later promoted to Partial/Computed
+    // by their own SD13-E2 recognition slices; this Dwarf-slice snapshot only
+    // asserts the races it did not touch.
+    for id in ["race.halfling.bounded_semantics"] {
         let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
             row.support_state,

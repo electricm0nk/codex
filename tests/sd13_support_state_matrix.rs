@@ -209,16 +209,17 @@ fn fighter_level_1_and_levels_2_10_remain_separate_rows() {
 
 #[test]
 fn every_still_unrecognized_non_human_race_row_is_unverified_and_observed() {
-    // Dwarf, Elf, Gnome, and Half-Elf were promoted to Partial/Computed by
-    // their own SD13-E2 recognition slices; verified separately below. The
-    // remaining two non-Human race rows are still pure roster-scope
-    // placeholders with no runtime evidence.
+    // Dwarf, Elf, Gnome, Half-Elf, and Half-Orc were promoted to
+    // Partial/Computed by their own SD13-E2 recognition slices; verified
+    // separately below. The remaining one non-Human race row is still a pure
+    // roster-scope placeholder with no runtime evidence.
     let matrix = matrix();
     let recognized = [
         "race.dwarf.bounded_semantics",
         "race.elf.bounded_semantics",
         "race.gnome.bounded_semantics",
         "race.half_elf.bounded_semantics",
+        "race.half_orc.bounded_semantics",
     ];
     let non_human_races: Vec<&SupportStateRow> = matrix
         .rows
@@ -230,8 +231,8 @@ fn every_still_unrecognized_non_human_race_row_is_unverified_and_observed() {
 
     assert_eq!(
         non_human_races.len(),
-        2,
-        "there must be 2 remaining unrecognized non-Human race rows"
+        1,
+        "there must be 1 remaining unrecognized non-Human race row"
     );
     for race in non_human_races {
         assert_eq!(
@@ -471,6 +472,7 @@ fn only_pilot_grounded_rows_rise_above_observed() {
         "race.elf.bounded_semantics",
         "race.gnome.bounded_semantics",
         "race.half_elf.bounded_semantics",
+        "race.half_orc.bounded_semantics",
         "class.fighter.level_1_pilot",
         "class.fighter.levels_2_10",
         "class.rogue.bounded_progression",
@@ -573,12 +575,13 @@ fn every_row_carries_grounding_and_next_uplift() {
 /// The rows anchored to a live, re-runnable proof surface. These are exactly the
 /// pilot-grounded, hybrid-baseline, Barbarian martial-baseline, and spell-baseline
 /// rows that rise above `Observed` evidence.
-const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 18] = [
+const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 19] = [
     "race.human.pilot_semantics",
     "race.dwarf.bounded_semantics",
     "race.elf.bounded_semantics",
     "race.gnome.bounded_semantics",
     "race.half_elf.bounded_semantics",
+    "race.half_orc.bounded_semantics",
     "class.fighter.level_1_pilot",
     "class.fighter.levels_2_10",
     "class.rogue.bounded_progression",
