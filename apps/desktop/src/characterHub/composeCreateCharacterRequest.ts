@@ -3,6 +3,7 @@ import type { AbilityScoresDto, CreateCharacterRequest } from '../boundary/loadC
 export interface CreateCharacterFormFields {
   displayLabel: string;
   raceId: string;
+  classId: string;
   level: number;
   abilityScores: AbilityScoresDto;
 }
@@ -25,6 +26,7 @@ export function composeCreateCharacterRequest(
     characterId: deps.generateId(),
     displayLabel: fields.displayLabel,
     raceId: fields.raceId,
+    classId: fields.classId,
     level: fields.level,
     abilityScores: { ...fields.abilityScores },
     savedAt: deps.now(),

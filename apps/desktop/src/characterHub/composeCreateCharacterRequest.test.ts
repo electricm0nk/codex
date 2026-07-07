@@ -10,6 +10,7 @@ function verifiesRequestShapeFromFormFields() {
     {
       displayLabel: 'Aldric',
       raceId: 'race:human',
+      classId: 'class:fighter',
       level: 1,
       abilityScores: {
         strength: 16,
@@ -29,6 +30,7 @@ function verifiesRequestShapeFromFormFields() {
   assertEqual(request.characterId, 'char-fixed-id', 'characterId');
   assertEqual(request.displayLabel, 'Aldric', 'displayLabel');
   assertEqual(request.raceId, 'race:human', 'raceId');
+  assertEqual(request.classId, 'class:fighter', 'classId');
   assertEqual(request.level, 1, 'level');
   assertEqual(request.savedAt, '2026-07-08T00:00:00Z', 'savedAt');
   assertEqual(request.abilityScores.strength, 16, 'ability strength');
