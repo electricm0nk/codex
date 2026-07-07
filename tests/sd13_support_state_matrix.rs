@@ -293,11 +293,11 @@ fn paladin_and_ranger_hybrid_rows_are_blocked_and_computed_with_named_burdens() 
 
 #[test]
 fn every_remaining_unproven_class_row_is_unverified_and_observed() {
-    // After SD13-E3-F6, SD13-E4-F7, SD13-E4-R3, SD13-E4 (Cleric), and the SD13-E3
-    // Barbarian martial-chassis slice, Fighter (level 1 + levels 2-10), Rogue,
-    // Barbarian, Paladin, Ranger, Sorcerer, Bard, Wizard, and Cleric all carry
-    // runtime evidence. The remaining two core class rows must still be pure
-    // roster-scope placeholders with no runtime evidence.
+    // After SD13-E3-F6, SD13-E4-F7, SD13-E4-R3, SD13-E4 (Cleric, Druid), and the
+    // SD13-E3 Barbarian martial-chassis slice, Fighter (level 1 + levels 2-10),
+    // Rogue, Barbarian, Paladin, Ranger, Sorcerer, Bard, Wizard, Cleric, and Druid
+    // all carry runtime evidence. The remaining core class row (Monk) must still
+    // be a pure roster-scope placeholder with no runtime evidence.
     let matrix = matrix();
     let proven_subjects = [
         "class:fighter",
@@ -309,6 +309,7 @@ fn every_remaining_unproven_class_row_is_unverified_and_observed() {
         "class:bard",
         "class:wizard",
         "class:cleric",
+        "class:druid",
     ];
     let other_classes: Vec<&SupportStateRow> = matrix
         .rows
@@ -319,8 +320,8 @@ fn every_remaining_unproven_class_row_is_unverified_and_observed() {
 
     assert_eq!(
         other_classes.len(),
-        2,
-        "there must be 2 remaining unproven core class rows"
+        1,
+        "there must be 1 remaining unproven core class row"
     );
     for class in other_classes {
         assert_eq!(
@@ -461,6 +462,7 @@ fn only_pilot_grounded_rows_rise_above_observed() {
         "class.bard.progression_and_spell_burden",
         "class.wizard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
+        "class.druid.progression_and_spell_burden",
         "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
     ];
 
@@ -551,7 +553,7 @@ fn every_row_carries_grounding_and_next_uplift() {
 /// The rows anchored to a live, re-runnable proof surface. These are exactly the
 /// pilot-grounded, hybrid-baseline, Barbarian martial-baseline, and spell-baseline
 /// rows that rise above `Observed` evidence.
-const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 12] = [
+const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 13] = [
     "race.human.pilot_semantics",
     "class.fighter.level_1_pilot",
     "class.fighter.levels_2_10",
@@ -563,6 +565,7 @@ const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 12] = [
     "class.bard.progression_and_spell_burden",
     "class.wizard.progression_and_spell_burden",
     "class.cleric.progression_and_spell_burden",
+    "class.druid.progression_and_spell_burden",
     "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
 ];
 

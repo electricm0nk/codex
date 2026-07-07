@@ -166,6 +166,16 @@ const MARTIAL_BASELINE_LEVEL: u8 = 1;
 const CLERIC_CLASS_ID: &str = "class:cleric";
 const CLERIC_BASELINE_LEVEL: u8 = 1;
 
+// Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
+// identity. Druid is a prepared divine caster whose bounded burden splits across
+// a nature bond / wild empathy class-feature family (nature bond choice between
+// an animal companion and a domain, nature sense, wild empathy) and a prepared
+// divine spell posture family (spells prepared from the full Druid list,
+// spontaneous summon nature's ally conversion, spell slots per day, bonus spells
+// from a high Wisdom, spell save DCs).
+const DRUID_CLASS_ID: &str = "class:druid";
+const DRUID_BASELINE_LEVEL: u8 = 1;
+
 
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
@@ -374,6 +384,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_wizard_level1_prepared_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_cleric_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+
+    explain_druid_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_bard_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
@@ -1548,6 +1560,93 @@ fn explain_cleric_level1_spell_baseline(
              from the full Cleric spell list, spontaneous cure/inflict conversion, spell slots per \
              day, bonus spell slots from a high Wisdom, and spell save DCs are out of scope for this \
              level-1 spell baseline and no spell math is fabricated"
+                .to_owned(),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Druid at the bounded
+/// prepared divine spell baseline level (1). Returns `false` for any other class, a
+/// multiclass mix, or a level-2+ Druid this slice deliberately does not recognize —
+/// each of which stays blocked exactly as before.
+fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == DRUID_CLASS_ID
+                && class_level.level == DRUID_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4 runtime evidence for the deterministic Human Druid level-1
+/// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
+/// its two still-missing burdens.
+///
+/// This deliberately does not compute a supported spell surface. It grounds no nature
+/// bond selection, no nature bond power execution (animal companion or domain), no
+/// wild empathy check resolution, no spellbook posture, no spells prepared, no
+/// spontaneous summon nature's ally conversion, no spell slots per day, no spell save
+/// DCs, and no bonus spell slots from a high Wisdom. It only:
+/// - leaves one recognition explanation so the `class:druid:1` identity is acknowledged
+///   as a prepared divine spell-bearing class rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the nature bond / wild
+///   empathy class-feature burden and the prepared divine spell posture burden
+///   explicitly, rather than hiding behind a generic "unsupported caster" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Druid prepared divine spell-bearing
+/// identity and its two named burdens legible on the runtime path.
+fn explain_druid_level1_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_druid_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Druid level-1
+    // prepared divine spell-bearing identity. This is a recognition record only; it
+    // fabricates no nature-bond power math and no spell math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.druid".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Druid level {DRUID_BASELINE_LEVEL} prepared divine \
+             spell-bearing baseline: the {DRUID_CLASS_ID}:{DRUID_BASELINE_LEVEL} class identity is \
+             acknowledged as a prepared divine spell-bearing class on the rules-core seam rather than \
+             an undocumented packet placeholder. This is a bounded recognition record only; it grounds \
+             no nature bond selection, no nature bond power execution, no wild empathy check \
+             resolution, no spellbook posture, no spells prepared per day, no spontaneous summon \
+             nature's ally conversion, no spell slots per day, no spell save DCs, and no bonus spell \
+             slots from a high Wisdom, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the nature bond / wild empathy class-feature burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.druid.nature_bond_and_wild_empathy.unsupported".to_owned(),
+        message: format!(
+            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its nature bond and wild empathy \
+             burden: the nature bond choice (an animal companion or a domain), nature sense, and wild \
+             empathy (the animal-diplomacy check) are not implemented in this bounded prepared divine \
+             spell baseline, so no Druid nature bond or wild empathy support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the prepared divine spell posture burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.druid.prepared_divine.unsupported".to_owned(),
+        message:
+            "Druid remains blocked on its prepared divine spell posture burden: spells prepared \
+             from the full Druid spell list, spontaneous summon nature's ally conversion, spell slots \
+             per day, bonus spell slots from a high Wisdom, and spell save DCs are out of scope for \
+             this level-1 spell baseline and no spell math is fabricated"
                 .to_owned(),
         claim_blocking: true,
     });

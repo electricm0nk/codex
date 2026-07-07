@@ -418,11 +418,12 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
     );
     assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
 
-    // Wizard and Cleric were later promoted to Blocked/Computed by their own
-    // follow-up slices; verified separately below.
+    // Wizard, Cleric, and Druid were later promoted to Blocked/Computed by their
+    // own follow-up slices; verified separately below.
     for id in [
         "class.wizard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
+        "class.druid.progression_and_spell_burden",
     ] {
         let row = matrix
             .row(id)
@@ -431,12 +432,9 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // Druid, Monk must remain Unverified / Observed — this slice does not
-    // silently promote any still-unproven class.
-    for id in [
-        "class.druid.progression_and_spell_burden",
-        "class.monk.bounded_progression",
-    ] {
+    // Monk must remain Unverified / Observed — this slice does not silently
+    // promote any still-unproven class.
+    for id in ["class.monk.bounded_progression"] {
         let row = matrix
             .row(id)
             .unwrap_or_else(|| panic!("row {id} must exist"));
