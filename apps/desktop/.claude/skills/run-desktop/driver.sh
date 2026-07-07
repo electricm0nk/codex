@@ -56,9 +56,9 @@ cmd_launch() {
     || { echo "Xvfb did not come up; see /tmp/run-desktop-driver.xvfb.log" >&2; exit 1; }
 
   # Vite's dev port must be free or `tauri dev` fails outright.
-  local stale_port_pid
-  stale_port_pid="$(lsof -ti:1420 2>/dev/null || true)"
-  [ -n "$stale_port_pid" ] && kill -9 $stale_port_pid 2>/dev/null || true
+  local stale_port_pids
+  stale_port_pids="$(lsof -ti:1420 2>/dev/null || true)"
+  [ -n "$stale_port_pids" ] && printf '%s\n' "$stale_port_pids" | xargs -r kill -9 2>/dev/null || true
 
   echo "Launching npx tauri dev (first build can take several minutes) ..." >&2
   (cd "$app_root" && DISPLAY=":$DISPLAY_NUM" npx tauri dev) >"$LOG_FILE" 2>&1 &
