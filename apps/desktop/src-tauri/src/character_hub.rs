@@ -638,14 +638,41 @@ mod tests {
             ])
         );
 
-        for class_id in ["class:rogue", "class:cleric", "class:druid", "class:monk"] {
-            assert_eq!(
-                claim_blocking_diagnostic_ids("race:human", class_id, 1),
-                generic_ids(),
-                "{} has no dedicated compute seam and must fall back to exactly the 4 generic diagnostics",
-                class_id
-            );
-        }
+        assert_eq!(
+            claim_blocking_diagnostic_ids("race:human", "class:rogue", 1),
+            generic_plus(&[
+                "class_feature.rogue.bounded_progression.base_attack.unsupported",
+                "class_feature.rogue.bounded_progression.base_save.unsupported",
+                "class_feature.rogue.bounded_progression.sneak_attack.unsupported",
+                "class_feature.rogue.bounded_progression.trapfinding.unsupported",
+            ])
+        );
+
+        assert_eq!(
+            claim_blocking_diagnostic_ids("race:human", "class:monk", 1),
+            generic_plus(&[
+                "class_feature.monk.bounded_progression.base_attack.unsupported",
+                "class_feature.monk.bounded_progression.base_save.unsupported",
+                "class_feature.monk.bounded_progression.unarmed_strike_and_flurry.unsupported",
+                "class_feature.monk.bounded_progression.ac_bonus_and_bonus_feat.unsupported",
+            ])
+        );
+
+        assert_eq!(
+            claim_blocking_diagnostic_ids("race:human", "class:cleric", 1),
+            generic_plus(&[
+                "class_feature.cleric.domain_and_channel_energy.unsupported",
+                "class_spell.cleric.prepared_divine.unsupported",
+            ])
+        );
+
+        assert_eq!(
+            claim_blocking_diagnostic_ids("race:human", "class:druid", 1),
+            generic_plus(&[
+                "class_feature.druid.nature_bond_and_wild_empathy.unsupported",
+                "class_spell.druid.prepared_divine.unsupported",
+            ])
+        );
 
         // Proves the Human-only gate: a non-Human race on a partially-supported
         // class collapses to the same 4 generic diagnostics as an unsupported class.
