@@ -427,6 +427,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
+    explain_halfling_race_seam(input, &mut explanations, &mut diagnostics);
+
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
     PilotBaseChassisComputation {
@@ -509,16 +511,20 @@ fn explain_human_race_seam(
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if input.chosen.race_id != HUMAN_RACE_ID {
-        // Dwarf, Elf, Gnome, Half-Elf, and Half-Orc carry their own dedicated
-        // race-semantics seams (explain_dwarf_race_seam, explain_elf_race_seam,
-        // explain_gnome_race_seam, explain_half_elf_race_seam,
-        // explain_half_orc_race_seam); they replace this generic diagnostic
-        // rather than stacking alongside it.
+        // Dwarf, Elf, Gnome, Half-Elf, Half-Orc, and Halfling carry their own
+        // dedicated race-semantics seams (explain_dwarf_race_seam,
+        // explain_elf_race_seam, explain_gnome_race_seam,
+        // explain_half_elf_race_seam, explain_half_orc_race_seam,
+        // explain_halfling_race_seam); they replace this generic diagnostic
+        // rather than stacking alongside it. With Halfling landed, this branch
+        // is unreachable for the seven-race SD-13 roster but stays as a
+        // defensive fallback for any race identity outside that roster.
         if input.chosen.race_id != DWARF_RACE_ID
             && input.chosen.race_id != ELF_RACE_ID
             && input.chosen.race_id != GNOME_RACE_ID
             && input.chosen.race_id != HALF_ELF_RACE_ID
             && input.chosen.race_id != HALF_ORC_RACE_ID
+            && input.chosen.race_id != HALFLING_RACE_ID
         {
             diagnostics.push(ComputationDiagnostic {
                 id: "race.semantics.unverified".to_owned(),
@@ -1184,6 +1190,124 @@ fn explain_half_orc_race_seam(
                   on Intimidate checks), Orc Ferocity (fighting on for one more round after \
                   being brought below 0 hit points), and weapon familiarity (orc double axe, \
                   falchion, and treating any weapon with 'orc' in its name as martial)."
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+const HALFLING_RACE_ID: &str = "race:halfling";
+const HALFLING_SIZE_CATEGORY: &str = "Small";
+const HALFLING_BASE_SPEED_FEET: i16 = 20;
+const HALFLING_DEX_ADJUSTMENT: i16 = 2;
+const HALFLING_STR_ADJUSTMENT: i16 = -2;
+
+/// SD13-E2 Halfling racial trait bundle explanation seam (mirroring the
+/// Dwarf/Elf/Gnome fixed-ability-pair pattern for the sixth and final
+/// non-Human core race).
+///
+/// Surfaces four grounded PF1 Core Rulebook Halfling racial trait dimensions
+/// (ability modifiers, size, speed, senses) as explicit `ComputationExplanation`
+/// records so the Halfling identity is legible on the runtime path rather than
+/// left behind the generic `race.semantics.unverified` diagnostic.
+///
+/// This function:
+///   - runs only when `race_id == race:halfling`; every other race is
+///     unaffected (Human, Dwarf, Elf, Gnome, Half-Elf, and Half-Orc keep their
+///     own seams),
+///   - adds no new computed mechanical contribution: the ability-modifiers
+///     record is recognition-only (the chosen Dexterity/Strength scores are
+///     understood to already reflect the fixed +2/-2 racial adjustment; no
+///     arithmetic is performed on this seam), and the size/senses records
+///     carry the grounded source value as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with a
+///     Halfling-specific `race.halfling.bounded_semantics` note naming the
+///     still-unproven families explicitly (Fearless, Halfling Luck, Keen
+///     Senses, Sure-Footed, weapon familiarity, and the explicit absence of
+///     any Halfling racial bonus feat),
+///   - is bounded to race recognition only; it deliberately grounds no
+///     Halfling class-chassis interaction, no other race, and no PF1
+///     alternate ruleset.
+fn explain_halfling_race_seam(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != HALFLING_RACE_ID {
+        return;
+    }
+
+    // ----- ability modifiers -----
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.ability_modifiers".to_owned(),
+        value: 0,
+        detail: format!(
+            "Halfling racial trait bundle — ability modifiers: PF1 Core Halfling grants a \
+             fixed {HALFLING_DEX_ADJUSTMENT:+} Dexterity and {HALFLING_STR_ADJUSTMENT:+} \
+             Strength racial adjustment (cr_races.lst race:halfling \
+             STAT:DEX|{HALFLING_DEX_ADJUSTMENT:+}, STAT:STR|{HALFLING_STR_ADJUSTMENT:+}). This \
+             is a bounded recognition record naming the fixed adjustment on the deterministic \
+             pilot seam; the chosen Dexterity and Strength scores are understood to already \
+             reflect it, so this record performs no arithmetic and carries no fabricated \
+             mechanical value (+0)"
+        ),
+    });
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Halfling racial trait bundle — size: PF1 Core Halfling is \
+             {HALFLING_SIZE_CATEGORY} size (cr_races.lst race:halfling SIZE:SMALL). This is a \
+             bounded recognition record naming the Halfling size category on the deterministic \
+             pilot seam; it contributes no numeric effect to attack rolls, AC, skill checks, \
+             ability checks, or any other computed value, so it carries no fabricated \
+             mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.speed".to_owned(),
+        value: HALFLING_BASE_SPEED_FEET,
+        detail: format!(
+            "Halfling racial trait bundle — speed: PF1 Core Halfling has a base land speed of \
+             {HALFLING_BASE_SPEED_FEET} ft \
+             (cr_races.lst race:halfling GAIT:WALK|{HALFLING_BASE_SPEED_FEET}). This is a \
+             grounded recognition value carrying the Halfling base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    // Bounded "no special senses" classification, mirroring Human's pattern:
+    // PF1 Core Halflings have ordinary vision (no darkvision, no low-light vision).
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Halfling racial trait bundle — senses: PF1 Core Halfling grants no special \
+                  senses (cr_races.lst race:halfling carries no SENSE tag; darkvision, \
+                  low-light vision, and other sense bonuses are absent). This is a bounded \
+                  no-effect classification record on the deterministic pilot seam; it carries \
+                  no fabricated sense bonus and contributes no computed value (+0)"
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Halfling specifically
+    // and stays non-claim-blocking so the deterministic pilot still reports
+    // computed evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.halfling.bounded_semantics".to_owned(),
+        message: "Halfling race semantics are grounded for the deterministic pilot's ability \
+                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core \
+                  Halfling racial trait surface remains unverified: Fearless (a bonus on saves \
+                  against fear), Halfling Luck (a luck bonus on all saving throws), Keen Senses \
+                  (a bonus on Perception checks), Sure-Footed (a bonus on Acrobatics and Climb \
+                  checks), and weapon familiarity (sling and thrown weapons). PF1 core \
+                  Halflings gain no racial bonus feat (unlike Human), so that family is \
+                  explicitly not applicable rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
     });

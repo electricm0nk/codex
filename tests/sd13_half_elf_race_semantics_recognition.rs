@@ -234,14 +234,17 @@ fn human_input_does_not_surface_half_elf_trait_bundle_records() {
 
 #[test]
 fn other_non_human_race_still_gets_the_generic_unverified_diagnostic() {
-    let halfling = HALF_ELF_FIXTURE.replace("race_id=race:half-elf", "race_id=race:halfling");
-    let input = load(&halfling);
+    // Every named SD-13 roster race now has its own dedicated seam, so this
+    // exercises the generic-diagnostic fallback with a race identity outside
+    // the seven-race roster entirely.
+    let other = HALF_ELF_FIXTURE.replace("race_id=race:half-elf", "race_id=race:tiefling");
+    let input = load(&other);
     let computation = compute_pilot_base_chassis(&input);
 
     for id in BUNDLE_IDS {
         assert!(
             !has_explanation(&computation, id),
-            "Halfling input must not surface Half-Elf trait bundle record '{id}', got explanations {:?}",
+            "Tiefling input must not surface Half-Elf trait bundle record '{id}', got explanations {:?}",
             computation.explanations
         );
     }
@@ -303,17 +306,9 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         );
     }
 
-    // Half-Orc was later promoted to Partial/Computed by its own SD13-E2
-    // recognition slice; this Half-Elf-slice snapshot only asserts the races
-    // it did not touch.
-    for id in ["race.halfling.bounded_semantics"] {
-        let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Unverified,
-            "row {id} must stay Unverified after the half-elf slice"
-        );
-    }
+    // Half-Orc and Halfling were later promoted to Partial/Computed by their
+    // own SD13-E2 recognition slices; this Half-Elf-slice snapshot no longer
+    // has any untouched sibling race to assert.
 
     assert!(
         !matrix

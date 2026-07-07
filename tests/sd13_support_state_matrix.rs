@@ -208,11 +208,11 @@ fn fighter_level_1_and_levels_2_10_remain_separate_rows() {
 }
 
 #[test]
-fn every_still_unrecognized_non_human_race_row_is_unverified_and_observed() {
-    // Dwarf, Elf, Gnome, Half-Elf, and Half-Orc were promoted to
-    // Partial/Computed by their own SD13-E2 recognition slices; verified
-    // separately below. The remaining one non-Human race row is still a pure
-    // roster-scope placeholder with no runtime evidence.
+fn every_non_human_race_row_now_carries_runtime_evidence() {
+    // Dwarf, Elf, Gnome, Half-Elf, Half-Orc, and Halfling were all promoted to
+    // Partial/Computed by their own SD13-E2 recognition slices. With this
+    // final race slice landed, no core race row is a pure roster-scope
+    // placeholder any longer.
     let matrix = matrix();
     let recognized = [
         "race.dwarf.bounded_semantics",
@@ -220,39 +220,39 @@ fn every_still_unrecognized_non_human_race_row_is_unverified_and_observed() {
         "race.gnome.bounded_semantics",
         "race.half_elf.bounded_semantics",
         "race.half_orc.bounded_semantics",
+        "race.halfling.bounded_semantics",
     ];
     let non_human_races: Vec<&SupportStateRow> = matrix
         .rows
         .iter()
         .filter(|r| r.subject_type == MatrixSubjectType::Race)
         .filter(|r| r.row_id != "race.human.pilot_semantics")
-        .filter(|r| !recognized.contains(&r.row_id))
         .collect();
 
     assert_eq!(
         non_human_races.len(),
-        1,
-        "there must be 1 remaining unrecognized non-Human race row"
+        recognized.len(),
+        "there must be exactly {} non-Human race rows",
+        recognized.len()
     );
     for race in non_human_races {
+        assert!(
+            recognized.contains(&race.row_id),
+            "unexpected non-Human race row '{}'",
+            race.row_id
+        );
         assert_eq!(
             race.support_state,
-            SupportState::Unverified,
-            "non-Human race row '{}' must be Unverified",
+            SupportState::Partial,
+            "non-Human race row '{}' must be Partial",
             race.row_id
         );
         assert_eq!(
             race.evidence_tier,
-            EvidenceTier::Observed,
-            "non-Human race row '{}' must be Observed",
+            EvidenceTier::Computed,
+            "non-Human race row '{}' must be Computed",
             race.row_id
         );
-    }
-
-    for row_id in recognized {
-        let recognized_row = matrix.row(row_id).expect("recognized row must exist");
-        assert_eq!(recognized_row.support_state, SupportState::Partial);
-        assert_eq!(recognized_row.evidence_tier, EvidenceTier::Computed);
     }
 }
 
@@ -473,6 +473,7 @@ fn only_pilot_grounded_rows_rise_above_observed() {
         "race.gnome.bounded_semantics",
         "race.half_elf.bounded_semantics",
         "race.half_orc.bounded_semantics",
+        "race.halfling.bounded_semantics",
         "class.fighter.level_1_pilot",
         "class.fighter.levels_2_10",
         "class.rogue.bounded_progression",
@@ -575,13 +576,14 @@ fn every_row_carries_grounding_and_next_uplift() {
 /// The rows anchored to a live, re-runnable proof surface. These are exactly the
 /// pilot-grounded, hybrid-baseline, Barbarian martial-baseline, and spell-baseline
 /// rows that rise above `Observed` evidence.
-const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 19] = [
+const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 20] = [
     "race.human.pilot_semantics",
     "race.dwarf.bounded_semantics",
     "race.elf.bounded_semantics",
     "race.gnome.bounded_semantics",
     "race.half_elf.bounded_semantics",
     "race.half_orc.bounded_semantics",
+    "race.halfling.bounded_semantics",
     "class.fighter.level_1_pilot",
     "class.fighter.levels_2_10",
     "class.rogue.bounded_progression",
