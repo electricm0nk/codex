@@ -106,6 +106,8 @@ WINDOW_ID=$window_id
 APP_ROOT=$app_root
 EOF
 
+  trap - EXIT INT TERM
+
   echo "Ready. DISPLAY=:$DISPLAY_NUM WINDOW_ID=$window_id"
 }
 
