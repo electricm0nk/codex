@@ -1,5 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod character_hub;
 mod ge08_workbench;
 mod sd13_support_state_matrix;
 mod sd16_browser_handoff;
@@ -7,6 +8,7 @@ mod update;
 
 use serde::Serialize;
 
+use character_hub::{create_character, list_saved_characters, load_saved_character};
 use sd13_support_state_matrix::{load_sd13_support_state_matrix_snapshot, Sd13SupportStateMatrixSnapshot};
 use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
@@ -71,7 +73,10 @@ fn main() {
             is_install_eligible,
             perform_install,
             perform_restore_previous,
-            verify_relaunch_artifact
+            verify_relaunch_artifact,
+            create_character,
+            list_saved_characters,
+            load_saved_character
         ])
         .run(tauri::generate_context!())
         .expect("error while running codex desktop shell scaffold");

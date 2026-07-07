@@ -14,7 +14,10 @@ use crate::rules_core::character_input::{
     ActiveState, CharacterInput, load_character_input_fixture,
 };
 
-use super::{SavedCharacterEnvelope, SavedCharacterRevisionKind, SavedCharacterStoreError};
+use super::{
+    SavedCharacterEnvelope, SavedCharacterListing, SavedCharacterListingError,
+    SavedCharacterRevisionKind, SavedCharacterStoreError, SavedCharacterSummary,
+};
 
 const ENVELOPE_FILE: &str = "envelope.txt";
 const CHARACTER_INPUT_FILE: &str = "authoritative_character_input.txt";
@@ -53,6 +56,7 @@ impl SavedCharacterStore {
             "content_or_rules_provenance",
             &envelope.content_or_rules_provenance,
         )?;
+        ensure_single_line("game_system", &envelope.game_system)?;
         ensure_single_line(
             "latest_authoritative_revision_ref",
             &envelope.latest_authoritative_revision_ref,
@@ -109,10 +113,75 @@ impl SavedCharacterStore {
             schema_version: metadata.schema_version,
             app_or_runtime_version: metadata.app_or_runtime_version,
             content_or_rules_provenance: metadata.content_or_rules_provenance,
+            game_system: metadata.game_system,
             latest_authoritative_revision_ref: metadata.latest_authoritative_revision_ref,
             display_label: metadata.display_label,
             character_input,
         })
+    }
+
+    /// List every saved character under `characters_root`.
+    ///
+    /// A nonexistent root returns an empty listing rather than an error — a
+    /// character hub with no characters yet is not a failure. Each
+    /// subdirectory is loaded independently: one corrupt/unreadable saved
+    /// character is reported in `unreadable_entries` without failing the
+    /// rest of the listing.
+    pub fn list_all(characters_root: &Path) -> Result<SavedCharacterListing, SavedCharacterStoreError> {
+        let entries = match fs::read_dir(characters_root) {
+            Ok(entries) => entries,
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
+                return Ok(SavedCharacterListing {
+                    characters: Vec::new(),
+                    unreadable_entries: Vec::new(),
+                });
+            }
+            Err(err) => return Err(io_error(characters_root, err)),
+        };
+
+        let mut subdirectories: Vec<_> = entries
+            .filter_map(Result::ok)
+            .filter(|entry| entry.path().is_dir())
+            .collect();
+        subdirectories.sort_by_key(|entry| entry.file_name());
+
+        let mut characters = Vec::new();
+        let mut unreadable_entries = Vec::new();
+        for entry in subdirectories {
+            match Self::load(&entry.path()) {
+                Ok(envelope) => characters.push(summarize(&envelope)),
+                Err(err) => unreadable_entries.push(SavedCharacterListingError {
+                    entry_name: entry.file_name().to_string_lossy().into_owned(),
+                    message: err.message,
+                }),
+            }
+        }
+
+        Ok(SavedCharacterListing {
+            characters,
+            unreadable_entries,
+        })
+    }
+}
+
+fn summarize(envelope: &SavedCharacterEnvelope) -> SavedCharacterSummary {
+    let class_summary = envelope
+        .character_input
+        .chosen
+        .class_levels
+        .iter()
+        .map(|class_level| format!("{}:{}", class_level.class_id, class_level.level))
+        .collect::<Vec<_>>()
+        .join(",");
+
+    SavedCharacterSummary {
+        character_id: envelope.character_id.clone(),
+        display_label: envelope.display_label.clone(),
+        game_system: envelope.game_system.clone(),
+        schema_version: envelope.schema_version,
+        saved_at: envelope.saved_at.clone(),
+        race_id: envelope.character_input.chosen.race_id.clone(),
+        class_summary,
     }
 }
 
@@ -202,6 +271,7 @@ fn render_envelope(envelope: &SavedCharacterEnvelope) -> String {
         "content_or_rules_provenance = {}",
         envelope.content_or_rules_provenance
     );
+    let _ = writeln!(out, "game_system = {}", envelope.game_system);
     let _ = writeln!(
         out,
         "latest_authoritative_revision_ref = {}",
@@ -285,6 +355,7 @@ struct ParsedEnvelopeMetadata {
     schema_version: Option<u16>,
     app_or_runtime_version: Option<String>,
     content_or_rules_provenance: Option<String>,
+    game_system: Option<String>,
     latest_authoritative_revision_ref: Option<String>,
     display_label: Option<String>,
 }
@@ -297,8 +368,25 @@ struct EnvelopeMetadata {
     schema_version: u16,
     app_or_runtime_version: String,
     content_or_rules_provenance: String,
+    game_system: String,
     latest_authoritative_revision_ref: String,
     display_label: String,
+}
+
+/// Back-compat default for schema_version=1 envelopes saved before the
+/// `game_system` field existed. Every pre-existing saved character is PF1e;
+/// this derives the canonical short id from the existing
+/// `content_or_rules_provenance` lineage prefix (e.g. "pf1.core_rulebook" ->
+/// "pf1") instead of fabricating an unrelated default.
+const LEGACY_DEFAULT_GAME_SYSTEM: &str = "pf1";
+
+fn derive_legacy_game_system(content_or_rules_provenance: &str) -> String {
+    content_or_rules_provenance
+        .split('.')
+        .next()
+        .filter(|segment| !segment.is_empty())
+        .unwrap_or(LEGACY_DEFAULT_GAME_SYSTEM)
+        .to_owned()
 }
 
 fn parse_envelope(text: &str) -> Result<EnvelopeMetadata, SavedCharacterStoreError> {
@@ -340,6 +428,7 @@ fn parse_envelope(text: &str) -> Result<EnvelopeMetadata, SavedCharacterStoreErr
             "content_or_rules_provenance" => {
                 parsed.content_or_rules_provenance = Some(value.to_owned())
             }
+            "game_system" => parsed.game_system = Some(value.to_owned()),
             "latest_authoritative_revision_ref" => {
                 parsed.latest_authoritative_revision_ref = Some(value.to_owned())
             }
@@ -351,6 +440,16 @@ fn parse_envelope(text: &str) -> Result<EnvelopeMetadata, SavedCharacterStoreErr
             }
         }
     }
+
+    let content_or_rules_provenance = parsed.content_or_rules_provenance.ok_or_else(|| {
+        parse_error("envelope missing required field content_or_rules_provenance")
+    })?;
+    // Pre-existing (schema_version=1) envelopes have no game_system line at
+    // all; derive an honest default from the content/rules lineage rather
+    // than failing to load a legacy artifact.
+    let game_system = parsed
+        .game_system
+        .unwrap_or_else(|| derive_legacy_game_system(&content_or_rules_provenance));
 
     Ok(EnvelopeMetadata {
         character_id: parsed
@@ -371,9 +470,8 @@ fn parse_envelope(text: &str) -> Result<EnvelopeMetadata, SavedCharacterStoreErr
         app_or_runtime_version: parsed
             .app_or_runtime_version
             .ok_or_else(|| parse_error("envelope missing required field app_or_runtime_version"))?,
-        content_or_rules_provenance: parsed.content_or_rules_provenance.ok_or_else(|| {
-            parse_error("envelope missing required field content_or_rules_provenance")
-        })?,
+        content_or_rules_provenance,
+        game_system,
         latest_authoritative_revision_ref: parsed.latest_authoritative_revision_ref.ok_or_else(
             || parse_error("envelope missing required field latest_authoritative_revision_ref"),
         )?,
