@@ -65,6 +65,11 @@
 //!   senses) are recognized on the compute seam, but the remaining Gnome family
 //!   surface (Defensive Training, Illusion Resistance, Hatred, Keen Senses, Gnome
 //!   Magic, weapon familiarity) stays unproven,
+//! - the Half-Elf row is `Partial` / `Computed`: the SD13-E2 slice proves four
+//!   grounded Half-Elf racial trait dimensions (a player-chosen ability-bonus
+//!   target, size, speed, senses) are recognized on the compute seam, but the
+//!   remaining Half-Elf family surface (Elven Immunities, Adaptability, Keen
+//!   Senses, Multitalented) stays unproven,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
 //! - every other core race and core class, and the broader non-Human interaction row
 //!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime evidence
@@ -257,6 +262,13 @@ const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_ba
 /// stays explicitly honest about the remaining unproven Gnome family surface.
 const SD13_GNOME_LEVEL1_TEST: &str = "tests/sd13_gnome_race_semantics_recognition.rs";
 
+/// SD13-E2 dedicated proof surface for the bounded Half-Elf race-semantics
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Half-Elf racial trait dimensions (chosen ability-bonus target, size, speed,
+/// senses) that stays explicitly honest about the remaining unproven Half-Elf
+/// family surface.
+const SD13_HALF_ELF_LEVEL1_TEST: &str = "tests/sd13_half_elf_race_semantics_recognition.rs";
+
 /// SD13-E4-F7 dedicated proof surface for the bounded Human Bard level-1 spell
 /// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
 /// that stays explicitly blocked on the bardic knowledge + bardic music chassis-class-feature
@@ -405,13 +417,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.half_elf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:half-elf",
-                dimension: "bounded race semantics",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E2 race-semantic slice",
+                dimension: "bounded Half-Elf race semantics: four grounded PF1 Core Rulebook \
+                            Half-Elf racial trait dimensions (chosen ability-bonus target, \
+                            size, speed, senses) recognized on the compute seam, with the \
+                            remaining Half-Elf family surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_HALF_ELF_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Half-Elf race-semantic families are recognized on the compute seam (a \
+                    player-chosen +2 ability-bonus target, mirroring the Human ability-bonus \
+                    mechanic's shape rather than a fixed pair; size: Medium; speed: 30 ft; \
+                    senses: low-light vision), but the remaining families stay unproven: Elven \
+                    Immunities (sleep immunity, enchantment save bonus), Adaptability (a bonus \
+                    Skill Focus feat), Keen Senses (Perception bonus), and Multitalented \
+                    (dual favored classes). No numeric mechanical contribution is fabricated \
+                    beyond the already-computed ability modifier for the chosen target.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Half-Elf families (Elven Immunities, Adaptability, Keen Senses, \
+                    Multitalented) as a real computed contribution",
             },
             SupportStateRow {
                 row_id: "race.half_orc.bounded_semantics",

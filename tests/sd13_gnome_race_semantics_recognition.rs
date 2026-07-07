@@ -313,8 +313,10 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         );
     }
 
+    // Half-Elf was later promoted to Partial/Computed by its own SD13-E2
+    // recognition slice; this Gnome-slice snapshot only asserts the races it
+    // did not touch.
     for id in [
-        "race.half_elf.bounded_semantics",
         "race.half_orc.bounded_semantics",
         "race.halfling.bounded_semantics",
     ] {

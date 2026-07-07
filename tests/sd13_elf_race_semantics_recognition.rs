@@ -314,11 +314,10 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         "dwarf row must keep its accepted Partial posture after the elf slice"
     );
 
-    // Gnome was later promoted to Partial/Computed by its own SD13-E2
-    // recognition slice; this Elf-slice snapshot only asserts the races it did
-    // not touch.
+    // Gnome and Half-Elf were later promoted to Partial/Computed by their own
+    // SD13-E2 recognition slices; this Elf-slice snapshot only asserts the
+    // races it did not touch.
     for id in [
-        "race.half_elf.bounded_semantics",
         "race.half_orc.bounded_semantics",
         "race.halfling.bounded_semantics",
     ] {

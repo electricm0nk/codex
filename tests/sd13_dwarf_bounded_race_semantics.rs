@@ -319,11 +319,10 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         .expect("human row must exist");
     assert_eq!(human.support_state, SupportState::Partial);
 
-    // Elf and Gnome were later promoted to Partial/Computed by their own
-    // SD13-E2 recognition slices; this Dwarf-slice snapshot only asserts the
+    // Elf, Gnome, and Half-Elf were later promoted to Partial/Computed by their
+    // own SD13-E2 recognition slices; this Dwarf-slice snapshot only asserts the
     // races it did not touch.
     for id in [
-        "race.half_elf.bounded_semantics",
         "race.half_orc.bounded_semantics",
         "race.halfling.bounded_semantics",
     ] {

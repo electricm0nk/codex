@@ -413,6 +413,13 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_gnome_race_seam(input, &mut explanations, &mut diagnostics);
 
+    explain_half_elf_race_seam(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
+
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
     PilotBaseChassisComputation {
@@ -495,12 +502,14 @@ fn explain_human_race_seam(
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if input.chosen.race_id != HUMAN_RACE_ID {
-        // Dwarf, Elf, and Gnome carry their own dedicated race-semantics seams
-        // (explain_dwarf_race_seam, explain_elf_race_seam, explain_gnome_race_seam);
-        // they replace this generic diagnostic rather than stacking alongside it.
+        // Dwarf, Elf, Gnome, and Half-Elf carry their own dedicated race-semantics
+        // seams (explain_dwarf_race_seam, explain_elf_race_seam,
+        // explain_gnome_race_seam, explain_half_elf_race_seam); they replace this
+        // generic diagnostic rather than stacking alongside it.
         if input.chosen.race_id != DWARF_RACE_ID
             && input.chosen.race_id != ELF_RACE_ID
             && input.chosen.race_id != GNOME_RACE_ID
+            && input.chosen.race_id != HALF_ELF_RACE_ID
         {
             diagnostics.push(ComputationDiagnostic {
                 id: "race.semantics.unverified".to_owned(),
@@ -927,6 +936,125 @@ fn explain_gnome_race_seam(
                   (gnome hooked hammer). PF1 core Gnomes gain no racial bonus feat (unlike \
                   Human), so that family is explicitly not applicable rather than silently \
                   omitted."
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+const HALF_ELF_RACE_ID: &str = "race:half-elf";
+const HALF_ELF_SIZE_CATEGORY: &str = "Medium";
+const HALF_ELF_BASE_SPEED_FEET: i16 = 30;
+const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
+
+/// SD13-E2 Half-Elf racial trait bundle explanation seam (mirroring the
+/// Dwarf/Elf/Gnome recognition pattern for the fourth non-Human core race, but
+/// with a choice-based ability bonus like Human's rather than a fixed pair).
+///
+/// Surfaces four grounded PF1 Core Rulebook Half-Elf racial trait dimensions
+/// (chosen ability-bonus target, size, speed, senses) as explicit
+/// `ComputationExplanation` records so the Half-Elf identity is legible on the
+/// runtime path rather than left behind the generic `race.semantics.unverified`
+/// diagnostic every other non-Human race still receives.
+///
+/// This function:
+///   - runs only when `race_id == race:half-elf`; every other race is unaffected
+///     (Human, Dwarf, Elf, and Gnome keep their own seams; every other non-Human
+///     race keeps the generic `race.semantics.unverified` diagnostic),
+///   - adds no new computed mechanical contribution: the ability-bonus-target
+///     record surfaces the already-computed modifier for the chosen ability as
+///     recognition (mirroring `race.human.ability_bonus_target`'s shape), and
+///     the size/senses records carry the grounded source value as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with a
+///     Half-Elf-specific `race.half_elf.bounded_semantics` note naming the
+///     still-unproven families explicitly (Elven Immunities, Adaptability, Keen
+///     Senses, Multitalented),
+///   - is bounded to race recognition only; it deliberately grounds no Half-Elf
+///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
+fn explain_half_elf_race_seam(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != HALF_ELF_RACE_ID {
+        return;
+    }
+
+    // ----- ability bonus (choice-based, like Human) -----
+    if let Some(selection) = choice_selection(input, HALF_ELF_ABILITY_BONUS_CHOICE_ID) {
+        let ability = selection
+            .strip_prefix(ABILITY_SELECTION_PREFIX)
+            .unwrap_or(selection);
+        let modifier = ability_modifier_for(ability_modifiers, ability);
+        explanations.push(ComputationExplanation {
+            id: "race.half_elf.trait_bundle.ability_bonus_target".to_owned(),
+            value: modifier,
+            detail: format!(
+                "Half-Elf racial trait bundle — ability bonus: PF1 Core Half-Elf grants a \
+                 player-chosen +2 to any one ability score ({HALF_ELF_ABILITY_BONUS_CHOICE_ID} \
+                 -> {selection}); the chosen {ability} score yields modifier {modifier:+}. This \
+                 is a bounded recognition record naming the chosen target on the deterministic \
+                 pilot seam; the chosen score is understood to already reflect the +2 \
+                 adjustment, so this record performs no arithmetic beyond surfacing the \
+                 already-computed modifier"
+            ),
+        });
+    }
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_elf.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Half-Elf racial trait bundle — size: PF1 Core Half-Elf is \
+             {HALF_ELF_SIZE_CATEGORY} size (cr_races.lst race:half-elf SIZE:MEDIUM). This is a \
+             bounded recognition record naming the Half-Elf size category on the deterministic \
+             pilot seam; it contributes no numeric effect to attack rolls, AC, skill checks, \
+             ability checks, or any other computed value, so it carries no fabricated \
+             mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_elf.trait_bundle.speed".to_owned(),
+        value: HALF_ELF_BASE_SPEED_FEET,
+        detail: format!(
+            "Half-Elf racial trait bundle — speed: PF1 Core Half-Elf has a base land speed of \
+             {HALF_ELF_BASE_SPEED_FEET} ft \
+             (cr_races.lst race:half-elf GAIT:WALK|{HALF_ELF_BASE_SPEED_FEET}). This is a \
+             grounded recognition value carrying the Half-Elf base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_elf.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Half-Elf racial trait bundle — senses: PF1 Core Half-Elf grants low-light \
+                  vision (cr_races.lst race:half-elf SENSE:Low-Light Vision). This is a bounded \
+                  recognition record naming the Half-Elf low-light vision identity on the \
+                  deterministic pilot seam; it contributes no computed illumination or \
+                  perception-derived effect to any chassis output, so it carries no fabricated \
+                  mechanical value (+0)"
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Half-Elf specifically
+    // and stays non-claim-blocking so the deterministic pilot still reports
+    // computed evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.half_elf.bounded_semantics".to_owned(),
+        message: "Half-Elf race semantics are grounded for the deterministic pilot's chosen \
+                  ability-bonus target, size, speed, and senses trait bundle; the remaining PF1 \
+                  Core Half-Elf racial trait surface remains unverified: Elven Immunities \
+                  (immunity to magic sleep effects and a bonus on saves against enchantment \
+                  spells and effects), Adaptability (a bonus Skill Focus feat in a chosen skill \
+                  at 1st level), Keen Senses (a bonus on Perception checks), and Multitalented \
+                  (counting both parent classes as favored classes)."
             .to_owned(),
         claim_blocking: false,
     });
