@@ -155,19 +155,19 @@ fn fighter_levels_2_10_row_is_partial_and_computed_and_names_what_remains() {
         !partial.blocker_or_lossiness_note.is_empty(),
         "partial Fighter levels-2-10 row must carry a non-empty note on what remains unproven"
     );
-    // The note must explicitly name that levels 5-10 remain out of proof after the
-    // SD13-E3 level-4 widening slice.
+    // The note must explicitly name that levels 6-10 remain out of proof after the
+    // SD13-E3 level-5 widening slice.
     assert!(
-        partial.blocker_or_lossiness_note.contains("5-10")
-            || partial.blocker_or_lossiness_note.contains("weapon training"),
-        "partial Fighter row must name the still-unproven levels 5-10: {}",
+        partial.blocker_or_lossiness_note.contains("6-10")
+            || partial.blocker_or_lossiness_note.contains("armor-training"),
+        "partial Fighter row must name the still-unproven levels 6-10: {}",
         partial.blocker_or_lossiness_note
     );
     assert!(
         partial
             .grounding_ref
-            .contains("sd13_fighter_level4_progression"),
-        "partial Fighter row must cite the SD13-E3 level-4 proof surface: {}",
+            .contains("sd13_fighter_level5_progression"),
+        "partial Fighter row must cite the SD13-E3 level-5 proof surface: {}",
         partial.grounding_ref
     );
 }

@@ -239,10 +239,11 @@ const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 /// pillar burdens (base attack, base save, sneak attack, trapfinding).
 const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs";
 
-/// SD13-E3 dedicated proof surface for the bounded Fighter level-4 milestone
-/// (base progression continues generically, level-4 bonus-feat seam). This is the
-/// most specific/current proof for the levels-2-10 row's grounding_ref.
-const SD13_FIGHTER_LEVEL4_TEST: &str = "tests/sd13_fighter_level4_progression.rs";
+/// SD13-E3 dedicated proof surface for the bounded Fighter level-5 milestone
+/// (Weapon Training 1 attack-roll half, folded into the baseline melee attack
+/// bonus). This is the most specific/current proof for the levels-2-10 row's
+/// grounding_ref.
+const SD13_FIGHTER_LEVEL5_TEST: &str = "tests/sd13_fighter_level5_progression.rs";
 
 /// SD13-E3-F5 dedicated proof surface for the bounded Fighter level-1 mandatory
 /// milestone classification: enumerates which level-1 mandatory milestones the
@@ -561,23 +562,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
                 dimension: "class progression across levels 2-10: bounded milestone proof \
-                            for levels 2 through 4 only, with levels 5-10 still unproven",
+                            for levels 2 through 5 only, with levels 6-10 still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_FIGHTER_LEVEL4_TEST,
-                blocker_or_lossiness_note: "SD13-E3 proves Fighter levels 2 through 4: base \
+                grounding_ref: SD13_FIGHTER_LEVEL5_TEST,
+                blocker_or_lossiness_note: "SD13-E3 proves Fighter levels 2 through 5: base \
                     attack / base save progression (the classlevel, classlevel/2+2, \
                     classlevel/3 formulas are level-generic), the level-2 and level-4 \
-                    bonus-feat progression seams, and the level-3 armor-training seam over the \
-                    deterministic Human loadout. The generic PF1 level-4 ability-score-increase \
+                    bonus-feat progression seams, the level-3 armor-training seam, and the \
+                    level-5 Weapon Training 1 attack-roll half (folded into the baseline melee \
+                    attack bonus for the canonical Heavy Blades group) over the deterministic \
+                    Human loadout. The Weapon Training damage-roll half stays unproven — no \
+                    damage total is computed anywhere in this codebase for any Fighter level, \
+                    so this is not a new gap. The generic PF1 level-4 ability-score-increase \
                     milestone needs no separate seam: the chosen ability score is trusted at \
-                    face value. Levels 5-10 remain out of proof, along with weapon training \
-                    (from level 5), later armor-training ranks (from level 7), the repeated \
-                    bonus-feat cadence beyond level 4, and any general feat-effect/prerequisite \
-                    engine",
-                next_required_uplift: "later SD13-E3 slice widening Fighter beyond level 4 \
-                    toward the level-10 milestones, starting with level 5 weapon training",
+                    face value. Levels 6-10 remain out of proof, along with later armor-training \
+                    ranks (from level 7), the repeated bonus-feat cadence beyond level 4, and \
+                    any general feat-effect/prerequisite engine",
+                next_required_uplift: "later SD13-E3 slice widening Fighter beyond level 5 \
+                    toward the level-10 milestones, starting with level 6",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",

@@ -262,12 +262,12 @@ const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
 // Bounded SD13-E3 Fighter milestone widening. The accepted level-1 pilot is now
-// joined by levels 2, 3, and 4. Nothing here grounds level 5+ Fighter burden
-// (weapon training begins at level 5), later armor-training ranks (level 7+), or
+// joined by levels 2 through 5. Nothing here grounds level 6+ Fighter burden,
+// later armor-training ranks (level 7+), the weapon-training damage-roll half, or
 // any non-Fighter positive support. The generic PF1 level-4 ability-score-increase
 // milestone needs no separate seam: the chosen ability score is trusted at face
 // value, like every other ability adjustment in this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 4;
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 5;
 
 // Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
 // feat at level 2; this slice surfaces the named selection as an explicit seam only
@@ -280,6 +280,17 @@ const FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_2"
 // feat-effect or prerequisite engine, mirroring the level-2 seam.
 const FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_4";
 const CLEAVE_FEAT_SELECTION: &str = "feat:cleave";
+
+// Fighter Weapon Training 1, gained at level 5. It grants +1 to attack rolls and
+// damage rolls with weapons of the chosen weapon group. This slice grounds only
+// the attack-roll half (folded into the baseline melee attack bonus for the
+// deterministic Longsword, which falls under the canonical Heavy Blades group);
+// the damage-roll half is never computed for any Fighter level in this codebase,
+// so it stays explicitly unproven rather than silently omitted.
+const FIGHTER_WEAPON_TRAINING_1_LEVEL: u8 = 5;
+const WEAPON_TRAINING_1_ATTACK_BONUS: i16 = 1;
+const FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID: &str = "choice:fighter_weapon_training_group";
+const HEAVY_BLADES_GROUP_SELECTION: &str = "group:heavy_blades";
 
 // Fighter armor training 1, gained at level 3. It reduces the worn armor's
 // armor-check penalty by 1 (to a minimum of 0) and raises its maximum Dexterity
@@ -1506,6 +1517,26 @@ fn effective_chain_shirt_armor_check_penalty(level: u8) -> i16 {
     (CHAIN_SHIRT_ARMOR_CHECK_PENALTY + fighter_armor_training(level).armor_check_reduction).min(0)
 }
 
+/// The Weapon Training 1 attack-roll bonus for a Fighter at the given level,
+/// gated on the canonical `choice:fighter_weapon_training_group ->
+/// group:heavy_blades` selection (the group the deterministic Longsword falls
+/// under). Returns 0 before level 5 or when the group choice is absent — the
+/// canonical-choice validator (`CANONICAL_FIGHTER_FEAT_CHOICES`) separately
+/// claim-blocks a present-but-non-canonical selection, so this function only
+/// needs to distinguish "canonical" from "absent or anything else."
+fn fighter_weapon_training_attack_bonus(input: &CharacterInput, level: u8) -> i16 {
+    if level < FIGHTER_WEAPON_TRAINING_1_LEVEL {
+        return 0;
+    }
+    if choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID)
+        == Some(HEAVY_BLADES_GROUP_SELECTION)
+    {
+        WEAPON_TRAINING_1_ATTACK_BONUS
+    } else {
+        0
+    }
+}
+
 /// Compute the bounded Fighter base chassis for the supported milestone levels
 /// (1, 2, or 3), or block the claim if the input is not a supported single-class
 /// Fighter posture for this narrow slice.
@@ -1645,14 +1676,36 @@ fn explain_fighter_class_features(
             ),
         });
     }
+
+    let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
+    if weapon_training_bonus > 0 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.weapon_training".to_owned(),
+            value: weapon_training_bonus,
+            detail: format!(
+                "Fighter level {FIGHTER_WEAPON_TRAINING_1_LEVEL} Weapon Training 1 (weapon \
+                 training, cr_abilities_class.lst Fighter): the chosen weapon group \
+                 ({FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID} -> {HEAVY_BLADES_GROUP_SELECTION}) \
+                 grants +{weapon_training_bonus} to attack rolls with weapons of that group, \
+                 which the deterministic Longsword falls under; this +{weapon_training_bonus} is \
+                 already folded into the baseline melee attack bonus. Weapon Training also grants \
+                 +{weapon_training_bonus} to damage rolls with weapons of that group, but no \
+                 damage total is computed anywhere in this codebase for any Fighter level, so the \
+                 damage-roll half stays explicitly unproven rather than silently omitted"
+            ),
+        });
+    }
 }
 
 /// The canonical Human Fighter feat-choice selections this slice preserves on the
-/// deterministic level-1/2/3/4 seam, as `(choice_set_id, canonical_selection_id)`
-/// pairs. Any named slot present but deviating from its canonical selection is
-/// claim-blocked. A slot absent for the chosen level (e.g. the level-2 bonus feat
-/// at level 1) is not fabricated.
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 5] = [
+/// deterministic level-1 through level-5 seam, as `(choice_set_id,
+/// canonical_selection_id)` pairs. Any named slot present but deviating from its
+/// canonical selection is claim-blocked. A slot absent for the chosen level (e.g.
+/// the level-2 bonus feat at level 1) is not fabricated. This same machinery
+/// validates the level-5 weapon-training-group choice, since it is structurally
+/// identical to a bonus-feat slot (a named choice-set that must match one
+/// canonical selection).
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 6] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -1669,6 +1722,10 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 5] = [
     (
         FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID,
         CLEAVE_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID,
+        HEAVY_BLADES_GROUP_SELECTION,
     ),
 ];
 
@@ -3019,25 +3076,35 @@ fn compute_combat_baseline(
     }
 
     // Baseline melee attack bonus: Fighter BAB + STR modifier + Weapon Focus
-    // (Longsword). Power Attack is selected but inactive, contributing 0.
+    // (Longsword) + Weapon Training (from level 5, Heavy Blades). Power Attack is
+    // selected but inactive, contributing 0. The posture check above guarantees a
+    // supported Fighter level here.
+    let level = supported_fighter_level(input).unwrap_or(1);
     let strength_modifier = ability_modifiers.strength;
-    let melee_attack_bonus = base_attack_bonus + strength_modifier + WEAPON_FOCUS_TO_HIT_BONUS;
+    let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
+    let melee_attack_bonus = base_attack_bonus
+        + strength_modifier
+        + WEAPON_FOCUS_TO_HIT_BONUS
+        + weapon_training_bonus;
+    let weapon_training_detail = if weapon_training_bonus > 0 {
+        format!(" + Weapon Training (Heavy Blades) (+{weapon_training_bonus})")
+    } else {
+        String::new()
+    };
 
     explanations.push(ComputationExplanation {
         id: "combat.baseline_melee_attack_bonus".to_owned(),
         value: melee_attack_bonus,
         detail: format!(
             "Baseline melee attack bonus for the Longsword: Fighter base attack bonus (+{base_attack_bonus}) \
-             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}); \
+             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}; \
              Power Attack is selected but inactive (+0) = {melee_attack_bonus}"
         ),
     });
 
     // Baseline armor class: 10 + Chain Shirt armor bonus + capped DEX + Dodge,
     // with no shield (absent posture contributes 0). Fighter armor training from
-    // level 3 raises the Chain Shirt maximum Dexterity bonus; the posture check
-    // above guarantees a supported Fighter level here.
-    let level = supported_fighter_level(input).unwrap_or(1);
+    // level 3 raises the Chain Shirt maximum Dexterity bonus.
     let effective_max_dex = CHAIN_SHIRT_MAX_DEX + fighter_armor_training(level).max_dex_increase;
     let dexterity_modifier = ability_modifiers.dexterity;
     let dexterity_contribution = dexterity_modifier.min(effective_max_dex);

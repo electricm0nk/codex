@@ -164,14 +164,15 @@ fn unsupported_loadout_posture_blocks_combat_totals() {
 #[test]
 fn wrong_fighter_level_blocks_combat_totals() {
     // The deterministic baseline is grounded only across the bounded Fighter
-    // milestone levels 1-4 (SD13-E3 widened level 4 into the supported tranche). A
-    // Fighter above that bounded tranche (level 5+, where weapon training begins)
-    // must be treated as an unsupported posture, not silently computed, even
-    // though every other loadout/feat/choice condition still holds.
+    // milestone levels 1-5 (SD13-E3 widened level 5, Weapon Training 1, into the
+    // supported tranche). A Fighter above that bounded tranche (level 6+, where
+    // Armor Training 2 begins) must be treated as an unsupported posture, not
+    // silently computed, even though every other loadout/feat/choice condition
+    // still holds.
     let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:fighter:5");
+        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:fighter:6");
     assert!(
-        mutated.contains("class_level=class:fighter:5"),
+        mutated.contains("class_level=class:fighter:6"),
         "test setup should have mutated the Fighter level"
     );
     let input = load(&mutated);
