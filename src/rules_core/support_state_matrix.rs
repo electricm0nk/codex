@@ -14,8 +14,10 @@
 //! - the Human pilot race seam and the Fighter level-1 pilot chassis are `Partial`
 //!   / `Computed` (proven, but with named missing semantics),
 //! - the Fighter levels-2-10 row is `Partial` / `Computed`: the SD13-E3 tranche now
-//!   proves Fighter levels 2 and 3 (base progression, the level-2 bonus-feat seam,
-//!   and the level-3 armor-training seam), while levels 4-10 remain out of proof,
+//!   proves Fighter levels 2 through 8 (base attack/save progression, the level-2/
+//!   4/6/8 bonus-feat seams, the level-3 Armor Training 1 seam, the level-5 Weapon
+//!   Training 1 attack-roll seam, and the level-7 Armor Training 2 seam), while
+//!   levels 9-10 remain out of proof,
 //! - the Rogue row is `Partial` / `Computed`: the SD13-E3 slice proves the
 //!   deterministic Human Rogue level-1 chassis identity is recognized on the
 //!   compute seam, but it stays blocked on the base-attack, base-save,
@@ -243,10 +245,10 @@ const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 /// pillar burdens (base attack, base save, sneak attack, trapfinding).
 const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs";
 
-/// SD13-E3 dedicated proof surface for the bounded Fighter level-7 milestone
-/// (Armor Training 2 seam). This is the most specific/current proof for the
+/// SD13-E3 dedicated proof surface for the bounded Fighter level-8 milestone
+/// (level-8 bonus-feat seam). This is the most specific/current proof for the
 /// levels-2-10 row's grounding_ref.
-const SD13_FIGHTER_LEVEL7_TEST: &str = "tests/sd13_fighter_level7_progression.rs";
+const SD13_FIGHTER_LEVEL8_TEST: &str = "tests/sd13_fighter_level8_progression.rs";
 
 /// SD13-E3-F5 dedicated proof surface for the bounded Fighter level-1 mandatory
 /// milestone classification: enumerates which level-1 mandatory milestones the
@@ -574,27 +576,39 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
                 dimension: "class progression across levels 2-10: bounded milestone proof \
-                            for levels 2 through 7 only, with levels 8-10 still unproven",
+                            for levels 2 through 8 only, with levels 9-10 still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_FIGHTER_LEVEL7_TEST,
-                blocker_or_lossiness_note: "SD13-E3 proves Fighter levels 2 through 7: base \
+                grounding_ref: SD13_FIGHTER_LEVEL8_TEST,
+                blocker_or_lossiness_note: "SD13-E3 proves Fighter levels 2 through 8: base \
                     attack / base save progression (the classlevel, classlevel/2+2, \
-                    classlevel/3 formulas are level-generic), the level-2, level-4, and \
-                    level-6 bonus-feat progression seams, the level-3 Armor Training 1 seam, \
-                    the level-5 Weapon Training 1 attack-roll half (folded into the baseline \
-                    melee attack bonus for the canonical Heavy Blades group), and the level-7 \
-                    Armor Training 2 seam (raises the Climb/Swim selected-skill totals by +1 \
-                    each on the deterministic Chain Shirt) over the deterministic Human \
+                    classlevel/3 formulas are level-generic), the level-2 bonus-feat, level-4 \
+                    bonus-feat, level-6 bonus-feat, and level-8 bonus-feat progression seams, \
+                    the level-3 Armor Training 1 seam, the level-5 Weapon Training 1 \
+                    attack-roll half (folded into the \
+                    baseline melee attack bonus for the canonical Heavy Blades group), and the \
+                    level-7 Armor Training 2 seam (raises the Climb/Swim selected-skill totals \
+                    by +1 each on the deterministic Chain Shirt) over the deterministic Human \
                     loadout. The Weapon Training damage-roll half stays unproven — no damage \
                     total is computed anywhere in this codebase for any Fighter level, so this \
                     is not a new gap. The generic PF1 level-4 ability-score-increase milestone \
                     needs no separate seam: the chosen ability score is trusted at face value. \
-                    Levels 8-10 remain out of proof, along with the bonus-feat cadence beyond \
-                    level 6 (next at level 8), and any general feat-effect/prerequisite engine",
-                next_required_uplift: "later SD13-E3 slice widening Fighter beyond level 7 \
-                    toward the level-10 milestones, starting with level 8's bonus feat",
+                    Levels 9-10 remain out of proof: PF1 core Fighter has no new class-feature \
+                    milestone at level 9 (the bonus-feat cadence's next entry is level 10, and \
+                    base attack / base save progression is already the level-generic formula \
+                    this row proves), and level 10 itself introduces no new Fighter-specific \
+                    mechanic beyond that same generic base-attack/save climb and the ordinary \
+                    PF1 ability-score-increase milestone (already trusted at face value, like \
+                    every other ability adjustment in this codebase, with no separate seam \
+                    needed). Any general feat-effect/prerequisite engine also remains out of \
+                    proof",
+                next_required_uplift: "later SD13-E3 slice widening Fighter beyond level 8 \
+                    toward the level-10 milestones: level 9 has no new PF1 Fighter-specific \
+                    milestone (base attack/save progression is already level-generic and \
+                    auto-covered), and level 10 needs only the level-10 bonus-feat cadence \
+                    entry proven (no separate ability-score-increase seam, which is already \
+                    trusted at face value)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",

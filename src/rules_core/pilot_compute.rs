@@ -34,7 +34,10 @@
 //! posture burden; it grounds no spellbook content, no spells prepared, no spell
 //! slots, no spell save DCs, no bonus spells, no school-opposition bookkeeping, and
 //! no specialty school bonus. Unsupported input yields claim-blocking diagnostics
-//! and withheld explanations rather than fabricated values.
+//! and withheld explanations rather than fabricated values. The SD13-E3 Fighter
+//! milestone tranche has since widened further still, to level 8: the level-8
+//! bonus-feat progression seam is surfaced explicitly, mirroring the level-2/4/6
+//! bonus-feat seams, and grounds no level-9+ Fighter burden.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
 
@@ -262,12 +265,12 @@ const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
 // Bounded SD13-E3 Fighter milestone widening. The accepted level-1 pilot is now
-// joined by levels 2 through 7. Nothing here grounds level 8+ Fighter burden
-// (the next bonus feat begins at level 8), the weapon-training damage-roll half,
-// or any non-Fighter positive support. The generic PF1 level-4 ability-score-increase
-// milestone needs no separate seam: the chosen ability score is trusted at face
-// value, like every other ability adjustment in this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 7;
+// joined by levels 2 through 8. Nothing here grounds level 9+ Fighter burden, the
+// weapon-training damage-roll half, or any non-Fighter positive support. The
+// generic PF1 level-4 ability-score-increase milestone needs no separate seam:
+// the chosen ability score is trusted at face value, like every other ability
+// adjustment in this codebase.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 8;
 
 // Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
 // feat at level 2; this slice surfaces the named selection as an explicit seam only
@@ -287,6 +290,13 @@ const CLEAVE_FEAT_SELECTION: &str = "feat:cleave";
 // feat-effect or prerequisite engine, mirroring the level-2/level-4 seams.
 const FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_6";
 const COMBAT_REFLEXES_FEAT_SELECTION: &str = "feat:combat_reflexes";
+
+// Fighter level-8 bonus-feat progression seam. Fighter gains an additional bonus
+// feat at level 8 (the cadence continues 1, 2, 4, 6, 8, 10, ...); this slice
+// surfaces the named selection as an explicit seam only and grounds no general
+// feat-effect or prerequisite engine, mirroring the level-2/level-4/level-6 seams.
+const FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_8";
+const IMPROVED_CRITICAL_FEAT_SELECTION: &str = "feat:improved_critical";
 
 // Fighter Weapon Training 1, gained at level 5. It grants +1 to attack rolls and
 // damage rolls with weapons of the chosen weapon group. This slice grounds only
@@ -1696,6 +1706,22 @@ fn explain_fighter_class_features(
         });
     }
 
+    if level >= 8
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_8_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 8 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. This slice grounds the bonus-feat slot, not a \
+                     general feat-effect or prerequisite engine, so it contributes no computed \
+                     mechanical value (+0)"
+            ),
+        });
+    }
+
     let armor_training = fighter_armor_training(level);
     if armor_training.rank == 2 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
@@ -1759,7 +1785,7 @@ fn explain_fighter_class_features(
 /// validates the level-5 weapon-training-group choice, since it is structurally
 /// identical to a bonus-feat slot (a named choice-set that must match one
 /// canonical selection).
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 7] = [
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 8] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -1784,6 +1810,10 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 7] = [
     (
         FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID,
         COMBAT_REFLEXES_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID,
+        IMPROVED_CRITICAL_FEAT_SELECTION,
     ),
 ];
 
