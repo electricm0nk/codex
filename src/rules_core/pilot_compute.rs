@@ -23,9 +23,18 @@
 //! additionally recognizes the deterministic Human Paladin level-1 and Human Ranger
 //! level-1 hybrid chassis as direct runtime evidence, but keeps both explicitly
 //! claim-blocked on their still-missing non-spell class-feature burden and later spell
-//! burden; it grounds no hybrid class-feature or spell math. Unsupported input yields
-//! claim-blocking diagnostics and withheld explanations rather than fabricated
-//! values.
+//! burden; it grounds no hybrid class-feature or spell math. The SD13-E4-F7 slice
+//! also recognizes the deterministic Human Sorcerer level-1 spell-bearing identity as
+//! a direct runtime evidence, but keeps it explicitly claim-blocked on its
+//! bloodline and spontaneous known-spell / slot posture burdens; it grounds no
+//! bloodline power and no spell math. The SD13-E4-R3 slice further recognizes the
+//! deterministic Human Wizard level-1 prepared arcane spell-bearing identity as
+//! direct runtime evidence, but keeps it explicitly claim-blocked on its school
+//! specialization burden and prepared spellbook / spells-prepared / spell-slot
+//! posture burden; it grounds no spellbook content, no spells prepared, no spell
+//! slots, no spell save DCs, no bonus spells, no school-opposition bookkeeping, and
+//! no specialty school bonus. Unsupported input yields claim-blocking diagnostics
+//! and withheld explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
 
@@ -118,6 +127,15 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // known, spell DCs, bonus spells, or prepared posture) for it.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const SORCERER_BASELINE_LEVEL: u8 = 1;
+
+// Grounded SD13-E4-R3 Human Wizard level-1 prepared arcane spell-bearing baseline
+// identities. The Wizard class is the canonical PF1 prepared arcane full caster;
+// its class identity differs from Sorcerer in two ways that this bounded slice
+// surfaces explicitly: the prepared posture (spellbook + spells prepared per day +
+// spell slots per day) and the school specialization (one school chosen, two
+// opposed schools locked, specialty school bonus at later levels).
+const WIZARD_CLASS_ID: &str = "class:wizard";
+const WIZARD_BASELINE_LEVEL: u8 = 1;
 
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
@@ -283,6 +301,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
 
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+
+    explain_wizard_level1_prepared_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
@@ -885,6 +905,100 @@ fn explain_sorcerer_level1_spell_baseline(
              spontaneous casting, spells known, spell slots per day, bonus spell slots from a high \
              ability score, and spell save DCs are out of scope for this level-1 spell baseline and \
              no spell math is fabricated"
+                .to_owned(),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Wizard at the bounded
+/// prepared spell baseline level (1). Returns `false` for any other class, a multiclass
+/// mix, or a level-2+ Wizard this slice deliberately does not recognize — each of which
+/// stays blocked exactly as before.
+fn is_single_class_wizard_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == WIZARD_CLASS_ID
+                && class_level.level == WIZARD_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4-R3 runtime evidence for the deterministic Human Wizard
+/// level-1 prepared arcane spell-bearing baseline, while keeping it explicitly
+/// claim-blocked on its two still-missing burdens.
+///
+/// This deliberately does not compute a supported spell surface. It grounds no
+/// spellbook content, no spells prepared, no spell slots per day, no spell save
+/// DCs, no bonus spell slots from a high Intelligence, no school-opposition
+/// bookkeeping, and no specialty school bonus. It only:
+/// - leaves one recognition explanation so the `class:wizard:1` identity is
+///   acknowledged as a prepared arcane spell-bearing class rather than an
+///   undocumented packet placeholder (direct runtime evidence, carrying no
+///   fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the school
+///   specialization burden (chosen school, two opposed schools, specialty school
+///   bonus) and the prepared spellbook / spells-prepared / spell-slot posture
+///   burden explicitly, rather than hiding behind a generic "unsupported caster"
+///   label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this
+/// seam keeps that blocked posture but makes the Wizard prepared spell-bearing
+/// identity and its two named burdens legible on the runtime path. The matrix
+/// file row transition (Unverified/Observed → Blocked/Computed) is recorded by
+/// the merge receipt only and is NOT applied to the in-source carrier here.
+fn explain_wizard_level1_prepared_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_wizard_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Wizard level-1
+    // prepared arcane spell-bearing identity. This is a recognition record only;
+    // it fabricates no spell math and no school-opposition / specialty school
+    // bonus math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.wizard".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Wizard level {WIZARD_BASELINE_LEVEL} prepared arcane \
+             spell-bearing baseline: the {WIZARD_CLASS_ID}:{WIZARD_BASELINE_LEVEL} class identity \
+             is acknowledged as a prepared arcane spell-bearing class on the rules-core seam \
+             rather than an undocumented packet placeholder. This is a bounded recognition record \
+             only; it grounds no spellbook content, no spells prepared per day, no spell slots \
+             per day, no spell save DCs, no bonus spell slots from a high Intelligence, no school \
+             specialization mechanics, no opposed-school bookkeeping, and no specialty school \
+             bonus, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the school specialization burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.wizard.school_specialization.unsupported".to_owned(),
+        message: format!(
+            "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school specialization \
+             burden: the chosen school, two opposed schools, the school's opposed schools list, \
+             and the specialty school bonus (additional spell slots / spells known at later \
+             levels) are not implemented in this bounded prepared spell baseline, so no Wizard \
+             school specialization support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the prepared spellbook / spells-prepared /
+    // spell-slot posture burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.wizard.prepared_spellbook.unsupported".to_owned(),
+        message:
+            "Wizard remains blocked on its prepared spellbook / spells prepared / spell slot \
+             posture burden: spellbook content, spells prepared per day, spell slots per day, \
+             bonus spell slots from a high Intelligence, and spell save DCs are out of scope for \
+             this level-1 prepared spell baseline and no spell math is fabricated"
                 .to_owned(),
         claim_blocking: true,
     });
