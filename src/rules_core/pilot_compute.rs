@@ -23,9 +23,18 @@
 //! additionally recognizes the deterministic Human Paladin level-1 and Human Ranger
 //! level-1 hybrid chassis as direct runtime evidence, but keeps both explicitly
 //! claim-blocked on their still-missing non-spell class-feature burden and later spell
-//! burden; it grounds no hybrid class-feature or spell math. Unsupported input yields
-//! claim-blocking diagnostics and withheld explanations rather than fabricated
-//! values.
+//! burden; it grounds no hybrid class-feature or spell math. The SD13-E4-F7 slice
+//! also recognizes the deterministic Human Sorcerer level-1 spell-bearing identity as
+//! a direct runtime evidence, but keeps it explicitly claim-blocked on its
+//! bloodline and spontaneous known-spell / slot posture burdens; it grounds no
+//! bloodline power and no spell math. The SD13-E4-R3 slice further recognizes the
+//! deterministic Human Wizard level-1 prepared arcane spell-bearing identity as
+//! direct runtime evidence, but keeps it explicitly claim-blocked on its school
+//! specialization burden and prepared spellbook / spells-prepared / spell-slot
+//! posture burden; it grounds no spellbook content, no spells prepared, no spell
+//! slots, no spell save DCs, no bonus spells, no school-opposition bookkeeping, and
+//! no specialty school bonus. Unsupported input yields claim-blocking diagnostics
+//! and withheld explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
 
@@ -119,6 +128,34 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const SORCERER_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E4-F7 spell-bearing baseline identity. Bard is a spontaneous arcane caster with a
+// distinct chassis-class-feature burden (Bardic Knowledge and Bardic Music); this slice
+// recognizes only its bounded single-class level-1 identity as direct runtime evidence and
+// grounds no Bardic Knowledge check resolution, no Bardic Music / Inspire Courage execution,
+// and no spell math (spells known, spells per day, spell DCs, bonus spells, school choice, or
+// prepared posture) for it.
+const BARD_CLASS_ID: &str = "class:bard";
+const BARD_BASELINE_LEVEL: u8 = 1;
+
+// Grounded SD13-E4-R3 Human Wizard level-1 prepared arcane spell-bearing baseline
+// identities. The Wizard class is the canonical PF1 prepared arcane full caster;
+// its class identity differs from Sorcerer in two ways that this bounded slice
+// surfaces explicitly: the prepared posture (spellbook + spells prepared per day +
+// spell slots per day) and the school specialization (one school chosen, two
+// opposed schools locked, specialty school bonus at later levels).
+const WIZARD_CLASS_ID: &str = "class:wizard";
+const WIZARD_BASELINE_LEVEL: u8 = 1;
+
+// SD13-E3 martial chassis baseline identity. Barbarian is a non-spell pure
+// martial class; this slice recognizes only its bounded single-class level-1
+// identity as direct runtime evidence and grounds no base-attack / base-save
+// progression, no fast-movement +10 ft. speed extension, no illiteracy trait
+// engine, no rage execution, no weapon familiarity, and no level-2+ martial
+// progression.
+const BARBARIAN_CLASS_ID: &str = "class:barbarian";
+const MARTIAL_BASELINE_LEVEL: u8 = 1;
+
+
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
 // grounds no non-Human race semantics and no broader Human racial trait burden.
@@ -140,6 +177,33 @@ const ABILITY_SELECTION_PREFIX: &str = "ability:";
 // programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/race-bounded-semantics/half-elf-bounded-semantics.md
 // for the bounded scope.
 const HALF_ELF_RACE_ID: &str = "race:half-elf";
+
+// SD13-E6-F3a Human racial trait bundle (size, speed, senses, extra skill ranks).
+// These name the remaining Human racial trait burden explicitly, classified
+// against PF1 Core Rulebook Standard Human racial traits (source evidence only,
+// not oracle-checked parity):
+//   cr_races.lst race:human SIZE:MEDIUM        -> Medium size category
+//   cr_races.lst race:human GAIT:WALK|30       -> 30 ft base land speed
+//   cr_races.lst race:human                   -> no special senses (PCGen races
+//                                                in the CRB only carry the SENSE
+//                                                tag when a sense bonus exists;
+//                                                Human has none for Standard Human)
+//   cr_races.lst race:human BONUS:SKILL|...   -> 4 extra skill points at 1st
+//                                                level and 1 extra skill rank
+//                                                per level thereafter
+//
+// This constant set deliberately names the entire PF1 Standard Human racial
+// trait surface — every line a Player's Handbook Human racial entry lists —
+// so the explanation records can name each dimension explicitly instead of
+// leaving it an incidental side-effect or a folklore claim.
+//
+// None of these ground a computed mechanical contribution to the existing
+// NumericOutputs in this slice. They explain Human identity only; the chassis
+// totals remain controlled by the bounded deterministic posture.
+const HUMAN_SIZE_CATEGORY: &str = "Medium";
+const HUMAN_BASE_SPEED_FEET: i16 = 30;
+const HUMAN_EXTRA_SKILL_POINTS_AT_LEVEL_1: u8 = 4;
+const HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL: u8 = 1;
 
 // Grounded deterministic combat-baseline contributors and posture identities.
 const LONGSWORD_ITEM_ID: &str = "item:longsword";
@@ -295,10 +359,28 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_fighter_class_features(input, &mut explanations);
 
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
+    explain_barbarian_level1_chassis(input, &mut explanations, &mut diagnostics);
+
+
+    // SD13-E3/E4 Paladin-only decomposition: split the F6 hybrid class-feature
+    // and spell-burden blockers into per-burden diagnostics so the chassis
+    // burden is separable from the partial-caster spell burden on the runtime
+    // path. This is an extension, never a downgrade, of the F6 surface.
+    explain_paladin_level1_chassis_and_spell_burden_separation(
+        input,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
+    explain_wizard_level1_prepared_spell_baseline(input, &mut explanations, &mut diagnostics);
+
+    explain_bard_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+
     explain_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
+
+    explain_human_trait_bundle(input, &mut explanations, &mut diagnostics);
 
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
@@ -464,9 +546,12 @@ fn explain_human_pilot_race_seam(
     // non-claim-blocking so the deterministic pilot still reports computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.human.bounded_semantics".to_owned(),
-        message: "Human race semantics are grounded only for the deterministic pilot's named \
-                  ability-bonus and bonus-feat selections; Human size, speed, senses, extra skill \
-                  ranks, and the remaining racial trait burden remain unverified"
+        message: "Human race semantics are grounded for the deterministic pilot's named \
+                  ability-bonus and bonus-feat selections, and the SD13-E6-F3a trait bundle \
+                  (size, speed, senses, extra skill ranks) is classified explicitly; the \
+                  remaining PF1 Standard Human racial trait surface (alternate Human racial \
+                  traits, variant Humans, half-Human heritages, and any ruleset-level effects \
+                  outside the named deterministic pilot) remains unverified"
             .to_owned(),
         claim_blocking: false,
     });
@@ -507,6 +592,114 @@ fn explain_half_elf_bounded_race_seam(
             input.chosen.race_id
         ),
         claim_blocking: false,
+    });
+}
+
+/// SD13-E6-F3a Human racial trait bundle explanation seam.
+///
+/// Surfaces each remaining PF1 Standard Human racial trait dimension (size,
+/// speed, senses, extra skill ranks) as an explicit `ComputationExplanation`
+/// record so the trait bundle is legible on the runtime path rather than left
+/// as an incidental side-effect or a folklore claim. Three of the four
+/// dimensions carry the grounded PF1 source value as a recognition record;
+/// the senses dimension carries a bounded "no special senses" classification
+/// because PF1 Standard Human grants no special sense bonus.
+///
+/// This function:
+///   - runs only when `race_id == race:human`; non-Human races stay on the
+///     bounded diagnostics the `explain_race_seam` dispatcher emits (the
+///     Half-Elf bounded diagnostic or the `race.semantics.unverified`
+///     catch-all),
+///   - adds no new computed mechanical contribution; each record carries the
+///     grounded source value as recognition and contributes nothing to the
+///     chassis totals, selected-skill modifiers, combat baseline, or AC,
+///   - replaces the previous "Human size, speed, senses, extra skill ranks
+///     remain unverified" non-claim-blocking note from
+///     `race.human.bounded_semantics` with explicit per-dimension records,
+///   - is bounded to the deterministic Human Fighter level-1/2/3 pilot
+///     posture implicitly via the caller; it deliberately grounds no other
+///     Human racial variant (alternate Human racial traits, variant Humans,
+///     half-Humans), no other race, and no PF1 alternate ruleset.
+fn explain_human_trait_bundle(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    _diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // ----- size -----
+    // Recognition record only; carries the grounded Human size category name
+    // as the recognition value so the explanation reads as the humanoid
+    // identity rather than fabricating a numeric contribution.
+    explanations.push(ComputationExplanation {
+        id: "race.human.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Human racial trait bundle — size: PF1 Standard Human is {HUMAN_SIZE_CATEGORY} size \
+             (cr_races.lst race:human SIZE:MEDIUM). This is a bounded recognition record naming \
+             the Human size category on the deterministic pilot seam; it contributes no numeric \
+             effect to attack rolls, AC, skill checks, ability checks, or any other computed \
+             value, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    // Recognition record for the 30 ft base land speed. The bounded
+    // selected-skill and combat baselines never consult base speed, so this
+    // record is identity-only — no computed speed-derived value is fabricated.
+    explanations.push(ComputationExplanation {
+        id: "race.human.trait_bundle.speed".to_owned(),
+        value: HUMAN_BASE_SPEED_FEET,
+        detail: format!(
+            "Human racial trait bundle — speed: PF1 Standard Human has a base land speed of \
+             {HUMAN_BASE_SPEED_FEET} ft (cr_races.lst race:human GAIT:WALK|{HUMAN_BASE_SPEED_FEET}). \
+             This is a grounded recognition value carrying the human base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    // Bounded "no special senses" classification. PF1 Standard Human grants
+    // no special senses (darkvision, low-light, scent, etc.), so this
+    // dimension is classified explicitly as no-effect rather than a silent
+    // omission or a fabricated sense bonus.
+    explanations.push(ComputationExplanation {
+        id: "race.human.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: format!(
+            "Human racial trait bundle — senses: PF1 Standard Human grants no special senses \
+             (cr_races.lst race:human carries no SENSE tag for Standard Human; darkvision, \
+             low-light vision, scent, and other sense bonuses are absent). This is a bounded \
+             no-effect classification record on the deterministic pilot seam; it carries no \
+             fabricated sense bonus and contributes no computed value (+0)"
+        ),
+    });
+
+    // ----- extra skill ranks -----
+    // Recognition record for the extra-skill-ranks Human trait. PF1 Standard
+    // Human grants 4 extra skill points at 1st level and 1 extra skill rank
+    // per additional level thereafter; this slice surfaces both numbers as a
+    // recognition record and explicitly does not propagate them through the
+    // bounded selected-skill modifier computation (which controls the
+    // deterministic Climb / Intimidate / Swim rank-1 posture only).
+    explanations.push(ComputationExplanation {
+        id: "race.human.trait_bundle.extra_skill_ranks".to_owned(),
+        value: i16::from(HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL),
+        detail: format!(
+            "Human racial trait bundle — extra skill ranks: PF1 Standard Human gains \
+             {HUMAN_EXTRA_SKILL_POINTS_AT_LEVEL_1} extra skill points at 1st level and \
+             {HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL} extra skill rank per additional level thereafter \
+             (cr_races.lst race:human BONUS:SKILL|...). The recognition value \
+             ({HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL:+}) carries the per-additional-level extra-rank \
+             identity on the deterministic pilot seam; this slice does not propagate these \
+             extra skill points/rank through the bounded Climb/Intimidate/Swim rank-1 selected \
+             skill-modifier computation, so the bounded fighter-posture skill totals remain \
+             grounded by the canonical rank-1 posture rather than by the unbounded Human extra \
+             skill-rank rule"
+        ),
     });
 }
 
@@ -678,21 +871,20 @@ fn explain_fighter_class_features(
     };
 
     if level >= 2
-        && let Some(selection) =
-            choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)
-        {
-            explanations.push(ComputationExplanation {
-                id: "class_feature.fighter.level_2_bonus_feat".to_owned(),
-                value: 0,
-                detail: format!(
-                    "Fighter level 2 grants an additional bonus feat; the named selection \
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_2_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 2 grants an additional bonus feat; the named selection \
                      ({FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
                      explicit progression seam only. This slice grounds the bonus-feat slot, not a \
                      general feat-effect or prerequisite engine, so it contributes no computed \
                      mechanical value (+0)"
-                ),
-            });
-        }
+            ),
+        });
+    }
 
     let armor_training = fighter_armor_training(level);
     if armor_training.rank > 0 {
@@ -718,10 +910,19 @@ fn explain_fighter_class_features(
 /// A slot absent for the chosen level (e.g. the level-2 bonus feat at level 1) is not
 /// fabricated.
 const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 4] = [
-    (LEVEL_1_CHARACTER_FEAT_CHOICE_ID, POWER_ATTACK_FEAT_SELECTION),
+    (
+        LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
+        POWER_ATTACK_FEAT_SELECTION,
+    ),
     (HUMAN_BONUS_FEAT_CHOICE_ID, DODGE_FEAT_ID),
-    (FIGHTER_BONUS_FEAT_CHOICE_ID, WEAPON_FOCUS_LONGSWORD_SELECTION),
-    (FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID, TOUGHNESS_FEAT_SELECTION),
+    (
+        FIGHTER_BONUS_FEAT_CHOICE_ID,
+        WEAPON_FOCUS_LONGSWORD_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID,
+        TOUGHNESS_FEAT_SELECTION,
+    ),
 ];
 
 /// Claim-block non-canonical feat-choice mutations on the deterministic Human Fighter
@@ -882,6 +1083,142 @@ fn explain_hybrid_level1_chassis(
     });
 }
 
+/// Return `true` when the chosen input is exactly a single-class Paladin at the
+/// bounded hybrid baseline level (1). Returns `false` for any other class, a
+/// multiclass mix, the Ranger hybrid (which has its own F6 class-feature
+/// decomposition lane), or any level-2+ Paladin this slice deliberately does
+/// not recognize — each of which stays blocked exactly as before.
+fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == PALADIN_CLASS_ID
+                && class_level.level == HYBRID_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E3/E4 runtime evidence for the deterministic Human
+/// Paladin level-1 chassis and spell burden as a separable pair of diagnostics.
+///
+/// This sits on top of the accepted SD13-F6 hybrid baseline: F6 already proves
+/// the deterministic Human Paladin level-1 hybrid identity is acknowledged on
+/// the compute seam and emits a single combined non-spell class-feature
+/// blocker plus a single combined later-spell blocker. This slice proves the
+/// per-burden separation Paladin actually needs:
+///
+/// - one explicit claim-blocking diagnostic per still-missing non-spell
+///   class-feature burden:
+///   * `smite evil` — alignment / target resolution, smite attack rolls and
+///     damage bonus, and smite-uses-per-day resource accounting
+///   * `lay on hands` — healing resource accounting, charismabased pool, and
+///     use-against-conditions behavior
+///   * `divine grace` — charisma-to-saves bonus, including the typing and
+///     proc-time posture that divines saves even at the deterministic seam
+///   * `mercy` — conditional save-effect and disease/poison removal mechanics
+///     that only begin at level 6 and must therefore be claimed honestly as
+///     still-blocked rather than silently allowed
+///
+/// - one explicit claim-blocking diagnostic for the partial-caster spell
+///   burden, distinct from the non-spell class-feature blockers:
+///   * Paladin is a divine partial caster in PF1 Core Rulebook (effective
+///     caster level = paladin level − 2, slots begin at level 2); the blocker
+///     names this partial-caster posture so the later SD13-E4 spell-burden
+///     closure cannot collapse Paladin into a full divine caster shape
+///     (Cleric / Druid) and so partial-caster pressure stays visible on the
+///     runtime path.
+///
+/// This deliberately does not compute a supported spell surface. It grounds
+/// no smite math, no lay-on-hands resource handling, no divine-grace
+/// computation, no mercy handling, no spell slots, no spell source lineage,
+/// no spells known or prepared posture, no deity resolution, no domain
+/// mechanics, no alignment-target resolution, and no healing accounting. It
+/// only emits the per-burden blockers that prove the F6 surface remains
+/// separable on the runtime path.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input;
+/// the F6 hybrid chassis emission already preserves a single class-feature
+/// blocker and a single spell blocker. This seam adds per-burden granularity
+/// next to the F6 surface, never replacing it, so the F6 acceptance test
+/// continues to pass.
+fn explain_paladin_level1_chassis_and_spell_burden_separation(
+    input: &CharacterInput,
+    _explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_paladin_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // The per-burden blockers ride alongside the F6 hybrid blockers. They are
+    // intentionally distinct diagnostic ids so the chassis burden is separable
+    // from the spell burden on the runtime path.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.paladin.smite_evil.unsupported".to_owned(),
+        message: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its smite evil burden: \
+             smite attack-roll bonuses, smite damage bonus, smite-uses-per-day resource \
+             accounting, and the underlying alignment-target resolution are not implemented in \
+             this bounded chassis baseline, so no Paladin smite execution is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.paladin.lay_on_hands.unsupported".to_owned(),
+        message: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its lay on hands burden: \
+             the charisma-based healing pool, the per-level heal amount, the use against poison / \
+             disease behavior, and any heal-resource accounting are not implemented in this \
+             bounded chassis baseline, so no Paladin lay on hands support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.paladin.divine_grace.unsupported".to_owned(),
+        message: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its divine grace burden: \
+             the charisma-to-saving-throw bonus and the typing/proc-time posture that applies it \
+             are not implemented in this bounded chassis baseline, so no Paladin divine grace \
+             save bonus support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.paladin.mercy.unsupported".to_owned(),
+        message: format!(
+            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its mercy burden: mercy \
+             is a level-6 class-feature, so the conditional save-effect and disease/poison \
+             removal mechanics are not implemented here; no Paladin mercy behavior is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // The partial-caster spell burden is its own blocker, distinct from the
+    // four non-spell class-feature blockers above. Paladin is a divine partial
+    // caster in PF1 Core Rulebook (effective caster level = paladin level - 2;
+    // first spell access at level 2 with a slowed slot progression), and the
+    // blocker must name that partial-caster posture so the later SD13-E4
+    // spell-burden closure cannot confuse Paladin with a full divine caster
+    // (Cleric / Druid).
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
+        message: format!(
+            "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
+             partial caster (effective caster level = paladin level - 2, with spell slots first \
+             available at level 2 in PF1 Core Rulebook), so spell-source lineage, spells known \
+             or prepared posture, spells-per-day progression, bonus spell slots, and spell save \
+             DCs are deferred to the SD13-E4 spellcasting slice; no partial-caster spell \
+             execution is fabricated in this bounded chassis baseline"
+        ),
+        claim_blocking: true,
+    });
+}
+
 /// Return `true` when the chosen input is exactly a single-class Sorcerer at the bounded
 /// spell baseline level (1). Returns `false` for any other class, a multiclass mix, or a
 /// level-2+ Sorcerer this slice deliberately does not recognize — each of which stays
@@ -912,6 +1249,134 @@ fn is_single_class_sorcerer_level1(input: &CharacterInput) -> bool {
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Sorcerer spell-bearing identity and its two
 /// named burdens legible on the runtime path.
+/// A pure martial (non-hybrid, non-spell) class this slice recognizes at its bounded
+/// single-class level-1 chassis boundary only.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum MartialClass {
+    Barbarian,
+}
+
+/// Return the martial class when the chosen input is exactly a single-class Barbarian
+/// at the bounded martial baseline level (1). Returns `None` for any other class, a
+/// multiclass mix, or a level-2+ Barbarian this slice deliberately does not recognize —
+/// each of which stays blocked exactly as before.
+fn martial_level1_class(input: &CharacterInput) -> Option<MartialClass> {
+    match input.chosen.class_levels.as_slice() {
+        [class_level] if class_level.level == MARTIAL_BASELINE_LEVEL => {
+            match class_level.class_id.as_str() {
+                BARBARIAN_CLASS_ID => Some(MartialClass::Barbarian),
+                _ => None,
+            }
+        }
+        _ => None,
+    }
+}
+
+/// Surface direct SD13-E3 runtime evidence for the deterministic Human Barbarian
+/// level-1 martial chassis, while keeping it explicitly claim-blocked on the four
+/// still-missing named burdens.
+///
+/// This deliberately does not compute a supported martial chassis. It grounds no
+/// base-attack progression, no base-save progression, no fast-movement +10 ft. speed
+/// extension, and no illiteracy trait engine. It grounds no rage execution, no
+/// weapon familiarity, and no level-2+ martial progression. It only:
+/// - leaves one chassis-recognition explanation so the `class:barbarian:1` identity
+///   is acknowledged as a non-hybrid martial baseline rather than an undocumented
+///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical
+///   value), and
+/// - emits four claim-blocking diagnostics naming the four still-missing pillar
+///   burdens (base-attack, base-save, fast-movement, illiteracy) explicitly, rather
+///   than hiding behind a single generic "unsupported class" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Barbarian martial identity and its four
+/// named pillar burdens legible on the runtime path.
+fn explain_barbarian_level1_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let Some(martial) = martial_level1_class(input) else {
+        return;
+    };
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Only the Barbarian is in this slice today; the match is exhaustive-by-design so
+    // a future addition (e.g. a non-hybrid Monk slice) needs an explicit arm here.
+    let MartialClass::Barbarian = martial;
+    let class_id = BARBARIAN_CLASS_ID;
+    let class_name = "Barbarian";
+    let chassis_id = "class_chassis.barbarian.bounded_progression";
+
+    // Direct runtime evidence: recognize the deterministic Human Barbarian level-1
+    // martial chassis identity. This is a recognition record only; it fabricates no
+    // mechanical value.
+    explanations.push(ComputationExplanation {
+        id: chassis_id.to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human {class_name} level {MARTIAL_BASELINE_LEVEL} martial chassis: \
+             the {class_id}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure non-hybrid \
+             martial baseline on the rules-core seam rather than an undocumented packet placeholder. This \
+             is a bounded chassis-recognition record only; it grounds no {class_name} base-attack or \
+             base-save progression, no fast-movement +10 ft. speed extension, no illiteracy trait engine, \
+             no rage execution, and no level-2+ martial progression, so it carries no fabricated \
+             mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/4): name the base-attack progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.barbarian.bounded_progression.base_attack.unsupported".to_owned(),
+        message: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its base attack progression: \
+             the full-BAB +{MARTIAL_BASELINE_LEVEL} base-attack bonus and the higher-level BAB cadence are \
+             not implemented in this bounded martial chassis baseline, so no {class_name} base-attack \
+             support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/4): name the base-save progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.barbarian.bounded_progression.base_save.unsupported".to_owned(),
+        message: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its base save progression: \
+             the good Fortitude +{}+2 and the poor Reflex / poor Will base-save cadence are not \
+             implemented in this bounded martial chassis baseline, so no {class_name} base-save support is \
+             claimed",
+            MARTIAL_BASELINE_LEVEL
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (3/4): name the fast-movement speed-extension burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.barbarian.bounded_progression.fast_movement.unsupported".to_owned(),
+        message: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its fast movement burden: \
+             the +10 ft. land speed extension applied while wearing no heavy armor is not implemented in \
+             this bounded martial chassis baseline, so no {class_name} fast-movement support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (4/4): name the illiteracy trait burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.barbarian.bounded_progression.illiteracy.unsupported".to_owned(),
+        message: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its illiteracy trait: \
+             the trait that prevents literate reading and writing of non-native languages without additional \
+             training is not implemented in this bounded martial chassis baseline, so no {class_name} \
+             illiteracy-trait support is claimed"
+        ),
+        claim_blocking: true,
+    });
+}
+
+
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -959,6 +1424,196 @@ fn explain_sorcerer_level1_spell_baseline(
              spontaneous casting, spells known, spell slots per day, bonus spell slots from a high \
              ability score, and spell save DCs are out of scope for this level-1 spell baseline and \
              no spell math is fabricated"
+                .to_owned(),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Wizard at the bounded
+/// prepared spell baseline level (1). Returns `false` for any other class, a multiclass
+/// mix, or a level-2+ Wizard this slice deliberately does not recognize — each of which
+/// stays blocked exactly as before.
+fn is_single_class_wizard_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == WIZARD_CLASS_ID
+                && class_level.level == WIZARD_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4-R3 runtime evidence for the deterministic Human Wizard
+/// level-1 prepared arcane spell-bearing baseline, while keeping it explicitly
+/// claim-blocked on its two still-missing burdens.
+///
+/// This deliberately does not compute a supported spell surface. It grounds no
+/// spellbook content, no spells prepared, no spell slots per day, no spell save
+/// DCs, no bonus spell slots from a high Intelligence, no school-opposition
+/// bookkeeping, and no specialty school bonus. It only:
+/// - leaves one recognition explanation so the `class:wizard:1` identity is
+///   acknowledged as a prepared arcane spell-bearing class rather than an
+///   undocumented packet placeholder (direct runtime evidence, carrying no
+///   fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the school
+///   specialization burden (chosen school, two opposed schools, specialty school
+///   bonus) and the prepared spellbook / spells-prepared / spell-slot posture
+///   burden explicitly, rather than hiding behind a generic "unsupported caster"
+///   label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this
+/// seam keeps that blocked posture but makes the Wizard prepared spell-bearing
+/// identity and its two named burdens legible on the runtime path. The matrix
+/// file row transition (Unverified/Observed → Blocked/Computed) is recorded by
+/// the merge receipt only and is NOT applied to the in-source carrier here.
+fn explain_wizard_level1_prepared_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_wizard_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Wizard level-1
+    // prepared arcane spell-bearing identity. This is a recognition record only;
+    // it fabricates no spell math and no school-opposition / specialty school
+    // bonus math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.wizard".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Wizard level {WIZARD_BASELINE_LEVEL} prepared arcane \
+             spell-bearing baseline: the {WIZARD_CLASS_ID}:{WIZARD_BASELINE_LEVEL} class identity \
+             is acknowledged as a prepared arcane spell-bearing class on the rules-core seam \
+             rather than an undocumented packet placeholder. This is a bounded recognition record \
+             only; it grounds no spellbook content, no spells prepared per day, no spell slots \
+             per day, no spell save DCs, no bonus spell slots from a high Intelligence, no school \
+             specialization mechanics, no opposed-school bookkeeping, and no specialty school \
+             bonus, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the school specialization burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.wizard.school_specialization.unsupported".to_owned(),
+        message: format!(
+            "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school specialization \
+             burden: the chosen school, two opposed schools, the school's opposed schools list, \
+             and the specialty school bonus (additional spell slots / spells known at later \
+             levels) are not implemented in this bounded prepared spell baseline, so no Wizard \
+             school specialization support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the prepared spellbook / spells-prepared /
+    // spell-slot posture burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.wizard.prepared_spellbook.unsupported".to_owned(),
+        message:
+            "Wizard remains blocked on its prepared spellbook / spells prepared / spell slot \
+             posture burden: spellbook content, spells prepared per day, spell slots per day, \
+             bonus spell slots from a high Intelligence, and spell save DCs are out of scope for \
+             this level-1 prepared spell baseline and no spell math is fabricated"
+                .to_owned(),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Bard at the bounded
+/// spell baseline level (1). Returns `false` for any other class, a multiclass mix, or a
+/// level-2+ Bard this slice deliberately does not recognize — each of which stays
+/// blocked exactly as before.
+fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == BARD_CLASS_ID
+                && class_level.level == BARD_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Bard
+/// level-1 spontaneous arcane spell-bearing baseline, while keeping it explicitly
+/// claim-blocked on its two still-missing burdens.
+///
+/// This deliberately does not compute a supported Bard chassis. It grounds no
+/// Bardic Knowledge check resolution, no Bardic Music / Inspire Courage execution, and
+/// no spell math whatsoever — no spells known, no spells per day, no spell DCs, no
+/// bonus spells, no prepared posture, no school choice. It only:
+/// - leaves one recognition explanation so the `class:bard:1` identity is acknowledged
+///   as a spontaneous arcane spell-bearing class with its named Bardic-class-feature
+///   burden rather than an undocumented packet placeholder (direct runtime evidence,
+///   carrying no fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the Bardic Knowledge + Bardic
+///   Music chassis-class-feature burden and the spontaneous known-spell / slot posture
+///   burden explicitly, rather than hiding behind a generic "unsupported caster" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Bard spell-bearing identity and its two
+/// named burdens legible on the runtime path.
+fn explain_bard_level1_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_bard_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Bard level-1
+    // spell-bearing identity. This is a recognition record only; it fabricates no
+    // Bardic-class-feature math and no spell math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.bard".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Bard level {BARD_BASELINE_LEVEL} spell-bearing \
+             baseline: the {BARD_CLASS_ID}:{BARD_BASELINE_LEVEL} class identity is acknowledged \
+             as a spontaneous arcane spell-bearing class with its named Bardic Knowledge and \
+             Bardic Music chassis-class-feature burden on the rules-core seam rather than an \
+             undocumented packet placeholder. This is a bounded recognition record only; it \
+             grounds no Bardic Knowledge check resolution, no Bardic Music / Inspire Courage \
+             execution, and no spell math (spells known, spells per day, spell DCs, bonus \
+             spells, or prepared posture), so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the Bardic Knowledge + Bardic Music chassis-class-feature
+    // burden explicitly. Bardic Knowledge grants a competence bonus on Knowledge checks
+    // equal to half the Bard level (minimum 1) plus the Bard's INT modifier; Bardic Music
+    // grants the Inspire Courage performance and the rest of the performance family. This
+    // slice grounds neither check resolution nor performance execution.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.bard.bardic_knowledge_and_music.unsupported".to_owned(),
+        message: format!(
+            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic knowledge and \
+             bardic music chassis-class-feature burden: the bardic knowledge competence bonus \
+             on Knowledge checks (half Bard level + INT modifier) and the bardic music \
+             performance family (inspire courage and later performances) are not implemented \
+             in this bounded spell baseline, so no Bard class-feature support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
+    // explicitly. Bard spells known and spells per day are gated by Bard level and CHA
+    // modifier on the Bard spell list; this slice grounds no spells known, no spells per
+    // day, no spell DCs, and no bonus spells from a high casting stat.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned(),
+        message:
+            "Bard remains blocked on its spontaneous known-spell / slot posture burden: \
+             spontaneous casting, spells known (from the Bard list), spells per day (from \
+             the Bard table plus CHA modifier), bonus spell slots from a high casting stat, \
+             and spell save DCs are out of scope for this level-1 spell baseline and no \
+             spell math is fabricated"
                 .to_owned(),
         claim_blocking: true,
     });
@@ -1232,10 +1887,8 @@ fn compute_combat_baseline(
     let effective_max_dex = CHAIN_SHIRT_MAX_DEX + fighter_armor_training(level).max_dex_increase;
     let dexterity_modifier = ability_modifiers.dexterity;
     let dexterity_contribution = dexterity_modifier.min(effective_max_dex);
-    let armor_class = ARMOR_CLASS_BASE
-        + CHAIN_SHIRT_ARMOR_BONUS
-        + dexterity_contribution
-        + DODGE_AC_BONUS;
+    let armor_class =
+        ARMOR_CLASS_BASE + CHAIN_SHIRT_ARMOR_BONUS + dexterity_contribution + DODGE_AC_BONUS;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -1285,7 +1938,11 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
     if !chosen.selected_feats.iter().any(|f| f == DODGE_FEAT_ID) {
         unmet.push(format!("missing selected feat {DODGE_FEAT_ID}"));
     }
-    if !chosen.selected_feats.iter().any(|f| f == WEAPON_FOCUS_FEAT_ID) {
+    if !chosen
+        .selected_feats
+        .iter()
+        .any(|f| f == WEAPON_FOCUS_FEAT_ID)
+    {
         unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
     }
 

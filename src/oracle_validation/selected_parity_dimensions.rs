@@ -45,14 +45,32 @@ impl SelectedParityDimensions {
     pub fn from_receipt(receipt: &PilotHeadlessReceipt) -> Self {
         let computation = &receipt.computation;
         let numeric_dimensions: [(&str, i16); 8] = [
-            ("combat.baseline_melee_attack_bonus", computation.baseline_melee_attack_bonus),
-            ("defense.baseline_armor_class", computation.baseline_armor_class),
-            ("defense.total_save.fortitude", computation.total_saves.fortitude),
+            (
+                "combat.baseline_melee_attack_bonus",
+                computation.baseline_melee_attack_bonus,
+            ),
+            (
+                "defense.baseline_armor_class",
+                computation.baseline_armor_class,
+            ),
+            (
+                "defense.total_save.fortitude",
+                computation.total_saves.fortitude,
+            ),
             ("defense.total_save.reflex", computation.total_saves.reflex),
             ("defense.total_save.will", computation.total_saves.will),
-            ("skill.selected_modifier.climb", computation.selected_skill_modifiers.climb),
-            ("skill.selected_modifier.intimidate", computation.selected_skill_modifiers.intimidate),
-            ("skill.selected_modifier.swim", computation.selected_skill_modifiers.swim),
+            (
+                "skill.selected_modifier.climb",
+                computation.selected_skill_modifiers.climb,
+            ),
+            (
+                "skill.selected_modifier.intimidate",
+                computation.selected_skill_modifiers.intimidate,
+            ),
+            (
+                "skill.selected_modifier.swim",
+                computation.selected_skill_modifiers.swim,
+            ),
         ];
 
         let mut dimensions = Vec::with_capacity(numeric_dimensions.len() + 1);
@@ -67,14 +85,16 @@ impl SelectedParityDimensions {
             });
         }
 
-        dimensions.extend(numeric_dimensions.into_iter().map(|(id, value)| {
-            SelectedDimension {
-                id: id.to_string(),
-                value_string: None,
-                value_i16: Some(value),
-                source_package_id: receipt.source_package_id.clone(),
-            }
-        }));
+        dimensions.extend(
+            numeric_dimensions
+                .into_iter()
+                .map(|(id, value)| SelectedDimension {
+                    id: id.to_string(),
+                    value_string: None,
+                    value_i16: Some(value),
+                    source_package_id: receipt.source_package_id.clone(),
+                }),
+        );
 
         Self {
             dimensions,

@@ -1,0 +1,108 @@
+{
+  "schema": "slice-merge-receipt/v1",
+  "slice_card_id": "t_37dbab62",
+  "slice_title": "SD-13 CODE: Race/Elf — bounded race semantics classification slice",
+  "epic": "SD-13",
+  "stc": "STC-CODEX-SD-13",
+  "branch": {
+    "slice_branch": "feat/sd13-race-elf-bounded-semantics",
+    "tranche_branch": "develop",
+    "base_sha": "c78287ce76d3cce10fe814806558976fcfd70543",
+    "slice_commit": "54b37a6c4798920e94362c519a3f6492d45c0cd0",
+    "merge_commit": "b345c827f571d783d4b7949479cfe5e9a5a1abfe",
+    "merge_method": "squash",
+    "pr_number": 102,
+    "pr_url": "https://github.com/electricm0nk/codex/pull/102",
+    "pr_base": "develop",
+    "pr_state_post_merge": "merged",
+    "pr_merged_at": "2026-07-06T22:50:00Z"
+  },
+  "matrix_row": {
+    "matrix_file": "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md",
+    "matrix_file_modified_by_slice": false,
+    "row_id": "race:elf:bounded-race-semantics",
+    "typed_carrier_row_id": "race.elf.bounded_semantics",
+    "typed_carrier_file": "src/rules_core/support_state_matrix.rs",
+    "support_state_before": "unverified",
+    "support_state_after": "unverified",
+    "support_state_change": false,
+    "evidence_tier_before": "Observed",
+    "evidence_tier_after": "Observed",
+    "evidence_tier_change": false,
+    "evidence_freshness_before": "AwaitingInitialEvidence",
+    "evidence_freshness_after": "AwaitingInitialEvidence",
+    "evidence_freshness_change": false,
+    "subject_id_before": "race:elf",
+    "subject_id_after": "race:elf",
+    "subject_id_change": false,
+    "dimension_before": "bounded race semantics",
+    "dimension_after": "bounded race semantics",
+    "dimension_change": false,
+    "grounding_ref_before": "SD13_ROSTER_MATRIX_DOC",
+    "grounding_ref_after": "SD13_ROSTER_MATRIX_DOC",
+    "grounding_ref_change": false,
+    "blocker_or_lossiness_note_before": "",
+    "blocker_or_lossiness_note_after": "non-empty; names the seven required Elf race-semantic families and their unproven status on the live evidence floor",
+    "blocker_or_lossiness_note_change": true,
+    "next_required_uplift_before": "SD13-E2 race-semantic slice",
+    "next_required_uplift_after": "explicit pointer at sd13-elf-bounded-race-semantics-classification-2026-07-06.md artifact",
+    "next_required_uplift_change": true
+  },
+  "files_changed_in_pr_102": [
+    {
+      "path": "src/rules_core/support_state_matrix.rs",
+      "kind": "modified",
+      "additions": 26,
+      "deletions": 2
+    },
+    {
+      "path": "tests/sd13_elf_bounded_race_semantics.rs",
+      "kind": "added",
+      "additions": 222,
+      "deletions": 0
+    },
+    {
+      "path": "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-elf-bounded-race-semantics-classification-2026-07-06.md",
+      "kind": "added",
+      "additions": 130,
+      "deletions": 0
+    }
+  ],
+  "verification": {
+    "tests_added": 10,
+    "tests_added_file": "tests/sd13_elf_bounded_race_semantics.rs",
+    "tests_added_result": "all pass (10 passed; 0 failed)",
+    "regression_tests": {
+      "sd13_support_state_matrix": "26 passed; 0 failed",
+      "ge06_pilot_base_computation": "3 passed; 0 failed",
+      "ge06_failure_classifier": "4 passed; 0 failed"
+    },
+    "full_floor": "cargo test --tests green on slice branch",
+    "evidence_tier": "Observed",
+    "verdict_classification": "unverified (no promotion)",
+    "verdict_rationale": "Seven required race-semantic families are unproven at the 2026-07-06 evidence floor. pilot_compute.rs gates every non-Human race out of the compute path. No Elf fixture exists in tests/fixtures/. Promotion above Unverified would be counterfeit breadth."
+  },
+  "hygiene": {
+    "worktree_path": "/home/ubuntu/.hermes/profiles/tech-priest/home/.hermes/worktrees/codex-tranche-2-6/t_37dbab62",
+    "branch_origin_deleted_at": "2026-07-06T22:50:00Z",
+    "branch_origin_deletion_verified": "git ls-remote origin 'refs/heads/feat/sd13-race-elf-bounded-semantics*' returns empty",
+    "fetch_origin_develop_status": "ok (no develop drift past merge base; merged fast-forward from c78287c to b345c82)"
+  },
+  "non_goals_observed": [
+    "did not promote Elf row above Unverified",
+    "did not introduce Elf trait code, ability modifier, speed, senses, weapon familiarity, immunity, bonus-feat, or interaction seam",
+    "did not modify matrix markdown file directly",
+    "did not collapse into non-Elf race slice",
+    "did not invent breadth claim that race is core supported",
+    "did not bypass the matrix update path (typed carrier only)"
+  ],
+  "evidence_artifact": "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-elf-bounded-race-semantics-classification-2026-07-06.md",
+  "merge_receipt_artifact": "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-elf-bounded-race-semantics-merge-receipt-2026-07-06.json",
+  "ledger_ref": "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/unsupported-partial-lossy-and-unverified-semantics-ledger.md",
+  "date_utc": "2026-07-06T22:50:00Z",
+  "author": "tech-priest (Ferrix-9)",
+  "owner": "Todd Hintzmann",
+  "scope": "program",
+  "canonical": true,
+  "comment": "Row state is unchanged (unverified / Observed / AwaitingInitialEvidence); only blocker_or_lossiness_note and next_required_uplift were enriched on the typed carrier to record the seven-family debt and the explicit uplift pointer. The MD matrix file is intentionally untouched per the parent gate's forbidden write scope; row state updates flow through the same PR via the typed Rust carrier, which PR #102 carried. Let it be recorded."
+}
