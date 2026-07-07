@@ -432,23 +432,12 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // Monk must remain Unverified / Observed — this slice does not silently
-    // promote any still-unproven class.
-    for id in ["class.monk.bounded_progression"] {
-        let row = matrix
-            .row(id)
-            .unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Unverified,
-            "row {id} must stay Unverified after the paladin-decomposition slice"
-        );
-        assert_eq!(
-            row.evidence_tier,
-            EvidenceTier::Observed,
-            "row {id} must stay Observed"
-        );
-    }
+    // Monk was later promoted to Partial/Computed by its own follow-up SD13-E3 slice.
+    let monk = matrix
+        .row("class.monk.bounded_progression")
+        .expect("monk row must exist");
+    assert_eq!(monk.support_state, SupportState::Partial);
+    assert_eq!(monk.evidence_tier, EvidenceTier::Computed);
 
     // No row is silently promoted to Supported by this slice.
     assert!(

@@ -46,6 +46,11 @@
 //!   recognized on the compute seam, but it stays blocked on the nature bond / wild
 //!   empathy burden and the prepared divine spell posture burden, and fabricates no
 //!   spell math,
+//! - the Monk row is `Partial` / `Computed`: the SD13-E3 slice proves the
+//!   deterministic Human Monk level-1 martial chassis identity is recognized on the
+//!   compute seam (mirroring the Barbarian pattern), but four named pillar burdens
+//!   (base attack, base save, unarmed strike / Flurry of Blows, AC Bonus / bonus
+//!   feat) remain unproven,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
 //! - every other core race and core class, and the broader non-Human interaction row
 //!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime evidence
@@ -269,6 +274,13 @@ const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.r
 /// spell-bearing identity that stays explicitly blocked on the nature bond / wild
 /// empathy burden and the prepared divine spell posture burden.
 const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs";
+
+/// SD13-E3 dedicated proof surface for the bounded Human Monk level-1 martial
+/// chassis baseline (mirroring the Barbarian pattern): direct computed
+/// chassis-recognition evidence that stays explicitly blocked on the four named
+/// martial pillar burdens (base attack, base save, unarmed strike / Flurry of
+/// Blows, AC Bonus / level-1 bonus feat).
+const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
@@ -647,13 +659,23 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.monk.bounded_progression",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:monk",
-                dimension: "bounded class progression",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E3 martial progression slice",
+                dimension: "bounded Monk martial chassis progression: the deterministic Human \
+                            Monk level-1 martial chassis identity, with base-attack, base-save, \
+                            unarmed-strike/Flurry-of-Blows, and AC-Bonus/bonus-feat burdens \
+                            still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_MONK_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E3 leaves direct computed evidence that the \
+                    deterministic Human Monk level-1 martial chassis identity is recognized on \
+                    the compute seam, but four named pillar burdens remain unproven: base attack \
+                    progression (3/4 BAB), base save progression (good Fortitude, Reflex, and \
+                    Will), unarmed strike damage die and Flurry of Blows, and AC Bonus \
+                    (Wisdom-to-AC) plus the level-1 bonus feat grant. No martial math is \
+                    fabricated and no Monk level 2+ is proven",
+                next_required_uplift: "later SD13-E3 slice grounding one or more of the four \
+                    named Monk martial pillar burdens",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",

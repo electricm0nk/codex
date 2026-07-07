@@ -155,6 +155,14 @@ const WIZARD_BASELINE_LEVEL: u8 = 1;
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const MARTIAL_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E3 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
+// is a non-spell pure martial class with a distinct four-pillar bounded burden; this
+// slice recognizes only its bounded single-class level-1 identity as direct runtime
+// evidence and grounds no base-attack / base-save progression, no unarmed strike
+// damage die, no Flurry of Blows execution, no AC Bonus computation, no level-1
+// bonus feat grant, no ki pool, and no level-2+ martial progression.
+const MONK_CLASS_ID: &str = "class:monk";
+
 // Grounded SD13-E4 Human Cleric level-1 prepared divine spell-bearing baseline
 // identity. Cleric is the canonical PF1 prepared divine full caster; unlike the
 // arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
@@ -367,6 +375,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
     explain_barbarian_level1_chassis(input, &mut explanations, &mut diagnostics);
+    explain_monk_level1_chassis(input, &mut explanations, &mut diagnostics);
 
 
     // SD13-E3/E4 Paladin-only decomposition: split the F6 hybrid class-feature
@@ -1242,7 +1251,10 @@ fn explain_barbarian_level1_chassis(
     }
 
     // Only the Barbarian is in this slice today; the match is exhaustive-by-design so
-    // a future addition (e.g. a non-hybrid Monk slice) needs an explicit arm here.
+    // a future addition needs an explicit arm here. The SD13-E3 Monk martial-chassis
+    // slice landed as its own dedicated recognition function (`explain_monk_level1_chassis`)
+    // rather than a new `MartialClass` arm, since its four named burdens are unrelated
+    // in content to Barbarian's.
     let MartialClass::Barbarian = martial;
     let class_id = BARBARIAN_CLASS_ID;
     let class_name = "Barbarian";
@@ -1309,6 +1321,118 @@ fn explain_barbarian_level1_chassis(
              the trait that prevents literate reading and writing of non-native languages without additional \
              training is not implemented in this bounded martial chassis baseline, so no {class_name} \
              illiteracy-trait support is claimed"
+        ),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Monk at the bounded
+/// martial baseline level (1). Returns `false` for any other class, a multiclass mix,
+/// or a level-2+ Monk this slice deliberately does not recognize — each of which stays
+/// blocked exactly as before.
+fn is_single_class_monk_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == MONK_CLASS_ID
+                && class_level.level == MARTIAL_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E3 runtime evidence for the deterministic Human Monk level-1
+/// martial chassis, mirroring the Barbarian level-1 baseline pattern, while keeping it
+/// explicitly claim-blocked on the four still-missing named burdens.
+///
+/// This deliberately does not compute a supported martial chassis. It grounds no
+/// base-attack progression (3/4 BAB), no base-save progression (good Fortitude,
+/// Reflex, and Will), no unarmed strike damage die, no Flurry of Blows execution, no
+/// AC Bonus (Wisdom-to-AC) computation, and no level-1 bonus feat grant from the
+/// restricted Monk feat list. It grounds no ki pool and no level-2+ martial
+/// progression. It only:
+/// - leaves one chassis-recognition explanation so the `class:monk:1` identity is
+///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits four claim-blocking diagnostics naming the four still-missing pillar
+///   burdens (base-attack, base-save, unarmed-strike/flurry, AC-bonus/bonus-feat)
+///   explicitly, rather than hiding behind a single generic "unsupported class" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Monk martial identity and its four named
+/// pillar burdens legible on the runtime path.
+fn explain_monk_level1_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_monk_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Monk level-1 martial
+    // chassis identity. This is a recognition record only; it fabricates no mechanical
+    // value.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.bounded_progression".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Monk level {MARTIAL_BASELINE_LEVEL} martial chassis: \
+             the {MONK_CLASS_ID}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure \
+             non-hybrid martial baseline on the rules-core seam rather than an undocumented packet \
+             placeholder. This is a bounded chassis-recognition record only; it grounds no Monk \
+             base-attack or base-save progression, no unarmed strike damage die, no Flurry of \
+             Blows execution, no AC Bonus computation, no level-1 bonus feat grant, no ki pool, \
+             and no level-2+ martial progression, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/4): name the base-attack progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.monk.bounded_progression.base_attack.unsupported".to_owned(),
+        message: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its base attack progression: \
+             the 3/4-BAB progression is not implemented in this bounded martial chassis baseline, \
+             so no Monk base-attack support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/4): name the base-save progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.monk.bounded_progression.base_save.unsupported".to_owned(),
+        message: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its base save progression: \
+             the good Fortitude, Reflex, and Will base-save progressions are not implemented in \
+             this bounded martial chassis baseline, so no Monk base-save support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (3/4): name the unarmed strike / Flurry of Blows burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.monk.bounded_progression.unarmed_strike_and_flurry.unsupported"
+            .to_owned(),
+        message: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its unarmed strike and \
+             Flurry of Blows burden: the unarmed strike damage die and the Flurry of Blows extra \
+             attack are not implemented in this bounded martial chassis baseline, so no Monk \
+             unarmed strike or Flurry of Blows support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (4/4): name the AC Bonus / level-1 bonus feat burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.monk.bounded_progression.ac_bonus_and_bonus_feat.unsupported"
+            .to_owned(),
+        message: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its AC Bonus and bonus feat \
+             burden: the AC Bonus (Wisdom modifier added to AC while unarmored and unencumbered) \
+             and the level-1 bonus feat grant from the restricted Monk feat list are not \
+             implemented in this bounded martial chassis baseline, so no Monk AC Bonus or bonus \
+             feat support is claimed"
         ),
         claim_blocking: true,
     });
