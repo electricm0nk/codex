@@ -60,6 +60,11 @@
 //!   Elf racial trait dimensions (ability modifiers, size, speed, senses) are
 //!   recognized on the compute seam, but the remaining Elf family surface (Elven
 //!   Immunities, Keen Senses, weapon familiarity, bonus languages) stays unproven,
+//! - the Gnome row is `Partial` / `Computed`: the SD13-E2 slice proves four
+//!   grounded Gnome racial trait dimensions (ability modifiers, size, speed,
+//!   senses) are recognized on the compute seam, but the remaining Gnome family
+//!   surface (Defensive Training, Illusion Resistance, Hatred, Keen Senses, Gnome
+//!   Magic, weapon familiarity) stays unproven,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
 //! - every other core race and core class, and the broader non-Human interaction row
 //!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime evidence
@@ -247,18 +252,10 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
 const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
-/// classification: the deterministic pilot still produces computed outputs
-/// through a `race:gnome` chassis, the Gnome race seam receives the same
-/// non-claim-blocking `race.semantics.unverified` diagnostic the seam emits
-/// for every non-Human race, and no Gnome-specific trait math is fabricated.
-#[allow(dead_code)]
-const SD13_RACE_GNOME_BOUNDED_SEMANTICS_TEST: &str =
-    "tests/sd13_race_gnome_bounded_semantics.rs";
-
-/// Live compute seam that emits the bounded, non-claim-blocking
-/// `race.semantics.unverified` diagnostic for any non-Human race (including
-/// `race:gnome`) and grounds no non-Human race-specific explanation records.
-const PILOT_COMPUTE_RACE_SEAM: &str = "src/rules_core/pilot_compute.rs";
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Gnome racial trait dimensions (ability modifiers, size, speed, senses) that
+/// stays explicitly honest about the remaining unproven Gnome family surface.
+const SD13_GNOME_LEVEL1_TEST: &str = "tests/sd13_gnome_race_semantics_recognition.rs";
 
 /// SD13-E4-F7 dedicated proof surface for the bounded Human Bard level-1 spell
 /// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
@@ -383,25 +380,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.gnome.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:gnome",
-                dimension: "bounded Gnome race semantics: the deterministic pilot
-                            still produces computed outputs through a `race:gnome`
-                            chassis, but the Gnome race seam receives only the
-                            same non-claim-blocking `race.semantics.unverified`
-                            diagnostic the seam emits for every non-Human race;
-                            no Gnome-specific trait math is fabricated",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: PILOT_COMPUTE_RACE_SEAM,
-                blocker_or_lossiness_note: "the bounded Gnome classification
-                    grounds only the negative-control seam: Gnome small-size,
-                    slow-speed, low-light vision, defensive training, illusion
-                    resistance, hatred, keen senses, and every other Gnome
-                    racial trait burden remain unverified; the deterministic
-                    pilot still computes through a Gnome chassis but
-                    fabricates no Gnome trait math",
-                next_required_uplift: "later SD13-E2 race-semantic slice that
-                    grounds one or more Gnome trait surfaces",
+                dimension: "bounded Gnome race semantics: four grounded PF1 Core Rulebook \
+                            Gnome racial trait dimensions (ability modifiers, size, speed, \
+                            senses) recognized on the compute seam, with the remaining Gnome \
+                            family surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_GNOME_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Gnome race-semantic families are recognized on the compute seam (ability \
+                    modifiers: +2 Constitution / -2 Strength; size: Small; speed: 20 ft; \
+                    senses: low-light vision), but the remaining families stay unproven: \
+                    Defensive Training, Illusion Resistance, Hatred, Keen Senses, Gnome Magic, \
+                    and weapon familiarity. PF1 core Gnomes gain no racial bonus feat, so that \
+                    family is not applicable rather than unproven. No numeric mechanical \
+                    contribution is fabricated for any of the four recognized dimensions.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Gnome families (Defensive Training, Illusion Resistance, Hatred, \
+                    Keen Senses, Gnome Magic, weapon familiarity) as a real computed \
+                    contribution",
             },
             SupportStateRow {
                 row_id: "race.half_elf.bounded_semantics",

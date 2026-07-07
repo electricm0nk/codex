@@ -411,6 +411,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_elf_race_seam(input, &mut explanations, &mut diagnostics);
 
+    explain_gnome_race_seam(input, &mut explanations, &mut diagnostics);
+
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
     PilotBaseChassisComputation {
@@ -493,10 +495,13 @@ fn explain_human_race_seam(
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if input.chosen.race_id != HUMAN_RACE_ID {
-        // Dwarf and Elf carry their own dedicated race-semantics seams
-        // (explain_dwarf_race_seam, explain_elf_race_seam); they replace this
-        // generic diagnostic rather than stacking alongside it.
-        if input.chosen.race_id != DWARF_RACE_ID && input.chosen.race_id != ELF_RACE_ID {
+        // Dwarf, Elf, and Gnome carry their own dedicated race-semantics seams
+        // (explain_dwarf_race_seam, explain_elf_race_seam, explain_gnome_race_seam);
+        // they replace this generic diagnostic rather than stacking alongside it.
+        if input.chosen.race_id != DWARF_RACE_ID
+            && input.chosen.race_id != ELF_RACE_ID
+            && input.chosen.race_id != GNOME_RACE_ID
+        {
             diagnostics.push(ComputationDiagnostic {
                 id: "race.semantics.unverified".to_owned(),
                 message: format!(
@@ -805,6 +810,121 @@ fn explain_elf_race_seam(
                   Keen Senses (a bonus on Perception checks), weapon familiarity (longbow, \
                   composite longbow, longsword, rapier, shortbow, composite shortbow), and \
                   bonus language grants. PF1 core Elves gain no racial bonus feat (unlike \
+                  Human), so that family is explicitly not applicable rather than silently \
+                  omitted."
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+const GNOME_RACE_ID: &str = "race:gnome";
+const GNOME_SIZE_CATEGORY: &str = "Small";
+const GNOME_BASE_SPEED_FEET: i16 = 20;
+const GNOME_CON_ADJUSTMENT: i16 = 2;
+const GNOME_STR_ADJUSTMENT: i16 = -2;
+
+/// SD13-E2 Gnome racial trait bundle explanation seam (mirroring the Dwarf/Elf
+/// pattern for the third non-Human core race).
+///
+/// Surfaces four grounded PF1 Core Rulebook Gnome racial trait dimensions
+/// (ability modifiers, size, speed, senses) as explicit `ComputationExplanation`
+/// records so the Gnome identity is legible on the runtime path rather than left
+/// behind the generic `race.semantics.unverified` diagnostic every other
+/// non-Human race still receives.
+///
+/// This function:
+///   - runs only when `race_id == race:gnome`; every other race is unaffected
+///     (Human, Dwarf, and Elf keep their own seams; every other non-Human race
+///     keeps the generic `race.semantics.unverified` diagnostic),
+///   - adds no new computed mechanical contribution: the ability-modifiers record
+///     is recognition-only (the chosen Constitution/Strength scores are
+///     understood to already reflect the fixed +2/-2 racial adjustment; no
+///     arithmetic is performed on this seam), and the size/senses records carry
+///     the grounded source value as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with a
+///     Gnome-specific `race.gnome.bounded_semantics` note naming the
+///     still-unproven families explicitly (Defensive Training, Illusion
+///     Resistance, Hatred, Keen Senses, Gnome Magic, weapon familiarity, and the
+///     explicit absence of any Gnome racial bonus feat),
+///   - is bounded to race recognition only; it deliberately grounds no Gnome
+///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
+fn explain_gnome_race_seam(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != GNOME_RACE_ID {
+        return;
+    }
+
+    // ----- ability modifiers -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.ability_modifiers".to_owned(),
+        value: 0,
+        detail: format!(
+            "Gnome racial trait bundle — ability modifiers: PF1 Core Gnome grants a fixed \
+             {GNOME_CON_ADJUSTMENT:+} Constitution and {GNOME_STR_ADJUSTMENT:+} Strength racial \
+             adjustment (cr_races.lst race:gnome STAT:CON|{GNOME_CON_ADJUSTMENT:+}, \
+             STAT:STR|{GNOME_STR_ADJUSTMENT:+}). This is a bounded recognition record naming the \
+             fixed adjustment on the deterministic pilot seam; the chosen Constitution and \
+             Strength scores are understood to already reflect it, so this record performs no \
+             arithmetic and carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Gnome racial trait bundle — size: PF1 Core Gnome is {GNOME_SIZE_CATEGORY} size \
+             (cr_races.lst race:gnome SIZE:SMALL). This is a bounded recognition record naming \
+             the Gnome size category on the deterministic pilot seam; it contributes no numeric \
+             effect to attack rolls, AC, skill checks, ability checks, or any other computed \
+             value, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.speed".to_owned(),
+        value: GNOME_BASE_SPEED_FEET,
+        detail: format!(
+            "Gnome racial trait bundle — speed: PF1 Core Gnome has a base land speed of \
+             {GNOME_BASE_SPEED_FEET} ft (cr_races.lst race:gnome GAIT:WALK|{GNOME_BASE_SPEED_FEET}). \
+             This is a grounded recognition value carrying the Gnome base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Gnome racial trait bundle — senses: PF1 Core Gnome grants low-light vision \
+                  (cr_races.lst race:gnome SENSE:Low-Light Vision). This is a bounded \
+                  recognition record naming the Gnome low-light vision identity on the \
+                  deterministic pilot seam; it contributes no computed illumination or \
+                  perception-derived effect to any chassis output, so it carries no fabricated \
+                  mechanical value (+0)"
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Gnome specifically and
+    // stays non-claim-blocking so the deterministic pilot still reports computed
+    // evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.gnome.bounded_semantics".to_owned(),
+        message: "Gnome race semantics are grounded for the deterministic pilot's ability \
+                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core Gnome \
+                  racial trait surface remains unverified: Defensive Training (a dodge bonus to \
+                  AC against giants), Illusion Resistance (a bonus on saves against illusion \
+                  spells and effects), Hatred (a bonus on attack rolls against reptilian \
+                  humanoids and goblinoids), Keen Senses (a bonus on Perception checks), Gnome \
+                  Magic (spell-like abilities keyed to a high Charisma), and weapon familiarity \
+                  (gnome hooked hammer). PF1 core Gnomes gain no racial bonus feat (unlike \
                   Human), so that family is explicitly not applicable rather than silently \
                   omitted."
             .to_owned(),

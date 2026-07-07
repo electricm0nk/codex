@@ -1,22 +1,25 @@
 //! SD13-E2 Gnome bounded race-semantics classification slice.
 //!
-//! Proves the first truthful SD13-E2 race-semantics classification for the
-//! Gnome row: the live rules-core surface ingests a deterministic
-//! `race:gnome` + `class:fighter:1` input, leaves direct computed evidence that
-//! (a) the bounded pilot still produces computed outputs through a non-Human
-//! race, (b) the Gnome race seam receives the same non-claim-blocking
-//! `race.semantics.unverified` diagnostic the seam emits for any non-Human
-//! race, and (c) no Gnome-specific explanation records or Human-only
-//! explanations are fabricated. The matrix row for `race.gnome.bounded_semantics`
-//! therefore stays honestly classified as `Unverified` / `Observed` /
-//! `AwaitingInitialEvidence` — *with* a real grounding reference to the live
-//! compute proof surface, instead of being a bare SD-13 roster-scope placeholder.
+//! Originally proved the first truthful SD13-E2 race-semantics classification
+//! for the Gnome row: at the time, the live rules-core surface ingested a
+//! deterministic `race:gnome` + `class:fighter:1` input and left only the
+//! generic non-claim-blocking `race.semantics.unverified` diagnostic, with no
+//! Gnome-specific trait math grounded.
 //!
-//! It is intentionally not a Gnome race engine. It grounds no Gnome small-size,
-//! slow-speed, low-light vision, defensive training, illusion resistance,
-//! hatred, keen senses, or other racial trait math. It does not promote the
-//! row off `Unverified`. It only pins the honest bounded classification that
-//! the live deterministic pilot emits today.
+//! The SD13-E2 Gnome bounded race-semantics recognition slice
+//! (`tests/sd13_gnome_race_semantics_recognition.rs`) executed the promotion
+//! path this file's original guards anticipated: it landed grounded evidence
+//! for four race-semantic families (ability modifiers, size, speed, senses) and
+//! updated the row state in the typed matrix carrier. This file now pins that
+//! promoted truth for the negative-control fixture below (a `race:gnome`
+//! Fighter input that predates the recognition slice and still deliberately
+//! omits every Human-specific selection): the Gnome race seam no longer emits
+//! the generic diagnostic for this fixture, and the matrix row is `Partial` /
+//! `Computed` rather than `Unverified` / `Observed`.
+//!
+//! It is intentionally not a Gnome race engine. It grounds no Gnome defensive
+//! training, illusion resistance, hatred, keen senses, Gnome Magic, or weapon
+//! familiarity math.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
@@ -71,21 +74,22 @@ fn gnome_pilot_produces_computed_outputs_through_a_non_human_race() {
         );
     }
 
-    // The Gnome race seam must surface the bounded, non-claim-blocking
-    // unverified-race diagnostic that the seam emits for every non-Human race.
+    // The Gnome race seam now surfaces its own bounded, non-claim-blocking note
+    // (SD13-E2 recognition slice) instead of the generic unverified-race
+    // diagnostic every other non-Human race still receives.
     assert!(
         computation
             .diagnostics
             .iter()
-            .any(|d| d.id == "race.semantics.unverified" && !d.claim_blocking),
-        "Gnome pilot must emit the bounded non-Human race semantics unverified diagnostic: {:?}",
+            .any(|d| d.id == "race.gnome.bounded_semantics" && !d.claim_blocking),
+        "Gnome pilot must emit the bounded Gnome race semantics note: {:?}",
         computation.diagnostics
     );
 
     // The Gnome race seam must NOT emit any Human-only race explanation records.
-    // Gnome-specific trait math (small size, slow speed, low-light vision,
-    // defensive training, illusion resistance, hatred, keen senses) is not
-    // implemented and must not be fabricated.
+    // Gnome-specific trait math beyond the four recognized dimensions
+    // (defensive training, illusion resistance, hatred, keen senses, Gnome
+    // Magic, weapon familiarity) is not implemented and must not be fabricated.
     for human_only in [
         "race.human.ability_bonus_target",
         "race.human.bonus_feat_grant",
@@ -108,38 +112,37 @@ fn gnome_pilot_produces_computed_outputs_through_a_non_human_race() {
     );
 }
 
-// ----- Control plane: the matrix keeps the honest Gnome classification -----
+// ----- Control plane: the matrix reflects the SD13-E2 Gnome recognition promotion -----
 
 #[test]
-fn matrix_gnome_row_is_unverified_observed_awaiting_initial_evidence() {
+fn matrix_gnome_row_is_partial_computed_after_sd13_e2_recognition() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let gnome = matrix
         .row("race.gnome.bounded_semantics")
         .expect("gnome bounded race semantics row must exist in the seeded matrix");
 
-    // The bounded Gnome classification remains honest: no Gnome-specific
-    // trait math is grounded by this slice, so the row stays Unverified with
-    // Observed-tier evidence and AwaitingInitialEvidence freshness.
+    // The SD13-E2 Gnome recognition slice landed grounded evidence for four
+    // race-semantic families (ability modifiers, size, speed, senses),
+    // promoting the row from Unverified to Partial.
     assert_eq!(
         gnome.subject_type,
         codex::rules_core::support_state_matrix::MatrixSubjectType::Race
     );
     assert_eq!(gnome.subject_id, "race:gnome");
-    assert_eq!(gnome.support_state, SupportState::Unverified);
-    assert_eq!(gnome.evidence_tier, EvidenceTier::Observed);
+    assert_eq!(gnome.support_state, SupportState::Partial);
+    assert_eq!(gnome.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         gnome.evidence_freshness,
-        EvidenceFreshness::AwaitingInitialEvidence
+        EvidenceFreshness::RefreshableFromLiveProof
     );
 
-    // The slice must point the grounding reference at the live compute proof
-    // surface so the row is anchored to a real, re-runnable source path —
-    // upgrading it from a bare SD-13 roster-scope placeholder to an honest
-    // Observed reference without silently flipping it to Computed. The
-    // parallel pattern for the Human row also grounds to `pilot_compute`.
+    // The slice upgrades the grounding reference to the live SD13-E2 recognition
+    // test surface.
     assert!(
-        gnome.grounding_ref.contains("pilot_compute"),
-        "gnome row grounding_ref must cite the live pilot compute proof surface: {}",
+        gnome
+            .grounding_ref
+            .contains("sd13_gnome_race_semantics_recognition"),
+        "gnome row grounding_ref must cite the live SD13-E2 recognition test surface: {}",
         gnome.grounding_ref
     );
 }
