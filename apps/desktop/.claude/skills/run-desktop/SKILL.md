@@ -18,7 +18,7 @@ Already present in this container image; on a fresh Ubuntu 24.04 box you'd need:
 sudo apt-get update
 sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file \
   libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev pkg-config \
-  xvfb xdotool imagemagick x11-utils
+  xvfb xdotool imagemagick x11-utils lsof
 ```
 
 Rust (via rustup) and Node.js LTS must also be installed — see the repo
