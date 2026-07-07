@@ -642,7 +642,8 @@ mod tests {
             assert_eq!(
                 claim_blocking_diagnostic_ids("race:human", class_id, 1),
                 generic_ids(),
-                "{class_id} has no dedicated compute seam and must fall back to exactly the 4 generic diagnostics"
+                "{} has no dedicated compute seam and must fall back to exactly the 4 generic diagnostics",
+                class_id
             );
         }
 
