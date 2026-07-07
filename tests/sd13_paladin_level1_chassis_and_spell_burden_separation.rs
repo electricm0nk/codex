@@ -418,18 +418,22 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
     );
     assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
 
-    // Wizard was later promoted to Blocked/Computed by the SD13-E4-R3 slice
-    // executing its own merge-receipt obligation; verified separately below.
-    let wizard = matrix
-        .row("class.wizard.progression_and_spell_burden")
-        .expect("wizard row must exist");
-    assert_eq!(wizard.support_state, SupportState::Blocked);
-    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
-
-    // Cleric, Druid, Monk must remain Unverified / Observed — this slice does
-    // not silently promote any still-unproven class.
+    // Wizard and Cleric were later promoted to Blocked/Computed by their own
+    // follow-up slices; verified separately below.
     for id in [
+        "class.wizard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
+    ] {
+        let row = matrix
+            .row(id)
+            .unwrap_or_else(|| panic!("row {id} must exist"));
+        assert_eq!(row.support_state, SupportState::Blocked);
+        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    }
+
+    // Druid, Monk must remain Unverified / Observed — this slice does not
+    // silently promote any still-unproven class.
+    for id in [
         "class.druid.progression_and_spell_burden",
         "class.monk.bounded_progression",
     ] {

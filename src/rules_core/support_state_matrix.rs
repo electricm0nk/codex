@@ -36,6 +36,11 @@
 //!   recognized on the compute seam, but it stays blocked on the school specialization
 //!   burden and the prepared spellbook / spell-slot posture burden, and fabricates no
 //!   spell math,
+//! - the Cleric row is `Blocked` / `Computed`: the SD13-E4 slice proves the
+//!   deterministic Human Cleric level-1 prepared divine spell-bearing identity is
+//!   recognized on the compute seam, but it stays blocked on the domain / channel
+//!   energy burden and the prepared divine spell posture burden, and fabricates no
+//!   spell math,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
 //! - every other core race and core class, and the broader non-Human interaction row
 //!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime evidence
@@ -247,6 +252,12 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
 /// spell-bearing identity that stays explicitly blocked on the school specialization
 /// burden and the prepared spellbook / spell-slot posture burden.
 const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs";
+
+/// SD13-E4 dedicated proof surface for the bounded Human Cleric level-1 prepared
+/// divine spell baseline: direct computed recognition of the prepared divine
+/// spell-bearing identity that stays explicitly blocked on the domain / channel
+/// energy burden and the prepared divine spell posture burden.
+const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
@@ -580,13 +591,23 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.cleric.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:cleric",
-                dimension: "bounded class progression and spell burden",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E4 spellcasting slice",
+                dimension: "bounded spell-bearing class progression: the deterministic Human Cleric \
+                            level-1 prepared divine spell baseline, with the domain / channel energy \
+                            burden and the prepared divine spell posture burden still blocked",
+                support_state: SupportState::Blocked,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_CLERIC_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
+                    deterministic Human Cleric level-1 prepared divine spell-bearing identity is \
+                    recognized on the compute seam, but the row stays blocked: the domain and channel \
+                    energy burden (two chosen domains, domain spells, domain powers, channel energy) \
+                    is not implemented, and the prepared divine spell posture burden (spells prepared \
+                    from the full Cleric list, spontaneous cure/inflict conversion, spell slots per \
+                    day, bonus spells from a high Wisdom, spell save DCs) is not computed. No spell \
+                    math is fabricated and no Cleric level 2+ is proven",
+                next_required_uplift: "SD13-E4 Cleric domain / channel energy and prepared divine \
+                    spell slice, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",

@@ -155,6 +155,17 @@ const WIZARD_BASELINE_LEVEL: u8 = 1;
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const MARTIAL_BASELINE_LEVEL: u8 = 1;
 
+// Grounded SD13-E4 Human Cleric level-1 prepared divine spell-bearing baseline
+// identity. Cleric is the canonical PF1 prepared divine full caster; unlike the
+// arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
+// is split across a domain / channel energy class-feature family (two domains
+// chosen, domain spells, domain powers, channel energy) and a prepared divine
+// spell posture family (spells prepared from the full Cleric list, spontaneous
+// cure/inflict conversion, spell slots per day, bonus spells from a high Wisdom,
+// spell save DCs).
+const CLERIC_CLASS_ID: &str = "class:cleric";
+const CLERIC_BASELINE_LEVEL: u8 = 1;
+
 
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
@@ -361,6 +372,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_wizard_level1_prepared_spell_baseline(input, &mut explanations, &mut diagnostics);
+
+    explain_cleric_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
     explain_bard_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
@@ -1447,6 +1460,94 @@ fn explain_wizard_level1_prepared_spell_baseline(
              posture burden: spellbook content, spells prepared per day, spell slots per day, \
              bonus spell slots from a high Intelligence, and spell save DCs are out of scope for \
              this level-1 prepared spell baseline and no spell math is fabricated"
+                .to_owned(),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Cleric at the bounded
+/// prepared divine spell baseline level (1). Returns `false` for any other class, a
+/// multiclass mix, or a level-2+ Cleric this slice deliberately does not recognize —
+/// each of which stays blocked exactly as before.
+fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == CLERIC_CLASS_ID
+                && class_level.level == CLERIC_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4 runtime evidence for the deterministic Human Cleric level-1
+/// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
+/// its two still-missing burdens.
+///
+/// This deliberately does not compute a supported spell surface. It grounds no domain
+/// selection, no domain spells, no domain powers, no channel energy execution, no
+/// spellbook posture, no spells prepared, no spontaneous cure/inflict conversion, no
+/// spell slots per day, no spell save DCs, and no bonus spell slots from a high Wisdom.
+/// It only:
+/// - leaves one recognition explanation so the `class:cleric:1` identity is acknowledged
+///   as a prepared divine spell-bearing class rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the domain / channel energy
+///   class-feature burden and the prepared divine spell posture burden explicitly,
+///   rather than hiding behind a generic "unsupported caster" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Cleric prepared divine spell-bearing
+/// identity and its two named burdens legible on the runtime path.
+fn explain_cleric_level1_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_cleric_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Cleric level-1
+    // prepared divine spell-bearing identity. This is a recognition record only; it
+    // fabricates no domain power math and no spell math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.cleric".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Cleric level {CLERIC_BASELINE_LEVEL} prepared divine \
+             spell-bearing baseline: the {CLERIC_CLASS_ID}:{CLERIC_BASELINE_LEVEL} class identity is \
+             acknowledged as a prepared divine spell-bearing class on the rules-core seam rather than \
+             an undocumented packet placeholder. This is a bounded recognition record only; it grounds \
+             no domain selection, no domain spells, no domain powers, no channel energy execution, no \
+             spellbook posture, no spells prepared per day, no spontaneous cure/inflict conversion, no \
+             spell slots per day, no spell save DCs, and no bonus spell slots from a high Wisdom, so it \
+             carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the domain / channel energy class-feature burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.cleric.domain_and_channel_energy.unsupported".to_owned(),
+        message: format!(
+            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain and channel energy \
+             burden: the two chosen domains, their domain spells, their domain powers, and channel \
+             energy (positive/negative energy burst, uses per day, save DC) are not implemented in \
+             this bounded prepared divine spell baseline, so no Cleric domain or channel energy \
+             support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the prepared divine spell posture burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.cleric.prepared_divine.unsupported".to_owned(),
+        message:
+            "Cleric remains blocked on its prepared divine spell posture burden: spells prepared \
+             from the full Cleric spell list, spontaneous cure/inflict conversion, spell slots per \
+             day, bonus spell slots from a high Wisdom, and spell save DCs are out of scope for this \
+             level-1 spell baseline and no spell math is fabricated"
                 .to_owned(),
         claim_blocking: true,
     });
