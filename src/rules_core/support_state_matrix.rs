@@ -16,8 +16,12 @@
 //! - the Fighter levels-2-10 row is `Partial` / `Computed`: the SD13-E3 tranche now
 //!   proves Fighter levels 2 and 3 (base progression, the level-2 bonus-feat seam,
 //!   and the level-3 armor-training seam), while levels 4-10 remain out of proof,
-//! - Rogue level 1 is `Blocked` / `Computed` because the live GE-06 test explicitly
-//!   claim-blocks it, keeping it an explicit negative-control seam,
+//! - the Rogue row is `Partial` / `Computed`: the SD13-E3 slice proves the
+//!   deterministic Human Rogue level-1 chassis identity is recognized on the
+//!   compute seam, but it stays blocked on the base-attack, base-save,
+//!   sneak-attack, and trapfinding burdens; the live GE-06 negative control
+//!   (`tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`)
+//!   keeps claim-blocking it unmodified,
 //! - the Paladin and Ranger hybrid rows are `Blocked` / `Computed`: the SD13-E3-F6
 //!   slice proves the deterministic Human Paladin level-1 and Human Ranger level-1
 //!   hybrid chassis are recognized on the compute seam, but both stay blocked on the
@@ -229,9 +233,11 @@ const PILOT_COMPUTE_MODULE: &str = "src/rules_core/pilot_compute.rs";
 /// bonus-feat and ability-bonus selections).
 const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 
-/// GE-06 total saving throws proof. Also claim-blocks Rogue level 1 and Fighter
-/// level 4.
-const GE06_TOTAL_SAVES_TEST: &str = "tests/ge06_pilot_total_saves.rs";
+/// SD13-E3 dedicated proof surface for the bounded Human Rogue level-1 chassis
+/// baseline (mirroring the Barbarian/Monk pattern): direct computed
+/// chassis-recognition evidence that stays explicitly blocked on the four named
+/// pillar burdens (base attack, base save, sneak attack, trapfinding).
+const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs";
 
 /// SD13-E3 dedicated proof surface for the bounded Fighter levels-2-and-3 milestone
 /// tranche (base progression, level-2 bonus-feat seam, level-3 armor-training seam).
@@ -572,15 +578,25 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.rogue.bounded_progression",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:rogue",
-                dimension: "bounded class progression",
-                support_state: SupportState::Blocked,
+                dimension: "bounded Rogue chassis progression: the deterministic Human Rogue \
+                            level-1 chassis identity, with base-attack, base-save, \
+                            sneak-attack, and trapfinding burdens still unproven",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: GE06_TOTAL_SAVES_TEST,
-                blocker_or_lossiness_note: "tests/ge06_pilot_total_saves.rs \
-                    (unsupported_chassis_blocks_total_saves) explicitly claim-blocks \
-                    class:rogue:1 under the current bounded compute path",
-                next_required_uplift: "SD13-E3 martial progression slice",
+                grounding_ref: SD13_ROGUE_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E3 leaves direct computed evidence that the \
+                    deterministic Human Rogue level-1 chassis identity is recognized on the \
+                    compute seam, but four named pillar burdens remain unproven: base attack \
+                    progression (3/4 BAB), base save progression (good Reflex, poor Fortitude, \
+                    poor Will), sneak attack (+1d6 extra damage), and trapfinding (Perception / \
+                    Disable Device bonus). No mechanical math is fabricated and no Rogue level \
+                    2+ is proven. tests/ge06_pilot_total_saves.rs \
+                    (unsupported_chassis_blocks_total_saves) still claim-blocks class:rogue:1 \
+                    unmodified: this slice adds recognition and burden diagnostics only, and \
+                    never computes defense.total_save.* for Rogue.",
+                next_required_uplift: "later SD13-E3 slice grounding one or more of the four \
+                    named Rogue pillar burdens",
             },
             SupportStateRow {
                 row_id: "class.barbarian.bounded_progression",

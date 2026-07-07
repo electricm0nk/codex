@@ -383,11 +383,12 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // Rogue stays the blocked negative control.
+    // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
+    // recognition slice.
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("rogue row must exist");
-    assert_eq!(rogue.support_state, SupportState::Blocked);
+    assert_eq!(rogue.support_state, SupportState::Partial);
 
     // Sorcerer stays at its accepted F7 posture.
     let sorcerer = matrix

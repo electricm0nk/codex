@@ -377,11 +377,12 @@ fn matrix_preserves_fighter_and_rogue_accepted_truth() {
         assert_eq!(fighter.evidence_tier, EvidenceTier::Computed);
     }
 
-    // Rogue stays the blocked negative control.
+    // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
+    // recognition slice.
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("rogue row must exist");
-    assert_eq!(rogue.support_state, SupportState::Blocked);
+    assert_eq!(rogue.support_state, SupportState::Partial);
 
     // No row is silently promoted to Supported or Lossy by this slice.
     assert!(

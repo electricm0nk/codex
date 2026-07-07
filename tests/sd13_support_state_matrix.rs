@@ -171,20 +171,24 @@ fn fighter_levels_2_10_row_is_partial_and_computed_and_names_what_remains() {
 }
 
 #[test]
-fn rogue_row_is_blocked_and_computed_with_blocker_note() {
+fn rogue_row_is_partial_and_computed_with_blocker_note() {
+    // The SD13-E3 Rogue chassis recognition slice promoted the row from
+    // Blocked to Partial.
     let matrix = matrix();
     let rogue = row(&matrix, "class.rogue.bounded_progression");
     assert_eq!(rogue.subject_type, MatrixSubjectType::Class);
     assert_eq!(rogue.subject_id, "class:rogue");
-    assert_eq!(rogue.support_state, SupportState::Blocked);
+    assert_eq!(rogue.support_state, SupportState::Partial);
     assert_eq!(rogue.evidence_tier, EvidenceTier::Computed);
     assert!(
         !rogue.blocker_or_lossiness_note.is_empty(),
-        "blocked Rogue row must carry a non-empty blocker note"
+        "partial Rogue row must carry a non-empty blocker note"
     );
     assert!(
-        rogue.grounding_ref.contains("ge06_pilot_total_saves"),
-        "blocked Rogue row must cite the GE-06 total-save test that claim-blocks it: {}",
+        rogue
+            .grounding_ref
+            .contains("sd13_rogue_level1_chassis_baseline"),
+        "partial Rogue row must cite the live SD13-E3 recognition test surface: {}",
         rogue.grounding_ref
     );
 }

@@ -273,15 +273,17 @@ fn matrix_level_1_and_levels_2_10_remain_distinct_rows() {
 }
 
 #[test]
-fn matrix_keeps_rogue_blocked_negative_control() {
+fn matrix_keeps_rogue_partial_after_its_own_recognition_slice() {
+    // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
+    // recognition slice; this Fighter-L1-widening snapshot preserves that.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("Rogue row must exist");
     assert_eq!(
         rogue.support_state,
-        SupportState::Blocked,
-        "Rogue must remain a blocked negative control after the Fighter L1 widening"
+        SupportState::Partial,
+        "Rogue must remain Partial after the Fighter L1 widening"
     );
 }
 

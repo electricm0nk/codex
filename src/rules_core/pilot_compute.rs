@@ -376,6 +376,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
     explain_barbarian_level1_chassis(input, &mut explanations, &mut diagnostics);
     explain_monk_level1_chassis(input, &mut explanations, &mut diagnostics);
+    explain_rogue_level1_chassis(input, &mut explanations, &mut diagnostics);
 
 
     // SD13-E3/E4 Paladin-only decomposition: split the F6 hybrid class-feature
@@ -2186,6 +2187,124 @@ fn explain_monk_level1_chassis(
              and the level-1 bonus feat grant from the restricted Monk feat list are not \
              implemented in this bounded martial chassis baseline, so no Monk AC Bonus or bonus \
              feat support is claimed"
+        ),
+        claim_blocking: true,
+    });
+}
+
+const ROGUE_CLASS_ID: &str = "class:rogue";
+const ROGUE_BASELINE_LEVEL: u8 = 1;
+
+/// Return `true` when the chosen input is exactly a single-class Rogue at the
+/// bounded chassis baseline level (1). Returns `false` for any other class, a
+/// multiclass mix, or a level-2+ Rogue this slice deliberately does not
+/// recognize — each of which stays blocked exactly as before.
+fn is_single_class_rogue_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == ROGUE_CLASS_ID
+                && class_level.level == ROGUE_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E3 runtime evidence for the deterministic Human Rogue
+/// level-1 chassis, mirroring the Barbarian/Monk level-1 baseline pattern,
+/// while keeping it explicitly claim-blocked on the four still-missing named
+/// burdens.
+///
+/// This deliberately does not compute a supported chassis. It grounds no
+/// base-attack progression (3/4 BAB), no base-save progression (good Reflex,
+/// poor Fortitude, poor Will), no sneak attack damage-die execution, and no
+/// trapfinding Perception / Disable Device bonus. It grounds no rogue talent
+/// and no level-2+ progression. It only:
+/// - leaves one chassis-recognition explanation so the `class:rogue:1`
+///   identity is acknowledged rather than an undocumented packet placeholder
+///   (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits four claim-blocking diagnostics naming the four still-missing
+///   pillar burdens (base-attack, base-save, sneak-attack, trapfinding)
+///   explicitly, rather than hiding behind a single generic "unsupported
+///   class" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input
+/// (including `tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`,
+/// which keeps passing unmodified since no `defense.total_save.*` explanation
+/// is ever computed here); this seam keeps that blocked posture but makes the
+/// Rogue chassis identity and its four named pillar burdens legible on the
+/// runtime path.
+fn explain_rogue_level1_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_rogue_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Rogue level-1
+    // chassis identity. This is a recognition record only; it fabricates no
+    // mechanical value.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.bounded_progression".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Rogue level {ROGUE_BASELINE_LEVEL} chassis: the \
+             {ROGUE_CLASS_ID}:{ROGUE_BASELINE_LEVEL} class identity is acknowledged on the \
+             rules-core seam rather than an undocumented packet placeholder. This is a bounded \
+             chassis-recognition record only; it grounds no Rogue base-attack or base-save \
+             progression, no sneak attack damage-die execution, no trapfinding Perception / \
+             Disable Device bonus, no rogue talent, and no level-2+ progression, so it carries \
+             no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/4): name the base-attack progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.rogue.bounded_progression.base_attack.unsupported".to_owned(),
+        message: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its base attack progression: \
+             the 3/4-BAB progression is not implemented in this bounded chassis baseline, so no \
+             Rogue base-attack support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/4): name the base-save progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.rogue.bounded_progression.base_save.unsupported".to_owned(),
+        message: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its base save progression: \
+             the good Reflex progression and the poor Fortitude / poor Will base-save cadence \
+             are not implemented in this bounded chassis baseline, so no Rogue base-save \
+             support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (3/4): name the sneak attack burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.rogue.bounded_progression.sneak_attack.unsupported".to_owned(),
+        message: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its sneak attack burden: the \
+             +1d6 extra sneak attack damage against a flanked or Dexterity-denied target is not \
+             implemented in this bounded chassis baseline, so no Rogue sneak attack support is \
+             claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (4/4): name the trapfinding burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.rogue.bounded_progression.trapfinding.unsupported".to_owned(),
+        message: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its trapfinding burden: the \
+             bonus on Perception checks to locate traps, the bonus on Disable Device checks to \
+             disarm them, and the ability to use Disable Device on magic traps are not \
+             implemented in this bounded chassis baseline, so no Rogue trapfinding support is \
+             claimed"
         ),
         claim_blocking: true,
     });

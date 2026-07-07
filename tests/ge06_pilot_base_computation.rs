@@ -110,13 +110,13 @@ fn missing_fighter_chassis_input_produces_claim_blocking_diagnostic() {
     // narrow class chassis must refuse to fabricate Fighter values and must emit
     // a claim-blocking diagnostic instead.
     //
-    // The negative-control class is `class:rogue:1`: Rogue has no dedicated
-    // chassis seam on this compute path, so this input is guaranteed to produce
-    // zero chassis-explanation records while still exercising the claim-blocked
-    // posture for a non-Fighter Human level-1 input. (The prior choice of
-    // `class:wizard:1` collided with the SD13-E4-R3 Wizard chassis-recognition
-    // seam, which deliberately emits a +0 `class_chassis.spell_baseline.wizard`
-    // recognition record alongside the Fighter-shaped claim-block.)
+    // The negative-control class is `class:rogue:1`. As of the SD13-E3 Rogue
+    // chassis-recognition slice, every core-roster class now emits its own
+    // bounded, non-fabricating `class_chassis.*` recognition record (mirroring
+    // the earlier Wizard-vs-Rogue collision this comment used to document), so
+    // this test no longer asserts the absence of every `class_chassis.*`
+    // explanation. It asserts the narrower, still-true claim: no FIGHTER-shaped
+    // chassis value is fabricated for a non-Fighter input.
     let result = load_character_input_fixture(
         "case_id=non-fighter\n\
          source_package_id=pf1.core_rulebook\n\
@@ -145,13 +145,15 @@ fn missing_fighter_chassis_input_produces_claim_blocking_diagnostic() {
         computation.diagnostics
     );
 
-    // No fabricated Fighter chassis explanations may exist for unsupported input.
+    // No fabricated Fighter chassis explanation may exist for unsupported input.
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.")),
-        "unsupported class chassis must not emit chassis explanations: {:?}",
+        computation.base_attack_bonus == 0
+            && !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_chassis.base_attack_bonus"),
+        "unsupported class chassis must not fabricate a Fighter base-attack-bonus \
+         explanation: {:?}",
         computation.explanations
     );
 }
