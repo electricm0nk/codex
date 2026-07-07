@@ -190,6 +190,12 @@ const SD13_FIGHTER_LEVEL2_LEVEL3_TEST: &str = "tests/sd13_fighter_level2_level3_
 /// blocked on the named non-spell class-feature burden and the later spell burden.
 const SD13_HYBRID_LEVEL1_TEST: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs";
 
+/// The combined grounding reference for the Paladin hybrid baseline row, citing
+/// both F6 (chassis identity) and the per-burden decomposition test as one
+/// literal. Both .contains() consumers (F6 test and this slice's test) read
+/// their respective substring from this combined grounding reference.
+const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs +      tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs";
+
 /// SD13-E4-F7 dedicated proof surface for the bounded Human Sorcerer level-1 spell
 /// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
 /// that stays explicitly blocked on the bloodline burden and the spontaneous
@@ -430,19 +436,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Paladin level-1 chassis baseline, with the non-spell \
-                            class-feature burden and the later spell burden still blocked",
+                            Paladin level-1 chassis baseline, with the per-feature non-spell \
+                            class-feature burden (smite evil / lay on hands / divine grace \
+                            / mercy) and the partial-caster spell burden still blocked",
                 support_state: SupportState::Blocked,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_HYBRID_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E3-F6 leaves direct computed evidence that the \
+                grounding_ref: SD13_PALADIN_ROW_GROUNDING_REF,
+                blocker_or_lossiness_note: "SD13-E3/E4 leaves direct computed evidence that the \
                     deterministic Human Paladin level-1 hybrid chassis is recognized on the compute \
-                    seam, but the row stays blocked: the non-spell class-feature burden (smite evil, \
-                    lay on hands, divine grace, mercy) is not implemented, and the later paladin spell \
-                    burden (spell slots, spell source, spells known/prepared) is deferred to SD13-E4. \
-                    No Paladin level 2+ is proven",
-                next_required_uplift: "SD13-E3 paladin class-feature slice, then SD13-E4 spell burden",
+                    seam AND that its non-spell class-feature burden is now split into per-feature \
+                    blockers (smite evil / lay on hands / divine grace / mercy) instead of the single \
+                    combined F6 string, but the row stays blocked: each per-feature chassis burden is \
+                    not implemented, and the later partial-caster spell burden (Paladin is a divine \
+                    partial caster in PF1 Core Rulebook: effective caster level = paladin level - 2, \
+                    spell slots first available at level 2) is deferred to SD13-E4. No Paladin level 2+ \
+                    is proven. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid chassis \
+                    recognition explanation all remain in place; this slice only adds per-burden \
+                    granularity next to them",
+                next_required_uplift: "SD13-E4 paladin partial-caster spell burden slice, then \
+                    paladin level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
