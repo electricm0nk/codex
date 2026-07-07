@@ -335,27 +335,28 @@ fn matrix_sorcerer_row_is_blocked_computed_and_names_both_burdens() {
 }
 
 #[test]
-fn matrix_keeps_wizard_unverified_observed_and_preserves_bard_blocked_state() {
+fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_blocked_state() {
     // After SD13-E4-F7 the Bard slice has landed first: the deterministic Human Bard
     // level-1 spontaneous arcane spell-bearing row is now Blocked/Computed/Refreshable
-    // with both named burdens. The Sorcerer slice must not regress that state; it must
-    // preserve Wizard's pure Unverified/Observed placeholder as the only non-trivial
-    // remaining core-class spell-bearing placeholder.
+    // with both named burdens. The Sorcerer slice does not regress that state. Wizard
+    // was Unverified/Observed at the time this test was first written, but the later
+    // SD13-E4-R3 slice executed the Wizard row's own merge-receipt obligation,
+    // promoting it to Blocked/Computed; this negative control now pins that current
+    // truth.
     let matrix = seeded_sd13_e1_f1_current_truth();
 
-    // Wizard stays a pure roster-scope placeholder.
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard row must exist");
     assert_eq!(
         wizard.support_state,
-        SupportState::Unverified,
-        "wizard row must stay Unverified after the Sorcerer slice"
+        SupportState::Blocked,
+        "wizard row must be Blocked after the SD13-E4-R3 promotion"
     );
     assert_eq!(
         wizard.evidence_tier,
-        EvidenceTier::Observed,
-        "wizard row must stay Observed after the Sorcerer slice"
+        EvidenceTier::Computed,
+        "wizard row must be Computed after the SD13-E4-R3 promotion"
     );
 
     // Bard must not regress; the Sorcerer slice must preserve its Blocked/Computed

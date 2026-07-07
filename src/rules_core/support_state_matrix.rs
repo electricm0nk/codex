@@ -31,10 +31,15 @@
 //!   recognized on the compute seam, but it stays blocked on the bardic knowledge +
 //!   bardic music chassis-class-feature burden and the spontaneous known-spell / slot
 //!   posture burden, and fabricates no Bardic-class-feature math and no spell math,
+//! - the Wizard row is `Blocked` / `Computed`: the SD13-E4-R3 slice proves the
+//!   deterministic Human Wizard level-1 prepared arcane spell-bearing identity is
+//!   recognized on the compute seam, but it stays blocked on the school specialization
+//!   burden and the prepared spellbook / spell-slot posture burden, and fabricates no
+//!   spell math,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
-//! - every other core race, core class (including Wizard), and the broader
-//!   non-Human interaction row remain `Unverified` / `Observed` (named by SD-13 scope
-//!   only, no runtime evidence yet).
+//! - every other core race and core class, and the broader non-Human interaction row
+//!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime evidence
+//!   yet).
 
 /// Current support state for a single matrix row. Kept independent from
 /// [`EvidenceTier`]: how strong the evidence is does not by itself decide whether
@@ -236,6 +241,12 @@ const PILOT_COMPUTE_RACE_SEAM: &str = "src/rules_core/pilot_compute.rs";
 /// that stays explicitly blocked on the bardic knowledge + bardic music chassis-class-feature
 /// burden and the spontaneous known-spell / slot posture burden.
 const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
+
+/// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1 prepared
+/// arcane spell baseline: direct computed recognition of the prepared arcane
+/// spell-bearing identity that stays explicitly blocked on the school specialization
+/// burden and the prepared spellbook / spell-slot posture burden.
+const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
@@ -671,13 +682,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.wizard.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:wizard",
-                dimension: "bounded class progression and spell burden",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E4 spellcasting slice",
+                dimension: "bounded spell-bearing class progression: the deterministic Human \
+                            Wizard level-1 prepared arcane spell baseline, with the school \
+                            specialization burden and the prepared spellbook / spell-slot \
+                            posture burden still blocked",
+                support_state: SupportState::Blocked,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_WIZARD_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E4-R3 leaves direct computed evidence that the \
+                    deterministic Human Wizard level-1 prepared arcane spell-bearing identity is \
+                    recognized on the compute seam, but the row stays blocked: the school \
+                    specialization burden (specialization choice, two opposed schools, specialty \
+                    school bonus spell slot) is not implemented, and the prepared spell posture \
+                    burden (spellbook content, spells prepared per day, spell slots per day, \
+                    bonus slots from high Intelligence, spell save DCs) is not computed. No \
+                    spell math is fabricated and no Wizard level 2+ is proven",
+                next_required_uplift: "SD13-E4 Wizard school-specialization and prepared \
+                    spellbook / spell-slot slice, then level-2+ progression",
             },
             // ----- Interaction rows (2) -----
             SupportStateRow {

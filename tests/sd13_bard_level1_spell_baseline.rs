@@ -363,20 +363,24 @@ fn matrix_bard_row_is_blocked_computed_and_names_both_burdens() {
 }
 
 #[test]
-fn matrix_keeps_wizard_unverified_observed_after_bard_slice() {
+fn matrix_wizard_row_reflects_current_truth_after_bard_slice() {
+    // The Bard slice itself left Wizard Unverified/Observed; the later SD13-E4-R3
+    // slice executed the Wizard row's own merge-receipt obligation, promoting it to
+    // Blocked/Computed. This negative control now pins that current truth rather
+    // than the Bard-slice-only snapshot.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard row must exist");
     assert_eq!(
         wizard.support_state,
-        SupportState::Unverified,
-        "wizard row must stay Unverified after the Bard slice"
+        SupportState::Blocked,
+        "wizard row must be Blocked after the SD13-E4-R3 promotion"
     );
     assert_eq!(
         wizard.evidence_tier,
-        EvidenceTier::Observed,
-        "wizard row must stay Observed after the Bard slice"
+        EvidenceTier::Computed,
+        "wizard row must be Computed after the SD13-E4-R3 promotion"
     );
 }
 
