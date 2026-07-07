@@ -5,11 +5,11 @@ import type { CharacterSummaryDto } from './loadListSavedCharacters';
 /**
  * Read/write desktop boundary over character creation.
  *
- * Invokes the `create_character` Tauri command, which composes the fixed
- * "golden path" build server-side and computes it via the real rules-core
- * engine. Returns a tagged `Saved` / `Blocked` outcome verbatim — never
- * fabricates a computed result, and a `Blocked` outcome means nothing was
- * persisted.
+ * Invokes the `create_character` Tauri command, which composes a
+ * `CharacterInput` from the caller's race/class/level choice server-side
+ * and computes it via the real rules-core engine. Returns a tagged
+ * `Saved` / `Blocked` outcome verbatim — never fabricates a computed
+ * result, and a `Blocked` outcome means nothing was persisted.
  */
 
 export interface AbilityScoresDto {
@@ -25,6 +25,7 @@ export interface CreateCharacterRequest {
   characterId: string;
   displayLabel: string;
   raceId: string;
+  classId: string;
   level: number;
   abilityScores: AbilityScoresDto;
   savedAt: string;

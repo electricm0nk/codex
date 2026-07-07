@@ -2,9 +2,10 @@ import { useState, type CSSProperties, type FormEvent } from 'react';
 import {
   CLASS_OPTIONS,
   DEFAULT_ABILITY_SCORES,
-  GOLDEN_PATH_LOADOUT_SUMMARY,
-  LEVEL_OPTIONS,
+  FIXED_LOADOUT_SUMMARY,
   RACE_OPTIONS,
+  describeClassSupportLevel,
+  getLevelOptionsForClass,
 } from './characterHubModel';
 import { composeCreateCharacterRequest } from './composeCreateCharacterRequest';
 import { createCharacterRuntime } from './characterHubRuntime';
@@ -30,13 +31,23 @@ const ABILITY_KEYS = ['strength', 'dexterity', 'constitution', 'intelligence', '
 export function CreateCharacterForm(props: { onCreated: () => void }) {
   const [displayLabel, setDisplayLabel] = useState('');
   const [raceId, setRaceId] = useState(RACE_OPTIONS[0].id);
-  const [level, setLevel] = useState(LEVEL_OPTIONS[0]);
+  const [classId, setClassId] = useState(CLASS_OPTIONS[0].id);
+  const [level, setLevel] = useState(getLevelOptionsForClass(CLASS_OPTIONS[0].id)[0]);
   const [abilityScores, setAbilityScores] = useState({ ...DEFAULT_ABILITY_SCORES });
   const [submitting, setSubmitting] = useState(false);
   const [outcome, setOutcome] = useState<CreateCharacterOutcomeSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const enabledClass = CLASS_OPTIONS.find((option) => option.enabled) ?? CLASS_OPTIONS[0];
+  const selectedClass = CLASS_OPTIONS.find((option) => option.id === classId) ?? CLASS_OPTIONS[0];
+  const levelOptions = getLevelOptionsForClass(classId);
+
+  function handleClassChange(nextClassId: string) {
+    setClassId(nextClassId);
+    const nextLevelOptions = getLevelOptionsForClass(nextClassId);
+    if (!nextLevelOptions.includes(level)) {
+      setLevel(nextLevelOptions[0]);
+    }
+  }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -44,7 +55,7 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
     setError(null);
     try {
       const request = composeCreateCharacterRequest(
-        { displayLabel, raceId, level, abilityScores },
+        { displayLabel, raceId, classId, level, abilityScores },
         { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
       );
       const result = await createCharacterRuntime(request);
@@ -96,10 +107,22 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
         <label style={LABEL_STYLE} htmlFor="character-class">
           Class
         </label>
-        <select id="character-class" style={INPUT_STYLE} value={enabledClass.id} disabled>
-          <option value={enabledClass.id}>{enabledClass.label}</option>
+        <select
+          id="character-class"
+          style={INPUT_STYLE}
+          value={classId}
+          onChange={(event) => handleClassChange(event.target.value)}
+        >
+          {CLASS_OPTIONS.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.label}
+              {option.supportLevel === 'full' ? '' : option.supportLevel === 'partial-human-only' ? ' (Human only, partial)' : ' (not yet computed)'}
+            </option>
+          ))}
         </select>
-        <p style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '0.35rem' }}>More classes are coming soon.</p>
+        <p style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '0.35rem' }}>
+          {describeClassSupportLevel(selectedClass.supportLevel, selectedClass.label)}
+        </p>
       </div>
 
       <div style={FIELD_STYLE}>
@@ -112,7 +135,7 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
           value={level}
           onChange={(event) => setLevel(Number(event.target.value))}
         >
-          {LEVEL_OPTIONS.map((option) => (
+          {levelOptions.map((option) => (
             <option key={option} value={option}>
               {option}
             </option>
@@ -156,13 +179,13 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
           What this build includes
         </p>
         <p style={{ color: '#475569', fontSize: '0.8rem', margin: '0 0 0.25rem' }}>
-          Feats: {GOLDEN_PATH_LOADOUT_SUMMARY.feats.join(', ')}
+          Feats: {FIXED_LOADOUT_SUMMARY.feats.join(', ')}
         </p>
         <p style={{ color: '#475569', fontSize: '0.8rem', margin: '0 0 0.25rem' }}>
-          Skills: {GOLDEN_PATH_LOADOUT_SUMMARY.skills.join(', ')}
+          Skills: {FIXED_LOADOUT_SUMMARY.skills.join(', ')}
         </p>
         <p style={{ color: '#475569', fontSize: '0.8rem', margin: 0 }}>
-          Equipment: {GOLDEN_PATH_LOADOUT_SUMMARY.equipment.join(', ')}
+          Equipment: {FIXED_LOADOUT_SUMMARY.equipment.join(', ')}
         </p>
       </div>
 
@@ -204,13 +227,35 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
               ))}
             </div>
           ) : (
-            <ul style={{ color: '#7c2d12', margin: 0, paddingLeft: '1.1rem' }}>
-              {outcome.diagnosticMessages.map((message) => (
-                <li key={message} style={{ marginBottom: '0.4rem' }}>
-                  {message}
-                </li>
+            <div>
+              {outcome.diagnosticGroups.map((group) => (
+                <div key={group.label} style={{ marginBottom: '0.75rem' }}>
+                  <p style={{ color: '#7c2d12', fontSize: '0.8rem', fontWeight: 600, margin: '0 0 0.35rem' }}>
+                    {group.label}
+                  </p>
+                  <ul style={{ color: '#7c2d12', margin: 0, paddingLeft: '1.1rem' }}>
+                    {group.messages.map((message) => (
+                      <li key={message} style={{ marginBottom: '0.4rem' }}>
+                        {message}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
+              <details style={{ marginTop: '0.5rem' }}>
+                <summary style={{ color: '#64748b', cursor: 'pointer', fontSize: '0.8rem' }}>
+                  Technical diagnostic details
+                </summary>
+                <ul style={{ color: '#64748b', fontSize: '0.75rem', margin: '0.5rem 0 0', paddingLeft: '1.1rem' }}>
+                  {outcome.rawDiagnostics.map((diagnostic) => (
+                    <li key={diagnostic.id} style={{ marginBottom: '0.3rem' }}>
+                      <code>{diagnostic.id}</code> ({diagnostic.claimBlocking ? 'blocking' : 'non-blocking'}):{' '}
+                      {diagnostic.message}
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </div>
           )}
         </div>
       ) : null}
