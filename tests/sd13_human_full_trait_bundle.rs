@@ -25,9 +25,8 @@ use codex::rules_core::pilot_compute::{
     build_pilot_headless_receipt, compute_pilot_base_chassis,
 };
 
-const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const FIGHTER_LEVEL_1_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 const FIGHTER_LEVEL_2_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level2_sd13_deterministic_input.txt");
 const FIGHTER_LEVEL_3_FIXTURE: &str =
@@ -200,7 +199,9 @@ fn human_extra_skill_ranks_record_names_both_at_level_1_and_per_level_grants() {
     );
     // PF1 Standard Human: 1 extra skill rank per additional level.
     assert!(
-        extra.detail.contains("1 extra skill rank per additional level"),
+        extra
+            .detail
+            .contains("1 extra skill rank per additional level"),
         "Human extra skill ranks record must name the per-additional-level grant: {}",
         extra.detail
     );
@@ -246,11 +247,15 @@ fn human_bounded_semantics_note_is_updated_to_reflect_classified_trait_bundle() 
         "race.human.bounded_semantics must reference the classified trait bundle: {}",
         bounded.message
     );
-    // And it must NOT still claim the four trait dimensions are unverified.
-    for token in ["size, speed, senses, extra skill ranks ... remain unverified"] {
+    // And it must NOT still carry the pre-F3a framing. These two tokens appear
+    // only in the old message ("grounded only for ..."; "...extra skill ranks,
+    // and the remaining racial trait burden remain unverified") and never in the
+    // new one, whose remaining-surface sentence legitimately ends with the
+    // singular "remains unverified".
+    for token in ["grounded only for", "racial trait burden remain unverified"] {
         assert!(
             !bounded.message.contains(token),
-            "race.human.bounded_semantics must no longer claim the trait bundle remains unverified: {}",
+            "race.human.bounded_semantics must no longer carry the pre-F3a '{token}' framing: {}",
             bounded.message
         );
     }

@@ -27,8 +27,7 @@ use codex::rules_core::support_state_matrix::{
 
 const ELF_ROW_ID: &str = "race.elf.bounded_semantics";
 const ELF_SUBJECT_ID: &str = "race:elf";
-const CLASSIFICATION_ARTIFACT_PATH: &str =
-    "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-elf-bounded-race-semantics-classification-2026-07-06.md";
+const CLASSIFICATION_ARTIFACT_PATH: &str = "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-elf-bounded-race-semantics-classification-2026-07-06.md";
 
 fn matrix() -> SupportStateMatrix {
     seeded_sd13_e1_f1_current_truth()
@@ -84,7 +83,8 @@ fn elf_row_grounding_stays_on_the_roster_authority_only() {
     let matrix = matrix();
     let elf = row(&matrix, ELF_ROW_ID);
     assert!(
-        elf.grounding_ref.contains("core-roster-and-support-state-matrix"),
+        elf.grounding_ref
+            .contains("core-roster-and-support-state-matrix"),
         "Elf row must ground to the SD-13 roster authority only (no runtime \
          compute or proof surface exists yet); got '{}'",
         elf.grounding_ref
@@ -123,13 +123,13 @@ fn elf_row_carries_non_empty_blocker_note_naming_required_families() {
     // that the audit surface can show the family-level gap. The slice's
     // note covers all seven.
     let families_or_dwarf_anchors = [
-        "ability",          // ability-score modifiers family
-        "size",             // size, speed, movement baseline family
-        "movement",         // size, speed, movement baseline family
-        "vision",           // senses family (low-light vision for Elf)
-        "sleep",            // Elf immunity to sleep trait
-        "weapon",           // weapon familiarity trait (Elf)
-        "trait",            // other core racial traits family
+        "ability",  // ability-score modifiers family
+        "size",     // size, speed, movement baseline family
+        "movement", // size, speed, movement baseline family
+        "vision",   // senses family (low-light vision for Elf)
+        "sleep",    // Elf immunity to sleep trait
+        "weapon",   // weapon familiarity trait (Elf)
+        "trait",    // other core racial traits family
     ];
     for needle in families_or_dwarf_anchors {
         assert!(
@@ -139,6 +139,15 @@ fn elf_row_carries_non_empty_blocker_note_naming_required_families() {
             elf.blocker_or_lossiness_note
         );
     }
+    // The note must not carry the pre-PR-#95 claim that pilot_compute gates
+    // every non-Human race out via a bare Human-id check: the race seam is now
+    // the `explain_race_seam` dispatcher with a dedicated Half-Elf arm.
+    assert!(
+        !elf.blocker_or_lossiness_note
+            .contains("gates every non-Human race out of the compute path"),
+        "Elf row note must not describe the retired pre-dispatcher race gate; got '{}'",
+        elf.blocker_or_lossiness_note
+    );
 }
 
 #[test]
@@ -146,7 +155,8 @@ fn elf_row_next_uplift_points_at_this_artifact() {
     let matrix = matrix();
     let elf = row(&matrix, ELF_ROW_ID);
     assert!(
-        elf.next_required_uplift.contains(CLASSIFICATION_ARTIFACT_PATH),
+        elf.next_required_uplift
+            .contains(CLASSIFICATION_ARTIFACT_PATH),
         "Elf row next_required_uplift must point at the bounded Elf \
          classification artifact at '{CLASSIFICATION_ARTIFACT_PATH}'; got '{}'",
         elf.next_required_uplift

@@ -21,14 +21,13 @@
 //! Slice: t_3cf90c2c, matrix row_id: race:dwarf:bounded-race-semantics.
 
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, MatrixSubjectType, SupportState,
-    SupportStateMatrix, SupportStateRow, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, MatrixSubjectType, SupportState, SupportStateMatrix,
+    SupportStateRow, seeded_sd13_e1_f1_current_truth,
 };
 
 const DWARF_ROW_ID: &str = "race.dwarf.bounded_semantics";
 const DWARF_SUBJECT_ID: &str = "race:dwarf";
-const CLASSIFICATION_ARTIFACT_PATH: &str =
-    "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-dwarf-bounded-race-semantics-classification-2026-07-06.md";
+const CLASSIFICATION_ARTIFACT_PATH: &str = "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-dwarf-bounded-race-semantics-classification-2026-07-06.md";
 
 fn matrix() -> SupportStateMatrix {
     seeded_sd13_e1_f1_current_truth()
@@ -116,6 +115,16 @@ fn dwarf_row_grounding_ref_is_present() {
         "Dwarf row must cite a grounding ref; an empty ref would \
          indicate the row was never seeded."
     );
+    // The row is grounded on this dedicated proof surface (half-elf precedent):
+    // a re-runnable test that pins the honest bounded classification. Observed /
+    // AwaitingInitialEvidence stays — the surface pins absence, not evidence.
+    assert!(
+        dwarf
+            .grounding_ref
+            .contains("sd13_race_dwarf_bounded_semantics"),
+        "Dwarf row grounding_ref must cite this dedicated proof surface: {}",
+        dwarf.grounding_ref
+    );
 }
 
 #[test]
@@ -134,11 +143,22 @@ fn dwarf_row_blocker_note_carries_honest_unverified_reason() {
          classified and reverts to silent breadth ambiguity."
     );
     assert!(
-        note.contains("race-semantic") || note.contains("ability") ||
-        note.contains("unverified") || note.contains("proven") ||
-        note.contains("family") || note.contains("Dwarf"),
+        note.contains("race-semantic")
+            || note.contains("ability")
+            || note.contains("unverified")
+            || note.contains("proven")
+            || note.contains("family")
+            || note.contains("Dwarf"),
         "Dwarf row blocker_or_lossiness_note must name the honest \
          reason (got: {note:?})."
+    );
+    // The note must not carry the pre-PR-#95 claim that pilot_compute gates
+    // every non-Human race out via a bare Human-id check: the race seam is now
+    // the `explain_race_seam` dispatcher with a dedicated Half-Elf arm.
+    assert!(
+        !note.contains("gates every non-Human race out of the compute path"),
+        "Dwarf row note must not describe the retired pre-dispatcher race gate \
+         (got: {note:?})."
     );
 }
 
@@ -157,13 +177,13 @@ fn dwarf_row_next_uplift_points_at_classification_artifact() {
          classification slice lands."
     );
     assert!(
-        uplift.contains("sd13-dwarf-bounded-race-semantics-classification") ||
-        uplift.contains("Dwarf") ||
-        uplift.contains("race-semantic") ||
-        uplift.contains("ability") ||
-        uplift.contains("speed") ||
-        uplift.contains("darkvision") ||
-        uplift.contains("family"),
+        uplift.contains("sd13-dwarf-bounded-race-semantics-classification")
+            || uplift.contains("Dwarf")
+            || uplift.contains("race-semantic")
+            || uplift.contains("ability")
+            || uplift.contains("speed")
+            || uplift.contains("darkvision")
+            || uplift.contains("family"),
         "Dwarf row next_required_uplift must reference the slice's \
          classification artifact or a concrete family gap. Got: {uplift:?}"
     );

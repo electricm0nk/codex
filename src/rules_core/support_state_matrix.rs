@@ -31,8 +31,13 @@
 //!   recognized on the compute seam, but it stays blocked on the bardic knowledge +
 //!   bardic music chassis-class-feature burden and the spontaneous known-spell / slot
 //!   posture burden, and fabricates no Bardic-class-feature math and no spell math,
+//! - the Wizard row is `Blocked` / `Computed`: the SD13-E4-R3 slice proves the
+//!   deterministic Human Wizard level-1 prepared arcane spell-bearing identity is
+//!   recognized on the compute seam (merge receipt executed 2026-07-07), but it stays
+//!   blocked on the school specialization burden and the prepared spellbook /
+//!   spell-slot posture burden, and fabricates no spell math,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
-//! - every other core race, core class (including Wizard), and the broader
+//! - every other core race and core class, and the broader
 //!   non-Human interaction row remain `Unverified` / `Observed` (named by SD-13 scope
 //!   only, no runtime evidence yet).
 
@@ -171,9 +176,13 @@ const SD13_ROSTER_MATRIX_DOC: &str = "programs/codex/requirements/\
 SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/\
 core-roster-and-support-state-matrix.md";
 
-/// The live compute seam that now makes the grounded Human race pressure explicit by
-/// emitting named Human ability-bonus and bonus-feat explanation records.
-const PILOT_COMPUTE_MODULE: &str = "src/rules_core/pilot_compute.rs";
+/// The combined grounding reference for the Human race row, citing both the live
+/// compute seam (named Human ability-bonus and bonus-feat explanation records plus
+/// the SD13-E6-F3a trait-bundle recognition records) and the trait-bundle proof
+/// surface that pins the four classified dimensions. Both `.contains()` consumers
+/// read their respective substring from this combined literal (paladin-row idiom).
+const SD13_HUMAN_ROW_GROUNDING_REF: &str =
+    "src/rules_core/pilot_compute.rs +      tests/sd13_human_full_trait_bundle.rs";
 
 /// GE-06 deterministic pilot input contract proof (race/class identity, Human
 /// bonus-feat and ability-bonus selections).
@@ -226,25 +235,38 @@ const SD13_HALF_ELF_RACE_TEST: &str = "tests/sd13_race_half_elf_bounded_semantic
 /// fast movement, illiteracy trait).
 const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs";
 
-/// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
-/// classification: the deterministic pilot still produces computed outputs
-/// through a `race:gnome` chassis, the Gnome race seam receives the same
-/// non-claim-blocking `race.semantics.unverified` diagnostic the seam emits
-/// for every non-Human race, and no Gnome-specific trait math is fabricated.
-#[allow(dead_code)]
-const SD13_RACE_GNOME_BOUNDED_SEMANTICS_TEST: &str =
-    "tests/sd13_race_gnome_bounded_semantics.rs";
+/// The combined grounding reference for the Gnome race row (paladin-row idiom),
+/// citing both the live compute seam whose `explain_race_seam` dispatcher emits
+/// the non-claim-blocking `race.semantics.unverified` diagnostic for `race:gnome`
+/// and the SD13-E2 dedicated proof surface that pins the honest bounded Gnome
+/// classification. Both `.contains()` consumers read their respective substring.
+const SD13_GNOME_ROW_GROUNDING_REF: &str =
+    "src/rules_core/pilot_compute.rs +      tests/sd13_race_gnome_bounded_semantics.rs";
 
-/// Live compute seam that emits the bounded, non-claim-blocking
-/// `race.semantics.unverified` diagnostic for any non-Human race (including
-/// `race:gnome`) and grounds no non-Human race-specific explanation records.
-const PILOT_COMPUTE_RACE_SEAM: &str = "src/rules_core/pilot_compute.rs";
+/// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
+/// classification: pins the honest seven-family Dwarf debt and the absence of
+/// any computed Dwarf mechanic. Observed / AwaitingInitialEvidence stays — the
+/// surface pins absence, not runtime evidence.
+const SD13_RACE_DWARF_BOUNDED_SEMANTICS_TEST: &str = "tests/sd13_race_dwarf_bounded_semantics.rs";
+
+/// SD13-E2 dedicated proof surface for the bounded Halfling race-semantics
+/// classification: pins the honest seven-family Halfling debt and the absence
+/// of any computed Halfling mechanic. Observed / AwaitingInitialEvidence stays —
+/// the surface pins absence, not runtime evidence.
+const SD13_RACE_HALFLING_BOUNDED_SEMANTICS_TEST: &str =
+    "tests/sd13_race_halfling_bounded_semantics.rs";
 
 /// SD13-E4-F7 dedicated proof surface for the bounded Human Bard level-1 spell
 /// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
 /// that stays explicitly blocked on the bardic knowledge + bardic music chassis-class-feature
 /// burden and the spontaneous known-spell / slot posture burden.
 const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
+
+/// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1 prepared
+/// arcane spell baseline: direct computed recognition of the prepared arcane
+/// spell-bearing identity that stays explicitly blocked on the school specialization
+/// burden and the prepared spellbook / spell-slot posture burden.
+const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
@@ -260,16 +282,25 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "race:human",
                 dimension: "bounded Human pilot race semantics: the named Human \
                             ability-bonus (Strength) and Human bonus-feat (Dodge) \
-                            selections exercised by the GE-06 deterministic proof",
+                            selections exercised by the GE-06 deterministic proof, plus \
+                            the SD13-E6-F3a classified trait bundle (size, speed, senses, \
+                            extra skill ranks)",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: PILOT_COMPUTE_MODULE,
-                blocker_or_lossiness_note: "the deterministic pilot grounds only the named \
-                    Human ability-bonus and bonus-feat pressure; Human size, speed, senses, \
-                    extra skill ranks, and the remaining racial trait burden are still unverified",
-                next_required_uplift: "classify the remaining Human racial trait burden \
-                    (size, speed, senses, skill ranks) explicitly",
+                grounding_ref: SD13_HUMAN_ROW_GROUNDING_REF,
+                blocker_or_lossiness_note: "the deterministic pilot grounds the named Human \
+                    ability-bonus and bonus-feat pressure, and the SD13-E6-F3a trait bundle \
+                    (size, speed, senses, extra skill ranks) is classified explicitly as \
+                    recognition records that ground no numeric contribution; the remaining \
+                    PF1 Standard Human racial trait surface (alternate Human racial traits, \
+                    variant Humans, half-Human heritages, and ruleset-level effects outside \
+                    the named deterministic pilot) remains unverified",
+                next_required_uplift: "classify the remaining PF1 Standard Human racial trait \
+                    surface (alternate Human racial traits, variant Humans, half-Human \
+                    heritages) explicitly, or ground a first computed Human trait mechanic \
+                    from the classified bundle (e.g. extra skill ranks into a bounded \
+                    skill-rank engine)",
             },
             SupportStateRow {
                 row_id: "race.dwarf.bounded_semantics",
@@ -279,7 +310,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
+                // Grounded on the dedicated proof surface that pins the honest bounded
+                // classification (half-elf precedent). Observed/AwaitingInitialEvidence
+                // stays: the surface pins the absence of computed Dwarf evidence, so
+                // there is no runtime evidence to refresh.
+                grounding_ref: SD13_RACE_DWARF_BOUNDED_SEMANTICS_TEST,
                 blocker_or_lossiness_note: "no direct runtime evidence for any of \
                     the seven required Dwarf race-semantic families at the live \
                     evidence floor (2026-07-06): identity/provenance is \
@@ -290,9 +325,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     modifiers, prerequisite/feat/class-feature interactions, and \
                     other core racial traits (Defensive Training, Hardy, \
                     Stability, Hatred, Stonecunning, Greedy, weapon familiarity) \
-                    remain unproven; pilot_compute.rs explicitly gates every \
-                    non-Human race out of the compute path via \
-                    `if input.chosen.race_id != HUMAN_RACE_ID`. No Dwarf fixture \
+                    remain unproven; the `explain_race_seam` dispatcher in \
+                    pilot_compute.rs grounds race semantics only for `race:human` \
+                    (computed seams) and `race:half-elf` (recognition-only \
+                    diagnostic), so `race:dwarf` receives the non-claim-blocking \
+                    `race.semantics.unverified` diagnostic. No Dwarf fixture \
                     exists in tests/fixtures. Promotion above Unverified is \
                     counterfeit breadth until a later bounded slice lands \
                     grounded evidence for at least one of these families.",
@@ -326,9 +363,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     immunity to sleep, weapon familiarity (longbow / rapier / \
                     longsword / shortbow / shortsword), bonus languages, and other \
                     core racial traits (keen senses, elven magic / weapon training \
-                    variants) remain unproven; pilot_compute.rs explicitly gates \
-                    every non-Human race out of the compute path via \
-                    `if input.chosen.race_id != HUMAN_RACE_ID`. No Elf fixture \
+                    variants) remain unproven; the `explain_race_seam` dispatcher \
+                    in pilot_compute.rs grounds race semantics only for \
+                    `race:human` (computed seams) and `race:half-elf` \
+                    (recognition-only diagnostic), so `race:elf` receives the \
+                    non-claim-blocking `race.semantics.unverified` diagnostic. \
+                    No Elf fixture \
                     exists in tests/fixtures. Promotion above Unverified is \
                     counterfeit breadth until a later bounded slice lands \
                     grounded evidence for at least one of these families.",
@@ -347,24 +387,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.gnome.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:gnome",
-                dimension: "bounded Gnome race semantics: the deterministic pilot
-                            still produces computed outputs through a `race:gnome`
-                            chassis, but the Gnome race seam receives only the
-                            same non-claim-blocking `race.semantics.unverified`
-                            diagnostic the seam emits for every non-Human race;
-                            no Gnome-specific trait math is fabricated",
+                dimension: "bounded Gnome race semantics: the deterministic pilot \
+                            still produces computed outputs through a `race:gnome` \
+                            chassis, but the Gnome race seam receives only the \
+                            non-claim-blocking `race.semantics.unverified` \
+                            diagnostic the `explain_race_seam` dispatcher emits \
+                            for every race without a dedicated seam (`race:human` \
+                            grounds computed semantics; `race:half-elf` carries \
+                            its own recognition-only diagnostic); no \
+                            Gnome-specific trait math is fabricated",
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: PILOT_COMPUTE_RACE_SEAM,
-                blocker_or_lossiness_note: "the bounded Gnome classification
-                    grounds only the negative-control seam: Gnome small-size,
-                    slow-speed, low-light vision, defensive training, illusion
-                    resistance, hatred, keen senses, and every other Gnome
-                    racial trait burden remain unverified; the deterministic
-                    pilot still computes through a Gnome chassis but
+                grounding_ref: SD13_GNOME_ROW_GROUNDING_REF,
+                blocker_or_lossiness_note: "the bounded Gnome classification \
+                    grounds only the negative-control seam: Gnome small-size, \
+                    slow-speed, low-light vision, defensive training, illusion \
+                    resistance, hatred, keen senses, and every other Gnome \
+                    racial trait burden remain unverified; the deterministic \
+                    pilot still computes through a Gnome chassis but \
                     fabricates no Gnome trait math",
-                next_required_uplift: "later SD13-E2 race-semantic slice that
+                next_required_uplift: "later SD13-E2 race-semantic slice that \
                     grounds one or more Gnome trait surfaces",
             },
             SupportStateRow {
@@ -425,10 +468,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "the deterministic pilot seam in \
-                    src/rules_core/pilot_compute.rs grounds race semantics only for \
-                    race:human and emits a non-claim-blocking \
+                    src/rules_core/pilot_compute.rs grounds computed race semantics \
+                    only for race:human, carries a dedicated recognition-only \
+                    diagnostic for race:half-elf, and emits the non-claim-blocking \
                     race.semantics.unverified diagnostic for every other race \
-                    identity; Half-Orc race semantics have no live proof surface \
+                    identity without a dedicated seam (including race:half-orc); \
+                    Half-Orc race semantics have no live proof surface \
                     yet, so the named Half-Orc trait burden remains unverified: \
                     Medium size (no size-derived combat modifier), darkvision 60 ft \
                     (no darkvision-based perception surface), the Half-Orc \
@@ -458,7 +503,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Unverified,
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
+                // Grounded on the dedicated proof surface that pins the honest bounded
+                // classification (half-elf precedent). Observed/AwaitingInitialEvidence
+                // stays: the surface pins the absence of computed Halfling evidence, so
+                // there is no runtime evidence to refresh.
+                grounding_ref: SD13_RACE_HALFLING_BOUNDED_SEMANTICS_TEST,
                 blocker_or_lossiness_note: "no direct runtime evidence for any of \
                     the seven required Halfling race-semantic families at the live \
                     evidence floor (2026-07-06): identity/provenance is observed-only \
@@ -473,9 +522,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     features), and other core racial traits (fearless halfling \
                     luck, +1 racial bonus on saves against fear, Halfling languages \
                     Common/Halfling, Halfling weapon familiarity, lucky trait) \
-                    remain unproven; pilot_compute.rs explicitly gates every \
-                    non-Human race out of the compute path via \
-                    `if input.chosen.race_id != HUMAN_RACE_ID`. No Halfling \
+                    remain unproven; the `explain_race_seam` dispatcher in \
+                    pilot_compute.rs grounds race semantics only for `race:human` \
+                    (computed seams) and `race:half-elf` (recognition-only \
+                    diagnostic), so `race:halfling` receives the \
+                    non-claim-blocking `race.semantics.unverified` diagnostic. \
+                    No Halfling \
                     fixture exists in tests/fixtures. Promotion above Unverified \
                     is counterfeit breadth until a later bounded slice lands \
                     grounded evidence for at least one of these families.",
@@ -558,7 +610,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 blocker_or_lossiness_note: "tests/ge06_pilot_total_saves.rs \
                     (unsupported_chassis_blocks_total_saves) explicitly claim-blocks \
                     class:rogue:1 under the current bounded compute path",
-                next_required_uplift: "SD13-E3 martial progression slice",
+                next_required_uplift: "dedicated SD13-E3 Rogue chassis slice: ground the \
+                    Rogue level-1 chassis (skill-heavy chassis, sneak-attack burden) and lift or \
+                    re-scope the ge06_pilot_total_saves unsupported-chassis claim-block",
             },
             SupportStateRow {
                 row_id: "class.barbarian.bounded_progression",
@@ -616,7 +670,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E4 spellcasting slice",
+                next_required_uplift: "dedicated SD13-E4 Cleric divine prepared \
+                    spell-baseline slice (mirroring the Sorcerer / Bard / Wizard level-1 \
+                    baseline pattern)",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",
@@ -628,7 +684,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E4 spellcasting slice",
+                next_required_uplift: "dedicated SD13-E4 Druid divine prepared \
+                    spell-baseline and nature-bond slice (mirroring the Sorcerer / Bard / \
+                    Wizard level-1 baseline pattern)",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",
@@ -640,7 +698,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
                 blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E3 martial progression slice",
+                next_required_uplift: "dedicated SD13-E3 Monk martial chassis slice \
+                    (mirroring the Barbarian level-1 martial baseline pattern)",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
@@ -712,13 +771,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.wizard.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:wizard",
-                dimension: "bounded class progression and spell burden",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E4 spellcasting slice",
+                // The SD13-E4-R3 merge receipt executed after the tranche 2.6
+                // closeout merged to develop (2026-07-07): the row carries the
+                // post-merge posture the slice's proof surface pinned as its
+                // merge-receipt obligation.
+                dimension: "bounded spell-bearing class progression: the deterministic Human \
+                            Wizard level-1 prepared arcane spell baseline, with the school \
+                            specialization burden and the prepared spellbook / spell-slot \
+                            posture burden still blocked",
+                support_state: SupportState::Blocked,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_WIZARD_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E4-R3 leaves direct computed evidence that the \
+                    deterministic Human Wizard level-1 prepared arcane spell-bearing identity is \
+                    recognized on the compute seam, but the row stays blocked: the school \
+                    specialization burden (specialization choice, two opposed schools, specialty \
+                    school bonus spell slot) is not implemented, and the prepared spell posture \
+                    burden (spellbook content, spells prepared per day, spell slots per day, \
+                    bonus slots from high Intelligence, spell save DCs) is not computed. No \
+                    spell math is fabricated and no Wizard level 2+ is proven",
+                next_required_uplift: "SD13-E4 Wizard school-specialization and prepared \
+                    spellbook / spell-slot slice, then level-2+ progression",
             },
             // ----- Interaction rows (2) -----
             SupportStateRow {
@@ -735,7 +809,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     seam is grounded: the human_bonus_feat -> feat:dodge and \
                     human_ability_bonus -> ability:strength selections now surfaced as explicit \
                     compute explanations; the general interaction-row model is not",
-                next_required_uplift: "SD13-E2 / SD13-E3 coupling",
+                next_required_uplift: "generalize the named Human pilot pressure into the \
+                    interaction-row model once a second computed interaction pressure exists \
+                    (per the non-Human interaction row's warrant condition)",
             },
             SupportStateRow {
                 row_id: "interaction.non_human_any_class.progression_pressure",
@@ -754,9 +830,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 //     Unverified/Observed with no computed race semantics, so there
                 //     is no non-Human race trait to compute a pressure against;
                 //   * every class row that has Computed evidence is either Blocked on
-                //     a chassis burden (Rogue, Paladin, Ranger, Sorcerer, Bard) or
-                //     Partial only on the deterministic Human pilot surface (Fighter
-                //     L1 and Fighter L2-10 over the Human loadout, and the Barbarian
+                //     a chassis / class-feature / spell burden (Rogue, Paladin,
+                //     Ranger, Sorcerer, Bard, Wizard) or Partial only on the
+                //     deterministic Human pilot surface (Fighter L1 and Fighter
+                //     L2-10 over the Human loadout, and the Barbarian
                 //     martial-chassis baseline over the Human loadout), so there is
                 //     no non-Human class seam that the separate class row does not
                 //     already cover;
@@ -782,7 +859,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     class.paladin.hybrid_chassis_and_spell_burden, \
                     class.ranger.hybrid_chassis_and_spell_burden, \
                     class.sorcerer.progression_and_spell_burden, \
-                    class.bard.progression_and_spell_burden) is Blocked on chassis or \
+                    class.bard.progression_and_spell_burden, \
+                    class.wizard.progression_and_spell_burden) is Blocked on chassis or \
                     Partial only on the Human deterministic pilot surface; and the named \
                     Human interaction row interaction.human_bonus_feat_ability_bonus.pilot_pressure \
                     already covers the only race/class pressure the deterministic compute \
