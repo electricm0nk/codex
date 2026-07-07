@@ -409,6 +409,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_dwarf_race_seam(input, &mut explanations, &mut diagnostics);
 
+    explain_elf_race_seam(input, &mut explanations, &mut diagnostics);
+
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
     PilotBaseChassisComputation {
@@ -491,9 +493,10 @@ fn explain_human_race_seam(
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if input.chosen.race_id != HUMAN_RACE_ID {
-        // Dwarf carries its own dedicated race-semantics seam (explain_dwarf_race_seam);
-        // it replaces this generic diagnostic rather than stacking alongside it.
-        if input.chosen.race_id != DWARF_RACE_ID {
+        // Dwarf and Elf carry their own dedicated race-semantics seams
+        // (explain_dwarf_race_seam, explain_elf_race_seam); they replace this
+        // generic diagnostic rather than stacking alongside it.
+        if input.chosen.race_id != DWARF_RACE_ID && input.chosen.race_id != ELF_RACE_ID {
             diagnostics.push(ComputationDiagnostic {
                 id: "race.semantics.unverified".to_owned(),
                 message: format!(
@@ -687,6 +690,123 @@ fn explain_dwarf_race_seam(
                   weapon familiarity (battleaxe, heavy pick, warhammer, dwarven waraxe, \
                   dwarven urgrosh). PF1 core Dwarves gain no racial bonus feat (unlike Human), \
                   so that family is explicitly not applicable rather than silently omitted."
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+const ELF_RACE_ID: &str = "race:elf";
+const ELF_SIZE_CATEGORY: &str = "Medium";
+const ELF_BASE_SPEED_FEET: i16 = 30;
+const ELF_DEX_ADJUSTMENT: i16 = 2;
+const ELF_CON_ADJUSTMENT: i16 = -2;
+
+/// SD13-E2 Elf racial trait bundle explanation seam (mirroring the Dwarf pattern
+/// for the second non-Human core race).
+///
+/// Surfaces four grounded PF1 Core Rulebook Elf racial trait dimensions (ability
+/// modifiers, size, speed, senses) as explicit `ComputationExplanation` records so
+/// the Elf identity is legible on the runtime path rather than left behind the
+/// generic `race.semantics.unverified` diagnostic every other non-Human race still
+/// receives.
+///
+/// This function:
+///   - runs only when `race_id == race:elf`; every other race is unaffected
+///     (Human and Dwarf keep their own seams; every other non-Human race keeps
+///     the generic `race.semantics.unverified` diagnostic),
+///   - adds no new computed mechanical contribution: the ability-modifiers record
+///     is recognition-only (the chosen Dexterity/Constitution scores are
+///     understood to already reflect the fixed +2/-2 racial adjustment; no
+///     arithmetic is performed on this seam), and the size/senses records carry
+///     the grounded source value as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with an
+///     Elf-specific `race.elf.bounded_semantics` note naming the still-unproven
+///     families explicitly (Elven Immunities, Keen Senses, weapon familiarity,
+///     bonus languages, and the explicit absence of any Elf racial bonus feat),
+///   - is bounded to race recognition only; it deliberately grounds no Elf
+///     class-chassis interaction, no other race, no alternate +2 Intelligence
+///     ability variant, and no PF1 alternate ruleset.
+fn explain_elf_race_seam(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != ELF_RACE_ID {
+        return;
+    }
+
+    // ----- ability modifiers -----
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.ability_modifiers".to_owned(),
+        value: 0,
+        detail: format!(
+            "Elf racial trait bundle — ability modifiers: PF1 Core Elf grants a fixed \
+             {ELF_DEX_ADJUSTMENT:+} Dexterity and {ELF_CON_ADJUSTMENT:+} Constitution racial \
+             adjustment (cr_races.lst race:elf STAT:DEX|{ELF_DEX_ADJUSTMENT:+}, \
+             STAT:CON|{ELF_CON_ADJUSTMENT:+}). This is a bounded recognition record naming the \
+             fixed adjustment on the deterministic pilot seam; the chosen Dexterity and \
+             Constitution scores are understood to already reflect it, so this record performs \
+             no arithmetic and carries no fabricated mechanical value (+0). The alternate PF1 \
+             +2 Intelligence Elf variant is out of scope for this slice."
+        ),
+    });
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Elf racial trait bundle — size: PF1 Core Elf is {ELF_SIZE_CATEGORY} size \
+             (cr_races.lst race:elf SIZE:MEDIUM). This is a bounded recognition record naming \
+             the Elf size category on the deterministic pilot seam; it contributes no numeric \
+             effect to attack rolls, AC, skill checks, ability checks, or any other computed \
+             value, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.speed".to_owned(),
+        value: ELF_BASE_SPEED_FEET,
+        detail: format!(
+            "Elf racial trait bundle — speed: PF1 Core Elf has a base land speed of \
+             {ELF_BASE_SPEED_FEET} ft (cr_races.lst race:elf GAIT:WALK|{ELF_BASE_SPEED_FEET}). \
+             This is a grounded recognition value carrying the Elf base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    // Low-light vision is a binary trait (doubles effective light for vision
+    // purposes), not a distance magnitude like Dwarf Darkvision; the recognition
+    // value stays +0.
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Elf racial trait bundle — senses: PF1 Core Elf grants low-light vision \
+                  (cr_races.lst race:elf SENSE:Low-Light Vision). This is a bounded recognition \
+                  record naming the Elf low-light vision identity on the deterministic pilot \
+                  seam; it contributes no computed illumination or perception-derived effect to \
+                  any chassis output, so it carries no fabricated mechanical value (+0)"
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Elf specifically and
+    // stays non-claim-blocking so the deterministic pilot still reports computed
+    // evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.elf.bounded_semantics".to_owned(),
+        message: "Elf race semantics are grounded for the deterministic pilot's ability \
+                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core Elf \
+                  racial trait surface remains unverified: Elven Immunities (immunity to magic \
+                  sleep effects and a bonus on saves against enchantment spells and effects), \
+                  Keen Senses (a bonus on Perception checks), weapon familiarity (longbow, \
+                  composite longbow, longsword, rapier, shortbow, composite shortbow), and \
+                  bonus language grants. PF1 core Elves gain no racial bonus feat (unlike \
+                  Human), so that family is explicitly not applicable rather than silently \
+                  omitted."
             .to_owned(),
         claim_blocking: false,
     });

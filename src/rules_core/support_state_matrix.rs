@@ -56,6 +56,10 @@
 //!   recognized on the compute seam, but the remaining Dwarf family surface
 //!   (Stonecunning, Defensive Training, Hardy, Stability, Hatred, weapon
 //!   familiarity) stays unproven,
+//! - the Elf row is `Partial` / `Computed`: the SD13-E2 slice proves four grounded
+//!   Elf racial trait dimensions (ability modifiers, size, speed, senses) are
+//!   recognized on the compute seam, but the remaining Elf family surface (Elven
+//!   Immunities, Keen Senses, weapon familiarity, bonus languages) stays unproven,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
 //! - every other core race and core class, and the broader non-Human interaction row
 //!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime evidence
@@ -293,6 +297,12 @@ const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs"
 /// stays explicitly honest about the remaining unproven Dwarf family surface.
 const SD13_DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs";
 
+/// SD13-E2 dedicated proof surface for the bounded Elf race-semantics
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Elf racial trait dimensions (ability modifiers, size, speed, senses) that
+/// stays explicitly honest about the remaining unproven Elf family surface.
+const SD13_ELF_LEVEL1_TEST: &str = "tests/sd13_elf_race_semantics_recognition.rs";
+
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
 /// Returns exactly 21 rows: 7 race, 12 class, and 2 interaction. The content is
@@ -347,37 +357,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.elf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:elf",
-                dimension: "bounded race semantics",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "no direct runtime evidence for any of \
-                    the seven required Elf race-semantic families at the live \
-                    evidence floor (2026-07-06): identity/provenance is \
-                    observed-only via the SD-13 packet roster and the typed matrix \
-                    row carrier, but ability-score modifiers (PF1 Core +2 Dex / -2 \
-                    Con and the alternate +2 Int variant), size/speed/movement \
-                    baseline (Medium, 30 ft base), senses (low-light vision), \
-                    immunity to sleep, weapon familiarity (longbow / rapier / \
-                    longsword / shortbow / shortsword), bonus languages, and other \
-                    core racial traits (keen senses, elven magic / weapon training \
-                    variants) remain unproven; pilot_compute.rs explicitly gates \
-                    every non-Human race out of the compute path via \
-                    `if input.chosen.race_id != HUMAN_RACE_ID`. No Elf fixture \
-                    exists in tests/fixtures. Promotion above Unverified is \
-                    counterfeit breadth until a later bounded slice lands \
-                    grounded evidence for at least one of these families.",
-                next_required_uplift: "SD13-Elf bounded race-semantic \
-                    classification artifact at \
-                    programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-elf-bounded-race-semantics-classification-2026-07-06.md \
-                    names the seven required race-semantic families and the \
-                    concrete acceptance criteria (new accepted fixture family, \
-                    new typed module or expansion emitting computed evidence \
-                    / explanation / claim-blocking diagnostic, new focused test \
-                    pinning family evidence at Computed / Oracle-checked tier, \
-                    updated row state with non-empty blocker note) required \
-                    before this row may honestly move out of Unverified.",
+                dimension: "bounded Elf race semantics: four grounded PF1 Core Rulebook Elf \
+                            racial trait dimensions (ability modifiers, size, speed, senses) \
+                            recognized on the compute seam, with the remaining Elf family \
+                            surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_ELF_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Elf race-semantic families are recognized on the compute seam (ability \
+                    modifiers: +2 Dexterity / -2 Constitution; size: Medium; speed: 30 ft; \
+                    senses: low-light vision), but the remaining families stay unproven: Elven \
+                    Immunities (sleep immunity, enchantment save bonus), Keen Senses (Perception \
+                    bonus), weapon familiarity (longbow, composite longbow, longsword, rapier, \
+                    shortbow, composite shortbow), and bonus language grants. PF1 core Elves \
+                    gain no racial bonus feat, so that family is not applicable rather than \
+                    unproven. No numeric mechanical contribution is fabricated for any of the \
+                    four recognized dimensions.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Elf families (Elven Immunities, Keen Senses, weapon familiarity, \
+                    bonus languages) as a real computed contribution",
             },
             SupportStateRow {
                 row_id: "race.gnome.bounded_semantics",

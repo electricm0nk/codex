@@ -1,22 +1,17 @@
 //! SD13-Elf bounded race-semantics classification test.
 //!
-//! Pin the honest classification of the Elf race-semantics row at the
-//! evidence floor on 2026-07-06. The repo contains no direct runtime
-//! evidence for any Elf semantic family: the only Elf surface is the
-//! row carrier in `src/rules_core/support_state_matrix.rs` plus the row
-//! names in the markdown matrix and the visibility ledger. The
-//! `pilot_compute` seam explicitly gates every non-Human race out of
-//! the compute path with `if input.chosen.race_id != HUMAN_RACE_ID`.
+//! Originally pinned the honest classification of the Elf race-semantics row
+//! at the 2026-07-06 evidence floor, when the repo contained no direct runtime
+//! evidence for any Elf semantic family.
 //!
-//! These tests must stay green until a later bounded slice lands
-//! grounded evidence for at least one of the seven required
-//! race-semantic families (identity/provenance, ability modifier,
-//! size/speed/movement, senses, bonus feats/skill/derived-stat
-//! modifiers, prerequisite/feat/class-feature interactions, other core
-//! racial traits) AND upgrades the row state in the typed matrix
-//! carrier with a non-empty blocker note. Promotion of the row above
-//! `Unverified` without that grounded evidence is a counterfeit breadth
-//! claim and must be rejected by these tests.
+//! The SD13-E2 Elf bounded race-semantics recognition slice
+//! (`tests/sd13_elf_race_semantics_recognition.rs`) executed exactly the
+//! promotion path this file's original guards anticipated: it landed grounded
+//! evidence for four race-semantic families (ability modifiers, size, speed,
+//! senses) and updated the row state in the typed matrix carrier with a
+//! non-empty blocker note naming the still-unproven remainder. These tests now
+//! pin that promoted truth (`Partial` / `Computed` / `RefreshableFromLiveProof`)
+//! instead of the pre-slice `Unverified` / `Observed` evidence floor.
 //!
 //! Slice: t_37dbab62, matrix row_id: race.elf.bounded_semantics.
 
@@ -27,8 +22,6 @@ use codex::rules_core::support_state_matrix::{
 
 const ELF_ROW_ID: &str = "race.elf.bounded_semantics";
 const ELF_SUBJECT_ID: &str = "race:elf";
-const CLASSIFICATION_ARTIFACT_PATH: &str =
-    "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-elf-bounded-race-semantics-classification-2026-07-06.md";
 
 fn matrix() -> SupportStateMatrix {
     seeded_sd13_e1_f1_current_truth()
@@ -50,68 +43,70 @@ fn elf_row_is_present_in_seeded_matrix() {
 }
 
 #[test]
-fn elf_row_state_is_unverified_at_evidence_floor() {
-    // The honest verdict on 2026-07-06 is Unverified/Observed. Promotion
-    // above Unverified is counterfeit breadth until a later slice lands
-    // grounded evidence for at least one of the seven required
-    // race-semantic families and updates the row accordingly.
+fn elf_row_state_is_partial_after_sd13_e2_recognition() {
+    // The SD13-E2 Elf recognition slice landed grounded evidence for four
+    // race-semantic families (ability modifiers, size, speed, senses),
+    // promoting the row from Unverified to Partial. The row is not Supported:
+    // several families (Elven Immunities, Keen Senses, weapon familiarity,
+    // bonus languages) remain unproven.
     let matrix = matrix();
     let elf = row(&matrix, ELF_ROW_ID);
     assert_eq!(
         elf.support_state,
-        SupportState::Unverified,
-        "Elf row must stay Unverified at the 2026-07-06 evidence floor; \
-         promotion is counterfeit breadth until a later slice lands grounded evidence"
+        SupportState::Partial,
+        "Elf row must be Partial after the SD13-E2 recognition slice lands \
+         grounded evidence for its four named families."
     );
     assert_eq!(
         elf.evidence_tier,
-        EvidenceTier::Observed,
-        "Elf row evidence tier must stay Observed until runtime evidence exists"
+        EvidenceTier::Computed,
+        "Elf row must be Computed once the SD13-E2 recognition slice lands \
+         direct runtime evidence."
     );
     assert_eq!(
         elf.evidence_freshness,
-        EvidenceFreshness::AwaitingInitialEvidence,
-        "Elf row has no runtime evidence to refresh; must await initial evidence"
+        EvidenceFreshness::RefreshableFromLiveProof,
+        "Elf row must be RefreshableFromLiveProof once grounded on the live \
+         SD13-E2 recognition test surface."
     );
 }
 
 #[test]
-fn elf_row_grounding_stays_on_the_roster_authority_only() {
-    // The Elf row has no live compute or test grounding on 2026-07-06, so
-    // it must keep grounding only on the SD-13 roster authority. If a
-    // later slice grounds Elf on the compute seam or a focused proof
-    // surface, that slice must upgrade the grounding_ref explicitly.
+fn elf_row_grounding_cites_the_live_recognition_test_surface() {
+    // The SD13-E2 recognition slice upgrades the grounding_ref from the
+    // roster authority to the live, re-runnable proof surface.
     let matrix = matrix();
     let elf = row(&matrix, ELF_ROW_ID);
     assert!(
-        elf.grounding_ref.contains("core-roster-and-support-state-matrix"),
-        "Elf row must ground to the SD-13 roster authority only (no runtime \
-         compute or proof surface exists yet); got '{}'",
+        elf.grounding_ref
+            .contains("sd13_elf_race_semantics_recognition"),
+        "Elf row must ground to the live SD13-E2 recognition test surface; \
+         got '{}'",
         elf.grounding_ref
     );
 }
 
 #[test]
-fn elf_row_dimension_stays_stable_as_bounded_race_semantics() {
-    // The slice keeps the dimension label stable so every race row reads
-    // as the same dimension family ("bounded race semantics"). The
-    // per-row blocker note and next-uplift carry the bounded scope.
+fn elf_row_dimension_names_the_recognized_families() {
+    // The SD13-E2 slice updates the dimension to name the four recognized
+    // families rather than the pre-slice generic placeholder text.
     let matrix = matrix();
     let elf = row(&matrix, ELF_ROW_ID);
-    assert_eq!(
-        elf.dimension, "bounded race semantics",
-        "Elf row dimension must stay 'bounded race semantics' so all race rows \
-         share the same dimension label; per-row scope lives in the blocker note"
-    );
+    for token in ["ability modifiers", "size", "speed", "senses"] {
+        assert!(
+            elf.dimension.contains(token),
+            "Elf row dimension must name the recognized '{token}' family: {}",
+            elf.dimension
+        );
+    }
 }
 
 #[test]
-fn elf_row_carries_non_empty_blocker_note_naming_required_families() {
-    // The slice's actual lift: turn the previously-empty
-    // blocker_or_lossiness_note into a non-empty note naming the seven
-    // required race-semantic families and their unproven status, so the
-    // audit surface shows exactly what would have to be grounded before
-    // Elf can move out of Unverified.
+fn elf_row_carries_non_empty_blocker_note_naming_recognized_and_remaining_families() {
+    // The SD13-E2 slice's actual lift: the blocker_or_lossiness_note now names
+    // both the four recognized families (with their grounded values) and the
+    // remaining unproven families, so the audit surface shows exactly what
+    // still needs grounding.
     let matrix = matrix();
     let elf = row(&matrix, ELF_ROW_ID);
     assert!(
@@ -119,36 +114,38 @@ fn elf_row_carries_non_empty_blocker_note_naming_required_families() {
         "Elf row blocker/lossiness note must be non-empty after the slice; \
          an empty note would silently hide the missing-semantic-family debt"
     );
-    // The blocker note must name enough of the seven required families
-    // that the audit surface can show the family-level gap. The slice's
-    // note covers all seven.
-    let families_or_dwarf_anchors = [
-        "ability",          // ability-score modifiers family
-        "size",             // size, speed, movement baseline family
-        "movement",         // size, speed, movement baseline family
-        "vision",           // senses family (low-light vision for Elf)
-        "sleep",            // Elf immunity to sleep trait
-        "weapon",           // weapon familiarity trait (Elf)
-        "trait",            // other core racial traits family
+    let anchors = [
+        "ability",          // recognized: ability modifiers
+        "size",             // recognized: size
+        "speed",            // recognized: speed
+        "senses",           // recognized: senses
+        "Elven Immunities", // remaining: sleep immunity, enchantment saves
+        "Keen Senses",      // remaining: Perception bonus
+        "weapon",           // remaining: weapon familiarity
+        "bonus language",   // remaining: bonus languages
     ];
-    for needle in families_or_dwarf_anchors {
+    for needle in anchors {
         assert!(
             elf.blocker_or_lossiness_note.contains(needle),
-            "Elf row blocker/lossiness note must name the '{needle}' family \
-             or trait anchor; got '{}'",
+            "Elf row blocker/lossiness note must name the '{needle}' anchor; \
+             got '{}'",
             elf.blocker_or_lossiness_note
         );
     }
 }
 
 #[test]
-fn elf_row_next_uplift_points_at_this_artifact() {
+fn elf_row_next_uplift_names_a_concrete_remaining_family() {
     let matrix = matrix();
     let elf = row(&matrix, ELF_ROW_ID);
     assert!(
-        elf.next_required_uplift.contains(CLASSIFICATION_ARTIFACT_PATH),
-        "Elf row next_required_uplift must point at the bounded Elf \
-         classification artifact at '{CLASSIFICATION_ARTIFACT_PATH}'; got '{}'",
+        !elf.next_required_uplift.is_empty(),
+        "Elf row next_required_uplift must be non-empty after the slice."
+    );
+    assert!(
+        elf.next_required_uplift.contains("Elf"),
+        "Elf row next_required_uplift must reference a concrete remaining \
+         Elf family. Got: {}",
         elf.next_required_uplift
     );
 }
@@ -162,19 +159,23 @@ fn elf_row_subject_type_and_id_remain_intact() {
 }
 
 #[test]
-fn elf_row_is_not_silently_promoted_to_supported_partial_lossy_or_blocked() {
-    // The first-slice contract is honest: even with a non-empty blocker
-    // note naming the seven required families, the row does NOT silently
-    // move into any stronger posture. Promotion requires a later slice
-    // with grounded compute or proof evidence — exactly what this slice
-    // does not produce.
+fn elf_row_is_not_silently_promoted_to_supported_or_lossy() {
+    // Belt-and-braces guard, updated for the SD13-E2 promotion to Partial. If a
+    // future change flips the support state to Supported or Lossy without
+    // grounding the remaining Elf families (Elven Immunities, Keen Senses,
+    // weapon familiarity, bonus languages) as real computed contributions, the
+    // test fails.
     let matrix = matrix();
     let elf = row(&matrix, ELF_ROW_ID);
-    assert_ne!(elf.support_state, SupportState::Supported);
-    assert_ne!(elf.support_state, SupportState::Partial);
-    assert_ne!(elf.support_state, SupportState::Lossy);
-    assert_ne!(elf.support_state, SupportState::Blocked);
-    assert_eq!(elf.support_state, SupportState::Unverified);
+    assert!(
+        !matches!(
+            elf.support_state,
+            SupportState::Supported | SupportState::Lossy
+        ),
+        "Elf row must not be silently promoted to Supported or Lossy without \
+         grounding the remaining unproven families. Current state: {:?}.",
+        elf.support_state
+    );
 }
 
 #[test]
