@@ -729,10 +729,14 @@ const NON_HUMAN_VERDICT_AUDIT_BASIS_TOKENS: &[&str] = &[
     "class.fighter.levels_2_10",
     "class.rogue.bounded_progression",
     "class.barbarian.bounded_progression",
+    "class.monk.bounded_progression",
     "class.paladin.hybrid_chassis_and_spell_burden",
     "class.ranger.hybrid_chassis_and_spell_burden",
     "class.sorcerer.progression_and_spell_burden",
     "class.bard.progression_and_spell_burden",
+    "class.wizard.progression_and_spell_burden",
+    "class.cleric.progression_and_spell_burden",
+    "class.druid.progression_and_spell_burden",
 ];
 
 #[test]
