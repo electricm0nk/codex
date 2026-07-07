@@ -262,15 +262,24 @@ const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
 // Bounded SD13-E3 Fighter milestone widening. The accepted level-1 pilot is now
-// joined by levels 2 and 3 only. Nothing here grounds level 4+ Fighter burden,
-// repeated bonus-feat cadence, weapon training, later armor-training ranks, or any
-// non-Fighter positive support.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 3;
+// joined by levels 2, 3, and 4. Nothing here grounds level 5+ Fighter burden
+// (weapon training begins at level 5), later armor-training ranks (level 7+), or
+// any non-Fighter positive support. The generic PF1 level-4 ability-score-increase
+// milestone needs no separate seam: the chosen ability score is trusted at face
+// value, like every other ability adjustment in this codebase.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 4;
 
 // Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
 // feat at level 2; this slice surfaces the named selection as an explicit seam only
 // and grounds no general feat-effect or prerequisite engine.
 const FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_2";
+
+// Fighter level-4 bonus-feat progression seam. Fighter gains an additional bonus
+// feat at level 4 (the cadence continues at 1, 2, 4, 6, 8, 10, ...); this slice
+// surfaces the named selection as an explicit seam only and grounds no general
+// feat-effect or prerequisite engine, mirroring the level-2 seam.
+const FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_4";
+const CLEAVE_FEAT_SELECTION: &str = "feat:cleave";
 
 // Fighter armor training 1, gained at level 3. It reduces the worn armor's
 // armor-check penalty by 1 (to a minimum of 0) and raises its maximum Dexterity
@@ -1604,6 +1613,22 @@ fn explain_fighter_class_features(
         });
     }
 
+    if level >= 4
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_4_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 4 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. This slice grounds the bonus-feat slot, not a \
+                     general feat-effect or prerequisite engine, so it contributes no computed \
+                     mechanical value (+0)"
+            ),
+        });
+    }
+
     let armor_training = fighter_armor_training(level);
     if armor_training.rank > 0 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
@@ -1623,11 +1648,11 @@ fn explain_fighter_class_features(
 }
 
 /// The canonical Human Fighter feat-choice selections this slice preserves on the
-/// deterministic level-1/2/3 seam, as `(choice_set_id, canonical_selection_id)` pairs.
-/// Any named slot present but deviating from its canonical selection is claim-blocked.
-/// A slot absent for the chosen level (e.g. the level-2 bonus feat at level 1) is not
-/// fabricated.
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 4] = [
+/// deterministic level-1/2/3/4 seam, as `(choice_set_id, canonical_selection_id)`
+/// pairs. Any named slot present but deviating from its canonical selection is
+/// claim-blocked. A slot absent for the chosen level (e.g. the level-2 bonus feat
+/// at level 1) is not fabricated.
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 5] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -1640,6 +1665,10 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 4] = [
     (
         FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID,
         TOUGHNESS_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID,
+        CLEAVE_FEAT_SELECTION,
     ),
 ];
 

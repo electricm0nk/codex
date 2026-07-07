@@ -261,12 +261,13 @@ fn matrix_level_1_and_levels_2_10_remain_distinct_rows() {
         level_1.dimension, levels_2_10.dimension,
         "Fighter L1 and L2-10 must keep distinct progression dimensions"
     );
-    // The slice must NOT have weakened the L2-10 row's enforcement of "4-10 remains
-    // unproven"; the L2-10 row is a separate concern with its own grounding ref.
+    // The slice must NOT have weakened the L2-10 row's enforcement of "5-10 remains
+    // unproven"; the L2-10 row is a separate concern with its own grounding ref,
+    // now the more specific SD13-E3 level-4 proof surface.
     assert!(
         levels_2_10
             .grounding_ref
-            .contains("sd13_fighter_level2_level3_progression"),
+            .contains("sd13_fighter_level4_progression"),
         "L2-10 row must keep its own SD13-E3 tranche grounding ref: {}",
         levels_2_10.grounding_ref
     );
