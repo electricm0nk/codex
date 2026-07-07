@@ -324,8 +324,36 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E2 race-semantic slice",
+                blocker_or_lossiness_note: "no direct runtime evidence for any of \
+                    the seven required Halfling race-semantic families at the live \
+                    evidence floor (2026-07-06): identity/provenance is observed-only \
+                    via the SD-13 packet roster and the typed matrix row carrier, but \
+                    ability-score modifiers (PF1 Core +2 Dex / -2 Str or any \
+                    alternative), size/speed/movement baseline (Small size, 20-ft \
+                    base speed), senses (no Halfling darkvision; only the human-sense \
+                    baseline), racial bonus feats and skill modifiers (+1 thrown \
+                    attack roll with thrown weapons and slings, +2 Appraise, +2 \
+                    Climb), prerequisite/feat/class-feature interactions (favored \
+                    class bonus, Halfling racial traits interacting with class \
+                    features), and other core racial traits (fearless halfling \
+                    luck, +1 racial bonus on saves against fear, Halfling languages \
+                    Common/Halfling, Halfling weapon familiarity, lucky trait) \
+                    remain unproven; pilot_compute.rs explicitly gates every \
+                    non-Human race out of the compute path via \
+                    `if input.chosen.race_id != HUMAN_RACE_ID`. No Halfling \
+                    fixture exists in tests/fixtures. Promotion above Unverified \
+                    is counterfeit breadth until a later bounded slice lands \
+                    grounded evidence for at least one of these families.",
+                next_required_uplift: "SD13-Halfling bounded race-semantic \
+                    classification artifact at \
+                    programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-halfling-bounded-race-semantics-classification-2026-07-06.md \
+                    names the seven required race-semantic families and the \
+                    concrete acceptance criteria (new accepted fixture family, \
+                    new typed module or expansion emitting computed evidence \
+                    / explanation / claim-blocking diagnostic, new focused test \
+                    pinning family evidence at Computed / Oracle-checked tier, \
+                    updated row state with non-empty blocker note) required \
+                    before this row may honestly move out of Unverified.",
             },
             // ----- Class rows (12) -----
             SupportStateRow {
