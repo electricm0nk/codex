@@ -1162,23 +1162,6 @@ fn is_single_class_sorcerer_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Sorcerer
-/// level-1 spell-bearing baseline, while keeping it explicitly claim-blocked on its two
-/// still-missing burdens.
-///
-/// This deliberately does not compute a supported spell surface. It grounds no bloodline
-/// power, no bloodline arcana, and no spell math whatsoever — no spell slots, spells
-/// known, spell DCs, bonus spells, prepared posture, or school choice. It only:
-/// - leaves one recognition explanation so the `class:sorcerer:1` identity is acknowledged
-///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
-///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two distinct claim-blocking diagnostics naming the bloodline burden and the
-///   spontaneous known-spell / slot posture burden explicitly, rather than hiding behind a
-///   generic "unsupported caster" label.
-///
-/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
-/// keeps that blocked posture but makes the Sorcerer spell-bearing identity and its two
-/// named burdens legible on the runtime path.
 /// A pure martial (non-hybrid, non-spell) class this slice recognizes at its bounded
 /// single-class level-1 chassis boundary only.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -1274,10 +1257,10 @@ fn explain_barbarian_level1_chassis(
         id: "class_feature.barbarian.bounded_progression.base_save.unsupported".to_owned(),
         message: format!(
             "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its base save progression: \
-             the good Fortitude +{}+2 and the poor Reflex / poor Will base-save cadence are not \
-             implemented in this bounded martial chassis baseline, so no {class_name} base-save support is \
-             claimed",
-            MARTIAL_BASELINE_LEVEL
+             the good Fortitude progression (classlevel/2+2, +{} at level {MARTIAL_BASELINE_LEVEL}) and \
+             the poor Reflex / poor Will base-save cadence are not implemented in this bounded martial \
+             chassis baseline, so no {class_name} base-save support is claimed",
+            i16::from(MARTIAL_BASELINE_LEVEL) / 2 + 2
         ),
         claim_blocking: true,
     });
@@ -1306,7 +1289,23 @@ fn explain_barbarian_level1_chassis(
     });
 }
 
-
+/// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Sorcerer
+/// level-1 spell-bearing baseline, while keeping it explicitly claim-blocked on its two
+/// still-missing burdens.
+///
+/// This deliberately does not compute a supported spell surface. It grounds no bloodline
+/// power, no bloodline arcana, and no spell math whatsoever — no spell slots, spells
+/// known, spell DCs, bonus spells, prepared posture, or school choice. It only:
+/// - leaves one recognition explanation so the `class:sorcerer:1` identity is acknowledged
+///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the bloodline burden and the
+///   spontaneous known-spell / slot posture burden explicitly, rather than hiding behind a
+///   generic "unsupported caster" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Sorcerer spell-bearing identity and its two
+/// named burdens legible on the runtime path.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,

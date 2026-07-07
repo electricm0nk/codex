@@ -1,6 +1,7 @@
 //! SD13-E4-R3 Wizard level-1 prepared arcane spell-burden baseline proof.
 //!
-//! Proves the second honest SD13-E4 spell-bearing slice: the live rules-core surface
+//! Proves the third honest SD13-E4 spell-bearing slice (after Sorcerer and Bard): the
+//! live rules-core surface
 //! ingests a deterministic Human `class:wizard:1` input, leaves direct computed
 //! evidence that recognizes the Wizard level-1 prepared arcane spell-bearing class
 //! identity rather than treating it as an undocumented packet placeholder, and yet
@@ -16,8 +17,9 @@
 //! here; the matrix file is read-only and the row transition flows through the merge
 //! receipt only), and the merge receipt obligation to move the row to `Blocked` /
 //! `Computed` with a blocker note naming both burdens is asserted explicitly. Bard
-//! stays `Unverified` / `Observed`; the accepted Paladin / Ranger / Sorcerer hybrid
-//! and spontaneous rows stay `Blocked` / `Computed`.
+//! keeps its accepted SD13-E4-F7 posture (`Blocked` / `Computed`); the accepted
+//! Paladin / Ranger / Sorcerer hybrid and spontaneous rows stay `Blocked` /
+//! `Computed`.
 //!
 //! It is intentionally not a spell engine. It fabricates no spellbook content, no
 //! spells prepared, no spell slots per day, no spell DCs, no bonus spells, no
@@ -357,20 +359,28 @@ fn matrix_wizard_row_stays_unverified_observed_in_carrier_and_merge_receipt_obli
 }
 
 #[test]
-fn matrix_keeps_bard_unverified_observed() {
+fn matrix_preserves_bard_blocked_computed_truth() {
+    // Bard landed its own SD13-E4-F7 spell-baseline slice; the Wizard slice
+    // must preserve that accepted Blocked/Computed posture, not re-promote or
+    // silently demote it.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
     assert_eq!(
         bard.support_state,
-        SupportState::Unverified,
-        "bard row must stay Unverified after the Wizard slice"
+        SupportState::Blocked,
+        "bard row must keep its accepted Blocked posture after the Wizard slice"
     );
     assert_eq!(
         bard.evidence_tier,
-        EvidenceTier::Observed,
-        "bard row must stay Observed after the Wizard slice"
+        EvidenceTier::Computed,
+        "bard row must keep its accepted Computed evidence tier after the Wizard slice"
+    );
+    assert_eq!(
+        bard.evidence_freshness,
+        EvidenceFreshness::RefreshableFromLiveProof,
+        "bard row must stay refreshable from its live spell-baseline proof surface"
     );
 }
 

@@ -211,6 +211,12 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
 /// known-spell / slot posture burden.
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
+/// SD13-E3 dedicated proof surface for the bounded Human Barbarian level-1 martial
+/// chassis baseline: direct computed chassis-recognition evidence that stays explicitly
+/// blocked on the four named martial pillar burdens (base attack, base save,
+/// fast movement, illiteracy trait).
+const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs";
+
 /// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
 /// classification: the deterministic pilot still produces computed outputs
 /// through a `race:gnome` chassis, the Gnome race seam receives the same
@@ -518,12 +524,22 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:barbarian",
                 dimension: "bounded class progression",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "SD13-E3 martial progression slice",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_BARBARIAN_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E3 Barbarian level-1 proof surfaces only the \
+                    bounded martial chassis-recognition record; the slice is explicitly blocked \
+                    on the four still-missing martial pillar burdens: base attack progression \
+                    (full BAB and the higher-level BAB cadence), base save progression (the \
+                    good Fortitude classlevel/2+2 cadence, +2 at level 1, and the poor \
+                    Reflex / poor Will base-save cadence), fast \
+                    movement (+10 ft. land speed extension while wearing no heavy armor), and \
+                    the illiteracy trait. No rage execution, weapon familiarity, or level-2+ \
+                    martial progression is claimed",
+                next_required_uplift: "widen beyond level 1 by grounding base-attack / base-save \
+                    progression, fast-movement speed extension, and the illiteracy trait engine, \
+                    later widening into rage execution and level-2+ martial progression",
             },
             SupportStateRow {
                 row_id: "class.bard.progression_and_spell_burden",
@@ -697,11 +713,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 //     Unverified/Observed with no computed race semantics, so there
                 //     is no non-Human race trait to compute a pressure against;
                 //   * every class row that has Computed evidence is either Blocked on
-                //     a chassis burden (Rogue, Paladin, Ranger, Sorcerer) or Partial
-                //     only on the deterministic Human pilot surface (Fighter L1 and
-                //     Fighter L2-10, Fighter levels-2-3 milestone proof over the
-                //     Human loadout), so there is no non-Human class seam that the
-                //     separate class row does not already cover;
+                //     a chassis burden (Rogue, Paladin, Ranger, Sorcerer, Bard) or
+                //     Partial only on the deterministic Human pilot surface (Fighter
+                //     L1 and Fighter L2-10 over the Human loadout, and the Barbarian
+                //     martial-chassis baseline over the Human loadout), so there is
+                //     no non-Human class seam that the separate class row does not
+                //     already cover;
                 //   * the only Human-named interaction row
                 //     (interaction.human_bonus_feat_ability_bonus.pilot_pressure)
                 //     is already Partial/Computed and is explicitly distinct from
@@ -720,9 +737,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     no computed race semantics; every class row that has Computed evidence \
                     (class.fighter.level_1_pilot, class.fighter.levels_2_10, \
                     class.rogue.bounded_progression, \
+                    class.barbarian.bounded_progression, \
                     class.paladin.hybrid_chassis_and_spell_burden, \
                     class.ranger.hybrid_chassis_and_spell_burden, \
-                    class.sorcerer.progression_and_spell_burden) is Blocked on chassis or \
+                    class.sorcerer.progression_and_spell_burden, \
+                    class.bard.progression_and_spell_burden) is Blocked on chassis or \
                     Partial only on the Human deterministic pilot surface; and the named \
                     Human interaction row interaction.human_bonus_feat_ability_bonus.pilot_pressure \
                     already covers the only race/class pressure the deterministic compute \

@@ -396,11 +396,31 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
     assert_eq!(sorcerer.support_state, SupportState::Blocked);
     assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
 
-    // Bard, Cleric, Druid, Monk, Barbarian, Wizard must remain Unverified /
-    // Observed — this slice does not silently promote any other class.
+    // Bard carries its own accepted SD13-E4-F7 posture (Blocked/Computed) and
+    // Barbarian carries its accepted SD13-E3 martial-chassis posture
+    // (Partial/Computed); this slice preserves both without re-promoting them.
+    let bard = matrix
+        .row("class.bard.progression_and_spell_burden")
+        .expect("bard row must exist");
+    assert_eq!(
+        bard.support_state,
+        SupportState::Blocked,
+        "bard row must keep its accepted Blocked posture after the paladin-decomposition slice"
+    );
+    assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
+    let barbarian = matrix
+        .row("class.barbarian.bounded_progression")
+        .expect("barbarian row must exist");
+    assert_eq!(
+        barbarian.support_state,
+        SupportState::Partial,
+        "barbarian row must keep its accepted Partial posture after the paladin-decomposition slice"
+    );
+    assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
+
+    // Cleric, Druid, Monk, Wizard must remain Unverified / Observed — this
+    // slice does not silently promote any still-unproven class.
     for id in [
-        "class.barbarian.bounded_progression",
-        "class.bard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
         "class.druid.progression_and_spell_burden",
         "class.monk.bounded_progression",
