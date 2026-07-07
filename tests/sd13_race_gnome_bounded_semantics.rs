@@ -142,4 +142,21 @@ fn matrix_gnome_row_is_unverified_observed_awaiting_initial_evidence() {
         "gnome row grounding_ref must cite the live pilot compute proof surface: {}",
         gnome.grounding_ref
     );
+    // Combined-ref idiom (paladin/human precedent): the row also cites this
+    // dedicated proof surface alongside the live compute seam.
+    assert!(
+        gnome
+            .grounding_ref
+            .contains("sd13_race_gnome_bounded_semantics"),
+        "gnome row grounding_ref must also cite this dedicated proof surface: {}",
+        gnome.grounding_ref
+    );
+    // The dimension must not claim the catch-all diagnostic covers "every
+    // non-Human race": since PR #95 the race seam is a dispatcher and Half-Elf
+    // carries its own recognition-only diagnostic.
+    assert!(
+        !gnome.dimension.contains("every non-Human race"),
+        "gnome row dimension must not describe the retired every-non-Human catch-all: {}",
+        gnome.dimension
+    );
 }

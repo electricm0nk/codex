@@ -293,10 +293,11 @@ fn paladin_and_ranger_hybrid_rows_are_blocked_and_computed_with_named_burdens() 
 
 #[test]
 fn every_remaining_unproven_class_row_is_unverified_and_observed() {
-    // After SD13-E3-F6, SD13-E4-F7, and the SD13-E3 Barbarian martial-chassis slice,
-    // Fighter (level 1 + levels 2-10), Rogue, Barbarian, Paladin, Ranger, Sorcerer,
-    // and Bard all carry runtime evidence. The remaining four core class rows must
-    // still be pure roster-scope placeholders with no runtime evidence.
+    // After SD13-E3-F6, SD13-E4-F7, the SD13-E3 Barbarian martial-chassis slice,
+    // and the executed SD13-E4-R3 Wizard merge receipt, Fighter (level 1 + levels
+    // 2-10), Rogue, Barbarian, Paladin, Ranger, Sorcerer, Bard, and Wizard all
+    // carry runtime evidence. The remaining three core class rows must still be
+    // pure roster-scope placeholders with no runtime evidence.
     let matrix = matrix();
     let proven_subjects = [
         "class:fighter",
@@ -306,6 +307,7 @@ fn every_remaining_unproven_class_row_is_unverified_and_observed() {
         "class:ranger",
         "class:sorcerer",
         "class:bard",
+        "class:wizard",
     ];
     let other_classes: Vec<&SupportStateRow> = matrix
         .rows
@@ -316,8 +318,8 @@ fn every_remaining_unproven_class_row_is_unverified_and_observed() {
 
     assert_eq!(
         other_classes.len(),
-        4,
-        "there must be 4 remaining unproven core class rows"
+        3,
+        "there must be 3 remaining unproven core class rows"
     );
     for class in other_classes {
         assert_eq!(
@@ -346,6 +348,13 @@ fn human_race_row_makes_named_pilot_seam_explicit() {
         "Human race row must ground to the compute surface that makes the seam explicit: {}",
         human.grounding_ref
     );
+    // The row must also cite the SD13-E6-F3a trait-bundle proof surface: it is the
+    // live, re-runnable evidence that the four trait dimensions are classified.
+    assert!(
+        human.grounding_ref.contains("sd13_human_full_trait_bundle"),
+        "Human race row must also ground on the trait-bundle proof surface: {}",
+        human.grounding_ref
+    );
     // The dimension must name the two grounded Human pilot pressures explicitly so the
     // seam is legible rather than incidental.
     assert!(
@@ -353,10 +362,20 @@ fn human_race_row_makes_named_pilot_seam_explicit() {
         "Human race row dimension must name the ability-bonus and bonus-feat seam: {}",
         human.dimension
     );
-    // The broader Human racial burden must stay visibly unverified.
+    // The note must reflect the classified SD13-E6-F3a trait bundle, not the
+    // pre-F3a claim that size/speed/senses/extra-skill-ranks are still unverified.
+    let note = human.blocker_or_lossiness_note;
     assert!(
-        !human.blocker_or_lossiness_note.is_empty(),
-        "Human race row must keep a non-empty note about the still-unverified Human burden"
+        !note.is_empty(),
+        "Human race row must keep a non-empty note about the remaining Human burden"
+    );
+    assert!(
+        note.contains("classified explicitly"),
+        "Human race row note must record that the trait bundle is classified explicitly: {note}"
+    );
+    assert!(
+        !note.contains("are still unverified"),
+        "Human race row note must no longer carry the pre-F3a 'still unverified' trait-bundle claim: {note}"
     );
 }
 
@@ -456,6 +475,7 @@ fn only_pilot_grounded_rows_rise_above_observed() {
         "class.ranger.hybrid_chassis_and_spell_burden",
         "class.sorcerer.progression_and_spell_burden",
         "class.bard.progression_and_spell_burden",
+        "class.wizard.progression_and_spell_burden",
         "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
     ];
 
@@ -531,6 +551,48 @@ fn every_row_carries_grounding_and_next_uplift() {
     }
 }
 
+#[test]
+fn stale_generic_uplift_pointers_are_reconciled() {
+    // The generic uplift pointers seeded before the tranche 2.6 closeout named
+    // slices that have since landed WITHOUT covering these rows ("SD13-E3
+    // martial progression slice" landed as the Barbarian baseline; "SD13-E4
+    // spellcasting slice" landed as the arcane Sorcerer/Bard/Wizard baselines;
+    // "SD13-E2 / SD13-E3 coupling" landed without generalizing the interaction
+    // model). Each remaining unproven row must point at a subject-specific
+    // uplift so the debt surface stays actionable instead of naming completed
+    // slices.
+    let matrix = matrix();
+    let expectations = [
+        ("class.rogue.bounded_progression", "Rogue"),
+        ("class.monk.bounded_progression", "Monk"),
+        ("class.cleric.progression_and_spell_burden", "Cleric"),
+        ("class.druid.progression_and_spell_burden", "Druid"),
+        (
+            "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
+            "interaction",
+        ),
+    ];
+    for (row_id, subject_token) in expectations {
+        let r = row(&matrix, row_id);
+        let uplift = r.next_required_uplift;
+        assert!(
+            uplift.contains(subject_token),
+            "row '{row_id}' next_required_uplift must name its own subject ('{subject_token}'): {uplift}"
+        );
+        for stale in [
+            "SD13-E3 martial progression slice",
+            "SD13-E4 spellcasting slice",
+            "SD13-E2 / SD13-E3 coupling",
+        ] {
+            assert_ne!(
+                uplift.trim(),
+                stale,
+                "row '{row_id}' next_required_uplift must no longer be the generic '{stale}' pointer"
+            );
+        }
+    }
+}
+
 // ---------------------------------------------------------------------------
 // SD13-E7-F13 evidence-freshness / breadth-claim audit truth.
 //
@@ -546,7 +608,7 @@ fn every_row_carries_grounding_and_next_uplift() {
 /// The rows anchored to a live, re-runnable proof surface. These are exactly the
 /// pilot-grounded, hybrid-baseline, Barbarian martial-baseline, and spell-baseline
 /// rows that rise above `Observed` evidence.
-const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 10] = [
+const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 11] = [
     "race.human.pilot_semantics",
     "class.fighter.level_1_pilot",
     "class.fighter.levels_2_10",
@@ -556,6 +618,7 @@ const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 10] = [
     "class.ranger.hybrid_chassis_and_spell_burden",
     "class.sorcerer.progression_and_spell_burden",
     "class.bard.progression_and_spell_burden",
+    "class.wizard.progression_and_spell_burden",
     "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
 ];
 
@@ -689,6 +752,7 @@ const NON_HUMAN_VERDICT_AUDIT_BASIS_TOKENS: &[&str] = &[
     "class.ranger.hybrid_chassis_and_spell_burden",
     "class.sorcerer.progression_and_spell_burden",
     "class.bard.progression_and_spell_burden",
+    "class.wizard.progression_and_spell_burden",
 ];
 
 #[test]
@@ -697,7 +761,10 @@ fn non_human_interaction_row_carries_non_empty_explicit_verdict_note() {
     // elsewhere. A future slice that empties the note is silently overturning
     // the audit and must be caught here.
     let matrix = matrix();
-    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    let non_human = row(
+        &matrix,
+        "interaction.non_human_any_class.progression_pressure",
+    );
     assert!(
         !non_human.blocker_or_lossiness_note.is_empty(),
         "non-Human interaction row must carry a non-empty blocker/lossiness note \
@@ -708,7 +775,10 @@ fn non_human_interaction_row_carries_non_empty_explicit_verdict_note() {
 #[test]
 fn non_human_interaction_row_verdict_names_the_no_named_row_decision() {
     let matrix = matrix();
-    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    let non_human = row(
+        &matrix,
+        "interaction.non_human_any_class.progression_pressure",
+    );
     for token in NON_HUMAN_NO_NAMED_ROW_VERDICT_TOKENS {
         assert!(
             non_human.blocker_or_lossiness_note.contains(token),
@@ -724,7 +794,10 @@ fn non_human_interaction_row_verdict_traces_to_real_audit_basis_rows() {
     // non-Human race row id and every Computed class row id must appear in the
     // blocker note so a future reader can trace each claim back to a real row.
     let matrix = matrix();
-    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    let non_human = row(
+        &matrix,
+        "interaction.non_human_any_class.progression_pressure",
+    );
     for token in NON_HUMAN_VERDICT_AUDIT_BASIS_TOKENS {
         assert!(
             non_human.blocker_or_lossiness_note.contains(token),
@@ -741,7 +814,10 @@ fn non_human_interaction_row_verdict_cites_human_interaction_row_as_already_name
     // name it so a future slice cannot claim the Human interaction row was
     // overlooked when deciding no non-Human interaction row is required.
     let matrix = matrix();
-    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    let non_human = row(
+        &matrix,
+        "interaction.non_human_any_class.progression_pressure",
+    );
     let human_interaction = row(
         &matrix,
         "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
@@ -765,7 +841,10 @@ fn non_human_interaction_row_stays_unverified_and_observed() {
     // the blocker note would be silently claiming a named interaction exists,
     // and must be caught here.
     let matrix = matrix();
-    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    let non_human = row(
+        &matrix,
+        "interaction.non_human_any_class.progression_pressure",
+    );
     assert_eq!(
         non_human.support_state,
         SupportState::Unverified,
@@ -790,7 +869,10 @@ fn non_human_interaction_row_subject_id_remains_a_generic_placeholder() {
     // "non-human-any-class-progression" placeholder, not a specific named
     // race/class pair (e.g. race.dwarf:race.dwarf+class.fighter.level_1_pilot).
     let matrix = matrix();
-    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    let non_human = row(
+        &matrix,
+        "interaction.non_human_any_class.progression_pressure",
+    );
     assert_eq!(
         non_human.subject_id, "interaction:non-human-any-class-progression",
         "non-Human interaction row subject_id must remain the generic placeholder until a \
@@ -818,7 +900,10 @@ fn non_human_interaction_row_verdict_does_not_silently_add_a_named_pair_row() {
         2,
         "interaction row count must stay at 2 while the verdict stands, got {}: {:?}",
         interaction_rows.len(),
-        interaction_rows.iter().map(|r| r.row_id).collect::<Vec<_>>()
+        interaction_rows
+            .iter()
+            .map(|r| r.row_id)
+            .collect::<Vec<_>>()
     );
 
     let row_ids: std::collections::BTreeSet<&str> =
@@ -843,8 +928,7 @@ fn non_human_interaction_row_verdict_does_not_silently_add_a_named_pair_row() {
             !subject_is_specific_non_human_pair,
             "no additional named non-Human interaction row is permitted while the verdict \
              stands; found subject_id '{}' on row '{}'",
-            r.subject_id,
-            r.row_id
+            r.subject_id, r.row_id
         );
     }
 }
@@ -858,7 +942,10 @@ fn non_human_interaction_row_next_uplift_states_the_warrant_condition() {
     // already absorb. This pins the doctrinal boundary so a future slice that
     // weakens the warrant (e.g. "add rows later") is caught here.
     let matrix = matrix();
-    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    let non_human = row(
+        &matrix,
+        "interaction.non_human_any_class.progression_pressure",
+    );
     let uplift = non_human.next_required_uplift;
     for token in [
         "named non-Human interaction row",
@@ -882,9 +969,14 @@ fn non_human_interaction_row_verdict_keeps_row_anchored_to_roster_matrix_doc() {
     // authority — i.e. no compute seam has been introduced for a non-Human
     // race/class interaction while the verdict stands.
     let matrix = matrix();
-    let non_human = row(&matrix, "interaction.non_human_any_class.progression_pressure");
+    let non_human = row(
+        &matrix,
+        "interaction.non_human_any_class.progression_pressure",
+    );
     assert!(
-        non_human.grounding_ref.contains("core-roster-and-support-state-matrix.md"),
+        non_human
+            .grounding_ref
+            .contains("core-roster-and-support-state-matrix.md"),
         "non-Human interaction row must stay anchored to the SD-13 roster matrix doc while \
          the verdict stands, got: {}",
         non_human.grounding_ref

@@ -131,14 +131,20 @@ fn half_orc_row_blocker_note_is_non_empty_and_names_missing_burden() {
         "speed",
         "skill",
     ];
-    let named_at_least_one = named_burden_tokens
-        .iter()
-        .any(|token| note.contains(token));
+    let named_at_least_one = named_burden_tokens.iter().any(|token| note.contains(token));
     assert!(
         named_at_least_one,
         "Half-Orc blocker note must name at least one Half-Orc-specific semantic \
          burden (one of: ability / ferocity / darkvision / weapon familiarity / \
          orc / size / speed / skill), got: {}",
+        half_orc.blocker_or_lossiness_note
+    );
+    // The note must not claim the catch-all diagnostic fires for "every other
+    // race identity" full stop: since PR #95 the race seam is a dispatcher and
+    // Half-Elf carries its own recognition-only diagnostic.
+    assert!(
+        !note.contains("for every other race identity;"),
+        "Half-Orc note must not describe the retired every-other-race catch-all, got: {}",
         half_orc.blocker_or_lossiness_note
     );
 }
@@ -282,7 +288,7 @@ fn half_orc_fighter_pilot_does_not_emit_human_race_explanations() {
 /// non-claim-blocking diagnostic only; the receipt's status remains Computed.
 #[test]
 fn half_orc_fighter_pilot_receipt_remains_computed_with_only_race_gap() {
-    use codex::rules_core::pilot_compute::{build_pilot_headless_receipt, HeadlessReceiptStatus};
+    use codex::rules_core::pilot_compute::{HeadlessReceiptStatus, build_pilot_headless_receipt};
 
     const HALF_ORC_FIGHTER_FIXTURE: &str = include_str!(
         "fixtures/rules_core/pf1_half_orc_fighter_level1_sd13_deterministic_input.txt"
@@ -312,4 +318,3 @@ fn half_orc_fighter_pilot_receipt_remains_computed_with_only_race_gap() {
         );
     }
 }
-

@@ -18,15 +18,15 @@
 //! continues to pass), the Sorcerer F7 baseline truth, and the Human race /
 //! interaction seam.
 
-use codex::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    build_pilot_headless_receipt, compute_pilot_base_chassis, ComputationDiagnostic,
-    HeadlessReceiptStatus, PilotBaseChassisComputation,
+    ComputationDiagnostic, HeadlessReceiptStatus, PilotBaseChassisComputation,
+    build_pilot_headless_receipt, compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    seeded_sd13_e1_f1_current_truth, EvidenceFreshness, EvidenceTier, SupportState,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
 };
 
 const PALADIN_FIXTURE: &str =
@@ -35,9 +35,8 @@ const PALADIN_FIXTURE: &str =
 const RANGER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_ranger_level1_sd13_deterministic_input.txt");
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const FIGHTER_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
 // Exact per-burden Paladin-only diagnostics this slice proves. Each one names a
 // distinct still-missing non-spell class-feature burden or the later
@@ -417,14 +416,24 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         "barbarian row must keep its accepted Partial posture after the paladin-decomposition slice"
     );
     assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
+    // Wizard carries its accepted post-merge-receipt posture (Blocked/Computed);
+    // this slice preserves it without re-promoting or demoting it.
+    let wizard = matrix
+        .row("class.wizard.progression_and_spell_burden")
+        .expect("wizard row must exist");
+    assert_eq!(
+        wizard.support_state,
+        SupportState::Blocked,
+        "wizard row must keep its accepted Blocked posture after the paladin-decomposition slice"
+    );
+    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
 
-    // Cleric, Druid, Monk, Wizard must remain Unverified / Observed — this
+    // Cleric, Druid, Monk must remain Unverified / Observed — this
     // slice does not silently promote any still-unproven class.
     for id in [
         "class.cleric.progression_and_spell_burden",
         "class.druid.progression_and_spell_burden",
         "class.monk.bounded_progression",
-        "class.wizard.progression_and_spell_burden",
     ] {
         let row = matrix
             .row(id)
