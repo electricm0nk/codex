@@ -196,10 +196,11 @@ cmd_logs() {
 cmd_stop() {
   if [ -f "$STATE_FILE" ]; then
     # shellcheck disable=SC1090
-    source "$STATE_FILE"
+    if [ -n "${TAURI_PID:-}" ]; then
+      pkill -9 -P "$TAURI_PID" 2>/dev/null || true
+      kill -9 "$TAURI_PID" 2>/dev/null || true
+    fi
     pkill -9 -f "target/debug/codex_desktop_shell_scaffold" 2>/dev/null || true
-    pkill -9 -f "node.*/apps/desktop/node_modules/.bin/vite" 2>/dev/null || true
-    pkill -9 -f "node.*/apps/desktop/node_modules/.bin/tauri dev" 2>/dev/null || true
     [ -n "${XVFB_PID:-}" ] && kill -9 "$XVFB_PID" 2>/dev/null || true
     rm -f "$STATE_FILE"
   fi
