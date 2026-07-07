@@ -2,7 +2,9 @@
 //!
 //! Pins the recognition-only posture of the `race:half-elf` chosen-race seam
 //! that this slice introduces. It deliberately asserts **no** Half-Elf
-//! computed mechanic — there is no Half-Elf deterministic pilot fixture, no
+//! computed mechanic — the Half-Elf deterministic input fixture this test
+//! loads is recognition-only (no computed-mechanic Half-Elf pilot fixture
+//! exists), there is no
 //! `race.half_elf.ability_bonus_target` analog, no `race.half_elf.bonus_feat_grant`
 //! analog, no sleep-immunity or low-light-vision claim, no favored-class or
 //! multiclass adaptability claim, and no +2 Listen/Spot/Search skill-focus
@@ -94,9 +96,10 @@ fn half_elf_receipt_carries_no_half_elf_computed_mechanic_explanations() {
     let input = load_half_elf_input();
     let receipt = build_pilot_headless_receipt(&input);
 
-    // No `race.half_elf.ability_bonus_target` analog because there is no
-    // Half-Elf deterministic pilot fixture in this slice; minting one would
-    // assert bounded mechanical truth the slice deliberately does not assert.
+    // No `race.half_elf.ability_bonus_target` analog because this slice mints
+    // no computed-mechanic Half-Elf pilot fixture (the fixture above is
+    // recognition-only); emitting one would assert bounded mechanical truth
+    // the slice deliberately does not assert.
     for forbidden in [
         "race.half_elf.ability_bonus_target",
         "race.half_elf.bonus_feat_grant",
@@ -232,7 +235,7 @@ fn half_elf_row_in_matrix_stays_unverified_with_named_blocker_note() {
         .row("race.half_elf.bounded_semantics")
         .expect("seeded matrix must continue to carry the race.half_elf.bounded_semantics row");
 
-    use codex::rules_core::support_state_matrix::{EvidenceTier, SupportState};
+    use codex::rules_core::support_state_matrix::{EvidenceFreshness, EvidenceTier, SupportState};
 
     // The Half-Elf row stays Unverified/Observed at this slice because
     // recognition-only is not bounded mechanical proof.
@@ -245,6 +248,21 @@ fn half_elf_row_in_matrix_stays_unverified_with_named_blocker_note() {
         row.evidence_tier,
         EvidenceTier::Observed,
         "race.half_elf.bounded_semantics must remain Observed at this slice (recognition-only is not Computed evidence)"
+    );
+    // Freshness stays AwaitingInitialEvidence: per the seeded-matrix invariant
+    // (`freshness_tracks_live_proof_grounding_not_optimism`), refreshability
+    // tracks the evidence tier, not the grounding ref. This proof surface pins
+    // the *absence* of computed Half-Elf evidence; there is still no runtime
+    // Half-Elf evidence to refresh, so the Observed row awaits initial evidence
+    // even though its grounding_ref is re-runnable.
+    assert_eq!(
+        row.evidence_freshness,
+        EvidenceFreshness::AwaitingInitialEvidence,
+        "race.half_elf.bounded_semantics is Observed (recognition-only), so per the matrix freshness invariant it must await initial evidence"
+    );
+    assert_eq!(
+        row.grounding_ref, "tests/sd13_race_half_elf_bounded_semantics.rs",
+        "the Half-Elf row must stay grounded on this proof surface"
     );
     assert!(
         !row.blocker_or_lossiness_note.is_empty(),

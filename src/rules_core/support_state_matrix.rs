@@ -200,8 +200,9 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
 /// recognition. The chosen `race:half-elf` identity is named on the deterministic
 /// pilot seam and the receipt carries a single explicit
 /// `race.half_elf.bounded_semantics` diagnostic that names the full PF1 Half-Elf
-/// racial trait set without grounding any computed mechanic for it. No Half-Elf
-/// deterministic pilot fixture is minted.
+/// racial trait set without grounding any computed mechanic for it. The Half-Elf
+/// deterministic input fixture is recognition-only; no computed-mechanic Half-Elf
+/// pilot fixture is minted.
 const SD13_HALF_ELF_RACE_TEST: &str = "tests/sd13_race_half_elf_bounded_semantics.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
@@ -275,10 +276,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded race semantics",
                 support_state: SupportState::Unverified,
                 // The Half-Elf row stays Unverified/Observed because this slice grounds
-                // **recognition only**: no Half-Elf deterministic pilot fixture is minted, no
-                // computed Half-Elf mechanic is emitted, and no Half-Elf choice-target is
-                // proven. Promoting to Computed would falsely assert bounded mechanical truth
-                // that this slice deliberately does not assert.
+                // **recognition only**: the minted Half-Elf deterministic input fixture is
+                // recognition-only (no computed-mechanic fixture exists), no computed
+                // Half-Elf mechanic is emitted, and no Half-Elf choice-target is proven.
+                // Promoting to Computed would falsely assert bounded mechanical truth
+                // that this slice deliberately does not assert. Freshness stays
+                // AwaitingInitialEvidence even though the grounding_ref below is a
+                // re-runnable test: per the matrix freshness invariant, refreshability
+                // tracks the evidence tier, and an Observed row has no runtime
+                // Half-Elf evidence to refresh — the proof surface pins absence.
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 // Grounded on the bounded compute seam that recognizes `race:half-elf` as a
@@ -292,10 +298,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     mechanic: no Half-Elf ability-bonus seam (no `race.half_elf.ability_bonus_target` \
                     analog), no sleep-immunity, low-light vision, elven blood, +2 Listen/Spot/Search \
                     skill focus, favored-class flexibility, or multiclass adaptability mechanic is \
-                    computed, and no Half-Elf deterministic pilot fixture has been minted. The row \
+                    computed, and the minted Half-Elf deterministic input fixture is \
+                    recognition-only (no computed-mechanic Half-Elf pilot fixture exists). The row \
                     stays Unverified/Observed because the bounded scope is recognition, not proof",
                 next_required_uplift: "SD13-E2 race-semantic Half-Elf computed-mechanic slice: \
-                    mint a Half-Elf deterministic pilot fixture, ground an explicit \
+                    upgrade the recognition-only Half-Elf deterministic input fixture into a \
+                    computed-mechanic grounding fixture, ground an explicit \
                     Half-Elf ability-bonus choice-target explanation parallel to the Human one, \
                     and at least one bounded non-ability Half-Elf mechanic (the lowest-cost \
                     available being immunity to sleep or low-light vision). Until that slice lands, \
