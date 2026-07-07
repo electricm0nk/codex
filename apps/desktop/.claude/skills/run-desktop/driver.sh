@@ -45,6 +45,8 @@ cmd_launch() {
   # Idempotent: clean up any previous run first.
   cmd_stop || true
 
+  # Ensure we don't leak Xvfb/tauri processes on launch failures or interrupts.
+  trap 'cmd_stop || true' EXIT INT TERM
   echo "Starting Xvfb on :$DISPLAY_NUM ..."
   Xvfb ":$DISPLAY_NUM" -screen 0 1280x900x24 >/tmp/run-desktop-driver.xvfb.log 2>&1 &
   local xvfb_pid=$!
