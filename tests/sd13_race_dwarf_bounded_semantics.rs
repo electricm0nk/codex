@@ -8,15 +8,14 @@
 //! `pilot_compute` seam explicitly gates every non-Human race out of the
 //! compute path with `if input.chosen.race_id != HUMAN_RACE_ID`.
 //!
-//! These tests must stay green until a later bounded slice lands
-//! grounded evidence for at least one of the seven required race-semantic
-//! families (identity/provenance, ability modifier, size/speed/movement,
-//! senses, bonus feats/skill/derived-stat modifiers, prerequisite/feat/
-//! class-feature interactions, other core racial traits) AND upgrades the
-//! row state in the typed matrix carrier with a non-empty blocker note.
-//! Promotion of the row above `Unverified` without that grounded
-//! evidence is a counterfeit breadth claim and must be rejected by these
-//! tests.
+//! The SD13-E2 Dwarf bounded race-semantics recognition slice
+//! (`tests/sd13_dwarf_bounded_race_semantics.rs`) executed exactly the promotion
+//! path this file's original guards anticipated: it landed grounded evidence for
+//! four race-semantic families (ability modifiers, size, speed, senses) and
+//! updated the row state in the typed matrix carrier with a non-empty blocker
+//! note naming the still-unproven remainder. These tests now pin that promoted
+//! truth (`Partial` / `Computed` / `RefreshableFromLiveProof`) instead of the
+//! pre-slice `Unverified` / `Observed` evidence floor.
 //!
 //! Slice: t_3cf90c2c, matrix row_id: race:dwarf:bounded-race-semantics.
 
@@ -27,8 +26,6 @@ use codex::rules_core::support_state_matrix::{
 
 const DWARF_ROW_ID: &str = "race.dwarf.bounded_semantics";
 const DWARF_SUBJECT_ID: &str = "race:dwarf";
-const CLASSIFICATION_ARTIFACT_PATH: &str =
-    "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-dwarf-bounded-race-semantics-classification-2026-07-06.md";
 
 fn matrix() -> SupportStateMatrix {
     seeded_sd13_e1_f1_current_truth()
@@ -50,61 +47,59 @@ fn dwarf_row_is_present_in_seeded_matrix() {
 }
 
 #[test]
-fn dwarf_row_state_is_unverified_at_evidence_floor() {
-    // The honest verdict on 2026-07-06 is Unverified/Observed. Promotion
-    // above Unverified is counterfeit breadth until a later slice lands
-    // grounded evidence for at least one of the seven required
-    // race-semantic families and updates the row accordingly.
+fn dwarf_row_state_is_partial_after_sd13_e2_recognition() {
+    // The SD13-E2 Dwarf recognition slice landed grounded evidence for four
+    // race-semantic families (ability modifiers, size, speed, senses),
+    // promoting the row from Unverified to Partial. The row is not Supported:
+    // several families (Stonecunning, Defensive Training, Hardy, Stability,
+    // Hatred, weapon familiarity) remain unproven.
     let matrix = matrix();
     let dwarf = row(&matrix, DWARF_ROW_ID);
     assert_eq!(
         dwarf.support_state,
-        SupportState::Unverified,
-        "Dwarf row must remain Unverified at the live evidence floor \
-         (slice t_3cf90c2c, 2026-07-06). Promotion requires grounded \
-         evidence per artifact {CLASSIFICATION_ARTIFACT_PATH}."
+        SupportState::Partial,
+        "Dwarf row must be Partial after the SD13-E2 recognition slice \
+         lands grounded evidence for its four named families."
     );
 }
 
 #[test]
-fn dwarf_row_evidence_tier_is_observed_only() {
-    // The evidence tier stays Observed: Dwarf is named by SD-13 packet
-    // roster and appears in the typed matrix carrier, but no
-    // parsed/converted/computed/oracle-checked evidence exists yet.
+fn dwarf_row_evidence_tier_is_computed() {
     let matrix = matrix();
     let dwarf = row(&matrix, DWARF_ROW_ID);
     assert_eq!(
         dwarf.evidence_tier,
-        EvidenceTier::Observed,
-        "Dwarf row must remain Observed until a later slice lands \
-         Parsed/Converted/Computed/Oracle-checked evidence."
+        EvidenceTier::Computed,
+        "Dwarf row must be Computed once the SD13-E2 recognition slice \
+         lands direct runtime evidence."
     );
 }
 
 #[test]
-fn dwarf_row_evidence_freshness_is_awaiting_initial_evidence() {
+fn dwarf_row_evidence_freshness_is_refreshable_from_live_proof() {
     let matrix = matrix();
     let dwarf = row(&matrix, DWARF_ROW_ID);
     assert_eq!(
         dwarf.evidence_freshness,
-        EvidenceFreshness::AwaitingInitialEvidence,
-        "Dwarf row must remain AwaitingInitialEvidence until a later \
-         slice lands live evidence."
+        EvidenceFreshness::RefreshableFromLiveProof,
+        "Dwarf row must be RefreshableFromLiveProof once grounded on the \
+         live SD13-E2 recognition test surface."
     );
 }
 
 #[test]
-fn dwarf_row_dimension_unchanged_for_this_slice() {
+fn dwarf_row_dimension_names_the_recognized_families() {
     let matrix = matrix();
     let dwarf = row(&matrix, DWARF_ROW_ID);
-    // The dimension string is preserved. The slice only refines the
-    // blocker_or_lossiness_note and the next_required_uplift pointers;
-    // it does not relabel the dimension itself.
-    assert_eq!(
-        dwarf.dimension, "bounded race semantics",
-        "Dwarf row dimension must remain 'bounded race semantics'; \
-         this slice does not relabel the dimension."
-    );
+    // The dimension is updated by the SD13-E2 slice to name the four
+    // recognized families rather than the pre-slice generic placeholder text.
+    for token in ["ability modifiers", "size", "speed", "senses"] {
+        assert!(
+            dwarf.dimension.contains(token),
+            "Dwarf row dimension must name the recognized '{token}' family: {}",
+            dwarf.dimension
+        );
+    }
 }
 
 #[test]
@@ -170,21 +165,22 @@ fn dwarf_row_next_uplift_points_at_classification_artifact() {
 }
 
 #[test]
-fn dwarf_row_does_not_promote_above_unverified() {
-    // Belt-and-braces guard. If a future change flips the support state
-    // to Partial, Lossy, Blocked, or Supported without updating this
-    // slice's artifact, the test fails. The honest path forward requires
-    // a new slice that lands grounded evidence for at least one
-    // race-semantic family AND updates the artifact with the new
-    // evidence floor AND adds the family-specific test.
+fn dwarf_row_does_not_silently_promote_to_supported_or_lossy() {
+    // Belt-and-braces guard, updated for the SD13-E2 promotion to Partial. If a
+    // future change flips the support state to Supported or Lossy without
+    // grounding the remaining Dwarf families (Stonecunning, Defensive
+    // Training, Hardy, Stability, Hatred, weapon familiarity) as real computed
+    // contributions, the test fails.
     let matrix = matrix();
     let dwarf = row(&matrix, DWARF_ROW_ID);
     assert!(
-        matches!(dwarf.support_state, SupportState::Unverified),
-        "Dwarf row must not be silently promoted above Unverified. \
-         Current state: {:?}. Promotion requires a new slice that \
-         lands grounded evidence and updates the classification \
-         artifact.",
+        !matches!(
+            dwarf.support_state,
+            SupportState::Supported | SupportState::Lossy
+        ),
+        "Dwarf row must not be silently promoted to Supported or Lossy \
+         without grounding the remaining unproven families. Current \
+         state: {:?}.",
         dwarf.support_state
     );
 }

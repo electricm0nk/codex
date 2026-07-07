@@ -208,19 +208,23 @@ fn fighter_level_1_and_levels_2_10_remain_separate_rows() {
 }
 
 #[test]
-fn every_non_human_race_row_is_unverified_and_observed() {
+fn every_still_unrecognized_non_human_race_row_is_unverified_and_observed() {
+    // Dwarf was promoted to Partial/Computed by the SD13-E2 recognition slice;
+    // verified separately below. The remaining five non-Human race rows are
+    // still pure roster-scope placeholders with no runtime evidence.
     let matrix = matrix();
     let non_human_races: Vec<&SupportStateRow> = matrix
         .rows
         .iter()
         .filter(|r| r.subject_type == MatrixSubjectType::Race)
         .filter(|r| r.row_id != "race.human.pilot_semantics")
+        .filter(|r| r.row_id != "race.dwarf.bounded_semantics")
         .collect();
 
     assert_eq!(
         non_human_races.len(),
-        6,
-        "there must be 6 non-Human race rows"
+        5,
+        "there must be 5 remaining unrecognized non-Human race rows"
     );
     for race in non_human_races {
         assert_eq!(
@@ -236,6 +240,12 @@ fn every_non_human_race_row_is_unverified_and_observed() {
             race.row_id
         );
     }
+
+    let dwarf = matrix
+        .row("race.dwarf.bounded_semantics")
+        .expect("dwarf row must exist");
+    assert_eq!(dwarf.support_state, SupportState::Partial);
+    assert_eq!(dwarf.evidence_tier, EvidenceTier::Computed);
 }
 
 #[test]
@@ -450,6 +460,7 @@ fn only_pilot_grounded_rows_rise_above_observed() {
 
     let expected_above_observed = [
         "race.human.pilot_semantics",
+        "race.dwarf.bounded_semantics",
         "class.fighter.level_1_pilot",
         "class.fighter.levels_2_10",
         "class.rogue.bounded_progression",
@@ -552,8 +563,9 @@ fn every_row_carries_grounding_and_next_uplift() {
 /// The rows anchored to a live, re-runnable proof surface. These are exactly the
 /// pilot-grounded, hybrid-baseline, Barbarian martial-baseline, and spell-baseline
 /// rows that rise above `Observed` evidence.
-const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 14] = [
+const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 15] = [
     "race.human.pilot_semantics",
+    "race.dwarf.bounded_semantics",
     "class.fighter.level_1_pilot",
     "class.fighter.levels_2_10",
     "class.rogue.bounded_progression",

@@ -51,6 +51,11 @@
 //!   compute seam (mirroring the Barbarian pattern), but four named pillar burdens
 //!   (base attack, base save, unarmed strike / Flurry of Blows, AC Bonus / bonus
 //!   feat) remain unproven,
+//! - the Dwarf row is `Partial` / `Computed`: the SD13-E2 slice proves four grounded
+//!   Dwarf racial trait dimensions (ability modifiers, size, speed, senses) are
+//!   recognized on the compute seam, but the remaining Dwarf family surface
+//!   (Stonecunning, Defensive Training, Hardy, Stability, Hatred, weapon
+//!   familiarity) stays unproven,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
 //! - every other core race and core class, and the broader non-Human interaction row
 //!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime evidence
@@ -282,6 +287,12 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs"
 /// Blows, AC Bonus / level-1 bonus feat).
 const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs";
 
+/// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Dwarf racial trait dimensions (ability modifiers, size, speed, senses) that
+/// stays explicitly honest about the remaining unproven Dwarf family surface.
+const SD13_DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs";
+
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
 /// Returns exactly 21 rows: 7 race, 12 class, and 2 interaction. The content is
@@ -311,37 +322,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.dwarf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:dwarf",
-                dimension: "bounded race semantics",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "no direct runtime evidence for any of \
-                    the seven required Dwarf race-semantic families at the live \
-                    evidence floor (2026-07-06): identity/provenance is \
-                    observed-only via the SD-13 packet roster and the typed matrix \
-                    row carrier, but ability-score modifiers (PF1 Core +2 Con / -2 \
-                    Cha or any alternative), size/speed/movement baseline, senses \
-                    (darkvision), racial bonus feats, skill or derived-stat \
-                    modifiers, prerequisite/feat/class-feature interactions, and \
-                    other core racial traits (Defensive Training, Hardy, \
-                    Stability, Hatred, Stonecunning, Greedy, weapon familiarity) \
-                    remain unproven; pilot_compute.rs explicitly gates every \
-                    non-Human race out of the compute path via \
-                    `if input.chosen.race_id != HUMAN_RACE_ID`. No Dwarf fixture \
-                    exists in tests/fixtures. Promotion above Unverified is \
-                    counterfeit breadth until a later bounded slice lands \
-                    grounded evidence for at least one of these families.",
-                next_required_uplift: "SD13-Dwarf bounded race-semantic \
-                    classification artifact at \
-                    programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-dwarf-bounded-race-semantics-classification-2026-07-06.md \
-                    names the seven required race-semantic families and the \
-                    concrete acceptance criteria (new accepted fixture family, \
-                    new typed module or expansion emitting computed evidence \
-                    / explanation / claim-blocking diagnostic, new focused test \
-                    pinning family evidence at Computed / Oracle-checked tier, \
-                    updated row state with non-empty blocker note) required \
-                    before this row may honestly move out of Unverified.",
+                dimension: "bounded Dwarf race semantics: four grounded PF1 Core Rulebook \
+                            Dwarf racial trait dimensions (ability modifiers, size, speed, \
+                            senses) recognized on the compute seam, with the remaining Dwarf \
+                            family surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_DWARF_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Dwarf race-semantic families are recognized on the compute seam (ability \
+                    modifiers: +2 Constitution / -2 Charisma; size: Medium; speed: 20 ft, \
+                    never reduced by armor or encumbrance; senses: Darkvision 60 ft), but the \
+                    remaining families stay unproven: skill or derived-stat modifiers \
+                    (Stonecunning), Defensive Training, Hardy, Stability, Hatred, and weapon \
+                    familiarity. PF1 core Dwarves gain no racial bonus feat, so that family is \
+                    not applicable rather than unproven. No numeric mechanical contribution is \
+                    fabricated for any of the four recognized dimensions.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Dwarf families (Stonecunning, Defensive Training, Hardy, \
+                    Stability, Hatred, weapon familiarity) as a real computed contribution",
             },
             SupportStateRow {
                 row_id: "race.elf.bounded_semantics",

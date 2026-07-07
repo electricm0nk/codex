@@ -407,6 +407,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_human_trait_bundle(input, &mut explanations, &mut diagnostics);
 
+    explain_dwarf_race_seam(input, &mut explanations, &mut diagnostics);
+
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
     PilotBaseChassisComputation {
@@ -489,15 +491,19 @@ fn explain_human_race_seam(
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if input.chosen.race_id != HUMAN_RACE_ID {
-        diagnostics.push(ComputationDiagnostic {
-            id: "race.semantics.unverified".to_owned(),
-            message: format!(
-                "race semantics are grounded only for {HUMAN_RACE_ID} on the deterministic pilot seam; \
-                 chosen race {} has no grounded race semantics in this slice",
-                input.chosen.race_id
-            ),
-            claim_blocking: false,
-        });
+        // Dwarf carries its own dedicated race-semantics seam (explain_dwarf_race_seam);
+        // it replaces this generic diagnostic rather than stacking alongside it.
+        if input.chosen.race_id != DWARF_RACE_ID {
+            diagnostics.push(ComputationDiagnostic {
+                id: "race.semantics.unverified".to_owned(),
+                message: format!(
+                    "race semantics are grounded only for {HUMAN_RACE_ID} on the deterministic pilot seam; \
+                     chosen race {} has no grounded race semantics in this slice",
+                    input.chosen.race_id
+                ),
+                claim_blocking: false,
+            });
+        }
         return;
     }
 
@@ -555,6 +561,132 @@ fn explain_human_race_seam(
                   remaining PF1 Standard Human racial trait surface (alternate Human racial \
                   traits, variant Humans, half-Human heritages, and any ruleset-level effects \
                   outside the named deterministic pilot) remains unverified"
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+const DWARF_RACE_ID: &str = "race:dwarf";
+const DWARF_SIZE_CATEGORY: &str = "Medium";
+const DWARF_BASE_SPEED_FEET: i16 = 20;
+const DWARF_DARKVISION_FEET: i16 = 60;
+const DWARF_CON_ADJUSTMENT: i16 = 2;
+const DWARF_CHA_ADJUSTMENT: i16 = -2;
+
+/// SD13-E2 Dwarf racial trait bundle explanation seam (mirroring the SD13-E6-F3a
+/// Human trait bundle pattern for the first non-Human core race).
+///
+/// Surfaces four grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
+/// modifiers, size, speed, senses) as explicit `ComputationExplanation` records so
+/// the Dwarf identity is legible on the runtime path rather than left behind the
+/// generic `race.semantics.unverified` diagnostic every other non-Human race still
+/// receives.
+///
+/// This function:
+///   - runs only when `race_id == race:dwarf`; every other race is unaffected
+///     (Human keeps its own seam; every other non-Human race keeps the generic
+///     `race.semantics.unverified` diagnostic from `explain_human_race_seam`),
+///   - adds no new computed mechanical contribution: the ability-modifiers record
+///     is recognition-only (the chosen Constitution/Charisma scores are understood
+///     to already reflect the fixed +2/-2 racial adjustment; no arithmetic is
+///     performed on this seam), and the size/senses records carry the grounded
+///     source value as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with a
+///     Dwarf-specific `race.dwarf.bounded_semantics` note naming the still-unproven
+///     families explicitly (Stonecunning and other skill/derived-stat modifiers,
+///     Defensive Training, Hardy, Stability, Hatred, weapon familiarity, and the
+///     explicit absence of any Dwarf racial bonus feat),
+///   - is bounded to race recognition only; it deliberately grounds no Dwarf
+///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
+fn explain_dwarf_race_seam(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != DWARF_RACE_ID {
+        return;
+    }
+
+    // ----- ability modifiers -----
+    // Recognition record only: PF1 Core Dwarf ability adjustments (+2 Con / -2 Cha)
+    // are fixed, not a player choice. The chosen Constitution/Charisma scores are
+    // understood to already reflect this adjustment; no arithmetic is performed here.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.ability_modifiers".to_owned(),
+        value: 0,
+        detail: format!(
+            "Dwarf racial trait bundle — ability modifiers: PF1 Core Dwarf grants a fixed \
+             {DWARF_CON_ADJUSTMENT:+} Constitution and {DWARF_CHA_ADJUSTMENT:+} Charisma racial \
+             adjustment (cr_races.lst race:dwarf STAT:CON|{DWARF_CON_ADJUSTMENT:+}, \
+             STAT:CHA|{DWARF_CHA_ADJUSTMENT:+}). This is a bounded recognition record naming the \
+             fixed adjustment on the deterministic pilot seam; the chosen Constitution and \
+             Charisma scores are understood to already reflect it, so this record performs no \
+             arithmetic and carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Dwarf racial trait bundle — size: PF1 Core Dwarf is {DWARF_SIZE_CATEGORY} size \
+             (cr_races.lst race:dwarf SIZE:MEDIUM). This is a bounded recognition record naming \
+             the Dwarf size category on the deterministic pilot seam; it contributes no numeric \
+             effect to attack rolls, AC, skill checks, ability checks, or any other computed \
+             value, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    // Recognition record for the 20 ft base land speed. PF1 Core Dwarf speed is
+    // never reduced by armor or encumbrance, unlike most Medium races; this is
+    // named explicitly as identity only — no computed speed-derived value is
+    // fabricated.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.speed".to_owned(),
+        value: DWARF_BASE_SPEED_FEET,
+        detail: format!(
+            "Dwarf racial trait bundle — speed: PF1 Core Dwarf has a base land speed of \
+             {DWARF_BASE_SPEED_FEET} ft that is never reduced by armor or encumbrance \
+             (cr_races.lst race:dwarf GAIT:WALK|{DWARF_BASE_SPEED_FEET}). This is a grounded \
+             recognition value carrying the Dwarf base-speed identity on the deterministic pilot \
+             seam; it contributes no computed speed-derived effect to any chassis output, skill \
+             modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    // Recognition record for Darkvision 60 ft, distinct from Human's bounded
+    // no-special-senses classification.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.senses".to_owned(),
+        value: DWARF_DARKVISION_FEET,
+        detail: format!(
+            "Dwarf racial trait bundle — senses: PF1 Core Dwarf grants Darkvision \
+             {DWARF_DARKVISION_FEET} ft (cr_races.lst race:dwarf SENSE:Darkvision \
+             ({DWARF_DARKVISION_FEET} ft)). This is a grounded recognition value carrying the \
+             Dwarf Darkvision identity on the deterministic pilot seam; it contributes no \
+             computed low-light or perception-derived effect to any chassis output"
+        ),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Dwarf specifically and
+    // stays non-claim-blocking so the deterministic pilot still reports computed
+    // evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.dwarf.bounded_semantics".to_owned(),
+        message: "Dwarf race semantics are grounded for the deterministic pilot's ability \
+                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core \
+                  Dwarf racial trait surface remains unverified: skill or derived-stat \
+                  modifiers (Stonecunning Perception/Appraise bonuses), Defensive Training \
+                  (dodge bonus to AC against giants), Hardy (bonus on saves against poison, \
+                  spells, and spell-like abilities), Stability (bonus to CMD against bull \
+                  rush/trip), Hatred (bonus on attack rolls against orcs and goblinoids), and \
+                  weapon familiarity (battleaxe, heavy pick, warhammer, dwarven waraxe, \
+                  dwarven urgrosh). PF1 core Dwarves gain no racial bonus feat (unlike Human), \
+                  so that family is explicitly not applicable rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
     });
