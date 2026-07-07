@@ -56,10 +56,13 @@ impl PackageStore {
         let manifest = parse_manifest(&read_required(root.join("manifest.yaml"))?)?;
         let feat = read_optional_single_record(root.join("objects/feats"), parse_feat_record)?;
         let effect = read_optional_single_record(root.join("rules/effects"), parse_effect_record)?;
-        let prerequisite =
-            read_optional_single_record(root.join("rules/prerequisites"), parse_prerequisite_record)?;
+        let prerequisite = read_optional_single_record(
+            root.join("rules/prerequisites"),
+            parse_prerequisite_record,
+        )?;
         let provenance = parse_provenance(&read_required(root.join("metadata/provenance.yaml"))?)?;
-        let diagnostics = parse_diagnostics(&read_required(root.join("metadata/diagnostics.yaml"))?)?;
+        let diagnostics =
+            parse_diagnostics(&read_required(root.join("metadata/diagnostics.yaml"))?)?;
 
         Ok(SourcePackage {
             manifest,
@@ -89,7 +92,10 @@ impl PackageStore {
         PackageDiff { changed_files }
     }
 
-    pub fn diff_roots(left_root: &Path, right_root: &Path) -> Result<PackageDiff, PackageStoreError> {
+    pub fn diff_roots(
+        left_root: &Path,
+        right_root: &Path,
+    ) -> Result<PackageDiff, PackageStoreError> {
         let left = Self::load(left_root)?;
         let right = Self::load(right_root)?;
         Ok(Self::diff(&left, &right))
@@ -141,7 +147,10 @@ fn clear_known_record_files(root: &Path) -> Result<(), PackageStoreError> {
 
 fn file_map(package: &SourcePackage) -> BTreeMap<String, String> {
     let mut files = BTreeMap::new();
-    files.insert("manifest.yaml".to_owned(), render_manifest(&package.manifest));
+    files.insert(
+        "manifest.yaml".to_owned(),
+        render_manifest(&package.manifest),
+    );
     files.insert(
         "metadata/provenance.yaml".to_owned(),
         render_provenance(&package.provenance),
@@ -204,9 +213,15 @@ fn validate_persistable(package: &SourcePackage) -> Result<(), PackageStoreError
         field("manifest supported_object_kinds entry", kind)?;
     }
     field("manifest provenance_policy", &manifest.provenance_policy)?;
-    field("manifest proof_binding case_id", &manifest.proof_binding.case_id)?;
+    field(
+        "manifest proof_binding case_id",
+        &manifest.proof_binding.case_id,
+    )?;
     field("manifest proof_binding slot", &manifest.proof_binding.slot)?;
-    field("manifest proof_binding remove", &manifest.proof_binding.remove)?;
+    field(
+        "manifest proof_binding remove",
+        &manifest.proof_binding.remove,
+    )?;
     field("manifest proof_binding add", &manifest.proof_binding.add)?;
 
     if let Some(feat) = &package.feat {
@@ -242,7 +257,10 @@ fn validate_persistable(package: &SourcePackage) -> Result<(), PackageStoreError
         field("provenance stable_id", &entry.stable_id)?;
         field("provenance source_package_id", &entry.source_package_id)?;
         field("provenance canonical_target_id", &entry.canonical_target_id)?;
-        field("provenance canonical_target_field", &entry.canonical_target_field)?;
+        field(
+            "provenance canonical_target_field",
+            &entry.canonical_target_field,
+        )?;
         field("provenance authored_path", &entry.authored_path)?;
         field("provenance source_system", &entry.source_system)?;
         field("provenance support", &entry.support)?;
@@ -329,7 +347,11 @@ fn render_provenance(entries: &[ProvenanceEntry]) -> String {
     for entry in entries {
         let _ = writeln!(output, "  - stable_id: {}", entry.stable_id);
         let _ = writeln!(output, "    source_package_id: {}", entry.source_package_id);
-        let _ = writeln!(output, "    canonical_target_id: {}", entry.canonical_target_id);
+        let _ = writeln!(
+            output,
+            "    canonical_target_id: {}",
+            entry.canonical_target_id
+        );
         let _ = writeln!(
             output,
             "    canonical_target_field: {}",
@@ -377,7 +399,11 @@ fn parse_manifest(text: &str) -> Result<PackageManifest, PackageStoreError> {
             continue;
         }
         if let Some(value) = line.strip_prefix("schema_version: ") {
-            schema_version = Some(value.parse::<u16>().map_err(|_| parse_error("manifest schema_version is invalid"))?);
+            schema_version = Some(
+                value
+                    .parse::<u16>()
+                    .map_err(|_| parse_error("manifest schema_version is invalid"))?,
+            );
             section = ManifestSection::TopLevel;
         } else if let Some(value) = line.strip_prefix("package_id: ") {
             package_id = Some(value.to_owned());
@@ -397,7 +423,9 @@ fn parse_manifest(text: &str) -> Result<PackageManifest, PackageStoreError> {
             section = ManifestSection::SupportedKinds;
         } else if let Some(value) = line.strip_prefix("validation_state: ") {
             validation_state = Some(PackageValidationState::parse(value).ok_or_else(|| {
-                parse_error(format!("manifest validation_state '{value}' is unsupported"))
+                parse_error(format!(
+                    "manifest validation_state '{value}' is unsupported"
+                ))
             })?);
             section = ManifestSection::TopLevel;
         } else if let Some(value) = line.strip_prefix("provenance_policy: ") {
@@ -409,7 +437,11 @@ fn parse_manifest(text: &str) -> Result<PackageManifest, PackageStoreError> {
             match section {
                 ManifestSection::DependsOn => depends_on.push(value.to_owned()),
                 ManifestSection::SupportedKinds => supported_object_kinds.push(value.to_owned()),
-                _ => return Err(parse_error(format!("unexpected list item in manifest: {line}"))),
+                _ => {
+                    return Err(parse_error(format!(
+                        "unexpected list item in manifest: {line}"
+                    )));
+                }
             }
         } else if let Some(rest) = line.strip_prefix("  ") {
             match section {
@@ -417,7 +449,11 @@ fn parse_manifest(text: &str) -> Result<PackageManifest, PackageStoreError> {
                     let (key, value) = split_field(rest)?;
                     proof_binding.apply(key, value)?;
                 }
-                _ => return Err(parse_error(format!("unexpected indented manifest field: {line}"))),
+                _ => {
+                    return Err(parse_error(format!(
+                        "unexpected indented manifest field: {line}"
+                    )));
+                }
             }
         } else {
             return Err(parse_error(format!("unsupported manifest line: {line}")));
@@ -425,15 +461,21 @@ fn parse_manifest(text: &str) -> Result<PackageManifest, PackageStoreError> {
     }
 
     Ok(PackageManifest {
-        schema_version: schema_version.ok_or_else(|| parse_error("manifest missing schema_version"))?,
+        schema_version: schema_version
+            .ok_or_else(|| parse_error("manifest missing schema_version"))?,
         package_id: package_id.ok_or_else(|| parse_error("manifest missing package_id"))?,
-        package_title: package_title.ok_or_else(|| parse_error("manifest missing package_title"))?,
-        game_system_id: game_system_id.ok_or_else(|| parse_error("manifest missing game_system_id"))?,
-        package_version: package_version.ok_or_else(|| parse_error("manifest missing package_version"))?,
+        package_title: package_title
+            .ok_or_else(|| parse_error("manifest missing package_title"))?,
+        game_system_id: game_system_id
+            .ok_or_else(|| parse_error("manifest missing game_system_id"))?,
+        package_version: package_version
+            .ok_or_else(|| parse_error("manifest missing package_version"))?,
         depends_on,
         supported_object_kinds,
-        validation_state: validation_state.ok_or_else(|| parse_error("manifest missing validation_state"))?,
-        provenance_policy: provenance_policy.ok_or_else(|| parse_error("manifest missing provenance_policy"))?,
+        validation_state: validation_state
+            .ok_or_else(|| parse_error("manifest missing validation_state"))?,
+        provenance_policy: provenance_policy
+            .ok_or_else(|| parse_error("manifest missing provenance_policy"))?,
         proof_binding: proof_binding.finish()?,
     })
 }
@@ -481,7 +523,9 @@ fn parse_feat_record(text: &str) -> Result<FeatRecord, PackageStoreError> {
                 RecordListSection::EffectIds => effect_ids.push(value.to_owned()),
                 RecordListSection::PrerequisiteIds => prerequisite_ids.push(value.to_owned()),
                 RecordListSection::TopLevel => {
-                    return Err(parse_error(format!("unexpected feat record list item: {line}")))
+                    return Err(parse_error(format!(
+                        "unexpected feat record list item: {line}"
+                    )));
                 }
             }
         } else {
@@ -492,7 +536,8 @@ fn parse_feat_record(text: &str) -> Result<FeatRecord, PackageStoreError> {
     Ok(FeatRecord {
         stable_id: stable_id.ok_or_else(|| parse_error("feat record missing stable_id"))?,
         package_id: package_id.ok_or_else(|| parse_error("feat record missing package_id"))?,
-        display_name: display_name.ok_or_else(|| parse_error("feat record missing display_name"))?,
+        display_name: display_name
+            .ok_or_else(|| parse_error("feat record missing display_name"))?,
         object_kind: object_kind.ok_or_else(|| parse_error("feat record missing object_kind"))?,
         substitutes_for: substitutes_for
             .ok_or_else(|| parse_error("feat record missing substitutes_for"))?,
@@ -525,21 +570,32 @@ fn parse_effect_record(text: &str) -> Result<EffectRecord, PackageStoreError> {
         } else if let Some(value) = line.strip_prefix("modifier_type: ") {
             modifier_type = Some(value.to_owned());
         } else if let Some(value) = line.strip_prefix("modifier_value: ") {
-            modifier_value = Some(value.parse::<i16>().map_err(|_| parse_error("effect modifier_value must be numeric"))?);
+            modifier_value = Some(
+                value
+                    .parse::<i16>()
+                    .map_err(|_| parse_error("effect modifier_value must be numeric"))?,
+            );
         } else if let Some(value) = line.strip_prefix("stacking_posture: ") {
             stacking_posture = Some(value.to_owned());
         } else {
-            return Err(parse_error(format!("unsupported effect record line: {line}")));
+            return Err(parse_error(format!(
+                "unsupported effect record line: {line}"
+            )));
         }
     }
 
     Ok(EffectRecord {
         stable_id: stable_id.ok_or_else(|| parse_error("effect record missing stable_id"))?,
-        owning_feat_id: owning_feat_id.ok_or_else(|| parse_error("effect record missing owning_feat_id"))?,
-        target_family: target_family.ok_or_else(|| parse_error("effect record missing target_family"))?,
-        modifier_type: modifier_type.ok_or_else(|| parse_error("effect record missing modifier_type"))?,
-        modifier_value: modifier_value.ok_or_else(|| parse_error("effect record missing modifier_value"))?,
-        stacking_posture: stacking_posture.ok_or_else(|| parse_error("effect record missing stacking_posture"))?,
+        owning_feat_id: owning_feat_id
+            .ok_or_else(|| parse_error("effect record missing owning_feat_id"))?,
+        target_family: target_family
+            .ok_or_else(|| parse_error("effect record missing target_family"))?,
+        modifier_type: modifier_type
+            .ok_or_else(|| parse_error("effect record missing modifier_type"))?,
+        modifier_value: modifier_value
+            .ok_or_else(|| parse_error("effect record missing modifier_value"))?,
+        stacking_posture: stacking_posture
+            .ok_or_else(|| parse_error("effect record missing stacking_posture"))?,
     })
 }
 
@@ -560,7 +616,9 @@ fn parse_prerequisite_record(text: &str) -> Result<PrerequisiteRecord, PackageSt
         } else if let Some(value) = line.strip_prefix("predicate: ") {
             predicate = Some(value.to_owned());
         } else {
-            return Err(parse_error(format!("unsupported prerequisite record line: {line}")));
+            return Err(parse_error(format!(
+                "unsupported prerequisite record line: {line}"
+            )));
         }
     }
 
@@ -646,7 +704,10 @@ fn parse_diagnostics(text: &str) -> Result<Vec<PackageDiagnostic>, PackageStoreE
     Ok(diagnostics)
 }
 
-fn read_optional_single_record<T, F>(directory: PathBuf, parser: F) -> Result<Option<T>, PackageStoreError>
+fn read_optional_single_record<T, F>(
+    directory: PathBuf,
+    parser: F,
+) -> Result<Option<T>, PackageStoreError>
 where
     F: Fn(&str) -> Result<T, PackageStoreError>,
 {
@@ -681,7 +742,9 @@ fn read_required(path: PathBuf) -> Result<String, PackageStoreError> {
 
 fn split_field(line: &str) -> Result<(&str, &str), PackageStoreError> {
     let Some((key, value)) = line.split_once(':') else {
-        return Err(parse_error(format!("expected field with ':' separator, got '{line}'")));
+        return Err(parse_error(format!(
+            "expected field with ':' separator, got '{line}'"
+        )));
     };
     Ok((key.trim(), value.trim_start()))
 }
@@ -728,17 +791,29 @@ impl ParsedProofBinding {
             "slot" => self.slot = Some(value.to_owned()),
             "remove" => self.remove = Some(value.to_owned()),
             "add" => self.add = Some(value.to_owned()),
-            _ => return Err(parse_error(format!("unsupported proof_binding field '{key}'"))),
+            _ => {
+                return Err(parse_error(format!(
+                    "unsupported proof_binding field '{key}'"
+                )));
+            }
         }
         Ok(())
     }
 
     fn finish(self) -> Result<ProofBinding, PackageStoreError> {
         Ok(ProofBinding {
-            case_id: self.case_id.ok_or_else(|| parse_error("proof_binding missing case_id"))?,
-            slot: self.slot.ok_or_else(|| parse_error("proof_binding missing slot"))?,
-            remove: self.remove.ok_or_else(|| parse_error("proof_binding missing remove"))?,
-            add: self.add.ok_or_else(|| parse_error("proof_binding missing add"))?,
+            case_id: self
+                .case_id
+                .ok_or_else(|| parse_error("proof_binding missing case_id"))?,
+            slot: self
+                .slot
+                .ok_or_else(|| parse_error("proof_binding missing slot"))?,
+            remove: self
+                .remove
+                .ok_or_else(|| parse_error("proof_binding missing remove"))?,
+            add: self
+                .add
+                .ok_or_else(|| parse_error("proof_binding missing add"))?,
         })
     }
 }
@@ -770,7 +845,9 @@ impl ParsedProvenanceEntry {
 
     fn finish(self) -> Result<ProvenanceEntry, PackageStoreError> {
         Ok(ProvenanceEntry {
-            stable_id: self.stable_id.ok_or_else(|| parse_error("provenance missing stable_id"))?,
+            stable_id: self
+                .stable_id
+                .ok_or_else(|| parse_error("provenance missing stable_id"))?,
             source_package_id: self
                 .source_package_id
                 .ok_or_else(|| parse_error("provenance missing source_package_id"))?,
@@ -786,7 +863,9 @@ impl ParsedProvenanceEntry {
             source_system: self
                 .source_system
                 .ok_or_else(|| parse_error("provenance missing source_system"))?,
-            support: self.support.ok_or_else(|| parse_error("provenance missing support"))?,
+            support: self
+                .support
+                .ok_or_else(|| parse_error("provenance missing support"))?,
         })
     }
 }
@@ -806,7 +885,9 @@ impl ParsedDiagnostic {
             "severity" => {
                 self.severity = PackageDiagnosticSeverity::parse(value);
                 if self.severity.is_none() {
-                    return Err(parse_error(format!("unsupported diagnostic severity '{value}'")));
+                    return Err(parse_error(format!(
+                        "unsupported diagnostic severity '{value}'"
+                    )));
                 }
             }
             "message" => self.message = Some(value.to_owned()),
@@ -815,7 +896,11 @@ impl ParsedDiagnostic {
                 self.claim_blocking = Some(match value {
                     "true" => true,
                     "false" => false,
-                    _ => return Err(parse_error(format!("diagnostic claim_blocking must be true/false, got '{value}'"))),
+                    _ => {
+                        return Err(parse_error(format!(
+                            "diagnostic claim_blocking must be true/false, got '{value}'"
+                        )));
+                    }
                 })
             }
             _ => return Err(parse_error(format!("unsupported diagnostic field '{key}'"))),
@@ -825,10 +910,18 @@ impl ParsedDiagnostic {
 
     fn finish(self) -> Result<PackageDiagnostic, PackageStoreError> {
         Ok(PackageDiagnostic {
-            class: self.class.ok_or_else(|| parse_error("diagnostic missing class"))?,
-            severity: self.severity.ok_or_else(|| parse_error("diagnostic missing severity"))?,
-            message: self.message.ok_or_else(|| parse_error("diagnostic missing message"))?,
-            subject_ref: self.subject_ref.ok_or_else(|| parse_error("diagnostic missing subject_ref"))?,
+            class: self
+                .class
+                .ok_or_else(|| parse_error("diagnostic missing class"))?,
+            severity: self
+                .severity
+                .ok_or_else(|| parse_error("diagnostic missing severity"))?,
+            message: self
+                .message
+                .ok_or_else(|| parse_error("diagnostic missing message"))?,
+            subject_ref: self
+                .subject_ref
+                .ok_or_else(|| parse_error("diagnostic missing subject_ref"))?,
             claim_blocking: self
                 .claim_blocking
                 .ok_or_else(|| parse_error("diagnostic missing claim_blocking"))?,

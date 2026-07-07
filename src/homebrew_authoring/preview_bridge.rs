@@ -168,48 +168,53 @@ impl PreviewBridge {
 
         let posture = classify_posture(package, package_state, binding);
 
-        let (preview_status, baseline_armor_class, explanation_refs, oracle_dimension_status, blocked_claims) =
-            match posture {
-                Posture::Supported => {
-                    let effect = package
-                        .effect
-                        .as_ref()
-                        .expect("supported posture guarantees an authored effect");
-                    let armor_class =
-                        GE06_BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT + effect.modifier_value;
-                    (
-                        PreviewStatus::Success,
-                        ArmorClassPreview::Computed(armor_class),
-                        supported_explanation_refs(package, binding, armor_class),
-                        dimension_status("previewed"),
-                        Vec::new(),
-                    )
-                }
-                Posture::Unsupported(reason) => (
-                    PreviewStatus::Unsupported,
-                    ArmorClassPreview::Blocked(reason.clone()),
-                    blocked_explanation_refs(package, binding, &reason),
-                    dimension_status("unsupported"),
-                    vec![
-                        "preview".to_owned(),
-                        "explanation".to_owned(),
-                        "export".to_owned(),
-                        "proof".to_owned(),
-                    ],
-                ),
-                Posture::Blocked(reason) => (
-                    PreviewStatus::Blocked,
-                    ArmorClassPreview::Blocked(reason.clone()),
-                    blocked_explanation_refs(package, binding, &reason),
-                    dimension_status("blocked"),
-                    vec![
-                        "preview".to_owned(),
-                        "explanation".to_owned(),
-                        "export".to_owned(),
-                        "proof".to_owned(),
-                    ],
-                ),
-            };
+        let (
+            preview_status,
+            baseline_armor_class,
+            explanation_refs,
+            oracle_dimension_status,
+            blocked_claims,
+        ) = match posture {
+            Posture::Supported => {
+                let effect = package
+                    .effect
+                    .as_ref()
+                    .expect("supported posture guarantees an authored effect");
+                let armor_class =
+                    GE06_BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT + effect.modifier_value;
+                (
+                    PreviewStatus::Success,
+                    ArmorClassPreview::Computed(armor_class),
+                    supported_explanation_refs(package, binding, armor_class),
+                    dimension_status("previewed"),
+                    Vec::new(),
+                )
+            }
+            Posture::Unsupported(reason) => (
+                PreviewStatus::Unsupported,
+                ArmorClassPreview::Blocked(reason.clone()),
+                blocked_explanation_refs(package, binding, &reason),
+                dimension_status("unsupported"),
+                vec![
+                    "preview".to_owned(),
+                    "explanation".to_owned(),
+                    "export".to_owned(),
+                    "proof".to_owned(),
+                ],
+            ),
+            Posture::Blocked(reason) => (
+                PreviewStatus::Blocked,
+                ArmorClassPreview::Blocked(reason.clone()),
+                blocked_explanation_refs(package, binding, &reason),
+                dimension_status("blocked"),
+                vec![
+                    "preview".to_owned(),
+                    "explanation".to_owned(),
+                    "export".to_owned(),
+                    "proof".to_owned(),
+                ],
+            ),
+        };
 
         PreviewEnvelope {
             case_id: binding.case_id.clone(),
@@ -309,7 +314,10 @@ fn base_explanation_refs(package: &SourcePackage, binding: &ProofBinding) -> Vec
         refs.push(ExplanationRef {
             node_kind: "canonical_object".to_owned(),
             ref_id: feat.stable_id.clone(),
-            detail: format!("authored feat '{}' selected into the Human bonus feat slot", feat.display_name),
+            detail: format!(
+                "authored feat '{}' selected into the Human bonus feat slot",
+                feat.display_name
+            ),
         });
     }
     if let Some(effect) = &package.effect {

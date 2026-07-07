@@ -7,14 +7,13 @@
 //! oracle-checked parity or normalization.
 
 use codex::oracle_validation::selected_parity_dimensions::{
-    SelectedParityDimensions, ClaimTierFloor,
+    ClaimTierFloor, SelectedParityDimensions,
 };
 use codex::rules_core::character_input::load_character_input_fixture;
 use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
 
-const DETERMINISTIC_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const DETERMINISTIC_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
 fn load(fixture: &str) -> codex::rules_core::character_input::CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -37,8 +36,16 @@ fn supported_deterministic_pilot_yields_selected_dimensions() {
     let dimensions = SelectedParityDimensions::from_receipt(&receipt);
 
     // The adapter emits exactly the mandatory selected pilot dimensions.
-    let dimension_ids: Vec<&str> = dimensions.dimensions.iter().map(|d| d.id.as_str()).collect();
-    assert_eq!(dimension_ids.len(), 9, "Expected exactly 9 selected dimensions");
+    let dimension_ids: Vec<&str> = dimensions
+        .dimensions
+        .iter()
+        .map(|d| d.id.as_str())
+        .collect();
+    assert_eq!(
+        dimension_ids.len(),
+        9,
+        "Expected exactly 9 selected dimensions"
+    );
     assert!(dimension_ids.contains(&"character.identity"));
     assert!(dimension_ids.contains(&"combat.baseline_melee_attack_bonus"));
     assert!(dimension_ids.contains(&"defense.baseline_armor_class"));
@@ -60,7 +67,10 @@ fn supported_deterministic_pilot_yields_selected_dimensions() {
 
     // character.identity preserves pilot identity from the merged receipt.
     let char_identity = find_dimension("character.identity");
-    assert_eq!(char_identity.value_string, Some("pf1-crb-human-fighter-level1".to_string()));
+    assert_eq!(
+        char_identity.value_string,
+        Some("pf1-crb-human-fighter-level1".to_string())
+    );
     assert_eq!(char_identity.source_package_id, "pf1.core_rulebook");
 
     // The remaining selected dimensions preserve the already-grounded new-system values.

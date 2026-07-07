@@ -11,9 +11,8 @@ use codex::rules_core::pilot_compute::{HeadlessReceiptStatus, build_pilot_headle
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 
-const DETERMINISTIC_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const DETERMINISTIC_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -28,7 +27,10 @@ fn load(fixture: &str) -> CharacterInput {
 }
 
 fn has_explanation(view_model: &PilotViewModel, id: &str) -> bool {
-    view_model.explanations.iter().any(|explanation| explanation.id == id)
+    view_model
+        .explanations
+        .iter()
+        .any(|explanation| explanation.id == id)
 }
 
 #[test]
@@ -38,7 +40,10 @@ fn supported_deterministic_pilot_projects_computed_view_model() {
 
     let view_model = PilotViewModel::from_receipt(&receipt);
 
-    assert_eq!(view_model.case_id.as_deref(), Some("pf1-crb-human-fighter-level1"));
+    assert_eq!(
+        view_model.case_id.as_deref(),
+        Some("pf1-crb-human-fighter-level1")
+    );
     assert_eq!(view_model.source_package_id, "pf1.core_rulebook");
     assert_eq!(view_model.status, HeadlessReceiptStatus::Computed);
     assert_eq!(view_model.primary_owner, PrimaryOwner::OracleGap);
@@ -106,7 +111,10 @@ fn computed_view_model_exposes_explicit_human_race_seam() {
 
     // The explicit Human race-seam explanations must propagate through the bounded
     // view-model projection.
-    for id in ["race.human.ability_bonus_target", "race.human.bonus_feat_grant"] {
+    for id in [
+        "race.human.ability_bonus_target",
+        "race.human.bonus_feat_grant",
+    ] {
         assert!(
             has_explanation(&view_model, id),
             "computed view model must expose race-seam explanation id '{id}', got {:?}",
@@ -141,7 +149,10 @@ fn blocked_receipt_projects_blocked_view_model_without_faux_success_snapshot() {
 
     let view_model = PilotViewModel::from_receipt(&receipt);
 
-    assert_eq!(view_model.case_id.as_deref(), Some("pf1-crb-human-fighter-level1"));
+    assert_eq!(
+        view_model.case_id.as_deref(),
+        Some("pf1-crb-human-fighter-level1")
+    );
     assert_eq!(view_model.source_package_id, "pf1.core_rulebook");
     assert_eq!(view_model.status, HeadlessReceiptStatus::Blocked);
     assert_eq!(view_model.primary_owner, PrimaryOwner::EngineFlaw);
