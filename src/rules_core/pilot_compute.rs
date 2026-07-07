@@ -41,7 +41,11 @@
 //! (3/4 BAB), base-save progression (good Reflex, poor Fortitude, poor Will), and
 //! the sneak attack damage-die count (1, i.e. 1d6); only trapfinding remains
 //! claim-blocked for Rogue, and `defense.total_save.*` is still never computed for
-//! it. Unsupported input yields claim-blocking diagnostics and withheld
+//! it. The SD13-E3 Barbarian level-1 martial chassis slice is widened further here:
+//! base-attack progression, base-save progression, and the fast-movement +10 ft.
+//! speed value are now grounded as standalone explanation records (mirroring the
+//! Fighter formula shape), leaving only the illiteracy trait burden explicitly
+//! claim-blocked. Unsupported input yields claim-blocking diagnostics and withheld
 //! explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
@@ -2151,24 +2155,31 @@ fn martial_level1_class(input: &CharacterInput) -> Option<MartialClass> {
 }
 
 /// Surface direct SD13-E3 runtime evidence for the deterministic Human Barbarian
-/// level-1 martial chassis, while keeping it explicitly claim-blocked on the four
-/// still-missing named burdens.
+/// level-1 martial chassis. Base-attack progression, base-save progression, and the
+/// fast-movement speed-extension value are now grounded directly; only the
+/// illiteracy trait burden stays explicitly claim-blocked.
 ///
-/// This deliberately does not compute a supported martial chassis. It grounds no
-/// base-attack progression, no base-save progression, no fast-movement +10 ft. speed
-/// extension, and no illiteracy trait engine. It grounds no rage execution, no
-/// weapon familiarity, and no level-2+ martial progression. It only:
+/// This deliberately does not compute a supported martial chassis: the grounded
+/// base-attack, base-save, and fast-movement explanation records below are
+/// standalone (not wired into `PilotBaseChassisComputation.base_attack_bonus`,
+/// `compute_total_saves`, `compute_combat_baseline`, or any speed/movement total),
+/// so the integrated pilot surface still reports a blocked posture on this input.
+/// It grounds no illiteracy trait engine, no rage execution, no weapon familiarity,
+/// and no level-2+ martial progression. It only:
 /// - leaves one chassis-recognition explanation so the `class:barbarian:1` identity
 ///   is acknowledged as a non-hybrid martial baseline rather than an undocumented
 ///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical
-///   value), and
-/// - emits four claim-blocking diagnostics naming the four still-missing pillar
-///   burdens (base-attack, base-save, fast-movement, illiteracy) explicitly, rather
-///   than hiding behind a single generic "unsupported class" label.
+///   value),
+/// - leaves five grounded explanation records naming the full-BAB base-attack
+///   bonus, the good-Fortitude/poor-Reflex/poor-Will base saves, and the flat
+///   +10 ft. fast-movement value, and
+/// - emits one claim-blocking diagnostic naming the still-missing illiteracy
+///   burden explicitly, rather than hiding behind a single generic "unsupported
+///   class" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
-/// keeps that blocked posture but makes the Barbarian martial identity and its four
-/// named pillar burdens legible on the runtime path.
+/// keeps that blocked posture but makes the Barbarian martial identity, its grounded
+/// pillar values, and its remaining named pillar burden legible on the runtime path.
 fn explain_barbarian_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -2190,6 +2201,7 @@ fn explain_barbarian_level1_chassis(
     let class_id = BARBARIAN_CLASS_ID;
     let class_name = "Barbarian";
     let chassis_id = "class_chassis.barbarian.bounded_progression";
+    let level_value = i16::from(MARTIAL_BASELINE_LEVEL);
 
     // Direct runtime evidence: recognize the deterministic Human Barbarian level-1
     // martial chassis identity. This is a recognition record only; it fabricates no
@@ -2201,50 +2213,84 @@ fn explain_barbarian_level1_chassis(
             "Recognized deterministic Human {class_name} level {MARTIAL_BASELINE_LEVEL} martial chassis: \
              the {class_id}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure non-hybrid \
              martial baseline on the rules-core seam rather than an undocumented packet placeholder. This \
-             is a bounded chassis-recognition record only; it grounds no {class_name} base-attack or \
-             base-save progression, no fast-movement +10 ft. speed extension, no illiteracy trait engine, \
-             no rage execution, and no level-2+ martial progression, so it carries no fabricated \
-             mechanical value (+0)"
+             is a bounded chassis-recognition record only; it grounds no illiteracy trait engine, no rage \
+             execution, and no level-2+ martial progression, so it carries no fabricated mechanical value \
+             (+0). The base-attack, base-save, and fast-movement pillar values are grounded separately by \
+             this same slice as standalone explanation records"
         ),
     });
 
-    // Still blocked (1/4): name the base-attack progression burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.barbarian.bounded_progression.base_attack.unsupported".to_owned(),
-        message: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its base attack progression: \
-             the full-BAB +{MARTIAL_BASELINE_LEVEL} base-attack bonus and the higher-level BAB cadence are \
-             not implemented in this bounded martial chassis baseline, so no {class_name} base-attack \
-             support is claimed"
+    // Grounded (1/3): full-BAB base-attack progression, same formula shape as
+    // Fighter's cr_classes.lst:139 BONUS:COMBAT|BASEAB|classlevel. No PCGen .lst
+    // file exists for the Barbarian class in this repo, so this cites the PF1 Core
+    // Rulebook Barbarian class table directly.
+    let base_attack_bonus = level_value;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+             Barbarian class table (full base-attack progression, same formula shape as Fighter's \
+             cr_classes.lst:139 BONUS:COMBAT|BASEAB|classlevel): classlevel = {base_attack_bonus}. This \
+             is a standalone explanation record; it is not wired into the integrated base_attack_bonus \
+             field or into compute_combat_baseline"
         ),
-        claim_blocking: true,
     });
 
-    // Still blocked (2/4): name the base-save progression burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.barbarian.bounded_progression.base_save.unsupported".to_owned(),
-        message: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its base save progression: \
-             the good Fortitude progression (classlevel/2+2, +{} at level {MARTIAL_BASELINE_LEVEL}) and \
-             the poor Reflex / poor Will base-save cadence are not implemented in this bounded martial \
-             chassis baseline, so no {class_name} base-save support is claimed",
-            i16::from(MARTIAL_BASELINE_LEVEL) / 2 + 2
+    // Grounded (2/3): base-save progression — good Fortitude, poor Reflex, poor
+    // Will, same formula shape as Fighter's cr_classes.lst:139 base-save cadence.
+    let fortitude_save = level_value / 2 + 2;
+    let reflex_save = level_value / 3;
+    let will_save = level_value / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.base_save.fortitude".to_owned(),
+        value: fortitude_save,
+        detail: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} base Fortitude save (good save) from the PF1 \
+             Core Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
+             BONUS:SAVE|BASE.Fortitude|classlevel/2+2: classlevel/2+2 = {fortitude_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
         ),
-        claim_blocking: true,
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.base_save.reflex".to_owned(),
+        value: reflex_save,
+        detail: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 Core \
+             Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
+             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3: classlevel/3 = {reflex_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.base_save.will".to_owned(),
+        value: will_save,
+        detail: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} base Will save (poor save) from the PF1 Core \
+             Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
+             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3: classlevel/3 = {will_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
+        ),
     });
 
-    // Still blocked (3/4): name the fast-movement speed-extension burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.barbarian.bounded_progression.fast_movement.unsupported".to_owned(),
-        message: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its fast movement burden: \
-             the +10 ft. land speed extension applied while wearing no heavy armor is not implemented in \
-             this bounded martial chassis baseline, so no {class_name} fast-movement support is claimed"
-        ),
-        claim_blocking: true,
+    // Grounded (3/3): the fast-movement flat +10 ft. speed value. This grounds only
+    // the flat bonus value itself, not a runtime armor/encumbrance-state check
+    // engine — no such engine exists anywhere in this codebase yet — so the value
+    // is asserted unconditionally rather than computed from armor/load state, and
+    // it is not wired into any speed/movement total.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.fast_movement".to_owned(),
+        value: 10,
+        detail: "Barbarian fast movement: +10 ft. land speed extension while wearing no heavy armor \
+             and carrying no heavy load (PF1 Core Rulebook Barbarian class table). This slice grounds \
+             only the flat +10 ft. value, not a runtime armor/encumbrance-state check engine — no such \
+             engine exists anywhere in this codebase yet — so the value is asserted unconditionally \
+             rather than computed from armor/load state, and it is not wired into any speed/movement \
+             total"
+            .to_owned(),
     });
 
-    // Still blocked (4/4): name the illiteracy trait burden explicitly.
+    // Still blocked: name the illiteracy trait burden explicitly.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.barbarian.bounded_progression.illiteracy.unsupported".to_owned(),
         message: format!(

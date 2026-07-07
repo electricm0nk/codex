@@ -3,21 +3,27 @@
 //! Proves the SD13-E3 barbarian slice: the live rules-core surface ingests a
 //! deterministic Human `class:barbarian:1` input, leaves direct computed
 //! evidence that acknowledges the bounded level-1 martial chassis identity
-//! rather than treating it as an undocumented packet placeholder, and yet
-//! stays explicitly claim-blocked on the four still-missing martial burdens
-//! (base-attack progression, base-save progression, fast-movement +10 ft.
-//! speed extension, illiteracy trait). It also pins the matrix
-//! reclassification of the barbarian row from `Unverified` / `Observed` to
-//! `Partial` / `Computed`.
+//! rather than treating it as an undocumented packet placeholder, and now
+//! grounds three of the four named martial pillar burdens directly: base-
+//! attack progression, base-save progression, and the fast-movement +10 ft.
+//! speed value. The fourth burden (the illiteracy trait) stays explicitly
+//! claim-blocked. It also pins the matrix reclassification of the barbarian
+//! row from `Unverified` / `Observed` to `Partial` / `Computed`.
 //!
-//! It is intentionally not a martial class engine. It grounds no Fighter-
-//! shaped `level_1_pilot` base-attack/base-save chassis (Barbarian has full
-//! BAB and good Fortitude but the slice does not implement it), no rage
-//! execution, no weapon familiarity, no level-2+ martial progression, no
-//! skill-list expansion (barbarian class skills), and no illiteracy trait
-//! engine. It also preserves the accepted Fighter 1-3 truth, the Rogue
-//! blocked negative control, the Paladin/Ranger blocked hybrid negative
-//! controls, and the Human race/interaction truth.
+//! It is intentionally not a martial class engine. The grounded base-attack
+//! and base-save explanations mirror the Fighter formula shape (full BAB,
+//! good Fortitude, poor Reflex/Will) but are standalone records: they are not
+//! wired into `PilotBaseChassisComputation.base_attack_bonus` or into
+//! `compute_total_saves`/`compute_combat_baseline`, so the integrated pilot
+//! surface still reports a blocked posture. The grounded fast-movement
+//! explanation asserts only the flat +10 ft. value; it grounds no
+//! armor/encumbrance-state check engine (no such engine exists anywhere in
+//! this codebase yet). This slice still grounds no rage execution, no weapon
+//! familiarity, no level-2+ martial progression, no skill-list expansion
+//! (barbarian class skills), and no illiteracy trait engine. It also
+//! preserves the accepted Fighter 1-3 truth, the Rogue blocked negative
+//! control, the Paladin/Ranger blocked hybrid negative controls, and the
+//! Human race/interaction truth.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -117,46 +123,71 @@ fn barbarian_level1_leaves_direct_chassis_recognition_evidence() {
     assert_eq!(computation.ability_modifiers.strength, 3);
 }
 
-// ----- Still blocked: honest, class-specific burden diagnostics -----
+// ----- Grounded: base-attack, base-save, and fast-movement pillar burdens -----
 
 #[test]
-fn barbarian_level1_stays_blocked_naming_four_martial_burdens() {
+fn barbarian_level1_grounds_base_attack_base_save_and_fast_movement() {
     let input = load(BARBARIAN_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // Four named burder-of-claim-blocking diagnostics. Each pillar of the
-    // barbarian level-1 bounded chassis surface must be named explicitly so the
-    // diagnosis is auditable, rather than hiding behind a generic "unsupported
-    // class" label.
-    let base_attack = claim_blocking(
-        &computation,
-        "class_feature.barbarian.bounded_progression.base_attack.unsupported",
-    );
+    // Base-attack progression is now grounded as a standalone explanation record
+    // (full BAB, same formula shape as Fighter's cr_classes.lst:139 base-attack
+    // progression), and its old "unsupported" diagnostic no longer exists.
+    let base_attack = explanation(&computation, "class_chassis.barbarian.base_attack_bonus");
+    assert_eq!(base_attack.value, 1, "Barbarian level 1 full BAB must be +1");
     assert!(
-        base_attack.message.contains("base attack"),
-        "barbarian base-attack blocker must name the 'base attack' burden: {}",
-        base_attack.message
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.barbarian.bounded_progression.base_attack.unsupported"),
+        "the grounded base-attack burden must no longer surface its old unsupported diagnostic: {:?}",
+        computation.diagnostics
     );
 
-    let base_save = claim_blocking(
-        &computation,
-        "class_feature.barbarian.bounded_progression.base_save.unsupported",
-    );
+    // Base-save progression is now grounded: good Fortitude, poor Reflex/Will.
+    let fortitude = explanation(&computation, "class_chassis.barbarian.base_save.fortitude");
+    assert_eq!(fortitude.value, 2, "Barbarian level 1 good Fortitude save must be +2");
+    let reflex = explanation(&computation, "class_chassis.barbarian.base_save.reflex");
+    assert_eq!(reflex.value, 0, "Barbarian level 1 poor Reflex save must be +0");
+    let will = explanation(&computation, "class_chassis.barbarian.base_save.will");
+    assert_eq!(will.value, 0, "Barbarian level 1 poor Will save must be +0");
     assert!(
-        base_save.message.contains("base save"),
-        "barbarian base-save blocker must name the 'base save' burden: {}",
-        base_save.message
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.barbarian.bounded_progression.base_save.unsupported"),
+        "the grounded base-save burden must no longer surface its old unsupported diagnostic: {:?}",
+        computation.diagnostics
     );
 
-    let fast_movement = claim_blocking(
-        &computation,
-        "class_feature.barbarian.bounded_progression.fast_movement.unsupported",
-    );
+    // Fast movement is now grounded as a flat +10 ft. value only, not a computed
+    // armor/encumbrance-state check.
+    let fast_movement = explanation(&computation, "class_chassis.barbarian.fast_movement");
+    assert_eq!(fast_movement.value, 10, "Barbarian fast movement must be +10 ft.");
     assert!(
-        fast_movement.message.contains("fast movement"),
-        "barbarian fast-movement blocker must name the 'fast movement' burden: {}",
-        fast_movement.message
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.barbarian.bounded_progression.fast_movement.unsupported"),
+        "the grounded fast-movement burden must no longer surface its old unsupported diagnostic: {:?}",
+        computation.diagnostics
     );
+
+    // The grounded records are standalone: they must not leak into the integrated
+    // base-attack-bonus/base-saves fields, which stay owned by the (unsupported for
+    // Barbarian) Fighter-shaped chassis compute path.
+    assert_eq!(
+        computation.base_attack_bonus, 0,
+        "the standalone barbarian base-attack explanation must not be wired into the integrated base_attack_bonus field"
+    );
+}
+
+// ----- Still blocked: the illiteracy trait burden -----
+
+#[test]
+fn barbarian_level1_stays_blocked_on_illiteracy() {
+    let input = load(BARBARIAN_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
 
     let illiteracy = claim_blocking(
         &computation,
@@ -168,7 +199,9 @@ fn barbarian_level1_stays_blocked_naming_four_martial_burdens() {
         illiteracy.message
     );
 
-    // The integrated posture is blocked, never a counterfeit computed success.
+    // The integrated posture is still blocked overall (the Fighter-shaped chassis
+    // compute path still claim-blocks Barbarian, and illiteracy remains
+    // claim-blocking), never a counterfeit computed success.
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
 
@@ -233,6 +266,14 @@ fn fighter_paladin_ranger_do_not_gain_barbarian_recognition() {
         "the Fighter chassis must not surface barbarian class-feature burden diagnostics: {:?}",
         fighter_computation.diagnostics
     );
+    assert!(
+        !fighter_computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
+        "the Fighter chassis must not surface barbarian-namespaced chassis explanations: {:?}",
+        fighter_computation.explanations
+    );
 
     // Paladin must stay a blocked hybrid baseline, never a barbarian baseline.
     let paladin = load(include_str!(
@@ -252,6 +293,13 @@ fn fighter_paladin_ranger_do_not_gain_barbarian_recognition() {
             .iter()
             .any(|d| d.id.starts_with("class_feature.barbarian.")),
         "Paladin must not surface barbarian class-feature burden diagnostics"
+    );
+    assert!(
+        !paladin_computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
+        "Paladin must not surface barbarian-namespaced chassis explanations"
     );
 
     // Ranger must stay a blocked hybrid baseline, never a barbarian baseline.
@@ -273,6 +321,13 @@ fn fighter_paladin_ranger_do_not_gain_barbarian_recognition() {
             .any(|d| d.id.starts_with("class_feature.barbarian.")),
         "Ranger must not surface barbarian class-feature burden diagnostics"
     );
+    assert!(
+        !ranger_computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
+        "Ranger must not surface barbarian-namespaced chassis explanations"
+    );
 
     // Rogue must stay a plain blocked negative control, never a barbarian baseline.
     let rogue_fixture = BARBARIAN_FIXTURE.replace("class:barbarian:1", "class:rogue:1");
@@ -292,6 +347,13 @@ fn fighter_paladin_ranger_do_not_gain_barbarian_recognition() {
             .any(|d| d.id.starts_with("class_feature.barbarian.")),
         "Rogue must not surface barbarian class-feature burden diagnostics"
     );
+    assert!(
+        !rogue_computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
+        "Rogue must not surface barbarian-namespaced chassis explanations"
+    );
 }
 
 #[test]
@@ -305,8 +367,9 @@ fn barbarian_level_2_is_not_promoted_by_this_slice() {
         !has_explanation(&computation, "class_chassis.barbarian.bounded_progression"),
         "level-2 Barbarian must not gain the bounded level-1 martial recognition record"
     );
-    // A level-2 barbarian must NOT surface any of the four named level-1 burden
-    // diagnostics; level-2 promotion is reserved for a later SD13-E3 slice.
+    // A level-2 barbarian must NOT surface the illiteracy burden diagnostic, nor any
+    // of the three now-grounded level-1 explanation records; level-2 promotion is
+    // reserved for a later SD13-E3 slice.
     assert!(
         !computation
             .diagnostics
@@ -314,6 +377,14 @@ fn barbarian_level_2_is_not_promoted_by_this_slice() {
             .any(|d| d.id.starts_with("class_feature.barbarian.")),
         "level-2 Barbarian must not surface the level-1 barbarian burden diagnostics: {:?}",
         computation.diagnostics
+    );
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
+        "level-2 Barbarian must not surface the level-1 barbarian chassis explanations: {:?}",
+        computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
@@ -336,6 +407,14 @@ fn multiclass_barbarian_is_not_promoted_by_this_slice() {
         "multiclass Barbarian must not gain the bounded level-1 single-class martial recognition record"
     );
     assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
+        "multiclass Barbarian must not surface the level-1 barbarian chassis explanations: {:?}",
+        computation.explanations
+    );
+    assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "multiclass Barbarian must stay claim-blocked in this slice"
     );
@@ -344,7 +423,7 @@ fn multiclass_barbarian_is_not_promoted_by_this_slice() {
 // ----- Control plane: the matrix reclassifies the barbarian row to Partial/Computed -----
 
 #[test]
-fn matrix_barbarian_row_is_partial_computed_and_names_four_burdens() {
+fn matrix_barbarian_row_is_partial_computed_and_names_illiteracy_as_still_unproven() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let barbarian = matrix
         .row("class.barbarian.bounded_progression")
@@ -365,13 +444,18 @@ fn matrix_barbarian_row_is_partial_computed_and_names_four_burdens() {
         "barbarian row must cite the SD13-E3 barbarian proof surface: {}",
         barbarian.grounding_ref
     );
-    // The note must name all four still-missing burdens explicitly.
+    // Base-attack, base-save, and fast-movement are now grounded; only illiteracy
+    // remains named as still-unproven.
     let note = barbarian.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "barbarian partial row must carry a note");
-    for token in ["base attack", "base save", "fast movement", "illiteracy"] {
+    assert!(
+        note.contains("illiteracy"),
+        "barbarian partial note must name the still-unproven 'illiteracy' burden: {note}"
+    );
+    for token in ["base attack", "base save", "fast movement"] {
         assert!(
             note.contains(token),
-            "barbarian partial note must name the '{token}' burden: {note}"
+            "barbarian partial note must still name the now-grounded '{token}' burden: {note}"
         );
     }
 }
