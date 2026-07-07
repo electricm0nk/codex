@@ -220,13 +220,12 @@ fn matrix_levels_2_10_names_level_4_as_proven() {
 
     assert_eq!(row.support_state, SupportState::Partial);
     assert_eq!(row.evidence_tier, EvidenceTier::Computed);
-    // The row's proven range has since widened past level 4 (to level 5); level 4
+    // The row's proven range has since widened past level 4 (to level 6); level 4
     // remains a subset of whatever range is currently proven, so assert the
     // level-4-specific blocker-note evidence directly rather than the dimension
     // text's exact digits, which a later slice is free to rephrase.
     assert!(
-        row.blocker_or_lossiness_note.contains("level-4 bonus-feat")
-            || row.blocker_or_lossiness_note.contains("level 4"),
+        row.blocker_or_lossiness_note.contains("level-4"),
         "levels-2-10 row blocker note must name the level-4 milestone: {}",
         row.blocker_or_lossiness_note
     );

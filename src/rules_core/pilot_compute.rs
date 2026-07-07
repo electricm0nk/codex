@@ -262,12 +262,12 @@ const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
 // Bounded SD13-E3 Fighter milestone widening. The accepted level-1 pilot is now
-// joined by levels 2 through 5. Nothing here grounds level 6+ Fighter burden,
-// later armor-training ranks (level 7+), the weapon-training damage-roll half, or
+// joined by levels 2 through 6. Nothing here grounds level 7+ Fighter burden
+// (Armor Training 2 begins at level 7), the weapon-training damage-roll half, or
 // any non-Fighter positive support. The generic PF1 level-4 ability-score-increase
 // milestone needs no separate seam: the chosen ability score is trusted at face
 // value, like every other ability adjustment in this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 5;
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 6;
 
 // Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
 // feat at level 2; this slice surfaces the named selection as an explicit seam only
@@ -280,6 +280,13 @@ const FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_2"
 // feat-effect or prerequisite engine, mirroring the level-2 seam.
 const FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_4";
 const CLEAVE_FEAT_SELECTION: &str = "feat:cleave";
+
+// Fighter level-6 bonus-feat progression seam. Fighter gains an additional bonus
+// feat at level 6 (the cadence continues 1, 2, 4, 6, 8, 10, ...); this slice
+// surfaces the named selection as an explicit seam only and grounds no general
+// feat-effect or prerequisite engine, mirroring the level-2/level-4 seams.
+const FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_6";
+const COMBAT_REFLEXES_FEAT_SELECTION: &str = "feat:combat_reflexes";
 
 // Fighter Weapon Training 1, gained at level 5. It grants +1 to attack rolls and
 // damage rolls with weapons of the chosen weapon group. This slice grounds only
@@ -1660,6 +1667,22 @@ fn explain_fighter_class_features(
         });
     }
 
+    if level >= 6
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_6_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 6 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. This slice grounds the bonus-feat slot, not a \
+                     general feat-effect or prerequisite engine, so it contributes no computed \
+                     mechanical value (+0)"
+            ),
+        });
+    }
+
     let armor_training = fighter_armor_training(level);
     if armor_training.rank > 0 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
@@ -1705,7 +1728,7 @@ fn explain_fighter_class_features(
 /// validates the level-5 weapon-training-group choice, since it is structurally
 /// identical to a bonus-feat slot (a named choice-set that must match one
 /// canonical selection).
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 6] = [
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 7] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -1726,6 +1749,10 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 6] = [
     (
         FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID,
         HEAVY_BLADES_GROUP_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID,
+        COMBAT_REFLEXES_FEAT_SELECTION,
     ),
 ];
 
