@@ -145,6 +145,33 @@ const HUMAN_ABILITY_BONUS_CHOICE_ID: &str = "choice:human_ability_bonus";
 const HUMAN_BONUS_FEAT_CHOICE_ID: &str = "choice:human_bonus_feat";
 const ABILITY_SELECTION_PREFIX: &str = "ability:";
 
+// SD13-E6-F3a Human racial trait bundle (size, speed, senses, extra skill ranks).
+// These name the remaining Human racial trait burden explicitly, classified
+// against PF1 Core Rulebook Standard Human racial traits (source evidence only,
+// not oracle-checked parity):
+//   cr_races.lst race:human SIZE:MEDIUM        -> Medium size category
+//   cr_races.lst race:human GAIT:WALK|30       -> 30 ft base land speed
+//   cr_races.lst race:human                   -> no special senses (PCGen races
+//                                                in the CRB only carry the SENSE
+//                                                tag when a sense bonus exists;
+//                                                Human has none for Standard Human)
+//   cr_races.lst race:human BONUS:SKILL|...   -> 4 extra skill points at 1st
+//                                                level and 1 extra skill rank
+//                                                per level thereafter
+//
+// This constant set deliberately names the entire PF1 Standard Human racial
+// trait surface — every line a Player's Handbook Human racial entry lists —
+// so the explanation records can name each dimension explicitly instead of
+// leaving it an incidental side-effect or a folklore claim.
+//
+// None of these ground a computed mechanical contribution to the existing
+// NumericOutputs in this slice. They explain Human identity only; the chassis
+// totals remain controlled by the bounded deterministic posture.
+const HUMAN_SIZE_CATEGORY: &str = "Medium";
+const HUMAN_BASE_SPEED_FEET: i16 = 30;
+const HUMAN_EXTRA_SKILL_POINTS_AT_LEVEL_1: u8 = 4;
+const HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL: u8 = 1;
+
 // Grounded deterministic combat-baseline contributors and posture identities.
 const LONGSWORD_ITEM_ID: &str = "item:longsword";
 const CHAIN_SHIRT_ITEM_ID: &str = "item:chain_shirt";
@@ -316,6 +343,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
+    explain_human_trait_bundle(input, &mut explanations, &mut diagnostics);
+
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
     PilotBaseChassisComputation {
@@ -458,11 +487,121 @@ fn explain_human_race_seam(
     // non-claim-blocking so the deterministic pilot still reports computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.human.bounded_semantics".to_owned(),
-        message: "Human race semantics are grounded only for the deterministic pilot's named \
-                  ability-bonus and bonus-feat selections; Human size, speed, senses, extra skill \
-                  ranks, and the remaining racial trait burden remain unverified"
+        message: "Human race semantics are grounded for the deterministic pilot's named \
+                  ability-bonus and bonus-feat selections, and the SD13-E6-F3a trait bundle \
+                  (size, speed, senses, extra skill ranks) is classified explicitly; the \
+                  remaining PF1 Standard Human racial trait surface (alternate Human racial \
+                  traits, variant Humans, half-Human heritages, and any ruleset-level effects \
+                  outside the named deterministic pilot) remains unverified"
             .to_owned(),
         claim_blocking: false,
+    });
+}
+
+/// SD13-E6-F3a Human racial trait bundle explanation seam.
+///
+/// Surfaces each remaining PF1 Standard Human racial trait dimension (size,
+/// speed, senses, extra skill ranks) as an explicit `ComputationExplanation`
+/// record so the trait bundle is legible on the runtime path rather than left
+/// as an incidental side-effect or a folklore claim. Three of the four
+/// dimensions carry the grounded PF1 source value as a recognition record;
+/// the senses dimension carries a bounded "no special senses" classification
+/// because PF1 Standard Human grants no special sense bonus.
+///
+/// This function:
+///   - runs only when `race_id == race:human`; non-Human races stay on the
+///     existing `race.semantics.unverified` diagnostic from
+///     `explain_human_race_seam`,
+///   - adds no new computed mechanical contribution; each record carries the
+///     grounded source value as recognition and contributes nothing to the
+///     chassis totals, selected-skill modifiers, combat baseline, or AC,
+///   - replaces the previous "Human size, speed, senses, extra skill ranks
+///     remain unverified" non-claim-blocking note from
+///     `race.human.bounded_semantics` with explicit per-dimension records,
+///   - is bounded to the deterministic Human Fighter level-1/2/3 pilot
+///     posture implicitly via the caller; it deliberately grounds no other
+///     Human racial variant (alternate Human racial traits, variant Humans,
+///     half-Humans), no other race, and no PF1 alternate ruleset.
+fn explain_human_trait_bundle(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    _diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // ----- size -----
+    // Recognition record only; carries the grounded Human size category name
+    // as the recognition value so the explanation reads as the humanoid
+    // identity rather than fabricating a numeric contribution.
+    explanations.push(ComputationExplanation {
+        id: "race.human.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Human racial trait bundle — size: PF1 Standard Human is {HUMAN_SIZE_CATEGORY} size \
+             (cr_races.lst race:human SIZE:MEDIUM). This is a bounded recognition record naming \
+             the Human size category on the deterministic pilot seam; it contributes no numeric \
+             effect to attack rolls, AC, skill checks, ability checks, or any other computed \
+             value, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    // Recognition record for the 30 ft base land speed. The bounded
+    // selected-skill and combat baselines never consult base speed, so this
+    // record is identity-only — no computed speed-derived value is fabricated.
+    explanations.push(ComputationExplanation {
+        id: "race.human.trait_bundle.speed".to_owned(),
+        value: HUMAN_BASE_SPEED_FEET,
+        detail: format!(
+            "Human racial trait bundle — speed: PF1 Standard Human has a base land speed of \
+             {HUMAN_BASE_SPEED_FEET} ft (cr_races.lst race:human GAIT:WALK|{HUMAN_BASE_SPEED_FEET}). \
+             This is a grounded recognition value carrying the human base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    // Bounded "no special senses" classification. PF1 Standard Human grants
+    // no special senses (darkvision, low-light, scent, etc.), so this
+    // dimension is classified explicitly as no-effect rather than a silent
+    // omission or a fabricated sense bonus.
+    explanations.push(ComputationExplanation {
+        id: "race.human.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: format!(
+            "Human racial trait bundle — senses: PF1 Standard Human grants no special senses \
+             (cr_races.lst race:human carries no SENSE tag for Standard Human; darkvision, \
+             low-light vision, scent, and other sense bonuses are absent). This is a bounded \
+             no-effect classification record on the deterministic pilot seam; it carries no \
+             fabricated sense bonus and contributes no computed value (+0)"
+        ),
+    });
+
+    // ----- extra skill ranks -----
+    // Recognition record for the extra-skill-ranks Human trait. PF1 Standard
+    // Human grants 4 extra skill points at 1st level and 1 extra skill rank
+    // per additional level thereafter; this slice surfaces both numbers as a
+    // recognition record and explicitly does not propagate them through the
+    // bounded selected-skill modifier computation (which controls the
+    // deterministic Climb / Intimidate / Swim rank-1 posture only).
+    explanations.push(ComputationExplanation {
+        id: "race.human.trait_bundle.extra_skill_ranks".to_owned(),
+        value: i16::from(HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL),
+        detail: format!(
+            "Human racial trait bundle — extra skill ranks: PF1 Standard Human gains \
+             {HUMAN_EXTRA_SKILL_POINTS_AT_LEVEL_1} extra skill points at 1st level and \
+             {HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL} extra skill rank per additional level thereafter \
+             (cr_races.lst race:human BONUS:SKILL|...). The recognition value \
+             ({HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL:+}) carries the per-additional-level extra-rank \
+             identity on the deterministic pilot seam; this slice does not propagate these \
+             extra skill points/rank through the bounded Climb/Intimidate/Swim rank-1 selected \
+             skill-modifier computation, so the bounded fighter-posture skill totals remain \
+             grounded by the canonical rank-1 posture rather than by the unbounded Human extra \
+             skill-rank rule"
+        ),
     });
 }
 
