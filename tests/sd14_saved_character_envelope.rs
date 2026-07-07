@@ -23,8 +23,7 @@ fn fresh_temp_dir(label: &str) -> PathBuf {
         .duration_since(UNIX_EPOCH)
         .expect("system time should be after unix epoch")
         .as_nanos();
-    let path =
-        std::env::temp_dir().join(format!("codex-{label}-{}-{unique}", std::process::id()));
+    let path = std::env::temp_dir().join(format!("codex-{label}-{}-{unique}", std::process::id()));
     fs::create_dir_all(&path).expect("temp dir should be creatable");
     path
 }
@@ -54,8 +53,7 @@ fn pilot_envelope() -> SavedCharacterEnvelope {
         schema_version: 1,
         app_or_runtime_version: "codex-dev".to_owned(),
         content_or_rules_provenance: "pf1.core_rulebook".to_owned(),
-        latest_authoritative_revision_ref: "sd14.fixture.pf1-human-fighter-level1.rev.1"
-            .to_owned(),
+        latest_authoritative_revision_ref: "sd14.fixture.pf1-human-fighter-level1.rev.1".to_owned(),
         display_label: "PF1 Human Fighter Level 1".to_owned(),
         character_input,
     }
@@ -111,7 +109,10 @@ fn sd14_checked_in_fixture_loads_as_bounded_envelope_shape() {
     assert_eq!(envelope.schema_version, 1);
     assert!(!envelope.display_label.is_empty());
 
-    assert_eq!(envelope.character_input.source_package_id, "pf1.core_rulebook");
+    assert_eq!(
+        envelope.character_input.source_package_id,
+        "pf1.core_rulebook"
+    );
     assert_eq!(envelope.character_input.chosen.race_id, "race:human");
     assert_eq!(envelope.character_input.chosen.class_levels.len(), 1);
     assert_eq!(
@@ -119,10 +120,7 @@ fn sd14_checked_in_fixture_loads_as_bounded_envelope_shape() {
         "class:fighter"
     );
     assert_eq!(envelope.character_input.chosen.class_levels[0].level, 1);
-    assert_eq!(
-        envelope.character_input.chosen.ability_scores.strength,
-        16
-    );
+    assert_eq!(envelope.character_input.chosen.ability_scores.strength, 16);
 }
 
 #[test]
@@ -178,9 +176,7 @@ fn sd14_missing_character_input_file_fails_honestly() {
     let root = fresh_temp_dir("sd14-missing-character-input");
     fs::write(
         root.join("envelope.txt"),
-        include_str!(
-            "fixtures/sd14/pf1_human_fighter_level1_saved_character/envelope.txt"
-        ),
+        include_str!("fixtures/sd14/pf1_human_fighter_level1_saved_character/envelope.txt"),
     )
     .expect("should be able to write fixture file");
 

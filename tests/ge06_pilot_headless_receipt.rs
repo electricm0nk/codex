@@ -17,9 +17,8 @@ use codex::rules_core::pilot_compute::{
     HeadlessReceiptStatus, PilotHeadlessReceipt, build_pilot_headless_receipt,
 };
 
-const DETERMINISTIC_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const DETERMINISTIC_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -44,7 +43,10 @@ fn supported_deterministic_pilot_yields_computed_receipt() {
     let receipt = build_pilot_headless_receipt(&input);
 
     // Case and source-package identity are preserved from the loaded input.
-    assert_eq!(receipt.case_id.as_deref(), Some("pf1-crb-human-fighter-level1"));
+    assert_eq!(
+        receipt.case_id.as_deref(),
+        Some("pf1-crb-human-fighter-level1")
+    );
     assert_eq!(receipt.source_package_id, "pf1.core_rulebook");
 
     // The integrated path produced evidence, not a blocker.
@@ -135,8 +137,7 @@ fn computed_receipt_exposes_explicit_human_race_seam() {
     // and the already-computed Strength modifier (+3).
     assert_eq!(ability.value, 3);
     assert!(
-        ability.detail.contains("human_ability_bonus")
-            && ability.detail.contains("strength"),
+        ability.detail.contains("human_ability_bonus") && ability.detail.contains("strength"),
         "ability-bonus detail must name the chosen Human ability-bonus seam: {}",
         ability.detail
     );
@@ -151,8 +152,7 @@ fn computed_receipt_exposes_explicit_human_race_seam() {
     // already-grounded Dodge armor-class contribution (+1).
     assert_eq!(bonus_feat.value, 1);
     assert!(
-        bonus_feat.detail.contains("human_bonus_feat")
-            && bonus_feat.detail.contains("Dodge"),
+        bonus_feat.detail.contains("human_bonus_feat") && bonus_feat.detail.contains("Dodge"),
         "bonus-feat detail must name the chosen Human bonus-feat Dodge seam: {}",
         bonus_feat.detail
     );
@@ -188,7 +188,10 @@ fn broken_prerequisite_yields_blocked_receipt() {
     let receipt = build_pilot_headless_receipt(&input);
 
     // Identity is still preserved on the blocker receipt.
-    assert_eq!(receipt.case_id.as_deref(), Some("pf1-crb-human-fighter-level1"));
+    assert_eq!(
+        receipt.case_id.as_deref(),
+        Some("pf1-crb-human-fighter-level1")
+    );
     assert_eq!(receipt.source_package_id, "pf1.core_rulebook");
 
     // The integrated path is blocked, not computed.

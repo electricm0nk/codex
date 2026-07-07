@@ -25,12 +25,10 @@ use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
 };
 
-const PALADIN_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_paladin_level1_sd13_deterministic_input.txt"
-);
-const RANGER_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_ranger_level1_sd13_deterministic_input.txt"
-);
+const PALADIN_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_paladin_level1_sd13_deterministic_input.txt");
+const RANGER_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_ranger_level1_sd13_deterministic_input.txt");
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -247,8 +245,10 @@ fn fighter_and_rogue_do_not_gain_hybrid_recognition() {
     ));
     let fighter_computation = compute_pilot_base_chassis(&fighter);
     assert!(
-        !has_explanation(&fighter_computation, "class_chassis.hybrid_baseline.paladin")
-            && !has_explanation(&fighter_computation, "class_chassis.hybrid_baseline.ranger"),
+        !has_explanation(
+            &fighter_computation,
+            "class_chassis.hybrid_baseline.paladin"
+        ) && !has_explanation(&fighter_computation, "class_chassis.hybrid_baseline.ranger"),
         "the Fighter chassis must not surface a hybrid-baseline recognition record"
     );
 
@@ -257,7 +257,10 @@ fn fighter_and_rogue_do_not_gain_hybrid_recognition() {
     let rogue = load(&rogue_fixture);
     let rogue_computation = compute_pilot_base_chassis(&rogue);
     assert!(
-        rogue_computation.diagnostics.iter().any(|d| d.claim_blocking),
+        rogue_computation
+            .diagnostics
+            .iter()
+            .any(|d| d.claim_blocking),
         "Rogue chassis must remain claim-blocked"
     );
     assert!(
@@ -363,7 +366,9 @@ fn matrix_preserves_fighter_and_rogue_accepted_truth() {
 
     // Fighter level-1 and levels-2-10 remain Partial/Computed (not downgraded).
     for id in ["class.fighter.level_1_pilot", "class.fighter.levels_2_10"] {
-        let fighter = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
+        let fighter = matrix
+            .row(id)
+            .unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
             fighter.support_state,
             SupportState::Partial,
@@ -380,8 +385,11 @@ fn matrix_preserves_fighter_and_rogue_accepted_truth() {
 
     // No row is silently promoted to Supported or Lossy by this slice.
     assert!(
-        !matrix.rows.iter().any(|r| r.support_state == SupportState::Supported
-            || r.support_state == SupportState::Lossy),
+        !matrix
+            .rows
+            .iter()
+            .any(|r| r.support_state == SupportState::Supported
+                || r.support_state == SupportState::Lossy),
         "the hybrid slice must not promote any row to Supported or Lossy"
     );
 }

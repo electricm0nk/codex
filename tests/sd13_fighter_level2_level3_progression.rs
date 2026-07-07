@@ -24,12 +24,10 @@ use codex::rules_core::support_state_matrix::{
     EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
 };
 
-const LEVEL_2_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level2_sd13_deterministic_input.txt"
-);
-const LEVEL_3_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level3_sd13_deterministic_input.txt"
-);
+const LEVEL_2_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level2_sd13_deterministic_input.txt");
+const LEVEL_3_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level3_sd13_deterministic_input.txt");
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -255,7 +253,8 @@ fn level_2_and_level_3_propagate_computed_receipts_and_view_models() {
 fn rogue_replacing_the_fighter_chassis_stays_blocked() {
     // Replace the level-2 Fighter chassis with a Rogue chassis. Widening Fighter must
     // not silently make Rogue interchangeable with Fighter.
-    let mutated = LEVEL_2_FIXTURE.replace("class_level=class:fighter:2", "class_level=class:rogue:2");
+    let mutated =
+        LEVEL_2_FIXTURE.replace("class_level=class:fighter:2", "class_level=class:rogue:2");
     assert!(
         mutated.contains("class_level=class:rogue:2"),
         "test setup should have mutated the class chassis to Rogue"

@@ -11,7 +11,7 @@ use std::fs;
 use std::path::Path;
 
 use crate::rules_core::character_input::{
-    load_character_input_fixture, ActiveState, CharacterInput,
+    ActiveState, CharacterInput, load_character_input_fixture,
 };
 
 use super::{SavedCharacterEnvelope, SavedCharacterRevisionKind, SavedCharacterStoreError};
@@ -32,7 +32,9 @@ impl SavedCharacterStore {
     ) -> Result<(), SavedCharacterStoreError> {
         fs::create_dir_all(root).map_err(|err| io_error(root, err))?;
 
-        let ensure_single_line = |field: &str, value: &str| -> Result<(), SavedCharacterStoreError> {
+        let ensure_single_line = |field: &str,
+                                  value: &str|
+         -> Result<(), SavedCharacterStoreError> {
             if value.contains('\n') || value.contains('\r') {
                 return Err(SavedCharacterStoreError {
                     message: format!(
@@ -79,14 +81,13 @@ impl SavedCharacterStore {
     /// Returns `Err` if either file is missing, malformed, or missing required fields.
     pub fn load(root: &Path) -> Result<SavedCharacterEnvelope, SavedCharacterStoreError> {
         let envelope_path = root.join(ENVELOPE_FILE);
-        let envelope_text = fs::read_to_string(&envelope_path).map_err(|err| {
-            SavedCharacterStoreError {
+        let envelope_text =
+            fs::read_to_string(&envelope_path).map_err(|err| SavedCharacterStoreError {
                 message: format!(
                     "envelope.txt missing or unreadable at {}: {err}",
                     envelope_path.display()
                 ),
-            }
-        })?;
+            })?;
 
         let character_input_path = root.join(CHARACTER_INPUT_FILE);
         let character_input_text =
@@ -191,7 +192,11 @@ fn render_envelope(envelope: &SavedCharacterEnvelope) -> String {
     let _ = writeln!(out, "revision_kind = {}", envelope.revision_kind.as_str());
     let _ = writeln!(out, "saved_at = {}", envelope.saved_at);
     let _ = writeln!(out, "schema_version = {}", envelope.schema_version);
-    let _ = writeln!(out, "app_or_runtime_version = {}", envelope.app_or_runtime_version);
+    let _ = writeln!(
+        out,
+        "app_or_runtime_version = {}",
+        envelope.app_or_runtime_version
+    );
     let _ = writeln!(
         out,
         "content_or_rules_provenance = {}",
@@ -216,12 +221,32 @@ fn render_character_input(input: &CharacterInput) -> String {
     for cl in &input.chosen.class_levels {
         let _ = writeln!(out, "class_level={}:{}", cl.class_id, cl.level);
     }
-    let _ = writeln!(out, "ability=strength:{}", input.chosen.ability_scores.strength);
-    let _ = writeln!(out, "ability=dexterity:{}", input.chosen.ability_scores.dexterity);
-    let _ = writeln!(out, "ability=constitution:{}", input.chosen.ability_scores.constitution);
-    let _ = writeln!(out, "ability=intelligence:{}", input.chosen.ability_scores.intelligence);
+    let _ = writeln!(
+        out,
+        "ability=strength:{}",
+        input.chosen.ability_scores.strength
+    );
+    let _ = writeln!(
+        out,
+        "ability=dexterity:{}",
+        input.chosen.ability_scores.dexterity
+    );
+    let _ = writeln!(
+        out,
+        "ability=constitution:{}",
+        input.chosen.ability_scores.constitution
+    );
+    let _ = writeln!(
+        out,
+        "ability=intelligence:{}",
+        input.chosen.ability_scores.intelligence
+    );
     let _ = writeln!(out, "ability=wisdom:{}", input.chosen.ability_scores.wisdom);
-    let _ = writeln!(out, "ability=charisma:{}", input.chosen.ability_scores.charisma);
+    let _ = writeln!(
+        out,
+        "ability=charisma:{}",
+        input.chosen.ability_scores.charisma
+    );
     for feat in &input.chosen.selected_feats {
         let _ = writeln!(out, "feat={feat}");
     }
@@ -237,7 +262,11 @@ fn render_character_input(input: &CharacterInput) -> String {
         let _ = writeln!(out, "equipment={}:{}", eq.item_id, state);
     }
     for choice in &input.chosen.selected_choices {
-        let _ = writeln!(out, "choice={}:{}", choice.choice_set_id, choice.selection_id);
+        let _ = writeln!(
+            out,
+            "choice={}:{}",
+            choice.choice_set_id, choice.selection_id
+        );
     }
     for prov in &input.selection_provenance {
         let _ = writeln!(out, "provenance={}", prov.source_ref);
@@ -318,7 +347,7 @@ fn parse_envelope(text: &str) -> Result<EnvelopeMetadata, SavedCharacterStoreErr
             unknown => {
                 return Err(parse_error(format!(
                     "envelope unsupported field '{unknown}'"
-                )))
+                )));
             }
         }
     }
@@ -345,13 +374,9 @@ fn parse_envelope(text: &str) -> Result<EnvelopeMetadata, SavedCharacterStoreErr
         content_or_rules_provenance: parsed.content_or_rules_provenance.ok_or_else(|| {
             parse_error("envelope missing required field content_or_rules_provenance")
         })?,
-        latest_authoritative_revision_ref: parsed
-            .latest_authoritative_revision_ref
-            .ok_or_else(|| {
-                parse_error(
-                    "envelope missing required field latest_authoritative_revision_ref",
-                )
-            })?,
+        latest_authoritative_revision_ref: parsed.latest_authoritative_revision_ref.ok_or_else(
+            || parse_error("envelope missing required field latest_authoritative_revision_ref"),
+        )?,
         display_label: parsed
             .display_label
             .ok_or_else(|| parse_error("envelope missing required field display_label"))?,

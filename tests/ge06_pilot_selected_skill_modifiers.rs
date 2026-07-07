@@ -13,9 +13,8 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 
-const DETERMINISTIC_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const DETERMINISTIC_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -187,8 +186,10 @@ fn missing_selected_skill_allocation_blocks_skill_modifiers() {
 fn widened_selected_skill_allocation_blocks_skill_modifiers() {
     // Widen beyond this slice by adding an out-of-scope skill allocation. The
     // narrow selected-skill surface must refuse rather than silently extend.
-    let mutated = DETERMINISTIC_FIXTURE
-        .replace("skill=skill:swim:1\n", "skill=skill:swim:1\nskill=skill:stealth:1\n");
+    let mutated = DETERMINISTIC_FIXTURE.replace(
+        "skill=skill:swim:1\n",
+        "skill=skill:swim:1\nskill=skill:stealth:1\n",
+    );
     assert!(
         mutated.contains("skill=skill:stealth:1"),
         "test setup should have widened the skill allocations"

@@ -128,6 +128,15 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const SORCERER_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E4-F7 spell-bearing baseline identity. Bard is a spontaneous arcane caster with a
+// distinct chassis-class-feature burden (Bardic Knowledge and Bardic Music); this slice
+// recognizes only its bounded single-class level-1 identity as direct runtime evidence and
+// grounds no Bardic Knowledge check resolution, no Bardic Music / Inspire Courage execution,
+// and no spell math (spells known, spells per day, spell DCs, bonus spells, school choice, or
+// prepared posture) for it.
+const BARD_CLASS_ID: &str = "class:bard";
+const BARD_BASELINE_LEVEL: u8 = 1;
+
 // Grounded SD13-E4-R3 Human Wizard level-1 prepared arcane spell-bearing baseline
 // identities. The Wizard class is the canonical PF1 prepared arcane full caster;
 // its class identity differs from Sorcerer in two ways that this bounded slice
@@ -341,7 +350,14 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_wizard_level1_prepared_spell_baseline(input, &mut explanations, &mut diagnostics);
 
-    explain_human_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
+    explain_bard_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+
+    explain_human_race_seam(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
     explain_human_trait_bundle(input, &mut explanations, &mut diagnostics);
 
@@ -773,21 +789,20 @@ fn explain_fighter_class_features(
     };
 
     if level >= 2
-        && let Some(selection) =
-            choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)
-        {
-            explanations.push(ComputationExplanation {
-                id: "class_feature.fighter.level_2_bonus_feat".to_owned(),
-                value: 0,
-                detail: format!(
-                    "Fighter level 2 grants an additional bonus feat; the named selection \
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_2_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 2 grants an additional bonus feat; the named selection \
                      ({FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
                      explicit progression seam only. This slice grounds the bonus-feat slot, not a \
                      general feat-effect or prerequisite engine, so it contributes no computed \
                      mechanical value (+0)"
-                ),
-            });
-        }
+            ),
+        });
+    }
 
     let armor_training = fighter_armor_training(level);
     if armor_training.rank > 0 {
@@ -813,10 +828,19 @@ fn explain_fighter_class_features(
 /// A slot absent for the chosen level (e.g. the level-2 bonus feat at level 1) is not
 /// fabricated.
 const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 4] = [
-    (LEVEL_1_CHARACTER_FEAT_CHOICE_ID, POWER_ATTACK_FEAT_SELECTION),
+    (
+        LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
+        POWER_ATTACK_FEAT_SELECTION,
+    ),
     (HUMAN_BONUS_FEAT_CHOICE_ID, DODGE_FEAT_ID),
-    (FIGHTER_BONUS_FEAT_CHOICE_ID, WEAPON_FOCUS_LONGSWORD_SELECTION),
-    (FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID, TOUGHNESS_FEAT_SELECTION),
+    (
+        FIGHTER_BONUS_FEAT_CHOICE_ID,
+        WEAPON_FOCUS_LONGSWORD_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID,
+        TOUGHNESS_FEAT_SELECTION,
+    ),
 ];
 
 /// Claim-block non-canonical feat-choice mutations on the deterministic Human Fighter
@@ -1289,6 +1313,102 @@ fn explain_wizard_level1_prepared_spell_baseline(
     });
 }
 
+/// Return `true` when the chosen input is exactly a single-class Bard at the bounded
+/// spell baseline level (1). Returns `false` for any other class, a multiclass mix, or a
+/// level-2+ Bard this slice deliberately does not recognize — each of which stays
+/// blocked exactly as before.
+fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == BARD_CLASS_ID
+                && class_level.level == BARD_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Bard
+/// level-1 spontaneous arcane spell-bearing baseline, while keeping it explicitly
+/// claim-blocked on its two still-missing burdens.
+///
+/// This deliberately does not compute a supported Bard chassis. It grounds no
+/// Bardic Knowledge check resolution, no Bardic Music / Inspire Courage execution, and
+/// no spell math whatsoever — no spells known, no spells per day, no spell DCs, no
+/// bonus spells, no prepared posture, no school choice. It only:
+/// - leaves one recognition explanation so the `class:bard:1` identity is acknowledged
+///   as a spontaneous arcane spell-bearing class with its named Bardic-class-feature
+///   burden rather than an undocumented packet placeholder (direct runtime evidence,
+///   carrying no fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the Bardic Knowledge + Bardic
+///   Music chassis-class-feature burden and the spontaneous known-spell / slot posture
+///   burden explicitly, rather than hiding behind a generic "unsupported caster" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Bard spell-bearing identity and its two
+/// named burdens legible on the runtime path.
+fn explain_bard_level1_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_bard_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Bard level-1
+    // spell-bearing identity. This is a recognition record only; it fabricates no
+    // Bardic-class-feature math and no spell math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.bard".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Bard level {BARD_BASELINE_LEVEL} spell-bearing \
+             baseline: the {BARD_CLASS_ID}:{BARD_BASELINE_LEVEL} class identity is acknowledged \
+             as a spontaneous arcane spell-bearing class with its named Bardic Knowledge and \
+             Bardic Music chassis-class-feature burden on the rules-core seam rather than an \
+             undocumented packet placeholder. This is a bounded recognition record only; it \
+             grounds no Bardic Knowledge check resolution, no Bardic Music / Inspire Courage \
+             execution, and no spell math (spells known, spells per day, spell DCs, bonus \
+             spells, or prepared posture), so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the Bardic Knowledge + Bardic Music chassis-class-feature
+    // burden explicitly. Bardic Knowledge grants a competence bonus on Knowledge checks
+    // equal to half the Bard level (minimum 1) plus the Bard's INT modifier; Bardic Music
+    // grants the Inspire Courage performance and the rest of the performance family. This
+    // slice grounds neither check resolution nor performance execution.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.bard.bardic_knowledge_and_music.unsupported".to_owned(),
+        message: format!(
+            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic knowledge and \
+             bardic music chassis-class-feature burden: the bardic knowledge competence bonus \
+             on Knowledge checks (half Bard level + INT modifier) and the bardic music \
+             performance family (inspire courage and later performances) are not implemented \
+             in this bounded spell baseline, so no Bard class-feature support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
+    // explicitly. Bard spells known and spells per day are gated by Bard level and CHA
+    // modifier on the Bard spell list; this slice grounds no spells known, no spells per
+    // day, no spell DCs, and no bonus spells from a high casting stat.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned(),
+        message:
+            "Bard remains blocked on its spontaneous known-spell / slot posture burden: \
+             spontaneous casting, spells known (from the Bard list), spells per day (from \
+             the Bard table plus CHA modifier), bonus spell slots from a high casting stat, \
+             and spell save DCs are out of scope for this level-1 spell baseline and no \
+             spell math is fabricated"
+                .to_owned(),
+        claim_blocking: true,
+    });
+}
+
 /// Compute total saving throws as the grounded Fighter level 1–3 base save plus the
 /// relevant ability modifier, or block the claim if a supported Fighter chassis
 /// (levels 1–3) is absent.
@@ -1557,10 +1677,8 @@ fn compute_combat_baseline(
     let effective_max_dex = CHAIN_SHIRT_MAX_DEX + fighter_armor_training(level).max_dex_increase;
     let dexterity_modifier = ability_modifiers.dexterity;
     let dexterity_contribution = dexterity_modifier.min(effective_max_dex);
-    let armor_class = ARMOR_CLASS_BASE
-        + CHAIN_SHIRT_ARMOR_BONUS
-        + dexterity_contribution
-        + DODGE_AC_BONUS;
+    let armor_class =
+        ARMOR_CLASS_BASE + CHAIN_SHIRT_ARMOR_BONUS + dexterity_contribution + DODGE_AC_BONUS;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -1610,7 +1728,11 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
     if !chosen.selected_feats.iter().any(|f| f == DODGE_FEAT_ID) {
         unmet.push(format!("missing selected feat {DODGE_FEAT_ID}"));
     }
-    if !chosen.selected_feats.iter().any(|f| f == WEAPON_FOCUS_FEAT_ID) {
+    if !chosen
+        .selected_feats
+        .iter()
+        .any(|f| f == WEAPON_FOCUS_FEAT_ID)
+    {
         unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
     }
 

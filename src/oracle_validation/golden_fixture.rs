@@ -288,7 +288,9 @@ fn apply_evidence_kind(value: &str, parsed: &mut ParsedFixture) {
         other => {
             parsed.diagnostics.push(invalid(
                 "legacy_evidence_kind",
-                format!("invalid golden-case fixture legacy_evidence_kind '{other}' is unsupported"),
+                format!(
+                    "invalid golden-case fixture legacy_evidence_kind '{other}' is unsupported"
+                ),
             ));
             return;
         }
@@ -387,7 +389,9 @@ fn apply_provisional(value: &str, parsed: &mut ParsedFixture) {
     let Some((key, assumption_value)) = value.split_once(':') else {
         parsed.diagnostics.push(invalid(
             "provisional_assumptions",
-            format!("invalid golden-case fixture provisional assumption '{value}' is missing a value"),
+            format!(
+                "invalid golden-case fixture provisional assumption '{value}' is missing a value"
+            ),
         ));
         return;
     };
@@ -409,7 +413,10 @@ impl ParsedFixture {
             ("source_game_mode", self.source_game_mode.as_deref()),
             ("character_input_ref", self.character_input_ref.as_deref()),
             ("legacy_route", self.legacy_route.as_deref()),
-            ("legacy_raw_output_ref", self.legacy_raw_output_ref.as_deref()),
+            (
+                "legacy_raw_output_ref",
+                self.legacy_raw_output_ref.as_deref(),
+            ),
             (
                 "legacy_raw_output_sha256",
                 self.legacy_raw_output_sha256.as_deref(),
@@ -504,7 +511,9 @@ impl ParsedFixture {
                     .expect("validated legacy_reduced_facts_ref"),
             },
             codex_output: CodexOutputEvidence {
-                state: self.codex_output_state.expect("validated codex_output_state"),
+                state: self
+                    .codex_output_state
+                    .expect("validated codex_output_state"),
                 output_ref: self.codex_output_ref,
                 diagnostics: self.codex_diagnostics,
             },
