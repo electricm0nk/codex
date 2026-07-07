@@ -189,6 +189,7 @@ cmd_geometry() {
 }
 
 cmd_logs() {
+  [ -f "$LOG_FILE" ] || { echo "No log file at $LOG_FILE — run 'driver.sh launch' first" >&2; exit 1; }
   tail -n "${1:-60}" "$LOG_FILE"
 }
 
