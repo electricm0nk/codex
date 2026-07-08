@@ -20,6 +20,7 @@ function verifiesRequestShapeFromFormFields() {
         wisdom: 12,
         charisma: 8,
       },
+      abilityBonusTarget: 'dexterity',
     },
     {
       generateId: () => 'char-fixed-id',
@@ -35,6 +36,7 @@ function verifiesRequestShapeFromFormFields() {
   assertEqual(request.savedAt, '2026-07-08T00:00:00Z', 'savedAt');
   assertEqual(request.abilityScores.strength, 16, 'ability strength');
   assertEqual(request.abilityScores.charisma, 8, 'ability charisma');
+  assertEqual(request.abilityBonusTarget, 'dexterity', 'abilityBonusTarget');
 }
 
 main().catch((error: unknown) => {

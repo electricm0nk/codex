@@ -28,6 +28,7 @@ export interface CreateCharacterRequest {
   classId: string;
   level: number;
   abilityScores: AbilityScoresDto;
+  abilityBonusTarget: string;
   savedAt: string;
 }
 
