@@ -337,13 +337,16 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
 /// posture burden stay explicitly blocked.
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
-/// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1
-/// martial chassis baseline: direct computed chassis-recognition evidence, plus
-/// grounded base-attack, base-save, fast-movement, and flat Rage pillar values
+/// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
+/// level-2 martial chassis baseline: direct computed chassis-recognition evidence,
+/// plus grounded base-attack, base-save, fast-movement, and flat Rage pillar values
 /// (rage rounds per day and the rage constants, values only) and the vacuous
-/// illiteracy-burden rules correction, that stays explicitly blocked only on the
-/// remaining named rage-state execution burden.
-const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs";
+/// illiteracy-burden rules correction at level 1, widened to level 2 by a later
+/// SD13-E5 slice (the level-range gate plus the extended formulas), that stays
+/// explicitly blocked only on the remaining named rage-state execution burden and
+/// weapon familiarity.
+const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs + \
+    tests/sd13_barbarian_level2_progression.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -737,7 +740,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.barbarian.bounded_progression",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:barbarian",
-                dimension: "bounded class progression",
+                dimension: "bounded Barbarian chassis progression: the deterministic Human \
+                    Barbarian level-1/level-2 martial chassis identity, with base-attack, \
+                    base-save, fast-movement, and flat Rage pillar values grounded across both \
+                    levels, and the rage-state execution / weapon-familiarity / level-3+ \
+                    remainder still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -757,17 +764,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     grounds Rage's flat numeric surface: rage rounds per day (4 + Constitution \
                     modifier, 7 on the Con 16 fixture) and the flat rage constants (+4 morale \
                     Strength, +4 morale Constitution, +2 morale Will saves, -2 AC), values only. \
-                    None of the grounded records are wired into the integrated \
-                    base_attack_bonus/base-saves/speed/ability totals, so the integrated pilot \
-                    surface still reports a blocked posture. The row remains explicitly blocked \
-                    on the rage execution engine (activation/deactivation, rage-round \
-                    consumption, fatigue after rage, temporary stat application). No weapon \
-                    familiarity or level-2+ martial progression is claimed",
+                    A later SD13-E5 slice widens the level-1-only gate to level 2 (mirroring the \
+                    Fighter/Paladin/Rogue level-range gate idiom): base-attack (classlevel = 2), \
+                    base-save (Fortitude +3, Reflex +0, Will +0), and fast movement (unchanged \
+                    flat +10 ft.) are extended to level 2 via the same formulas, and rage rounds \
+                    per day grows by the PF1 Core Rulebook's own +2-rounds-per-level-after-1st \
+                    rule (4 + Constitution modifier + 2 * (level - 1), 9 on the Con 16 fixture at \
+                    level 2) — the flat rage constants and the illiteracy-absence record stay \
+                    unchanged at level 2. None of the grounded records are wired into the \
+                    integrated base_attack_bonus/base-saves/speed/ability totals, so the \
+                    integrated pilot surface still reports a blocked posture. The row remains \
+                    explicitly blocked on the rage execution engine (activation/deactivation, \
+                    rage-round consumption, fatigue after rage, temporary stat application). No \
+                    weapon familiarity or level-3+ martial progression is claimed",
                 next_required_uplift: "ground the Barbarian rage-state execution engine \
                     (activation/deactivation, rage-round consumption, post-rage fatigue, \
                     temporary application of the rage constants), and wire the grounded \
                     base-attack / base-save / fast-movement values into the integrated pilot \
-                    surface, later widening into weapon familiarity and level-2+ martial \
+                    surface, later widening into weapon familiarity and level-3+ martial \
                     progression",
             },
             SupportStateRow {
