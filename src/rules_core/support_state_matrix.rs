@@ -313,11 +313,13 @@ const SD13_FIGHTER_LEVEL1_ROW_GROUNDING_REF: &str =
      tests/sd13_fighter_level1_hit_point_baseline.rs";
 
 /// The combined grounding reference for the Paladin hybrid baseline row, citing
-/// F6 (chassis identity), the per-burden decomposition test, and the SD13-E5
-/// effective-caster-level gate test as one literal. Each `.contains()`
-/// consumer (the F6 test, the decomposition test, and this slice's test) reads
-/// its respective substring from this combined grounding reference.
-const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs +      tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs + tests/sd13_paladin_partial_caster_effective_caster_level.rs";
+/// F6 (chassis identity), the per-burden decomposition test, the SD13-E5
+/// effective-caster-level gate test, and the SD13-E5 level-2 lay on hands /
+/// divine grace grounding test as one literal. Each `.contains()` consumer
+/// reads its respective substring from this combined grounding reference.
+const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs +      tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs + \
+    tests/sd13_paladin_partial_caster_effective_caster_level.rs + \
+    tests/sd13_paladin_level2_lay_on_hands_divine_grace.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// both F6 (chassis identity) and the Ranger-only per-pillar decomposition +
@@ -918,46 +920,53 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Paladin level-1 chassis baseline, with smite evil's uses-per-day / \
-                            attack-bonus / damage-bonus formula grounded, the lay on hands / \
-                            divine grace / mercy burdens grounded as correct PF1 CRB level-gate \
-                            absences at level 1, the partial-caster effective-caster-level gate \
-                            grounded as a correct zero absence, and the hybrid chassis pair plus \
-                            the spells-known/spells-per-day/spell-DC spell burden still named and \
+                            Paladin level-1/level-2 chassis baseline, with smite evil's \
+                            uses-per-day / attack-bonus / damage-bonus formula grounded at both \
+                            levels, lay on hands and divine grace grounded for real at level 2 \
+                            (correct PF1 CRB level-gate absences at level 1), mercy grounded as a \
+                            correct PF1 CRB level-gate absence at both levels, the \
+                            partial-caster effective-caster-level gate grounded as a correct \
+                            zero absence at both levels, and the hybrid chassis pair plus the \
+                            spells-known/spells-per-day/spell-DC spell burden still named and \
                             unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_PALADIN_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3/E4/E5 leaves direct computed evidence that the \
-                    deterministic Human Paladin level-1 hybrid chassis is recognized on the compute \
-                    seam and that all four named non-spell class-feature burdens are grounded. The \
-                    smite evil pillar is grounded for real: uses per day = 1, attack-roll bonus = Charisma \
-                    modifier (if positive), damage bonus = paladin level (PF1 Core Rulebook), \
-                    computed against the deterministic fixture as 1 / +2 / +1 at level 1; this \
-                    grounds only that flat numeric formula, not alignment/evil-subtype target \
-                    resolution or evil-outsider/dragon/undead damage doubling. Lay on hands, divine \
-                    grace, and mercy are grounded as correct level gate absences: lay on hands and \
-                    divine grace are 2nd-level paladin features and mercy is a 3rd-level paladin \
-                    feature in the PF1 Core Rulebook, so at level 1 each emits a value-0 record \
-                    naming its at-grant formula without computing it. SD13-E5 additionally grounds \
-                    the partial-caster IDENTITY itself as one more flat level-gate record: \
-                    effective caster level = max(paladin level - 3, 0), which correctly grounds to \
-                    0 at level 1 (PF1 Core Rulebook: paladin spells begin at paladin level 4). The \
-                    row is Partial, not Supported: the F6 hybrid chassis pair (class-feature and \
-                    spell) stays claim-blocking as accepted hybrid truth, and the partial-caster \
-                    spell burden itself (Paladin is a divine partial caster in PF1 Core Rulebook: \
-                    spells begin at paladin level 4, effective caster level = paladin level - 3) \
+                    deterministic Human Paladin level-1 and level-2 hybrid chassis is recognized \
+                    on the compute seam and that all four named non-spell class-feature burdens \
+                    are grounded across those levels. The smite evil pillar is grounded for real: \
+                    uses per day = 1, attack-roll bonus = Charisma modifier (if positive), damage \
+                    bonus = paladin level (PF1 Core Rulebook), computed against the deterministic \
+                    fixtures as 1 / +2 / +1 at level 1 and 1 / +2 / +2 at level 2; this grounds \
+                    only that flat numeric formula, not alignment/evil-subtype target resolution \
+                    or evil-outsider/dragon/undead damage doubling. Lay on hands and divine grace \
+                    are grounded for real at level 2 (their PF1 CRB level gate): lay on hands uses \
+                    per day = 1/2 paladin level + Charisma modifier, with the heal amount stated \
+                    as a flat non-fabricated die-count magnitude (1d6 per two paladin levels, \
+                    never a rolled value); divine grace grants a Charisma-modifier bonus, applied \
+                    only if positive, on all saving throws. Below that gate, at level 1, both \
+                    remain correct level gate absences (value 0). Mercy stays a grounded level \
+                    gate absence at both levels: mercy is a 3rd-level paladin feature in the PF1 \
+                    Core Rulebook, so at level 1 and level 2 it emits a value-0 record naming its \
+                    at-grant formula without computing it. SD13-E5 additionally grounds the \
+                    partial-caster IDENTITY itself as one more flat level-gate record: effective \
+                    caster level = max(paladin level - 3, 0), which correctly grounds to 0 at \
+                    both level 1 and level 2 (PF1 Core Rulebook: paladin spells begin at paladin \
+                    level 4). The row is Partial, not Supported: the F6 hybrid chassis pair \
+                    (class-feature and spell) stays claim-blocking as accepted hybrid truth, no \
+                    Paladin level 3+ is proven, and the partial-caster spell burden itself \
                     remains named and unproven beyond the grounded caster-level gate arithmetic — \
                     no spell-source lineage, spells known or prepared posture, spells-per-day \
-                    progression, bonus spell slots, or spell save DCs are grounded. No Paladin \
-                    level 2+ is proven. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 \
-                    hybrid chassis recognition explanation all remain in place",
+                    progression, bonus spell slots, or spell save DCs are grounded. The F6 hybrid \
+                    baseline, the F6 hybrid blockers, and the F6 hybrid chassis recognition \
+                    explanation all remain in place (each gated to the bounded hybrid baseline \
+                    level, so they still fire only at level 1)",
                 next_required_uplift: "ground the paladin spells-known/spells-per-day/spell-DC \
                     burden content now that the effective-caster-level gate is grounded (spells \
                     begin at paladin level 4, caster level = paladin level - 3), then paladin \
-                    level-2+ progression (lay on hands and divine grace at level 2, mercy at \
-                    level 3)",
+                    level-3+ progression (mercy at level 3)",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",

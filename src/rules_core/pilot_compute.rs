@@ -193,6 +193,23 @@ const PALADIN_CLASS_ID: &str = "class:paladin";
 const RANGER_CLASS_ID: &str = "class:ranger";
 const HYBRID_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E5 Paladin milestone widening. The accepted level-1 chassis-and-spell-burden
+// separation is now joined by level 2, the PF1 Core Rulebook level gate at which lay
+// on hands and divine grace are actually granted. Nothing here grounds level 3+
+// Paladin (mercy is a 3rd-level paladin feature and stays an unproven correct
+// absence within this bounded surface).
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 2;
+
+// Lay on hands and divine grace are both 2nd-level paladin features in the PF1 Core
+// Rulebook. Below this level their honest computed surface is their correct
+// ABSENCE; at or above it, this slice grounds their flat numeric formulas.
+const PALADIN_LAY_ON_HANDS_DIVINE_GRACE_LEVEL: u8 = 2;
+
+// Mercy is a 3rd-level paladin feature (gained at 3rd level and every three levels
+// thereafter). This bounded slice does not ground any level past
+// MAX_SUPPORTED_PALADIN_LEVEL, so mercy is always a correct ABSENCE on this surface.
+const PALADIN_MERCY_LEVEL: u8 = 3;
+
 // SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
 // caster; this slice recognizes only its bounded single-class level-1 identity as direct
 // runtime evidence and grounds no bloodline power and no spell math (spell slots, spells
@@ -603,10 +620,11 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_rogue_level1_chassis(input, &mut explanations);
 
 
-    // SD13-E3/E4 Paladin-only decomposition: split the F6 hybrid class-feature
+    // SD13-E3/E4/E5 Paladin-only decomposition: split the F6 hybrid class-feature
     // and spell-burden blockers into per-burden diagnostics so the chassis
     // burden is separable from the partial-caster spell burden on the runtime
-    // path. This is an extension, never a downgrade, of the F6 surface.
+    // path, widened by SD13-E5 to the level-2 lay on hands / divine grace
+    // grant. This is an extension, never a downgrade, of the F6 surface.
     explain_paladin_level1_chassis_and_spell_burden_separation(
         input,
         &ability_modifiers,
@@ -2315,33 +2333,41 @@ fn explain_hybrid_level1_chassis(
     });
 }
 
-/// Return `true` when the chosen input is exactly a single-class Paladin at the
-/// bounded hybrid baseline level (1). Returns `false` for any other class, a
-/// multiclass mix, the Ranger hybrid (which has its own F6 class-feature
-/// decomposition lane), or any level-2+ Paladin this slice deliberately does
-/// not recognize — each of which stays blocked exactly as before.
-fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
-    matches!(
-        input.chosen.class_levels.as_slice(),
+/// The bounded Paladin milestone level this decomposition surface grounds, if
+/// any. Returns the single Paladin level when the chosen input is exactly a
+/// single-class Paladin at one of the supported milestone levels (1 or 2).
+/// Returns `None` for no Paladin, a non-Paladin class, a multiclass mix, the
+/// Ranger hybrid (which has its own F6 class-feature decomposition lane), or
+/// any level-3+ Paladin this slice deliberately does not recognize (mercy is
+/// a 3rd-level paladin feature and stays unproven) — each of which stays
+/// claim-blocked exactly as before.
+fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
+    match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == PALADIN_CLASS_ID
-                && class_level.level == HYBRID_BASELINE_LEVEL
-    )
+                && (1..=MAX_SUPPORTED_PALADIN_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
+        }
+        _ => None,
+    }
 }
 
-/// Surface direct SD13-E3/E4 runtime evidence for the deterministic Human
-/// Paladin level-1 chassis and spell burden as a separable pair of diagnostics.
+/// Surface direct SD13-E3/E4/E5 runtime evidence for the deterministic Human
+/// Paladin level-1/level-2 chassis and spell burden as a separable pair of
+/// diagnostics.
 ///
 /// This sits on top of the accepted SD13-F6 hybrid baseline: F6 already proves
 /// the deterministic Human Paladin level-1 hybrid identity is acknowledged on
 /// the compute seam and emits a single combined non-spell class-feature
 /// blocker plus a single combined later-spell blocker. This slice proves the
-/// per-burden separation Paladin actually needs:
+/// per-burden separation Paladin actually needs, widened by the SD13-E5
+/// level-2 milestone:
 ///
 /// - one grounded numeric explanation set for the fourth named non-spell
-///   pillar, Smite Evil, computed for real:
-///   * PF1 Core Rulebook Smite Evil at the bounded level-1 baseline: 1 use per
-///     day, an attack-roll bonus equal to the paladin's Charisma modifier (if
+///   pillar, Smite Evil, computed for real at every supported level:
+///   * PF1 Core Rulebook Smite Evil: 1 use per day below level 4, an
+///     attack-roll bonus equal to the paladin's Charisma modifier (if
 ///     positive — the rule text applies the Charisma bonus "if any", never a
 ///     penalty), and a damage bonus equal to the paladin's class level. This
 ///     grounds only that flat numeric formula; it grounds no alignment /
@@ -2349,17 +2375,33 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 ///     bookkeeping, no deflection-AC-vs-target bonus, and no
 ///     evil-outsider/evil-dragon/undead damage doubling.
 ///
-/// - three grounded level-gate records (value 0 each) for the remaining named
-///   non-spell pillars, whose honest level-1 computed surface is their correct
+/// - below the level-2 gate (i.e. at level 1), two grounded level-gate
+///   records (value 0 each) whose honest computed surface is their correct
 ///   ABSENCE by PF1 Core Rulebook level gate:
 ///   * `lay on hands` — a 2nd-level paladin feature (heals 1d6 per two paladin
 ///     levels; uses/day = 1/2 paladin level + Charisma modifier); the at-grant
 ///     formula is named but not computed
 ///   * `divine grace` — a 2nd-level paladin feature (+Charisma bonus on all
 ///     saving throws); the at-grant formula is named but not computed
-///   * `mercy` — a 3rd-level paladin feature (gained at 3rd level and every
-///     three levels thereafter, chosen from the mercy list and attached to lay
-///     on hands); the at-grant selection is named but not computed
+///
+/// - at or above the level-2 gate, lay on hands and divine grace are grounded
+///   for real as bounded, flat numeric formulas with no execution engine
+///   behind them (no healing-resolution engine, no saving-throw-resolution
+///   engine):
+///   * `lay on hands` uses per day = 1/2 paladin level + Charisma modifier;
+///     the heal amount is stated as a flat, non-fabricated d6-die-count
+///     magnitude (1d6 per two paladin levels), never a rolled value —
+///     mirroring how Smite Evil's damage bonus is a flat scalar, not a
+///     dice-roll execution
+///   * `divine grace` grants a Charisma-modifier bonus on all saving throws,
+///     applied only if positive — mirroring the "applied only if positive"
+///     idiom already used for Smite Evil's attack bonus
+///
+/// - `mercy` stays a grounded level-gate record (value 0) at every level this
+///   slice supports: mercy is a 3rd-level paladin feature (gained at 3rd
+///   level and every three levels thereafter, chosen from the mercy list and
+///   attached to lay on hands); the at-grant selection is named but not
+///   computed
 ///
 /// - one grounded numeric explanation (SD13-E5) for the partial-caster
 ///   IDENTITY itself, distinct from the spell burden it sits next to:
@@ -2371,7 +2413,8 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 ///     no spells per day, no bonus spell slots, and no spell save DCs.
 ///
 /// - one explicit claim-blocking diagnostic for the partial-caster spell
-///   burden, distinct from the grounded chassis records:
+///   burden, distinct from the grounded chassis records, unchanged by this
+///   slice:
 ///   * Paladin is a divine partial caster in PF1 Core Rulebook (spells begin
 ///     at paladin level 4; effective caster level = paladin level − 3); the
 ///     blocker names this partial-caster posture so the later spell-burden
@@ -2379,40 +2422,41 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 ///     (Cleric / Druid) and so partial-caster pressure stays visible on the
 ///     runtime path.
 ///
-/// This deliberately does not compute a supported spell surface. Beyond the
-/// grounded Smite Evil numeric formula, the three grounded level-gate
-/// absences, and the grounded effective-caster-level gate, it grounds no
-/// lay-on-hands resource handling, no divine-grace computation, no mercy
-/// handling, no spell slots, no spell source lineage, no spells known or
-/// prepared posture, no deity resolution, no domain mechanics, no
-/// alignment-target resolution, and no healing accounting. It only emits the
+/// This deliberately does not compute a supported spell surface, and it does
+/// not ground level 3+. Beyond the grounded Smite Evil, lay on hands, and
+/// divine grace numeric formulas, the mercy level-gate absence, and the
+/// grounded effective-caster-level gate, it grounds no spell slots, no spell
+/// source lineage, no spells known or prepared posture, no deity resolution,
+/// no domain mechanics, no alignment-target resolution, no healing-resource
+/// accounting, and no saving-throw-resolution engine. It only emits the
 /// grounded records and the remaining spell blocker that prove the F6 surface
 /// remains separable on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
-/// blocker and a single spell blocker. This seam adds per-burden granularity
-/// next to the F6 surface, never replacing it, so the F6 acceptance test
-/// continues to pass.
+/// blocker and a single spell blocker (both gated to the bounded hybrid
+/// baseline level, so they only fire at level 1). This seam adds per-burden
+/// granularity next to the F6 surface, never replacing it, so the F6
+/// acceptance test continues to pass.
 fn explain_paladin_level1_chassis_and_spell_burden_separation(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    if !is_single_class_paladin_level1(input) {
+    let Some(level) = supported_paladin_level(input) else {
         return;
-    }
+    };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
 
     // Smite Evil, the fourth named non-spell pillar, is grounded for real: a
     // bounded, flat numeric formula with no execution engine behind it. PF1
-    // Core Rulebook: 1 use/day at level 1, attack-roll bonus = Charisma
+    // Core Rulebook: 1 use/day below level 4, attack-roll bonus = Charisma
     // modifier (if positive; the rule never applies it as a penalty), damage
     // bonus = paladin level.
-    let paladin_level = i16::from(HYBRID_BASELINE_LEVEL);
+    let paladin_level = i16::from(level);
     let smite_evil_uses_per_day: i16 = 1;
     let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
     let smite_evil_attack_bonus = charisma_modifier.max(0);
@@ -2422,11 +2466,11 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         id: "class_chassis.paladin.smite_evil_uses_per_day".to_owned(),
         value: smite_evil_uses_per_day,
         detail: format!(
-            "Paladin Smite Evil uses per day at paladin level {HYBRID_BASELINE_LEVEL} (PF1 Core \
-             Rulebook: 1/day at level 1, +1 at level 4 and every three levels thereafter, none of \
-             which this bounded level-1 baseline grounds): {smite_evil_uses_per_day}. This grounds \
-             only the flat per-day resource count; it computes no swift-action activation \
-             bookkeeping and no per-use consumption tracking"
+            "Paladin Smite Evil uses per day at paladin level {level} (PF1 Core Rulebook: 1/day \
+             below level 4, +1 at level 4 and every three levels thereafter, none of which this \
+             bounded level-{MAX_SUPPORTED_PALADIN_LEVEL} baseline grounds): \
+             {smite_evil_uses_per_day}. This grounds only the flat per-day resource count; it \
+             computes no swift-action activation bookkeeping and no per-use consumption tracking"
         ),
     });
 
@@ -2449,47 +2493,95 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
             "Paladin Smite Evil damage bonus: equal to the paladin's class level (PF1 Core \
              Rulebook: 2x paladin level against evil outsiders, evil dragons, and undead, which \
              this bounded formula does not distinguish) = {smite_evil_damage_bonus} at paladin \
-             level {HYBRID_BASELINE_LEVEL}. This grounds only the flat per-hit damage bonus; it \
-             computes no evil-outsider/evil-dragon/undead damage doubling and no deflection-AC \
-             bonus against the smited target"
+             level {level}. This grounds only the flat per-hit damage bonus; it computes no \
+             evil-outsider/evil-dragon/undead damage doubling and no deflection-AC bonus against \
+             the smited target"
         ),
     });
 
-    // The remaining three named non-spell pillars are grounded as correct
-    // PF1 Core Rulebook level-gate absences: lay on hands and divine grace are
-    // 2nd-level paladin features and mercy is a 3rd-level paladin feature, so
-    // at level 1 the honest computed surface is their correct ABSENCE (value 0
-    // each). Each record names the at-grant formula without computing it; no
-    // heal amount, save bonus, or mercy effect is fabricated.
-    explanations.push(ComputationExplanation {
-        id: "class_chassis.paladin.level_gate.lay_on_hands".to_owned(),
-        value: 0,
-        detail: format!(
-            "Paladin lay on hands at paladin level {HYBRID_BASELINE_LEVEL}: correctly absent at \
-             level 1 by PF1 CRB level gate; at-grant formula named but not computed. Lay on \
-             hands is a 2nd-level paladin feature: heals 1d6 per two paladin levels, uses/day = \
-             1/2 paladin level + Charisma modifier"
-        ),
-    });
+    if level < PALADIN_LAY_ON_HANDS_DIVINE_GRACE_LEVEL {
+        // Below the level-2 gate, lay on hands and divine grace are grounded
+        // as correct PF1 Core Rulebook level-gate absences (value 0 each).
+        // Each record names the at-grant formula without computing it; no
+        // heal amount or save bonus is fabricated.
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.level_gate.lay_on_hands".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin lay on hands at paladin level {level}: correctly absent at level {level} \
+                 by PF1 CRB level gate; at-grant formula named but not computed. Lay on hands is a \
+                 2nd-level paladin feature: heals 1d6 per two paladin levels, uses/day = 1/2 \
+                 paladin level + Charisma modifier"
+            ),
+        });
 
-    explanations.push(ComputationExplanation {
-        id: "class_chassis.paladin.level_gate.divine_grace".to_owned(),
-        value: 0,
-        detail: format!(
-            "Paladin divine grace at paladin level {HYBRID_BASELINE_LEVEL}: correctly absent at \
-             level 1 by PF1 CRB level gate; at-grant formula named but not computed. Divine \
-             grace is a 2nd-level paladin feature: +Charisma bonus on all saving throws"
-        ),
-    });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.level_gate.divine_grace".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin divine grace at paladin level {level}: correctly absent at level {level} \
+                 by PF1 CRB level gate; at-grant formula named but not computed. Divine grace is a \
+                 2nd-level paladin feature: +Charisma bonus on all saving throws"
+            ),
+        });
+    } else {
+        // At or above the level-2 gate, lay on hands and divine grace are
+        // grounded for real: bounded, flat numeric formulas with no
+        // execution engine behind them.
+        let lay_on_hands_uses_per_day = paladin_level / 2 + charisma_modifier;
+        let lay_on_hands_heal_dice = paladin_level / 2;
+        let divine_grace_save_bonus = charisma_modifier.max(0);
 
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.lay_on_hands_uses_per_day".to_owned(),
+            value: lay_on_hands_uses_per_day,
+            detail: format!(
+                "Paladin lay on hands uses per day at paladin level {level} (PF1 Core Rulebook, \
+                 2nd-level paladin feature): 1/2 paladin level + Charisma modifier = \
+                 {paladin_level} / 2 + {charisma_modifier} = {lay_on_hands_uses_per_day}. This \
+                 grounds only the flat per-day resource count; it computes no \
+                 healing-resolution execution engine and no per-use consumption tracking"
+            ),
+        });
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.lay_on_hands_heal_amount".to_owned(),
+            value: lay_on_hands_heal_dice,
+            detail: format!(
+                "Paladin lay on hands heal amount at paladin level {level} (PF1 Core Rulebook, \
+                 2nd-level paladin feature): 1d6 per two paladin levels = {lay_on_hands_heal_dice}d6 \
+                 at paladin level {level}. This grounds only the flat die-count magnitude, stated \
+                 as a non-fabricated record; it computes no dice-roll execution and no \
+                 healing-resource accounting"
+            ),
+        });
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.divine_grace_save_bonus".to_owned(),
+            value: divine_grace_save_bonus,
+            detail: format!(
+                "Paladin divine grace saving-throw bonus at paladin level {level} (PF1 Core \
+                 Rulebook, 2nd-level paladin feature): the paladin's Charisma modifier, applied \
+                 only if positive (never as a penalty) = max({charisma_modifier}, 0) = \
+                 {divine_grace_save_bonus}, applied to all saving throws. This grounds only the \
+                 flat saving-throw bonus magnitude; it computes no saving-throw-resolution engine"
+            ),
+        });
+    }
+
+    // Mercy stays a grounded level-gate absence (value 0) at every level this
+    // slice supports: mercy is a 3rd-level paladin feature, so it is always
+    // correctly ABSENT within the bounded level-1/level-2 surface. The
+    // at-grant selection is named but not computed; no mercy effect is
+    // fabricated.
     explanations.push(ComputationExplanation {
         id: "class_chassis.paladin.level_gate.mercy".to_owned(),
         value: 0,
         detail: format!(
-            "Paladin mercy at paladin level {HYBRID_BASELINE_LEVEL}: correctly absent at level 1 \
-             by PF1 CRB level gate; at-grant formula named but not computed. Mercy is a \
-             3rd-level paladin feature (gained at 3rd level and every three levels thereafter): \
-             chosen from the mercy list, attaches to lay on hands"
+            "Paladin mercy at paladin level {level}: correctly absent at level {level} by PF1 CRB \
+             level gate (mercy is a {PALADIN_MERCY_LEVEL}rd-level paladin feature, gained at \
+             3rd level and every three levels thereafter); at-grant formula named but not \
+             computed. Mercy is chosen from the mercy list and attaches to lay on hands"
         ),
     });
 
@@ -2506,11 +2598,11 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         id: "class_chassis.paladin.partial_caster.effective_caster_level".to_owned(),
         value: paladin_effective_caster_level,
         detail: format!(
-            "Paladin effective caster level at paladin level {HYBRID_BASELINE_LEVEL}: max(paladin \
-             level - 3, 0) = max({paladin_level} - 3, 0) = {paladin_effective_caster_level} (PF1 \
-             Core Rulebook: paladin spells begin at paladin level 4). This grounds only the \
-             caster-level gate arithmetic; it computes no spells known, no spells per day, no \
-             bonus spell slots, and no spell save DCs"
+            "Paladin effective caster level at paladin level {level}: max(paladin level - 3, 0) = \
+             max({paladin_level} - 3, 0) = {paladin_effective_caster_level} (PF1 Core Rulebook: \
+             paladin spells begin at paladin level 4). This grounds only the caster-level gate \
+             arithmetic; it computes no spells known, no spells per day, no bonus spell slots, \
+             and no spell save DCs"
         ),
     });
 
@@ -2519,7 +2611,9 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // caster in PF1 Core Rulebook (spells begin at paladin level 4; effective
     // caster level = paladin level - 3), and the blocker must name that
     // partial-caster posture so the later spell-burden closure cannot confuse
-    // Paladin with a full divine caster (Cleric / Druid).
+    // Paladin with a full divine caster (Cleric / Druid). Unchanged by the
+    // level-2 widening: still claim-blocking at every level this slice
+    // supports.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
         message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
