@@ -58,8 +58,15 @@
 //! Ranger non-spell class-feature burden into three named pillars: favored enemy and
 //! combat style stay explicitly claim-blocked by their own named diagnostics, and
 //! Track (the Survival-check bonus to follow tracks, ½ ranger level minimum 1) is
-//! grounded for real as a bounded numeric value; it grounds no favored-enemy or
-//! combat-style math and no ranger spell posture. The SD13-E4 Druid Wild Empathy
+//! grounded for real as a bounded numeric value; it grounds no combat-style math and
+//! no ranger spell posture. The SD13-E5 Ranger Favored Enemy slice then grounds the
+//! favored-enemy flat surface for real — recognition of the chosen favored-enemy type
+//! (from `choice:ranger_favored_enemy`), the flat +2 bonus on Bluff, Knowledge,
+//! Perception, Sense Motive, and Survival checks against the favored enemy, and the
+//! flat +2 bonus on weapon attack and damage rolls against the favored enemy (PF1
+//! includes attack rolls, unlike D&D 3.5) — retiring the favored-enemy claim-blocking
+//! diagnostic while grounding no target-type matching or conditional-application
+//! engine. The SD13-E4 Druid Wild Empathy
 //! slice further splits the Druid nature-bond/wild-empathy class-feature blocker
 //! into two named diagnostics: nature bond (the animal-companion-vs-domain choice
 //! and nature sense) stays explicitly claim-blocked, and Wild Empathy (PF1 Core
@@ -2236,7 +2243,9 @@ fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E3 runtime evidence for the deterministic Human Ranger
 /// level-1 chassis as a per-pillar decomposition of the F6 combined non-spell
-/// class-feature blocker, grounding one of the three named pillars for real.
+/// class-feature blocker, grounding two of the three named pillars for real
+/// (Track by the SD13-E3 slice, the Favored Enemy flat surface by the SD13-E5
+/// slice).
 ///
 /// This sits on top of the accepted SD13-F6 hybrid baseline: F6 already proves
 /// the deterministic Human Ranger level-1 hybrid identity is acknowledged on the
@@ -2245,31 +2254,42 @@ fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
 /// single combined later-spell blocker. This slice proves the per-pillar
 /// separation Ranger actually needs:
 ///
-/// - two explicit claim-blocking diagnostics, one per still-missing non-spell
+/// - one explicit claim-blocking diagnostic for the still-missing non-spell
 ///   class-feature pillar:
-///   * `favored enemy` — the chosen favored-enemy type and its associated
-///     Bluff / Knowledge / Perception / Sense Motive / Survival skill-check
-///     bonuses, and the bonus on weapon damage rolls against that favored
-///     enemy, are not implemented
 ///   * `combat style` — the archery-vs-two-weapon-combat style choice is a
 ///     level-1 decision, but the bonus feat the combat style actually grants
 ///     is a level-2 PF1 Core Rulebook milestone; neither the level-1 style
 ///     choice nor the level-2 bonus-feat grant is implemented, so nothing is
 ///     fabricated at either level
 ///
-/// - one grounded explanation for the third pillar, Track, computed for real:
+/// - one grounded explanation for the Track pillar, computed for real:
 ///   the Survival-check bonus to follow tracks equals `max(ranger level / 2, 1)`
 ///   (PF1 Core Rulebook Track: +1/2 ranger level, minimum +1), which is `1` at
 ///   the bounded level-1 baseline. This grounds only the flat numeric Track
 ///   bonus, not a tracking-check execution engine: no full Survival check, no
 ///   DC resolution, and no tracking narrative is computed.
 ///
+/// - the grounded Favored Enemy FLAT surface (SD13-E5), which retires the
+///   `class_feature.ranger.favored_enemy.unsupported` blocker:
+///   * recognition of the chosen favored-enemy type from the
+///     `choice:ranger_favored_enemy` selection when it is present in chosen
+///     input (a +0 recognition record; nothing is fabricated when the choice
+///     is absent),
+///   * the flat +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and
+///     Survival checks against the favored enemy (PF1 CRB level 1), and
+///   * the flat +2 bonus on weapon attack AND damage rolls against the
+///     favored enemy (PF1 includes attack rolls, unlike D&D 3.5).
+///
+///   Only the flat magnitudes are grounded: no target-type matching and no
+///   conditional-application engine decides whether any specific check or
+///   attack is actually made against the favored enemy.
+///
 /// This deliberately does not compute a supported class-feature surface. It
-/// grounds no favored-enemy target resolution or skill/damage math, no
-/// combat-style feat grant, no animal companion, no favored-terrain breadth,
-/// and no spell posture. It only emits the per-pillar blockers and the one
-/// grounded Track value that prove the F6 surface remains separable on the
-/// runtime path.
+/// grounds no favored-enemy conditional application, no combat-style feat
+/// grant, no animal companion, no favored-terrain breadth, and no spell
+/// posture. It only emits the remaining per-pillar blocker and the grounded
+/// Track / Favored Enemy flat values that prove the F6 surface remains
+/// separable on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -2288,21 +2308,11 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         return;
     }
 
-    // The per-pillar blockers ride alongside the F6 hybrid blockers. They are
-    // intentionally distinct diagnostic ids so the chassis burden is separable
+    // The per-pillar blocker rides alongside the F6 hybrid blockers. It is an
+    // intentionally distinct diagnostic id so the chassis burden is separable
     // from the combined F6 non-spell class-feature burden on the runtime path.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.ranger.favored_enemy.unsupported".to_owned(),
-        message: format!(
-            "Ranger level {HYBRID_BASELINE_LEVEL} remains blocked on its favored enemy burden: \
-             the chosen favored-enemy type and its associated Bluff, Knowledge, Perception, Sense \
-             Motive, and Survival skill-check bonuses, plus the bonus on weapon damage rolls against \
-             that favored enemy, are not implemented in this bounded hybrid chassis baseline, so no \
-             Ranger favored-enemy support is claimed"
-        ),
-        claim_blocking: true,
-    });
-
+    // The former `class_feature.ranger.favored_enemy.unsupported` blocker is
+    // retired: the Favored Enemy flat surface is grounded for real below.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.ranger.combat_style.unsupported".to_owned(),
         message: format!(
@@ -2328,6 +2338,59 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
              max({HYBRID_BASELINE_LEVEL} / 2, 1) = {track_bonus}. This grounds only the flat numeric \
              Track bonus on Survival checks to follow tracks; it is not a tracking-check execution \
              engine and computes no full Survival check, no DC resolution, and no tracking narrative"
+        ),
+    });
+
+    // The Favored Enemy FLAT surface is grounded for real (SD13-E5). PF1 Core
+    // Rulebook, Ranger level 1: the ranger selects one favored-enemy type and
+    // gains a +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and
+    // Survival checks against it, plus a +2 bonus on weapon attack and damage
+    // rolls against it (PF1 includes attack rolls, unlike D&D 3.5). Only the
+    // flat magnitudes are grounded: no target-type matching and no
+    // conditional-application engine decides whether any specific check or
+    // attack is actually made against the favored enemy.
+    if let Some(favored_enemy) = choice_selection(input, "choice:ranger_favored_enemy") {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Favored Enemy selection (choice:ranger_favored_enemy -> {favored_enemy}): \
+                 the level-{HYBRID_BASELINE_LEVEL} favored-enemy type chosen for this character is \
+                 {favored_enemy}. This is a bounded recognition record of the chosen enemy type \
+                 only; the flat bonus magnitudes are grounded separately, and no target-type \
+                 matching or conditional-application engine is implemented, so it carries no \
+                 fabricated mechanical value (+0)"
+            ),
+        });
+    }
+
+    let favored_enemy_bonus: i16 = 2;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.favored_enemy_skill_bonus".to_owned(),
+        value: favored_enemy_bonus,
+        detail: format!(
+            "Ranger Favored Enemy skill bonus (PF1 Core Rulebook, level \
+             {HYBRID_BASELINE_LEVEL}): +{favored_enemy_bonus} on Bluff, Knowledge, Perception, \
+             Sense Motive, and Survival checks against the chosen favored enemy. This grounds only \
+             the flat +{favored_enemy_bonus} magnitude; no target-type matching and no \
+             conditional-application engine is implemented, so whether any specific skill check is \
+             actually made against the favored enemy is never resolved and no skill total is \
+             modified by this record"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.favored_enemy_attack_damage_bonus".to_owned(),
+        value: favored_enemy_bonus,
+        detail: format!(
+            "Ranger Favored Enemy weapon attack/damage bonus (PF1 Core Rulebook, level \
+             {HYBRID_BASELINE_LEVEL}): +{favored_enemy_bonus} on weapon attack rolls AND weapon \
+             damage rolls against the chosen favored enemy — PF1 includes attack rolls, unlike the \
+             damage-only D&D 3.5 favored enemy. This grounds only the flat \
+             +{favored_enemy_bonus} magnitude; no target-type matching and no \
+             conditional-application engine is implemented, so whether any specific attack is \
+             actually made against the favored enemy is never resolved and no combat baseline is \
+             modified by this record"
         ),
     });
 }

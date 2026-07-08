@@ -600,7 +600,6 @@ mod tests {
             generic_plus(&[
                 "class_feature.hybrid.ranger.unsupported",
                 "class_spell.hybrid.ranger.unsupported",
-                "class_feature.ranger.favored_enemy.unsupported",
                 "class_feature.ranger.combat_style.unsupported",
             ])
         );

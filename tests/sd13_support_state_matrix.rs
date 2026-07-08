@@ -302,8 +302,10 @@ fn paladin_hybrid_row_is_blocked_and_computed_with_named_burdens() {
 #[test]
 fn ranger_hybrid_row_is_partial_and_computed_with_named_burdens() {
     // The SD13-E3 Ranger decomposition slice grounds Track for real and
-    // promotes this row from Blocked to Partial; favored enemy, combat style,
-    // and the later spell burden remain named and unproven.
+    // promotes this row from Blocked to Partial; the SD13-E5 slice further
+    // grounds the Favored Enemy flat surface. Combat style, the favored-enemy
+    // conditional-application engine, and the later spell burden remain named
+    // and unproven.
     let matrix = matrix();
     let hybrid = row(&matrix, "class.ranger.hybrid_chassis_and_spell_burden");
     assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
@@ -335,13 +337,22 @@ fn ranger_hybrid_row_is_partial_and_computed_with_named_burdens() {
         "ranger hybrid row note must still defer the spell burden to SD13-E4: {}",
         hybrid.blocker_or_lossiness_note
     );
-    for token in ["favored enemy", "combat style"] {
+    // Combat style stays a named, unproven burden; the favored-enemy flat
+    // surface is grounded but its conditional-application engine stays named
+    // and unproven.
+    for token in ["favored enemy", "combat style", "conditional-application"] {
         assert!(
             hybrid.blocker_or_lossiness_note.contains(token),
-            "ranger hybrid row note must name the still-unproven '{token}' burden: {}",
+            "ranger hybrid row note must name the '{token}' burden truth: {}",
             hybrid.blocker_or_lossiness_note
         );
     }
+    assert!(
+        hybrid.blocker_or_lossiness_note.contains("grounds")
+            || hybrid.blocker_or_lossiness_note.contains("grounded"),
+        "ranger hybrid row note must record the grounded Track / favored-enemy flat surface: {}",
+        hybrid.blocker_or_lossiness_note
+    );
 }
 
 #[test]
