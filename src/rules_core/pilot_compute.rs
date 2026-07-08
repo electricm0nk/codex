@@ -38,7 +38,13 @@
 //! independent bonus feat every 1st-level Wizard is granted, is grounded for real,
 //! while the specialization CHOICE burden (chosen school, opposed schools, specialty
 //! school bonus) stays its own named claim-blocking diagnostic; the prepared
-//! spellbook / spells-prepared / spell-slot posture burden is untouched. The SD13-E3
+//! spellbook / spells-prepared / spell-slot posture burden is untouched. The SD13-E5
+//! Wizard specialization slice then grounds the flat surface of that choice for real:
+//! the canonical Evocation specialization with Necromancy and Transmutation opposed
+//! is recognized, and the specialist bonus slot is grounded as a flat count (one
+//! 1st-level Evocation-only slot at level 1, no cantrip-level slot, no slot
+//! contents), narrowing the claim-blocker to the school powers (intense spells,
+//! force missile) and the opposed-school two-slot preparation cost. The SD13-E3
 //! Fighter milestone tranche has since
 //! widened further still, to level 8: the level-8 bonus-feat progression seam is
 //! surfaced explicitly, mirroring the level-2/4/6 bonus-feat seams, and grounds no
@@ -219,6 +225,21 @@ const BARD_BASELINE_LEVEL: u8 = 1;
 // opposed schools locked, specialty school bonus at later levels).
 const WIZARD_CLASS_ID: &str = "class:wizard";
 const WIZARD_BASELINE_LEVEL: u8 = 1;
+
+// SD13-E5 Wizard specialization slice: the canonical deterministic fixture
+// selections for the school specialization choice. The bounded seam recognizes
+// exactly this canonical triple (Evocation chosen; Necromancy and Transmutation
+// opposed) versus "absent or anything else" — it is not a general school engine.
+const WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID: &str = "choice:wizard_school_specialization";
+const WIZARD_OPPOSED_SCHOOLS_CHOICE_ID: &str = "choice:wizard_opposed_schools";
+const EVOCATION_SCHOOL_SELECTION: &str = "school:evocation";
+const NECROMANCY_SCHOOL_SELECTION: &str = "school:necromancy";
+const TRANSMUTATION_SCHOOL_SELECTION: &str = "school:transmutation";
+/// PF1 Core Rulebook arcane school class feature: a specialist wizard gains one
+/// additional spell slot of each spell level she can cast, 1st and up, usable only
+/// for spells of the chosen school. At the bounded baseline level 1 that is exactly
+/// one 1st-level slot; there is no cantrip-level bonus slot.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1: i16 = 1;
 
 // SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
 // martial class; the bounded single-class level-1 identity is recognized as
@@ -3378,14 +3399,38 @@ fn is_single_class_wizard_level1(input: &CharacterInput) -> bool {
     )
 }
 
+/// Return `true` when the input carries exactly the canonical deterministic school
+/// specialization selections: Evocation chosen as the specialty school, with
+/// Necromancy and Transmutation as the two opposed schools. Anything else — the
+/// choice slots absent (e.g. a universalist-shaped request) or any non-canonical
+/// selection — returns `false`, so no specialization grounding is fabricated for a
+/// choice that was never made or that this bounded slice does not know.
+fn wizard_has_canonical_specialization_selections(input: &CharacterInput) -> bool {
+    if choice_selection(input, WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID)
+        != Some(EVOCATION_SCHOOL_SELECTION)
+    {
+        return false;
+    }
+    let opposed: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == WIZARD_OPPOSED_SCHOOLS_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+    opposed.len() == 2
+        && opposed.contains(&NECROMANCY_SCHOOL_SELECTION)
+        && opposed.contains(&TRANSMUTATION_SCHOOL_SELECTION)
+}
+
 /// Surface direct SD13-E4-R3 runtime evidence for the deterministic Human Wizard
 /// level-1 prepared arcane spell-bearing baseline, while keeping it explicitly
 /// claim-blocked on its two still-missing burdens.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no
 /// spellbook content, no spells prepared, no spell slots per day, no spell save
-/// DCs, no bonus spell slots from a high Intelligence, no school-opposition
-/// bookkeeping, and no specialty school bonus. It only:
+/// DCs, no bonus spell slots from a high Intelligence, and no school-power or
+/// opposed-school preparation-cost math. It only:
 /// - leaves one recognition explanation so the `class:wizard:1` identity is
 ///   acknowledged as a prepared arcane spell-bearing class rather than an
 ///   undocumented packet placeholder (direct runtime evidence, carrying no
@@ -3396,17 +3441,24 @@ fn is_single_class_wizard_level1(input: &CharacterInput) -> bool {
 ///   letting the Wizard create scrolls of spells they know. This is a bounded
 ///   grant-only recognition, not a numeric formula: it carries no fabricated
 ///   mechanical value (+0) and computes no scroll-creation cost, crafting time,
-///   spellbook content, or spell-slot machinery, and
-/// - emits two distinct claim-blocking diagnostics naming the school
-///   specialization CHOICE burden (chosen school, two opposed schools, specialty
-///   school bonus) and the prepared spellbook / spells-prepared / spell-slot
-///   posture burden explicitly, rather than hiding behind a generic "unsupported
-///   caster" label.
+///   spellbook content, or spell-slot machinery,
+/// - grounds the flat surface of the school specialization choice for real
+///   (SD13-E5), gated on the exact canonical deterministic selections: a
+///   recognition record of the Evocation specialization with Necromancy and
+///   Transmutation opposed (+0), plus the specialist bonus slot as a flat count
+///   only — one 1st-level Evocation-only bonus slot at level 1 (+1), with no
+///   cantrip-level bonus slot and no slot contents, and
+/// - emits two distinct claim-blocking diagnostics naming the school-powers /
+///   opposed-school-preparation-cost burden (intense spells, the force missile
+///   3 + Int-mod/day pool, and the two-prepared-slot cost for opposed-school
+///   spells) and the prepared spellbook / spells-prepared / spell-slot posture
+///   burden explicitly, rather than hiding behind a generic "unsupported caster"
+///   label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this
 /// seam keeps that blocked posture but makes the Wizard prepared spell-bearing
-/// identity, its one grounded universal class feature, and its two remaining
-/// named burdens legible on the runtime path. The matrix file row transition
+/// identity, its grounded class-feature surfaces, and its two remaining named
+/// burdens legible on the runtime path. The matrix file row transition
 /// (Unverified/Observed → Blocked/Computed, then Blocked → Partial once Scribe
 /// Scroll is grounded) is recorded by this proof surface and applied to the
 /// in-source carrier directly (see `seeded_sd13_e1_f1_current_truth`).
@@ -3459,24 +3511,63 @@ fn explain_wizard_level1_prepared_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the specialization CHOICE burden explicitly, now
-    // that Scribe Scroll (the other named pillar of the former combined
-    // school-specialization burden) is grounded above.
+    // Grounded for real (SD13-E5): the flat surface of the school specialization
+    // choice, gated on the exact canonical deterministic selections ("canonical"
+    // versus "absent or anything else"). An input without them (e.g. a
+    // universalist-shaped request that never made the choice) gains no
+    // specialization recognition and no specialist bonus slot.
+    if wizard_has_canonical_specialization_selections(input) {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.wizard.specialization_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Recognized Wizard level {WIZARD_BASELINE_LEVEL} school specialization choice: \
+                 the canonical deterministic selections choose Evocation as the specialty arcane \
+                 school ({WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID} -> \
+                 {EVOCATION_SCHOOL_SELECTION}) with Necromancy and Transmutation as the two \
+                 opposed schools ({WIZARD_OPPOSED_SCHOOLS_CHOICE_ID} -> \
+                 {NECROMANCY_SCHOOL_SELECTION}, {TRANSMUTATION_SCHOOL_SELECTION}), per the PF1 \
+                 Core Rulebook arcane school class feature. This is a bounded recognition record \
+                 of the choice identity only: it carries no fabricated mechanical value (+0) and \
+                 computes no school power, no opposed-school preparation cost, and no spell math"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.wizard.specialist_bonus_slot".to_owned(),
+            value: WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1,
+            detail: format!(
+                "Wizard level {WIZARD_BASELINE_LEVEL} specialist bonus spell slot: a specialist \
+                 wizard gains one additional spell slot of each spell level she can cast, 1st \
+                 and up, usable only for spells of the chosen school (PF1 Core Rulebook arcane \
+                 school class feature). At level {WIZARD_BASELINE_LEVEL} that is exactly one \
+                 1st-level Evocation-only bonus slot \
+                 ({WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1:+} flat count); there is no \
+                 cantrip-level bonus slot. This grounds the flat count only: no slot contents, \
+                 no spells prepared per day, no per-day slot totals, and no bonus slots from a \
+                 high Intelligence are computed"
+            ),
+        });
+    }
+
+    // Still blocked (1/2): with the specialization choice itself grounded above, the
+    // claim-blocker narrows to exactly what stays unimplemented — the school powers
+    // and the opposed-school preparation cost.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.wizard.specialization_choice.unsupported".to_owned(),
+        id: "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported".to_owned(),
         message: format!(
-            "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school specialization \
-             choice burden: the chosen school, the two opposed schools locked out by that choice, \
-             and the specialty school bonus (additional spell slots / spells known at later \
-             levels) are not implemented in this bounded prepared spell baseline, so no Wizard \
-             specialization-choice support is claimed"
+            "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school-powers and \
+             opposed-school preparation-cost burden: the Evocation school powers (intense \
+             spells, and the force missile pool of 3 + Int-mod uses per day) and the \
+             opposed-school preparation cost (each opposed-school spell occupies two prepared \
+             slots) are not implemented in this bounded prepared spell baseline, so no Wizard \
+             school-power or opposed-school support is claimed"
         ),
         claim_blocking: true,
     });
 
     // Still blocked (2/2): name the prepared spellbook / spells-prepared /
-    // spell-slot posture burden explicitly. Unchanged by the Scribe Scroll
-    // grounding: it fabricates no spell math.
+    // spell-slot posture burden explicitly. Unchanged by the Scribe Scroll and
+    // specialization-choice groundings: it fabricates no spell math.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.wizard.prepared_spellbook.unsupported".to_owned(),
         message:

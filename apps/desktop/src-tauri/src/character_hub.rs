@@ -619,7 +619,7 @@ mod tests {
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:wizard", 1),
             generic_plus(&[
-                "class_feature.wizard.specialization_choice.unsupported",
+                "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported",
                 "class_spell.wizard.prepared_spellbook.unsupported",
             ])
         );
