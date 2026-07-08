@@ -54,10 +54,14 @@ export function Sd16UpdateUi({ initialDeps, restoreOffer }: Sd16UpdateUiProps) {
   const [deps, setDeps] = useState<Sd16UpdateControllerDeps>(
     () => initialDeps ?? buildUnwiredUpdateDeps(),
   );
+  useEffect(() => {
+    if (initialDeps) {
+      setDeps(initialDeps);
+    }
+  }, [initialDeps]);
   const [checkInProgress, setCheckInProgress] = useState(false);
   const [installInProgress, setInstallInProgress] = useState(false);
   const [restoreInProgress, setRestoreInProgress] = useState(false);
-
   const handleRestore = useCallback(async () => {
     if (!restoreOffer) {
       return;
