@@ -92,8 +92,14 @@
 //! slice further splits the F7 combined bloodline burden into two named diagnostics
 //! and grounds one for real: Eschew Materials, the universal, bloodline-independent
 //! bonus feat every 1st-level Sorcerer receives; it grounds no bloodline power,
-//! bloodline arcana, or spell math, and the bloodline-power and spontaneous
-//! spell-posture burdens stay explicitly claim-blocked. Unsupported input yields
+//! bloodline arcana, or spell math. The SD13-E5 Sorcerer bloodline-choice slice then
+//! recognizes the canonical deterministic bloodline choice-slot selection
+//! (`choice:sorcerer_bloodline -> bloodline:arcane`) as chosen input — recognition
+//! only, since the Arcane bloodline's level-1 power is Arcane Bond (a familiar or a
+//! bonded object), an execution engine rather than a flat number — and narrows the
+//! former bloodline-power blocker to the Arcane Bond / bloodline progression burden;
+//! that burden and the spontaneous spell-posture burden stay explicitly
+//! claim-blocked. Unsupported input yields
 //! claim-blocking diagnostics and withheld explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
@@ -187,6 +193,14 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // known, spell DCs, bonus spells, or prepared posture) for it.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const SORCERER_BASELINE_LEVEL: u8 = 1;
+
+// SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
+// Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
+// chosen input. Recognition only: the Arcane bloodline's level-1 power is Arcane Bond
+// (a familiar or a bonded object — an execution engine, not a flat number), so no
+// power value is ever fabricated from this choice.
+const SORCERER_BLOODLINE_CHOICE_ID: &str = "choice:sorcerer_bloodline";
+const ARCANE_BLOODLINE_SELECTION_ID: &str = "bloodline:arcane";
 
 // SD13-E4-F7 spell-bearing baseline identity. Bard is a spontaneous arcane caster with a
 // distinct chassis-class-feature burden (Bardic Knowledge and Bardic Music); this slice
@@ -3196,21 +3210,39 @@ fn explain_rogue_level1_chassis(
 /// boolean feat grant, not a numeric formula, so it carries no fabricated mechanical
 /// value; it grounds no bloodline power, no bloodline arcana, and no spell math
 /// whatsoever — no spell slots, spells known, spell DCs, bonus spells, prepared
-/// posture, or school choice. It only:
+/// posture, or school choice.
+///
+/// The SD13-E5 Sorcerer bloodline-choice slice grounds the next honest pillar: the
+/// canonical deterministic bloodline choice-slot selection
+/// (`choice:sorcerer_bloodline -> bloodline:arcane`) is recognized as chosen input,
+/// mirroring the Fighter bonus-feat choice-slot / Wizard Scribe Scroll precedent. This
+/// is recognition only: the Arcane bloodline's level-1 power is Arcane Bond (a familiar
+/// or a bonded object — an execution engine, not a flat number), so no power value is
+/// fabricated. The former combined `bloodline_power` blocker narrows to an
+/// `arcane_bond_and_bloodline_progression` blocker naming what stays unimplemented. It
+/// only:
 /// - leaves one recognition explanation so the `class:sorcerer:1` identity is acknowledged
 ///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves one grounded explanation recognizing the Eschew Materials bonus-feat grant
-///   (also carrying no fabricated mechanical value, since it is a boolean grant), and
-/// - emits two distinct claim-blocking diagnostics naming the bloodline-power burden
-///   (bloodline selection, level-1 bloodline power, bloodline arcana, and higher-level
-///   bonus spells/feats/skills) and the spontaneous known-spell / slot posture burden
-///   explicitly, rather than hiding behind a generic "unsupported caster" label.
+///   (also carrying no fabricated mechanical value, since it is a boolean grant),
+/// - conditionally leaves one grounded explanation recognizing the canonical bloodline
+///   choice-slot selection when a `choice:sorcerer_bloodline` selection is present
+///   (carrying no fabricated mechanical value, since Arcane Bond is an execution engine
+///   rather than a number), and
+/// - emits two distinct claim-blocking diagnostics naming the Arcane Bond / bloodline
+///   progression burden (Arcane Bond execution, the bloodline arcana, the bloodline
+///   class skill grant, and the 3rd+-level bonus spells/feats) and the spontaneous
+///   known-spell / slot posture burden explicitly, rather than hiding behind a generic
+///   "unsupported caster" label. The Arcane Bond blocker names the Arcane bloodline's
+///   specific mechanics only when the Arcane bloodline was the recognized selection;
+///   otherwise it stays bloodline-agnostic so it never claims a specific bloodline's
+///   facts for a character whose chosen bloodline this seam did not recognize.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Sorcerer spell-bearing identity, the
-/// grounded Eschew Materials grant, and the two remaining named burdens legible on the
-/// runtime path.
+/// grounded Eschew Materials grant, the grounded bloodline choice recognition, and the
+/// two remaining named burdens legible on the runtime path.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -3256,16 +3288,67 @@ fn explain_sorcerer_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the bloodline-power burden explicitly, now that Eschew
-    // Materials has been split out and grounded above.
+    // Grounded for real: the canonical bloodline choice-slot selection is recognized as
+    // chosen input, mirroring the Fighter bonus-feat choice-slot / Wizard Scribe Scroll
+    // precedent. Recognition only: the Arcane bloodline's level-1 power is Arcane Bond,
+    // an execution engine rather than a flat number, so no power value is fabricated.
+    let bloodline_selection = choice_selection(input, SORCERER_BLOODLINE_CHOICE_ID);
+    let recognized_arcane_bloodline = bloodline_selection == Some(ARCANE_BLOODLINE_SELECTION_ID);
+    if let Some(selection) = bloodline_selection {
+        let detail = if recognized_arcane_bloodline {
+            format!(
+                "Sorcerer level {SORCERER_BASELINE_LEVEL} bloodline choice recognized: the \
+                 canonical deterministic selection ({SORCERER_BLOODLINE_CHOICE_ID} -> \
+                 {selection}) names the Arcane bloodline as chosen input on the compute seam. \
+                 This is a recognition record of the choice slot only, so it carries no \
+                 fabricated mechanical value (+0): the Arcane bloodline's level-1 power is \
+                 Arcane Bond (a familiar or a bonded object), an execution engine rather than a \
+                 flat number, and neither it nor the bloodline arcana, bloodline class skill \
+                 grant, or higher-level bonus spells/feats is grounded here"
+            )
+        } else {
+            format!(
+                "Sorcerer level {SORCERER_BASELINE_LEVEL} bloodline choice slot is present \
+                 ({SORCERER_BLOODLINE_CHOICE_ID} -> {selection}), but only the canonical \
+                 deterministic Arcane bloodline selection is recognized on this bounded seam; \
+                 no bloodline power is grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.sorcerer.bloodline_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    // Still blocked (1/2): with the bloodline choice recognized above, narrow the former
+    // combined bloodline-power blocker to what actually remains unimplemented. The message
+    // names the Arcane bloodline specifically only when it was actually the recognized
+    // selection above; when no bloodline is chosen, or a different bloodline is chosen,
+    // it stays bloodline-agnostic so it never asserts a specific bloodline's mechanics as
+    // "remaining" for a character whose chosen bloodline this seam did not recognize.
+    let arcane_bond_message = if recognized_arcane_bloodline {
+        format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its Arcane Bond and \
+             bloodline progression burden: the Arcane bloodline's level-1 power Arcane Bond (a \
+             familiar or a bonded object — an execution engine, not a flat number), the \
+             bloodline arcana (+1 spell save DC on spells modified by a metamagic feat that \
+             raises the spell's level — a conditional effect), the bloodline class skill grant \
+             (Knowledge [arcana]), and the bloodline bonus spells and bonus feats at 3rd+ level \
+             are not implemented in this bounded spell baseline, so no Sorcerer bloodline-power \
+             support is claimed"
+        )
+    } else {
+        format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline power and \
+             progression burden: no bloodline power, bloodline arcana, bloodline class skill \
+             grant, or bonus spells/feats at 3rd+ level are implemented for any bloodline in this \
+             bounded spell baseline, so no Sorcerer bloodline-power support is claimed"
+        )
+    };
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.sorcerer.bloodline_power.unsupported".to_owned(),
-        message: format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline power \
-             burden: the bloodline selection, its level-1 bloodline power, bloodline arcana, and \
-             bloodline bonus spells/feats/skills are not implemented in this bounded spell \
-             baseline, so no Sorcerer bloodline-power support is claimed"
-        ),
+        id: "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported".to_owned(),
+        message: arcane_bond_message,
         claim_blocking: true,
     });
 
