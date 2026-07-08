@@ -588,9 +588,6 @@ mod tests {
             generic_plus(&[
                 "class_feature.hybrid.paladin.unsupported",
                 "class_spell.hybrid.paladin.unsupported",
-                "class_feature.paladin.lay_on_hands.unsupported",
-                "class_feature.paladin.divine_grace.unsupported",
-                "class_feature.paladin.mercy.unsupported",
                 "class_spell.paladin.partial_caster.unsupported",
             ])
         );

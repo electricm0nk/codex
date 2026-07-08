@@ -483,13 +483,16 @@ fn matrix_preserves_bard_blocked_computed_truth() {
 fn matrix_preserves_hybrid_paladin_and_sorcerer_blocked_computed_truth() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
+    // Paladin was later promoted to Partial/Computed by its own SD13-E5
+    // level-gate slice (lay on hands / divine grace / mercy grounded as
+    // correct level-1 absences).
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .unwrap_or_else(|| panic!("row class.paladin.hybrid_chassis_and_spell_burden must exist"));
     assert_eq!(
         paladin.support_state,
-        SupportState::Blocked,
-        "paladin row must stay Blocked after the Wizard slice"
+        SupportState::Partial,
+        "paladin row must keep its later-accepted Partial posture after the Wizard slice"
     );
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
     assert_eq!(

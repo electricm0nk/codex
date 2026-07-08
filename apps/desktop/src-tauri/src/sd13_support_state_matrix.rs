@@ -259,16 +259,18 @@ mod tests {
 
     #[test]
     fn every_blocked_row_preserves_a_non_empty_blocker_note() {
+        // SD13-E5 promoted Paladin, the last remaining `Blocked` class row, to
+        // `Partial`, so the seeded truth may now legitimately carry zero
+        // `Blocked` rows. This test no longer requires at least one to exist;
+        // it only pins the invariant that any row that IS `Blocked` still
+        // preserves a non-empty note, so a future regression that reintroduces
+        // an unblocked-but-unexplained row is still caught.
         let snapshot = snapshot();
         let blocked: Vec<&Sd13SupportStateRow> = snapshot
             .rows
             .iter()
             .filter(|r| r.support_state == "blocked")
             .collect();
-        assert!(
-            !blocked.is_empty(),
-            "at least one blocked row must exist in the seeded truth"
-        );
         for r in blocked {
             assert!(
                 !r.blocker_or_lossiness_note.is_empty(),

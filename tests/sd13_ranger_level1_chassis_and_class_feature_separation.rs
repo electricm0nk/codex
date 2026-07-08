@@ -455,14 +455,16 @@ fn matrix_ranger_row_is_promoted_to_partial_and_names_remaining_pillars() {
 fn matrix_preserves_sibling_rows_after_ranger_promotion() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
-    // This row stays Blocked/Computed.
+    // Paladin was later promoted to Partial/Computed by its own SD13-E5
+    // level-gate slice (lay on hands / divine grace / mercy grounded as
+    // correct level-1 absences).
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .unwrap_or_else(|| panic!("row class.paladin.hybrid_chassis_and_spell_burden must exist"));
     assert_eq!(
         paladin.support_state,
-        SupportState::Blocked,
-        "paladin row must stay Blocked after the ranger-decomposition slice"
+        SupportState::Partial,
+        "paladin row must keep its later-accepted Partial posture after the ranger-decomposition slice"
     );
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
 
