@@ -439,7 +439,7 @@ fn matrix_ranger_row_is_promoted_to_partial_and_names_remaining_pillars() {
     }
     // The note must not claim Track is unproven — it is grounded.
     assert!(
-        note.contains("Track") && note.contains("grounds") || note.contains("grounded"),
+        note.contains("Track") && (note.contains("grounds") || note.contains("grounded")),
         "ranger partial note must name Track as grounded, not unproven: {note}"
     );
     // The spell burden is still named as deferred to SD13-E4.

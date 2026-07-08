@@ -618,12 +618,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Levels 9-10 remain out of proof: PF1 core Fighter has no new class-feature \
                     milestone at level 9 (the bonus-feat cadence's next entry is level 10, and \
                     base attack / base save progression is already the level-generic formula \
-                    this row proves), and level 10 itself introduces no new Fighter-specific \
-                    mechanic beyond that same generic base-attack/save climb and the ordinary \
-                    PF1 ability-score-increase milestone (already trusted at face value, like \
-                    every other ability adjustment in this codebase, with no separate seam \
-                    needed). Any general feat-effect/prerequisite engine also remains out of \
-                    proof",
+                    this row proves), and level 10 needs only the level-10 bonus-feat cadence \
+                    entry proven (the ordinary PF1 ability-score-increase milestone is already \
+                    trusted at face value, like every other ability adjustment in this codebase, \
+                    with no separate seam needed). Any general feat-effect/prerequisite engine \
+                    also remains out of proof",
                 next_required_uplift: "later SD13-E3 slice widening Fighter beyond level 8 \
                     toward the level-10 milestones: level 9 has no new PF1 Fighter-specific \
                     milestone (base attack/save progression is already level-generic and \

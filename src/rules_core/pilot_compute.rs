@@ -1810,7 +1810,7 @@ fn explain_fighter_class_features(
 }
 
 /// The canonical Human Fighter feat-choice selections this slice preserves on the
-/// deterministic level-1 through level-5 seam, as `(choice_set_id,
+/// deterministic level-1 through level-8 seam, as `(choice_set_id,
 /// canonical_selection_id)` pairs. Any named slot present but deviating from its
 /// canonical selection is claim-blocked. A slot absent for the chosen level (e.g.
 /// the level-2 bonus feat at level 1) is not fabricated. This same machinery
@@ -1850,7 +1850,7 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 8] = [
 ];
 
 /// Claim-block non-canonical feat-choice mutations on the deterministic Human Fighter
-/// levels 1-3 seam, while preserving the accepted canonical selections exactly.
+/// levels 1-8 seam, while preserving the accepted canonical selections exactly.
 ///
 /// This is deliberately not a general feat legality or prerequisite engine. It only knows
 /// the exact accepted deterministic feat-choice selections on the bounded Human Fighter
@@ -1860,7 +1860,7 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 8] = [
 /// proof without a general engine — instead of letting the non-canonical build ride through
 /// as a fabricated computed success.
 ///
-/// It runs only for a supported single-class Human Fighter (levels 1-3); any other posture
+/// It runs only for a supported single-class Human Fighter (levels 1-8); any other posture
 /// is already claim-blocked upstream and is left untouched here. It grounds no alternative
 /// feat effect and does not touch the read-only canonical Human ability-bonus target.
 fn validate_fighter_feat_choice_legality(
