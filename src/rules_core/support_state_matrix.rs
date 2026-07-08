@@ -60,10 +60,12 @@
 //!   spell-slot posture burden, and fabricates no spell math,
 //! - the Cleric row is `Partial` / `Computed`: the SD13-E4 slice proves the
 //!   deterministic Human Cleric level-1 prepared divine spell-bearing identity is
-//!   recognized on the compute seam, and a later SD13-E4 Cleric Channel Energy slice
-//!   grounds Channel Energy for real (die count and uses per day), but the domain
-//!   choice burden and the prepared divine spell posture burden remain named and
-//!   unproven, and fabricates no domain power math and no spell math,
+//!   recognized on the compute seam, a later SD13-E4 Cleric Channel Energy slice
+//!   grounds Channel Energy for real (die count and uses per day), and the SD13-E5
+//!   Cleric domain slice grounds the domain choice seam and the flat domain spell
+//!   slot count, but the domain powers burden and the prepared divine spell posture
+//!   burden remain named and unproven, and fabricates no domain power math and no
+//!   spell math,
 //! - the Druid row is `Blocked` / `Computed`: the SD13-E4 slice proves the
 //!   deterministic Human Druid level-1 prepared divine spell-bearing identity is
 //!   recognized on the compute seam, but it stays blocked on the nature bond / wild
@@ -352,8 +354,9 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
 
 /// SD13-E4 dedicated proof surface for the bounded Human Cleric level-1 prepared
 /// divine spell baseline: direct computed recognition of the prepared divine
-/// spell-bearing identity that stays explicitly blocked on the domain / channel
-/// energy burden and the prepared divine spell posture burden.
+/// spell-bearing identity, with Channel Energy, the domain choice seam, and the
+/// flat domain spell slot count grounded for real, that stays explicitly blocked
+/// on the domain powers burden and the prepared divine spell posture burden.
 const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs";
 
 /// SD13-E4 dedicated proof surface for the bounded Human Druid level-1 prepared
@@ -730,27 +733,36 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:cleric",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Cleric \
-                            level-1 prepared divine spell baseline, with Channel Energy grounded for \
-                            real and the domain choice burden and the prepared divine spell posture \
-                            burden still blocked",
+                            level-1 prepared divine spell baseline, with Channel Energy, the domain \
+                            choice seam, and the flat domain spell slot count grounded for real and \
+                            the domain powers burden and the prepared divine spell posture burden \
+                            still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_CLERIC_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
                     deterministic Human Cleric level-1 prepared divine spell-bearing identity is \
-                    recognized on the compute seam, AND the SD13-E4 Cleric Channel Energy slice grounds \
+                    recognized on the compute seam, the SD13-E4 Cleric Channel Energy slice grounds \
                     Channel Energy for real (PF1 Core Rulebook: ceil(cleric level / 2) d6, minimum 1d6, \
                     computed against the fixture as 1d6 at level 1; usable 3 + Charisma modifier times \
-                    per day, computed against the fixture's Charisma 14 (+2) as 5 uses per day). The row \
-                    is Partial, not Supported: the domain choice burden (two chosen domains, domain \
-                    spells, domain powers) remains named and unproven, and the prepared divine spell \
-                    posture burden (spells prepared from the full Cleric list, spontaneous cure/inflict \
-                    conversion, spell slots per day, bonus spells from a high Wisdom, spell save DCs) is \
-                    still entirely unproven. No domain power math and no spell math is fabricated and no \
-                    Cleric level 2+ is proven",
-                next_required_uplift: "SD13-E4 Cleric domain choice grounding slice, then the prepared \
-                    divine spell posture burden, then level-2+ progression",
+                    per day, computed against the fixture's Charisma 14 (+2) as 5 uses per day), AND \
+                    the SD13-E5 Cleric domain slice grounds the domain choice seam (the two canonical \
+                    fixture selections choice:cleric_domain -> domain:good and domain:healing, \
+                    surfaced as an explicit choice seam carrying no mechanical value) and the flat \
+                    domain spell slot count (PF1 Core Rulebook Domains: one domain spell slot per \
+                    level of cleric spells she can cast, 1st and up — exactly one 1st-level domain \
+                    slot at level 1; the slot's contents are not grounded). The row is Partial, not \
+                    Supported: the domain powers burden (the granted powers of the chosen domains — \
+                    Good: Touch of Good; Healing: Rebuke Death, each 3 + Wisdom modifier uses per \
+                    day — and the domain spell-list contents) remains named and unproven, and the \
+                    prepared divine spell posture burden (spells prepared from the full Cleric list, \
+                    spontaneous cure/inflict conversion, spell slots per day, bonus spells from a \
+                    high Wisdom, spell save DCs) is still entirely unproven. No domain power math and \
+                    no spell math is fabricated and no Cleric level 2+ is proven",
+                next_required_uplift: "SD13-E5 Cleric domain powers grounding slice (Touch of Good, \
+                    Rebuke Death, domain spell-list contents), then the prepared divine spell \
+                    posture burden, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",
