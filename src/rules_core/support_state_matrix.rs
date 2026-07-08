@@ -93,10 +93,11 @@
 //!   unproven burden,
 //! - the Monk row is `Partial` / `Computed`: the SD13-E3 slice proves the
 //!   deterministic Human Monk level-1 martial chassis identity is recognized on the
-//!   compute seam (mirroring the Barbarian pattern), and now grounds three named
-//!   pillar burdens (base attack, base save, AC Bonus); two named pillar burdens
-//!   (unarmed strike / Flurry of Blows, and the level-1 bonus feat grant) remain
-//!   unproven,
+//!   compute seam (mirroring the Barbarian pattern), and the SD13-E5 slices ground
+//!   five named pillar burdens (base attack, base save, AC Bonus, unarmed strike /
+//!   Flurry of Blows, and the level-1 bonus feat choice-slot selection); the
+//!   recognized bonus feat's own mechanics (an execution engine, not a flat
+//!   number) remain unproven,
 //! - the Dwarf row is `Partial` / `Computed`: the SD13-E2 slice proves four grounded
 //!   Dwarf racial trait dimensions (ability modifiers, size, speed, senses) are
 //!   recognized on the compute seam, but the remaining Dwarf family surface
@@ -389,13 +390,15 @@ const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.r
 /// empathy burden and the prepared divine spell posture burden.
 const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs";
 
-/// SD13-E3 dedicated proof surface for the bounded Human Monk level-1 martial
-/// chassis baseline (mirroring the Barbarian pattern): direct computed
-/// chassis-recognition evidence, now grounding three named martial pillar burdens
-/// (base attack, base save, AC Bonus) and staying explicitly blocked on the two
-/// remaining named burdens (unarmed strike / Flurry of Blows, level-1 bonus feat
-/// grant).
-const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs";
+/// The combined grounding reference for the Monk martial chassis row, citing both
+/// the SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC
+/// Bonus, unarmed strike die, Flurry of Blows) and the SD13-E5 bonus-feat
+/// choice-recognition test as one literal, mirroring
+/// [`SD13_PALADIN_ROW_GROUNDING_REF`] / [`SD13_RANGER_ROW_GROUNDING_REF`]. Both
+/// `.contains()` consumers read their respective substring from this combined
+/// grounding reference.
+const SD13_MONK_LEVEL1_TEST: &str =
+    "tests/sd13_monk_level1_chassis_baseline.rs + tests/sd13_monk_bonus_feat_choice.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -858,29 +861,36 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:monk",
                 dimension: "bounded Monk martial chassis progression: the deterministic Human \
                             Monk level-1 martial chassis identity, with base-attack, base-save, \
-                            AC Bonus, the unarmed strike damage die, and the Flurry of Blows \
-                            flat attack surface now grounded, and the level-1 bonus feat grant \
-                            still unproven",
+                            AC Bonus, the unarmed strike damage die, the Flurry of Blows flat \
+                            attack surface, and the level-1 bonus feat choice-slot selection now \
+                            grounded, and the recognized bonus feat's own mechanics still \
+                            unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_MONK_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3/E5 leaves direct computed evidence that the \
                     deterministic Human Monk level-1 martial chassis identity is recognized on \
-                    the compute seam, and now grounds four named pillar burdens: base attack \
+                    the compute seam, and now grounds five named pillar burdens: base attack \
                     progression (3/4 BAB), base save progression (good Fortitude, Reflex, and \
-                    Will), AC Bonus (Wisdom-to-AC, the flat level-1 value only), and the unarmed \
+                    Will), AC Bonus (Wisdom-to-AC, the flat level-1 value only), the unarmed \
                     strike / Flurry of Blows flat surface (Medium monk 1d6 unarmed damage — die \
                     size only, no damage roll or total — and the level-1 flurry posture of two \
-                    attacks at monk level - 2 = -1 each before ability modifiers). One named \
-                    pillar burden remains unproven: the level-1 bonus feat grant from the \
-                    restricted Monk feat list. The level-4+ unarmed damage die progression, \
-                    flurry with special monk weapons, an attack-resolution engine, wiring into \
+                    attacks at monk level - 2 = -1 each before ability modifiers), and the \
+                    level-1 bonus feat choice-slot selection (recognized when it names one of the \
+                    PF1 Core Rulebook restricted Monk bonus feat list's five feats: Combat \
+                    Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, Stunning Fist — a \
+                    +0 recognition record with no feat-effect execution, mirroring the Sorcerer \
+                    bloodline choice / Cleric domain choice / Druid nature-bond choice \
+                    recognition idiom). One named burden remains unproven: the recognized bonus \
+                    feat's own mechanics (no attack-resolution, grapple-check, trip-check, or \
+                    DC/save engine exists for any of the restricted-list feats). The level-4+ \
+                    unarmed damage die progression, flurry with special monk weapons, wiring into \
                     integrated combat totals, and Monk level 2+ all remain unproven, and no \
                     martial math beyond the grounded flat surfaces is fabricated",
-                next_required_uplift: "later SD13-E5 slice grounding the one remaining named \
-                    Monk martial pillar burden (the level-1 bonus feat grant from the restricted \
-                    Monk feat list), then level-2+ progression",
+                next_required_uplift: "later SD13-E5/E6 slice grounding the one remaining named \
+                    Monk martial pillar burden (the recognized bonus feat's own mechanics — an \
+                    execution engine per feat, not a flat number), then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
