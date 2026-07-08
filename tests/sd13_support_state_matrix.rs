@@ -174,7 +174,9 @@ fn fighter_levels_2_10_row_is_partial_and_computed_and_names_what_remains() {
 #[test]
 fn rogue_row_is_partial_and_computed_with_blocker_note() {
     // The SD13-E3 Rogue chassis recognition slice promoted the row from
-    // Blocked to Partial.
+    // Blocked to Partial; the SD13-E5 slice grounds the fourth and final
+    // named pillar (trapfinding), leaving the row Partial with the
+    // check-execution / rogue-talent / integration remainder named.
     let matrix = matrix();
     let rogue = row(&matrix, "class.rogue.bounded_progression");
     assert_eq!(rogue.subject_type, MatrixSubjectType::Class);
@@ -186,10 +188,22 @@ fn rogue_row_is_partial_and_computed_with_blocker_note() {
         "partial Rogue row must carry a non-empty blocker note"
     );
     assert!(
+        rogue.blocker_or_lossiness_note.contains("trapfinding"),
+        "partial Rogue row note must name the now-grounded trapfinding pillar: {}",
+        rogue.blocker_or_lossiness_note
+    );
+    assert!(
+        !rogue
+            .blocker_or_lossiness_note
+            .contains("only trapfinding remains unproven"),
+        "partial Rogue row note must not repeat the stale pre-E5 trapfinding-unproven claim: {}",
+        rogue.blocker_or_lossiness_note
+    );
+    assert!(
         rogue
             .grounding_ref
             .contains("sd13_rogue_level1_chassis_baseline"),
-        "partial Rogue row must cite the live SD13-E3 recognition test surface: {}",
+        "partial Rogue row must cite the live SD13-E3/E5 recognition test surface: {}",
         rogue.grounding_ref
     );
 }
