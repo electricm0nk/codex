@@ -805,9 +805,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Paladin level-1 chassis baseline, with the per-feature non-spell \
-                            class-feature burden (smite evil / lay on hands / divine grace \
-                            / mercy) and the partial-caster spell burden still blocked",
+                            Paladin level-1 chassis baseline, with smite evil's uses-per-day / \
+                            attack-bonus / damage-bonus formula grounded and the lay on hands / \
+                            divine grace / mercy per-feature burdens plus the partial-caster \
+                            spell burden still blocked",
                 support_state: SupportState::Blocked,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -816,14 +817,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     deterministic Human Paladin level-1 hybrid chassis is recognized on the compute \
                     seam AND that its non-spell class-feature burden is now split into per-feature \
                     blockers (smite evil / lay on hands / divine grace / mercy) instead of the single \
-                    combined F6 string, but the row stays blocked: each per-feature chassis burden is \
-                    not implemented, and the later partial-caster spell burden (Paladin is a divine \
-                    partial caster in PF1 Core Rulebook: effective caster level = paladin level - 2, \
-                    spell slots first available at level 2) is deferred to SD13-E4. No Paladin level 2+ \
-                    is proven. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid chassis \
-                    recognition explanation all remain in place; this slice only adds per-burden \
-                    granularity next to them",
-                next_required_uplift: "SD13-E4 paladin partial-caster spell burden slice, then \
+                    combined F6 string. Of those four, smite evil is now grounded for real: uses per \
+                    day = 1, attack-roll bonus = Charisma modifier (if positive), damage bonus = \
+                    paladin level (PF1 Core Rulebook), computed against the deterministic fixture as \
+                    1 / +2 / +1 at level 1; this grounds only that flat numeric formula, not \
+                    alignment/evil-subtype target resolution or evil-outsider/dragon/undead damage \
+                    doubling. The row stays blocked: lay on hands, divine grace, and mercy remain \
+                    unproven per-feature chassis burdens, and the later partial-caster spell burden \
+                    (Paladin is a divine partial caster in PF1 Core Rulebook: effective caster level = \
+                    paladin level - 2, spell slots first available at level 2) is deferred to SD13-E4. \
+                    No Paladin level 2+ is proven. The F6 hybrid baseline, the F6 hybrid blockers, and \
+                    the F6 hybrid chassis recognition explanation all remain in place; this slice only \
+                    adds per-burden granularity and the one grounded smite-evil formula next to them",
+                next_required_uplift: "ground the lay on hands / divine grace / mercy per-feature \
+                    chassis burdens, then the SD13-E4 paladin partial-caster spell burden slice, then \
                     paladin level-2+ progression",
             },
             SupportStateRow {

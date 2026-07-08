@@ -465,6 +465,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // path. This is an extension, never a downgrade, of the F6 surface.
     explain_paladin_level1_chassis_and_spell_burden_separation(
         input,
+        &ability_modifiers,
         &mut explanations,
         &mut diagnostics,
     );
@@ -2053,10 +2054,19 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 /// blocker plus a single combined later-spell blocker. This slice proves the
 /// per-burden separation Paladin actually needs:
 ///
+/// - one grounded numeric explanation set for the fourth named non-spell
+///   pillar, Smite Evil, computed for real:
+///   * PF1 Core Rulebook Smite Evil at the bounded level-1 baseline: 1 use per
+///     day, an attack-roll bonus equal to the paladin's Charisma modifier (if
+///     positive — the rule text applies the Charisma bonus "if any", never a
+///     penalty), and a damage bonus equal to the paladin's class level. This
+///     grounds only that flat numeric formula; it grounds no alignment /
+///     evil-subtype target resolution, no swift-action activation
+///     bookkeeping, no deflection-AC-vs-target bonus, and no
+///     evil-outsider/evil-dragon/undead damage doubling.
+///
 /// - one explicit claim-blocking diagnostic per still-missing non-spell
 ///   class-feature burden:
-///   * `smite evil` — alignment / target resolution, smite attack rolls and
-///     damage bonus, and smite-uses-per-day resource accounting
 ///   * `lay on hands` — healing resource accounting, charismabased pool, and
 ///     use-against-conditions behavior
 ///   * `divine grace` — charisma-to-saves bonus, including the typing and
@@ -2074,13 +2084,14 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 ///     (Cleric / Druid) and so partial-caster pressure stays visible on the
 ///     runtime path.
 ///
-/// This deliberately does not compute a supported spell surface. It grounds
-/// no smite math, no lay-on-hands resource handling, no divine-grace
-/// computation, no mercy handling, no spell slots, no spell source lineage,
-/// no spells known or prepared posture, no deity resolution, no domain
-/// mechanics, no alignment-target resolution, and no healing accounting. It
-/// only emits the per-burden blockers that prove the F6 surface remains
-/// separable on the runtime path.
+/// This deliberately does not compute a supported spell surface. Beyond the
+/// grounded Smite Evil numeric formula, it grounds no lay-on-hands resource
+/// handling, no divine-grace computation, no mercy handling, no spell slots,
+/// no spell source lineage, no spells known or prepared posture, no deity
+/// resolution, no domain mechanics, no alignment-target resolution, and no
+/// healing accounting. It only emits the per-burden blockers (plus the one
+/// grounded Smite Evil formula) that prove the F6 surface remains separable
+/// on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -2089,7 +2100,8 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 /// continues to pass.
 fn explain_paladin_level1_chassis_and_spell_burden_separation(
     input: &CharacterInput,
-    _explanations: &mut Vec<ComputationExplanation>,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if !is_single_class_paladin_level1(input) {
@@ -2099,20 +2111,57 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         return;
     }
 
+    // Smite Evil, the fourth named non-spell pillar, is grounded for real: a
+    // bounded, flat numeric formula with no execution engine behind it. PF1
+    // Core Rulebook: 1 use/day at level 1, attack-roll bonus = Charisma
+    // modifier (if positive; the rule never applies it as a penalty), damage
+    // bonus = paladin level.
+    let paladin_level = i16::from(HYBRID_BASELINE_LEVEL);
+    let smite_evil_uses_per_day: i16 = 1;
+    let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
+    let smite_evil_attack_bonus = charisma_modifier.max(0);
+    let smite_evil_damage_bonus = paladin_level;
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.smite_evil_uses_per_day".to_owned(),
+        value: smite_evil_uses_per_day,
+        detail: format!(
+            "Paladin Smite Evil uses per day at paladin level {HYBRID_BASELINE_LEVEL} (PF1 Core \
+             Rulebook: 1/day at level 1, +1 at level 4 and every three levels thereafter, none of \
+             which this bounded level-1 baseline grounds): {smite_evil_uses_per_day}. This grounds \
+             only the flat per-day resource count; it computes no swift-action activation \
+             bookkeeping and no per-use consumption tracking"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.smite_evil_attack_bonus".to_owned(),
+        value: smite_evil_attack_bonus,
+        detail: format!(
+            "Paladin Smite Evil attack-roll bonus: the paladin's Charisma modifier, applied only \
+             if positive (PF1 Core Rulebook: \"the paladin adds her Charisma modifier, if any, to \
+             her attack roll\", never as a penalty) = max({charisma_modifier}, 0) = \
+             {smite_evil_attack_bonus}. This grounds only the flat attack-roll bonus; it computes \
+             no alignment or evil-subtype target resolution"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.smite_evil_damage_bonus".to_owned(),
+        value: smite_evil_damage_bonus,
+        detail: format!(
+            "Paladin Smite Evil damage bonus: equal to the paladin's class level (PF1 Core \
+             Rulebook: 2x paladin level against evil outsiders, evil dragons, and undead, which \
+             this bounded formula does not distinguish) = {smite_evil_damage_bonus} at paladin \
+             level {HYBRID_BASELINE_LEVEL}. This grounds only the flat per-hit damage bonus; it \
+             computes no evil-outsider/evil-dragon/undead damage doubling and no deflection-AC \
+             bonus against the smited target"
+        ),
+    });
+
     // The per-burden blockers ride alongside the F6 hybrid blockers. They are
     // intentionally distinct diagnostic ids so the chassis burden is separable
     // from the spell burden on the runtime path.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.paladin.smite_evil.unsupported".to_owned(),
-        message: format!(
-            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its smite evil burden: \
-             smite attack-roll bonuses, smite damage bonus, smite-uses-per-day resource \
-             accounting, and the underlying alignment-target resolution are not implemented in \
-             this bounded chassis baseline, so no Paladin smite execution is claimed"
-        ),
-        claim_blocking: true,
-    });
-
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.paladin.lay_on_hands.unsupported".to_owned(),
         message: format!(
