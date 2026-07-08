@@ -275,6 +275,19 @@ const MARTIAL_BASELINE_LEVEL: u8 = 1;
 // bonus feat grant, no ki pool, and no level-2+ martial progression.
 const MONK_CLASS_ID: &str = "class:monk";
 
+// SD13-E5 Monk level-1 bonus feat choice-slot recognition. The PF1 Core Rulebook
+// restricted Monk bonus feat list this bounded recognition seam knows is Combat
+// Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, and Stunning Fist.
+// Improved Unarmed Strike is deliberately excluded: the PF1 Core Rulebook grants
+// it to every monk automatically at level 1, separate from this chosen bonus
+// feat, and this codebase does not ground that automatic grant either, so it is
+// never treated as a choice-set member here.
+const MONK_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat";
+const DEFLECT_ARROWS_FEAT_SELECTION: &str = "feat:deflect_arrows";
+const IMPROVED_GRAPPLE_FEAT_SELECTION: &str = "feat:improved_grapple";
+const IMPROVED_TRIP_FEAT_SELECTION: &str = "feat:improved_trip";
+const STUNNING_FIST_FEAT_SELECTION: &str = "feat:stunning_fist";
+
 // Grounded SD13-E4 Human Cleric level-1 prepared divine spell-bearing baseline
 // identity. Cleric is the canonical PF1 prepared divine full caster; unlike the
 // arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
@@ -485,6 +498,16 @@ const ARMOR_TRAINING_1_MAX_DEX_INCREASE: i16 = 1;
 const FIGHTER_ARMOR_TRAINING_2_LEVEL: u8 = 7;
 const ARMOR_TRAINING_2_ARMOR_CHECK_REDUCTION: i16 = 2;
 const ARMOR_TRAINING_2_MAX_DEX_INCREASE: i16 = 2;
+
+// Fighter Bravery, gained at level 2 with an additional +1 every four Fighter
+// levels thereafter (level 6, level 10, ...): +1 Will save vs fear at level 2,
+// +2 at level 6, +3 at level 10, per PF1 Core Rulebook. This slice grounds only
+// the flat bonus magnitude as a standalone explanation record, mirroring the
+// Weapon Training attack-bonus-rank idiom; no fear-condition or save-resolution
+// engine exists anywhere in this codebase, so the bonus is never folded into the
+// unconditional Will save total.
+const FIGHTER_BRAVERY_LEVEL: u8 = 2;
+const FIGHTER_BRAVERY_RANK_LEVEL_STRIDE: u8 = 4;
 
 /// Simple integrated status for the GE-06 pilot headless receipt: whether the
 /// path produced computed evidence or is blocked. This distinguishes evidence
@@ -1776,6 +1799,17 @@ fn fighter_weapon_training_attack_bonus(input: &CharacterInput, level: u8) -> i1
     }
 }
 
+/// The Fighter Bravery Will-save-vs-fear bonus magnitude at the given level: 0
+/// before level 2, then 1 + (level - 2) / 4 (+1 at level 2, +2 at level 6, +3 at
+/// level 10 within this bounded levels-1-10 surface). A flat magnitude only —
+/// no fear-condition or save-resolution engine exists on this compute surface.
+fn fighter_bravery_bonus(level: u8) -> i16 {
+    if level < FIGHTER_BRAVERY_LEVEL {
+        return 0;
+    }
+    i16::from(1 + (level - FIGHTER_BRAVERY_LEVEL) / FIGHTER_BRAVERY_RANK_LEVEL_STRIDE)
+}
+
 /// Compute the bounded Fighter base chassis for the supported milestone levels
 /// (1, 2, or 3), or block the claim if the input is not a supported single-class
 /// Fighter posture for this narrow slice.
@@ -1866,6 +1900,23 @@ fn explain_fighter_class_features(
     let Some(level) = supported_fighter_level(input) else {
         return;
     };
+
+    let bravery_bonus = fighter_bravery_bonus(level);
+    if bravery_bonus > 0 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.bravery".to_owned(),
+            value: bravery_bonus,
+            detail: format!(
+                "Fighter level {FIGHTER_BRAVERY_LEVEL} Bravery (cr_abilities_class.lst Fighter; \
+                 +1 at level {FIGHTER_BRAVERY_LEVEL} and another +1 every \
+                 {FIGHTER_BRAVERY_RANK_LEVEL_STRIDE} Fighter levels thereafter): grants \
+                 +{bravery_bonus} to Will saves against fear. This is a flat, non-fabricated \
+                 bonus magnitude only — no fear-condition or Will-save-resolution engine exists \
+                 anywhere in this codebase, so this bonus is never folded into the unconditional \
+                 Will save total"
+            ),
+        });
+    }
 
     if level >= 2
         && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)
@@ -2352,6 +2403,15 @@ fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
 ///   attached to lay on hands); the at-grant selection is named but not
 ///   computed
 ///
+/// - one grounded numeric explanation (SD13-E5) for the partial-caster
+///   IDENTITY itself, distinct from the spell burden it sits next to:
+///   * PF1 Core Rulebook effective caster level = max(paladin level − 3, 0);
+///     spells begin at paladin level 4. At the bounded level-1 baseline this
+///     grounds to 0 — the same "correct absence" idiom already used for the
+///     lay on hands / divine grace / mercy level gates above. This grounds
+///     only the caster-level gate arithmetic; it fabricates no spells known,
+///     no spells per day, no bonus spell slots, and no spell save DCs.
+///
 /// - one explicit claim-blocking diagnostic for the partial-caster spell
 ///   burden, distinct from the grounded chassis records, unchanged by this
 ///   slice:
@@ -2364,12 +2424,13 @@ fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
 ///
 /// This deliberately does not compute a supported spell surface, and it does
 /// not ground level 3+. Beyond the grounded Smite Evil, lay on hands, and
-/// divine grace numeric formulas and the mercy level-gate absence, it grounds
-/// no spell slots, no spell source lineage, no spells known or prepared
-/// posture, no deity resolution, no domain mechanics, no alignment-target
-/// resolution, no healing-resource accounting, and no saving-throw-resolution
-/// engine. It only emits the grounded records and the remaining spell blocker
-/// that prove the F6 surface remains separable on the runtime path.
+/// divine grace numeric formulas, the mercy level-gate absence, and the
+/// grounded effective-caster-level gate, it grounds no spell slots, no spell
+/// source lineage, no spells known or prepared posture, no deity resolution,
+/// no domain mechanics, no alignment-target resolution, no healing-resource
+/// accounting, and no saving-throw-resolution engine. It only emits the
+/// grounded records and the remaining spell blocker that prove the F6 surface
+/// remains separable on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -2521,6 +2582,27 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
              level gate (mercy is a {PALADIN_MERCY_LEVEL}rd-level paladin feature, gained at \
              3rd level and every three levels thereafter); at-grant formula named but not \
              computed. Mercy is chosen from the mercy list and attaches to lay on hands"
+        ),
+    });
+
+    // SD13-E5: ground the partial-caster IDENTITY itself as one more flat
+    // level-gate record, distinct from the still-ungrounded spell burden
+    // named below. PF1 Core Rulebook: effective caster level = max(paladin
+    // level - 3, 0); spells begin at paladin level 4. At level 1 this
+    // correctly grounds to 0 — the same "correct absence" idiom already used
+    // for lay on hands / divine grace / mercy above. This grounds only the
+    // caster-level gate arithmetic; it fabricates no spells known, no spells
+    // per day, no bonus spell slots, and no spell save DCs.
+    let paladin_effective_caster_level = (paladin_level - 3).max(0);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.partial_caster.effective_caster_level".to_owned(),
+        value: paladin_effective_caster_level,
+        detail: format!(
+            "Paladin effective caster level at paladin level {level}: max(paladin level - 3, 0) = \
+             max({paladin_level} - 3, 0) = {paladin_effective_caster_level} (PF1 Core Rulebook: \
+             paladin spells begin at paladin level 4). This grounds only the caster-level gate \
+             arithmetic; it computes no spells known, no spells per day, no bonus spell slots, \
+             and no spell save DCs"
         ),
     });
 
@@ -3034,10 +3116,11 @@ fn is_single_class_monk_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Monk
 /// level-1 martial chassis, mirroring the Barbarian level-1 baseline pattern, and
-/// now grounding four named pillar burdens (base-attack, base-save, AC Bonus, and
-/// the unarmed strike die / Flurry of Blows flat surface) while keeping it
-/// explicitly claim-blocked on the one remaining named burden (the level-1 bonus
-/// feat grant).
+/// now grounding five named pillar burdens (base-attack, base-save, AC Bonus, the
+/// unarmed strike die / Flurry of Blows flat surface, and the level-1 bonus feat
+/// choice-slot recognition) while keeping it explicitly claim-blocked on the
+/// recognized bonus feat's own mechanics (an execution engine, not a flat
+/// number).
 ///
 /// This grounds the Monk base-attack progression (3/4 BAB: `classlevel * 3 / 4`),
 /// the base-save progression (good Fortitude, Reflex, and Will: `classlevel/2+2`
@@ -3046,27 +3129,40 @@ fn is_single_class_monk_level1(input: &CharacterInput) -> bool {
 /// Bonus (the positive Wisdom modifier added to AC, asserted unconditionally on this
 /// deterministic unarmored fixture), the Medium-monk level-1 unarmed strike damage
 /// die size (1d6 — die size only, mirroring the Rogue sneak-attack die-count record:
-/// no damage roll or damage total is computed), and the level-1 Flurry of Blows flat
-/// surface (two attacks, each at monk level - 2 = -1 before ability modifiers). It
-/// still grounds no level-1 bonus feat grant from the restricted Monk feat list, no
-/// attack-resolution or damage-roll engine, no monk-weapon flurry, no level-4+
-/// unarmed damage die progression, no ki pool, no level-4+ AC Bonus dodge-bonus
-/// progression, no "unarmored and unencumbered" runtime state-check engine, no
-/// wiring into integrated combat totals, and no level-2+ martial progression. It:
+/// no damage roll or damage total is computed), the level-1 Flurry of Blows flat
+/// surface (two attacks, each at monk level - 2 = -1 before ability modifiers), and
+/// (SD13-E5) the level-1 bonus feat choice-slot selection when it names one of the
+/// PF1 Core Rulebook restricted Monk bonus feat list's five feats (Combat
+/// Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, Stunning Fist),
+/// mirroring the Sorcerer bloodline choice / Cleric domain choice / Druid
+/// nature-bond choice recognition idiom. It still grounds no attack-resolution or
+/// damage-roll engine, no monk-weapon flurry, no level-4+ unarmed damage die
+/// progression, no ki pool, no level-4+ AC Bonus dodge-bonus progression, no
+/// "unarmored and unencumbered" runtime state-check engine, no wiring into
+/// integrated combat totals, no level-2+ martial progression, and no execution of
+/// what the recognized bonus feat actually does (no attack-of-opportunity engine
+/// for Combat Reflexes, no grapple-check engine for Improved Grapple, no DC/save
+/// engine for Stunning Fist, and so on). It:
 /// - leaves one chassis-recognition explanation so the `class:monk:1` identity is
 ///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves grounded explanation records for base-attack, the three base saves,
 ///   AC Bonus, the unarmed strike damage die, and the flurry flat attack
-///   bonus/attack count, and
-/// - emits one claim-blocking diagnostic naming the still-missing pillar burden
-///   (the level-1 bonus feat grant) explicitly, rather than hiding behind a single
-///   generic "unsupported class" label.
+///   bonus/attack count,
+/// - conditionally leaves one grounded explanation recognizing the level-1 bonus
+///   feat choice-slot selection when a `choice:monk_bonus_feat` selection is
+///   present (carrying no fabricated mechanical value, since the recognized
+///   feat's own mechanics are an execution engine rather than a number), and
+/// - emits one claim-blocking diagnostic naming the still-missing burden (the
+///   recognized bonus feat's own mechanics, or the bonus feat grant entirely when
+///   no restricted-list selection is recognized) explicitly, rather than hiding
+///   behind a single generic "unsupported class" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture (`defense.baseline_armor_class` stays gated to Fighter
 /// and is untouched here) but makes the Monk martial identity, its grounded pillars,
-/// and its one remaining named pillar burden legible on the runtime path.
+/// its recognized bonus feat choice, and its one remaining named burden legible on
+/// the runtime path.
 fn explain_monk_level1_chassis(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -3225,67 +3321,172 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Still blocked (the one remaining named burden): the level-1 bonus feat grant.
-    // This is narrower than the prior combined AC-Bonus/bonus-feat diagnostic: AC
-    // Bonus is grounded above, so only the bonus-feat grant remains named here.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned(),
-        message: format!(
+    // Grounded (6/6, SD13-E5): the level-1 bonus feat choice-slot selection is
+    // recognized as chosen input when it names one of the PF1 Core Rulebook
+    // restricted Monk bonus feat list's five feats (Combat Reflexes, Deflect
+    // Arrows, Improved Grapple, Improved Trip, Stunning Fist), mirroring the
+    // Sorcerer bloodline choice / Cleric domain choice / Druid nature-bond choice
+    // recognition idiom. This is recognition of the choice-slot identity only; it
+    // fabricates no feat-effect execution (no attack-of-opportunity engine for
+    // Combat Reflexes, no ranged-deflection engine for Deflect Arrows, no
+    // grapple-check engine for Improved Grapple, no trip-check engine for Improved
+    // Trip, and no DC/save engine for Stunning Fist). A selection present but
+    // outside this restricted list is acknowledged without naming a specific
+    // restricted-list feat, mirroring the Sorcerer bloodline choice's
+    // present-but-unrecognized branch, so no restricted-list feat identity is
+    // fabricated for a selection this bounded seam does not know.
+    let bonus_feat_selection = choice_selection(input, MONK_BONUS_FEAT_CHOICE_ID);
+    let recognized_bonus_feat_name = bonus_feat_selection.and_then(|selection| {
+        if selection == COMBAT_REFLEXES_FEAT_SELECTION {
+            Some("Combat Reflexes")
+        } else if selection == DEFLECT_ARROWS_FEAT_SELECTION {
+            Some("Deflect Arrows")
+        } else if selection == IMPROVED_GRAPPLE_FEAT_SELECTION {
+            Some("Improved Grapple")
+        } else if selection == IMPROVED_TRIP_FEAT_SELECTION {
+            Some("Improved Trip")
+        } else if selection == STUNNING_FIST_FEAT_SELECTION {
+            Some("Stunning Fist")
+        } else {
+            None
+        }
+    });
+    if let Some(selection) = bonus_feat_selection {
+        let detail = if let Some(feat_name) = recognized_bonus_feat_name {
+            format!(
+                "Monk level {MARTIAL_BASELINE_LEVEL} bonus feat choice recognized: the canonical \
+                 deterministic selection ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}) names \
+                 {feat_name}, drawn from the PF1 Core Rulebook restricted Monk bonus feat list \
+                 (Combat Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, Stunning \
+                 Fist), as chosen input on the compute seam. This is a recognition record of the \
+                 choice slot only, so it carries no fabricated mechanical value (+0): \
+                 {feat_name}'s own mechanics are not grounded here, and no attack-resolution, \
+                 grapple-check, trip-check, or DC/save engine exists in this codebase. Improved \
+                 Unarmed Strike is not part of this restricted choice set because the PF1 Core \
+                 Rulebook grants it to every monk automatically at level {MARTIAL_BASELINE_LEVEL}, \
+                 separate from this chosen bonus feat, and this codebase does not ground that \
+                 automatic grant either"
+            )
+        } else {
+            format!(
+                "Monk level {MARTIAL_BASELINE_LEVEL} bonus feat choice slot is present \
+                 ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}), but only the PF1 Core Rulebook \
+                 restricted Monk bonus feat list (Combat Reflexes, Deflect Arrows, Improved \
+                 Grapple, Improved Trip, Stunning Fist) is recognized on this bounded seam; no \
+                 restricted-list feat identity is grounded and no mechanical value is fabricated \
+                 (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.bonus_feat_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    // Still blocked (the one remaining named burden): the level-1 bonus feat's own
+    // mechanics. The choice-slot identity is recognized above (when present and
+    // in-list); this diagnostic narrows to naming only what remains
+    // unimplemented, and it names the specific recognized feat only when this
+    // seam actually recognized one, mirroring the Druid animal-companion
+    // blocker's conditional message — so it never asserts a specific feat's
+    // mechanics as "remaining" for a character whose chosen feat this seam did
+    // not recognize.
+    let bonus_feat_message = if let Some(feat_name) = recognized_bonus_feat_name {
+        format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its level-1 bonus feat's own \
+             mechanics: the recognized choice ({feat_name}) is acknowledged as chosen input \
+             only — {feat_name}'s actual feat effect requires a general feat-selection or \
+             feat-prerequisite/effect engine that does not exist in this bounded martial chassis \
+             baseline, so no Monk bonus-feat execution support is claimed"
+        )
+    } else {
+        format!(
             "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its level-1 bonus feat grant: \
              the free bonus feat drawn from the restricted Monk feat list (Combat Reflexes, Deflect \
-             Arrows, Improved Grapple, Improved Unarmed Strike, Scorpion Style, Stunning Fist, and \
-             others) is not implemented in this bounded martial chassis baseline — no feat-selection \
-             or feat-prerequisite engine exists here — so no Monk bonus-feat support is claimed"
-        ),
+             Arrows, Improved Grapple, Improved Trip, Stunning Fist) is not recognized as chosen \
+             input in this bounded martial chassis baseline — no feat-selection or \
+             feat-prerequisite engine exists here — so no Monk bonus-feat support is claimed"
+        )
+    };
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned(),
+        message: bonus_feat_message,
         claim_blocking: true,
     });
 }
 
 const ROGUE_CLASS_ID: &str = "class:rogue";
-const ROGUE_BASELINE_LEVEL: u8 = 1;
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 2;
+/// PF1 Core Rulebook level gate at which Rogue gains Evasion.
+const ROGUE_EVASION_LEVEL: u8 = 2;
 
-/// Return `true` when the chosen input is exactly a single-class Rogue at the
-/// bounded chassis baseline level (1). Returns `false` for any other class, a
-/// multiclass mix, or a level-2+ Rogue this slice deliberately does not
-/// recognize — each of which stays blocked exactly as before.
-fn is_single_class_rogue_level1(input: &CharacterInput) -> bool {
-    matches!(
-        input.chosen.class_levels.as_slice(),
+/// The bounded Rogue milestone level this decomposition surface grounds, if
+/// any. Returns the single Rogue level when the chosen input is exactly a
+/// single-class Rogue at one of the supported milestone levels (1 or 2).
+/// Returns `None` for no Rogue, a non-Rogue class, a multiclass mix, or any
+/// level-3+ Rogue this slice deliberately does not recognize — each of which
+/// stays claim-blocked exactly as before. Mirrors the Fighter
+/// `supported_fighter_level` / Paladin `supported_paladin_level` level-range
+/// gate idiom.
+fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
+    match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == ROGUE_CLASS_ID
-                && class_level.level == ROGUE_BASELINE_LEVEL
-    )
+                && (1..=MAX_SUPPORTED_ROGUE_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
+        }
+        _ => None,
+    }
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Rogue
-/// level-1 chassis, mirroring the Barbarian/Monk level-1 baseline pattern.
+/// level-1/level-2 chassis, mirroring the Barbarian/Monk level-1 baseline
+/// pattern and the Fighter `supported_fighter_level` / Paladin
+/// `supported_paladin_level` level-range-gate idiom.
 /// The SD13-E3 pillar-grounding slice grounds three of the four named
 /// burdens directly (base-attack progression, base-save progression, and
-/// sneak attack die count); the SD13-E5 slice grounds the fourth, Trapfinding,
-/// mirroring the grounded Ranger Track record, so no named Rogue pillar
-/// burden remains claim-blocked.
+/// sneak attack die count); the SD13-E5 trapfinding slice grounds the
+/// fourth, Trapfinding, mirroring the grounded Ranger Track record, so no
+/// named Rogue pillar burden remains claim-blocked; a later SD13-E5 slice
+/// widens the level-1-only gate to level 2 (the PF1 Core Rulebook Rogue
+/// class table's next milestone) and grounds Evasion as a bounded
+/// identity/recognition record.
 ///
-/// This deliberately does not compute a full Rogue class engine. It grounds:
+/// This deliberately does not compute a full Rogue class engine. It grounds,
+/// at every supported level (1 and 2):
 /// - base-attack progression (3/4 BAB, `level * 3 / 4`),
 /// - base-save progression (good Reflex, poor Fortitude, poor Will),
-/// - the sneak attack damage-die *count* only (the value `1`, i.e. `1d6`) —
-///   not damage-roll execution and not the flanking / Dexterity-denial
-///   trigger-condition engine, and
-/// - the Trapfinding flat numeric bonus (`max(level / 2, 1)`, `+1` at level 1)
-///   on Perception checks to locate traps and on Disable Device checks, plus
-///   the magic-trap-disarm statement — not a check-execution engine, no trap
-///   DC resolution, and no magic-trap disarm engine.
+/// - the sneak attack damage-die *count* only (`(level + 1) / 2`, i.e. `1`
+///   at levels 1-2, `1d6`) — not damage-roll execution and not the flanking /
+///   Dexterity-denial trigger-condition engine,
+/// - the Trapfinding flat numeric bonus (`max(level / 2, 1)`, `+1` at levels
+///   1-2) on Perception checks to locate traps and on Disable Device checks,
+///   plus the magic-trap-disarm statement — not a check-execution engine, no
+///   trap DC resolution, and no magic-trap disarm engine, and
+/// - Evasion (a 2nd-level Rogue class feature): below level 2 it is grounded
+///   as a correct PF1 Core Rulebook level-gate absence (value 0); at level 2
+///   it is grounded as a bounded identity/recognition record only (value 0,
+///   non-fabricated) naming the rule text (no damage on a successful Reflex
+///   save against an effect that normally allows half damage on a
+///   successful save; no benefit on a failed save) — mirroring how Divine
+///   Grace and Bravery were grounded as flat rules-text records without
+///   folding into an actual saving-throw-resolution or damage-resolution
+///   engine, neither of which exists in this codebase.
 ///
-/// It still grounds no rogue talent (a level-2+ milestone) and no level-2+
-/// progression. These `class_chassis.rogue.*` explanation records are
-/// standalone: they are not wired into `compute_fighter_chassis`,
+/// It still grounds no rogue talent (a level-2+ choice-list feature, and a
+/// genuinely open-ended talent tree — a new-subsystem-shaped burden left
+/// named but unproven) and no level-3+ progression. These
+/// `class_chassis.rogue.*` / `class_feature.rogue.evasion` explanation
+/// records are standalone: they are not wired into `compute_fighter_chassis`,
 /// `compute_total_saves`, or `compute_combat_baseline`, so
 /// `defense.total_save.*` is still never computed for Rogue here. It only:
-/// - leaves one chassis-recognition explanation so the `class:rogue:1`
+/// - leaves one chassis-recognition explanation so the `class:rogue:N`
 ///   identity is acknowledged rather than an undocumented packet placeholder
 ///   (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - leaves five grounded pillar explanations (base-attack, base-save
-///   fortitude/reflex/will, sneak-attack die count, trapfinding).
+/// - leaves six grounded pillar explanations (base-attack, base-save
+///   fortitude/reflex/will, sneak-attack die count, trapfinding, Evasion).
 ///
 /// The named Rogue claim-blocking diagnostic set is now empty; the four
 /// generic chassis diagnostics (`class_chassis.unsupported`,
@@ -3300,43 +3501,43 @@ fn explain_rogue_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    if !is_single_class_rogue_level1(input) {
+    let Some(level) = supported_rogue_level(input) else {
         return;
-    }
+    };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
 
-    // Direct runtime evidence: recognize the deterministic Human Rogue level-1
-    // chassis identity. This is a recognition record only; it fabricates no
-    // mechanical value.
+    // Direct runtime evidence: recognize the deterministic Human Rogue
+    // chassis identity at the supported level. This is a recognition record
+    // only; it fabricates no mechanical value.
     explanations.push(ComputationExplanation {
         id: "class_chassis.rogue.bounded_progression".to_owned(),
         value: 0,
         detail: format!(
-            "Recognized deterministic Human Rogue level {ROGUE_BASELINE_LEVEL} chassis: the \
-             {ROGUE_CLASS_ID}:{ROGUE_BASELINE_LEVEL} class identity is acknowledged on the \
+            "Recognized deterministic Human Rogue level {level} chassis: the \
+             {ROGUE_CLASS_ID}:{level} class identity is acknowledged on the \
              rules-core seam rather than an undocumented packet placeholder. This is a bounded \
              chassis-recognition record only; the base-attack, base-save, sneak-attack \
-             die-count, and trapfinding pillars are grounded separately below, but this record \
-             still grounds no rogue talent and no level-2+ progression, so it carries no \
-             fabricated mechanical value (+0)"
+             die-count, trapfinding, and Evasion pillars are grounded separately below, but \
+             this record still grounds no rogue talent and no level-3+ progression, so it \
+             carries no fabricated mechanical value (+0)"
         ),
     });
 
-    // Grounded (1/4): base-attack progression (3/4 BAB).
-    let level_value = i16::from(ROGUE_BASELINE_LEVEL);
+    // Grounded (1/5): base-attack progression (3/4 BAB).
+    let level_value = i16::from(level);
     let base_attack_bonus = level_value * 3 / 4;
     explanations.push(ComputationExplanation {
         id: "class_chassis.rogue.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+            "Rogue level {level} base attack bonus from the PF1 Core Rulebook \
              Rogue class table's 3/4-BAB progression: level * 3 / 4 = {base_attack_bonus}"
         ),
     });
 
-    // Grounded (2/4): base-save progression (good Reflex, poor Fortitude, poor Will).
+    // Grounded (2/5): base-save progression (good Reflex, poor Fortitude, poor Will).
     let base_save_fortitude = level_value / 3;
     let base_save_reflex = level_value / 2 + 2;
     let base_save_will = level_value / 3;
@@ -3344,7 +3545,7 @@ fn explain_rogue_level1_chassis(
         id: "class_chassis.rogue.base_save.fortitude".to_owned(),
         value: base_save_fortitude,
         detail: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} base Fortitude save (poor) from the PF1 Core \
+            "Rogue level {level} base Fortitude save (poor) from the PF1 Core \
              Rulebook Rogue class table: level / 3 = {base_save_fortitude}"
         ),
     });
@@ -3352,7 +3553,7 @@ fn explain_rogue_level1_chassis(
         id: "class_chassis.rogue.base_save.reflex".to_owned(),
         value: base_save_reflex,
         detail: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} base Reflex save (good) from the PF1 Core \
+            "Rogue level {level} base Reflex save (good) from the PF1 Core \
              Rulebook Rogue class table: level / 2 + 2 = {base_save_reflex}"
         ),
     });
@@ -3360,25 +3561,30 @@ fn explain_rogue_level1_chassis(
         id: "class_chassis.rogue.base_save.will".to_owned(),
         value: base_save_will,
         detail: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} base Will save (poor) from the PF1 Core \
+            "Rogue level {level} base Will save (poor) from the PF1 Core \
              Rulebook Rogue class table: level / 3 = {base_save_will}"
         ),
     });
 
-    // Grounded (3/4): sneak attack damage-die count only.
+    // Grounded (3/5): sneak attack damage-die count only. PF1 Core Rulebook:
+    // the sneak attack die count increases by 1d6 every two rogue levels
+    // (1d6 at levels 1-2, 2d6 at level 3+): (level + 1) / 2.
+    let sneak_attack_die_count = (level_value + 1) / 2;
     explanations.push(ComputationExplanation {
         id: "class_chassis.rogue.sneak_attack".to_owned(),
-        value: 1,
+        value: sneak_attack_die_count,
         detail: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} sneak attack from the PF1 Core Rulebook Rogue \
-             class table: +1d6 sneak attack damage die at level 1, against a flanked or \
-             Dexterity-denied target. Only the die-count facet (1, i.e. 1d6) is grounded here; \
-             damage-roll execution and the flanking / Dexterity-denial trigger-condition engine \
-             are not implemented"
+            "Rogue level {level} sneak attack from the PF1 Core Rulebook Rogue \
+             class table: the sneak attack die count increases by 1 every two rogue levels \
+             (1d6 at levels 1-2, 2d6 at level 3+): (level + 1) / 2 = ({level_value} + 1) / 2 = \
+             {sneak_attack_die_count}, i.e. {sneak_attack_die_count}d6 sneak attack damage die, \
+             against a flanked or Dexterity-denied target. Only the die-count facet is grounded \
+             here; damage-roll execution and the flanking / Dexterity-denial trigger-condition \
+             engine are not implemented"
         ),
     });
 
-    // Grounded (4/4): trapfinding — the flat numeric bonus and the
+    // Grounded (4/5): trapfinding — the flat numeric bonus and the
     // magic-trap-disarm statement only, mirroring the grounded Ranger Track
     // record (no check-execution engine behind it).
     let trapfinding_bonus = (level_value / 2).max(1);
@@ -3389,13 +3595,48 @@ fn explain_rogue_level1_chassis(
             "Rogue Trapfinding class feature: adds a bonus equal to max(rogue level / 2, 1) \
              (PF1 Core Rulebook Trapfinding: +1/2 rogue level, minimum +1) on Perception checks \
              made to locate traps and on Disable Device checks, and lets the rogue use Disable \
-             Device to disarm magic traps. At Rogue level {ROGUE_BASELINE_LEVEL} this bonus is \
-             max({ROGUE_BASELINE_LEVEL} / 2, 1) = {trapfinding_bonus}. This grounds only the \
+             Device to disarm magic traps. At Rogue level {level} this bonus is \
+             max({level_value} / 2, 1) = {trapfinding_bonus}. This grounds only the \
              flat numeric Trapfinding bonus and the magic-trap-disarm statement; it is not a \
              check-execution engine and computes no full Perception or Disable Device check, no \
              trap DC resolution, and no magic-trap disarm engine"
         ),
     });
+
+    // Grounded (5/5): Evasion, a 2nd-level Rogue class feature. Below the
+    // level-2 gate this is a correct PF1 Core Rulebook level-gate absence
+    // (value 0); at or above it, it is a bounded identity/recognition record
+    // only (value 0, non-fabricated) naming the rule text — mirroring how
+    // Divine Grace and Bravery were grounded as flat rules-text records
+    // without folding into an actual saving-throw-resolution or
+    // damage-resolution engine, neither of which exists in this codebase.
+    if level < ROGUE_EVASION_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.evasion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Evasion at rogue level {level}: correctly absent at level {level} by PF1 \
+                 Core Rulebook level gate; the at-grant rule is named but not computed. Evasion \
+                 is a 2nd-level rogue class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.evasion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Evasion granted at rogue level {level} (PF1 Core Rulebook, 2nd-level \
+                 rogue class feature): if the rogue makes a successful Reflex saving throw \
+                 against an attack that normally deals half damage on a successful save, she \
+                 instead takes no damage; Evasion has no effect if the rogue fails the saving \
+                 throw, and it has no effect at all against attacks that do not allow a saving \
+                 throw for half damage. This is a bounded identity/recognition record only \
+                 (value 0, non-fabricated): no saving-throw-resolution engine and no \
+                 damage-resolution engine exists anywhere in this codebase to apply it, so this \
+                 grounds no actual damage reduction on any save outcome"
+            ),
+        });
+    }
 }
 
 /// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Sorcerer

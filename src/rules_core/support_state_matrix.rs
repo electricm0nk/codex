@@ -93,10 +93,11 @@
 //!   unproven burden,
 //! - the Monk row is `Partial` / `Computed`: the SD13-E3 slice proves the
 //!   deterministic Human Monk level-1 martial chassis identity is recognized on the
-//!   compute seam (mirroring the Barbarian pattern), and now grounds three named
-//!   pillar burdens (base attack, base save, AC Bonus); two named pillar burdens
-//!   (unarmed strike / Flurry of Blows, and the level-1 bonus feat grant) remain
-//!   unproven,
+//!   compute seam (mirroring the Barbarian pattern), and the SD13-E5 slices ground
+//!   five named pillar burdens (base attack, base save, AC Bonus, unarmed strike /
+//!   Flurry of Blows, and the level-1 bonus feat choice-slot selection); the
+//!   recognized bonus feat's own mechanics (an execution engine, not a flat
+//!   number) remain unproven,
 //! - the Dwarf row is `Partial` / `Computed`: the SD13-E2 slice proves four grounded
 //!   Dwarf racial trait dimensions (ability modifiers, size, speed, senses) are
 //!   recognized on the compute seam, but the remaining Dwarf family surface
@@ -279,16 +280,24 @@ const SD13_HUMAN_ROW_GROUNDING_REF: &str =
 /// bonus-feat and ability-bonus selections).
 const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 
-/// SD13-E3/E5 dedicated proof surface for the bounded Human Rogue level-1 chassis
-/// baseline (mirroring the Barbarian/Monk pattern): direct computed
+/// SD13-E3/E5 dedicated proof surface for the bounded Human Rogue level-1/level-2
+/// chassis baseline (mirroring the Barbarian/Monk pattern): direct computed
 /// chassis-recognition evidence with all four named pillar burdens (base attack,
-/// base save, sneak attack die count, trapfinding) grounded as standalone records.
-const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs";
+/// base save, sneak attack die count, trapfinding) grounded as standalone records
+/// at level 1, widened to level 2 by a later SD13-E5 slice (the level-range gate
+/// plus the Evasion identity/recognition record), citing both proof files as one
+/// combined literal.
+const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs + \
+    tests/sd13_rogue_level2_progression.rs";
 
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group
 /// seam, and level-10 bonus-feat seam). This is the most specific/current proof
-/// for the levels-2-10 row's grounding_ref.
+/// for the levels-2-10 row's grounding_ref. (The Fighter Bravery flat-magnitude
+/// milestone — tests/sd13_fighter_bravery.rs — layers on top of this same
+/// levels-1-10 fixture set without moving the row's grounding_ref, since the
+/// already-landed sd13_fighter_level9_level10_progression.rs test asserts this
+/// exact grounding_ref string.)
 const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
@@ -304,11 +313,12 @@ const SD13_FIGHTER_LEVEL1_ROW_GROUNDING_REF: &str =
      tests/sd13_fighter_level1_hit_point_baseline.rs";
 
 /// The combined grounding reference for the Paladin hybrid baseline row, citing
-/// F6 (chassis identity), the per-burden decomposition test, and the SD13-E5
-/// level-2 lay on hands / divine grace grounding test as one literal. Each
-/// `.contains()` consumer reads its respective substring from this combined
-/// grounding reference.
+/// F6 (chassis identity), the per-burden decomposition test, the SD13-E5
+/// effective-caster-level gate test, and the SD13-E5 level-2 lay on hands /
+/// divine grace grounding test as one literal. Each `.contains()` consumer
+/// reads its respective substring from this combined grounding reference.
 const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs +      tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs + \
+    tests/sd13_paladin_partial_caster_effective_caster_level.rs + \
     tests/sd13_paladin_level2_lay_on_hands_divine_grace.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
@@ -391,13 +401,15 @@ const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.r
 /// empathy burden and the prepared divine spell posture burden.
 const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs";
 
-/// SD13-E3 dedicated proof surface for the bounded Human Monk level-1 martial
-/// chassis baseline (mirroring the Barbarian pattern): direct computed
-/// chassis-recognition evidence, now grounding three named martial pillar burdens
-/// (base attack, base save, AC Bonus) and staying explicitly blocked on the two
-/// remaining named burdens (unarmed strike / Flurry of Blows, level-1 bonus feat
-/// grant).
-const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs";
+/// The combined grounding reference for the Monk martial chassis row, citing both
+/// the SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC
+/// Bonus, unarmed strike die, Flurry of Blows) and the SD13-E5 bonus-feat
+/// choice-recognition test as one literal, mirroring
+/// [`SD13_PALADIN_ROW_GROUNDING_REF`] / [`SD13_RANGER_ROW_GROUNDING_REF`]. Both
+/// `.contains()` consumers read their respective substring from this combined
+/// grounding reference.
+const SD13_MONK_LEVEL1_TEST: &str =
+    "tests/sd13_monk_level1_chassis_baseline.rs + tests/sd13_monk_bonus_feat_choice.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -641,7 +653,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:fighter",
                 dimension: "class progression across levels 2-10: bounded milestone proof \
                             for levels 2 through 10, with the Weapon Training damage-roll \
-                            half and Bravery still unproven",
+                            half still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -654,33 +666,38 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     canonical loadout), the level-3 Armor Training 1 seam, the level-5 Weapon \
                     Training 1 attack-roll half, the level-7 Armor Training 2 seam (raises the \
                     Climb/Swim selected-skill totals by +1 each on the deterministic Chain \
-                    Shirt), and the level-9 Weapon Training 2 attack-roll half (rank = 1 + \
+                    Shirt), the level-9 Weapon Training 2 attack-roll half (rank = 1 + \
                     (level - 5) / 4: the first-group Heavy Blades bonus rises to +2, folded \
                     into the baseline melee attack bonus, and the canonical second group, Bows, \
                     is surfaced at +1 as an explanation-only seam covering no equipped weapon) \
-                    over the deterministic Human loadout. The Weapon Training damage-roll half \
-                    stays unproven — no damage total is computed anywhere in this codebase for \
-                    any Fighter level, so this is not a new gap. Bravery stays unproven — the \
-                    level-2 Fighter Will-save bonus vs fear (+1 at level 2, +2 at level 6, +3 \
-                    at level 10) is absent from this codebase entirely; no Will-vs-fear total \
-                    or seam exists. The generic PF1 ability-score-increase milestones need no \
-                    separate seam: the chosen ability score is trusted at face value. Any \
-                    general feat-effect/prerequisite engine also remains out of proof",
+                    over the deterministic Human loadout, and Bravery (+1 Will save vs fear at \
+                    level 2, +2 at level 6, +3 at level 10, rank = 1 + (level - 2) / 4) as a \
+                    flat, non-fabricated bonus magnitude record. The Weapon Training \
+                    damage-roll half stays unproven — no damage total is computed anywhere in \
+                    this codebase for any Fighter level, so this is not a new gap. Bravery's \
+                    magnitude is grounded, but the Will-vs-fear total itself stays unproven: no \
+                    fear-condition or save-resolution engine exists on this compute surface, so \
+                    the Bravery bonus is never folded into the unconditional Will save total. \
+                    The generic PF1 ability-score-increase milestones need no separate seam: \
+                    the chosen ability score is trusted at face value. Any general \
+                    feat-effect/prerequisite engine also remains out of proof",
                 next_required_uplift: "later SD13 slice grounding the remaining named Fighter \
-                    class-feature burdens inside levels 2-10: the Bravery Will-vs-fear seam \
-                    (+1 at level 2, +2 at level 6, +3 at level 10) and the Weapon Training \
-                    damage-roll half (which first needs any damage total to exist on the \
-                    compute surface)",
+                    class-feature burden inside levels 2-10: the Weapon Training damage-roll \
+                    half (which first needs any damage total to exist on the compute surface), \
+                    or a fear-condition/save-resolution engine to apply the Bravery magnitude \
+                    to an actual Will save (a tranche-level subsystem decision, not a slice \
+                    decision)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:rogue",
                 dimension: "bounded Rogue chassis progression: the deterministic Human Rogue \
-                            level-1 chassis identity, with all four named pillars now grounded \
-                            (base-attack, base-save, sneak-attack die count, and trapfinding) \
-                            and the check-execution / rogue-talent / integration remainder \
-                            still unproven",
+                            level-1/level-2 chassis identity, with all four named pillars \
+                            grounded across both levels (base-attack, base-save, sneak-attack \
+                            die count, and trapfinding), Evasion grounded as a level-2 \
+                            identity/recognition record, and the check-execution / \
+                            rogue-talent / integration remainder still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -690,21 +707,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     compute seam, and all four named pillar burdens are now grounded: base \
                     attack progression (3/4 BAB, level * 3 / 4), base save progression (good \
                     Reflex, poor Fortitude, poor Will), sneak attack (die count only, +1d6 at \
-                    level 1 — damage-roll execution and the flanking / Dexterity-denial \
+                    levels 1-2 — damage-roll execution and the flanking / Dexterity-denial \
                     trigger-condition engine remain unproven), and, per the SD13-E5 slice, \
                     trapfinding (the flat max(rogue level / 2, 1) bonus on Perception checks to \
-                    locate traps and on Disable Device checks, +1 at level 1, plus the \
+                    locate traps and on Disable Device checks, +1 at levels 1-2, plus the \
                     magic-trap-disarm statement — a check-execution engine, trap DC resolution, \
-                    and a magic-trap disarm engine remain unproven). The row is Partial, not \
-                    Supported: no rogue talent (a level-2+ milestone) is proven, no Rogue level \
-                    2+ is proven, and no mechanical math is fabricated beyond these grounded \
-                    pillars. \
+                    and a magic-trap disarm engine remain unproven). A later SD13-E5 slice widens \
+                    the level-1-only gate to level 2 (mirroring the Fighter/Paladin level-range \
+                    gate idiom) and grounds Evasion as a bounded identity/recognition record only \
+                    (value 0, non-fabricated): no damage on a successful Reflex save against an \
+                    effect that normally allows half damage on a successful save, no benefit on a \
+                    failed save — naming the rule text with no saving-throw-resolution or \
+                    damage-resolution engine behind it. The row is Partial, not Supported: no \
+                    rogue talent (a level-2+ choice-list feature, and a genuinely open-ended \
+                    talent tree left named but unproven) is proven, no Rogue level 3+ is proven, \
+                    and no mechanical math is fabricated beyond these grounded pillars. \
                     tests/ge06_pilot_total_saves.rs (unsupported_chassis_blocks_total_saves) \
                     still claim-blocks class:rogue:1 unmodified: the \
                     class_chassis.rogue.base_attack_bonus / base_save.* / sneak_attack / \
-                    trapfinding explanations are standalone records, not wired into \
-                    compute_fighter_chassis, compute_total_saves, or compute_combat_baseline, \
-                    so defense.total_save.* is still never computed for Rogue.",
+                    trapfinding / class_feature.rogue.evasion explanations are standalone \
+                    records, not wired into compute_fighter_chassis, compute_total_saves, or \
+                    compute_combat_baseline, so defense.total_save.* is still never computed for \
+                    Rogue.",
                 next_required_uplift: "later SD13 slice wiring the grounded Rogue pillar \
                     records into the integrated pilot surface (the generic chassis diagnostics \
                     still claim-block), then rogue talents and level-2+ progression",
@@ -860,29 +884,36 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:monk",
                 dimension: "bounded Monk martial chassis progression: the deterministic Human \
                             Monk level-1 martial chassis identity, with base-attack, base-save, \
-                            AC Bonus, the unarmed strike damage die, and the Flurry of Blows \
-                            flat attack surface now grounded, and the level-1 bonus feat grant \
-                            still unproven",
+                            AC Bonus, the unarmed strike damage die, the Flurry of Blows flat \
+                            attack surface, and the level-1 bonus feat choice-slot selection now \
+                            grounded, and the recognized bonus feat's own mechanics still \
+                            unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_MONK_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3/E5 leaves direct computed evidence that the \
                     deterministic Human Monk level-1 martial chassis identity is recognized on \
-                    the compute seam, and now grounds four named pillar burdens: base attack \
+                    the compute seam, and now grounds five named pillar burdens: base attack \
                     progression (3/4 BAB), base save progression (good Fortitude, Reflex, and \
-                    Will), AC Bonus (Wisdom-to-AC, the flat level-1 value only), and the unarmed \
+                    Will), AC Bonus (Wisdom-to-AC, the flat level-1 value only), the unarmed \
                     strike / Flurry of Blows flat surface (Medium monk 1d6 unarmed damage — die \
                     size only, no damage roll or total — and the level-1 flurry posture of two \
-                    attacks at monk level - 2 = -1 each before ability modifiers). One named \
-                    pillar burden remains unproven: the level-1 bonus feat grant from the \
-                    restricted Monk feat list. The level-4+ unarmed damage die progression, \
-                    flurry with special monk weapons, an attack-resolution engine, wiring into \
+                    attacks at monk level - 2 = -1 each before ability modifiers), and the \
+                    level-1 bonus feat choice-slot selection (recognized when it names one of the \
+                    PF1 Core Rulebook restricted Monk bonus feat list's five feats: Combat \
+                    Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, Stunning Fist — a \
+                    +0 recognition record with no feat-effect execution, mirroring the Sorcerer \
+                    bloodline choice / Cleric domain choice / Druid nature-bond choice \
+                    recognition idiom). One named burden remains unproven: the recognized bonus \
+                    feat's own mechanics (no attack-resolution, grapple-check, trip-check, or \
+                    DC/save engine exists for any of the restricted-list feats). The level-4+ \
+                    unarmed damage die progression, flurry with special monk weapons, wiring into \
                     integrated combat totals, and Monk level 2+ all remain unproven, and no \
                     martial math beyond the grounded flat surfaces is fabricated",
-                next_required_uplift: "later SD13-E5 slice grounding the one remaining named \
-                    Monk martial pillar burden (the level-1 bonus feat grant from the restricted \
-                    Monk feat list), then level-2+ progression",
+                next_required_uplift: "later SD13-E5/E6 slice grounding the one remaining named \
+                    Monk martial pillar burden (the recognized bonus feat's own mechanics — an \
+                    execution engine per feat, not a flat number), then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
@@ -893,8 +924,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             uses-per-day / attack-bonus / damage-bonus formula grounded at both \
                             levels, lay on hands and divine grace grounded for real at level 2 \
                             (correct PF1 CRB level-gate absences at level 1), mercy grounded as a \
-                            correct PF1 CRB level-gate absence at both levels, and the hybrid \
-                            chassis pair plus the partial-caster spell burden still named and \
+                            correct PF1 CRB level-gate absence at both levels, the \
+                            partial-caster effective-caster-level gate grounded as a correct \
+                            zero absence at both levels, and the hybrid chassis pair plus the \
+                            spells-known/spells-per-day/spell-DC spell burden still named and \
                             unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -917,17 +950,23 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     remain correct level gate absences (value 0). Mercy stays a grounded level \
                     gate absence at both levels: mercy is a 3rd-level paladin feature in the PF1 \
                     Core Rulebook, so at level 1 and level 2 it emits a value-0 record naming its \
-                    at-grant formula without computing it. The row is Partial, not Supported: the \
-                    F6 hybrid chassis pair (class-feature and spell) stays claim-blocking as \
-                    accepted hybrid truth, no Paladin level 3+ is proven, and the partial-caster \
-                    spell burden (Paladin is a divine partial caster in PF1 Core Rulebook: spells \
-                    begin at paladin level 4, effective caster level = paladin level - 3) remains \
-                    named and unproven. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 \
-                    hybrid chassis recognition explanation all remain in place (each gated to the \
-                    bounded hybrid baseline level, so they still fire only at level 1)",
-                next_required_uplift: "ground the paladin partial-caster spell burden (spells begin \
-                    at paladin level 4, caster level = paladin level - 3), then paladin level-3+ \
-                    progression (mercy at level 3)",
+                    at-grant formula without computing it. SD13-E5 additionally grounds the \
+                    partial-caster IDENTITY itself as one more flat level-gate record: effective \
+                    caster level = max(paladin level - 3, 0), which correctly grounds to 0 at \
+                    both level 1 and level 2 (PF1 Core Rulebook: paladin spells begin at paladin \
+                    level 4). The row is Partial, not Supported: the F6 hybrid chassis pair \
+                    (class-feature and spell) stays claim-blocking as accepted hybrid truth, no \
+                    Paladin level 3+ is proven, and the partial-caster spell burden itself \
+                    remains named and unproven beyond the grounded caster-level gate arithmetic — \
+                    no spell-source lineage, spells known or prepared posture, spells-per-day \
+                    progression, bonus spell slots, or spell save DCs are grounded. The F6 hybrid \
+                    baseline, the F6 hybrid blockers, and the F6 hybrid chassis recognition \
+                    explanation all remain in place (each gated to the bounded hybrid baseline \
+                    level, so they still fire only at level 1)",
+                next_required_uplift: "ground the paladin spells-known/spells-per-day/spell-DC \
+                    burden content now that the effective-caster-level gate is grounded (spells \
+                    begin at paladin level 4, caster level = paladin level - 3), then paladin \
+                    level-3+ progression (mercy at level 3)",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
