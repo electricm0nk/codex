@@ -4,22 +4,26 @@
 //! Wizard): the live rules-core surface ingests a deterministic Human `class:cleric:1`
 //! input, leaves direct computed evidence that recognizes the Cleric level-1 prepared
 //! divine spell-bearing class identity rather than treating it as an undocumented
-//! packet placeholder, and yet stays explicitly claim-blocked with two distinct
-//! diagnostics: one for the domain and channel energy class-feature burden (two domains
-//! chosen, domain spells, domain powers, channel energy) and one for the prepared
-//! divine spell posture burden (spells prepared from the full Cleric list, spontaneous
-//! cure/inflict conversion, spell slots per day, bonus spells from a high Wisdom, spell
-//! save DCs). The slice stays single-class, level-1-only, Human-only, and grounds no
-//! spell math, no domain power execution, and no channel energy execution.
+//! packet placeholder, and grounds its Channel Energy class feature for real (PF1 Core
+//! Rulebook: `ceil(cleric level / 2)` d6, minimum 1d6; usable `3 + Charisma modifier`
+//! times per day). It yet stays explicitly claim-blocked with two distinct diagnostics:
+//! one for the domain choice class-feature burden (two domains chosen, domain spells,
+//! domain powers) and one for the prepared divine spell posture burden (spells prepared
+//! from the full Cleric list, spontaneous cure/inflict conversion, spell slots per day,
+//! bonus spells from a high Wisdom, spell save DCs). The slice stays single-class,
+//! level-1-only, Human-only, and grounds no domain power execution, no channel energy
+//! save DC or damage/healing resolution, and no spell math.
 //!
-//! It also promotes the matrix reclassification inline (mirroring the Sorcerer / Bard
-//! pattern, not the one-off deferred Wizard merge-receipt pattern): the in-source
-//! carrier moves the Cleric row to `Blocked` / `Computed` / `RefreshableFromLiveProof`,
-//! grounded on this test file, with a blocker note naming both burdens.
+//! It also promotes the matrix reclassification inline (mirroring the Ranger Track
+//! decomposition precedent): the in-source carrier moves the Cleric row from `Blocked`
+//! to `Partial` / `Computed` / `RefreshableFromLiveProof`, grounded on this same test
+//! file (grounding_ref unchanged), with a blocker note naming Channel Energy as grounded
+//! and the two remaining burdens as still unproven.
 //!
 //! It is intentionally not a spell engine. It fabricates no domain spells, no domain
-//! powers, no channel energy execution, no spellbook content, no spells prepared, no
-//! spell slots per day, no spell DCs, no bonus spells, and it grounds no Cleric level 2+.
+//! powers, no channel energy save DC or damage/healing resolution, no spellbook
+//! content, no spells prepared, no spell slots per day, no spell DCs, no bonus spells,
+//! and it grounds no Cleric level 2+.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -36,7 +40,9 @@ const CLERIC_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_cleric_level1_sd13_deterministic_input.txt");
 
 const RECOGNITION_ID: &str = "class_chassis.spell_baseline.cleric";
-const DOMAIN_BLOCKER_ID: &str = "class_feature.cleric.domain_and_channel_energy.unsupported";
+const CHANNEL_ENERGY_DICE_ID: &str = "class_chassis.cleric.channel_energy_dice";
+const CHANNEL_ENERGY_USES_PER_DAY_ID: &str = "class_chassis.cleric.channel_energy_uses_per_day";
+const DOMAIN_BLOCKER_ID: &str = "class_feature.cleric.domain_choice.unsupported";
 const PREPARED_BLOCKER_ID: &str = "class_spell.cleric.prepared_divine.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -145,25 +151,83 @@ fn cleric_level1_fabricates_no_spell_math() {
 
     for explanation in &computation.explanations {
         assert!(
-            explanation.id == RECOGNITION_ID || !explanation.id.contains("spell"),
-            "no fabricated spell explanation is allowed beyond the +0 recognition: {explanation:?}"
+            explanation.id == RECOGNITION_ID
+                || explanation.id == CHANNEL_ENERGY_DICE_ID
+                || explanation.id == CHANNEL_ENERGY_USES_PER_DAY_ID
+                || !explanation.id.contains("spell"),
+            "no fabricated spell explanation is allowed beyond the +0 recognition and the grounded \
+             Channel Energy pillars: {explanation:?}"
         );
     }
     let recognition = explanation(&computation, RECOGNITION_ID);
     assert_eq!(recognition.value, 0);
 }
 
+// ----- Grounded for real: Channel Energy die count and uses per day -----
+
+#[test]
+fn cleric_level1_grounds_channel_energy_dice_and_uses_per_day() {
+    let input = load(CLERIC_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // PF1 Core Rulebook Channel Energy: ceil(cleric level / 2) d6, minimum 1d6.
+    // At level 1: ceil(1 / 2) = 1.
+    let dice = explanation(&computation, CHANNEL_ENERGY_DICE_ID);
+    assert_eq!(
+        dice.value, 1,
+        "cleric level 1 Channel Energy must ground exactly 1d6"
+    );
+    assert!(
+        dice.detail.contains("d6") && dice.detail.contains("Channel Energy"),
+        "channel energy dice explanation must name the d6 die count and Channel Energy: {}",
+        dice.detail
+    );
+
+    // PF1 Core Rulebook Channel Energy: usable 3 + Charisma modifier times per day.
+    // Fixture Charisma is 14 -> modifier +2 -> 3 + 2 = 5.
+    let uses = explanation(&computation, CHANNEL_ENERGY_USES_PER_DAY_ID);
+    assert_eq!(
+        uses.value, 5,
+        "cleric level 1 with CHA 14 (+2) must ground 3 + 2 = 5 channel energy uses per day"
+    );
+    assert!(
+        uses.detail.contains("Charisma") && uses.detail.contains("Channel Energy"),
+        "channel energy uses-per-day explanation must name Charisma and Channel Energy: {}",
+        uses.detail
+    );
+
+    // Grounding Channel Energy must not silently fabricate domain spell math or
+    // the prepared-spell posture: no domain-spell or prepared-spell explanation
+    // is allowed, and both remaining named burdens must still be present and
+    // claim-blocking.
+    assert!(
+        !has_explanation(&computation, "class_feature.cleric.domain_spells"),
+        "grounding Channel Energy must not fabricate domain spell math"
+    );
+    assert!(
+        !has_explanation(&computation, "class_spell.cleric.prepared_divine"),
+        "grounding Channel Energy must not fabricate the prepared divine spell posture"
+    );
+    claim_blocking(&computation, DOMAIN_BLOCKER_ID);
+    claim_blocking(&computation, PREPARED_BLOCKER_ID);
+}
+
 // ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
 
 #[test]
-fn cleric_level1_stays_blocked_on_domain_and_channel_energy_burden() {
+fn cleric_level1_stays_blocked_on_domain_choice_burden() {
     let input = load(CLERIC_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let domain = claim_blocking(&computation, DOMAIN_BLOCKER_ID);
     assert!(
-        domain.message.contains("domain") && domain.message.contains("channel energy"),
-        "cleric domain blocker must name the domain / channel energy burden: {}",
+        domain.message.contains("domain"),
+        "cleric domain blocker must name the domain choice burden: {}",
+        domain.message
+    );
+    assert!(
+        !domain.message.contains("channel energy"),
+        "cleric domain choice blocker must no longer name channel energy now that it is grounded: {}",
         domain.message
     );
 }
@@ -297,34 +361,42 @@ fn cleric_level_2_is_not_promoted_by_this_slice() {
         "level-2 Cleric must not gain the bounded level-1 prepared-divine-spell-baseline recognition record"
     );
     assert!(
+        !has_explanation(&computation, CHANNEL_ENERGY_DICE_ID)
+            && !has_explanation(&computation, CHANNEL_ENERGY_USES_PER_DAY_ID),
+        "level-2 Cleric must not gain the bounded level-1 Channel Energy grounding"
+    );
+    assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "level-2 Cleric must stay claim-blocked in this slice"
     );
 }
 
-// ----- Control plane: the matrix row is promoted inline (Sorcerer/Bard pattern) -----
+// ----- Control plane: the matrix row is promoted inline (Ranger Track precedent) -----
 
 #[test]
-fn matrix_cleric_row_is_blocked_computed_and_names_both_burdens() {
+fn matrix_cleric_row_is_partial_computed_and_names_all_three_burdens() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let cleric = matrix
         .row("class.cleric.progression_and_spell_burden")
         .expect("cleric row must exist");
 
-    assert_eq!(cleric.support_state, SupportState::Blocked);
+    assert_eq!(cleric.support_state, SupportState::Partial);
+    assert_ne!(cleric.support_state, SupportState::Blocked);
+    assert_ne!(cleric.support_state, SupportState::Supported);
     assert_eq!(cleric.evidence_tier, EvidenceTier::Computed);
     assert_eq!(cleric.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
         cleric
             .grounding_ref
             .contains("sd13_cleric_level1_spell_baseline"),
-        "carrier grounding_ref must cite this slice's proof surface"
+        "carrier grounding_ref must cite this slice's proof surface (unchanged)"
     );
     assert!(
-        cleric.blocker_or_lossiness_note.contains("domain")
-            && cleric.blocker_or_lossiness_note.contains("channel energy")
+        cleric.blocker_or_lossiness_note.contains("Channel Energy")
+            && cleric.blocker_or_lossiness_note.contains("domain")
             && cleric.blocker_or_lossiness_note.contains("prepared"),
-        "cleric blocker note must name the domain, channel energy, and prepared divine spell burdens: {}",
+        "cleric blocker note must name Channel Energy as grounded, and the domain and prepared \
+         divine spell burdens as still unproven: {}",
         cleric.blocker_or_lossiness_note
     );
 }
