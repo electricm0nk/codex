@@ -784,8 +784,13 @@ function Sd16UpdateSection() {
           ? {
               ...mounted.restoreOffer,
               onRestore: async () => {
-                await restorePreviousVersion();
-                await refresh();
+                try {
+                  setLoadError(null);
+                  await restorePreviousVersion();
+                  await refresh();
+                } catch (cause: unknown) {
+                  setLoadError(cause instanceof Error ? cause.message : 'Unknown restore failure');
+                }
               },
             }
           : undefined
