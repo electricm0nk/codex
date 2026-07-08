@@ -528,7 +528,12 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
-    explain_bard_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+    explain_bard_level1_spell_baseline(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
     explain_human_pilot_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
@@ -3558,13 +3563,17 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E4-F7/SD13-E4 runtime evidence for the deterministic Human
-/// Bard level-1 spontaneous arcane spell-bearing baseline: one recognition record,
-/// one grounded chassis-class-feature pillar (Bardic Knowledge), and two remaining
-/// named claim-blocking burdens (Bardic Music, the spontaneous spell posture).
+/// Surface direct SD13-E4-F7/SD13-E4/SD13-E5 runtime evidence for the deterministic
+/// Human Bard level-1 spontaneous arcane spell-bearing baseline: one recognition
+/// record, three grounded chassis-class-feature pillars (Bardic Knowledge, the
+/// Bardic Performance rounds-per-day budget, and the Inspire Courage flat level-1
+/// magnitude), and two remaining named claim-blocking burdens (the bardic
+/// performance-execution engine, the spontaneous spell posture).
 ///
 /// This deliberately does not compute a supported Bard chassis. It grounds no
-/// Bardic Music / Inspire Courage execution and no spell math whatsoever — no
+/// bardic performance execution — no start/maintain action economy, no round
+/// tracking or consumption, and none of the other level-1 performances
+/// (countersong, distraction, fascinate) — and no spell math whatsoever: no
 /// spells known, no spells per day, no spell DCs, no bonus spells, no prepared
 /// posture, no school choice. It only:
 /// - leaves one recognition explanation so the `class:bard:1` identity is acknowledged
@@ -3577,18 +3586,26 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
 ///   modifier (the Intelligence modifier already belongs to the ordinary Knowledge
 ///   check, not to this class-feature bonus), so it is a bounded, deterministic,
 ///   level-only value; this grounds only that flat bonus, not a full Knowledge-check
-///   resolution, and
-/// - emits two distinct claim-blocking diagnostics naming the still-unproven Bardic
-///   Music chassis-class-feature burden and the spontaneous known-spell / slot
-///   posture burden explicitly, rather than hiding behind a generic "unsupported
-///   caster" label.
+///   resolution,
+/// - grounds the flat Bardic Performance surface for real: the rounds-per-day
+///   budget (PF1 Core Rulebook Bardic Performance: a level-1 bard can use bardic
+///   performance for 4 + Charisma modifier rounds per day, floored at 0) and the
+///   Inspire Courage flat level-1 magnitude (+1 competence bonus on attack and
+///   weapon damage rolls, +1 morale bonus on saving throws against charm and fear
+///   effects). These are bounded flat values only; no performance-state engine
+///   applies them anywhere, and
+/// - emits two distinct claim-blocking diagnostics naming the still-unproven bardic
+///   performance-execution burden (start/maintain action economy, round tracking and
+///   consumption, and the ungrounded countersong / distraction / fascinate
+///   performances) and the spontaneous known-spell / slot posture burden explicitly,
+///   rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Bard spell-bearing identity, the grounded
-/// Bardic Knowledge pillar, and the two remaining named burdens legible on the
-/// runtime path.
+/// flat pillars, and the two remaining named burdens legible on the runtime path.
 fn explain_bard_level1_spell_baseline(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -3608,12 +3625,14 @@ fn explain_bard_level1_spell_baseline(
         detail: format!(
             "Recognized deterministic Human Bard level {BARD_BASELINE_LEVEL} spell-bearing \
              baseline: the {BARD_CLASS_ID}:{BARD_BASELINE_LEVEL} class identity is acknowledged \
-             as a spontaneous arcane spell-bearing class with its named Bardic Music \
-             chassis-class-feature burden on the rules-core seam rather than an undocumented \
-             packet placeholder. This is a bounded recognition record only; it grounds no \
-             Bardic Music / Inspire Courage execution and no spell math (spells known, spells \
-             per day, spell DCs, bonus spells, or prepared posture), so it carries no \
-             fabricated mechanical value (+0)"
+             as a spontaneous arcane spell-bearing class with its named bardic \
+             performance-execution chassis-class-feature burden on the rules-core seam rather \
+             than an undocumented packet placeholder. This is a bounded recognition record \
+             only; it grounds no bardic performance execution (no start/maintain action \
+             economy, no round tracking or consumption, no countersong / distraction / \
+             fascinate resolution) and no spell math (spells known, spells per day, spell DCs, \
+             bonus spells, or prepared posture), so it carries no fabricated mechanical value \
+             (+0)"
         ),
     });
 
@@ -3636,21 +3655,65 @@ fn explain_bard_level1_spell_baseline(
              max({BARD_BASELINE_LEVEL} / 2, 1) = {bardic_knowledge_bonus}. This grounds only \
              the flat Knowledge-check competence bonus; it is not a full Knowledge-check \
              resolution engine and adds no skill rank, no ability modifier, and no untrained-\
-             check gate, and it grounds no Bardic Music / Inspire Courage execution"
+             check gate, and it grounds no bardic performance execution"
         ),
     });
 
-    // Still blocked (1/2): name the Bardic Music chassis-class-feature burden
-    // explicitly, now separated from the grounded Bardic Knowledge pillar. Bardic
-    // Music grants the Inspire Courage performance and the rest of the performance
-    // family; this slice grounds no performance execution.
+    // Grounded for real: the Bardic Performance rounds-per-day budget. PF1 Core
+    // Rulebook Bardic Performance: a level-1 bard can use bardic performance for a
+    // number of rounds per day equal to 4 + his Charisma modifier (each level after
+    // 1st adds 2 more rounds; this bounded level-1 baseline grounds only the level-1
+    // budget), floored at 0 mirroring the Cleric channel-energy uses-per-day floor.
+    let bardic_performance_rounds_per_day = (4 + ability_modifiers.charisma).max(0);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.bardic_performance_rounds_per_day".to_owned(),
+        value: bardic_performance_rounds_per_day,
+        detail: format!(
+            "Bard Bardic Performance rounds per day: 4 + Charisma modifier at bard level \
+             {BARD_BASELINE_LEVEL} (PF1 Core Rulebook Bardic Performance), floored at 0. At \
+             Charisma modifier {} this is max(4 + {}, 0) = {bardic_performance_rounds_per_day}. \
+             This grounds only the flat daily round budget; no round tracking or consumption, \
+             no start/maintain action economy, and no per-performance execution is computed",
+            ability_modifiers.charisma, ability_modifiers.charisma
+        ),
+    });
+
+    // Grounded for real: the Inspire Courage flat level-1 magnitude. PF1 Core
+    // Rulebook Inspire Courage at bard level 1: affected allies receive a +1 morale
+    // bonus on saving throws against charm and fear effects and a +1 competence
+    // bonus on attack and weapon damage rolls. Only the flat magnitude is grounded;
+    // no performance-state engine exists to start the performance or apply the
+    // bonus to any computed total.
+    let inspire_courage_bonus = 1_i16;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.inspire_courage_bonus".to_owned(),
+        value: inspire_courage_bonus,
+        detail: format!(
+            "Bard Inspire Courage magnitude at bard level {BARD_BASELINE_LEVEL} (PF1 Core \
+             Rulebook Inspire Courage): a +{inspire_courage_bonus} competence bonus on attack \
+             rolls and weapon damage rolls and a +{inspire_courage_bonus} morale bonus on \
+             saving throws against charm and fear effects for affected allies. This grounds \
+             only the flat level-1 magnitude of the fixture's chosen performance \
+             (choice:bard_bardic_music -> performance:inspire_courage); it is never applied to \
+             any attack, damage, or save total because the performance-state engine \
+             (start/maintain action economy, round tracking) is not implemented"
+        ),
+    });
+
+    // Still blocked (1/2): name the narrowed bardic performance-execution burden
+    // explicitly, now separated from the grounded flat pillars (Bardic Knowledge,
+    // the rounds-per-day budget, the Inspire Courage magnitude). The
+    // performance-state engine and the other level-1 performances remain unproven.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.bard.bardic_music.unsupported".to_owned(),
+        id: "class_feature.bard.bardic_performance_execution.unsupported".to_owned(),
         message: format!(
-            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic music \
-             chassis-class-feature burden: the bardic music performance family (inspire \
-             courage and later performances) is not implemented in this bounded spell \
-             baseline, so no Bard bardic-music support is claimed"
+            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic \
+             performance-execution burden: the performance-state engine is not implemented \
+             (no start/maintain action economy, no round tracking or consumption of the \
+             grounded rounds-per-day budget, no application of the grounded inspire courage \
+             magnitude to any attack, damage, or save total), and the other level-1 \
+             performances (countersong, distraction, fascinate) are not grounded, so no Bard \
+             bardic-performance execution support is claimed"
         ),
         claim_blocking: true,
     });
