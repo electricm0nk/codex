@@ -469,6 +469,16 @@ const FIGHTER_ARMOR_TRAINING_2_LEVEL: u8 = 7;
 const ARMOR_TRAINING_2_ARMOR_CHECK_REDUCTION: i16 = 2;
 const ARMOR_TRAINING_2_MAX_DEX_INCREASE: i16 = 2;
 
+// Fighter Bravery, gained at level 2 with an additional +1 every four Fighter
+// levels thereafter (level 6, level 10, ...): +1 Will save vs fear at level 2,
+// +2 at level 6, +3 at level 10, per PF1 Core Rulebook. This slice grounds only
+// the flat bonus magnitude as a standalone explanation record, mirroring the
+// Weapon Training attack-bonus-rank idiom; no fear-condition or save-resolution
+// engine exists anywhere in this codebase, so the bonus is never folded into the
+// unconditional Will save total.
+const FIGHTER_BRAVERY_LEVEL: u8 = 2;
+const FIGHTER_BRAVERY_RANK_LEVEL_STRIDE: u8 = 4;
+
 /// Simple integrated status for the GE-06 pilot headless receipt: whether the
 /// path produced computed evidence or is blocked. This distinguishes evidence
 /// from a blocker posture; it is not an oracle-checked parity verdict.
@@ -1758,6 +1768,17 @@ fn fighter_weapon_training_attack_bonus(input: &CharacterInput, level: u8) -> i1
     }
 }
 
+/// The Fighter Bravery Will-save-vs-fear bonus magnitude at the given level: 0
+/// before level 2, then 1 + (level - 2) / 4 (+1 at level 2, +2 at level 6, +3 at
+/// level 10 within this bounded levels-1-10 surface). A flat magnitude only —
+/// no fear-condition or save-resolution engine exists on this compute surface.
+fn fighter_bravery_bonus(level: u8) -> i16 {
+    if level < FIGHTER_BRAVERY_LEVEL {
+        return 0;
+    }
+    i16::from(1 + (level - FIGHTER_BRAVERY_LEVEL) / FIGHTER_BRAVERY_RANK_LEVEL_STRIDE)
+}
+
 /// Compute the bounded Fighter base chassis for the supported milestone levels
 /// (1, 2, or 3), or block the claim if the input is not a supported single-class
 /// Fighter posture for this narrow slice.
@@ -1848,6 +1869,23 @@ fn explain_fighter_class_features(
     let Some(level) = supported_fighter_level(input) else {
         return;
     };
+
+    let bravery_bonus = fighter_bravery_bonus(level);
+    if bravery_bonus > 0 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.bravery".to_owned(),
+            value: bravery_bonus,
+            detail: format!(
+                "Fighter level {FIGHTER_BRAVERY_LEVEL} Bravery (cr_abilities_class.lst Fighter; \
+                 +1 at level {FIGHTER_BRAVERY_LEVEL} and another +1 every \
+                 {FIGHTER_BRAVERY_RANK_LEVEL_STRIDE} Fighter levels thereafter): grants \
+                 +{bravery_bonus} to Will saves against fear. This is a flat, non-fabricated \
+                 bonus magnitude only — no fear-condition or Will-save-resolution engine exists \
+                 anywhere in this codebase, so this bonus is never folded into the unconditional \
+                 Will save total"
+            ),
+        });
+    }
 
     if level >= 2
         && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID)

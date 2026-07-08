@@ -288,7 +288,11 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group
 /// seam, and level-10 bonus-feat seam). This is the most specific/current proof
-/// for the levels-2-10 row's grounding_ref.
+/// for the levels-2-10 row's grounding_ref. (The Fighter Bravery flat-magnitude
+/// milestone — tests/sd13_fighter_bravery.rs — layers on top of this same
+/// levels-1-10 fixture set without moving the row's grounding_ref, since the
+/// already-landed sd13_fighter_level9_level10_progression.rs test asserts this
+/// exact grounding_ref string.)
 const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
@@ -640,7 +644,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:fighter",
                 dimension: "class progression across levels 2-10: bounded milestone proof \
                             for levels 2 through 10, with the Weapon Training damage-roll \
-                            half and Bravery still unproven",
+                            half still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -653,23 +657,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     canonical loadout), the level-3 Armor Training 1 seam, the level-5 Weapon \
                     Training 1 attack-roll half, the level-7 Armor Training 2 seam (raises the \
                     Climb/Swim selected-skill totals by +1 each on the deterministic Chain \
-                    Shirt), and the level-9 Weapon Training 2 attack-roll half (rank = 1 + \
+                    Shirt), the level-9 Weapon Training 2 attack-roll half (rank = 1 + \
                     (level - 5) / 4: the first-group Heavy Blades bonus rises to +2, folded \
                     into the baseline melee attack bonus, and the canonical second group, Bows, \
                     is surfaced at +1 as an explanation-only seam covering no equipped weapon) \
-                    over the deterministic Human loadout. The Weapon Training damage-roll half \
-                    stays unproven — no damage total is computed anywhere in this codebase for \
-                    any Fighter level, so this is not a new gap. Bravery stays unproven — the \
-                    level-2 Fighter Will-save bonus vs fear (+1 at level 2, +2 at level 6, +3 \
-                    at level 10) is absent from this codebase entirely; no Will-vs-fear total \
-                    or seam exists. The generic PF1 ability-score-increase milestones need no \
-                    separate seam: the chosen ability score is trusted at face value. Any \
-                    general feat-effect/prerequisite engine also remains out of proof",
+                    over the deterministic Human loadout, and Bravery (+1 Will save vs fear at \
+                    level 2, +2 at level 6, +3 at level 10, rank = 1 + (level - 2) / 4) as a \
+                    flat, non-fabricated bonus magnitude record. The Weapon Training \
+                    damage-roll half stays unproven — no damage total is computed anywhere in \
+                    this codebase for any Fighter level, so this is not a new gap. Bravery's \
+                    magnitude is grounded, but the Will-vs-fear total itself stays unproven: no \
+                    fear-condition or save-resolution engine exists on this compute surface, so \
+                    the Bravery bonus is never folded into the unconditional Will save total. \
+                    The generic PF1 ability-score-increase milestones need no separate seam: \
+                    the chosen ability score is trusted at face value. Any general \
+                    feat-effect/prerequisite engine also remains out of proof",
                 next_required_uplift: "later SD13 slice grounding the remaining named Fighter \
-                    class-feature burdens inside levels 2-10: the Bravery Will-vs-fear seam \
-                    (+1 at level 2, +2 at level 6, +3 at level 10) and the Weapon Training \
-                    damage-roll half (which first needs any damage total to exist on the \
-                    compute surface)",
+                    class-feature burden inside levels 2-10: the Weapon Training damage-roll \
+                    half (which first needs any damage total to exist on the compute surface), \
+                    or a fear-condition/save-resolution engine to apply the Bravery magnitude \
+                    to an actual Will save (a tranche-level subsystem decision, not a slice \
+                    decision)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",
