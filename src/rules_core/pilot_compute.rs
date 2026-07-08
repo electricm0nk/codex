@@ -2171,33 +2171,35 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 ///     bookkeeping, no deflection-AC-vs-target bonus, and no
 ///     evil-outsider/evil-dragon/undead damage doubling.
 ///
-/// - one explicit claim-blocking diagnostic per still-missing non-spell
-///   class-feature burden:
-///   * `lay on hands` — healing resource accounting, charismabased pool, and
-///     use-against-conditions behavior
-///   * `divine grace` — charisma-to-saves bonus, including the typing and
-///     proc-time posture that divines saves even at the deterministic seam
-///   * `mercy` — conditional save-effect and disease/poison removal mechanics
-///     that only begin at level 6 and must therefore be claimed honestly as
-///     still-blocked rather than silently allowed
+/// - three grounded level-gate records (value 0 each) for the remaining named
+///   non-spell pillars, whose honest level-1 computed surface is their correct
+///   ABSENCE by PF1 Core Rulebook level gate:
+///   * `lay on hands` — a 2nd-level paladin feature (heals 1d6 per two paladin
+///     levels; uses/day = 1/2 paladin level + Charisma modifier); the at-grant
+///     formula is named but not computed
+///   * `divine grace` — a 2nd-level paladin feature (+Charisma bonus on all
+///     saving throws); the at-grant formula is named but not computed
+///   * `mercy` — a 3rd-level paladin feature (gained at 3rd level and every
+///     three levels thereafter, chosen from the mercy list and attached to lay
+///     on hands); the at-grant selection is named but not computed
 ///
 /// - one explicit claim-blocking diagnostic for the partial-caster spell
-///   burden, distinct from the non-spell class-feature blockers:
-///   * Paladin is a divine partial caster in PF1 Core Rulebook (effective
-///     caster level = paladin level − 2, slots begin at level 2); the blocker
-///     names this partial-caster posture so the later SD13-E4 spell-burden
+///   burden, distinct from the grounded chassis records:
+///   * Paladin is a divine partial caster in PF1 Core Rulebook (spells begin
+///     at paladin level 4; effective caster level = paladin level − 3); the
+///     blocker names this partial-caster posture so the later spell-burden
 ///     closure cannot collapse Paladin into a full divine caster shape
 ///     (Cleric / Druid) and so partial-caster pressure stays visible on the
 ///     runtime path.
 ///
 /// This deliberately does not compute a supported spell surface. Beyond the
-/// grounded Smite Evil numeric formula, it grounds no lay-on-hands resource
-/// handling, no divine-grace computation, no mercy handling, no spell slots,
-/// no spell source lineage, no spells known or prepared posture, no deity
-/// resolution, no domain mechanics, no alignment-target resolution, and no
-/// healing accounting. It only emits the per-burden blockers (plus the one
-/// grounded Smite Evil formula) that prove the F6 surface remains separable
-/// on the runtime path.
+/// grounded Smite Evil numeric formula and the three grounded level-gate
+/// absences, it grounds no lay-on-hands resource handling, no divine-grace
+/// computation, no mercy handling, no spell slots, no spell source lineage,
+/// no spells known or prepared posture, no deity resolution, no domain
+/// mechanics, no alignment-target resolution, and no healing accounting. It
+/// only emits the grounded records and the remaining spell blocker that prove
+/// the F6 surface remains separable on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -2265,55 +2267,57 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         ),
     });
 
-    // The per-burden blockers ride alongside the F6 hybrid blockers. They are
-    // intentionally distinct diagnostic ids so the chassis burden is separable
-    // from the spell burden on the runtime path.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.paladin.lay_on_hands.unsupported".to_owned(),
-        message: format!(
-            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its lay on hands burden: \
-             the charisma-based healing pool, the per-level heal amount, the use against poison / \
-             disease behavior, and any heal-resource accounting are not implemented in this \
-             bounded chassis baseline, so no Paladin lay on hands support is claimed"
+    // The remaining three named non-spell pillars are grounded as correct
+    // PF1 Core Rulebook level-gate absences: lay on hands and divine grace are
+    // 2nd-level paladin features and mercy is a 3rd-level paladin feature, so
+    // at level 1 the honest computed surface is their correct ABSENCE (value 0
+    // each). Each record names the at-grant formula without computing it; no
+    // heal amount, save bonus, or mercy effect is fabricated.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.level_gate.lay_on_hands".to_owned(),
+        value: 0,
+        detail: format!(
+            "Paladin lay on hands at paladin level {HYBRID_BASELINE_LEVEL}: correctly absent at \
+             level 1 by PF1 CRB level gate; at-grant formula named but not computed. Lay on \
+             hands is a 2nd-level paladin feature: heals 1d6 per two paladin levels, uses/day = \
+             1/2 paladin level + Charisma modifier"
         ),
-        claim_blocking: true,
     });
 
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.paladin.divine_grace.unsupported".to_owned(),
-        message: format!(
-            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its divine grace burden: \
-             the charisma-to-saving-throw bonus and the typing/proc-time posture that applies it \
-             are not implemented in this bounded chassis baseline, so no Paladin divine grace \
-             save bonus support is claimed"
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.level_gate.divine_grace".to_owned(),
+        value: 0,
+        detail: format!(
+            "Paladin divine grace at paladin level {HYBRID_BASELINE_LEVEL}: correctly absent at \
+             level 1 by PF1 CRB level gate; at-grant formula named but not computed. Divine \
+             grace is a 2nd-level paladin feature: +Charisma bonus on all saving throws"
         ),
-        claim_blocking: true,
     });
 
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.paladin.mercy.unsupported".to_owned(),
-        message: format!(
-            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its mercy burden: mercy \
-             is a level-6 class-feature, so the conditional save-effect and disease/poison \
-             removal mechanics are not implemented here; no Paladin mercy behavior is claimed"
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.level_gate.mercy".to_owned(),
+        value: 0,
+        detail: format!(
+            "Paladin mercy at paladin level {HYBRID_BASELINE_LEVEL}: correctly absent at level 1 \
+             by PF1 CRB level gate; at-grant formula named but not computed. Mercy is a \
+             3rd-level paladin feature (gained at 3rd level and every three levels thereafter): \
+             chosen from the mercy list, attaches to lay on hands"
         ),
-        claim_blocking: true,
     });
 
     // The partial-caster spell burden is its own blocker, distinct from the
-    // four non-spell class-feature blockers above. Paladin is a divine partial
-    // caster in PF1 Core Rulebook (effective caster level = paladin level - 2;
-    // first spell access at level 2 with a slowed slot progression), and the
-    // blocker must name that partial-caster posture so the later SD13-E4
-    // spell-burden closure cannot confuse Paladin with a full divine caster
-    // (Cleric / Druid).
+    // grounded non-spell chassis records above. Paladin is a divine partial
+    // caster in PF1 Core Rulebook (spells begin at paladin level 4; effective
+    // caster level = paladin level - 3), and the blocker must name that
+    // partial-caster posture so the later spell-burden closure cannot confuse
+    // Paladin with a full divine caster (Cleric / Druid).
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
         message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
-             partial caster (effective caster level = paladin level - 2, with spell slots first \
-             available at level 2 in PF1 Core Rulebook), so spell-source lineage, spells known \
+             partial caster (spells begin at paladin level 4, with effective caster level = \
+             paladin level - 3 in PF1 Core Rulebook), so spell-source lineage, spells known \
              or prepared posture, spells-per-day progression, bonus spell slots, and spell save \
-             DCs are deferred to the SD13-E4 spellcasting slice; no partial-caster spell \
+             DCs are deferred to a later spellcasting slice; no partial-caster spell \
              execution is fabricated in this bounded chassis baseline"
             .to_owned(),
         claim_blocking: true,

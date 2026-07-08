@@ -306,16 +306,20 @@ fn every_non_human_race_row_now_carries_runtime_evidence() {
 }
 
 #[test]
-fn paladin_hybrid_row_is_blocked_and_computed_with_named_burdens() {
-    // SD13-E3-F6 moves the Paladin hybrid row off the pure Unverified/Observed
-    // placeholder to a still-blocked computed posture that names the
-    // class-feature and spell burdens. Paladin has not been promoted.
+fn paladin_hybrid_row_is_partial_and_computed_with_named_burdens() {
+    // SD13-E3-F6 moved the Paladin hybrid row off the pure Unverified/Observed
+    // placeholder to a blocked computed posture; the SD13-E4 slice grounded
+    // Smite Evil for real, and the SD13-E5 level-gate slice grounds lay on
+    // hands / divine grace / mercy as correct PF1 CRB level-gate absences and
+    // promotes the row from Blocked to Partial. The hybrid chassis pair and
+    // the partial-caster spell burden stay named and unproven — never
+    // Supported.
     let matrix = matrix();
     let hybrid = row(&matrix, "class.paladin.hybrid_chassis_and_spell_burden");
     assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
     assert_eq!(hybrid.subject_id, "class:paladin");
-    assert_eq!(hybrid.support_state, SupportState::Blocked);
-    assert_ne!(hybrid.support_state, SupportState::Partial);
+    assert_eq!(hybrid.support_state, SupportState::Partial);
+    assert_ne!(hybrid.support_state, SupportState::Blocked);
     assert_ne!(hybrid.support_state, SupportState::Supported);
     assert_eq!(hybrid.evidence_tier, EvidenceTier::Computed);
     assert!(
@@ -327,7 +331,7 @@ fn paladin_hybrid_row_is_blocked_and_computed_with_named_burdens() {
     );
     assert!(
         !hybrid.blocker_or_lossiness_note.is_empty(),
-        "blocked paladin hybrid row must carry a non-empty blocker note"
+        "partial paladin hybrid row must carry a non-empty lossiness note"
     );
     assert!(
         hybrid.blocker_or_lossiness_note.contains("spell"),

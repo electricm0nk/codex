@@ -1,31 +1,38 @@
-//! SD13-E3/E4 Paladin level-1 chassis-and-spell-burden separation proof.
+//! SD13-E3/E4/E5 Paladin level-1 chassis-and-spell-burden separation proof.
 //!
 //! Proves the deeper Paladin-only decomposition that sits on top of the accepted
-//! SD13-F6 hybrid baseline: the live rules-core surface emits one distinct
-//! claim-blocking diagnostic per still-missing Paladin non-spell class-feature
-//! burden (lay on hands, divine grace, mercy) plus one distinct claim-blocking
-//! diagnostic for the later partial-caster spell burden, and the support-state
-//! matrix row for `class.paladin.hybrid_chassis_and_spell_burden` reclassifies
-//! its blocker note to name each separated burden explicitly instead of the
-//! single combined "non-spell class-feature" string left by F6.
+//! SD13-F6 hybrid baseline, through the SD13-E5 level-gate grounding slice: the
+//! live rules-core surface grounds Smite Evil for real (SD13-E4) and grounds the
+//! lay on hands / divine grace / mercy burdens as correct PF1 CRB level-gate
+//! absences (SD13-E5), keeping one distinct claim-blocking diagnostic for the
+//! later partial-caster spell burden, and the support-state matrix row for
+//! `class.paladin.hybrid_chassis_and_spell_burden` is promoted from Blocked to
+//! Partial with a note that names each burden's honest state explicitly.
 //!
-//! It also grounds the fourth named burden, Smite Evil, for real: at the
-//! bounded level-1 baseline a paladin gets 1 use per day, an attack-roll bonus
-//! equal to her Charisma modifier (if positive; PF1 Core Rulebook Smite Evil
-//! applies the Charisma bonus "if any", never a penalty), and a damage bonus
-//! equal to her paladin level. This grounds only that flat numeric formula; it
-//! grounds no alignment / evil-subtype target resolution, no swift-action
-//! activation bookkeeping, no deflection-AC-vs-target bonus, and no
-//! evil-outsider/evil-dragon/undead damage doubling.
+//! Smite Evil stays grounded for real: at the bounded level-1 baseline a
+//! paladin gets 1 use per day, an attack-roll bonus equal to her Charisma
+//! modifier (if positive; PF1 Core Rulebook Smite Evil applies the Charisma
+//! bonus "if any", never a penalty), and a damage bonus equal to her paladin
+//! level. This grounds only that flat numeric formula; it grounds no alignment
+//! / evil-subtype target resolution, no swift-action activation bookkeeping,
+//! no deflection-AC-vs-target bonus, and no evil-outsider/evil-dragon/undead
+//! damage doubling.
+//!
+//! Lay on hands and divine grace are 2nd-level paladin features and mercy is a
+//! 3rd-level paladin feature in the PF1 Core Rulebook, so at level 1 the honest
+//! computed surface is their correct ABSENCE: three grounded level-gate records
+//! (value 0 each) that name the at-grant formula without computing it. No
+//! lay-on-hands heal amount, no divine-grace save bonus, and no mercy effect is
+//! fabricated.
 //!
 //! It is intentionally not a hybrid class engine. It grounds no Paladin level
 //! 2+, no lay-on-hands / divine-grace / mercy math, no partial-caster slot
 //! math, no deity resolution, no domain mechanics, no alignment-driven target
 //! resolution, no healing-resource accounting, and no spell posture
 //! computation. It also preserves the accepted Fighter 1-3 truth, the Rogue
-//! blocked negative control, the shared F6 hybrid blockers (so the F6 test
-//! continues to pass), the Sorcerer F7 baseline truth, and the Human race /
-//! interaction seam.
+//! negative control, the shared F6 hybrid blockers (so the F6 test continues
+//! to pass), the Sorcerer F7 baseline truth, and the Human race / interaction
+//! seam.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -47,18 +54,28 @@ const RANGER_FIXTURE: &str =
 const FIGHTER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
-// Exact per-burden Paladin-only diagnostics this slice proves. Each one names a
-// distinct still-missing non-spell class-feature burden or the later
-// partial-caster spell burden, so Paladin's chassis and spell burdens are
-// separable on the runtime path.
-const PALADIN_LAY_ON_HANDS_ID: &str = "class_feature.paladin.lay_on_hands.unsupported";
-const PALADIN_DIVINE_GRACE_ID: &str = "class_feature.paladin.divine_grace.unsupported";
-const PALADIN_MERCY_ID: &str = "class_feature.paladin.mercy.unsupported";
+// The one remaining Paladin-only claim-blocking diagnostic: the partial-caster
+// spell burden, distinct from the (now grounded) non-spell class-feature
+// burdens, so Paladin's chassis and spell burdens stay separable on the
+// runtime path.
 const PALADIN_PARTIAL_CASTER_ID: &str = "class_spell.paladin.partial_caster.unsupported";
 
-// The formerly claim-blocking smite-evil id is now grounded for real; it must
-// no longer appear as a diagnostic at all.
+// The formerly claim-blocking per-feature ids are now grounded (Smite Evil for
+// real, lay on hands / divine grace / mercy as correct level-gate absences);
+// none of them may appear as a diagnostic any longer.
 const PALADIN_SMITE_EVIL_BLOCKER_ID: &str = "class_feature.paladin.smite_evil.unsupported";
+const PALADIN_LAY_ON_HANDS_BLOCKER_ID: &str = "class_feature.paladin.lay_on_hands.unsupported";
+const PALADIN_DIVINE_GRACE_BLOCKER_ID: &str = "class_feature.paladin.divine_grace.unsupported";
+const PALADIN_MERCY_BLOCKER_ID: &str = "class_feature.paladin.mercy.unsupported";
+
+// The three grounded level-gate explanations (value 0 each): lay on hands and
+// divine grace are 2nd-level paladin features and mercy is a 3rd-level paladin
+// feature in the PF1 Core Rulebook, so at level 1 their honest computed
+// surface is their correct absence, with the at-grant formula named but not
+// computed.
+const PALADIN_LAY_ON_HANDS_GATE_ID: &str = "class_chassis.paladin.level_gate.lay_on_hands";
+const PALADIN_DIVINE_GRACE_GATE_ID: &str = "class_chassis.paladin.level_gate.divine_grace";
+const PALADIN_MERCY_GATE_ID: &str = "class_chassis.paladin.level_gate.mercy";
 
 // Smite Evil's three grounded numeric explanations (uses per day, attack-roll
 // bonus, damage bonus), naming this repo's `class_chassis.<class>.<pillar>`
@@ -129,32 +146,139 @@ fn explanation<'a>(
         })
 }
 
-// ----- Per-burden Paladin chassis blockers must be present and claim-blocking -----
+// ----- Retired per-feature blockers and grounded level-gate records -----
 
 #[test]
-fn paladin_level1_emits_separate_lay_on_hands_divine_grace_mercy_blockers() {
+fn paladin_level1_retires_lay_on_hands_divine_grace_mercy_blockers() {
     let input = load(PALADIN_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    for id in [PALADIN_LAY_ON_HANDS_ID, PALADIN_DIVINE_GRACE_ID, PALADIN_MERCY_ID] {
+    // All four formerly claim-blocking per-feature ids are grounded now: none
+    // of them may appear as a diagnostic at all.
+    for id in [
+        PALADIN_SMITE_EVIL_BLOCKER_ID,
+        PALADIN_LAY_ON_HANDS_BLOCKER_ID,
+        PALADIN_DIVINE_GRACE_BLOCKER_ID,
+        PALADIN_MERCY_BLOCKER_ID,
+    ] {
         assert!(
-            has_diagnostic(&computation, id),
-            "paladin must surface separate claim-blocking diagnostic '{id}', got {:?}",
+            !has_diagnostic(&computation, id),
+            "retired per-feature paladin blocker '{id}' must no longer appear, got {:?}",
             computation.diagnostics
-        );
-        let diag = claim_blocking(&computation, id);
-        assert!(
-            !diag.message.is_empty(),
-            "per-burden paladin blocker '{id}' must carry a non-empty message"
         );
     }
 
-    // Smite evil is no longer claim-blocked: it is grounded for real by this
-    // slice, so its old blocker id must not appear as a diagnostic at all.
+    // The accepted F6 hybrid pair and the partial-caster spell burden remain
+    // claim-blocking: this slice grounds level gates, not the hybrid chassis
+    // pair and not the spell surface.
+    for id in [
+        F6_HYBRID_PALADIN_FEATURE_ID,
+        F6_HYBRID_PALADIN_SPELL_ID,
+        PALADIN_PARTIAL_CASTER_ID,
+    ] {
+        let diag = claim_blocking(&computation, id);
+        assert!(
+            !diag.message.is_empty(),
+            "remaining paladin blocker '{id}' must carry a non-empty message"
+        );
+    }
+}
+
+#[test]
+fn paladin_level_gate_records_ground_correct_absence_at_level_1() {
+    let input = load(PALADIN_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // PF1 Core Rulebook level gates: lay on hands and divine grace are
+    // 2nd-level paladin features; mercy is a 3rd-level paladin feature. At
+    // level 1 the honest computed surface is their correct absence (value 0),
+    // with the at-grant formula named but not computed.
+    for id in [
+        PALADIN_LAY_ON_HANDS_GATE_ID,
+        PALADIN_DIVINE_GRACE_GATE_ID,
+        PALADIN_MERCY_GATE_ID,
+    ] {
+        let gate = explanation(&computation, id);
+        assert_eq!(
+            gate.value, 0,
+            "level-gate record '{id}' must carry value 0 (correct absence at level 1): {gate:?}"
+        );
+        assert!(
+            gate.detail.contains("correctly absent at level 1"),
+            "level-gate record '{id}' must ground the correct absence at level 1: {}",
+            gate.detail
+        );
+        assert!(
+            gate.detail.contains("named but not computed"),
+            "level-gate record '{id}' must name the at-grant formula without computing it: {}",
+            gate.detail
+        );
+    }
+}
+
+#[test]
+fn paladin_lay_on_hands_gate_names_second_level_grant_and_formula() {
+    let input = load(PALADIN_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let gate = explanation(&computation, PALADIN_LAY_ON_HANDS_GATE_ID);
+    // Lay on hands is a 2nd-level paladin feature: heals 1d6 per two paladin
+    // levels, uses/day = 1/2 paladin level + Charisma modifier.
     assert!(
-        !has_diagnostic(&computation, PALADIN_SMITE_EVIL_BLOCKER_ID),
-        "paladin smite-evil blocker must be removed now that smite evil is grounded, got {:?}",
-        computation.diagnostics
+        gate.detail.contains("2nd-level"),
+        "lay-on-hands gate must name the 2nd-level PF1 CRB grant: {}",
+        gate.detail
+    );
+    assert!(
+        gate.detail.contains("1d6"),
+        "lay-on-hands gate must name the 1d6-per-two-levels heal formula: {}",
+        gate.detail
+    );
+}
+
+#[test]
+fn paladin_divine_grace_gate_names_second_level_grant_and_formula() {
+    let input = load(PALADIN_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let gate = explanation(&computation, PALADIN_DIVINE_GRACE_GATE_ID);
+    // Divine grace is a 2nd-level paladin feature: +Charisma bonus on all
+    // saving throws.
+    assert!(
+        gate.detail.contains("2nd-level"),
+        "divine-grace gate must name the 2nd-level PF1 CRB grant: {}",
+        gate.detail
+    );
+    assert!(
+        gate.detail.contains("saving throws"),
+        "divine-grace gate must name the Charisma-to-saving-throws formula: {}",
+        gate.detail
+    );
+}
+
+#[test]
+fn paladin_mercy_gate_names_third_level_grant_not_level_six() {
+    let input = load(PALADIN_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let gate = explanation(&computation, PALADIN_MERCY_GATE_ID);
+    // Mercy is a 3rd-level paladin feature in PF1 (gained at 3rd and every
+    // three levels after), chosen from the mercy list and attached to lay on
+    // hands. The formerly-catalogued "level-6" claim was a rules error.
+    assert!(
+        gate.detail.contains("3rd-level"),
+        "mercy gate must name the 3rd-level PF1 CRB grant: {}",
+        gate.detail
+    );
+    assert!(
+        gate.detail.contains("lay on hands"),
+        "mercy gate must name that mercies attach to lay on hands: {}",
+        gate.detail
+    );
+    assert!(
+        !gate.detail.contains("level-6") && !gate.detail.contains("level 6"),
+        "mercy gate must not repeat the corrected level-6 rules error: {}",
+        gate.detail
     );
 }
 
@@ -184,62 +308,16 @@ fn paladin_smite_evil_uses_per_day_attack_and_damage_bonus_are_grounded() {
         "smite evil damage bonus must equal paladin level (1 at level 1): {damage_bonus:?}"
     );
 
-    // No fabricated math leaks: grounding smite evil must not silently compute
-    // lay on hands healing or divine grace's save bonus, and the three other
-    // named burdens must remain claim-blocking and unproven.
+    // No fabricated math leaks: grounding the level gates must not silently
+    // compute lay on hands healing or divine grace's save bonus — the gates
+    // name the at-grant formulas without computing them.
     assert!(
         !has_explanation(&computation, "class_chassis.paladin.lay_on_hands_heal_amount"),
-        "lay on hands healing must not be fabricated by grounding smite evil"
+        "lay on hands healing must not be fabricated by grounding the level gates"
     );
     assert!(
         !has_explanation(&computation, "class_chassis.paladin.divine_grace_save_bonus"),
-        "divine grace's save bonus must not be fabricated by grounding smite evil"
-    );
-    for id in [PALADIN_LAY_ON_HANDS_ID, PALADIN_DIVINE_GRACE_ID, PALADIN_MERCY_ID] {
-        let diag = claim_blocking(&computation, id);
-        assert!(
-            !diag.message.is_empty(),
-            "'{id}' must remain claim-blocking after smite evil is grounded"
-        );
-    }
-}
-
-#[test]
-fn paladin_lay_on_hands_blocker_names_healing_resource_burden() {
-    let input = load(PALADIN_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
-
-    let lay_on_hands = claim_blocking(&computation, PALADIN_LAY_ON_HANDS_ID);
-    assert!(
-        lay_on_hands.message.contains("lay on hands") || lay_on_hands.message.contains("heal"),
-        "paladin lay-on-hands blocker must name the lay-on-hands / healing burden: {}",
-        lay_on_hands.message
-    );
-}
-
-#[test]
-fn paladin_divine_grace_blocker_names_save_bonus_burden() {
-    let input = load(PALADIN_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
-
-    let divine_grace = claim_blocking(&computation, PALADIN_DIVINE_GRACE_ID);
-    assert!(
-        divine_grace.message.contains("divine grace") || divine_grace.message.contains("save"),
-        "paladin divine-grace blocker must name the divine-grace / save-bonus burden: {}",
-        divine_grace.message
-    );
-}
-
-#[test]
-fn paladin_mercy_blocker_names_conditional_modifier_burden() {
-    let input = load(PALADIN_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
-
-    let mercy = claim_blocking(&computation, PALADIN_MERCY_ID);
-    assert!(
-        mercy.message.contains("mercy"),
-        "paladin mercy blocker must name the mercy burden: {}",
-        mercy.message
+        "divine grace's save bonus must not be fabricated by grounding the level gates"
     );
 }
 
@@ -269,6 +347,26 @@ fn paladin_partial_caster_blocker_is_separate_and_partial_caster_specific() {
         "paladin partial-caster blocker must not collapse into a full-caster claim: {}",
         spell.message
     );
+
+    // The blocker must carry the corrected PF1 Core Rulebook facts: paladin
+    // spells begin at 4th level and effective caster level = paladin level - 3.
+    // The formerly-catalogued "level - 2 / slots at level 2" claim was a rules
+    // error and must not survive anywhere in the message.
+    assert!(
+        spell.message.contains("level - 3"),
+        "paladin partial-caster blocker must state caster level = paladin level - 3: {}",
+        spell.message
+    );
+    assert!(
+        spell.message.contains("level 4"),
+        "paladin partial-caster blocker must state spells begin at level 4: {}",
+        spell.message
+    );
+    assert!(
+        !spell.message.contains("level - 2") && !spell.message.contains("available at level 2"),
+        "paladin partial-caster blocker must not repeat the corrected caster-level rules error: {}",
+        spell.message
+    );
 }
 
 #[test]
@@ -278,25 +376,21 @@ fn paladin_separated_blockers_do_not_emerge_for_ranger_or_fighter() {
     // Ranger-only decomposition slice (when it lands).
     let ranger_input = load(RANGER_FIXTURE);
     let ranger_computation = compute_pilot_base_chassis(&ranger_input);
-    for id in [
-        PALADIN_LAY_ON_HANDS_ID,
-        PALADIN_DIVINE_GRACE_ID,
-        PALADIN_MERCY_ID,
-        PALADIN_PARTIAL_CASTER_ID,
-    ] {
-        assert!(
-            !has_diagnostic(&ranger_computation, id),
-            "ranger must not gain a Paladin-only per-burden blocker '{id}'"
-        );
-    }
+    assert!(
+        !has_diagnostic(&ranger_computation, PALADIN_PARTIAL_CASTER_ID),
+        "ranger must not gain the Paladin-only partial-caster blocker"
+    );
     for id in [
         PALADIN_SMITE_EVIL_USES_PER_DAY_ID,
         PALADIN_SMITE_EVIL_ATTACK_BONUS_ID,
         PALADIN_SMITE_EVIL_DAMAGE_BONUS_ID,
+        PALADIN_LAY_ON_HANDS_GATE_ID,
+        PALADIN_DIVINE_GRACE_GATE_ID,
+        PALADIN_MERCY_GATE_ID,
     ] {
         assert!(
             !has_explanation(&ranger_computation, id),
-            "ranger must not gain a Paladin-only grounded smite-evil explanation '{id}'"
+            "ranger must not gain a Paladin-only grounded explanation '{id}'"
         );
     }
 
@@ -305,9 +399,6 @@ fn paladin_separated_blockers_do_not_emerge_for_ranger_or_fighter() {
     let fighter_input = load(FIGHTER_FIXTURE);
     let fighter_computation = compute_pilot_base_chassis(&fighter_input);
     for id in [
-        PALADIN_LAY_ON_HANDS_ID,
-        PALADIN_DIVINE_GRACE_ID,
-        PALADIN_MERCY_ID,
         PALADIN_PARTIAL_CASTER_ID,
         F6_HYBRID_PALADIN_FEATURE_ID,
         F6_HYBRID_PALADIN_SPELL_ID,
@@ -321,10 +412,13 @@ fn paladin_separated_blockers_do_not_emerge_for_ranger_or_fighter() {
         PALADIN_SMITE_EVIL_USES_PER_DAY_ID,
         PALADIN_SMITE_EVIL_ATTACK_BONUS_ID,
         PALADIN_SMITE_EVIL_DAMAGE_BONUS_ID,
+        PALADIN_LAY_ON_HANDS_GATE_ID,
+        PALADIN_DIVINE_GRACE_GATE_ID,
+        PALADIN_MERCY_GATE_ID,
     ] {
         assert!(
             !has_explanation(&fighter_computation, id),
-            "fighter must not gain a Paladin-only grounded smite-evil explanation '{id}'"
+            "fighter must not gain a Paladin-only grounded explanation '{id}'"
         );
     }
 }
@@ -379,14 +473,19 @@ fn paladin_level1_still_yields_blocked_headless_receipt_and_view_model() {
 // ----- Control plane: matrix row carries the separated burden note -----
 
 #[test]
-fn matrix_paladin_row_note_names_each_separated_burden() {
+fn matrix_paladin_row_is_promoted_to_partial_with_honest_burden_note() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid row must exist");
 
-    // Posture stays Blocked / Computed — this slice is not a promotion.
-    assert_eq!(paladin.support_state, SupportState::Blocked);
+    // The SD13-E5 level-gate slice promotes the row Blocked -> Partial: all
+    // four named non-spell burdens are now grounded (Smite Evil for real,
+    // lay on hands / divine grace / mercy as correct level-gate absences),
+    // while the hybrid chassis pair and the partial-caster spell burden stay
+    // named and claim-blocking. Never Supported.
+    assert_eq!(paladin.support_state, SupportState::Partial);
+    assert_ne!(paladin.support_state, SupportState::Supported);
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         paladin.evidence_freshness,
@@ -400,28 +499,39 @@ fn matrix_paladin_row_note_names_each_separated_burden() {
         paladin.grounding_ref
     );
 
-    // The matrix note must now name each per-feature burden explicitly, not
-    // just the combined "non-spell class-feature" string from F6.
+    // The matrix note must name each burden's honest state explicitly.
     let note = paladin.blocker_or_lossiness_note;
-    assert!(!note.is_empty(), "paladin blocked row must carry a note");
+    assert!(!note.is_empty(), "paladin partial row must carry a note");
     for token in ["lay on hands", "divine grace", "mercy"] {
         assert!(
             note.contains(token),
-            "paladin blocked note must name the still-unproven '{token}' burden: {note}"
+            "paladin note must name the '{token}' level-gate grounding: {note}"
         );
     }
-    // Smite evil is no longer an unproven burden: the note must say it is
-    // grounded for real rather than merely naming it as still missing.
+    // The level gates are grounded absences, not still-missing burdens.
+    assert!(
+        note.contains("level gate") || note.contains("level-gate"),
+        "paladin note must name the grounded level gates: {note}"
+    );
     assert!(
         note.contains("smite") && note.contains("grounded"),
         "paladin note must name smite evil as grounded, not still-blocked: {note}"
     );
     // The note must also name the partial-caster posture distinctly from the
-    // per-feature chassis burdens, so the later SD13-E4 spell-burden closure
-    // cannot accidentally collapse Paladin into a Cleric shape.
+    // grounded chassis burdens, with the corrected PF1 CRB facts (spells begin
+    // at level 4; caster level = paladin level - 3), so the later spell-burden
+    // closure cannot accidentally collapse Paladin into a Cleric shape.
     assert!(
         note.contains("partial-caster") || note.contains("partial caster"),
-        "paladin blocked note must name the partial-caster posture: {note}"
+        "paladin note must name the partial-caster posture: {note}"
+    );
+    assert!(
+        note.contains("level - 3") && note.contains("level 4"),
+        "paladin note must carry the corrected partial-caster facts: {note}"
+    );
+    assert!(
+        !note.contains("level - 2") && !note.contains("available at level 2"),
+        "paladin note must not repeat the corrected caster-level rules error: {note}"
     );
 }
 

@@ -513,13 +513,16 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         );
     }
 
+    // Paladin was later promoted to Partial/Computed by its own SD13-E5
+    // level-gate slice (lay on hands / divine grace / mercy grounded as
+    // correct level-1 absences).
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin row must exist");
     assert_eq!(
         paladin.support_state,
-        SupportState::Blocked,
-        "paladin row must stay Blocked after the rogue slice"
+        SupportState::Partial,
+        "paladin row must keep its later-accepted Partial posture after the rogue slice"
     );
 
     // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger

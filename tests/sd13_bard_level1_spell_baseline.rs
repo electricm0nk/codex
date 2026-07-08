@@ -584,13 +584,16 @@ fn matrix_keeps_sorcerer_and_paladin_blocked_computed_after_bard_slice() {
     );
     assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
 
+    // Paladin was later promoted to Partial/Computed by its own SD13-E5
+    // level-gate slice (lay on hands / divine grace / mercy grounded as
+    // correct level-1 absences).
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin row must exist");
     assert_eq!(
         paladin.support_state,
-        SupportState::Blocked,
-        "paladin row must stay Blocked after the Bard slice"
+        SupportState::Partial,
+        "paladin row must keep its later-accepted Partial posture after the Bard slice"
     );
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
 
