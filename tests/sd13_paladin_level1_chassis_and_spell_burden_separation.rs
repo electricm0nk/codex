@@ -3,16 +3,25 @@
 //! Proves the deeper Paladin-only decomposition that sits on top of the accepted
 //! SD13-F6 hybrid baseline: the live rules-core surface emits one distinct
 //! claim-blocking diagnostic per still-missing Paladin non-spell class-feature
-//! burden (smite evil, lay on hands, divine grace, mercy) plus one distinct
-//! claim-blocking diagnostic for the later partial-caster spell burden, and the
-//! support-state matrix row for `class.paladin.hybrid_chassis_and_spell_burden`
-//! reclassifies its blocker note to name each separated burden explicitly
-//! instead of the single combined "non-spell class-feature" string left by F6.
+//! burden (lay on hands, divine grace, mercy) plus one distinct claim-blocking
+//! diagnostic for the later partial-caster spell burden, and the support-state
+//! matrix row for `class.paladin.hybrid_chassis_and_spell_burden` reclassifies
+//! its blocker note to name each separated burden explicitly instead of the
+//! single combined "non-spell class-feature" string left by F6.
+//!
+//! It also grounds the fourth named burden, Smite Evil, for real: at the
+//! bounded level-1 baseline a paladin gets 1 use per day, an attack-roll bonus
+//! equal to her Charisma modifier (if positive; PF1 Core Rulebook Smite Evil
+//! applies the Charisma bonus "if any", never a penalty), and a damage bonus
+//! equal to her paladin level. This grounds only that flat numeric formula; it
+//! grounds no alignment / evil-subtype target resolution, no swift-action
+//! activation bookkeeping, no deflection-AC-vs-target bonus, and no
+//! evil-outsider/evil-dragon/undead damage doubling.
 //!
 //! It is intentionally not a hybrid class engine. It grounds no Paladin level
-//! 2+, no smite / lay-on-hands / divine-grace / mercy math, no partial-caster
-//! slot math, no deity resolution, no domain mechanics, no alignment-driven
-//! target resolution, no healing-resource accounting, and no spell posture
+//! 2+, no lay-on-hands / divine-grace / mercy math, no partial-caster slot
+//! math, no deity resolution, no domain mechanics, no alignment-driven target
+//! resolution, no healing-resource accounting, and no spell posture
 //! computation. It also preserves the accepted Fighter 1-3 truth, the Rogue
 //! blocked negative control, the shared F6 hybrid blockers (so the F6 test
 //! continues to pass), the Sorcerer F7 baseline truth, and the Human race /
@@ -20,8 +29,8 @@
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationDiagnostic, HeadlessReceiptStatus, PilotBaseChassisComputation,
-    build_pilot_headless_receipt, compute_pilot_base_chassis,
+    ComputationDiagnostic, ComputationExplanation, HeadlessReceiptStatus,
+    PilotBaseChassisComputation, build_pilot_headless_receipt, compute_pilot_base_chassis,
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
@@ -42,11 +51,21 @@ const FIGHTER_FIXTURE: &str =
 // distinct still-missing non-spell class-feature burden or the later
 // partial-caster spell burden, so Paladin's chassis and spell burdens are
 // separable on the runtime path.
-const PALADIN_SMITE_EVIL_ID: &str = "class_feature.paladin.smite_evil.unsupported";
 const PALADIN_LAY_ON_HANDS_ID: &str = "class_feature.paladin.lay_on_hands.unsupported";
 const PALADIN_DIVINE_GRACE_ID: &str = "class_feature.paladin.divine_grace.unsupported";
 const PALADIN_MERCY_ID: &str = "class_feature.paladin.mercy.unsupported";
 const PALADIN_PARTIAL_CASTER_ID: &str = "class_spell.paladin.partial_caster.unsupported";
+
+// The formerly claim-blocking smite-evil id is now grounded for real; it must
+// no longer appear as a diagnostic at all.
+const PALADIN_SMITE_EVIL_BLOCKER_ID: &str = "class_feature.paladin.smite_evil.unsupported";
+
+// Smite Evil's three grounded numeric explanations (uses per day, attack-roll
+// bonus, damage bonus), naming this repo's `class_chassis.<class>.<pillar>`
+// convention.
+const PALADIN_SMITE_EVIL_USES_PER_DAY_ID: &str = "class_chassis.paladin.smite_evil_uses_per_day";
+const PALADIN_SMITE_EVIL_ATTACK_BONUS_ID: &str = "class_chassis.paladin.smite_evil_attack_bonus";
+const PALADIN_SMITE_EVIL_DAMAGE_BONUS_ID: &str = "class_chassis.paladin.smite_evil_damage_bonus";
 
 // F6 hybrid blockers are accepted truth and must still be claim-blocking for
 // Ranger regression preservation. The F6 test asserts both of these ids.
@@ -94,19 +113,30 @@ fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool 
     computation.explanations.iter().any(|e| e.id == id)
 }
 
+fn explanation<'a>(
+    computation: &'a PilotBaseChassisComputation,
+    id: &str,
+) -> &'a ComputationExplanation {
+    computation
+        .explanations
+        .iter()
+        .find(|e| e.id == id)
+        .unwrap_or_else(|| {
+            panic!(
+                "expected explanation id '{id}', got {:?}",
+                computation.explanations
+            )
+        })
+}
+
 // ----- Per-burden Paladin chassis blockers must be present and claim-blocking -----
 
 #[test]
-fn paladin_level1_emits_separate_smite_lay_on_hands_divine_grace_mercy_blockers() {
+fn paladin_level1_emits_separate_lay_on_hands_divine_grace_mercy_blockers() {
     let input = load(PALADIN_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    for id in [
-        PALADIN_SMITE_EVIL_ID,
-        PALADIN_LAY_ON_HANDS_ID,
-        PALADIN_DIVINE_GRACE_ID,
-        PALADIN_MERCY_ID,
-    ] {
+    for id in [PALADIN_LAY_ON_HANDS_ID, PALADIN_DIVINE_GRACE_ID, PALADIN_MERCY_ID] {
         assert!(
             has_diagnostic(&computation, id),
             "paladin must surface separate claim-blocking diagnostic '{id}', got {:?}",
@@ -118,29 +148,60 @@ fn paladin_level1_emits_separate_smite_lay_on_hands_divine_grace_mercy_blockers(
             "per-burden paladin blocker '{id}' must carry a non-empty message"
         );
     }
+
+    // Smite evil is no longer claim-blocked: it is grounded for real by this
+    // slice, so its old blocker id must not appear as a diagnostic at all.
+    assert!(
+        !has_diagnostic(&computation, PALADIN_SMITE_EVIL_BLOCKER_ID),
+        "paladin smite-evil blocker must be removed now that smite evil is grounded, got {:?}",
+        computation.diagnostics
+    );
 }
 
 #[test]
-fn paladin_smite_evil_blocker_names_alignment_and_target_resolution_burden() {
+fn paladin_smite_evil_uses_per_day_attack_and_damage_bonus_are_grounded() {
     let input = load(PALADIN_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let smite = claim_blocking(&computation, PALADIN_SMITE_EVIL_ID);
-    assert!(
-        smite.message.contains("smite"),
-        "paladin smite blocker must name the smite burden: {}",
-        smite.message
+    // Fixture is a level-1 Human Paladin with Charisma 14 (modifier +2).
+    // PF1 Core Rulebook Smite Evil at level 1: 1 use/day, attack-roll bonus =
+    // Charisma modifier (if positive), damage bonus = paladin level.
+    let uses_per_day = explanation(&computation, PALADIN_SMITE_EVIL_USES_PER_DAY_ID);
+    assert_eq!(
+        uses_per_day.value, 1,
+        "smite evil uses per day must be 1 at paladin level 1: {uses_per_day:?}"
     );
-    // The smite burden is inseparable from alignment target resolution. The
-    // blocker must name that the alignment / target resolution is also out of
-    // scope, so no fake smite execution can sneak in.
-    assert!(
-        smite.message.contains("alignment")
-            || smite.message.contains("target")
-            || smite.message.contains("evil"),
-        "paladin smite blocker must name alignment/target burden: {}",
-        smite.message
+
+    let attack_bonus = explanation(&computation, PALADIN_SMITE_EVIL_ATTACK_BONUS_ID);
+    assert_eq!(
+        attack_bonus.value, 2,
+        "smite evil attack bonus must equal the Charisma modifier (+2 for CHA 14): {attack_bonus:?}"
     );
+
+    let damage_bonus = explanation(&computation, PALADIN_SMITE_EVIL_DAMAGE_BONUS_ID);
+    assert_eq!(
+        damage_bonus.value, 1,
+        "smite evil damage bonus must equal paladin level (1 at level 1): {damage_bonus:?}"
+    );
+
+    // No fabricated math leaks: grounding smite evil must not silently compute
+    // lay on hands healing or divine grace's save bonus, and the three other
+    // named burdens must remain claim-blocking and unproven.
+    assert!(
+        !has_explanation(&computation, "class_chassis.paladin.lay_on_hands_heal_amount"),
+        "lay on hands healing must not be fabricated by grounding smite evil"
+    );
+    assert!(
+        !has_explanation(&computation, "class_chassis.paladin.divine_grace_save_bonus"),
+        "divine grace's save bonus must not be fabricated by grounding smite evil"
+    );
+    for id in [PALADIN_LAY_ON_HANDS_ID, PALADIN_DIVINE_GRACE_ID, PALADIN_MERCY_ID] {
+        let diag = claim_blocking(&computation, id);
+        assert!(
+            !diag.message.is_empty(),
+            "'{id}' must remain claim-blocking after smite evil is grounded"
+        );
+    }
 }
 
 #[test]
@@ -218,7 +279,6 @@ fn paladin_separated_blockers_do_not_emerge_for_ranger_or_fighter() {
     let ranger_input = load(RANGER_FIXTURE);
     let ranger_computation = compute_pilot_base_chassis(&ranger_input);
     for id in [
-        PALADIN_SMITE_EVIL_ID,
         PALADIN_LAY_ON_HANDS_ID,
         PALADIN_DIVINE_GRACE_ID,
         PALADIN_MERCY_ID,
@@ -229,13 +289,22 @@ fn paladin_separated_blockers_do_not_emerge_for_ranger_or_fighter() {
             "ranger must not gain a Paladin-only per-burden blocker '{id}'"
         );
     }
+    for id in [
+        PALADIN_SMITE_EVIL_USES_PER_DAY_ID,
+        PALADIN_SMITE_EVIL_ATTACK_BONUS_ID,
+        PALADIN_SMITE_EVIL_DAMAGE_BONUS_ID,
+    ] {
+        assert!(
+            !has_explanation(&ranger_computation, id),
+            "ranger must not gain a Paladin-only grounded smite-evil explanation '{id}'"
+        );
+    }
 
     // And the Fighter must stay on the Fighter-shaped accepted truth, never
     // gain any hybrid or partial-caster blocker.
     let fighter_input = load(FIGHTER_FIXTURE);
     let fighter_computation = compute_pilot_base_chassis(&fighter_input);
     for id in [
-        PALADIN_SMITE_EVIL_ID,
         PALADIN_LAY_ON_HANDS_ID,
         PALADIN_DIVINE_GRACE_ID,
         PALADIN_MERCY_ID,
@@ -246,6 +315,16 @@ fn paladin_separated_blockers_do_not_emerge_for_ranger_or_fighter() {
         assert!(
             !has_diagnostic(&fighter_computation, id),
             "fighter must not gain a Paladin-only or hybrid blocker '{id}'"
+        );
+    }
+    for id in [
+        PALADIN_SMITE_EVIL_USES_PER_DAY_ID,
+        PALADIN_SMITE_EVIL_ATTACK_BONUS_ID,
+        PALADIN_SMITE_EVIL_DAMAGE_BONUS_ID,
+    ] {
+        assert!(
+            !has_explanation(&fighter_computation, id),
+            "fighter must not gain a Paladin-only grounded smite-evil explanation '{id}'"
         );
     }
 }
@@ -325,12 +404,18 @@ fn matrix_paladin_row_note_names_each_separated_burden() {
     // just the combined "non-spell class-feature" string from F6.
     let note = paladin.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "paladin blocked row must carry a note");
-    for token in ["smite", "lay on hands", "divine grace", "mercy"] {
+    for token in ["lay on hands", "divine grace", "mercy"] {
         assert!(
             note.contains(token),
-            "paladin blocked note must name the '{token}' burden: {note}"
+            "paladin blocked note must name the still-unproven '{token}' burden: {note}"
         );
     }
+    // Smite evil is no longer an unproven burden: the note must say it is
+    // grounded for real rather than merely naming it as still missing.
+    assert!(
+        note.contains("smite") && note.contains("grounded"),
+        "paladin note must name smite evil as grounded, not still-blocked: {note}"
+    );
     // The note must also name the partial-caster posture distinctly from the
     // per-feature chassis burdens, so the later SD13-E4 spell-burden closure
     // cannot accidentally collapse Paladin into a Cleric shape.
@@ -389,23 +474,25 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         .expect("rogue row must exist");
     assert_eq!(rogue.support_state, SupportState::Partial);
 
-    // Sorcerer stays at its accepted F7 posture.
+    // Sorcerer was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Eschew Materials grounded for real).
     let sorcerer = matrix
         .row("class.sorcerer.progression_and_spell_burden")
         .expect("sorcerer row must exist");
-    assert_eq!(sorcerer.support_state, SupportState::Blocked);
+    assert_eq!(sorcerer.support_state, SupportState::Partial);
     assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
 
-    // Bard carries its own accepted SD13-E4-F7 posture (Blocked/Computed) and
-    // Barbarian carries its accepted SD13-E3 martial-chassis posture
-    // (Partial/Computed); this slice preserves both without re-promoting them.
+    // Bard was later promoted to Partial/Computed by its own SD13-E4 decomposition
+    // slice (Bardic Knowledge grounded for real), and Barbarian carries its
+    // accepted SD13-E3 martial-chassis posture (Partial/Computed); this slice
+    // preserves both without re-promoting them further.
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
     assert_eq!(
         bard.support_state,
-        SupportState::Blocked,
-        "bard row must keep its accepted Blocked posture after the paladin-decomposition slice"
+        SupportState::Partial,
+        "bard row must keep its later-accepted Partial posture after the paladin-decomposition slice"
     );
     assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
     let barbarian = matrix
@@ -417,31 +504,32 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         "barbarian row must keep its accepted Partial posture after the paladin-decomposition slice"
     );
     assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
-    // Wizard carries its accepted post-merge-receipt posture (Blocked/Computed);
-    // this slice preserves it without re-promoting or demoting it.
-    let wizard = matrix
-        .row("class.wizard.progression_and_spell_burden")
-        .expect("wizard row must exist");
-    assert_eq!(
-        wizard.support_state,
-        SupportState::Blocked,
-        "wizard row must keep its accepted Blocked posture after the paladin-decomposition slice"
-    );
-    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
-
-    // Wizard, Cleric, and Druid were later promoted to Blocked/Computed by their
-    // own follow-up slices; verified separately below.
+    // Cleric and Druid were later promoted to Partial/Computed by their own
+    // SD13-E4 decomposition slices (Channel Energy, Wild Empathy).
     for id in [
-        "class.wizard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
         "class.druid.progression_and_spell_burden",
     ] {
         let row = matrix
             .row(id)
             .unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(row.support_state, SupportState::Blocked);
+        assert_eq!(row.support_state, SupportState::Partial);
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
+
+    // Wizard carried its accepted post-merge-receipt posture (Blocked/Computed) at
+    // the time this test was first written, but a later SD13-E4 Wizard
+    // decomposition slice grounds Scribe Scroll for real, promoting the row to
+    // Partial/Computed. This test now pins that current truth.
+    let wizard = matrix
+        .row("class.wizard.progression_and_spell_burden")
+        .expect("wizard row must exist");
+    assert_eq!(
+        wizard.support_state,
+        SupportState::Partial,
+        "wizard row must keep its later-accepted Partial posture after the paladin-decomposition slice"
+    );
+    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
 
     // Monk was later promoted to Partial/Computed by its own follow-up SD13-E3 slice.
     let monk = matrix

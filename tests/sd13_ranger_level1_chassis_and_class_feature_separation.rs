@@ -455,22 +455,33 @@ fn matrix_ranger_row_is_promoted_to_partial_and_names_remaining_pillars() {
 fn matrix_preserves_sibling_rows_after_ranger_promotion() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
-    // These rows stay Blocked/Computed.
+    // This row stays Blocked/Computed.
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .unwrap_or_else(|| panic!("row class.paladin.hybrid_chassis_and_spell_burden must exist"));
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin row must stay Blocked after the ranger-decomposition slice"
+    );
+    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+
+    // Bard, Cleric, Druid, and Sorcerer were later promoted to Partial/Computed by
+    // their own SD13-E4 decomposition slices (Bardic Knowledge, Channel Energy,
+    // Wild Empathy, Eschew Materials).
     for id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
         "class.bard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
         "class.druid.progression_and_spell_burden",
         "class.sorcerer.progression_and_spell_burden",
-        "class.wizard.progression_and_spell_burden",
     ] {
         let row = matrix
             .row(id)
             .unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
             row.support_state,
-            SupportState::Blocked,
-            "row {id} must stay Blocked after the ranger-decomposition slice"
+            SupportState::Partial,
+            "row {id} must be Partial after its own SD13-E4 decomposition slice"
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
@@ -493,6 +504,18 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
+
+    // Wizard was later promoted to Partial/Computed by its own SD13-E4 Scribe
+    // Scroll decomposition slice.
+    let wizard = matrix
+        .row("class.wizard.progression_and_spell_burden")
+        .expect("wizard row must exist");
+    assert_eq!(
+        wizard.support_state,
+        SupportState::Partial,
+        "wizard row must keep its later-accepted Partial posture after the ranger-decomposition slice"
+    );
+    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
 
     // No row is silently promoted to Supported or Lossy by this slice.
     assert!(

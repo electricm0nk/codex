@@ -37,25 +37,33 @@
 //!   favored-enemy and combat-style pillar burdens remain named and unproven, and the
 //!   later ranger spell burden (slots, source, spells known/prepared) stays deferred
 //!   to SD13-E4,
-//! - the Sorcerer row is `Blocked` / `Computed`: the SD13-E4-F7 slice proves the
+//! - the Sorcerer row is `Partial` / `Computed`: the SD13-E4-F7 slice proves the
 //!   deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is
-//!   recognized on the compute seam, but it stays blocked on the bloodline burden and the
-//!   spontaneous known-spell / slot posture burden, and fabricates no spell math,
-//! - the Bard row is `Blocked` / `Computed`: the SD13-E4-F7 slice proves the
+//!   recognized on the compute seam, AND the SD13-E4 Sorcerer decomposition slice grounds
+//!   Eschew Materials (the universal, bloodline-independent 1st-level bonus feat) for
+//!   real, but the bloodline-power burden and the spontaneous known-spell / slot posture
+//!   burden remain named and unproven, and no spell math is fabricated,
+//! - the Bard row is `Partial` / `Computed`: the SD13-E4-F7 slice proves the
 //!   deterministic Human Bard level-1 spontaneous arcane spell-bearing identity is
-//!   recognized on the compute seam, but it stays blocked on the bardic knowledge +
-//!   bardic music chassis-class-feature burden and the spontaneous known-spell / slot
-//!   posture burden, and fabricates no Bardic-class-feature math and no spell math,
-//! - the Wizard row is `Blocked` / `Computed`: the SD13-E4-R3 slice proves the
+//!   recognized on the compute seam, and the SD13-E4 Bard decomposition slice grounds
+//!   Bardic Knowledge for real (the Knowledge-check competence bonus, max(bard level /
+//!   2, 1)), but the Bardic Music chassis-class-feature burden and the spontaneous
+//!   known-spell / slot posture burden remain unproven, and no Bardic Music math and
+//!   no spell math is fabricated,
+//! - the Wizard row is `Partial` / `Computed`: the SD13-E4-R3 slice proves the
 //!   deterministic Human Wizard level-1 prepared arcane spell-bearing identity is
-//!   recognized on the compute seam (merge receipt executed 2026-07-07), but it stays
-//!   blocked on the school specialization burden and the prepared spellbook /
+//!   recognized on the compute seam (merge receipt executed 2026-07-07), and a later
+//!   SD13-E4 decomposition slice grounds Scribe Scroll (the free, specialization-
+//!   independent bonus feat every 1st-level Wizard is granted) for real, promoting
+//!   the row from Blocked to Partial (mirroring the Ranger Track promotion); the row
+//!   stays blocked on the specialization-choice burden and the prepared spellbook /
 //!   spell-slot posture burden, and fabricates no spell math,
-//! - the Cleric row is `Blocked` / `Computed`: the SD13-E4 slice proves the
+//! - the Cleric row is `Partial` / `Computed`: the SD13-E4 slice proves the
 //!   deterministic Human Cleric level-1 prepared divine spell-bearing identity is
-//!   recognized on the compute seam, but it stays blocked on the domain / channel
-//!   energy burden and the prepared divine spell posture burden, and fabricates no
-//!   spell math,
+//!   recognized on the compute seam, and a later SD13-E4 Cleric Channel Energy slice
+//!   grounds Channel Energy for real (die count and uses per day), but the domain
+//!   choice burden and the prepared divine spell posture burden remain named and
+//!   unproven, and fabricates no domain power math and no spell math,
 //! - the Druid row is `Blocked` / `Computed`: the SD13-E4 slice proves the
 //!   deterministic Human Druid level-1 prepared divine spell-bearing identity is
 //!   recognized on the compute seam, but it stays blocked on the nature bond / wild
@@ -288,10 +296,11 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
 const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs + \
     tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs";
 
-/// SD13-E4-F7 dedicated proof surface for the bounded Human Sorcerer level-1 spell
-/// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
-/// that stays explicitly blocked on the bloodline burden and the spontaneous
-/// known-spell / slot posture burden.
+/// SD13-E4-F7 / SD13-E4 dedicated proof surface for the bounded Human Sorcerer level-1
+/// spell baseline: direct computed recognition of the spontaneous arcane spell-bearing
+/// identity, plus the SD13-E4 decomposition slice's grounded Eschew Materials bonus-feat
+/// grant, while the bloodline-power burden and the spontaneous known-spell / slot
+/// posture burden stay explicitly blocked.
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
 /// SD13-E3 dedicated proof surface for the bounded Human Barbarian level-1 martial
@@ -327,16 +336,18 @@ const SD13_HALF_ORC_LEVEL1_TEST: &str = "tests/sd13_half_orc_race_semantics_reco
 /// surface.
 const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs";
 
-/// SD13-E4-F7 dedicated proof surface for the bounded Human Bard level-1 spell
-/// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
-/// that stays explicitly blocked on the bardic knowledge + bardic music chassis-class-feature
-/// burden and the spontaneous known-spell / slot posture burden.
+/// SD13-E4-F7/SD13-E4 dedicated proof surface for the bounded Human Bard level-1 spell
+/// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity,
+/// the grounded Bardic Knowledge chassis-class-feature pillar, and the still-blocked
+/// Bardic Music burden and spontaneous known-spell / slot posture burden.
 const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1 prepared
 /// arcane spell baseline: direct computed recognition of the prepared arcane
-/// spell-bearing identity that stays explicitly blocked on the school specialization
-/// burden and the prepared spellbook / spell-slot posture burden.
+/// spell-bearing identity, plus a later SD13-E4 decomposition slice grounding the
+/// Scribe Scroll bonus feat grant for real, that stays explicitly blocked on the
+/// specialization-choice burden and the prepared spellbook / spell-slot posture
+/// burden.
 const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs";
 
 /// SD13-E4 dedicated proof surface for the bounded Human Cleric level-1 prepared
@@ -692,69 +703,82 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Bard level-1 spell baseline, with the bardic knowledge + bardic \
-                            music chassis-class-feature burden and the spontaneous known-spell \
-                            / slot posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            Bard level-1 spell baseline, with Bardic Knowledge grounded for \
+                            real and the Bardic Music chassis-class-feature burden and the \
+                            spontaneous known-spell / slot posture burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_BARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
                     deterministic Human Bard level-1 spontaneous arcane spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the bardic knowledge \
-                    competence bonus on Knowledge checks (half Bard level + INT modifier) and the \
-                    bardic music performance family (inspire courage and later performances) are not \
-                    implemented, and the spontaneous spell burden (spontaneous spells known, spells \
-                    per day, bonus spell slots from CHA, spell save DCs, school choice, prepared \
-                    posture) is not computed. No Bardic-class-feature math and no spell math is \
-                    fabricated and no Bard level 2+ is proven",
-                next_required_uplift: "SD13-E4 Bard chassis-class-feature (bardic knowledge, \
-                    bardic music) and spontaneous spell-slot slice, then level-2+ progression",
+                    recognized on the compute seam, AND the SD13-E4 Bard decomposition slice \
+                    grounds bardic knowledge (the Knowledge-check competence bonus equal to \
+                    max(bard level / 2, 1), i.e. +1 at level 1, computed against the fixture with \
+                    no dependency on the Bard's Intelligence modifier or skill ranks) for real. \
+                    The row is Partial, not Supported: the bardic music performance family \
+                    (inspire courage and later performances) is not implemented, and the entire \
+                    spontaneous spell burden (spontaneous spells known, spells per day, bonus \
+                    spell slots from CHA, spell save DCs, school choice, prepared posture) is not \
+                    computed. No bardic music math and no spell math is fabricated and no Bard \
+                    level 2+ is proven",
+                next_required_uplift: "SD13-E4 Bard bardic music grounding slice, then the \
+                    spontaneous spell-slot burden, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:cleric",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Cleric \
-                            level-1 prepared divine spell baseline, with the domain / channel energy \
-                            burden and the prepared divine spell posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            level-1 prepared divine spell baseline, with Channel Energy grounded for \
+                            real and the domain choice burden and the prepared divine spell posture \
+                            burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_CLERIC_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
                     deterministic Human Cleric level-1 prepared divine spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the domain and channel \
-                    energy burden (two chosen domains, domain spells, domain powers, channel energy) \
-                    is not implemented, and the prepared divine spell posture burden (spells prepared \
-                    from the full Cleric list, spontaneous cure/inflict conversion, spell slots per \
-                    day, bonus spells from a high Wisdom, spell save DCs) is not computed. No spell \
-                    math is fabricated and no Cleric level 2+ is proven",
-                next_required_uplift: "SD13-E4 Cleric domain / channel energy and prepared divine \
-                    spell slice, then level-2+ progression",
+                    recognized on the compute seam, AND the SD13-E4 Cleric Channel Energy slice grounds \
+                    Channel Energy for real (PF1 Core Rulebook: ceil(cleric level / 2) d6, minimum 1d6, \
+                    computed against the fixture as 1d6 at level 1; usable 3 + Charisma modifier times \
+                    per day, computed against the fixture's Charisma 14 (+2) as 5 uses per day). The row \
+                    is Partial, not Supported: the domain choice burden (two chosen domains, domain \
+                    spells, domain powers) remains named and unproven, and the prepared divine spell \
+                    posture burden (spells prepared from the full Cleric list, spontaneous cure/inflict \
+                    conversion, spell slots per day, bonus spells from a high Wisdom, spell save DCs) is \
+                    still entirely unproven. No domain power math and no spell math is fabricated and no \
+                    Cleric level 2+ is proven",
+                next_required_uplift: "SD13-E4 Cleric domain choice grounding slice, then the prepared \
+                    divine spell posture burden, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
-                            level-1 prepared divine spell baseline, with the nature bond / wild \
-                            empathy burden and the prepared divine spell posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            level-1 prepared divine spell baseline, with Wild Empathy now grounded \
+                            and the nature bond burden and the prepared divine spell posture burden \
+                            still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_DRUID_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
                     deterministic Human Druid level-1 prepared divine spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the nature bond and \
-                    wild empathy burden (nature bond choice between an animal companion and a domain, \
-                    nature sense, wild empathy) is not implemented, and the prepared divine spell \
-                    posture burden (spells prepared from the full Druid list, spontaneous summon \
-                    nature's ally conversion, spell slots per day, bonus spells from a high Wisdom, \
-                    spell save DCs) is not computed. No spell math is fabricated and no Druid level \
-                    2+ is proven",
-                next_required_uplift: "SD13-E4 Druid nature bond / wild empathy and prepared divine \
-                    spell slice, then level-2+ progression",
+                    recognized on the compute seam, AND the SD13-E4 wild empathy grounding slice \
+                    grounds wild empathy for real (PF1 Core Rulebook: 1d20 + druid level + Charisma \
+                    modifier, used like a Diplomacy check to improve an animal's attitude; only the \
+                    flat druid-level + Charisma-modifier bonus is computed against the deterministic \
+                    fixture, no d20 roll and no Diplomacy-check execution engine). The row is \
+                    Partial, not Supported: the nature bond burden (the choice between an animal \
+                    companion and a domain, and nature sense) remains named and unproven, and the \
+                    prepared divine spell posture burden (spells prepared from the full Druid list, \
+                    spontaneous summon nature's ally conversion, spell slots per day, bonus spells \
+                    from a high Wisdom, spell save DCs) is still entirely unproven. No spell math is \
+                    fabricated and no Druid level 2+ is proven",
+                next_required_uplift: "SD13-E4 Druid nature bond grounding slice, or the prepared \
+                    divine spell burden slice, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",
@@ -786,9 +810,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Paladin level-1 chassis baseline, with the per-feature non-spell \
-                            class-feature burden (smite evil / lay on hands / divine grace \
-                            / mercy) and the partial-caster spell burden still blocked",
+                            Paladin level-1 chassis baseline, with smite evil's uses-per-day / \
+                            attack-bonus / damage-bonus formula grounded and the lay on hands / \
+                            divine grace / mercy per-feature burdens plus the partial-caster \
+                            spell burden still blocked",
                 support_state: SupportState::Blocked,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -797,14 +822,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     deterministic Human Paladin level-1 hybrid chassis is recognized on the compute \
                     seam AND that its non-spell class-feature burden is now split into per-feature \
                     blockers (smite evil / lay on hands / divine grace / mercy) instead of the single \
-                    combined F6 string, but the row stays blocked: each per-feature chassis burden is \
-                    not implemented, and the later partial-caster spell burden (Paladin is a divine \
-                    partial caster in PF1 Core Rulebook: effective caster level = paladin level - 2, \
-                    spell slots first available at level 2) is deferred to SD13-E4. No Paladin level 2+ \
-                    is proven. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid chassis \
-                    recognition explanation all remain in place; this slice only adds per-burden \
-                    granularity next to them",
-                next_required_uplift: "SD13-E4 paladin partial-caster spell burden slice, then \
+                    combined F6 string. Of those four, smite evil is now grounded for real: uses per \
+                    day = 1, attack-roll bonus = Charisma modifier (if positive), damage bonus = \
+                    paladin level (PF1 Core Rulebook), computed against the deterministic fixture as \
+                    1 / +2 / +1 at level 1; this grounds only that flat numeric formula, not \
+                    alignment/evil-subtype target resolution or evil-outsider/dragon/undead damage \
+                    doubling. The row stays blocked: lay on hands, divine grace, and mercy remain \
+                    unproven per-feature chassis burdens, and the later partial-caster spell burden \
+                    (Paladin is a divine partial caster in PF1 Core Rulebook: effective caster level = \
+                    paladin level - 2, spell slots first available at level 2) is deferred to SD13-E4. \
+                    No Paladin level 2+ is proven. The F6 hybrid baseline, the F6 hybrid blockers, and \
+                    the F6 hybrid chassis recognition explanation all remain in place; this slice only \
+                    adds per-burden granularity and the one grounded smite-evil formula next to them",
+                next_required_uplift: "ground the lay on hands / divine grace / mercy per-feature \
+                    chassis burdens, then the SD13-E4 paladin partial-caster spell burden slice, then \
                     paladin level-2+ progression",
             },
             SupportStateRow {
@@ -838,48 +869,62 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Sorcerer level-1 spell baseline, with the bloodline burden and the \
-                            spontaneous known-spell / slot posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            Sorcerer level-1 spell baseline, with Eschew Materials grounded for \
+                            real and the bloodline-power burden and the spontaneous \
+                            known-spell / slot posture burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_SORCERER_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
                     deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the bloodline burden \
-                    (bloodline selection, level-1 bloodline power, bloodline arcana, bonus \
-                    spells/feats/skills) is not implemented, and the spontaneous spell burden \
-                    (spontaneous spells known, spell slots per day, bonus spell slots, spell save DCs) \
-                    is not computed. No spell math is fabricated and no Sorcerer level 2+ is proven",
-                next_required_uplift: "SD13-E4 Sorcerer bloodline and spontaneous spell-slot slice, \
-                    then level-2+ progression",
+                    recognized on the compute seam, AND the SD13-E4 Sorcerer decomposition slice \
+                    grounds Eschew Materials (the universal, bloodline-independent bonus feat every \
+                    1st-level Sorcerer receives: casting a spell with a material component costing \
+                    1 gp or less without needing that material component) for real. The row is \
+                    Partial, not Supported: the bloodline-power burden (bloodline selection, \
+                    level-1 bloodline power, bloodline arcana, bonus spells/feats/skills) remains \
+                    named and unproven, and the spontaneous spell burden (spontaneous spells known, \
+                    spell slots per day, bonus spell slots, spell save DCs) is entirely unproven. No \
+                    spell math is fabricated and no Sorcerer level 2+ is proven",
+                next_required_uplift: "SD13-E4 Sorcerer bloodline-power grounding slice (a specific \
+                    bloodline's level-1 power), then the spontaneous spell burden, then level-2+ \
+                    progression",
             },
             SupportStateRow {
                 row_id: "class.wizard.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:wizard",
                 // The SD13-E4-R3 merge receipt executed after the tranche 2.6
-                // closeout merged to develop (2026-07-07): the row carries the
-                // post-merge posture the slice's proof surface pinned as its
-                // merge-receipt obligation.
+                // closeout merged to develop (2026-07-07): the row carried the
+                // post-merge Blocked/Computed posture the slice's proof surface
+                // pinned as its merge-receipt obligation. A further SD13-E4 Wizard
+                // decomposition slice then grounds Scribe Scroll for real,
+                // promoting the row from Blocked to Partial (mirroring the Ranger
+                // Track promotion): one of the two named burdens is now grounded,
+                // while the specialization-choice burden and the entire prepared
+                // spell posture burden remain unproven.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1 prepared arcane spell baseline, with the school \
-                            specialization burden and the prepared spellbook / spell-slot \
-                            posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            Wizard level-1 prepared arcane spell baseline, with Scribe Scroll \
+                            grounded for real and the specialization-choice burden and the \
+                            prepared spellbook / spell-slot posture burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_WIZARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-R3 leaves direct computed evidence that the \
                     deterministic Human Wizard level-1 prepared arcane spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the school \
-                    specialization burden (specialization choice, two opposed schools, specialty \
-                    school bonus spell slot) is not implemented, and the prepared spell posture \
-                    burden (spellbook content, spells prepared per day, spell slots per day, \
-                    bonus slots from high Intelligence, spell save DCs) is not computed. No \
-                    spell math is fabricated and no Wizard level 2+ is proven",
-                next_required_uplift: "SD13-E4 Wizard school-specialization and prepared \
-                    spellbook / spell-slot slice, then level-2+ progression",
+                    recognized on the compute seam, AND a later SD13-E4 Wizard decomposition slice \
+                    grounds Scribe Scroll (the free, specialization-independent bonus feat every \
+                    1st-level Wizard is granted, letting them create scrolls of spells they know) \
+                    for real. The row is Partial, not Supported: the specialization choice burden \
+                    (the chosen school, two opposed schools, and the specialty school bonus spell \
+                    slot) remains named and unproven, and the prepared spell posture burden \
+                    (spellbook content, spells prepared per day, spell slots per day, bonus slots \
+                    from high Intelligence, spell save DCs) is still entirely unproven. No spell \
+                    math is fabricated and no Wizard level 2+ is proven",
+                next_required_uplift: "SD13-E4 Wizard specialization-choice grounding slice, then \
+                    the prepared spellbook / spell-slot posture slice, then level-2+ progression",
             },
             // ----- Interaction rows (2) -----
             SupportStateRow {

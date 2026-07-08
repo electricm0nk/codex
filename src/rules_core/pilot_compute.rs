@@ -33,7 +33,13 @@
 //! specialization burden and prepared spellbook / spells-prepared / spell-slot
 //! posture burden; it grounds no spellbook content, no spells prepared, no spell
 //! slots, no spell save DCs, no bonus spells, no school-opposition bookkeeping, and
-//! no specialty school bonus. The SD13-E3 Fighter milestone tranche has since
+//! no specialty school bonus. A later SD13-E4 Wizard decomposition slice splits that
+//! school specialization burden in two: Scribe Scroll, the free specialization-
+//! independent bonus feat every 1st-level Wizard is granted, is grounded for real,
+//! while the specialization CHOICE burden (chosen school, opposed schools, specialty
+//! school bonus) stays its own named claim-blocking diagnostic; the prepared
+//! spellbook / spells-prepared / spell-slot posture burden is untouched. The SD13-E3
+//! Fighter milestone tranche has since
 //! widened further still, to level 8: the level-8 bonus-feat progression seam is
 //! surfaced explicitly, mirroring the level-2/4/6 bonus-feat seams, and grounds no
 //! level-9+ Fighter burden. The SD13-E3 Rogue pillar-grounding slice widens the
@@ -53,7 +59,19 @@
 //! combat style stay explicitly claim-blocked by their own named diagnostics, and
 //! Track (the Survival-check bonus to follow tracks, ½ ranger level minimum 1) is
 //! grounded for real as a bounded numeric value; it grounds no favored-enemy or
-//! combat-style math and no ranger spell posture. Unsupported input yields
+//! combat-style math and no ranger spell posture. The SD13-E4 Druid Wild Empathy
+//! slice further splits the Druid nature-bond/wild-empathy class-feature blocker
+//! into two named diagnostics: nature bond (the animal-companion-vs-domain choice
+//! and nature sense) stays explicitly claim-blocked, and Wild Empathy (PF1 Core
+//! Rulebook: 1d20 + druid level + Charisma modifier, used like a Diplomacy check to
+//! improve an animal's attitude) is grounded for real as the flat druid-level +
+//! Cha-modifier value; it grounds no nature-bond power execution and no
+//! Diplomacy-check/d20-roll resolution. The SD13-E4 Sorcerer decomposition
+//! slice further splits the F7 combined bloodline burden into two named diagnostics
+//! and grounds one for real: Eschew Materials, the universal, bloodline-independent
+//! bonus feat every 1st-level Sorcerer receives; it grounds no bloodline power,
+//! bloodline arcana, or spell math, and the bloodline-power and spontaneous
+//! spell-posture burdens stay explicitly claim-blocked. Unsupported input yields
 //! claim-blocking diagnostics and withheld explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
@@ -186,11 +204,12 @@ const MONK_CLASS_ID: &str = "class:monk";
 // Grounded SD13-E4 Human Cleric level-1 prepared divine spell-bearing baseline
 // identity. Cleric is the canonical PF1 prepared divine full caster; unlike the
 // arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
-// is split across a domain / channel energy class-feature family (two domains
-// chosen, domain spells, domain powers, channel energy) and a prepared divine
-// spell posture family (spells prepared from the full Cleric list, spontaneous
-// cure/inflict conversion, spell slots per day, bonus spells from a high Wisdom,
-// spell save DCs).
+// is split across a domain choice class-feature family (two domains chosen,
+// domain spells, domain powers — Channel Energy has since been grounded for
+// real: ceil(cleric level / 2) d6, minimum 1d6, usable 3 + Charisma modifier
+// times per day) and a prepared divine spell posture family (spells prepared
+// from the full Cleric list, spontaneous cure/inflict conversion, spell slots
+// per day, bonus spells from a high Wisdom, spell save DCs).
 const CLERIC_CLASS_ID: &str = "class:cleric";
 const CLERIC_BASELINE_LEVEL: u8 = 1;
 
@@ -452,6 +471,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // path. This is an extension, never a downgrade, of the F6 surface.
     explain_paladin_level1_chassis_and_spell_burden_separation(
         input,
+        &ability_modifiers,
         &mut explanations,
         &mut diagnostics,
     );
@@ -471,9 +491,19 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_wizard_level1_prepared_spell_baseline(input, &mut explanations, &mut diagnostics);
 
-    explain_cleric_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+    explain_cleric_level1_spell_baseline(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
-    explain_druid_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+    explain_druid_level1_spell_baseline(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
     explain_bard_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
@@ -2030,10 +2060,19 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 /// blocker plus a single combined later-spell blocker. This slice proves the
 /// per-burden separation Paladin actually needs:
 ///
+/// - one grounded numeric explanation set for the fourth named non-spell
+///   pillar, Smite Evil, computed for real:
+///   * PF1 Core Rulebook Smite Evil at the bounded level-1 baseline: 1 use per
+///     day, an attack-roll bonus equal to the paladin's Charisma modifier (if
+///     positive — the rule text applies the Charisma bonus "if any", never a
+///     penalty), and a damage bonus equal to the paladin's class level. This
+///     grounds only that flat numeric formula; it grounds no alignment /
+///     evil-subtype target resolution, no swift-action activation
+///     bookkeeping, no deflection-AC-vs-target bonus, and no
+///     evil-outsider/evil-dragon/undead damage doubling.
+///
 /// - one explicit claim-blocking diagnostic per still-missing non-spell
 ///   class-feature burden:
-///   * `smite evil` — alignment / target resolution, smite attack rolls and
-///     damage bonus, and smite-uses-per-day resource accounting
 ///   * `lay on hands` — healing resource accounting, charismabased pool, and
 ///     use-against-conditions behavior
 ///   * `divine grace` — charisma-to-saves bonus, including the typing and
@@ -2051,13 +2090,14 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 ///     (Cleric / Druid) and so partial-caster pressure stays visible on the
 ///     runtime path.
 ///
-/// This deliberately does not compute a supported spell surface. It grounds
-/// no smite math, no lay-on-hands resource handling, no divine-grace
-/// computation, no mercy handling, no spell slots, no spell source lineage,
-/// no spells known or prepared posture, no deity resolution, no domain
-/// mechanics, no alignment-target resolution, and no healing accounting. It
-/// only emits the per-burden blockers that prove the F6 surface remains
-/// separable on the runtime path.
+/// This deliberately does not compute a supported spell surface. Beyond the
+/// grounded Smite Evil numeric formula, it grounds no lay-on-hands resource
+/// handling, no divine-grace computation, no mercy handling, no spell slots,
+/// no spell source lineage, no spells known or prepared posture, no deity
+/// resolution, no domain mechanics, no alignment-target resolution, and no
+/// healing accounting. It only emits the per-burden blockers (plus the one
+/// grounded Smite Evil formula) that prove the F6 surface remains separable
+/// on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -2066,7 +2106,8 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 /// continues to pass.
 fn explain_paladin_level1_chassis_and_spell_burden_separation(
     input: &CharacterInput,
-    _explanations: &mut Vec<ComputationExplanation>,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if !is_single_class_paladin_level1(input) {
@@ -2076,20 +2117,57 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         return;
     }
 
+    // Smite Evil, the fourth named non-spell pillar, is grounded for real: a
+    // bounded, flat numeric formula with no execution engine behind it. PF1
+    // Core Rulebook: 1 use/day at level 1, attack-roll bonus = Charisma
+    // modifier (if positive; the rule never applies it as a penalty), damage
+    // bonus = paladin level.
+    let paladin_level = i16::from(HYBRID_BASELINE_LEVEL);
+    let smite_evil_uses_per_day: i16 = 1;
+    let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
+    let smite_evil_attack_bonus = charisma_modifier.max(0);
+    let smite_evil_damage_bonus = paladin_level;
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.smite_evil_uses_per_day".to_owned(),
+        value: smite_evil_uses_per_day,
+        detail: format!(
+            "Paladin Smite Evil uses per day at paladin level {HYBRID_BASELINE_LEVEL} (PF1 Core \
+             Rulebook: 1/day at level 1, +1 at level 4 and every three levels thereafter, none of \
+             which this bounded level-1 baseline grounds): {smite_evil_uses_per_day}. This grounds \
+             only the flat per-day resource count; it computes no swift-action activation \
+             bookkeeping and no per-use consumption tracking"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.smite_evil_attack_bonus".to_owned(),
+        value: smite_evil_attack_bonus,
+        detail: format!(
+            "Paladin Smite Evil attack-roll bonus: the paladin's Charisma modifier, applied only \
+             if positive (PF1 Core Rulebook: \"the paladin adds her Charisma modifier, if any, to \
+             her attack roll\", never as a penalty) = max({charisma_modifier}, 0) = \
+             {smite_evil_attack_bonus}. This grounds only the flat attack-roll bonus; it computes \
+             no alignment or evil-subtype target resolution"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.smite_evil_damage_bonus".to_owned(),
+        value: smite_evil_damage_bonus,
+        detail: format!(
+            "Paladin Smite Evil damage bonus: equal to the paladin's class level (PF1 Core \
+             Rulebook: 2x paladin level against evil outsiders, evil dragons, and undead, which \
+             this bounded formula does not distinguish) = {smite_evil_damage_bonus} at paladin \
+             level {HYBRID_BASELINE_LEVEL}. This grounds only the flat per-hit damage bonus; it \
+             computes no evil-outsider/evil-dragon/undead damage doubling and no deflection-AC \
+             bonus against the smited target"
+        ),
+    });
+
     // The per-burden blockers ride alongside the F6 hybrid blockers. They are
     // intentionally distinct diagnostic ids so the chassis burden is separable
     // from the spell burden on the runtime path.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.paladin.smite_evil.unsupported".to_owned(),
-        message: format!(
-            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its smite evil burden: \
-             smite attack-roll bonuses, smite damage bonus, smite-uses-per-day resource \
-             accounting, and the underlying alignment-target resolution are not implemented in \
-             this bounded chassis baseline, so no Paladin smite execution is claimed"
-        ),
-        claim_blocking: true,
-    });
-
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.paladin.lay_on_hands.unsupported".to_owned(),
         message: format!(
@@ -2762,22 +2840,32 @@ fn explain_rogue_level1_chassis(
 }
 
 /// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Sorcerer
-/// level-1 spell-bearing baseline, while keeping it explicitly claim-blocked on its two
+/// level-1 spell-bearing baseline, while keeping it explicitly claim-blocked on its
 /// still-missing burdens.
 ///
-/// This deliberately does not compute a supported spell surface. It grounds no bloodline
-/// power, no bloodline arcana, and no spell math whatsoever — no spell slots, spells
-/// known, spell DCs, bonus spells, prepared posture, or school choice. It only:
+/// The SD13-E4 Sorcerer decomposition slice splits the original combined bloodline
+/// blocker into two named diagnostics and grounds one of them for real: Eschew
+/// Materials, the universal, bloodline-independent bonus feat every 1st-level Sorcerer
+/// receives (PF1 Core Rulebook: it lets a Sorcerer cast a spell with a material
+/// component costing 1 gp or less without needing that material component). This is a
+/// boolean feat grant, not a numeric formula, so it carries no fabricated mechanical
+/// value; it grounds no bloodline power, no bloodline arcana, and no spell math
+/// whatsoever — no spell slots, spells known, spell DCs, bonus spells, prepared
+/// posture, or school choice. It only:
 /// - leaves one recognition explanation so the `class:sorcerer:1` identity is acknowledged
 ///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
-///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two distinct claim-blocking diagnostics naming the bloodline burden and the
-///   spontaneous known-spell / slot posture burden explicitly, rather than hiding behind a
-///   generic "unsupported caster" label.
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - leaves one grounded explanation recognizing the Eschew Materials bonus-feat grant
+///   (also carrying no fabricated mechanical value, since it is a boolean grant), and
+/// - emits two distinct claim-blocking diagnostics naming the bloodline-power burden
+///   (bloodline selection, level-1 bloodline power, bloodline arcana, and higher-level
+///   bonus spells/feats/skills) and the spontaneous known-spell / slot posture burden
+///   explicitly, rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
-/// keeps that blocked posture but makes the Sorcerer spell-bearing identity and its two
-/// named burdens legible on the runtime path.
+/// keeps that blocked posture but makes the Sorcerer spell-bearing identity, the
+/// grounded Eschew Materials grant, and the two remaining named burdens legible on the
+/// runtime path.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -2805,14 +2893,33 @@ fn explain_sorcerer_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the bloodline burden explicitly.
+    // Grounded for real: Eschew Materials is a universal, bloodline-independent bonus
+    // feat granted to every 1st-level Sorcerer. It is a boolean feat grant, not a
+    // numeric formula, so it carries no fabricated mechanical value; it grounds no
+    // bloodline power and no spell math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.sorcerer.eschew_materials".to_owned(),
+        value: 0,
+        detail: format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} Eschew Materials bonus feat: the PF1 Core \
+             Rulebook grants every Sorcerer the Eschew Materials feat at 1st level regardless of \
+             chosen bloodline, letting them cast a spell with a material component costing 1 gp or \
+             less without needing that material component. This is a boolean feat grant, not a \
+             numeric bonus, so it carries no fabricated mechanical value (+0); it grounds no \
+             bloodline power, no bloodline arcana, and no spell math (spell slots, spells known, \
+             spell DCs, or bonus spells)"
+        ),
+    });
+
+    // Still blocked (1/2): name the bloodline-power burden explicitly, now that Eschew
+    // Materials has been split out and grounded above.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.sorcerer.bloodline.unsupported".to_owned(),
+        id: "class_feature.sorcerer.bloodline_power.unsupported".to_owned(),
         message: format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline burden: the \
-             bloodline selection, its level-1 bloodline power, bloodline arcana, and bloodline bonus \
-             spells/feats/skills are not implemented in this bounded spell baseline, so no Sorcerer \
-             bloodline support is claimed"
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline power \
+             burden: the bloodline selection, its level-1 bloodline power, bloodline arcana, and \
+             bloodline bonus spells/feats/skills are not implemented in this bounded spell \
+             baseline, so no Sorcerer bloodline-power support is claimed"
         ),
         claim_blocking: true,
     });
@@ -2854,18 +2961,27 @@ fn is_single_class_wizard_level1(input: &CharacterInput) -> bool {
 /// - leaves one recognition explanation so the `class:wizard:1` identity is
 ///   acknowledged as a prepared arcane spell-bearing class rather than an
 ///   undocumented packet placeholder (direct runtime evidence, carrying no
-///   fabricated mechanical value), and
+///   fabricated mechanical value),
+/// - grounds one universal, specialization-independent class feature for real:
+///   Scribe Scroll, the bonus feat every 1st-level Wizard is granted regardless
+///   of arcane school specialization (PF1 Core Rulebook Wizard class feature),
+///   letting the Wizard create scrolls of spells they know. This is a bounded
+///   grant-only recognition, not a numeric formula: it carries no fabricated
+///   mechanical value (+0) and computes no scroll-creation cost, crafting time,
+///   spellbook content, or spell-slot machinery, and
 /// - emits two distinct claim-blocking diagnostics naming the school
-///   specialization burden (chosen school, two opposed schools, specialty school
-///   bonus) and the prepared spellbook / spells-prepared / spell-slot posture
-///   burden explicitly, rather than hiding behind a generic "unsupported caster"
-///   label.
+///   specialization CHOICE burden (chosen school, two opposed schools, specialty
+///   school bonus) and the prepared spellbook / spells-prepared / spell-slot
+///   posture burden explicitly, rather than hiding behind a generic "unsupported
+///   caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this
 /// seam keeps that blocked posture but makes the Wizard prepared spell-bearing
-/// identity and its two named burdens legible on the runtime path. The matrix
-/// file row transition (Unverified/Observed → Blocked/Computed) is recorded by
-/// the merge receipt only and is NOT applied to the in-source carrier here.
+/// identity, its one grounded universal class feature, and its two remaining
+/// named burdens legible on the runtime path. The matrix file row transition
+/// (Unverified/Observed → Blocked/Computed, then Blocked → Partial once Scribe
+/// Scroll is grounded) is recorded by this proof surface and applied to the
+/// in-source carrier directly (see `seeded_sd13_e1_f1_current_truth`).
 fn explain_wizard_level1_prepared_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -2897,21 +3013,42 @@ fn explain_wizard_level1_prepared_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the school specialization burden explicitly.
+    // Grounded for real: Scribe Scroll is a universal, specialization-independent
+    // Wizard class feature (every 1st-level Wizard is granted it regardless of
+    // which school, if any, is later chosen), so it is separable from the
+    // school-specialization burden. It is a boolean grant, not a numeric formula.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.wizard.scribe_scroll".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized Wizard level {WIZARD_BASELINE_LEVEL} Scribe Scroll bonus feat grant: \
+             every Wizard, regardless of arcane school specialization, is granted Scribe Scroll \
+             as a bonus feat at level {WIZARD_BASELINE_LEVEL} (PF1 Core Rulebook Wizard class \
+             feature), letting the Wizard create scrolls of spells they know. This is a bounded \
+             grant-only recognition: it carries no fabricated mechanical value (+0) and computes \
+             no scroll creation cost, no crafting time, no spellbook content, and no spell-slot \
+             machinery"
+        ),
+    });
+
+    // Still blocked (1/2): name the specialization CHOICE burden explicitly, now
+    // that Scribe Scroll (the other named pillar of the former combined
+    // school-specialization burden) is grounded above.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.wizard.school_specialization.unsupported".to_owned(),
+        id: "class_feature.wizard.specialization_choice.unsupported".to_owned(),
         message: format!(
             "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school specialization \
-             burden: the chosen school, two opposed schools, the school's opposed schools list, \
+             choice burden: the chosen school, the two opposed schools locked out by that choice, \
              and the specialty school bonus (additional spell slots / spells known at later \
              levels) are not implemented in this bounded prepared spell baseline, so no Wizard \
-             school specialization support is claimed"
+             specialization-choice support is claimed"
         ),
         claim_blocking: true,
     });
 
     // Still blocked (2/2): name the prepared spellbook / spells-prepared /
-    // spell-slot posture burden explicitly.
+    // spell-slot posture burden explicitly. Unchanged by the Scribe Scroll
+    // grounding: it fabricates no spell math.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.wizard.prepared_spellbook.unsupported".to_owned(),
         message:
@@ -2939,25 +3076,31 @@ fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E4 runtime evidence for the deterministic Human Cleric level-1
 /// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
-/// its two still-missing burdens.
+/// its remaining still-missing burdens.
 ///
-/// This deliberately does not compute a supported spell surface. It grounds no domain
-/// selection, no domain spells, no domain powers, no channel energy execution, no
-/// spellbook posture, no spells prepared, no spontaneous cure/inflict conversion, no
-/// spell slots per day, no spell save DCs, and no bonus spell slots from a high Wisdom.
-/// It only:
+/// This deliberately does not compute a supported spell surface. It grounds Channel
+/// Energy's flat die-count and uses-per-day math, but grounds no domain selection, no
+/// domain spells, no domain powers, no channel energy save DC or damage/healing
+/// resolution, no spellbook posture, no spells prepared, no spontaneous cure/inflict
+/// conversion, no spell slots per day, no spell save DCs, and no bonus spell slots from
+/// a high Wisdom. It only:
 /// - leaves one recognition explanation so the `class:cleric:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
-///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two distinct claim-blocking diagnostics naming the domain / channel energy
-///   class-feature burden and the prepared divine spell posture burden explicitly,
-///   rather than hiding behind a generic "unsupported caster" label.
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - grounds Channel Energy's die count and daily use count for real (PF1 Core
+///   Rulebook Channel Energy: `ceil(cleric level / 2)` d6, minimum 1d6; usable
+///   `3 + Charisma modifier` times per day), and
+/// - emits two distinct claim-blocking diagnostics naming the still-unproven domain
+///   choice class-feature burden and the prepared divine spell posture burden
+///   explicitly, rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Cleric prepared divine spell-bearing
-/// identity and its two named burdens legible on the runtime path.
+/// identity, its one grounded Channel Energy pillar, and its two named remaining
+/// burdens legible on the runtime path.
 fn explain_cleric_level1_spell_baseline(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -2986,15 +3129,49 @@ fn explain_cleric_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the domain / channel energy class-feature burden explicitly.
+    // Grounded for real: Channel Energy's flat die count. PF1 Core Rulebook Channel
+    // Energy: the cleric channels a number of d6s equal to ceil(cleric level / 2),
+    // minimum 1d6. At the bounded level-1 baseline this is ceil(1 / 2) = 1d6.
+    let channel_energy_dice = (i16::from(CLERIC_BASELINE_LEVEL) + 1) / 2;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.cleric.channel_energy_dice".to_owned(),
+        value: channel_energy_dice,
+        detail: format!(
+            "Cleric Channel Energy die count: ceil(cleric level / 2) d6 (PF1 Core Rulebook Channel \
+             Energy), minimum 1d6. At Cleric level {CLERIC_BASELINE_LEVEL} this is \
+             ceil({CLERIC_BASELINE_LEVEL} / 2) = {channel_energy_dice}d6. This grounds only the flat \
+             d6 die count; it computes no channel energy save DC and no positive/negative energy \
+             burst damage or healing resolution"
+        ),
+    });
+
+    // Grounded for real: Channel Energy's flat daily use count. PF1 Core Rulebook
+    // Channel Energy: usable 3 + Charisma modifier times per day, floored at 0 (a
+    // cleric cannot channel energy a negative number of times per day).
+    let channel_energy_uses_per_day = (3 + ability_modifiers.charisma).max(0);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.cleric.channel_energy_uses_per_day".to_owned(),
+        value: channel_energy_uses_per_day,
+        detail: format!(
+            "Cleric Channel Energy uses per day: 3 + Charisma modifier (PF1 Core Rulebook Channel \
+             Energy), floored at 0. At Charisma modifier {} this is max(3 + {}, 0) = \
+             {channel_energy_uses_per_day}. This grounds only the flat daily use count; it computes \
+             no channel energy save DC and no positive/negative energy burst damage or healing \
+             resolution",
+            ability_modifiers.charisma, ability_modifiers.charisma
+        ),
+    });
+
+    // Still blocked (1/2): name the domain choice class-feature burden explicitly.
+    // Channel Energy (above) is grounded; the two chosen domains, their domain
+    // spells, and their domain powers remain entirely unproven.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.cleric.domain_and_channel_energy.unsupported".to_owned(),
+        id: "class_feature.cleric.domain_choice.unsupported".to_owned(),
         message: format!(
-            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain and channel energy \
-             burden: the two chosen domains, their domain spells, their domain powers, and channel \
-             energy (positive/negative energy burst, uses per day, save DC) are not implemented in \
-             this bounded prepared divine spell baseline, so no Cleric domain or channel energy \
-             support is claimed"
+            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain choice burden: the \
+             two chosen domains, their domain spells, and their domain powers are not implemented in \
+             this bounded prepared divine spell baseline, so no Cleric domain choice support is \
+             claimed"
         ),
         claim_blocking: true,
     });
@@ -3027,25 +3204,32 @@ fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E4 runtime evidence for the deterministic Human Druid level-1
 /// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
-/// its two still-missing burdens.
+/// its remaining burdens. The SD13-E4 Wild Empathy grounding slice grounds Wild
+/// Empathy for real as a bounded numeric value; nature bond and the prepared divine
+/// spell posture burden remain claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
 /// bond selection, no nature bond power execution (animal companion or domain), no
-/// wild empathy check resolution, no spellbook posture, no spells prepared, no
-/// spontaneous summon nature's ally conversion, no spell slots per day, no spell save
-/// DCs, and no bonus spell slots from a high Wisdom. It only:
+/// spellbook posture, no spells prepared, no spontaneous summon nature's ally
+/// conversion, no spell slots per day, no spell save DCs, and no bonus spell slots
+/// from a high Wisdom. It only:
 /// - leaves one recognition explanation so the `class:druid:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
-///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two distinct claim-blocking diagnostics naming the nature bond / wild
-///   empathy class-feature burden and the prepared divine spell posture burden
-///   explicitly, rather than hiding behind a generic "unsupported caster" label.
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - leaves one grounded Wild Empathy explanation (the flat druid-level +
+///   Charisma-modifier modifier, not a d20 roll and not a Diplomacy-check execution
+///   engine), and
+/// - emits two distinct claim-blocking diagnostics naming the nature bond
+///   class-feature burden and the prepared divine spell posture burden explicitly,
+///   rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Druid prepared divine spell-bearing
-/// identity and its two named burdens legible on the runtime path.
+/// identity, its grounded Wild Empathy modifier, and its remaining named burdens
+/// legible on the runtime path.
 fn explain_druid_level1_spell_baseline(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -3066,22 +3250,44 @@ fn explain_druid_level1_spell_baseline(
             "Recognized deterministic Human Druid level {DRUID_BASELINE_LEVEL} prepared divine \
              spell-bearing baseline: the {DRUID_CLASS_ID}:{DRUID_BASELINE_LEVEL} class identity is \
              acknowledged as a prepared divine spell-bearing class on the rules-core seam rather than \
-             an undocumented packet placeholder. This is a bounded recognition record only; it grounds \
-             no nature bond selection, no nature bond power execution, no wild empathy check \
-             resolution, no spellbook posture, no spells prepared per day, no spontaneous summon \
-             nature's ally conversion, no spell slots per day, no spell save DCs, and no bonus spell \
-             slots from a high Wisdom, so it carries no fabricated mechanical value (+0)"
+             an undocumented packet placeholder. This is a bounded recognition record only; the Wild \
+             Empathy modifier is grounded separately below, but this record still grounds no nature \
+             bond selection, no nature bond power execution, no spellbook posture, no spells prepared \
+             per day, no spontaneous summon nature's ally conversion, no spell slots per day, no spell \
+             save DCs, and no bonus spell slots from a high Wisdom, so it carries no fabricated \
+             mechanical value (+0)"
         ),
     });
 
-    // Still blocked (1/2): name the nature bond / wild empathy class-feature burden explicitly.
+    // Grounded: Wild Empathy (PF1 Core Rulebook). A druid uses Wild Empathy to
+    // improve the attitude of an animal, resolved like a Diplomacy check: the
+    // druid rolls 1d20 and adds her druid level and her Charisma modifier. Only
+    // the flat level + Cha-modifier bonus is grounded here; no d20 roll and no
+    // Diplomacy-check/attitude-outcome execution engine is computed.
+    let wild_empathy_modifier = i16::from(DRUID_BASELINE_LEVEL) + ability_modifiers.charisma;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.druid.wild_empathy".to_owned(),
+        value: wild_empathy_modifier,
+        detail: format!(
+            "Druid Wild Empathy modifier (PF1 Core Rulebook): a druid uses Wild Empathy to improve \
+             an animal's attitude as if making a Diplomacy check, rolling 1d20 and adding her druid \
+             level and her Charisma modifier. At Druid level {DRUID_BASELINE_LEVEL} with a Charisma \
+             modifier of {}, the modifier is {DRUID_BASELINE_LEVEL} + {} = {wild_empathy_modifier}. \
+             This grounds only the flat druid-level + Charisma-modifier bonus; it computes no d20 \
+             roll, no Diplomacy-check resolution, and no attitude-improvement outcome",
+            ability_modifiers.charisma, ability_modifiers.charisma
+        ),
+    });
+
+    // Still blocked (1/2): name the nature bond class-feature burden explicitly. Wild
+    // Empathy is grounded above and no longer named here as a blocker.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.druid.nature_bond_and_wild_empathy.unsupported".to_owned(),
+        id: "class_feature.druid.nature_bond.unsupported".to_owned(),
         message: format!(
-            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its nature bond and wild empathy \
-             burden: the nature bond choice (an animal companion or a domain), nature sense, and wild \
-             empathy (the animal-diplomacy check) are not implemented in this bounded prepared divine \
-             spell baseline, so no Druid nature bond or wild empathy support is claimed"
+            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its nature bond burden: the \
+             nature bond choice (an animal companion or a domain) and nature sense are not \
+             implemented in this bounded prepared divine spell baseline, so no Druid nature bond \
+             support is claimed"
         ),
         claim_blocking: true,
     });
@@ -3112,25 +3318,35 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Bard
-/// level-1 spontaneous arcane spell-bearing baseline, while keeping it explicitly
-/// claim-blocked on its two still-missing burdens.
+/// Surface direct SD13-E4-F7/SD13-E4 runtime evidence for the deterministic Human
+/// Bard level-1 spontaneous arcane spell-bearing baseline: one recognition record,
+/// one grounded chassis-class-feature pillar (Bardic Knowledge), and two remaining
+/// named claim-blocking burdens (Bardic Music, the spontaneous spell posture).
 ///
 /// This deliberately does not compute a supported Bard chassis. It grounds no
-/// Bardic Knowledge check resolution, no Bardic Music / Inspire Courage execution, and
-/// no spell math whatsoever — no spells known, no spells per day, no spell DCs, no
-/// bonus spells, no prepared posture, no school choice. It only:
+/// Bardic Music / Inspire Courage execution and no spell math whatsoever — no
+/// spells known, no spells per day, no spell DCs, no bonus spells, no prepared
+/// posture, no school choice. It only:
 /// - leaves one recognition explanation so the `class:bard:1` identity is acknowledged
-///   as a spontaneous arcane spell-bearing class with its named Bardic-class-feature
-///   burden rather than an undocumented packet placeholder (direct runtime evidence,
-///   carrying no fabricated mechanical value), and
-/// - emits two distinct claim-blocking diagnostics naming the Bardic Knowledge + Bardic
-///   Music chassis-class-feature burden and the spontaneous known-spell / slot posture
-///   burden explicitly, rather than hiding behind a generic "unsupported caster" label.
+///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - grounds the Bardic Knowledge chassis-class-feature pillar for real: PF1 Core
+///   Rulebook Bardic Knowledge is a flat competence bonus on Knowledge checks equal
+///   to half the bard's level (minimum 1), also letting the bard make any Knowledge
+///   check untrained. That flat bonus needs no skill-rank state and no ability
+///   modifier (the Intelligence modifier already belongs to the ordinary Knowledge
+///   check, not to this class-feature bonus), so it is a bounded, deterministic,
+///   level-only value; this grounds only that flat bonus, not a full Knowledge-check
+///   resolution, and
+/// - emits two distinct claim-blocking diagnostics naming the still-unproven Bardic
+///   Music chassis-class-feature burden and the spontaneous known-spell / slot
+///   posture burden explicitly, rather than hiding behind a generic "unsupported
+///   caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
-/// keeps that blocked posture but makes the Bard spell-bearing identity and its two
-/// named burdens legible on the runtime path.
+/// keeps that blocked posture but makes the Bard spell-bearing identity, the grounded
+/// Bardic Knowledge pillar, and the two remaining named burdens legible on the
+/// runtime path.
 fn explain_bard_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -3145,35 +3361,56 @@ fn explain_bard_level1_spell_baseline(
 
     // Direct runtime evidence: recognize the deterministic Human Bard level-1
     // spell-bearing identity. This is a recognition record only; it fabricates no
-    // Bardic-class-feature math and no spell math.
+    // spell math.
     explanations.push(ComputationExplanation {
         id: "class_chassis.spell_baseline.bard".to_owned(),
         value: 0,
         detail: format!(
             "Recognized deterministic Human Bard level {BARD_BASELINE_LEVEL} spell-bearing \
              baseline: the {BARD_CLASS_ID}:{BARD_BASELINE_LEVEL} class identity is acknowledged \
-             as a spontaneous arcane spell-bearing class with its named Bardic Knowledge and \
-             Bardic Music chassis-class-feature burden on the rules-core seam rather than an \
-             undocumented packet placeholder. This is a bounded recognition record only; it \
-             grounds no Bardic Knowledge check resolution, no Bardic Music / Inspire Courage \
-             execution, and no spell math (spells known, spells per day, spell DCs, bonus \
-             spells, or prepared posture), so it carries no fabricated mechanical value (+0)"
+             as a spontaneous arcane spell-bearing class with its named Bardic Music \
+             chassis-class-feature burden on the rules-core seam rather than an undocumented \
+             packet placeholder. This is a bounded recognition record only; it grounds no \
+             Bardic Music / Inspire Courage execution and no spell math (spells known, spells \
+             per day, spell DCs, bonus spells, or prepared posture), so it carries no \
+             fabricated mechanical value (+0)"
         ),
     });
 
-    // Still blocked (1/2): name the Bardic Knowledge + Bardic Music chassis-class-feature
-    // burden explicitly. Bardic Knowledge grants a competence bonus on Knowledge checks
-    // equal to half the Bard level (minimum 1) plus the Bard's INT modifier; Bardic Music
-    // grants the Inspire Courage performance and the rest of the performance family. This
-    // slice grounds neither check resolution nor performance execution.
+    // Grounded for real: the Bardic Knowledge pillar. PF1 Core Rulebook Bardic
+    // Knowledge: "A bard adds half his bard level (minimum 1) to Knowledge skill
+    // checks and may make all Knowledge skill checks untrained." That is a flat
+    // competence bonus, not "half level + INT modifier": the Intelligence modifier
+    // is already part of the ordinary Knowledge skill check total (rank + ability
+    // modifier + misc bonuses), so it is not an additional term this class-feature
+    // bonus contributes on its own.
+    let bardic_knowledge_bonus = (i16::from(BARD_BASELINE_LEVEL) / 2).max(1);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.bardic_knowledge".to_owned(),
+        value: bardic_knowledge_bonus,
+        detail: format!(
+            "Bard Bardic Knowledge class feature: grants a competence bonus on Knowledge \
+             skill checks equal to max(bard level / 2, 1) (PF1 Core Rulebook Bardic Knowledge: \
+             half bard level, minimum +1), and lets the bard make any Knowledge skill check \
+             untrained. At Bard level {BARD_BASELINE_LEVEL} this bonus is \
+             max({BARD_BASELINE_LEVEL} / 2, 1) = {bardic_knowledge_bonus}. This grounds only \
+             the flat Knowledge-check competence bonus; it is not a full Knowledge-check \
+             resolution engine and adds no skill rank, no ability modifier, and no untrained-\
+             check gate, and it grounds no Bardic Music / Inspire Courage execution"
+        ),
+    });
+
+    // Still blocked (1/2): name the Bardic Music chassis-class-feature burden
+    // explicitly, now separated from the grounded Bardic Knowledge pillar. Bardic
+    // Music grants the Inspire Courage performance and the rest of the performance
+    // family; this slice grounds no performance execution.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.bard.bardic_knowledge_and_music.unsupported".to_owned(),
+        id: "class_feature.bard.bardic_music.unsupported".to_owned(),
         message: format!(
-            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic knowledge and \
-             bardic music chassis-class-feature burden: the bardic knowledge competence bonus \
-             on Knowledge checks (half Bard level + INT modifier) and the bardic music \
-             performance family (inspire courage and later performances) are not implemented \
-             in this bounded spell baseline, so no Bard class-feature support is claimed"
+            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic music \
+             chassis-class-feature burden: the bardic music performance family (inspire \
+             courage and later performances) is not implemented in this bounded spell \
+             baseline, so no Bard bardic-music support is claimed"
         ),
         claim_blocking: true,
     });

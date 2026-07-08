@@ -18,8 +18,19 @@
 //! / `RefreshableFromLiveProof`, grounded on this test file, with a blocker note naming
 //! both burdens.
 //!
+//! The SD13-E4 Wild Empathy grounding slice further splits the combined nature-bond /
+//! wild-empathy class-feature blocker into two named diagnostics: `nature_bond` stays
+//! claim-blocked (the animal-companion-vs-domain choice and nature sense remain
+//! unproven), while Wild Empathy is grounded for real as
+//! `class_chassis.druid.wild_empathy` = druid level + Charisma modifier (PF1 Core
+//! Rulebook: 1d20 + druid level + Cha modifier, used like a Diplomacy check to improve
+//! an animal's attitude). Only the flat modifier is grounded; no die roll and no
+//! Diplomacy-check execution engine is computed. This promotes the matrix row from
+//! `Blocked` to `Partial`.
+//!
 //! It is intentionally not a spell engine. It fabricates no nature-bond power
-//! execution, no wild-empathy check resolution, no spellbook content, no spells
+//! execution, no animal companion or domain math, no wild-empathy check resolution
+//! (no d20 roll, no attitude-improvement outcome), no spellbook content, no spells
 //! prepared, no spell slots per day, no spell DCs, no bonus spells, and it grounds no
 //! Druid level 2+.
 
@@ -38,7 +49,8 @@ const DRUID_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_druid_level1_sd13_deterministic_input.txt");
 
 const RECOGNITION_ID: &str = "class_chassis.spell_baseline.druid";
-const NATURE_BOND_BLOCKER_ID: &str = "class_feature.druid.nature_bond_and_wild_empathy.unsupported";
+const WILD_EMPATHY_ID: &str = "class_chassis.druid.wild_empathy";
+const NATURE_BOND_BLOCKER_ID: &str = "class_feature.druid.nature_bond.unsupported";
 const PREPARED_BLOCKER_ID: &str = "class_spell.druid.prepared_divine.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -147,26 +159,81 @@ fn druid_level1_fabricates_no_spell_math() {
 
     for explanation in &computation.explanations {
         assert!(
-            explanation.id == RECOGNITION_ID || !explanation.id.contains("spell"),
-            "no fabricated spell explanation is allowed beyond the +0 recognition: {explanation:?}"
+            explanation.id == RECOGNITION_ID
+                || explanation.id == WILD_EMPATHY_ID
+                || !explanation.id.contains("spell"),
+            "no fabricated spell explanation is allowed beyond the +0 recognition and the \
+             grounded wild empathy modifier: {explanation:?}"
         );
     }
     let recognition = explanation(&computation, RECOGNITION_ID);
     assert_eq!(recognition.value, 0);
 }
 
+// ----- Grounded: Wild Empathy is computed for real -----
+
+#[test]
+fn druid_level1_grounds_wild_empathy_modifier() {
+    let input = load(DRUID_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // Fixture: Charisma 12 -> modifier +1. Druid level 1 + Cha modifier +1 = 2.
+    assert_eq!(computation.ability_modifiers.charisma, 1);
+    let wild_empathy = explanation(&computation, WILD_EMPATHY_ID);
+    assert_eq!(
+        wild_empathy.value, 2,
+        "wild empathy modifier must equal druid level + Cha modifier (1 + 1 = 2): {wild_empathy:?}"
+    );
+    assert!(
+        wild_empathy.detail.contains("druid level") || wild_empathy.detail.contains("Druid level"),
+        "wild empathy detail must cite the druid-level term of the formula: {}",
+        wild_empathy.detail
+    );
+    assert!(
+        wild_empathy.detail.contains("Charisma") || wild_empathy.detail.contains("Cha"),
+        "wild empathy detail must cite the Charisma-modifier term of the formula: {}",
+        wild_empathy.detail
+    );
+    assert!(
+        !wild_empathy.detail.contains("animal companion") && !wild_empathy.detail.contains("domain"),
+        "wild empathy must not fabricate nature bond / animal companion / domain math: {}",
+        wild_empathy.detail
+    );
+    assert!(
+        !wild_empathy.detail.to_lowercase().contains("spells prepared")
+            && !wild_empathy.detail.to_lowercase().contains("spell slot"),
+        "wild empathy must not fabricate prepared-spell posture math: {}",
+        wild_empathy.detail
+    );
+}
+
 // ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
 
 #[test]
-fn druid_level1_stays_blocked_on_nature_bond_and_wild_empathy_burden() {
+fn druid_level1_stays_blocked_on_nature_bond_burden() {
     let input = load(DRUID_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let bond = claim_blocking(&computation, NATURE_BOND_BLOCKER_ID);
     assert!(
-        bond.message.contains("nature bond") && bond.message.contains("wild empathy"),
-        "druid nature-bond blocker must name the nature bond / wild empathy burden: {}",
+        bond.message.contains("nature bond"),
+        "druid nature-bond blocker must name the nature bond burden: {}",
         bond.message
+    );
+    assert!(
+        !bond.message.contains("wild empathy"),
+        "druid nature-bond blocker must no longer name wild empathy, now that it is grounded: {}",
+        bond.message
+    );
+
+    // Wild Empathy must no longer be claim-blocking anywhere in the diagnostics.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.claim_blocking && d.id.contains("wild_empathy")),
+        "wild empathy must not remain claim-blocking: {:?}",
+        computation.diagnostics
     );
 }
 
@@ -296,13 +363,17 @@ fn druid_level_2_is_not_promoted_by_this_slice() {
 // ----- Control plane: the matrix row is promoted inline (Sorcerer/Bard/Cleric pattern) -----
 
 #[test]
-fn matrix_druid_row_is_blocked_computed_and_names_both_burdens() {
+fn matrix_druid_row_is_partial_computed_and_names_remaining_burdens() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let druid = matrix
         .row("class.druid.progression_and_spell_burden")
         .expect("druid row must exist");
 
-    assert_eq!(druid.support_state, SupportState::Blocked);
+    // Wild Empathy is now grounded for real, promoting the row from Blocked to
+    // Partial; nature bond and the prepared divine spell posture remain unproven.
+    assert_eq!(druid.support_state, SupportState::Partial);
+    assert_ne!(druid.support_state, SupportState::Blocked);
+    assert_ne!(druid.support_state, SupportState::Supported);
     assert_eq!(druid.evidence_tier, EvidenceTier::Computed);
     assert_eq!(druid.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
@@ -312,22 +383,39 @@ fn matrix_druid_row_is_blocked_computed_and_names_both_burdens() {
         "carrier grounding_ref must cite this slice's proof surface"
     );
     assert!(
-        druid.blocker_or_lossiness_note.contains("nature bond")
-            && druid.blocker_or_lossiness_note.contains("wild empathy")
+        druid.blocker_or_lossiness_note.contains("wild empathy")
+            && druid.blocker_or_lossiness_note.contains("nature bond")
             && druid.blocker_or_lossiness_note.contains("prepared"),
-        "druid blocker note must name the nature bond, wild empathy, and prepared divine spell burdens: {}",
+        "druid blocker note must name wild empathy (grounded), nature bond (unproven), and the \
+         prepared divine spell burden (unproven): {}",
         druid.blocker_or_lossiness_note
+    );
+    assert!(
+        !druid.blocker_or_lossiness_note.is_empty(),
+        "partial druid row must carry a non-empty note"
     );
 }
 
 #[test]
 fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_truth() {
     let matrix = seeded_sd13_e1_f1_current_truth();
+
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .expect("paladin row must exist");
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin row must stay Blocked after the Druid slice"
+    );
+    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+
+    // Sorcerer, Bard, and Cleric were later promoted to Partial/Computed by their
+    // own SD13-E4 decomposition slices (Eschew Materials, Bardic Knowledge,
+    // Channel Energy).
     for row_id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
         "class.sorcerer.progression_and_spell_burden",
         "class.bard.progression_and_spell_burden",
-        "class.wizard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
     ] {
         let row = matrix
@@ -335,8 +423,8 @@ fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_trut
             .unwrap_or_else(|| panic!("row {row_id} must exist"));
         assert_eq!(
             row.support_state,
-            SupportState::Blocked,
-            "row {row_id} must stay Blocked after the Druid slice"
+            SupportState::Partial,
+            "row {row_id} must be Partial after its own SD13-E4 decomposition slice"
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
@@ -352,6 +440,18 @@ fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_trut
         "ranger row must keep its later-accepted Partial posture after the Druid slice"
     );
     assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+
+    // Wizard was later promoted to Partial/Computed by its own SD13-E4 Scribe
+    // Scroll decomposition slice.
+    let wizard = matrix
+        .row("class.wizard.progression_and_spell_burden")
+        .expect("wizard row must exist");
+    assert_eq!(
+        wizard.support_state,
+        SupportState::Partial,
+        "wizard row must keep its later-accepted Partial posture after the Druid slice"
+    );
+    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
 }
 
 #[test]

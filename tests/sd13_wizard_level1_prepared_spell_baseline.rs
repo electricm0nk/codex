@@ -12,14 +12,28 @@
 //! stays single-class, level-1-only, Human-only, and grounds no spell math, no
 //! school-opposition mechanics, and no specialty school bonus.
 //!
+//! A later SD13-E4 Wizard decomposition slice splits the school-specialization
+//! diagnostic into two: Scribe Scroll (the free, specialization-independent bonus
+//! feat every 1st-level Wizard is granted, letting them create scrolls of spells
+//! they know) is grounded for real as a bounded, non-numeric grant-only
+//! explanation, while the specialization CHOICE burden (the chosen school, the two
+//! opposed schools, and the specialty school bonus spell slot) stays its own named,
+//! claim-blocking diagnostic. The prepared spellbook / spells-prepared / spell-slot
+//! posture burden is untouched by this decomposition and remains entirely unproven.
+//!
 //! It also pins the matrix reclassification for the Wizard row. At slice time the
 //! in-source carrier stayed `Unverified` / `Observed` and the transition was owned
 //! by the merge receipt; that receipt obligation was executed after the tranche 2.6
-//! closeout merged to develop (2026-07-07, merge a774a2b), so the carrier row is now
+//! closeout merged to develop (2026-07-07, merge a774a2b), so the carrier row became
 //! `Blocked` / `Computed` / `RefreshableFromLiveProof`, grounded on this proof
-//! surface, with a blocker note naming both burdens. Bard keeps its accepted
-//! SD13-E4-F7 posture (`Blocked` / `Computed`); the accepted Paladin / Ranger /
-//! Sorcerer hybrid and spontaneous rows stay `Blocked` / `Computed`.
+//! surface, with a blocker note naming both burdens. The Scribe Scroll decomposition
+//! then promotes the row to `Partial` / `Computed` / `RefreshableFromLiveProof`
+//! (grounding_ref unchanged), mirroring how the Ranger Track grounding alone flipped
+//! that row from Blocked to Partial: one of the two named Wizard burdens is now
+//! grounded, while the specialization-choice burden and the entire prepared spell
+//! posture burden stay unproven. Bard keeps its accepted SD13-E4-F7 posture
+//! (`Blocked` / `Computed`); the accepted Paladin / Sorcerer hybrid and spontaneous
+//! rows stay `Blocked` / `Computed`.
 //!
 //! It is intentionally not a spell engine. It fabricates no spellbook content, no
 //! spells prepared, no spell slots per day, no spell DCs, no bonus spells, no
@@ -41,7 +55,9 @@ const WIZARD_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_wizard_level1_sd13_deterministic_input.txt");
 
 const RECOGNITION_ID: &str = "class_chassis.spell_baseline.wizard";
-const SPECIALIZATION_BLOCKER_ID: &str = "class_feature.wizard.school_specialization.unsupported";
+const SCRIBE_SCROLL_EXPLANATION_ID: &str = "class_chassis.wizard.scribe_scroll";
+const SPECIALIZATION_CHOICE_BLOCKER_ID: &str =
+    "class_feature.wizard.specialization_choice.unsupported";
 const PREPARED_BLOCKER_ID: &str = "class_spell.wizard.prepared_spellbook.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -166,20 +182,72 @@ fn wizard_level1_fabricates_no_spell_math() {
 // ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
 
 #[test]
-fn wizard_level1_stays_blocked_on_school_specialization_burden() {
+fn wizard_level1_stays_blocked_on_specialization_choice_burden() {
     let input = load(WIZARD_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The school specialization burden must be named explicitly, not hidden behind a
-    // generic "unsupported caster" label.
-    let specialization = claim_blocking(&computation, SPECIALIZATION_BLOCKER_ID);
+    // The specialization CHOICE burden must be named explicitly, not hidden behind a
+    // generic "unsupported caster" label, and it must not have been silently resolved
+    // by the Scribe Scroll grounding below.
+    let specialization = claim_blocking(&computation, SPECIALIZATION_CHOICE_BLOCKER_ID);
     assert!(
         specialization.message.contains("school")
             && specialization.message.contains("opposed")
             && specialization.message.contains("specialty"),
-        "wizard specialization blocker must name the school / opposed / specialty school burden: {}",
+        "wizard specialization-choice blocker must name the school / opposed / specialty school burden: {}",
         specialization.message
     );
+
+    // The old combined diagnostic id must no longer appear: it was split, not kept
+    // alongside the new one.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.wizard.school_specialization.unsupported"),
+        "the old combined school_specialization diagnostic id must no longer be emitted: {:?}",
+        computation.diagnostics
+    );
+}
+
+#[test]
+fn wizard_level1_scribe_scroll_is_grounded_as_specialization_independent_grant() {
+    let input = load(WIZARD_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // Scribe Scroll is grounded for real: a specialization-independent bonus feat
+    // grant every 1st-level Wizard receives.
+    let scribe_scroll = explanation(&computation, SCRIBE_SCROLL_EXPLANATION_ID);
+    assert!(
+        scribe_scroll.detail.contains("Scribe Scroll"),
+        "scribe scroll explanation must name Scribe Scroll by name: {}",
+        scribe_scroll.detail
+    );
+    assert!(
+        scribe_scroll.detail.contains("bonus feat"),
+        "scribe scroll explanation must name it as a bonus feat grant: {}",
+        scribe_scroll.detail
+    );
+
+    // It is a boolean grant, not a numeric formula: it must carry no fabricated
+    // mechanical value (+0), matching every other recognition-only explanation in
+    // this bounded slice.
+    assert_eq!(
+        scribe_scroll.value, 0,
+        "scribe scroll grant must carry no fabricated numeric value (+0)"
+    );
+
+    // It must not leak into computing the specialty school bonus spell slot or the
+    // prepared spellbook posture: those stay claim-blocked, and no explanation may
+    // fabricate that math.
+    assert!(
+        !scribe_scroll.detail.contains("specialty school bonus spell slot")
+            && !scribe_scroll.detail.to_lowercase().contains("spells prepared per day"),
+        "scribe scroll grounding must not silently compute specialty-slot or prepared-posture math: {}",
+        scribe_scroll.detail
+    );
+    claim_blocking(&computation, SPECIALIZATION_CHOICE_BLOCKER_ID);
+    claim_blocking(&computation, PREPARED_BLOCKER_ID);
 }
 
 #[test]
@@ -198,10 +266,10 @@ fn wizard_level1_stays_blocked_on_prepared_spell_posture_burden() {
         prepared.message
     );
 
-    // The two burdens are genuinely distinct diagnostics.
+    // The two remaining burdens are genuinely distinct diagnostics.
     assert_ne!(
-        SPECIALIZATION_BLOCKER_ID, PREPARED_BLOCKER_ID,
-        "specialization and prepared burdens must be separate diagnostics"
+        SPECIALIZATION_CHOICE_BLOCKER_ID, PREPARED_BLOCKER_ID,
+        "specialization-choice and prepared burdens must be separate diagnostics"
     );
     let distinct_blocking = computation
         .diagnostics
@@ -210,7 +278,8 @@ fn wizard_level1_stays_blocked_on_prepared_spell_posture_burden() {
         .count();
     assert_eq!(
         distinct_blocking, 2,
-        "wizard must leave exactly two class-specific claim-blocking diagnostics: {:?}",
+        "wizard must leave exactly two class-specific claim-blocking diagnostics (specialization \
+         choice + prepared spellbook), now that Scribe Scroll is grounded rather than blocked: {:?}",
         computation.diagnostics
     );
 }
@@ -321,51 +390,57 @@ fn wizard_level_2_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the merge receipt executed; the carrier row is Blocked/Computed -----
+// ----- Control plane: Scribe Scroll grounding promotes the row to Partial -----
 
 #[test]
-fn matrix_wizard_row_is_blocked_computed_after_merge_receipt_execution() {
+fn matrix_wizard_row_is_partial_computed_after_scribe_scroll_grounding() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard row must exist");
 
-    // The merge-receipt obligation pinned by this slice has been executed: the
-    // slice merged to develop via the tranche 2.6 closeout, so the carrier row
-    // carries the post-merge posture. Blocked, not Partial: both named burdens
-    // remain claim-blocking on the runtime path.
+    // The merge-receipt obligation pinned by the SD13-E4-R3 slice already carried the
+    // row to Blocked/Computed; this Scribe Scroll decomposition slice grounds one of
+    // the two named burdens for real (mirroring the Ranger Track promotion), flipping
+    // the row from Blocked to Partial. It is not Supported: the specialization-choice
+    // burden and the entire prepared spell posture burden remain claim-blocking on the
+    // runtime path.
     assert_eq!(
         wizard.support_state,
-        SupportState::Blocked,
-        "wizard row must carry the post-merge Blocked posture (both spell burdens still claim-block)"
+        SupportState::Partial,
+        "wizard row must be promoted to Partial: Scribe Scroll is grounded, but specialization \
+         choice and the prepared spell posture burden stay claim-blocking"
     );
     assert_eq!(
         wizard.evidence_tier,
         EvidenceTier::Computed,
-        "wizard row must carry Computed evidence: the prepared arcane recognition seam is live"
+        "wizard row must carry Computed evidence: the prepared arcane recognition and Scribe \
+         Scroll grant seams are live"
     );
     assert_eq!(
         wizard.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof,
         "wizard row must be refreshable from this re-runnable proof surface"
     );
-    // The merge receipt anchored the row on the runtime proof this slice produced.
+    // grounding_ref stays unchanged: the same test file grounds both the merge-receipt
+    // posture and this decomposition.
     assert!(
         wizard
             .grounding_ref
             .contains("sd13_wizard_level1_prepared_spell_baseline"),
-        "wizard row grounding_ref must cite this proof surface after the merge receipt: {}",
+        "wizard row grounding_ref must cite this proof surface unchanged: {}",
         wizard.grounding_ref
     );
-    // The blocker note must name both burdens explicitly, mirroring the two
-    // claim-blocking diagnostics this proof surface pins.
+    // The blocker note must name the Scribe Scroll grounding and both still-unproven
+    // burdens explicitly.
     let note = wizard.blocker_or_lossiness_note;
     assert!(
         !note.is_empty(),
-        "blocked wizard row must carry a blocker note"
+        "partial wizard row must carry a non-empty blocker note"
     );
     for token in [
-        "school specialization",
+        "Scribe Scroll",
+        "specialization choice",
         "spellbook",
         "spells prepared",
         "spell slots",
@@ -379,17 +454,18 @@ fn matrix_wizard_row_is_blocked_computed_after_merge_receipt_execution() {
 
 #[test]
 fn matrix_preserves_bard_blocked_computed_truth() {
-    // Bard landed its own SD13-E4-F7 spell-baseline slice; the Wizard slice
-    // must preserve that accepted Blocked/Computed posture, not re-promote or
-    // silently demote it.
+    // Bard landed its own SD13-E4-F7 spell-baseline slice and was later promoted
+    // to Partial/Computed by a further SD13-E4 decomposition slice (Bardic
+    // Knowledge grounded for real); the Wizard slice must preserve that posture,
+    // not re-promote or silently demote it.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
     assert_eq!(
         bard.support_state,
-        SupportState::Blocked,
-        "bard row must keep its accepted Blocked posture after the Wizard slice"
+        SupportState::Partial,
+        "bard row must keep its later-accepted Partial posture after the Wizard slice"
     );
     assert_eq!(
         bard.evidence_tier,
@@ -406,24 +482,36 @@ fn matrix_preserves_bard_blocked_computed_truth() {
 #[test]
 fn matrix_preserves_hybrid_paladin_and_sorcerer_blocked_computed_truth() {
     let matrix = seeded_sd13_e1_f1_current_truth();
-    for row_id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
-        "class.sorcerer.progression_and_spell_burden",
-    ] {
-        let row = matrix
-            .row(row_id)
-            .unwrap_or_else(|| panic!("row {row_id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Blocked,
-            "row {row_id} must stay Blocked after the Wizard slice"
-        );
-        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
-        assert_eq!(
-            row.evidence_freshness,
-            EvidenceFreshness::RefreshableFromLiveProof
-        );
-    }
+
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .unwrap_or_else(|| panic!("row class.paladin.hybrid_chassis_and_spell_burden must exist"));
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin row must stay Blocked after the Wizard slice"
+    );
+    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(
+        paladin.evidence_freshness,
+        EvidenceFreshness::RefreshableFromLiveProof
+    );
+
+    // Sorcerer was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Eschew Materials grounded for real).
+    let sorcerer = matrix
+        .row("class.sorcerer.progression_and_spell_burden")
+        .unwrap_or_else(|| panic!("row class.sorcerer.progression_and_spell_burden must exist"));
+    assert_eq!(
+        sorcerer.support_state,
+        SupportState::Partial,
+        "sorcerer row must be Partial after its own SD13-E4 decomposition slice"
+    );
+    assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(
+        sorcerer.evidence_freshness,
+        EvidenceFreshness::RefreshableFromLiveProof
+    );
 
     // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
     // decomposition slice (Track grounded for real).

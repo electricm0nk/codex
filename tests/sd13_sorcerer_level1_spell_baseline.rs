@@ -14,6 +14,17 @@
 //! spell DCs, bonus spells, prepared posture, school choice, or general spell totals,
 //! and it grounds no Sorcerer level 2+. It also preserves the accepted Human race seam
 //! on the spell-bearing path.
+//!
+//! The SD13-E4 Sorcerer decomposition slice splits the F7 combined bloodline blocker
+//! into two named diagnostics and grounds one of them for real: Eschew Materials, the
+//! universal, bloodline-independent bonus feat every 1st-level Sorcerer receives (PF1
+//! Core Rulebook: it lets a Sorcerer cast spells with material components costing 1 gp
+//! or less without needing the material component). Bloodline selection, its level-1
+//! bloodline power, bloodline arcana, and the higher-level bonus spells/feats/skills
+//! stay claim-blocked under a renamed `bloodline_power` diagnostic. This promotes the
+//! matrix row from `Blocked` to `Partial`, mirroring the SD13-E3 Ranger Track-grounding
+//! precedent: one of several named pillars is grounded for real while the class remains
+//! far from fully proven and the entire spontaneous spell burden stays untouched.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -30,7 +41,8 @@ const SORCERER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_sorcerer_level1_sd13_deterministic_input.txt");
 
 const RECOGNITION_ID: &str = "class_chassis.spell_baseline.sorcerer";
-const BLOODLINE_BLOCKER_ID: &str = "class_feature.sorcerer.bloodline.unsupported";
+const ESCHEW_MATERIALS_EXPLANATION_ID: &str = "class_chassis.sorcerer.eschew_materials";
+const BLOODLINE_POWER_BLOCKER_ID: &str = "class_feature.sorcerer.bloodline_power.unsupported";
 const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.sorcerer.spontaneous.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -145,20 +157,72 @@ fn sorcerer_level1_fabricates_no_spell_math() {
     assert_eq!(recognition.value, 0);
 }
 
-// ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
+// ----- Grounded for real: Eschew Materials, the bloodline-independent level-1 grant -----
 
 #[test]
-fn sorcerer_level1_stays_blocked_on_bloodline_burden() {
+fn sorcerer_level1_grounds_eschew_materials_as_a_real_bonus_feat_grant() {
     let input = load(SORCERER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The bloodline burden must be named explicitly, not hidden behind a generic
-    // "unsupported caster" label.
-    let bloodline = claim_blocking(&computation, BLOODLINE_BLOCKER_ID);
+    // Eschew Materials is granted to every 1st-level Sorcerer regardless of bloodline;
+    // it must be a real, named, grounded explanation rather than a claim-blocking
+    // placeholder.
+    let eschew = explanation(&computation, ESCHEW_MATERIALS_EXPLANATION_ID);
     assert!(
-        bloodline.message.contains("bloodline"),
-        "sorcerer bloodline blocker must name the bloodline burden: {}",
-        bloodline.message
+        eschew.detail.contains("Eschew Materials"),
+        "eschew materials explanation must name the feat: {}",
+        eschew.detail
+    );
+    assert!(
+        eschew.detail.contains("material component"),
+        "eschew materials explanation must describe the material-component grant: {}",
+        eschew.detail
+    );
+    assert!(
+        eschew.detail.contains("bloodline"),
+        "eschew materials explanation must note it is bloodline-independent: {}",
+        eschew.detail
+    );
+
+    // It is a boolean feat grant, not a numeric formula: it must fabricate no spell math
+    // or bloodline-power effect, so it carries no non-zero value.
+    assert_eq!(
+        eschew.value, 0,
+        "eschew materials grant is a boolean feat grant, not a numeric bonus, so it must \
+         carry no fabricated value"
+    );
+
+    // It must no longer appear as a claim-blocking diagnostic.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.sorcerer.eschew_materials.unsupported"),
+        "eschew materials must no longer be claim-blocked: {:?}",
+        computation.diagnostics
+    );
+}
+
+// ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
+
+#[test]
+fn sorcerer_level1_stays_blocked_on_bloodline_power_burden() {
+    let input = load(SORCERER_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // The bloodline power burden must be named explicitly, not hidden behind a generic
+    // "unsupported caster" label, and it must be distinct from the now-grounded Eschew
+    // Materials grant.
+    let bloodline_power = claim_blocking(&computation, BLOODLINE_POWER_BLOCKER_ID);
+    assert!(
+        bloodline_power.message.contains("bloodline"),
+        "sorcerer bloodline-power blocker must name the bloodline burden: {}",
+        bloodline_power.message
+    );
+    assert!(
+        !bloodline_power.message.contains("Eschew Materials"),
+        "bloodline-power blocker must not fold in the now-grounded Eschew Materials grant: {}",
+        bloodline_power.message
     );
 }
 
@@ -178,10 +242,10 @@ fn sorcerer_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
         spontaneous.message
     );
 
-    // The two burdens are genuinely distinct diagnostics.
+    // The two remaining burdens are genuinely distinct diagnostics.
     assert_ne!(
-        BLOODLINE_BLOCKER_ID, SPONTANEOUS_BLOCKER_ID,
-        "bloodline and spontaneous burdens must be separate diagnostics"
+        BLOODLINE_POWER_BLOCKER_ID, SPONTANEOUS_BLOCKER_ID,
+        "bloodline-power and spontaneous burdens must be separate diagnostics"
     );
     let distinct_blocking = computation
         .diagnostics
@@ -300,36 +364,45 @@ fn sorcerer_level_2_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the matrix reclassifies the Sorcerer row to Blocked/Computed -----
+// ----- Control plane: the matrix promotes the Sorcerer row to Partial/Computed -----
 
 #[test]
-fn matrix_sorcerer_row_is_blocked_computed_and_names_both_burdens() {
+fn matrix_sorcerer_row_is_partial_computed_and_names_eschew_and_bloodline_power() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let sorcerer = matrix
         .row("class.sorcerer.progression_and_spell_burden")
         .expect("sorcerer row must exist");
 
-    // Moves off the pure Unverified/Observed placeholder, but only to Blocked/Computed.
-    assert_eq!(sorcerer.support_state, SupportState::Blocked);
+    // The SD13-E4 Sorcerer decomposition slice grounds Eschew Materials for real,
+    // promoting the row from Blocked to Partial (never all the way to Supported).
+    assert_eq!(sorcerer.support_state, SupportState::Partial);
     assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         sorcerer.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
     );
+    // grounding_ref stays the same test file citation; this slice only adds tests to it.
     assert!(
         sorcerer
             .grounding_ref
             .contains("sd13_sorcerer_level1_spell_baseline"),
-        "sorcerer row must cite the SD13-F7 spell-baseline proof surface: {}",
+        "sorcerer row must keep citing the SD13-F7/E4 spell-baseline proof surface: {}",
         sorcerer.grounding_ref
     );
-    // The note must name both the bloodline burden and the spontaneous spell posture.
+    // The note must name the now-grounded Eschew Materials grant, the still-unproven
+    // bloodline power burden, and the still-unproven spontaneous spell posture.
     let note = sorcerer.blocker_or_lossiness_note;
-    assert!(!note.is_empty(), "sorcerer blocked row must carry a note");
-    for token in ["bloodline", "spontaneous", "spells known", "spell slot"] {
+    assert!(!note.is_empty(), "sorcerer row must carry a note");
+    for token in [
+        "Eschew Materials",
+        "bloodline power",
+        "spontaneous",
+        "spells known",
+        "spell slot",
+    ] {
         assert!(
             note.contains(token),
-            "sorcerer blocked note must name the '{token}' burden: {note}"
+            "sorcerer row note must name the '{token}' burden: {note}"
         );
     }
 }
@@ -341,8 +414,9 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_blocked_state() {
     // with both named burdens. The Sorcerer slice does not regress that state. Wizard
     // was Unverified/Observed at the time this test was first written, but the later
     // SD13-E4-R3 slice executed the Wizard row's own merge-receipt obligation,
-    // promoting it to Blocked/Computed; this negative control now pins that current
-    // truth.
+    // promoting it to Blocked/Computed, and a further SD13-E4 Wizard decomposition
+    // slice grounded Scribe Scroll for real, promoting it again to Partial/Computed;
+    // this negative control now pins that current truth.
     let matrix = seeded_sd13_e1_f1_current_truth();
 
     let wizard = matrix
@@ -350,8 +424,8 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_blocked_state() {
         .expect("wizard row must exist");
     assert_eq!(
         wizard.support_state,
-        SupportState::Blocked,
-        "wizard row must be Blocked after the SD13-E4-R3 promotion"
+        SupportState::Partial,
+        "wizard row must be Partial after the Scribe Scroll grounding slice"
     );
     assert_eq!(
         wizard.evidence_tier,
@@ -359,15 +433,16 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_blocked_state() {
         "wizard row must be Computed after the SD13-E4-R3 promotion"
     );
 
-    // Bard must not regress; the Sorcerer slice must preserve its Blocked/Computed
-    // truth established by the SD13-E4-F7 Bard slice.
+    // Bard must not regress; it was later promoted to Partial/Computed by its own
+    // SD13-E4 decomposition slice (Bardic Knowledge grounded for real), and the
+    // Sorcerer slice must preserve that truth.
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
     assert_eq!(
         bard.support_state,
-        SupportState::Blocked,
-        "bard row must stay Blocked after the Sorcerer slice"
+        SupportState::Partial,
+        "bard row must keep its later-accepted Partial posture after the Sorcerer slice"
     );
     assert_eq!(
         bard.evidence_tier,
