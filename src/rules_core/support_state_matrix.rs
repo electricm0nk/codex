@@ -41,11 +41,13 @@
 //!   deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is
 //!   recognized on the compute seam, but it stays blocked on the bloodline burden and the
 //!   spontaneous known-spell / slot posture burden, and fabricates no spell math,
-//! - the Bard row is `Blocked` / `Computed`: the SD13-E4-F7 slice proves the
+//! - the Bard row is `Partial` / `Computed`: the SD13-E4-F7 slice proves the
 //!   deterministic Human Bard level-1 spontaneous arcane spell-bearing identity is
-//!   recognized on the compute seam, but it stays blocked on the bardic knowledge +
-//!   bardic music chassis-class-feature burden and the spontaneous known-spell / slot
-//!   posture burden, and fabricates no Bardic-class-feature math and no spell math,
+//!   recognized on the compute seam, and the SD13-E4 Bard decomposition slice grounds
+//!   Bardic Knowledge for real (the Knowledge-check competence bonus, max(bard level /
+//!   2, 1)), but the Bardic Music chassis-class-feature burden and the spontaneous
+//!   known-spell / slot posture burden remain unproven, and no Bardic Music math and
+//!   no spell math is fabricated,
 //! - the Wizard row is `Blocked` / `Computed`: the SD13-E4-R3 slice proves the
 //!   deterministic Human Wizard level-1 prepared arcane spell-bearing identity is
 //!   recognized on the compute seam (merge receipt executed 2026-07-07), but it stays
@@ -327,10 +329,10 @@ const SD13_HALF_ORC_LEVEL1_TEST: &str = "tests/sd13_half_orc_race_semantics_reco
 /// surface.
 const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs";
 
-/// SD13-E4-F7 dedicated proof surface for the bounded Human Bard level-1 spell
-/// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
-/// that stays explicitly blocked on the bardic knowledge + bardic music chassis-class-feature
-/// burden and the spontaneous known-spell / slot posture burden.
+/// SD13-E4-F7/SD13-E4 dedicated proof surface for the bounded Human Bard level-1 spell
+/// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity,
+/// the grounded Bardic Knowledge chassis-class-feature pillar, and the still-blocked
+/// Bardic Music burden and spontaneous known-spell / slot posture burden.
 const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1 prepared
@@ -692,24 +694,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Bard level-1 spell baseline, with the bardic knowledge + bardic \
-                            music chassis-class-feature burden and the spontaneous known-spell \
-                            / slot posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            Bard level-1 spell baseline, with Bardic Knowledge grounded for \
+                            real and the Bardic Music chassis-class-feature burden and the \
+                            spontaneous known-spell / slot posture burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_BARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
                     deterministic Human Bard level-1 spontaneous arcane spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the bardic knowledge \
-                    competence bonus on Knowledge checks (half Bard level + INT modifier) and the \
-                    bardic music performance family (inspire courage and later performances) are not \
-                    implemented, and the spontaneous spell burden (spontaneous spells known, spells \
-                    per day, bonus spell slots from CHA, spell save DCs, school choice, prepared \
-                    posture) is not computed. No Bardic-class-feature math and no spell math is \
-                    fabricated and no Bard level 2+ is proven",
-                next_required_uplift: "SD13-E4 Bard chassis-class-feature (bardic knowledge, \
-                    bardic music) and spontaneous spell-slot slice, then level-2+ progression",
+                    recognized on the compute seam, AND the SD13-E4 Bard decomposition slice \
+                    grounds bardic knowledge (the Knowledge-check competence bonus equal to \
+                    max(bard level / 2, 1), i.e. +1 at level 1, computed against the fixture with \
+                    no dependency on the Bard's Intelligence modifier or skill ranks) for real. \
+                    The row is Partial, not Supported: the bardic music performance family \
+                    (inspire courage and later performances) is not implemented, and the entire \
+                    spontaneous spell burden (spontaneous spells known, spells per day, bonus \
+                    spell slots from CHA, spell save DCs, school choice, prepared posture) is not \
+                    computed. No bardic music math and no spell math is fabricated and no Bard \
+                    level 2+ is proven",
+                next_required_uplift: "SD13-E4 Bard bardic music grounding slice, then the \
+                    spontaneous spell-slot burden, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",

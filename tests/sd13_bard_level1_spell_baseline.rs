@@ -4,20 +4,27 @@
 //! rules-core surface ingests a deterministic Human `class:bard:1` input, leaves
 //! direct computed evidence that recognizes the Bard level-1 spell-bearing class
 //! identity rather than treating it as an undocumented packet placeholder, and yet
-//! stays explicitly claim-blocked with two distinct diagnostics: one for the named
-//! Bardic Knowledge + Bardic Music chassis-class-feature burden and one for the
-//! spontaneous known-spell / slot posture burden. It also pins the matrix
-//! reclassification of the Bard row from `Unverified` / `Observed` to
-//! `Blocked` / `Computed`, while proving Sorcerer stays `Blocked` / `Computed`,
-//! Wizard stays `Unverified` / `Observed`, and the accepted Paladin/Ranger hybrid
-//! rows stay `Blocked` / `Computed`.
+//! stays explicitly claim-blocked. It also pins the matrix reclassification of the
+//! Bard row from `Unverified` / `Observed` to `Blocked` / `Computed`, while proving
+//! Sorcerer stays `Blocked` / `Computed`, Wizard stays `Unverified` / `Observed`,
+//! and the accepted Paladin/Ranger hybrid rows stay `Blocked` / `Computed`.
+//!
+//! The SD13-E4 Bard decomposition slice further splits the original combined
+//! Bardic Knowledge + Bardic Music chassis-class-feature blocker into two named
+//! diagnostics and grounds one of them for real: Bardic Knowledge (PF1 Core
+//! Rulebook: a flat competence bonus on Knowledge checks equal to half the bard's
+//! level, minimum +1, that also lets the bard make any Knowledge check untrained)
+//! is computed as `class_chassis.bard.bardic_knowledge`, while Bardic Music /
+//! Inspire Courage stays claim-blocked by its own named diagnostic. This promotes
+//! the matrix row from `Blocked` to `Partial` / `Computed`.
 //!
 //! It is intentionally not a Bard-class-feature engine and not a spell engine. It
-//! fabricates no Bardic Knowledge check resolution, no Bardic Music / Inspire
-//! Courage execution, no spell slots, no spells known, no spell DCs, no bonus
-//! spells, no prepared posture, no school choice, and no general spell totals,
-//! and it grounds no Bard level 2+. It also preserves the accepted Human race
-//! seam on the spell-bearing path.
+//! fabricates no Bardic Music / Inspire Courage execution, no full Knowledge-check
+//! resolution (no skill ranks, no ability modifier, no untrained-check gate), no
+//! spell slots, no spells known, no spell DCs, no bonus spells, no prepared
+//! posture, no school choice, and no general spell totals, and it grounds no Bard
+//! level 2+. It also preserves the accepted Human race seam on the spell-bearing
+//! path.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -34,8 +41,8 @@ const BARD_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_bard_level1_sd13_deterministic_input.txt");
 
 const RECOGNITION_ID: &str = "class_chassis.spell_baseline.bard";
-const BARDIC_CLASS_FEATURE_BLOCKER_ID: &str =
-    "class_feature.bard.bardic_knowledge_and_music.unsupported";
+const BARDIC_KNOWLEDGE_ID: &str = "class_chassis.bard.bardic_knowledge";
+const BARDIC_MUSIC_BLOCKER_ID: &str = "class_feature.bard.bardic_music.unsupported";
 const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.bard.spontaneous_known_and_per_day.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -137,36 +144,91 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
     let computation = compute_pilot_base_chassis(&input);
 
     // No explanation may fabricate spell slots, spells known, DCs, bonus spells, prepared
-    // posture, school choice, or general spell totals. No explanation may fabricate Bardic
-    // Knowledge check resolution or Bardic Music / Inspire Courage execution. The single
-    // recognition record is the only spell-bearing explanation, and it carries +0.
+    // posture, school choice, or general spell totals, and none may fabricate Bardic Music /
+    // Inspire Courage execution. The recognition record and the grounded Bardic Knowledge
+    // pillar are the only two allowed spell/bardic-tagged explanations.
     for explanation in &computation.explanations {
         assert!(
             explanation.id == RECOGNITION_ID
+                || explanation.id == BARDIC_KNOWLEDGE_ID
                 || (!explanation.id.contains("spell") && !explanation.id.contains("bardic")),
             "no fabricated spell or bardic-class-feature explanation is allowed beyond the \
-             +0 recognition: {explanation:?}"
+             +0 recognition and the grounded Bardic Knowledge pillar: {explanation:?}"
         );
     }
-    // The recognition itself asserts it fabricates no spell math and no Bardic math.
+    // No explanation may fabricate Bardic Music / Inspire Courage math under any name.
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.contains("music") || e.id.contains("inspire")),
+        "no explanation may fabricate Bardic Music / Inspire Courage math: {:?}",
+        computation.explanations
+    );
+    // The recognition itself asserts it fabricates no spell math and no Bardic Music math.
     let recognition = explanation(&computation, RECOGNITION_ID);
     assert_eq!(recognition.value, 0);
 }
 
-// ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
+// ----- Grounded: the Bardic Knowledge pillar is computed for real -----
 
 #[test]
-fn bard_level1_stays_blocked_on_bardic_class_feature_burden() {
+fn bard_level1_grounds_bardic_knowledge_class_feature_bonus() {
     let input = load(BARD_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The Bardic Knowledge + Bardic Music chassis-class-feature burden must be named
-    // explicitly, not hidden behind a generic "unsupported caster" label.
-    let bardic = claim_blocking(&computation, BARDIC_CLASS_FEATURE_BLOCKER_ID);
+    // PF1 Core Rulebook Bardic Knowledge: a bard adds half his bard level (minimum 1) to
+    // Knowledge skill checks and may make all Knowledge skill checks untrained. At bard
+    // level 1 that flat competence bonus is max(1 / 2, 1) = 1. This does NOT bundle in the
+    // Bard's Intelligence modifier: the INT modifier is already part of the ordinary
+    // Knowledge skill check (rank + ability modifier + misc bonuses), not an additional
+    // term inside the Bardic Knowledge class-feature bonus itself, so grounding it requires
+    // no skill-rank state and no ability-modifier addition.
+    let bardic_knowledge = explanation(&computation, BARDIC_KNOWLEDGE_ID);
+    assert_eq!(
+        bardic_knowledge.value, 1,
+        "Bardic Knowledge at bard level 1 must equal max(level / 2, 1) = 1: {bardic_knowledge:?}"
+    );
     assert!(
-        bardic.message.contains("bardic knowledge") && bardic.message.contains("bardic music"),
-        "bard class-feature blocker must name both Bardic Knowledge and Bardic Music: {}",
-        bardic.message
+        bardic_knowledge.detail.contains("Knowledge"),
+        "Bardic Knowledge explanation must name the Knowledge-check bonus it grants: {}",
+        bardic_knowledge.detail
+    );
+
+    // Grounding Bardic Knowledge must not silently grant Fighter-style base-attack math or
+    // any other unrelated computed chassis.
+    assert_eq!(computation.base_attack_bonus, 0);
+}
+
+// ----- Still blocked: Bardic Music and the spontaneous spell posture burden -----
+
+#[test]
+fn bard_level1_stays_blocked_on_bardic_music_burden() {
+    let input = load(BARD_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // Bardic Music / Inspire Courage must be named explicitly by its own diagnostic, not
+    // hidden behind a generic "unsupported caster" label, and it must no longer be bundled
+    // with the now-grounded Bardic Knowledge pillar.
+    let bardic_music = claim_blocking(&computation, BARDIC_MUSIC_BLOCKER_ID);
+    assert!(
+        bardic_music.message.contains("bardic music"),
+        "bard class-feature blocker must name Bardic Music: {}",
+        bardic_music.message
+    );
+    assert!(
+        !bardic_music.message.contains("bardic knowledge"),
+        "the Bardic Music blocker must no longer name Bardic Knowledge now that it is grounded: {}",
+        bardic_music.message
+    );
+
+    // The old combined diagnostic id must no longer appear at all.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.bard.bardic_knowledge_and_music.unsupported"),
+        "the old combined Bardic Knowledge + Music diagnostic must be split, not merely renamed"
     );
 }
 
@@ -186,10 +248,11 @@ fn bard_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
         spontaneous.message
     );
 
-    // The two burdens are genuinely distinct diagnostics.
+    // The two remaining burdens (Bardic Music, spontaneous spell posture) are genuinely
+    // distinct diagnostics; Bardic Knowledge is no longer one of them because it is grounded.
     assert_ne!(
-        BARDIC_CLASS_FEATURE_BLOCKER_ID, SPONTANEOUS_BLOCKER_ID,
-        "bardic-class-feature and spontaneous burdens must be separate diagnostics"
+        BARDIC_MUSIC_BLOCKER_ID, SPONTANEOUS_BLOCKER_ID,
+        "bardic-music and spontaneous burdens must be separate diagnostics"
     );
     let distinct_blocking = computation
         .diagnostics
@@ -198,7 +261,8 @@ fn bard_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
         .count();
     assert_eq!(
         distinct_blocking, 2,
-        "bard must leave exactly two class-specific claim-blocking diagnostics: {:?}",
+        "bard must leave exactly two class-specific claim-blocking diagnostics \
+         (bardic music, spontaneous spell posture): {:?}",
         computation.diagnostics
     );
 }
@@ -323,17 +387,20 @@ fn bard_level_2_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the matrix reclassifies the Bard row to Blocked/Computed -----
+// ----- Control plane: the matrix promotes the Bard row to Partial/Computed -----
 
 #[test]
-fn matrix_bard_row_is_blocked_computed_and_names_both_burdens() {
+fn matrix_bard_row_is_partial_computed_and_names_remaining_burdens() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
 
-    // Moves off the pure Unverified/Observed placeholder, but only to Blocked/Computed.
-    assert_eq!(bard.support_state, SupportState::Blocked);
+    // The SD13-E4 Bard decomposition slice grounds Bardic Knowledge for real, promoting
+    // the row from Blocked to Partial (mirroring the Ranger Track precedent): Bardic
+    // Music and the entire spontaneous spell burden remain unproven, so the row is not
+    // Supported.
+    assert_eq!(bard.support_state, SupportState::Partial);
     assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         bard.evidence_freshness,
@@ -342,12 +409,13 @@ fn matrix_bard_row_is_blocked_computed_and_names_both_burdens() {
     assert!(
         bard.grounding_ref
             .contains("sd13_bard_level1_spell_baseline"),
-        "bard row must cite the SD13-F7 spell-baseline proof surface: {}",
+        "bard row must cite the SD13-F7/E4 spell-baseline proof surface: {}",
         bard.grounding_ref
     );
-    // The note must name both the Bardic class-feature burden and the spontaneous spell posture.
+    // The note must name the grounded Bardic Knowledge pillar, the still-blocked Bardic
+    // Music pillar, and the still-entirely-unproven spontaneous spell posture.
     let note = bard.blocker_or_lossiness_note;
-    assert!(!note.is_empty(), "bard blocked row must carry a note");
+    assert!(!note.is_empty(), "bard partial row must carry a note");
     for token in [
         "bardic knowledge",
         "bardic music",
@@ -357,7 +425,7 @@ fn matrix_bard_row_is_blocked_computed_and_names_both_burdens() {
     ] {
         assert!(
             note.contains(token),
-            "bard blocked note must name the '{token}' burden: {note}"
+            "bard partial note must name the '{token}' burden: {note}"
         );
     }
 }

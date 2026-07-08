@@ -3112,25 +3112,35 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Bard
-/// level-1 spontaneous arcane spell-bearing baseline, while keeping it explicitly
-/// claim-blocked on its two still-missing burdens.
+/// Surface direct SD13-E4-F7/SD13-E4 runtime evidence for the deterministic Human
+/// Bard level-1 spontaneous arcane spell-bearing baseline: one recognition record,
+/// one grounded chassis-class-feature pillar (Bardic Knowledge), and two remaining
+/// named claim-blocking burdens (Bardic Music, the spontaneous spell posture).
 ///
 /// This deliberately does not compute a supported Bard chassis. It grounds no
-/// Bardic Knowledge check resolution, no Bardic Music / Inspire Courage execution, and
-/// no spell math whatsoever — no spells known, no spells per day, no spell DCs, no
-/// bonus spells, no prepared posture, no school choice. It only:
+/// Bardic Music / Inspire Courage execution and no spell math whatsoever — no
+/// spells known, no spells per day, no spell DCs, no bonus spells, no prepared
+/// posture, no school choice. It only:
 /// - leaves one recognition explanation so the `class:bard:1` identity is acknowledged
-///   as a spontaneous arcane spell-bearing class with its named Bardic-class-feature
-///   burden rather than an undocumented packet placeholder (direct runtime evidence,
-///   carrying no fabricated mechanical value), and
-/// - emits two distinct claim-blocking diagnostics naming the Bardic Knowledge + Bardic
-///   Music chassis-class-feature burden and the spontaneous known-spell / slot posture
-///   burden explicitly, rather than hiding behind a generic "unsupported caster" label.
+///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - grounds the Bardic Knowledge chassis-class-feature pillar for real: PF1 Core
+///   Rulebook Bardic Knowledge is a flat competence bonus on Knowledge checks equal
+///   to half the bard's level (minimum 1), also letting the bard make any Knowledge
+///   check untrained. That flat bonus needs no skill-rank state and no ability
+///   modifier (the Intelligence modifier already belongs to the ordinary Knowledge
+///   check, not to this class-feature bonus), so it is a bounded, deterministic,
+///   level-only value; this grounds only that flat bonus, not a full Knowledge-check
+///   resolution, and
+/// - emits two distinct claim-blocking diagnostics naming the still-unproven Bardic
+///   Music chassis-class-feature burden and the spontaneous known-spell / slot
+///   posture burden explicitly, rather than hiding behind a generic "unsupported
+///   caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
-/// keeps that blocked posture but makes the Bard spell-bearing identity and its two
-/// named burdens legible on the runtime path.
+/// keeps that blocked posture but makes the Bard spell-bearing identity, the grounded
+/// Bardic Knowledge pillar, and the two remaining named burdens legible on the
+/// runtime path.
 fn explain_bard_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -3145,35 +3155,56 @@ fn explain_bard_level1_spell_baseline(
 
     // Direct runtime evidence: recognize the deterministic Human Bard level-1
     // spell-bearing identity. This is a recognition record only; it fabricates no
-    // Bardic-class-feature math and no spell math.
+    // spell math.
     explanations.push(ComputationExplanation {
         id: "class_chassis.spell_baseline.bard".to_owned(),
         value: 0,
         detail: format!(
             "Recognized deterministic Human Bard level {BARD_BASELINE_LEVEL} spell-bearing \
              baseline: the {BARD_CLASS_ID}:{BARD_BASELINE_LEVEL} class identity is acknowledged \
-             as a spontaneous arcane spell-bearing class with its named Bardic Knowledge and \
-             Bardic Music chassis-class-feature burden on the rules-core seam rather than an \
-             undocumented packet placeholder. This is a bounded recognition record only; it \
-             grounds no Bardic Knowledge check resolution, no Bardic Music / Inspire Courage \
-             execution, and no spell math (spells known, spells per day, spell DCs, bonus \
-             spells, or prepared posture), so it carries no fabricated mechanical value (+0)"
+             as a spontaneous arcane spell-bearing class with its named Bardic Music \
+             chassis-class-feature burden on the rules-core seam rather than an undocumented \
+             packet placeholder. This is a bounded recognition record only; it grounds no \
+             Bardic Music / Inspire Courage execution and no spell math (spells known, spells \
+             per day, spell DCs, bonus spells, or prepared posture), so it carries no \
+             fabricated mechanical value (+0)"
         ),
     });
 
-    // Still blocked (1/2): name the Bardic Knowledge + Bardic Music chassis-class-feature
-    // burden explicitly. Bardic Knowledge grants a competence bonus on Knowledge checks
-    // equal to half the Bard level (minimum 1) plus the Bard's INT modifier; Bardic Music
-    // grants the Inspire Courage performance and the rest of the performance family. This
-    // slice grounds neither check resolution nor performance execution.
+    // Grounded for real: the Bardic Knowledge pillar. PF1 Core Rulebook Bardic
+    // Knowledge: "A bard adds half his bard level (minimum 1) to Knowledge skill
+    // checks and may make all Knowledge skill checks untrained." That is a flat
+    // competence bonus, not "half level + INT modifier": the Intelligence modifier
+    // is already part of the ordinary Knowledge skill check total (rank + ability
+    // modifier + misc bonuses), so it is not an additional term this class-feature
+    // bonus contributes on its own.
+    let bardic_knowledge_bonus = (i16::from(BARD_BASELINE_LEVEL) / 2).max(1);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.bardic_knowledge".to_owned(),
+        value: bardic_knowledge_bonus,
+        detail: format!(
+            "Bard Bardic Knowledge class feature: grants a competence bonus on Knowledge \
+             skill checks equal to max(bard level / 2, 1) (PF1 Core Rulebook Bardic Knowledge: \
+             half bard level, minimum +1), and lets the bard make any Knowledge skill check \
+             untrained. At Bard level {BARD_BASELINE_LEVEL} this bonus is \
+             max({BARD_BASELINE_LEVEL} / 2, 1) = {bardic_knowledge_bonus}. This grounds only \
+             the flat Knowledge-check competence bonus; it is not a full Knowledge-check \
+             resolution engine and adds no skill rank, no ability modifier, and no untrained-\
+             check gate, and it grounds no Bardic Music / Inspire Courage execution"
+        ),
+    });
+
+    // Still blocked (1/2): name the Bardic Music chassis-class-feature burden
+    // explicitly, now separated from the grounded Bardic Knowledge pillar. Bardic
+    // Music grants the Inspire Courage performance and the rest of the performance
+    // family; this slice grounds no performance execution.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.bard.bardic_knowledge_and_music.unsupported".to_owned(),
+        id: "class_feature.bard.bardic_music.unsupported".to_owned(),
         message: format!(
-            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic knowledge and \
-             bardic music chassis-class-feature burden: the bardic knowledge competence bonus \
-             on Knowledge checks (half Bard level + INT modifier) and the bardic music \
-             performance family (inspire courage and later performances) are not implemented \
-             in this bounded spell baseline, so no Bard class-feature support is claimed"
+            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic music \
+             chassis-class-feature burden: the bardic music performance family (inspire \
+             courage and later performances) is not implemented in this bounded spell \
+             baseline, so no Bard bardic-music support is claimed"
         ),
         claim_blocking: true,
     });
