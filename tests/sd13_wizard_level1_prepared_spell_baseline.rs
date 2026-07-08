@@ -35,10 +35,24 @@
 //! (`Blocked` / `Computed`); the accepted Paladin / Sorcerer hybrid and spontaneous
 //! rows stay `Blocked` / `Computed`.
 //!
+//! A further SD13-E5 Wizard specialization slice grounds the flat surface of the
+//! school specialization choice itself: the canonical fixture selections
+//! (`choice:wizard_school_specialization -> school:evocation` plus the two opposed
+//! schools `school:necromancy` and `school:transmutation`) are recognized as a
+//! bounded, non-numeric recognition record, and the specialist bonus slot is
+//! grounded as a flat count only (a specialist wizard gains one additional spell
+//! slot of each spell level she can cast, 1st and up, usable only for spells of the
+//! chosen school — at level 1, exactly one 1st-level Evocation-only bonus slot, and
+//! no cantrip-level bonus slot). The specialization-choice claim-blocker is retired
+//! and replaced by a narrowed claim-blocking diagnostic naming what stays
+//! unimplemented: the Evocation school powers (intense spells, the force missile
+//! 3 + Int-mod/day pool) and the opposed-school preparation cost (each
+//! opposed-school spell occupies two prepared slots).
+//!
 //! It is intentionally not a spell engine. It fabricates no spellbook content, no
 //! spells prepared, no spell slots per day, no spell DCs, no bonus spells, no
-//! school-opposed spell restrictions, and no specialty school bonus, and it grounds
-//! no Wizard level 2+.
+//! school-power math, and no opposed-school preparation-cost bookkeeping, and it
+//! grounds no Wizard level 2+.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -56,8 +70,10 @@ const WIZARD_FIXTURE: &str =
 
 const RECOGNITION_ID: &str = "class_chassis.spell_baseline.wizard";
 const SCRIBE_SCROLL_EXPLANATION_ID: &str = "class_chassis.wizard.scribe_scroll";
-const SPECIALIZATION_CHOICE_BLOCKER_ID: &str =
-    "class_feature.wizard.specialization_choice.unsupported";
+const SPECIALIZATION_CHOICE_EXPLANATION_ID: &str = "class_chassis.wizard.specialization_choice";
+const SPECIALIST_BONUS_SLOT_EXPLANATION_ID: &str = "class_chassis.wizard.specialist_bonus_slot";
+const SCHOOL_POWERS_BLOCKER_ID: &str =
+    "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported";
 const PREPARED_BLOCKER_ID: &str = "class_spell.wizard.prepared_spellbook.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -164,14 +180,18 @@ fn wizard_level1_fabricates_no_spell_math() {
     let input = load(WIZARD_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // No explanation may fabricate spellbook content, spells prepared, spell slots,
-    // DCs, bonus spells, school opposition, specialty school bonus, or general spell
-    // totals. The single recognition record is the only spell-bearing explanation, and
-    // it carries +0.
+    // No explanation may fabricate spellbook content, spells prepared, per-day spell
+    // slot totals, DCs, bonus spells, school-power math, or general spell totals.
+    // The +0 recognition record and the flat specialist-bonus-slot count (grounded
+    // by its own dedicated test below) are the only spell-adjacent explanations
+    // allowed on this bounded path.
     for explanation in &computation.explanations {
         assert!(
-            explanation.id == RECOGNITION_ID || !explanation.id.contains("spell"),
-            "no fabricated spell explanation is allowed beyond the +0 recognition: {explanation:?}"
+            explanation.id == RECOGNITION_ID
+                || explanation.id == SPECIALIST_BONUS_SLOT_EXPLANATION_ID
+                || !explanation.id.contains("spell"),
+            "no fabricated spell explanation is allowed beyond the +0 recognition and the flat \
+             specialist bonus slot count: {explanation:?}"
         );
     }
     // The recognition itself asserts it fabricates no spell math.
@@ -182,32 +202,129 @@ fn wizard_level1_fabricates_no_spell_math() {
 // ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
 
 #[test]
-fn wizard_level1_stays_blocked_on_specialization_choice_burden() {
+fn wizard_level1_stays_blocked_on_school_powers_and_opposed_school_cost_burden() {
     let input = load(WIZARD_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The specialization CHOICE burden must be named explicitly, not hidden behind a
-    // generic "unsupported caster" label, and it must not have been silently resolved
-    // by the Scribe Scroll grounding below.
-    let specialization = claim_blocking(&computation, SPECIALIZATION_CHOICE_BLOCKER_ID);
-    assert!(
-        specialization.message.contains("school")
-            && specialization.message.contains("opposed")
-            && specialization.message.contains("specialty"),
-        "wizard specialization-choice blocker must name the school / opposed / specialty school burden: {}",
-        specialization.message
+    // With the specialization choice itself grounded, the claim-blocker narrows to
+    // exactly what stays unimplemented: the Evocation school powers (intense spells
+    // and the force missile 3 + Int-mod/day pool) and the opposed-school
+    // preparation cost (each opposed-school spell occupies two prepared slots).
+    let school_powers = claim_blocking(&computation, SCHOOL_POWERS_BLOCKER_ID);
+    for token in [
+        "intense spells",
+        "force missile",
+        "opposed",
+        "two prepared",
+    ] {
+        assert!(
+            school_powers.message.contains(token),
+            "wizard school-powers blocker must name the '{token}' burden: {}",
+            school_powers.message
+        );
+    }
+
+    // The retired diagnostic ids must no longer appear: each was narrowed, not kept
+    // alongside its replacement.
+    for retired in [
+        "class_feature.wizard.school_specialization.unsupported",
+        "class_feature.wizard.specialization_choice.unsupported",
+    ] {
+        assert!(
+            !computation.diagnostics.iter().any(|d| d.id == retired),
+            "the retired diagnostic id '{retired}' must no longer be emitted: {:?}",
+            computation.diagnostics
+        );
+    }
+}
+
+#[test]
+fn wizard_level1_specialization_choice_is_grounded_as_canonical_recognition() {
+    let input = load(WIZARD_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // The school specialization choice is grounded as a recognition record of the
+    // canonical fixture selections: Evocation chosen, Necromancy and Transmutation
+    // opposed. It is recognition only, carrying no fabricated mechanical value (+0).
+    let choice = explanation(&computation, SPECIALIZATION_CHOICE_EXPLANATION_ID);
+    for token in ["evocation", "necromancy", "transmutation", "opposed"] {
+        assert!(
+            choice.detail.to_lowercase().contains(token),
+            "specialization-choice recognition must name the '{token}' selection: {}",
+            choice.detail
+        );
+    }
+    assert_eq!(
+        choice.value, 0,
+        "specialization-choice recognition must carry no fabricated numeric value (+0)"
     );
 
-    // The old combined diagnostic id must no longer appear: it was split, not kept
-    // alongside the new one.
-    assert!(
-        !computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id == "class_feature.wizard.school_specialization.unsupported"),
-        "the old combined school_specialization diagnostic id must no longer be emitted: {:?}",
-        computation.diagnostics
+    // Grounding the choice must not silently resolve the school-power or
+    // prepared-posture burdens: both stay claim-blocking.
+    claim_blocking(&computation, SCHOOL_POWERS_BLOCKER_ID);
+    claim_blocking(&computation, PREPARED_BLOCKER_ID);
+}
+
+#[test]
+fn wizard_level1_specialist_bonus_slot_grounds_the_flat_count_only() {
+    let input = load(WIZARD_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // PF1 CRB: a specialist wizard gains one additional spell slot of each spell
+    // level she can cast, 1st and up, usable only for spells of the chosen school.
+    // At level 1 that is exactly one 1st-level Evocation-only bonus slot.
+    let bonus_slot = explanation(&computation, SPECIALIST_BONUS_SLOT_EXPLANATION_ID);
+    assert_eq!(
+        bonus_slot.value, 1,
+        "specialist bonus slot must ground the flat count of exactly one 1st-level slot at level 1"
     );
+    assert!(
+        bonus_slot.detail.to_lowercase().contains("evocation")
+            && bonus_slot.detail.contains("1st"),
+        "specialist bonus slot must name the 1st-level Evocation-only restriction: {}",
+        bonus_slot.detail
+    );
+
+    // The flat count must not fabricate a cantrip-level bonus slot (there is none:
+    // the specialist slot applies to spell levels 1st and up only).
+    assert!(
+        bonus_slot.detail.to_lowercase().contains("no cantrip"),
+        "specialist bonus slot must state explicitly that no cantrip-level bonus slot exists: {}",
+        bonus_slot.detail
+    );
+
+    // It grounds the count only, not slot contents or the surrounding slot posture:
+    // the prepared spellbook / spells-prepared / spell-slot burden stays blocked.
+    claim_blocking(&computation, PREPARED_BLOCKER_ID);
+}
+
+#[test]
+fn wizard_without_canonical_specialization_choices_gains_no_specialization_grounding() {
+    // An input that omits the canonical specialization / opposed-school selections
+    // (e.g. the desktop-composed request shape) must not gain the specialization
+    // recognition or the specialist bonus slot — nothing is fabricated for a choice
+    // that was never made — while both claim-blockers still fire.
+    let stripped: String = WIZARD_FIXTURE
+        .lines()
+        .filter(|line| {
+            !line.contains("choice:wizard_school_specialization")
+                && !line.contains("choice:wizard_opposed_schools")
+        })
+        .collect::<Vec<_>>()
+        .join("\n");
+    let input = load(&stripped);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        !has_explanation(&computation, SPECIALIZATION_CHOICE_EXPLANATION_ID),
+        "a wizard without the canonical specialization choice must not gain the recognition record"
+    );
+    assert!(
+        !has_explanation(&computation, SPECIALIST_BONUS_SLOT_EXPLANATION_ID),
+        "a wizard without the canonical specialization choice must not gain a specialist bonus slot"
+    );
+    claim_blocking(&computation, SCHOOL_POWERS_BLOCKER_ID);
+    claim_blocking(&computation, PREPARED_BLOCKER_ID);
 }
 
 #[test]
@@ -237,16 +354,15 @@ fn wizard_level1_scribe_scroll_is_grounded_as_specialization_independent_grant()
         "scribe scroll grant must carry no fabricated numeric value (+0)"
     );
 
-    // It must not leak into computing the specialty school bonus spell slot or the
-    // prepared spellbook posture: those stay claim-blocked, and no explanation may
-    // fabricate that math.
+    // It must not leak into computing the school powers or the prepared spellbook
+    // posture: those stay claim-blocked, and no explanation may fabricate that math.
     assert!(
-        !scribe_scroll.detail.contains("specialty school bonus spell slot")
+        !scribe_scroll.detail.contains("intense spells")
             && !scribe_scroll.detail.to_lowercase().contains("spells prepared per day"),
-        "scribe scroll grounding must not silently compute specialty-slot or prepared-posture math: {}",
+        "scribe scroll grounding must not silently compute school-power or prepared-posture math: {}",
         scribe_scroll.detail
     );
-    claim_blocking(&computation, SPECIALIZATION_CHOICE_BLOCKER_ID);
+    claim_blocking(&computation, SCHOOL_POWERS_BLOCKER_ID);
     claim_blocking(&computation, PREPARED_BLOCKER_ID);
 }
 
@@ -268,8 +384,8 @@ fn wizard_level1_stays_blocked_on_prepared_spell_posture_burden() {
 
     // The two remaining burdens are genuinely distinct diagnostics.
     assert_ne!(
-        SPECIALIZATION_CHOICE_BLOCKER_ID, PREPARED_BLOCKER_ID,
-        "specialization-choice and prepared burdens must be separate diagnostics"
+        SCHOOL_POWERS_BLOCKER_ID, PREPARED_BLOCKER_ID,
+        "school-powers and prepared burdens must be separate diagnostics"
     );
     let distinct_blocking = computation
         .diagnostics
@@ -278,8 +394,9 @@ fn wizard_level1_stays_blocked_on_prepared_spell_posture_burden() {
         .count();
     assert_eq!(
         distinct_blocking, 2,
-        "wizard must leave exactly two class-specific claim-blocking diagnostics (specialization \
-         choice + prepared spellbook), now that Scribe Scroll is grounded rather than blocked: {:?}",
+        "wizard must leave exactly two class-specific claim-blocking diagnostics (school powers \
+         and opposed-school cost + prepared spellbook), now that the specialization choice and \
+         specialist bonus slot are grounded rather than blocked: {:?}",
         computation.diagnostics
     );
 }
@@ -390,40 +507,41 @@ fn wizard_level_2_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: Scribe Scroll grounding promotes the row to Partial -----
+// ----- Control plane: the row stays Partial with the specialization choice grounded -----
 
 #[test]
-fn matrix_wizard_row_is_partial_computed_after_scribe_scroll_grounding() {
+fn matrix_wizard_row_stays_partial_computed_with_specialization_choice_grounded() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard row must exist");
 
-    // The merge-receipt obligation pinned by the SD13-E4-R3 slice already carried the
-    // row to Blocked/Computed; this Scribe Scroll decomposition slice grounds one of
-    // the two named burdens for real (mirroring the Ranger Track promotion), flipping
-    // the row from Blocked to Partial. It is not Supported: the specialization-choice
-    // burden and the entire prepared spell posture burden remain claim-blocking on the
-    // runtime path.
+    // The Scribe Scroll decomposition slice already carried the row from Blocked to
+    // Partial; this SD13-E5 specialization slice grounds the school specialization
+    // choice and the flat specialist-bonus-slot count for real, but the row stays
+    // Partial, never Supported: the school-powers / opposed-school-cost burden and
+    // the entire prepared spell posture burden remain claim-blocking on the runtime
+    // path.
     assert_eq!(
         wizard.support_state,
         SupportState::Partial,
-        "wizard row must be promoted to Partial: Scribe Scroll is grounded, but specialization \
-         choice and the prepared spell posture burden stay claim-blocking"
+        "wizard row must stay Partial: the specialization choice and specialist bonus slot are \
+         grounded, but the school powers / opposed-school cost and the prepared spell posture \
+         burden stay claim-blocking"
     );
     assert_eq!(
         wizard.evidence_tier,
         EvidenceTier::Computed,
-        "wizard row must carry Computed evidence: the prepared arcane recognition and Scribe \
-         Scroll grant seams are live"
+        "wizard row must carry Computed evidence: the prepared arcane recognition, Scribe \
+         Scroll grant, and specialization-choice seams are live"
     );
     assert_eq!(
         wizard.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof,
         "wizard row must be refreshable from this re-runnable proof surface"
     );
-    // grounding_ref stays unchanged: the same test file grounds both the merge-receipt
-    // posture and this decomposition.
+    // grounding_ref stays unchanged: the same test file grounds the merge-receipt
+    // posture, the Scribe Scroll decomposition, and this specialization slice.
     assert!(
         wizard
             .grounding_ref
@@ -431,8 +549,8 @@ fn matrix_wizard_row_is_partial_computed_after_scribe_scroll_grounding() {
         "wizard row grounding_ref must cite this proof surface unchanged: {}",
         wizard.grounding_ref
     );
-    // The blocker note must name the Scribe Scroll grounding and both still-unproven
-    // burdens explicitly.
+    // The blocker note must name the grounded surfaces (Scribe Scroll, specialization
+    // choice, specialist bonus slot) and both still-unproven burdens explicitly.
     let note = wizard.blocker_or_lossiness_note;
     assert!(
         !note.is_empty(),
@@ -441,13 +559,16 @@ fn matrix_wizard_row_is_partial_computed_after_scribe_scroll_grounding() {
     for token in [
         "Scribe Scroll",
         "specialization choice",
+        "specialist bonus slot",
+        "school powers",
+        "opposed-school",
         "spellbook",
         "spells prepared",
         "spell slots",
     ] {
         assert!(
             note.contains(token),
-            "wizard blocker note must name the '{token}' burden: {note}"
+            "wizard blocker note must name the '{token}' surface: {note}"
         );
     }
 }

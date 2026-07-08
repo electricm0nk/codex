@@ -52,11 +52,14 @@
 //!   no spell math is fabricated,
 //! - the Wizard row is `Partial` / `Computed`: the SD13-E4-R3 slice proves the
 //!   deterministic Human Wizard level-1 prepared arcane spell-bearing identity is
-//!   recognized on the compute seam (merge receipt executed 2026-07-07), and a later
+//!   recognized on the compute seam (merge receipt executed 2026-07-07), a later
 //!   SD13-E4 decomposition slice grounds Scribe Scroll (the free, specialization-
 //!   independent bonus feat every 1st-level Wizard is granted) for real, promoting
-//!   the row from Blocked to Partial (mirroring the Ranger Track promotion); the row
-//!   stays blocked on the specialization-choice burden and the prepared spellbook /
+//!   the row from Blocked to Partial (mirroring the Ranger Track promotion), and the
+//!   SD13-E5 specialization slice grounds the school specialization choice (canonical
+//!   Evocation specialist, Necromancy and Transmutation opposed) and the flat
+//!   specialist-bonus-slot count for real; the row stays blocked on the
+//!   school-powers / opposed-school-cost burden and the prepared spellbook /
 //!   spell-slot posture burden, and fabricates no spell math,
 //! - the Cleric row is `Partial` / `Computed`: the SD13-E4 slice proves the
 //!   deterministic Human Cleric level-1 prepared divine spell-bearing identity is
@@ -345,9 +348,10 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1 prepared
 /// arcane spell baseline: direct computed recognition of the prepared arcane
 /// spell-bearing identity, plus a later SD13-E4 decomposition slice grounding the
-/// Scribe Scroll bonus feat grant for real, that stays explicitly blocked on the
-/// specialization-choice burden and the prepared spellbook / spell-slot posture
-/// burden.
+/// Scribe Scroll bonus feat grant and the SD13-E5 slice grounding the school
+/// specialization choice and flat specialist-bonus-slot count for real, that stays
+/// explicitly blocked on the school-powers / opposed-school-cost burden and the
+/// prepared spellbook / spell-slot posture burden.
 const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs";
 
 /// SD13-E4 dedicated proof surface for the bounded Human Cleric level-1 prepared
@@ -901,30 +905,43 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // pinned as its merge-receipt obligation. A further SD13-E4 Wizard
                 // decomposition slice then grounds Scribe Scroll for real,
                 // promoting the row from Blocked to Partial (mirroring the Ranger
-                // Track promotion): one of the two named burdens is now grounded,
-                // while the specialization-choice burden and the entire prepared
-                // spell posture burden remain unproven.
+                // Track promotion). The SD13-E5 Wizard specialization slice then
+                // grounds the flat surface of the school specialization choice
+                // (canonical Evocation specialist, Necromancy and Transmutation
+                // opposed) plus the specialist bonus slot count, narrowing the
+                // class-feature blocker to the school powers and the opposed-school
+                // preparation cost; the prepared spell posture burden remains
+                // entirely unproven.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1 prepared arcane spell baseline, with Scribe Scroll \
-                            grounded for real and the specialization-choice burden and the \
-                            prepared spellbook / spell-slot posture burden still blocked",
+                            Wizard level-1 prepared arcane spell baseline, with Scribe Scroll, \
+                            the school specialization choice, and the specialist-bonus-slot flat \
+                            count grounded for real, and the school-powers / opposed-school-cost \
+                            burden and the prepared spellbook / spell-slot posture burden still \
+                            blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_WIZARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-R3 leaves direct computed evidence that the \
                     deterministic Human Wizard level-1 prepared arcane spell-bearing identity is \
-                    recognized on the compute seam, AND a later SD13-E4 Wizard decomposition slice \
+                    recognized on the compute seam, a later SD13-E4 Wizard decomposition slice \
                     grounds Scribe Scroll (the free, specialization-independent bonus feat every \
                     1st-level Wizard is granted, letting them create scrolls of spells they know) \
-                    for real. The row is Partial, not Supported: the specialization choice burden \
-                    (the chosen school, two opposed schools, and the specialty school bonus spell \
-                    slot) remains named and unproven, and the prepared spell posture burden \
-                    (spellbook content, spells prepared per day, spell slots per day, bonus slots \
-                    from high Intelligence, spell save DCs) is still entirely unproven. No spell \
-                    math is fabricated and no Wizard level 2+ is proven",
-                next_required_uplift: "SD13-E4 Wizard specialization-choice grounding slice, then \
-                    the prepared spellbook / spell-slot posture slice, then level-2+ progression",
+                    for real, AND the SD13-E5 specialization slice grounds the school \
+                    specialization choice (the canonical Evocation specialist with Necromancy and \
+                    Transmutation opposed) as a recognition record plus the specialist bonus slot \
+                    as a flat count only (one 1st-level Evocation-only bonus slot at level 1, no \
+                    cantrip-level bonus slot, no slot contents). The row is Partial, not \
+                    Supported: the school powers and opposed-school preparation-cost burden (the \
+                    Evocation intense spells and force missile 3 + Int-mod/day powers, and the \
+                    two-prepared-slot cost for opposed-school spells) remains named and unproven, \
+                    and the prepared spell posture burden (spellbook content, spells prepared per \
+                    day, spell slots per day, bonus slots from high Intelligence, spell save DCs) \
+                    is still entirely unproven. No spell math is fabricated and no Wizard level \
+                    2+ is proven",
+                next_required_uplift: "SD13-E5 Wizard school-powers and opposed-school \
+                    preparation-cost grounding slice, then the prepared spellbook / spell-slot \
+                    posture slice, then level-2+ progression",
             },
             // ----- Interaction rows (2) -----
             SupportStateRow {
