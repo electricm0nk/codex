@@ -4,22 +4,28 @@
 //! martial-baseline pattern): the live rules-core surface ingests a
 //! deterministic Human `class:rogue:1` input, leaves direct computed evidence
 //! that acknowledges the bounded level-1 chassis identity rather than treating
-//! it as an undocumented packet placeholder, and yet stays explicitly
-//! claim-blocked on the four still-missing burdens (base-attack progression,
-//! base-save progression, sneak attack, trapfinding). It also pins the matrix
-//! reclassification of the rogue row from `Blocked` / `Computed` to `Partial`
-//! / `Computed`.
+//! it as an undocumented packet placeholder. The SD13-E3 pillar-grounding
+//! slice now grounds three of the four named burdens directly: base-attack
+//! progression (3/4 BAB), base-save progression (good Reflex, poor Fortitude,
+//! poor Will), and sneak attack (die-count only, `+1d6` at level 1). Only
+//! trapfinding remains claim-blocked. It also pins the matrix reclassification
+//! of the rogue row, which stays `Partial` / `Computed` with a narrowed
+//! blocker note naming only trapfinding.
 //!
-//! It is intentionally not a Rogue class engine. It grounds no Fighter-shaped
-//! `level_1_pilot` base-attack/base-save chassis (Rogue has 3/4 BAB and good
-//! Reflex but the slice does not implement it), no sneak attack damage-die
-//! execution, no trapfinding Perception/Disable Device bonus, no rogue talent,
-//! and no level-2+ progression. It also preserves the accepted Fighter 1-3
-//! truth, the Barbarian/Monk partial/computed truth, the Paladin/Ranger
-//! blocked hybrid negative controls, and the Human race/interaction truth.
+//! It is intentionally not a Rogue class engine. The new base-attack/base-save
+//! explanations are standalone `class_chassis.rogue.*` records, not wired into
+//! `compute_fighter_chassis`, `compute_total_saves`, or
+//! `compute_combat_baseline` — `defense.total_save.*` is still never computed
+//! for Rogue. The sneak-attack explanation grounds only the die-count facet
+//! (`1`), not damage-roll execution or the flanking/Dexterity-denial
+//! trigger-condition engine. This slice grounds no trapfinding
+//! Perception/Disable Device bonus, no rogue talent, and no level-2+
+//! progression. It also preserves the accepted Fighter 1-3 truth, the
+//! Barbarian/Monk partial/computed truth, the Paladin/Ranger blocked hybrid
+//! negative controls, and the Human race/interaction truth.
 //! `tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`
-//! keeps passing unmodified: this slice adds recognition and named burden
-//! diagnostics only, and never computes `defense.total_save.*` for Rogue.
+//! keeps passing unmodified: this slice adds grounded pillar explanations
+//! only, and never computes `defense.total_save.*` for Rogue.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -117,42 +123,110 @@ fn rogue_level1_leaves_direct_chassis_recognition_evidence() {
     assert_eq!(computation.ability_modifiers.dexterity, 3);
 }
 
-// ----- Still blocked: honest, class-specific burden diagnostics -----
+// ----- Now grounded: base-attack, base-save, and sneak-attack pillars -----
 
 #[test]
-fn rogue_level1_stays_blocked_naming_four_burdens() {
+fn rogue_level1_base_attack_bonus_is_grounded_and_no_longer_blocked() {
     let input = load(ROGUE_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let base_attack = claim_blocking(
-        &computation,
-        "class_feature.rogue.bounded_progression.base_attack.unsupported",
+    let base_attack = explanation(&computation, "class_chassis.rogue.base_attack_bonus");
+    assert_eq!(
+        base_attack.value, 0,
+        "Rogue level 1 3/4-BAB progression (1 * 3 / 4) must equal 0: {}",
+        base_attack.detail
     );
     assert!(
-        base_attack.message.contains("base attack"),
-        "rogue base-attack blocker must name the 'base attack' burden: {}",
-        base_attack.message
+        base_attack.detail.contains("3/4") || base_attack.detail.to_lowercase().contains("bab"),
+        "rogue base-attack explanation must name the 3/4-BAB progression: {}",
+        base_attack.detail
+    );
+    assert!(
+        !computation.diagnostics.iter().any(|d| d.id
+            == "class_feature.rogue.bounded_progression.base_attack.unsupported"),
+        "the base-attack unsupported diagnostic must no longer be emitted: {:?}",
+        computation.diagnostics
+    );
+}
+
+#[test]
+fn rogue_level1_base_saves_are_grounded_and_no_longer_blocked() {
+    let input = load(ROGUE_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let fortitude = explanation(&computation, "class_chassis.rogue.base_save.fortitude");
+    assert_eq!(fortitude.value, 0, "Rogue level 1 poor Fortitude (1/3) must equal 0");
+    assert!(
+        fortitude.detail.to_lowercase().contains("poor"),
+        "rogue Fortitude explanation must name it as a poor save: {}",
+        fortitude.detail
     );
 
-    let base_save = claim_blocking(
-        &computation,
-        "class_feature.rogue.bounded_progression.base_save.unsupported",
-    );
+    let reflex = explanation(&computation, "class_chassis.rogue.base_save.reflex");
+    assert_eq!(reflex.value, 2, "Rogue level 1 good Reflex (1/2+2) must equal 2");
     assert!(
-        base_save.message.contains("base save"),
-        "rogue base-save blocker must name the 'base save' burden: {}",
-        base_save.message
+        reflex.detail.to_lowercase().contains("good"),
+        "rogue Reflex explanation must name it as a good save: {}",
+        reflex.detail
     );
 
-    let sneak_attack = claim_blocking(
-        &computation,
-        "class_feature.rogue.bounded_progression.sneak_attack.unsupported",
+    let will = explanation(&computation, "class_chassis.rogue.base_save.will");
+    assert_eq!(will.value, 0, "Rogue level 1 poor Will (1/3) must equal 0");
+    assert!(
+        will.detail.to_lowercase().contains("poor"),
+        "rogue Will explanation must name it as a poor save: {}",
+        will.detail
+    );
+
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.rogue.bounded_progression.base_save.unsupported"),
+        "the base-save unsupported diagnostic must no longer be emitted: {:?}",
+        computation.diagnostics
+    );
+}
+
+#[test]
+fn rogue_level1_sneak_attack_die_count_is_grounded_and_no_longer_blocked() {
+    let input = load(ROGUE_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let sneak_attack = explanation(&computation, "class_chassis.rogue.sneak_attack");
+    assert_eq!(
+        sneak_attack.value, 1,
+        "Rogue level 1 sneak attack die count must be 1 (i.e. 1d6): {}",
+        sneak_attack.detail
     );
     assert!(
-        sneak_attack.message.contains("sneak attack"),
-        "rogue sneak-attack blocker must name the 'sneak attack' burden: {}",
-        sneak_attack.message
+        sneak_attack.detail.contains("1d6"),
+        "rogue sneak-attack explanation must name the +1d6 damage die: {}",
+        sneak_attack.detail
     );
+    assert!(
+        sneak_attack.detail.to_lowercase().contains("die count")
+            || sneak_attack.detail.to_lowercase().contains("die-count"),
+        "rogue sneak-attack explanation must explicitly scope itself to the die-count facet \
+         only, not damage-roll execution or the trigger-condition engine: {}",
+        sneak_attack.detail
+    );
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.rogue.bounded_progression.sneak_attack.unsupported"),
+        "the sneak-attack unsupported diagnostic must no longer be emitted: {:?}",
+        computation.diagnostics
+    );
+}
+
+// ----- Still blocked: trapfinding is the sole remaining named burden -----
+
+#[test]
+fn rogue_level1_stays_blocked_naming_trapfinding_only() {
+    let input = load(ROGUE_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
 
     let trapfinding = claim_blocking(
         &computation,
@@ -210,8 +284,12 @@ fn fighter_does_not_gain_rogue_recognition() {
     let fighter = load(FIGHTER_FIXTURE);
     let fighter_computation = compute_pilot_base_chassis(&fighter);
     assert!(
-        !has_explanation(&fighter_computation, "class_chassis.rogue.bounded_progression"),
-        "the Fighter chassis must not surface a rogue-baseline recognition record"
+        !fighter_computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.rogue.")),
+        "the Fighter chassis must not surface any rogue-namespaced explanation: {:?}",
+        fighter_computation.explanations
     );
     assert!(
         !fighter_computation
@@ -229,8 +307,12 @@ fn rogue_level_2_is_not_promoted_by_this_slice() {
     let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, "class_chassis.rogue.bounded_progression"),
-        "level-2 Rogue must not gain the bounded level-1 chassis recognition record"
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.rogue.")),
+        "level-2 Rogue must not gain any bounded level-1 rogue chassis explanation: {:?}",
+        computation.explanations
     );
     assert!(
         !computation
@@ -255,8 +337,13 @@ fn multiclass_rogue_is_not_promoted_by_this_slice() {
     let input = load(&multiclass);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, "class_chassis.rogue.bounded_progression"),
-        "multiclass Rogue must not gain the bounded level-1 single-class chassis recognition record"
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.rogue.")),
+        "multiclass Rogue must not gain any bounded level-1 single-class rogue chassis \
+         explanation: {:?}",
+        computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
@@ -289,7 +376,7 @@ fn rogue_still_produces_a_claim_blocking_diagnostic_and_no_total_saves() {
 // ----- Control plane: the matrix reclassifies the rogue row to Partial/Computed -----
 
 #[test]
-fn matrix_rogue_row_is_partial_computed_and_names_four_burdens() {
+fn matrix_rogue_row_is_partial_computed_and_names_trapfinding_only() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let rogue = matrix
         .row("class.rogue.bounded_progression")
@@ -310,12 +397,29 @@ fn matrix_rogue_row_is_partial_computed_and_names_four_burdens() {
     );
     let note = rogue.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "rogue partial row must carry a note");
-    for token in ["base attack", "base save", "sneak attack", "trapfinding"] {
+    assert!(
+        note.contains("trapfinding"),
+        "rogue partial note must still name the 'trapfinding' burden: {note}"
+    );
+    assert!(
+        note.contains("only trapfinding remains unproven")
+            || note.contains("only the trapfinding burden remains unproven"),
+        "rogue partial note must explicitly say trapfinding is the sole remaining burden: {note}"
+    );
+    for grounded in ["base attack", "base save", "sneak attack"] {
         assert!(
-            note.contains(token),
-            "rogue partial note must name the '{token}' burden: {note}"
+            note.contains(grounded),
+            "rogue partial note must still mention '{grounded}' as grounded: {note}"
         );
     }
+    assert!(
+        !note.contains("four named pillar burdens remain unproven"),
+        "rogue partial note must not repeat the stale 'four burdens unproven' claim: {note}"
+    );
+    assert!(
+        note.contains("defense.total_save"),
+        "rogue partial note must still name the separate, still-true total_save gap: {note}"
+    );
 }
 
 #[test]
@@ -340,17 +444,25 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         );
     }
 
-    for id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
-        "class.ranger.hybrid_chassis_and_spell_burden",
-    ] {
-        let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Blocked,
-            "row {id} must stay Blocked after the rogue slice"
-        );
-    }
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .expect("paladin row must exist");
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin row must stay Blocked after the rogue slice"
+    );
+
+    // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
+    // decomposition slice (Track grounded for real).
+    let ranger = matrix
+        .row("class.ranger.hybrid_chassis_and_spell_burden")
+        .expect("ranger row must exist");
+    assert_eq!(
+        ranger.support_state,
+        SupportState::Partial,
+        "ranger row must keep its later-accepted Partial posture after the rogue slice"
+    );
 
     assert!(
         !matrix

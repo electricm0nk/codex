@@ -404,11 +404,10 @@ fn matrix_preserves_bard_blocked_computed_truth() {
 }
 
 #[test]
-fn matrix_preserves_hybrid_paladin_ranger_and_sorcerer_blocked_computed_truth() {
+fn matrix_preserves_hybrid_paladin_and_sorcerer_blocked_computed_truth() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     for row_id in [
         "class.paladin.hybrid_chassis_and_spell_burden",
-        "class.ranger.hybrid_chassis_and_spell_burden",
         "class.sorcerer.progression_and_spell_burden",
     ] {
         let row = matrix
@@ -425,6 +424,22 @@ fn matrix_preserves_hybrid_paladin_ranger_and_sorcerer_blocked_computed_truth() 
             EvidenceFreshness::RefreshableFromLiveProof
         );
     }
+
+    // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
+    // decomposition slice (Track grounded for real).
+    let ranger = matrix
+        .row("class.ranger.hybrid_chassis_and_spell_burden")
+        .expect("ranger row must exist");
+    assert_eq!(
+        ranger.support_state,
+        SupportState::Partial,
+        "ranger row must keep its later-accepted Partial posture after the Wizard slice"
+    );
+    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(
+        ranger.evidence_freshness,
+        EvidenceFreshness::RefreshableFromLiveProof
+    );
 }
 
 #[test]

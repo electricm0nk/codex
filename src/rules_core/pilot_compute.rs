@@ -33,8 +33,28 @@
 //! specialization burden and prepared spellbook / spells-prepared / spell-slot
 //! posture burden; it grounds no spellbook content, no spells prepared, no spell
 //! slots, no spell save DCs, no bonus spells, no school-opposition bookkeeping, and
-//! no specialty school bonus. Unsupported input yields claim-blocking diagnostics
-//! and withheld explanations rather than fabricated values.
+//! no specialty school bonus. The SD13-E3 Fighter milestone tranche has since
+//! widened further still, to level 8: the level-8 bonus-feat progression seam is
+//! surfaced explicitly, mirroring the level-2/4/6 bonus-feat seams, and grounds no
+//! level-9+ Fighter burden. The SD13-E3 Rogue pillar-grounding slice widens the
+//! deterministic Human Rogue level-1 chassis to ground base-attack progression
+//! (3/4 BAB), base-save progression (good Reflex, poor Fortitude, poor Will), and
+//! the sneak attack damage-die count (1, i.e. 1d6); only trapfinding remains
+//! claim-blocked for Rogue, and `defense.total_save.*` is still never computed for
+//! it. The SD13-E3 Barbarian level-1 martial chassis slice is widened further here:
+//! base-attack progression, base-save progression, and the fast-movement +10 ft.
+//! speed value are now grounded as standalone explanation records (mirroring the
+//! Fighter formula shape), leaving only the illiteracy trait burden explicitly
+//! claim-blocked. A later SD13-E3 slice widens the deterministic Human Monk
+//! level-1 chassis to ground base-attack, base-save, and AC Bonus (Wisdom-to-AC),
+//! while keeping unarmed strike / Flurry of Blows and the level-1 bonus feat grant
+//! explicitly claim-blocked. The SD13-E3 Ranger decomposition further splits the F6
+//! Ranger non-spell class-feature burden into three named pillars: favored enemy and
+//! combat style stay explicitly claim-blocked by their own named diagnostics, and
+//! Track (the Survival-check bonus to follow tracks, ½ ranger level minimum 1) is
+//! grounded for real as a bounded numeric value; it grounds no favored-enemy or
+//! combat-style math and no ranger spell posture. Unsupported input yields
+//! claim-blocking diagnostics and withheld explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
 
@@ -262,12 +282,12 @@ const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
 // Bounded SD13-E3 Fighter milestone widening. The accepted level-1 pilot is now
-// joined by levels 2 through 7. Nothing here grounds level 8+ Fighter burden
-// (the next bonus feat begins at level 8), the weapon-training damage-roll half,
-// or any non-Fighter positive support. The generic PF1 level-4 ability-score-increase
-// milestone needs no separate seam: the chosen ability score is trusted at face
-// value, like every other ability adjustment in this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 7;
+// joined by levels 2 through 8. Nothing here grounds level 9+ Fighter burden, the
+// weapon-training damage-roll half, or any non-Fighter positive support. The
+// generic PF1 level-4 ability-score-increase milestone needs no separate seam:
+// the chosen ability score is trusted at face value, like every other ability
+// adjustment in this codebase.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 8;
 
 // Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
 // feat at level 2; this slice surfaces the named selection as an explicit seam only
@@ -287,6 +307,13 @@ const CLEAVE_FEAT_SELECTION: &str = "feat:cleave";
 // feat-effect or prerequisite engine, mirroring the level-2/level-4 seams.
 const FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_6";
 const COMBAT_REFLEXES_FEAT_SELECTION: &str = "feat:combat_reflexes";
+
+// Fighter level-8 bonus-feat progression seam. Fighter gains an additional bonus
+// feat at level 8 (the cadence continues 1, 2, 4, 6, 8, 10, ...); this slice
+// surfaces the named selection as an explicit seam only and grounds no general
+// feat-effect or prerequisite engine, mirroring the level-2/level-4/level-6 seams.
+const FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_8";
+const IMPROVED_CRITICAL_FEAT_SELECTION: &str = "feat:improved_critical";
 
 // Fighter Weapon Training 1, gained at level 5. It grants +1 to attack rolls and
 // damage rolls with weapons of the chosen weapon group. This slice grounds only
@@ -410,7 +437,12 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
     explain_barbarian_level1_chassis(input, &mut explanations, &mut diagnostics);
-    explain_monk_level1_chassis(input, &mut explanations, &mut diagnostics);
+    explain_monk_level1_chassis(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
     explain_rogue_level1_chassis(input, &mut explanations, &mut diagnostics);
 
 
@@ -419,6 +451,17 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // burden is separable from the partial-caster spell burden on the runtime
     // path. This is an extension, never a downgrade, of the F6 surface.
     explain_paladin_level1_chassis_and_spell_burden_separation(
+        input,
+        &mut explanations,
+        &mut diagnostics,
+    );
+
+    // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
+    // class-feature blocker into three named pillars, and ground Track for
+    // real (the only one of the three with a bounded, deterministic flat
+    // numeric value). This is an extension, never a downgrade, of the F6
+    // surface, mirroring the Paladin decomposition immediately above.
+    explain_ranger_level1_chassis_and_class_feature_separation(
         input,
         &mut explanations,
         &mut diagnostics,
@@ -1420,13 +1463,12 @@ fn explain_human_trait_bundle(
     explanations.push(ComputationExplanation {
         id: "race.human.trait_bundle.senses".to_owned(),
         value: 0,
-        detail: format!(
-            "Human racial trait bundle — senses: PF1 Standard Human grants no special senses \
+        detail: "Human racial trait bundle — senses: PF1 Standard Human grants no special senses \
              (cr_races.lst race:human carries no SENSE tag for Standard Human; darkvision, \
              low-light vision, scent, and other sense bonuses are absent). This is a bounded \
              no-effect classification record on the deterministic pilot seam; it carries no \
              fabricated sense bonus and contributes no computed value (+0)"
-        ),
+            .to_owned(),
     });
 
     // ----- extra skill ranks -----
@@ -1696,6 +1738,22 @@ fn explain_fighter_class_features(
         });
     }
 
+    if level >= 8
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_8_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 8 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. This slice grounds the bonus-feat slot, not a \
+                     general feat-effect or prerequisite engine, so it contributes no computed \
+                     mechanical value (+0)"
+            ),
+        });
+    }
+
     let armor_training = fighter_armor_training(level);
     if armor_training.rank == 2 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
@@ -1752,14 +1810,14 @@ fn explain_fighter_class_features(
 }
 
 /// The canonical Human Fighter feat-choice selections this slice preserves on the
-/// deterministic level-1 through level-5 seam, as `(choice_set_id,
+/// deterministic level-1 through level-8 seam, as `(choice_set_id,
 /// canonical_selection_id)` pairs. Any named slot present but deviating from its
 /// canonical selection is claim-blocked. A slot absent for the chosen level (e.g.
 /// the level-2 bonus feat at level 1) is not fabricated. This same machinery
 /// validates the level-5 weapon-training-group choice, since it is structurally
 /// identical to a bonus-feat slot (a named choice-set that must match one
 /// canonical selection).
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 7] = [
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 8] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -1785,10 +1843,14 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 7] = [
         FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID,
         COMBAT_REFLEXES_FEAT_SELECTION,
     ),
+    (
+        FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID,
+        IMPROVED_CRITICAL_FEAT_SELECTION,
+    ),
 ];
 
 /// Claim-block non-canonical feat-choice mutations on the deterministic Human Fighter
-/// levels 1-3 seam, while preserving the accepted canonical selections exactly.
+/// levels 1-8 seam, while preserving the accepted canonical selections exactly.
 ///
 /// This is deliberately not a general feat legality or prerequisite engine. It only knows
 /// the exact accepted deterministic feat-choice selections on the bounded Human Fighter
@@ -1798,7 +1860,7 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 7] = [
 /// proof without a general engine — instead of letting the non-canonical build ride through
 /// as a fabricated computed success.
 ///
-/// It runs only for a supported single-class Human Fighter (levels 1-3); any other posture
+/// It runs only for a supported single-class Human Fighter (levels 1-8); any other posture
 /// is already claim-blocked upstream and is left untouched here. It grounds no alternative
 /// feat effect and does not touch the read-only canonical Human ability-bonus target.
 fn validate_fighter_feat_choice_legality(
@@ -2069,15 +2131,126 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // (Cleric / Druid).
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
-        message: format!(
-            "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
+        message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
              partial caster (effective caster level = paladin level - 2, with spell slots first \
              available at level 2 in PF1 Core Rulebook), so spell-source lineage, spells known \
              or prepared posture, spells-per-day progression, bonus spell slots, and spell save \
              DCs are deferred to the SD13-E4 spellcasting slice; no partial-caster spell \
              execution is fabricated in this bounded chassis baseline"
+            .to_owned(),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Ranger at the
+/// bounded hybrid baseline level (1). Returns `false` for any other class, a
+/// multiclass mix, the Paladin hybrid (which has its own decomposition lane), or
+/// any level-2+ Ranger this slice deliberately does not recognize — each of which
+/// stays blocked exactly as before.
+fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == RANGER_CLASS_ID
+                && class_level.level == HYBRID_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E3 runtime evidence for the deterministic Human Ranger
+/// level-1 chassis as a per-pillar decomposition of the F6 combined non-spell
+/// class-feature blocker, grounding one of the three named pillars for real.
+///
+/// This sits on top of the accepted SD13-F6 hybrid baseline: F6 already proves
+/// the deterministic Human Ranger level-1 hybrid identity is acknowledged on the
+/// compute seam and emits a single combined non-spell class-feature blocker
+/// (naming favored enemy, combat style, and skill/tracking together) plus a
+/// single combined later-spell blocker. This slice proves the per-pillar
+/// separation Ranger actually needs:
+///
+/// - two explicit claim-blocking diagnostics, one per still-missing non-spell
+///   class-feature pillar:
+///   * `favored enemy` — the chosen favored-enemy type and its associated
+///     Bluff / Knowledge / Perception / Sense Motive / Survival skill-check
+///     bonuses, and the bonus on weapon damage rolls against that favored
+///     enemy, are not implemented
+///   * `combat style` — the archery-vs-two-weapon-combat style choice is a
+///     level-1 decision, but the bonus feat the combat style actually grants
+///     is a level-2 PF1 Core Rulebook milestone; neither the level-1 style
+///     choice nor the level-2 bonus-feat grant is implemented, so nothing is
+///     fabricated at either level
+///
+/// - one grounded explanation for the third pillar, Track, computed for real:
+///   the Survival-check bonus to follow tracks equals `max(ranger level / 2, 1)`
+///   (PF1 Core Rulebook Track: +1/2 ranger level, minimum +1), which is `1` at
+///   the bounded level-1 baseline. This grounds only the flat numeric Track
+///   bonus, not a tracking-check execution engine: no full Survival check, no
+///   DC resolution, and no tracking narrative is computed.
+///
+/// This deliberately does not compute a supported class-feature surface. It
+/// grounds no favored-enemy target resolution or skill/damage math, no
+/// combat-style feat grant, no animal companion, no favored-terrain breadth,
+/// and no spell posture. It only emits the per-pillar blockers and the one
+/// grounded Track value that prove the F6 surface remains separable on the
+/// runtime path.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input;
+/// the F6 hybrid chassis emission already preserves a single class-feature
+/// blocker and a single spell blocker. This seam adds per-pillar granularity
+/// next to the F6 surface, never replacing it, so the F6 acceptance test
+/// continues to pass.
+fn explain_ranger_level1_chassis_and_class_feature_separation(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_ranger_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // The per-pillar blockers ride alongside the F6 hybrid blockers. They are
+    // intentionally distinct diagnostic ids so the chassis burden is separable
+    // from the combined F6 non-spell class-feature burden on the runtime path.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.ranger.favored_enemy.unsupported".to_owned(),
+        message: format!(
+            "Ranger level {HYBRID_BASELINE_LEVEL} remains blocked on its favored enemy burden: \
+             the chosen favored-enemy type and its associated Bluff, Knowledge, Perception, Sense \
+             Motive, and Survival skill-check bonuses, plus the bonus on weapon damage rolls against \
+             that favored enemy, are not implemented in this bounded hybrid chassis baseline, so no \
+             Ranger favored-enemy support is claimed"
         ),
         claim_blocking: true,
+    });
+
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.ranger.combat_style.unsupported".to_owned(),
+        message: format!(
+            "Ranger level {HYBRID_BASELINE_LEVEL} remains blocked on its combat style burden: the \
+             archery-vs-two-weapon-combat style choice is a level-1 decision, but the bonus feat the \
+             combat style actually grants is a level-2 PF1 Core Rulebook milestone; neither the \
+             level-1 style choice nor the level-2 bonus-feat grant is implemented in this bounded \
+             chassis baseline, so no Ranger combat-style support is claimed at either level"
+        ),
+        claim_blocking: true,
+    });
+
+    // The third named F6 pillar, Track, is grounded for real: a bounded, flat
+    // numeric Survival bonus with no execution engine behind it.
+    let track_bonus = (i16::from(HYBRID_BASELINE_LEVEL) / 2).max(1);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.track".to_owned(),
+        value: track_bonus,
+        detail: format!(
+            "Ranger Track class feature: grants a bonus on Survival checks made to follow tracks \
+             equal to max(ranger level / 2, 1) (PF1 Core Rulebook Track: +1/2 ranger level, minimum \
+             +1). At Ranger level {HYBRID_BASELINE_LEVEL} this bonus is \
+             max({HYBRID_BASELINE_LEVEL} / 2, 1) = {track_bonus}. This grounds only the flat numeric \
+             Track bonus on Survival checks to follow tracks; it is not a tracking-check execution \
+             engine and computes no full Survival check, no DC resolution, and no tracking narrative"
+        ),
     });
 }
 
@@ -2118,24 +2291,31 @@ fn martial_level1_class(input: &CharacterInput) -> Option<MartialClass> {
 }
 
 /// Surface direct SD13-E3 runtime evidence for the deterministic Human Barbarian
-/// level-1 martial chassis, while keeping it explicitly claim-blocked on the four
-/// still-missing named burdens.
+/// level-1 martial chassis. Base-attack progression, base-save progression, and the
+/// fast-movement speed-extension value are now grounded directly; only the
+/// illiteracy trait burden stays explicitly claim-blocked.
 ///
-/// This deliberately does not compute a supported martial chassis. It grounds no
-/// base-attack progression, no base-save progression, no fast-movement +10 ft. speed
-/// extension, and no illiteracy trait engine. It grounds no rage execution, no
-/// weapon familiarity, and no level-2+ martial progression. It only:
+/// This deliberately does not compute a supported martial chassis: the grounded
+/// base-attack, base-save, and fast-movement explanation records below are
+/// standalone (not wired into `PilotBaseChassisComputation.base_attack_bonus`,
+/// `compute_total_saves`, `compute_combat_baseline`, or any speed/movement total),
+/// so the integrated pilot surface still reports a blocked posture on this input.
+/// It grounds no illiteracy trait engine, no rage execution, no weapon familiarity,
+/// and no level-2+ martial progression. It only:
 /// - leaves one chassis-recognition explanation so the `class:barbarian:1` identity
 ///   is acknowledged as a non-hybrid martial baseline rather than an undocumented
 ///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical
-///   value), and
-/// - emits four claim-blocking diagnostics naming the four still-missing pillar
-///   burdens (base-attack, base-save, fast-movement, illiteracy) explicitly, rather
-///   than hiding behind a single generic "unsupported class" label.
+///   value),
+/// - leaves five grounded explanation records naming the full-BAB base-attack
+///   bonus, the good-Fortitude/poor-Reflex/poor-Will base saves, and the flat
+///   +10 ft. fast-movement value, and
+/// - emits one claim-blocking diagnostic naming the still-missing illiteracy
+///   burden explicitly, rather than hiding behind a single generic "unsupported
+///   class" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
-/// keeps that blocked posture but makes the Barbarian martial identity and its four
-/// named pillar burdens legible on the runtime path.
+/// keeps that blocked posture but makes the Barbarian martial identity, its grounded
+/// pillar values, and its remaining named pillar burden legible on the runtime path.
 fn explain_barbarian_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -2151,12 +2331,13 @@ fn explain_barbarian_level1_chassis(
     // Only the Barbarian is in this slice today; the match is exhaustive-by-design so
     // a future addition needs an explicit arm here. The SD13-E3 Monk martial-chassis
     // slice landed as its own dedicated recognition function (`explain_monk_level1_chassis`)
-    // rather than a new `MartialClass` arm, since its four named burdens are unrelated
-    // in content to Barbarian's.
+    // rather than a new `MartialClass` arm, since its named burdens are unrelated in
+    // content to Barbarian's.
     let MartialClass::Barbarian = martial;
     let class_id = BARBARIAN_CLASS_ID;
     let class_name = "Barbarian";
     let chassis_id = "class_chassis.barbarian.bounded_progression";
+    let level_value = i16::from(MARTIAL_BASELINE_LEVEL);
 
     // Direct runtime evidence: recognize the deterministic Human Barbarian level-1
     // martial chassis identity. This is a recognition record only; it fabricates no
@@ -2168,50 +2349,84 @@ fn explain_barbarian_level1_chassis(
             "Recognized deterministic Human {class_name} level {MARTIAL_BASELINE_LEVEL} martial chassis: \
              the {class_id}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure non-hybrid \
              martial baseline on the rules-core seam rather than an undocumented packet placeholder. This \
-             is a bounded chassis-recognition record only; it grounds no {class_name} base-attack or \
-             base-save progression, no fast-movement +10 ft. speed extension, no illiteracy trait engine, \
-             no rage execution, and no level-2+ martial progression, so it carries no fabricated \
-             mechanical value (+0)"
+             is a bounded chassis-recognition record only; it grounds no illiteracy trait engine, no rage \
+             execution, and no level-2+ martial progression, so it carries no fabricated mechanical value \
+             (+0). The base-attack, base-save, and fast-movement pillar values are grounded separately by \
+             this same slice as standalone explanation records"
         ),
     });
 
-    // Still blocked (1/4): name the base-attack progression burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.barbarian.bounded_progression.base_attack.unsupported".to_owned(),
-        message: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its base attack progression: \
-             the full-BAB +{MARTIAL_BASELINE_LEVEL} base-attack bonus and the higher-level BAB cadence are \
-             not implemented in this bounded martial chassis baseline, so no {class_name} base-attack \
-             support is claimed"
+    // Grounded (1/3): full-BAB base-attack progression, same formula shape as
+    // Fighter's cr_classes.lst:139 BONUS:COMBAT|BASEAB|classlevel. No PCGen .lst
+    // file exists for the Barbarian class in this repo, so this cites the PF1 Core
+    // Rulebook Barbarian class table directly.
+    let base_attack_bonus = level_value;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+             Barbarian class table (full base-attack progression, same formula shape as Fighter's \
+             cr_classes.lst:139 BONUS:COMBAT|BASEAB|classlevel): classlevel = {base_attack_bonus}. This \
+             is a standalone explanation record; it is not wired into the integrated base_attack_bonus \
+             field or into compute_combat_baseline"
         ),
-        claim_blocking: true,
     });
 
-    // Still blocked (2/4): name the base-save progression burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.barbarian.bounded_progression.base_save.unsupported".to_owned(),
-        message: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its base save progression: \
-             the good Fortitude progression (classlevel/2+2, +{} at level {MARTIAL_BASELINE_LEVEL}) and \
-             the poor Reflex / poor Will base-save cadence are not implemented in this bounded martial \
-             chassis baseline, so no {class_name} base-save support is claimed",
-            i16::from(MARTIAL_BASELINE_LEVEL) / 2 + 2
+    // Grounded (2/3): base-save progression — good Fortitude, poor Reflex, poor
+    // Will, same formula shape as Fighter's cr_classes.lst:139 base-save cadence.
+    let fortitude_save = level_value / 2 + 2;
+    let reflex_save = level_value / 3;
+    let will_save = level_value / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.base_save.fortitude".to_owned(),
+        value: fortitude_save,
+        detail: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} base Fortitude save (good save) from the PF1 \
+             Core Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
+             BONUS:SAVE|BASE.Fortitude|classlevel/2+2: classlevel/2+2 = {fortitude_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
         ),
-        claim_blocking: true,
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.base_save.reflex".to_owned(),
+        value: reflex_save,
+        detail: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 Core \
+             Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
+             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3: classlevel/3 = {reflex_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.base_save.will".to_owned(),
+        value: will_save,
+        detail: format!(
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} base Will save (poor save) from the PF1 Core \
+             Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
+             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3: classlevel/3 = {will_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
+        ),
     });
 
-    // Still blocked (3/4): name the fast-movement speed-extension burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.barbarian.bounded_progression.fast_movement.unsupported".to_owned(),
-        message: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its fast movement burden: \
-             the +10 ft. land speed extension applied while wearing no heavy armor is not implemented in \
-             this bounded martial chassis baseline, so no {class_name} fast-movement support is claimed"
-        ),
-        claim_blocking: true,
+    // Grounded (3/3): the fast-movement flat +10 ft. speed value. This grounds only
+    // the flat bonus value itself, not a runtime armor/encumbrance-state check
+    // engine — no such engine exists anywhere in this codebase yet — so the value
+    // is asserted unconditionally rather than computed from armor/load state, and
+    // it is not wired into any speed/movement total.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.fast_movement".to_owned(),
+        value: 10,
+        detail: "Barbarian fast movement: +10 ft. land speed extension while wearing no heavy armor \
+             and carrying no heavy load (PF1 Core Rulebook Barbarian class table). This slice grounds \
+             only the flat +10 ft. value, not a runtime armor/encumbrance-state check engine — no such \
+             engine exists anywhere in this codebase yet — so the value is asserted unconditionally \
+             rather than computed from armor/load state, and it is not wired into any speed/movement \
+             total"
+            .to_owned(),
     });
 
-    // Still blocked (4/4): name the illiteracy trait burden explicitly.
+    // Still blocked: name the illiteracy trait burden explicitly.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.barbarian.bounded_progression.illiteracy.unsupported".to_owned(),
         message: format!(
@@ -2238,27 +2453,37 @@ fn is_single_class_monk_level1(input: &CharacterInput) -> bool {
 }
 
 /// Surface direct SD13-E3 runtime evidence for the deterministic Human Monk level-1
-/// martial chassis, mirroring the Barbarian level-1 baseline pattern, while keeping it
-/// explicitly claim-blocked on the four still-missing named burdens.
+/// martial chassis, mirroring the Barbarian level-1 baseline pattern, and now
+/// grounding three named pillar burdens (base-attack, base-save, AC Bonus) while
+/// keeping it explicitly claim-blocked on the two remaining named burdens (unarmed
+/// strike / Flurry of Blows, and the level-1 bonus feat grant).
 ///
-/// This deliberately does not compute a supported martial chassis. It grounds no
-/// base-attack progression (3/4 BAB), no base-save progression (good Fortitude,
-/// Reflex, and Will), no unarmed strike damage die, no Flurry of Blows execution, no
-/// AC Bonus (Wisdom-to-AC) computation, and no level-1 bonus feat grant from the
-/// restricted Monk feat list. It grounds no ki pool and no level-2+ martial
-/// progression. It only:
+/// This grounds the Monk base-attack progression (3/4 BAB: `classlevel * 3 / 4`),
+/// the base-save progression (good Fortitude, Reflex, and Will: `classlevel/2+2`
+/// each — Monk is unusual among the martial classes recognized so far in having all
+/// three saves good rather than a 2-good/1-poor or 1-good/2-poor split), and the AC
+/// Bonus (the positive Wisdom modifier added to AC, asserted unconditionally on this
+/// deterministic unarmored fixture). It still grounds no unarmed strike damage die,
+/// no Flurry of Blows execution, and no level-1 bonus feat grant from the restricted
+/// Monk feat list. It grounds no ki pool, no level-4+ AC Bonus dodge-bonus
+/// progression, no "unarmored and unencumbered" runtime state-check engine, and no
+/// level-2+ martial progression. It:
 /// - leaves one chassis-recognition explanation so the `class:monk:1` identity is
 ///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
-///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits four claim-blocking diagnostics naming the four still-missing pillar
-///   burdens (base-attack, base-save, unarmed-strike/flurry, AC-bonus/bonus-feat)
-///   explicitly, rather than hiding behind a single generic "unsupported class" label.
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - leaves grounded explanation records for base-attack, the three base saves, and
+///   AC Bonus, and
+/// - emits two claim-blocking diagnostics naming the two still-missing pillar
+///   burdens (unarmed-strike/flurry, and the level-1 bonus feat grant) explicitly,
+///   rather than hiding behind a single generic "unsupported class" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
-/// keeps that blocked posture but makes the Monk martial identity and its four named
-/// pillar burdens legible on the runtime path.
+/// keeps that blocked posture (`defense.baseline_armor_class` stays gated to Fighter
+/// and is untouched here) but makes the Monk martial identity, its three grounded
+/// pillars, and its two remaining named pillar burdens legible on the runtime path.
 fn explain_monk_level1_chassis(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -2279,36 +2504,88 @@ fn explain_monk_level1_chassis(
             "Recognized deterministic Human Monk level {MARTIAL_BASELINE_LEVEL} martial chassis: \
              the {MONK_CLASS_ID}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure \
              non-hybrid martial baseline on the rules-core seam rather than an undocumented packet \
-             placeholder. This is a bounded chassis-recognition record only; it grounds no Monk \
-             base-attack or base-save progression, no unarmed strike damage die, no Flurry of \
-             Blows execution, no AC Bonus computation, no level-1 bonus feat grant, no ki pool, \
-             and no level-2+ martial progression, so it carries no fabricated mechanical value (+0)"
+             placeholder. This is a bounded chassis-recognition record only; the base-attack, \
+             base-save, and AC Bonus values are grounded separately below, and this record itself \
+             grounds no unarmed strike damage die, no Flurry of Blows execution, no level-1 bonus \
+             feat grant, no ki pool, and no level-2+ martial progression, so it carries no \
+             fabricated mechanical value (+0)"
         ),
     });
 
-    // Still blocked (1/4): name the base-attack progression burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.monk.bounded_progression.base_attack.unsupported".to_owned(),
-        message: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its base attack progression: \
-             the 3/4-BAB progression is not implemented in this bounded martial chassis baseline, \
-             so no Monk base-attack support is claimed"
+    let level_value = i16::from(MARTIAL_BASELINE_LEVEL);
+
+    // Grounded (1/3): Monk 3/4-BAB base-attack progression from the PF1 Core
+    // Rulebook Monk class table. No PCGen cr_classes.lst entry is used here (this
+    // repo carries no Monk .lst source), so the formula cites the rulebook table
+    // directly rather than inventing a line reference.
+    let base_attack_bonus = level_value * 3 / 4;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook Monk \
+             class table's 3/4-BAB progression: classlevel * 3 / 4 = {base_attack_bonus}"
         ),
-        claim_blocking: true,
     });
 
-    // Still blocked (2/4): name the base-save progression burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.monk.bounded_progression.base_save.unsupported".to_owned(),
-        message: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its base save progression: \
-             the good Fortitude, Reflex, and Will base-save progressions are not implemented in \
-             this bounded martial chassis baseline, so no Monk base-save support is claimed"
+    // Grounded (2/3): Monk base-save progression. Unlike Fighter/Barbarian/Rogue's
+    // 2-good/1-poor or 1-good/2-poor split, the PF1 Core Rulebook Monk class table
+    // gives all three base saves (Fortitude, Reflex, and Will) the good progression.
+    let base_save_value = level_value / 2 + 2;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.base_save.fortitude".to_owned(),
+        value: base_save_value,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} base Fortitude save from the PF1 Core Rulebook \
+             Monk class table: Monk is unusual in having all three saves good (unlike Fighter's/\
+             Barbarian's/Rogue's mixed good/poor split), so Fortitude uses the good-save formula \
+             classlevel/2+2 = {base_save_value}"
         ),
-        claim_blocking: true,
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.base_save.reflex".to_owned(),
+        value: base_save_value,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} base Reflex save from the PF1 Core Rulebook Monk \
+             class table: Monk is unusual in having all three saves good (unlike Fighter's/\
+             Barbarian's/Rogue's mixed good/poor split), so Reflex uses the good-save formula \
+             classlevel/2+2 = {base_save_value}"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.base_save.will".to_owned(),
+        value: base_save_value,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} base Will save from the PF1 Core Rulebook Monk \
+             class table: Monk is unusual in having all three saves good (unlike Fighter's/\
+             Barbarian's/Rogue's mixed good/poor split), so Will uses the good-save formula \
+             classlevel/2+2 = {base_save_value}"
+        ),
     });
 
-    // Still blocked (3/4): name the unarmed strike / Flurry of Blows burden explicitly.
+    // Grounded (3/3): AC Bonus (Wisdom-to-AC). PF1: "she adds her Wisdom bonus, if
+    // any, to her AC" — only a positive Wisdom modifier is added, never subtracted
+    // here for a negative Wisdom modifier. This grounds only the flat level-1 value;
+    // it grounds no level-4+ dodge-bonus progression and no "unarmored and
+    // unencumbered" runtime state-check engine (no such engine exists anywhere in
+    // this codebase yet), so the value is asserted unconditionally on the
+    // deterministic Human Monk fixture, which is by construction unarmored.
+    let ac_bonus = ability_modifiers.wisdom.max(0);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.ac_bonus".to_owned(),
+        value: ac_bonus,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} AC Bonus: Wisdom bonus (if positive) added to AC \
+             and CMD while unarmored and unencumbered = max({}, 0) = {ac_bonus}. This grounds only \
+             the flat level-1 Wisdom-to-AC value, not the level-4+ dodge-bonus progression, and not \
+             an \"unarmored and unencumbered\" runtime state-check engine (none exists in this \
+             codebase yet); the value is asserted unconditionally on the deterministic Human Monk \
+             fixture, which is by construction unarmored",
+            ability_modifiers.wisdom
+        ),
+    });
+
+    // Still blocked (1/2): name the unarmed strike / Flurry of Blows burden explicitly.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.monk.bounded_progression.unarmed_strike_and_flurry.unsupported"
             .to_owned(),
@@ -2321,16 +2598,17 @@ fn explain_monk_level1_chassis(
         claim_blocking: true,
     });
 
-    // Still blocked (4/4): name the AC Bonus / level-1 bonus feat burden explicitly.
+    // Still blocked (2/2): name the level-1 bonus feat grant burden explicitly. This
+    // is narrower than the prior combined AC-Bonus/bonus-feat diagnostic: AC Bonus is
+    // now grounded above, so only the bonus-feat grant remains named here.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.monk.bounded_progression.ac_bonus_and_bonus_feat.unsupported"
-            .to_owned(),
+        id: "class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned(),
         message: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its AC Bonus and bonus feat \
-             burden: the AC Bonus (Wisdom modifier added to AC while unarmored and unencumbered) \
-             and the level-1 bonus feat grant from the restricted Monk feat list are not \
-             implemented in this bounded martial chassis baseline, so no Monk AC Bonus or bonus \
-             feat support is claimed"
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its level-1 bonus feat grant: \
+             the free bonus feat drawn from the restricted Monk feat list (Combat Reflexes, Deflect \
+             Arrows, Improved Grapple, Improved Unarmed Strike, Scorpion Style, Stunning Fist, and \
+             others) is not implemented in this bounded martial chassis baseline — no feat-selection \
+             or feat-prerequisite engine exists here — so no Monk bonus-feat support is claimed"
         ),
         claim_blocking: true,
     });
@@ -2353,29 +2631,39 @@ fn is_single_class_rogue_level1(input: &CharacterInput) -> bool {
 }
 
 /// Surface direct SD13-E3 runtime evidence for the deterministic Human Rogue
-/// level-1 chassis, mirroring the Barbarian/Monk level-1 baseline pattern,
-/// while keeping it explicitly claim-blocked on the four still-missing named
-/// burdens.
+/// level-1 chassis, mirroring the Barbarian/Monk level-1 baseline pattern.
+/// The SD13-E3 pillar-grounding slice grounds three of the four named
+/// burdens directly (base-attack progression, base-save progression, and
+/// sneak attack die count); only trapfinding remains claim-blocked.
 ///
-/// This deliberately does not compute a supported chassis. It grounds no
-/// base-attack progression (3/4 BAB), no base-save progression (good Reflex,
-/// poor Fortitude, poor Will), no sneak attack damage-die execution, and no
-/// trapfinding Perception / Disable Device bonus. It grounds no rogue talent
-/// and no level-2+ progression. It only:
+/// This deliberately does not compute a full Rogue class engine. It grounds:
+/// - base-attack progression (3/4 BAB, `level * 3 / 4`),
+/// - base-save progression (good Reflex, poor Fortitude, poor Will), and
+/// - the sneak attack damage-die *count* only (the value `1`, i.e. `1d6`) —
+///   not damage-roll execution and not the flanking / Dexterity-denial
+///   trigger-condition engine.
+///
+/// It still grounds no trapfinding Perception / Disable Device bonus, no
+/// rogue talent, and no level-2+ progression. These new
+/// `class_chassis.rogue.*` explanation records are standalone: they are not
+/// wired into `compute_fighter_chassis`, `compute_total_saves`, or
+/// `compute_combat_baseline`, so `defense.total_save.*` is still never
+/// computed for Rogue here. It only:
 /// - leaves one chassis-recognition explanation so the `class:rogue:1`
 ///   identity is acknowledged rather than an undocumented packet placeholder
-///   (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits four claim-blocking diagnostics naming the four still-missing
-///   pillar burdens (base-attack, base-save, sneak-attack, trapfinding)
-///   explicitly, rather than hiding behind a single generic "unsupported
-///   class" label.
+///   (direct runtime evidence, carrying no fabricated mechanical value),
+/// - leaves four grounded pillar explanations (base-attack, base-save
+///   fortitude/reflex/will, sneak-attack die count), and
+/// - emits one claim-blocking diagnostic naming the sole still-missing
+///   pillar burden (trapfinding) explicitly, rather than hiding behind a
+///   single generic "unsupported class" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input
 /// (including `tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`,
 /// which keeps passing unmodified since no `defense.total_save.*` explanation
 /// is ever computed here); this seam keeps that blocked posture but makes the
-/// Rogue chassis identity and its four named pillar burdens legible on the
-/// runtime path.
+/// Rogue chassis identity, its grounded pillars, and its one remaining named
+/// pillar burden legible on the runtime path.
 fn explain_rogue_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -2398,46 +2686,65 @@ fn explain_rogue_level1_chassis(
             "Recognized deterministic Human Rogue level {ROGUE_BASELINE_LEVEL} chassis: the \
              {ROGUE_CLASS_ID}:{ROGUE_BASELINE_LEVEL} class identity is acknowledged on the \
              rules-core seam rather than an undocumented packet placeholder. This is a bounded \
-             chassis-recognition record only; it grounds no Rogue base-attack or base-save \
-             progression, no sneak attack damage-die execution, no trapfinding Perception / \
-             Disable Device bonus, no rogue talent, and no level-2+ progression, so it carries \
-             no fabricated mechanical value (+0)"
+             chassis-recognition record only; the base-attack, base-save, and sneak-attack \
+             die-count pillars are grounded separately below, but this record still grounds no \
+             trapfinding Perception / Disable Device bonus, no rogue talent, and no level-2+ \
+             progression, so it carries no fabricated mechanical value (+0)"
         ),
     });
 
-    // Still blocked (1/4): name the base-attack progression burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.rogue.bounded_progression.base_attack.unsupported".to_owned(),
-        message: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its base attack progression: \
-             the 3/4-BAB progression is not implemented in this bounded chassis baseline, so no \
-             Rogue base-attack support is claimed"
+    // Grounded (1/4): base-attack progression (3/4 BAB).
+    let level_value = i16::from(ROGUE_BASELINE_LEVEL);
+    let base_attack_bonus = level_value * 3 / 4;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+             Rogue class table's 3/4-BAB progression: level * 3 / 4 = {base_attack_bonus}"
         ),
-        claim_blocking: true,
     });
 
-    // Still blocked (2/4): name the base-save progression burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.rogue.bounded_progression.base_save.unsupported".to_owned(),
-        message: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its base save progression: \
-             the good Reflex progression and the poor Fortitude / poor Will base-save cadence \
-             are not implemented in this bounded chassis baseline, so no Rogue base-save \
-             support is claimed"
+    // Grounded (2/4): base-save progression (good Reflex, poor Fortitude, poor Will).
+    let base_save_fortitude = level_value / 3;
+    let base_save_reflex = level_value / 2 + 2;
+    let base_save_will = level_value / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.base_save.fortitude".to_owned(),
+        value: base_save_fortitude,
+        detail: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} base Fortitude save (poor) from the PF1 Core \
+             Rulebook Rogue class table: level / 3 = {base_save_fortitude}"
         ),
-        claim_blocking: true,
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.base_save.reflex".to_owned(),
+        value: base_save_reflex,
+        detail: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} base Reflex save (good) from the PF1 Core \
+             Rulebook Rogue class table: level / 2 + 2 = {base_save_reflex}"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.base_save.will".to_owned(),
+        value: base_save_will,
+        detail: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} base Will save (poor) from the PF1 Core \
+             Rulebook Rogue class table: level / 3 = {base_save_will}"
+        ),
     });
 
-    // Still blocked (3/4): name the sneak attack burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.rogue.bounded_progression.sneak_attack.unsupported".to_owned(),
-        message: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its sneak attack burden: the \
-             +1d6 extra sneak attack damage against a flanked or Dexterity-denied target is not \
-             implemented in this bounded chassis baseline, so no Rogue sneak attack support is \
-             claimed"
+    // Grounded (3/4): sneak attack damage-die count only.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.sneak_attack".to_owned(),
+        value: 1,
+        detail: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} sneak attack from the PF1 Core Rulebook Rogue \
+             class table: +1d6 sneak attack damage die at level 1, against a flanked or \
+             Dexterity-denied target. Only the die-count facet (1, i.e. 1d6) is grounded here; \
+             damage-roll execution and the flanking / Dexterity-denial trigger-condition engine \
+             are not implemented"
         ),
-        claim_blocking: true,
     });
 
     // Still blocked (4/4): name the trapfinding burden explicitly.
