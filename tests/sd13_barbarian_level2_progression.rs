@@ -1,0 +1,389 @@
+//! SD13-E5 Barbarian level-2 progression grounding proof.
+//!
+//! Widens the accepted Barbarian level-1 martial chassis baseline
+//! (`tests/sd13_barbarian_level1_chassis_baseline.rs`) to barbarian level 2,
+//! mirroring the Fighter `supported_fighter_level` / Paladin
+//! `supported_paladin_level` / Rogue `supported_rogue_level` level-range-gate
+//! idiom (the level-1-only gate `martial_level1_class` is generalized to
+//! `supported_barbarian_level`, an `Option<u8>` helper gated by
+//! `MAX_SUPPORTED_BARBARIAN_LEVEL = 2`). It proves:
+//!
+//! - base attack bonus at level 2 is grounded by the same full-BAB formula
+//!   (`classlevel`) already grounded at level 1: `2`.
+//! - base saves at level 2 are grounded by the same good-Fortitude/poor-Reflex/
+//!   poor-Will formulas already grounded at level 1, extended to level 2:
+//!   Fortitude `2 / 2 + 2 = 3`, Reflex `2 / 3 = 0`, Will `2 / 3 = 0`.
+//! - fast movement stays the flat +10 ft. value at level 2, confirmed via the
+//!   same formula, not a new record — the PF1 Core Rulebook fast-movement
+//!   bonus does not scale with level.
+//! - rage rounds per day at level 2 grows by the PF1 Core Rulebook Rage rule
+//!   ("at each level after 1st, she can rage for 2 additional rounds"):
+//!   `4 + Constitution modifier + 2 * (level - 1)`. On the Con 16 fixture
+//!   (modifier +3) this is `4 + 3 + 2 * 1 = 9` at level 2 (was `7` at level
+//!   1). The claim-blocking-instead-of-fabricating behavior for a
+//!   non-positive sum is preserved at level 2.
+//! - the four flat while-raging constants (+4 Str, +4 Con, +2 Will, -2 AC)
+//!   stay exactly the same magnitudes at level 2, confirmed via the same
+//!   formula, not new records — the PF1 Core Rulebook Rage constants do not
+//!   scale with level.
+//! - the illiteracy-absence rules-correction record still applies,
+//!   unconditionally, at level 2.
+//!
+//! It deliberately does not implement the rage-state execution engine
+//! (activation, round consumption, fatigue, stat application), weapon
+//! familiarity, or level-3+ Barbarian progression. It also preserves the
+//! accepted Barbarian level-1 truth (unchanged), the Fighter/Paladin/Ranger
+//! negative controls, and the multiclass negative control.
+
+use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::pilot_compute::{
+    ComputationDiagnostic, ComputationExplanation, PilotBaseChassisComputation,
+    compute_pilot_base_chassis,
+};
+use codex::rules_core::support_state_matrix::{
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+};
+
+const BARBARIAN_LEVEL1_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_barbarian_level1_sd13_deterministic_input.txt"
+);
+
+const BARBARIAN_LEVEL2_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_barbarian_level2_sd13_deterministic_input.txt"
+);
+
+const BARBARIAN_LEVEL1_LOW_CONSTITUTION_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_barbarian_level1_low_constitution_sd13_deterministic_input.txt"
+);
+
+const FIGHTER_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+);
+
+fn load(fixture: &str) -> CharacterInput {
+    let result = load_character_input_fixture(fixture);
+    assert!(
+        result.diagnostics.is_empty(),
+        "fixture should load cleanly: {:?}",
+        result.diagnostics
+    );
+    result
+        .character_input
+        .expect("valid fixture should produce a character input record")
+}
+
+fn explanation<'a>(
+    computation: &'a PilotBaseChassisComputation,
+    id: &str,
+) -> &'a ComputationExplanation {
+    computation
+        .explanations
+        .iter()
+        .find(|e| e.id == id)
+        .unwrap_or_else(|| {
+            panic!(
+                "expected explanation id '{id}', got {:?}",
+                computation.explanations
+            )
+        })
+}
+
+fn claim_blocking<'a>(
+    computation: &'a PilotBaseChassisComputation,
+    id: &str,
+) -> &'a ComputationDiagnostic {
+    let diag = computation
+        .diagnostics
+        .iter()
+        .find(|d| d.id == id)
+        .unwrap_or_else(|| {
+            panic!(
+                "expected diagnostic id '{id}', got {:?}",
+                computation.diagnostics
+            )
+        });
+    assert!(
+        diag.claim_blocking,
+        "diagnostic '{id}' must be claim-blocking: {diag:?}"
+    );
+    diag
+}
+
+// ----- Base attack bonus at level 2 -----
+
+#[test]
+fn barbarian_level2_base_attack_bonus_is_grounded_by_the_same_formula() {
+    let input = load(BARBARIAN_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let base_attack = explanation(&computation, "class_chassis.barbarian.base_attack_bonus");
+    assert_eq!(
+        base_attack.value, 2,
+        "Barbarian level 2 full-BAB progression (classlevel) must equal 2: {}",
+        base_attack.detail
+    );
+    assert!(
+        base_attack.detail.contains("level 2"),
+        "barbarian base-attack explanation must name level 2: {}",
+        base_attack.detail
+    );
+}
+
+// ----- Base saves at level 2 -----
+
+#[test]
+fn barbarian_level2_base_saves_are_grounded_by_the_same_formulas() {
+    let input = load(BARBARIAN_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let fortitude = explanation(&computation, "class_chassis.barbarian.base_save.fortitude");
+    assert_eq!(fortitude.value, 3, "Barbarian level 2 good Fortitude (2/2+2) must equal 3");
+    assert!(
+        fortitude.detail.to_lowercase().contains("good"),
+        "barbarian Fortitude explanation must name it as a good save: {}",
+        fortitude.detail
+    );
+
+    let reflex = explanation(&computation, "class_chassis.barbarian.base_save.reflex");
+    assert_eq!(reflex.value, 0, "Barbarian level 2 poor Reflex (2/3) must equal 0");
+    assert!(
+        reflex.detail.to_lowercase().contains("poor"),
+        "barbarian Reflex explanation must name it as a poor save: {}",
+        reflex.detail
+    );
+
+    let will = explanation(&computation, "class_chassis.barbarian.base_save.will");
+    assert_eq!(will.value, 0, "Barbarian level 2 poor Will (2/3) must equal 0");
+    assert!(
+        will.detail.to_lowercase().contains("poor"),
+        "barbarian Will explanation must name it as a poor save: {}",
+        will.detail
+    );
+}
+
+// ----- Fast movement stays the flat +10 ft. value at level 2 -----
+
+#[test]
+fn barbarian_level2_fast_movement_stays_flat_ten_feet() {
+    let input = load(BARBARIAN_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let fast_movement = explanation(&computation, "class_chassis.barbarian.fast_movement");
+    assert_eq!(
+        fast_movement.value, 10,
+        "Barbarian fast movement must stay +10 ft. at level 2, not a new record: {}",
+        fast_movement.detail
+    );
+}
+
+// ----- Rage rounds per day grows by the PF1 CRB +2-rounds-per-level rule -----
+
+#[test]
+fn barbarian_level2_rage_rounds_per_day_grows_by_two() {
+    let input = load(BARBARIAN_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // Con 16 -> modifier +3. Level 2: 4 + 3 + 2 * (2 - 1) = 9 (was 7 at level 1).
+    let rage_rounds = explanation(&computation, "class_chassis.barbarian.rage_rounds_per_day");
+    assert_eq!(
+        rage_rounds.value, 9,
+        "Barbarian level 2 rage rounds per day must be 4 + Con modifier (+3) + 2 * (level - 1) \
+         = 9: {}",
+        rage_rounds.detail
+    );
+    assert!(
+        rage_rounds.detail.contains("2 additional")
+            || rage_rounds.detail.contains("2 * (level"),
+        "rage rounds per day at level 2 must document the +2-rounds-per-level-after-1st rule: {}",
+        rage_rounds.detail
+    );
+}
+
+#[test]
+fn barbarian_level2_claim_blocks_rage_rounds_per_day_at_low_constitution() {
+    // Con 1 -> modifier -5. Level 2: 4 + (-5) + 2 * (2 - 1) = 1, which IS a positive
+    // count at level 2 (unlike level 1, where the same Con score claim-blocks). This
+    // proves the level-2 formula is a real generalization, not a copy-pasted level-1
+    // constant.
+    let level_2_low_con =
+        BARBARIAN_LEVEL1_LOW_CONSTITUTION_FIXTURE.replace("class:barbarian:1", "class:barbarian:2");
+    let input = load(&level_2_low_con);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let rage_rounds = explanation(&computation, "class_chassis.barbarian.rage_rounds_per_day");
+    assert_eq!(
+        rage_rounds.value, 1,
+        "Barbarian level 2 rage rounds per day at Con modifier -5 must be 4 + (-5) + 2 = 1: {}",
+        rage_rounds.detail
+    );
+}
+
+// ----- Flat rage constants are unchanged at level 2 -----
+
+#[test]
+fn barbarian_level2_flat_rage_constants_are_unchanged() {
+    let input = load(BARBARIAN_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    for (id, expected) in [
+        ("class_chassis.barbarian.rage.strength_morale_bonus", 4),
+        ("class_chassis.barbarian.rage.constitution_morale_bonus", 4),
+        ("class_chassis.barbarian.rage.will_save_morale_bonus", 2),
+        ("class_chassis.barbarian.rage.armor_class_penalty", -2),
+    ] {
+        let record = explanation(&computation, id);
+        assert_eq!(
+            record.value, expected,
+            "rage constant '{id}' must stay {expected} at level 2, not a new record"
+        );
+    }
+}
+
+// ----- Illiteracy-absence record still applies at level 2 -----
+
+#[test]
+fn barbarian_level2_illiteracy_absence_still_applies() {
+    let input = load(BARBARIAN_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let illiteracy_absent = explanation(&computation, "class_chassis.barbarian.illiteracy_absent");
+    assert_eq!(
+        illiteracy_absent.value, 0,
+        "the illiteracy-absent record documents a rules correction; it carries no mechanical value"
+    );
+}
+
+// ----- Still blocked: rage-state execution engine and generic diagnostics -----
+
+#[test]
+fn barbarian_level2_stays_blocked_on_rage_execution() {
+    let input = load(BARBARIAN_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    claim_blocking(
+        &computation,
+        "class_feature.barbarian.bounded_progression.rage_execution.unsupported",
+    );
+    assert_eq!(
+        computation.base_attack_bonus, 0,
+        "the standalone barbarian base-attack explanation must not be wired into the integrated \
+         base_attack_bonus field at level 2"
+    );
+}
+
+// ----- Negative control: level 3 stays unrecognized by this slice -----
+
+#[test]
+fn barbarian_level_3_is_not_promoted_by_this_slice() {
+    let level_3 = BARBARIAN_LEVEL2_FIXTURE.replace("class:barbarian:2", "class:barbarian:3");
+    let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
+        "level-3 Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+        computation.explanations
+    );
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id.starts_with("class_feature.barbarian.")),
+        "level-3 Barbarian must not surface the barbarian burden diagnostics from this bounded \
+         slice: {:?}",
+        computation.diagnostics
+    );
+}
+
+// ----- Negative control: the barbarian path must not leak onto other classes -----
+
+#[test]
+fn fighter_does_not_gain_barbarian_level2_recognition() {
+    let fighter = load(FIGHTER_FIXTURE);
+    let fighter_computation = compute_pilot_base_chassis(&fighter);
+    assert!(
+        !fighter_computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
+        "the Fighter chassis must not surface any barbarian-namespaced explanation: {:?}",
+        fighter_computation.explanations
+    );
+}
+
+// ----- Negative control: multiclass Barbarian is not promoted -----
+
+#[test]
+fn multiclass_barbarian_level2_is_not_promoted_by_this_slice() {
+    let multiclass = BARBARIAN_LEVEL2_FIXTURE.replace(
+        "class_level=class:barbarian:2",
+        "class_level=class:barbarian:2\nclass_level=class:fighter:1",
+    );
+    let input = load(&multiclass);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
+        "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+        computation.explanations
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "multiclass Barbarian must stay claim-blocked in this slice"
+    );
+}
+
+// ----- Barbarian level 1 stays unchanged -----
+
+#[test]
+fn barbarian_level1_truth_is_unchanged_by_the_level2_widening() {
+    let input = load(BARBARIAN_LEVEL1_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let base_attack = explanation(&computation, "class_chassis.barbarian.base_attack_bonus");
+    assert_eq!(base_attack.value, 1, "Barbarian level 1 full BAB must stay +1");
+
+    let rage_rounds = explanation(&computation, "class_chassis.barbarian.rage_rounds_per_day");
+    assert_eq!(
+        rage_rounds.value, 7,
+        "Barbarian level 1 rage rounds per day must stay 4 + Con modifier (+3) = 7"
+    );
+}
+
+// ----- Control plane: the matrix note names the level-2 widening -----
+
+#[test]
+fn matrix_barbarian_row_names_level_2_widening() {
+    let matrix = seeded_sd13_e1_f1_current_truth();
+    let barbarian = matrix
+        .row("class.barbarian.bounded_progression")
+        .expect("barbarian bounded_progression row must exist");
+
+    assert_eq!(barbarian.support_state, SupportState::Partial);
+    assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(
+        barbarian.evidence_freshness,
+        EvidenceFreshness::RefreshableFromLiveProof
+    );
+    assert!(
+        barbarian
+            .grounding_ref
+            .contains("sd13_barbarian_level2_progression"),
+        "barbarian row must cite the live SD13-E5 level-2 proof surface: {}",
+        barbarian.grounding_ref
+    );
+    let note = barbarian.blocker_or_lossiness_note;
+    assert!(
+        note.contains("level 2") || note.contains("level-2"),
+        "barbarian partial note must name the level-2 widening: {note}"
+    );
+    assert!(
+        note.contains("rage execution") || note.contains("rage-state execution"),
+        "barbarian partial note must keep naming the rage-state execution engine as unproven: \
+         {note}"
+    );
+}

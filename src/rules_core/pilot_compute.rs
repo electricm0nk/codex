@@ -266,6 +266,12 @@ const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1: i16 = 1;
 // familiarity, or level-2+ martial progression is grounded.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const MARTIAL_BASELINE_LEVEL: u8 = 1;
+/// SD13-E5 Barbarian level-range gate, mirroring the Fighter
+/// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
+/// `supported_rogue_level` idiom. `MARTIAL_BASELINE_LEVEL` above stays 1 and
+/// is unaffected: it is still used by the (unrelated, still level-1-only)
+/// Monk martial-chassis gate.
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 2;
 
 // SD13-E3 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
@@ -2808,40 +2814,42 @@ fn is_single_class_sorcerer_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// A pure martial (non-hybrid, non-spell) class this slice recognizes at its bounded
-/// single-class level-1 chassis boundary only.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum MartialClass {
-    Barbarian,
-}
-
-/// Return the martial class when the chosen input is exactly a single-class Barbarian
-/// at the bounded martial baseline level (1). Returns `None` for any other class, a
-/// multiclass mix, or a level-2+ Barbarian this slice deliberately does not recognize —
-/// each of which stays blocked exactly as before.
-fn martial_level1_class(input: &CharacterInput) -> Option<MartialClass> {
+/// The bounded Barbarian milestone level this decomposition surface grounds, if any.
+/// Returns the single Barbarian level when the chosen input is exactly a
+/// single-class Barbarian at one of the supported milestone levels (1 or 2). Returns
+/// `None` for no Barbarian, a non-Barbarian class, a multiclass mix, or any level-3+
+/// Barbarian this slice deliberately does not recognize — each of which stays
+/// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level` /
+/// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` level-range gate
+/// idiom.
+fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
     match input.chosen.class_levels.as_slice() {
-        [class_level] if class_level.level == MARTIAL_BASELINE_LEVEL => {
-            match class_level.class_id.as_str() {
-                BARBARIAN_CLASS_ID => Some(MartialClass::Barbarian),
-                _ => None,
-            }
+        [class_level]
+            if class_level.class_id == BARBARIAN_CLASS_ID
+                && (1..=MAX_SUPPORTED_BARBARIAN_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
         }
         _ => None,
     }
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Barbarian
-/// level-1 martial chassis. Base-attack progression, base-save progression, and the
-/// fast-movement speed-extension value are grounded directly. The SD13-E5 slice
-/// resolves the formerly-named illiteracy burden as vacuous — the PF1 Core Rulebook
-/// Barbarian is NOT illiterate; illiteracy is a D&D 3.5e Barbarian trait that never
-/// existed in PF1, so under the fixture's `pf1.core_rulebook` source package there
-/// was never anything to implement — and grounds Rage's flat numeric surface: rage
-/// rounds per day (4 + Constitution modifier, claim-blocked instead of grounded when
-/// that sum is non-positive) and the flat while-raging constants (+4 morale
-/// Strength, +4 morale Constitution, +2 morale on Will saves, -2 AC), values only.
-/// Otherwise only the rage-state execution burden stays explicitly claim-blocked.
+/// level-1/level-2 martial chassis. Base-attack progression, base-save progression, and
+/// the fast-movement speed-extension value are grounded directly at every supported
+/// level. The SD13-E5 slice resolves the formerly-named illiteracy burden as vacuous —
+/// the PF1 Core Rulebook Barbarian is NOT illiterate; illiteracy is a D&D 3.5e
+/// Barbarian trait that never existed in PF1, so under the fixture's
+/// `pf1.core_rulebook` source package there was never anything to implement — and
+/// grounds Rage's flat numeric surface: rage rounds per day (4 + Constitution modifier,
+/// growing by 2 more rounds per level after 1st, claim-blocked instead of grounded
+/// when that sum is non-positive) and the flat while-raging constants (a morale
+/// bonus to Strength, a morale bonus to Constitution, a morale bonus on Will saves,
+/// and an armor class penalty, unchanged by level), values only. A later SD13-E5
+/// slice widens the level-1-only gate (`martial_level1_class`) to a level-range gate
+/// (`supported_barbarian_level`, 1..=2), mirroring the Fighter/Paladin/Rogue
+/// level-range-gate idiom. Otherwise only the rage-state execution burden and weapon
+/// familiarity stay explicitly claim-blocked.
 ///
 /// This deliberately does not compute a supported martial chassis: the grounded
 /// base-attack, base-save, fast-movement, and rage explanation records below are
@@ -2849,11 +2857,11 @@ fn martial_level1_class(input: &CharacterInput) -> Option<MartialClass> {
 /// `compute_total_saves`, `compute_combat_baseline`, the integrated ability
 /// modifiers, or any speed/movement total), so the integrated pilot surface still
 /// reports a blocked posture on this input. It grounds no rage-state engine, no
-/// weapon familiarity, and no level-2+ martial progression. It only:
-/// - leaves one chassis-recognition explanation so the `class:barbarian:1` identity
-///   is acknowledged as a non-hybrid martial baseline rather than an undocumented
-///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical
-///   value),
+/// weapon familiarity, and no level-3+ martial progression. It only:
+/// - leaves one chassis-recognition explanation so the `class:barbarian:N` identity
+///   (at the supported level, 1 or 2) is acknowledged as a non-hybrid martial
+///   baseline rather than an undocumented packet placeholder (direct runtime
+///   evidence, carrying no fabricated mechanical value),
 /// - leaves five grounded explanation records naming the full-BAB base-attack
 ///   bonus, the good-Fortitude/poor-Reflex/poor-Will base saves, and the flat
 ///   +10 ft. fast-movement value,
@@ -2877,36 +2885,30 @@ fn explain_barbarian_level1_chassis(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    let Some(martial) = martial_level1_class(input) else {
+    let Some(level) = supported_barbarian_level(input) else {
         return;
     };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
 
-    // Only the Barbarian is in this slice today; the match is exhaustive-by-design so
-    // a future addition needs an explicit arm here. The SD13-E3 Monk martial-chassis
-    // slice landed as its own dedicated recognition function (`explain_monk_level1_chassis`)
-    // rather than a new `MartialClass` arm, since its named burdens are unrelated in
-    // content to Barbarian's.
-    let MartialClass::Barbarian = martial;
     let class_id = BARBARIAN_CLASS_ID;
     let class_name = "Barbarian";
     let chassis_id = "class_chassis.barbarian.bounded_progression";
-    let level_value = i16::from(MARTIAL_BASELINE_LEVEL);
+    let level_value = i16::from(level);
 
-    // Direct runtime evidence: recognize the deterministic Human Barbarian level-1
-    // martial chassis identity. This is a recognition record only; it fabricates no
-    // mechanical value.
+    // Direct runtime evidence: recognize the deterministic Human Barbarian chassis
+    // identity at the supported level. This is a recognition record only; it
+    // fabricates no mechanical value.
     explanations.push(ComputationExplanation {
         id: chassis_id.to_owned(),
         value: 0,
         detail: format!(
-            "Recognized deterministic Human {class_name} level {MARTIAL_BASELINE_LEVEL} martial chassis: \
-             the {class_id}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure non-hybrid \
+            "Recognized deterministic Human {class_name} level {level} martial chassis: \
+             the {class_id}:{level} class identity is acknowledged as a pure non-hybrid \
              martial baseline on the rules-core seam rather than an undocumented packet placeholder. This \
              is a bounded chassis-recognition record only; it grounds no rage-state execution engine, no \
-             weapon familiarity, and no level-2+ martial progression, so it carries no fabricated \
+             weapon familiarity, and no level-3+ martial progression, so it carries no fabricated \
              mechanical value (+0). The base-attack, base-save, fast-movement, and flat rage pillar \
              values are grounded separately as standalone explanation records"
         ),
@@ -2921,7 +2923,7 @@ fn explain_barbarian_level1_chassis(
         id: "class_chassis.barbarian.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+            "{class_name} level {level} base attack bonus from the PF1 Core Rulebook \
              Barbarian class table (full base-attack progression, same formula shape as Fighter's \
              cr_classes.lst:139 BONUS:COMBAT|BASEAB|classlevel): classlevel = {base_attack_bonus}. This \
              is a standalone explanation record; it is not wired into the integrated base_attack_bonus \
@@ -2931,6 +2933,7 @@ fn explain_barbarian_level1_chassis(
 
     // Grounded (2/3): base-save progression — good Fortitude, poor Reflex, poor
     // Will, same formula shape as Fighter's cr_classes.lst:139 base-save cadence.
+    // Extended to every supported level via the same formulas, not re-derived.
     let fortitude_save = level_value / 2 + 2;
     let reflex_save = level_value / 3;
     let will_save = level_value / 3;
@@ -2938,7 +2941,7 @@ fn explain_barbarian_level1_chassis(
         id: "class_chassis.barbarian.base_save.fortitude".to_owned(),
         value: fortitude_save,
         detail: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} base Fortitude save (good save) from the PF1 \
+            "{class_name} level {level} base Fortitude save (good save) from the PF1 \
              Core Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
              BONUS:SAVE|BASE.Fortitude|classlevel/2+2: classlevel/2+2 = {fortitude_save}. This is a \
              standalone explanation record; it is not wired into compute_total_saves"
@@ -2948,7 +2951,7 @@ fn explain_barbarian_level1_chassis(
         id: "class_chassis.barbarian.base_save.reflex".to_owned(),
         value: reflex_save,
         detail: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 Core \
+            "{class_name} level {level} base Reflex save (poor save) from the PF1 Core \
              Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
              BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3: classlevel/3 = {reflex_save}. This is a \
              standalone explanation record; it is not wired into compute_total_saves"
@@ -2958,7 +2961,7 @@ fn explain_barbarian_level1_chassis(
         id: "class_chassis.barbarian.base_save.will".to_owned(),
         value: will_save,
         detail: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} base Will save (poor save) from the PF1 Core \
+            "{class_name} level {level} base Will save (poor save) from the PF1 Core \
              Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
              BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3: classlevel/3 = {will_save}. This is a \
              standalone explanation record; it is not wired into compute_total_saves"
@@ -2969,7 +2972,9 @@ fn explain_barbarian_level1_chassis(
     // the flat bonus value itself, not a runtime armor/encumbrance-state check
     // engine — no such engine exists anywhere in this codebase yet — so the value
     // is asserted unconditionally rather than computed from armor/load state, and
-    // it is not wired into any speed/movement total.
+    // it is not wired into any speed/movement total. The PF1 Core Rulebook
+    // fast-movement bonus does not scale with level, so this is the same flat +10
+    // ft. value at every supported level.
     explanations.push(ComputationExplanation {
         id: "class_chassis.barbarian.fast_movement".to_owned(),
         value: 10,
@@ -2978,7 +2983,7 @@ fn explain_barbarian_level1_chassis(
              only the flat +10 ft. value, not a runtime armor/encumbrance-state check engine — no such \
              engine exists anywhere in this codebase yet — so the value is asserted unconditionally \
              rather than computed from armor/load state, and it is not wired into any speed/movement \
-             total"
+             total. This flat value does not scale with barbarian level"
             .to_owned(),
     });
 
@@ -3002,36 +3007,44 @@ fn explain_barbarian_level1_chassis(
     });
 
     // Grounded: Rage's flat numeric surface, values only. Rage rounds per day is the
-    // one Constitution-derived rage number the PF1 Core Rulebook fixes at level 1:
-    // 4 + Constitution modifier. At a low enough Constitution modifier (<= -4) that
-    // sum is non-positive, which is not a real PF1 rounds-per-day count, so this
-    // slice claim-blocks the record instead of asserting a fabricated zero/negative
-    // value — the deterministic Con 16 fixture (modifier +3, 7 rounds) never hits
-    // this branch, but the public compute seam accepts any Human Barbarian input.
+    // one Constitution-derived rage number the PF1 Core Rulebook Rage class feature
+    // grounds at level 1 (4 + Constitution modifier) and grows by a further flat +2
+    // rounds "at each level after 1st" (PF1 Core Rulebook Rage: "She can rage for a
+    // number of rounds per day equal to 4 + her Constitution modifier. At each level
+    // after 1st, she can rage for 2 additional rounds."), generalized here as
+    // 4 + Constitution modifier + 2 * (level - 1). At level 1 this collapses to the
+    // original 4 + Constitution modifier (2 * 0 = 0 extra rounds), so the grounded
+    // level-1 truth is unchanged by this widening. At a low enough Constitution
+    // modifier that sum is non-positive, which is not a real PF1 rounds-per-day
+    // count, so this slice claim-blocks the record instead of asserting a
+    // fabricated zero/negative value — the deterministic Con 16 fixture (modifier
+    // +3, 7 rounds at level 1, 9 rounds at level 2) never hits this branch, but the
+    // public compute seam accepts any Human Barbarian input.
     let constitution_modifier = ability_modifier_for(ability_modifiers, "constitution");
-    let rage_rounds_per_day = 4 + constitution_modifier;
+    let rage_rounds_per_day = 4 + constitution_modifier + 2 * (level_value - 1);
     if rage_rounds_per_day > 0 {
         explanations.push(ComputationExplanation {
             id: "class_chassis.barbarian.rage_rounds_per_day".to_owned(),
             value: rage_rounds_per_day,
             detail: format!(
-                "{class_name} level {MARTIAL_BASELINE_LEVEL} rage rounds per day from the PF1 Core \
-                 Rulebook Rage class feature: 4 + Constitution modifier = 4 + {constitution_modifier} = \
-                 {rage_rounds_per_day} rounds per day at level {MARTIAL_BASELINE_LEVEL} (2 additional \
-                 rounds per {class_name} level beyond 1st are a level-2+ burden this slice does not \
-                 claim). This is a standalone explanation record: no round is ever consumed, tracked, or \
-                 restored by this slice"
+                "{class_name} level {level} rage rounds per day from the PF1 Core \
+                 Rulebook Rage class feature: 4 + Constitution modifier + 2 * (level - 1) = 4 + \
+                 {constitution_modifier} + 2 * ({level_value} - 1) = {rage_rounds_per_day} rounds per \
+                 day at level {level} (the +2-additional-rounds-per-level-after-1st rule). This is a \
+                 standalone explanation record: no round is ever consumed, tracked, or restored by \
+                 this slice"
             ),
         });
     } else {
         diagnostics.push(ComputationDiagnostic {
             id: "class_chassis.barbarian.rage_rounds_per_day.unsupported".to_owned(),
             message: format!(
-                "{class_name} level {MARTIAL_BASELINE_LEVEL} rage rounds per day (4 + Constitution \
-                 modifier) is not grounded for this input: 4 + {constitution_modifier} = \
-                 {rage_rounds_per_day}, a non-positive count with no PF1 Core Rulebook meaning. \
-                 This slice does not assert a fabricated zero/negative rounds-per-day value, so no \
-                 rage rounds per day is claimed for this Constitution score"
+                "{class_name} level {level} rage rounds per day (4 + Constitution modifier + 2 * \
+                 (level - 1)) is not grounded for this input: 4 + {constitution_modifier} + 2 * \
+                 ({level_value} - 1) = {rage_rounds_per_day}, a non-positive count with no PF1 Core \
+                 Rulebook meaning. This slice does not assert a fabricated zero/negative \
+                 rounds-per-day value, so no rage rounds per day is claimed for this Constitution \
+                 score"
             ),
             claim_blocking: true,
         });
@@ -3090,7 +3103,7 @@ fn explain_barbarian_level1_chassis(
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.barbarian.bounded_progression.rage_execution.unsupported".to_owned(),
         message: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its rage-state execution \
+            "{class_name} level {level} remains blocked on its rage-state execution \
              engine: rage activation and deactivation, round-by-round consumption of the grounded rage \
              rounds per day, the fatigue condition after a rage ends, and temporary application of the \
              grounded rage constants ({rage_constants_summary}) to computed totals are not implemented \
