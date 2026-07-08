@@ -462,7 +462,6 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
         "class.cleric.progression_and_spell_burden",
         "class.druid.progression_and_spell_burden",
         "class.sorcerer.progression_and_spell_burden",
-        "class.wizard.progression_and_spell_burden",
     ] {
         let row = matrix
             .row(id)
@@ -493,6 +492,18 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
+
+    // Wizard was later promoted to Partial/Computed by its own SD13-E4 Scribe
+    // Scroll decomposition slice.
+    let wizard = matrix
+        .row("class.wizard.progression_and_spell_burden")
+        .expect("wizard row must exist");
+    assert_eq!(
+        wizard.support_state,
+        SupportState::Partial,
+        "wizard row must keep its later-accepted Partial posture after the ranger-decomposition slice"
+    );
+    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
 
     // No row is silently promoted to Supported or Lossy by this slice.
     assert!(

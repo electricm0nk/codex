@@ -502,22 +502,9 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         "barbarian row must keep its accepted Partial posture after the paladin-decomposition slice"
     );
     assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
-    // Wizard carries its accepted post-merge-receipt posture (Blocked/Computed);
-    // this slice preserves it without re-promoting or demoting it.
-    let wizard = matrix
-        .row("class.wizard.progression_and_spell_burden")
-        .expect("wizard row must exist");
-    assert_eq!(
-        wizard.support_state,
-        SupportState::Blocked,
-        "wizard row must keep its accepted Blocked posture after the paladin-decomposition slice"
-    );
-    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
-
-    // Wizard, Cleric, and Druid were later promoted to Blocked/Computed by their
-    // own follow-up slices; verified separately below.
+    // Cleric and Druid were later promoted to Blocked/Computed by their own
+    // follow-up slices; verified separately below.
     for id in [
-        "class.wizard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
         "class.druid.progression_and_spell_burden",
     ] {
@@ -527,6 +514,20 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         assert_eq!(row.support_state, SupportState::Blocked);
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
+
+    // Wizard carried its accepted post-merge-receipt posture (Blocked/Computed) at
+    // the time this test was first written, but a later SD13-E4 Wizard
+    // decomposition slice grounds Scribe Scroll for real, promoting the row to
+    // Partial/Computed. This test now pins that current truth.
+    let wizard = matrix
+        .row("class.wizard.progression_and_spell_burden")
+        .expect("wizard row must exist");
+    assert_eq!(
+        wizard.support_state,
+        SupportState::Partial,
+        "wizard row must keep its later-accepted Partial posture after the paladin-decomposition slice"
+    );
+    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
 
     // Monk was later promoted to Partial/Computed by its own follow-up SD13-E3 slice.
     let monk = matrix
