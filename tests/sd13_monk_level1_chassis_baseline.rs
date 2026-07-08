@@ -1,24 +1,29 @@
-//! SD13-E3 Monk level-1 martial chassis baseline proof.
+//! SD13-E3/E5 Monk level-1 martial chassis baseline proof.
 //!
 //! Proves the SD13-E3 monk slice (mirroring the Barbarian level-1 martial-baseline
-//! pattern): the live rules-core surface ingests a deterministic Human `class:monk:1`
-//! input, leaves direct computed evidence that acknowledges the bounded level-1
-//! martial chassis identity rather than treating it as an undocumented packet
-//! placeholder, and now grounds three pillar burdens directly (base-attack
-//! progression, base-save progression, and AC Bonus / Wisdom-to-AC), while staying
-//! explicitly claim-blocked on the two still-missing burdens (unarmed strike /
-//! Flurry of Blows, and the level-1 bonus feat grant). It also pins the matrix
-//! reclassification of the monk row from `Unverified` / `Observed` to `Partial` /
-//! `Computed`.
+//! pattern) plus the SD13-E5 unarmed-strike/flurry grounding slice: the live
+//! rules-core surface ingests a deterministic Human `class:monk:1` input, leaves
+//! direct computed evidence that acknowledges the bounded level-1 martial chassis
+//! identity rather than treating it as an undocumented packet placeholder, and now
+//! grounds four pillar burdens directly (base-attack progression, base-save
+//! progression, AC Bonus / Wisdom-to-AC, and the unarmed-strike damage die plus
+//! the Flurry of Blows flat attack surface), while staying explicitly
+//! claim-blocked on the one still-missing burden (the level-1 bonus feat grant).
+//! It also pins the matrix reclassification of the monk row from `Unverified` /
+//! `Observed` to `Partial` / `Computed`.
 //!
 //! It is intentionally not a martial class engine. It grounds the Monk 3/4-BAB
 //! progression (`classlevel * 3 / 4`), the all-three-good base-save progression
-//! (`classlevel / 2 + 2` for Fortitude, Reflex, and Will), and the flat level-1
-//! Wisdom-to-AC value (Wisdom modifier, if positive, added to AC), but it grounds
-//! no unarmed strike damage die, no Flurry of Blows execution, no level-1 bonus
-//! feat grant from the restricted Monk feat list, no ki pool, no level-4+ AC Bonus
-//! dodge-bonus progression, no "unarmored and unencumbered" runtime state-check
-//! engine, and no level-2+ martial progression. It also preserves the accepted
+//! (`classlevel / 2 + 2` for Fortitude, Reflex, and Will), the flat level-1
+//! Wisdom-to-AC value (Wisdom modifier, if positive, added to AC), the Medium-monk
+//! level-1 unarmed strike damage die size (1d6 — die size only, no damage roll or
+//! damage total), and the level-1 Flurry of Blows flat surface (two attacks, each
+//! at monk level - 2 = -1 before ability modifiers), but it grounds no
+//! attack-resolution or damage-roll engine, no monk-weapon flurry, no level-4+
+//! unarmed damage die progression, no level-1 bonus feat grant from the
+//! restricted Monk feat list, no ki pool, no level-4+ AC Bonus dodge-bonus
+//! progression, no "unarmored and unencumbered" runtime state-check engine, and
+//! no level-2+ martial progression. It also preserves the accepted
 //! Fighter 1-3 truth, the Rogue blocked negative control, the Barbarian
 //! partial/computed truth, the Paladin/Ranger blocked hybrid negative controls, and
 //! the Human race/interaction truth.
@@ -195,24 +200,116 @@ fn monk_level1_grounds_ac_bonus() {
     );
 }
 
-// ----- Still blocked: unarmed strike / Flurry of Blows -----
+// ----- Grounded (SD13-E5): unarmed strike damage die + Flurry of Blows flat surface -----
 
 #[test]
-fn monk_level1_stays_blocked_on_unarmed_strike_and_flurry() {
+fn monk_level1_grounds_unarmed_strike_damage_die() {
     let input = load(MONK_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let unarmed_flurry = claim_blocking(
-        &computation,
-        "class_feature.monk.bounded_progression.unarmed_strike_and_flurry.unsupported",
+    // Medium monk at level 1 deals 1d6 unarmed strike damage. Only the die-size
+    // facet (6, i.e. 1d6) is grounded; no damage roll or damage total is computed.
+    let die = explanation(&computation, "class_chassis.monk.unarmed_strike_damage_die");
+    assert_eq!(
+        die.value, 6,
+        "monk level 1 Medium unarmed strike damage die is 1d6, so the die-size facet is 6"
     );
     assert!(
-        unarmed_flurry.message.contains("unarmed strike")
-            && unarmed_flurry.message.contains("Flurry of Blows"),
-        "monk unarmed-strike/flurry blocker must name both burdens: {}",
-        unarmed_flurry.message
+        die.detail.contains("1d6"),
+        "monk unarmed-strike explanation must name the 1d6 die: {}",
+        die.detail
+    );
+    assert!(
+        die.detail.contains("die") && die.detail.contains("no damage roll"),
+        "monk unarmed-strike explanation must scope itself to the die size and disclaim \
+         damage-roll execution: {}",
+        die.detail
+    );
+    assert!(
+        die.detail.contains("lethal") && die.detail.contains("nonlethal"),
+        "monk unarmed-strike explanation must record the lethal-or-nonlethal choice as a \
+         rule statement: {}",
+        die.detail
+    );
+    assert!(
+        die.detail.contains("off-hand"),
+        "monk unarmed-strike explanation must record the no-off-hand-penalty rule statement: {}",
+        die.detail
+    );
+    assert!(
+        die.detail.contains("1d8") && die.detail.contains("not grounded"),
+        "monk unarmed-strike explanation must disclaim the higher-level die progression \
+         (1d8 and beyond) as not grounded: {}",
+        die.detail
+    );
+}
+
+#[test]
+fn monk_level1_grounds_flurry_of_blows_flat_surface() {
+    let input = load(MONK_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // PF1 level-1 flurry: the monk uses her monk level in place of her base attack
+    // bonus and takes -2 on all attacks, so the flat modifier is 1 - 2 = -1.
+    let flurry_bonus = explanation(
+        &computation,
+        "class_chassis.monk.flurry_of_blows_attack_bonus",
+    );
+    assert_eq!(
+        flurry_bonus.value, -1,
+        "monk level 1 flurry flat attack modifier is monk level - 2 = 1 - 2 = -1"
+    );
+    assert!(
+        flurry_bonus.detail.contains("monk level") && flurry_bonus.detail.contains("-2"),
+        "monk flurry attack-bonus explanation must name the monk-level-in-place-of-BAB \
+         formula and the -2 penalty: {}",
+        flurry_bonus.detail
+    );
+    assert!(
+        flurry_bonus.detail.contains("before ability modifiers"),
+        "monk flurry attack-bonus explanation must scope the flat modifier as pre-ability: {}",
+        flurry_bonus.detail
     );
 
+    // A level-1 flurry grants two attacks. Only the count facet is grounded; no
+    // attack-resolution engine exists.
+    let flurry_count = explanation(
+        &computation,
+        "class_chassis.monk.flurry_of_blows_attack_count",
+    );
+    assert_eq!(
+        flurry_count.value, 2,
+        "monk level 1 flurry grants two attacks (one additional attack on a full attack)"
+    );
+    assert!(
+        flurry_count.detail.contains("two attacks"),
+        "monk flurry attack-count explanation must name the two-attack surface: {}",
+        flurry_count.detail
+    );
+    assert!(
+        flurry_count.detail.contains("no attack-resolution"),
+        "monk flurry attack-count explanation must disclaim an attack-resolution engine: {}",
+        flurry_count.detail
+    );
+}
+
+#[test]
+fn monk_level1_retires_the_unarmed_strike_and_flurry_blocker_but_stays_blocked() {
+    let input = load(MONK_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // The combined unarmed-strike/flurry blocker is retired: both facets are now
+    // grounded as flat surfaces above.
+    assert!(
+        !has_diagnostic(
+            &computation,
+            "class_feature.monk.bounded_progression.unarmed_strike_and_flurry.unsupported"
+        ),
+        "the old unarmed-strike/flurry blocker diagnostic must no longer be emitted: {:?}",
+        computation.diagnostics
+    );
+
+    // The monk row stays claim-blocked overall: the bonus-feat burden remains named.
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
 
@@ -419,14 +516,27 @@ fn matrix_monk_row_is_partial_computed_and_names_remaining_burdens() {
     );
     let note = monk.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "monk partial row must carry a note");
-    // Base-attack, base-save, and AC Bonus are now grounded; only unarmed strike /
-    // Flurry of Blows and the bonus feat grant remain named as still-unproven.
-    for token in ["unarmed strike", "Flurry of Blows", "bonus feat"] {
+    // Base-attack, base-save, AC Bonus, the unarmed strike damage die, and the
+    // flurry flat surface are now grounded; only the level-1 bonus feat grant
+    // remains named as still-unproven, and the note must scope what the grounded
+    // unarmed/flurry surface deliberately does not prove.
+    for token in ["1d6", "Flurry of Blows", "bonus feat"] {
         assert!(
             note.contains(token),
-            "monk partial note must name the still-unproven '{token}' burden: {note}"
+            "monk partial note must name the '{token}' surface: {note}"
         );
     }
+    for honesty_token in ["die size only", "attack-resolution", "level-4+"] {
+        assert!(
+            note.contains(honesty_token),
+            "monk partial note must keep the '{honesty_token}' honesty scope: {note}"
+        );
+    }
+    assert!(
+        monk.next_required_uplift.contains("bonus feat"),
+        "monk next uplift must point at the remaining bonus-feat burden: {}",
+        monk.next_required_uplift
+    );
 }
 
 #[test]

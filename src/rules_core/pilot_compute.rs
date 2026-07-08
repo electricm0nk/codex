@@ -2530,35 +2530,41 @@ fn is_single_class_monk_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E3 runtime evidence for the deterministic Human Monk level-1
-/// martial chassis, mirroring the Barbarian level-1 baseline pattern, and now
-/// grounding three named pillar burdens (base-attack, base-save, AC Bonus) while
-/// keeping it explicitly claim-blocked on the two remaining named burdens (unarmed
-/// strike / Flurry of Blows, and the level-1 bonus feat grant).
+/// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Monk
+/// level-1 martial chassis, mirroring the Barbarian level-1 baseline pattern, and
+/// now grounding four named pillar burdens (base-attack, base-save, AC Bonus, and
+/// the unarmed strike die / Flurry of Blows flat surface) while keeping it
+/// explicitly claim-blocked on the one remaining named burden (the level-1 bonus
+/// feat grant).
 ///
 /// This grounds the Monk base-attack progression (3/4 BAB: `classlevel * 3 / 4`),
 /// the base-save progression (good Fortitude, Reflex, and Will: `classlevel/2+2`
 /// each — Monk is unusual among the martial classes recognized so far in having all
-/// three saves good rather than a 2-good/1-poor or 1-good/2-poor split), and the AC
+/// three saves good rather than a 2-good/1-poor or 1-good/2-poor split), the AC
 /// Bonus (the positive Wisdom modifier added to AC, asserted unconditionally on this
-/// deterministic unarmored fixture). It still grounds no unarmed strike damage die,
-/// no Flurry of Blows execution, and no level-1 bonus feat grant from the restricted
-/// Monk feat list. It grounds no ki pool, no level-4+ AC Bonus dodge-bonus
-/// progression, no "unarmored and unencumbered" runtime state-check engine, and no
-/// level-2+ martial progression. It:
+/// deterministic unarmored fixture), the Medium-monk level-1 unarmed strike damage
+/// die size (1d6 — die size only, mirroring the Rogue sneak-attack die-count record:
+/// no damage roll or damage total is computed), and the level-1 Flurry of Blows flat
+/// surface (two attacks, each at monk level - 2 = -1 before ability modifiers). It
+/// still grounds no level-1 bonus feat grant from the restricted Monk feat list, no
+/// attack-resolution or damage-roll engine, no monk-weapon flurry, no level-4+
+/// unarmed damage die progression, no ki pool, no level-4+ AC Bonus dodge-bonus
+/// progression, no "unarmored and unencumbered" runtime state-check engine, no
+/// wiring into integrated combat totals, and no level-2+ martial progression. It:
 /// - leaves one chassis-recognition explanation so the `class:monk:1` identity is
 ///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
-/// - leaves grounded explanation records for base-attack, the three base saves, and
-///   AC Bonus, and
-/// - emits two claim-blocking diagnostics naming the two still-missing pillar
-///   burdens (unarmed-strike/flurry, and the level-1 bonus feat grant) explicitly,
-///   rather than hiding behind a single generic "unsupported class" label.
+/// - leaves grounded explanation records for base-attack, the three base saves,
+///   AC Bonus, the unarmed strike damage die, and the flurry flat attack
+///   bonus/attack count, and
+/// - emits one claim-blocking diagnostic naming the still-missing pillar burden
+///   (the level-1 bonus feat grant) explicitly, rather than hiding behind a single
+///   generic "unsupported class" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture (`defense.baseline_armor_class` stays gated to Fighter
-/// and is untouched here) but makes the Monk martial identity, its three grounded
-/// pillars, and its two remaining named pillar burdens legible on the runtime path.
+/// and is untouched here) but makes the Monk martial identity, its grounded pillars,
+/// and its one remaining named pillar burden legible on the runtime path.
 fn explain_monk_level1_chassis(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -2583,16 +2589,16 @@ fn explain_monk_level1_chassis(
              the {MONK_CLASS_ID}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure \
              non-hybrid martial baseline on the rules-core seam rather than an undocumented packet \
              placeholder. This is a bounded chassis-recognition record only; the base-attack, \
-             base-save, and AC Bonus values are grounded separately below, and this record itself \
-             grounds no unarmed strike damage die, no Flurry of Blows execution, no level-1 bonus \
-             feat grant, no ki pool, and no level-2+ martial progression, so it carries no \
-             fabricated mechanical value (+0)"
+             base-save, AC Bonus, unarmed-strike-die, and Flurry of Blows flat-surface values are \
+             grounded separately below, and this record itself grounds no level-1 bonus feat \
+             grant, no attack-resolution engine, no ki pool, and no level-2+ martial progression, \
+             so it carries no fabricated mechanical value (+0)"
         ),
     });
 
     let level_value = i16::from(MARTIAL_BASELINE_LEVEL);
 
-    // Grounded (1/3): Monk 3/4-BAB base-attack progression from the PF1 Core
+    // Grounded (1/5): Monk 3/4-BAB base-attack progression from the PF1 Core
     // Rulebook Monk class table. No PCGen cr_classes.lst entry is used here (this
     // repo carries no Monk .lst source), so the formula cites the rulebook table
     // directly rather than inventing a line reference.
@@ -2606,7 +2612,7 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Grounded (2/3): Monk base-save progression. Unlike Fighter/Barbarian/Rogue's
+    // Grounded (2/5): Monk base-save progression. Unlike Fighter/Barbarian/Rogue's
     // 2-good/1-poor or 1-good/2-poor split, the PF1 Core Rulebook Monk class table
     // gives all three base saves (Fortitude, Reflex, and Will) the good progression.
     let base_save_value = level_value / 2 + 2;
@@ -2641,7 +2647,7 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Grounded (3/3): AC Bonus (Wisdom-to-AC). PF1: "she adds her Wisdom bonus, if
+    // Grounded (3/5): AC Bonus (Wisdom-to-AC). PF1: "she adds her Wisdom bonus, if
     // any, to her AC" — only a positive Wisdom modifier is added, never subtracted
     // here for a negative Wisdom modifier. This grounds only the flat level-1 value;
     // it grounds no level-4+ dodge-bonus progression and no "unarmored and
@@ -2663,22 +2669,63 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Still blocked (1/2): name the unarmed strike / Flurry of Blows burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.monk.bounded_progression.unarmed_strike_and_flurry.unsupported"
-            .to_owned(),
-        message: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its unarmed strike and \
-             Flurry of Blows burden: the unarmed strike damage die and the Flurry of Blows extra \
-             attack are not implemented in this bounded martial chassis baseline, so no Monk \
-             unarmed strike or Flurry of Blows support is claimed"
+    // Grounded (4/5): unarmed strike damage die. PF1 Core Rulebook Monk class table:
+    // a Medium monk deals 1d6 unarmed strike damage at levels 1-3. Mirroring the
+    // Rogue sneak-attack die-count record, only the die-size facet (6, i.e. 1d6) is
+    // grounded here — no damage roll, damage total, or attack-resolution engine is
+    // computed, and the level-4+ die progression (1d8 and beyond) is not grounded.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.unarmed_strike_damage_die".to_owned(),
+        value: 6,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} unarmed strike from the PF1 Core Rulebook Monk \
+             class table: a Medium monk deals 1d6 unarmed strike damage at level \
+             {MARTIAL_BASELINE_LEVEL}. Only the die-size facet (6, i.e. 1d6) is grounded here; \
+             no damage roll or damage total is computed and no attack-resolution engine exists. \
+             Two PF1 unarmed-strike rules are recorded as statements only: the monk may choose \
+             to deal lethal or nonlethal damage with no penalty on the attack roll, and monk \
+             unarmed strikes carry no off-hand penalty (a monk applies her full Strength bonus \
+             on damage rolls for all her unarmed strikes). The higher-level unarmed damage die \
+             progression (1d8 at levels 4-7 and beyond) is not grounded"
         ),
-        claim_blocking: true,
     });
 
-    // Still blocked (2/2): name the level-1 bonus feat grant burden explicitly. This
-    // is narrower than the prior combined AC-Bonus/bonus-feat diagnostic: AC Bonus is
-    // now grounded above, so only the bonus-feat grant remains named here.
+    // Grounded (5/5): Flurry of Blows flat attack surface, in two facets. PF1 Core
+    // Rulebook: when making a flurry of blows as a full-attack action, the monk uses
+    // her monk level in place of her base attack bonus and takes a -2 penalty on all
+    // attacks; at level 1 the flurry grants one additional attack, i.e. two attacks
+    // at -1/-1 before ability modifiers. Only these flat facets are grounded; no
+    // attack-resolution engine, no monk-weapon flurry, and no wiring into integrated
+    // combat totals is implemented.
+    let flurry_attack_bonus = level_value - 2;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.flurry_of_blows_attack_bonus".to_owned(),
+        value: flurry_attack_bonus,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} Flurry of Blows flat attack modifier from the \
+             PF1 Core Rulebook: when using flurry as a full-attack action the monk uses her \
+             monk level in place of her base attack bonus and takes a -2 penalty on all attack \
+             rolls, so the flat modifier is monk level - 2 = {level_value} - 2 = \
+             {flurry_attack_bonus} on each flurry attack, before ability modifiers. Only this \
+             flat pre-ability modifier is grounded; no attack-resolution engine, no monk-weapon \
+             flurry, and no wiring into integrated combat totals is implemented"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.flurry_of_blows_attack_count".to_owned(),
+        value: 2,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} Flurry of Blows attack count from the PF1 Core \
+             Rulebook: a level-{MARTIAL_BASELINE_LEVEL} flurry grants one additional attack on \
+             a full attack, i.e. two attacks, each at the flat pre-ability modifier grounded \
+             separately. Only the count facet (2) is grounded; no attack-resolution engine and \
+             no monk-weapon flurry support is implemented"
+        ),
+    });
+
+    // Still blocked (the one remaining named burden): the level-1 bonus feat grant.
+    // This is narrower than the prior combined AC-Bonus/bonus-feat diagnostic: AC
+    // Bonus is grounded above, so only the bonus-feat grant remains named here.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned(),
         message: format!(

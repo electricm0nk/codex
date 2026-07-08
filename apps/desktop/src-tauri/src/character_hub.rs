@@ -645,10 +645,7 @@ mod tests {
 
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:monk", 1),
-            generic_plus(&[
-                "class_feature.monk.bounded_progression.unarmed_strike_and_flurry.unsupported",
-                "class_feature.monk.bounded_progression.bonus_feat.unsupported",
-            ])
+            generic_plus(&["class_feature.monk.bounded_progression.bonus_feat.unsupported"])
         );
 
         assert_eq!(
