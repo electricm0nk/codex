@@ -71,10 +71,14 @@
 //!   spell math,
 //! - the Barbarian row is `Partial` / `Computed`: the SD13-E3 slice proves the
 //!   deterministic Human Barbarian level-1 martial chassis identity is recognized
-//!   on the compute seam and now grounds three of the four named martial pillar
-//!   burdens as standalone explanation records (base attack, base save, fast
-//!   movement), none wired into the integrated pilot surface; only the illiteracy
-//!   trait burden remains unproven,
+//!   on the compute seam and grounds base attack, base save, and fast movement as
+//!   standalone explanation records; the SD13-E5 slice resolves the formerly-named
+//!   illiteracy burden as vacuous (the PF1 Core Rulebook Barbarian is not
+//!   illiterate — illiteracy is a D&D 3.5e trait that never existed in PF1) and
+//!   grounds Rage's flat numeric surface (rage rounds per day = 4 + Constitution
+//!   modifier, plus the flat rage constants), values only, none wired into the
+//!   integrated pilot surface; the rage-state execution engine remains the named
+//!   unproven burden,
 //! - the Monk row is `Partial` / `Computed`: the SD13-E3 slice proves the
 //!   deterministic Human Monk level-1 martial chassis identity is recognized on the
 //!   compute seam (mirroring the Barbarian pattern), and now grounds three named
@@ -303,10 +307,12 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
 /// posture burden stay explicitly blocked.
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
-/// SD13-E3 dedicated proof surface for the bounded Human Barbarian level-1 martial
-/// chassis baseline: direct computed chassis-recognition evidence, plus grounded
-/// base-attack, base-save, and fast-movement pillar values, that stays explicitly
-/// blocked only on the remaining named illiteracy trait burden.
+/// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1
+/// martial chassis baseline: direct computed chassis-recognition evidence, plus
+/// grounded base-attack, base-save, fast-movement, and flat Rage pillar values
+/// (rage rounds per day and the rage constants, values only) and the vacuous
+/// illiteracy-burden rules correction, that stays explicitly blocked only on the
+/// remaining named rage-state execution burden.
 const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
@@ -682,21 +688,32 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_BARBARIAN_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3 Barbarian level-1 proof surfaces the bounded \
-                    martial chassis-recognition record and now grounds three of the four named \
-                    martial pillar burdens as standalone explanation records: base attack \
+                    martial chassis-recognition record and grounds base attack \
                     progression (full BAB, classlevel = +1 at level 1), base save progression (the \
                     good Fortitude classlevel/2+2 cadence, +2 at level 1, and the poor \
                     Reflex / poor Will classlevel/3 cadence, +0 at level 1), and fast \
                     movement (the flat +10 ft. land speed extension value while wearing no heavy \
                     armor and carrying no heavy load — no armor/encumbrance-state check engine is \
-                    grounded, none exists anywhere in this codebase yet). None of these three are \
-                    wired into the integrated base_attack_bonus/base-saves/speed totals, so the \
-                    integrated pilot surface still reports a blocked posture. The slice remains \
-                    explicitly blocked only on the illiteracy trait. No rage execution, weapon \
-                    familiarity, or level-2+ martial progression is claimed",
-                next_required_uplift: "ground the illiteracy trait engine, and wire the grounded \
+                    grounded, none exists anywhere in this codebase yet) as standalone explanation \
+                    records. The SD13-E5 slice resolves the formerly-named illiteracy burden as \
+                    vacuous — a rules correction, not an uplift: the PF1 Core Rulebook Barbarian \
+                    is not illiterate; illiteracy is a D&D 3.5e Barbarian trait that never \
+                    existed in PF1, documented by the grounded illiteracy_absent record — and \
+                    grounds Rage's flat numeric surface: rage rounds per day (4 + Constitution \
+                    modifier, 7 on the Con 16 fixture) and the flat rage constants (+4 morale \
+                    Strength, +4 morale Constitution, +2 morale Will saves, -2 AC), values only. \
+                    None of the grounded records are wired into the integrated \
+                    base_attack_bonus/base-saves/speed/ability totals, so the integrated pilot \
+                    surface still reports a blocked posture. The row remains explicitly blocked \
+                    on the rage execution engine (activation/deactivation, rage-round \
+                    consumption, fatigue after rage, temporary stat application). No weapon \
+                    familiarity or level-2+ martial progression is claimed",
+                next_required_uplift: "ground the Barbarian rage-state execution engine \
+                    (activation/deactivation, rage-round consumption, post-rage fatigue, \
+                    temporary application of the rage constants), and wire the grounded \
                     base-attack / base-save / fast-movement values into the integrated pilot \
-                    surface, later widening into rage execution and level-2+ martial progression",
+                    surface, later widening into weapon familiarity and level-2+ martial \
+                    progression",
             },
             SupportStateRow {
                 row_id: "class.bard.progression_and_spell_burden",

@@ -608,7 +608,7 @@ mod tests {
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:barbarian", 1),
             generic_plus(&[
-                "class_feature.barbarian.bounded_progression.illiteracy.unsupported",
+                "class_feature.barbarian.bounded_progression.rage_execution.unsupported",
             ])
         );
 
