@@ -139,6 +139,36 @@ fn fighter_level_1_row_is_partial_and_computed() {
         !fighter.grounding_ref.is_empty(),
         "computed Fighter level-1 row must cite grounding evidence"
     );
+    // The SD13-E5 hit-point slice grounds level-1 hit points: the row must cite
+    // both the mandatory-milestone classification proof and the hit-point
+    // baseline proof, and the note must carry the hit-point milestone on the
+    // proven side while keeping the favored-class residue named as unproven.
+    assert!(
+        fighter
+            .grounding_ref
+            .contains("sd13_fighter_level1_mandatory_milestone_classification"),
+        "Fighter level-1 row must keep citing the mandatory-milestone proof surface: {}",
+        fighter.grounding_ref
+    );
+    assert!(
+        fighter
+            .grounding_ref
+            .contains("sd13_fighter_level1_hit_point_baseline"),
+        "Fighter level-1 row must cite the SD13-E5 hit-point baseline proof surface: {}",
+        fighter.grounding_ref
+    );
+    assert!(
+        fighter
+            .blocker_or_lossiness_note
+            .contains("level-1 hit points"),
+        "Fighter level-1 row note must name the grounded level-1 hit-point milestone: {}",
+        fighter.blocker_or_lossiness_note
+    );
+    assert!(
+        fighter.blocker_or_lossiness_note.contains("favored-class"),
+        "Fighter level-1 row note must keep the unproven favored-class hit-point residue named: {}",
+        fighter.blocker_or_lossiness_note
+    );
 }
 
 #[test]

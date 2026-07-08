@@ -274,12 +274,17 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
 /// levels-2-10 row's grounding_ref.
 const SD13_FIGHTER_LEVEL8_TEST: &str = "tests/sd13_fighter_level8_progression.rs";
 
-/// SD13-E3-F5 dedicated proof surface for the bounded Fighter level-1 mandatory
-/// milestone classification: enumerates which level-1 mandatory milestones the
-/// deterministic pilot surface has proven (computed) and which remain unproven
-/// for the level-10 progression matrix.
-const SD13_FIGHTER_LEVEL1_MILESTONE_TEST: &str =
-    "tests/sd13_fighter_level1_mandatory_milestone_classification.rs";
+/// The combined grounding reference for the Fighter level-1 pilot row, citing
+/// both the SD13-E3-F5 mandatory-milestone classification proof (which level-1
+/// mandatory milestones are proven versus unproven for the level-10 progression
+/// matrix) and the SD13-E5 level-1 hit-point baseline proof (level-1 hit points
+/// = maximized d10 hit die 10 + Constitution modifier as a standalone grounded
+/// explanation record) as one literal (paladin-row idiom). Both `.contains()`
+/// consumers read their respective substring from this combined grounding
+/// reference.
+const SD13_FIGHTER_LEVEL1_ROW_GROUNDING_REF: &str =
+    "tests/sd13_fighter_level1_mandatory_milestone_classification.rs + \
+     tests/sd13_fighter_level1_hit_point_baseline.rs";
 
 /// The combined grounding reference for the Paladin hybrid baseline row, citing
 /// both F6 (chassis identity) and the per-burden decomposition test as one
@@ -575,28 +580,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_FIGHTER_LEVEL1_MILESTONE_TEST,
+                grounding_ref: SD13_FIGHTER_LEVEL1_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3-F5 widens the Fighter level-1 deterministic \
                     pilot surface into a bounded mandatory-milestone classification: the proven \
                     (computed) level-1 surface covers ability modifier, base attack bonus, base \
                     saving throws (fortitude/reflex/will), total saves with contributors, baseline \
                     melee attack bonus with contributors, defense.baseline_armor_class with \
                     contributors, selected skill modifier (class-skill + chosen rank + ability \
-                    modifier + bounded armor-check penalty), pilot view-model projection, the \
-                    Human race ability-bonus target and bonus-feat grant seams, prerequisite / \
-                    invalid-choice blocking for the canonical Human Fighter feat selection, and \
-                    explicit claim-blocking on missing chassis / wrong Fighter level / unsupported \
-                    loadout. Remaining unproven Fighter level-1 mandatory milestones for the \
-                    level-10 progression matrix are: hit point computation (Fighter d10 HD at \
-                    level 1), a general class skill rank allocation engine beyond the named \
-                    selected-skill seam, a general feat selection engine beyond the canonical \
-                    Human Fighter choice seam, equipment / weapon / armor effects beyond the \
-                    bounded baseline AC + BAB seam, a general feat prerequisite engine, and the \
-                    level-1 prerequisites of the level-10 progression milestones (level-1 bonus- \
-                    feat selection into the repeated bonus-feat cadence, level-1 BAB into the \
-                    level-10 BAB climb, level-1 base saves into the level-10 save climb, and the \
-                    level-1 armor / weapon selection that seeds armor-training and weapon-training \
-                    progression at higher levels)",
+                    modifier + bounded armor-check penalty), level-1 hit points (SD13-E5: \
+                    maximized d10 hit die 10 + Constitution modifier, grounded as a standalone \
+                    explanation record wired into no view-model total), pilot view-model \
+                    projection, the Human race ability-bonus target and bonus-feat grant seams, \
+                    prerequisite / invalid-choice blocking for the canonical Human Fighter feat \
+                    selection, and explicit claim-blocking on missing chassis / wrong Fighter \
+                    level / unsupported loadout. Remaining unproven Fighter level-1 mandatory \
+                    milestones for the level-10 progression matrix are: the favored-class +1 hp / \
+                    +1 skill-rank choice (no input surface exists for it), hit points at levels \
+                    2+ and Toughness / feat hit-point interplay, a general class skill rank \
+                    allocation engine beyond the named selected-skill seam, a general feat \
+                    selection engine beyond the canonical Human Fighter choice seam, equipment / \
+                    weapon / armor effects beyond the bounded baseline AC + BAB seam, a general \
+                    feat prerequisite engine, and the level-1 prerequisites of the level-10 \
+                    progression milestones (level-1 bonus-feat selection into the repeated \
+                    bonus-feat cadence, level-1 BAB into the level-10 BAB climb, level-1 base \
+                    saves into the level-10 save climb, and the level-1 armor / weapon selection \
+                    that seeds armor-training and weapon-training progression at higher levels)",
                 next_required_uplift: "SD13-E3 slice widening the bounded Fighter surface \
                     beyond level 1 toward the level-10 progression milestones (base attack \
                     bonus climb, base save climb, bonus-feat cadence, armor-training ranks, \

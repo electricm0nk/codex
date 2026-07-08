@@ -308,6 +308,14 @@ const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 // adjustment in this codebase.
 const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 8;
 
+// Fighter level-1 hit points. PF1 maximizes the hit die at 1st character level:
+// the Fighter's d10 hit die grants 10 hit points at level 1, plus the
+// Constitution modifier. This slice grounds only that level-1 value; hit points
+// at levels 2+ (average/rolled hit-die policy), the favored-class +1 hp /
+// +1 skill-rank choice (no input surface exists for it), and Toughness / feat
+// hit-point interplay stay unproven.
+const FIGHTER_LEVEL_1_MAX_HIT_DIE_HIT_POINTS: i16 = 10;
+
 // Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
 // feat at level 2; this slice surfaces the named selection as an explicit seam only
 // and grounds no general feat-effect or prerequisite engine.
@@ -453,6 +461,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     );
 
     explain_fighter_class_features(input, &mut explanations);
+
+    explain_fighter_level1_hit_points(input, &ability_modifiers, &mut explanations);
 
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
     explain_barbarian_level1_chassis(input, &mut explanations, &mut diagnostics);
@@ -1837,6 +1847,45 @@ fn explain_fighter_class_features(
             ),
         });
     }
+}
+
+/// Ground the Fighter level-1 hit-point milestone as a standalone explanation
+/// record: level-1 hit points = 10 (the maximized d10 Fighter hit die at 1st
+/// character level, PF1 Core Rulebook) + the Constitution modifier already
+/// computed from the raw chosen score by [`compute_ability_modifiers`].
+///
+/// Gated the same way the other Fighter explanation seams gate (the bounded
+/// [`supported_fighter_level`] recognition), narrowed to level 1 because only
+/// the level-1 hit-point value is grounded. The record is deliberately wired
+/// into no view-model total and no derived combat/defense output. Still
+/// unproven and named in the record detail: the favored-class +1 hp /
+/// +1 skill-rank choice (no input surface exists for it), hit points at
+/// levels 2+ (no average/rolled hit-die policy is grounded), and Toughness /
+/// feat hit-point interplay.
+fn explain_fighter_level1_hit_points(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if supported_fighter_level(input) != Some(1) {
+        return;
+    }
+
+    let constitution_modifier = ability_modifiers.constitution;
+    let hit_points = FIGHTER_LEVEL_1_MAX_HIT_DIE_HIT_POINTS + constitution_modifier;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.fighter.level_1_hit_points".to_owned(),
+        value: hit_points,
+        detail: format!(
+            "Fighter level-1 hit points: maximized d10 Fighter hit die at 1st level \
+             ({FIGHTER_LEVEL_1_MAX_HIT_DIE_HIT_POINTS}) + Constitution modifier \
+             ({constitution_modifier:+}) = {hit_points}. This is a standalone grounded \
+             record wired into no view-model total. Still unproven and out of scope: the \
+             favored-class +1 hp / +1 skill-rank choice (no input surface exists for it), \
+             hit points at levels 2+ (no average/rolled hit-die policy is grounded), and \
+             Toughness / feat hit-point interplay"
+        ),
+    });
 }
 
 /// The canonical Human Fighter feat-choice selections this slice preserves on the
