@@ -258,6 +258,19 @@ const MARTIAL_BASELINE_LEVEL: u8 = 1;
 // bonus feat grant, no ki pool, and no level-2+ martial progression.
 const MONK_CLASS_ID: &str = "class:monk";
 
+// SD13-E5 Monk level-1 bonus feat choice-slot recognition. The PF1 Core Rulebook
+// restricted Monk bonus feat list this bounded recognition seam knows is Combat
+// Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, and Stunning Fist.
+// Improved Unarmed Strike is deliberately excluded: the PF1 Core Rulebook grants
+// it to every monk automatically at level 1, separate from this chosen bonus
+// feat, and this codebase does not ground that automatic grant either, so it is
+// never treated as a choice-set member here.
+const MONK_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat";
+const DEFLECT_ARROWS_FEAT_SELECTION: &str = "feat:deflect_arrows";
+const IMPROVED_GRAPPLE_FEAT_SELECTION: &str = "feat:improved_grapple";
+const IMPROVED_TRIP_FEAT_SELECTION: &str = "feat:improved_trip";
+const STUNNING_FIST_FEAT_SELECTION: &str = "feat:stunning_fist";
+
 // Grounded SD13-E4 Human Cleric level-1 prepared divine spell-bearing baseline
 // identity. Cleric is the canonical PF1 prepared divine full caster; unlike the
 // arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
@@ -3009,10 +3022,11 @@ fn is_single_class_monk_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Monk
 /// level-1 martial chassis, mirroring the Barbarian level-1 baseline pattern, and
-/// now grounding four named pillar burdens (base-attack, base-save, AC Bonus, and
-/// the unarmed strike die / Flurry of Blows flat surface) while keeping it
-/// explicitly claim-blocked on the one remaining named burden (the level-1 bonus
-/// feat grant).
+/// now grounding five named pillar burdens (base-attack, base-save, AC Bonus, the
+/// unarmed strike die / Flurry of Blows flat surface, and the level-1 bonus feat
+/// choice-slot recognition) while keeping it explicitly claim-blocked on the
+/// recognized bonus feat's own mechanics (an execution engine, not a flat
+/// number).
 ///
 /// This grounds the Monk base-attack progression (3/4 BAB: `classlevel * 3 / 4`),
 /// the base-save progression (good Fortitude, Reflex, and Will: `classlevel/2+2`
@@ -3021,27 +3035,40 @@ fn is_single_class_monk_level1(input: &CharacterInput) -> bool {
 /// Bonus (the positive Wisdom modifier added to AC, asserted unconditionally on this
 /// deterministic unarmored fixture), the Medium-monk level-1 unarmed strike damage
 /// die size (1d6 — die size only, mirroring the Rogue sneak-attack die-count record:
-/// no damage roll or damage total is computed), and the level-1 Flurry of Blows flat
-/// surface (two attacks, each at monk level - 2 = -1 before ability modifiers). It
-/// still grounds no level-1 bonus feat grant from the restricted Monk feat list, no
-/// attack-resolution or damage-roll engine, no monk-weapon flurry, no level-4+
-/// unarmed damage die progression, no ki pool, no level-4+ AC Bonus dodge-bonus
-/// progression, no "unarmored and unencumbered" runtime state-check engine, no
-/// wiring into integrated combat totals, and no level-2+ martial progression. It:
+/// no damage roll or damage total is computed), the level-1 Flurry of Blows flat
+/// surface (two attacks, each at monk level - 2 = -1 before ability modifiers), and
+/// (SD13-E5) the level-1 bonus feat choice-slot selection when it names one of the
+/// PF1 Core Rulebook restricted Monk bonus feat list's five feats (Combat
+/// Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, Stunning Fist),
+/// mirroring the Sorcerer bloodline choice / Cleric domain choice / Druid
+/// nature-bond choice recognition idiom. It still grounds no attack-resolution or
+/// damage-roll engine, no monk-weapon flurry, no level-4+ unarmed damage die
+/// progression, no ki pool, no level-4+ AC Bonus dodge-bonus progression, no
+/// "unarmored and unencumbered" runtime state-check engine, no wiring into
+/// integrated combat totals, no level-2+ martial progression, and no execution of
+/// what the recognized bonus feat actually does (no attack-of-opportunity engine
+/// for Combat Reflexes, no grapple-check engine for Improved Grapple, no DC/save
+/// engine for Stunning Fist, and so on). It:
 /// - leaves one chassis-recognition explanation so the `class:monk:1` identity is
 ///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves grounded explanation records for base-attack, the three base saves,
 ///   AC Bonus, the unarmed strike damage die, and the flurry flat attack
-///   bonus/attack count, and
-/// - emits one claim-blocking diagnostic naming the still-missing pillar burden
-///   (the level-1 bonus feat grant) explicitly, rather than hiding behind a single
-///   generic "unsupported class" label.
+///   bonus/attack count,
+/// - conditionally leaves one grounded explanation recognizing the level-1 bonus
+///   feat choice-slot selection when a `choice:monk_bonus_feat` selection is
+///   present (carrying no fabricated mechanical value, since the recognized
+///   feat's own mechanics are an execution engine rather than a number), and
+/// - emits one claim-blocking diagnostic naming the still-missing burden (the
+///   recognized bonus feat's own mechanics, or the bonus feat grant entirely when
+///   no restricted-list selection is recognized) explicitly, rather than hiding
+///   behind a single generic "unsupported class" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture (`defense.baseline_armor_class` stays gated to Fighter
 /// and is untouched here) but makes the Monk martial identity, its grounded pillars,
-/// and its one remaining named pillar burden legible on the runtime path.
+/// its recognized bonus feat choice, and its one remaining named burden legible on
+/// the runtime path.
 fn explain_monk_level1_chassis(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -3200,18 +3227,97 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Still blocked (the one remaining named burden): the level-1 bonus feat grant.
-    // This is narrower than the prior combined AC-Bonus/bonus-feat diagnostic: AC
-    // Bonus is grounded above, so only the bonus-feat grant remains named here.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned(),
-        message: format!(
+    // Grounded (6/6, SD13-E5): the level-1 bonus feat choice-slot selection is
+    // recognized as chosen input when it names one of the PF1 Core Rulebook
+    // restricted Monk bonus feat list's five feats (Combat Reflexes, Deflect
+    // Arrows, Improved Grapple, Improved Trip, Stunning Fist), mirroring the
+    // Sorcerer bloodline choice / Cleric domain choice / Druid nature-bond choice
+    // recognition idiom. This is recognition of the choice-slot identity only; it
+    // fabricates no feat-effect execution (no attack-of-opportunity engine for
+    // Combat Reflexes, no ranged-deflection engine for Deflect Arrows, no
+    // grapple-check engine for Improved Grapple, no trip-check engine for Improved
+    // Trip, and no DC/save engine for Stunning Fist). A selection present but
+    // outside this restricted list is acknowledged without naming a specific
+    // restricted-list feat, mirroring the Sorcerer bloodline choice's
+    // present-but-unrecognized branch, so no restricted-list feat identity is
+    // fabricated for a selection this bounded seam does not know.
+    let bonus_feat_selection = choice_selection(input, MONK_BONUS_FEAT_CHOICE_ID);
+    let recognized_bonus_feat_name = bonus_feat_selection.and_then(|selection| {
+        if selection == COMBAT_REFLEXES_FEAT_SELECTION {
+            Some("Combat Reflexes")
+        } else if selection == DEFLECT_ARROWS_FEAT_SELECTION {
+            Some("Deflect Arrows")
+        } else if selection == IMPROVED_GRAPPLE_FEAT_SELECTION {
+            Some("Improved Grapple")
+        } else if selection == IMPROVED_TRIP_FEAT_SELECTION {
+            Some("Improved Trip")
+        } else if selection == STUNNING_FIST_FEAT_SELECTION {
+            Some("Stunning Fist")
+        } else {
+            None
+        }
+    });
+    if let Some(selection) = bonus_feat_selection {
+        let detail = if let Some(feat_name) = recognized_bonus_feat_name {
+            format!(
+                "Monk level {MARTIAL_BASELINE_LEVEL} bonus feat choice recognized: the canonical \
+                 deterministic selection ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}) names \
+                 {feat_name}, drawn from the PF1 Core Rulebook restricted Monk bonus feat list \
+                 (Combat Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, Stunning \
+                 Fist), as chosen input on the compute seam. This is a recognition record of the \
+                 choice slot only, so it carries no fabricated mechanical value (+0): \
+                 {feat_name}'s own mechanics are not grounded here, and no attack-resolution, \
+                 grapple-check, trip-check, or DC/save engine exists in this codebase. Improved \
+                 Unarmed Strike is not part of this restricted choice set because the PF1 Core \
+                 Rulebook grants it to every monk automatically at level {MARTIAL_BASELINE_LEVEL}, \
+                 separate from this chosen bonus feat, and this codebase does not ground that \
+                 automatic grant either"
+            )
+        } else {
+            format!(
+                "Monk level {MARTIAL_BASELINE_LEVEL} bonus feat choice slot is present \
+                 ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}), but only the PF1 Core Rulebook \
+                 restricted Monk bonus feat list (Combat Reflexes, Deflect Arrows, Improved \
+                 Grapple, Improved Trip, Stunning Fist) is recognized on this bounded seam; no \
+                 restricted-list feat identity is grounded and no mechanical value is fabricated \
+                 (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.bonus_feat_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    // Still blocked (the one remaining named burden): the level-1 bonus feat's own
+    // mechanics. The choice-slot identity is recognized above (when present and
+    // in-list); this diagnostic narrows to naming only what remains
+    // unimplemented, and it names the specific recognized feat only when this
+    // seam actually recognized one, mirroring the Druid animal-companion
+    // blocker's conditional message — so it never asserts a specific feat's
+    // mechanics as "remaining" for a character whose chosen feat this seam did
+    // not recognize.
+    let bonus_feat_message = if let Some(feat_name) = recognized_bonus_feat_name {
+        format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its level-1 bonus feat's own \
+             mechanics: the recognized choice ({feat_name}) is acknowledged as chosen input \
+             only — {feat_name}'s actual feat effect requires a general feat-selection or \
+             feat-prerequisite/effect engine that does not exist in this bounded martial chassis \
+             baseline, so no Monk bonus-feat execution support is claimed"
+        )
+    } else {
+        format!(
             "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its level-1 bonus feat grant: \
              the free bonus feat drawn from the restricted Monk feat list (Combat Reflexes, Deflect \
-             Arrows, Improved Grapple, Improved Unarmed Strike, Scorpion Style, Stunning Fist, and \
-             others) is not implemented in this bounded martial chassis baseline — no feat-selection \
-             or feat-prerequisite engine exists here — so no Monk bonus-feat support is claimed"
-        ),
+             Arrows, Improved Grapple, Improved Trip, Stunning Fist) is not recognized as chosen \
+             input in this bounded martial chassis baseline — no feat-selection or \
+             feat-prerequisite engine exists here — so no Monk bonus-feat support is claimed"
+        )
+    };
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned(),
+        message: bonus_feat_message,
         claim_blocking: true,
     });
 }
