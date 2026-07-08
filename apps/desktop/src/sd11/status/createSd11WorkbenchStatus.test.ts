@@ -50,7 +50,7 @@ function verifiesLinuxAlphaStatusTruth() {
     platformLabel: 'Linux',
   }, noOfficialReleaseTruth());
 
-  assertEqual(status.build.label, 'codex-desktop-shell-scaffold@0.0.0-test', 'build label');
+  assertEqual(status.build.label, 'codex-character-hub@0.0.0-test', 'build label');
   assertEqual(status.channel.testerFacingLabel, 'alpha', 'tester-facing channel');
   assertEqual(status.channel.operatorBranch, 'develop', 'operator branch');
   assertEqual(status.channel.operatorPromotionPath, 'develop -> main', 'operator promotion path');
