@@ -14,17 +14,30 @@
 //! diagnostics and grounds one of them for real: Bardic Knowledge (PF1 Core
 //! Rulebook: a flat competence bonus on Knowledge checks equal to half the bard's
 //! level, minimum +1, that also lets the bard make any Knowledge check untrained)
-//! is computed as `class_chassis.bard.bardic_knowledge`, while Bardic Music /
-//! Inspire Courage stays claim-blocked by its own named diagnostic. This promotes
-//! the matrix row from `Blocked` to `Partial` / `Computed`.
+//! is computed as `class_chassis.bard.bardic_knowledge`. This promotes the matrix
+//! row from `Blocked` to `Partial` / `Computed`.
+//!
+//! The SD13-E5 Bardic Performance grounding slice then grounds the flat Bardic
+//! Performance surface for real: the rounds-per-day budget (PF1 Core Rulebook: a
+//! level-1 bard can use bardic performance for 4 + Charisma modifier rounds per
+//! day) is computed as `class_chassis.bard.bardic_performance_rounds_per_day`,
+//! and the Inspire Courage flat level-1 magnitude (+1 competence bonus on attack
+//! and weapon damage rolls, +1 morale bonus on saves against charm and fear
+//! effects) is computed as `class_chassis.bard.inspire_courage_bonus`. The
+//! performance-state engine (start/maintain action economy, round tracking and
+//! consumption) and the other level-1 performances (countersong, distraction,
+//! fascinate) stay claim-blocked by the narrowed
+//! `class_feature.bard.bardic_performance_execution.unsupported` diagnostic. The
+//! matrix row stays `Partial` / `Computed`.
 //!
 //! It is intentionally not a Bard-class-feature engine and not a spell engine. It
-//! fabricates no Bardic Music / Inspire Courage execution, no full Knowledge-check
-//! resolution (no skill ranks, no ability modifier, no untrained-check gate), no
-//! spell slots, no spells known, no spell DCs, no bonus spells, no prepared
-//! posture, no school choice, and no general spell totals, and it grounds no Bard
-//! level 2+. It also preserves the accepted Human race seam on the spell-bearing
-//! path.
+//! fabricates no bardic performance execution (no start/maintain action economy,
+//! no round tracking or consumption, no countersong, distraction, or fascinate
+//! resolution), no full Knowledge-check resolution (no skill ranks, no ability
+//! modifier, no untrained-check gate), no spell slots, no spells known, no spell
+//! DCs, no bonus spells, no prepared posture, no school choice, and no general
+//! spell totals, and it grounds no Bard level 2+. It also preserves the accepted
+//! Human race seam on the spell-bearing path.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -42,7 +55,10 @@ const BARD_FIXTURE: &str =
 
 const RECOGNITION_ID: &str = "class_chassis.spell_baseline.bard";
 const BARDIC_KNOWLEDGE_ID: &str = "class_chassis.bard.bardic_knowledge";
-const BARDIC_MUSIC_BLOCKER_ID: &str = "class_feature.bard.bardic_music.unsupported";
+const BARDIC_PERFORMANCE_ROUNDS_ID: &str = "class_chassis.bard.bardic_performance_rounds_per_day";
+const INSPIRE_COURAGE_ID: &str = "class_chassis.bard.inspire_courage_bonus";
+const PERFORMANCE_EXECUTION_BLOCKER_ID: &str =
+    "class_feature.bard.bardic_performance_execution.unsupported";
 const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.bard.spontaneous_known_and_per_day.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -144,28 +160,36 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
     let computation = compute_pilot_base_chassis(&input);
 
     // No explanation may fabricate spell slots, spells known, DCs, bonus spells, prepared
-    // posture, school choice, or general spell totals, and none may fabricate Bardic Music /
-    // Inspire Courage execution. The recognition record and the grounded Bardic Knowledge
-    // pillar are the only two allowed spell/bardic-tagged explanations.
+    // posture, school choice, or general spell totals, and none may fabricate bardic
+    // performance execution. The recognition record and the three grounded flat pillars
+    // (Bardic Knowledge, the bardic performance rounds-per-day budget, and the Inspire
+    // Courage flat magnitude) are the only allowed spell/bardic-tagged explanations.
+    let allowed_ids = [
+        RECOGNITION_ID,
+        BARDIC_KNOWLEDGE_ID,
+        BARDIC_PERFORMANCE_ROUNDS_ID,
+        INSPIRE_COURAGE_ID,
+    ];
     for explanation in &computation.explanations {
         assert!(
-            explanation.id == RECOGNITION_ID
-                || explanation.id == BARDIC_KNOWLEDGE_ID
-                || (!explanation.id.contains("spell") && !explanation.id.contains("bardic")),
+            allowed_ids.contains(&explanation.id.as_str())
+                || (!explanation.id.contains("spell")
+                    && !explanation.id.contains("bardic")
+                    && !explanation.id.contains("music")
+                    && !explanation.id.contains("inspire")),
             "no fabricated spell or bardic-class-feature explanation is allowed beyond the \
-             +0 recognition and the grounded Bardic Knowledge pillar: {explanation:?}"
+             +0 recognition and the grounded flat pillars: {explanation:?}"
         );
     }
-    // No explanation may fabricate Bardic Music / Inspire Courage math under any name.
+    // No explanation may fabricate the still-ungrounded level-1 performances under any name.
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.contains("music") || e.id.contains("inspire")),
-        "no explanation may fabricate Bardic Music / Inspire Courage math: {:?}",
+        !computation.explanations.iter().any(|e| {
+            e.id.contains("countersong") || e.id.contains("distraction") || e.id.contains("fascinate")
+        }),
+        "no explanation may fabricate countersong / distraction / fascinate math: {:?}",
         computation.explanations
     );
-    // The recognition itself asserts it fabricates no spell math and no Bardic Music math.
+    // The recognition itself asserts it fabricates no spell math and no performance execution.
     let recognition = explanation(&computation, RECOGNITION_ID);
     assert_eq!(recognition.value, 0);
 }
@@ -200,26 +224,100 @@ fn bard_level1_grounds_bardic_knowledge_class_feature_bonus() {
     assert_eq!(computation.base_attack_bonus, 0);
 }
 
-// ----- Still blocked: Bardic Music and the spontaneous spell posture burden -----
+// ----- Grounded: the flat Bardic Performance surface is computed for real -----
 
 #[test]
-fn bard_level1_stays_blocked_on_bardic_music_burden() {
+fn bard_level1_grounds_bardic_performance_rounds_per_day() {
     let input = load(BARD_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // Bardic Music / Inspire Courage must be named explicitly by its own diagnostic, not
-    // hidden behind a generic "unsupported caster" label, and it must no longer be bundled
-    // with the now-grounded Bardic Knowledge pillar.
-    let bardic_music = claim_blocking(&computation, BARDIC_MUSIC_BLOCKER_ID);
-    assert!(
-        bardic_music.message.contains("bardic music"),
-        "bard class-feature blocker must name Bardic Music: {}",
-        bardic_music.message
+    // PF1 Core Rulebook Bardic Performance: a level-1 bard can use bardic performance
+    // for a number of rounds per day equal to 4 + his Charisma modifier. The fixture's
+    // Charisma 15 yields a +2 modifier, so the daily budget is 4 + 2 = 6 rounds.
+    let rounds = explanation(&computation, BARDIC_PERFORMANCE_ROUNDS_ID);
+    assert_eq!(
+        rounds.value, 6,
+        "bardic performance rounds per day must equal 4 + CHA modifier (4 + 2 = 6): {rounds:?}"
     );
     assert!(
-        !bardic_music.message.contains("bardic knowledge"),
-        "the Bardic Music blocker must no longer name Bardic Knowledge now that it is grounded: {}",
-        bardic_music.message
+        rounds.detail.contains("4 + ") && rounds.detail.contains("Charisma"),
+        "the rounds-per-day explanation must name the 4 + Charisma-modifier formula: {}",
+        rounds.detail
+    );
+
+    // Grounding the daily budget must not fabricate the performance-state engine: the
+    // explanation itself must disclaim round tracking/consumption and action economy.
+    assert!(
+        rounds.detail.contains("no round") || rounds.detail.contains("round tracking"),
+        "the rounds-per-day explanation must disclaim the ungrounded round-tracking engine: {}",
+        rounds.detail
+    );
+}
+
+#[test]
+fn bard_level1_grounds_inspire_courage_flat_magnitude() {
+    let input = load(BARD_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // PF1 Core Rulebook Inspire Courage at bard level 1: a +1 competence bonus on attack
+    // and weapon damage rolls and a +1 morale bonus on saving throws against charm and
+    // fear effects. Only the flat +1 magnitude is grounded here; the performance-state
+    // engine that would apply it stays claim-blocked.
+    let inspire_courage = explanation(&computation, INSPIRE_COURAGE_ID);
+    assert_eq!(
+        inspire_courage.value, 1,
+        "inspire courage at bard level 1 must carry the flat +1 magnitude: {inspire_courage:?}"
+    );
+    for token in ["competence", "attack", "damage", "morale", "charm", "fear"] {
+        assert!(
+            inspire_courage.detail.contains(token),
+            "the inspire courage explanation must name the '{token}' component of the PF1 \
+             level-1 magnitude: {}",
+            inspire_courage.detail
+        );
+    }
+
+    // The flat magnitude must not leak into the integrated Fighter-style totals: nothing
+    // applies the bonus, because the performance-state engine is not implemented.
+    assert_eq!(computation.base_attack_bonus, 0);
+    assert_eq!(
+        computation.baseline_melee_attack_bonus, 0,
+        "the flat inspire courage magnitude must not be applied to any combat total"
+    );
+}
+
+// ----- Still blocked: performance execution and the spontaneous spell posture burden -----
+
+#[test]
+fn bard_level1_stays_blocked_on_bardic_performance_execution_burden() {
+    let input = load(BARD_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // The narrowed performance-execution burden must be named explicitly by its own
+    // diagnostic, not hidden behind a generic "unsupported caster" label: the
+    // performance-state engine (start/maintain action economy, round tracking and
+    // consumption) and the other level-1 performances are still unproven.
+    let execution = claim_blocking(&computation, PERFORMANCE_EXECUTION_BLOCKER_ID);
+    for token in [
+        "start",
+        "maintain",
+        "action economy",
+        "round tracking",
+        "countersong",
+        "distraction",
+        "fascinate",
+    ] {
+        assert!(
+            execution.message.contains(token),
+            "the performance-execution blocker must name the '{token}' burden: {}",
+            execution.message
+        );
+    }
+    assert!(
+        !execution.message.contains("bardic knowledge"),
+        "the performance-execution blocker must not re-bundle the grounded Bardic Knowledge \
+         pillar: {}",
+        execution.message
     );
 
     // The old combined diagnostic id must no longer appear at all.
@@ -229,6 +327,15 @@ fn bard_level1_stays_blocked_on_bardic_music_burden() {
             .iter()
             .any(|d| d.id == "class_feature.bard.bardic_knowledge_and_music.unsupported"),
         "the old combined Bardic Knowledge + Music diagnostic must be split, not merely renamed"
+    );
+    // The pre-E5 broad bardic-music diagnostic id must be narrowed away, not kept alongside.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.bard.bardic_music.unsupported"),
+        "the broad bardic-music diagnostic must be narrowed to performance execution now that \
+         the flat performance surface is grounded"
     );
 }
 
@@ -248,11 +355,12 @@ fn bard_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
         spontaneous.message
     );
 
-    // The two remaining burdens (Bardic Music, spontaneous spell posture) are genuinely
-    // distinct diagnostics; Bardic Knowledge is no longer one of them because it is grounded.
+    // The two remaining burdens (performance execution, spontaneous spell posture) are
+    // genuinely distinct diagnostics; Bardic Knowledge and the flat Bardic Performance
+    // surface are no longer among them because they are grounded.
     assert_ne!(
-        BARDIC_MUSIC_BLOCKER_ID, SPONTANEOUS_BLOCKER_ID,
-        "bardic-music and spontaneous burdens must be separate diagnostics"
+        PERFORMANCE_EXECUTION_BLOCKER_ID, SPONTANEOUS_BLOCKER_ID,
+        "performance-execution and spontaneous burdens must be separate diagnostics"
     );
     let distinct_blocking = computation
         .diagnostics
@@ -262,7 +370,7 @@ fn bard_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
     assert_eq!(
         distinct_blocking, 2,
         "bard must leave exactly two class-specific claim-blocking diagnostics \
-         (bardic music, spontaneous spell posture): {:?}",
+         (performance execution, spontaneous spell posture): {:?}",
         computation.diagnostics
     );
 }
@@ -396,10 +504,11 @@ fn matrix_bard_row_is_partial_computed_and_names_remaining_burdens() {
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
 
-    // The SD13-E4 Bard decomposition slice grounds Bardic Knowledge for real, promoting
-    // the row from Blocked to Partial (mirroring the Ranger Track precedent): Bardic
-    // Music and the entire spontaneous spell burden remain unproven, so the row is not
-    // Supported.
+    // The SD13-E4 Bard decomposition slice grounded Bardic Knowledge (Blocked to
+    // Partial), and the SD13-E5 Bardic Performance grounding slice grounds the flat
+    // performance surface (rounds per day, inspire courage magnitude). The row stays
+    // Partial, not Supported: the performance-execution engine, the other level-1
+    // performances, and the entire spontaneous spell burden remain unproven.
     assert_eq!(bard.support_state, SupportState::Partial);
     assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
@@ -409,16 +518,22 @@ fn matrix_bard_row_is_partial_computed_and_names_remaining_burdens() {
     assert!(
         bard.grounding_ref
             .contains("sd13_bard_level1_spell_baseline"),
-        "bard row must cite the SD13-F7/E4 spell-baseline proof surface: {}",
+        "bard row must cite the SD13-F7/E4/E5 spell-baseline proof surface: {}",
         bard.grounding_ref
     );
-    // The note must name the grounded Bardic Knowledge pillar, the still-blocked Bardic
-    // Music pillar, and the still-entirely-unproven spontaneous spell posture.
+    // The note must name the grounded Bardic Knowledge and flat Bardic Performance
+    // pillars, the still-blocked performance-execution engine and remaining level-1
+    // performances, and the still-entirely-unproven spontaneous spell posture.
     let note = bard.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "bard partial row must carry a note");
     for token in [
         "bardic knowledge",
-        "bardic music",
+        "bardic performance",
+        "rounds per day",
+        "inspire courage",
+        "countersong",
+        "distraction",
+        "fascinate",
         "spontaneous",
         "spells known",
         "spells per day",

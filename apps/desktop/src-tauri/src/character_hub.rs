@@ -631,7 +631,7 @@ mod tests {
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:bard", 1),
             generic_plus(&[
-                "class_feature.bard.bardic_music.unsupported",
+                "class_feature.bard.bardic_performance_execution.unsupported",
                 "class_spell.bard.spontaneous_known_and_per_day.unsupported",
             ])
         );

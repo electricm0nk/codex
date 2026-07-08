@@ -45,11 +45,14 @@
 //!   burden remain named and unproven, and no spell math is fabricated,
 //! - the Bard row is `Partial` / `Computed`: the SD13-E4-F7 slice proves the
 //!   deterministic Human Bard level-1 spontaneous arcane spell-bearing identity is
-//!   recognized on the compute seam, and the SD13-E4 Bard decomposition slice grounds
+//!   recognized on the compute seam, the SD13-E4 Bard decomposition slice grounds
 //!   Bardic Knowledge for real (the Knowledge-check competence bonus, max(bard level /
-//!   2, 1)), but the Bardic Music chassis-class-feature burden and the spontaneous
-//!   known-spell / slot posture burden remain unproven, and no Bardic Music math and
-//!   no spell math is fabricated,
+//!   2, 1)), and the SD13-E5 slice grounds the flat Bardic Performance surface (the
+//!   4 + CHA-modifier rounds-per-day budget and the flat +1 Inspire Courage level-1
+//!   magnitude), but the bardic performance-execution burden (start/maintain action
+//!   economy, round tracking/consumption, countersong / distraction / fascinate) and
+//!   the spontaneous known-spell / slot posture burden remain unproven, and no
+//!   performance-execution math and no spell math is fabricated,
 //! - the Wizard row is `Partial` / `Computed`: the SD13-E4-R3 slice proves the
 //!   deterministic Human Wizard level-1 prepared arcane spell-bearing identity is
 //!   recognized on the compute seam (merge receipt executed 2026-07-07), and a later
@@ -336,10 +339,11 @@ const SD13_HALF_ORC_LEVEL1_TEST: &str = "tests/sd13_half_orc_race_semantics_reco
 /// surface.
 const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs";
 
-/// SD13-E4-F7/SD13-E4 dedicated proof surface for the bounded Human Bard level-1 spell
-/// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity,
-/// the grounded Bardic Knowledge chassis-class-feature pillar, and the still-blocked
-/// Bardic Music burden and spontaneous known-spell / slot posture burden.
+/// SD13-E4-F7/SD13-E4/SD13-E5 dedicated proof surface for the bounded Human Bard level-1
+/// spell baseline: direct computed recognition of the spontaneous arcane spell-bearing
+/// identity, the grounded Bardic Knowledge and flat Bardic Performance pillars (rounds
+/// per day, inspire courage magnitude), and the still-blocked bardic
+/// performance-execution burden and spontaneous known-spell / slot posture burden.
 const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1 prepared
@@ -703,27 +707,37 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Bard level-1 spell baseline, with Bardic Knowledge grounded for \
-                            real and the Bardic Music chassis-class-feature burden and the \
-                            spontaneous known-spell / slot posture burden still blocked",
+                            Bard level-1 spell baseline, with Bardic Knowledge and the flat \
+                            Bardic Performance surface (rounds per day, inspire courage \
+                            magnitude) grounded for real and the bardic performance-execution \
+                            burden and the spontaneous known-spell / slot posture burden still \
+                            blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_BARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
                     deterministic Human Bard level-1 spontaneous arcane spell-bearing identity is \
-                    recognized on the compute seam, AND the SD13-E4 Bard decomposition slice \
-                    grounds bardic knowledge (the Knowledge-check competence bonus equal to \
-                    max(bard level / 2, 1), i.e. +1 at level 1, computed against the fixture with \
-                    no dependency on the Bard's Intelligence modifier or skill ranks) for real. \
-                    The row is Partial, not Supported: the bardic music performance family \
-                    (inspire courage and later performances) is not implemented, and the entire \
-                    spontaneous spell burden (spontaneous spells known, spells per day, bonus \
-                    spell slots from CHA, spell save DCs, school choice, prepared posture) is not \
-                    computed. No bardic music math and no spell math is fabricated and no Bard \
-                    level 2+ is proven",
-                next_required_uplift: "SD13-E4 Bard bardic music grounding slice, then the \
-                    spontaneous spell-slot burden, then level-2+ progression",
+                    recognized on the compute seam, the SD13-E4 Bard decomposition slice grounds \
+                    bardic knowledge (the Knowledge-check competence bonus equal to max(bard \
+                    level / 2, 1), i.e. +1 at level 1, computed against the fixture with no \
+                    dependency on the Bard's Intelligence modifier or skill ranks) for real, AND \
+                    the SD13-E5 slice grounds the flat bardic performance surface: the bardic \
+                    performance rounds per day budget (4 + CHA modifier, i.e. 6 against the \
+                    fixture's Charisma 15) and the flat inspire courage level-1 magnitude (+1 \
+                    competence bonus on attack and weapon damage rolls, +1 morale bonus on \
+                    saves against charm and fear effects). The row is Partial, not Supported: \
+                    the performance-state engine (start/maintain action economy, round \
+                    tracking/consumption of the grounded budget) is not implemented, the other \
+                    level-1 performances (countersong, distraction, fascinate) are not \
+                    grounded, and the entire spontaneous spell burden (spontaneous spells \
+                    known, spells per day, bonus spell slots from CHA, spell save DCs, school \
+                    choice, prepared posture) is not computed. No performance-execution math \
+                    and no spell math is fabricated and no Bard level 2+ is proven",
+                next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
+                    (start/maintain action economy, round tracking, countersong / distraction / \
+                    fascinate grounding), then the spontaneous spell-slot burden, then level-2+ \
+                    progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",
