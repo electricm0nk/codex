@@ -19,12 +19,23 @@
 //! into two named diagnostics and grounds one of them for real: Eschew Materials, the
 //! universal, bloodline-independent bonus feat every 1st-level Sorcerer receives (PF1
 //! Core Rulebook: it lets a Sorcerer cast spells with material components costing 1 gp
-//! or less without needing the material component). Bloodline selection, its level-1
-//! bloodline power, bloodline arcana, and the higher-level bonus spells/feats/skills
-//! stay claim-blocked under a renamed `bloodline_power` diagnostic. This promotes the
-//! matrix row from `Blocked` to `Partial`, mirroring the SD13-E3 Ranger Track-grounding
-//! precedent: one of several named pillars is grounded for real while the class remains
-//! far from fully proven and the entire spontaneous spell burden stays untouched.
+//! or less without needing the material component). This promotes the matrix row from
+//! `Blocked` to `Partial`, mirroring the SD13-E3 Ranger Track-grounding precedent: one
+//! of several named pillars is grounded for real while the class remains far from fully
+//! proven and the entire spontaneous spell burden stays untouched.
+//!
+//! The SD13-E5 Sorcerer bloodline-choice slice grounds the next honest pillar: the
+//! canonical deterministic bloodline choice-slot selection
+//! (`choice:sorcerer_bloodline -> bloodline:arcane`) is recognized as chosen input on
+//! the compute seam, mirroring the Fighter bonus-feat choice-slot / Wizard Scribe
+//! Scroll precedent. It is a recognition record only: the Arcane bloodline's level-1
+//! power is Arcane Bond (a familiar or a bonded object — an execution engine, not a
+//! flat number), so no power value is fabricated. The former `bloodline_power` blocker
+//! is narrowed to `arcane_bond_and_bloodline_progression`, naming exactly what stays
+//! unimplemented: Arcane Bond execution, the bloodline arcana (a conditional +1 spell
+//! save DC on metamagic-raised spells), the bloodline class skill grant, and the bonus
+//! spells/feats at 3rd+ level. The row stays `Partial` and the spontaneous spell burden
+//! stays untouched.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -42,7 +53,11 @@ const SORCERER_FIXTURE: &str =
 
 const RECOGNITION_ID: &str = "class_chassis.spell_baseline.sorcerer";
 const ESCHEW_MATERIALS_EXPLANATION_ID: &str = "class_chassis.sorcerer.eschew_materials";
-const BLOODLINE_POWER_BLOCKER_ID: &str = "class_feature.sorcerer.bloodline_power.unsupported";
+const BLOODLINE_CHOICE_EXPLANATION_ID: &str = "class_chassis.sorcerer.bloodline_choice";
+const ARCANE_BOND_BLOCKER_ID: &str =
+    "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported";
+const RETIRED_BLOODLINE_POWER_BLOCKER_ID: &str =
+    "class_feature.sorcerer.bloodline_power.unsupported";
 const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.sorcerer.spontaneous.unsupported";
 
 fn load(fixture: &str) -> CharacterInput {
@@ -203,26 +218,144 @@ fn sorcerer_level1_grounds_eschew_materials_as_a_real_bonus_feat_grant() {
     );
 }
 
-// ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
+// ----- Grounded for real: the canonical bloodline choice-slot selection -----
 
 #[test]
-fn sorcerer_level1_stays_blocked_on_bloodline_power_burden() {
+fn sorcerer_level1_grounds_the_bloodline_choice_recognition() {
     let input = load(SORCERER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The bloodline power burden must be named explicitly, not hidden behind a generic
-    // "unsupported caster" label, and it must be distinct from the now-grounded Eschew
-    // Materials grant.
-    let bloodline_power = claim_blocking(&computation, BLOODLINE_POWER_BLOCKER_ID);
+    // The canonical deterministic bloodline choice-slot selection must be recognized as
+    // chosen input, mirroring the Fighter bonus-feat choice-slot / Wizard Scribe Scroll
+    // precedent: a real, named, grounded explanation rather than part of a claim-blocking
+    // placeholder.
+    let bloodline_choice = explanation(&computation, BLOODLINE_CHOICE_EXPLANATION_ID);
     assert!(
-        bloodline_power.message.contains("bloodline"),
-        "sorcerer bloodline-power blocker must name the bloodline burden: {}",
-        bloodline_power.message
+        bloodline_choice.detail.contains("choice:sorcerer_bloodline")
+            && bloodline_choice.detail.contains("bloodline:arcane"),
+        "bloodline choice recognition must name the canonical selection \
+         (choice:sorcerer_bloodline -> bloodline:arcane): {}",
+        bloodline_choice.detail
+    );
+
+    // Honesty constraint: the Arcane bloodline's level-1 power is Arcane Bond (a
+    // familiar or a bonded object), an execution engine rather than a flat number. The
+    // recognition record must name this explicitly and fabricate no power value.
+    assert!(
+        bloodline_choice.detail.contains("Arcane Bond"),
+        "bloodline choice recognition must name Arcane Bond as the ungroundable-by-flat-value \
+         level-1 power: {}",
+        bloodline_choice.detail
+    );
+    assert_eq!(
+        bloodline_choice.value, 0,
+        "bloodline choice recognition is a choice-slot recognition record, not a numeric \
+         bonus, so it must carry no fabricated value"
+    );
+
+    // The former combined bloodline-power blocker must be retired, replaced by the
+    // narrowed arcane-bond-and-bloodline-progression blocker asserted below.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == RETIRED_BLOODLINE_POWER_BLOCKER_ID),
+        "the combined bloodline_power blocker must be retired once the bloodline choice \
+         is grounded: {:?}",
+        computation.diagnostics
+    );
+}
+
+// ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
+
+#[test]
+fn sorcerer_level1_stays_blocked_on_arcane_bond_and_bloodline_progression_burden() {
+    let input = load(SORCERER_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // With the bloodline CHOICE grounded, the blocker narrows to what actually remains
+    // unimplemented: Arcane Bond execution, the bloodline arcana, the bloodline class
+    // skill grant, and the 3rd+-level bonus spells/feats.
+    let arcane_bond = claim_blocking(&computation, ARCANE_BOND_BLOCKER_ID);
+    assert!(
+        arcane_bond.message.contains("Arcane Bond"),
+        "sorcerer arcane-bond blocker must name the Arcane Bond execution burden: {}",
+        arcane_bond.message
+    );
+    for token in ["arcana", "class skill", "bonus spells", "bonus feats"] {
+        assert!(
+            arcane_bond.message.contains(token),
+            "arcane-bond blocker must name the remaining '{token}' bloodline burden: {}",
+            arcane_bond.message
+        );
+    }
+    assert!(
+        !arcane_bond.message.contains("Eschew Materials"),
+        "arcane-bond blocker must not fold in the now-grounded Eschew Materials grant: {}",
+        arcane_bond.message
     );
     assert!(
-        !bloodline_power.message.contains("Eschew Materials"),
-        "bloodline-power blocker must not fold in the now-grounded Eschew Materials grant: {}",
-        bloodline_power.message
+        !arcane_bond.message.contains("bloodline selection"),
+        "arcane-bond blocker must not still claim the now-grounded bloodline selection is \
+         unimplemented: {}",
+        arcane_bond.message
+    );
+}
+
+// ----- Honesty control: the Arcane Bond blocker must not overclaim Arcane-specific facts
+// ----- for a character whose chosen bloodline this seam did not recognize -----
+
+#[test]
+fn sorcerer_level1_with_non_arcane_bloodline_choice_stays_bloodline_agnostic() {
+    // A non-canonical bloodline selection (e.g. Draconic) is present, but not recognized as
+    // the canonical Arcane selection. The choice-slot recognition explanation must still
+    // appear (the slot is present), but the arcane-bond blocker must not assert
+    // Arcane-specific facts ("Arcane Bond", "Arcane bloodline") for a character who did not
+    // choose the Arcane bloodline.
+    let fixture = SORCERER_FIXTURE.replace("bloodline:arcane", "bloodline:draconic");
+    let input = load(&fixture);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let bloodline_choice = explanation(&computation, BLOODLINE_CHOICE_EXPLANATION_ID);
+    assert!(
+        bloodline_choice.detail.contains("bloodline:draconic"),
+        "bloodline choice recognition must name the non-canonical selection present: {}",
+        bloodline_choice.detail
+    );
+    assert_eq!(bloodline_choice.value, 0);
+
+    let arcane_bond = claim_blocking(&computation, ARCANE_BOND_BLOCKER_ID);
+    assert!(
+        !arcane_bond.message.contains("Arcane Bond") && !arcane_bond.message.contains("Arcane"),
+        "arcane-bond blocker must not claim Arcane-specific facts for a non-Arcane bloodline \
+         selection: {}",
+        arcane_bond.message
+    );
+}
+
+#[test]
+fn sorcerer_level1_with_no_bloodline_choice_stays_bloodline_agnostic() {
+    // No bloodline choice slot is present at all. No bloodline-choice recognition
+    // explanation may appear, and the arcane-bond blocker must stay bloodline-agnostic
+    // rather than asserting Arcane-specific facts for a character with no chosen bloodline.
+    let fixture: String = SORCERER_FIXTURE
+        .lines()
+        .filter(|line| !line.starts_with("choice=choice:sorcerer_bloodline"))
+        .collect::<Vec<_>>()
+        .join("\n");
+    let input = load(&fixture);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        !has_explanation(&computation, BLOODLINE_CHOICE_EXPLANATION_ID),
+        "no bloodline-choice recognition may appear when no bloodline choice slot is present"
+    );
+
+    let arcane_bond = claim_blocking(&computation, ARCANE_BOND_BLOCKER_ID);
+    assert!(
+        !arcane_bond.message.contains("Arcane Bond") && !arcane_bond.message.contains("Arcane"),
+        "arcane-bond blocker must not claim Arcane-specific facts when no bloodline is chosen: {}",
+        arcane_bond.message
     );
 }
 
@@ -244,8 +377,8 @@ fn sorcerer_level1_stays_blocked_on_spontaneous_spell_posture_burden() {
 
     // The two remaining burdens are genuinely distinct diagnostics.
     assert_ne!(
-        BLOODLINE_POWER_BLOCKER_ID, SPONTANEOUS_BLOCKER_ID,
-        "bloodline-power and spontaneous burdens must be separate diagnostics"
+        ARCANE_BOND_BLOCKER_ID, SPONTANEOUS_BLOCKER_ID,
+        "arcane-bond and spontaneous burdens must be separate diagnostics"
     );
     let distinct_blocking = computation
         .diagnostics
@@ -367,14 +500,15 @@ fn sorcerer_level_2_is_not_promoted_by_this_slice() {
 // ----- Control plane: the matrix promotes the Sorcerer row to Partial/Computed -----
 
 #[test]
-fn matrix_sorcerer_row_is_partial_computed_and_names_eschew_and_bloodline_power() {
+fn matrix_sorcerer_row_is_partial_computed_and_names_choice_arcane_bond_and_spontaneous() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let sorcerer = matrix
         .row("class.sorcerer.progression_and_spell_burden")
         .expect("sorcerer row must exist");
 
-    // The SD13-E4 Sorcerer decomposition slice grounds Eschew Materials for real,
-    // promoting the row from Blocked to Partial (never all the way to Supported).
+    // The SD13-E4 Sorcerer decomposition slice grounded Eschew Materials for real,
+    // and the SD13-E5 bloodline-choice slice grounds the canonical bloodline
+    // choice-slot recognition; the row stays Partial (never Supported).
     assert_eq!(sorcerer.support_state, SupportState::Partial);
     assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
@@ -386,16 +520,19 @@ fn matrix_sorcerer_row_is_partial_computed_and_names_eschew_and_bloodline_power(
         sorcerer
             .grounding_ref
             .contains("sd13_sorcerer_level1_spell_baseline"),
-        "sorcerer row must keep citing the SD13-F7/E4 spell-baseline proof surface: {}",
+        "sorcerer row must keep citing the SD13-F7/E4/E5 spell-baseline proof surface: {}",
         sorcerer.grounding_ref
     );
-    // The note must name the now-grounded Eschew Materials grant, the still-unproven
-    // bloodline power burden, and the still-unproven spontaneous spell posture.
+    // The note must name the now-grounded Eschew Materials grant and bloodline choice
+    // recognition, the still-unproven Arcane Bond / bloodline progression burden, and
+    // the still-unproven spontaneous spell posture.
     let note = sorcerer.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "sorcerer row must carry a note");
     for token in [
         "Eschew Materials",
-        "bloodline power",
+        "choice:sorcerer_bloodline",
+        "bloodline:arcane",
+        "Arcane Bond",
         "spontaneous",
         "spells known",
         "spell slot",

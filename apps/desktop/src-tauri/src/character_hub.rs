@@ -615,7 +615,7 @@ mod tests {
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:sorcerer", 1),
             generic_plus(&[
-                "class_feature.sorcerer.bloodline_power.unsupported",
+                "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported",
                 "class_spell.sorcerer.spontaneous.unsupported",
             ])
         );
