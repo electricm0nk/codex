@@ -820,24 +820,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:monk",
                 dimension: "bounded Monk martial chassis progression: the deterministic Human \
                             Monk level-1 martial chassis identity, with base-attack, base-save, \
-                            and AC Bonus now grounded, and unarmed-strike/Flurry-of-Blows and the \
-                            level-1 bonus feat grant still unproven",
+                            AC Bonus, the unarmed strike damage die, and the Flurry of Blows \
+                            flat attack surface now grounded, and the level-1 bonus feat grant \
+                            still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_MONK_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E3 leaves direct computed evidence that the \
+                blocker_or_lossiness_note: "SD13-E3/E5 leaves direct computed evidence that the \
                     deterministic Human Monk level-1 martial chassis identity is recognized on \
-                    the compute seam, and now grounds three named pillar burdens: base attack \
+                    the compute seam, and now grounds four named pillar burdens: base attack \
                     progression (3/4 BAB), base save progression (good Fortitude, Reflex, and \
-                    Will), and AC Bonus (Wisdom-to-AC, the flat level-1 value only). Two named \
-                    pillar burdens remain unproven: unarmed strike damage die and Flurry of Blows, \
-                    and the level-1 bonus feat grant from the restricted Monk feat list. No \
-                    martial math beyond the three grounded pillars is fabricated and no Monk \
-                    level 2+ is proven",
-                next_required_uplift: "later SD13-E3 slice grounding one or both of the two \
-                    remaining named Monk martial pillar burdens (unarmed strike / Flurry of \
-                    Blows, and the level-1 bonus feat grant)",
+                    Will), AC Bonus (Wisdom-to-AC, the flat level-1 value only), and the unarmed \
+                    strike / Flurry of Blows flat surface (Medium monk 1d6 unarmed damage — die \
+                    size only, no damage roll or total — and the level-1 flurry posture of two \
+                    attacks at monk level - 2 = -1 each before ability modifiers). One named \
+                    pillar burden remains unproven: the level-1 bonus feat grant from the \
+                    restricted Monk feat list. The level-4+ unarmed damage die progression, \
+                    flurry with special monk weapons, an attack-resolution engine, wiring into \
+                    integrated combat totals, and Monk level 2+ all remain unproven, and no \
+                    martial math beyond the grounded flat surfaces is fabricated",
+                next_required_uplift: "later SD13-E5 slice grounding the one remaining named \
+                    Monk martial pillar burden (the level-1 bonus feat grant from the restricted \
+                    Monk feat list), then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
