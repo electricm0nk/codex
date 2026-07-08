@@ -306,7 +306,7 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// both F6 (chassis identity) and the Ranger-only per-pillar decomposition +
-/// Track-grounding test as one literal, mirroring
+/// Track / Favored-Enemy-flat-surface grounding test as one literal, mirroring
 /// [`SD13_PALADIN_ROW_GROUNDING_REF`]. Both .contains() consumers (the F6 test
 /// and this slice's test) read their respective substring from this combined
 /// grounding reference.
@@ -918,26 +918,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Ranger level-1 chassis baseline, with Track grounded for real \
-                            and the favored-enemy / combat-style pillar burdens and the \
-                            later spell burden still blocked",
+                            Ranger level-1 chassis baseline, with Track and the favored-enemy \
+                            flat surface grounded for real and the combat-style pillar burden \
+                            and the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_RANGER_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3-F6 leaves direct computed evidence that the \
                     deterministic Human Ranger level-1 hybrid chassis is recognized on the compute \
-                    seam, AND the SD13-E3 Ranger decomposition slice grounds Track (the \
-                    skill/tracking pillar: a bonus on Survival checks to follow tracks equal to \
-                    max(ranger level / 2, 1), i.e. +1 at level 1) for real. The row is Partial, not \
-                    Supported: the favored enemy pillar (favored-enemy type and its Bluff / \
-                    Knowledge / Perception / Sense Motive / Survival / weapon-damage bonuses) and the \
-                    combat style pillar (the level-1 style choice and its level-2 bonus-feat grant) \
-                    remain named and unproven, and the later ranger spell burden (spell slots, spell \
-                    source, spells known/prepared) is still deferred to SD13-E4. No Ranger level 2+ \
-                    is proven",
-                next_required_uplift: "SD13-E3 ranger favored-enemy and combat-style grounding \
-                    slice, then SD13-E4 ranger spell burden",
+                    seam, the SD13-E3 Ranger decomposition slice grounds Track (the skill/tracking \
+                    pillar: a bonus on Survival checks to follow tracks equal to \
+                    max(ranger level / 2, 1), i.e. +1 at level 1) for real, AND the SD13-E5 slice \
+                    grounds the favored enemy flat surface for real: recognition of the chosen \
+                    favored-enemy type (choice:ranger_favored_enemy), the flat +2 bonus on Bluff / \
+                    Knowledge / Perception / Sense Motive / Survival checks against the favored \
+                    enemy, and the flat +2 bonus on weapon attack and damage rolls against the \
+                    favored enemy (PF1 includes attack rolls, unlike D&D 3.5). The row is Partial, \
+                    not Supported: the favored-enemy conditional-application engine (target-type \
+                    matching that would decide whether a specific check or attack is made against \
+                    the favored enemy) is not implemented, the combat style pillar (the level-1 \
+                    style choice and its level-2 bonus-feat grant) remains named and unproven, and \
+                    the later ranger spell burden (spell slots, spell source, spells \
+                    known/prepared) is still deferred to SD13-E4. No Ranger level 2+ is proven",
+                next_required_uplift: "SD13-E5 ranger combat-style grounding slice and a \
+                    favored-enemy conditional-application engine, then SD13-E4 ranger spell burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",
