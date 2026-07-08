@@ -195,6 +195,12 @@ export function createSd16UpdateControllerDeps(
   deps.controller = {
     async runCheck(channel: Sd16UpdateChannelLabel): Promise<void> {
       deps.lastCheck.selectedChannel = channel;
+      deps.lastCheck.indexUrl = `https://raw.githubusercontent.com/electricm0nk/codex/update-index/channels/${channel}.json`;
+      deps.lastCheck.indexStatus = 'in-progress';
+      deps.lastCheck.manifestStatus = 'not-loaded';
+      deps.lastCheck.releaseVersion = null;
+      deps.lastCheck.releaseNotesStatus = 'not-loaded';
+      fetchOutcomes = emptyFetchOutcomes();
 
       const indexResult = await fetchChannelIndex(channel, { fetchImpl: options.fetchImpl });
       const indexClass = classifyFetchResult(indexResult);
@@ -205,7 +211,6 @@ export function createSd16UpdateControllerDeps(
         indexSchemaError: indexClass.schemaError,
       };
       deps.lastCheck.indexStatus = indexClass.status === 'ok' ? 'ok' : 'failed';
-
       if (!indexResult.ok) {
         deps.lastCheck.manifestStatus = 'not-loaded';
         hasRun = true;
