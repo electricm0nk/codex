@@ -789,11 +789,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Bard level-1 spell baseline, with Bardic Knowledge and the flat \
+                            Bard level-1 spell baseline, with Bardic Knowledge, the flat \
                             Bardic Performance surface (rounds per day, inspire courage \
-                            magnitude) grounded for real and the bardic performance-execution \
-                            burden and the spontaneous known-spell / slot posture burden still \
-                            blocked",
+                            magnitude), and the flat Fascinate DC / affected-creature-count \
+                            formulas grounded for real and the bardic performance-execution \
+                            burden (including Countersong and Distraction) and the spontaneous \
+                            known-spell / slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -808,18 +809,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     performance rounds per day budget (4 + CHA modifier, i.e. 6 against the \
                     fixture's Charisma 15) and the flat inspire courage level-1 magnitude (+1 \
                     competence bonus on attack and weapon damage rolls, +1 morale bonus on \
-                    saves against charm and fear effects). The row is Partial, not Supported: \
-                    the performance-state engine (start/maintain action economy, round \
-                    tracking/consumption of the grounded budget) is not implemented, the other \
-                    level-1 performances (countersong, distraction, fascinate) are not \
-                    grounded, and the entire spontaneous spell burden (spontaneous spells \
-                    known, spells per day, bonus spell slots from CHA, spell save DCs, school \
-                    choice, prepared posture) is not computed. No performance-execution math \
-                    and no spell math is fabricated and no Bard level 2+ is proven",
+                    saves against charm and fear effects), AND a further SD13-E5 slice grounds \
+                    the fascinate flat Will-save DC (10 + 1/2 bard level + CHA modifier, i.e. 12 \
+                    against the fixture) and the fascinate flat affected-creature count (1 at \
+                    1st level, plus one more for every three bard levels beyond 1st, i.e. 1 at \
+                    level 1) — both verified against the PF1 Core Rulebook Fascinate rule text, \
+                    not assumed from memory. The row is Partial, not Supported: the \
+                    performance-state engine (start/maintain action economy, round \
+                    tracking/consumption of the grounded budget, no application of the grounded \
+                    fascinate DC or count to any actual Will save or targeting) is not \
+                    implemented, the two remaining level-1 performances (countersong, \
+                    distraction) are not grounded at all — both require an opposed \
+                    Perform-check-vs-effect substitution resolution, not a flat number — and the \
+                    entire spontaneous spell burden (spontaneous spells known, spells per day, \
+                    bonus spell slots from CHA, spell save DCs, school choice, prepared posture) \
+                    is not computed. No performance-execution math and no spell math is \
+                    fabricated and no Bard level 2+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
-                    (start/maintain action economy, round tracking, countersong / distraction / \
-                    fascinate grounding), then the spontaneous spell-slot burden, then level-2+ \
-                    progression",
+                    (start/maintain action economy, round tracking, application of the grounded \
+                    Inspire Courage / Fascinate magnitudes, Countersong / Distraction opposed \
+                    Perform-check-vs-effect grounding), then the spontaneous spell-slot burden, \
+                    then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",
