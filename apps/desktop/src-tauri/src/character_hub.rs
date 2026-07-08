@@ -636,11 +636,13 @@ mod tests {
             ])
         );
 
+        // The SD13-E5 Rogue slice grounds trapfinding, the last named Rogue
+        // pillar burden, so the named Rogue set is now empty: only the 4
+        // generic chassis diagnostics remain (like the non-Human classes).
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:rogue", 1),
-            generic_plus(&[
-                "class_feature.rogue.bounded_progression.trapfinding.unsupported",
-            ])
+            generic_ids(),
+            "Human Rogue L1 must carry only the 4 generic diagnostics after trapfinding grounding"
         );
 
         assert_eq!(

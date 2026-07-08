@@ -5,22 +5,28 @@
 //! deterministic Human `class:rogue:1` input, leaves direct computed evidence
 //! that acknowledges the bounded level-1 chassis identity rather than treating
 //! it as an undocumented packet placeholder. The SD13-E3 pillar-grounding
-//! slice now grounds three of the four named burdens directly: base-attack
-//! progression (3/4 BAB), base-save progression (good Reflex, poor Fortitude,
-//! poor Will), and sneak attack (die-count only, `+1d6` at level 1). Only
-//! trapfinding remains claim-blocked. It also pins the matrix reclassification
-//! of the rogue row, which stays `Partial` / `Computed` with a narrowed
-//! blocker note naming only trapfinding.
+//! slice grounds base-attack progression (3/4 BAB), base-save progression
+//! (good Reflex, poor Fortitude, poor Will), and sneak attack (die-count
+//! only, `+1d6` at level 1); the SD13-E5 slice grounds the fourth and final
+//! named pillar, Trapfinding (the flat `max(rogue level / 2, 1)` bonus on
+//! Perception checks to locate traps and on Disable Device checks, `+1` at
+//! level 1, plus the magic-trap-disarm statement), mirroring the Ranger
+//! Track precedent. No named Rogue pillar burden remains claim-blocked; the
+//! input still claim-blocks on the four generic chassis diagnostics. It also
+//! pins the matrix truth: the rogue row stays `Partial` / `Computed` with a
+//! note naming the honestly-unproven remainder.
 //!
-//! It is intentionally not a Rogue class engine. The new base-attack/base-save
+//! It is intentionally not a Rogue class engine. The base-attack/base-save
 //! explanations are standalone `class_chassis.rogue.*` records, not wired into
 //! `compute_fighter_chassis`, `compute_total_saves`, or
 //! `compute_combat_baseline` — `defense.total_save.*` is still never computed
 //! for Rogue. The sneak-attack explanation grounds only the die-count facet
 //! (`1`), not damage-roll execution or the flanking/Dexterity-denial
-//! trigger-condition engine. This slice grounds no trapfinding
-//! Perception/Disable Device bonus, no rogue talent, and no level-2+
-//! progression. It also preserves the accepted Fighter 1-3 truth, the
+//! trigger-condition engine. The trapfinding explanation grounds only the
+//! flat numeric bonus and the magic-trap-disarm statement, not a
+//! check-execution engine, trap DCs, or a magic-trap disarm engine. This
+//! slice grounds no rogue talent and no level-2+ progression. It also
+//! preserves the accepted Fighter 1-3 truth, the
 //! Barbarian/Monk partial/computed truth, the Paladin/Ranger blocked hybrid
 //! negative controls, and the Human race/interaction truth.
 //! `tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`
@@ -221,22 +227,80 @@ fn rogue_level1_sneak_attack_die_count_is_grounded_and_no_longer_blocked() {
     );
 }
 
-// ----- Still blocked: trapfinding is the sole remaining named burden -----
+// ----- Now grounded (SD13-E5): trapfinding, the fourth and final named pillar -----
 
 #[test]
-fn rogue_level1_stays_blocked_naming_trapfinding_only() {
+fn rogue_trapfinding_is_grounded_with_value_one_at_level_one() {
     let input = load(ROGUE_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let trapfinding = claim_blocking(
-        &computation,
-        "class_feature.rogue.bounded_progression.trapfinding.unsupported",
+    let trapfinding = explanation(&computation, "class_chassis.rogue.trapfinding");
+    assert_eq!(
+        trapfinding.value, 1,
+        "rogue Trapfinding bonus at level 1 must be max(1 / 2, 1) = 1, got {}",
+        trapfinding.value
     );
     assert!(
-        trapfinding.message.contains("trapfinding"),
-        "rogue trapfinding blocker must name the 'trapfinding' burden: {}",
-        trapfinding.message
+        trapfinding.detail.contains("Trapfinding"),
+        "rogue Trapfinding explanation must name the Trapfinding class feature: {}",
+        trapfinding.detail
     );
+    assert!(
+        trapfinding.detail.contains("Perception") && trapfinding.detail.contains("locate traps"),
+        "rogue Trapfinding explanation must name the Perception bonus to locate traps: {}",
+        trapfinding.detail
+    );
+    assert!(
+        trapfinding.detail.contains("Disable Device"),
+        "rogue Trapfinding explanation must name the Disable Device bonus: {}",
+        trapfinding.detail
+    );
+    assert!(
+        trapfinding.detail.contains("magic traps"),
+        "rogue Trapfinding explanation must carry the magic-trap-disarm statement: {}",
+        trapfinding.detail
+    );
+    // Must be explicit that this grounds only the flat numeric bonus (plus the
+    // magic-trap-disarm statement), not a check-execution engine.
+    assert!(
+        trapfinding.detail.contains("not a check-execution engine")
+            || trapfinding.detail.contains("no check-execution engine"),
+        "rogue Trapfinding explanation must disclaim a check-execution engine: {}",
+        trapfinding.detail
+    );
+    assert!(
+        trapfinding.detail.contains("no magic-trap disarm engine"),
+        "rogue Trapfinding explanation must disclaim a magic-trap disarm engine: {}",
+        trapfinding.detail
+    );
+}
+
+// ----- No named Rogue pillar burden remains; only the generics still block -----
+
+#[test]
+fn rogue_level1_retires_the_trapfinding_blocker_but_generics_still_block() {
+    let input = load(ROGUE_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.rogue.bounded_progression.trapfinding.unsupported"),
+        "the trapfinding unsupported diagnostic must no longer be emitted: {:?}",
+        computation.diagnostics
+    );
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id.starts_with("class_feature.rogue.")),
+        "no named rogue pillar diagnostic may remain — the named set is now empty: {:?}",
+        computation.diagnostics
+    );
+    // The generic chassis diagnostic still claim-blocks the integrated surface:
+    // the grounded pillar records are standalone, not wired into totals.
+    claim_blocking(&computation, "class_chassis.unsupported");
 
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
@@ -376,7 +440,7 @@ fn rogue_still_produces_a_claim_blocking_diagnostic_and_no_total_saves() {
 // ----- Control plane: the matrix reclassifies the rogue row to Partial/Computed -----
 
 #[test]
-fn matrix_rogue_row_is_partial_computed_and_names_trapfinding_only() {
+fn matrix_rogue_row_is_partial_computed_with_all_four_pillars_grounded() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let rogue = matrix
         .row("class.rogue.bounded_progression")
@@ -392,30 +456,35 @@ fn matrix_rogue_row_is_partial_computed_and_names_trapfinding_only() {
         rogue
             .grounding_ref
             .contains("sd13_rogue_level1_chassis_baseline"),
-        "rogue row must cite the SD13-E3 rogue proof surface: {}",
+        "rogue row must cite the SD13-E3/E5 rogue proof surface: {}",
         rogue.grounding_ref
     );
     let note = rogue.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "rogue partial row must carry a note");
-    assert!(
-        note.contains("trapfinding"),
-        "rogue partial note must still name the 'trapfinding' burden: {note}"
-    );
-    assert!(
-        note.contains("only trapfinding remains unproven")
-            || note.contains("only the trapfinding burden remains unproven"),
-        "rogue partial note must explicitly say trapfinding is the sole remaining burden: {note}"
-    );
-    for grounded in ["base attack", "base save", "sneak attack"] {
+    for grounded in ["base attack", "base save", "sneak attack", "trapfinding"] {
         assert!(
-            note.contains(grounded),
-            "rogue partial note must still mention '{grounded}' as grounded: {note}"
+            note.to_lowercase().contains(grounded),
+            "rogue partial note must mention '{grounded}' as grounded: {note}"
         );
     }
     assert!(
-        !note.contains("four named pillar burdens remain unproven"),
-        "rogue partial note must not repeat the stale 'four burdens unproven' claim: {note}"
+        !note.contains("only trapfinding remains unproven")
+            && !note.contains("trapfinding remains unproven"),
+        "rogue partial note must not repeat the stale 'trapfinding unproven' claim: {note}"
     );
+    // The honestly-unproven remainder must stay named.
+    for unproven in [
+        "check-execution engine",
+        "trap DC",
+        "magic-trap disarm engine",
+        "rogue talent",
+        "damage-roll execution",
+    ] {
+        assert!(
+            note.contains(unproven),
+            "rogue partial note must name the unproven '{unproven}' remainder: {note}"
+        );
+    }
     assert!(
         note.contains("defense.total_save"),
         "rogue partial note must still name the separate, still-true total_save gap: {note}"
