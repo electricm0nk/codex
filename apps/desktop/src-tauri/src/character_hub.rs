@@ -653,7 +653,7 @@ mod tests {
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:cleric", 1),
             generic_plus(&[
-                "class_feature.cleric.domain_choice.unsupported",
+                "class_feature.cleric.domain_powers.unsupported",
                 "class_spell.cleric.prepared_divine.unsupported",
             ])
         );

@@ -212,14 +212,30 @@ const MONK_CLASS_ID: &str = "class:monk";
 // Grounded SD13-E4 Human Cleric level-1 prepared divine spell-bearing baseline
 // identity. Cleric is the canonical PF1 prepared divine full caster; unlike the
 // arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
-// is split across a domain choice class-feature family (two domains chosen,
-// domain spells, domain powers — Channel Energy has since been grounded for
-// real: ceil(cleric level / 2) d6, minimum 1d6, usable 3 + Charisma modifier
-// times per day) and a prepared divine spell posture family (spells prepared
-// from the full Cleric list, spontaneous cure/inflict conversion, spell slots
-// per day, bonus spells from a high Wisdom, spell save DCs).
+// is split across a domain powers class-feature family (the granted powers of
+// the chosen domains and the domain spell-list contents — Channel Energy has
+// been grounded for real: ceil(cleric level / 2) d6, minimum 1d6, usable
+// 3 + Charisma modifier times per day; and the SD13-E5 domain slice grounds the
+// domain choice seam and the flat domain spell slot count) and a prepared divine
+// spell posture family (spells prepared from the full Cleric list, spontaneous
+// cure/inflict conversion, spell slots per day, bonus spells from a high Wisdom,
+// spell save DCs).
 const CLERIC_CLASS_ID: &str = "class:cleric";
 const CLERIC_BASELINE_LEVEL: u8 = 1;
+
+// SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
+// deterministic domain selections on the level-1 seam (a cleric chooses two domains
+// from among those belonging to her deity). This slice surfaces the named selections
+// as an explicit choice seam only and grounds no domain power and no domain
+// spell-list contents, mirroring the Fighter bonus-feat choice-slot seam pattern.
+const CLERIC_DOMAIN_CHOICE_ID: &str = "choice:cleric_domain";
+const GOOD_DOMAIN_SELECTION: &str = "domain:good";
+const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
+
+// PF1 Core Rulebook Domains: a cleric gains one domain spell slot per level of
+// cleric spells she can cast, 1st and up. At the bounded level-1 baseline she casts
+// only 1st-level cleric spells, so exactly one 1st-level domain slot is granted.
+const CLERIC_LEVEL1_DOMAIN_SPELL_SLOT_COUNT: i16 = 1;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
 // identity. Druid is a prepared divine caster whose bounded burden splits across
@@ -3324,25 +3340,34 @@ fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
 /// its remaining still-missing burdens.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds Channel
-/// Energy's flat die-count and uses-per-day math, but grounds no domain selection, no
-/// domain spells, no domain powers, no channel energy save DC or damage/healing
-/// resolution, no spellbook posture, no spells prepared, no spontaneous cure/inflict
-/// conversion, no spell slots per day, no spell save DCs, and no bonus spell slots from
-/// a high Wisdom. It only:
+/// Energy's flat die-count and uses-per-day math, the domain choice seam, and the flat
+/// domain spell slot count, but grounds no domain powers, no domain spell-list
+/// contents, no channel energy save DC or damage/healing resolution, no spellbook
+/// posture, no spells prepared, no spontaneous cure/inflict conversion, no general
+/// spell slots per day, no spell save DCs, and no bonus spell slots from a high
+/// Wisdom. It only:
 /// - leaves one recognition explanation so the `class:cleric:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - grounds Channel Energy's die count and daily use count for real (PF1 Core
 ///   Rulebook Channel Energy: `ceil(cleric level / 2)` d6, minimum 1d6; usable
-///   `3 + Charisma modifier` times per day), and
+///   `3 + Charisma modifier` times per day),
+/// - surfaces the canonical two-domain choice seam (`choice:cleric_domain ->
+///   domain:good` and `choice:cleric_domain -> domain:healing`) as an explicit
+///   recognition record carrying no mechanical value, mirroring the Fighter
+///   bonus-feat choice-slot seam,
+/// - grounds the flat domain spell slot count for real (PF1 Core Rulebook Domains:
+///   one domain spell slot per level of cleric spells she can cast, 1st and up —
+///   exactly one 1st-level domain slot at level 1; the slot's contents are not
+///   grounded), and
 /// - emits two distinct claim-blocking diagnostics naming the still-unproven domain
-///   choice class-feature burden and the prepared divine spell posture burden
-///   explicitly, rather than hiding behind a generic "unsupported caster" label.
+///   powers burden and the prepared divine spell posture burden explicitly, rather
+///   than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Cleric prepared divine spell-bearing
-/// identity, its one grounded Channel Energy pillar, and its two named remaining
-/// burdens legible on the runtime path.
+/// identity, its grounded Channel Energy / domain-choice / domain-slot-count pillars,
+/// and its two named remaining burdens legible on the runtime path.
 fn explain_cleric_level1_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -3407,16 +3432,70 @@ fn explain_cleric_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the domain choice class-feature burden explicitly.
-    // Channel Energy (above) is grounded; the two chosen domains, their domain
-    // spells, and their domain powers remain entirely unproven.
+    // Grounded for real: the canonical two-domain choice seam. A PF1 cleric chooses
+    // two domains from among those belonging to her deity; the deterministic fixture
+    // carries the canonical Good + Healing pair. Mirroring the Fighter bonus-feat
+    // choice-slot seam, this surfaces the named selections as an explicit choice seam
+    // only when both canonical selections are present — an absent slot is not
+    // fabricated — and contributes no computed mechanical value.
+    let domain_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == CLERIC_DOMAIN_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+    if domain_selections.len() == 2
+        && domain_selections.contains(&GOOD_DOMAIN_SELECTION)
+        && domain_selections.contains(&HEALING_DOMAIN_SELECTION)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.cleric.domain_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Cleric level {CLERIC_BASELINE_LEVEL} chooses two domains from among those \
+                 belonging to her deity (PF1 Core Rulebook Domains); the named canonical \
+                 selections ({CLERIC_DOMAIN_CHOICE_ID} -> {GOOD_DOMAIN_SELECTION}, \
+                 {CLERIC_DOMAIN_CHOICE_ID} -> {HEALING_DOMAIN_SELECTION}) are surfaced as an \
+                 explicit choice seam only, mirroring the Fighter bonus-feat choice-slot seam. \
+                 This slice grounds the domain choice slot, not the chosen domains' granted \
+                 powers or domain spell lists, so it contributes no computed mechanical value \
+                 (+0)"
+            ),
+        });
+    }
+
+    // Grounded for real: the flat domain spell slot count. PF1 Core Rulebook Domains:
+    // a cleric gains one domain spell slot per level of cleric spells she can cast,
+    // 1st and up. This count is class-chassis math independent of which domains were
+    // chosen; only the slot's contents (which domain spell may fill it) depend on the
+    // chosen domains, and those are deliberately not grounded.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.cleric.domain_spell_slot".to_owned(),
+        value: CLERIC_LEVEL1_DOMAIN_SPELL_SLOT_COUNT,
+        detail: format!(
+            "Cleric domain spell slot count: one domain spell slot per level of cleric spells \
+             she can cast, 1st and up (PF1 Core Rulebook Domains). At Cleric level \
+             {CLERIC_BASELINE_LEVEL} she casts only 1st-level cleric spells, so exactly \
+             {CLERIC_LEVEL1_DOMAIN_SPELL_SLOT_COUNT} 1st-level domain spell slot is granted. \
+             This grounds only the flat slot count; it grounds no slot contents (which domain \
+             spell may fill it), no domain spell lists, and no prepared-spell posture"
+        ),
+    });
+
+    // Still blocked (1/2): name the domain powers burden explicitly. Channel Energy,
+    // the domain choice seam, and the flat domain spell slot count (above) are
+    // grounded; the granted powers of the chosen domains and the domain spell-list
+    // contents remain entirely unproven.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.cleric.domain_choice.unsupported".to_owned(),
+        id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
         message: format!(
-            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain choice burden: the \
-             two chosen domains, their domain spells, and their domain powers are not implemented in \
-             this bounded prepared divine spell baseline, so no Cleric domain choice support is \
-             claimed"
+            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain powers burden: \
+             the granted powers of the chosen domains (Good: Touch of Good; Healing: Rebuke \
+             Death — each usable 3 + Wisdom modifier times per day) and the domain spell-list \
+             contents that could fill the grounded domain spell slot are not implemented in this \
+             bounded prepared divine spell baseline, so no Cleric domain power or domain spell \
+             support is claimed"
         ),
         claim_blocking: true,
     });
