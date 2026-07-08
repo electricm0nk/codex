@@ -2310,6 +2310,15 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 ///     three levels thereafter, chosen from the mercy list and attached to lay
 ///     on hands); the at-grant selection is named but not computed
 ///
+/// - one grounded numeric explanation (SD13-E5) for the partial-caster
+///   IDENTITY itself, distinct from the spell burden it sits next to:
+///   * PF1 Core Rulebook effective caster level = max(paladin level − 3, 0);
+///     spells begin at paladin level 4. At the bounded level-1 baseline this
+///     grounds to 0 — the same "correct absence" idiom already used for the
+///     lay on hands / divine grace / mercy level gates above. This grounds
+///     only the caster-level gate arithmetic; it fabricates no spells known,
+///     no spells per day, no bonus spell slots, and no spell save DCs.
+///
 /// - one explicit claim-blocking diagnostic for the partial-caster spell
 ///   burden, distinct from the grounded chassis records:
 ///   * Paladin is a divine partial caster in PF1 Core Rulebook (spells begin
@@ -2320,13 +2329,14 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 ///     runtime path.
 ///
 /// This deliberately does not compute a supported spell surface. Beyond the
-/// grounded Smite Evil numeric formula and the three grounded level-gate
-/// absences, it grounds no lay-on-hands resource handling, no divine-grace
-/// computation, no mercy handling, no spell slots, no spell source lineage,
-/// no spells known or prepared posture, no deity resolution, no domain
-/// mechanics, no alignment-target resolution, and no healing accounting. It
-/// only emits the grounded records and the remaining spell blocker that prove
-/// the F6 surface remains separable on the runtime path.
+/// grounded Smite Evil numeric formula, the three grounded level-gate
+/// absences, and the grounded effective-caster-level gate, it grounds no
+/// lay-on-hands resource handling, no divine-grace computation, no mercy
+/// handling, no spell slots, no spell source lineage, no spells known or
+/// prepared posture, no deity resolution, no domain mechanics, no
+/// alignment-target resolution, and no healing accounting. It only emits the
+/// grounded records and the remaining spell blocker that prove the F6 surface
+/// remains separable on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -2429,6 +2439,27 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
              by PF1 CRB level gate; at-grant formula named but not computed. Mercy is a \
              3rd-level paladin feature (gained at 3rd level and every three levels thereafter): \
              chosen from the mercy list, attaches to lay on hands"
+        ),
+    });
+
+    // SD13-E5: ground the partial-caster IDENTITY itself as one more flat
+    // level-gate record, distinct from the still-ungrounded spell burden
+    // named below. PF1 Core Rulebook: effective caster level = max(paladin
+    // level - 3, 0); spells begin at paladin level 4. At level 1 this
+    // correctly grounds to 0 — the same "correct absence" idiom already used
+    // for lay on hands / divine grace / mercy above. This grounds only the
+    // caster-level gate arithmetic; it fabricates no spells known, no spells
+    // per day, no bonus spell slots, and no spell save DCs.
+    let paladin_effective_caster_level = (paladin_level - 3).max(0);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.partial_caster.effective_caster_level".to_owned(),
+        value: paladin_effective_caster_level,
+        detail: format!(
+            "Paladin effective caster level at paladin level {HYBRID_BASELINE_LEVEL}: max(paladin \
+             level - 3, 0) = max({paladin_level} - 3, 0) = {paladin_effective_caster_level} (PF1 \
+             Core Rulebook: paladin spells begin at paladin level 4). This grounds only the \
+             caster-level gate arithmetic; it computes no spells known, no spells per day, no \
+             bonus spell slots, and no spell save DCs"
         ),
     });
 

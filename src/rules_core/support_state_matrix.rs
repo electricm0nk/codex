@@ -304,10 +304,11 @@ const SD13_FIGHTER_LEVEL1_ROW_GROUNDING_REF: &str =
      tests/sd13_fighter_level1_hit_point_baseline.rs";
 
 /// The combined grounding reference for the Paladin hybrid baseline row, citing
-/// both F6 (chassis identity) and the per-burden decomposition test as one
-/// literal. Both .contains() consumers (F6 test and this slice's test) read
-/// their respective substring from this combined grounding reference.
-const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs +      tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs";
+/// F6 (chassis identity), the per-burden decomposition test, and the SD13-E5
+/// effective-caster-level gate test as one literal. Each `.contains()`
+/// consumer (the F6 test, the decomposition test, and this slice's test) reads
+/// its respective substring from this combined grounding reference.
+const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs +      tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs + tests/sd13_paladin_partial_caster_effective_caster_level.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// both F6 (chassis identity) and the Ranger-only per-pillar decomposition +
@@ -890,8 +891,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             Paladin level-1 chassis baseline, with smite evil's uses-per-day / \
                             attack-bonus / damage-bonus formula grounded, the lay on hands / \
                             divine grace / mercy burdens grounded as correct PF1 CRB level-gate \
-                            absences at level 1, and the hybrid chassis pair plus the \
-                            partial-caster spell burden still named and unproven",
+                            absences at level 1, the partial-caster effective-caster-level gate \
+                            grounded as a correct zero absence, and the hybrid chassis pair plus \
+                            the spells-known/spells-per-day/spell-DC spell burden still named and \
+                            unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -907,16 +910,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     grace, and mercy are grounded as correct level gate absences: lay on hands and \
                     divine grace are 2nd-level paladin features and mercy is a 3rd-level paladin \
                     feature in the PF1 Core Rulebook, so at level 1 each emits a value-0 record \
-                    naming its at-grant formula without computing it. The row is Partial, not \
-                    Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
-                    claim-blocking as accepted hybrid truth, and the partial-caster spell burden \
-                    (Paladin is a divine partial caster in PF1 Core Rulebook: spells begin at \
-                    paladin level 4, effective caster level = paladin level - 3) remains named and \
-                    unproven. No Paladin level 2+ is proven. The F6 hybrid baseline, the F6 hybrid \
-                    blockers, and the F6 hybrid chassis recognition explanation all remain in place",
-                next_required_uplift: "ground the paladin partial-caster spell burden (spells begin \
-                    at paladin level 4, caster level = paladin level - 3), then paladin level-2+ \
-                    progression (lay on hands and divine grace at level 2, mercy at level 3)",
+                    naming its at-grant formula without computing it. SD13-E5 additionally grounds \
+                    the partial-caster IDENTITY itself as one more flat level-gate record: \
+                    effective caster level = max(paladin level - 3, 0), which correctly grounds to \
+                    0 at level 1 (PF1 Core Rulebook: paladin spells begin at paladin level 4). The \
+                    row is Partial, not Supported: the F6 hybrid chassis pair (class-feature and \
+                    spell) stays claim-blocking as accepted hybrid truth, and the partial-caster \
+                    spell burden itself (Paladin is a divine partial caster in PF1 Core Rulebook: \
+                    spells begin at paladin level 4, effective caster level = paladin level - 3) \
+                    remains named and unproven beyond the grounded caster-level gate arithmetic — \
+                    no spell-source lineage, spells known or prepared posture, spells-per-day \
+                    progression, bonus spell slots, or spell save DCs are grounded. No Paladin \
+                    level 2+ is proven. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 \
+                    hybrid chassis recognition explanation all remain in place",
+                next_required_uplift: "ground the paladin spells-known/spells-per-day/spell-DC \
+                    burden content now that the effective-caster-level gate is grounded (spells \
+                    begin at paladin level 4, caster level = paladin level - 3), then paladin \
+                    level-2+ progression (lay on hands and divine grace at level 2, mercy at \
+                    level 3)",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
