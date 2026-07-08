@@ -6,6 +6,7 @@ export interface CreateCharacterFormFields {
   classId: string;
   level: number;
   abilityScores: AbilityScoresDto;
+  abilityBonusTarget: string;
 }
 
 export interface ComposeCreateCharacterRequestDependencies {
@@ -29,6 +30,7 @@ export function composeCreateCharacterRequest(
     classId: fields.classId,
     level: fields.level,
     abilityScores: { ...fields.abilityScores },
+    abilityBonusTarget: fields.abilityBonusTarget,
     savedAt: deps.now(),
   };
 }

@@ -104,6 +104,7 @@ pub struct CreateCharacterRequest {
     pub class_id: String,
     pub level: u8,
     pub ability_scores: AbilityScoresDto,
+    pub ability_bonus_target: String,
     pub saved_at: String,
 }
 
@@ -162,8 +163,8 @@ pub enum CreateCharacterResponse {
 /// equipment loadout is fixed — no class-specific diagnostic in the compute
 /// seam reads those selections, so widening them would not change which
 /// combinations reach `Computed`. Human additionally receives its own
-/// canonical choice-slot values — the ability-bonus target is fixed to
-/// Strength (not yet exposed as a form field); every other race omits the
+/// canonical choice-slot values — the ability-bonus target is the caller's
+/// real choice (`request.ability_bonus_target`); every other race omits the
 /// Human-only slots.
 pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInput {
     let mut selected_choices = vec![
@@ -184,7 +185,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         });
         selected_choices.push(SelectedChoice {
             choice_set_id: "choice:human_ability_bonus".to_owned(),
-            selection_id: "ability:strength".to_owned(),
+            selection_id: format!("ability:{}", request.ability_bonus_target),
         });
     }
 
@@ -479,6 +480,7 @@ mod tests {
                 wisdom: 12,
                 charisma: 8,
             },
+            ability_bonus_target: "strength".to_owned(),
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }
@@ -521,6 +523,23 @@ mod tests {
         assert!(has_choice("choice:human_ability_bonus"));
         assert!(has_choice("choice:level_1_character_feat"));
         assert!(has_choice("choice:fighter_bonus_feat"));
+    }
+
+    #[test]
+    fn compose_character_input_honors_the_requested_human_ability_bonus_target() {
+        let mut request = request_for("race:human", 1);
+        request.ability_bonus_target = "dexterity".to_owned();
+
+        let input = compose_character_input(&request);
+
+        let selection = input
+            .chosen
+            .selected_choices
+            .iter()
+            .find(|choice| choice.choice_set_id == "choice:human_ability_bonus")
+            .map(|choice| choice.selection_id.as_str());
+
+        assert_eq!(selection, Some("ability:dexterity"));
     }
 
     #[test]

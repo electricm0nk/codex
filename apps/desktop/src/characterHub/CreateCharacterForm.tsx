@@ -27,6 +27,7 @@ const INPUT_STYLE: CSSProperties = {
 const FIELD_STYLE: CSSProperties = { marginBottom: '1rem' };
 
 const ABILITY_KEYS = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'] as const;
+const HUMAN_RACE_ID = 'race:human';
 
 export function CreateCharacterForm(props: { onCreated: () => void }) {
   const [displayLabel, setDisplayLabel] = useState('');
@@ -34,6 +35,7 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
   const [classId, setClassId] = useState(CLASS_OPTIONS[0].id);
   const [level, setLevel] = useState(getLevelOptionsForClass(CLASS_OPTIONS[0].id)[0]);
   const [abilityScores, setAbilityScores] = useState({ ...DEFAULT_ABILITY_SCORES });
+  const [abilityBonusTarget, setAbilityBonusTarget] = useState<(typeof ABILITY_KEYS)[number]>('strength');
   const [submitting, setSubmitting] = useState(false);
   const [outcome, setOutcome] = useState<CreateCharacterOutcomeSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -55,7 +57,7 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
     setError(null);
     try {
       const request = composeCreateCharacterRequest(
-        { displayLabel, raceId, classId, level, abilityScores },
+        { displayLabel, raceId, classId, level, abilityScores, abilityBonusTarget },
         { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
       );
       const result = await createCharacterRuntime(request);
@@ -102,6 +104,26 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
           ))}
         </select>
       </div>
+
+      {raceId === HUMAN_RACE_ID ? (
+        <div style={FIELD_STYLE}>
+          <label style={LABEL_STYLE} htmlFor="character-ability-bonus-target">
+            Human ability bonus
+          </label>
+          <select
+            id="character-ability-bonus-target"
+            style={INPUT_STYLE}
+            value={abilityBonusTarget}
+            onChange={(event) => setAbilityBonusTarget(event.target.value as (typeof ABILITY_KEYS)[number])}
+          >
+            {ABILITY_KEYS.map((key) => (
+              <option key={key} value={key} style={{ textTransform: 'capitalize' }}>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </option>
+            ))}
+          </select>
+        </div>
+      ) : null}
 
       <div style={FIELD_STYLE}>
         <label style={LABEL_STYLE} htmlFor="character-class">
