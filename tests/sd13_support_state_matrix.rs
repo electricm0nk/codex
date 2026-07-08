@@ -155,36 +155,41 @@ fn fighter_levels_2_10_row_is_partial_and_computed_and_names_what_remains() {
         !partial.blocker_or_lossiness_note.is_empty(),
         "partial Fighter levels-2-10 row must carry a non-empty note on what remains unproven"
     );
-    // The note must explicitly name that levels 4-10 remain out of proof after the slice.
+    // The note must explicitly name that levels 8-10 remain out of proof after the
+    // SD13-E3 level-7 widening slice.
     assert!(
-        partial.blocker_or_lossiness_note.contains("4-10"),
-        "partial Fighter row must name the still-unproven levels 4-10: {}",
+        partial.blocker_or_lossiness_note.contains("8-10"),
+        "partial Fighter row must name the still-unproven levels 8-10: {}",
         partial.blocker_or_lossiness_note
     );
     assert!(
         partial
             .grounding_ref
-            .contains("sd13_fighter_level2_level3_progression"),
-        "partial Fighter row must cite the SD13-E3 tranche proof surface: {}",
+            .contains("sd13_fighter_level7_progression"),
+        "partial Fighter row must cite the SD13-E3 level-7 proof surface: {}",
         partial.grounding_ref
     );
 }
 
 #[test]
-fn rogue_row_is_blocked_and_computed_with_blocker_note() {
+fn rogue_row_is_partial_and_computed_with_blocker_note() {
+    // The SD13-E3 Rogue chassis recognition slice promoted the row from
+    // Blocked to Partial.
     let matrix = matrix();
     let rogue = row(&matrix, "class.rogue.bounded_progression");
     assert_eq!(rogue.subject_type, MatrixSubjectType::Class);
     assert_eq!(rogue.subject_id, "class:rogue");
-    assert_eq!(rogue.support_state, SupportState::Blocked);
+    assert_eq!(rogue.support_state, SupportState::Partial);
     assert_eq!(rogue.evidence_tier, EvidenceTier::Computed);
     assert!(
         !rogue.blocker_or_lossiness_note.is_empty(),
-        "blocked Rogue row must carry a non-empty blocker note"
+        "partial Rogue row must carry a non-empty blocker note"
     );
     assert!(
-        rogue.grounding_ref.contains("ge06_pilot_total_saves"),
-        "blocked Rogue row must cite the GE-06 total-save test that claim-blocks it: {}",
+        rogue
+            .grounding_ref
+            .contains("sd13_rogue_level1_chassis_baseline"),
+        "partial Rogue row must cite the live SD13-E3 recognition test surface: {}",
         rogue.grounding_ref
     );
 }
@@ -208,8 +213,20 @@ fn fighter_level_1_and_levels_2_10_remain_separate_rows() {
 }
 
 #[test]
-fn every_non_human_race_row_is_unverified_and_observed() {
+fn every_non_human_race_row_now_carries_runtime_evidence() {
+    // Dwarf, Elf, Gnome, Half-Elf, Half-Orc, and Halfling were all promoted to
+    // Partial/Computed by their own SD13-E2 recognition slices. With this
+    // final race slice landed, no core race row is a pure roster-scope
+    // placeholder any longer.
     let matrix = matrix();
+    let recognized = [
+        "race.dwarf.bounded_semantics",
+        "race.elf.bounded_semantics",
+        "race.gnome.bounded_semantics",
+        "race.half_elf.bounded_semantics",
+        "race.half_orc.bounded_semantics",
+        "race.halfling.bounded_semantics",
+    ];
     let non_human_races: Vec<&SupportStateRow> = matrix
         .rows
         .iter()
@@ -219,20 +236,26 @@ fn every_non_human_race_row_is_unverified_and_observed() {
 
     assert_eq!(
         non_human_races.len(),
-        6,
-        "there must be 6 non-Human race rows"
+        recognized.len(),
+        "there must be exactly {} non-Human race rows",
+        recognized.len()
     );
     for race in non_human_races {
+        assert!(
+            recognized.contains(&race.row_id),
+            "unexpected non-Human race row '{}'",
+            race.row_id
+        );
         assert_eq!(
             race.support_state,
-            SupportState::Unverified,
-            "non-Human race row '{}' must be Unverified",
+            SupportState::Partial,
+            "non-Human race row '{}' must be Partial",
             race.row_id
         );
         assert_eq!(
             race.evidence_tier,
-            EvidenceTier::Observed,
-            "non-Human race row '{}' must be Observed",
+            EvidenceTier::Computed,
+            "non-Human race row '{}' must be Computed",
             race.row_id
         );
     }
@@ -292,12 +315,12 @@ fn paladin_and_ranger_hybrid_rows_are_blocked_and_computed_with_named_burdens() 
 }
 
 #[test]
-fn every_remaining_unproven_class_row_is_unverified_and_observed() {
-    // After SD13-E3-F6, SD13-E4-F7, the SD13-E3 Barbarian martial-chassis slice,
-    // and the executed SD13-E4-R3 Wizard merge receipt, Fighter (level 1 + levels
-    // 2-10), Rogue, Barbarian, Paladin, Ranger, Sorcerer, Bard, and Wizard all
-    // carry runtime evidence. The remaining three core class rows must still be
-    // pure roster-scope placeholders with no runtime evidence.
+fn every_core_class_row_now_carries_runtime_evidence() {
+    // After SD13-E3-F6, SD13-E4-F7, SD13-E4-R3, SD13-E4 (Cleric, Druid), and the
+    // SD13-E3 Barbarian/Monk martial-chassis slices, all twelve core class rows
+    // carry runtime evidence. No core class row is a pure roster-scope
+    // placeholder any longer, though several stay Blocked or Partial rather than
+    // Supported.
     let matrix = matrix();
     let proven_subjects = [
         "class:fighter",
@@ -308,30 +331,30 @@ fn every_remaining_unproven_class_row_is_unverified_and_observed() {
         "class:sorcerer",
         "class:bard",
         "class:wizard",
+        "class:cleric",
+        "class:druid",
+        "class:monk",
     ];
-    let other_classes: Vec<&SupportStateRow> = matrix
+    let class_rows: Vec<&SupportStateRow> = matrix
         .rows
         .iter()
         .filter(|r| r.subject_type == MatrixSubjectType::Class)
-        .filter(|r| !proven_subjects.contains(&r.subject_id))
         .collect();
 
-    assert_eq!(
-        other_classes.len(),
-        3,
-        "there must be 3 remaining unproven core class rows"
-    );
-    for class in other_classes {
-        assert_eq!(
-            class.support_state,
-            SupportState::Unverified,
-            "class row '{}' must be Unverified",
-            class.row_id
+    // Twelve class rows total: eleven distinct class subjects, with Fighter alone
+    // carrying two rows (level-1 pilot and levels-2-10).
+    assert_eq!(class_rows.len(), 12, "there must be exactly 12 core class rows");
+    for class in class_rows {
+        assert!(
+            proven_subjects.contains(&class.subject_id),
+            "unexpected class row '{}' with subject_id '{}'",
+            class.row_id,
+            class.subject_id
         );
-        assert_eq!(
+        assert_ne!(
             class.evidence_tier,
             EvidenceTier::Observed,
-            "class row '{}' must be Observed",
+            "class row '{}' must carry runtime evidence, not stay a roster-scope placeholder",
             class.row_id
         );
     }
@@ -467,6 +490,12 @@ fn only_pilot_grounded_rows_rise_above_observed() {
 
     let expected_above_observed = [
         "race.human.pilot_semantics",
+        "race.dwarf.bounded_semantics",
+        "race.elf.bounded_semantics",
+        "race.gnome.bounded_semantics",
+        "race.half_elf.bounded_semantics",
+        "race.half_orc.bounded_semantics",
+        "race.halfling.bounded_semantics",
         "class.fighter.level_1_pilot",
         "class.fighter.levels_2_10",
         "class.rogue.bounded_progression",
@@ -476,6 +505,9 @@ fn only_pilot_grounded_rows_rise_above_observed() {
         "class.sorcerer.progression_and_spell_burden",
         "class.bard.progression_and_spell_burden",
         "class.wizard.progression_and_spell_burden",
+        "class.cleric.progression_and_spell_burden",
+        "class.druid.progression_and_spell_burden",
+        "class.monk.bounded_progression",
         "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
     ];
 
@@ -608,8 +640,14 @@ fn stale_generic_uplift_pointers_are_reconciled() {
 /// The rows anchored to a live, re-runnable proof surface. These are exactly the
 /// pilot-grounded, hybrid-baseline, Barbarian martial-baseline, and spell-baseline
 /// rows that rise above `Observed` evidence.
-const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 11] = [
+const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 20] = [
     "race.human.pilot_semantics",
+    "race.dwarf.bounded_semantics",
+    "race.elf.bounded_semantics",
+    "race.gnome.bounded_semantics",
+    "race.half_elf.bounded_semantics",
+    "race.half_orc.bounded_semantics",
+    "race.halfling.bounded_semantics",
     "class.fighter.level_1_pilot",
     "class.fighter.levels_2_10",
     "class.rogue.bounded_progression",
@@ -619,6 +657,9 @@ const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 11] = [
     "class.sorcerer.progression_and_spell_burden",
     "class.bard.progression_and_spell_burden",
     "class.wizard.progression_and_spell_burden",
+    "class.cleric.progression_and_spell_burden",
+    "class.druid.progression_and_spell_burden",
+    "class.monk.bounded_progression",
     "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
 ];
 
@@ -748,11 +789,14 @@ const NON_HUMAN_VERDICT_AUDIT_BASIS_TOKENS: &[&str] = &[
     "class.fighter.levels_2_10",
     "class.rogue.bounded_progression",
     "class.barbarian.bounded_progression",
+    "class.monk.bounded_progression",
     "class.paladin.hybrid_chassis_and_spell_burden",
     "class.ranger.hybrid_chassis_and_spell_burden",
     "class.sorcerer.progression_and_spell_burden",
     "class.bard.progression_and_spell_burden",
     "class.wizard.progression_and_spell_burden",
+    "class.cleric.progression_and_spell_burden",
+    "class.druid.progression_and_spell_burden",
 ];
 
 #[test]

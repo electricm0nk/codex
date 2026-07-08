@@ -1,0 +1,43 @@
+# SD13-E3 deterministic Human Fighter level 5 progression fixture.
+# Widens the accepted GE-06 deterministic PF1 Core Rulebook Human Fighter pilot to
+# level 5 as chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice seam and
+# the deterministic Longsword / Chain Shirt / no-shield posture, adding the
+# level-5 Weapon Training 1 group selection (Heavy Blades, which the deterministic
+# Longsword falls under). Weapon Training grants +1 to both attack rolls and
+# damage rolls with weapons of the chosen group in PF1 Core Rulebook; this slice
+# grounds only the attack-roll half (folded into the baseline melee attack bonus,
+# mirroring how the deterministic combat baseline already tracks attack but never
+# damage for any Fighter level). No damage total is computed anywhere in this
+# codebase, so the damage-roll half stays explicitly unproven rather than silently
+# omitted.
+case_id=pf1-crb-human-fighter-level5
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:5
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+feat=feat:toughness
+feat=feat:cleave
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+choice=choice:fighter_bonus_feat_2:feat:toughness
+choice=choice:fighter_bonus_feat_4:feat:cleave
+choice=choice:fighter_weapon_training_group:group:heavy_blades
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

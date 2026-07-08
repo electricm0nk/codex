@@ -155,6 +155,35 @@ const WIZARD_BASELINE_LEVEL: u8 = 1;
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const MARTIAL_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E3 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
+// is a non-spell pure martial class with a distinct four-pillar bounded burden; this
+// slice recognizes only its bounded single-class level-1 identity as direct runtime
+// evidence and grounds no base-attack / base-save progression, no unarmed strike
+// damage die, no Flurry of Blows execution, no AC Bonus computation, no level-1
+// bonus feat grant, no ki pool, and no level-2+ martial progression.
+const MONK_CLASS_ID: &str = "class:monk";
+
+// Grounded SD13-E4 Human Cleric level-1 prepared divine spell-bearing baseline
+// identity. Cleric is the canonical PF1 prepared divine full caster; unlike the
+// arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
+// is split across a domain / channel energy class-feature family (two domains
+// chosen, domain spells, domain powers, channel energy) and a prepared divine
+// spell posture family (spells prepared from the full Cleric list, spontaneous
+// cure/inflict conversion, spell slots per day, bonus spells from a high Wisdom,
+// spell save DCs).
+const CLERIC_CLASS_ID: &str = "class:cleric";
+const CLERIC_BASELINE_LEVEL: u8 = 1;
+
+// Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
+// identity. Druid is a prepared divine caster whose bounded burden splits across
+// a nature bond / wild empathy class-feature family (nature bond choice between
+// an animal companion and a domain, nature sense, wild empathy) and a prepared
+// divine spell posture family (spells prepared from the full Druid list,
+// spontaneous summon nature's ally conversion, spell slots per day, bonus spells
+// from a high Wisdom, spell save DCs).
+const DRUID_CLASS_ID: &str = "class:druid";
+const DRUID_BASELINE_LEVEL: u8 = 1;
+
 
 // Grounded Human pilot race seam identities. These name the already-accepted
 // deterministic Human selections; this slice makes their pressure explicit but
@@ -163,20 +192,6 @@ const HUMAN_RACE_ID: &str = "race:human";
 const HUMAN_ABILITY_BONUS_CHOICE_ID: &str = "choice:human_ability_bonus";
 const HUMAN_BONUS_FEAT_CHOICE_ID: &str = "choice:human_bonus_feat";
 const ABILITY_SELECTION_PREFIX: &str = "ability:";
-
-// SD13-E2-F3a Half-Elf bounded race seam identity. Half-Elf is recognized as a
-// chosen race on the pilot seam, but its bounded semantics stay unverified in
-// this slice: no Half-Elf ability-bonus seam, no computed mechanics for sleep
-// immunity / low-light vision / elven blood / skill focus (Listen, Spot,
-// Search) / favored class / multiclass adaptability, and the Half-Elf
-// deterministic input fixture is recognition-only (no computed-mechanic
-// Half-Elf fixture proof surface exists). The bounded, non-claim-blocking
-// `race.half_elf.bounded_semantics` diagnostic makes this explicit on every
-// receipt that selects `race:half-elf`, parallel to the Human seam's bounded
-// note. See
-// programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/race-bounded-semantics/half-elf-bounded-semantics.md
-// for the bounded scope.
-const HALF_ELF_RACE_ID: &str = "race:half-elf";
 
 // SD13-E6-F3a Human racial trait bundle (size, speed, senses, extra skill ranks).
 // These name the remaining Human racial trait burden explicitly, classified
@@ -247,15 +262,42 @@ const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
 // Bounded SD13-E3 Fighter milestone widening. The accepted level-1 pilot is now
-// joined by levels 2 and 3 only. Nothing here grounds level 4+ Fighter burden,
-// repeated bonus-feat cadence, weapon training, later armor-training ranks, or any
-// non-Fighter positive support.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 3;
+// joined by levels 2 through 7. Nothing here grounds level 8+ Fighter burden
+// (the next bonus feat begins at level 8), the weapon-training damage-roll half,
+// or any non-Fighter positive support. The generic PF1 level-4 ability-score-increase
+// milestone needs no separate seam: the chosen ability score is trusted at face
+// value, like every other ability adjustment in this codebase.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 7;
 
 // Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
 // feat at level 2; this slice surfaces the named selection as an explicit seam only
 // and grounds no general feat-effect or prerequisite engine.
 const FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_2";
+
+// Fighter level-4 bonus-feat progression seam. Fighter gains an additional bonus
+// feat at level 4 (the cadence continues at 1, 2, 4, 6, 8, 10, ...); this slice
+// surfaces the named selection as an explicit seam only and grounds no general
+// feat-effect or prerequisite engine, mirroring the level-2 seam.
+const FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_4";
+const CLEAVE_FEAT_SELECTION: &str = "feat:cleave";
+
+// Fighter level-6 bonus-feat progression seam. Fighter gains an additional bonus
+// feat at level 6 (the cadence continues 1, 2, 4, 6, 8, 10, ...); this slice
+// surfaces the named selection as an explicit seam only and grounds no general
+// feat-effect or prerequisite engine, mirroring the level-2/level-4 seams.
+const FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_6";
+const COMBAT_REFLEXES_FEAT_SELECTION: &str = "feat:combat_reflexes";
+
+// Fighter Weapon Training 1, gained at level 5. It grants +1 to attack rolls and
+// damage rolls with weapons of the chosen weapon group. This slice grounds only
+// the attack-roll half (folded into the baseline melee attack bonus for the
+// deterministic Longsword, which falls under the canonical Heavy Blades group);
+// the damage-roll half is never computed for any Fighter level in this codebase,
+// so it stays explicitly unproven rather than silently omitted.
+const FIGHTER_WEAPON_TRAINING_1_LEVEL: u8 = 5;
+const WEAPON_TRAINING_1_ATTACK_BONUS: i16 = 1;
+const FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID: &str = "choice:fighter_weapon_training_group";
+const HEAVY_BLADES_GROUP_SELECTION: &str = "group:heavy_blades";
 
 // Fighter armor training 1, gained at level 3. It reduces the worn armor's
 // armor-check penalty by 1 (to a minimum of 0) and raises its maximum Dexterity
@@ -264,6 +306,14 @@ const FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_2"
 const FIGHTER_ARMOR_TRAINING_1_LEVEL: u8 = 3;
 const ARMOR_TRAINING_1_ARMOR_CHECK_REDUCTION: i16 = 1;
 const ARMOR_TRAINING_1_MAX_DEX_INCREASE: i16 = 1;
+
+// Fighter armor training 2, gained at level 7. It further reduces the worn
+// armor's armor-check penalty (to a minimum of 0, cumulative with Armor
+// Training 1) and further raises its maximum Dexterity bonus. Grounded from
+// cr_abilities_class.lst Fighter armor training; not oracle-checked parity.
+const FIGHTER_ARMOR_TRAINING_2_LEVEL: u8 = 7;
+const ARMOR_TRAINING_2_ARMOR_CHECK_REDUCTION: i16 = 2;
+const ARMOR_TRAINING_2_MAX_DEX_INCREASE: i16 = 2;
 
 /// Simple integrated status for the GE-06 pilot headless receipt: whether the
 /// path produced computed evidence or is blocked. This distinguishes evidence
@@ -360,6 +410,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
     explain_barbarian_level1_chassis(input, &mut explanations, &mut diagnostics);
+    explain_monk_level1_chassis(input, &mut explanations, &mut diagnostics);
+    explain_rogue_level1_chassis(input, &mut explanations, &mut diagnostics);
 
 
     // SD13-E3/E4 Paladin-only decomposition: split the F6 hybrid class-feature
@@ -376,11 +428,37 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_wizard_level1_prepared_spell_baseline(input, &mut explanations, &mut diagnostics);
 
+    explain_cleric_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+
+    explain_druid_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+
     explain_bard_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
-    explain_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
+    explain_human_pilot_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
     explain_human_trait_bundle(input, &mut explanations, &mut diagnostics);
+
+    explain_dwarf_race_seam(input, &mut explanations, &mut diagnostics);
+
+    explain_elf_race_seam(input, &mut explanations, &mut diagnostics);
+
+    explain_gnome_race_seam(input, &mut explanations, &mut diagnostics);
+
+    explain_half_elf_race_seam(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
+
+    explain_half_orc_race_seam(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
+
+    explain_halfling_race_seam(input, &mut explanations, &mut diagnostics);
 
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
@@ -444,39 +522,6 @@ fn assign_modifier(modifiers: &mut AbilityModifiers, ability: &str, modifier: i1
     }
 }
 
-/// Dispatch race-semantics explanation by the chosen `race_id`. Today only
-/// `race:human` carries a grounded compute-surface explanation (preserving the
-/// SD13-E2-R2 precedence verbatim); `race:half-elf` carries a bounded
-/// non-claim-blocking diagnostic that names its scope without grounding any
-/// computed Half-Elf mechanic; every other race keeps the existing
-/// `race.semantics.unverified` note that names the chosen-race identity.
-fn explain_race_seam(
-    input: &CharacterInput,
-    ability_modifiers: &AbilityModifiers,
-    explanations: &mut Vec<ComputationExplanation>,
-    diagnostics: &mut Vec<ComputationDiagnostic>,
-) {
-    match input.chosen.race_id.as_str() {
-        HUMAN_RACE_ID => {
-            explain_human_pilot_race_seam(input, ability_modifiers, explanations, diagnostics);
-        }
-        HALF_ELF_RACE_ID => {
-            explain_half_elf_bounded_race_seam(input, diagnostics);
-        }
-        _ => {
-            diagnostics.push(ComputationDiagnostic {
-                id: "race.semantics.unverified".to_owned(),
-                message: format!(
-                    "race semantics are grounded only for {HUMAN_RACE_ID} on the deterministic pilot seam; \
-                     chosen race {} has no grounded race semantics in this slice",
-                    input.chosen.race_id
-                ),
-                claim_blocking: false,
-            });
-        }
-    }
-}
-
 /// Make the already-grounded Human pilot race seam explicit instead of leaving it an
 /// incidental side effect of the numeric outputs.
 ///
@@ -498,6 +543,35 @@ fn explain_human_pilot_race_seam(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        // Dwarf, Elf, Gnome, Half-Elf, Half-Orc, and Halfling carry their own
+        // dedicated race-semantics seams (explain_dwarf_race_seam,
+        // explain_elf_race_seam, explain_gnome_race_seam,
+        // explain_half_elf_race_seam, explain_half_orc_race_seam,
+        // explain_halfling_race_seam); they replace this generic diagnostic
+        // rather than stacking alongside it. With Halfling landed, this branch
+        // is unreachable for the seven-race SD-13 roster but stays as a
+        // defensive fallback for any race identity outside that roster.
+        if input.chosen.race_id != DWARF_RACE_ID
+            && input.chosen.race_id != ELF_RACE_ID
+            && input.chosen.race_id != GNOME_RACE_ID
+            && input.chosen.race_id != HALF_ELF_RACE_ID
+            && input.chosen.race_id != HALF_ORC_RACE_ID
+            && input.chosen.race_id != HALFLING_RACE_ID
+        {
+            diagnostics.push(ComputationDiagnostic {
+                id: "race.semantics.unverified".to_owned(),
+                message: format!(
+                    "race semantics are grounded only for {HUMAN_RACE_ID} on the deterministic pilot seam; \
+                     chosen race {} has no grounded race semantics in this slice",
+                    input.chosen.race_id
+                ),
+                claim_blocking: false,
+            });
+        }
+        return;
+    }
+
     // Human ability-bonus interaction: the named choice targets one ability. Surface its
     // pressure through the already-computed modifier for exactly that ability.
     if let Some(selection) = choice_selection(input, HUMAN_ABILITY_BONUS_CHOICE_ID) {
@@ -557,40 +631,717 @@ fn explain_human_pilot_race_seam(
     });
 }
 
-/// Bounded Half-Elf race-semantics seam (SD13-E2-F3a).
+const DWARF_RACE_ID: &str = "race:dwarf";
+const DWARF_SIZE_CATEGORY: &str = "Medium";
+const DWARF_BASE_SPEED_FEET: i16 = 20;
+const DWARF_DARKVISION_FEET: i16 = 60;
+const DWARF_CON_ADJUSTMENT: i16 = 2;
+const DWARF_CHA_ADJUSTMENT: i16 = -2;
+
+/// SD13-E2 Dwarf racial trait bundle explanation seam (mirroring the SD13-E6-F3a
+/// Human trait bundle pattern for the first non-Human core race).
 ///
-/// This is **recognition without grounding**. Half-Elf is named as a chosen
-/// race on the pilot seam so the receipt carries a single explicit,
-/// non-claim-blocking diagnostic that names every Half-Elf PF1 Core Rulebook
-/// racial trait (ability-bonus to one chosen ability, immunity to sleep,
-/// elven blood / low-light vision, +2 Listen/Spot/Search skill focus, favored
-/// class flexibility, multiclass adaptability). The diagnostic makes explicit
-/// that this slice grounds **no** Half-Elf computed mechanic: there is no
-/// `race.half_elf.ability_bonus_target` analog (the Half-Elf deterministic
-/// input fixture is recognition-only; a computed-mechanic fixture would mint
-/// one only after a later slice proves the chosen-target mechanic is
-/// repeatable at the chosen level), there is no
-/// computed sleep-immunity or low-light-vision emission, and there is no
-/// guarded favored-class / multiclass-feat engine. The diagnostic carries the
-/// chosen `race:half-elf` identity in its message so downstream readers can
-/// reconcile it from the receipt alone.
-fn explain_half_elf_bounded_race_seam(
+/// Surfaces four grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
+/// modifiers, size, speed, senses) as explicit `ComputationExplanation` records so
+/// the Dwarf identity is legible on the runtime path rather than left behind the
+/// generic `race.semantics.unverified` diagnostic every other non-Human race still
+/// receives.
+///
+/// This function:
+///   - runs only when `race_id == race:dwarf`; every other race is unaffected
+///     (Human keeps its own seam; every other non-Human race keeps the generic
+///     `race.semantics.unverified` diagnostic from `explain_human_race_seam`),
+///   - adds no new computed mechanical contribution: the ability-modifiers record
+///     is recognition-only (the chosen Constitution/Charisma scores are understood
+///     to already reflect the fixed +2/-2 racial adjustment; no arithmetic is
+///     performed on this seam), and the size/senses records carry the grounded
+///     source value as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with a
+///     Dwarf-specific `race.dwarf.bounded_semantics` note naming the still-unproven
+///     families explicitly (Stonecunning and other skill/derived-stat modifiers,
+///     Defensive Training, Hardy, Stability, Hatred, weapon familiarity, and the
+///     explicit absence of any Dwarf racial bonus feat),
+///   - is bounded to race recognition only; it deliberately grounds no Dwarf
+///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
+fn explain_dwarf_race_seam(
     input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    if input.chosen.race_id != DWARF_RACE_ID {
+        return;
+    }
+
+    // ----- ability modifiers -----
+    // Recognition record only: PF1 Core Dwarf ability adjustments (+2 Con / -2 Cha)
+    // are fixed, not a player choice. The chosen Constitution/Charisma scores are
+    // understood to already reflect this adjustment; no arithmetic is performed here.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.ability_modifiers".to_owned(),
+        value: 0,
+        detail: format!(
+            "Dwarf racial trait bundle — ability modifiers: PF1 Core Dwarf grants a fixed \
+             {DWARF_CON_ADJUSTMENT:+} Constitution and {DWARF_CHA_ADJUSTMENT:+} Charisma racial \
+             adjustment (cr_races.lst race:dwarf STAT:CON|{DWARF_CON_ADJUSTMENT:+}, \
+             STAT:CHA|{DWARF_CHA_ADJUSTMENT:+}). This is a bounded recognition record naming the \
+             fixed adjustment on the deterministic pilot seam; the chosen Constitution and \
+             Charisma scores are understood to already reflect it, so this record performs no \
+             arithmetic and carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Dwarf racial trait bundle — size: PF1 Core Dwarf is {DWARF_SIZE_CATEGORY} size \
+             (cr_races.lst race:dwarf SIZE:MEDIUM). This is a bounded recognition record naming \
+             the Dwarf size category on the deterministic pilot seam; it contributes no numeric \
+             effect to attack rolls, AC, skill checks, ability checks, or any other computed \
+             value, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    // Recognition record for the 20 ft base land speed. PF1 Core Dwarf speed is
+    // never reduced by armor or encumbrance, unlike most Medium races; this is
+    // named explicitly as identity only — no computed speed-derived value is
+    // fabricated.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.speed".to_owned(),
+        value: DWARF_BASE_SPEED_FEET,
+        detail: format!(
+            "Dwarf racial trait bundle — speed: PF1 Core Dwarf has a base land speed of \
+             {DWARF_BASE_SPEED_FEET} ft that is never reduced by armor or encumbrance \
+             (cr_races.lst race:dwarf GAIT:WALK|{DWARF_BASE_SPEED_FEET}). This is a grounded \
+             recognition value carrying the Dwarf base-speed identity on the deterministic pilot \
+             seam; it contributes no computed speed-derived effect to any chassis output, skill \
+             modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    // Recognition record for Darkvision 60 ft, distinct from Human's bounded
+    // no-special-senses classification.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.senses".to_owned(),
+        value: DWARF_DARKVISION_FEET,
+        detail: format!(
+            "Dwarf racial trait bundle — senses: PF1 Core Dwarf grants Darkvision \
+             {DWARF_DARKVISION_FEET} ft (cr_races.lst race:dwarf SENSE:Darkvision \
+             ({DWARF_DARKVISION_FEET} ft)). This is a grounded recognition value carrying the \
+             Dwarf Darkvision identity on the deterministic pilot seam; it contributes no \
+             computed low-light or perception-derived effect to any chassis output"
+        ),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Dwarf specifically and
+    // stays non-claim-blocking so the deterministic pilot still reports computed
+    // evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.dwarf.bounded_semantics".to_owned(),
+        message: "Dwarf race semantics are grounded for the deterministic pilot's ability \
+                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core \
+                  Dwarf racial trait surface remains unverified: skill or derived-stat \
+                  modifiers (Stonecunning Perception/Appraise bonuses), Defensive Training \
+                  (dodge bonus to AC against giants), Hardy (bonus on saves against poison, \
+                  spells, and spell-like abilities), Stability (bonus to CMD against bull \
+                  rush/trip), Hatred (bonus on attack rolls against orcs and goblinoids), and \
+                  weapon familiarity (battleaxe, heavy pick, warhammer, dwarven waraxe, \
+                  dwarven urgrosh). PF1 core Dwarves gain no racial bonus feat (unlike Human), \
+                  so that family is explicitly not applicable rather than silently omitted."
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+const ELF_RACE_ID: &str = "race:elf";
+const ELF_SIZE_CATEGORY: &str = "Medium";
+const ELF_BASE_SPEED_FEET: i16 = 30;
+const ELF_DEX_ADJUSTMENT: i16 = 2;
+const ELF_CON_ADJUSTMENT: i16 = -2;
+
+/// SD13-E2 Elf racial trait bundle explanation seam (mirroring the Dwarf pattern
+/// for the second non-Human core race).
+///
+/// Surfaces four grounded PF1 Core Rulebook Elf racial trait dimensions (ability
+/// modifiers, size, speed, senses) as explicit `ComputationExplanation` records so
+/// the Elf identity is legible on the runtime path rather than left behind the
+/// generic `race.semantics.unverified` diagnostic every other non-Human race still
+/// receives.
+///
+/// This function:
+///   - runs only when `race_id == race:elf`; every other race is unaffected
+///     (Human and Dwarf keep their own seams; every other non-Human race keeps
+///     the generic `race.semantics.unverified` diagnostic),
+///   - adds no new computed mechanical contribution: the ability-modifiers record
+///     is recognition-only (the chosen Dexterity/Constitution scores are
+///     understood to already reflect the fixed +2/-2 racial adjustment; no
+///     arithmetic is performed on this seam), and the size/senses records carry
+///     the grounded source value as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with an
+///     Elf-specific `race.elf.bounded_semantics` note naming the still-unproven
+///     families explicitly (Elven Immunities, Keen Senses, weapon familiarity,
+///     bonus languages, and the explicit absence of any Elf racial bonus feat),
+///   - is bounded to race recognition only; it deliberately grounds no Elf
+///     class-chassis interaction, no other race, no alternate +2 Intelligence
+///     ability variant, and no PF1 alternate ruleset.
+fn explain_elf_race_seam(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != ELF_RACE_ID {
+        return;
+    }
+
+    // ----- ability modifiers -----
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.ability_modifiers".to_owned(),
+        value: 0,
+        detail: format!(
+            "Elf racial trait bundle — ability modifiers: PF1 Core Elf grants a fixed \
+             {ELF_DEX_ADJUSTMENT:+} Dexterity and {ELF_CON_ADJUSTMENT:+} Constitution racial \
+             adjustment (cr_races.lst race:elf STAT:DEX|{ELF_DEX_ADJUSTMENT:+}, \
+             STAT:CON|{ELF_CON_ADJUSTMENT:+}). This is a bounded recognition record naming the \
+             fixed adjustment on the deterministic pilot seam; the chosen Dexterity and \
+             Constitution scores are understood to already reflect it, so this record performs \
+             no arithmetic and carries no fabricated mechanical value (+0). The alternate PF1 \
+             +2 Intelligence Elf variant is out of scope for this slice."
+        ),
+    });
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Elf racial trait bundle — size: PF1 Core Elf is {ELF_SIZE_CATEGORY} size \
+             (cr_races.lst race:elf SIZE:MEDIUM). This is a bounded recognition record naming \
+             the Elf size category on the deterministic pilot seam; it contributes no numeric \
+             effect to attack rolls, AC, skill checks, ability checks, or any other computed \
+             value, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.speed".to_owned(),
+        value: ELF_BASE_SPEED_FEET,
+        detail: format!(
+            "Elf racial trait bundle — speed: PF1 Core Elf has a base land speed of \
+             {ELF_BASE_SPEED_FEET} ft (cr_races.lst race:elf GAIT:WALK|{ELF_BASE_SPEED_FEET}). \
+             This is a grounded recognition value carrying the Elf base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    // Low-light vision is a binary trait (doubles effective light for vision
+    // purposes), not a distance magnitude like Dwarf Darkvision; the recognition
+    // value stays +0.
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Elf racial trait bundle — senses: PF1 Core Elf grants low-light vision \
+                  (cr_races.lst race:elf SENSE:Low-Light Vision). This is a bounded recognition \
+                  record naming the Elf low-light vision identity on the deterministic pilot \
+                  seam; it contributes no computed illumination or perception-derived effect to \
+                  any chassis output, so it carries no fabricated mechanical value (+0)"
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Elf specifically and
+    // stays non-claim-blocking so the deterministic pilot still reports computed
+    // evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.elf.bounded_semantics".to_owned(),
+        message: "Elf race semantics are grounded for the deterministic pilot's ability \
+                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core Elf \
+                  racial trait surface remains unverified: Elven Immunities (immunity to magic \
+                  sleep effects and a bonus on saves against enchantment spells and effects), \
+                  Keen Senses (a bonus on Perception checks), weapon familiarity (longbow, \
+                  composite longbow, longsword, rapier, shortbow, composite shortbow), and \
+                  bonus language grants. PF1 core Elves gain no racial bonus feat (unlike \
+                  Human), so that family is explicitly not applicable rather than silently \
+                  omitted."
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+const GNOME_RACE_ID: &str = "race:gnome";
+const GNOME_SIZE_CATEGORY: &str = "Small";
+const GNOME_BASE_SPEED_FEET: i16 = 20;
+const GNOME_CON_ADJUSTMENT: i16 = 2;
+const GNOME_STR_ADJUSTMENT: i16 = -2;
+
+/// SD13-E2 Gnome racial trait bundle explanation seam (mirroring the Dwarf/Elf
+/// pattern for the third non-Human core race).
+///
+/// Surfaces four grounded PF1 Core Rulebook Gnome racial trait dimensions
+/// (ability modifiers, size, speed, senses) as explicit `ComputationExplanation`
+/// records so the Gnome identity is legible on the runtime path rather than left
+/// behind the generic `race.semantics.unverified` diagnostic every other
+/// non-Human race still receives.
+///
+/// This function:
+///   - runs only when `race_id == race:gnome`; every other race is unaffected
+///     (Human, Dwarf, and Elf keep their own seams; every other non-Human race
+///     keeps the generic `race.semantics.unverified` diagnostic),
+///   - adds no new computed mechanical contribution: the ability-modifiers record
+///     is recognition-only (the chosen Constitution/Strength scores are
+///     understood to already reflect the fixed +2/-2 racial adjustment; no
+///     arithmetic is performed on this seam), and the size/senses records carry
+///     the grounded source value as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with a
+///     Gnome-specific `race.gnome.bounded_semantics` note naming the
+///     still-unproven families explicitly (Defensive Training, Illusion
+///     Resistance, Hatred, Keen Senses, Gnome Magic, weapon familiarity, and the
+///     explicit absence of any Gnome racial bonus feat),
+///   - is bounded to race recognition only; it deliberately grounds no Gnome
+///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
+fn explain_gnome_race_seam(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != GNOME_RACE_ID {
+        return;
+    }
+
+    // ----- ability modifiers -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.ability_modifiers".to_owned(),
+        value: 0,
+        detail: format!(
+            "Gnome racial trait bundle — ability modifiers: PF1 Core Gnome grants a fixed \
+             {GNOME_CON_ADJUSTMENT:+} Constitution and {GNOME_STR_ADJUSTMENT:+} Strength racial \
+             adjustment (cr_races.lst race:gnome STAT:CON|{GNOME_CON_ADJUSTMENT:+}, \
+             STAT:STR|{GNOME_STR_ADJUSTMENT:+}). This is a bounded recognition record naming the \
+             fixed adjustment on the deterministic pilot seam; the chosen Constitution and \
+             Strength scores are understood to already reflect it, so this record performs no \
+             arithmetic and carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Gnome racial trait bundle — size: PF1 Core Gnome is {GNOME_SIZE_CATEGORY} size \
+             (cr_races.lst race:gnome SIZE:SMALL). This is a bounded recognition record naming \
+             the Gnome size category on the deterministic pilot seam; it contributes no numeric \
+             effect to attack rolls, AC, skill checks, ability checks, or any other computed \
+             value, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.speed".to_owned(),
+        value: GNOME_BASE_SPEED_FEET,
+        detail: format!(
+            "Gnome racial trait bundle — speed: PF1 Core Gnome has a base land speed of \
+             {GNOME_BASE_SPEED_FEET} ft (cr_races.lst race:gnome GAIT:WALK|{GNOME_BASE_SPEED_FEET}). \
+             This is a grounded recognition value carrying the Gnome base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Gnome racial trait bundle — senses: PF1 Core Gnome grants low-light vision \
+                  (cr_races.lst race:gnome SENSE:Low-Light Vision). This is a bounded \
+                  recognition record naming the Gnome low-light vision identity on the \
+                  deterministic pilot seam; it contributes no computed illumination or \
+                  perception-derived effect to any chassis output, so it carries no fabricated \
+                  mechanical value (+0)"
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Gnome specifically and
+    // stays non-claim-blocking so the deterministic pilot still reports computed
+    // evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.gnome.bounded_semantics".to_owned(),
+        message: "Gnome race semantics are grounded for the deterministic pilot's ability \
+                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core Gnome \
+                  racial trait surface remains unverified: Defensive Training (a dodge bonus to \
+                  AC against giants), Illusion Resistance (a bonus on saves against illusion \
+                  spells and effects), Hatred (a bonus on attack rolls against reptilian \
+                  humanoids and goblinoids), Keen Senses (a bonus on Perception checks), Gnome \
+                  Magic (spell-like abilities keyed to a high Charisma), and weapon familiarity \
+                  (gnome hooked hammer). PF1 core Gnomes gain no racial bonus feat (unlike \
+                  Human), so that family is explicitly not applicable rather than silently \
+                  omitted."
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+const HALF_ELF_RACE_ID: &str = "race:half-elf";
+const HALF_ELF_SIZE_CATEGORY: &str = "Medium";
+const HALF_ELF_BASE_SPEED_FEET: i16 = 30;
+const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
+
+/// SD13-E2 Half-Elf racial trait bundle explanation seam (mirroring the
+/// Dwarf/Elf/Gnome recognition pattern for the fourth non-Human core race, but
+/// with a choice-based ability bonus like Human's rather than a fixed pair).
+///
+/// Surfaces four grounded PF1 Core Rulebook Half-Elf racial trait dimensions
+/// (chosen ability-bonus target, size, speed, senses) as explicit
+/// `ComputationExplanation` records so the Half-Elf identity is legible on the
+/// runtime path rather than left behind the generic `race.semantics.unverified`
+/// diagnostic every other non-Human race still receives.
+///
+/// This function:
+///   - runs only when `race_id == race:half-elf`; every other race is unaffected
+///     (Human, Dwarf, Elf, and Gnome keep their own seams; every other non-Human
+///     race keeps the generic `race.semantics.unverified` diagnostic),
+///   - adds no new computed mechanical contribution: the ability-bonus-target
+///     record surfaces the already-computed modifier for the chosen ability as
+///     recognition (mirroring `race.human.ability_bonus_target`'s shape), and
+///     the size/senses records carry the grounded source value as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with a
+///     Half-Elf-specific `race.half_elf.bounded_semantics` note naming the
+///     still-unproven families explicitly (Elven Immunities, Adaptability, Keen
+///     Senses, Multitalented),
+///   - is bounded to race recognition only; it deliberately grounds no Half-Elf
+///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
+fn explain_half_elf_race_seam(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != HALF_ELF_RACE_ID {
+        return;
+    }
+
+    // ----- ability bonus (choice-based, like Human) -----
+    if let Some(selection) = choice_selection(input, HALF_ELF_ABILITY_BONUS_CHOICE_ID) {
+        let ability = selection
+            .strip_prefix(ABILITY_SELECTION_PREFIX)
+            .unwrap_or(selection);
+        let modifier = ability_modifier_for(ability_modifiers, ability);
+        explanations.push(ComputationExplanation {
+            id: "race.half_elf.trait_bundle.ability_bonus_target".to_owned(),
+            value: modifier,
+            detail: format!(
+                "Half-Elf racial trait bundle — ability bonus: PF1 Core Half-Elf grants a \
+                 player-chosen +2 to any one ability score ({HALF_ELF_ABILITY_BONUS_CHOICE_ID} \
+                 -> {selection}); the chosen {ability} score yields modifier {modifier:+}. This \
+                 is a bounded recognition record naming the chosen target on the deterministic \
+                 pilot seam; the chosen score is understood to already reflect the +2 \
+                 adjustment, so this record performs no arithmetic beyond surfacing the \
+                 already-computed modifier"
+            ),
+        });
+    }
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_elf.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Half-Elf racial trait bundle — size: PF1 Core Half-Elf is \
+             {HALF_ELF_SIZE_CATEGORY} size (cr_races.lst race:half-elf SIZE:MEDIUM). This is a \
+             bounded recognition record naming the Half-Elf size category on the deterministic \
+             pilot seam; it contributes no numeric effect to attack rolls, AC, skill checks, \
+             ability checks, or any other computed value, so it carries no fabricated \
+             mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_elf.trait_bundle.speed".to_owned(),
+        value: HALF_ELF_BASE_SPEED_FEET,
+        detail: format!(
+            "Half-Elf racial trait bundle — speed: PF1 Core Half-Elf has a base land speed of \
+             {HALF_ELF_BASE_SPEED_FEET} ft \
+             (cr_races.lst race:half-elf GAIT:WALK|{HALF_ELF_BASE_SPEED_FEET}). This is a \
+             grounded recognition value carrying the Half-Elf base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_elf.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Half-Elf racial trait bundle — senses: PF1 Core Half-Elf grants low-light \
+                  vision (cr_races.lst race:half-elf SENSE:Low-Light Vision). This is a bounded \
+                  recognition record naming the Half-Elf low-light vision identity on the \
+                  deterministic pilot seam; it contributes no computed illumination or \
+                  perception-derived effect to any chassis output, so it carries no fabricated \
+                  mechanical value (+0)"
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Half-Elf specifically
+    // and stays non-claim-blocking so the deterministic pilot still reports
+    // computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.half_elf.bounded_semantics".to_owned(),
-        message: format!(
-            "{HALF_ELF_RACE_ID} is recognized as a chosen race on the deterministic pilot seam, but \
-             this slice grounds no computed Half-Elf racial mechanic: no Half-Elf ability-bonus seam \
-             for the chosen +2 ability is emitted, no sleep-immunity, low-light vision, elven-blood, \
-             +2 Listen/Spot/Search skill focus, favored class flexibility, or multiclass adaptability \
-             mechanic is computed, and the Half-Elf deterministic input fixture is recognition-only \
-             (no computed-mechanic Half-Elf pilot fixture has been minted). \
-             Only the chosen race_id {} is carried; broader PF1 Half-Elf racial semantics remain \
-             unverified on the bounded-pilot seam until a later SD13-E2 race-semantic slice lands",
-            input.chosen.race_id
+        message: "Half-Elf race semantics are grounded for the deterministic pilot's chosen \
+                  ability-bonus target, size, speed, and senses trait bundle; the remaining PF1 \
+                  Core Half-Elf racial trait surface remains unverified: Elven Immunities \
+                  (immunity to magic sleep effects and a bonus on saves against enchantment \
+                  spells and effects), Adaptability (a bonus Skill Focus feat in a chosen skill \
+                  at 1st level), Keen Senses (a bonus on Perception checks), and Multitalented \
+                  (counting both parent classes as favored classes)."
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+const HALF_ORC_RACE_ID: &str = "race:half-orc";
+const HALF_ORC_SIZE_CATEGORY: &str = "Medium";
+const HALF_ORC_BASE_SPEED_FEET: i16 = 30;
+const HALF_ORC_DARKVISION_FEET: i16 = 60;
+const HALF_ORC_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_orc_ability_bonus";
+
+/// SD13-E2 Half-Orc racial trait bundle explanation seam (mirroring the
+/// Half-Elf choice-based ability-bonus pattern for the fifth non-Human core
+/// race, with Darkvision instead of low-light vision).
+///
+/// Surfaces four grounded PF1 Core Rulebook Half-Orc racial trait dimensions
+/// (chosen ability-bonus target, size, speed, senses) as explicit
+/// `ComputationExplanation` records so the Half-Orc identity is legible on the
+/// runtime path rather than left behind the generic `race.semantics.unverified`
+/// diagnostic every other non-Human race still receives.
+///
+/// This function:
+///   - runs only when `race_id == race:half-orc`; every other race is
+///     unaffected (Human, Dwarf, Elf, Gnome, and Half-Elf keep their own seams;
+///     every other non-Human race keeps the generic `race.semantics.unverified`
+///     diagnostic),
+///   - adds no new computed mechanical contribution: the ability-bonus-target
+///     record surfaces the already-computed modifier for the chosen ability as
+///     recognition, and the size/senses records carry the grounded source value
+///     as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with a
+///     Half-Orc-specific `race.half_orc.bounded_semantics` note naming the
+///     still-unproven families explicitly (Intimidating, Orc Ferocity, weapon
+///     familiarity),
+///   - is bounded to race recognition only; it deliberately grounds no Half-Orc
+///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
+fn explain_half_orc_race_seam(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != HALF_ORC_RACE_ID {
+        return;
+    }
+
+    // ----- ability bonus (choice-based, like Half-Elf) -----
+    if let Some(selection) = choice_selection(input, HALF_ORC_ABILITY_BONUS_CHOICE_ID) {
+        let ability = selection
+            .strip_prefix(ABILITY_SELECTION_PREFIX)
+            .unwrap_or(selection);
+        let modifier = ability_modifier_for(ability_modifiers, ability);
+        explanations.push(ComputationExplanation {
+            id: "race.half_orc.trait_bundle.ability_bonus_target".to_owned(),
+            value: modifier,
+            detail: format!(
+                "Half-Orc racial trait bundle — ability bonus: PF1 Core Half-Orc grants a \
+                 player-chosen +2 to any one ability score \
+                 ({HALF_ORC_ABILITY_BONUS_CHOICE_ID} -> {selection}); the chosen {ability} score \
+                 yields modifier {modifier:+}. This is a bounded recognition record naming the \
+                 chosen target on the deterministic pilot seam; the chosen score is understood \
+                 to already reflect the +2 adjustment, so this record performs no arithmetic \
+                 beyond surfacing the already-computed modifier"
+            ),
+        });
+    }
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_orc.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Half-Orc racial trait bundle — size: PF1 Core Half-Orc is \
+             {HALF_ORC_SIZE_CATEGORY} size (cr_races.lst race:half-orc SIZE:MEDIUM). This is a \
+             bounded recognition record naming the Half-Orc size category on the deterministic \
+             pilot seam; it contributes no numeric effect to attack rolls, AC, skill checks, \
+             ability checks, or any other computed value, so it carries no fabricated \
+             mechanical value (+0)"
         ),
+    });
+
+    // ----- speed -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_orc.trait_bundle.speed".to_owned(),
+        value: HALF_ORC_BASE_SPEED_FEET,
+        detail: format!(
+            "Half-Orc racial trait bundle — speed: PF1 Core Half-Orc has a base land speed of \
+             {HALF_ORC_BASE_SPEED_FEET} ft \
+             (cr_races.lst race:half-orc GAIT:WALK|{HALF_ORC_BASE_SPEED_FEET}). This is a \
+             grounded recognition value carrying the Half-Orc base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_orc.trait_bundle.senses".to_owned(),
+        value: HALF_ORC_DARKVISION_FEET,
+        detail: format!(
+            "Half-Orc racial trait bundle — senses: PF1 Core Half-Orc grants Darkvision \
+             {HALF_ORC_DARKVISION_FEET} ft (cr_races.lst race:half-orc SENSE:Darkvision \
+             ({HALF_ORC_DARKVISION_FEET} ft)). This is a grounded recognition value carrying \
+             the Half-Orc Darkvision identity on the deterministic pilot seam; it contributes \
+             no computed low-light or perception-derived effect to any chassis output"
+        ),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Half-Orc specifically
+    // and stays non-claim-blocking so the deterministic pilot still reports
+    // computed evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.half_orc.bounded_semantics".to_owned(),
+        message: "Half-Orc race semantics are grounded for the deterministic pilot's chosen \
+                  ability-bonus target, size, speed, and senses trait bundle; the remaining PF1 \
+                  Core Half-Orc racial trait surface remains unverified: Intimidating (a bonus \
+                  on Intimidate checks), Orc Ferocity (fighting on for one more round after \
+                  being brought below 0 hit points), and weapon familiarity (orc double axe, \
+                  falchion, and treating any weapon with 'orc' in its name as martial)."
+            .to_owned(),
+        claim_blocking: false,
+    });
+}
+
+const HALFLING_RACE_ID: &str = "race:halfling";
+const HALFLING_SIZE_CATEGORY: &str = "Small";
+const HALFLING_BASE_SPEED_FEET: i16 = 20;
+const HALFLING_DEX_ADJUSTMENT: i16 = 2;
+const HALFLING_STR_ADJUSTMENT: i16 = -2;
+
+/// SD13-E2 Halfling racial trait bundle explanation seam (mirroring the
+/// Dwarf/Elf/Gnome fixed-ability-pair pattern for the sixth and final
+/// non-Human core race).
+///
+/// Surfaces four grounded PF1 Core Rulebook Halfling racial trait dimensions
+/// (ability modifiers, size, speed, senses) as explicit `ComputationExplanation`
+/// records so the Halfling identity is legible on the runtime path rather than
+/// left behind the generic `race.semantics.unverified` diagnostic.
+///
+/// This function:
+///   - runs only when `race_id == race:halfling`; every other race is
+///     unaffected (Human, Dwarf, Elf, Gnome, Half-Elf, and Half-Orc keep their
+///     own seams),
+///   - adds no new computed mechanical contribution: the ability-modifiers
+///     record is recognition-only (the chosen Dexterity/Strength scores are
+///     understood to already reflect the fixed +2/-2 racial adjustment; no
+///     arithmetic is performed on this seam), and the size/senses records
+///     carry the grounded source value as identity only,
+///   - replaces the generic `race.semantics.unverified` diagnostic with a
+///     Halfling-specific `race.halfling.bounded_semantics` note naming the
+///     still-unproven families explicitly (Fearless, Halfling Luck, Keen
+///     Senses, Sure-Footed, weapon familiarity, and the explicit absence of
+///     any Halfling racial bonus feat),
+///   - is bounded to race recognition only; it deliberately grounds no
+///     Halfling class-chassis interaction, no other race, and no PF1
+///     alternate ruleset.
+fn explain_halfling_race_seam(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if input.chosen.race_id != HALFLING_RACE_ID {
+        return;
+    }
+
+    // ----- ability modifiers -----
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.ability_modifiers".to_owned(),
+        value: 0,
+        detail: format!(
+            "Halfling racial trait bundle — ability modifiers: PF1 Core Halfling grants a \
+             fixed {HALFLING_DEX_ADJUSTMENT:+} Dexterity and {HALFLING_STR_ADJUSTMENT:+} \
+             Strength racial adjustment (cr_races.lst race:halfling \
+             STAT:DEX|{HALFLING_DEX_ADJUSTMENT:+}, STAT:STR|{HALFLING_STR_ADJUSTMENT:+}). This \
+             is a bounded recognition record naming the fixed adjustment on the deterministic \
+             pilot seam; the chosen Dexterity and Strength scores are understood to already \
+             reflect it, so this record performs no arithmetic and carries no fabricated \
+             mechanical value (+0)"
+        ),
+    });
+
+    // ----- size -----
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.size".to_owned(),
+        value: 0,
+        detail: format!(
+            "Halfling racial trait bundle — size: PF1 Core Halfling is \
+             {HALFLING_SIZE_CATEGORY} size (cr_races.lst race:halfling SIZE:SMALL). This is a \
+             bounded recognition record naming the Halfling size category on the deterministic \
+             pilot seam; it contributes no numeric effect to attack rolls, AC, skill checks, \
+             ability checks, or any other computed value, so it carries no fabricated \
+             mechanical value (+0)"
+        ),
+    });
+
+    // ----- speed -----
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.speed".to_owned(),
+        value: HALFLING_BASE_SPEED_FEET,
+        detail: format!(
+            "Halfling racial trait bundle — speed: PF1 Core Halfling has a base land speed of \
+             {HALFLING_BASE_SPEED_FEET} ft \
+             (cr_races.lst race:halfling GAIT:WALK|{HALFLING_BASE_SPEED_FEET}). This is a \
+             grounded recognition value carrying the Halfling base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline"
+        ),
+    });
+
+    // ----- senses -----
+    // Bounded "no special senses" classification, mirroring Human's pattern:
+    // PF1 Core Halflings have ordinary vision (no darkvision, no low-light vision).
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Halfling racial trait bundle — senses: PF1 Core Halfling grants no special \
+                  senses (cr_races.lst race:halfling carries no SENSE tag; darkvision, \
+                  low-light vision, and other sense bonuses are absent). This is a bounded \
+                  no-effect classification record on the deterministic pilot seam; it carries \
+                  no fabricated sense bonus and contributes no computed value (+0)"
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // the generic race.semantics.unverified diagnostic for Halfling specifically
+    // and stays non-claim-blocking so the deterministic pilot still reports
+    // computed evidence.
+    diagnostics.push(ComputationDiagnostic {
+        id: "race.halfling.bounded_semantics".to_owned(),
+        message: "Halfling race semantics are grounded for the deterministic pilot's ability \
+                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core \
+                  Halfling racial trait surface remains unverified: Fearless (a bonus on saves \
+                  against fear), Halfling Luck (a luck bonus on all saving throws), Keen Senses \
+                  (a bonus on Perception checks), Sure-Footed (a bonus on Acrobatics and Climb \
+                  checks), and weapon familiarity (sling and thrown weapons). PF1 core \
+                  Halflings gain no racial bonus feat (unlike Human), so that family is \
+                  explicitly not applicable rather than silently omitted."
+            .to_owned(),
         claim_blocking: false,
     });
 }
@@ -745,10 +1496,11 @@ fn supported_fighter_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Fighter armor-training profile for a given Fighter level. Armor training 1 is
-/// gained at level 3; before that there is no armor-training effect.
+/// gained at level 3, and armor training 2 at level 7; before level 3 there is no
+/// armor-training effect.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct FighterArmorTraining {
-    /// Armor-training rank (0 before level 3, 1 from level 3 in this slice).
+    /// Armor-training rank (0 before level 3, 1 from level 3, 2 from level 7).
     rank: u8,
     /// Reduction applied to the worn armor's armor-check penalty (moves it toward 0).
     armor_check_reduction: i16,
@@ -757,7 +1509,13 @@ struct FighterArmorTraining {
 }
 
 fn fighter_armor_training(level: u8) -> FighterArmorTraining {
-    if level >= FIGHTER_ARMOR_TRAINING_1_LEVEL {
+    if level >= FIGHTER_ARMOR_TRAINING_2_LEVEL {
+        FighterArmorTraining {
+            rank: 2,
+            armor_check_reduction: ARMOR_TRAINING_2_ARMOR_CHECK_REDUCTION,
+            max_dex_increase: ARMOR_TRAINING_2_MAX_DEX_INCREASE,
+        }
+    } else if level >= FIGHTER_ARMOR_TRAINING_1_LEVEL {
         FighterArmorTraining {
             rank: 1,
             armor_check_reduction: ARMOR_TRAINING_1_ARMOR_CHECK_REDUCTION,
@@ -777,6 +1535,26 @@ fn fighter_armor_training(level: u8) -> FighterArmorTraining {
 /// into a bonus.
 fn effective_chain_shirt_armor_check_penalty(level: u8) -> i16 {
     (CHAIN_SHIRT_ARMOR_CHECK_PENALTY + fighter_armor_training(level).armor_check_reduction).min(0)
+}
+
+/// The Weapon Training 1 attack-roll bonus for a Fighter at the given level,
+/// gated on the canonical `choice:fighter_weapon_training_group ->
+/// group:heavy_blades` selection (the group the deterministic Longsword falls
+/// under). Returns 0 before level 5 or when the group choice is absent — the
+/// canonical-choice validator (`CANONICAL_FIGHTER_FEAT_CHOICES`) separately
+/// claim-blocks a present-but-non-canonical selection, so this function only
+/// needs to distinguish "canonical" from "absent or anything else."
+fn fighter_weapon_training_attack_bonus(input: &CharacterInput, level: u8) -> i16 {
+    if level < FIGHTER_WEAPON_TRAINING_1_LEVEL {
+        return 0;
+    }
+    if choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID)
+        == Some(HEAVY_BLADES_GROUP_SELECTION)
+    {
+        WEAPON_TRAINING_1_ATTACK_BONUS
+    } else {
+        0
+    }
 }
 
 /// Compute the bounded Fighter base chassis for the supported milestone levels
@@ -886,8 +1664,58 @@ fn explain_fighter_class_features(
         });
     }
 
+    if level >= 4
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_4_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 4 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. This slice grounds the bonus-feat slot, not a \
+                     general feat-effect or prerequisite engine, so it contributes no computed \
+                     mechanical value (+0)"
+            ),
+        });
+    }
+
+    if level >= 6
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_6_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 6 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. This slice grounds the bonus-feat slot, not a \
+                     general feat-effect or prerequisite engine, so it contributes no computed \
+                     mechanical value (+0)"
+            ),
+        });
+    }
+
     let armor_training = fighter_armor_training(level);
-    if armor_training.rank > 0 {
+    if armor_training.rank == 2 {
+        let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
+        let raised_max_dex = CHAIN_SHIRT_MAX_DEX + armor_training.max_dex_increase;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.armor_training".to_owned(),
+            value: i16::from(armor_training.rank),
+            detail: format!(
+                "Fighter level {FIGHTER_ARMOR_TRAINING_2_LEVEL} Armor Training 2 (armor training, \
+                 cr_abilities_class.lst Fighter): further reduces the worn Chain Shirt armor-check \
+                 penalty by {ARMOR_TRAINING_2_ARMOR_CHECK_REDUCTION} cumulative (from \
+                 {CHAIN_SHIRT_ARMOR_CHECK_PENALTY:+} to {reduced_penalty:+}), which raises the \
+                 armor-check-penalty-affected selected skill totals (Climb, Swim) by the same \
+                 amount, and raises the maximum Dexterity bonus by \
+                 {ARMOR_TRAINING_2_MAX_DEX_INCREASE} cumulative (from {CHAIN_SHIRT_MAX_DEX} to \
+                 {raised_max_dex}); on the deterministic +2 Dexterity contribution, this changes \
+                 no derived armor-class value on this fixture"
+            ),
+        });
+    } else if armor_training.rank == 1 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
         let raised_max_dex = CHAIN_SHIRT_MAX_DEX + armor_training.max_dex_increase;
         explanations.push(ComputationExplanation {
@@ -902,14 +1730,36 @@ fn explain_fighter_class_features(
             ),
         });
     }
+
+    let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
+    if weapon_training_bonus > 0 {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.weapon_training".to_owned(),
+            value: weapon_training_bonus,
+            detail: format!(
+                "Fighter level {FIGHTER_WEAPON_TRAINING_1_LEVEL} Weapon Training 1 (weapon \
+                 training, cr_abilities_class.lst Fighter): the chosen weapon group \
+                 ({FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID} -> {HEAVY_BLADES_GROUP_SELECTION}) \
+                 grants +{weapon_training_bonus} to attack rolls with weapons of that group, \
+                 which the deterministic Longsword falls under; this +{weapon_training_bonus} is \
+                 already folded into the baseline melee attack bonus. Weapon Training also grants \
+                 +{weapon_training_bonus} to damage rolls with weapons of that group, but no \
+                 damage total is computed anywhere in this codebase for any Fighter level, so the \
+                 damage-roll half stays explicitly unproven rather than silently omitted"
+            ),
+        });
+    }
 }
 
 /// The canonical Human Fighter feat-choice selections this slice preserves on the
-/// deterministic level-1/2/3 seam, as `(choice_set_id, canonical_selection_id)` pairs.
-/// Any named slot present but deviating from its canonical selection is claim-blocked.
-/// A slot absent for the chosen level (e.g. the level-2 bonus feat at level 1) is not
-/// fabricated.
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 4] = [
+/// deterministic level-1 through level-5 seam, as `(choice_set_id,
+/// canonical_selection_id)` pairs. Any named slot present but deviating from its
+/// canonical selection is claim-blocked. A slot absent for the chosen level (e.g.
+/// the level-2 bonus feat at level 1) is not fabricated. This same machinery
+/// validates the level-5 weapon-training-group choice, since it is structurally
+/// identical to a bonus-feat slot (a named choice-set that must match one
+/// canonical selection).
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 7] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -922,6 +1772,18 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 4] = [
     (
         FIGHTER_LEVEL_2_BONUS_FEAT_CHOICE_ID,
         TOUGHNESS_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_4_BONUS_FEAT_CHOICE_ID,
+        CLEAVE_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID,
+        HEAVY_BLADES_GROUP_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_6_BONUS_FEAT_CHOICE_ID,
+        COMBAT_REFLEXES_FEAT_SELECTION,
     ),
 ];
 
@@ -1287,7 +2149,10 @@ fn explain_barbarian_level1_chassis(
     }
 
     // Only the Barbarian is in this slice today; the match is exhaustive-by-design so
-    // a future addition (e.g. a non-hybrid Monk slice) needs an explicit arm here.
+    // a future addition needs an explicit arm here. The SD13-E3 Monk martial-chassis
+    // slice landed as its own dedicated recognition function (`explain_monk_level1_chassis`)
+    // rather than a new `MartialClass` arm, since its four named burdens are unrelated
+    // in content to Barbarian's.
     let MartialClass::Barbarian = martial;
     let class_id = BARBARIAN_CLASS_ID;
     let class_name = "Barbarian";
@@ -1354,6 +2219,236 @@ fn explain_barbarian_level1_chassis(
              the trait that prevents literate reading and writing of non-native languages without additional \
              training is not implemented in this bounded martial chassis baseline, so no {class_name} \
              illiteracy-trait support is claimed"
+        ),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Monk at the bounded
+/// martial baseline level (1). Returns `false` for any other class, a multiclass mix,
+/// or a level-2+ Monk this slice deliberately does not recognize — each of which stays
+/// blocked exactly as before.
+fn is_single_class_monk_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == MONK_CLASS_ID
+                && class_level.level == MARTIAL_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E3 runtime evidence for the deterministic Human Monk level-1
+/// martial chassis, mirroring the Barbarian level-1 baseline pattern, while keeping it
+/// explicitly claim-blocked on the four still-missing named burdens.
+///
+/// This deliberately does not compute a supported martial chassis. It grounds no
+/// base-attack progression (3/4 BAB), no base-save progression (good Fortitude,
+/// Reflex, and Will), no unarmed strike damage die, no Flurry of Blows execution, no
+/// AC Bonus (Wisdom-to-AC) computation, and no level-1 bonus feat grant from the
+/// restricted Monk feat list. It grounds no ki pool and no level-2+ martial
+/// progression. It only:
+/// - leaves one chassis-recognition explanation so the `class:monk:1` identity is
+///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits four claim-blocking diagnostics naming the four still-missing pillar
+///   burdens (base-attack, base-save, unarmed-strike/flurry, AC-bonus/bonus-feat)
+///   explicitly, rather than hiding behind a single generic "unsupported class" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Monk martial identity and its four named
+/// pillar burdens legible on the runtime path.
+fn explain_monk_level1_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_monk_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Monk level-1 martial
+    // chassis identity. This is a recognition record only; it fabricates no mechanical
+    // value.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.bounded_progression".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Monk level {MARTIAL_BASELINE_LEVEL} martial chassis: \
+             the {MONK_CLASS_ID}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure \
+             non-hybrid martial baseline on the rules-core seam rather than an undocumented packet \
+             placeholder. This is a bounded chassis-recognition record only; it grounds no Monk \
+             base-attack or base-save progression, no unarmed strike damage die, no Flurry of \
+             Blows execution, no AC Bonus computation, no level-1 bonus feat grant, no ki pool, \
+             and no level-2+ martial progression, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/4): name the base-attack progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.monk.bounded_progression.base_attack.unsupported".to_owned(),
+        message: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its base attack progression: \
+             the 3/4-BAB progression is not implemented in this bounded martial chassis baseline, \
+             so no Monk base-attack support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/4): name the base-save progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.monk.bounded_progression.base_save.unsupported".to_owned(),
+        message: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its base save progression: \
+             the good Fortitude, Reflex, and Will base-save progressions are not implemented in \
+             this bounded martial chassis baseline, so no Monk base-save support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (3/4): name the unarmed strike / Flurry of Blows burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.monk.bounded_progression.unarmed_strike_and_flurry.unsupported"
+            .to_owned(),
+        message: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its unarmed strike and \
+             Flurry of Blows burden: the unarmed strike damage die and the Flurry of Blows extra \
+             attack are not implemented in this bounded martial chassis baseline, so no Monk \
+             unarmed strike or Flurry of Blows support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (4/4): name the AC Bonus / level-1 bonus feat burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.monk.bounded_progression.ac_bonus_and_bonus_feat.unsupported"
+            .to_owned(),
+        message: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its AC Bonus and bonus feat \
+             burden: the AC Bonus (Wisdom modifier added to AC while unarmored and unencumbered) \
+             and the level-1 bonus feat grant from the restricted Monk feat list are not \
+             implemented in this bounded martial chassis baseline, so no Monk AC Bonus or bonus \
+             feat support is claimed"
+        ),
+        claim_blocking: true,
+    });
+}
+
+const ROGUE_CLASS_ID: &str = "class:rogue";
+const ROGUE_BASELINE_LEVEL: u8 = 1;
+
+/// Return `true` when the chosen input is exactly a single-class Rogue at the
+/// bounded chassis baseline level (1). Returns `false` for any other class, a
+/// multiclass mix, or a level-2+ Rogue this slice deliberately does not
+/// recognize — each of which stays blocked exactly as before.
+fn is_single_class_rogue_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == ROGUE_CLASS_ID
+                && class_level.level == ROGUE_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E3 runtime evidence for the deterministic Human Rogue
+/// level-1 chassis, mirroring the Barbarian/Monk level-1 baseline pattern,
+/// while keeping it explicitly claim-blocked on the four still-missing named
+/// burdens.
+///
+/// This deliberately does not compute a supported chassis. It grounds no
+/// base-attack progression (3/4 BAB), no base-save progression (good Reflex,
+/// poor Fortitude, poor Will), no sneak attack damage-die execution, and no
+/// trapfinding Perception / Disable Device bonus. It grounds no rogue talent
+/// and no level-2+ progression. It only:
+/// - leaves one chassis-recognition explanation so the `class:rogue:1`
+///   identity is acknowledged rather than an undocumented packet placeholder
+///   (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits four claim-blocking diagnostics naming the four still-missing
+///   pillar burdens (base-attack, base-save, sneak-attack, trapfinding)
+///   explicitly, rather than hiding behind a single generic "unsupported
+///   class" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input
+/// (including `tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`,
+/// which keeps passing unmodified since no `defense.total_save.*` explanation
+/// is ever computed here); this seam keeps that blocked posture but makes the
+/// Rogue chassis identity and its four named pillar burdens legible on the
+/// runtime path.
+fn explain_rogue_level1_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_rogue_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Rogue level-1
+    // chassis identity. This is a recognition record only; it fabricates no
+    // mechanical value.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.bounded_progression".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Rogue level {ROGUE_BASELINE_LEVEL} chassis: the \
+             {ROGUE_CLASS_ID}:{ROGUE_BASELINE_LEVEL} class identity is acknowledged on the \
+             rules-core seam rather than an undocumented packet placeholder. This is a bounded \
+             chassis-recognition record only; it grounds no Rogue base-attack or base-save \
+             progression, no sneak attack damage-die execution, no trapfinding Perception / \
+             Disable Device bonus, no rogue talent, and no level-2+ progression, so it carries \
+             no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/4): name the base-attack progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.rogue.bounded_progression.base_attack.unsupported".to_owned(),
+        message: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its base attack progression: \
+             the 3/4-BAB progression is not implemented in this bounded chassis baseline, so no \
+             Rogue base-attack support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/4): name the base-save progression burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.rogue.bounded_progression.base_save.unsupported".to_owned(),
+        message: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its base save progression: \
+             the good Reflex progression and the poor Fortitude / poor Will base-save cadence \
+             are not implemented in this bounded chassis baseline, so no Rogue base-save \
+             support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (3/4): name the sneak attack burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.rogue.bounded_progression.sneak_attack.unsupported".to_owned(),
+        message: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its sneak attack burden: the \
+             +1d6 extra sneak attack damage against a flanked or Dexterity-denied target is not \
+             implemented in this bounded chassis baseline, so no Rogue sneak attack support is \
+             claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (4/4): name the trapfinding burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.rogue.bounded_progression.trapfinding.unsupported".to_owned(),
+        message: format!(
+            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its trapfinding burden: the \
+             bonus on Perception checks to locate traps, the bonus on Disable Device checks to \
+             disarm them, and the ability to use Disable Device on magic traps are not \
+             implemented in this bounded chassis baseline, so no Rogue trapfinding support is \
+             claimed"
         ),
         claim_blocking: true,
     });
@@ -1517,6 +2612,181 @@ fn explain_wizard_level1_prepared_spell_baseline(
              posture burden: spellbook content, spells prepared per day, spell slots per day, \
              bonus spell slots from a high Intelligence, and spell save DCs are out of scope for \
              this level-1 prepared spell baseline and no spell math is fabricated"
+                .to_owned(),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Cleric at the bounded
+/// prepared divine spell baseline level (1). Returns `false` for any other class, a
+/// multiclass mix, or a level-2+ Cleric this slice deliberately does not recognize —
+/// each of which stays blocked exactly as before.
+fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == CLERIC_CLASS_ID
+                && class_level.level == CLERIC_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4 runtime evidence for the deterministic Human Cleric level-1
+/// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
+/// its two still-missing burdens.
+///
+/// This deliberately does not compute a supported spell surface. It grounds no domain
+/// selection, no domain spells, no domain powers, no channel energy execution, no
+/// spellbook posture, no spells prepared, no spontaneous cure/inflict conversion, no
+/// spell slots per day, no spell save DCs, and no bonus spell slots from a high Wisdom.
+/// It only:
+/// - leaves one recognition explanation so the `class:cleric:1` identity is acknowledged
+///   as a prepared divine spell-bearing class rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the domain / channel energy
+///   class-feature burden and the prepared divine spell posture burden explicitly,
+///   rather than hiding behind a generic "unsupported caster" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Cleric prepared divine spell-bearing
+/// identity and its two named burdens legible on the runtime path.
+fn explain_cleric_level1_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_cleric_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Cleric level-1
+    // prepared divine spell-bearing identity. This is a recognition record only; it
+    // fabricates no domain power math and no spell math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.cleric".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Cleric level {CLERIC_BASELINE_LEVEL} prepared divine \
+             spell-bearing baseline: the {CLERIC_CLASS_ID}:{CLERIC_BASELINE_LEVEL} class identity is \
+             acknowledged as a prepared divine spell-bearing class on the rules-core seam rather than \
+             an undocumented packet placeholder. This is a bounded recognition record only; it grounds \
+             no domain selection, no domain spells, no domain powers, no channel energy execution, no \
+             spellbook posture, no spells prepared per day, no spontaneous cure/inflict conversion, no \
+             spell slots per day, no spell save DCs, and no bonus spell slots from a high Wisdom, so it \
+             carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the domain / channel energy class-feature burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.cleric.domain_and_channel_energy.unsupported".to_owned(),
+        message: format!(
+            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain and channel energy \
+             burden: the two chosen domains, their domain spells, their domain powers, and channel \
+             energy (positive/negative energy burst, uses per day, save DC) are not implemented in \
+             this bounded prepared divine spell baseline, so no Cleric domain or channel energy \
+             support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the prepared divine spell posture burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.cleric.prepared_divine.unsupported".to_owned(),
+        message:
+            "Cleric remains blocked on its prepared divine spell posture burden: spells prepared \
+             from the full Cleric spell list, spontaneous cure/inflict conversion, spell slots per \
+             day, bonus spell slots from a high Wisdom, and spell save DCs are out of scope for this \
+             level-1 spell baseline and no spell math is fabricated"
+                .to_owned(),
+        claim_blocking: true,
+    });
+}
+
+/// Return `true` when the chosen input is exactly a single-class Druid at the bounded
+/// prepared divine spell baseline level (1). Returns `false` for any other class, a
+/// multiclass mix, or a level-2+ Druid this slice deliberately does not recognize —
+/// each of which stays blocked exactly as before.
+fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
+    matches!(
+        input.chosen.class_levels.as_slice(),
+        [class_level]
+            if class_level.class_id == DRUID_CLASS_ID
+                && class_level.level == DRUID_BASELINE_LEVEL
+    )
+}
+
+/// Surface direct SD13-E4 runtime evidence for the deterministic Human Druid level-1
+/// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
+/// its two still-missing burdens.
+///
+/// This deliberately does not compute a supported spell surface. It grounds no nature
+/// bond selection, no nature bond power execution (animal companion or domain), no
+/// wild empathy check resolution, no spellbook posture, no spells prepared, no
+/// spontaneous summon nature's ally conversion, no spell slots per day, no spell save
+/// DCs, and no bonus spell slots from a high Wisdom. It only:
+/// - leaves one recognition explanation so the `class:druid:1` identity is acknowledged
+///   as a prepared divine spell-bearing class rather than an undocumented packet
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - emits two distinct claim-blocking diagnostics naming the nature bond / wild
+///   empathy class-feature burden and the prepared divine spell posture burden
+///   explicitly, rather than hiding behind a generic "unsupported caster" label.
+///
+/// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
+/// keeps that blocked posture but makes the Druid prepared divine spell-bearing
+/// identity and its two named burdens legible on the runtime path.
+fn explain_druid_level1_spell_baseline(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if !is_single_class_druid_level1(input) {
+        return;
+    }
+    if input.chosen.race_id != HUMAN_RACE_ID {
+        return;
+    }
+
+    // Direct runtime evidence: recognize the deterministic Human Druid level-1
+    // prepared divine spell-bearing identity. This is a recognition record only; it
+    // fabricates no nature-bond power math and no spell math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.spell_baseline.druid".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized deterministic Human Druid level {DRUID_BASELINE_LEVEL} prepared divine \
+             spell-bearing baseline: the {DRUID_CLASS_ID}:{DRUID_BASELINE_LEVEL} class identity is \
+             acknowledged as a prepared divine spell-bearing class on the rules-core seam rather than \
+             an undocumented packet placeholder. This is a bounded recognition record only; it grounds \
+             no nature bond selection, no nature bond power execution, no wild empathy check \
+             resolution, no spellbook posture, no spells prepared per day, no spontaneous summon \
+             nature's ally conversion, no spell slots per day, no spell save DCs, and no bonus spell \
+             slots from a high Wisdom, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Still blocked (1/2): name the nature bond / wild empathy class-feature burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.druid.nature_bond_and_wild_empathy.unsupported".to_owned(),
+        message: format!(
+            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its nature bond and wild empathy \
+             burden: the nature bond choice (an animal companion or a domain), nature sense, and wild \
+             empathy (the animal-diplomacy check) are not implemented in this bounded prepared divine \
+             spell baseline, so no Druid nature bond or wild empathy support is claimed"
+        ),
+        claim_blocking: true,
+    });
+
+    // Still blocked (2/2): name the prepared divine spell posture burden explicitly.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_spell.druid.prepared_divine.unsupported".to_owned(),
+        message:
+            "Druid remains blocked on its prepared divine spell posture burden: spells prepared \
+             from the full Druid spell list, spontaneous summon nature's ally conversion, spell slots \
+             per day, bonus spell slots from a high Wisdom, and spell save DCs are out of scope for \
+             this level-1 spell baseline and no spell math is fabricated"
                 .to_owned(),
         claim_blocking: true,
     });
@@ -1864,25 +3134,35 @@ fn compute_combat_baseline(
     }
 
     // Baseline melee attack bonus: Fighter BAB + STR modifier + Weapon Focus
-    // (Longsword). Power Attack is selected but inactive, contributing 0.
+    // (Longsword) + Weapon Training (from level 5, Heavy Blades). Power Attack is
+    // selected but inactive, contributing 0. The posture check above guarantees a
+    // supported Fighter level here.
+    let level = supported_fighter_level(input).unwrap_or(1);
     let strength_modifier = ability_modifiers.strength;
-    let melee_attack_bonus = base_attack_bonus + strength_modifier + WEAPON_FOCUS_TO_HIT_BONUS;
+    let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
+    let melee_attack_bonus = base_attack_bonus
+        + strength_modifier
+        + WEAPON_FOCUS_TO_HIT_BONUS
+        + weapon_training_bonus;
+    let weapon_training_detail = if weapon_training_bonus > 0 {
+        format!(" + Weapon Training (Heavy Blades) (+{weapon_training_bonus})")
+    } else {
+        String::new()
+    };
 
     explanations.push(ComputationExplanation {
         id: "combat.baseline_melee_attack_bonus".to_owned(),
         value: melee_attack_bonus,
         detail: format!(
             "Baseline melee attack bonus for the Longsword: Fighter base attack bonus (+{base_attack_bonus}) \
-             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}); \
+             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}; \
              Power Attack is selected but inactive (+0) = {melee_attack_bonus}"
         ),
     });
 
     // Baseline armor class: 10 + Chain Shirt armor bonus + capped DEX + Dodge,
     // with no shield (absent posture contributes 0). Fighter armor training from
-    // level 3 raises the Chain Shirt maximum Dexterity bonus; the posture check
-    // above guarantees a supported Fighter level here.
-    let level = supported_fighter_level(input).unwrap_or(1);
+    // level 3 raises the Chain Shirt maximum Dexterity bonus.
     let effective_max_dex = CHAIN_SHIRT_MAX_DEX + fighter_armor_training(level).max_dex_increase;
     let dexterity_modifier = ability_modifiers.dexterity;
     let dexterity_contribution = dexterity_modifier.min(effective_max_dex);

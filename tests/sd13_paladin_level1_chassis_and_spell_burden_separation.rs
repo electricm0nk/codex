@@ -382,11 +382,12 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // Rogue stays the blocked negative control.
+    // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
+    // recognition slice.
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("rogue row must exist");
-    assert_eq!(rogue.support_state, SupportState::Blocked);
+    assert_eq!(rogue.support_state, SupportState::Partial);
 
     // Sorcerer stays at its accepted F7 posture.
     let sorcerer = matrix
@@ -428,27 +429,26 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
     );
     assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
 
-    // Cleric, Druid, Monk must remain Unverified / Observed — this
-    // slice does not silently promote any still-unproven class.
+    // Wizard, Cleric, and Druid were later promoted to Blocked/Computed by their
+    // own follow-up slices; verified separately below.
     for id in [
+        "class.wizard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
         "class.druid.progression_and_spell_burden",
-        "class.monk.bounded_progression",
     ] {
         let row = matrix
             .row(id)
             .unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Unverified,
-            "row {id} must stay Unverified after the paladin-decomposition slice"
-        );
-        assert_eq!(
-            row.evidence_tier,
-            EvidenceTier::Observed,
-            "row {id} must stay Observed"
-        );
+        assert_eq!(row.support_state, SupportState::Blocked);
+        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
+
+    // Monk was later promoted to Partial/Computed by its own follow-up SD13-E3 slice.
+    let monk = matrix
+        .row("class.monk.bounded_progression")
+        .expect("monk row must exist");
+    assert_eq!(monk.support_state, SupportState::Partial);
+    assert_eq!(monk.evidence_tier, EvidenceTier::Computed);
 
     // No row is silently promoted to Supported by this slice.
     assert!(

@@ -1,41 +1,29 @@
-# SD13-E2-F3a Half-Elf bounded race-semantics fixture.
+# SD13-E2 deterministic Half-Elf Fighter level 1 race-semantics recognition
+# fixture. Represents a deterministic PF1 Core Rulebook Half-Elf Fighter level 1
+# identity as chosen input only. It names selections; it does not contain derived,
+# computed, or parity values.
 #
-# This fixture is **recognition-only**. Half-Elf is named as a chosen race on the
-# deterministic pilot seam so that a Half-Elf character input parses without
-# validation failure and the receipt carries a single explicit, non-claim-blocking
-# `race.half_elf.bounded_semantics` diagnostic. The fixture does not exercise any
-# Half-Elf racial mechanic: no Half-Elf ability-bonus choice is selected (so no
-# `race.half_elf.ability_bonus_target` analog is emitted), no Half-Elf sleep-immunity
-# or low-light-vision assertion is required (those traits live outside the bounded
-# compute seam in this slice), and no Half-Elf multiclass / favored-class engine
-# is exercised. The chosen human-style Fighter pilot chassis anchors the rest of the
-# fixture so the bounded pilot surface continues to behave identically when the
-# `race_id` swap is the only change.
+# Unlike Dwarf/Elf/Gnome (a fixed racial ability-score pair), PF1 Core Half-Elf
+# grants a player-chosen +2 to any one ability score, mirroring the Human
+# ability-bonus mechanic's shape (a named choice, not a fixed pair).
 #
-# Acceptance of chosen input is the bounded surface; computed Half-Elf mechanics
-# are deliberately not asserted here. See
-# programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/race-bounded-semantics/half-elf-bounded-semantics.md
-# for the full bounded scope statement.
+# The Fighter combat baseline, total saves, and selected-skill modifiers stay
+# claim-blocked on this input because the bounded GE-06 Fighter compute path is
+# grounded only for race:human; that is expected and unrelated to this fixture's
+# purpose, which is to make the bounded Half-Elf race-semantics recognition
+# legible. It deliberately avoids every unproven Half-Elf family: no Elven
+# Immunities (sleep immunity, enchantment save bonus), no Adaptability (bonus
+# Skill Focus feat), no Keen Senses Perception bonus, and no Multitalented
+# favored-class posture.
 case_id=pf1-crb-half-elf-fighter-level1
 source_package_id=pf1.core_rulebook
 race_id=race:half-elf
 class_level=class:fighter:1
-ability=strength:16
-ability=dexterity:14
-ability=constitution:14
+ability=strength:12
+ability=dexterity:16
+ability=constitution:12
 ability=intelligence:10
-ability=wisdom:12
-ability=charisma:8
-feat=feat:power_attack
-feat=feat:dodge
-feat=feat:weapon_focus
-skill=skill:climb:1
-skill=skill:intimidate:1
-skill=skill:swim:1
-equipment=item:chain_shirt:equipped_worn_active
-equipment=item:longsword:equipped_primary_active
-equipment=item:shield:absent
-equipment=power_attack:selected_inactive
-choice=choice:level_1_character_feat:feat:power_attack
-choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
-provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/race-bounded-semantics/half-elf-bounded-semantics.md
+ability=wisdom:10
+ability=charisma:12
+choice=choice:half_elf_ability_bonus:ability:dexterity
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

@@ -16,8 +16,12 @@
 //! - the Fighter levels-2-10 row is `Partial` / `Computed`: the SD13-E3 tranche now
 //!   proves Fighter levels 2 and 3 (base progression, the level-2 bonus-feat seam,
 //!   and the level-3 armor-training seam), while levels 4-10 remain out of proof,
-//! - Rogue level 1 is `Blocked` / `Computed` because the live GE-06 test explicitly
-//!   claim-blocks it, keeping it an explicit negative-control seam,
+//! - the Rogue row is `Partial` / `Computed`: the SD13-E3 slice proves the
+//!   deterministic Human Rogue level-1 chassis identity is recognized on the
+//!   compute seam, but it stays blocked on the base-attack, base-save,
+//!   sneak-attack, and trapfinding burdens; the live GE-06 negative control
+//!   (`tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`)
+//!   keeps claim-blocking it unmodified,
 //! - the Paladin and Ranger hybrid rows are `Blocked` / `Computed`: the SD13-E3-F6
 //!   slice proves the deterministic Human Paladin level-1 and Human Ranger level-1
 //!   hybrid chassis are recognized on the compute seam, but both stay blocked on the
@@ -36,10 +40,55 @@
 //!   recognized on the compute seam (merge receipt executed 2026-07-07), but it stays
 //!   blocked on the school specialization burden and the prepared spellbook /
 //!   spell-slot posture burden, and fabricates no spell math,
+//! - the Cleric row is `Blocked` / `Computed`: the SD13-E4 slice proves the
+//!   deterministic Human Cleric level-1 prepared divine spell-bearing identity is
+//!   recognized on the compute seam, but it stays blocked on the domain / channel
+//!   energy burden and the prepared divine spell posture burden, and fabricates no
+//!   spell math,
+//! - the Druid row is `Blocked` / `Computed`: the SD13-E4 slice proves the
+//!   deterministic Human Druid level-1 prepared divine spell-bearing identity is
+//!   recognized on the compute seam, but it stays blocked on the nature bond / wild
+//!   empathy burden and the prepared divine spell posture burden, and fabricates no
+//!   spell math,
+//! - the Monk row is `Partial` / `Computed`: the SD13-E3 slice proves the
+//!   deterministic Human Monk level-1 martial chassis identity is recognized on the
+//!   compute seam (mirroring the Barbarian pattern), but four named pillar burdens
+//!   (base attack, base save, unarmed strike / Flurry of Blows, AC Bonus / bonus
+//!   feat) remain unproven,
+//! - the Dwarf row is `Partial` / `Computed`: the SD13-E2 slice proves four grounded
+//!   Dwarf racial trait dimensions (ability modifiers, size, speed, senses) are
+//!   recognized on the compute seam, but the remaining Dwarf family surface
+//!   (Stonecunning, Defensive Training, Hardy, Stability, Hatred, weapon
+//!   familiarity) stays unproven,
+//! - the Elf row is `Partial` / `Computed`: the SD13-E2 slice proves four grounded
+//!   Elf racial trait dimensions (ability modifiers, size, speed, senses) are
+//!   recognized on the compute seam, but the remaining Elf family surface (Elven
+//!   Immunities, Keen Senses, weapon familiarity, bonus languages) stays unproven,
+//! - the Gnome row is `Partial` / `Computed`: the SD13-E2 slice proves four
+//!   grounded Gnome racial trait dimensions (ability modifiers, size, speed,
+//!   senses) are recognized on the compute seam, but the remaining Gnome family
+//!   surface (Defensive Training, Illusion Resistance, Hatred, Keen Senses, Gnome
+//!   Magic, weapon familiarity) stays unproven,
+//! - the Half-Elf row is `Partial` / `Computed`: the SD13-E2 slice proves four
+//!   grounded Half-Elf racial trait dimensions (a player-chosen ability-bonus
+//!   target, size, speed, senses) are recognized on the compute seam, but the
+//!   remaining Half-Elf family surface (Elven Immunities, Adaptability, Keen
+//!   Senses, Multitalented) stays unproven,
+//! - the Half-Orc row is `Partial` / `Computed`: the SD13-E2 slice proves four
+//!   grounded Half-Orc racial trait dimensions (a player-chosen ability-bonus
+//!   target, size, speed, senses) are recognized on the compute seam, but the
+//!   remaining Half-Orc family surface (Intimidating, Orc Ferocity, weapon
+//!   familiarity) stays unproven,
+//! - the Halfling row is `Partial` / `Computed`: the SD13-E2 slice proves four
+//!   grounded Halfling racial trait dimensions (ability modifiers, size, speed,
+//!   senses) are recognized on the compute seam, but the remaining Halfling
+//!   family surface (Fearless, Halfling Luck, Keen Senses, Sure-Footed, weapon
+//!   familiarity) stays unproven — with this slice, every core race row
+//!   carries runtime evidence,
 //! - the Human bonus-feat / ability-bonus interaction seam is `Partial` / `Computed`,
-//! - every other core race and core class, and the broader
-//!   non-Human interaction row remain `Unverified` / `Observed` (named by SD-13 scope
-//!   only, no runtime evidence yet).
+//! - every other core race and core class, and the broader non-Human interaction row
+//!   remain `Unverified` / `Observed` (named by SD-13 scope only, no runtime evidence
+//!   yet).
 
 /// Current support state for a single matrix row. Kept independent from
 /// [`EvidenceTier`]: how strong the evidence is does not by itself decide whether
@@ -188,13 +237,16 @@ const SD13_HUMAN_ROW_GROUNDING_REF: &str =
 /// bonus-feat and ability-bonus selections).
 const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 
-/// GE-06 total saving throws proof. Also claim-blocks Rogue level 1 and Fighter
-/// level 4.
-const GE06_TOTAL_SAVES_TEST: &str = "tests/ge06_pilot_total_saves.rs";
+/// SD13-E3 dedicated proof surface for the bounded Human Rogue level-1 chassis
+/// baseline (mirroring the Barbarian/Monk pattern): direct computed
+/// chassis-recognition evidence that stays explicitly blocked on the four named
+/// pillar burdens (base attack, base save, sneak attack, trapfinding).
+const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs";
 
-/// SD13-E3 dedicated proof surface for the bounded Fighter levels-2-and-3 milestone
-/// tranche (base progression, level-2 bonus-feat seam, level-3 armor-training seam).
-const SD13_FIGHTER_LEVEL2_LEVEL3_TEST: &str = "tests/sd13_fighter_level2_level3_progression.rs";
+/// SD13-E3 dedicated proof surface for the bounded Fighter level-7 milestone
+/// (Armor Training 2 seam). This is the most specific/current proof for the
+/// levels-2-10 row's grounding_ref.
+const SD13_FIGHTER_LEVEL7_TEST: &str = "tests/sd13_fighter_level7_progression.rs";
 
 /// SD13-E3-F5 dedicated proof surface for the bounded Fighter level-1 mandatory
 /// milestone classification: enumerates which level-1 mandatory milestones the
@@ -220,41 +272,38 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
 /// known-spell / slot posture burden.
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
-/// SD13-E2-F3a dedicated proof surface for the bounded Half-Elf race-semantics
-/// recognition. The chosen `race:half-elf` identity is named on the deterministic
-/// pilot seam and the receipt carries a single explicit
-/// `race.half_elf.bounded_semantics` diagnostic that names the full PF1 Half-Elf
-/// racial trait set without grounding any computed mechanic for it. The Half-Elf
-/// deterministic input fixture is recognition-only; no computed-mechanic Half-Elf
-/// pilot fixture is minted.
-const SD13_HALF_ELF_RACE_TEST: &str = "tests/sd13_race_half_elf_bounded_semantics.rs";
-
 /// SD13-E3 dedicated proof surface for the bounded Human Barbarian level-1 martial
 /// chassis baseline: direct computed chassis-recognition evidence that stays explicitly
 /// blocked on the four named martial pillar burdens (base attack, base save,
 /// fast movement, illiteracy trait).
 const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs";
 
-/// The combined grounding reference for the Gnome race row (paladin-row idiom),
-/// citing both the live compute seam whose `explain_race_seam` dispatcher emits
-/// the non-claim-blocking `race.semantics.unverified` diagnostic for `race:gnome`
-/// and the SD13-E2 dedicated proof surface that pins the honest bounded Gnome
-/// classification. Both `.contains()` consumers read their respective substring.
-const SD13_GNOME_ROW_GROUNDING_REF: &str =
-    "src/rules_core/pilot_compute.rs +      tests/sd13_race_gnome_bounded_semantics.rs";
+/// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Gnome racial trait dimensions (ability modifiers, size, speed, senses) that
+/// stays explicitly honest about the remaining unproven Gnome family surface.
+const SD13_GNOME_LEVEL1_TEST: &str = "tests/sd13_gnome_race_semantics_recognition.rs";
 
-/// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
-/// classification: pins the honest seven-family Dwarf debt and the absence of
-/// any computed Dwarf mechanic. Observed / AwaitingInitialEvidence stays — the
-/// surface pins absence, not runtime evidence.
-const SD13_RACE_DWARF_BOUNDED_SEMANTICS_TEST: &str = "tests/sd13_race_dwarf_bounded_semantics.rs";
+/// SD13-E2 dedicated proof surface for the bounded Half-Elf race-semantics
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Half-Elf racial trait dimensions (chosen ability-bonus target, size, speed,
+/// senses) that stays explicitly honest about the remaining unproven Half-Elf
+/// family surface.
+const SD13_HALF_ELF_LEVEL1_TEST: &str = "tests/sd13_half_elf_race_semantics_recognition.rs";
+
+/// SD13-E2 dedicated proof surface for the bounded Half-Orc race-semantics
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Half-Orc racial trait dimensions (chosen ability-bonus target, size, speed,
+/// senses) that stays explicitly honest about the remaining unproven Half-Orc
+/// family surface.
+const SD13_HALF_ORC_LEVEL1_TEST: &str = "tests/sd13_half_orc_race_semantics_recognition.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Halfling race-semantics
-/// classification: pins the honest seven-family Halfling debt and the absence
-/// of any computed Halfling mechanic. Observed / AwaitingInitialEvidence stays —
-/// the surface pins absence, not runtime evidence.
-const SD13_RACE_HALFLING_BOUNDED_SEMANTICS_TEST: &str =
-    "tests/sd13_race_halfling_bounded_semantics.rs";
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Halfling racial trait dimensions (ability modifiers, size, speed, senses)
+/// that stays explicitly honest about the remaining unproven Halfling family
+/// surface.
+const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs";
 
 /// SD13-E4-F7 dedicated proof surface for the bounded Human Bard level-1 spell
 /// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
@@ -267,6 +316,37 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
 /// spell-bearing identity that stays explicitly blocked on the school specialization
 /// burden and the prepared spellbook / spell-slot posture burden.
 const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs";
+
+/// SD13-E4 dedicated proof surface for the bounded Human Cleric level-1 prepared
+/// divine spell baseline: direct computed recognition of the prepared divine
+/// spell-bearing identity that stays explicitly blocked on the domain / channel
+/// energy burden and the prepared divine spell posture burden.
+const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs";
+
+/// SD13-E4 dedicated proof surface for the bounded Human Druid level-1 prepared
+/// divine spell baseline: direct computed recognition of the prepared divine
+/// spell-bearing identity that stays explicitly blocked on the nature bond / wild
+/// empathy burden and the prepared divine spell posture burden.
+const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs";
+
+/// SD13-E3 dedicated proof surface for the bounded Human Monk level-1 martial
+/// chassis baseline (mirroring the Barbarian pattern): direct computed
+/// chassis-recognition evidence that stays explicitly blocked on the four named
+/// martial pillar burdens (base attack, base save, unarmed strike / Flurry of
+/// Blows, AC Bonus / level-1 bonus feat).
+const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs";
+
+/// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Dwarf racial trait dimensions (ability modifiers, size, speed, senses) that
+/// stays explicitly honest about the remaining unproven Dwarf family surface.
+const SD13_DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs";
+
+/// SD13-E2 dedicated proof surface for the bounded Elf race-semantics
+/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// Elf racial trait dimensions (ability modifiers, size, speed, senses) that
+/// stays explicitly honest about the remaining unproven Elf family surface.
+const SD13_ELF_LEVEL1_TEST: &str = "tests/sd13_elf_race_semantics_recognition.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
@@ -306,241 +386,151 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.dwarf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:dwarf",
-                dimension: "bounded race semantics",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                // Grounded on the dedicated proof surface that pins the honest bounded
-                // classification (half-elf precedent). Observed/AwaitingInitialEvidence
-                // stays: the surface pins the absence of computed Dwarf evidence, so
-                // there is no runtime evidence to refresh.
-                grounding_ref: SD13_RACE_DWARF_BOUNDED_SEMANTICS_TEST,
-                blocker_or_lossiness_note: "no direct runtime evidence for any of \
-                    the seven required Dwarf race-semantic families at the live \
-                    evidence floor (2026-07-06): identity/provenance is \
-                    observed-only via the SD-13 packet roster and the typed matrix \
-                    row carrier, but ability-score modifiers (PF1 Core +2 Con / -2 \
-                    Cha or any alternative), size/speed/movement baseline, senses \
-                    (darkvision), racial bonus feats, skill or derived-stat \
-                    modifiers, prerequisite/feat/class-feature interactions, and \
-                    other core racial traits (Defensive Training, Hardy, \
-                    Stability, Hatred, Stonecunning, Greedy, weapon familiarity) \
-                    remain unproven; the `explain_race_seam` dispatcher in \
-                    pilot_compute.rs grounds race semantics only for `race:human` \
-                    (computed seams) and `race:half-elf` (recognition-only \
-                    diagnostic), so `race:dwarf` receives the non-claim-blocking \
-                    `race.semantics.unverified` diagnostic. No Dwarf fixture \
-                    exists in tests/fixtures. Promotion above Unverified is \
-                    counterfeit breadth until a later bounded slice lands \
-                    grounded evidence for at least one of these families.",
-                next_required_uplift: "SD13-Dwarf bounded race-semantic \
-                    classification artifact at \
-                    programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-dwarf-bounded-race-semantics-classification-2026-07-06.md \
-                    names the seven required race-semantic families and the \
-                    concrete acceptance criteria (new accepted fixture family, \
-                    new typed module or expansion emitting computed evidence \
-                    / explanation / claim-blocking diagnostic, new focused test \
-                    pinning family evidence at Computed / Oracle-checked tier, \
-                    updated row state with non-empty blocker note) required \
-                    before this row may honestly move out of Unverified.",
+                dimension: "bounded Dwarf race semantics: four grounded PF1 Core Rulebook \
+                            Dwarf racial trait dimensions (ability modifiers, size, speed, \
+                            senses) recognized on the compute seam, with the remaining Dwarf \
+                            family surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_DWARF_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Dwarf race-semantic families are recognized on the compute seam (ability \
+                    modifiers: +2 Constitution / -2 Charisma; size: Medium; speed: 20 ft, \
+                    never reduced by armor or encumbrance; senses: Darkvision 60 ft), but the \
+                    remaining families stay unproven: skill or derived-stat modifiers \
+                    (Stonecunning), Defensive Training, Hardy, Stability, Hatred, and weapon \
+                    familiarity. PF1 core Dwarves gain no racial bonus feat, so that family is \
+                    not applicable rather than unproven. No numeric mechanical contribution is \
+                    fabricated for any of the four recognized dimensions.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Dwarf families (Stonecunning, Defensive Training, Hardy, \
+                    Stability, Hatred, weapon familiarity) as a real computed contribution",
             },
             SupportStateRow {
                 row_id: "race.elf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:elf",
-                dimension: "bounded race semantics",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "no direct runtime evidence for any of \
-                    the seven required Elf race-semantic families at the live \
-                    evidence floor (2026-07-06): identity/provenance is \
-                    observed-only via the SD-13 packet roster and the typed matrix \
-                    row carrier, but ability-score modifiers (PF1 Core +2 Dex / -2 \
-                    Con and the alternate +2 Int variant), size/speed/movement \
-                    baseline (Medium, 30 ft base), senses (low-light vision), \
-                    immunity to sleep, weapon familiarity (longbow / rapier / \
-                    longsword / shortbow / shortsword), bonus languages, and other \
-                    core racial traits (keen senses, elven magic / weapon training \
-                    variants) remain unproven; the `explain_race_seam` dispatcher \
-                    in pilot_compute.rs grounds race semantics only for \
-                    `race:human` (computed seams) and `race:half-elf` \
-                    (recognition-only diagnostic), so `race:elf` receives the \
-                    non-claim-blocking `race.semantics.unverified` diagnostic. \
-                    No Elf fixture \
-                    exists in tests/fixtures. Promotion above Unverified is \
-                    counterfeit breadth until a later bounded slice lands \
-                    grounded evidence for at least one of these families.",
-                next_required_uplift: "SD13-Elf bounded race-semantic \
-                    classification artifact at \
-                    programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-elf-bounded-race-semantics-classification-2026-07-06.md \
-                    names the seven required race-semantic families and the \
-                    concrete acceptance criteria (new accepted fixture family, \
-                    new typed module or expansion emitting computed evidence \
-                    / explanation / claim-blocking diagnostic, new focused test \
-                    pinning family evidence at Computed / Oracle-checked tier, \
-                    updated row state with non-empty blocker note) required \
-                    before this row may honestly move out of Unverified.",
+                dimension: "bounded Elf race semantics: four grounded PF1 Core Rulebook Elf \
+                            racial trait dimensions (ability modifiers, size, speed, senses) \
+                            recognized on the compute seam, with the remaining Elf family \
+                            surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_ELF_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Elf race-semantic families are recognized on the compute seam (ability \
+                    modifiers: +2 Dexterity / -2 Constitution; size: Medium; speed: 30 ft; \
+                    senses: low-light vision), but the remaining families stay unproven: Elven \
+                    Immunities (sleep immunity, enchantment save bonus), Keen Senses (Perception \
+                    bonus), weapon familiarity (longbow, composite longbow, longsword, rapier, \
+                    shortbow, composite shortbow), and bonus language grants. PF1 core Elves \
+                    gain no racial bonus feat, so that family is not applicable rather than \
+                    unproven. No numeric mechanical contribution is fabricated for any of the \
+                    four recognized dimensions.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Elf families (Elven Immunities, Keen Senses, weapon familiarity, \
+                    bonus languages) as a real computed contribution",
             },
             SupportStateRow {
                 row_id: "race.gnome.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:gnome",
-                dimension: "bounded Gnome race semantics: the deterministic pilot \
-                            still produces computed outputs through a `race:gnome` \
-                            chassis, but the Gnome race seam receives only the \
-                            non-claim-blocking `race.semantics.unverified` \
-                            diagnostic the `explain_race_seam` dispatcher emits \
-                            for every race without a dedicated seam (`race:human` \
-                            grounds computed semantics; `race:half-elf` carries \
-                            its own recognition-only diagnostic); no \
-                            Gnome-specific trait math is fabricated",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_GNOME_ROW_GROUNDING_REF,
-                blocker_or_lossiness_note: "the bounded Gnome classification \
-                    grounds only the negative-control seam: Gnome small-size, \
-                    slow-speed, low-light vision, defensive training, illusion \
-                    resistance, hatred, keen senses, and every other Gnome \
-                    racial trait burden remain unverified; the deterministic \
-                    pilot still computes through a Gnome chassis but \
-                    fabricates no Gnome trait math",
-                next_required_uplift: "later SD13-E2 race-semantic slice that \
-                    grounds one or more Gnome trait surfaces",
+                dimension: "bounded Gnome race semantics: four grounded PF1 Core Rulebook \
+                            Gnome racial trait dimensions (ability modifiers, size, speed, \
+                            senses) recognized on the compute seam, with the remaining Gnome \
+                            family surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_GNOME_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Gnome race-semantic families are recognized on the compute seam (ability \
+                    modifiers: +2 Constitution / -2 Strength; size: Small; speed: 20 ft; \
+                    senses: low-light vision), but the remaining families stay unproven: \
+                    Defensive Training, Illusion Resistance, Hatred, Keen Senses, Gnome Magic, \
+                    and weapon familiarity. PF1 core Gnomes gain no racial bonus feat, so that \
+                    family is not applicable rather than unproven. No numeric mechanical \
+                    contribution is fabricated for any of the four recognized dimensions.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Gnome families (Defensive Training, Illusion Resistance, Hatred, \
+                    Keen Senses, Gnome Magic, weapon familiarity) as a real computed \
+                    contribution",
             },
             SupportStateRow {
                 row_id: "race.half_elf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:half-elf",
-                // SD13-E2-F3a leaves the dimension name unchanged so downstream readers can
-                // see every race row carries the same dimension label; the per-row note and
-                // grounding carry the bounded scope.
-                dimension: "bounded race semantics",
-                support_state: SupportState::Unverified,
-                // The Half-Elf row stays Unverified/Observed because this slice grounds
-                // **recognition only**: the minted Half-Elf deterministic input fixture is
-                // recognition-only (no computed-mechanic fixture exists), no computed
-                // Half-Elf mechanic is emitted, and no Half-Elf choice-target is proven.
-                // Promoting to Computed would falsely assert bounded mechanical truth
-                // that this slice deliberately does not assert. Freshness stays
-                // AwaitingInitialEvidence even though the grounding_ref below is a
-                // re-runnable test: per the matrix freshness invariant, refreshability
-                // tracks the evidence tier, and an Observed row has no runtime
-                // Half-Elf evidence to refresh — the proof surface pins absence.
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                // Grounded on the bounded compute seam that recognizes `race:half-elf` as a
-                // chosen race and emits a single explicit, non-claim-blocking
-                // `race.half_elf.bounded_semantics` diagnostic; the carrier also points at
-                // the SD13-E2-F3a proof surface that pins the bounded diagnostic and the
-                // absence of any Half-Elf `ComputationExplanation`.
-                grounding_ref: SD13_HALF_ELF_RACE_TEST,
-                blocker_or_lossiness_note: "SD13-E2-F3a recognized `race:half-elf` as a chosen \
-                    race on the deterministic pilot seam but grounded **no** Half-Elf computed \
-                    mechanic: no Half-Elf ability-bonus seam (no `race.half_elf.ability_bonus_target` \
-                    analog), no sleep-immunity, low-light vision, elven blood, +2 Listen/Spot/Search \
-                    skill focus, favored-class flexibility, or multiclass adaptability mechanic is \
-                    computed, and the minted Half-Elf deterministic input fixture is \
-                    recognition-only (no computed-mechanic Half-Elf pilot fixture exists). The row \
-                    stays Unverified/Observed because the bounded scope is recognition, not proof",
-                next_required_uplift: "SD13-E2 race-semantic Half-Elf computed-mechanic slice: \
-                    upgrade the recognition-only Half-Elf deterministic input fixture into a \
-                    computed-mechanic grounding fixture, ground an explicit \
-                    Half-Elf ability-bonus choice-target explanation parallel to the Human one, \
-                    and at least one bounded non-ability Half-Elf mechanic (the lowest-cost \
-                    available being immunity to sleep or low-light vision). Until that slice lands, \
-                    any reader treating Half-Elf as 'core supported' is asserting truth not in the \
-                    seeded matrix",
+                dimension: "bounded Half-Elf race semantics: four grounded PF1 Core Rulebook \
+                            Half-Elf racial trait dimensions (chosen ability-bonus target, \
+                            size, speed, senses) recognized on the compute seam, with the \
+                            remaining Half-Elf family surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_HALF_ELF_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Half-Elf race-semantic families are recognized on the compute seam (a \
+                    player-chosen +2 ability-bonus target, mirroring the Human ability-bonus \
+                    mechanic's shape rather than a fixed pair; size: Medium; speed: 30 ft; \
+                    senses: low-light vision), but the remaining families stay unproven: Elven \
+                    Immunities (sleep immunity, enchantment save bonus), Adaptability (a bonus \
+                    Skill Focus feat), Keen Senses (Perception bonus), and Multitalented \
+                    (dual favored classes). No numeric mechanical contribution is fabricated \
+                    beyond the already-computed ability modifier for the chosen target.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Half-Elf families (Elven Immunities, Adaptability, Keen Senses, \
+                    Multitalented) as a real computed contribution",
             },
             SupportStateRow {
                 row_id: "race.half_orc.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:half-orc",
-                dimension: "bounded Half-Orc race semantics: the named Half-Orc \
-                            PF1 trait burden (Medium size, darkvision 60 ft, \
-                            ability-score modifier, weapon familiarity with greataxe \
-                            and falchion, ferocity) and any Half-Orc skill / \
-                            favored-class posture on the deterministic pilot seam",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "the deterministic pilot seam in \
-                    src/rules_core/pilot_compute.rs grounds computed race semantics \
-                    only for race:human, carries a dedicated recognition-only \
-                    diagnostic for race:half-elf, and emits the non-claim-blocking \
-                    race.semantics.unverified diagnostic for every other race \
-                    identity without a dedicated seam (including race:half-orc); \
-                    Half-Orc race semantics have no live proof surface \
-                    yet, so the named Half-Orc trait burden remains unverified: \
-                    Medium size (no size-derived combat modifier), darkvision 60 ft \
-                    (no darkvision-based perception surface), the Half-Orc \
-                    ability-score modifier (no ability bonus applied), weapon \
-                    familiarity with greataxe / falchion (no item-level combat \
-                    modifier computed), orc ferocity (no unconscious-but-fighting \
-                    posture computed), any Half-Orc skill bonus or favored-class \
-                    posture, and any general Half-Orc character-creation option \
-                    (alternate favored class, racial archetype, age/culture). The \
-                    row stays Unverified rather than Blocked because the Half-Orc \
-                    loadout still produces a Computed pilot receipt — only the \
-                    race semantic gap is non-claim-blocking",
-                next_required_uplift: "SD13-E2 Half-Orc race-semantic slice: emit a \
-                    Half-Orc-specific race-semantics diagnostic in pilot_compute.rs \
-                    that names the grounded subset (e.g. ability modifier, \
-                    darkvision) versus the still-unverified subset (size, ferocity, \
-                    weapon familiarity, skill bonus, favored-class, racial \
-                    archetype) so the row can advance from Unverified to Partial \
-                    only when a live Half-Orc proof surface exists with at least \
-                    one grounded Half-Orc trait computed end-to-end",
+                dimension: "bounded Half-Orc race semantics: four grounded PF1 Core Rulebook \
+                            Half-Orc racial trait dimensions (chosen ability-bonus target, \
+                            size, speed, senses) recognized on the compute seam, with the \
+                            remaining Half-Orc family surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_HALF_ORC_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Half-Orc race-semantic families are recognized on the compute seam (a \
+                    player-chosen +2 ability-bonus target, mirroring the Half-Elf mechanic's \
+                    shape; size: Medium; speed: 30 ft; senses: Darkvision 60 ft), but the \
+                    remaining families stay unproven: Intimidating (a bonus on Intimidate \
+                    checks), Orc Ferocity (fighting on for one more round below 0 hit points), \
+                    and weapon familiarity (orc double axe, falchion). No numeric mechanical \
+                    contribution is fabricated beyond the already-computed ability modifier \
+                    for the chosen target.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Half-Orc families (Intimidating, Orc Ferocity, weapon \
+                    familiarity) as a real computed contribution",
             },
             SupportStateRow {
                 row_id: "race.halfling.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:halfling",
-                dimension: "bounded race semantics",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                // Grounded on the dedicated proof surface that pins the honest bounded
-                // classification (half-elf precedent). Observed/AwaitingInitialEvidence
-                // stays: the surface pins the absence of computed Halfling evidence, so
-                // there is no runtime evidence to refresh.
-                grounding_ref: SD13_RACE_HALFLING_BOUNDED_SEMANTICS_TEST,
-                blocker_or_lossiness_note: "no direct runtime evidence for any of \
-                    the seven required Halfling race-semantic families at the live \
-                    evidence floor (2026-07-06): identity/provenance is observed-only \
-                    via the SD-13 packet roster and the typed matrix row carrier, but \
-                    ability-score modifiers (PF1 Core +2 Dex / -2 Str or any \
-                    alternative), size/speed/movement baseline (Small size, 20-ft \
-                    base speed), senses (no Halfling darkvision; only the human-sense \
-                    baseline), racial bonus feats and skill modifiers (+1 thrown \
-                    attack roll with thrown weapons and slings, +2 Appraise, +2 \
-                    Climb), prerequisite/feat/class-feature interactions (favored \
-                    class bonus, Halfling racial traits interacting with class \
-                    features), and other core racial traits (fearless halfling \
-                    luck, +1 racial bonus on saves against fear, Halfling languages \
-                    Common/Halfling, Halfling weapon familiarity, lucky trait) \
-                    remain unproven; the `explain_race_seam` dispatcher in \
-                    pilot_compute.rs grounds race semantics only for `race:human` \
-                    (computed seams) and `race:half-elf` (recognition-only \
-                    diagnostic), so `race:halfling` receives the \
-                    non-claim-blocking `race.semantics.unverified` diagnostic. \
-                    No Halfling \
-                    fixture exists in tests/fixtures. Promotion above Unverified \
-                    is counterfeit breadth until a later bounded slice lands \
-                    grounded evidence for at least one of these families.",
-                next_required_uplift: "SD13-Halfling bounded race-semantic \
-                    classification artifact at \
-                    programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-halfling-bounded-race-semantics-classification-2026-07-06.md \
-                    names the seven required race-semantic families and the \
-                    concrete acceptance criteria (new accepted fixture family, \
-                    new typed module or expansion emitting computed evidence \
-                    / explanation / claim-blocking diagnostic, new focused test \
-                    pinning family evidence at Computed / Oracle-checked tier, \
-                    updated row state with non-empty blocker note) required \
-                    before this row may honestly move out of Unverified.",
+                dimension: "bounded Halfling race semantics: four grounded PF1 Core Rulebook \
+                            Halfling racial trait dimensions (ability modifiers, size, speed, \
+                            senses) recognized on the compute seam, with the remaining \
+                            Halfling family surface still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_HALFLING_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
+                    Halfling race-semantic families are recognized on the compute seam \
+                    (ability modifiers: +2 Dexterity / -2 Strength; size: Small; speed: 20 ft; \
+                    senses: no special senses), but the remaining families stay unproven: \
+                    Fearless, Halfling Luck, Keen Senses, Sure-Footed, and weapon familiarity. \
+                    PF1 core Halflings gain no racial bonus feat, so that family is not \
+                    applicable rather than unproven. No numeric mechanical contribution is \
+                    fabricated for any of the four recognized dimensions.",
+                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
+                    remaining Halfling families (Fearless, Halfling Luck, Keen Senses, \
+                    Sure-Footed, weapon familiarity) as a real computed contribution",
             },
             // ----- Class rows (12) -----
             SupportStateRow {
@@ -584,35 +574,51 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
                 dimension: "class progression across levels 2-10: bounded milestone proof \
-                            for levels 2 and 3 only, with levels 4-10 still unproven",
+                            for levels 2 through 7 only, with levels 8-10 still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_FIGHTER_LEVEL2_LEVEL3_TEST,
-                blocker_or_lossiness_note: "SD13-E3 proves only Fighter levels 2 and 3: base \
-                    attack / base save progression, the level-2 bonus-feat progression seam, and \
-                    the level-3 armor-training seam over the deterministic Human loadout. Levels \
-                    4-10 remain out of proof, along with level-4 ability-score progression, the \
-                    repeated bonus-feat cadence, weapon training, later armor-training ranks, and \
-                    any general feat-effect/prerequisite engine",
-                next_required_uplift: "later SD13-E3 slice widening Fighter beyond level 3 toward \
-                    the level-10 milestones",
+                grounding_ref: SD13_FIGHTER_LEVEL7_TEST,
+                blocker_or_lossiness_note: "SD13-E3 proves Fighter levels 2 through 7: base \
+                    attack / base save progression (the classlevel, classlevel/2+2, \
+                    classlevel/3 formulas are level-generic), the level-2, level-4, and \
+                    level-6 bonus-feat progression seams, the level-3 Armor Training 1 seam, \
+                    the level-5 Weapon Training 1 attack-roll half (folded into the baseline \
+                    melee attack bonus for the canonical Heavy Blades group), and the level-7 \
+                    Armor Training 2 seam (raises the Climb/Swim selected-skill totals by +1 \
+                    each on the deterministic Chain Shirt) over the deterministic Human \
+                    loadout. The Weapon Training damage-roll half stays unproven — no damage \
+                    total is computed anywhere in this codebase for any Fighter level, so this \
+                    is not a new gap. The generic PF1 level-4 ability-score-increase milestone \
+                    needs no separate seam: the chosen ability score is trusted at face value. \
+                    Levels 8-10 remain out of proof, along with the bonus-feat cadence beyond \
+                    level 6 (next at level 8), and any general feat-effect/prerequisite engine",
+                next_required_uplift: "later SD13-E3 slice widening Fighter beyond level 7 \
+                    toward the level-10 milestones, starting with level 8's bonus feat",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:rogue",
-                dimension: "bounded class progression",
-                support_state: SupportState::Blocked,
+                dimension: "bounded Rogue chassis progression: the deterministic Human Rogue \
+                            level-1 chassis identity, with base-attack, base-save, \
+                            sneak-attack, and trapfinding burdens still unproven",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: GE06_TOTAL_SAVES_TEST,
-                blocker_or_lossiness_note: "tests/ge06_pilot_total_saves.rs \
-                    (unsupported_chassis_blocks_total_saves) explicitly claim-blocks \
-                    class:rogue:1 under the current bounded compute path",
-                next_required_uplift: "dedicated SD13-E3 Rogue chassis slice: ground the \
-                    Rogue level-1 chassis (skill-heavy chassis, sneak-attack burden) and lift or \
-                    re-scope the ge06_pilot_total_saves unsupported-chassis claim-block",
+                grounding_ref: SD13_ROGUE_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E3 leaves direct computed evidence that the \
+                    deterministic Human Rogue level-1 chassis identity is recognized on the \
+                    compute seam, but four named pillar burdens remain unproven: base attack \
+                    progression (3/4 BAB), base save progression (good Reflex, poor Fortitude, \
+                    poor Will), sneak attack (+1d6 extra damage), and trapfinding (Perception / \
+                    Disable Device bonus). No mechanical math is fabricated and no Rogue level \
+                    2+ is proven. tests/ge06_pilot_total_saves.rs \
+                    (unsupported_chassis_blocks_total_saves) still claim-blocks class:rogue:1 \
+                    unmodified: this slice adds recognition and burden diagnostics only, and \
+                    never computes defense.total_save.* for Rogue.",
+                next_required_uplift: "later SD13-E3 slice grounding one or more of the four \
+                    named Rogue pillar burdens",
             },
             SupportStateRow {
                 row_id: "class.barbarian.bounded_progression",
@@ -664,42 +670,68 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.cleric.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:cleric",
-                dimension: "bounded class progression and spell burden",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "dedicated SD13-E4 Cleric divine prepared \
-                    spell-baseline slice (mirroring the Sorcerer / Bard / Wizard level-1 \
-                    baseline pattern)",
+                dimension: "bounded spell-bearing class progression: the deterministic Human Cleric \
+                            level-1 prepared divine spell baseline, with the domain / channel energy \
+                            burden and the prepared divine spell posture burden still blocked",
+                support_state: SupportState::Blocked,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_CLERIC_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
+                    deterministic Human Cleric level-1 prepared divine spell-bearing identity is \
+                    recognized on the compute seam, but the row stays blocked: the domain and channel \
+                    energy burden (two chosen domains, domain spells, domain powers, channel energy) \
+                    is not implemented, and the prepared divine spell posture burden (spells prepared \
+                    from the full Cleric list, spontaneous cure/inflict conversion, spell slots per \
+                    day, bonus spells from a high Wisdom, spell save DCs) is not computed. No spell \
+                    math is fabricated and no Cleric level 2+ is proven",
+                next_required_uplift: "SD13-E4 Cleric domain / channel energy and prepared divine \
+                    spell slice, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:druid",
-                dimension: "bounded class progression and spell burden",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "dedicated SD13-E4 Druid divine prepared \
-                    spell-baseline and nature-bond slice (mirroring the Sorcerer / Bard / \
-                    Wizard level-1 baseline pattern)",
+                dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
+                            level-1 prepared divine spell baseline, with the nature bond / wild \
+                            empathy burden and the prepared divine spell posture burden still blocked",
+                support_state: SupportState::Blocked,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_DRUID_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
+                    deterministic Human Druid level-1 prepared divine spell-bearing identity is \
+                    recognized on the compute seam, but the row stays blocked: the nature bond and \
+                    wild empathy burden (nature bond choice between an animal companion and a domain, \
+                    nature sense, wild empathy) is not implemented, and the prepared divine spell \
+                    posture burden (spells prepared from the full Druid list, spontaneous summon \
+                    nature's ally conversion, spell slots per day, bonus spells from a high Wisdom, \
+                    spell save DCs) is not computed. No spell math is fabricated and no Druid level \
+                    2+ is proven",
+                next_required_uplift: "SD13-E4 Druid nature bond / wild empathy and prepared divine \
+                    spell slice, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:monk",
-                dimension: "bounded class progression",
-                support_state: SupportState::Unverified,
-                evidence_tier: EvidenceTier::Observed,
-                evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
-                grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                blocker_or_lossiness_note: "",
-                next_required_uplift: "dedicated SD13-E3 Monk martial chassis slice \
-                    (mirroring the Barbarian level-1 martial baseline pattern)",
+                dimension: "bounded Monk martial chassis progression: the deterministic Human \
+                            Monk level-1 martial chassis identity, with base-attack, base-save, \
+                            unarmed-strike/Flurry-of-Blows, and AC-Bonus/bonus-feat burdens \
+                            still unproven",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD13_MONK_LEVEL1_TEST,
+                blocker_or_lossiness_note: "SD13-E3 leaves direct computed evidence that the \
+                    deterministic Human Monk level-1 martial chassis identity is recognized on \
+                    the compute seam, but four named pillar burdens remain unproven: base attack \
+                    progression (3/4 BAB), base save progression (good Fortitude, Reflex, and \
+                    Will), unarmed strike damage die and Flurry of Blows, and AC Bonus \
+                    (Wisdom-to-AC) plus the level-1 bonus feat grant. No martial math is \
+                    fabricated and no Monk level 2+ is proven",
+                next_required_uplift: "later SD13-E3 slice grounding one or more of the four \
+                    named Monk martial pillar burdens",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
@@ -822,21 +854,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 evidence_tier: EvidenceTier::Observed,
                 evidence_freshness: EvidenceFreshness::AwaitingInitialEvidence,
                 grounding_ref: SD13_ROSTER_MATRIX_DOC,
-                // SD13-E2-F15 first-slice verdict: no named non-Human interaction row
-                // is required at this stage. The audit basis is the SD-13 carrier
-                // itself, not invented semantics:
+                // SD13-E2-F15 first-slice verdict (reconciled post the SD13-E2 race
+                // sweep and the SD13-E3/E4 class-recognition slices): no named
+                // non-Human interaction row is required at this stage. The audit
+                // basis is the SD-13 carrier itself, not invented semantics:
                 //   * every non-Human race row (race.dwarf / race.elf / race.gnome /
-                //     race.half_elf / race.half_orc / race.halfling) is
-                //     Unverified/Observed with no computed race semantics, so there
-                //     is no non-Human race trait to compute a pressure against;
-                //   * every class row that has Computed evidence is either Blocked on
-                //     a chassis / class-feature / spell burden (Rogue, Paladin,
-                //     Ranger, Sorcerer, Bard, Wizard) or Partial only on the
-                //     deterministic Human pilot surface (Fighter L1 and Fighter
-                //     L2-10 over the Human loadout, and the Barbarian
-                //     martial-chassis baseline over the Human loadout), so there is
-                //     no non-Human class seam that the separate class row does not
-                //     already cover;
+                //     race.half_elf / race.half_orc / race.halfling) is now
+                //     Partial/Computed, grounding a bounded ability-modifiers /
+                //     size / speed / senses recognition bundle via its own
+                //     dedicated race seam in pilot_compute.rs — but every one of
+                //     those seams fires identically regardless of the chosen class;
+                //     none branches on class identity, so no race x class pressure
+                //     is exposed by the race side of the carrier;
+                //   * every class row that has Computed evidence (Fighter L1,
+                //     Fighter L2-10, Rogue, Barbarian, Monk, Paladin, Ranger,
+                //     Sorcerer, Bard, Wizard, Cleric, Druid) is Blocked on a
+                //     class-feature or spell burden, or Partial only on the
+                //     deterministic Human pilot surface — several of those class
+                //     seams (Human Fighter, Barbarian, Monk) are themselves gated
+                //     to race:human specifically, so the only race x class pressure
+                //     any class row exposes is already the named Human interaction
+                //     row's pressure, not a distinct non-Human one;
                 //   * the only Human-named interaction row
                 //     (interaction.human_bonus_feat_ability_bonus.pilot_pressure)
                 //     is already Partial/Computed and is explicitly distinct from
@@ -844,34 +882,46 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // therefore no race x class seam is currently under-captured by the
                 // separate race and class rows, and adding a named non-Human
                 // interaction row today would invent a pressure the carrier cannot
-                // ground. A named non-Human interaction row becomes warranted only
-                // when a non-Human race trait is proven at the compute surface
-                // (the SD13-E2 race-semantic slice) and a class row exposes a
-                // distinct non-Human race x class pressure that the separate rows
-                // do not already absorb.
+                // ground. This row itself stays Unverified/Observed while the
+                // verdict stands. A named non-Human interaction row becomes
+                // warranted only when a class row's compute path is proven to
+                // branch on a specific non-Human race identity — a distinct
+                // non-Human race x class pressure that the separate race and class
+                // rows do not already absorb.
                 blocker_or_lossiness_note: "no named non-Human interaction row is required \
                     at this stage: every non-Human race row (race.dwarf, race.elf, race.gnome, \
-                    race.half_elf, race.half_orc, race.halfling) is Unverified/Observed with \
-                    no computed race semantics; every class row that has Computed evidence \
+                    race.half_elf, race.half_orc, race.halfling) now grounds a bounded, \
+                    class-independent recognition trait bundle via its own dedicated race seam, \
+                    but each seam fires identically regardless of the chosen class — no race \
+                    seam branches on class identity; every class row that has Computed evidence \
                     (class.fighter.level_1_pilot, class.fighter.levels_2_10, \
                     class.rogue.bounded_progression, \
                     class.barbarian.bounded_progression, \
+                    class.monk.bounded_progression, \
                     class.paladin.hybrid_chassis_and_spell_burden, \
                     class.ranger.hybrid_chassis_and_spell_burden, \
                     class.sorcerer.progression_and_spell_burden, \
                     class.bard.progression_and_spell_burden, \
-                    class.wizard.progression_and_spell_burden) is Blocked on chassis or \
-                    Partial only on the Human deterministic pilot surface; and the named \
-                    Human interaction row interaction.human_bonus_feat_ability_bonus.pilot_pressure \
-                    already covers the only race/class pressure the deterministic compute \
-                    surface exposes today; a named non-Human interaction row becomes warranted \
-                    only when a non-Human race trait is proven at the compute surface and a \
-                    class row exposes a distinct non-Human race x class pressure the separate \
+                    class.wizard.progression_and_spell_burden, \
+                    class.cleric.progression_and_spell_burden, \
+                    class.druid.progression_and_spell_burden) is Blocked on a class-feature or \
+                    spell burden, or Partial only on the Human deterministic pilot surface — \
+                    several of these class seams are themselves gated to race:human, so their \
+                    pressure is already absorbed by the named Human interaction row rather than \
+                    exposing a distinct non-Human pressure; and the named Human interaction row \
+                    interaction.human_bonus_feat_ability_bonus.pilot_pressure already covers the \
+                    only race/class pressure the deterministic compute surface exposes today; \
+                    this row itself remains Unverified/Observed while the verdict stands; a \
+                    named non-Human interaction row becomes warranted only when a class row's \
+                    compute path is proven to branch on a specific non-Human race identity, a \
+                    distinct non-Human race x class pressure the separate rows do not already \
+                    absorb",
+                next_required_uplift: "add a named non-Human interaction row only when a class \
+                    row's compute path is proven to branch on a specific non-Human race \
+                    identity — the SD13-E2 race-semantic slices already prove non-Human race \
+                    traits are computed at the compute surface, but no class row yet exposes a \
+                    distinct non-Human race x class pressure that the separate race and class \
                     rows do not already absorb",
-                next_required_uplift: "add a named non-Human interaction row only when the \
-                    SD13-E2 race-semantic slice proves a non-Human race trait at the compute \
-                    surface and a class row exposes a distinct non-Human race x class pressure \
-                    that the separate race and class rows do not already absorb",
             },
         ],
     }

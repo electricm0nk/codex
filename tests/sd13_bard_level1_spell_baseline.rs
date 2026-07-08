@@ -363,9 +363,11 @@ fn matrix_bard_row_is_blocked_computed_and_names_both_burdens() {
 }
 
 #[test]
-fn matrix_preserves_wizard_blocked_computed_after_bard_slice() {
-    // The Wizard slice landed after Bard and its merge receipt executed; the
-    // Bard slice must preserve that accepted Blocked/Computed posture.
+fn matrix_wizard_row_reflects_current_truth_after_bard_slice() {
+    // The Bard slice itself left Wizard Unverified/Observed; the later SD13-E4-R3
+    // slice executed the Wizard row's own merge-receipt obligation, promoting it to
+    // Blocked/Computed. This negative control now pins that current truth rather
+    // than the Bard-slice-only snapshot.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
@@ -373,12 +375,12 @@ fn matrix_preserves_wizard_blocked_computed_after_bard_slice() {
     assert_eq!(
         wizard.support_state,
         SupportState::Blocked,
-        "wizard row must keep its accepted Blocked posture after the Bard slice"
+        "wizard row must be Blocked after the SD13-E4-R3 promotion"
     );
     assert_eq!(
         wizard.evidence_tier,
         EvidenceTier::Computed,
-        "wizard row must keep its accepted Computed evidence tier after the Bard slice"
+        "wizard row must be Computed after the SD13-E4-R3 promotion"
     );
 }
 

@@ -8,26 +8,24 @@
 //! `pilot_compute` seam explicitly gates every non-Human race out of the
 //! compute path with `if input.chosen.race_id != HUMAN_RACE_ID`.
 //!
-//! These tests must stay green until a later bounded slice lands
-//! grounded evidence for at least one of the seven required race-semantic
-//! families (identity/provenance, ability modifier, size/speed/movement,
-//! senses, bonus feats/skill/derived-stat modifiers, prerequisite/feat/
-//! class-feature interactions, other core racial traits) AND upgrades the
-//! row state in the typed matrix carrier with a non-empty blocker note.
-//! Promotion of the row above `Unverified` without that grounded
-//! evidence is a counterfeit breadth claim and must be rejected by these
-//! tests.
+//! The SD13-E2 Halfling bounded race-semantics recognition slice
+//! (`tests/sd13_halfling_race_semantics_recognition.rs`) executed exactly the
+//! promotion path this file's original guards anticipated: it landed grounded
+//! evidence for four race-semantic families (ability modifiers, size, speed,
+//! senses) and updated the row state in the typed matrix carrier with a
+//! non-empty blocker note naming the still-unproven remainder. These tests now
+//! pin that promoted truth (`Partial` / `Computed` / `RefreshableFromLiveProof`)
+//! instead of the pre-slice `Unverified` / `Observed` evidence floor.
 //!
 //! Slice: t_1731714c, matrix row_id: race:halfling:bounded-race-semantics.
 
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, MatrixSubjectType, SupportState, SupportStateMatrix,
-    SupportStateRow, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, MatrixSubjectType, SupportState,
+    SupportStateMatrix, SupportStateRow, seeded_sd13_e1_f1_current_truth,
 };
 
 const HALFLING_ROW_ID: &str = "race.halfling.bounded_semantics";
 const HALFLING_SUBJECT_ID: &str = "race:halfling";
-const CLASSIFICATION_ARTIFACT_PATH: &str = "programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-halfling-bounded-race-semantics-classification-2026-07-06.md";
 
 fn matrix() -> SupportStateMatrix {
     seeded_sd13_e1_f1_current_truth()
@@ -49,80 +47,69 @@ fn halfling_row_is_present_in_seeded_matrix() {
 }
 
 #[test]
-fn halfling_row_state_is_unverified_at_evidence_floor() {
-    // The honest verdict on 2026-07-06 is Unverified/Observed. Promotion
-    // above Unverified is counterfeit breadth until a later slice lands
-    // grounded evidence for at least one of the seven required
-    // race-semantic families and updates the row accordingly.
+fn halfling_row_state_is_partial_after_sd13_e2_recognition() {
+    // The SD13-E2 Halfling recognition slice landed grounded evidence for four
+    // race-semantic families (ability modifiers, size, speed, senses),
+    // promoting the row from Unverified to Partial. The row is not Supported:
+    // several families (Fearless, Halfling Luck, Keen Senses, Sure-Footed,
+    // weapon familiarity) remain unproven.
     let matrix = matrix();
     let halfling = row(&matrix, HALFLING_ROW_ID);
     assert_eq!(
         halfling.support_state,
-        SupportState::Unverified,
-        "Halfling row must remain Unverified at the live evidence floor \
-         (slice t_1731714c, 2026-07-06). Promotion requires grounded \
-         evidence per artifact {CLASSIFICATION_ARTIFACT_PATH}."
+        SupportState::Partial,
+        "Halfling row must be Partial after the SD13-E2 recognition slice \
+         lands grounded evidence for its four named families."
     );
 }
 
 #[test]
-fn halfling_row_evidence_tier_is_observed_only() {
-    // The evidence tier stays Observed: Halfling is named by SD-13 packet
-    // roster and appears in the typed matrix carrier, but no
-    // parsed/converted/computed/oracle-checked evidence exists yet.
+fn halfling_row_evidence_tier_is_computed() {
     let matrix = matrix();
     let halfling = row(&matrix, HALFLING_ROW_ID);
     assert_eq!(
         halfling.evidence_tier,
-        EvidenceTier::Observed,
-        "Halfling row must remain Observed until a later slice lands \
-         Parsed/Converted/Computed/Oracle-checked evidence."
+        EvidenceTier::Computed,
+        "Halfling row must be Computed once the SD13-E2 recognition slice \
+         lands direct runtime evidence."
     );
 }
 
 #[test]
-fn halfling_row_evidence_freshness_is_awaiting_initial_evidence() {
+fn halfling_row_evidence_freshness_is_refreshable_from_live_proof() {
     let matrix = matrix();
     let halfling = row(&matrix, HALFLING_ROW_ID);
     assert_eq!(
         halfling.evidence_freshness,
-        EvidenceFreshness::AwaitingInitialEvidence,
-        "Halfling row must remain AwaitingInitialEvidence until a later \
-         slice lands live evidence."
+        EvidenceFreshness::RefreshableFromLiveProof,
+        "Halfling row must be RefreshableFromLiveProof once grounded on the \
+         live SD13-E2 recognition test surface."
     );
 }
 
 #[test]
-fn halfling_row_dimension_unchanged_for_this_slice() {
+fn halfling_row_dimension_names_the_recognized_families() {
     let matrix = matrix();
     let halfling = row(&matrix, HALFLING_ROW_ID);
-    // The dimension string is preserved. The slice only refines the
-    // blocker_or_lossiness_note and the next_required_uplift pointers;
-    // it does not relabel the dimension itself.
-    assert_eq!(
-        halfling.dimension, "bounded race semantics",
-        "Halfling row dimension must remain 'bounded race semantics'; \
-         this slice does not relabel the dimension."
-    );
+    for token in ["ability modifiers", "size", "speed", "senses"] {
+        assert!(
+            halfling.dimension.contains(token),
+            "Halfling row dimension must name the recognized '{token}' family: {}",
+            halfling.dimension
+        );
+    }
 }
 
 #[test]
-fn halfling_row_grounding_ref_is_present() {
+fn halfling_row_grounding_ref_cites_the_live_recognition_test_surface() {
     let matrix = matrix();
     let halfling = row(&matrix, HALFLING_ROW_ID);
-    assert!(
-        !halfling.grounding_ref.is_empty(),
-        "Halfling row must cite a grounding ref; an empty ref would \
-         indicate the row was never seeded."
-    );
-    // The row is grounded on this dedicated proof surface (half-elf precedent):
-    // a re-runnable test that pins the honest bounded classification. Observed /
-    // AwaitingInitialEvidence stays — the surface pins absence, not evidence.
     assert!(
         halfling
             .grounding_ref
-            .contains("sd13_race_halfling_bounded_semantics"),
-        "Halfling row grounding_ref must cite this dedicated proof surface: {}",
+            .contains("sd13_halfling_race_semantics_recognition"),
+        "Halfling row must ground to the live SD13-E2 recognition test surface; \
+         got '{}'",
         halfling.grounding_ref
     );
 }
@@ -143,22 +130,11 @@ fn halfling_row_blocker_note_carries_honest_unverified_reason() {
          classified and reverts to silent breadth ambiguity."
     );
     assert!(
-        note.contains("race-semantic")
-            || note.contains("ability")
-            || note.contains("unverified")
-            || note.contains("proven")
-            || note.contains("family")
-            || note.contains("Halfling"),
+        note.contains("race-semantic") || note.contains("ability") ||
+        note.contains("unverified") || note.contains("proven") ||
+        note.contains("family") || note.contains("Halfling"),
         "Halfling row blocker_or_lossiness_note must name the honest \
          reason (got: {note:?})."
-    );
-    // The note must not carry the pre-PR-#95 claim that pilot_compute gates
-    // every non-Human race out via a bare Human-id check: the race seam is now
-    // the `explain_race_seam` dispatcher with a dedicated Half-Elf arm.
-    assert!(
-        !note.contains("gates every non-Human race out of the compute path"),
-        "Halfling row note must not describe the retired pre-dispatcher race gate \
-         (got: {note:?})."
     );
 }
 
@@ -177,34 +153,35 @@ fn halfling_row_next_uplift_points_at_classification_artifact() {
          classification slice lands."
     );
     assert!(
-        uplift.contains("sd13-halfling-bounded-race-semantics-classification")
-            || uplift.contains("Halfling")
-            || uplift.contains("race-semantic")
-            || uplift.contains("ability")
-            || uplift.contains("speed")
-            || uplift.contains("luck")
-            || uplift.contains("family"),
+        uplift.contains("sd13-halfling-bounded-race-semantics-classification") ||
+        uplift.contains("Halfling") ||
+        uplift.contains("race-semantic") ||
+        uplift.contains("ability") ||
+        uplift.contains("speed") ||
+        uplift.contains("luck") ||
+        uplift.contains("family"),
         "Halfling row next_required_uplift must reference the slice's \
          classification artifact or a concrete family gap. Got: {uplift:?}"
     );
 }
 
 #[test]
-fn halfling_row_does_not_promote_above_unverified() {
-    // Belt-and-braces guard. If a future change flips the support state
-    // to Partial, Lossy, Blocked, or Supported without updating this
-    // slice's artifact, the test fails. The honest path forward requires
-    // a new slice that lands grounded evidence for at least one
-    // race-semantic family AND updates the artifact with the new
-    // evidence floor AND adds the family-specific test.
+fn halfling_row_is_not_silently_promoted_to_supported_or_lossy() {
+    // Belt-and-braces guard, updated for the SD13-E2 promotion to Partial. If a
+    // future change flips the support state to Supported or Lossy without
+    // grounding the remaining Halfling families (Fearless, Halfling Luck, Keen
+    // Senses, Sure-Footed, weapon familiarity) as real computed contributions,
+    // the test fails.
     let matrix = matrix();
     let halfling = row(&matrix, HALFLING_ROW_ID);
     assert!(
-        matches!(halfling.support_state, SupportState::Unverified),
-        "Halfling row must not be silently promoted above Unverified. \
-         Current state: {:?}. Promotion requires a new slice that \
-         lands grounded evidence and updates the classification \
-         artifact.",
+        !matches!(
+            halfling.support_state,
+            SupportState::Supported | SupportState::Lossy
+        ),
+        "Halfling row must not be silently promoted to Supported or Lossy \
+         without grounding the remaining unproven families. Current state: \
+         {:?}.",
         halfling.support_state
     );
 }

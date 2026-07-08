@@ -48,10 +48,10 @@ export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:wizard', label: 'Wizard', supportLevel: 'partial-human-only', levelOptions: [1] },
   { id: 'class:bard', label: 'Bard', supportLevel: 'partial-human-only', levelOptions: [1] },
   { id: 'class:barbarian', label: 'Barbarian', supportLevel: 'partial-human-only', levelOptions: [1] },
-  { id: 'class:rogue', label: 'Rogue', supportLevel: 'none', levelOptions: [1] },
-  { id: 'class:cleric', label: 'Cleric', supportLevel: 'none', levelOptions: [1] },
-  { id: 'class:druid', label: 'Druid', supportLevel: 'none', levelOptions: [1] },
-  { id: 'class:monk', label: 'Monk', supportLevel: 'none', levelOptions: [1] },
+  { id: 'class:rogue', label: 'Rogue', supportLevel: 'partial-human-only', levelOptions: [1] },
+  { id: 'class:cleric', label: 'Cleric', supportLevel: 'partial-human-only', levelOptions: [1] },
+  { id: 'class:druid', label: 'Druid', supportLevel: 'partial-human-only', levelOptions: [1] },
+  { id: 'class:monk', label: 'Monk', supportLevel: 'partial-human-only', levelOptions: [1] },
 ];
 
 const DEFAULT_LEVEL_OPTIONS: number[] = [1];

@@ -261,27 +261,31 @@ fn matrix_level_1_and_levels_2_10_remain_distinct_rows() {
         level_1.dimension, levels_2_10.dimension,
         "Fighter L1 and L2-10 must keep distinct progression dimensions"
     );
-    // The slice must NOT have weakened the L2-10 row's enforcement of "4-10 remains
-    // unproven"; the L2-10 row is a separate concern with its own grounding ref.
+    // The slice must NOT have weakened the L2-10 row's enforcement of "levels
+    // beyond the proven range remain unproven"; the L2-10 row is a separate
+    // concern with its own grounding ref, now the more specific SD13-E3 level-7
+    // proof surface.
     assert!(
         levels_2_10
             .grounding_ref
-            .contains("sd13_fighter_level2_level3_progression"),
+            .contains("sd13_fighter_level7_progression"),
         "L2-10 row must keep its own SD13-E3 tranche grounding ref: {}",
         levels_2_10.grounding_ref
     );
 }
 
 #[test]
-fn matrix_keeps_rogue_blocked_negative_control() {
+fn matrix_keeps_rogue_partial_after_its_own_recognition_slice() {
+    // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
+    // recognition slice; this Fighter-L1-widening snapshot preserves that.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("Rogue row must exist");
     assert_eq!(
         rogue.support_state,
-        SupportState::Blocked,
-        "Rogue must remain a blocked negative control after the Fighter L1 widening"
+        SupportState::Partial,
+        "Rogue must remain Partial after the Fighter L1 widening"
     );
 }
 
