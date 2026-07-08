@@ -738,23 +738,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
-                            level-1 prepared divine spell baseline, with the nature bond / wild \
-                            empathy burden and the prepared divine spell posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            level-1 prepared divine spell baseline, with Wild Empathy now grounded \
+                            and the nature bond burden and the prepared divine spell posture burden \
+                            still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_DRUID_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
                     deterministic Human Druid level-1 prepared divine spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the nature bond and \
-                    wild empathy burden (nature bond choice between an animal companion and a domain, \
-                    nature sense, wild empathy) is not implemented, and the prepared divine spell \
-                    posture burden (spells prepared from the full Druid list, spontaneous summon \
-                    nature's ally conversion, spell slots per day, bonus spells from a high Wisdom, \
-                    spell save DCs) is not computed. No spell math is fabricated and no Druid level \
-                    2+ is proven",
-                next_required_uplift: "SD13-E4 Druid nature bond / wild empathy and prepared divine \
-                    spell slice, then level-2+ progression",
+                    recognized on the compute seam, AND the SD13-E4 wild empathy grounding slice \
+                    grounds wild empathy for real (PF1 Core Rulebook: 1d20 + druid level + Charisma \
+                    modifier, used like a Diplomacy check to improve an animal's attitude; only the \
+                    flat druid-level + Charisma-modifier bonus is computed against the deterministic \
+                    fixture, no d20 roll and no Diplomacy-check execution engine). The row is \
+                    Partial, not Supported: the nature bond burden (the choice between an animal \
+                    companion and a domain, and nature sense) remains named and unproven, and the \
+                    prepared divine spell posture burden (spells prepared from the full Druid list, \
+                    spontaneous summon nature's ally conversion, spell slots per day, bonus spells \
+                    from a high Wisdom, spell save DCs) is still entirely unproven. No spell math is \
+                    fabricated and no Druid level 2+ is proven",
+                next_required_uplift: "SD13-E4 Druid nature bond grounding slice, or the prepared \
+                    divine spell burden slice, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",
