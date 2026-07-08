@@ -53,7 +53,12 @@
 //! combat style stay explicitly claim-blocked by their own named diagnostics, and
 //! Track (the Survival-check bonus to follow tracks, ½ ranger level minimum 1) is
 //! grounded for real as a bounded numeric value; it grounds no favored-enemy or
-//! combat-style math and no ranger spell posture. Unsupported input yields
+//! combat-style math and no ranger spell posture. The SD13-E4 Sorcerer decomposition
+//! slice further splits the F7 combined bloodline burden into two named diagnostics
+//! and grounds one for real: Eschew Materials, the universal, bloodline-independent
+//! bonus feat every 1st-level Sorcerer receives; it grounds no bloodline power,
+//! bloodline arcana, or spell math, and the bloodline-power and spontaneous
+//! spell-posture burdens stay explicitly claim-blocked. Unsupported input yields
 //! claim-blocking diagnostics and withheld explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
@@ -2762,22 +2767,32 @@ fn explain_rogue_level1_chassis(
 }
 
 /// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Sorcerer
-/// level-1 spell-bearing baseline, while keeping it explicitly claim-blocked on its two
+/// level-1 spell-bearing baseline, while keeping it explicitly claim-blocked on its
 /// still-missing burdens.
 ///
-/// This deliberately does not compute a supported spell surface. It grounds no bloodline
-/// power, no bloodline arcana, and no spell math whatsoever — no spell slots, spells
-/// known, spell DCs, bonus spells, prepared posture, or school choice. It only:
+/// The SD13-E4 Sorcerer decomposition slice splits the original combined bloodline
+/// blocker into two named diagnostics and grounds one of them for real: Eschew
+/// Materials, the universal, bloodline-independent bonus feat every 1st-level Sorcerer
+/// receives (PF1 Core Rulebook: it lets a Sorcerer cast a spell with a material
+/// component costing 1 gp or less without needing that material component). This is a
+/// boolean feat grant, not a numeric formula, so it carries no fabricated mechanical
+/// value; it grounds no bloodline power, no bloodline arcana, and no spell math
+/// whatsoever — no spell slots, spells known, spell DCs, bonus spells, prepared
+/// posture, or school choice. It only:
 /// - leaves one recognition explanation so the `class:sorcerer:1` identity is acknowledged
 ///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
-///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two distinct claim-blocking diagnostics naming the bloodline burden and the
-///   spontaneous known-spell / slot posture burden explicitly, rather than hiding behind a
-///   generic "unsupported caster" label.
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - leaves one grounded explanation recognizing the Eschew Materials bonus-feat grant
+///   (also carrying no fabricated mechanical value, since it is a boolean grant), and
+/// - emits two distinct claim-blocking diagnostics naming the bloodline-power burden
+///   (bloodline selection, level-1 bloodline power, bloodline arcana, and higher-level
+///   bonus spells/feats/skills) and the spontaneous known-spell / slot posture burden
+///   explicitly, rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
-/// keeps that blocked posture but makes the Sorcerer spell-bearing identity and its two
-/// named burdens legible on the runtime path.
+/// keeps that blocked posture but makes the Sorcerer spell-bearing identity, the
+/// grounded Eschew Materials grant, and the two remaining named burdens legible on the
+/// runtime path.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -2805,14 +2820,33 @@ fn explain_sorcerer_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the bloodline burden explicitly.
+    // Grounded for real: Eschew Materials is a universal, bloodline-independent bonus
+    // feat granted to every 1st-level Sorcerer. It is a boolean feat grant, not a
+    // numeric formula, so it carries no fabricated mechanical value; it grounds no
+    // bloodline power and no spell math.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.sorcerer.eschew_materials".to_owned(),
+        value: 0,
+        detail: format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} Eschew Materials bonus feat: the PF1 Core \
+             Rulebook grants every Sorcerer the Eschew Materials feat at 1st level regardless of \
+             chosen bloodline, letting them cast a spell with a material component costing 1 gp or \
+             less without needing that material component. This is a boolean feat grant, not a \
+             numeric bonus, so it carries no fabricated mechanical value (+0); it grounds no \
+             bloodline power, no bloodline arcana, and no spell math (spell slots, spells known, \
+             spell DCs, or bonus spells)"
+        ),
+    });
+
+    // Still blocked (1/2): name the bloodline-power burden explicitly, now that Eschew
+    // Materials has been split out and grounded above.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.sorcerer.bloodline.unsupported".to_owned(),
+        id: "class_feature.sorcerer.bloodline_power.unsupported".to_owned(),
         message: format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline burden: the \
-             bloodline selection, its level-1 bloodline power, bloodline arcana, and bloodline bonus \
-             spells/feats/skills are not implemented in this bounded spell baseline, so no Sorcerer \
-             bloodline support is claimed"
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline power \
+             burden: the bloodline selection, its level-1 bloodline power, bloodline arcana, and \
+             bloodline bonus spells/feats/skills are not implemented in this bounded spell \
+             baseline, so no Sorcerer bloodline-power support is claimed"
         ),
         claim_blocking: true,
     });

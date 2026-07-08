@@ -37,10 +37,12 @@
 //!   favored-enemy and combat-style pillar burdens remain named and unproven, and the
 //!   later ranger spell burden (slots, source, spells known/prepared) stays deferred
 //!   to SD13-E4,
-//! - the Sorcerer row is `Blocked` / `Computed`: the SD13-E4-F7 slice proves the
+//! - the Sorcerer row is `Partial` / `Computed`: the SD13-E4-F7 slice proves the
 //!   deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is
-//!   recognized on the compute seam, but it stays blocked on the bloodline burden and the
-//!   spontaneous known-spell / slot posture burden, and fabricates no spell math,
+//!   recognized on the compute seam, AND the SD13-E4 Sorcerer decomposition slice grounds
+//!   Eschew Materials (the universal, bloodline-independent 1st-level bonus feat) for
+//!   real, but the bloodline-power burden and the spontaneous known-spell / slot posture
+//!   burden remain named and unproven, and no spell math is fabricated,
 //! - the Bard row is `Blocked` / `Computed`: the SD13-E4-F7 slice proves the
 //!   deterministic Human Bard level-1 spontaneous arcane spell-bearing identity is
 //!   recognized on the compute seam, but it stays blocked on the bardic knowledge +
@@ -288,10 +290,11 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
 const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs + \
     tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs";
 
-/// SD13-E4-F7 dedicated proof surface for the bounded Human Sorcerer level-1 spell
-/// baseline: direct computed recognition of the spontaneous arcane spell-bearing identity
-/// that stays explicitly blocked on the bloodline burden and the spontaneous
-/// known-spell / slot posture burden.
+/// SD13-E4-F7 / SD13-E4 dedicated proof surface for the bounded Human Sorcerer level-1
+/// spell baseline: direct computed recognition of the spontaneous arcane spell-bearing
+/// identity, plus the SD13-E4 decomposition slice's grounded Eschew Materials bonus-feat
+/// grant, while the bloodline-power burden and the spontaneous known-spell / slot
+/// posture burden stay explicitly blocked.
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
 
 /// SD13-E3 dedicated proof surface for the bounded Human Barbarian level-1 martial
@@ -838,21 +841,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Sorcerer level-1 spell baseline, with the bloodline burden and the \
-                            spontaneous known-spell / slot posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            Sorcerer level-1 spell baseline, with Eschew Materials grounded for \
+                            real and the bloodline-power burden and the spontaneous \
+                            known-spell / slot posture burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_SORCERER_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
                     deterministic Human Sorcerer level-1 spontaneous arcane spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the bloodline burden \
-                    (bloodline selection, level-1 bloodline power, bloodline arcana, bonus \
-                    spells/feats/skills) is not implemented, and the spontaneous spell burden \
-                    (spontaneous spells known, spell slots per day, bonus spell slots, spell save DCs) \
-                    is not computed. No spell math is fabricated and no Sorcerer level 2+ is proven",
-                next_required_uplift: "SD13-E4 Sorcerer bloodline and spontaneous spell-slot slice, \
-                    then level-2+ progression",
+                    recognized on the compute seam, AND the SD13-E4 Sorcerer decomposition slice \
+                    grounds Eschew Materials (the universal, bloodline-independent bonus feat every \
+                    1st-level Sorcerer receives: casting a spell with a material component costing \
+                    1 gp or less without needing that material component) for real. The row is \
+                    Partial, not Supported: the bloodline-power burden (bloodline selection, \
+                    level-1 bloodline power, bloodline arcana, bonus spells/feats/skills) remains \
+                    named and unproven, and the spontaneous spell burden (spontaneous spells known, \
+                    spell slots per day, bonus spell slots, spell save DCs) is entirely unproven. No \
+                    spell math is fabricated and no Sorcerer level 2+ is proven",
+                next_required_uplift: "SD13-E4 Sorcerer bloodline-power grounding slice (a specific \
+                    bloodline's level-1 power), then the spontaneous spell burden, then level-2+ \
+                    progression",
             },
             SupportStateRow {
                 row_id: "class.wizard.progression_and_spell_burden",
