@@ -280,11 +280,15 @@ const SD13_HUMAN_ROW_GROUNDING_REF: &str =
 /// bonus-feat and ability-bonus selections).
 const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 
-/// SD13-E3/E5 dedicated proof surface for the bounded Human Rogue level-1 chassis
-/// baseline (mirroring the Barbarian/Monk pattern): direct computed
+/// SD13-E3/E5 dedicated proof surface for the bounded Human Rogue level-1/level-2
+/// chassis baseline (mirroring the Barbarian/Monk pattern): direct computed
 /// chassis-recognition evidence with all four named pillar burdens (base attack,
-/// base save, sneak attack die count, trapfinding) grounded as standalone records.
-const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs";
+/// base save, sneak attack die count, trapfinding) grounded as standalone records
+/// at level 1, widened to level 2 by a later SD13-E5 slice (the level-range gate
+/// plus the Evasion identity/recognition record), citing both proof files as one
+/// combined literal.
+const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs + \
+    tests/sd13_rogue_level2_progression.rs";
 
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group
@@ -687,10 +691,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:rogue",
                 dimension: "bounded Rogue chassis progression: the deterministic Human Rogue \
-                            level-1 chassis identity, with all four named pillars now grounded \
-                            (base-attack, base-save, sneak-attack die count, and trapfinding) \
-                            and the check-execution / rogue-talent / integration remainder \
-                            still unproven",
+                            level-1/level-2 chassis identity, with all four named pillars \
+                            grounded across both levels (base-attack, base-save, sneak-attack \
+                            die count, and trapfinding), Evasion grounded as a level-2 \
+                            identity/recognition record, and the check-execution / \
+                            rogue-talent / integration remainder still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -700,21 +705,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     compute seam, and all four named pillar burdens are now grounded: base \
                     attack progression (3/4 BAB, level * 3 / 4), base save progression (good \
                     Reflex, poor Fortitude, poor Will), sneak attack (die count only, +1d6 at \
-                    level 1 — damage-roll execution and the flanking / Dexterity-denial \
+                    levels 1-2 — damage-roll execution and the flanking / Dexterity-denial \
                     trigger-condition engine remain unproven), and, per the SD13-E5 slice, \
                     trapfinding (the flat max(rogue level / 2, 1) bonus on Perception checks to \
-                    locate traps and on Disable Device checks, +1 at level 1, plus the \
+                    locate traps and on Disable Device checks, +1 at levels 1-2, plus the \
                     magic-trap-disarm statement — a check-execution engine, trap DC resolution, \
-                    and a magic-trap disarm engine remain unproven). The row is Partial, not \
-                    Supported: no rogue talent (a level-2+ milestone) is proven, no Rogue level \
-                    2+ is proven, and no mechanical math is fabricated beyond these grounded \
-                    pillars. \
+                    and a magic-trap disarm engine remain unproven). A later SD13-E5 slice widens \
+                    the level-1-only gate to level 2 (mirroring the Fighter/Paladin level-range \
+                    gate idiom) and grounds Evasion as a bounded identity/recognition record only \
+                    (value 0, non-fabricated): no damage on a successful Reflex save against an \
+                    effect that normally allows half damage on a successful save, no benefit on a \
+                    failed save — naming the rule text with no saving-throw-resolution or \
+                    damage-resolution engine behind it. The row is Partial, not Supported: no \
+                    rogue talent (a level-2+ choice-list feature, and a genuinely open-ended \
+                    talent tree left named but unproven) is proven, no Rogue level 3+ is proven, \
+                    and no mechanical math is fabricated beyond these grounded pillars. \
                     tests/ge06_pilot_total_saves.rs (unsupported_chassis_blocks_total_saves) \
                     still claim-blocks class:rogue:1 unmodified: the \
                     class_chassis.rogue.base_attack_bonus / base_save.* / sneak_attack / \
-                    trapfinding explanations are standalone records, not wired into \
-                    compute_fighter_chassis, compute_total_saves, or compute_combat_baseline, \
-                    so defense.total_save.* is still never computed for Rogue.",
+                    trapfinding / class_feature.rogue.evasion explanations are standalone \
+                    records, not wired into compute_fighter_chassis, compute_total_saves, or \
+                    compute_combat_baseline, so defense.total_save.* is still never computed for \
+                    Rogue.",
                 next_required_uplift: "later SD13 slice wiring the grounded Rogue pillar \
                     records into the integrated pilot surface (the generic chassis diagnostics \
                     still claim-block), then rogue talents and level-2+ progression",
