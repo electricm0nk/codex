@@ -186,11 +186,12 @@ const MONK_CLASS_ID: &str = "class:monk";
 // Grounded SD13-E4 Human Cleric level-1 prepared divine spell-bearing baseline
 // identity. Cleric is the canonical PF1 prepared divine full caster; unlike the
 // arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
-// is split across a domain / channel energy class-feature family (two domains
-// chosen, domain spells, domain powers, channel energy) and a prepared divine
-// spell posture family (spells prepared from the full Cleric list, spontaneous
-// cure/inflict conversion, spell slots per day, bonus spells from a high Wisdom,
-// spell save DCs).
+// is split across a domain choice class-feature family (two domains chosen,
+// domain spells, domain powers — Channel Energy has since been grounded for
+// real: ceil(cleric level / 2) d6, minimum 1d6, usable 3 + Charisma modifier
+// times per day) and a prepared divine spell posture family (spells prepared
+// from the full Cleric list, spontaneous cure/inflict conversion, spell slots
+// per day, bonus spells from a high Wisdom, spell save DCs).
 const CLERIC_CLASS_ID: &str = "class:cleric";
 const CLERIC_BASELINE_LEVEL: u8 = 1;
 
@@ -471,7 +472,12 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_wizard_level1_prepared_spell_baseline(input, &mut explanations, &mut diagnostics);
 
-    explain_cleric_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+    explain_cleric_level1_spell_baseline(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
     explain_druid_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
@@ -2939,25 +2945,31 @@ fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E4 runtime evidence for the deterministic Human Cleric level-1
 /// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
-/// its two still-missing burdens.
+/// its remaining still-missing burdens.
 ///
-/// This deliberately does not compute a supported spell surface. It grounds no domain
-/// selection, no domain spells, no domain powers, no channel energy execution, no
-/// spellbook posture, no spells prepared, no spontaneous cure/inflict conversion, no
-/// spell slots per day, no spell save DCs, and no bonus spell slots from a high Wisdom.
-/// It only:
+/// This deliberately does not compute a supported spell surface. It grounds Channel
+/// Energy's flat die-count and uses-per-day math, but grounds no domain selection, no
+/// domain spells, no domain powers, no channel energy save DC or damage/healing
+/// resolution, no spellbook posture, no spells prepared, no spontaneous cure/inflict
+/// conversion, no spell slots per day, no spell save DCs, and no bonus spell slots from
+/// a high Wisdom. It only:
 /// - leaves one recognition explanation so the `class:cleric:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
-///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two distinct claim-blocking diagnostics naming the domain / channel energy
-///   class-feature burden and the prepared divine spell posture burden explicitly,
-///   rather than hiding behind a generic "unsupported caster" label.
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - grounds Channel Energy's die count and daily use count for real (PF1 Core
+///   Rulebook Channel Energy: `ceil(cleric level / 2)` d6, minimum 1d6; usable
+///   `3 + Charisma modifier` times per day), and
+/// - emits two distinct claim-blocking diagnostics naming the still-unproven domain
+///   choice class-feature burden and the prepared divine spell posture burden
+///   explicitly, rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Cleric prepared divine spell-bearing
-/// identity and its two named burdens legible on the runtime path.
+/// identity, its one grounded Channel Energy pillar, and its two named remaining
+/// burdens legible on the runtime path.
 fn explain_cleric_level1_spell_baseline(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -2986,15 +2998,49 @@ fn explain_cleric_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the domain / channel energy class-feature burden explicitly.
+    // Grounded for real: Channel Energy's flat die count. PF1 Core Rulebook Channel
+    // Energy: the cleric channels a number of d6s equal to ceil(cleric level / 2),
+    // minimum 1d6. At the bounded level-1 baseline this is ceil(1 / 2) = 1d6.
+    let channel_energy_dice = (i16::from(CLERIC_BASELINE_LEVEL) + 1) / 2;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.cleric.channel_energy_dice".to_owned(),
+        value: channel_energy_dice,
+        detail: format!(
+            "Cleric Channel Energy die count: ceil(cleric level / 2) d6 (PF1 Core Rulebook Channel \
+             Energy), minimum 1d6. At Cleric level {CLERIC_BASELINE_LEVEL} this is \
+             ceil({CLERIC_BASELINE_LEVEL} / 2) = {channel_energy_dice}d6. This grounds only the flat \
+             d6 die count; it computes no channel energy save DC and no positive/negative energy \
+             burst damage or healing resolution"
+        ),
+    });
+
+    // Grounded for real: Channel Energy's flat daily use count. PF1 Core Rulebook
+    // Channel Energy: usable 3 + Charisma modifier times per day, floored at 0 (a
+    // cleric cannot channel energy a negative number of times per day).
+    let channel_energy_uses_per_day = (3 + ability_modifiers.charisma).max(0);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.cleric.channel_energy_uses_per_day".to_owned(),
+        value: channel_energy_uses_per_day,
+        detail: format!(
+            "Cleric Channel Energy uses per day: 3 + Charisma modifier (PF1 Core Rulebook Channel \
+             Energy), floored at 0. At Charisma modifier {} this is max(3 + {}, 0) = \
+             {channel_energy_uses_per_day}. This grounds only the flat daily use count; it computes \
+             no channel energy save DC and no positive/negative energy burst damage or healing \
+             resolution",
+            ability_modifiers.charisma, ability_modifiers.charisma
+        ),
+    });
+
+    // Still blocked (1/2): name the domain choice class-feature burden explicitly.
+    // Channel Energy (above) is grounded; the two chosen domains, their domain
+    // spells, and their domain powers remain entirely unproven.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.cleric.domain_and_channel_energy.unsupported".to_owned(),
+        id: "class_feature.cleric.domain_choice.unsupported".to_owned(),
         message: format!(
-            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain and channel energy \
-             burden: the two chosen domains, their domain spells, their domain powers, and channel \
-             energy (positive/negative energy burst, uses per day, save DC) are not implemented in \
-             this bounded prepared divine spell baseline, so no Cleric domain or channel energy \
-             support is claimed"
+            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain choice burden: the \
+             two chosen domains, their domain spells, and their domain powers are not implemented in \
+             this bounded prepared divine spell baseline, so no Cleric domain choice support is \
+             claimed"
         ),
         claim_blocking: true,
     });

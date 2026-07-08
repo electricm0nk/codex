@@ -5,11 +5,12 @@
 # and stays a single-class, level-1-only prepared divine spell-bearing baseline.
 #
 # It deliberately avoids every spell-support surface: no spellbook, no spells prepared,
-# no spell slots, no spell DCs, no bonus spells, no domain power execution, no channel
-# energy execution, and no general spell totals. It adds only the minimum choice data
-# needed to make the Cleric class identity, the domain / channel energy burden, and the
-# prepared divine spell posture burden legible; those burdens are intentionally left for
-# the runtime and matrix to name as still blocking.
+# no spell slots, no spell DCs, no bonus spells, no domain power execution, and no
+# general spell totals. Channel Energy's flat die-count and uses-per-day math is
+# grounded for real from this fixture's level and Charisma score. It adds only the
+# minimum choice data needed to make the Cleric class identity, the domain choice
+# burden, and the prepared divine spell posture burden legible; those two burdens are
+# intentionally left for the runtime and matrix to name as still blocking.
 case_id=pf1-crb-human-cleric-level1
 source_package_id=pf1.core_rulebook
 race_id=race:human

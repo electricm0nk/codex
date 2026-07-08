@@ -51,11 +51,12 @@
 //!   recognized on the compute seam (merge receipt executed 2026-07-07), but it stays
 //!   blocked on the school specialization burden and the prepared spellbook /
 //!   spell-slot posture burden, and fabricates no spell math,
-//! - the Cleric row is `Blocked` / `Computed`: the SD13-E4 slice proves the
+//! - the Cleric row is `Partial` / `Computed`: the SD13-E4 slice proves the
 //!   deterministic Human Cleric level-1 prepared divine spell-bearing identity is
-//!   recognized on the compute seam, but it stays blocked on the domain / channel
-//!   energy burden and the prepared divine spell posture burden, and fabricates no
-//!   spell math,
+//!   recognized on the compute seam, and a later SD13-E4 Cleric Channel Energy slice
+//!   grounds Channel Energy for real (die count and uses per day), but the domain
+//!   choice burden and the prepared divine spell posture burden remain named and
+//!   unproven, and fabricates no domain power math and no spell math,
 //! - the Druid row is `Blocked` / `Computed`: the SD13-E4 slice proves the
 //!   deterministic Human Druid level-1 prepared divine spell-bearing identity is
 //!   recognized on the compute seam, but it stays blocked on the nature bond / wild
@@ -716,22 +717,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:cleric",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Cleric \
-                            level-1 prepared divine spell baseline, with the domain / channel energy \
-                            burden and the prepared divine spell posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            level-1 prepared divine spell baseline, with Channel Energy grounded for \
+                            real and the domain choice burden and the prepared divine spell posture \
+                            burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_CLERIC_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
                     deterministic Human Cleric level-1 prepared divine spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the domain and channel \
-                    energy burden (two chosen domains, domain spells, domain powers, channel energy) \
-                    is not implemented, and the prepared divine spell posture burden (spells prepared \
-                    from the full Cleric list, spontaneous cure/inflict conversion, spell slots per \
-                    day, bonus spells from a high Wisdom, spell save DCs) is not computed. No spell \
-                    math is fabricated and no Cleric level 2+ is proven",
-                next_required_uplift: "SD13-E4 Cleric domain / channel energy and prepared divine \
-                    spell slice, then level-2+ progression",
+                    recognized on the compute seam, AND the SD13-E4 Cleric Channel Energy slice grounds \
+                    Channel Energy for real (PF1 Core Rulebook: ceil(cleric level / 2) d6, minimum 1d6, \
+                    computed against the fixture as 1d6 at level 1; usable 3 + Charisma modifier times \
+                    per day, computed against the fixture's Charisma 14 (+2) as 5 uses per day). The row \
+                    is Partial, not Supported: the domain choice burden (two chosen domains, domain \
+                    spells, domain powers) remains named and unproven, and the prepared divine spell \
+                    posture burden (spells prepared from the full Cleric list, spontaneous cure/inflict \
+                    conversion, spell slots per day, bonus spells from a high Wisdom, spell save DCs) is \
+                    still entirely unproven. No domain power math and no spell math is fabricated and no \
+                    Cleric level 2+ is proven",
+                next_required_uplift: "SD13-E4 Cleric domain choice grounding slice, then the prepared \
+                    divine spell posture burden, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",
