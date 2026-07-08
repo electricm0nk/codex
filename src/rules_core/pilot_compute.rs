@@ -53,8 +53,15 @@
 //! combat style stay explicitly claim-blocked by their own named diagnostics, and
 //! Track (the Survival-check bonus to follow tracks, ½ ranger level minimum 1) is
 //! grounded for real as a bounded numeric value; it grounds no favored-enemy or
-//! combat-style math and no ranger spell posture. Unsupported input yields
-//! claim-blocking diagnostics and withheld explanations rather than fabricated values.
+//! combat-style math and no ranger spell posture. The SD13-E4 Druid Wild Empathy
+//! slice further splits the Druid nature-bond/wild-empathy class-feature blocker
+//! into two named diagnostics: nature bond (the animal-companion-vs-domain choice
+//! and nature sense) stays explicitly claim-blocked, and Wild Empathy (PF1 Core
+//! Rulebook: 1d20 + druid level + Charisma modifier, used like a Diplomacy check to
+//! improve an animal's attitude) is grounded for real as the flat druid-level +
+//! Cha-modifier value; it grounds no nature-bond power execution and no
+//! Diplomacy-check/d20-roll resolution. Unsupported input yields claim-blocking
+//! diagnostics and withheld explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
 
@@ -479,7 +486,12 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
-    explain_druid_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+    explain_druid_level1_spell_baseline(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
     explain_bard_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
@@ -3073,25 +3085,32 @@ fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E4 runtime evidence for the deterministic Human Druid level-1
 /// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
-/// its two still-missing burdens.
+/// its remaining burdens. The SD13-E4 Wild Empathy grounding slice grounds Wild
+/// Empathy for real as a bounded numeric value; nature bond and the prepared divine
+/// spell posture burden remain claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
 /// bond selection, no nature bond power execution (animal companion or domain), no
-/// wild empathy check resolution, no spellbook posture, no spells prepared, no
-/// spontaneous summon nature's ally conversion, no spell slots per day, no spell save
-/// DCs, and no bonus spell slots from a high Wisdom. It only:
+/// spellbook posture, no spells prepared, no spontaneous summon nature's ally
+/// conversion, no spell slots per day, no spell save DCs, and no bonus spell slots
+/// from a high Wisdom. It only:
 /// - leaves one recognition explanation so the `class:druid:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
-///   placeholder (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - emits two distinct claim-blocking diagnostics naming the nature bond / wild
-///   empathy class-feature burden and the prepared divine spell posture burden
-///   explicitly, rather than hiding behind a generic "unsupported caster" label.
+///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - leaves one grounded Wild Empathy explanation (the flat druid-level +
+///   Charisma-modifier modifier, not a d20 roll and not a Diplomacy-check execution
+///   engine), and
+/// - emits two distinct claim-blocking diagnostics naming the nature bond
+///   class-feature burden and the prepared divine spell posture burden explicitly,
+///   rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Druid prepared divine spell-bearing
-/// identity and its two named burdens legible on the runtime path.
+/// identity, its grounded Wild Empathy modifier, and its remaining named burdens
+/// legible on the runtime path.
 fn explain_druid_level1_spell_baseline(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -3112,22 +3131,44 @@ fn explain_druid_level1_spell_baseline(
             "Recognized deterministic Human Druid level {DRUID_BASELINE_LEVEL} prepared divine \
              spell-bearing baseline: the {DRUID_CLASS_ID}:{DRUID_BASELINE_LEVEL} class identity is \
              acknowledged as a prepared divine spell-bearing class on the rules-core seam rather than \
-             an undocumented packet placeholder. This is a bounded recognition record only; it grounds \
-             no nature bond selection, no nature bond power execution, no wild empathy check \
-             resolution, no spellbook posture, no spells prepared per day, no spontaneous summon \
-             nature's ally conversion, no spell slots per day, no spell save DCs, and no bonus spell \
-             slots from a high Wisdom, so it carries no fabricated mechanical value (+0)"
+             an undocumented packet placeholder. This is a bounded recognition record only; the Wild \
+             Empathy modifier is grounded separately below, but this record still grounds no nature \
+             bond selection, no nature bond power execution, no spellbook posture, no spells prepared \
+             per day, no spontaneous summon nature's ally conversion, no spell slots per day, no spell \
+             save DCs, and no bonus spell slots from a high Wisdom, so it carries no fabricated \
+             mechanical value (+0)"
         ),
     });
 
-    // Still blocked (1/2): name the nature bond / wild empathy class-feature burden explicitly.
+    // Grounded: Wild Empathy (PF1 Core Rulebook). A druid uses Wild Empathy to
+    // improve the attitude of an animal, resolved like a Diplomacy check: the
+    // druid rolls 1d20 and adds her druid level and her Charisma modifier. Only
+    // the flat level + Cha-modifier bonus is grounded here; no d20 roll and no
+    // Diplomacy-check/attitude-outcome execution engine is computed.
+    let wild_empathy_modifier = i16::from(DRUID_BASELINE_LEVEL) + ability_modifiers.charisma;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.druid.wild_empathy".to_owned(),
+        value: wild_empathy_modifier,
+        detail: format!(
+            "Druid Wild Empathy modifier (PF1 Core Rulebook): a druid uses Wild Empathy to improve \
+             an animal's attitude as if making a Diplomacy check, rolling 1d20 and adding her druid \
+             level and her Charisma modifier. At Druid level {DRUID_BASELINE_LEVEL} with a Charisma \
+             modifier of {}, the modifier is {DRUID_BASELINE_LEVEL} + {} = {wild_empathy_modifier}. \
+             This grounds only the flat druid-level + Charisma-modifier bonus; it computes no d20 \
+             roll, no Diplomacy-check resolution, and no attitude-improvement outcome",
+            ability_modifiers.charisma, ability_modifiers.charisma
+        ),
+    });
+
+    // Still blocked (1/2): name the nature bond class-feature burden explicitly. Wild
+    // Empathy is grounded above and no longer named here as a blocker.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.druid.nature_bond_and_wild_empathy.unsupported".to_owned(),
+        id: "class_feature.druid.nature_bond.unsupported".to_owned(),
         message: format!(
-            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its nature bond and wild empathy \
-             burden: the nature bond choice (an animal companion or a domain), nature sense, and wild \
-             empathy (the animal-diplomacy check) are not implemented in this bounded prepared divine \
-             spell baseline, so no Druid nature bond or wild empathy support is claimed"
+            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its nature bond burden: the \
+             nature bond choice (an animal companion or a domain) and nature sense are not \
+             implemented in this bounded prepared divine spell baseline, so no Druid nature bond \
+             support is claimed"
         ),
         claim_blocking: true,
     });
