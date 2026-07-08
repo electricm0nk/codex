@@ -27,14 +27,15 @@ import {
   runBrowserHandoff,
   type BrowserHandoffOutcome,
 } from './sd16/feedback/browserHandoff';
-import { loadSd11UpdateAction } from './boundary/loadSd11UpdateAction';
-import {
-  deriveSd11UpdateAction,
-  type Sd11UpdateActionResult,
-  type Sd11UpdateCheckContext,
-  type Sd11UpdateResultState,
-} from './sd11/update';
 import { CharacterHubPage } from './characterHub/CharacterHubPage';
+import { Sd16UpdateUi } from './sd16/update/Ui';
+import {
+  createSd16UpdateControllerDeps,
+  loadSd16MountTimeState,
+  restorePreviousVersion,
+  type Sd16MountTimeState,
+} from './sd16/update/controllerAdapter';
+import type { Sd16UpdateControllerDeps } from './sd16/update/updateModel';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -731,133 +732,70 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
   );
 }
 
-function updateStateTone(state: Sd11UpdateResultState): 'info' | 'warning' | 'error' {
-  if (state === 'up-to-date' || state === 'update-available') {
-    return 'info';
-  }
-  if (state === 'manual-only' || state === 'unsupported' || state === 'no-official-release-for-this-build') {
-    return 'warning';
-  }
-  return 'error';
-}
+/**
+ * Character Hub Phase 3 — real `sd16/update` mount. Replaces `UpdateActionPanel`
+ * now that a genuine controller adapter exists (real check/rollback wiring;
+ * install stays honestly disabled pending a future slice). Loads mount-time
+ * state via the real, already-tested `verify_relaunch_artifact` command
+ * before rendering, so the page never opens with a stale placeholder state.
+ */
+function Sd16UpdateSection() {
+  const [mounted, setMounted] = useState<{
+    deps: Sd16UpdateControllerDeps;
+    restoreOffer: Sd16MountTimeState['restoreOffer'];
+  } | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
-function UpdateActionPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
-  const [result, setResult] = useState<Sd11UpdateActionResult | null>(null);
-  const [checking, setChecking] = useState(false);
-
-  const context = useMemo<Sd11UpdateCheckContext>(
-    () => ({
-      buildLabel: props.surface.status.build.label,
-      buildVersion: props.surface.status.build.version,
-      platformLabel: props.surface.status.support.platformLabel,
-      platformTier: props.surface.status.support.platformTier,
-      testerChannelLabel: props.surface.status.channel.testerFacingLabel,
-    }),
-    [props.surface]
+  const refresh = useMemo(
+    () => async () => {
+      const mountTimeState = await loadSd16MountTimeState();
+      setMounted({
+        deps: createSd16UpdateControllerDeps(mountTimeState),
+        restoreOffer: mountTimeState.restoreOffer,
+      });
+    },
+    [],
   );
 
-  // Read-only check only. This slice classifies honest update state over governed SD-12 truth; it
-  // never downloads, applies, or mutates a release, and never counterfeits success.
-  async function onCheck() {
-    setChecking(true);
-    try {
-      const truth = await loadSd11UpdateAction({
-        buildVersion: context.buildVersion,
-        buildLabel: context.buildLabel,
-        platformLabel: context.platformLabel,
-        testerChannelLabel: context.testerChannelLabel,
-      });
-      setResult(deriveSd11UpdateAction(context, truth));
-    } finally {
-      setChecking(false);
-    }
+  useEffect(() => {
+    refresh().catch((cause: unknown) => {
+      setLoadError(cause instanceof Error ? cause.message : 'Unknown update-status load failure');
+    });
+  }, [refresh]);
+
+  if (loadError) {
+    return (
+      <section style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: 12, padding: '1rem 1.25rem' }}>
+        <h2 style={{ color: '#991b1b', marginTop: 0 }}>Update status load failure</h2>
+        <p style={{ color: '#7f1d1d', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{loadError}</p>
+      </section>
+    );
   }
 
-  const tone = result ? updateStateTone(result.state) : 'info';
+  if (!mounted) {
+    return <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Loading update status…</p>;
+  }
 
   return (
-    <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
-      <h2 style={{ marginTop: 0 }}>Check for updates</h2>
-      <p style={{ color: '#475569', lineHeight: 1.6 }}>
-        Run a bounded, read-only update check against governed SD-12 release truth. SD-11 consumes release
-        truth as a client; it never publishes, applies, or mutates releases, and it never promotes macOS or
-        Windows to automatic-update parity. Outcomes stay explicit and platform-aware.
-      </p>
-
-      <button
-        type="button"
-        onClick={onCheck}
-        disabled={checking}
-        style={{
-          backgroundColor: '#0f766e',
-          border: 'none',
-          borderRadius: 8,
-          color: '#ffffff',
-          cursor: checking ? 'wait' : 'pointer',
-          fontWeight: 700,
-          marginTop: '0.25rem',
-          padding: '0.6rem 1rem',
-        }}
-      >
-        {checking ? 'Checking…' : 'Check for updates'}
-      </button>
-
-      {result ? (
-        <div
-          style={{
-            backgroundColor: '#f8fafc',
-            border: `1px solid ${toneColor(tone)}`,
-            borderRadius: 12,
-            marginTop: '1rem',
-            padding: '0.9rem 1rem',
-          }}
-        >
-          <p style={{ color: toneColor(tone), fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
-            Result: {result.state}
-          </p>
-          <p style={{ color: '#0f172a', fontSize: '1rem', fontWeight: 700, margin: '0.35rem 0 0' }}>{result.headline}</p>
-          <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{result.detail}</p>
-          <p style={{ color: '#475569', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
-            Checked build: <code>{result.checkedBuildLabel}</code> · platform {result.platformLabel} ({result.platformTier}) ·{' '}
-            {result.testerChannelLabel} track
-          </p>
-          <p style={{ color: result.automaticEligible ? '#0f766e' : '#b45309', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
-            {result.automaticEligible
-              ? 'Automatic-update eligible (Linux first-class, SD-12 integrity gate satisfied).'
-              : 'Not automatic-update eligible in this context.'}
-          </p>
-          {result.manualReason ? (
-            <p style={{ color: '#7c2d12', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>{result.manualReason}</p>
-          ) : null}
-          {result.replacementTarget ? (
-            <p style={{ color: '#7c2d12', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
-              Preferred replacement release: <code>{result.replacementTarget}</code>
-            </p>
-          ) : null}
-          {result.recoveryDirection ? (
-            <p style={{ color: '#7c2d12', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
-              Recovery target: <code>{result.recoveryDirection}</code>
-            </p>
-          ) : null}
-          {result.operatorPromotionPathReference ? (
-            <p style={{ color: '#64748b', fontSize: '0.8rem', margin: '0.45rem 0 0' }}>
-              Operator provenance: {result.operatorPromotionPathReference}
-            </p>
-          ) : null}
-          {result.evidenceNotes.length ? (
-            <ul style={{ color: '#475569', fontSize: '0.85rem', margin: '0.45rem 0 0', paddingLeft: '1.2rem' }}>
-              {result.evidenceNotes.map((note) => (
-                <li key={note}>{note}</li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
-      ) : (
-        <p style={{ color: '#64748b', fontSize: '0.875rem', marginTop: '0.75rem' }}>
-          No check has been run yet. Results are reported explicitly and are never silently assumed successful.
-        </p>
-      )}
-    </section>
+    <Sd16UpdateUi
+      initialDeps={mounted.deps}
+      restoreOffer={
+        mounted.restoreOffer
+          ? {
+              ...mounted.restoreOffer,
+              onRestore: async () => {
+                try {
+                  setLoadError(null);
+                  await restorePreviousVersion();
+                  await refresh();
+                } catch (cause: unknown) {
+                  setLoadError(cause instanceof Error ? cause.message : 'Unknown restore failure');
+                }
+              },
+            }
+          : undefined
+      }
+    />
   );
 }
 
@@ -1260,7 +1198,7 @@ export default function App() {
 
           <BreadthClaimAuditPanel surface={surface} />
 
-          <UpdateActionPanel surface={surface} />
+          <Sd16UpdateSection />
 
           <FeedbackEvidencePanel surface={surface} />
 

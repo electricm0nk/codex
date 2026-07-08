@@ -5,14 +5,23 @@ import { Sd16InstallControl } from './InstallControl';
 import { Sd16InstalledPanel } from './installedPanel';
 import { Sd16LastCheckPanel } from './lastCheckPanel';
 import { Sd16PendingRollbackPanel } from './pendingRollbackPanel';
+import { Sd16RestoreOffer } from './restoreOffer';
 import {
   buildUnwiredUpdateDeps,
+  SD16_UI_BUTTON_BASE_STYLE,
+  SD16_UI_BUTTON_DISABLED_STYLE,
   SD16_UI_CONTAINER_STYLE,
   type Sd16UpdateChannelLabel,
   type Sd16UpdateControllerDeps,
 } from './updateModel';
 
 export const SD16_UPDATE_UI_ID = 'sd16-update-ui';
+
+export interface Sd16RestoreOfferProps {
+  priorVersion: string;
+  restoreAvailable: boolean;
+  onRestore: () => Promise<void>;
+}
 
 export interface Sd16UpdateUiProps {
   /**
@@ -22,6 +31,13 @@ export interface Sd16UpdateUiProps {
    * remounts with the new state but never fabricates eligibility.
    */
   initialDeps?: Sd16UpdateControllerDeps;
+  /**
+   * Present only when `verify_relaunch_artifact` (real, run at mount by the
+   * caller) reported a verification mismatch. `Sd16RestoreOffer` itself is
+   * pure/no-side-effects by design, so the actionable "Restore" control and
+   * its `perform_restore_previous` call live here at the orchestration layer.
+   */
+  restoreOffer?: Sd16RestoreOfferProps;
 }
 
 /**
@@ -34,12 +50,29 @@ export interface Sd16UpdateUiProps {
  * `initialDeps` is supplied with a wired controller and release-notes
  * payload; nothing in this file has to change.
  */
-export function Sd16UpdateUi({ initialDeps }: Sd16UpdateUiProps) {
+export function Sd16UpdateUi({ initialDeps, restoreOffer }: Sd16UpdateUiProps) {
   const [deps, setDeps] = useState<Sd16UpdateControllerDeps>(
     () => initialDeps ?? buildUnwiredUpdateDeps(),
   );
+  useEffect(() => {
+    if (initialDeps) {
+      setDeps(initialDeps);
+    }
+  }, [initialDeps]);
   const [checkInProgress, setCheckInProgress] = useState(false);
   const [installInProgress, setInstallInProgress] = useState(false);
+  const [restoreInProgress, setRestoreInProgress] = useState(false);
+  const handleRestore = useCallback(async () => {
+    if (!restoreOffer) {
+      return;
+    }
+    setRestoreInProgress(true);
+    try {
+      await restoreOffer.onRestore();
+    } finally {
+      setRestoreInProgress(false);
+    }
+  }, [restoreOffer]);
 
   // Re-derive lastCheck.selectedChannel from the deps so the visible
   // selector reflects the most recent authoritative value, including any
@@ -127,6 +160,28 @@ export function Sd16UpdateUi({ initialDeps }: Sd16UpdateUiProps) {
       <Sd16InstalledPanel deps={deps} />
       <Sd16LastCheckPanel deps={deps} />
       <Sd16PendingRollbackPanel deps={deps} />
+      {restoreOffer ? (
+        <>
+          <Sd16RestoreOffer
+            priorVersion={restoreOffer.priorVersion}
+            restoreAvailable={restoreOffer.restoreAvailable}
+          />
+          {restoreOffer.restoreAvailable ? (
+            <button
+              id="restore-previous-button"
+              data-testid="sd16-restore-previous-button"
+              type="button"
+              disabled={restoreInProgress}
+              style={restoreInProgress ? SD16_UI_BUTTON_DISABLED_STYLE : SD16_UI_BUTTON_BASE_STYLE}
+              onClick={() => {
+                void handleRestore();
+              }}
+            >
+              {restoreInProgress ? 'Restoring…' : 'Restore previous version'}
+            </button>
+          ) : null}
+        </>
+      ) : null}
     </main>
   );
 }
