@@ -249,6 +249,11 @@ const ARCANE_BLOODLINE_SELECTION_ID: &str = "bloodline:arcane";
 const BARD_CLASS_ID: &str = "class:bard";
 const BARD_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E5 Fascinate flat DC base. PF1 Core Rulebook Fascinate Will save DC is
+// 10 + 1/2 bard level + Charisma modifier; only the fixed base term is a named
+// constant, since the level and Charisma terms are already grounded elsewhere.
+const FASCINATE_DC_BASE: i16 = 10;
+
 // Grounded SD13-E4-R3 Human Wizard level-1 prepared arcane spell-bearing baseline
 // identities. The Wizard class is the canonical PF1 prepared arcane full caster;
 // its class identity differs from Sorcerer in two ways that this bounded slice
@@ -4424,17 +4429,19 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E4-F7/SD13-E4/SD13-E5 runtime evidence for the deterministic
 /// Human Bard level-1 spontaneous arcane spell-bearing baseline: one recognition
-/// record, three grounded chassis-class-feature pillars (Bardic Knowledge, the
-/// Bardic Performance rounds-per-day budget, and the Inspire Courage flat level-1
-/// magnitude), and two remaining named claim-blocking burdens (the bardic
+/// record, five grounded chassis-class-feature pillars (Bardic Knowledge, the
+/// Bardic Performance rounds-per-day budget, the Inspire Courage flat level-1
+/// magnitude, and the Fascinate flat Will-save DC and affected-creature-count
+/// formulas), and two remaining named claim-blocking burdens (the bardic
 /// performance-execution engine, the spontaneous spell posture).
 ///
 /// This deliberately does not compute a supported Bard chassis. It grounds no
 /// bardic performance execution — no start/maintain action economy, no round
-/// tracking or consumption, and none of the other level-1 performances
-/// (countersong, distraction, fascinate) — and no spell math whatsoever: no
-/// spells known, no spells per day, no spell DCs, no bonus spells, no prepared
-/// posture, no school choice. It only:
+/// tracking or consumption, and no Will-save/targeting resolution for Fascinate,
+/// nor anything at all for Countersong or Distraction (both require an opposed
+/// Perform-check-vs-effect substitution resolution, not a flat number) — and no
+/// spell math whatsoever: no spells known, no spells per day, no spell DCs, no
+/// bonus spells, no prepared posture, no school choice. It only:
 /// - leaves one recognition explanation so the `class:bard:1` identity is acknowledged
 ///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
@@ -4452,12 +4459,19 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
 ///   Inspire Courage flat level-1 magnitude (+1 competence bonus on attack and
 ///   weapon damage rolls, +1 morale bonus on saving throws against charm and fear
 ///   effects). These are bounded flat values only; no performance-state engine
-///   applies them anywhere, and
+///   applies them anywhere,
+/// - grounds the Fascinate flat Will-save DC (10 + 1/2 bard level + Charisma
+///   modifier) and the Fascinate flat affected-creature count (1 at 1st level,
+///   plus one more for every three bard levels beyond 1st) for real, verified
+///   against the PF1 Core Rulebook Fascinate rule text rather than assumed from
+///   memory. Both are bounded flat values only; neither is ever applied to an
+///   actual Will save or targeting outcome, and
 /// - emits two distinct claim-blocking diagnostics naming the still-unproven bardic
 ///   performance-execution burden (start/maintain action economy, round tracking and
-///   consumption, and the ungrounded countersong / distraction / fascinate
-///   performances) and the spontaneous known-spell / slot posture burden explicitly,
-///   rather than hiding behind a generic "unsupported caster" label.
+///   consumption, no application of any grounded magnitude/DC/count to an actual
+///   total, and the fully-ungrounded Countersong / Distraction performances) and the
+///   spontaneous known-spell / slot posture burden explicitly, rather than hiding
+///   behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Bard spell-bearing identity, the grounded
@@ -4559,10 +4573,61 @@ fn explain_bard_level1_spell_baseline(
         ),
     });
 
+    // Grounded for real: the Fascinate flat Will-save DC formula. PF1 Core
+    // Rulebook Fascinate: each creature within range receives a Will save (DC
+    // 10 + 1/2 the bard's level + the bard's Charisma modifier) to negate the
+    // effect. Verified against the PF1 Core Rulebook Fascinate rule text (d20pfsrd
+    // and the legacy Paizo PRD mirror), not trusted from memory alone. Only the
+    // flat DC magnitude is grounded; no Will-save resolution and no application of
+    // this DC to any actual save total is computed.
+    let fascinate_dc =
+        FASCINATE_DC_BASE + (i16::from(BARD_BASELINE_LEVEL) / 2) + ability_modifiers.charisma;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.fascinate_dc".to_owned(),
+        value: fascinate_dc,
+        detail: format!(
+            "Bard Fascinate Will save DC at bard level {BARD_BASELINE_LEVEL} (PF1 Core Rulebook \
+             Fascinate): DC = 10 + 1/2 bard level + Charisma modifier. At bard level \
+             {BARD_BASELINE_LEVEL} and Charisma modifier {} this is {FASCINATE_DC_BASE} + \
+             ({BARD_BASELINE_LEVEL} / 2) + {} = {fascinate_dc}. This grounds only the flat DC \
+             magnitude; no Will-save resolution, no range/line-of-sight/attention-requirement \
+             checking, and no application of this DC to any actual save total is computed \
+             because the performance-state engine is not implemented",
+            ability_modifiers.charisma, ability_modifiers.charisma
+        ),
+    });
+
+    // Grounded for real: the Fascinate flat affected-creature-count formula. PF1
+    // Core Rulebook Fascinate: a bard can affect one creature at 1st level, and
+    // targets one additional creature for every three bard levels attained beyond
+    // 1st. Verified against the PF1 Core Rulebook Fascinate rule text the same
+    // way as the DC above; this is deliberately NOT "half the bard's level" — a
+    // different-looking formula that happens to coincide with the correct one
+    // only at level 1, which is exactly the kind of from-memory error a primary
+    // source check catches (mirroring the earlier Ranger combat-style and
+    // Paladin mercy level-gate corrections).
+    let fascinate_affected_creatures = 1 + (i16::from(BARD_BASELINE_LEVEL) - 1) / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.fascinate_affected_creatures".to_owned(),
+        value: fascinate_affected_creatures,
+        detail: format!(
+            "Bard Fascinate affected-creature count at bard level {BARD_BASELINE_LEVEL} (PF1 \
+             Core Rulebook Fascinate): 1 creature at 1st level, plus one additional creature for \
+             every three bard levels attained beyond 1st — formula 1 + (bard level - 1) / 3. At \
+             bard level {BARD_BASELINE_LEVEL} this is 1 + ({BARD_BASELINE_LEVEL} - 1) / 3 = \
+             {fascinate_affected_creatures}. This grounds only the flat creature-count \
+             magnitude; no range/line-of-sight/attention-requirement checking and no application \
+             of this count to any actual targeting resolution is computed"
+        ),
+    });
+
     // Still blocked (1/2): name the narrowed bardic performance-execution burden
     // explicitly, now separated from the grounded flat pillars (Bardic Knowledge,
-    // the rounds-per-day budget, the Inspire Courage magnitude). The
-    // performance-state engine and the other level-1 performances remain unproven.
+    // the rounds-per-day budget, the Inspire Courage magnitude, and the Fascinate
+    // DC / affected-creature-count formulas). The performance-state engine and the
+    // two remaining level-1 performances (Countersong, Distraction) remain
+    // unproven — both require an opposed Perform-check-vs-effect substitution
+    // resolution, not a flat number, so neither is attempted here.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.bard.bardic_performance_execution.unsupported".to_owned(),
         message: format!(
@@ -4570,9 +4635,12 @@ fn explain_bard_level1_spell_baseline(
              performance-execution burden: the performance-state engine is not implemented \
              (no start/maintain action economy, no round tracking or consumption of the \
              grounded rounds-per-day budget, no application of the grounded inspire courage \
-             magnitude to any attack, damage, or save total), and the other level-1 \
-             performances (countersong, distraction, fascinate) are not grounded, so no Bard \
-             bardic-performance execution support is claimed"
+             magnitude to any attack, damage, or save total, no application of the grounded \
+             fascinate DC or affected-creature-count to any actual Will-save resolution or \
+             targeting), and the two remaining level-1 performances (countersong, distraction) \
+             are not grounded at all — both require an opposed Perform-check-vs-effect \
+             substitution resolution rather than a flat number, so no Bard bardic-performance \
+             execution support is claimed"
         ),
         claim_blocking: true,
     });
