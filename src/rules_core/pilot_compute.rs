@@ -38,40 +38,74 @@
 //! independent bonus feat every 1st-level Wizard is granted, is grounded for real,
 //! while the specialization CHOICE burden (chosen school, opposed schools, specialty
 //! school bonus) stays its own named claim-blocking diagnostic; the prepared
-//! spellbook / spells-prepared / spell-slot posture burden is untouched. The SD13-E3
+//! spellbook / spells-prepared / spell-slot posture burden is untouched. The SD13-E5
+//! Wizard specialization slice then grounds the flat surface of that choice for real:
+//! the canonical Evocation specialization with Necromancy and Transmutation opposed
+//! is recognized, and the specialist bonus slot is grounded as a flat count (one
+//! 1st-level Evocation-only slot at level 1, no cantrip-level slot, no slot
+//! contents), narrowing the claim-blocker to the school powers (intense spells,
+//! force missile) and the opposed-school two-slot preparation cost. The SD13-E3
 //! Fighter milestone tranche has since
 //! widened further still, to level 8: the level-8 bonus-feat progression seam is
 //! surfaced explicitly, mirroring the level-2/4/6 bonus-feat seams, and grounds no
 //! level-9+ Fighter burden. The SD13-E3 Rogue pillar-grounding slice widens the
 //! deterministic Human Rogue level-1 chassis to ground base-attack progression
 //! (3/4 BAB), base-save progression (good Reflex, poor Fortitude, poor Will), and
-//! the sneak attack damage-die count (1, i.e. 1d6); only trapfinding remains
-//! claim-blocked for Rogue, and `defense.total_save.*` is still never computed for
+//! the sneak attack damage-die count (1, i.e. 1d6); the SD13-E5 Rogue slice grounds
+//! the fourth named pillar, Trapfinding (the flat max(rogue level / 2, 1) bonus on
+//! Perception checks to locate traps and on Disable Device checks, plus the
+//! magic-trap-disarm statement), so no named Rogue pillar burden remains
+//! claim-blocked, and `defense.total_save.*` is still never computed for
 //! it. The SD13-E3 Barbarian level-1 martial chassis slice is widened further here:
 //! base-attack progression, base-save progression, and the fast-movement +10 ft.
 //! speed value are now grounded as standalone explanation records (mirroring the
-//! Fighter formula shape), leaving only the illiteracy trait burden explicitly
-//! claim-blocked. A later SD13-E3 slice widens the deterministic Human Monk
+//! Fighter formula shape). The SD13-E5 Barbarian slice then resolves the
+//! formerly-named illiteracy burden as vacuous (the PF1 Core Rulebook Barbarian is
+//! not illiterate; illiteracy is a D&D 3.5e trait that never existed in PF1) and
+//! grounds Rage's flat numeric surface — rage rounds per day (4 + Constitution
+//! modifier) and the flat rage constants — values only, leaving the rage-state
+//! execution engine explicitly claim-blocked as the honest remaining Barbarian
+//! burden. A later SD13-E3 slice widens the deterministic Human Monk
 //! level-1 chassis to ground base-attack, base-save, and AC Bonus (Wisdom-to-AC),
 //! while keeping unarmed strike / Flurry of Blows and the level-1 bonus feat grant
 //! explicitly claim-blocked. The SD13-E3 Ranger decomposition further splits the F6
 //! Ranger non-spell class-feature burden into three named pillars: favored enemy and
 //! combat style stay explicitly claim-blocked by their own named diagnostics, and
 //! Track (the Survival-check bonus to follow tracks, ½ ranger level minimum 1) is
-//! grounded for real as a bounded numeric value; it grounds no favored-enemy or
-//! combat-style math and no ranger spell posture. The SD13-E4 Druid Wild Empathy
+//! grounded for real as a bounded numeric value; it grounds no combat-style math and
+//! no ranger spell posture. The SD13-E5 Ranger Favored Enemy slice then grounds the
+//! favored-enemy flat surface for real — recognition of the chosen favored-enemy type
+//! (from `choice:ranger_favored_enemy`), the flat +2 bonus on Bluff, Knowledge,
+//! Perception, Sense Motive, and Survival checks against the favored enemy, and the
+//! flat +2 bonus on weapon attack and damage rolls against the favored enemy (PF1
+//! includes attack rolls, unlike D&D 3.5) — retiring the favored-enemy claim-blocking
+//! diagnostic while grounding no target-type matching or conditional-application
+//! engine. The SD13-E4 Druid Wild Empathy
 //! slice further splits the Druid nature-bond/wild-empathy class-feature blocker
 //! into two named diagnostics: nature bond (the animal-companion-vs-domain choice
 //! and nature sense) stays explicitly claim-blocked, and Wild Empathy (PF1 Core
 //! Rulebook: 1d20 + druid level + Charisma modifier, used like a Diplomacy check to
 //! improve an animal's attitude) is grounded for real as the flat druid-level +
 //! Cha-modifier value; it grounds no nature-bond power execution and no
-//! Diplomacy-check/d20-roll resolution. The SD13-E4 Sorcerer decomposition
+//! Diplomacy-check/d20-roll resolution. The SD13-E5 Druid Nature Sense /
+//! nature-bond-choice slice grounds Nature Sense for real (PF1 Core Rulebook: a
+//! flat, level-independent +2 bonus on Knowledge (nature) and Survival checks,
+//! kept as a standalone record not wired into any skill total), recognizes the
+//! deterministic `choice:druid_nature_bond -> bond:animal_companion` selection as
+//! a +0 recognition record, and narrows the retired combined nature-bond blocker
+//! to the chosen bond's execution (companion stat block, companion advancement,
+//! link / share spells), which stays claim-blocked. The SD13-E4 Sorcerer decomposition
 //! slice further splits the F7 combined bloodline burden into two named diagnostics
 //! and grounds one for real: Eschew Materials, the universal, bloodline-independent
 //! bonus feat every 1st-level Sorcerer receives; it grounds no bloodline power,
-//! bloodline arcana, or spell math, and the bloodline-power and spontaneous
-//! spell-posture burdens stay explicitly claim-blocked. Unsupported input yields
+//! bloodline arcana, or spell math. The SD13-E5 Sorcerer bloodline-choice slice then
+//! recognizes the canonical deterministic bloodline choice-slot selection
+//! (`choice:sorcerer_bloodline -> bloodline:arcane`) as chosen input — recognition
+//! only, since the Arcane bloodline's level-1 power is Arcane Bond (a familiar or a
+//! bonded object), an execution engine rather than a flat number — and narrows the
+//! former bloodline-power blocker to the Arcane Bond / bloodline progression burden;
+//! that burden and the spontaneous spell-posture burden stay explicitly
+//! claim-blocked. Unsupported input yields
 //! claim-blocking diagnostics and withheld explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
@@ -166,6 +200,14 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const SORCERER_BASELINE_LEVEL: u8 = 1;
 
+// SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
+// Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
+// chosen input. Recognition only: the Arcane bloodline's level-1 power is Arcane Bond
+// (a familiar or a bonded object — an execution engine, not a flat number), so no
+// power value is ever fabricated from this choice.
+const SORCERER_BLOODLINE_CHOICE_ID: &str = "choice:sorcerer_bloodline";
+const ARCANE_BLOODLINE_SELECTION_ID: &str = "bloodline:arcane";
+
 // SD13-E4-F7 spell-bearing baseline identity. Bard is a spontaneous arcane caster with a
 // distinct chassis-class-feature burden (Bardic Knowledge and Bardic Music); this slice
 // recognizes only its bounded single-class level-1 identity as direct runtime evidence and
@@ -184,12 +226,27 @@ const BARD_BASELINE_LEVEL: u8 = 1;
 const WIZARD_CLASS_ID: &str = "class:wizard";
 const WIZARD_BASELINE_LEVEL: u8 = 1;
 
-// SD13-E3 martial chassis baseline identity. Barbarian is a non-spell pure
-// martial class; this slice recognizes only its bounded single-class level-1
-// identity as direct runtime evidence and grounds no base-attack / base-save
-// progression, no fast-movement +10 ft. speed extension, no illiteracy trait
-// engine, no rage execution, no weapon familiarity, and no level-2+ martial
-// progression.
+// SD13-E5 Wizard specialization slice: the canonical deterministic fixture
+// selections for the school specialization choice. The bounded seam recognizes
+// exactly this canonical triple (Evocation chosen; Necromancy and Transmutation
+// opposed) versus "absent or anything else" — it is not a general school engine.
+const WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID: &str = "choice:wizard_school_specialization";
+const WIZARD_OPPOSED_SCHOOLS_CHOICE_ID: &str = "choice:wizard_opposed_schools";
+const EVOCATION_SCHOOL_SELECTION: &str = "school:evocation";
+const NECROMANCY_SCHOOL_SELECTION: &str = "school:necromancy";
+const TRANSMUTATION_SCHOOL_SELECTION: &str = "school:transmutation";
+/// PF1 Core Rulebook arcane school class feature: a specialist wizard gains one
+/// additional spell slot of each spell level she can cast, 1st and up, usable only
+/// for spells of the chosen school. At the bounded baseline level 1 that is exactly
+/// one 1st-level slot; there is no cantrip-level bonus slot.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1: i16 = 1;
+
+// SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
+// martial class; the bounded single-class level-1 identity is recognized as
+// direct runtime evidence, with base-attack / base-save progression, the
+// fast-movement +10 ft. speed extension, and Rage's flat numeric surface
+// grounded as standalone records. No rage-state execution engine, weapon
+// familiarity, or level-2+ martial progression is grounded.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const MARTIAL_BASELINE_LEVEL: u8 = 1;
 
@@ -204,14 +261,30 @@ const MONK_CLASS_ID: &str = "class:monk";
 // Grounded SD13-E4 Human Cleric level-1 prepared divine spell-bearing baseline
 // identity. Cleric is the canonical PF1 prepared divine full caster; unlike the
 // arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
-// is split across a domain choice class-feature family (two domains chosen,
-// domain spells, domain powers — Channel Energy has since been grounded for
-// real: ceil(cleric level / 2) d6, minimum 1d6, usable 3 + Charisma modifier
-// times per day) and a prepared divine spell posture family (spells prepared
-// from the full Cleric list, spontaneous cure/inflict conversion, spell slots
-// per day, bonus spells from a high Wisdom, spell save DCs).
+// is split across a domain powers class-feature family (the granted powers of
+// the chosen domains and the domain spell-list contents — Channel Energy has
+// been grounded for real: ceil(cleric level / 2) d6, minimum 1d6, usable
+// 3 + Charisma modifier times per day; and the SD13-E5 domain slice grounds the
+// domain choice seam and the flat domain spell slot count) and a prepared divine
+// spell posture family (spells prepared from the full Cleric list, spontaneous
+// cure/inflict conversion, spell slots per day, bonus spells from a high Wisdom,
+// spell save DCs).
 const CLERIC_CLASS_ID: &str = "class:cleric";
 const CLERIC_BASELINE_LEVEL: u8 = 1;
+
+// SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
+// deterministic domain selections on the level-1 seam (a cleric chooses two domains
+// from among those belonging to her deity). This slice surfaces the named selections
+// as an explicit choice seam only and grounds no domain power and no domain
+// spell-list contents, mirroring the Fighter bonus-feat choice-slot seam pattern.
+const CLERIC_DOMAIN_CHOICE_ID: &str = "choice:cleric_domain";
+const GOOD_DOMAIN_SELECTION: &str = "domain:good";
+const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
+
+// PF1 Core Rulebook Domains: a cleric gains one domain spell slot per level of
+// cleric spells she can cast, 1st and up. At the bounded level-1 baseline she casts
+// only 1st-level cleric spells, so exactly one 1st-level domain slot is granted.
+const CLERIC_LEVEL1_DOMAIN_SPELL_SLOT_COUNT: i16 = 1;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
 // identity. Druid is a prepared divine caster whose bounded burden splits across
@@ -219,9 +292,19 @@ const CLERIC_BASELINE_LEVEL: u8 = 1;
 // an animal companion and a domain, nature sense, wild empathy) and a prepared
 // divine spell posture family (spells prepared from the full Druid list,
 // spontaneous summon nature's ally conversion, spell slots per day, bonus spells
-// from a high Wisdom, spell save DCs).
+// from a high Wisdom, spell save DCs). Wild Empathy (SD13-E4), Nature Sense, and
+// the deterministic nature-bond choice recognition (SD13-E5) are grounded; the
+// chosen bond's execution and the whole spell posture stay claim-blocked.
 const DRUID_CLASS_ID: &str = "class:druid";
 const DRUID_BASELINE_LEVEL: u8 = 1;
+// PF1 Core Rulebook Nature Sense: a druid gains a +2 bonus on Knowledge (nature)
+// and Survival checks. Flat and level-independent.
+const DRUID_NATURE_SENSE_BONUS: i16 = 2;
+// The deterministic SD13 fixture's nature-bond selection seam: the choice set and
+// the one selection this bounded slice recognizes (an animal companion; a domain
+// bond is not part of the deterministic fixture and stays unrecognized).
+const DRUID_NATURE_BOND_CHOICE_ID: &str = "choice:druid_nature_bond";
+const DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID: &str = "bond:animal_companion";
 
 
 // Grounded Human pilot race seam identities. These name the already-accepted
@@ -300,13 +383,21 @@ const SELECTED_SKILL_RANK: u8 = 1;
 const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
-// Bounded SD13-E3 Fighter milestone widening. The accepted level-1 pilot is now
-// joined by levels 2 through 8. Nothing here grounds level 9+ Fighter burden, the
-// weapon-training damage-roll half, or any non-Fighter positive support. The
-// generic PF1 level-4 ability-score-increase milestone needs no separate seam:
-// the chosen ability score is trusted at face value, like every other ability
-// adjustment in this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 8;
+// Bounded SD13-E3/SD13-E5 Fighter milestone widening. The accepted level-1 pilot
+// is now joined by levels 2 through 10. Nothing here grounds level 11+ Fighter
+// burden, the weapon-training damage-roll half, the Bravery Will-vs-fear bonus,
+// or any non-Fighter positive support. The generic PF1 ability-score-increase
+// milestones (levels 4 and 8) need no separate seam: the chosen ability score is
+// trusted at face value, like every other ability adjustment in this codebase.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 10;
+
+// Fighter level-1 hit points. PF1 maximizes the hit die at 1st character level:
+// the Fighter's d10 hit die grants 10 hit points at level 1, plus the
+// Constitution modifier. This slice grounds only that level-1 value; hit points
+// at levels 2+ (average/rolled hit-die policy), the favored-class +1 hp /
+// +1 skill-rank choice (no input surface exists for it), and Toughness / feat
+// hit-point interplay stay unproven.
+const FIGHTER_LEVEL_1_MAX_HIT_DIE_HIT_POINTS: i16 = 10;
 
 // Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
 // feat at level 2; this slice surfaces the named selection as an explicit seam only
@@ -334,16 +425,33 @@ const COMBAT_REFLEXES_FEAT_SELECTION: &str = "feat:combat_reflexes";
 const FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_8";
 const IMPROVED_CRITICAL_FEAT_SELECTION: &str = "feat:improved_critical";
 
-// Fighter Weapon Training 1, gained at level 5. It grants +1 to attack rolls and
-// damage rolls with weapons of the chosen weapon group. This slice grounds only
-// the attack-roll half (folded into the baseline melee attack bonus for the
-// deterministic Longsword, which falls under the canonical Heavy Blades group);
-// the damage-roll half is never computed for any Fighter level in this codebase,
-// so it stays explicitly unproven rather than silently omitted.
+// Fighter level-10 bonus-feat progression seam. Fighter gains an additional bonus
+// feat at level 10 (the cadence continues 1, 2, 4, 6, 8, 10); this slice surfaces
+// the named selection as an explicit seam only and grounds no general feat-effect
+// or prerequisite engine, mirroring the level-2 through level-8 seams. The
+// canonical Greater Weapon Focus selection's prerequisites (Weapon Focus with the
+// chosen weapon and fighter level 8) are honestly met by the canonical loadout:
+// Weapon Focus (longsword) is the level-1 fighter bonus feat and the seam only
+// exists at Fighter level 10.
+const FIGHTER_LEVEL_10_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_10";
+const GREATER_WEAPON_FOCUS_FEAT_SELECTION: &str = "feat:greater_weapon_focus";
+
+// Fighter Weapon Training, gained at level 5 with a new rank every four levels
+// (rank = 1 + (level - 5) / 4): Weapon Training 1 at level 5, Weapon Training 2
+// at level 9. Each rank grants the first chosen weapon group +rank to attack and
+// damage rolls; each later-chosen group sits one point lower. This slice grounds
+// only the attack-roll half of the first group (folded into the baseline melee
+// attack bonus for the deterministic Longsword, which falls under the canonical
+// Heavy Blades group) and surfaces the second group (canonically Bows, chosen at
+// level 9) as an explanation-only record; the damage-roll half is never computed
+// for any Fighter level in this codebase, so it stays explicitly unproven rather
+// than silently omitted.
 const FIGHTER_WEAPON_TRAINING_1_LEVEL: u8 = 5;
-const WEAPON_TRAINING_1_ATTACK_BONUS: i16 = 1;
+const FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE: u8 = 4;
 const FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID: &str = "choice:fighter_weapon_training_group";
 const HEAVY_BLADES_GROUP_SELECTION: &str = "group:heavy_blades";
+const FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID: &str = "choice:fighter_weapon_training_group_2";
+const BOWS_GROUP_SELECTION: &str = "group:bows";
 
 // Fighter armor training 1, gained at level 3. It reduces the worn armor's
 // armor-check penalty by 1 (to a minimum of 0) and raises its maximum Dexterity
@@ -454,15 +562,22 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_fighter_class_features(input, &mut explanations);
 
+    explain_fighter_level1_hit_points(input, &ability_modifiers, &mut explanations);
+
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
-    explain_barbarian_level1_chassis(input, &mut explanations, &mut diagnostics);
+    explain_barbarian_level1_chassis(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
     explain_monk_level1_chassis(
         input,
         &ability_modifiers,
         &mut explanations,
         &mut diagnostics,
     );
-    explain_rogue_level1_chassis(input, &mut explanations, &mut diagnostics);
+    explain_rogue_level1_chassis(input, &mut explanations);
 
 
     // SD13-E3/E4 Paladin-only decomposition: split the F6 hybrid class-feature
@@ -505,7 +620,12 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut diagnostics,
     );
 
-    explain_bard_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+    explain_bard_level1_spell_baseline(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
     explain_human_pilot_race_seam(input, &ability_modifiers, &mut explanations, &mut diagnostics);
 
@@ -1609,21 +1729,30 @@ fn effective_chain_shirt_armor_check_penalty(level: u8) -> i16 {
     (CHAIN_SHIRT_ARMOR_CHECK_PENALTY + fighter_armor_training(level).armor_check_reduction).min(0)
 }
 
-/// The Weapon Training 1 attack-roll bonus for a Fighter at the given level,
-/// gated on the canonical `choice:fighter_weapon_training_group ->
-/// group:heavy_blades` selection (the group the deterministic Longsword falls
-/// under). Returns 0 before level 5 or when the group choice is absent — the
-/// canonical-choice validator (`CANONICAL_FIGHTER_FEAT_CHOICES`) separately
-/// claim-blocks a present-but-non-canonical selection, so this function only
-/// needs to distinguish "canonical" from "absent or anything else."
-fn fighter_weapon_training_attack_bonus(input: &CharacterInput, level: u8) -> i16 {
+/// The Fighter weapon-training rank at the given level: 0 before level 5, then
+/// 1 + (level - 5) / 4 (Weapon Training 1 at level 5, Weapon Training 2 at
+/// level 9 within this bounded levels-1-10 surface).
+fn fighter_weapon_training_rank(level: u8) -> i16 {
     if level < FIGHTER_WEAPON_TRAINING_1_LEVEL {
         return 0;
     }
+    i16::from(1 + (level - FIGHTER_WEAPON_TRAINING_1_LEVEL) / FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE)
+}
+
+/// The weapon-training attack-roll bonus for the first chosen weapon group at
+/// the given Fighter level, gated on the canonical
+/// `choice:fighter_weapon_training_group -> group:heavy_blades` selection (the
+/// group the deterministic Longsword falls under). The bonus equals the
+/// weapon-training rank: +1 at levels 5-8, +2 at levels 9-10. Returns 0 before
+/// level 5 or when the group choice is absent — the canonical-choice validator
+/// (`CANONICAL_FIGHTER_FEAT_CHOICES`) separately claim-blocks a
+/// present-but-non-canonical selection, so this function only needs to
+/// distinguish "canonical" from "absent or anything else."
+fn fighter_weapon_training_attack_bonus(input: &CharacterInput, level: u8) -> i16 {
     if choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID)
         == Some(HEAVY_BLADES_GROUP_SELECTION)
     {
-        WEAPON_TRAINING_1_ATTACK_BONUS
+        fighter_weapon_training_rank(level)
     } else {
         0
     }
@@ -1784,6 +1913,24 @@ fn explain_fighter_class_features(
         });
     }
 
+    if level >= 10
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_10_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_10_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 10 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_10_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. The canonical Greater Weapon Focus \
+                     selection's prerequisites (Weapon Focus (longsword) and fighter level 8) are \
+                     honestly met by the canonical loadout. This slice grounds the bonus-feat \
+                     slot, not a general feat-effect or prerequisite engine, so it contributes no \
+                     computed mechanical value (+0)"
+            ),
+        });
+    }
+
     let armor_training = fighter_armor_training(level);
     if armor_training.rank == 2 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
@@ -1821,12 +1968,19 @@ fn explain_fighter_class_features(
 
     let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
     if weapon_training_bonus > 0 {
+        let rank = fighter_weapon_training_rank(level);
+        let rank_level = if rank >= 2 {
+            FIGHTER_WEAPON_TRAINING_1_LEVEL + FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE
+        } else {
+            FIGHTER_WEAPON_TRAINING_1_LEVEL
+        };
         explanations.push(ComputationExplanation {
             id: "class_feature.fighter.weapon_training".to_owned(),
             value: weapon_training_bonus,
             detail: format!(
-                "Fighter level {FIGHTER_WEAPON_TRAINING_1_LEVEL} Weapon Training 1 (weapon \
-                 training, cr_abilities_class.lst Fighter): the chosen weapon group \
+                "Fighter level {rank_level} Weapon Training {rank} (weapon training, \
+                 cr_abilities_class.lst Fighter; rank = 1 + (level - 5) / 4): the first chosen \
+                 weapon group \
                  ({FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID} -> {HEAVY_BLADES_GROUP_SELECTION}) \
                  grants +{weapon_training_bonus} to attack rolls with weapons of that group, \
                  which the deterministic Longsword falls under; this +{weapon_training_bonus} is \
@@ -1836,18 +1990,83 @@ fn explain_fighter_class_features(
                  damage-roll half stays explicitly unproven rather than silently omitted"
             ),
         });
+
+        // Weapon Training 2 (level 9) also grants a second chosen weapon group a
+        // bonus one point lower than the first group's. The canonical second group
+        // (Bows) covers no equipped weapon on the deterministic Longsword loadout,
+        // so this is an explanation-only record: its +1 is never folded into the
+        // Longsword baseline melee attack bonus, which uses the first-group rank.
+        if rank >= 2
+            && choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID)
+                == Some(BOWS_GROUP_SELECTION)
+        {
+            let second_group_bonus = rank - 1;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.fighter.weapon_training_group_2".to_owned(),
+                value: second_group_bonus,
+                detail: format!(
+                    "Fighter level {rank_level} Weapon Training {rank} also grants a second \
+                     chosen weapon group \
+                     ({FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID} -> {BOWS_GROUP_SELECTION}) \
+                     +{second_group_bonus} to attack and damage rolls with weapons of that \
+                     group. No bow is part of the deterministic Longsword loadout, so this seam \
+                     is explanation-only: the +{second_group_bonus} is not folded into any \
+                     computed total, and the baseline melee attack bonus uses only the \
+                     first-group (Heavy Blades) rank"
+                ),
+            });
+        }
     }
 }
 
+/// Ground the Fighter level-1 hit-point milestone as a standalone explanation
+/// record: level-1 hit points = 10 (the maximized d10 Fighter hit die at 1st
+/// character level, PF1 Core Rulebook) + the Constitution modifier already
+/// computed from the raw chosen score by [`compute_ability_modifiers`].
+///
+/// Gated the same way the other Fighter explanation seams gate (the bounded
+/// [`supported_fighter_level`] recognition), narrowed to level 1 because only
+/// the level-1 hit-point value is grounded. The record is deliberately wired
+/// into no view-model total and no derived combat/defense output. Still
+/// unproven and named in the record detail: the favored-class +1 hp /
+/// +1 skill-rank choice (no input surface exists for it), hit points at
+/// levels 2+ (no average/rolled hit-die policy is grounded), and Toughness /
+/// feat hit-point interplay.
+fn explain_fighter_level1_hit_points(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if supported_fighter_level(input) != Some(1) {
+        return;
+    }
+
+    let constitution_modifier = ability_modifiers.constitution;
+    let hit_points = FIGHTER_LEVEL_1_MAX_HIT_DIE_HIT_POINTS + constitution_modifier;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.fighter.level_1_hit_points".to_owned(),
+        value: hit_points,
+        detail: format!(
+            "Fighter level-1 hit points: maximized d10 Fighter hit die at 1st level \
+             ({FIGHTER_LEVEL_1_MAX_HIT_DIE_HIT_POINTS}) + Constitution modifier \
+             ({constitution_modifier:+}) = {hit_points}. This is a standalone grounded \
+             record wired into no view-model total. Still unproven and out of scope: the \
+             favored-class +1 hp / +1 skill-rank choice (no input surface exists for it), \
+             hit points at levels 2+ (no average/rolled hit-die policy is grounded), and \
+             Toughness / feat hit-point interplay"
+        ),
+    });
+}
+
 /// The canonical Human Fighter feat-choice selections this slice preserves on the
-/// deterministic level-1 through level-8 seam, as `(choice_set_id,
+/// deterministic level-1 through level-10 seam, as `(choice_set_id,
 /// canonical_selection_id)` pairs. Any named slot present but deviating from its
 /// canonical selection is claim-blocked. A slot absent for the chosen level (e.g.
 /// the level-2 bonus feat at level 1) is not fabricated. This same machinery
-/// validates the level-5 weapon-training-group choice, since it is structurally
-/// identical to a bonus-feat slot (a named choice-set that must match one
-/// canonical selection).
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 8] = [
+/// validates the level-5 and level-9 weapon-training-group choices, since each is
+/// structurally identical to a bonus-feat slot (a named choice-set that must match
+/// one canonical selection).
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 10] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -1877,10 +2096,18 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 8] = [
         FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID,
         IMPROVED_CRITICAL_FEAT_SELECTION,
     ),
+    (
+        FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID,
+        BOWS_GROUP_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_10_BONUS_FEAT_CHOICE_ID,
+        GREATER_WEAPON_FOCUS_FEAT_SELECTION,
+    ),
 ];
 
 /// Claim-block non-canonical feat-choice mutations on the deterministic Human Fighter
-/// levels 1-8 seam, while preserving the accepted canonical selections exactly.
+/// levels 1-10 seam, while preserving the accepted canonical selections exactly.
 ///
 /// This is deliberately not a general feat legality or prerequisite engine. It only knows
 /// the exact accepted deterministic feat-choice selections on the bounded Human Fighter
@@ -1890,7 +2117,7 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 8] = [
 /// proof without a general engine — instead of letting the non-canonical build ride through
 /// as a fabricated computed success.
 ///
-/// It runs only for a supported single-class Human Fighter (levels 1-8); any other posture
+/// It runs only for a supported single-class Human Fighter (levels 1-10); any other posture
 /// is already claim-blocked upstream and is left untouched here. It grounds no alternative
 /// feat effect and does not touch the read-only canonical Human ability-bonus target.
 fn validate_fighter_feat_choice_legality(
@@ -2071,33 +2298,35 @@ fn is_single_class_paladin_level1(input: &CharacterInput) -> bool {
 ///     bookkeeping, no deflection-AC-vs-target bonus, and no
 ///     evil-outsider/evil-dragon/undead damage doubling.
 ///
-/// - one explicit claim-blocking diagnostic per still-missing non-spell
-///   class-feature burden:
-///   * `lay on hands` — healing resource accounting, charismabased pool, and
-///     use-against-conditions behavior
-///   * `divine grace` — charisma-to-saves bonus, including the typing and
-///     proc-time posture that divines saves even at the deterministic seam
-///   * `mercy` — conditional save-effect and disease/poison removal mechanics
-///     that only begin at level 6 and must therefore be claimed honestly as
-///     still-blocked rather than silently allowed
+/// - three grounded level-gate records (value 0 each) for the remaining named
+///   non-spell pillars, whose honest level-1 computed surface is their correct
+///   ABSENCE by PF1 Core Rulebook level gate:
+///   * `lay on hands` — a 2nd-level paladin feature (heals 1d6 per two paladin
+///     levels; uses/day = 1/2 paladin level + Charisma modifier); the at-grant
+///     formula is named but not computed
+///   * `divine grace` — a 2nd-level paladin feature (+Charisma bonus on all
+///     saving throws); the at-grant formula is named but not computed
+///   * `mercy` — a 3rd-level paladin feature (gained at 3rd level and every
+///     three levels thereafter, chosen from the mercy list and attached to lay
+///     on hands); the at-grant selection is named but not computed
 ///
 /// - one explicit claim-blocking diagnostic for the partial-caster spell
-///   burden, distinct from the non-spell class-feature blockers:
-///   * Paladin is a divine partial caster in PF1 Core Rulebook (effective
-///     caster level = paladin level − 2, slots begin at level 2); the blocker
-///     names this partial-caster posture so the later SD13-E4 spell-burden
+///   burden, distinct from the grounded chassis records:
+///   * Paladin is a divine partial caster in PF1 Core Rulebook (spells begin
+///     at paladin level 4; effective caster level = paladin level − 3); the
+///     blocker names this partial-caster posture so the later spell-burden
 ///     closure cannot collapse Paladin into a full divine caster shape
 ///     (Cleric / Druid) and so partial-caster pressure stays visible on the
 ///     runtime path.
 ///
 /// This deliberately does not compute a supported spell surface. Beyond the
-/// grounded Smite Evil numeric formula, it grounds no lay-on-hands resource
-/// handling, no divine-grace computation, no mercy handling, no spell slots,
-/// no spell source lineage, no spells known or prepared posture, no deity
-/// resolution, no domain mechanics, no alignment-target resolution, and no
-/// healing accounting. It only emits the per-burden blockers (plus the one
-/// grounded Smite Evil formula) that prove the F6 surface remains separable
-/// on the runtime path.
+/// grounded Smite Evil numeric formula and the three grounded level-gate
+/// absences, it grounds no lay-on-hands resource handling, no divine-grace
+/// computation, no mercy handling, no spell slots, no spell source lineage,
+/// no spells known or prepared posture, no deity resolution, no domain
+/// mechanics, no alignment-target resolution, and no healing accounting. It
+/// only emits the grounded records and the remaining spell blocker that prove
+/// the F6 surface remains separable on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -2165,55 +2394,57 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         ),
     });
 
-    // The per-burden blockers ride alongside the F6 hybrid blockers. They are
-    // intentionally distinct diagnostic ids so the chassis burden is separable
-    // from the spell burden on the runtime path.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.paladin.lay_on_hands.unsupported".to_owned(),
-        message: format!(
-            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its lay on hands burden: \
-             the charisma-based healing pool, the per-level heal amount, the use against poison / \
-             disease behavior, and any heal-resource accounting are not implemented in this \
-             bounded chassis baseline, so no Paladin lay on hands support is claimed"
+    // The remaining three named non-spell pillars are grounded as correct
+    // PF1 Core Rulebook level-gate absences: lay on hands and divine grace are
+    // 2nd-level paladin features and mercy is a 3rd-level paladin feature, so
+    // at level 1 the honest computed surface is their correct ABSENCE (value 0
+    // each). Each record names the at-grant formula without computing it; no
+    // heal amount, save bonus, or mercy effect is fabricated.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.level_gate.lay_on_hands".to_owned(),
+        value: 0,
+        detail: format!(
+            "Paladin lay on hands at paladin level {HYBRID_BASELINE_LEVEL}: correctly absent at \
+             level 1 by PF1 CRB level gate; at-grant formula named but not computed. Lay on \
+             hands is a 2nd-level paladin feature: heals 1d6 per two paladin levels, uses/day = \
+             1/2 paladin level + Charisma modifier"
         ),
-        claim_blocking: true,
     });
 
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.paladin.divine_grace.unsupported".to_owned(),
-        message: format!(
-            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its divine grace burden: \
-             the charisma-to-saving-throw bonus and the typing/proc-time posture that applies it \
-             are not implemented in this bounded chassis baseline, so no Paladin divine grace \
-             save bonus support is claimed"
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.level_gate.divine_grace".to_owned(),
+        value: 0,
+        detail: format!(
+            "Paladin divine grace at paladin level {HYBRID_BASELINE_LEVEL}: correctly absent at \
+             level 1 by PF1 CRB level gate; at-grant formula named but not computed. Divine \
+             grace is a 2nd-level paladin feature: +Charisma bonus on all saving throws"
         ),
-        claim_blocking: true,
     });
 
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.paladin.mercy.unsupported".to_owned(),
-        message: format!(
-            "Paladin level {HYBRID_BASELINE_LEVEL} remains blocked on its mercy burden: mercy \
-             is a level-6 class-feature, so the conditional save-effect and disease/poison \
-             removal mechanics are not implemented here; no Paladin mercy behavior is claimed"
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.level_gate.mercy".to_owned(),
+        value: 0,
+        detail: format!(
+            "Paladin mercy at paladin level {HYBRID_BASELINE_LEVEL}: correctly absent at level 1 \
+             by PF1 CRB level gate; at-grant formula named but not computed. Mercy is a \
+             3rd-level paladin feature (gained at 3rd level and every three levels thereafter): \
+             chosen from the mercy list, attaches to lay on hands"
         ),
-        claim_blocking: true,
     });
 
     // The partial-caster spell burden is its own blocker, distinct from the
-    // four non-spell class-feature blockers above. Paladin is a divine partial
-    // caster in PF1 Core Rulebook (effective caster level = paladin level - 2;
-    // first spell access at level 2 with a slowed slot progression), and the
-    // blocker must name that partial-caster posture so the later SD13-E4
-    // spell-burden closure cannot confuse Paladin with a full divine caster
-    // (Cleric / Druid).
+    // grounded non-spell chassis records above. Paladin is a divine partial
+    // caster in PF1 Core Rulebook (spells begin at paladin level 4; effective
+    // caster level = paladin level - 3), and the blocker must name that
+    // partial-caster posture so the later spell-burden closure cannot confuse
+    // Paladin with a full divine caster (Cleric / Druid).
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
         message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
-             partial caster (effective caster level = paladin level - 2, with spell slots first \
-             available at level 2 in PF1 Core Rulebook), so spell-source lineage, spells known \
+             partial caster (spells begin at paladin level 4, with effective caster level = \
+             paladin level - 3 in PF1 Core Rulebook), so spell-source lineage, spells known \
              or prepared posture, spells-per-day progression, bonus spell slots, and spell save \
-             DCs are deferred to the SD13-E4 spellcasting slice; no partial-caster spell \
+             DCs are deferred to a later spellcasting slice; no partial-caster spell \
              execution is fabricated in this bounded chassis baseline"
             .to_owned(),
         claim_blocking: true,
@@ -2236,7 +2467,9 @@ fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E3 runtime evidence for the deterministic Human Ranger
 /// level-1 chassis as a per-pillar decomposition of the F6 combined non-spell
-/// class-feature blocker, grounding one of the three named pillars for real.
+/// class-feature blocker, grounding two of the three named pillars for real
+/// (Track by the SD13-E3 slice, the Favored Enemy flat surface by the SD13-E5
+/// slice).
 ///
 /// This sits on top of the accepted SD13-F6 hybrid baseline: F6 already proves
 /// the deterministic Human Ranger level-1 hybrid identity is acknowledged on the
@@ -2245,31 +2478,42 @@ fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
 /// single combined later-spell blocker. This slice proves the per-pillar
 /// separation Ranger actually needs:
 ///
-/// - two explicit claim-blocking diagnostics, one per still-missing non-spell
+/// - one explicit claim-blocking diagnostic for the still-missing non-spell
 ///   class-feature pillar:
-///   * `favored enemy` — the chosen favored-enemy type and its associated
-///     Bluff / Knowledge / Perception / Sense Motive / Survival skill-check
-///     bonuses, and the bonus on weapon damage rolls against that favored
-///     enemy, are not implemented
 ///   * `combat style` — the archery-vs-two-weapon-combat style choice is a
 ///     level-1 decision, but the bonus feat the combat style actually grants
 ///     is a level-2 PF1 Core Rulebook milestone; neither the level-1 style
 ///     choice nor the level-2 bonus-feat grant is implemented, so nothing is
 ///     fabricated at either level
 ///
-/// - one grounded explanation for the third pillar, Track, computed for real:
+/// - one grounded explanation for the Track pillar, computed for real:
 ///   the Survival-check bonus to follow tracks equals `max(ranger level / 2, 1)`
 ///   (PF1 Core Rulebook Track: +1/2 ranger level, minimum +1), which is `1` at
 ///   the bounded level-1 baseline. This grounds only the flat numeric Track
 ///   bonus, not a tracking-check execution engine: no full Survival check, no
 ///   DC resolution, and no tracking narrative is computed.
 ///
+/// - the grounded Favored Enemy FLAT surface (SD13-E5), which retires the
+///   `class_feature.ranger.favored_enemy.unsupported` blocker:
+///   * recognition of the chosen favored-enemy type from the
+///     `choice:ranger_favored_enemy` selection when it is present in chosen
+///     input (a +0 recognition record; nothing is fabricated when the choice
+///     is absent),
+///   * the flat +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and
+///     Survival checks against the favored enemy (PF1 CRB level 1), and
+///   * the flat +2 bonus on weapon attack AND damage rolls against the
+///     favored enemy (PF1 includes attack rolls, unlike D&D 3.5).
+///
+///   Only the flat magnitudes are grounded: no target-type matching and no
+///   conditional-application engine decides whether any specific check or
+///   attack is actually made against the favored enemy.
+///
 /// This deliberately does not compute a supported class-feature surface. It
-/// grounds no favored-enemy target resolution or skill/damage math, no
-/// combat-style feat grant, no animal companion, no favored-terrain breadth,
-/// and no spell posture. It only emits the per-pillar blockers and the one
-/// grounded Track value that prove the F6 surface remains separable on the
-/// runtime path.
+/// grounds no favored-enemy conditional application, no combat-style feat
+/// grant, no animal companion, no favored-terrain breadth, and no spell
+/// posture. It only emits the remaining per-pillar blocker and the grounded
+/// Track / Favored Enemy flat values that prove the F6 surface remains
+/// separable on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -2288,21 +2532,11 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         return;
     }
 
-    // The per-pillar blockers ride alongside the F6 hybrid blockers. They are
-    // intentionally distinct diagnostic ids so the chassis burden is separable
+    // The per-pillar blocker rides alongside the F6 hybrid blockers. It is an
+    // intentionally distinct diagnostic id so the chassis burden is separable
     // from the combined F6 non-spell class-feature burden on the runtime path.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.ranger.favored_enemy.unsupported".to_owned(),
-        message: format!(
-            "Ranger level {HYBRID_BASELINE_LEVEL} remains blocked on its favored enemy burden: \
-             the chosen favored-enemy type and its associated Bluff, Knowledge, Perception, Sense \
-             Motive, and Survival skill-check bonuses, plus the bonus on weapon damage rolls against \
-             that favored enemy, are not implemented in this bounded hybrid chassis baseline, so no \
-             Ranger favored-enemy support is claimed"
-        ),
-        claim_blocking: true,
-    });
-
+    // The former `class_feature.ranger.favored_enemy.unsupported` blocker is
+    // retired: the Favored Enemy flat surface is grounded for real below.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.ranger.combat_style.unsupported".to_owned(),
         message: format!(
@@ -2328,6 +2562,59 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
              max({HYBRID_BASELINE_LEVEL} / 2, 1) = {track_bonus}. This grounds only the flat numeric \
              Track bonus on Survival checks to follow tracks; it is not a tracking-check execution \
              engine and computes no full Survival check, no DC resolution, and no tracking narrative"
+        ),
+    });
+
+    // The Favored Enemy FLAT surface is grounded for real (SD13-E5). PF1 Core
+    // Rulebook, Ranger level 1: the ranger selects one favored-enemy type and
+    // gains a +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and
+    // Survival checks against it, plus a +2 bonus on weapon attack and damage
+    // rolls against it (PF1 includes attack rolls, unlike D&D 3.5). Only the
+    // flat magnitudes are grounded: no target-type matching and no
+    // conditional-application engine decides whether any specific check or
+    // attack is actually made against the favored enemy.
+    if let Some(favored_enemy) = choice_selection(input, "choice:ranger_favored_enemy") {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Favored Enemy selection (choice:ranger_favored_enemy -> {favored_enemy}): \
+                 the level-{HYBRID_BASELINE_LEVEL} favored-enemy type chosen for this character is \
+                 {favored_enemy}. This is a bounded recognition record of the chosen enemy type \
+                 only; the flat bonus magnitudes are grounded separately, and no target-type \
+                 matching or conditional-application engine is implemented, so it carries no \
+                 fabricated mechanical value (+0)"
+            ),
+        });
+    }
+
+    let favored_enemy_bonus: i16 = 2;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.favored_enemy_skill_bonus".to_owned(),
+        value: favored_enemy_bonus,
+        detail: format!(
+            "Ranger Favored Enemy skill bonus (PF1 Core Rulebook, level \
+             {HYBRID_BASELINE_LEVEL}): +{favored_enemy_bonus} on Bluff, Knowledge, Perception, \
+             Sense Motive, and Survival checks against the chosen favored enemy. This grounds only \
+             the flat +{favored_enemy_bonus} magnitude; no target-type matching and no \
+             conditional-application engine is implemented, so whether any specific skill check is \
+             actually made against the favored enemy is never resolved and no skill total is \
+             modified by this record"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.favored_enemy_attack_damage_bonus".to_owned(),
+        value: favored_enemy_bonus,
+        detail: format!(
+            "Ranger Favored Enemy weapon attack/damage bonus (PF1 Core Rulebook, level \
+             {HYBRID_BASELINE_LEVEL}): +{favored_enemy_bonus} on weapon attack rolls AND weapon \
+             damage rolls against the chosen favored enemy — PF1 includes attack rolls, unlike the \
+             damage-only D&D 3.5 favored enemy. This grounds only the flat \
+             +{favored_enemy_bonus} magnitude; no target-type matching and no \
+             conditional-application engine is implemented, so whether any specific attack is \
+             actually made against the favored enemy is never resolved and no combat baseline is \
+             modified by this record"
         ),
     });
 }
@@ -2368,34 +2655,49 @@ fn martial_level1_class(input: &CharacterInput) -> Option<MartialClass> {
     }
 }
 
-/// Surface direct SD13-E3 runtime evidence for the deterministic Human Barbarian
+/// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Barbarian
 /// level-1 martial chassis. Base-attack progression, base-save progression, and the
-/// fast-movement speed-extension value are now grounded directly; only the
-/// illiteracy trait burden stays explicitly claim-blocked.
+/// fast-movement speed-extension value are grounded directly. The SD13-E5 slice
+/// resolves the formerly-named illiteracy burden as vacuous — the PF1 Core Rulebook
+/// Barbarian is NOT illiterate; illiteracy is a D&D 3.5e Barbarian trait that never
+/// existed in PF1, so under the fixture's `pf1.core_rulebook` source package there
+/// was never anything to implement — and grounds Rage's flat numeric surface: rage
+/// rounds per day (4 + Constitution modifier, claim-blocked instead of grounded when
+/// that sum is non-positive) and the flat while-raging constants (+4 morale
+/// Strength, +4 morale Constitution, +2 morale on Will saves, -2 AC), values only.
+/// Otherwise only the rage-state execution burden stays explicitly claim-blocked.
 ///
 /// This deliberately does not compute a supported martial chassis: the grounded
-/// base-attack, base-save, and fast-movement explanation records below are
+/// base-attack, base-save, fast-movement, and rage explanation records below are
 /// standalone (not wired into `PilotBaseChassisComputation.base_attack_bonus`,
-/// `compute_total_saves`, `compute_combat_baseline`, or any speed/movement total),
-/// so the integrated pilot surface still reports a blocked posture on this input.
-/// It grounds no illiteracy trait engine, no rage execution, no weapon familiarity,
-/// and no level-2+ martial progression. It only:
+/// `compute_total_saves`, `compute_combat_baseline`, the integrated ability
+/// modifiers, or any speed/movement total), so the integrated pilot surface still
+/// reports a blocked posture on this input. It grounds no rage-state engine, no
+/// weapon familiarity, and no level-2+ martial progression. It only:
 /// - leaves one chassis-recognition explanation so the `class:barbarian:1` identity
 ///   is acknowledged as a non-hybrid martial baseline rather than an undocumented
 ///   packet placeholder (direct runtime evidence, carrying no fabricated mechanical
 ///   value),
 /// - leaves five grounded explanation records naming the full-BAB base-attack
 ///   bonus, the good-Fortitude/poor-Reflex/poor-Will base saves, and the flat
-///   +10 ft. fast-movement value, and
-/// - emits one claim-blocking diagnostic naming the still-missing illiteracy
-///   burden explicitly, rather than hiding behind a single generic "unsupported
-///   class" label.
+///   +10 ft. fast-movement value,
+/// - leaves one grounded rules-correction record documenting that the illiteracy
+///   burden was vacuous (`class_chassis.barbarian.illiteracy_absent`, +0),
+/// - leaves up to five grounded rage explanation records naming rage rounds per day
+///   (4 + Constitution modifier, omitted in favor of a claim-blocking diagnostic when
+///   that sum is non-positive) and the four flat rage constants, values only, and
+/// - emits one claim-blocking diagnostic naming the still-missing rage-state
+///   execution engine explicitly (activation/deactivation, round-by-round rage
+///   round consumption, fatigue after rage, and temporary application of the rage
+///   constants to computed totals), rather than hiding behind a single generic
+///   "unsupported class" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Barbarian martial identity, its grounded
 /// pillar values, and its remaining named pillar burden legible on the runtime path.
 fn explain_barbarian_level1_chassis(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -2427,10 +2729,10 @@ fn explain_barbarian_level1_chassis(
             "Recognized deterministic Human {class_name} level {MARTIAL_BASELINE_LEVEL} martial chassis: \
              the {class_id}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure non-hybrid \
              martial baseline on the rules-core seam rather than an undocumented packet placeholder. This \
-             is a bounded chassis-recognition record only; it grounds no illiteracy trait engine, no rage \
-             execution, and no level-2+ martial progression, so it carries no fabricated mechanical value \
-             (+0). The base-attack, base-save, and fast-movement pillar values are grounded separately by \
-             this same slice as standalone explanation records"
+             is a bounded chassis-recognition record only; it grounds no rage-state execution engine, no \
+             weapon familiarity, and no level-2+ martial progression, so it carries no fabricated \
+             mechanical value (+0). The base-attack, base-save, fast-movement, and flat rage pillar \
+             values are grounded separately as standalone explanation records"
         ),
     });
 
@@ -2504,14 +2806,120 @@ fn explain_barbarian_level1_chassis(
             .to_owned(),
     });
 
-    // Still blocked: name the illiteracy trait burden explicitly.
+    // Rules correction: the formerly-named illiteracy burden was vacuous under the
+    // fixture's pf1.core_rulebook source package. Illiteracy is a D&D 3.5e Barbarian
+    // trait; the PF1 Core Rulebook Barbarian is not illiterate, so there was never
+    // anything to implement. The resolution is documented as a grounded value-0
+    // record rather than silently dropped, and the old claim-blocking diagnostic
+    // (class_feature.barbarian.bounded_progression.illiteracy.unsupported) is retired.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.barbarian.illiteracy_absent".to_owned(),
+        value: 0,
+        detail: format!(
+            "{class_name} illiteracy burden resolved as vacuous: the PF1 Core Rulebook {class_name} \
+             is NOT illiterate — illiteracy is a D&D 3.5e {class_name} class trait that was removed in \
+             Pathfinder 1e and never existed under the pf1.core_rulebook source package this fixture \
+             names. The previously catalogued illiteracy burden therefore named a rule with no PF1 \
+             existence, and retiring it is a rules correction, not an uplift. This record documents \
+             that correction only; it carries no mechanical value (+0)"
+        ),
+    });
+
+    // Grounded: Rage's flat numeric surface, values only. Rage rounds per day is the
+    // one Constitution-derived rage number the PF1 Core Rulebook fixes at level 1:
+    // 4 + Constitution modifier. At a low enough Constitution modifier (<= -4) that
+    // sum is non-positive, which is not a real PF1 rounds-per-day count, so this
+    // slice claim-blocks the record instead of asserting a fabricated zero/negative
+    // value — the deterministic Con 16 fixture (modifier +3, 7 rounds) never hits
+    // this branch, but the public compute seam accepts any Human Barbarian input.
+    let constitution_modifier = ability_modifier_for(ability_modifiers, "constitution");
+    let rage_rounds_per_day = 4 + constitution_modifier;
+    if rage_rounds_per_day > 0 {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.barbarian.rage_rounds_per_day".to_owned(),
+            value: rage_rounds_per_day,
+            detail: format!(
+                "{class_name} level {MARTIAL_BASELINE_LEVEL} rage rounds per day from the PF1 Core \
+                 Rulebook Rage class feature: 4 + Constitution modifier = 4 + {constitution_modifier} = \
+                 {rage_rounds_per_day} rounds per day at level {MARTIAL_BASELINE_LEVEL} (2 additional \
+                 rounds per {class_name} level beyond 1st are a level-2+ burden this slice does not \
+                 claim). This is a standalone explanation record: no round is ever consumed, tracked, or \
+                 restored by this slice"
+            ),
+        });
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_chassis.barbarian.rage_rounds_per_day.unsupported".to_owned(),
+            message: format!(
+                "{class_name} level {MARTIAL_BASELINE_LEVEL} rage rounds per day (4 + Constitution \
+                 modifier) is not grounded for this input: 4 + {constitution_modifier} = \
+                 {rage_rounds_per_day}, a non-positive count with no PF1 Core Rulebook meaning. \
+                 This slice does not assert a fabricated zero/negative rounds-per-day value, so no \
+                 rage rounds per day is claimed for this Constitution score"
+            ),
+            claim_blocking: true,
+        });
+    }
+
+    // Grounded: the four flat while-raging constants, as value-only records. None of
+    // these is applied to any computed total — application is exactly the rage-state
+    // execution burden named by the claim-blocking diagnostic below. Each entry also
+    // carries a terse label (4th field) so the claim-blocking diagnostic below can
+    // cite the same four values without hand-retyping them as a separate literal.
+    let rage_constants: [(&str, i16, &str, &str); 4] = [
+        (
+            "class_chassis.barbarian.rage.strength_morale_bonus",
+            4,
+            "+4 morale bonus to Strength while raging",
+            "+4 morale Strength",
+        ),
+        (
+            "class_chassis.barbarian.rage.constitution_morale_bonus",
+            4,
+            "+4 morale bonus to Constitution while raging",
+            "+4 morale Constitution",
+        ),
+        (
+            "class_chassis.barbarian.rage.will_save_morale_bonus",
+            2,
+            "+2 morale bonus on Will saves while raging",
+            "+2 morale Will saves",
+        ),
+        (
+            "class_chassis.barbarian.rage.armor_class_penalty",
+            -2,
+            "-2 penalty to Armor Class while raging",
+            "-2 AC",
+        ),
+    ];
+    for (id, value, effect, _short_label) in rage_constants {
+        explanations.push(ComputationExplanation {
+            id: id.to_owned(),
+            value,
+            detail: format!(
+                "{class_name} Rage flat constant from the PF1 Core Rulebook Rage class feature: \
+                 {effect}. This slice grounds only the flat value; it is never applied to the \
+                 integrated ability modifiers, saves, or armor class — temporary application is \
+                 part of the unimplemented rage-state execution engine"
+            ),
+        });
+    }
+    let rage_constants_summary = rage_constants
+        .iter()
+        .map(|(_, _, _, short_label)| *short_label)
+        .collect::<Vec<_>>()
+        .join(", ");
+
+    // Still blocked: name the rage-state execution burden explicitly.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.barbarian.bounded_progression.illiteracy.unsupported".to_owned(),
+        id: "class_feature.barbarian.bounded_progression.rage_execution.unsupported".to_owned(),
         message: format!(
-            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its illiteracy trait: \
-             the trait that prevents literate reading and writing of non-native languages without additional \
-             training is not implemented in this bounded martial chassis baseline, so no {class_name} \
-             illiteracy-trait support is claimed"
+            "{class_name} level {MARTIAL_BASELINE_LEVEL} remains blocked on its rage-state execution \
+             engine: rage activation and deactivation, round-by-round consumption of the grounded rage \
+             rounds per day, the fatigue condition after a rage ends, and temporary application of the \
+             grounded rage constants ({rage_constants_summary}) to computed totals are not implemented \
+             in this bounded martial chassis baseline, so no {class_name} rage-execution support is \
+             claimed"
         ),
         claim_blocking: true,
     });
@@ -2530,35 +2938,41 @@ fn is_single_class_monk_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E3 runtime evidence for the deterministic Human Monk level-1
-/// martial chassis, mirroring the Barbarian level-1 baseline pattern, and now
-/// grounding three named pillar burdens (base-attack, base-save, AC Bonus) while
-/// keeping it explicitly claim-blocked on the two remaining named burdens (unarmed
-/// strike / Flurry of Blows, and the level-1 bonus feat grant).
+/// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Monk
+/// level-1 martial chassis, mirroring the Barbarian level-1 baseline pattern, and
+/// now grounding four named pillar burdens (base-attack, base-save, AC Bonus, and
+/// the unarmed strike die / Flurry of Blows flat surface) while keeping it
+/// explicitly claim-blocked on the one remaining named burden (the level-1 bonus
+/// feat grant).
 ///
 /// This grounds the Monk base-attack progression (3/4 BAB: `classlevel * 3 / 4`),
 /// the base-save progression (good Fortitude, Reflex, and Will: `classlevel/2+2`
 /// each — Monk is unusual among the martial classes recognized so far in having all
-/// three saves good rather than a 2-good/1-poor or 1-good/2-poor split), and the AC
+/// three saves good rather than a 2-good/1-poor or 1-good/2-poor split), the AC
 /// Bonus (the positive Wisdom modifier added to AC, asserted unconditionally on this
-/// deterministic unarmored fixture). It still grounds no unarmed strike damage die,
-/// no Flurry of Blows execution, and no level-1 bonus feat grant from the restricted
-/// Monk feat list. It grounds no ki pool, no level-4+ AC Bonus dodge-bonus
-/// progression, no "unarmored and unencumbered" runtime state-check engine, and no
-/// level-2+ martial progression. It:
+/// deterministic unarmored fixture), the Medium-monk level-1 unarmed strike damage
+/// die size (1d6 — die size only, mirroring the Rogue sneak-attack die-count record:
+/// no damage roll or damage total is computed), and the level-1 Flurry of Blows flat
+/// surface (two attacks, each at monk level - 2 = -1 before ability modifiers). It
+/// still grounds no level-1 bonus feat grant from the restricted Monk feat list, no
+/// attack-resolution or damage-roll engine, no monk-weapon flurry, no level-4+
+/// unarmed damage die progression, no ki pool, no level-4+ AC Bonus dodge-bonus
+/// progression, no "unarmored and unencumbered" runtime state-check engine, no
+/// wiring into integrated combat totals, and no level-2+ martial progression. It:
 /// - leaves one chassis-recognition explanation so the `class:monk:1` identity is
 ///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
-/// - leaves grounded explanation records for base-attack, the three base saves, and
-///   AC Bonus, and
-/// - emits two claim-blocking diagnostics naming the two still-missing pillar
-///   burdens (unarmed-strike/flurry, and the level-1 bonus feat grant) explicitly,
-///   rather than hiding behind a single generic "unsupported class" label.
+/// - leaves grounded explanation records for base-attack, the three base saves,
+///   AC Bonus, the unarmed strike damage die, and the flurry flat attack
+///   bonus/attack count, and
+/// - emits one claim-blocking diagnostic naming the still-missing pillar burden
+///   (the level-1 bonus feat grant) explicitly, rather than hiding behind a single
+///   generic "unsupported class" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture (`defense.baseline_armor_class` stays gated to Fighter
-/// and is untouched here) but makes the Monk martial identity, its three grounded
-/// pillars, and its two remaining named pillar burdens legible on the runtime path.
+/// and is untouched here) but makes the Monk martial identity, its grounded pillars,
+/// and its one remaining named pillar burden legible on the runtime path.
 fn explain_monk_level1_chassis(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -2583,16 +2997,16 @@ fn explain_monk_level1_chassis(
              the {MONK_CLASS_ID}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure \
              non-hybrid martial baseline on the rules-core seam rather than an undocumented packet \
              placeholder. This is a bounded chassis-recognition record only; the base-attack, \
-             base-save, and AC Bonus values are grounded separately below, and this record itself \
-             grounds no unarmed strike damage die, no Flurry of Blows execution, no level-1 bonus \
-             feat grant, no ki pool, and no level-2+ martial progression, so it carries no \
-             fabricated mechanical value (+0)"
+             base-save, AC Bonus, unarmed-strike-die, and Flurry of Blows flat-surface values are \
+             grounded separately below, and this record itself grounds no level-1 bonus feat \
+             grant, no attack-resolution engine, no ki pool, and no level-2+ martial progression, \
+             so it carries no fabricated mechanical value (+0)"
         ),
     });
 
     let level_value = i16::from(MARTIAL_BASELINE_LEVEL);
 
-    // Grounded (1/3): Monk 3/4-BAB base-attack progression from the PF1 Core
+    // Grounded (1/5): Monk 3/4-BAB base-attack progression from the PF1 Core
     // Rulebook Monk class table. No PCGen cr_classes.lst entry is used here (this
     // repo carries no Monk .lst source), so the formula cites the rulebook table
     // directly rather than inventing a line reference.
@@ -2606,7 +3020,7 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Grounded (2/3): Monk base-save progression. Unlike Fighter/Barbarian/Rogue's
+    // Grounded (2/5): Monk base-save progression. Unlike Fighter/Barbarian/Rogue's
     // 2-good/1-poor or 1-good/2-poor split, the PF1 Core Rulebook Monk class table
     // gives all three base saves (Fortitude, Reflex, and Will) the good progression.
     let base_save_value = level_value / 2 + 2;
@@ -2641,7 +3055,7 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Grounded (3/3): AC Bonus (Wisdom-to-AC). PF1: "she adds her Wisdom bonus, if
+    // Grounded (3/5): AC Bonus (Wisdom-to-AC). PF1: "she adds her Wisdom bonus, if
     // any, to her AC" — only a positive Wisdom modifier is added, never subtracted
     // here for a negative Wisdom modifier. This grounds only the flat level-1 value;
     // it grounds no level-4+ dodge-bonus progression and no "unarmored and
@@ -2663,22 +3077,63 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Still blocked (1/2): name the unarmed strike / Flurry of Blows burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.monk.bounded_progression.unarmed_strike_and_flurry.unsupported"
-            .to_owned(),
-        message: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its unarmed strike and \
-             Flurry of Blows burden: the unarmed strike damage die and the Flurry of Blows extra \
-             attack are not implemented in this bounded martial chassis baseline, so no Monk \
-             unarmed strike or Flurry of Blows support is claimed"
+    // Grounded (4/5): unarmed strike damage die. PF1 Core Rulebook Monk class table:
+    // a Medium monk deals 1d6 unarmed strike damage at levels 1-3. Mirroring the
+    // Rogue sneak-attack die-count record, only the die-size facet (6, i.e. 1d6) is
+    // grounded here — no damage roll, damage total, or attack-resolution engine is
+    // computed, and the level-4+ die progression (1d8 and beyond) is not grounded.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.unarmed_strike_damage_die".to_owned(),
+        value: 6,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} unarmed strike from the PF1 Core Rulebook Monk \
+             class table: a Medium monk deals 1d6 unarmed strike damage at level \
+             {MARTIAL_BASELINE_LEVEL}. Only the die-size facet (6, i.e. 1d6) is grounded here; \
+             no damage roll or damage total is computed and no attack-resolution engine exists. \
+             Two PF1 unarmed-strike rules are recorded as statements only: the monk may choose \
+             to deal lethal or nonlethal damage with no penalty on the attack roll, and monk \
+             unarmed strikes carry no off-hand penalty (a monk applies her full Strength bonus \
+             on damage rolls for all her unarmed strikes). The higher-level unarmed damage die \
+             progression (1d8 at levels 4-7 and beyond) is not grounded"
         ),
-        claim_blocking: true,
     });
 
-    // Still blocked (2/2): name the level-1 bonus feat grant burden explicitly. This
-    // is narrower than the prior combined AC-Bonus/bonus-feat diagnostic: AC Bonus is
-    // now grounded above, so only the bonus-feat grant remains named here.
+    // Grounded (5/5): Flurry of Blows flat attack surface, in two facets. PF1 Core
+    // Rulebook: when making a flurry of blows as a full-attack action, the monk uses
+    // her monk level in place of her base attack bonus and takes a -2 penalty on all
+    // attacks; at level 1 the flurry grants one additional attack, i.e. two attacks
+    // at -1/-1 before ability modifiers. Only these flat facets are grounded; no
+    // attack-resolution engine, no monk-weapon flurry, and no wiring into integrated
+    // combat totals is implemented.
+    let flurry_attack_bonus = level_value - 2;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.flurry_of_blows_attack_bonus".to_owned(),
+        value: flurry_attack_bonus,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} Flurry of Blows flat attack modifier from the \
+             PF1 Core Rulebook: when using flurry as a full-attack action the monk uses her \
+             monk level in place of her base attack bonus and takes a -2 penalty on all attack \
+             rolls, so the flat modifier is monk level - 2 = {level_value} - 2 = \
+             {flurry_attack_bonus} on each flurry attack, before ability modifiers. Only this \
+             flat pre-ability modifier is grounded; no attack-resolution engine, no monk-weapon \
+             flurry, and no wiring into integrated combat totals is implemented"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.monk.flurry_of_blows_attack_count".to_owned(),
+        value: 2,
+        detail: format!(
+            "Monk level {MARTIAL_BASELINE_LEVEL} Flurry of Blows attack count from the PF1 Core \
+             Rulebook: a level-{MARTIAL_BASELINE_LEVEL} flurry grants one additional attack on \
+             a full attack, i.e. two attacks, each at the flat pre-ability modifier grounded \
+             separately. Only the count facet (2) is grounded; no attack-resolution engine and \
+             no monk-weapon flurry support is implemented"
+        ),
+    });
+
+    // Still blocked (the one remaining named burden): the level-1 bonus feat grant.
+    // This is narrower than the prior combined AC-Bonus/bonus-feat diagnostic: AC
+    // Bonus is grounded above, so only the bonus-feat grant remains named here.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.monk.bounded_progression.bonus_feat.unsupported".to_owned(),
         message: format!(
@@ -2708,44 +3163,48 @@ fn is_single_class_rogue_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E3 runtime evidence for the deterministic Human Rogue
+/// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Rogue
 /// level-1 chassis, mirroring the Barbarian/Monk level-1 baseline pattern.
 /// The SD13-E3 pillar-grounding slice grounds three of the four named
 /// burdens directly (base-attack progression, base-save progression, and
-/// sneak attack die count); only trapfinding remains claim-blocked.
+/// sneak attack die count); the SD13-E5 slice grounds the fourth, Trapfinding,
+/// mirroring the grounded Ranger Track record, so no named Rogue pillar
+/// burden remains claim-blocked.
 ///
 /// This deliberately does not compute a full Rogue class engine. It grounds:
 /// - base-attack progression (3/4 BAB, `level * 3 / 4`),
-/// - base-save progression (good Reflex, poor Fortitude, poor Will), and
+/// - base-save progression (good Reflex, poor Fortitude, poor Will),
 /// - the sneak attack damage-die *count* only (the value `1`, i.e. `1d6`) —
 ///   not damage-roll execution and not the flanking / Dexterity-denial
-///   trigger-condition engine.
+///   trigger-condition engine, and
+/// - the Trapfinding flat numeric bonus (`max(level / 2, 1)`, `+1` at level 1)
+///   on Perception checks to locate traps and on Disable Device checks, plus
+///   the magic-trap-disarm statement — not a check-execution engine, no trap
+///   DC resolution, and no magic-trap disarm engine.
 ///
-/// It still grounds no trapfinding Perception / Disable Device bonus, no
-/// rogue talent, and no level-2+ progression. These new
-/// `class_chassis.rogue.*` explanation records are standalone: they are not
-/// wired into `compute_fighter_chassis`, `compute_total_saves`, or
-/// `compute_combat_baseline`, so `defense.total_save.*` is still never
-/// computed for Rogue here. It only:
+/// It still grounds no rogue talent (a level-2+ milestone) and no level-2+
+/// progression. These `class_chassis.rogue.*` explanation records are
+/// standalone: they are not wired into `compute_fighter_chassis`,
+/// `compute_total_saves`, or `compute_combat_baseline`, so
+/// `defense.total_save.*` is still never computed for Rogue here. It only:
 /// - leaves one chassis-recognition explanation so the `class:rogue:1`
 ///   identity is acknowledged rather than an undocumented packet placeholder
-///   (direct runtime evidence, carrying no fabricated mechanical value),
-/// - leaves four grounded pillar explanations (base-attack, base-save
-///   fortitude/reflex/will, sneak-attack die count), and
-/// - emits one claim-blocking diagnostic naming the sole still-missing
-///   pillar burden (trapfinding) explicitly, rather than hiding behind a
-///   single generic "unsupported class" label.
+///   (direct runtime evidence, carrying no fabricated mechanical value), and
+/// - leaves five grounded pillar explanations (base-attack, base-save
+///   fortitude/reflex/will, sneak-attack die count, trapfinding).
 ///
-/// The bounded Fighter-shaped compute path already claim-blocks this input
+/// The named Rogue claim-blocking diagnostic set is now empty; the four
+/// generic chassis diagnostics (`class_chassis.unsupported`,
+/// `combat.baseline_unsupported`, `defense.total_save.unsupported`,
+/// `skill.selected_modifier.unsupported`) still claim-block this input
 /// (including `tests/ge06_pilot_total_saves.rs::unsupported_chassis_blocks_total_saves`,
 /// which keeps passing unmodified since no `defense.total_save.*` explanation
 /// is ever computed here); this seam keeps that blocked posture but makes the
-/// Rogue chassis identity, its grounded pillars, and its one remaining named
-/// pillar burden legible on the runtime path.
+/// Rogue chassis identity and its grounded pillars legible on the runtime
+/// path.
 fn explain_rogue_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
-    diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if !is_single_class_rogue_level1(input) {
         return;
@@ -2764,10 +3223,10 @@ fn explain_rogue_level1_chassis(
             "Recognized deterministic Human Rogue level {ROGUE_BASELINE_LEVEL} chassis: the \
              {ROGUE_CLASS_ID}:{ROGUE_BASELINE_LEVEL} class identity is acknowledged on the \
              rules-core seam rather than an undocumented packet placeholder. This is a bounded \
-             chassis-recognition record only; the base-attack, base-save, and sneak-attack \
-             die-count pillars are grounded separately below, but this record still grounds no \
-             trapfinding Perception / Disable Device bonus, no rogue talent, and no level-2+ \
-             progression, so it carries no fabricated mechanical value (+0)"
+             chassis-recognition record only; the base-attack, base-save, sneak-attack \
+             die-count, and trapfinding pillars are grounded separately below, but this record \
+             still grounds no rogue talent and no level-2+ progression, so it carries no \
+             fabricated mechanical value (+0)"
         ),
     });
 
@@ -2825,17 +3284,23 @@ fn explain_rogue_level1_chassis(
         ),
     });
 
-    // Still blocked (4/4): name the trapfinding burden explicitly.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.rogue.bounded_progression.trapfinding.unsupported".to_owned(),
-        message: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} remains blocked on its trapfinding burden: the \
-             bonus on Perception checks to locate traps, the bonus on Disable Device checks to \
-             disarm them, and the ability to use Disable Device on magic traps are not \
-             implemented in this bounded chassis baseline, so no Rogue trapfinding support is \
-             claimed"
+    // Grounded (4/4): trapfinding — the flat numeric bonus and the
+    // magic-trap-disarm statement only, mirroring the grounded Ranger Track
+    // record (no check-execution engine behind it).
+    let trapfinding_bonus = (level_value / 2).max(1);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.rogue.trapfinding".to_owned(),
+        value: trapfinding_bonus,
+        detail: format!(
+            "Rogue Trapfinding class feature: adds a bonus equal to max(rogue level / 2, 1) \
+             (PF1 Core Rulebook Trapfinding: +1/2 rogue level, minimum +1) on Perception checks \
+             made to locate traps and on Disable Device checks, and lets the rogue use Disable \
+             Device to disarm magic traps. At Rogue level {ROGUE_BASELINE_LEVEL} this bonus is \
+             max({ROGUE_BASELINE_LEVEL} / 2, 1) = {trapfinding_bonus}. This grounds only the \
+             flat numeric Trapfinding bonus and the magic-trap-disarm statement; it is not a \
+             check-execution engine and computes no full Perception or Disable Device check, no \
+             trap DC resolution, and no magic-trap disarm engine"
         ),
-        claim_blocking: true,
     });
 }
 
@@ -2851,21 +3316,39 @@ fn explain_rogue_level1_chassis(
 /// boolean feat grant, not a numeric formula, so it carries no fabricated mechanical
 /// value; it grounds no bloodline power, no bloodline arcana, and no spell math
 /// whatsoever — no spell slots, spells known, spell DCs, bonus spells, prepared
-/// posture, or school choice. It only:
+/// posture, or school choice.
+///
+/// The SD13-E5 Sorcerer bloodline-choice slice grounds the next honest pillar: the
+/// canonical deterministic bloodline choice-slot selection
+/// (`choice:sorcerer_bloodline -> bloodline:arcane`) is recognized as chosen input,
+/// mirroring the Fighter bonus-feat choice-slot / Wizard Scribe Scroll precedent. This
+/// is recognition only: the Arcane bloodline's level-1 power is Arcane Bond (a familiar
+/// or a bonded object — an execution engine, not a flat number), so no power value is
+/// fabricated. The former combined `bloodline_power` blocker narrows to an
+/// `arcane_bond_and_bloodline_progression` blocker naming what stays unimplemented. It
+/// only:
 /// - leaves one recognition explanation so the `class:sorcerer:1` identity is acknowledged
 ///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves one grounded explanation recognizing the Eschew Materials bonus-feat grant
-///   (also carrying no fabricated mechanical value, since it is a boolean grant), and
-/// - emits two distinct claim-blocking diagnostics naming the bloodline-power burden
-///   (bloodline selection, level-1 bloodline power, bloodline arcana, and higher-level
-///   bonus spells/feats/skills) and the spontaneous known-spell / slot posture burden
-///   explicitly, rather than hiding behind a generic "unsupported caster" label.
+///   (also carrying no fabricated mechanical value, since it is a boolean grant),
+/// - conditionally leaves one grounded explanation recognizing the canonical bloodline
+///   choice-slot selection when a `choice:sorcerer_bloodline` selection is present
+///   (carrying no fabricated mechanical value, since Arcane Bond is an execution engine
+///   rather than a number), and
+/// - emits two distinct claim-blocking diagnostics naming the Arcane Bond / bloodline
+///   progression burden (Arcane Bond execution, the bloodline arcana, the bloodline
+///   class skill grant, and the 3rd+-level bonus spells/feats) and the spontaneous
+///   known-spell / slot posture burden explicitly, rather than hiding behind a generic
+///   "unsupported caster" label. The Arcane Bond blocker names the Arcane bloodline's
+///   specific mechanics only when the Arcane bloodline was the recognized selection;
+///   otherwise it stays bloodline-agnostic so it never claims a specific bloodline's
+///   facts for a character whose chosen bloodline this seam did not recognize.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Sorcerer spell-bearing identity, the
-/// grounded Eschew Materials grant, and the two remaining named burdens legible on the
-/// runtime path.
+/// grounded Eschew Materials grant, the grounded bloodline choice recognition, and the
+/// two remaining named burdens legible on the runtime path.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -2911,16 +3394,67 @@ fn explain_sorcerer_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the bloodline-power burden explicitly, now that Eschew
-    // Materials has been split out and grounded above.
+    // Grounded for real: the canonical bloodline choice-slot selection is recognized as
+    // chosen input, mirroring the Fighter bonus-feat choice-slot / Wizard Scribe Scroll
+    // precedent. Recognition only: the Arcane bloodline's level-1 power is Arcane Bond,
+    // an execution engine rather than a flat number, so no power value is fabricated.
+    let bloodline_selection = choice_selection(input, SORCERER_BLOODLINE_CHOICE_ID);
+    let recognized_arcane_bloodline = bloodline_selection == Some(ARCANE_BLOODLINE_SELECTION_ID);
+    if let Some(selection) = bloodline_selection {
+        let detail = if recognized_arcane_bloodline {
+            format!(
+                "Sorcerer level {SORCERER_BASELINE_LEVEL} bloodline choice recognized: the \
+                 canonical deterministic selection ({SORCERER_BLOODLINE_CHOICE_ID} -> \
+                 {selection}) names the Arcane bloodline as chosen input on the compute seam. \
+                 This is a recognition record of the choice slot only, so it carries no \
+                 fabricated mechanical value (+0): the Arcane bloodline's level-1 power is \
+                 Arcane Bond (a familiar or a bonded object), an execution engine rather than a \
+                 flat number, and neither it nor the bloodline arcana, bloodline class skill \
+                 grant, or higher-level bonus spells/feats is grounded here"
+            )
+        } else {
+            format!(
+                "Sorcerer level {SORCERER_BASELINE_LEVEL} bloodline choice slot is present \
+                 ({SORCERER_BLOODLINE_CHOICE_ID} -> {selection}), but only the canonical \
+                 deterministic Arcane bloodline selection is recognized on this bounded seam; \
+                 no bloodline power is grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.sorcerer.bloodline_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    // Still blocked (1/2): with the bloodline choice recognized above, narrow the former
+    // combined bloodline-power blocker to what actually remains unimplemented. The message
+    // names the Arcane bloodline specifically only when it was actually the recognized
+    // selection above; when no bloodline is chosen, or a different bloodline is chosen,
+    // it stays bloodline-agnostic so it never asserts a specific bloodline's mechanics as
+    // "remaining" for a character whose chosen bloodline this seam did not recognize.
+    let arcane_bond_message = if recognized_arcane_bloodline {
+        format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its Arcane Bond and \
+             bloodline progression burden: the Arcane bloodline's level-1 power Arcane Bond (a \
+             familiar or a bonded object — an execution engine, not a flat number), the \
+             bloodline arcana (+1 spell save DC on spells modified by a metamagic feat that \
+             raises the spell's level — a conditional effect), the bloodline class skill grant \
+             (Knowledge [arcana]), and the bloodline bonus spells and bonus feats at 3rd+ level \
+             are not implemented in this bounded spell baseline, so no Sorcerer bloodline-power \
+             support is claimed"
+        )
+    } else {
+        format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline power and \
+             progression burden: no bloodline power, bloodline arcana, bloodline class skill \
+             grant, or bonus spells/feats at 3rd+ level are implemented for any bloodline in this \
+             bounded spell baseline, so no Sorcerer bloodline-power support is claimed"
+        )
+    };
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.sorcerer.bloodline_power.unsupported".to_owned(),
-        message: format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline power \
-             burden: the bloodline selection, its level-1 bloodline power, bloodline arcana, and \
-             bloodline bonus spells/feats/skills are not implemented in this bounded spell \
-             baseline, so no Sorcerer bloodline-power support is claimed"
-        ),
+        id: "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported".to_owned(),
+        message: arcane_bond_message,
         claim_blocking: true,
     });
 
@@ -2950,14 +3484,38 @@ fn is_single_class_wizard_level1(input: &CharacterInput) -> bool {
     )
 }
 
+/// Return `true` when the input carries exactly the canonical deterministic school
+/// specialization selections: Evocation chosen as the specialty school, with
+/// Necromancy and Transmutation as the two opposed schools. Anything else — the
+/// choice slots absent (e.g. a universalist-shaped request) or any non-canonical
+/// selection — returns `false`, so no specialization grounding is fabricated for a
+/// choice that was never made or that this bounded slice does not know.
+fn wizard_has_canonical_specialization_selections(input: &CharacterInput) -> bool {
+    if choice_selection(input, WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID)
+        != Some(EVOCATION_SCHOOL_SELECTION)
+    {
+        return false;
+    }
+    let opposed: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == WIZARD_OPPOSED_SCHOOLS_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+    opposed.len() == 2
+        && opposed.contains(&NECROMANCY_SCHOOL_SELECTION)
+        && opposed.contains(&TRANSMUTATION_SCHOOL_SELECTION)
+}
+
 /// Surface direct SD13-E4-R3 runtime evidence for the deterministic Human Wizard
 /// level-1 prepared arcane spell-bearing baseline, while keeping it explicitly
 /// claim-blocked on its two still-missing burdens.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no
 /// spellbook content, no spells prepared, no spell slots per day, no spell save
-/// DCs, no bonus spell slots from a high Intelligence, no school-opposition
-/// bookkeeping, and no specialty school bonus. It only:
+/// DCs, no bonus spell slots from a high Intelligence, and no school-power or
+/// opposed-school preparation-cost math. It only:
 /// - leaves one recognition explanation so the `class:wizard:1` identity is
 ///   acknowledged as a prepared arcane spell-bearing class rather than an
 ///   undocumented packet placeholder (direct runtime evidence, carrying no
@@ -2968,17 +3526,24 @@ fn is_single_class_wizard_level1(input: &CharacterInput) -> bool {
 ///   letting the Wizard create scrolls of spells they know. This is a bounded
 ///   grant-only recognition, not a numeric formula: it carries no fabricated
 ///   mechanical value (+0) and computes no scroll-creation cost, crafting time,
-///   spellbook content, or spell-slot machinery, and
-/// - emits two distinct claim-blocking diagnostics naming the school
-///   specialization CHOICE burden (chosen school, two opposed schools, specialty
-///   school bonus) and the prepared spellbook / spells-prepared / spell-slot
-///   posture burden explicitly, rather than hiding behind a generic "unsupported
-///   caster" label.
+///   spellbook content, or spell-slot machinery,
+/// - grounds the flat surface of the school specialization choice for real
+///   (SD13-E5), gated on the exact canonical deterministic selections: a
+///   recognition record of the Evocation specialization with Necromancy and
+///   Transmutation opposed (+0), plus the specialist bonus slot as a flat count
+///   only — one 1st-level Evocation-only bonus slot at level 1 (+1), with no
+///   cantrip-level bonus slot and no slot contents, and
+/// - emits two distinct claim-blocking diagnostics naming the school-powers /
+///   opposed-school-preparation-cost burden (intense spells, the force missile
+///   3 + Int-mod/day pool, and the two-prepared-slot cost for opposed-school
+///   spells) and the prepared spellbook / spells-prepared / spell-slot posture
+///   burden explicitly, rather than hiding behind a generic "unsupported caster"
+///   label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this
 /// seam keeps that blocked posture but makes the Wizard prepared spell-bearing
-/// identity, its one grounded universal class feature, and its two remaining
-/// named burdens legible on the runtime path. The matrix file row transition
+/// identity, its grounded class-feature surfaces, and its two remaining named
+/// burdens legible on the runtime path. The matrix file row transition
 /// (Unverified/Observed → Blocked/Computed, then Blocked → Partial once Scribe
 /// Scroll is grounded) is recorded by this proof surface and applied to the
 /// in-source carrier directly (see `seeded_sd13_e1_f1_current_truth`).
@@ -3031,24 +3596,63 @@ fn explain_wizard_level1_prepared_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the specialization CHOICE burden explicitly, now
-    // that Scribe Scroll (the other named pillar of the former combined
-    // school-specialization burden) is grounded above.
+    // Grounded for real (SD13-E5): the flat surface of the school specialization
+    // choice, gated on the exact canonical deterministic selections ("canonical"
+    // versus "absent or anything else"). An input without them (e.g. a
+    // universalist-shaped request that never made the choice) gains no
+    // specialization recognition and no specialist bonus slot.
+    if wizard_has_canonical_specialization_selections(input) {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.wizard.specialization_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Recognized Wizard level {WIZARD_BASELINE_LEVEL} school specialization choice: \
+                 the canonical deterministic selections choose Evocation as the specialty arcane \
+                 school ({WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID} -> \
+                 {EVOCATION_SCHOOL_SELECTION}) with Necromancy and Transmutation as the two \
+                 opposed schools ({WIZARD_OPPOSED_SCHOOLS_CHOICE_ID} -> \
+                 {NECROMANCY_SCHOOL_SELECTION}, {TRANSMUTATION_SCHOOL_SELECTION}), per the PF1 \
+                 Core Rulebook arcane school class feature. This is a bounded recognition record \
+                 of the choice identity only: it carries no fabricated mechanical value (+0) and \
+                 computes no school power, no opposed-school preparation cost, and no spell math"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.wizard.specialist_bonus_slot".to_owned(),
+            value: WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1,
+            detail: format!(
+                "Wizard level {WIZARD_BASELINE_LEVEL} specialist bonus spell slot: a specialist \
+                 wizard gains one additional spell slot of each spell level she can cast, 1st \
+                 and up, usable only for spells of the chosen school (PF1 Core Rulebook arcane \
+                 school class feature). At level {WIZARD_BASELINE_LEVEL} that is exactly one \
+                 1st-level Evocation-only bonus slot \
+                 ({WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1:+} flat count); there is no \
+                 cantrip-level bonus slot. This grounds the flat count only: no slot contents, \
+                 no spells prepared per day, no per-day slot totals, and no bonus slots from a \
+                 high Intelligence are computed"
+            ),
+        });
+    }
+
+    // Still blocked (1/2): with the specialization choice itself grounded above, the
+    // claim-blocker narrows to exactly what stays unimplemented — the school powers
+    // and the opposed-school preparation cost.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.wizard.specialization_choice.unsupported".to_owned(),
+        id: "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported".to_owned(),
         message: format!(
-            "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school specialization \
-             choice burden: the chosen school, the two opposed schools locked out by that choice, \
-             and the specialty school bonus (additional spell slots / spells known at later \
-             levels) are not implemented in this bounded prepared spell baseline, so no Wizard \
-             specialization-choice support is claimed"
+            "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school-powers and \
+             opposed-school preparation-cost burden: the Evocation school powers (intense \
+             spells, and the force missile pool of 3 + Int-mod uses per day) and the \
+             opposed-school preparation cost (each opposed-school spell occupies two prepared \
+             slots) are not implemented in this bounded prepared spell baseline, so no Wizard \
+             school-power or opposed-school support is claimed"
         ),
         claim_blocking: true,
     });
 
     // Still blocked (2/2): name the prepared spellbook / spells-prepared /
-    // spell-slot posture burden explicitly. Unchanged by the Scribe Scroll
-    // grounding: it fabricates no spell math.
+    // spell-slot posture burden explicitly. Unchanged by the Scribe Scroll and
+    // specialization-choice groundings: it fabricates no spell math.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.wizard.prepared_spellbook.unsupported".to_owned(),
         message:
@@ -3079,25 +3683,34 @@ fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
 /// its remaining still-missing burdens.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds Channel
-/// Energy's flat die-count and uses-per-day math, but grounds no domain selection, no
-/// domain spells, no domain powers, no channel energy save DC or damage/healing
-/// resolution, no spellbook posture, no spells prepared, no spontaneous cure/inflict
-/// conversion, no spell slots per day, no spell save DCs, and no bonus spell slots from
-/// a high Wisdom. It only:
+/// Energy's flat die-count and uses-per-day math, the domain choice seam, and the flat
+/// domain spell slot count, but grounds no domain powers, no domain spell-list
+/// contents, no channel energy save DC or damage/healing resolution, no spellbook
+/// posture, no spells prepared, no spontaneous cure/inflict conversion, no general
+/// spell slots per day, no spell save DCs, and no bonus spell slots from a high
+/// Wisdom. It only:
 /// - leaves one recognition explanation so the `class:cleric:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - grounds Channel Energy's die count and daily use count for real (PF1 Core
 ///   Rulebook Channel Energy: `ceil(cleric level / 2)` d6, minimum 1d6; usable
-///   `3 + Charisma modifier` times per day), and
+///   `3 + Charisma modifier` times per day),
+/// - surfaces the canonical two-domain choice seam (`choice:cleric_domain ->
+///   domain:good` and `choice:cleric_domain -> domain:healing`) as an explicit
+///   recognition record carrying no mechanical value, mirroring the Fighter
+///   bonus-feat choice-slot seam,
+/// - grounds the flat domain spell slot count for real (PF1 Core Rulebook Domains:
+///   one domain spell slot per level of cleric spells she can cast, 1st and up —
+///   exactly one 1st-level domain slot at level 1; the slot's contents are not
+///   grounded), and
 /// - emits two distinct claim-blocking diagnostics naming the still-unproven domain
-///   choice class-feature burden and the prepared divine spell posture burden
-///   explicitly, rather than hiding behind a generic "unsupported caster" label.
+///   powers burden and the prepared divine spell posture burden explicitly, rather
+///   than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Cleric prepared divine spell-bearing
-/// identity, its one grounded Channel Energy pillar, and its two named remaining
-/// burdens legible on the runtime path.
+/// identity, its grounded Channel Energy / domain-choice / domain-slot-count pillars,
+/// and its two named remaining burdens legible on the runtime path.
 fn explain_cleric_level1_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -3162,16 +3775,70 @@ fn explain_cleric_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the domain choice class-feature burden explicitly.
-    // Channel Energy (above) is grounded; the two chosen domains, their domain
-    // spells, and their domain powers remain entirely unproven.
+    // Grounded for real: the canonical two-domain choice seam. A PF1 cleric chooses
+    // two domains from among those belonging to her deity; the deterministic fixture
+    // carries the canonical Good + Healing pair. Mirroring the Fighter bonus-feat
+    // choice-slot seam, this surfaces the named selections as an explicit choice seam
+    // only when both canonical selections are present — an absent slot is not
+    // fabricated — and contributes no computed mechanical value.
+    let domain_selections: Vec<&str> = input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id == CLERIC_DOMAIN_CHOICE_ID)
+        .map(|c| c.selection_id.as_str())
+        .collect();
+    if domain_selections.len() == 2
+        && domain_selections.contains(&GOOD_DOMAIN_SELECTION)
+        && domain_selections.contains(&HEALING_DOMAIN_SELECTION)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.cleric.domain_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Cleric level {CLERIC_BASELINE_LEVEL} chooses two domains from among those \
+                 belonging to her deity (PF1 Core Rulebook Domains); the named canonical \
+                 selections ({CLERIC_DOMAIN_CHOICE_ID} -> {GOOD_DOMAIN_SELECTION}, \
+                 {CLERIC_DOMAIN_CHOICE_ID} -> {HEALING_DOMAIN_SELECTION}) are surfaced as an \
+                 explicit choice seam only, mirroring the Fighter bonus-feat choice-slot seam. \
+                 This slice grounds the domain choice slot, not the chosen domains' granted \
+                 powers or domain spell lists, so it contributes no computed mechanical value \
+                 (+0)"
+            ),
+        });
+    }
+
+    // Grounded for real: the flat domain spell slot count. PF1 Core Rulebook Domains:
+    // a cleric gains one domain spell slot per level of cleric spells she can cast,
+    // 1st and up. This count is class-chassis math independent of which domains were
+    // chosen; only the slot's contents (which domain spell may fill it) depend on the
+    // chosen domains, and those are deliberately not grounded.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.cleric.domain_spell_slot".to_owned(),
+        value: CLERIC_LEVEL1_DOMAIN_SPELL_SLOT_COUNT,
+        detail: format!(
+            "Cleric domain spell slot count: one domain spell slot per level of cleric spells \
+             she can cast, 1st and up (PF1 Core Rulebook Domains). At Cleric level \
+             {CLERIC_BASELINE_LEVEL} she casts only 1st-level cleric spells, so exactly \
+             {CLERIC_LEVEL1_DOMAIN_SPELL_SLOT_COUNT} 1st-level domain spell slot is granted. \
+             This grounds only the flat slot count; it grounds no slot contents (which domain \
+             spell may fill it), no domain spell lists, and no prepared-spell posture"
+        ),
+    });
+
+    // Still blocked (1/2): name the domain powers burden explicitly. Channel Energy,
+    // the domain choice seam, and the flat domain spell slot count (above) are
+    // grounded; the granted powers of the chosen domains and the domain spell-list
+    // contents remain entirely unproven.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.cleric.domain_choice.unsupported".to_owned(),
+        id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
         message: format!(
-            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain choice burden: the \
-             two chosen domains, their domain spells, and their domain powers are not implemented in \
-             this bounded prepared divine spell baseline, so no Cleric domain choice support is \
-             claimed"
+            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain powers burden: \
+             the granted powers of the chosen domains (Good: Touch of Good; Healing: Rebuke \
+             Death — each usable 3 + Wisdom modifier times per day) and the domain spell-list \
+             contents that could fill the grounded domain spell slot are not implemented in this \
+             bounded prepared divine spell baseline, so no Cleric domain power or domain spell \
+             support is claimed"
         ),
         claim_blocking: true,
     });
@@ -3202,31 +3869,40 @@ fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E4 runtime evidence for the deterministic Human Druid level-1
-/// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
-/// its remaining burdens. The SD13-E4 Wild Empathy grounding slice grounds Wild
-/// Empathy for real as a bounded numeric value; nature bond and the prepared divine
-/// spell posture burden remain claim-blocked.
+/// Surface direct SD13-E4/SD13-E5 runtime evidence for the deterministic Human Druid
+/// level-1 prepared divine spell-bearing baseline, while keeping it explicitly
+/// claim-blocked on its remaining burdens. The SD13-E4 Wild Empathy slice grounds
+/// Wild Empathy for real; the SD13-E5 Nature Sense / nature-bond-choice slice grounds
+/// Nature Sense for real and recognizes the deterministic nature-bond selection; the
+/// chosen bond's execution and the prepared divine spell posture burden remain
+/// claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
-/// bond selection, no nature bond power execution (animal companion or domain), no
-/// spellbook posture, no spells prepared, no spontaneous summon nature's ally
-/// conversion, no spell slots per day, no spell save DCs, and no bonus spell slots
-/// from a high Wisdom. It only:
+/// bond power execution (no companion stat block, no companion advancement, no link /
+/// share spells, no domain math), no spellbook posture, no spells prepared, no
+/// spontaneous summon nature's ally conversion, no spell slots per day, no spell save
+/// DCs, and no bonus spell slots from a high Wisdom. It only:
 /// - leaves one recognition explanation so the `class:druid:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves one grounded Wild Empathy explanation (the flat druid-level +
 ///   Charisma-modifier modifier, not a d20 roll and not a Diplomacy-check execution
-///   engine), and
-/// - emits two distinct claim-blocking diagnostics naming the nature bond
-///   class-feature burden and the prepared divine spell posture burden explicitly,
+///   engine),
+/// - leaves one grounded Nature Sense explanation (the flat, level-independent PF1
+///   +2 bonus on Knowledge (nature) and Survival checks, kept as a standalone record
+///   not wired into any skill-check total),
+/// - when the deterministic `choice:druid_nature_bond -> bond:animal_companion`
+///   selection is present, leaves one +0 recognition record acknowledging that
+///   selection without executing it (no record is fabricated when the selection is
+///   absent), and
+/// - emits two distinct claim-blocking diagnostics naming the animal-companion
+///   execution burden and the prepared divine spell posture burden explicitly,
 ///   rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Druid prepared divine spell-bearing
-/// identity, its grounded Wild Empathy modifier, and its remaining named burdens
-/// legible on the runtime path.
+/// identity, its grounded Wild Empathy / Nature Sense values, its recognized
+/// nature-bond choice, and its remaining named burdens legible on the runtime path.
 fn explain_druid_level1_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -3251,11 +3927,11 @@ fn explain_druid_level1_spell_baseline(
              spell-bearing baseline: the {DRUID_CLASS_ID}:{DRUID_BASELINE_LEVEL} class identity is \
              acknowledged as a prepared divine spell-bearing class on the rules-core seam rather than \
              an undocumented packet placeholder. This is a bounded recognition record only; the Wild \
-             Empathy modifier is grounded separately below, but this record still grounds no nature \
-             bond selection, no nature bond power execution, no spellbook posture, no spells prepared \
-             per day, no spontaneous summon nature's ally conversion, no spell slots per day, no spell \
-             save DCs, and no bonus spell slots from a high Wisdom, so it carries no fabricated \
-             mechanical value (+0)"
+             Empathy and Nature Sense values and the nature-bond choice recognition are grounded \
+             separately below, but this record still grounds no nature bond power execution, no \
+             spellbook posture, no spells prepared per day, no spontaneous summon nature's ally \
+             conversion, no spell slots per day, no spell save DCs, and no bonus spell slots from a \
+             high Wisdom, so it carries no fabricated mechanical value (+0)"
         ),
     });
 
@@ -3279,16 +3955,70 @@ fn explain_druid_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the nature bond class-feature burden explicitly. Wild
-    // Empathy is grounded above and no longer named here as a blocker.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.druid.nature_bond.unsupported".to_owned(),
-        message: format!(
-            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its nature bond burden: the \
-             nature bond choice (an animal companion or a domain) and nature sense are not \
-             implemented in this bounded prepared divine spell baseline, so no Druid nature bond \
-             support is claimed"
+    // Grounded: Nature Sense (PF1 Core Rulebook). A druid gains a +2 bonus on
+    // Knowledge (nature) and Survival checks. Flat and level-independent; grounded
+    // as a standalone record only — it is not wired into any skill-check total and
+    // resolves no Knowledge (nature) or Survival check.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.druid.nature_sense".to_owned(),
+        value: DRUID_NATURE_SENSE_BONUS,
+        detail: format!(
+            "Druid Nature Sense bonus (PF1 Core Rulebook): a druid gains a \
+             +{DRUID_NATURE_SENSE_BONUS} bonus on Knowledge (nature) and Survival checks. The \
+             bonus is flat and level-independent. This is a standalone grounded record only: it \
+             is not wired into any computed skill-check total and it resolves no Knowledge \
+             (nature) or Survival check"
         ),
+    });
+
+    // Recognized: the deterministic nature-bond selection. The fixture carries
+    // `choice:druid_nature_bond -> bond:animal_companion`; when that selection is
+    // present it is acknowledged as chosen input, carrying no fabricated bond
+    // execution. When the selection is absent (the desktop composer threads no
+    // nature-bond slot) no record is fabricated.
+    let animal_companion_chosen = choice_selection(input, DRUID_NATURE_BOND_CHOICE_ID)
+        == Some(DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID);
+    if animal_companion_chosen {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.druid.nature_bond_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Recognized Druid nature bond selection ({DRUID_NATURE_BOND_CHOICE_ID} -> \
+                 {DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID}): the deterministic fixture \
+                 chooses an animal companion as its PF1 nature bond. This is a bounded \
+                 recognition record of the chosen input only; the chosen bond's execution stays \
+                 ungrounded — no animal companion stat block, no companion advancement, and no \
+                 link or share-spells behavior is computed — so it carries no fabricated \
+                 mechanical value (+0)"
+            ),
+        });
+    }
+
+    // Still blocked (1/2): name the animal companion execution burden explicitly. Wild
+    // Empathy, Nature Sense, and (when recognized) the nature-bond choice recognition
+    // are grounded above and no longer named here as blockers. The message must not
+    // claim a specific bond was chosen unless the choice-selection lookup above
+    // actually recognized one — otherwise it would fabricate the claim that an
+    // animal companion was picked when no nature-bond selection was made at all.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.druid.animal_companion.unsupported".to_owned(),
+        message: if animal_companion_chosen {
+            format!(
+                "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its animal companion \
+                 execution burden: the chosen nature bond (an animal companion) is recognized as \
+                 input only — the companion's stat block, its advancement, and its link and share \
+                 spells abilities are not implemented in this bounded prepared divine spell \
+                 baseline, so no Druid animal companion support is claimed"
+            )
+        } else {
+            format!(
+                "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its animal companion \
+                 execution burden: no nature bond selection is recognized as chosen input in \
+                 this bounded prepared divine spell baseline, and even when an animal companion \
+                 bond is chosen its stat block, its advancement, and its link and share spells \
+                 abilities are not implemented, so no Druid animal companion support is claimed"
+            )
+        },
         claim_blocking: true,
     });
 
@@ -3318,13 +4048,17 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E4-F7/SD13-E4 runtime evidence for the deterministic Human
-/// Bard level-1 spontaneous arcane spell-bearing baseline: one recognition record,
-/// one grounded chassis-class-feature pillar (Bardic Knowledge), and two remaining
-/// named claim-blocking burdens (Bardic Music, the spontaneous spell posture).
+/// Surface direct SD13-E4-F7/SD13-E4/SD13-E5 runtime evidence for the deterministic
+/// Human Bard level-1 spontaneous arcane spell-bearing baseline: one recognition
+/// record, three grounded chassis-class-feature pillars (Bardic Knowledge, the
+/// Bardic Performance rounds-per-day budget, and the Inspire Courage flat level-1
+/// magnitude), and two remaining named claim-blocking burdens (the bardic
+/// performance-execution engine, the spontaneous spell posture).
 ///
 /// This deliberately does not compute a supported Bard chassis. It grounds no
-/// Bardic Music / Inspire Courage execution and no spell math whatsoever — no
+/// bardic performance execution — no start/maintain action economy, no round
+/// tracking or consumption, and none of the other level-1 performances
+/// (countersong, distraction, fascinate) — and no spell math whatsoever: no
 /// spells known, no spells per day, no spell DCs, no bonus spells, no prepared
 /// posture, no school choice. It only:
 /// - leaves one recognition explanation so the `class:bard:1` identity is acknowledged
@@ -3337,18 +4071,26 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
 ///   modifier (the Intelligence modifier already belongs to the ordinary Knowledge
 ///   check, not to this class-feature bonus), so it is a bounded, deterministic,
 ///   level-only value; this grounds only that flat bonus, not a full Knowledge-check
-///   resolution, and
-/// - emits two distinct claim-blocking diagnostics naming the still-unproven Bardic
-///   Music chassis-class-feature burden and the spontaneous known-spell / slot
-///   posture burden explicitly, rather than hiding behind a generic "unsupported
-///   caster" label.
+///   resolution,
+/// - grounds the flat Bardic Performance surface for real: the rounds-per-day
+///   budget (PF1 Core Rulebook Bardic Performance: a level-1 bard can use bardic
+///   performance for 4 + Charisma modifier rounds per day, floored at 0) and the
+///   Inspire Courage flat level-1 magnitude (+1 competence bonus on attack and
+///   weapon damage rolls, +1 morale bonus on saving throws against charm and fear
+///   effects). These are bounded flat values only; no performance-state engine
+///   applies them anywhere, and
+/// - emits two distinct claim-blocking diagnostics naming the still-unproven bardic
+///   performance-execution burden (start/maintain action economy, round tracking and
+///   consumption, and the ungrounded countersong / distraction / fascinate
+///   performances) and the spontaneous known-spell / slot posture burden explicitly,
+///   rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Bard spell-bearing identity, the grounded
-/// Bardic Knowledge pillar, and the two remaining named burdens legible on the
-/// runtime path.
+/// flat pillars, and the two remaining named burdens legible on the runtime path.
 fn explain_bard_level1_spell_baseline(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -3368,12 +4110,14 @@ fn explain_bard_level1_spell_baseline(
         detail: format!(
             "Recognized deterministic Human Bard level {BARD_BASELINE_LEVEL} spell-bearing \
              baseline: the {BARD_CLASS_ID}:{BARD_BASELINE_LEVEL} class identity is acknowledged \
-             as a spontaneous arcane spell-bearing class with its named Bardic Music \
-             chassis-class-feature burden on the rules-core seam rather than an undocumented \
-             packet placeholder. This is a bounded recognition record only; it grounds no \
-             Bardic Music / Inspire Courage execution and no spell math (spells known, spells \
-             per day, spell DCs, bonus spells, or prepared posture), so it carries no \
-             fabricated mechanical value (+0)"
+             as a spontaneous arcane spell-bearing class with its named bardic \
+             performance-execution chassis-class-feature burden on the rules-core seam rather \
+             than an undocumented packet placeholder. This is a bounded recognition record \
+             only; it grounds no bardic performance execution (no start/maintain action \
+             economy, no round tracking or consumption, no countersong / distraction / \
+             fascinate resolution) and no spell math (spells known, spells per day, spell DCs, \
+             bonus spells, or prepared posture), so it carries no fabricated mechanical value \
+             (+0)"
         ),
     });
 
@@ -3396,21 +4140,65 @@ fn explain_bard_level1_spell_baseline(
              max({BARD_BASELINE_LEVEL} / 2, 1) = {bardic_knowledge_bonus}. This grounds only \
              the flat Knowledge-check competence bonus; it is not a full Knowledge-check \
              resolution engine and adds no skill rank, no ability modifier, and no untrained-\
-             check gate, and it grounds no Bardic Music / Inspire Courage execution"
+             check gate, and it grounds no bardic performance execution"
         ),
     });
 
-    // Still blocked (1/2): name the Bardic Music chassis-class-feature burden
-    // explicitly, now separated from the grounded Bardic Knowledge pillar. Bardic
-    // Music grants the Inspire Courage performance and the rest of the performance
-    // family; this slice grounds no performance execution.
+    // Grounded for real: the Bardic Performance rounds-per-day budget. PF1 Core
+    // Rulebook Bardic Performance: a level-1 bard can use bardic performance for a
+    // number of rounds per day equal to 4 + his Charisma modifier (each level after
+    // 1st adds 2 more rounds; this bounded level-1 baseline grounds only the level-1
+    // budget), floored at 0 mirroring the Cleric channel-energy uses-per-day floor.
+    let bardic_performance_rounds_per_day = (4 + ability_modifiers.charisma).max(0);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.bardic_performance_rounds_per_day".to_owned(),
+        value: bardic_performance_rounds_per_day,
+        detail: format!(
+            "Bard Bardic Performance rounds per day: 4 + Charisma modifier at bard level \
+             {BARD_BASELINE_LEVEL} (PF1 Core Rulebook Bardic Performance), floored at 0. At \
+             Charisma modifier {} this is max(4 + {}, 0) = {bardic_performance_rounds_per_day}. \
+             This grounds only the flat daily round budget; no round tracking or consumption, \
+             no start/maintain action economy, and no per-performance execution is computed",
+            ability_modifiers.charisma, ability_modifiers.charisma
+        ),
+    });
+
+    // Grounded for real: the Inspire Courage flat level-1 magnitude. PF1 Core
+    // Rulebook Inspire Courage at bard level 1: affected allies receive a +1 morale
+    // bonus on saving throws against charm and fear effects and a +1 competence
+    // bonus on attack and weapon damage rolls. Only the flat magnitude is grounded;
+    // no performance-state engine exists to start the performance or apply the
+    // bonus to any computed total.
+    let inspire_courage_bonus = 1_i16;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.inspire_courage_bonus".to_owned(),
+        value: inspire_courage_bonus,
+        detail: format!(
+            "Bard Inspire Courage magnitude at bard level {BARD_BASELINE_LEVEL} (PF1 Core \
+             Rulebook Inspire Courage): a +{inspire_courage_bonus} competence bonus on attack \
+             rolls and weapon damage rolls and a +{inspire_courage_bonus} morale bonus on \
+             saving throws against charm and fear effects for affected allies. This grounds \
+             only the flat level-1 magnitude of the fixture's chosen performance \
+             (choice:bard_bardic_music -> performance:inspire_courage); it is never applied to \
+             any attack, damage, or save total because the performance-state engine \
+             (start/maintain action economy, round tracking) is not implemented"
+        ),
+    });
+
+    // Still blocked (1/2): name the narrowed bardic performance-execution burden
+    // explicitly, now separated from the grounded flat pillars (Bardic Knowledge,
+    // the rounds-per-day budget, the Inspire Courage magnitude). The
+    // performance-state engine and the other level-1 performances remain unproven.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.bard.bardic_music.unsupported".to_owned(),
+        id: "class_feature.bard.bardic_performance_execution.unsupported".to_owned(),
         message: format!(
-            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic music \
-             chassis-class-feature burden: the bardic music performance family (inspire \
-             courage and later performances) is not implemented in this bounded spell \
-             baseline, so no Bard bardic-music support is claimed"
+            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic \
+             performance-execution burden: the performance-state engine is not implemented \
+             (no start/maintain action economy, no round tracking or consumption of the \
+             grounded rounds-per-day budget, no application of the grounded inspire courage \
+             magnitude to any attack, damage, or save total), and the other level-1 \
+             performances (countersong, distraction, fascinate) are not grounded, so no Bard \
+             bardic-performance execution support is claimed"
         ),
         claim_blocking: true,
     });

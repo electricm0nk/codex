@@ -1,24 +1,30 @@
-//! SD13-E3 Ranger level-1 chassis-and-class-feature separation proof.
+//! SD13-E3 Ranger level-1 chassis-and-class-feature separation proof, extended
+//! by the SD13-E5 Favored Enemy flat-surface grounding slice.
 //!
 //! Proves the deeper Ranger-only decomposition that sits on top of the accepted
-//! SD13-F6 hybrid baseline: the live rules-core surface emits two distinct
-//! claim-blocking diagnostics for the still-missing Ranger non-spell
-//! class-feature pillars (favored enemy, combat style), and grounds the third
-//! named F6 pillar — Track — for real as a bounded flat Survival-check bonus
-//! (`max(ranger level / 2, 1)`, i.e. `1` at the bounded level-1 baseline). The
+//! SD13-F6 hybrid baseline: the live rules-core surface emits a distinct
+//! claim-blocking diagnostic for the still-missing Ranger combat-style pillar,
+//! grounds Track for real as a bounded flat Survival-check bonus
+//! (`max(ranger level / 2, 1)`, i.e. `1` at the bounded level-1 baseline), and
+//! — as of the SD13-E5 slice — grounds the Favored Enemy flat surface for real:
+//! recognition of the chosen favored-enemy type from the fixture's
+//! `choice:ranger_favored_enemy` selection, the flat +2 bonus on Bluff,
+//! Knowledge, Perception, Sense Motive, and Survival checks against the favored
+//! enemy, and the flat +2 bonus on weapon attack and damage rolls against the
+//! favored enemy (PF1 CRB — attack rolls are included, unlike D&D 3.5). The
 //! support-state matrix row for `class.ranger.hybrid_chassis_and_spell_burden`
-//! is promoted from `Blocked` to `Partial` to reflect that Track is now real,
-//! grounded evidence, while favored enemy, combat style, and the later spell
-//! burden remain named and unproven.
+//! stays `Partial`: combat style, the favored-enemy conditional-application
+//! engine, and the later spell burden remain named and unproven.
 //!
 //! It is intentionally not a Ranger class engine. It grounds no favored-enemy
-//! target resolution or skill/damage math, no combat-style feat grant, no
-//! animal companion, no favored-terrain breadth, no Ranger level 2+, no
-//! multiclass, and no spell posture (spell slots, spell source, spells
+//! target-type matching or conditional-application engine (the flat magnitudes
+//! are grounded, never applied to a specific target), no combat-style feat
+//! grant, no animal companion, no favored-terrain breadth, no Ranger level 2+,
+//! no multiclass, and no spell posture (spell slots, spell source, spells
 //! known/prepared). It also preserves the accepted Fighter 1-3 truth, the
 //! Rogue/Barbarian/Monk/Paladin postures, the shared F6 hybrid blockers (so the
-//! F6 test continues to pass), the Sorcerer/Bard/Wizard/Cleric/Druid Blocked
-//! postures, and the Human race/interaction seam.
+//! F6 test continues to pass), the Sorcerer/Bard/Wizard/Cleric/Druid postures,
+//! and the Human race/interaction seam.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -40,10 +46,31 @@ const PALADIN_FIXTURE: &str =
 const FIGHTER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
-// Exact per-pillar Ranger-only diagnostics this slice proves.
-const RANGER_FAVORED_ENEMY_ID: &str = "class_feature.ranger.favored_enemy.unsupported";
+// Exact per-pillar Ranger-only records this slice proves.
+//
+// The favored-enemy claim-blocking diagnostic is RETIRED by the SD13-E5
+// Favored Enemy flat-surface grounding slice; it must no longer be emitted.
+const RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID: &str =
+    "class_feature.ranger.favored_enemy.unsupported";
 const RANGER_COMBAT_STYLE_ID: &str = "class_feature.ranger.combat_style.unsupported";
 const RANGER_TRACK_ID: &str = "class_chassis.ranger.track";
+
+// Grounded Favored Enemy flat-surface records (SD13-E5).
+const RANGER_FAVORED_ENEMY_CHOICE_ID: &str = "class_chassis.ranger.favored_enemy_choice";
+const RANGER_FAVORED_ENEMY_SKILL_BONUS_ID: &str = "class_chassis.ranger.favored_enemy_skill_bonus";
+const RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID: &str =
+    "class_chassis.ranger.favored_enemy_attack_damage_bonus";
+
+// Every Ranger-only per-pillar record id — used by the negative controls to
+// prove none of them leak onto sibling classes, level 2+, or multiclass.
+const RANGER_PER_PILLAR_RECORD_IDS: [&str; 6] = [
+    RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID,
+    RANGER_COMBAT_STYLE_ID,
+    RANGER_TRACK_ID,
+    RANGER_FAVORED_ENEMY_CHOICE_ID,
+    RANGER_FAVORED_ENEMY_SKILL_BONUS_ID,
+    RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID,
+];
 
 // F6 hybrid blockers are accepted truth and must still be claim-blocking for
 // Ranger regression preservation. The F6 test asserts both of these ids.
@@ -107,38 +134,66 @@ fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool 
     computation.explanations.iter().any(|e| e.id == id)
 }
 
-// ----- Per-pillar Ranger chassis blockers must be present and claim-blocking -----
+// ----- The remaining per-pillar Ranger chassis blocker must be present and claim-blocking -----
 
 #[test]
-fn ranger_level1_emits_separate_favored_enemy_and_combat_style_blockers() {
+fn ranger_level1_emits_combat_style_blocker_and_no_retired_favored_enemy_blocker() {
     let input = load(RANGER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    for id in [RANGER_FAVORED_ENEMY_ID, RANGER_COMBAT_STYLE_ID] {
-        assert!(
-            has_diagnostic(&computation, id),
-            "ranger must surface separate claim-blocking diagnostic '{id}', got {:?}",
-            computation.diagnostics
-        );
-        let diag = claim_blocking(&computation, id);
-        assert!(
-            !diag.message.is_empty(),
-            "per-pillar ranger blocker '{id}' must carry a non-empty message"
-        );
-    }
+    let diag = claim_blocking(&computation, RANGER_COMBAT_STYLE_ID);
+    assert!(
+        !diag.message.is_empty(),
+        "per-pillar ranger combat-style blocker must carry a non-empty message"
+    );
+
+    // The favored-enemy claim-blocking diagnostic is retired: the flat surface
+    // is grounded for real, so the blocker must no longer be emitted.
+    assert!(
+        !has_diagnostic(&computation, RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID),
+        "the retired favored-enemy blocker '{RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID}' must no \
+         longer be emitted, got {:?}",
+        computation.diagnostics
+    );
+}
+
+// ----- The Favored Enemy flat surface is grounded for real (SD13-E5) -----
+
+#[test]
+fn ranger_favored_enemy_choice_is_recognized_from_chosen_input() {
+    let input = load(RANGER_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let choice = explanation(&computation, RANGER_FAVORED_ENEMY_CHOICE_ID);
+    assert_eq!(
+        choice.value, 0,
+        "favored-enemy choice recognition is a recognition record only and must carry no \
+         fabricated mechanical value, got {}",
+        choice.value
+    );
+    assert!(
+        choice.detail.contains("favored enemy") || choice.detail.contains("favored-enemy"),
+        "favored-enemy choice recognition must name the favored-enemy feature: {}",
+        choice.detail
+    );
+    assert!(
+        choice.detail.contains("enemy:humanoid_orc"),
+        "favored-enemy choice recognition must name the chosen enemy type from the fixture's \
+         choice:ranger_favored_enemy selection: {}",
+        choice.detail
+    );
 }
 
 #[test]
-fn ranger_favored_enemy_blocker_names_skill_and_weapon_damage_burden() {
+fn ranger_favored_enemy_skill_bonus_is_grounded_at_plus_two() {
     let input = load(RANGER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let favored_enemy = claim_blocking(&computation, RANGER_FAVORED_ENEMY_ID);
-    assert!(
-        favored_enemy.message.contains("favored enemy")
-            || favored_enemy.message.contains("favored-enemy"),
-        "ranger favored-enemy blocker must name the favored-enemy burden: {}",
-        favored_enemy.message
+    let skill = explanation(&computation, RANGER_FAVORED_ENEMY_SKILL_BONUS_ID);
+    assert_eq!(
+        skill.value, 2,
+        "favored-enemy skill bonus at level 1 must be the flat +2 (PF1 CRB), got {}",
+        skill.value
     );
     for token in [
         "Bluff",
@@ -148,15 +203,74 @@ fn ranger_favored_enemy_blocker_names_skill_and_weapon_damage_burden() {
         "Survival",
     ] {
         assert!(
-            favored_enemy.message.contains(token),
-            "ranger favored-enemy blocker must name the '{token}' skill burden: {}",
-            favored_enemy.message
+            skill.detail.contains(token),
+            "favored-enemy skill bonus must name the '{token}' skill: {}",
+            skill.detail
+        );
+    }
+    // Must be explicit that only the flat magnitude is grounded, not a
+    // target-type matching / conditional-application engine.
+    assert!(
+        skill.detail.contains("conditional-application"),
+        "favored-enemy skill bonus must disclaim the conditional-application engine: {}",
+        skill.detail
+    );
+}
+
+#[test]
+fn ranger_favored_enemy_attack_damage_bonus_is_grounded_at_plus_two() {
+    let input = load(RANGER_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let attack_damage = explanation(&computation, RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID);
+    assert_eq!(
+        attack_damage.value, 2,
+        "favored-enemy attack/damage bonus at level 1 must be the flat +2 (PF1 CRB), got {}",
+        attack_damage.value
+    );
+    // PF1 grants the bonus on weapon ATTACK rolls as well as damage rolls
+    // (unlike D&D 3.5, which granted damage only) — both must be named.
+    assert!(
+        attack_damage.detail.contains("attack") && attack_damage.detail.contains("damage"),
+        "favored-enemy attack/damage bonus must name both weapon attack and damage rolls: {}",
+        attack_damage.detail
+    );
+    assert!(
+        attack_damage.detail.contains("conditional-application"),
+        "favored-enemy attack/damage bonus must disclaim the conditional-application engine: {}",
+        attack_damage.detail
+    );
+}
+
+#[test]
+fn ranger_without_favored_enemy_choice_grounds_magnitudes_but_not_recognition() {
+    // The desktop compose path builds ranger inputs without a
+    // choice:ranger_favored_enemy selection. The flat level-1 magnitudes are
+    // properties of the class feature and stay grounded; the choice-recognition
+    // record derives strictly from chosen input and must not be fabricated. The
+    // retired blocker must not reappear either way.
+    let without_choice =
+        RANGER_FIXTURE.replace("choice=choice:ranger_favored_enemy:enemy:humanoid_orc", "");
+    let input = load(&without_choice);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        !has_explanation(&computation, RANGER_FAVORED_ENEMY_CHOICE_ID),
+        "without a chosen favored-enemy type there is nothing to recognize; the recognition \
+         record must not be fabricated"
+    );
+    for id in [
+        RANGER_FAVORED_ENEMY_SKILL_BONUS_ID,
+        RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID,
+    ] {
+        assert!(
+            has_explanation(&computation, id),
+            "flat favored-enemy magnitude '{id}' must stay grounded without the choice selection"
         );
     }
     assert!(
-        favored_enemy.message.contains("weapon damage"),
-        "ranger favored-enemy blocker must name the weapon-damage burden: {}",
-        favored_enemy.message
+        !has_diagnostic(&computation, RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID),
+        "the retired favored-enemy blocker must not reappear when the choice is absent"
     );
 }
 
@@ -277,11 +391,7 @@ fn ranger_decomposition_preserves_human_race_seam() {
 fn ranger_separated_blockers_do_not_emerge_for_paladin_or_fighter() {
     let paladin_input = load(PALADIN_FIXTURE);
     let paladin_computation = compute_pilot_base_chassis(&paladin_input);
-    for id in [
-        RANGER_FAVORED_ENEMY_ID,
-        RANGER_COMBAT_STYLE_ID,
-        RANGER_TRACK_ID,
-    ] {
+    for id in RANGER_PER_PILLAR_RECORD_IDS {
         assert!(
             !has_diagnostic(&paladin_computation, id) && !has_explanation(&paladin_computation, id),
             "paladin must not gain a Ranger-only per-pillar record '{id}'"
@@ -290,11 +400,7 @@ fn ranger_separated_blockers_do_not_emerge_for_paladin_or_fighter() {
 
     let fighter_input = load(FIGHTER_FIXTURE);
     let fighter_computation = compute_pilot_base_chassis(&fighter_input);
-    for id in [
-        RANGER_FAVORED_ENEMY_ID,
-        RANGER_COMBAT_STYLE_ID,
-        RANGER_TRACK_ID,
-    ] {
+    for id in RANGER_PER_PILLAR_RECORD_IDS {
         assert!(
             !has_diagnostic(&fighter_computation, id) && !has_explanation(&fighter_computation, id),
             "fighter must not gain a Ranger-only per-pillar record '{id}'"
@@ -316,11 +422,7 @@ fn ranger_rogue_barbarian_monk_do_not_gain_ranger_pillar_records() {
         let fixture = PALADIN_FIXTURE.replace("class:paladin:1", class_id);
         let input = load(&fixture);
         let computation = compute_pilot_base_chassis(&input);
-        for id in [
-            RANGER_FAVORED_ENEMY_ID,
-            RANGER_COMBAT_STYLE_ID,
-            RANGER_TRACK_ID,
-        ] {
+        for id in RANGER_PER_PILLAR_RECORD_IDS {
             assert!(
                 !has_diagnostic(&computation, id) && !has_explanation(&computation, id),
                 "{class_id} must not gain a Ranger-only per-pillar record '{id}'"
@@ -337,11 +439,7 @@ fn ranger_level2_is_not_promoted_by_this_slice() {
     let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
 
-    for id in [
-        RANGER_FAVORED_ENEMY_ID,
-        RANGER_COMBAT_STYLE_ID,
-        RANGER_TRACK_ID,
-    ] {
+    for id in RANGER_PER_PILLAR_RECORD_IDS {
         assert!(
             !has_diagnostic(&computation, id) && !has_explanation(&computation, id),
             "level-2 ranger must not gain the bounded level-1 per-pillar record '{id}'"
@@ -361,11 +459,7 @@ fn multiclass_ranger_is_not_promoted_by_this_slice() {
     let input = load(&multiclass_fixture);
     let computation = compute_pilot_base_chassis(&input);
 
-    for id in [
-        RANGER_FAVORED_ENEMY_ID,
-        RANGER_COMBAT_STYLE_ID,
-        RANGER_TRACK_ID,
-    ] {
+    for id in RANGER_PER_PILLAR_RECORD_IDS {
         assert!(
             !has_diagnostic(&computation, id) && !has_explanation(&computation, id),
             "multiclass ranger must not gain the bounded single-class per-pillar record '{id}'"
@@ -377,10 +471,11 @@ fn multiclass_ranger_is_not_promoted_by_this_slice() {
 
 #[test]
 fn ranger_level1_still_yields_blocked_headless_receipt_and_view_model() {
-    // Grounding Track alone does not unblock the whole character: favored
-    // enemy and combat style are still claim-blocking diagnostics, so the
-    // per-character receipt status stays Blocked even though the row's
-    // SupportState moves to Partial at the matrix (documentary) level.
+    // Grounding Track and the Favored Enemy flat surface does not unblock the
+    // whole character: combat style and the shared F6 hybrid burdens are still
+    // claim-blocking diagnostics, so the per-character receipt status stays
+    // Blocked even though the row's SupportState is Partial at the matrix
+    // (documentary) level.
     let input = load(RANGER_FIXTURE);
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(
@@ -431,12 +526,22 @@ fn matrix_ranger_row_is_promoted_to_partial_and_names_remaining_pillars() {
 
     let note = ranger.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "ranger partial row must carry a note");
-    for token in ["favored enemy", "combat style"] {
-        assert!(
-            note.contains(token),
-            "ranger partial note must name the still-unproven '{token}' pillar: {note}"
-        );
-    }
+    // Combat style remains the named, unproven class-feature pillar.
+    assert!(
+        note.contains("combat style"),
+        "ranger partial note must name the still-unproven 'combat style' pillar: {note}"
+    );
+    // The favored-enemy FLAT SURFACE is grounded; the conditional-application
+    // engine (target-type matching) stays named and unproven.
+    assert!(
+        note.contains("favored enemy") || note.contains("favored-enemy"),
+        "ranger partial note must name the favored-enemy pillar: {note}"
+    );
+    assert!(
+        note.contains("conditional-application"),
+        "ranger partial note must name the still-unproven favored-enemy conditional-application \
+         engine: {note}"
+    );
     // The note must not claim Track is unproven — it is grounded.
     assert!(
         note.contains("Track") && (note.contains("grounds") || note.contains("grounded")),
@@ -455,14 +560,16 @@ fn matrix_ranger_row_is_promoted_to_partial_and_names_remaining_pillars() {
 fn matrix_preserves_sibling_rows_after_ranger_promotion() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
-    // This row stays Blocked/Computed.
+    // Paladin was later promoted to Partial/Computed by its own SD13-E5
+    // level-gate slice (lay on hands / divine grace / mercy grounded as
+    // correct level-1 absences).
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .unwrap_or_else(|| panic!("row class.paladin.hybrid_chassis_and_spell_burden must exist"));
     assert_eq!(
         paladin.support_state,
-        SupportState::Blocked,
-        "paladin row must stay Blocked after the ranger-decomposition slice"
+        SupportState::Partial,
+        "paladin row must keep its later-accepted Partial posture after the ranger-decomposition slice"
     );
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
 

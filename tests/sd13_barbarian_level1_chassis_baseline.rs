@@ -1,14 +1,21 @@
-//! SD13-E3 Barbarian level-1 martial chassis baseline proof.
+//! SD13-E3/E5 Barbarian level-1 martial chassis baseline proof.
 //!
 //! Proves the SD13-E3 barbarian slice: the live rules-core surface ingests a
 //! deterministic Human `class:barbarian:1` input, leaves direct computed
 //! evidence that acknowledges the bounded level-1 martial chassis identity
-//! rather than treating it as an undocumented packet placeholder, and now
-//! grounds three of the four named martial pillar burdens directly: base-
-//! attack progression, base-save progression, and the fast-movement +10 ft.
-//! speed value. The fourth burden (the illiteracy trait) stays explicitly
-//! claim-blocked. It also pins the matrix reclassification of the barbarian
-//! row from `Unverified` / `Observed` to `Partial` / `Computed`.
+//! rather than treating it as an undocumented packet placeholder, and
+//! grounds three of the four originally-named martial pillar burdens
+//! directly: base-attack progression, base-save progression, and the
+//! fast-movement +10 ft. speed value. The SD13-E5 slice then resolves the
+//! fourth originally-named burden (the illiteracy trait) as vacuous — the
+//! PF1 Core Rulebook Barbarian is NOT illiterate; illiteracy is a D&D 3.5e
+//! Barbarian trait that never existed in PF1 — and grounds Rage's flat
+//! numeric surface: rage rounds per day (4 + Constitution modifier) and the
+//! flat rage constants (+4 morale Strength, +4 morale Constitution, +2
+//! morale on Will saves, -2 AC), values only. The honest remaining burden is
+//! now the rage-state execution engine, named by its own claim-blocking
+//! diagnostic. It also pins the matrix reclassification of the barbarian row
+//! at `Partial` / `Computed`.
 //!
 //! It is intentionally not a martial class engine. The grounded base-attack
 //! and base-save explanations mirror the Fighter formula shape (full BAB,
@@ -18,10 +25,13 @@
 //! surface still reports a blocked posture. The grounded fast-movement
 //! explanation asserts only the flat +10 ft. value; it grounds no
 //! armor/encumbrance-state check engine (no such engine exists anywhere in
-//! this codebase yet). This slice still grounds no rage execution, no weapon
-//! familiarity, no level-2+ martial progression, no skill-list expansion
-//! (barbarian class skills), and no illiteracy trait engine. It also
-//! preserves the accepted Fighter 1-3 truth, the Rogue blocked negative
+//! this codebase yet). The grounded rage records assert only flat values;
+//! they ground no rage-state engine: no activation/deactivation, no
+//! round-by-round consumption of rage rounds, no fatigue after rage, and no
+//! temporary application of the rage constants to any integrated total. This
+//! slice still grounds no weapon familiarity, no level-2+ martial
+//! progression, and no skill-list expansion (barbarian class skills). It
+//! also preserves the accepted Fighter 1-3 truth, the Rogue blocked negative
 //! control, the Paladin/Ranger blocked hybrid negative controls, and the
 //! Human race/interaction truth.
 
@@ -38,6 +48,10 @@ use codex::rules_core::support_state_matrix::{
 
 const BARBARIAN_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_barbarian_level1_sd13_deterministic_input.txt"
+);
+
+const BARBARIAN_LOW_CONSTITUTION_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_barbarian_level1_low_constitution_sd13_deterministic_input.txt"
 );
 
 fn load(fixture: &str) -> CharacterInput {
@@ -182,25 +196,160 @@ fn barbarian_level1_grounds_base_attack_base_save_and_fast_movement() {
     );
 }
 
-// ----- Still blocked: the illiteracy trait burden -----
+// ----- Rules correction: the illiteracy burden was vacuous under pf1.core_rulebook -----
 
 #[test]
-fn barbarian_level1_stays_blocked_on_illiteracy() {
+fn barbarian_level1_resolves_illiteracy_as_vacuous_under_pf1_core_rulebook() {
     let input = load(BARBARIAN_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let illiteracy = claim_blocking(
-        &computation,
-        "class_feature.barbarian.bounded_progression.illiteracy.unsupported",
+    // The PF1 Core Rulebook Barbarian is NOT illiterate: illiteracy is a D&D 3.5e
+    // Barbarian trait that never existed in PF1, so the burden named by the old
+    // diagnostic was vacuous under the fixture's `pf1.core_rulebook` source package.
+    // The resolution is documented as a grounded value-0 record, not silently dropped.
+    let illiteracy_absent = explanation(&computation, "class_chassis.barbarian.illiteracy_absent");
+    assert_eq!(
+        illiteracy_absent.value, 0,
+        "the illiteracy-absent record documents a rules correction; it carries no mechanical value"
+    );
+    for token in ["3.5", "PF1 Core Rulebook", "vacuous"] {
+        assert!(
+            illiteracy_absent.detail.contains(token),
+            "the illiteracy-absent record must document the rules correction ('{token}'): {}",
+            illiteracy_absent.detail
+        );
+    }
+
+    // The old vacuous claim-blocking diagnostic is retired outright.
+    assert!(
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.barbarian.bounded_progression.illiteracy.unsupported"),
+        "the vacuous illiteracy blocker must be retired: {:?}",
+        computation.diagnostics
+    );
+}
+
+// ----- Grounded: Rage's flat numeric surface (values only, no application) -----
+
+#[test]
+fn barbarian_level1_grounds_rage_rounds_per_day_from_constitution() {
+    let input = load(BARBARIAN_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // Rage rounds per day = 4 + Constitution modifier (PF1 Core Rulebook Rage).
+    // The fixture's Con 16 gives modifier +3, so 4 + 3 = 7.
+    let rage_rounds = explanation(&computation, "class_chassis.barbarian.rage_rounds_per_day");
+    assert_eq!(
+        rage_rounds.value, 7,
+        "Barbarian level 1 rage rounds per day must be 4 + Con modifier (+3) = 7"
     );
     assert!(
-        illiteracy.message.contains("illiteracy"),
-        "barbarian illiteracy blocker must name the 'illiteracy' trait: {}",
-        illiteracy.message
+        rage_rounds.detail.contains("4 + ") && rage_rounds.detail.contains("Constitution"),
+        "rage rounds per day must document the 4 + Constitution modifier formula: {}",
+        rage_rounds.detail
+    );
+}
+
+#[test]
+fn barbarian_level1_claim_blocks_rage_rounds_per_day_at_low_constitution() {
+    let input = load(BARBARIAN_LOW_CONSTITUTION_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // Constitution 1 gives modifier -5, so 4 + Constitution modifier = -1: a
+    // non-positive count with no PF1 Core Rulebook meaning as "rounds per day".
+    // The compute seam must not assert a fabricated negative value; it must
+    // claim-block the record instead.
+    assert!(
+        computation
+            .explanations
+            .iter()
+            .all(|e| e.id != "class_chassis.barbarian.rage_rounds_per_day"),
+        "a non-positive rage rounds per day must not be grounded as an explanation: {:?}",
+        computation.explanations
+    );
+    let blocked = claim_blocking(
+        &computation,
+        "class_chassis.barbarian.rage_rounds_per_day.unsupported",
+    );
+    assert!(
+        blocked.message.contains("-1"),
+        "the claim-blocking diagnostic must name the computed non-positive sum: {}",
+        blocked.message
     );
 
+    // The flat rage constants and the rage-execution blocker are unaffected by
+    // Constitution: they still ground / claim-block exactly as on the Con 16 fixture.
+    for id in [
+        "class_chassis.barbarian.rage.strength_morale_bonus",
+        "class_chassis.barbarian.rage.constitution_morale_bonus",
+        "class_chassis.barbarian.rage.will_save_morale_bonus",
+        "class_chassis.barbarian.rage.armor_class_penalty",
+    ] {
+        explanation(&computation, id);
+    }
+    claim_blocking(
+        &computation,
+        "class_feature.barbarian.bounded_progression.rage_execution.unsupported",
+    );
+}
+
+#[test]
+fn barbarian_level1_grounds_flat_rage_constants_as_values_only() {
+    let input = load(BARBARIAN_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // The flat while-raging constants are grounded as value-only records: +4 morale
+    // Strength, +4 morale Constitution, +2 morale on Will saves, -2 AC.
+    for (id, expected) in [
+        ("class_chassis.barbarian.rage.strength_morale_bonus", 4),
+        ("class_chassis.barbarian.rage.constitution_morale_bonus", 4),
+        ("class_chassis.barbarian.rage.will_save_morale_bonus", 2),
+        ("class_chassis.barbarian.rage.armor_class_penalty", -2),
+    ] {
+        let record = explanation(&computation, id);
+        assert_eq!(record.value, expected, "rage constant '{id}' must be {expected}");
+    }
+
+    // Values only, no application: the rage constants must not leak into any
+    // integrated total — ability modifiers stay the un-raged fixture truth
+    // (Str 16 -> +3, Con 16 -> +3), and no Fighter-style chassis is fabricated.
+    assert_eq!(
+        computation.ability_modifiers.strength, 3,
+        "the +4 morale Strength rage constant must not be applied to the integrated Strength modifier"
+    );
+    assert_eq!(
+        computation.ability_modifiers.constitution, 3,
+        "the +4 morale Constitution rage constant must not be applied to the integrated Constitution modifier"
+    );
+    assert_eq!(
+        computation.base_attack_bonus, 0,
+        "the rage constants must not be wired into the integrated base_attack_bonus field"
+    );
+}
+
+// ----- Still blocked: the rage-state execution engine -----
+
+#[test]
+fn barbarian_level1_stays_blocked_on_rage_execution() {
+    let input = load(BARBARIAN_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let rage_execution = claim_blocking(
+        &computation,
+        "class_feature.barbarian.bounded_progression.rage_execution.unsupported",
+    );
+    for token in ["activation", "round", "fatigue", "temporary"] {
+        assert!(
+            rage_execution.message.contains(token),
+            "barbarian rage-execution blocker must name the '{token}' burden: {}",
+            rage_execution.message
+        );
+    }
+
     // The integrated posture is still blocked overall (the Fighter-shaped chassis
-    // compute path still claim-blocks Barbarian, and illiteracy remains
+    // compute path still claim-blocks Barbarian, and rage execution remains
     // claim-blocking), never a counterfeit computed success.
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
@@ -367,9 +516,9 @@ fn barbarian_level_2_is_not_promoted_by_this_slice() {
         !has_explanation(&computation, "class_chassis.barbarian.bounded_progression"),
         "level-2 Barbarian must not gain the bounded level-1 martial recognition record"
     );
-    // A level-2 barbarian must NOT surface the illiteracy burden diagnostic, nor any
-    // of the three now-grounded level-1 explanation records; level-2 promotion is
-    // reserved for a later SD13-E3 slice.
+    // A level-2 barbarian must NOT surface the rage-execution burden diagnostic, nor
+    // any of the grounded level-1 explanation records; level-2 promotion is reserved
+    // for a later slice.
     assert!(
         !computation
             .diagnostics
@@ -423,14 +572,13 @@ fn multiclass_barbarian_is_not_promoted_by_this_slice() {
 // ----- Control plane: the matrix reclassifies the barbarian row to Partial/Computed -----
 
 #[test]
-fn matrix_barbarian_row_is_partial_computed_and_names_illiteracy_as_still_unproven() {
+fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_unproven() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let barbarian = matrix
         .row("class.barbarian.bounded_progression")
         .expect("barbarian bounded_progression row must exist");
 
-    // Moves off the pure Unverified/Observed placeholder, but only to Partial/Computed.
-    // The slice is bounded; we are not claiming Supported.
+    // Stays Partial/Computed. The slice is bounded; we are not claiming Supported.
     assert_eq!(barbarian.support_state, SupportState::Partial);
     assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
@@ -441,21 +589,33 @@ fn matrix_barbarian_row_is_partial_computed_and_names_illiteracy_as_still_unprov
         barbarian
             .grounding_ref
             .contains("sd13_barbarian_level1_chassis_baseline"),
-        "barbarian row must cite the SD13-E3 barbarian proof surface: {}",
+        "barbarian row must cite the barbarian proof surface: {}",
         barbarian.grounding_ref
     );
-    // Base-attack, base-save, and fast-movement are now grounded; only illiteracy
-    // remains named as still-unproven.
     let note = barbarian.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "barbarian partial row must carry a note");
-    assert!(
-        note.contains("illiteracy"),
-        "barbarian partial note must name the still-unproven 'illiteracy' burden: {note}"
-    );
-    for token in ["base attack", "base save", "fast movement"] {
+    // The illiteracy burden is resolved as vacuous (a rules correction, not an
+    // uplift): the PF1 Core Rulebook Barbarian is not illiterate.
+    for token in ["illiteracy", "vacuous", "3.5"] {
         assert!(
             note.contains(token),
-            "barbarian partial note must still name the now-grounded '{token}' burden: {note}"
+            "barbarian partial note must record the illiteracy rules correction ('{token}'): {note}"
+        );
+    }
+    // Rage's flat numeric surface is grounded; the rage-state execution engine is
+    // the named remaining burden, and weapon familiarity / level-2+ stay unclaimed.
+    for token in [
+        "base attack",
+        "base save",
+        "fast movement",
+        "rage rounds",
+        "rage execution",
+        "weapon familiarity",
+        "level-2+",
+    ] {
+        assert!(
+            note.contains(token),
+            "barbarian partial note must name '{token}': {note}"
         );
     }
 }
@@ -475,14 +635,16 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // Paladin stays Blocked/Computed (hybrid negative control).
+    // Paladin was later promoted to Partial/Computed by its own SD13-E5
+    // level-gate slice (lay on hands / divine grace / mercy grounded as
+    // correct level-1 absences).
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin row must exist");
     assert_eq!(
         paladin.support_state,
-        SupportState::Blocked,
-        "paladin row must stay Blocked after the barbarian slice"
+        SupportState::Partial,
+        "paladin row must keep its later-accepted Partial posture after the barbarian slice"
     );
 
     // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger

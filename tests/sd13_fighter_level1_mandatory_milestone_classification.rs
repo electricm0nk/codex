@@ -71,6 +71,7 @@ fn level_1_pilot_surface_still_emits_proven_base_chassis_explanations() {
         "class_chassis.base_save.fortitude",
         "class_chassis.base_save.reflex",
         "class_chassis.base_save.will",
+        "class_chassis.fighter.level_1_hit_points",
         "defense.total_save.fortitude",
         "defense.total_save.reflex",
         "defense.total_save.will",
@@ -171,7 +172,10 @@ fn matrix_level_1_blocker_note_enumerates_proven_milestones() {
     );
 
     // Proven (computed) level-1 surface tokens. The note must name each one
-    // explicitly so downstream readers can see exactly what is grounded.
+    // explicitly so downstream readers can see exactly what is grounded. The
+    // SD13-E5 hit-point slice moved "hit point" here from the remaining-unproven
+    // enumeration: the level-1 hit-point value (max d10 HD + Constitution
+    // modifier) is now grounded.
     for token in [
         "ability modifier",
         "base attack bonus",
@@ -180,6 +184,7 @@ fn matrix_level_1_blocker_note_enumerates_proven_milestones() {
         "baseline melee attack",
         "defense.baseline_armor_class",
         "selected skill modifier",
+        "hit point",
         "pilot view-model",
         "prerequisite",
         "invalid-choice",
@@ -202,9 +207,15 @@ fn matrix_level_1_blocker_note_enumerates_remaining_unproven_milestones() {
 
     // Remaining unproven Fighter level-1 mandatory milestones for the level-10
     // progression matrix. The note must name each one explicitly so the gap is
-    // visible instead of hidden behind "unclassified".
+    // visible instead of hidden behind "unclassified". The SD13-E5 hit-point
+    // slice grounded the level-1 hit-point value itself (moved to the proven
+    // loop above); the honest hit-point residue is now the favored-class
+    // +1 hp / +1 skill-rank choice, hit points at levels 2+, and Toughness /
+    // feat hit-point interplay.
     for token in [
-        "hit point",
+        "favored-class",
+        "levels 2+",
+        "Toughness",
         "general class skill rank",
         "general feat",
         "equipment",
@@ -263,13 +274,13 @@ fn matrix_level_1_and_levels_2_10_remain_distinct_rows() {
     );
     // The slice must NOT have weakened the L2-10 row's enforcement of "levels
     // beyond the proven range remain unproven"; the L2-10 row is a separate
-    // concern with its own grounding ref, now the more specific SD13-E3 level-8
-    // proof surface.
+    // concern with its own grounding ref, now the more specific SD13-E5
+    // level-9/level-10 proof surface.
     assert!(
         levels_2_10
             .grounding_ref
-            .contains("sd13_fighter_level8_progression"),
-        "L2-10 row must keep its own SD13-E3 tranche grounding ref: {}",
+            .contains("sd13_fighter_level9_level10_progression"),
+        "L2-10 row must keep its own SD13 tranche grounding ref: {}",
         levels_2_10.grounding_ref
     );
 }

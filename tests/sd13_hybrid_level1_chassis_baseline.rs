@@ -296,17 +296,21 @@ fn paladin_level_2_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the matrix reclassifies both hybrid rows to Blocked/Computed -----
+// ----- Control plane: the matrix carries both hybrid rows as Computed evidence -----
 
 #[test]
-fn matrix_paladin_row_is_blocked_computed_and_names_both_burdens() {
+fn matrix_paladin_row_is_partial_computed_and_names_both_burdens() {
+    // F6 moved this row off the pure Unverified/Observed placeholder to
+    // Blocked/Computed; the SD13-E4 slice grounded Smite Evil and the SD13-E5
+    // level-gate slice grounded lay on hands / divine grace / mercy as correct
+    // level-1 absences and promoted the row to Partial. The F6 chassis and
+    // blocker truth this file otherwise pins is unchanged.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid row must exist");
 
-    // Moves off the pure Unverified/Observed placeholder, but only to Blocked/Computed.
-    assert_eq!(paladin.support_state, SupportState::Blocked);
+    assert_eq!(paladin.support_state, SupportState::Partial);
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
     assert_eq!(
         paladin.evidence_freshness,

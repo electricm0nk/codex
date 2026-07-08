@@ -139,6 +139,36 @@ fn fighter_level_1_row_is_partial_and_computed() {
         !fighter.grounding_ref.is_empty(),
         "computed Fighter level-1 row must cite grounding evidence"
     );
+    // The SD13-E5 hit-point slice grounds level-1 hit points: the row must cite
+    // both the mandatory-milestone classification proof and the hit-point
+    // baseline proof, and the note must carry the hit-point milestone on the
+    // proven side while keeping the favored-class residue named as unproven.
+    assert!(
+        fighter
+            .grounding_ref
+            .contains("sd13_fighter_level1_mandatory_milestone_classification"),
+        "Fighter level-1 row must keep citing the mandatory-milestone proof surface: {}",
+        fighter.grounding_ref
+    );
+    assert!(
+        fighter
+            .grounding_ref
+            .contains("sd13_fighter_level1_hit_point_baseline"),
+        "Fighter level-1 row must cite the SD13-E5 hit-point baseline proof surface: {}",
+        fighter.grounding_ref
+    );
+    assert!(
+        fighter
+            .blocker_or_lossiness_note
+            .contains("level-1 hit points"),
+        "Fighter level-1 row note must name the grounded level-1 hit-point milestone: {}",
+        fighter.blocker_or_lossiness_note
+    );
+    assert!(
+        fighter.blocker_or_lossiness_note.contains("favored-class"),
+        "Fighter level-1 row note must keep the unproven favored-class hit-point residue named: {}",
+        fighter.blocker_or_lossiness_note
+    );
 }
 
 #[test]
@@ -155,18 +185,24 @@ fn fighter_levels_2_10_row_is_partial_and_computed_and_names_what_remains() {
         !partial.blocker_or_lossiness_note.is_empty(),
         "partial Fighter levels-2-10 row must carry a non-empty note on what remains unproven"
     );
-    // The note must explicitly name that levels 9-10 remain out of proof after the
-    // SD13-E3 level-8 widening slice.
+    // After the SD13-E5 level-9/level-10 widening slice the whole 2-10 level range
+    // is proven; the note must explicitly name the honest remaining class-feature
+    // burdens instead: the Weapon Training damage-roll half and Bravery.
     assert!(
-        partial.blocker_or_lossiness_note.contains("9-10"),
-        "partial Fighter row must name the still-unproven levels 9-10: {}",
+        partial.blocker_or_lossiness_note.contains("damage"),
+        "partial Fighter row must name the still-unproven Weapon Training damage-roll half: {}",
+        partial.blocker_or_lossiness_note
+    );
+    assert!(
+        partial.blocker_or_lossiness_note.contains("Bravery"),
+        "partial Fighter row must name the still-unproven Bravery milestone: {}",
         partial.blocker_or_lossiness_note
     );
     assert!(
         partial
             .grounding_ref
-            .contains("sd13_fighter_level8_progression"),
-        "partial Fighter row must cite the SD13-E3 level-8 proof surface: {}",
+            .contains("sd13_fighter_level9_level10_progression"),
+        "partial Fighter row must cite the SD13-E5 level-9/level-10 proof surface: {}",
         partial.grounding_ref
     );
 }
@@ -174,7 +210,9 @@ fn fighter_levels_2_10_row_is_partial_and_computed_and_names_what_remains() {
 #[test]
 fn rogue_row_is_partial_and_computed_with_blocker_note() {
     // The SD13-E3 Rogue chassis recognition slice promoted the row from
-    // Blocked to Partial.
+    // Blocked to Partial; the SD13-E5 slice grounds the fourth and final
+    // named pillar (trapfinding), leaving the row Partial with the
+    // check-execution / rogue-talent / integration remainder named.
     let matrix = matrix();
     let rogue = row(&matrix, "class.rogue.bounded_progression");
     assert_eq!(rogue.subject_type, MatrixSubjectType::Class);
@@ -186,10 +224,22 @@ fn rogue_row_is_partial_and_computed_with_blocker_note() {
         "partial Rogue row must carry a non-empty blocker note"
     );
     assert!(
+        rogue.blocker_or_lossiness_note.contains("trapfinding"),
+        "partial Rogue row note must name the now-grounded trapfinding pillar: {}",
+        rogue.blocker_or_lossiness_note
+    );
+    assert!(
+        !rogue
+            .blocker_or_lossiness_note
+            .contains("only trapfinding remains unproven"),
+        "partial Rogue row note must not repeat the stale pre-E5 trapfinding-unproven claim: {}",
+        rogue.blocker_or_lossiness_note
+    );
+    assert!(
         rogue
             .grounding_ref
             .contains("sd13_rogue_level1_chassis_baseline"),
-        "partial Rogue row must cite the live SD13-E3 recognition test surface: {}",
+        "partial Rogue row must cite the live SD13-E3/E5 recognition test surface: {}",
         rogue.grounding_ref
     );
 }
@@ -262,16 +312,20 @@ fn every_non_human_race_row_now_carries_runtime_evidence() {
 }
 
 #[test]
-fn paladin_hybrid_row_is_blocked_and_computed_with_named_burdens() {
-    // SD13-E3-F6 moves the Paladin hybrid row off the pure Unverified/Observed
-    // placeholder to a still-blocked computed posture that names the
-    // class-feature and spell burdens. Paladin has not been promoted.
+fn paladin_hybrid_row_is_partial_and_computed_with_named_burdens() {
+    // SD13-E3-F6 moved the Paladin hybrid row off the pure Unverified/Observed
+    // placeholder to a blocked computed posture; the SD13-E4 slice grounded
+    // Smite Evil for real, and the SD13-E5 level-gate slice grounds lay on
+    // hands / divine grace / mercy as correct PF1 CRB level-gate absences and
+    // promotes the row from Blocked to Partial. The hybrid chassis pair and
+    // the partial-caster spell burden stay named and unproven — never
+    // Supported.
     let matrix = matrix();
     let hybrid = row(&matrix, "class.paladin.hybrid_chassis_and_spell_burden");
     assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
     assert_eq!(hybrid.subject_id, "class:paladin");
-    assert_eq!(hybrid.support_state, SupportState::Blocked);
-    assert_ne!(hybrid.support_state, SupportState::Partial);
+    assert_eq!(hybrid.support_state, SupportState::Partial);
+    assert_ne!(hybrid.support_state, SupportState::Blocked);
     assert_ne!(hybrid.support_state, SupportState::Supported);
     assert_eq!(hybrid.evidence_tier, EvidenceTier::Computed);
     assert!(
@@ -283,7 +337,7 @@ fn paladin_hybrid_row_is_blocked_and_computed_with_named_burdens() {
     );
     assert!(
         !hybrid.blocker_or_lossiness_note.is_empty(),
-        "blocked paladin hybrid row must carry a non-empty blocker note"
+        "partial paladin hybrid row must carry a non-empty lossiness note"
     );
     assert!(
         hybrid.blocker_or_lossiness_note.contains("spell"),
@@ -302,8 +356,10 @@ fn paladin_hybrid_row_is_blocked_and_computed_with_named_burdens() {
 #[test]
 fn ranger_hybrid_row_is_partial_and_computed_with_named_burdens() {
     // The SD13-E3 Ranger decomposition slice grounds Track for real and
-    // promotes this row from Blocked to Partial; favored enemy, combat style,
-    // and the later spell burden remain named and unproven.
+    // promotes this row from Blocked to Partial; the SD13-E5 slice further
+    // grounds the Favored Enemy flat surface. Combat style, the favored-enemy
+    // conditional-application engine, and the later spell burden remain named
+    // and unproven.
     let matrix = matrix();
     let hybrid = row(&matrix, "class.ranger.hybrid_chassis_and_spell_burden");
     assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
@@ -335,13 +391,22 @@ fn ranger_hybrid_row_is_partial_and_computed_with_named_burdens() {
         "ranger hybrid row note must still defer the spell burden to SD13-E4: {}",
         hybrid.blocker_or_lossiness_note
     );
-    for token in ["favored enemy", "combat style"] {
+    // Combat style stays a named, unproven burden; the favored-enemy flat
+    // surface is grounded but its conditional-application engine stays named
+    // and unproven.
+    for token in ["favored enemy", "combat style", "conditional-application"] {
         assert!(
             hybrid.blocker_or_lossiness_note.contains(token),
-            "ranger hybrid row note must name the still-unproven '{token}' burden: {}",
+            "ranger hybrid row note must name the '{token}' burden truth: {}",
             hybrid.blocker_or_lossiness_note
         );
     }
+    assert!(
+        hybrid.blocker_or_lossiness_note.contains("grounds")
+            || hybrid.blocker_or_lossiness_note.contains("grounded"),
+        "ranger hybrid row note must record the grounded Track / favored-enemy flat surface: {}",
+        hybrid.blocker_or_lossiness_note
+    );
 }
 
 #[test]

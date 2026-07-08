@@ -5,12 +5,14 @@
 # bonus-feat) and stays a single-class, level-1-only hybrid baseline.
 #
 # It deliberately avoids every later hybrid burden surface: no spell selections, no
-# spells known/prepared posture, no favored-enemy category resolution, no combat-style
-# selection, no favored-terrain breadth, no animal companion, no tracking-engine
-# accounting. It adds only the minimum feat, equipment, and selected-skill posture
-# needed to make the bounded level-1 hybrid chassis legible; the ranger class-feature
-# and later spell burdens are intentionally left for the runtime and matrix to name as
-# still blocking.
+# spells known/prepared posture, no combat-style selection, no favored-terrain breadth,
+# no animal companion, no tracking-engine accounting. The SD13-E5 favored-enemy slice
+# adds the canonical level-1 favored-enemy choice as chosen input only (the selection
+# names the chosen enemy type; no target-type matching or conditional application is
+# resolved here). It adds only the minimum feat, equipment, choice, and selected-skill
+# posture needed to make the bounded level-1 hybrid chassis legible; the remaining
+# ranger class-feature and later spell burdens are intentionally left for the runtime
+# and matrix to name as still blocking.
 case_id=pf1-crb-human-ranger-level1
 source_package_id=pf1.core_rulebook
 race_id=race:human
@@ -29,4 +31,5 @@ equipment=item:shield:absent
 choice=choice:level_1_character_feat:feat:power_attack
 choice=choice:human_bonus_feat:feat:dodge
 choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
 provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e3-r5-paladin-and-ranger-hybrid-chassis-baseline-execution-handoff-2026-07-01.md

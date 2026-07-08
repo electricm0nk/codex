@@ -607,10 +607,6 @@ mod tests {
             generic_plus(&[
                 "class_feature.hybrid.paladin.unsupported",
                 "class_spell.hybrid.paladin.unsupported",
-                "class_feature.paladin.smite_evil.unsupported",
-                "class_feature.paladin.lay_on_hands.unsupported",
-                "class_feature.paladin.divine_grace.unsupported",
-                "class_feature.paladin.mercy.unsupported",
                 "class_spell.paladin.partial_caster.unsupported",
             ])
         );
@@ -620,23 +616,21 @@ mod tests {
             generic_plus(&[
                 "class_feature.hybrid.ranger.unsupported",
                 "class_spell.hybrid.ranger.unsupported",
+                "class_feature.ranger.combat_style.unsupported",
             ])
         );
 
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:barbarian", 1),
             generic_plus(&[
-                "class_feature.barbarian.bounded_progression.base_attack.unsupported",
-                "class_feature.barbarian.bounded_progression.base_save.unsupported",
-                "class_feature.barbarian.bounded_progression.fast_movement.unsupported",
-                "class_feature.barbarian.bounded_progression.illiteracy.unsupported",
+                "class_feature.barbarian.bounded_progression.rage_execution.unsupported",
             ])
         );
 
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:sorcerer", 1),
             generic_plus(&[
-                "class_feature.sorcerer.bloodline.unsupported",
+                "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported",
                 "class_spell.sorcerer.spontaneous.unsupported",
             ])
         );
@@ -644,7 +638,7 @@ mod tests {
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:wizard", 1),
             generic_plus(&[
-                "class_feature.wizard.school_specialization.unsupported",
+                "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported",
                 "class_spell.wizard.prepared_spellbook.unsupported",
             ])
         );
@@ -652,35 +646,29 @@ mod tests {
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:bard", 1),
             generic_plus(&[
-                "class_feature.bard.bardic_knowledge_and_music.unsupported",
+                "class_feature.bard.bardic_performance_execution.unsupported",
                 "class_spell.bard.spontaneous_known_and_per_day.unsupported",
             ])
         );
 
+        // The SD13-E5 Rogue slice grounds trapfinding, the last named Rogue
+        // pillar burden, so the named Rogue set is now empty: only the 4
+        // generic chassis diagnostics remain (like the non-Human classes).
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:rogue", 1),
-            generic_plus(&[
-                "class_feature.rogue.bounded_progression.base_attack.unsupported",
-                "class_feature.rogue.bounded_progression.base_save.unsupported",
-                "class_feature.rogue.bounded_progression.sneak_attack.unsupported",
-                "class_feature.rogue.bounded_progression.trapfinding.unsupported",
-            ])
+            generic_ids(),
+            "Human Rogue L1 must carry only the 4 generic diagnostics after trapfinding grounding"
         );
 
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:monk", 1),
-            generic_plus(&[
-                "class_feature.monk.bounded_progression.base_attack.unsupported",
-                "class_feature.monk.bounded_progression.base_save.unsupported",
-                "class_feature.monk.bounded_progression.unarmed_strike_and_flurry.unsupported",
-                "class_feature.monk.bounded_progression.ac_bonus_and_bonus_feat.unsupported",
-            ])
+            generic_plus(&["class_feature.monk.bounded_progression.bonus_feat.unsupported"])
         );
 
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:cleric", 1),
             generic_plus(&[
-                "class_feature.cleric.domain_and_channel_energy.unsupported",
+                "class_feature.cleric.domain_powers.unsupported",
                 "class_spell.cleric.prepared_divine.unsupported",
             ])
         );
@@ -688,7 +676,7 @@ mod tests {
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:druid", 1),
             generic_plus(&[
-                "class_feature.druid.nature_bond_and_wild_empathy.unsupported",
+                "class_feature.druid.animal_companion.unsupported",
                 "class_spell.druid.prepared_divine.unsupported",
             ])
         );
