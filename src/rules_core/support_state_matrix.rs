@@ -817,28 +817,35 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
-                            level-1 prepared divine spell baseline, with Wild Empathy now grounded \
-                            and the nature bond burden and the prepared divine spell posture burden \
-                            still blocked",
+                            level-1 prepared divine spell baseline, with Wild Empathy, Nature \
+                            Sense, and the nature-bond choice recognition now grounded, and the \
+                            animal-companion execution burden and the prepared divine spell \
+                            posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_DRUID_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
                     deterministic Human Druid level-1 prepared divine spell-bearing identity is \
-                    recognized on the compute seam, AND the SD13-E4 wild empathy grounding slice \
+                    recognized on the compute seam, the SD13-E4 wild empathy grounding slice \
                     grounds wild empathy for real (PF1 Core Rulebook: 1d20 + druid level + Charisma \
                     modifier, used like a Diplomacy check to improve an animal's attitude; only the \
                     flat druid-level + Charisma-modifier bonus is computed against the deterministic \
-                    fixture, no d20 roll and no Diplomacy-check execution engine). The row is \
-                    Partial, not Supported: the nature bond burden (the choice between an animal \
-                    companion and a domain, and nature sense) remains named and unproven, and the \
-                    prepared divine spell posture burden (spells prepared from the full Druid list, \
-                    spontaneous summon nature's ally conversion, spell slots per day, bonus spells \
-                    from a high Wisdom, spell save DCs) is still entirely unproven. No spell math is \
-                    fabricated and no Druid level 2+ is proven",
-                next_required_uplift: "SD13-E4 Druid nature bond grounding slice, or the prepared \
-                    divine spell burden slice, then level-2+ progression",
+                    fixture, no d20 roll and no Diplomacy-check execution engine), AND the SD13-E5 \
+                    slice grounds nature sense for real (PF1 Core Rulebook: a flat, \
+                    level-independent +2 bonus on Knowledge (nature) and Survival checks, kept as \
+                    a standalone record not wired into any skill-check total) while recognizing \
+                    the deterministic nature bond selection (choice:druid_nature_bond -> \
+                    bond:animal_companion, a +0 recognition record with no bond execution). The \
+                    row is Partial, not Supported: the animal companion execution burden (the \
+                    companion's stat block, its advancement, and its link / share spells \
+                    abilities) remains named and unproven, and the prepared divine spell posture \
+                    burden (spells prepared from the full Druid list, spontaneous summon nature's \
+                    ally conversion, spell slots per day, bonus spells from a high Wisdom, spell \
+                    save DCs) is still entirely unproven. No spell math is fabricated and no Druid \
+                    level 2+ is proven",
+                next_required_uplift: "SD13-E5 Druid animal companion execution slice, or the \
+                    prepared divine spell burden slice, then level-2+ progression",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",

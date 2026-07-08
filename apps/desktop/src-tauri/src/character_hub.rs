@@ -661,7 +661,7 @@ mod tests {
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:druid", 1),
             generic_plus(&[
-                "class_feature.druid.nature_bond.unsupported",
+                "class_feature.druid.animal_companion.unsupported",
                 "class_spell.druid.prepared_divine.unsupported",
             ])
         );

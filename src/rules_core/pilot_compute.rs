@@ -74,7 +74,14 @@
 //! Rulebook: 1d20 + druid level + Charisma modifier, used like a Diplomacy check to
 //! improve an animal's attitude) is grounded for real as the flat druid-level +
 //! Cha-modifier value; it grounds no nature-bond power execution and no
-//! Diplomacy-check/d20-roll resolution. The SD13-E4 Sorcerer decomposition
+//! Diplomacy-check/d20-roll resolution. The SD13-E5 Druid Nature Sense /
+//! nature-bond-choice slice grounds Nature Sense for real (PF1 Core Rulebook: a
+//! flat, level-independent +2 bonus on Knowledge (nature) and Survival checks,
+//! kept as a standalone record not wired into any skill total), recognizes the
+//! deterministic `choice:druid_nature_bond -> bond:animal_companion` selection as
+//! a +0 recognition record, and narrows the retired combined nature-bond blocker
+//! to the chosen bond's execution (companion stat block, companion advancement,
+//! link / share spells), which stays claim-blocked. The SD13-E4 Sorcerer decomposition
 //! slice further splits the F7 combined bloodline burden into two named diagnostics
 //! and grounds one for real: Eschew Materials, the universal, bloodline-independent
 //! bonus feat every 1st-level Sorcerer receives; it grounds no bloodline power,
@@ -243,9 +250,19 @@ const CLERIC_LEVEL1_DOMAIN_SPELL_SLOT_COUNT: i16 = 1;
 // an animal companion and a domain, nature sense, wild empathy) and a prepared
 // divine spell posture family (spells prepared from the full Druid list,
 // spontaneous summon nature's ally conversion, spell slots per day, bonus spells
-// from a high Wisdom, spell save DCs).
+// from a high Wisdom, spell save DCs). Wild Empathy (SD13-E4), Nature Sense, and
+// the deterministic nature-bond choice recognition (SD13-E5) are grounded; the
+// chosen bond's execution and the whole spell posture stay claim-blocked.
 const DRUID_CLASS_ID: &str = "class:druid";
 const DRUID_BASELINE_LEVEL: u8 = 1;
+// PF1 Core Rulebook Nature Sense: a druid gains a +2 bonus on Knowledge (nature)
+// and Survival checks. Flat and level-independent.
+const DRUID_NATURE_SENSE_BONUS: i16 = 2;
+// The deterministic SD13 fixture's nature-bond selection seam: the choice set and
+// the one selection this bounded slice recognizes (an animal companion; a domain
+// bond is not part of the deterministic fixture and stays unrecognized).
+const DRUID_NATURE_BOND_CHOICE_ID: &str = "choice:druid_nature_bond";
+const DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID: &str = "bond:animal_companion";
 
 
 // Grounded Human pilot race seam identities. These name the already-accepted
@@ -3526,31 +3543,40 @@ fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
     )
 }
 
-/// Surface direct SD13-E4 runtime evidence for the deterministic Human Druid level-1
-/// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
-/// its remaining burdens. The SD13-E4 Wild Empathy grounding slice grounds Wild
-/// Empathy for real as a bounded numeric value; nature bond and the prepared divine
-/// spell posture burden remain claim-blocked.
+/// Surface direct SD13-E4/SD13-E5 runtime evidence for the deterministic Human Druid
+/// level-1 prepared divine spell-bearing baseline, while keeping it explicitly
+/// claim-blocked on its remaining burdens. The SD13-E4 Wild Empathy slice grounds
+/// Wild Empathy for real; the SD13-E5 Nature Sense / nature-bond-choice slice grounds
+/// Nature Sense for real and recognizes the deterministic nature-bond selection; the
+/// chosen bond's execution and the prepared divine spell posture burden remain
+/// claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
-/// bond selection, no nature bond power execution (animal companion or domain), no
-/// spellbook posture, no spells prepared, no spontaneous summon nature's ally
-/// conversion, no spell slots per day, no spell save DCs, and no bonus spell slots
-/// from a high Wisdom. It only:
+/// bond power execution (no companion stat block, no companion advancement, no link /
+/// share spells, no domain math), no spellbook posture, no spells prepared, no
+/// spontaneous summon nature's ally conversion, no spell slots per day, no spell save
+/// DCs, and no bonus spell slots from a high Wisdom. It only:
 /// - leaves one recognition explanation so the `class:druid:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves one grounded Wild Empathy explanation (the flat druid-level +
 ///   Charisma-modifier modifier, not a d20 roll and not a Diplomacy-check execution
-///   engine), and
-/// - emits two distinct claim-blocking diagnostics naming the nature bond
-///   class-feature burden and the prepared divine spell posture burden explicitly,
+///   engine),
+/// - leaves one grounded Nature Sense explanation (the flat, level-independent PF1
+///   +2 bonus on Knowledge (nature) and Survival checks, kept as a standalone record
+///   not wired into any skill-check total),
+/// - when the deterministic `choice:druid_nature_bond -> bond:animal_companion`
+///   selection is present, leaves one +0 recognition record acknowledging that
+///   selection without executing it (no record is fabricated when the selection is
+///   absent), and
+/// - emits two distinct claim-blocking diagnostics naming the animal-companion
+///   execution burden and the prepared divine spell posture burden explicitly,
 ///   rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Druid prepared divine spell-bearing
-/// identity, its grounded Wild Empathy modifier, and its remaining named burdens
-/// legible on the runtime path.
+/// identity, its grounded Wild Empathy / Nature Sense values, its recognized
+/// nature-bond choice, and its remaining named burdens legible on the runtime path.
 fn explain_druid_level1_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -3575,11 +3601,11 @@ fn explain_druid_level1_spell_baseline(
              spell-bearing baseline: the {DRUID_CLASS_ID}:{DRUID_BASELINE_LEVEL} class identity is \
              acknowledged as a prepared divine spell-bearing class on the rules-core seam rather than \
              an undocumented packet placeholder. This is a bounded recognition record only; the Wild \
-             Empathy modifier is grounded separately below, but this record still grounds no nature \
-             bond selection, no nature bond power execution, no spellbook posture, no spells prepared \
-             per day, no spontaneous summon nature's ally conversion, no spell slots per day, no spell \
-             save DCs, and no bonus spell slots from a high Wisdom, so it carries no fabricated \
-             mechanical value (+0)"
+             Empathy and Nature Sense values and the nature-bond choice recognition are grounded \
+             separately below, but this record still grounds no nature bond power execution, no \
+             spellbook posture, no spells prepared per day, no spontaneous summon nature's ally \
+             conversion, no spell slots per day, no spell save DCs, and no bonus spell slots from a \
+             high Wisdom, so it carries no fabricated mechanical value (+0)"
         ),
     });
 
@@ -3603,16 +3629,70 @@ fn explain_druid_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the nature bond class-feature burden explicitly. Wild
-    // Empathy is grounded above and no longer named here as a blocker.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.druid.nature_bond.unsupported".to_owned(),
-        message: format!(
-            "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its nature bond burden: the \
-             nature bond choice (an animal companion or a domain) and nature sense are not \
-             implemented in this bounded prepared divine spell baseline, so no Druid nature bond \
-             support is claimed"
+    // Grounded: Nature Sense (PF1 Core Rulebook). A druid gains a +2 bonus on
+    // Knowledge (nature) and Survival checks. Flat and level-independent; grounded
+    // as a standalone record only — it is not wired into any skill-check total and
+    // resolves no Knowledge (nature) or Survival check.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.druid.nature_sense".to_owned(),
+        value: DRUID_NATURE_SENSE_BONUS,
+        detail: format!(
+            "Druid Nature Sense bonus (PF1 Core Rulebook): a druid gains a \
+             +{DRUID_NATURE_SENSE_BONUS} bonus on Knowledge (nature) and Survival checks. The \
+             bonus is flat and level-independent. This is a standalone grounded record only: it \
+             is not wired into any computed skill-check total and it resolves no Knowledge \
+             (nature) or Survival check"
         ),
+    });
+
+    // Recognized: the deterministic nature-bond selection. The fixture carries
+    // `choice:druid_nature_bond -> bond:animal_companion`; when that selection is
+    // present it is acknowledged as chosen input, carrying no fabricated bond
+    // execution. When the selection is absent (the desktop composer threads no
+    // nature-bond slot) no record is fabricated.
+    let animal_companion_chosen = choice_selection(input, DRUID_NATURE_BOND_CHOICE_ID)
+        == Some(DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID);
+    if animal_companion_chosen {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.druid.nature_bond_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Recognized Druid nature bond selection ({DRUID_NATURE_BOND_CHOICE_ID} -> \
+                 {DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID}): the deterministic fixture \
+                 chooses an animal companion as its PF1 nature bond. This is a bounded \
+                 recognition record of the chosen input only; the chosen bond's execution stays \
+                 ungrounded — no animal companion stat block, no companion advancement, and no \
+                 link or share-spells behavior is computed — so it carries no fabricated \
+                 mechanical value (+0)"
+            ),
+        });
+    }
+
+    // Still blocked (1/2): name the animal companion execution burden explicitly. Wild
+    // Empathy, Nature Sense, and (when recognized) the nature-bond choice recognition
+    // are grounded above and no longer named here as blockers. The message must not
+    // claim a specific bond was chosen unless the choice-selection lookup above
+    // actually recognized one — otherwise it would fabricate the claim that an
+    // animal companion was picked when no nature-bond selection was made at all.
+    diagnostics.push(ComputationDiagnostic {
+        id: "class_feature.druid.animal_companion.unsupported".to_owned(),
+        message: if animal_companion_chosen {
+            format!(
+                "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its animal companion \
+                 execution burden: the chosen nature bond (an animal companion) is recognized as \
+                 input only — the companion's stat block, its advancement, and its link and share \
+                 spells abilities are not implemented in this bounded prepared divine spell \
+                 baseline, so no Druid animal companion support is claimed"
+            )
+        } else {
+            format!(
+                "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its animal companion \
+                 execution burden: no nature bond selection is recognized as chosen input in \
+                 this bounded prepared divine spell baseline, and even when an animal companion \
+                 bond is chosen its stat block, its advancement, and its link and share spells \
+                 abilities are not implemented, so no Druid animal companion support is claimed"
+            )
+        },
         claim_blocking: true,
     });
 

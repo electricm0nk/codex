@@ -19,20 +19,34 @@
 //! both burdens.
 //!
 //! The SD13-E4 Wild Empathy grounding slice further splits the combined nature-bond /
-//! wild-empathy class-feature blocker into two named diagnostics: `nature_bond` stays
-//! claim-blocked (the animal-companion-vs-domain choice and nature sense remain
-//! unproven), while Wild Empathy is grounded for real as
+//! wild-empathy class-feature blocker into two named diagnostics: `nature_bond` stayed
+//! claim-blocked at that point (the animal-companion-vs-domain choice and nature sense
+//! were still unproven; both are grounded by the later SD13-E5 slice below), while
+//! Wild Empathy is grounded for real as
 //! `class_chassis.druid.wild_empathy` = druid level + Charisma modifier (PF1 Core
 //! Rulebook: 1d20 + druid level + Cha modifier, used like a Diplomacy check to improve
 //! an animal's attitude). Only the flat modifier is grounded; no die roll and no
 //! Diplomacy-check execution engine is computed. This promotes the matrix row from
 //! `Blocked` to `Partial`.
 //!
+//! The SD13-E5 Nature Sense / nature-bond-choice slice grounds the next two honest
+//! Druid facts: Nature Sense is grounded for real as
+//! `class_chassis.druid.nature_sense` = 2 (PF1 Core Rulebook: a druid gains a +2
+//! bonus on Knowledge (nature) and Survival checks — flat and level-independent; a
+//! standalone record only, not wired into any skill-check total), and the fixture's
+//! deterministic `choice:druid_nature_bond -> bond:animal_companion` selection is
+//! recognized as `class_chassis.druid.nature_bond_choice` (+0 recognition record,
+//! no bond execution math). The old combined `nature_bond` blocker is retired and
+//! narrowed to `class_feature.druid.animal_companion.unsupported`, naming exactly
+//! what stays unimplemented: the chosen bond's execution (companion stat block,
+//! companion advancement, link / share-spells). The row stays `Partial`.
+//!
 //! It is intentionally not a spell engine. It fabricates no nature-bond power
-//! execution, no animal companion or domain math, no wild-empathy check resolution
-//! (no d20 roll, no attitude-improvement outcome), no spellbook content, no spells
-//! prepared, no spell slots per day, no spell DCs, no bonus spells, and it grounds no
-//! Druid level 2+.
+//! execution, no animal companion stat block, advancement, or link/share-spells
+//! math, no domain math, no skill-check resolution for the Nature Sense bonus, no
+//! wild-empathy check resolution (no d20 roll, no attitude-improvement outcome), no
+//! spellbook content, no spells prepared, no spell slots per day, no spell DCs, no
+//! bonus spells, and it grounds no Druid level 2+.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -50,8 +64,11 @@ const DRUID_FIXTURE: &str =
 
 const RECOGNITION_ID: &str = "class_chassis.spell_baseline.druid";
 const WILD_EMPATHY_ID: &str = "class_chassis.druid.wild_empathy";
-const NATURE_BOND_BLOCKER_ID: &str = "class_feature.druid.nature_bond.unsupported";
+const NATURE_SENSE_ID: &str = "class_chassis.druid.nature_sense";
+const NATURE_BOND_CHOICE_ID: &str = "class_chassis.druid.nature_bond_choice";
+const ANIMAL_COMPANION_BLOCKER_ID: &str = "class_feature.druid.animal_companion.unsupported";
 const PREPARED_BLOCKER_ID: &str = "class_spell.druid.prepared_divine.unsupported";
+const NATURE_BOND_CHOICE_LINE: &str = "choice=choice:druid_nature_bond:bond:animal_companion\n";
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -207,32 +224,149 @@ fn druid_level1_grounds_wild_empathy_modifier() {
     );
 }
 
-// ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
+// ----- Grounded: Nature Sense is computed for real -----
 
 #[test]
-fn druid_level1_stays_blocked_on_nature_bond_burden() {
+fn druid_level1_grounds_nature_sense_bonus() {
     let input = load(DRUID_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let bond = claim_blocking(&computation, NATURE_BOND_BLOCKER_ID);
-    assert!(
-        bond.message.contains("nature bond"),
-        "druid nature-bond blocker must name the nature bond burden: {}",
-        bond.message
+    // PF1 CRB Nature Sense: a flat, level-independent +2 bonus on Knowledge
+    // (nature) and Survival checks.
+    let nature_sense = explanation(&computation, NATURE_SENSE_ID);
+    assert_eq!(
+        nature_sense.value, 2,
+        "nature sense must be the flat PF1 CRB +2 bonus: {nature_sense:?}"
     );
     assert!(
-        !bond.message.contains("wild empathy"),
-        "druid nature-bond blocker must no longer name wild empathy, now that it is grounded: {}",
-        bond.message
+        nature_sense.detail.contains("Knowledge (nature)")
+            && nature_sense.detail.contains("Survival"),
+        "nature sense detail must name the two skills the bonus applies to: {}",
+        nature_sense.detail
     );
+    assert!(
+        nature_sense.detail.contains("standalone"),
+        "nature sense detail must state it is a standalone record, not wired into skill totals: {}",
+        nature_sense.detail
+    );
+    assert!(
+        !nature_sense.detail.to_lowercase().contains("spells prepared")
+            && !nature_sense.detail.to_lowercase().contains("spell slot"),
+        "nature sense must not fabricate prepared-spell posture math: {}",
+        nature_sense.detail
+    );
+}
 
-    // Wild Empathy must no longer be claim-blocking anywhere in the diagnostics.
+#[test]
+fn nature_sense_bonus_is_not_wired_into_skill_totals() {
+    // The grounded +2 is a standalone record: it must not surface any per-skill
+    // total explanation for Knowledge (nature) or Survival.
+    let input = load(DRUID_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
     assert!(
         !computation
-            .diagnostics
+            .explanations
             .iter()
-            .any(|d| d.claim_blocking && d.id.contains("wild_empathy")),
-        "wild empathy must not remain claim-blocking: {:?}",
+            .any(|e| e.id.contains("skill") && e.id.contains("druid")),
+        "nature sense must not surface a druid skill-total explanation: {:?}",
+        computation.explanations
+    );
+}
+
+// ----- Recognized: the deterministic nature-bond selection is acknowledged -----
+
+#[test]
+fn druid_level1_recognizes_nature_bond_choice() {
+    let input = load(DRUID_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let bond_choice = explanation(&computation, NATURE_BOND_CHOICE_ID);
+    assert_eq!(
+        bond_choice.value, 0,
+        "nature-bond choice recognition must carry no fabricated mechanical value (+0): {bond_choice:?}"
+    );
+    assert!(
+        bond_choice.detail.contains("choice:druid_nature_bond")
+            && bond_choice.detail.contains("bond:animal_companion"),
+        "nature-bond choice recognition must name the exact fixture selection: {}",
+        bond_choice.detail
+    );
+    assert!(
+        bond_choice.detail.contains("stat block")
+            || bond_choice.detail.contains("no animal companion"),
+        "nature-bond choice recognition must state that the chosen bond's execution stays \
+         ungrounded: {}",
+        bond_choice.detail
+    );
+}
+
+#[test]
+fn druid_level1_without_nature_bond_selection_omits_recognition_but_stays_blocked() {
+    // The desktop composer does not thread a nature-bond selection; the seam must
+    // stay honest for that shape: no recognition record is fabricated, while the
+    // grounded facts and both claim-blocking burdens still fire.
+    let without_choice = DRUID_FIXTURE.replace(NATURE_BOND_CHOICE_LINE, "");
+    assert_ne!(
+        without_choice, DRUID_FIXTURE,
+        "the fixture must carry the nature-bond choice line this control removes"
+    );
+    let input = load(&without_choice);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        !has_explanation(&computation, NATURE_BOND_CHOICE_ID),
+        "no nature-bond choice recognition may be fabricated when no selection was made: {:?}",
+        computation.explanations
+    );
+    assert!(has_explanation(&computation, NATURE_SENSE_ID));
+    assert!(has_explanation(&computation, WILD_EMPATHY_ID));
+    let companion = claim_blocking(&computation, ANIMAL_COMPANION_BLOCKER_ID);
+    claim_blocking(&computation, PREPARED_BLOCKER_ID);
+
+    // No recognition record was left, so the blocker must not fabricate the claim
+    // that an animal companion (or any specific bond) was actually chosen.
+    assert!(
+        !companion.message.contains("the chosen nature bond (an animal companion)"),
+        "the animal-companion blocker must not claim a specific bond was chosen when no \
+         nature-bond selection was made: {}",
+        companion.message
+    );
+}
+
+// ----- Still blocked: two distinct honest, class-specific burden diagnostics -----
+
+#[test]
+fn druid_level1_stays_blocked_on_animal_companion_execution_burden() {
+    let input = load(DRUID_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let companion = claim_blocking(&computation, ANIMAL_COMPANION_BLOCKER_ID);
+    assert!(
+        companion.message.contains("animal companion"),
+        "druid animal-companion blocker must name the chosen bond it leaves unexecuted: {}",
+        companion.message
+    );
+    for token in ["stat block", "advancement", "share spells"] {
+        assert!(
+            companion.message.contains(token),
+            "druid animal-companion blocker must name the unimplemented '{token}' execution: {}",
+            companion.message
+        );
+    }
+    assert!(
+        !companion.message.contains("wild empathy") && !companion.message.contains("nature sense"),
+        "druid animal-companion blocker must not re-name the grounded wild empathy / nature \
+         sense facts: {}",
+        companion.message
+    );
+
+    // The retired combined nature-bond blocker and the grounded facts must not be
+    // claim-blocking anywhere in the diagnostics.
+    assert!(
+        !computation.diagnostics.iter().any(|d| d.claim_blocking
+            && (d.id.contains("nature_bond") || d.id.contains("nature_sense") || d.id.contains("wild_empathy"))),
+        "nature bond choice, nature sense, and wild empathy must not remain claim-blocking: {:?}",
         computation.diagnostics
     );
 }
@@ -250,8 +384,8 @@ fn druid_level1_stays_blocked_on_prepared_divine_spell_posture_burden() {
     );
 
     assert_ne!(
-        NATURE_BOND_BLOCKER_ID, PREPARED_BLOCKER_ID,
-        "nature-bond and prepared burdens must be separate diagnostics"
+        ANIMAL_COMPANION_BLOCKER_ID, PREPARED_BLOCKER_ID,
+        "animal-companion and prepared burdens must be separate diagnostics"
     );
     let distinct_blocking = computation
         .diagnostics
@@ -369,8 +503,9 @@ fn matrix_druid_row_is_partial_computed_and_names_remaining_burdens() {
         .row("class.druid.progression_and_spell_burden")
         .expect("druid row must exist");
 
-    // Wild Empathy is now grounded for real, promoting the row from Blocked to
-    // Partial; nature bond and the prepared divine spell posture remain unproven.
+    // Wild Empathy, Nature Sense, and the nature-bond choice recognition are now
+    // grounded; the animal-companion execution and the prepared divine spell
+    // posture remain unproven, so the row stays Partial.
     assert_eq!(druid.support_state, SupportState::Partial);
     assert_ne!(druid.support_state, SupportState::Blocked);
     assert_ne!(druid.support_state, SupportState::Supported);
@@ -382,13 +517,21 @@ fn matrix_druid_row_is_partial_computed_and_names_remaining_burdens() {
             .contains("sd13_druid_level1_spell_baseline"),
         "carrier grounding_ref must cite this slice's proof surface"
     );
+    for token in ["wild empathy", "nature sense", "nature bond", "animal companion", "prepared"] {
+        assert!(
+            druid.blocker_or_lossiness_note.contains(token),
+            "druid blocker note must name '{token}' — wild empathy / nature sense / the nature \
+             bond choice (grounded) and the animal-companion execution / prepared divine spell \
+             burdens (unproven): {}",
+            druid.blocker_or_lossiness_note
+        );
+    }
     assert!(
-        druid.blocker_or_lossiness_note.contains("wild empathy")
-            && druid.blocker_or_lossiness_note.contains("nature bond")
-            && druid.blocker_or_lossiness_note.contains("prepared"),
-        "druid blocker note must name wild empathy (grounded), nature bond (unproven), and the \
-         prepared divine spell burden (unproven): {}",
-        druid.blocker_or_lossiness_note
+        druid.dimension.contains("animal-companion execution")
+            || druid.dimension.contains("animal companion"),
+        "druid row dimension must truthfully name the remaining animal-companion execution \
+         burden instead of the retired combined nature-bond burden: {}",
+        druid.dimension
     );
     assert!(
         !druid.blocker_or_lossiness_note.is_empty(),
