@@ -19,7 +19,7 @@ export function makeSurface(
     surfaceLabel: 'SD-11 tester workbench',
     headline: 'Bounded tester workbench',
     lead: 'lead',
-    buildLabel: 'codex-desktop-shell-scaffold@0.0.0-test',
+    buildLabel: 'codex@0.0.0-test',
     channelLabel: 'alpha',
     platformLabel: 'Linux',
     supportTierLabel: 'Linux first-class · macOS second-class · Windows third-class',
@@ -46,7 +46,7 @@ export function makeSurface(
     provenanceRefs: [],
     notes: ['note'],
     status: {
-      build: { label: 'codex-desktop-shell-scaffold@0.0.0-test', version: '0.0.0-test' },
+      build: { label: 'codex@0.0.0-test', version: '0.0.0-test' },
       channel: {
         testerFacingLabel: 'alpha',
         operatorBranch: 'develop',

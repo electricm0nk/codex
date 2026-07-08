@@ -79,7 +79,7 @@ fn main() {
             load_saved_character
         ])
         .run(tauri::generate_context!())
-        .expect("error while running codex desktop shell scaffold");
+        .expect("error while running codex");
 }
 
 #[cfg(test)]

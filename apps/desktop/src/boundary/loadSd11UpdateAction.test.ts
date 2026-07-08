@@ -128,7 +128,7 @@ const STRUCTURALLY_INVALID_MANIFEST_WIRE_JSON = JSON.stringify(
 function request(overrides: Partial<Sd11UpdateActionRequest> = {}): Sd11UpdateActionRequest {
   return {
     buildVersion: '0.0.0',
-    buildLabel: 'codex-desktop-shell-scaffold@0.0.0',
+    buildLabel: 'codex@0.0.0',
     platformLabel: 'Linux',
     testerChannelLabel: 'alpha' as Sd11TesterChannelLabel,
     ...overrides,
@@ -162,7 +162,7 @@ async function testHappyPathAlphaReturnsGovernedRelease() {
     // otherwise no update could ever be detected.
     assertEqual(
       result.manifest.currentBuild.releaseId,
-      'codex-desktop-shell-scaffold@0.0.0',
+      'codex@0.0.0',
       'currentBuild identity comes from the running build'
     );
     assertEqual(result.manifest.currentBuild.version, '0.0.0', 'running version');
@@ -205,7 +205,7 @@ async function testUpToDateBuildCollapsesLatestToCurrent() {
     const result = await loadSd11UpdateAction(
       request({
         buildVersion: '0.1.0',
-        buildLabel: 'codex-desktop-shell-scaffold@0.1.0',
+        buildLabel: 'codex@0.1.0',
       })
     );
     assertEqual(result.kind, 'governed-release', 'up-to-date build still governed-release');

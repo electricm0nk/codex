@@ -122,7 +122,7 @@ npx tauri build --debug
 Expected build artifact:
 
 ```text
-apps/desktop/src-tauri/target/debug/codex_desktop_shell_scaffold
+apps/desktop/src-tauri/target/debug/codex
 ```
 
 ## Build and verification surfaces
@@ -174,7 +174,7 @@ npx tauri dev
 Or run the built binary directly:
 
 ```bash
-apps/desktop/src-tauri/target/debug/codex_desktop_shell_scaffold
+apps/desktop/src-tauri/target/debug/codex
 ```
 
 Expected current behavior:

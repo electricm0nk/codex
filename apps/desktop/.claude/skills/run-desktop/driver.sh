@@ -20,7 +20,7 @@ set -euo pipefail
 
 STATE_FILE="/tmp/run-desktop-driver.state"
 DISPLAY_NUM=99
-WINDOW_TITLE="Codex Character Hub"
+WINDOW_TITLE="Codex"
 LOG_FILE="/tmp/run-desktop-driver.tauri-dev.log"
 
 resolve_app_root() {
@@ -75,7 +75,7 @@ cmd_launch() {
   # such buffering delay. The log is still tailed on a genuine failure.
   local ready=""
   for _ in $(seq 1 300); do
-    if pgrep -f "target/debug/codex_desktop_shell_scaffold" >/dev/null 2>&1; then
+    if pgrep -f "target/debug/codex" >/dev/null 2>&1; then
       ready=1
       break
     fi
@@ -92,9 +92,23 @@ cmd_launch() {
   # This also incidentally proves the window title is what it's supposed to be.
   # WebKitGTK's cold-start window/webview creation lags process start by a
   # variable amount (observed anywhere from ~1s to >15s) — budget generously.
+  #
+  # xdotool's --name regex match is case-insensitive regardless of anchors, so
+  # a bare `search --name "$WINDOW_TITLE"` can return the "second, seemingly-
+  # inert window whose WM_NAME is the raw binary name" (see Gotchas) whenever
+  # the product name and binary name differ only by case — which happens for
+  # this app. Filter candidates client-side against an exact, case-sensitive
+  # WM_NAME match instead of trusting xdotool's own matching.
   local window_id=""
   for _ in $(seq 1 90); do
-    window_id="$(DISPLAY=":$DISPLAY_NUM" xdotool search --name "$WINDOW_TITLE" 2>/dev/null | head -n1 || true)"
+    local candidate wm_name
+    for candidate in $(DISPLAY=":$DISPLAY_NUM" xdotool search --name "$WINDOW_TITLE" 2>/dev/null || true); do
+      wm_name="$(DISPLAY=":$DISPLAY_NUM" xdotool getwindowname "$candidate" 2>/dev/null || true)"
+      if [ "$wm_name" = "$WINDOW_TITLE" ]; then
+        window_id="$candidate"
+        break
+      fi
+    done
     [ -n "$window_id" ] && break
     sleep 0.5
   done
@@ -202,7 +216,7 @@ cmd_stop() {
       pkill -9 -P "$TAURI_PID" 2>/dev/null || true
       kill -9 "$TAURI_PID" 2>/dev/null || true
     fi
-    pkill -9 -f "target/debug/codex_desktop_shell_scaffold" 2>/dev/null || true
+    pkill -9 -f "target/debug/codex" 2>/dev/null || true
     [ -n "${XVFB_PID:-}" ] && kill -9 "$XVFB_PID" 2>/dev/null || true
     rm -f "$STATE_FILE"
   fi

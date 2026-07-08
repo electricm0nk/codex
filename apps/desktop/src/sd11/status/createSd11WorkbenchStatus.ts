@@ -58,7 +58,7 @@ export interface Sd11WorkbenchStatus {
   issueCapture: Sd11WorkbenchIssueCaptureStatus;
 }
 
-const BUILD_PREFIX = 'codex-character-hub';
+const BUILD_PREFIX = 'codex';
 const TESTER_CHANNEL: Sd11WorkbenchChannelStatus['testerFacingLabel'] = 'alpha';
 const OPERATOR_BRANCH: Sd11WorkbenchChannelStatus['operatorBranch'] = 'develop';
 const OPERATOR_PROMOTION_PATH: Sd11WorkbenchChannelStatus['operatorPromotionPath'] = 'develop -> main';

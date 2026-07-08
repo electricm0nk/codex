@@ -467,13 +467,9 @@ dependencies = [
 
 [[package]]
 name = "codex"
-version = "0.1.0"
-
-[[package]]
-name = "codex_desktop_shell_scaffold"
 version = "0.0.0"
 dependencies = [
- "codex",
+ "codex 0.1.0",
  "serde",
  "serde_json",
  "sha2",
@@ -481,6 +477,10 @@ dependencies = [
  "tauri-build",
  "tauri-plugin-opener",
 ]
+
+[[package]]
+name = "codex"
+version = "0.1.0"
 
 [[package]]
 name = "combine"

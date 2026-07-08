@@ -15,7 +15,7 @@ function assertContains(actual: string, needle: string, message: string) {
 
 function linuxContext(): Sd11UpdateCheckContext {
   return {
-    buildLabel: 'codex-desktop-shell-scaffold@0.0.0',
+    buildLabel: 'codex@0.0.0',
     buildVersion: '0.0.0',
     platformLabel: 'Linux',
     platformTier: 'first-class',
@@ -87,7 +87,7 @@ function verifiesNoOfficialReleaseForLocalBuild() {
   const truth: Sd11UpdateReleaseTruth = {
     kind: 'no-official-release',
     reason: 'This build is a local, non-governed desktop build with no official tester release unit.',
-    buildLabel: 'codex-desktop-shell-scaffold@0.0.0',
+    buildLabel: 'codex@0.0.0',
     version: '0.0.0',
   };
   const result = deriveSd11UpdateAction(linuxContext(), truth);
@@ -108,7 +108,7 @@ function verifiesNoOfficialReleaseDetailStripsInternalMemoryContext() {
       '</memory-context>',
       'No checksum is embedded in this local build.',
     ].join('\n'),
-    buildLabel: 'codex-desktop-shell-scaffold@0.0.0',
+    buildLabel: 'codex@0.0.0',
     version: '0.0.0',
   };
   const result = deriveSd11UpdateAction(linuxContext(), truth);
@@ -126,7 +126,7 @@ function verifiesCheckFailed() {
   const truth: Sd11UpdateReleaseTruth = {
     kind: 'check-failed',
     reason: 'desktop update boundary unavailable',
-    buildLabel: 'codex-desktop-shell-scaffold@0.0.0',
+    buildLabel: 'codex@0.0.0',
     version: '0.0.0',
   };
   const result = deriveSd11UpdateAction(linuxContext(), truth);
@@ -147,7 +147,7 @@ function verifiesCheckFailedDetailStripsInternalMemoryContext() {
       '</memory-context>',
       'retry once official release truth is available',
     ].join('\n'),
-    buildLabel: 'codex-desktop-shell-scaffold@0.0.0',
+    buildLabel: 'codex@0.0.0',
     version: '0.0.0',
   };
   const result = deriveSd11UpdateAction(linuxContext(), truth);

@@ -1,5 +1,5 @@
 [package]
-name = "codex_desktop_shell_scaffold"
+name = "codex"
 version = "0.0.0"
 edition = "2021"
 

@@ -1,6 +1,6 @@
 ---
 name: run-desktop
-description: Build, run, and drive the Codex Character Hub desktop app (Tauri + React). Use when asked to start the desktop app, build it, screenshot its UI, or click through/interact with the running app.
+description: Build, run, and drive the Codex desktop app (Tauri + React). Use when asked to start the desktop app, build it, screenshot its UI, or click through/interact with the running app.
 ---
 
 This is a Tauri 2 (Rust) + React desktop app, not Electron — there is no
@@ -52,7 +52,7 @@ npm run tauri:check # cargo check --manifest-path src-tauri/Cargo.toml
 ```
 
 Starts Xvfb on `:99`, runs `npx tauri dev`, waits for the binary process
-to exist and for a window titled "Codex Character Hub" to appear, then
+to exist and for a window titled "Codex" to appear, then
 writes `/tmp/run-desktop-driver.state`. Every subsequent subcommand is a
 short, independent invocation that reads that state file — there is no
 persistent driver process to keep a shell attached to.
@@ -151,13 +151,13 @@ cd ../.. && cargo test   # root rules-core/persistence suite
   a file it can arrive in one late burst well after the app is already
   up and the window exists, making a log-content check report a false
   "timed out" minutes after the app was actually ready. `driver.sh`
-  polls `pgrep -f target/debug/codex_desktop_shell_scaffold` instead,
+  polls `pgrep -f target/debug/codex` instead,
   which has no such delay.
 - **`npx tauri build --debug` fails at the AppImage bundling step** in
   this container — `xdg-open` isn't installed
   (`failed to bundle project: xdg-open binary not found`). This does
   NOT block development: the debug binary itself is already built and
-  written to `src-tauri/target/debug/codex_desktop_shell_scaffold`
+  written to `src-tauri/target/debug/codex`
   *before* bundling runs, and `npx tauri dev` (what the driver uses)
   never bundles at all. Install `xdg-utils` if you specifically need the
   AppImage artifact.
@@ -166,8 +166,8 @@ cd ../.. && cargo test   # root rules-core/persistence suite
   anything on that port before starting, so this only bites you if you
   bypass the driver and launch `npx tauri dev` by hand twice.
 - **Two X windows exist**, not one: the visible app window (titled
-  "Codex Character Hub") and a second, seemingly-inert window whose
-  `WM_NAME` is the raw binary name `codex_desktop_shell_scaffold`.
+  "Codex") and a second, seemingly-inert window whose
+  `WM_NAME` is the raw binary name `codex`.
   `driver.sh` finds the right one by searching for the configured
   window *title*, not by binary/class name — this also happens to prove
   the titlebar text is correct as a side effect of launching.
