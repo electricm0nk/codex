@@ -3148,50 +3148,76 @@ fn explain_monk_level1_chassis(
 }
 
 const ROGUE_CLASS_ID: &str = "class:rogue";
-const ROGUE_BASELINE_LEVEL: u8 = 1;
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 2;
+/// PF1 Core Rulebook level gate at which Rogue gains Evasion.
+const ROGUE_EVASION_LEVEL: u8 = 2;
 
-/// Return `true` when the chosen input is exactly a single-class Rogue at the
-/// bounded chassis baseline level (1). Returns `false` for any other class, a
-/// multiclass mix, or a level-2+ Rogue this slice deliberately does not
-/// recognize — each of which stays blocked exactly as before.
-fn is_single_class_rogue_level1(input: &CharacterInput) -> bool {
-    matches!(
-        input.chosen.class_levels.as_slice(),
+/// The bounded Rogue milestone level this decomposition surface grounds, if
+/// any. Returns the single Rogue level when the chosen input is exactly a
+/// single-class Rogue at one of the supported milestone levels (1 or 2).
+/// Returns `None` for no Rogue, a non-Rogue class, a multiclass mix, or any
+/// level-3+ Rogue this slice deliberately does not recognize — each of which
+/// stays claim-blocked exactly as before. Mirrors the Fighter
+/// `supported_fighter_level` / Paladin `supported_paladin_level` level-range
+/// gate idiom.
+fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
+    match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == ROGUE_CLASS_ID
-                && class_level.level == ROGUE_BASELINE_LEVEL
-    )
+                && (1..=MAX_SUPPORTED_ROGUE_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
+        }
+        _ => None,
+    }
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Rogue
-/// level-1 chassis, mirroring the Barbarian/Monk level-1 baseline pattern.
+/// level-1/level-2 chassis, mirroring the Barbarian/Monk level-1 baseline
+/// pattern and the Fighter `supported_fighter_level` / Paladin
+/// `supported_paladin_level` level-range-gate idiom.
 /// The SD13-E3 pillar-grounding slice grounds three of the four named
 /// burdens directly (base-attack progression, base-save progression, and
-/// sneak attack die count); the SD13-E5 slice grounds the fourth, Trapfinding,
-/// mirroring the grounded Ranger Track record, so no named Rogue pillar
-/// burden remains claim-blocked.
+/// sneak attack die count); the SD13-E5 trapfinding slice grounds the
+/// fourth, Trapfinding, mirroring the grounded Ranger Track record, so no
+/// named Rogue pillar burden remains claim-blocked; a later SD13-E5 slice
+/// widens the level-1-only gate to level 2 (the PF1 Core Rulebook Rogue
+/// class table's next milestone) and grounds Evasion as a bounded
+/// identity/recognition record.
 ///
-/// This deliberately does not compute a full Rogue class engine. It grounds:
+/// This deliberately does not compute a full Rogue class engine. It grounds,
+/// at every supported level (1 and 2):
 /// - base-attack progression (3/4 BAB, `level * 3 / 4`),
 /// - base-save progression (good Reflex, poor Fortitude, poor Will),
-/// - the sneak attack damage-die *count* only (the value `1`, i.e. `1d6`) —
-///   not damage-roll execution and not the flanking / Dexterity-denial
-///   trigger-condition engine, and
-/// - the Trapfinding flat numeric bonus (`max(level / 2, 1)`, `+1` at level 1)
-///   on Perception checks to locate traps and on Disable Device checks, plus
-///   the magic-trap-disarm statement — not a check-execution engine, no trap
-///   DC resolution, and no magic-trap disarm engine.
+/// - the sneak attack damage-die *count* only (`(level + 1) / 2`, i.e. `1`
+///   at levels 1-2, `1d6`) — not damage-roll execution and not the flanking /
+///   Dexterity-denial trigger-condition engine,
+/// - the Trapfinding flat numeric bonus (`max(level / 2, 1)`, `+1` at levels
+///   1-2) on Perception checks to locate traps and on Disable Device checks,
+///   plus the magic-trap-disarm statement — not a check-execution engine, no
+///   trap DC resolution, and no magic-trap disarm engine, and
+/// - Evasion (a 2nd-level Rogue class feature): below level 2 it is grounded
+///   as a correct PF1 Core Rulebook level-gate absence (value 0); at level 2
+///   it is grounded as a bounded identity/recognition record only (value 0,
+///   non-fabricated) naming the rule text (no damage on a successful Reflex
+///   save against an effect that normally allows half damage on a
+///   successful save; no benefit on a failed save) — mirroring how Divine
+///   Grace and Bravery were grounded as flat rules-text records without
+///   folding into an actual saving-throw-resolution or damage-resolution
+///   engine, neither of which exists in this codebase.
 ///
-/// It still grounds no rogue talent (a level-2+ milestone) and no level-2+
-/// progression. These `class_chassis.rogue.*` explanation records are
-/// standalone: they are not wired into `compute_fighter_chassis`,
+/// It still grounds no rogue talent (a level-2+ choice-list feature, and a
+/// genuinely open-ended talent tree — a new-subsystem-shaped burden left
+/// named but unproven) and no level-3+ progression. These
+/// `class_chassis.rogue.*` / `class_feature.rogue.evasion` explanation
+/// records are standalone: they are not wired into `compute_fighter_chassis`,
 /// `compute_total_saves`, or `compute_combat_baseline`, so
 /// `defense.total_save.*` is still never computed for Rogue here. It only:
-/// - leaves one chassis-recognition explanation so the `class:rogue:1`
+/// - leaves one chassis-recognition explanation so the `class:rogue:N`
 ///   identity is acknowledged rather than an undocumented packet placeholder
 ///   (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - leaves five grounded pillar explanations (base-attack, base-save
-///   fortitude/reflex/will, sneak-attack die count, trapfinding).
+/// - leaves six grounded pillar explanations (base-attack, base-save
+///   fortitude/reflex/will, sneak-attack die count, trapfinding, Evasion).
 ///
 /// The named Rogue claim-blocking diagnostic set is now empty; the four
 /// generic chassis diagnostics (`class_chassis.unsupported`,
@@ -3206,43 +3232,43 @@ fn explain_rogue_level1_chassis(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    if !is_single_class_rogue_level1(input) {
+    let Some(level) = supported_rogue_level(input) else {
         return;
-    }
+    };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
 
-    // Direct runtime evidence: recognize the deterministic Human Rogue level-1
-    // chassis identity. This is a recognition record only; it fabricates no
-    // mechanical value.
+    // Direct runtime evidence: recognize the deterministic Human Rogue
+    // chassis identity at the supported level. This is a recognition record
+    // only; it fabricates no mechanical value.
     explanations.push(ComputationExplanation {
         id: "class_chassis.rogue.bounded_progression".to_owned(),
         value: 0,
         detail: format!(
-            "Recognized deterministic Human Rogue level {ROGUE_BASELINE_LEVEL} chassis: the \
-             {ROGUE_CLASS_ID}:{ROGUE_BASELINE_LEVEL} class identity is acknowledged on the \
+            "Recognized deterministic Human Rogue level {level} chassis: the \
+             {ROGUE_CLASS_ID}:{level} class identity is acknowledged on the \
              rules-core seam rather than an undocumented packet placeholder. This is a bounded \
              chassis-recognition record only; the base-attack, base-save, sneak-attack \
-             die-count, and trapfinding pillars are grounded separately below, but this record \
-             still grounds no rogue talent and no level-2+ progression, so it carries no \
-             fabricated mechanical value (+0)"
+             die-count, trapfinding, and Evasion pillars are grounded separately below, but \
+             this record still grounds no rogue talent and no level-3+ progression, so it \
+             carries no fabricated mechanical value (+0)"
         ),
     });
 
-    // Grounded (1/4): base-attack progression (3/4 BAB).
-    let level_value = i16::from(ROGUE_BASELINE_LEVEL);
+    // Grounded (1/5): base-attack progression (3/4 BAB).
+    let level_value = i16::from(level);
     let base_attack_bonus = level_value * 3 / 4;
     explanations.push(ComputationExplanation {
         id: "class_chassis.rogue.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+            "Rogue level {level} base attack bonus from the PF1 Core Rulebook \
              Rogue class table's 3/4-BAB progression: level * 3 / 4 = {base_attack_bonus}"
         ),
     });
 
-    // Grounded (2/4): base-save progression (good Reflex, poor Fortitude, poor Will).
+    // Grounded (2/5): base-save progression (good Reflex, poor Fortitude, poor Will).
     let base_save_fortitude = level_value / 3;
     let base_save_reflex = level_value / 2 + 2;
     let base_save_will = level_value / 3;
@@ -3250,7 +3276,7 @@ fn explain_rogue_level1_chassis(
         id: "class_chassis.rogue.base_save.fortitude".to_owned(),
         value: base_save_fortitude,
         detail: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} base Fortitude save (poor) from the PF1 Core \
+            "Rogue level {level} base Fortitude save (poor) from the PF1 Core \
              Rulebook Rogue class table: level / 3 = {base_save_fortitude}"
         ),
     });
@@ -3258,7 +3284,7 @@ fn explain_rogue_level1_chassis(
         id: "class_chassis.rogue.base_save.reflex".to_owned(),
         value: base_save_reflex,
         detail: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} base Reflex save (good) from the PF1 Core \
+            "Rogue level {level} base Reflex save (good) from the PF1 Core \
              Rulebook Rogue class table: level / 2 + 2 = {base_save_reflex}"
         ),
     });
@@ -3266,25 +3292,30 @@ fn explain_rogue_level1_chassis(
         id: "class_chassis.rogue.base_save.will".to_owned(),
         value: base_save_will,
         detail: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} base Will save (poor) from the PF1 Core \
+            "Rogue level {level} base Will save (poor) from the PF1 Core \
              Rulebook Rogue class table: level / 3 = {base_save_will}"
         ),
     });
 
-    // Grounded (3/4): sneak attack damage-die count only.
+    // Grounded (3/5): sneak attack damage-die count only. PF1 Core Rulebook:
+    // the sneak attack die count increases by 1d6 every two rogue levels
+    // (1d6 at levels 1-2, 2d6 at level 3+): (level + 1) / 2.
+    let sneak_attack_die_count = (level_value + 1) / 2;
     explanations.push(ComputationExplanation {
         id: "class_chassis.rogue.sneak_attack".to_owned(),
-        value: 1,
+        value: sneak_attack_die_count,
         detail: format!(
-            "Rogue level {ROGUE_BASELINE_LEVEL} sneak attack from the PF1 Core Rulebook Rogue \
-             class table: +1d6 sneak attack damage die at level 1, against a flanked or \
-             Dexterity-denied target. Only the die-count facet (1, i.e. 1d6) is grounded here; \
-             damage-roll execution and the flanking / Dexterity-denial trigger-condition engine \
-             are not implemented"
+            "Rogue level {level} sneak attack from the PF1 Core Rulebook Rogue \
+             class table: the sneak attack die count increases by 1 every two rogue levels \
+             (1d6 at levels 1-2, 2d6 at level 3+): (level + 1) / 2 = ({level_value} + 1) / 2 = \
+             {sneak_attack_die_count}, i.e. {sneak_attack_die_count}d6 sneak attack damage die, \
+             against a flanked or Dexterity-denied target. Only the die-count facet is grounded \
+             here; damage-roll execution and the flanking / Dexterity-denial trigger-condition \
+             engine are not implemented"
         ),
     });
 
-    // Grounded (4/4): trapfinding — the flat numeric bonus and the
+    // Grounded (4/5): trapfinding — the flat numeric bonus and the
     // magic-trap-disarm statement only, mirroring the grounded Ranger Track
     // record (no check-execution engine behind it).
     let trapfinding_bonus = (level_value / 2).max(1);
@@ -3295,13 +3326,48 @@ fn explain_rogue_level1_chassis(
             "Rogue Trapfinding class feature: adds a bonus equal to max(rogue level / 2, 1) \
              (PF1 Core Rulebook Trapfinding: +1/2 rogue level, minimum +1) on Perception checks \
              made to locate traps and on Disable Device checks, and lets the rogue use Disable \
-             Device to disarm magic traps. At Rogue level {ROGUE_BASELINE_LEVEL} this bonus is \
-             max({ROGUE_BASELINE_LEVEL} / 2, 1) = {trapfinding_bonus}. This grounds only the \
+             Device to disarm magic traps. At Rogue level {level} this bonus is \
+             max({level_value} / 2, 1) = {trapfinding_bonus}. This grounds only the \
              flat numeric Trapfinding bonus and the magic-trap-disarm statement; it is not a \
              check-execution engine and computes no full Perception or Disable Device check, no \
              trap DC resolution, and no magic-trap disarm engine"
         ),
     });
+
+    // Grounded (5/5): Evasion, a 2nd-level Rogue class feature. Below the
+    // level-2 gate this is a correct PF1 Core Rulebook level-gate absence
+    // (value 0); at or above it, it is a bounded identity/recognition record
+    // only (value 0, non-fabricated) naming the rule text — mirroring how
+    // Divine Grace and Bravery were grounded as flat rules-text records
+    // without folding into an actual saving-throw-resolution or
+    // damage-resolution engine, neither of which exists in this codebase.
+    if level < ROGUE_EVASION_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.evasion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Evasion at rogue level {level}: correctly absent at level {level} by PF1 \
+                 Core Rulebook level gate; the at-grant rule is named but not computed. Evasion \
+                 is a 2nd-level rogue class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.evasion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Evasion granted at rogue level {level} (PF1 Core Rulebook, 2nd-level \
+                 rogue class feature): if the rogue makes a successful Reflex saving throw \
+                 against an attack that normally deals half damage on a successful save, she \
+                 instead takes no damage; Evasion has no effect if the rogue fails the saving \
+                 throw, and it has no effect at all against attacks that do not allow a saving \
+                 throw for half damage. This is a bounded identity/recognition record only \
+                 (value 0, non-fabricated): no saving-throw-resolution engine and no \
+                 damage-resolution engine exists anywhere in this codebase to apply it, so this \
+                 grounds no actual damage reduction on any save outcome"
+            ),
+        });
+    }
 }
 
 /// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Sorcerer

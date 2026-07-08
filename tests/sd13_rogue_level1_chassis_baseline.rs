@@ -366,16 +366,19 @@ fn fighter_does_not_gain_rogue_recognition() {
 }
 
 #[test]
-fn rogue_level_2_is_not_promoted_by_this_slice() {
+fn rogue_level_2_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 2 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_rogue_level2_progression.rs) widened the level-1-only gate
+    // to level 2 (mirroring the Fighter/Paladin level-range gate idiom) and
+    // grounded Evasion; this negative control is superseded, not violated —
+    // pin the new truth here too so this file stays internally consistent.
     let level_2 = ROGUE_FIXTURE.replace("class:rogue:1", "class:rogue:2");
     let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")),
-        "level-2 Rogue must not gain any bounded level-1 rogue chassis explanation: {:?}",
+        has_explanation(&computation, "class_chassis.rogue.base_attack_bonus"),
+        "level-2 Rogue is supported since the SD13-E5 level-2 slice: {:?}",
         computation.explanations
     );
     assert!(
@@ -383,12 +386,13 @@ fn rogue_level_2_is_not_promoted_by_this_slice() {
             .diagnostics
             .iter()
             .any(|d| d.id.starts_with("class_feature.rogue.")),
-        "level-2 Rogue must not surface the level-1 rogue burden diagnostics: {:?}",
+        "level-2 Rogue must not surface any named rogue burden diagnostic (Evasion is grounded \
+         as an explanation record, not a diagnostic): {:?}",
         computation.diagnostics
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-2 Rogue must stay claim-blocked in this slice"
+        "level-2 Rogue must still be claim-blocked by the generic chassis diagnostics"
     );
 }
 

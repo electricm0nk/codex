@@ -247,12 +247,24 @@ fn level_2_and_level_3_propagate_computed_receipts_and_view_models() {
     }
 }
 
-// ----- Negative control: Rogue stays blocked, must not become interchangeable -----
+// ----- Negative control: Rogue must never inherit Fighter-namespaced seams -----
 
 #[test]
-fn rogue_replacing_the_fighter_chassis_stays_blocked() {
+fn rogue_replacing_the_fighter_chassis_never_leaks_fighter_seams() {
     // Replace the level-2 Fighter chassis with a Rogue chassis. Widening Fighter must
     // not silently make Rogue interchangeable with Fighter.
+    //
+    // At the time this file's slice landed, Rogue level 2 was entirely
+    // unrecognized, so this control also asserted a blanket absence of any
+    // `class_chassis.*` explanation. A later SD13-E5 slice
+    // (tests/sd13_rogue_level2_progression.rs) widened the Rogue level-1-only
+    // gate to level 2 and grounds `class_chassis.rogue.*` records there; this
+    // negative control is superseded, not violated — it now asserts the
+    // narrower, still-true claim: Rogue's own grounded records never carry
+    // the Fighter-only class-feature seams, and the shared
+    // `computation.base_attack_bonus` struct field (the Fighter-chassis
+    // integration point, distinct from the standalone Rogue explanation
+    // records) stays unfabricated for a Rogue chassis.
     let mutated =
         LEVEL_2_FIXTURE.replace("class_level=class:fighter:2", "class_level=class:rogue:2");
     assert!(
@@ -269,14 +281,15 @@ fn rogue_replacing_the_fighter_chassis_stays_blocked() {
     );
     assert_eq!(
         computation.base_attack_bonus, 0,
-        "blocked Rogue chassis must not fabricate a base attack bonus"
+        "Rogue must not fabricate the shared Fighter-chassis base_attack_bonus struct field; \
+         Rogue's own base-attack explanation is a standalone record, not wired into it"
     );
     assert!(
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.")),
-        "blocked Rogue chassis must withhold chassis explanations: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.") && !e.id.starts_with("class_chassis.rogue.")),
+        "Rogue chassis must withhold every non-Rogue-namespaced chassis explanation: {:?}",
         computation.explanations
     );
     // The Fighter-only class-feature seams must not leak onto a Rogue chassis.
