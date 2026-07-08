@@ -26,14 +26,14 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 
 /// Filename of the AppImage artifact staged for inspection before replace.
-const STAGED_APPIMAGE_FILENAME: &str = "Codex-Desktop-Shell-Scaffold.staged.AppImage";
+const STAGED_APPIMAGE_FILENAME: &str = "Codex.staged.AppImage";
 
 /// Filename of the most-recent rolling backup of the previous managed AppImage (slot 1).
-const BACKUP_APPIMAGE_FILENAME: &str = "Codex-Desktop-Shell-Scaffold.previous.AppImage";
+const BACKUP_APPIMAGE_FILENAME: &str = "Codex.previous.AppImage";
 
 /// Filename of the older rolling backup (slot 2). Slot 1 is shifted here before slot 1 is
 /// overwritten, capping the backup set at two entries.
-const BACKUP_APPIMAGE_FILENAME_2: &str = "Codex-Desktop-Shell-Scaffold.previous2.AppImage";
+const BACKUP_APPIMAGE_FILENAME_2: &str = "Codex.previous2.AppImage";
 
 /// Subdirectory (under the config update dir) that holds staged downloads and the rolling
 /// previous-binary backup.
@@ -50,7 +50,7 @@ pub const PENDING_UPDATE_FILENAME: &str = "pending-update.json";
 /// Resolution of the config-dir update root.
 pub fn config_update_dir(config_dir: &Path) -> PathBuf {
     config_dir
-        .join("codex-desktop-shell-scaffold")
+        .join("codex")
         .join("update")
 }
 
@@ -613,12 +613,12 @@ pub fn verify_relaunch_artifact() -> ReloadVerifyOutcome {
 }
 
 /// Resolve the config ROOT that `config_update_dir` hangs the
-/// `codex-desktop-shell-scaffold/update/` tree off.
+/// `codex/update/` tree off.
 ///
 /// `CODEX_CONFIG_DIR` overrides the root — the ops/integration-test redirect seam,
 /// following the `CODEX_REPO_ROOT` / `CODEX_DESKTOP_RESOURCE_DIR` env idiom in
 /// `ge08_workbench.rs`. The default is `$HOME/.config`, so the pending record resolves to
-/// `~/.config/codex-desktop-shell-scaffold/update/pending-update.json`.
+/// `~/.config/codex/update/pending-update.json`.
 fn resolve_config_root() -> PathBuf {
     if let Ok(dir) = std::env::var("CODEX_CONFIG_DIR") {
         return PathBuf::from(dir);
@@ -689,7 +689,7 @@ pub fn perform_install(_args: PerformInstallArgs) -> Result<RelaunchPrompt, Stri
 ///
 /// F3b authors the body. The command reads the pending-update marker
 /// (`<config_update_dir>/pending-update.json`), locates the most-recent
-/// rolling backup at `<config_update_dir>/backups/Codex-Desktop-Shell-Scaffold.previous.AppImage`,
+/// rolling backup at `<config_update_dir>/backups/Codex.previous.AppImage`,
 /// and atomically copies that backup over the managed AppImage path. On
 /// restore failure (missing/unreadable/corrupted backup), the command writes
 /// a `rollback-state.json` sidecar recording `rollback_state: "rollback-failed"`
@@ -1003,7 +1003,7 @@ mod tests {
             source_commit: "f2ba1b9".into(),
             artifact_sha256: sha256_hex(artifact_bytes),
             manifest_hash: "manifesthash000".into(),
-            artifact_name: "Codex-Desktop-Shell-Scaffold.AppImage".into(),
+            artifact_name: "Codex.AppImage".into(),
             artifact_size: artifact_bytes.len() as u64,
             eligibility_policy: EligibilityPolicy {
                 update_eligible: true,
@@ -1014,7 +1014,7 @@ mod tests {
 
     fn make_running(dir: &Path) -> RunningBuildIdentity {
         RunningBuildIdentity {
-            managed_executable_path: dir.join("Codex-Desktop-Shell-Scaffold.AppImage"),
+            managed_executable_path: dir.join("Codex.AppImage"),
             channel: "alpha".into(),
             version: "0.0.0-alpha.20260628.1".into(),
             release_tag: "alpha/0.0.0-alpha.20260628.1".into(),
@@ -1028,7 +1028,7 @@ mod tests {
 
     fn make_installed(dir: &Path) -> InstalledState {
         InstalledState {
-            managed_executable_path: dir.join("Codex-Desktop-Shell-Scaffold.AppImage"),
+            managed_executable_path: dir.join("Codex.AppImage"),
             install_kind: InstallKind::AppImage,
             channel: "alpha".into(),
             version: "0.0.0-alpha.20260628.1".into(),
@@ -1045,7 +1045,7 @@ mod tests {
     #[test]
     fn success_path_returns_relaunch_prompt_and_writes_pending() {
         let dir = tempdir("success");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         // Pretend a previous AppImage already lives at the managed path so preserve_previous
         // has something to rotate.
         fs::write(&managed, b"old-binary-payload").expect("write old binary");
@@ -1103,7 +1103,7 @@ mod tests {
     #[test]
     fn hash_mismatch_aborts_without_touching_managed() {
         let dir = tempdir("mismatch");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"old-binary-payload").expect("write old binary");
 
         let real_artifact = b"new-appimage-payload";
@@ -1153,7 +1153,7 @@ mod tests {
     #[test]
     fn empty_artifact_aborts_with_empty_code() {
         let dir = tempdir("empty");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"old").expect("write old binary");
 
         // Manifest claims a non-empty payload, but the download closure writes zero bytes.
@@ -1178,7 +1178,7 @@ mod tests {
     #[test]
     fn first_install_without_installed_state_is_accepted() {
         let dir = tempdir("first-install");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         let artifact = b"first-install-payload";
         let manifest = make_manifest(artifact);
         let outcome = execute_transaction(TransactionConfig {
@@ -1205,7 +1205,7 @@ mod tests {
     #[test]
     fn ineligible_manifest_aborts_before_download() {
         let dir = tempdir("ineligible");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"old").expect("write old binary");
 
         let artifact = b"new-payload";
@@ -1234,7 +1234,7 @@ mod tests {
     #[test]
     fn download_failure_aborts_with_staged_file_missing_code() {
         let dir = tempdir("download-fail");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"old").expect("write old binary");
 
         let manifest = make_manifest(b"new-payload");
@@ -1262,7 +1262,7 @@ mod tests {
     #[test]
     fn running_path_mismatch_against_installed_state_aborts() {
         let dir = tempdir("path-mismatch");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"old").expect("write old binary");
 
         let artifact = b"new-payload";
@@ -1326,7 +1326,7 @@ mod tests {
         let got = config_update_dir(&dir);
         assert_eq!(
             got,
-            PathBuf::from("/tmp/fake-xdg/codex-desktop-shell-scaffold/update")
+            PathBuf::from("/tmp/fake-xdg/codex/update")
         );
     }
 
@@ -1335,7 +1335,7 @@ mod tests {
         // Confirms the injected-closure seam works with a std::io::Cursor — same shape as
         // production would use with a streaming HTTP reader.
         let dir = tempdir("cursor");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"old").expect("write old binary");
         let artifact = b"streamed-payload";
         let manifest = make_manifest(artifact);
@@ -1376,7 +1376,7 @@ mod preserve_previous_tests {
     #[test]
     fn backup_rotation_caps_at_two_slots() {
         let dir = tempdir("two-slot");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
 
         // First generation: write "v1" as the managed binary.
         fs::write(&managed, b"binary-v1").expect("write v1");
@@ -1437,7 +1437,7 @@ mod verify_relaunch_artifact_tests {
             manifest_hash: "manifest-hash-fixture".into(),
             staging_path: update_dir.join("staging/AppImage"),
             backup_path: update_dir.join("backups/AppImage"),
-            managed_executable_path: dir.join("Codex-Desktop-Shell-Scaffold.AppImage"),
+            managed_executable_path: dir.join("Codex.AppImage"),
             channel: "alpha".into(),
             release_tag: format!("alpha/{to}"),
             source_commit: "deadbeef".into(),
@@ -1700,7 +1700,7 @@ mod verify_relaunch_artifact_tests {
 //
 //   - AV-RB-5 (F3b cross-cite with F3a) — backups keep last 2. F3b's retention
 //       sweep defensively enforces the two-slot ceiling on every invocation:
-//       if more than two `Codex-Desktop-Shell-Scaffold.previous*.AppImage`
+//       if more than two `Codex.previous*.AppImage`
 //       files exist, the oldest by mtime is removed. F3a's `preserve_previous`
 //       already enforces the rotation on every fresh install; F3b's sweep is
 //       the belt-and-suspenders catch-up for any drift.
@@ -2195,7 +2195,7 @@ pub fn perform_restore_previous_impl(config: RestoreConfig) -> RollbackOutcome {
 ///      a Success marker that survived the F3c deletion (e.g. a crash between
 ///      the installed-state write and the pending deletion).
 ///   3. AV-RB-5: enforce the backups two-slot ceiling. If more than two
-///      `Codex-Desktop-Shell-Scaffold.previous*.AppImage` files exist
+///      `Codex.previous*.AppImage` files exist
 ///      (degenerate state — F3a's rotation already caps at 2), evict the
 ///      oldest by mtime until only two remain.
 ///   4. AV-RB-7: this function NEVER touches `pending-update.json` unless
@@ -2241,7 +2241,7 @@ pub fn perform_retention_sweep_impl(config: RetentionConfig) -> RetentionOutcome
                         .file_name()
                         .and_then(|n| n.to_str())
                         .map(|name| {
-                            name.starts_with("Codex-Desktop-Shell-Scaffold.previous")
+                            name.starts_with("Codex.previous")
                                 && name.ends_with(".AppImage")
                         })
                         .unwrap_or(false)
@@ -2327,7 +2327,7 @@ mod rollback_retention_tests {
             manifest_hash: "manifest-hash-fixture".into(),
             staging_path: staging_dir(&update_dir).join("AppImage"),
             backup_path: backup_path.clone(),
-            managed_executable_path: dir.join("Codex-Desktop-Shell-Scaffold.AppImage"),
+            managed_executable_path: dir.join("Codex.AppImage"),
             channel: "alpha".into(),
             release_tag: format!("alpha/{to}"),
             source_commit: "deadbeef".into(),
@@ -2350,7 +2350,7 @@ mod rollback_retention_tests {
     fn auto_restore_after_threshold_mismatch_cycles() {
         let dir = tempdir("auto-restore");
         let backup_payload = b"prior-binary-payload";
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"stuck-running-binary").expect("write managed");
 
         let update_dir = config_update_dir(&dir);
@@ -2400,7 +2400,7 @@ mod rollback_retention_tests {
     #[test]
     fn restore_failure_marks_rollback_failed() {
         let dir = tempdir("rollback-failed");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"stuck-running-binary").expect("write managed");
 
         let update_dir = config_update_dir(&dir);
@@ -2465,7 +2465,7 @@ mod rollback_retention_tests {
     #[test]
     fn backups_keep_last_two_after_retention_sweep() {
         let dir = tempdir("backups-cap");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"v1").expect("write v1");
 
         let update_dir = config_update_dir(&dir);
@@ -2475,7 +2475,7 @@ mod rollback_retention_tests {
         // into the backups directory (older → newer mtime).
         let slot1 = backups_dir(&update_dir).join(BACKUP_APPIMAGE_FILENAME);
         let slot2 = backups_dir(&update_dir).join(BACKUP_APPIMAGE_FILENAME_2);
-        let extra = backups_dir(&update_dir).join("Codex-Desktop-Shell-Scaffold.previous3.AppImage");
+        let extra = backups_dir(&update_dir).join("Codex.previous3.AppImage");
         fs::write(&extra, b"oldest").expect("write extra");
         std::thread::sleep(std::time::Duration::from_millis(10));
         fs::write(&slot2, b"middle").expect("write slot2");
@@ -2514,14 +2514,14 @@ mod rollback_retention_tests {
     #[test]
     fn successful_staging_is_cleaned_after_sweep() {
         let dir = tempdir("staging-cleanup");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"new-binary").expect("write managed");
 
         let update_dir = config_update_dir(&dir);
         fs::create_dir_all(staging_dir(&update_dir)).expect("mkdir staging");
         fs::create_dir_all(backups_dir(&update_dir)).expect("mkdir backups");
 
-        let staging_file = staging_dir(&update_dir).join("Codex-Desktop-Shell-Scaffold.staged.AppImage");
+        let staging_file = staging_dir(&update_dir).join("Codex.staged.AppImage");
         fs::write(&staging_file, b"staged-payload").expect("write staged");
 
         let pending = PendingUpdate {
@@ -2568,7 +2568,7 @@ mod rollback_retention_tests {
     #[test]
     fn pending_update_never_deleted_while_unresolved() {
         let dir = tempdir("pending-keep");
-        let managed = dir.join("Codex-Desktop-Shell-Scaffold.AppImage");
+        let managed = dir.join("Codex.AppImage");
         fs::write(&managed, b"stuck-binary").expect("write managed");
 
         let update_dir = config_update_dir(&dir);
@@ -2635,7 +2635,7 @@ mod rollback_retention_tests {
             manifest_hash: "manifest-hash-fixture".into(),
             staging_path: update_dir.join("staging/AppImage"),
             backup_path: update_dir.join("backups/AppImage"),
-            managed_executable_path: dir.join("Codex-Desktop-Shell-Scaffold.AppImage"),
+            managed_executable_path: dir.join("Codex.AppImage"),
             channel: "alpha".into(),
             release_tag: "alpha/0.0.1".into(),
             source_commit: "deadbeef".into(),

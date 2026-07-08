@@ -19,7 +19,7 @@ async function main() {
 
 function autoEvidenceResolvesFromSurface() {
   const auto = captureAutoEvidence(makeSurface());
-  assertEqual(auto.buildLabel, 'codex-desktop-shell-scaffold@0.0.0-test', 'auto build label');
+  assertEqual(auto.buildLabel, 'codex@0.0.0-test', 'auto build label');
   assertEqual(auto.channelSupportLabel, 'alpha · Linux first-class', 'auto channel/support label');
   assertEqual(auto.platformLabel, 'Linux', 'auto platform label');
   assertEqual(auto.currentWorkflow, 'GE08 Guard Stance authoring workbench / Authored / Computed', 'auto workflow');

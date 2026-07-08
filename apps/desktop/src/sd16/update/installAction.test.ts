@@ -197,7 +197,7 @@ async function testBuildRelaunchPromptMarkupCarriesAllHookAttributes(): Promise<
   const response: PerformInstallResponse = {
     artifactSha256: "sha-of-new-artifact",
     managedExecutablePath: "/opt/codex/Codex.AppImage",
-    pendingUpdatePath: "/home/x/.config/codex-desktop-shell-scaffold/update/pending-update.json",
+    pendingUpdatePath: "/home/x/.config/codex/update/pending-update.json",
     fromVersion: "0.0.1",
     toVersion: "0.0.2",
   };
@@ -206,7 +206,7 @@ async function testBuildRelaunchPromptMarkupCarriesAllHookAttributes(): Promise<
     `id="${INSTALL_RELAUNCH_PROMPT_ID}"`,
     'data-from-version="0.0.1"',
     'data-to-version="0.0.2"',
-    'data-pending-state-path="/home/x/.config/codex-desktop-shell-scaffold/update/pending-update.json"',
+    'data-pending-state-path="/home/x/.config/codex/update/pending-update.json"',
     'data-managed-executable-path="/opt/codex/Codex.AppImage"',
     'data-new-artifact-sha256="sha-of-new-artifact"',
     'data-must-relaunch="true"',

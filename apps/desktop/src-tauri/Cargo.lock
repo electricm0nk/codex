@@ -470,7 +470,7 @@ name = "codex"
 version = "0.1.0"
 
 [[package]]
-name = "codex_desktop_shell_scaffold"
+name = "codex-desktop"
 version = "0.0.0"
 dependencies = [
  "codex",

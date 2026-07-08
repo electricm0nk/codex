@@ -165,8 +165,8 @@ export function makePerformInstallResponseFixture(
   overrides: Partial<PerformInstallResponse> = {},
 ): PerformInstallResponse {
   return {
-    pendingUpdatePath: "/home/ubuntu/.config/codex-desktop-shell-scaffold/update/pending-update.json",
-    managedExecutablePath: "/opt/codex/Codex-Desktop-Shell-Scaffold.AppImage",
+    pendingUpdatePath: "/home/ubuntu/.config/codex/update/pending-update.json",
+    managedExecutablePath: "/opt/codex/Codex.AppImage",
     fromVersion: "0.0.0",
     toVersion: "0.0.1",
     artifactSha256: "abc123sha",

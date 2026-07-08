@@ -11,7 +11,7 @@ function noOfficialReleaseTruth() {
     truth: {
       kind: 'no-official-release' as const,
       reason: 'Feature/local builds are not governed tester release units.',
-      buildLabel: 'codex-desktop-shell-scaffold@0.0.0-test',
+      buildLabel: 'codex@0.0.0-test',
       version: '0.0.0-test',
     },
     updateAction: {
@@ -25,7 +25,7 @@ function noOfficialReleaseTruth() {
       manualReason: null,
       replacementTarget: null,
       recoveryDirection: null,
-      checkedBuildLabel: 'codex-desktop-shell-scaffold@0.0.0-test',
+      checkedBuildLabel: 'codex@0.0.0-test',
       checkedVersion: '0.0.0-test',
       operatorPromotionPathReference: null,
       evidenceNotes: [],
@@ -50,7 +50,7 @@ function verifiesLinuxAlphaStatusTruth() {
     platformLabel: 'Linux',
   }, noOfficialReleaseTruth());
 
-  assertEqual(status.build.label, 'codex-character-hub@0.0.0-test', 'build label');
+  assertEqual(status.build.label, 'codex@0.0.0-test', 'build label');
   assertEqual(status.channel.testerFacingLabel, 'alpha', 'tester-facing channel');
   assertEqual(status.channel.operatorBranch, 'develop', 'operator branch');
   assertEqual(status.channel.operatorPromotionPath, 'develop -> main', 'operator promotion path');

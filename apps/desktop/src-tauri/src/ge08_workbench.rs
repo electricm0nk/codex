@@ -12,9 +12,9 @@ use codex::homebrew_authoring::package_store::PackageStore;
 use codex::homebrew_authoring::preview_bridge::{ArmorClassPreview, PreviewBridge, PreviewStatus};
 
 const PACKAGED_RESOURCE_PREFIX: &str = "resources/";
-const LINUX_PRODUCT_RESOURCE_DIR_NAME: &str = "Codex Desktop Shell Scaffold";
-const LINUX_DEB_RESOURCE_DIR_NAME: &str = "codex-desktop-shell-scaffold";
-const LINUX_BINARY_RESOURCE_DIR_NAME: &str = "codex_desktop_shell_scaffold";
+const LINUX_PRODUCT_RESOURCE_DIR_NAME: &str = "Codex";
+const LINUX_DEB_RESOURCE_DIR_NAME: &str = "codex";
+const LINUX_BINARY_RESOURCE_DIR_NAME: &str = "codex";
 
 /// Request to load the GE08 authoring workbench snapshot.
 #[derive(Debug, Clone, Serialize, Deserialize)]
