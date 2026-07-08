@@ -341,8 +341,9 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_blocked_state() {
     // with both named burdens. The Sorcerer slice does not regress that state. Wizard
     // was Unverified/Observed at the time this test was first written, but the later
     // SD13-E4-R3 slice executed the Wizard row's own merge-receipt obligation,
-    // promoting it to Blocked/Computed; this negative control now pins that current
-    // truth.
+    // promoting it to Blocked/Computed, and a further SD13-E4 Wizard decomposition
+    // slice grounded Scribe Scroll for real, promoting it again to Partial/Computed;
+    // this negative control now pins that current truth.
     let matrix = seeded_sd13_e1_f1_current_truth();
 
     let wizard = matrix
@@ -350,8 +351,8 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_blocked_state() {
         .expect("wizard row must exist");
     assert_eq!(
         wizard.support_state,
-        SupportState::Blocked,
-        "wizard row must be Blocked after the SD13-E4-R3 promotion"
+        SupportState::Partial,
+        "wizard row must be Partial after the Scribe Scroll grounding slice"
     );
     assert_eq!(
         wizard.evidence_tier,

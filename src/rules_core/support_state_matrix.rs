@@ -46,10 +46,13 @@
 //!   recognized on the compute seam, but it stays blocked on the bardic knowledge +
 //!   bardic music chassis-class-feature burden and the spontaneous known-spell / slot
 //!   posture burden, and fabricates no Bardic-class-feature math and no spell math,
-//! - the Wizard row is `Blocked` / `Computed`: the SD13-E4-R3 slice proves the
+//! - the Wizard row is `Partial` / `Computed`: the SD13-E4-R3 slice proves the
 //!   deterministic Human Wizard level-1 prepared arcane spell-bearing identity is
-//!   recognized on the compute seam (merge receipt executed 2026-07-07), but it stays
-//!   blocked on the school specialization burden and the prepared spellbook /
+//!   recognized on the compute seam (merge receipt executed 2026-07-07), and a later
+//!   SD13-E4 decomposition slice grounds Scribe Scroll (the free, specialization-
+//!   independent bonus feat every 1st-level Wizard is granted) for real, promoting
+//!   the row from Blocked to Partial (mirroring the Ranger Track promotion); the row
+//!   stays blocked on the specialization-choice burden and the prepared spellbook /
 //!   spell-slot posture burden, and fabricates no spell math,
 //! - the Cleric row is `Blocked` / `Computed`: the SD13-E4 slice proves the
 //!   deterministic Human Cleric level-1 prepared divine spell-bearing identity is
@@ -335,8 +338,10 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1 prepared
 /// arcane spell baseline: direct computed recognition of the prepared arcane
-/// spell-bearing identity that stays explicitly blocked on the school specialization
-/// burden and the prepared spellbook / spell-slot posture burden.
+/// spell-bearing identity, plus a later SD13-E4 decomposition slice grounding the
+/// Scribe Scroll bonus feat grant for real, that stays explicitly blocked on the
+/// specialization-choice burden and the prepared spellbook / spell-slot posture
+/// burden.
 const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs";
 
 /// SD13-E4 dedicated proof surface for the bounded Human Cleric level-1 prepared
@@ -859,27 +864,35 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:wizard",
                 // The SD13-E4-R3 merge receipt executed after the tranche 2.6
-                // closeout merged to develop (2026-07-07): the row carries the
-                // post-merge posture the slice's proof surface pinned as its
-                // merge-receipt obligation.
+                // closeout merged to develop (2026-07-07): the row carried the
+                // post-merge Blocked/Computed posture the slice's proof surface
+                // pinned as its merge-receipt obligation. A further SD13-E4 Wizard
+                // decomposition slice then grounds Scribe Scroll for real,
+                // promoting the row from Blocked to Partial (mirroring the Ranger
+                // Track promotion): one of the two named burdens is now grounded,
+                // while the specialization-choice burden and the entire prepared
+                // spell posture burden remain unproven.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1 prepared arcane spell baseline, with the school \
-                            specialization burden and the prepared spellbook / spell-slot \
-                            posture burden still blocked",
-                support_state: SupportState::Blocked,
+                            Wizard level-1 prepared arcane spell baseline, with Scribe Scroll \
+                            grounded for real and the specialization-choice burden and the \
+                            prepared spellbook / spell-slot posture burden still blocked",
+                support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_WIZARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-R3 leaves direct computed evidence that the \
                     deterministic Human Wizard level-1 prepared arcane spell-bearing identity is \
-                    recognized on the compute seam, but the row stays blocked: the school \
-                    specialization burden (specialization choice, two opposed schools, specialty \
-                    school bonus spell slot) is not implemented, and the prepared spell posture \
-                    burden (spellbook content, spells prepared per day, spell slots per day, \
-                    bonus slots from high Intelligence, spell save DCs) is not computed. No \
-                    spell math is fabricated and no Wizard level 2+ is proven",
-                next_required_uplift: "SD13-E4 Wizard school-specialization and prepared \
-                    spellbook / spell-slot slice, then level-2+ progression",
+                    recognized on the compute seam, AND a later SD13-E4 Wizard decomposition slice \
+                    grounds Scribe Scroll (the free, specialization-independent bonus feat every \
+                    1st-level Wizard is granted, letting them create scrolls of spells they know) \
+                    for real. The row is Partial, not Supported: the specialization choice burden \
+                    (the chosen school, two opposed schools, and the specialty school bonus spell \
+                    slot) remains named and unproven, and the prepared spell posture burden \
+                    (spellbook content, spells prepared per day, spell slots per day, bonus slots \
+                    from high Intelligence, spell save DCs) is still entirely unproven. No spell \
+                    math is fabricated and no Wizard level 2+ is proven",
+                next_required_uplift: "SD13-E4 Wizard specialization-choice grounding slice, then \
+                    the prepared spellbook / spell-slot posture slice, then level-2+ progression",
             },
             // ----- Interaction rows (2) -----
             SupportStateRow {

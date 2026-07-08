@@ -33,7 +33,13 @@
 //! specialization burden and prepared spellbook / spells-prepared / spell-slot
 //! posture burden; it grounds no spellbook content, no spells prepared, no spell
 //! slots, no spell save DCs, no bonus spells, no school-opposition bookkeeping, and
-//! no specialty school bonus. The SD13-E3 Fighter milestone tranche has since
+//! no specialty school bonus. A later SD13-E4 Wizard decomposition slice splits that
+//! school specialization burden in two: Scribe Scroll, the free specialization-
+//! independent bonus feat every 1st-level Wizard is granted, is grounded for real,
+//! while the specialization CHOICE burden (chosen school, opposed schools, specialty
+//! school bonus) stays its own named claim-blocking diagnostic; the prepared
+//! spellbook / spells-prepared / spell-slot posture burden is untouched. The SD13-E3
+//! Fighter milestone tranche has since
 //! widened further still, to level 8: the level-8 bonus-feat progression seam is
 //! surfaced explicitly, mirroring the level-2/4/6 bonus-feat seams, and grounds no
 //! level-9+ Fighter burden. The SD13-E3 Rogue pillar-grounding slice widens the
@@ -2854,18 +2860,27 @@ fn is_single_class_wizard_level1(input: &CharacterInput) -> bool {
 /// - leaves one recognition explanation so the `class:wizard:1` identity is
 ///   acknowledged as a prepared arcane spell-bearing class rather than an
 ///   undocumented packet placeholder (direct runtime evidence, carrying no
-///   fabricated mechanical value), and
+///   fabricated mechanical value),
+/// - grounds one universal, specialization-independent class feature for real:
+///   Scribe Scroll, the bonus feat every 1st-level Wizard is granted regardless
+///   of arcane school specialization (PF1 Core Rulebook Wizard class feature),
+///   letting the Wizard create scrolls of spells they know. This is a bounded
+///   grant-only recognition, not a numeric formula: it carries no fabricated
+///   mechanical value (+0) and computes no scroll-creation cost, crafting time,
+///   spellbook content, or spell-slot machinery, and
 /// - emits two distinct claim-blocking diagnostics naming the school
-///   specialization burden (chosen school, two opposed schools, specialty school
-///   bonus) and the prepared spellbook / spells-prepared / spell-slot posture
-///   burden explicitly, rather than hiding behind a generic "unsupported caster"
-///   label.
+///   specialization CHOICE burden (chosen school, two opposed schools, specialty
+///   school bonus) and the prepared spellbook / spells-prepared / spell-slot
+///   posture burden explicitly, rather than hiding behind a generic "unsupported
+///   caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this
 /// seam keeps that blocked posture but makes the Wizard prepared spell-bearing
-/// identity and its two named burdens legible on the runtime path. The matrix
-/// file row transition (Unverified/Observed → Blocked/Computed) is recorded by
-/// the merge receipt only and is NOT applied to the in-source carrier here.
+/// identity, its one grounded universal class feature, and its two remaining
+/// named burdens legible on the runtime path. The matrix file row transition
+/// (Unverified/Observed → Blocked/Computed, then Blocked → Partial once Scribe
+/// Scroll is grounded) is recorded by this proof surface and applied to the
+/// in-source carrier directly (see `seeded_sd13_e1_f1_current_truth`).
 fn explain_wizard_level1_prepared_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -2897,21 +2912,42 @@ fn explain_wizard_level1_prepared_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the school specialization burden explicitly.
+    // Grounded for real: Scribe Scroll is a universal, specialization-independent
+    // Wizard class feature (every 1st-level Wizard is granted it regardless of
+    // which school, if any, is later chosen), so it is separable from the
+    // school-specialization burden. It is a boolean grant, not a numeric formula.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.wizard.scribe_scroll".to_owned(),
+        value: 0,
+        detail: format!(
+            "Recognized Wizard level {WIZARD_BASELINE_LEVEL} Scribe Scroll bonus feat grant: \
+             every Wizard, regardless of arcane school specialization, is granted Scribe Scroll \
+             as a bonus feat at level {WIZARD_BASELINE_LEVEL} (PF1 Core Rulebook Wizard class \
+             feature), letting the Wizard create scrolls of spells they know. This is a bounded \
+             grant-only recognition: it carries no fabricated mechanical value (+0) and computes \
+             no scroll creation cost, no crafting time, no spellbook content, and no spell-slot \
+             machinery"
+        ),
+    });
+
+    // Still blocked (1/2): name the specialization CHOICE burden explicitly, now
+    // that Scribe Scroll (the other named pillar of the former combined
+    // school-specialization burden) is grounded above.
     diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.wizard.school_specialization.unsupported".to_owned(),
+        id: "class_feature.wizard.specialization_choice.unsupported".to_owned(),
         message: format!(
             "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school specialization \
-             burden: the chosen school, two opposed schools, the school's opposed schools list, \
+             choice burden: the chosen school, the two opposed schools locked out by that choice, \
              and the specialty school bonus (additional spell slots / spells known at later \
              levels) are not implemented in this bounded prepared spell baseline, so no Wizard \
-             school specialization support is claimed"
+             specialization-choice support is claimed"
         ),
         claim_blocking: true,
     });
 
     // Still blocked (2/2): name the prepared spellbook / spells-prepared /
-    // spell-slot posture burden explicitly.
+    // spell-slot posture burden explicitly. Unchanged by the Scribe Scroll
+    // grounding: it fabricates no spell math.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.wizard.prepared_spellbook.unsupported".to_owned(),
         message:

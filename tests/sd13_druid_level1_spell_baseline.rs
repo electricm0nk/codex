@@ -327,7 +327,6 @@ fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_trut
         "class.paladin.hybrid_chassis_and_spell_burden",
         "class.sorcerer.progression_and_spell_burden",
         "class.bard.progression_and_spell_burden",
-        "class.wizard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
     ] {
         let row = matrix
@@ -352,6 +351,18 @@ fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_trut
         "ranger row must keep its later-accepted Partial posture after the Druid slice"
     );
     assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+
+    // Wizard was later promoted to Partial/Computed by its own SD13-E4 Scribe
+    // Scroll decomposition slice.
+    let wizard = matrix
+        .row("class.wizard.progression_and_spell_burden")
+        .expect("wizard row must exist");
+    assert_eq!(
+        wizard.support_state,
+        SupportState::Partial,
+        "wizard row must keep its later-accepted Partial posture after the Druid slice"
+    );
+    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
 }
 
 #[test]

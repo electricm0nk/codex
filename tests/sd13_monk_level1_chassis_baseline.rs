@@ -482,7 +482,6 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
     for id in [
         "class.sorcerer.progression_and_spell_burden",
         "class.bard.progression_and_spell_burden",
-        "class.wizard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
         "class.druid.progression_and_spell_burden",
     ] {
@@ -493,6 +492,17 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
             "row {id} must stay Blocked after the monk slice"
         );
     }
+
+    // Wizard was later promoted to Partial/Computed by its own SD13-E4 Scribe
+    // Scroll decomposition slice.
+    let wizard = matrix
+        .row("class.wizard.progression_and_spell_burden")
+        .expect("wizard row must exist");
+    assert_eq!(
+        wizard.support_state,
+        SupportState::Partial,
+        "wizard row must keep its later-accepted Partial posture after the monk slice"
+    );
 
     assert!(
         !matrix
