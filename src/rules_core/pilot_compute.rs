@@ -4062,11 +4062,13 @@ fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
 /// its remaining still-missing burdens.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds Channel
-/// Energy's flat die-count and uses-per-day math, the domain choice seam, and the flat
-/// domain spell slot count, but grounds no domain powers, no domain spell-list
-/// contents, no channel energy save DC or damage/healing resolution, no spellbook
-/// posture, no spells prepared, no spontaneous cure/inflict conversion, no general
-/// spell slots per day, no spell save DCs, and no bonus spell slots from a high
+/// Energy's flat die-count and uses-per-day math, the domain choice seam, the flat
+/// domain spell slot count, the Good domain's Touch of Good (flat sacred-bonus
+/// magnitude and flat uses-per-day count), and the Healing domain's Rebuke Death (flat
+/// uses-per-day count only), but grounds no Rebuke Death heal amount, no domain
+/// spell-list contents, no channel energy save DC or damage/healing resolution, no
+/// spellbook posture, no spells prepared, no spontaneous cure/inflict conversion, no
+/// general spell slots per day, no spell save DCs, and no bonus spell slots from a high
 /// Wisdom. It only:
 /// - leaves one recognition explanation so the `class:cleric:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
@@ -4081,15 +4083,24 @@ fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
 /// - grounds the flat domain spell slot count for real (PF1 Core Rulebook Domains:
 ///   one domain spell slot per level of cleric spells she can cast, 1st and up —
 ///   exactly one 1st-level domain slot at level 1; the slot's contents are not
-///   grounded), and
-/// - emits two distinct claim-blocking diagnostics naming the still-unproven domain
-///   powers burden and the prepared divine spell posture burden explicitly, rather
-///   than hiding behind a generic "unsupported caster" label.
+///   grounded),
+/// - grounds the Good domain's Touch of Good in full when Good is a chosen domain
+///   (PF1 Core Rulebook Good Domain: a flat sacred bonus equal to half cleric level,
+///   minimum 1, and a flat `3 + Wisdom modifier` uses-per-day count — both formulas
+///   are non-dice, so both ground for real),
+/// - grounds only the Healing domain's Rebuke Death uses-per-day count when Healing
+///   is a chosen domain (PF1 Core Rulebook Healing Domain: `3 + Wisdom modifier`
+///   times per day), leaving its heal amount (`1d4` plus a per-level bonus, gated on
+///   the target's hit-point state) explicitly named but unproven because it is not a
+///   flat number, and
+/// - emits two distinct claim-blocking diagnostics naming the still-unproven pieces of
+///   the domain powers burden and the prepared divine spell posture burden explicitly,
+///   rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Cleric prepared divine spell-bearing
-/// identity, its grounded Channel Energy / domain-choice / domain-slot-count pillars,
-/// and its two named remaining burdens legible on the runtime path.
+/// identity, its grounded Channel Energy / domain-choice / domain-slot-count / domain
+/// power pillars, and its two named remaining burdens legible on the runtime path.
 fn explain_cleric_level1_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -4205,19 +4216,96 @@ fn explain_cleric_level1_spell_baseline(
         ),
     });
 
-    // Still blocked (1/2): name the domain powers burden explicitly. Channel Energy,
-    // the domain choice seam, and the flat domain spell slot count (above) are
-    // grounded; the granted powers of the chosen domains and the domain spell-list
+    // Grounded for real: the Good domain's granted power, Touch of Good. PF1 Core
+    // Rulebook Good Domain: as a standard action, touch a creature to grant it a
+    // sacred bonus on attack rolls, skill checks, ability checks, and saving throws
+    // equal to half the cleric's level (minimum 1) for 1 round; usable 3 + Wisdom
+    // modifier times per day. Verified against the PF1 Core Rulebook Good Domain rule
+    // text (d20pfsrd, cross-checked by a second independent search) rather than
+    // trusted from the pre-existing blocker-message claim or from memory. Both the
+    // bonus magnitude and the uses-per-day count are flat, non-dice formulas, so both
+    // ground for real, gated on the Good domain actually being one of the two chosen
+    // domains (an absent selection is not fabricated, mirroring the domain-choice
+    // seam above).
+    if domain_selections.contains(&GOOD_DOMAIN_SELECTION) {
+        let touch_of_good_bonus = (i16::from(CLERIC_BASELINE_LEVEL) / 2).max(1);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.cleric.domain_power_good_touch_of_good_bonus".to_owned(),
+            value: touch_of_good_bonus,
+            detail: format!(
+                "Cleric Good domain granted power Touch of Good sacred bonus (PF1 Core Rulebook \
+                 Good Domain): half cleric level, minimum 1, applied for 1 round to attack \
+                 rolls, skill checks, ability checks, and saving throws after a touch. At \
+                 Cleric level {CLERIC_BASELINE_LEVEL} this is \
+                 max({CLERIC_BASELINE_LEVEL} / 2, 1) = {touch_of_good_bonus}. This grounds only \
+                 the flat sacred-bonus magnitude; it computes no touch-attack resolution and no \
+                 application of the bonus to any actual attack roll, skill check, ability \
+                 check, or saving throw"
+            ),
+        });
+
+        let touch_of_good_uses_per_day = (3 + ability_modifiers.wisdom).max(0);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day".to_owned(),
+            value: touch_of_good_uses_per_day,
+            detail: format!(
+                "Cleric Good domain granted power Touch of Good uses per day (PF1 Core Rulebook \
+                 Good Domain): 3 + Wisdom modifier, floored at 0. At Wisdom modifier {} this is \
+                 max(3 + {}, 0) = {touch_of_good_uses_per_day}. This grounds only the flat \
+                 daily use count; it performs no per-use consumption tracking",
+                ability_modifiers.wisdom, ability_modifiers.wisdom
+            ),
+        });
+    }
+
+    // Grounded for real (uses/day only): the Healing domain's granted power, Rebuke
+    // Death. PF1 Core Rulebook Healing Domain: as a standard action, touch a living
+    // creature below 0 hit points to heal it 1d4 points of damage plus 1 for every
+    // two cleric levels; usable 3 + Wisdom modifier times per day. Verified against
+    // the PF1 Core Rulebook Healing Domain rule text (d20pfsrd, cross-checked by a
+    // second independent search): the uses-per-day rate is genuinely the same "3 +
+    // Wisdom modifier" formula as Touch of Good, so the pre-existing blocker-message
+    // claim was correct on independent verification — but the heal amount itself is
+    // NOT a flat number (a 1d4 dice roll, plus a hit-point-state gating check on the
+    // target), so it deliberately stays named-but-unproven rather than fabricated.
+    if domain_selections.contains(&HEALING_DOMAIN_SELECTION) {
+        let rebuke_death_uses_per_day = (3 + ability_modifiers.wisdom).max(0);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.cleric.domain_power_healing_rebuke_death_uses_per_day".to_owned(),
+            value: rebuke_death_uses_per_day,
+            detail: format!(
+                "Cleric Healing domain granted power Rebuke Death uses per day (PF1 Core \
+                 Rulebook Healing Domain): 3 + Wisdom modifier, floored at 0. At Wisdom \
+                 modifier {} this is max(3 + {}, 0) = {rebuke_death_uses_per_day}. This \
+                 grounds only the flat daily use count; the heal amount itself (1d4 points of \
+                 damage plus 1 for every two cleric levels, usable only on a living creature \
+                 below 0 hit points) is not a flat number and is not grounded here — it \
+                 requires a dice-roll execution engine and a hit-point-state gating check that \
+                 do not exist in this codebase",
+                ability_modifiers.wisdom, ability_modifiers.wisdom
+            ),
+        });
+    }
+
+    // Still blocked (1/2): name the domain powers burden explicitly, narrowed by the
+    // grounding above. Channel Energy, the domain choice seam, the flat domain spell
+    // slot count, Touch of Good (bonus and uses per day), and Rebuke Death's uses per
+    // day are all grounded; the Rebuke Death heal amount and the domain spell-list
     // contents remain entirely unproven.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
         message: format!(
             "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain powers burden: \
              the granted powers of the chosen domains (Good: Touch of Good; Healing: Rebuke \
-             Death — each usable 3 + Wisdom modifier times per day) and the domain spell-list \
-             contents that could fill the grounded domain spell slot are not implemented in this \
-             bounded prepared divine spell baseline, so no Cleric domain power or domain spell \
-             support is claimed"
+             Death — each usable 3 + Wisdom modifier times per day) narrow to a single unproven \
+             piece each cycle grounds more of. Touch of Good's flat sacred-bonus magnitude and \
+             flat uses-per-day count are now both grounded. Rebuke Death's flat uses-per-day \
+             count is grounded, but its heal amount (1d4 points of damage plus 1 for every two \
+             cleric levels, usable only on a creature below 0 hit points) is not a flat number \
+             and remains unproven, along with the domain spell-list contents that could fill \
+             the grounded domain spell slot. No touch-attack resolution, healing-application \
+             engine, hit-point-state gating check, or per-use consumption tracking exists for \
+             either power, so no further Cleric domain power or domain spell support is claimed"
         ),
         claim_blocking: true,
     });
