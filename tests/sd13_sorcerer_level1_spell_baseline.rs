@@ -433,15 +433,16 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_blocked_state() {
         "wizard row must be Computed after the SD13-E4-R3 promotion"
     );
 
-    // Bard must not regress; the Sorcerer slice must preserve its Blocked/Computed
-    // truth established by the SD13-E4-F7 Bard slice.
+    // Bard must not regress; it was later promoted to Partial/Computed by its own
+    // SD13-E4 decomposition slice (Bardic Knowledge grounded for real), and the
+    // Sorcerer slice must preserve that truth.
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
     assert_eq!(
         bard.support_state,
-        SupportState::Blocked,
-        "bard row must stay Blocked after the Sorcerer slice"
+        SupportState::Partial,
+        "bard row must keep its later-accepted Partial posture after the Sorcerer slice"
     );
     assert_eq!(
         bard.evidence_tier,

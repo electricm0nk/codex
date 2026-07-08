@@ -399,8 +399,21 @@ fn matrix_druid_row_is_partial_computed_and_names_remaining_burdens() {
 #[test]
 fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_truth() {
     let matrix = seeded_sd13_e1_f1_current_truth();
+
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .expect("paladin row must exist");
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin row must stay Blocked after the Druid slice"
+    );
+    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+
+    // Sorcerer, Bard, and Cleric were later promoted to Partial/Computed by their
+    // own SD13-E4 decomposition slices (Eschew Materials, Bardic Knowledge,
+    // Channel Energy).
     for row_id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
         "class.sorcerer.progression_and_spell_burden",
         "class.bard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
@@ -410,8 +423,8 @@ fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_trut
             .unwrap_or_else(|| panic!("row {row_id} must exist"));
         assert_eq!(
             row.support_state,
-            SupportState::Blocked,
-            "row {row_id} must stay Blocked after the Druid slice"
+            SupportState::Partial,
+            "row {row_id} must be Partial after its own SD13-E4 decomposition slice"
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }

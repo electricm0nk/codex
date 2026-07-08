@@ -474,23 +474,25 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         .expect("rogue row must exist");
     assert_eq!(rogue.support_state, SupportState::Partial);
 
-    // Sorcerer stays at its accepted F7 posture.
+    // Sorcerer was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Eschew Materials grounded for real).
     let sorcerer = matrix
         .row("class.sorcerer.progression_and_spell_burden")
         .expect("sorcerer row must exist");
-    assert_eq!(sorcerer.support_state, SupportState::Blocked);
+    assert_eq!(sorcerer.support_state, SupportState::Partial);
     assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
 
-    // Bard carries its own accepted SD13-E4-F7 posture (Blocked/Computed) and
-    // Barbarian carries its accepted SD13-E3 martial-chassis posture
-    // (Partial/Computed); this slice preserves both without re-promoting them.
+    // Bard was later promoted to Partial/Computed by its own SD13-E4 decomposition
+    // slice (Bardic Knowledge grounded for real), and Barbarian carries its
+    // accepted SD13-E3 martial-chassis posture (Partial/Computed); this slice
+    // preserves both without re-promoting them further.
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
     assert_eq!(
         bard.support_state,
-        SupportState::Blocked,
-        "bard row must keep its accepted Blocked posture after the paladin-decomposition slice"
+        SupportState::Partial,
+        "bard row must keep its later-accepted Partial posture after the paladin-decomposition slice"
     );
     assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
     let barbarian = matrix
@@ -502,8 +504,8 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         "barbarian row must keep its accepted Partial posture after the paladin-decomposition slice"
     );
     assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
-    // Cleric and Druid were later promoted to Blocked/Computed by their own
-    // follow-up slices; verified separately below.
+    // Cleric and Druid were later promoted to Partial/Computed by their own
+    // SD13-E4 decomposition slices (Channel Energy, Wild Empathy).
     for id in [
         "class.cleric.progression_and_spell_burden",
         "class.druid.progression_and_spell_burden",
@@ -511,7 +513,7 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         let row = matrix
             .row(id)
             .unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(row.support_state, SupportState::Blocked);
+        assert_eq!(row.support_state, SupportState::Partial);
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 

@@ -479,6 +479,9 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         .expect("rogue row must exist");
     assert_eq!(rogue.support_state, SupportState::Partial);
 
+    // Sorcerer, Bard, Cleric, and Druid were later promoted to Partial/Computed by
+    // their own SD13-E4 decomposition slices (Eschew Materials, Bardic Knowledge,
+    // Channel Energy, Wild Empathy).
     for id in [
         "class.sorcerer.progression_and_spell_burden",
         "class.bard.progression_and_spell_burden",
@@ -488,8 +491,8 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
             row.support_state,
-            SupportState::Blocked,
-            "row {id} must stay Blocked after the monk slice"
+            SupportState::Partial,
+            "row {id} must be Partial after its own SD13-E4 decomposition slice"
         );
     }
 

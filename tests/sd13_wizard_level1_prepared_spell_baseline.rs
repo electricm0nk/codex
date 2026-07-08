@@ -454,17 +454,18 @@ fn matrix_wizard_row_is_partial_computed_after_scribe_scroll_grounding() {
 
 #[test]
 fn matrix_preserves_bard_blocked_computed_truth() {
-    // Bard landed its own SD13-E4-F7 spell-baseline slice; the Wizard slice
-    // must preserve that accepted Blocked/Computed posture, not re-promote or
-    // silently demote it.
+    // Bard landed its own SD13-E4-F7 spell-baseline slice and was later promoted
+    // to Partial/Computed by a further SD13-E4 decomposition slice (Bardic
+    // Knowledge grounded for real); the Wizard slice must preserve that posture,
+    // not re-promote or silently demote it.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
     assert_eq!(
         bard.support_state,
-        SupportState::Blocked,
-        "bard row must keep its accepted Blocked posture after the Wizard slice"
+        SupportState::Partial,
+        "bard row must keep its later-accepted Partial posture after the Wizard slice"
     );
     assert_eq!(
         bard.evidence_tier,
@@ -481,24 +482,36 @@ fn matrix_preserves_bard_blocked_computed_truth() {
 #[test]
 fn matrix_preserves_hybrid_paladin_and_sorcerer_blocked_computed_truth() {
     let matrix = seeded_sd13_e1_f1_current_truth();
-    for row_id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
-        "class.sorcerer.progression_and_spell_burden",
-    ] {
-        let row = matrix
-            .row(row_id)
-            .unwrap_or_else(|| panic!("row {row_id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Blocked,
-            "row {row_id} must stay Blocked after the Wizard slice"
-        );
-        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
-        assert_eq!(
-            row.evidence_freshness,
-            EvidenceFreshness::RefreshableFromLiveProof
-        );
-    }
+
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .unwrap_or_else(|| panic!("row class.paladin.hybrid_chassis_and_spell_burden must exist"));
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin row must stay Blocked after the Wizard slice"
+    );
+    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(
+        paladin.evidence_freshness,
+        EvidenceFreshness::RefreshableFromLiveProof
+    );
+
+    // Sorcerer was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Eschew Materials grounded for real).
+    let sorcerer = matrix
+        .row("class.sorcerer.progression_and_spell_burden")
+        .unwrap_or_else(|| panic!("row class.sorcerer.progression_and_spell_burden must exist"));
+    assert_eq!(
+        sorcerer.support_state,
+        SupportState::Partial,
+        "sorcerer row must be Partial after its own SD13-E4 decomposition slice"
+    );
+    assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(
+        sorcerer.evidence_freshness,
+        EvidenceFreshness::RefreshableFromLiveProof
+    );
 
     // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
     // decomposition slice (Track grounded for real).

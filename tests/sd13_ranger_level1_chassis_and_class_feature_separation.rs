@@ -455,9 +455,21 @@ fn matrix_ranger_row_is_promoted_to_partial_and_names_remaining_pillars() {
 fn matrix_preserves_sibling_rows_after_ranger_promotion() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
-    // These rows stay Blocked/Computed.
+    // This row stays Blocked/Computed.
+    let paladin = matrix
+        .row("class.paladin.hybrid_chassis_and_spell_burden")
+        .unwrap_or_else(|| panic!("row class.paladin.hybrid_chassis_and_spell_burden must exist"));
+    assert_eq!(
+        paladin.support_state,
+        SupportState::Blocked,
+        "paladin row must stay Blocked after the ranger-decomposition slice"
+    );
+    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+
+    // Bard, Cleric, Druid, and Sorcerer were later promoted to Partial/Computed by
+    // their own SD13-E4 decomposition slices (Bardic Knowledge, Channel Energy,
+    // Wild Empathy, Eschew Materials).
     for id in [
-        "class.paladin.hybrid_chassis_and_spell_burden",
         "class.bard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
         "class.druid.progression_and_spell_burden",
@@ -468,8 +480,8 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
             .unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
             row.support_state,
-            SupportState::Blocked,
-            "row {id} must stay Blocked after the ranger-decomposition slice"
+            SupportState::Partial,
+            "row {id} must be Partial after its own SD13-E4 decomposition slice"
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
