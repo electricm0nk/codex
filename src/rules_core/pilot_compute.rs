@@ -80,7 +80,13 @@
 //! flat +2 bonus on weapon attack and damage rolls against the favored enemy (PF1
 //! includes attack rolls, unlike D&D 3.5) — retiring the favored-enemy claim-blocking
 //! diagnostic while grounding no target-type matching or conditional-application
-//! engine. The SD13-E4 Druid Wild Empathy
+//! engine. A later SD13-E5 Ranger Combat Style slice corrects a mistaken framing in
+//! the combat-style diagnostic (it previously claimed the archery-vs-two-weapon-combat
+//! style choice was a level-1 decision separate from a level-2 bonus-feat grant; PF1
+//! Core Rulebook actually grants the style choice and its first bonus feat TOGETHER at
+//! 2nd level) and retires the claim-blocking diagnostic in favor of a grounded
+//! level-gate absence record (value 0), mirroring the Paladin mercy level-gate idiom —
+//! no bonus-feat mechanical value is fabricated. The SD13-E4 Druid Wild Empathy
 //! slice further splits the Druid nature-bond/wild-empathy class-feature blocker
 //! into two named diagnostics: nature bond (the animal-companion-vs-domain choice
 //! and nature sense) stays explicitly claim-blocked, and Wild Empathy (PF1 Core
@@ -209,6 +215,15 @@ const PALADIN_LAY_ON_HANDS_DIVINE_GRACE_LEVEL: u8 = 2;
 // thereafter). This bounded slice does not ground any level past
 // MAX_SUPPORTED_PALADIN_LEVEL, so mercy is always a correct ABSENCE on this surface.
 const PALADIN_MERCY_LEVEL: u8 = 3;
+
+// SD13-E5 Ranger Combat Style correction. Combat Style Feat is a 2nd-level ranger
+// feature in the PF1 Core Rulebook: the ranger selects a combat style (archery or
+// two-weapon combat) and gains its first bonus feat TOGETHER at 2nd level -- these
+// are not separable into a level-1 style choice plus a level-2 feat grant, as an
+// earlier version of the Ranger combat-style diagnostic incorrectly claimed. This
+// bounded slice does not ground any level past HYBRID_BASELINE_LEVEL (1), so combat
+// style is always a correct ABSENCE on this surface, mirroring PALADIN_MERCY_LEVEL.
+const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 
 // SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
 // caster; this slice recognizes only its bounded single-class level-1 identity as direct
@@ -639,14 +654,14 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     );
 
     // SD13-E3 Ranger-only decomposition: split the F6 Ranger non-spell
-    // class-feature blocker into three named pillars, and ground Track for
-    // real (the only one of the three with a bounded, deterministic flat
-    // numeric value). This is an extension, never a downgrade, of the F6
-    // surface, mirroring the Paladin decomposition immediately above.
+    // class-feature blocker into three named pillars, and ground Track and
+    // combat style for real (Track as a bounded flat numeric value, combat
+    // style as a level-gate absence record). This is an extension, never a
+    // downgrade, of the F6 surface, mirroring the Paladin decomposition
+    // immediately above.
     explain_ranger_level1_chassis_and_class_feature_separation(
         input,
         &mut explanations,
-        &mut diagnostics,
     );
 
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
@@ -2649,9 +2664,9 @@ fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E3 runtime evidence for the deterministic Human Ranger
 /// level-1 chassis as a per-pillar decomposition of the F6 combined non-spell
-/// class-feature blocker, grounding two of the three named pillars for real
-/// (Track by the SD13-E3 slice, the Favored Enemy flat surface by the SD13-E5
-/// slice).
+/// class-feature blocker, grounding all three named pillars for real (Track by
+/// the SD13-E3 slice, the Favored Enemy flat surface by the SD13-E5 slice, and
+/// the combat style level-gate absence by a later SD13-E5 slice).
 ///
 /// This sits on top of the accepted SD13-F6 hybrid baseline: F6 already proves
 /// the deterministic Human Ranger level-1 hybrid identity is acknowledged on the
@@ -2660,13 +2675,17 @@ fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
 /// single combined later-spell blocker. This slice proves the per-pillar
 /// separation Ranger actually needs:
 ///
-/// - one explicit claim-blocking diagnostic for the still-missing non-spell
-///   class-feature pillar:
-///   * `combat style` — the archery-vs-two-weapon-combat style choice is a
-///     level-1 decision, but the bonus feat the combat style actually grants
-///     is a level-2 PF1 Core Rulebook milestone; neither the level-1 style
-///     choice nor the level-2 bonus-feat grant is implemented, so nothing is
-///     fabricated at either level
+/// - one grounded level-gate explanation (value 0) for the combat style
+///   pillar, which retires the `class_feature.ranger.combat_style.unsupported`
+///   blocker and corrects a mistaken framing that blocker carried: PF1 Core
+///   Rulebook grants the archery-vs-two-weapon-combat style choice and its
+///   first bonus feat TOGETHER at 2nd level (`RANGER_COMBAT_STYLE_LEVEL`) —
+///   they are not separable into a level-1 style choice plus a level-2 feat
+///   grant, as the retired diagnostic incorrectly claimed. At the bounded
+///   level-1 baseline this correctly grounds to a value-0 ABSENCE, mirroring
+///   the Paladin mercy level-gate idiom (`class_chassis.paladin.level_gate.mercy`);
+///   the at-grant selection is named but not computed, and no bonus-feat
+///   mechanical value is fabricated.
 ///
 /// - one grounded explanation for the Track pillar, computed for real:
 ///   the Survival-check bonus to follow tracks equals `max(ranger level / 2, 1)`
@@ -2693,9 +2712,9 @@ fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
 /// This deliberately does not compute a supported class-feature surface. It
 /// grounds no favored-enemy conditional application, no combat-style feat
 /// grant, no animal companion, no favored-terrain breadth, and no spell
-/// posture. It only emits the remaining per-pillar blocker and the grounded
-/// Track / Favored Enemy flat values that prove the F6 surface remains
-/// separable on the runtime path.
+/// posture. It only emits the grounded Track / Favored Enemy / combat-style
+/// level-gate values that prove the F6 surface remains separable on the
+/// runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -2705,7 +2724,6 @@ fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
 fn explain_ranger_level1_chassis_and_class_feature_separation(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
-    diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     if !is_single_class_ranger_level1(input) {
         return;
@@ -2714,21 +2732,29 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         return;
     }
 
-    // The per-pillar blocker rides alongside the F6 hybrid blockers. It is an
-    // intentionally distinct diagnostic id so the chassis burden is separable
-    // from the combined F6 non-spell class-feature burden on the runtime path.
-    // The former `class_feature.ranger.favored_enemy.unsupported` blocker is
-    // retired: the Favored Enemy flat surface is grounded for real below.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.ranger.combat_style.unsupported".to_owned(),
-        message: format!(
-            "Ranger level {HYBRID_BASELINE_LEVEL} remains blocked on its combat style burden: the \
-             archery-vs-two-weapon-combat style choice is a level-1 decision, but the bonus feat the \
-             combat style actually grants is a level-2 PF1 Core Rulebook milestone; neither the \
-             level-1 style choice nor the level-2 bonus-feat grant is implemented in this bounded \
-             chassis baseline, so no Ranger combat-style support is claimed at either level"
+    // Combat style is a correct ABSENCE at this bounded level-1 baseline, grounded
+    // as a level-gate explanation (value 0), mirroring the Paladin mercy idiom. The
+    // former `class_feature.ranger.combat_style.unsupported` blocker is retired: it
+    // incorrectly claimed the archery-vs-two-weapon-combat style choice was a
+    // level-1 decision separate from a level-2 bonus-feat grant. PF1 Core Rulebook
+    // actually grants the style choice and its first bonus feat TOGETHER at 2nd
+    // level (RANGER_COMBAT_STYLE_LEVEL), so at level 1 there is nothing to
+    // recognize: no style is chosen and no bonus feat is granted.
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.level_gate.combat_style".to_owned(),
+        value: 0,
+        detail: format!(
+            "Ranger combat style at ranger level {HYBRID_BASELINE_LEVEL}: correctly absent at \
+             level {HYBRID_BASELINE_LEVEL} by PF1 CRB level gate; at-grant selection named but not \
+             computed. Combat Style Feat is a {RANGER_COMBAT_STYLE_LEVEL}nd-level ranger feature: \
+             the ranger selects one combat style (archery or two-weapon combat) and gains its \
+             first bonus feat together at {RANGER_COMBAT_STYLE_LEVEL}nd level -- the style choice \
+             and the bonus-feat grant are not separable into a level-1 decision plus a level-2 \
+             grant. (Correction: an earlier version of this record, \
+             `class_feature.ranger.combat_style.unsupported`, incorrectly described the style \
+             choice as a level-1 decision distinct from the level-2 bonus-feat grant; PF1 Core \
+             Rulebook grants both together at 2nd level.)"
         ),
-        claim_blocking: true,
     });
 
     // The third named F6 pillar, Track, is grounded for real: a bounded, flat

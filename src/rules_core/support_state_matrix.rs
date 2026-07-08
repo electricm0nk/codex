@@ -987,9 +987,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Ranger level-1 chassis baseline, with Track and the favored-enemy \
-                            flat surface grounded for real and the combat-style pillar burden \
-                            and the later spell burden still blocked",
+                            Ranger level-1 chassis baseline, with Track, the favored-enemy \
+                            flat surface, and the combat-style level-gate absence grounded \
+                            for real and the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1003,15 +1003,21 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     favored-enemy type (choice:ranger_favored_enemy), the flat +2 bonus on Bluff / \
                     Knowledge / Perception / Sense Motive / Survival checks against the favored \
                     enemy, and the flat +2 bonus on weapon attack and damage rolls against the \
-                    favored enemy (PF1 includes attack rolls, unlike D&D 3.5). The row is Partial, \
-                    not Supported: the favored-enemy conditional-application engine (target-type \
+                    favored enemy (PF1 includes attack rolls, unlike D&D 3.5). A later SD13-E5 \
+                    slice grounds the combat style pillar as a correct level-1 ABSENCE (value 0): \
+                    PF1 Core Rulebook grants the archery-vs-two-weapon-combat style choice and its \
+                    first bonus feat TOGETHER at 2nd level, not split across a level-1 choice and a \
+                    level-2 grant as an earlier version of this row's note incorrectly claimed; \
+                    there was never a level-1 style choice to ground. The row is Partial, not \
+                    Supported: the favored-enemy conditional-application engine (target-type \
                     matching that would decide whether a specific check or attack is made against \
-                    the favored enemy) is not implemented, the combat style pillar (the level-1 \
-                    style choice and its level-2 bonus-feat grant) remains named and unproven, and \
-                    the later ranger spell burden (spell slots, spell source, spells \
-                    known/prepared) is still deferred to SD13-E4. No Ranger level 2+ is proven",
-                next_required_uplift: "SD13-E5 ranger combat-style grounding slice and a \
-                    favored-enemy conditional-application engine, then SD13-E4 ranger spell burden",
+                    the favored enemy) is not implemented, the level-2 combat-style feat grant \
+                    itself remains unproven pending Ranger level-2+ progression, and the later \
+                    ranger spell burden (spell slots, spell source, spells known/prepared) is \
+                    still deferred to SD13-E4. No Ranger level 2+ is proven",
+                next_required_uplift: "Ranger level-2+ progression (to ground the combat-style \
+                    feat grant at 2nd level) and a favored-enemy conditional-application engine, \
+                    then SD13-E4 ranger spell burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",
