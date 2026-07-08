@@ -182,22 +182,25 @@ fn level_8_propagates_computed_receipt_and_view_model() {
     );
 }
 
-// ----- Negative control: level 9 stays blocked (no new milestone proven yet) -----
+// ----- Negative control: a Fighter above the bounded tranche stays blocked -----
 
 #[test]
-fn level_9_fighter_stays_claim_blocked() {
-    let level_9 = LEVEL_8_FIXTURE.replace("class:fighter:8", "class:fighter:9");
-    let input = load(&level_9);
+fn fighter_above_the_bounded_tranche_stays_claim_blocked() {
+    // The bounded tranche has since widened past level 8 (to level 10 —
+    // tests/sd13_fighter_level9_level10_progression.rs), so this negative control
+    // now sits just above the current bound (level 11) rather than at level 9.
+    let level_11 = LEVEL_8_FIXTURE.replace("class:fighter:8", "class:fighter:11");
+    let input = load(&level_11);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-9 Fighter must stay claim-blocked in this slice: {:?}",
+        "level-11 Fighter must stay claim-blocked above the bounded tranche: {:?}",
         computation.diagnostics
     );
     assert!(
         !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "level-9 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-11 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 
@@ -227,7 +230,11 @@ fn non_fighter_class_does_not_leak_level_8_bonus_feat_explanation() {
 // ----- Control plane: the matrix widens the levels-2-10 row's proven range to level 8 -----
 
 #[test]
-fn matrix_levels_2_10_names_level_8_as_proven_and_level_9_plus_as_remaining() {
+fn matrix_levels_2_10_names_level_8_as_proven() {
+    // The row's proven range has since widened past level 8 (to level 10 —
+    // tests/sd13_fighter_level9_level10_progression.rs), so this test only asserts
+    // that level 8's own proof landed, rather than the exact current grounding_ref
+    // or "remaining" range, which a later slice is free to move forward.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let row = matrix
         .row("class.fighter.levels_2_10")
@@ -236,20 +243,10 @@ fn matrix_levels_2_10_names_level_8_as_proven_and_level_9_plus_as_remaining() {
     assert_eq!(row.support_state, SupportState::Partial);
     assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     assert!(
-        row.grounding_ref.contains("sd13_fighter_level8_progression"),
-        "levels-2-10 row must cite the live SD13-E3 level-8 proof surface: {}",
-        row.grounding_ref
-    );
-    assert!(
-        row.blocker_or_lossiness_note.contains("level-8 bonus")
+        row.blocker_or_lossiness_note.contains("level-8")
             || row.blocker_or_lossiness_note.contains("L8")
             || row.blocker_or_lossiness_note.contains("level 8"),
         "levels-2-10 row blocker note must name the level-8 bonus-feat milestone: {}",
-        row.blocker_or_lossiness_note
-    );
-    assert!(
-        row.blocker_or_lossiness_note.contains("9-10"),
-        "levels-2-10 row blocker note must name the remaining unproven levels 9-10: {}",
         row.blocker_or_lossiness_note
     );
 }

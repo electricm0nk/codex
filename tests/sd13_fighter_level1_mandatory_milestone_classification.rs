@@ -263,13 +263,13 @@ fn matrix_level_1_and_levels_2_10_remain_distinct_rows() {
     );
     // The slice must NOT have weakened the L2-10 row's enforcement of "levels
     // beyond the proven range remain unproven"; the L2-10 row is a separate
-    // concern with its own grounding ref, now the more specific SD13-E3 level-8
-    // proof surface.
+    // concern with its own grounding ref, now the more specific SD13-E5
+    // level-9/level-10 proof surface.
     assert!(
         levels_2_10
             .grounding_ref
-            .contains("sd13_fighter_level8_progression"),
-        "L2-10 row must keep its own SD13-E3 tranche grounding ref: {}",
+            .contains("sd13_fighter_level9_level10_progression"),
+        "L2-10 row must keep its own SD13 tranche grounding ref: {}",
         levels_2_10.grounding_ref
     );
 }

@@ -164,15 +164,15 @@ fn unsupported_loadout_posture_blocks_combat_totals() {
 #[test]
 fn wrong_fighter_level_blocks_combat_totals() {
     // The deterministic baseline is grounded only across the bounded Fighter
-    // milestone levels 1-8 (SD13-E3 widened level 8, another bonus feat, into the
-    // supported tranche). A Fighter above that bounded tranche (level 9+, where
-    // no new PF1 Fighter-specific milestone exists until the level-10 bonus-feat
-    // cadence entry) must be treated as an unsupported posture, not silently
-    // computed, even though every other loadout/feat/choice condition still holds.
-    let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:fighter:9");
+    // milestone levels 1-10 (SD13-E5 widened levels 9-10, Weapon Training 2 and
+    // the level-10 bonus feat, into the supported tranche). A Fighter above that
+    // bounded tranche (level 11+, beyond the SD-13 level-10 progression matrix)
+    // must be treated as an unsupported posture, not silently computed, even
+    // though every other loadout/feat/choice condition still holds.
+    let mutated = DETERMINISTIC_FIXTURE
+        .replace("class_level=class:fighter:1", "class_level=class:fighter:11");
     assert!(
-        mutated.contains("class_level=class:fighter:9"),
+        mutated.contains("class_level=class:fighter:11"),
         "test setup should have mutated the Fighter level"
     );
     let input = load(&mutated);

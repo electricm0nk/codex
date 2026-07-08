@@ -300,13 +300,13 @@ const SELECTED_SKILL_RANK: u8 = 1;
 const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
-// Bounded SD13-E3 Fighter milestone widening. The accepted level-1 pilot is now
-// joined by levels 2 through 8. Nothing here grounds level 9+ Fighter burden, the
-// weapon-training damage-roll half, or any non-Fighter positive support. The
-// generic PF1 level-4 ability-score-increase milestone needs no separate seam:
-// the chosen ability score is trusted at face value, like every other ability
-// adjustment in this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 8;
+// Bounded SD13-E3/SD13-E5 Fighter milestone widening. The accepted level-1 pilot
+// is now joined by levels 2 through 10. Nothing here grounds level 11+ Fighter
+// burden, the weapon-training damage-roll half, the Bravery Will-vs-fear bonus,
+// or any non-Fighter positive support. The generic PF1 ability-score-increase
+// milestones (levels 4 and 8) need no separate seam: the chosen ability score is
+// trusted at face value, like every other ability adjustment in this codebase.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 10;
 
 // Fighter level-2 bonus-feat progression seam. Fighter gains an additional bonus
 // feat at level 2; this slice surfaces the named selection as an explicit seam only
@@ -334,16 +334,33 @@ const COMBAT_REFLEXES_FEAT_SELECTION: &str = "feat:combat_reflexes";
 const FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_8";
 const IMPROVED_CRITICAL_FEAT_SELECTION: &str = "feat:improved_critical";
 
-// Fighter Weapon Training 1, gained at level 5. It grants +1 to attack rolls and
-// damage rolls with weapons of the chosen weapon group. This slice grounds only
-// the attack-roll half (folded into the baseline melee attack bonus for the
-// deterministic Longsword, which falls under the canonical Heavy Blades group);
-// the damage-roll half is never computed for any Fighter level in this codebase,
-// so it stays explicitly unproven rather than silently omitted.
+// Fighter level-10 bonus-feat progression seam. Fighter gains an additional bonus
+// feat at level 10 (the cadence continues 1, 2, 4, 6, 8, 10); this slice surfaces
+// the named selection as an explicit seam only and grounds no general feat-effect
+// or prerequisite engine, mirroring the level-2 through level-8 seams. The
+// canonical Greater Weapon Focus selection's prerequisites (Weapon Focus with the
+// chosen weapon and fighter level 8) are honestly met by the canonical loadout:
+// Weapon Focus (longsword) is the level-1 fighter bonus feat and the seam only
+// exists at Fighter level 10.
+const FIGHTER_LEVEL_10_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_10";
+const GREATER_WEAPON_FOCUS_FEAT_SELECTION: &str = "feat:greater_weapon_focus";
+
+// Fighter Weapon Training, gained at level 5 with a new rank every four levels
+// (rank = 1 + (level - 5) / 4): Weapon Training 1 at level 5, Weapon Training 2
+// at level 9. Each rank grants the first chosen weapon group +rank to attack and
+// damage rolls; each later-chosen group sits one point lower. This slice grounds
+// only the attack-roll half of the first group (folded into the baseline melee
+// attack bonus for the deterministic Longsword, which falls under the canonical
+// Heavy Blades group) and surfaces the second group (canonically Bows, chosen at
+// level 9) as an explanation-only record; the damage-roll half is never computed
+// for any Fighter level in this codebase, so it stays explicitly unproven rather
+// than silently omitted.
 const FIGHTER_WEAPON_TRAINING_1_LEVEL: u8 = 5;
-const WEAPON_TRAINING_1_ATTACK_BONUS: i16 = 1;
+const FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE: u8 = 4;
 const FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID: &str = "choice:fighter_weapon_training_group";
 const HEAVY_BLADES_GROUP_SELECTION: &str = "group:heavy_blades";
+const FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID: &str = "choice:fighter_weapon_training_group_2";
+const BOWS_GROUP_SELECTION: &str = "group:bows";
 
 // Fighter armor training 1, gained at level 3. It reduces the worn armor's
 // armor-check penalty by 1 (to a minimum of 0) and raises its maximum Dexterity
@@ -1609,21 +1626,30 @@ fn effective_chain_shirt_armor_check_penalty(level: u8) -> i16 {
     (CHAIN_SHIRT_ARMOR_CHECK_PENALTY + fighter_armor_training(level).armor_check_reduction).min(0)
 }
 
-/// The Weapon Training 1 attack-roll bonus for a Fighter at the given level,
-/// gated on the canonical `choice:fighter_weapon_training_group ->
-/// group:heavy_blades` selection (the group the deterministic Longsword falls
-/// under). Returns 0 before level 5 or when the group choice is absent — the
-/// canonical-choice validator (`CANONICAL_FIGHTER_FEAT_CHOICES`) separately
-/// claim-blocks a present-but-non-canonical selection, so this function only
-/// needs to distinguish "canonical" from "absent or anything else."
-fn fighter_weapon_training_attack_bonus(input: &CharacterInput, level: u8) -> i16 {
+/// The Fighter weapon-training rank at the given level: 0 before level 5, then
+/// 1 + (level - 5) / 4 (Weapon Training 1 at level 5, Weapon Training 2 at
+/// level 9 within this bounded levels-1-10 surface).
+fn fighter_weapon_training_rank(level: u8) -> i16 {
     if level < FIGHTER_WEAPON_TRAINING_1_LEVEL {
         return 0;
     }
+    i16::from(1 + (level - FIGHTER_WEAPON_TRAINING_1_LEVEL) / FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE)
+}
+
+/// The weapon-training attack-roll bonus for the first chosen weapon group at
+/// the given Fighter level, gated on the canonical
+/// `choice:fighter_weapon_training_group -> group:heavy_blades` selection (the
+/// group the deterministic Longsword falls under). The bonus equals the
+/// weapon-training rank: +1 at levels 5-8, +2 at levels 9-10. Returns 0 before
+/// level 5 or when the group choice is absent — the canonical-choice validator
+/// (`CANONICAL_FIGHTER_FEAT_CHOICES`) separately claim-blocks a
+/// present-but-non-canonical selection, so this function only needs to
+/// distinguish "canonical" from "absent or anything else."
+fn fighter_weapon_training_attack_bonus(input: &CharacterInput, level: u8) -> i16 {
     if choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID)
         == Some(HEAVY_BLADES_GROUP_SELECTION)
     {
-        WEAPON_TRAINING_1_ATTACK_BONUS
+        fighter_weapon_training_rank(level)
     } else {
         0
     }
@@ -1784,6 +1810,24 @@ fn explain_fighter_class_features(
         });
     }
 
+    if level >= 10
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_10_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_10_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 10 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_10_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. The canonical Greater Weapon Focus \
+                     selection's prerequisites (Weapon Focus (longsword) and fighter level 8) are \
+                     honestly met by the canonical loadout. This slice grounds the bonus-feat \
+                     slot, not a general feat-effect or prerequisite engine, so it contributes no \
+                     computed mechanical value (+0)"
+            ),
+        });
+    }
+
     let armor_training = fighter_armor_training(level);
     if armor_training.rank == 2 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
@@ -1821,12 +1865,19 @@ fn explain_fighter_class_features(
 
     let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
     if weapon_training_bonus > 0 {
+        let rank = fighter_weapon_training_rank(level);
+        let rank_level = if rank >= 2 {
+            FIGHTER_WEAPON_TRAINING_1_LEVEL + FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE
+        } else {
+            FIGHTER_WEAPON_TRAINING_1_LEVEL
+        };
         explanations.push(ComputationExplanation {
             id: "class_feature.fighter.weapon_training".to_owned(),
             value: weapon_training_bonus,
             detail: format!(
-                "Fighter level {FIGHTER_WEAPON_TRAINING_1_LEVEL} Weapon Training 1 (weapon \
-                 training, cr_abilities_class.lst Fighter): the chosen weapon group \
+                "Fighter level {rank_level} Weapon Training {rank} (weapon training, \
+                 cr_abilities_class.lst Fighter; rank = 1 + (level - 5) / 4): the first chosen \
+                 weapon group \
                  ({FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID} -> {HEAVY_BLADES_GROUP_SELECTION}) \
                  grants +{weapon_training_bonus} to attack rolls with weapons of that group, \
                  which the deterministic Longsword falls under; this +{weapon_training_bonus} is \
@@ -1836,18 +1887,44 @@ fn explain_fighter_class_features(
                  damage-roll half stays explicitly unproven rather than silently omitted"
             ),
         });
+
+        // Weapon Training 2 (level 9) also grants a second chosen weapon group a
+        // bonus one point lower than the first group's. The canonical second group
+        // (Bows) covers no equipped weapon on the deterministic Longsword loadout,
+        // so this is an explanation-only record: its +1 is never folded into the
+        // Longsword baseline melee attack bonus, which uses the first-group rank.
+        if rank >= 2
+            && choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID)
+                == Some(BOWS_GROUP_SELECTION)
+        {
+            let second_group_bonus = rank - 1;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.fighter.weapon_training_group_2".to_owned(),
+                value: second_group_bonus,
+                detail: format!(
+                    "Fighter level {rank_level} Weapon Training {rank} also grants a second \
+                     chosen weapon group \
+                     ({FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID} -> {BOWS_GROUP_SELECTION}) \
+                     +{second_group_bonus} to attack and damage rolls with weapons of that \
+                     group. No bow is part of the deterministic Longsword loadout, so this seam \
+                     is explanation-only: the +{second_group_bonus} is not folded into any \
+                     computed total, and the baseline melee attack bonus uses only the \
+                     first-group (Heavy Blades) rank"
+                ),
+            });
+        }
     }
 }
 
 /// The canonical Human Fighter feat-choice selections this slice preserves on the
-/// deterministic level-1 through level-8 seam, as `(choice_set_id,
+/// deterministic level-1 through level-10 seam, as `(choice_set_id,
 /// canonical_selection_id)` pairs. Any named slot present but deviating from its
 /// canonical selection is claim-blocked. A slot absent for the chosen level (e.g.
 /// the level-2 bonus feat at level 1) is not fabricated. This same machinery
-/// validates the level-5 weapon-training-group choice, since it is structurally
-/// identical to a bonus-feat slot (a named choice-set that must match one
-/// canonical selection).
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 8] = [
+/// validates the level-5 and level-9 weapon-training-group choices, since each is
+/// structurally identical to a bonus-feat slot (a named choice-set that must match
+/// one canonical selection).
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 10] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -1877,10 +1954,18 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 8] = [
         FIGHTER_LEVEL_8_BONUS_FEAT_CHOICE_ID,
         IMPROVED_CRITICAL_FEAT_SELECTION,
     ),
+    (
+        FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID,
+        BOWS_GROUP_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_10_BONUS_FEAT_CHOICE_ID,
+        GREATER_WEAPON_FOCUS_FEAT_SELECTION,
+    ),
 ];
 
 /// Claim-block non-canonical feat-choice mutations on the deterministic Human Fighter
-/// levels 1-8 seam, while preserving the accepted canonical selections exactly.
+/// levels 1-10 seam, while preserving the accepted canonical selections exactly.
 ///
 /// This is deliberately not a general feat legality or prerequisite engine. It only knows
 /// the exact accepted deterministic feat-choice selections on the bounded Human Fighter
@@ -1890,7 +1975,7 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 8] = [
 /// proof without a general engine — instead of letting the non-canonical build ride through
 /// as a fabricated computed success.
 ///
-/// It runs only for a supported single-class Human Fighter (levels 1-8); any other posture
+/// It runs only for a supported single-class Human Fighter (levels 1-10); any other posture
 /// is already claim-blocked upstream and is left untouched here. It grounds no alternative
 /// feat effect and does not touch the read-only canonical Human ability-bonus target.
 fn validate_fighter_feat_choice_legality(
