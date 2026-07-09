@@ -536,17 +536,26 @@ fn druid_level_3_was_later_widened_into_the_supported_tranche() {
 }
 
 #[test]
-fn druid_level_4_is_not_promoted() {
+fn druid_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 stayed unrecognized. A later
+    // SD13-E5 slice (tests/sd13_druid_level4_progression.rs) widened the
+    // level-range gate to level 4 and confirmed every one of the formulas below
+    // extends to level 4 unchanged; this negative control is superseded, not
+    // violated — pin the new truth here too so this file stays internally
+    // consistent. The equivalent level-5 negative control now lives in the new
+    // tests/sd13_druid_level4_progression.rs file where the coverage moved.
     let level_4 = DRUID_FIXTURE.replace("class:druid:1", "class:druid:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, RECOGNITION_ID),
-        "level-4 Druid must not gain the bounded prepared-divine-spell-baseline recognition record"
+        has_explanation(&computation, RECOGNITION_ID),
+        "level-4 Druid is supported since the SD13-E5 level-4 slice: {:?}",
+        computation.explanations
     );
     assert!(
-        !has_explanation(&computation, WILD_EMPATHY_ID) && !has_explanation(&computation, NATURE_SENSE_ID),
-        "level-4 Druid must not gain the bounded Wild Empathy / Nature Sense grounding"
+        has_explanation(&computation, WILD_EMPATHY_ID) && has_explanation(&computation, NATURE_SENSE_ID),
+        "level-4 Druid is supported since the SD13-E5 level-4 slice: {:?}",
+        computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
