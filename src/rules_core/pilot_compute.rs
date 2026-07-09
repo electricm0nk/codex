@@ -2614,6 +2614,14 @@ fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
 /// per-burden separation Paladin actually needs, widened by the SD13-E5
 /// level-2 milestone:
 ///
+/// - one grounded numeric explanation set for the foundational base-attack-
+///   bonus / base-save progression pillar, computed for real at every
+///   supported level (1..=2): full base attack bonus (the same formula shape
+///   as Fighter/Barbarian/Ranger), and good Fortitude / good Will / poor
+///   Reflex base saves (NOT the same save shape as Ranger's good
+///   Fortitude/Reflex, poor Will). Both formulas were verified independently
+///   against the PF1 Core Rulebook Paladin class table before grounding.
+///
 /// - one grounded numeric explanation set for the fourth named non-spell
 ///   pillar, Smite Evil, computed for real at every supported level:
 ///   * PF1 Core Rulebook Smite Evil: 1 use per day below level 4, an
@@ -2707,8 +2715,67 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // modifier (if positive; the rule never applies it as a penalty), damage
     // bonus = paladin level.
     let paladin_level = i16::from(level);
-    let smite_evil_uses_per_day: i16 = 1;
     let charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
+
+    // Grounded (SD13-E5): the foundational base-attack-bonus / base-save progression
+    // pillar. Unlike every other class row in this matrix (Fighter, Barbarian, Monk,
+    // Rogue, Druid, Cleric, Bard, Sorcerer, Wizard, and by the immediately preceding
+    // cycle, Ranger), Paladin had never had this pillar grounded at all, despite
+    // Paladin already supporting a level-range gate (1..=2) unlike Ranger's
+    // level-1-only gate at the time its own gap was closed. Both formulas were
+    // verified against the PF1 Core Rulebook Paladin class table (d20pfsrd and the
+    // legacy Paizo PRD mirror) before writing this code, reading the raw level 1-5
+    // table rows directly (BAB +1/+2/+3/+4/+5, Fort +2/+3/+3/+4/+4, Ref +0/+0/+1/+1/+1,
+    // Will +2/+3/+3/+4/+4) rather than assuming Paladin matched Ranger's exact shape:
+    // Paladin is full BAB (the same shape as Fighter/Barbarian/Ranger), but its good
+    // saves are Fortitude AND Will (poor Reflex) -- NOT Ranger's good
+    // Fortitude/Reflex, poor Will. Paladin level 3+ (mercy) remains out of scope for
+    // this slice; only the flat base-attack and base-save numbers are grounded here,
+    // extended across the already-supported level 1..=2 range.
+    let good_save = paladin_level / 2 + 2;
+    let poor_save = paladin_level / 3;
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.base_attack_bonus".to_owned(),
+        value: paladin_level,
+        detail: format!(
+            "Paladin level {level} base attack bonus from the PF1 Core Rulebook Paladin class \
+             table (full base-attack progression, the same formula shape as \
+             Fighter/Barbarian/Ranger): classlevel = {paladin_level}. This is a standalone \
+             explanation record; it is not wired into the integrated base_attack_bonus field or \
+             into compute_combat_baseline"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.base_save.fortitude".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Paladin level {level} base Fortitude save (good save) from the PF1 Core Rulebook \
+             Paladin class table: classlevel/2+2 = {good_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.base_save.reflex".to_owned(),
+        value: poor_save,
+        detail: format!(
+            "Paladin level {level} base Reflex save (poor save) from the PF1 Core Rulebook \
+             Paladin class table: classlevel/3 = {poor_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.base_save.will".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Paladin level {level} base Will save (good save) from the PF1 Core Rulebook \
+             Paladin class table: classlevel/2+2 = {good_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+
+    let smite_evil_uses_per_day: i16 = 1;
     let smite_evil_attack_bonus = charisma_modifier.max(0);
     let smite_evil_damage_bonus = paladin_level;
 

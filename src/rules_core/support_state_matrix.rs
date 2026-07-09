@@ -1097,7 +1097,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 blocker_or_lossiness_note: "SD13-E3/E4/E5 leaves direct computed evidence that the \
                     deterministic Human Paladin level-1 and level-2 hybrid chassis is recognized \
                     on the compute seam and that all four named non-spell class-feature burdens \
-                    are grounded across those levels. The smite evil pillar is grounded for real: \
+                    are grounded across those levels. The foundational base attack bonus / base \
+                    save progression pillar is now grounded for real at both levels as standalone, \
+                    not-integrated records: full base attack bonus (classlevel, the same shape as \
+                    Fighter/Barbarian/Ranger) and good Fortitude / good Will / poor Reflex base \
+                    saves (classlevel/2+2 for the two good saves, classlevel/3 for the poor save) \
+                    -- NOT the same save shape as Ranger's good Fortitude/Reflex, poor Will, both \
+                    verified independently against the PF1 Core Rulebook Paladin class table. The \
+                    smite evil pillar is grounded for real: \
                     uses per day = 1, attack-roll bonus = Charisma modifier (if positive), damage \
                     bonus = paladin level (PF1 Core Rulebook), computed against the deterministic \
                     fixtures as 1 / +2 / +1 at level 1 and 1 / +2 / +2 at level 2; this grounds \
