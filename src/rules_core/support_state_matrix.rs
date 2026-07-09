@@ -823,18 +823,30 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     per day grows by the PF1 Core Rulebook's own +2-rounds-per-level-after-1st \
                     rule (4 + Constitution modifier + 2 * (level - 1), 9 on the Con 16 fixture at \
                     level 2) — the flat rage constants and the illiteracy-absence record stay \
-                    unchanged at level 2. None of the grounded records are wired into the \
-                    integrated base_attack_bonus/base-saves/speed/ability totals, so the \
-                    integrated pilot surface still reports a blocked posture. The row remains \
-                    explicitly blocked on the rage execution engine (activation/deactivation, \
-                    rage-round consumption, fatigue after rage, temporary stat application). No \
-                    weapon familiarity or level-3+ martial progression is claimed",
+                    unchanged at level 2. A further SD13-E5 slice grounds Uncanny Dodge, the PF1 \
+                    Core Rulebook Barbarian's 2nd-level \"Special\" class table entry (verified \
+                    independently against d20pfsrd and legacy.aonprd.com, both naming \"Rage \
+                    power, uncanny dodge\" as the level-2 row), as a bounded identity/recognition \
+                    record only (value 0): correctly absent below level 2, granted-but-unexecuted \
+                    at or above it, mirroring exactly how Rogue's/Monk's own Evasion and Druid's \
+                    Woodland Stride were grounded, with no flat-footed-state tracking, no Armor \
+                    Class computation, and no invisibility-detection engine implemented. The \
+                    level-2 row's other named entry, a Rage Power choice (a genuinely \
+                    open-ended choice-list feature, a new-subsystem-shaped burden), is \
+                    deliberately left named-but-unproven, mirroring the Monk level-2 bonus feat \
+                    grant / Bard Versatile Performance precedent. None of the grounded records \
+                    are wired into the integrated base_attack_bonus/base-saves/speed/ability/\
+                    Armor-Class totals, so the integrated pilot surface still reports a blocked \
+                    posture. The row remains explicitly blocked on the rage execution engine \
+                    (activation/deactivation, rage-round consumption, fatigue after rage, \
+                    temporary stat application). No weapon familiarity, Rage Power choice-list \
+                    grounding, or level-3+ martial progression is claimed",
                 next_required_uplift: "ground the Barbarian rage-state execution engine \
                     (activation/deactivation, rage-round consumption, post-rage fatigue, \
-                    temporary application of the rage constants), and wire the grounded \
-                    base-attack / base-save / fast-movement values into the integrated pilot \
-                    surface, later widening into weapon familiarity and level-3+ martial \
-                    progression",
+                    temporary application of the rage constants), the Rage Power choice-list \
+                    feature, and wire the grounded base-attack / base-save / fast-movement / \
+                    Uncanny Dodge values into the integrated pilot surface, later widening into \
+                    weapon familiarity and level-3+ martial progression",
             },
             SupportStateRow {
                 row_id: "class.bard.progression_and_spell_burden",

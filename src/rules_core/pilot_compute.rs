@@ -386,6 +386,12 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// Barbarian gate.
 const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 2;
 
+/// PF1 Core Rulebook level gate at which Barbarian gains Uncanny Dodge (2nd level,
+/// verified against two independent primary sources — d20pfsrd and legacy.aonprd.com
+/// both list "Rage power, uncanny dodge" as the Barbarian 2nd-level special feature
+/// entry).
+const BARBARIAN_UNCANNY_DODGE_LEVEL: u8 = 2;
+
 // SD13-E3/E5 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
 // slice recognizes its bounded single-class level-1/level-2 identity as direct
@@ -3422,16 +3428,30 @@ fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
 /// and an armor class penalty, unchanged by level), values only. A later SD13-E5
 /// slice widens the level-1-only gate (`martial_level1_class`) to a level-range gate
 /// (`supported_barbarian_level`, 1..=2), mirroring the Fighter/Paladin/Rogue
-/// level-range-gate idiom. Otherwise only the rage-state execution burden and weapon
-/// familiarity stay explicitly claim-blocked.
+/// level-range-gate idiom, and a further SD13-E5 slice grounds Uncanny Dodge, the
+/// PF1 Core Rulebook Barbarian's 2nd-level "Special" class table entry (verified
+/// independently against d20pfsrd and legacy.aonprd.com, both naming "Rage power,
+/// uncanny dodge" as the level-2 row), as a bounded identity/recognition record only
+/// (`class_feature.barbarian.uncanny_dodge`, value 0) — a level-gate-absence record
+/// below level 2, a granted-but-unexecuted rule-text recognition record at or above
+/// it, mirroring exactly how Rogue's/Monk's own Evasion and Druid's Woodland Stride
+/// were grounded, with no flat-footed-state tracking, no Armor Class computation, and
+/// no invisibility-detection engine implemented. The level-2 row's other named entry,
+/// a Rage Power choice (a genuinely open-ended choice-list feature), is deliberately
+/// left named-but-unproven, mirroring the Monk level-2 bonus feat grant / Bard
+/// Versatile Performance precedent. Otherwise only the rage-state execution burden,
+/// the Rage Power choice, and weapon familiarity stay explicitly claim-blocked.
 ///
 /// This deliberately does not compute a supported martial chassis: the grounded
-/// base-attack, base-save, fast-movement, and rage explanation records below are
-/// standalone (not wired into `PilotBaseChassisComputation.base_attack_bonus`,
-/// `compute_total_saves`, `compute_combat_baseline`, the integrated ability
-/// modifiers, or any speed/movement total), so the integrated pilot surface still
-/// reports a blocked posture on this input. It grounds no rage-state engine, no
-/// weapon familiarity, and no level-3+ martial progression. It only:
+/// base-attack, base-save, fast-movement, rage, and Uncanny Dodge explanation
+/// records below are standalone (not wired into
+/// `PilotBaseChassisComputation.base_attack_bonus`, `compute_total_saves`,
+/// `compute_combat_baseline`, the integrated ability modifiers, or any
+/// speed/movement/flat-footed/Armor-Class total), so the integrated pilot surface
+/// still reports a blocked posture on this input. It grounds no rage-state engine, no
+/// weapon familiarity, no Rage Power choice-list feature, no flat-footed-state
+/// tracking, no Armor Class computation, no invisibility-detection engine, and no
+/// level-3+ martial progression. It only:
 /// - leaves one chassis-recognition explanation so the `class:barbarian:N` identity
 ///   (at the supported level, 1 or 2) is acknowledged as a non-hybrid martial
 ///   baseline rather than an undocumented packet placeholder (direct runtime
@@ -3443,7 +3463,10 @@ fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
 ///   burden was vacuous (`class_chassis.barbarian.illiteracy_absent`, +0),
 /// - leaves up to five grounded rage explanation records naming rage rounds per day
 ///   (4 + Constitution modifier, omitted in favor of a claim-blocking diagnostic when
-///   that sum is non-positive) and the four flat rage constants, values only, and
+///   that sum is non-positive) and the four flat rage constants, values only,
+/// - leaves one grounded Uncanny Dodge identity/recognition record (level-gate
+///   absence below level 2, granted-but-unexecuted rule-text recognition at or
+///   above it, value 0 either way), and
 /// - emits one claim-blocking diagnostic naming the still-missing rage-state
 ///   execution engine explicitly (activation/deactivation, round-by-round rage
 ///   round consumption, fatigue after rage, and temporary application of the rage
@@ -3672,6 +3695,48 @@ fn explain_barbarian_level1_chassis(
         .map(|(_, _, _, short_label)| *short_label)
         .collect::<Vec<_>>()
         .join(", ");
+
+    // Grounded (SD13-E5): Uncanny Dodge, a 2nd-level Barbarian class feature verified
+    // independently against two primary PF1 sources (d20pfsrd and legacy.aonprd.com
+    // both list "Rage power, uncanny dodge" as the Barbarian 2nd-level special feature
+    // entry). Below the level-2 gate this is a correct PF1 Core Rulebook level-gate
+    // absence (value 0); at or above it, it is a bounded identity/recognition record
+    // only (value 0, non-fabricated) naming the rule text — mirroring exactly how
+    // Rogue's/Monk's own Evasion and Druid's Woodland Stride were grounded, without
+    // folding into any actual flat-footed-state tracking, Armor Class computation, or
+    // invisibility-detection engine, none of which exists in this codebase. The level-2
+    // row's OTHER named entry, a Rage Power choice (a genuinely open-ended choice-list
+    // feature, a new-subsystem-shaped burden), is deliberately left named-but-unproven
+    // this slice, mirroring how the Monk level-2 bonus feat grant and the Bard
+    // Versatile Performance were each deliberately left unrecognized: no new
+    // choice-slot and no new diagnostic was added for it.
+    if level < BARBARIAN_UNCANNY_DODGE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.uncanny_dodge".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian Uncanny Dodge at barbarian level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Uncanny Dodge is a 2nd-level barbarian class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.uncanny_dodge".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian Uncanny Dodge granted at barbarian level {level} (PF1 Core Rulebook, \
+                 2nd-level barbarian class feature, part of the \"Rage power, uncanny dodge\" \
+                 table entry): she cannot be caught flat-footed, and she retains her Dexterity \
+                 bonus to Armor Class even if the attacker is invisible; she still loses her \
+                 Dexterity bonus to Armor Class if immobilized, and a successful feint action can \
+                 still strip it away. This is a bounded identity/recognition record only (value 0, \
+                 non-fabricated): no flat-footed-state tracking, no Armor Class computation, and \
+                 no invisibility-detection engine exists anywhere in this codebase to apply it, so \
+                 this grounds no actual flat-footed immunity or Dexterity-to-AC retention"
+            ),
+        });
+    }
 
     // Still blocked: name the rage-state execution burden explicitly.
     diagnostics.push(ComputationDiagnostic {
