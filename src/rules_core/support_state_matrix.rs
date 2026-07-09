@@ -456,17 +456,20 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
 const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs + \
     tests/sd13_cleric_level2_progression.rs + tests/sd13_cleric_level3_progression.rs";
 
-/// SD13-E4/E5 dedicated proof surface for the bounded Human Druid level-1/level-2
-/// prepared divine spell baseline: direct computed recognition of the prepared
-/// divine spell-bearing identity, with base attack bonus, base save progression,
-/// Wild Empathy, Nature Sense, the nature-bond choice recognition, and (at level 2)
-/// Woodland Stride grounded for real, that stays explicitly blocked on the animal
-/// companion execution burden and the prepared divine spell posture burden, widened
-/// to level 2 by a later SD13-E5 slice (the level-range gate plus every named pillar
-/// formula extended to level 2 via the same formula), citing both proof files as one
-/// combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`] / [`SD13_BARD_LEVEL1_TEST`].
+/// SD13-E4/E5 dedicated proof surface for the bounded Human Druid level-1/level-2/
+/// level-3 prepared divine spell baseline: direct computed recognition of the
+/// prepared divine spell-bearing identity, with base attack bonus, base save
+/// progression, Wild Empathy, Nature Sense, the nature-bond choice recognition, (at
+/// level 2) Woodland Stride, and (at level 3) Trackless Step grounded for real, that
+/// stays explicitly blocked on the animal companion execution burden and the
+/// prepared divine spell posture burden, widened to level 2 by a later SD13-E5 slice
+/// (the level-range gate plus every named pillar formula extended to level 2 via the
+/// same formula) and to level 3 by a further SD13-E5 slice (the level-range gate
+/// plus every named pillar formula extended to level 3 via the same formula, plus
+/// the Trackless Step identity/recognition record), citing all three proof files as
+/// one combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`] / [`SD13_BARD_LEVEL1_TEST`].
 const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs + \
-    tests/sd13_druid_level2_progression.rs";
+    tests/sd13_druid_level2_progression.rs + tests/sd13_druid_level3_progression.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -1075,11 +1078,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
-                            level-1/level-2 prepared divine spell baseline, with base attack bonus, \
-                            base save progression, Wild Empathy, Nature Sense, the nature-bond \
-                            choice recognition, and (at level 2) Woodland Stride grounded for real \
-                            at both supported levels, and the animal-companion execution burden \
-                            and the prepared divine spell posture burden still blocked",
+                            level-1/level-2/level-3 prepared divine spell baseline, with base \
+                            attack bonus, base save progression, Wild Empathy, Nature Sense, the \
+                            nature-bond choice recognition, (at level 2) Woodland Stride, and (at \
+                            level 3) Trackless Step grounded for real at all three supported \
+                            levels, and the animal-companion execution burden and the prepared \
+                            divine spell posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1116,15 +1120,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     shaped class feature grounded as a bounded identity record (value 0, mirroring \
                     exactly how Rogue's/Monk's own Evasion was grounded): a druid may move through \
                     natural undergrowth at normal speed without damage or impediment, with no \
-                    terrain-detection engine and no movement-execution engine fabricated. The row is \
-                    Partial, not Supported: the animal companion execution burden (the companion's \
-                    stat block, its advancement, and its link / share spells abilities) remains \
-                    named and unproven, and the prepared divine spell posture burden (spells \
-                    prepared from the full Druid list, spontaneous summon nature's ally conversion, \
-                    spell slots per day, bonus spells from a high Wisdom, spell save DCs) is still \
-                    entirely unproven. No spell math is fabricated and no Druid level 3+ is proven",
+                    terrain-detection engine and no movement-execution engine fabricated. A still \
+                    further SD13-E5 slice widens the gate to level 3 (verified independently against \
+                    d20pfsrd and legacy.aonprd.com): level 3 base attack bonus is +2, base saves are \
+                    +3/+1/+3 (Fortitude/Reflex/Will), extended via the same formulas; Wild Empathy \
+                    grounds correctly to 4 (3 + Charisma modifier 1) and Nature Sense stays the flat \
+                    +2 bonus, both via the same formula, not new records; Woodland Stride stays \
+                    granted, not re-derived; and the Druid class table's level-3 \"Special\" column \
+                    reads \"Trackless step\" (verified independently against both primary sources), \
+                    a new, flat/identity-shaped class feature grounded as a bounded identity record \
+                    (value 0, mirroring exactly how Woodland Stride was grounded): starting at 3rd \
+                    level, a druid leaves no trail in natural surroundings and cannot be tracked, \
+                    with no tracking-resolution engine and no terrain-detection engine fabricated. \
+                    Druid has no currently-grounded spell-slot-count pillar (unlike Wizard's \
+                    specialist bonus slot or Cleric's domain slot), so there is no analogous level-3 \
+                    doubling to widen. The row is Partial, not Supported: the animal companion \
+                    execution burden (the companion's stat block, its advancement, and its link / \
+                    share spells abilities) remains named and unproven, and the prepared divine \
+                    spell posture burden (spells prepared from the full Druid list, spontaneous \
+                    summon nature's ally conversion, spell slots per day, bonus spells from a high \
+                    Wisdom, spell save DCs) is still entirely unproven. No spell math is fabricated \
+                    and no Druid level 4+ is proven",
                 next_required_uplift: "SD13-E5 Druid animal companion execution slice, or the \
-                    prepared divine spell burden slice, then Druid level 3+ progression (out of \
+                    prepared divine spell burden slice, then Druid level 4+ progression (out of \
                     scope for this slice)",
             },
             SupportStateRow {

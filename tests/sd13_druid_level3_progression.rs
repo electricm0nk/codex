@@ -1,0 +1,391 @@
+//! SD13-E5 Druid level-3 progression grounding proof.
+//!
+//! Widens the accepted Druid level-1/level-2 prepared divine spell-bearing
+//! baseline (`tests/sd13_druid_level1_spell_baseline.rs`,
+//! `tests/sd13_druid_base_attack_and_saves.rs`,
+//! `tests/sd13_druid_level2_progression.rs`) to druid level 3, mirroring the
+//! Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Bard/Sorcerer/Wizard/Ranger
+//! level-range-gate idiom (`supported_druid_level` is generalized from
+//! `1..=2` to `1..=3` via `MAX_SUPPORTED_DRUID_LEVEL = 3`). Both PF1 CRB
+//! primary sources (d20pfsrd and legacy.aonprd.com Druid class table) were
+//! read directly before writing any code or test: level 3 base attack bonus
+//! is +2, base Fortitude/Will are +3 (good), base Reflex is +1 (poor), and
+//! the level-3 "Special" column reads "Trackless step." It proves:
+//!
+//! - base attack bonus at level 3 is grounded by the same 3/4-BAB formula
+//!   (`level * 3 / 4`) already grounded at levels 1-2: `3 * 3 / 4 = 2`.
+//! - base saves at level 3 are grounded by the same formulas already
+//!   grounded at levels 1-2 (`level / 2 + 2` for good Fortitude/Will,
+//!   `level / 3` for poor Reflex): Fortitude/Will = 3, Reflex = 1.
+//! - Wild Empathy's modifier is level-generic by construction and grounds
+//!   correctly to 4 (3 + Charisma modifier 1) at level 3, via the same
+//!   formula, not a new record.
+//! - Nature Sense stays the flat, level-independent PF1 CRB +2 bonus,
+//!   confirmed unchanged at level 3 via the same formula, not a new record.
+//! - the nature-bond choice recognition is not level-gated; it still fires
+//!   at level 3 for the same fixture selection
+//!   (`choice:druid_nature_bond -> bond:animal_companion`).
+//! - Woodland Stride (granted starting at level 2) stays granted at level 3,
+//!   not re-derived, grounded as the same bounded identity/recognition
+//!   record already grounded at level 2.
+//! - Trackless Step, the PF1 Core Rulebook's 3rd-level Druid class feature
+//!   (verified independently against d20pfsrd and legacy.aonprd.com:
+//!   "Starting at 3rd level, a druid leaves no trail in natural surroundings
+//!   and cannot be tracked. She may choose to leave a trail if so
+//!   desired."), is flat/identity-shaped — a binary recognition that the
+//!   rule applies, no numeric formula — and is grounded as a bounded
+//!   identity record (value 0) mirroring exactly how Woodland Stride /
+//!   Rogue's and Monk's own Evasion were grounded: a level-gate-absence
+//!   record below level 3, an identity/recognition record at or above it,
+//!   with no tracking-resolution engine and no terrain-detection engine
+//!   implemented.
+//! - the Druid class table's level-3 spells-per-day row does show a
+//!   2nd-level spell column becoming non-blank for the first time, mirroring
+//!   the Wizard/Cleric level-3 spell-slot-count doubling pattern — but
+//!   Druid has no currently-grounded spell-slot-count pillar at all (unlike
+//!   Wizard's specialist bonus slot or Cleric's domain slot), so there is no
+//!   analogous pillar to widen; the entire prepared divine spell posture
+//!   burden stays named-but-unproven below, unchanged.
+//!
+//! It deliberately does not touch the animal companion stat block/
+//! advancement/link-share-spells burden or the prepared divine spell
+//! posture burden (both stay named-but-unproven, unchanged from level 1),
+//! and it does not ground Druid level 4+. It also preserves the accepted
+//! Druid level-1/level-2 truth (unchanged), the Fighter negative control,
+//! and the multiclass negative control.
+
+use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::pilot_compute::{
+    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
+};
+use codex::rules_core::support_state_matrix::{
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+};
+
+const DRUID_LEVEL2_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_druid_level2_sd13_deterministic_input.txt");
+
+const DRUID_LEVEL3_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_druid_level3_sd13_deterministic_input.txt");
+
+const FIGHTER_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+);
+
+const DRUID_WOODLAND_STRIDE_ID: &str = "class_feature.druid.woodland_stride";
+const DRUID_TRACKLESS_STEP_ID: &str = "class_feature.druid.trackless_step";
+
+fn load(fixture: &str) -> CharacterInput {
+    let result = load_character_input_fixture(fixture);
+    assert!(
+        result.diagnostics.is_empty(),
+        "fixture should load cleanly: {:?}",
+        result.diagnostics
+    );
+    result
+        .character_input
+        .expect("valid fixture should produce a character input record")
+}
+
+fn explanation<'a>(
+    computation: &'a PilotBaseChassisComputation,
+    id: &str,
+) -> &'a ComputationExplanation {
+    computation
+        .explanations
+        .iter()
+        .find(|e| e.id == id)
+        .unwrap_or_else(|| {
+            panic!(
+                "expected explanation id '{id}', got {:?}",
+                computation.explanations
+            )
+        })
+}
+
+fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
+    computation.explanations.iter().any(|e| e.id == id)
+}
+
+// ----- Base attack bonus at level 3 -----
+
+#[test]
+fn druid_level3_base_attack_bonus_is_grounded_by_the_same_formula() {
+    let input = load(DRUID_LEVEL3_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let base_attack = explanation(&computation, "class_chassis.druid.base_attack_bonus");
+    assert_eq!(
+        base_attack.value, 2,
+        "Druid level 3 3/4-BAB progression (3 * 3 / 4) must equal 2: {}",
+        base_attack.detail
+    );
+}
+
+// ----- Base saves at level 3 (good Fortitude/Will, poor Reflex) -----
+
+#[test]
+fn druid_level3_base_saves_are_grounded_by_the_same_formulas() {
+    let input = load(DRUID_LEVEL3_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let fortitude = explanation(&computation, "class_chassis.druid.base_save.fortitude");
+    assert_eq!(fortitude.value, 3, "Druid level 3 good Fortitude (3/2+2) must equal 3");
+
+    let reflex = explanation(&computation, "class_chassis.druid.base_save.reflex");
+    assert_eq!(reflex.value, 1, "Druid level 3 poor Reflex (3/3) must equal 1");
+
+    let will = explanation(&computation, "class_chassis.druid.base_save.will");
+    assert_eq!(will.value, 3, "Druid level 3 good Will (3/2+2) must equal 3");
+}
+
+// ----- Wild Empathy at level 3 -----
+
+#[test]
+fn druid_level3_wild_empathy_modifier_is_grounded_by_the_same_formula() {
+    let input = load(DRUID_LEVEL3_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // Fixture: Charisma 12 -> modifier +1. Druid level 3 + Cha modifier +1 = 4.
+    let wild_empathy = explanation(&computation, "class_chassis.druid.wild_empathy");
+    assert_eq!(
+        wild_empathy.value, 4,
+        "Druid level 3 wild empathy modifier must equal druid level + Cha modifier (3 + 1 = 4): {}",
+        wild_empathy.detail
+    );
+}
+
+// ----- Nature Sense at level 3 (flat, level-independent) -----
+
+#[test]
+fn druid_level3_nature_sense_bonus_is_unchanged() {
+    let input = load(DRUID_LEVEL3_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let nature_sense = explanation(&computation, "class_chassis.druid.nature_sense");
+    assert_eq!(
+        nature_sense.value, 2,
+        "Druid level 3 Nature Sense must stay the flat PF1 CRB +2 bonus: {}",
+        nature_sense.detail
+    );
+}
+
+// ----- Nature bond choice recognition at level 3 -----
+
+#[test]
+fn druid_level3_still_recognizes_nature_bond_choice() {
+    let input = load(DRUID_LEVEL3_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        has_explanation(&computation, "class_chassis.druid.nature_bond_choice"),
+        "level-3 Druid must still recognize the nature-bond choice: {:?}",
+        computation.explanations
+    );
+}
+
+// ----- Woodland Stride stays granted at level 3, not re-derived -----
+
+#[test]
+fn druid_level3_keeps_woodland_stride_grounded() {
+    let input = load(DRUID_LEVEL3_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let woodland_stride = explanation(&computation, DRUID_WOODLAND_STRIDE_ID);
+    assert_eq!(
+        woodland_stride.value, 0,
+        "Woodland Stride must carry no fabricated mechanical value at level 3: {}",
+        woodland_stride.detail
+    );
+    assert!(
+        woodland_stride.detail.contains("granted"),
+        "Woodland Stride detail at level 3 must state it is granted, not absent: {}",
+        woodland_stride.detail
+    );
+}
+
+// ----- Trackless Step: new 3rd-level class feature, identity-shaped -----
+
+#[test]
+fn druid_level2_correctly_lacks_trackless_step() {
+    let input = load(DRUID_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let trackless_step = explanation(&computation, DRUID_TRACKLESS_STEP_ID);
+    assert_eq!(
+        trackless_step.value, 0,
+        "Trackless Step absence record must carry no fabricated value: {}",
+        trackless_step.detail
+    );
+    assert!(
+        trackless_step.detail.to_lowercase().contains("absent"),
+        "Trackless Step detail at level 2 must state the correct level-gate absence: {}",
+        trackless_step.detail
+    );
+}
+
+#[test]
+fn druid_level3_grounds_trackless_step_as_bounded_identity_record() {
+    let input = load(DRUID_LEVEL3_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let trackless_step = explanation(&computation, DRUID_TRACKLESS_STEP_ID);
+    assert_eq!(
+        trackless_step.value, 0,
+        "Trackless Step is a bounded identity record only, carrying no fabricated mechanical \
+         value: {}",
+        trackless_step.detail
+    );
+    assert!(
+        trackless_step.detail.contains("Trackless Step") || trackless_step.detail.contains("trail"),
+        "Trackless Step detail must cite the PF1 CRB rule text: {}",
+        trackless_step.detail
+    );
+    assert!(
+        trackless_step.detail.to_lowercase().contains("granted"),
+        "Trackless Step detail at level 3 must state it is granted, not absent: {}",
+        trackless_step.detail
+    );
+    assert!(
+        trackless_step.detail.to_lowercase().contains("no")
+            && trackless_step.detail.to_lowercase().contains("engine"),
+        "Trackless Step detail must disclaim any tracking-resolution/terrain-detection engine: {}",
+        trackless_step.detail
+    );
+}
+
+// ----- The two existing burden diagnostics still fire at level 3 -----
+
+#[test]
+fn druid_level3_still_claim_blocks_animal_companion_and_prepared_divine_burdens() {
+    let input = load(DRUID_LEVEL3_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.druid.animal_companion.unsupported" && d.claim_blocking),
+        "level-3 Druid must still claim-block on the animal companion execution burden: {:?}",
+        computation.diagnostics
+    );
+    assert!(
+        computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_spell.druid.prepared_divine.unsupported" && d.claim_blocking),
+        "level-3 Druid must still claim-block on the prepared divine spell posture burden: {:?}",
+        computation.diagnostics
+    );
+}
+
+// ----- The accepted Druid level-2 truth is unaffected -----
+
+#[test]
+fn druid_level2_truth_is_unchanged_by_this_widening() {
+    let input = load(DRUID_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let base_attack = explanation(&computation, "class_chassis.druid.base_attack_bonus");
+    assert_eq!(base_attack.value, 1, "Druid level 2 base attack bonus must stay 1");
+
+    let wild_empathy = explanation(&computation, "class_chassis.druid.wild_empathy");
+    assert_eq!(wild_empathy.value, 3, "Druid level 2 wild empathy modifier must stay 3");
+}
+
+// ----- Negative control: level 4 stays unrecognized by this slice -----
+
+#[test]
+fn druid_level_4_is_not_promoted_by_this_slice() {
+    let level_4 = DRUID_LEVEL3_FIXTURE.replace("class:druid:3", "class:druid:4");
+    let input = load(&level_4);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.druid.")
+                || e.id == "class_chassis.spell_baseline.druid"
+                || e.id == DRUID_WOODLAND_STRIDE_ID
+                || e.id == DRUID_TRACKLESS_STEP_ID),
+        "level-4 Druid must not gain any bounded druid chassis explanation: {:?}",
+        computation.explanations
+    );
+}
+
+// ----- Negative control: the druid path must not leak onto other classes -----
+
+#[test]
+fn fighter_does_not_gain_druid_level3_recognition() {
+    let fighter = load(FIGHTER_FIXTURE);
+    let fighter_computation = compute_pilot_base_chassis(&fighter);
+    assert!(
+        !fighter_computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.druid.")
+                || e.id == "class_chassis.spell_baseline.druid"
+                || e.id == DRUID_WOODLAND_STRIDE_ID
+                || e.id == DRUID_TRACKLESS_STEP_ID),
+        "the Fighter chassis must not surface any druid-namespaced explanation: {:?}",
+        fighter_computation.explanations
+    );
+}
+
+// ----- Negative control: multiclass Druid is not promoted -----
+
+#[test]
+fn multiclass_druid_level3_is_not_promoted_by_this_slice() {
+    let multiclass = DRUID_LEVEL3_FIXTURE.replace(
+        "class_level=class:druid:3",
+        "class_level=class:druid:3\nclass_level=class:fighter:1",
+    );
+    let input = load(&multiclass);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.druid.")
+                || e.id == "class_chassis.spell_baseline.druid"
+                || e.id == DRUID_WOODLAND_STRIDE_ID
+                || e.id == DRUID_TRACKLESS_STEP_ID),
+        "multiclass Druid must not gain any bounded druid chassis explanation: {:?}",
+        computation.explanations
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "multiclass Druid must stay claim-blocked in this slice"
+    );
+}
+
+// ----- Control plane: the matrix note names the level-3 widening and Trackless Step -----
+
+#[test]
+fn matrix_druid_row_names_level_3_widening_and_trackless_step() {
+    let matrix = seeded_sd13_e1_f1_current_truth();
+    let druid = matrix
+        .row("class.druid.progression_and_spell_burden")
+        .expect("druid progression_and_spell_burden row must exist");
+
+    assert_eq!(druid.support_state, SupportState::Partial);
+    assert_eq!(druid.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(
+        druid.evidence_freshness,
+        EvidenceFreshness::RefreshableFromLiveProof
+    );
+    assert!(
+        druid.grounding_ref.contains("sd13_druid_level3_progression"),
+        "druid row must cite the live SD13-E5 level-3 proof surface: {}",
+        druid.grounding_ref
+    );
+    let note = druid.blocker_or_lossiness_note;
+    assert!(
+        note.contains("level 3") || note.contains("level-3"),
+        "druid partial note must name the level-3 widening: {note}"
+    );
+    assert!(
+        note.to_lowercase().contains("trackless step"),
+        "druid partial note must name the newly-grounded Trackless Step identity record: {note}"
+    );
+}

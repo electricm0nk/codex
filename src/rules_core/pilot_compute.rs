@@ -618,13 +618,26 @@ const DRUID_CLASS_ID: &str = "class:druid";
 /// formula this seam already grounds extends to level 2 without re-derivation; Nature
 /// Sense and the nature-bond choice recognition are level-independent and unaffected;
 /// the class table's level-2 "Special" column reads "Woodland stride" (a new,
-/// flat/identity-shaped class feature grounded separately below).
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 2;
+/// flat/identity-shaped class feature grounded separately below). A further SD13-E5
+/// slice widens the gate to level 3 (verified independently against d20pfsrd and
+/// legacy.aonprd.com): level 3 base attack bonus is +2, base saves are +3/+1/+3
+/// (Fortitude/Reflex/Will), extended via the same formulas; Woodland Stride stays
+/// granted, not re-derived; the class table's level-3 "Special" column reads
+/// "Trackless step" (a new, flat/identity-shaped class feature grounded separately
+/// below); Druid has no currently-grounded spell-slot-count pillar (unlike Wizard's
+/// specialist bonus slot or Cleric's domain slot), so there is no analogous level-3
+/// doubling to widen.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 3;
 /// PF1 Core Rulebook level gate at which Druid gains Woodland Stride (2nd level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Woodland stride" as the Druid 2nd-level special
 /// feature entry).
 const DRUID_WOODLAND_STRIDE_LEVEL: u8 = 2;
+/// PF1 Core Rulebook level gate at which Druid gains Trackless Step (3rd level,
+/// verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Trackless step" as the Druid 3rd-level special
+/// feature entry).
+const DRUID_TRACKLESS_STEP_LEVEL: u8 = 3;
 // PF1 Core Rulebook Nature Sense: a druid gains a +2 bonus on Knowledge (nature)
 // and Survival checks. Flat and level-independent.
 const DRUID_NATURE_SENSE_BONUS: i16 = 2;
@@ -5920,8 +5933,8 @@ fn explain_cleric_level1_spell_baseline(
 
 /// The bounded Druid milestone level this decomposition surface grounds, if any.
 /// Returns the single Druid level when the chosen input is exactly a single-class
-/// Druid at one of the supported milestone levels (1 or 2). Returns `None` for no
-/// Druid, a non-Druid class, a multiclass mix, or any level-3+ Druid this slice
+/// Druid at one of the supported milestone levels (1, 2, or 3). Returns `None` for no
+/// Druid, a non-Druid class, a multiclass mix, or any level-4+ Druid this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -5940,7 +5953,7 @@ fn supported_druid_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E4/SD13-E5 runtime evidence for the deterministic Human Druid
-/// level-1/level-2 prepared divine spell-bearing baseline, while keeping it
+/// level-1/level-2/level-3 prepared divine spell-bearing baseline, while keeping it
 /// explicitly claim-blocked on its remaining burdens. The SD13-E4 Wild Empathy slice
 /// grounds Wild Empathy for real; the SD13-E5 Nature Sense / nature-bond-choice slice
 /// grounds Nature Sense for real and recognizes the deterministic nature-bond
@@ -5953,8 +5966,15 @@ fn supported_druid_level(input: &CharacterInput) -> Option<u8> {
 /// level 2 base attack bonus is +1, base saves are +3/+0/+3 (Fortitude/Reflex/Will).
 /// That same slice also grounds Woodland Stride, the class table's level-2 "Special"
 /// column entry, as a bounded identity record (flat/identity-shaped, no numeric
-/// formula). The chosen bond's execution and the prepared divine spell posture
-/// burden remain claim-blocked.
+/// formula). A still further SD13-E5 slice widens the gate to level 3
+/// (`supported_druid_level`, 1..=3), extending every formula above to level 3 via the
+/// same formula (level 3 base attack bonus is +2, base saves are +3/+1/+3
+/// Fortitude/Reflex/Will), keeps Woodland Stride granted (not re-derived), and grounds
+/// Trackless Step, the class table's level-3 "Special" column entry, as a bounded
+/// identity record (flat/identity-shaped, no numeric formula) mirroring the Woodland
+/// Stride idiom exactly; Druid has no currently-grounded spell-slot-count pillar, so
+/// there is no analogous level-3 doubling to widen. The chosen bond's execution and
+/// the prepared divine spell posture burden remain claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
 /// bond power execution (no companion stat block, no companion advancement, no link /
@@ -5982,7 +6002,11 @@ fn supported_druid_level(input: &CharacterInput) -> Option<u8> {
 /// - leaves one Woodland Stride explanation — a correct level-gate absence below
 ///   level 2, and a bounded identity/recognition record (value 0) at or above it,
 ///   mirroring exactly how Rogue's/Monk's own Evasion was grounded, with no
-///   terrain-detection engine and no movement-execution engine implemented, and
+///   terrain-detection engine and no movement-execution engine implemented,
+/// - leaves one Trackless Step explanation — a correct level-gate absence below
+///   level 3, and a bounded identity/recognition record (value 0) at or above it,
+///   mirroring exactly how Woodland Stride was grounded, with no tracking-resolution
+///   engine and no terrain-detection engine implemented, and
 /// - emits two distinct claim-blocking diagnostics naming the animal-companion
 ///   execution burden and the prepared divine spell posture burden explicitly,
 ///   rather than hiding behind a generic "unsupported caster" label.
@@ -6182,6 +6206,41 @@ fn explain_druid_level1_spell_baseline(
                  identity/recognition record only (value 0, non-fabricated): no terrain-detection \
                  engine and no movement-execution engine exists anywhere in this codebase to apply \
                  it, so this grounds no actual movement or terrain-impediment resolution"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): Trackless Step, a 3rd-level Druid class feature verified
+    // independently against two primary PF1 sources (d20pfsrd and legacy.aonprd.com
+    // both list "Trackless step" as the Druid 3rd-level special feature entry). Below
+    // the level-3 gate this is a correct PF1 Core Rulebook level-gate absence (value
+    // 0); at or above it, it is a bounded identity/recognition record only (value 0,
+    // non-fabricated) naming the rule text — mirroring exactly how Woodland Stride and
+    // Rogue's/Monk's own Evasion were grounded, without folding into any actual
+    // tracking-resolution engine or terrain-detection engine, neither of which exists
+    // in this codebase.
+    if level < DRUID_TRACKLESS_STEP_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.trackless_step".to_owned(),
+            value: 0,
+            detail: format!(
+                "Druid Trackless Step at druid level {level}: correctly absent at level {level} \
+                 by PF1 Core Rulebook level gate; the at-grant rule is named but not computed. \
+                 Trackless Step is a 3rd-level druid class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.trackless_step".to_owned(),
+            value: 0,
+            detail: format!(
+                "Druid Trackless Step granted at druid level {level} (PF1 Core Rulebook, \
+                 3rd-level druid class feature): starting at 3rd level, a druid leaves no trail \
+                 in natural surroundings and cannot be tracked; she may choose to leave a trail \
+                 if so desired. This is a bounded identity/recognition record only (value 0, \
+                 non-fabricated): no tracking-resolution engine and no terrain-detection engine \
+                 exists anywhere in this codebase to apply it, so this grounds no actual \
+                 tracking-check or trail-detection resolution"
             ),
         });
     }
