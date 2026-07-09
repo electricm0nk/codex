@@ -199,12 +199,12 @@ const PALADIN_CLASS_ID: &str = "class:paladin";
 const RANGER_CLASS_ID: &str = "class:ranger";
 const HYBRID_BASELINE_LEVEL: u8 = 1;
 
-// SD13-E5 Paladin milestone widening. The accepted level-1 chassis-and-spell-burden
-// separation is now joined by level 2, the PF1 Core Rulebook level gate at which lay
-// on hands and divine grace are actually granted. Nothing here grounds level 3+
-// Paladin (mercy is a 3rd-level paladin feature and stays an unproven correct
-// absence within this bounded surface).
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 2;
+// SD13-E5 Paladin milestone widening. The accepted level-1/level-2 chassis-and-
+// spell-burden separation is now joined by level 3, the PF1 Core Rulebook level
+// gate at which Mercy is actually granted. Nothing here grounds level 4+ Paladin
+// (Smite Evil's uses/day would first increase at level 4, which stays out of
+// scope for this bounded surface).
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 3;
 
 // Lay on hands and divine grace are both 2nd-level paladin features in the PF1 Core
 // Rulebook. Below this level their honest computed surface is their correct
@@ -212,9 +212,32 @@ const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 2;
 const PALADIN_LAY_ON_HANDS_DIVINE_GRACE_LEVEL: u8 = 2;
 
 // Mercy is a 3rd-level paladin feature (gained at 3rd level and every three levels
-// thereafter). This bounded slice does not ground any level past
-// MAX_SUPPORTED_PALADIN_LEVEL, so mercy is always a correct ABSENCE on this surface.
+// thereafter). Below this level its honest computed surface is its correct
+// ABSENCE; at or above it (SD13-E5 level-3 widening), this slice grounds a
+// bounded GRANT-only identity record (mirroring the Barbarian Uncanny Dodge /
+// Ranger Endurance idiom) plus, when the fixture provides one, a choice-
+// recognition record naming whichever mercy was selected (mirroring the Ranger
+// Favored Terrain / Sorcerer bloodline choice-slot idiom). PF1 Core Rulebook
+// Mercy (verified independently against legacy.aonprd.com's Core Rulebook
+// Paladin page): "At 3rd level, and every three levels thereafter, a paladin
+// can select one mercy. Each mercy adds an effect to the paladin's lay on
+// hands ability." The first, 3rd-level tier of the mercy list is Fatigued,
+// Shaken, and Sickened -- verified against the Core-Rulebook-scoped primary
+// source rather than the aggregated Archives of Nethys mercy table, which also
+// lists two additional 3rd-level-tier mercies (Deceived, Riled) sourced from a
+// later supplement (Ultimate Combat), out of scope for this Core-Rulebook-only
+// grounding. This grounds only the CHOICE recognition; the selected mercy's own
+// effect (curing the named condition automatically whenever lay on hands is
+// used) is NOT computed, since no lay-on-hands execution engine exists
+// anywhere in this codebase.
 const PALADIN_MERCY_LEVEL: u8 = 3;
+
+/// SD13-E5 Paladin Mercy choice-slot id. The deterministic level-3 fixture names a
+/// chosen mercy (e.g. `mercy:shaken`); the compute seam recognizes whichever raw
+/// mercy string was actually selected, mirroring `choice:ranger_favored_terrain`'s
+/// open-ended (non-restricted-list) recognition idiom exactly -- no enum
+/// validation against the mercy list is performed here.
+const PALADIN_MERCY_CHOICE_ID: &str = "choice:paladin_mercy";
 
 // SD13-E5 Ranger Combat Style correction. Combat Style Feat is a 2nd-level ranger
 // feature in the PF1 Core Rulebook: the ranger selects a combat style (archery or
@@ -2765,12 +2788,11 @@ fn explain_hybrid_level1_chassis(
 
 /// The bounded Paladin milestone level this decomposition surface grounds, if
 /// any. Returns the single Paladin level when the chosen input is exactly a
-/// single-class Paladin at one of the supported milestone levels (1 or 2).
+/// single-class Paladin at one of the supported milestone levels (1, 2, or 3).
 /// Returns `None` for no Paladin, a non-Paladin class, a multiclass mix, the
 /// Ranger hybrid (which has its own F6 class-feature decomposition lane), or
-/// any level-3+ Paladin this slice deliberately does not recognize (mercy is
-/// a 3rd-level paladin feature and stays unproven) — each of which stays
-/// claim-blocked exactly as before.
+/// any level-4+ Paladin this slice deliberately does not recognize — each of
+/// which stays claim-blocked exactly as before.
 fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
     match input.chosen.class_levels.as_slice() {
         [class_level]
@@ -2784,19 +2806,19 @@ fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E3/E4/E5 runtime evidence for the deterministic Human
-/// Paladin level-1/level-2 chassis and spell burden as a separable pair of
-/// diagnostics.
+/// Paladin level-1/level-2/level-3 chassis and spell burden as a separable pair
+/// of diagnostics.
 ///
 /// This sits on top of the accepted SD13-F6 hybrid baseline: F6 already proves
 /// the deterministic Human Paladin level-1 hybrid identity is acknowledged on
 /// the compute seam and emits a single combined non-spell class-feature
 /// blocker plus a single combined later-spell blocker. This slice proves the
 /// per-burden separation Paladin actually needs, widened by the SD13-E5
-/// level-2 milestone:
+/// level-2 milestone and, by a further SD13-E5 slice, the level-3 milestone:
 ///
 /// - one grounded numeric explanation set for the foundational base-attack-
 ///   bonus / base-save progression pillar, computed for real at every
-///   supported level (1..=2): full base attack bonus (the same formula shape
+///   supported level (1..=3): full base attack bonus (the same formula shape
 ///   as Fighter/Barbarian/Ranger), and good Fortitude / good Will / poor
 ///   Reflex base saves (NOT the same save shape as Ranger's good
 ///   Fortitude/Reflex, poor Will). Both formulas were verified independently
@@ -2835,11 +2857,18 @@ fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
 ///     applied only if positive — mirroring the "applied only if positive"
 ///     idiom already used for Smite Evil's attack bonus
 ///
-/// - `mercy` stays a grounded level-gate record (value 0) at every level this
-///   slice supports: mercy is a 3rd-level paladin feature (gained at 3rd
-///   level and every three levels thereafter, chosen from the mercy list and
-///   attached to lay on hands); the at-grant selection is named but not
-///   computed
+/// - below the level-3 gate (levels 1-2), `mercy` stays a grounded level-gate
+///   absence record (value 0); at or above it (SD13-E5 level-3 widening), it
+///   transitions to a bounded GRANT-only identity record (mirroring the
+///   Barbarian Uncanny Dodge / Ranger Endurance idiom) plus, when the
+///   deterministic fixture provides one, a choice-recognition record naming
+///   which mercy was selected (mirroring the Ranger Favored Terrain /
+///   Sorcerer bloodline choice-slot idiom): mercy is a 3rd-level paladin
+///   feature (gained at 3rd level and every three levels thereafter; a
+///   paladin selects one mercy from the list, and each mercy adds an effect
+///   to lay on hands). The selected mercy's own effect (curing the named
+///   condition automatically whenever lay on hands is used) is NOT computed,
+///   since no lay-on-hands execution engine exists in this codebase.
 ///
 /// - one grounded numeric explanation (SD13-E5) for the partial-caster
 ///   IDENTITY itself, distinct from the spell burden it sits next to:
@@ -2861,8 +2890,8 @@ fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
 ///     runtime path.
 ///
 /// This deliberately does not compute a supported spell surface, and it does
-/// not ground level 3+. Beyond the grounded Smite Evil, lay on hands, and
-/// divine grace numeric formulas, the mercy level-gate absence, and the
+/// not ground level 4+. Beyond the grounded Smite Evil, lay on hands, and
+/// divine grace numeric formulas, the mercy grant/choice recognition, and the
 /// grounded effective-caster-level gate, it grounds no spell slots, no spell
 /// source lineage, no spells known or prepared posture, no deity resolution,
 /// no domain mechanics, no alignment-target resolution, no healing-resource
@@ -2909,9 +2938,9 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // Will +2/+3/+3/+4/+4) rather than assuming Paladin matched Ranger's exact shape:
     // Paladin is full BAB (the same shape as Fighter/Barbarian/Ranger), but its good
     // saves are Fortitude AND Will (poor Reflex) -- NOT Ranger's good
-    // Fortitude/Reflex, poor Will. Paladin level 3+ (mercy) remains out of scope for
-    // this slice; only the flat base-attack and base-save numbers are grounded here,
-    // extended across the already-supported level 1..=2 range.
+    // Fortitude/Reflex, poor Will. Paladin level 4+ remains out of scope for this
+    // slice; only the flat base-attack and base-save numbers are grounded here,
+    // extended across the already-supported level 1..=3 range.
     let good_save = paladin_level / 2 + 2;
     let poor_save = paladin_level / 3;
 
@@ -3066,21 +3095,60 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
-    // Mercy stays a grounded level-gate absence (value 0) at every level this
-    // slice supports: mercy is a 3rd-level paladin feature, so it is always
-    // correctly ABSENT within the bounded level-1/level-2 surface. The
-    // at-grant selection is named but not computed; no mercy effect is
-    // fabricated.
-    explanations.push(ComputationExplanation {
-        id: "class_chassis.paladin.level_gate.mercy".to_owned(),
-        value: 0,
-        detail: format!(
-            "Paladin mercy at paladin level {level}: correctly absent at level {level} by PF1 CRB \
-             level gate (mercy is a {PALADIN_MERCY_LEVEL}rd-level paladin feature, gained at \
-             3rd level and every three levels thereafter); at-grant formula named but not \
-             computed. Mercy is chosen from the mercy list and attaches to lay on hands"
-        ),
-    });
+    // Mercy: below the level-3 gate, this stays a grounded level-gate absence
+    // (value 0); at or above it (SD13-E5 level-3 widening), it transitions to a
+    // bounded GRANT-only identity record (mirroring the Barbarian Uncanny Dodge /
+    // Ranger Endurance idiom), plus -- when the deterministic fixture provides
+    // one -- a further choice-recognition record naming which mercy was selected
+    // (mirroring the Ranger Favored Terrain / Sorcerer bloodline choice-slot
+    // idiom). No mercy effect (curing the named condition when lay on hands is
+    // used) is ever fabricated; no lay-on-hands execution engine exists in this
+    // codebase.
+    if level < PALADIN_MERCY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.level_gate.mercy".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin mercy at paladin level {level}: correctly absent at level {level} by PF1 \
+                 CRB level gate (mercy is a {PALADIN_MERCY_LEVEL}rd-level paladin feature, gained \
+                 at 3rd level and every three levels thereafter); at-grant formula named but not \
+                 computed. Mercy is chosen from the mercy list and attaches to lay on hands"
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.mercy_granted".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin mercy granted at paladin level {level} (PF1 Core Rulebook, \
+                 {PALADIN_MERCY_LEVEL}rd-level paladin feature, gained at 3rd level and every \
+                 three levels thereafter): \"a paladin can select one mercy. Each mercy adds an \
+                 effect to the paladin's lay on hands ability\" (verified independently against \
+                 legacy.aonprd.com's Core Rulebook Paladin page). The first, 3rd-level tier of \
+                 the mercy list is Fatigued, Shaken, and Sickened. This is a bounded grant-only \
+                 identity record (value 0, non-fabricated): which specific mercy was selected is \
+                 recognized separately below when present, and the selected mercy's own effect \
+                 (curing the named condition automatically whenever lay on hands is used) is not \
+                 computed, since no lay-on-hands execution engine exists anywhere in this codebase"
+            ),
+        });
+
+        if let Some(selected_mercy) = choice_selection(input, PALADIN_MERCY_CHOICE_ID) {
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.paladin.mercy_choice".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Paladin mercy selection ({PALADIN_MERCY_CHOICE_ID} -> {selected_mercy}): the \
+                     level-{level} mercy chosen for this character is {selected_mercy}. This is a \
+                     bounded recognition record of the chosen mercy only; no restricted-list \
+                     validation is performed (mirroring the Ranger Favored Terrain / Sorcerer \
+                     bloodline class-skill choice-recognition idiom), and the mercy's own effect \
+                     is not computed, since no lay-on-hands execution engine exists anywhere in \
+                     this codebase"
+                ),
+            });
+        }
+    }
 
     // SD13-E5: ground the partial-caster IDENTITY itself as one more flat
     // level-gate record, distinct from the still-ungrounded spell burden
