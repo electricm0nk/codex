@@ -1072,11 +1072,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Sorcerer level-1 spell baseline, with Eschew Materials, the \
-                            canonical bloodline choice recognition, and the Arcane bloodline's \
-                            class-skill choice (a player's choice of any one Knowledge skill) \
-                            grounded for real and the Arcane Bond / bloodline progression burden \
-                            and the spontaneous known-spell / slot posture burden still blocked",
+                            Sorcerer level-1 spell baseline, with base attack bonus, base save \
+                            progression, Eschew Materials, the canonical bloodline choice \
+                            recognition, and the Arcane bloodline's class-skill choice (a \
+                            player's choice of any one Knowledge skill) grounded for real and \
+                            the Arcane Bond / bloodline progression burden and the spontaneous \
+                            known-spell / slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1097,8 +1098,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     d20pfsrd and the legacy Paizo PRD mirror, correcting an earlier imprecise \
                     framing of this grant as a fixed Knowledge [arcana] award), a player's choice \
                     of any one Knowledge skill, recognized here as a +0 recognition record only \
-                    (granting a class skill confers no flat modifier by itself in this codebase). \
-                    The row is Partial, not Supported: the Arcane Bond / bloodline progression \
+                    (granting a class skill confers no flat modifier by itself in this codebase), \
+                    AND a further SD13-E5 slice grounds the foundational base-attack-bonus / \
+                    base-save progression pillar that every other class row in this matrix \
+                    (Fighter, Barbarian, Monk, Rogue, Paladin, Druid, Cleric, Bard) already had \
+                    and Sorcerer never had: base attack bonus (1/2 BAB, classlevel / 2 — UNLIKE \
+                    the 3/4 BAB shared by Rogue/Monk/Druid/Cleric/Bard) and base save \
+                    progression (good Will only, poor Fortitude, poor Reflex), both verified \
+                    against the PF1 Core Rulebook Sorcerer class table (d20pfsrd and the legacy \
+                    Paizo PRD mirror), reading the raw level 1-6 table rows directly to \
+                    disambiguate the 1/2-vs-3/4 fraction since level 1 alone floors every \
+                    fraction to +0, both grounded as standalone explanation records not wired \
+                    into compute_total_saves or compute_combat_baseline. The row is Partial, not \
+                    Supported: the Arcane Bond / bloodline progression \
                     burden (Arcane Bond execution, the conditional bloodline arcana, and the \
                     bonus spells/feats at 3rd+ level) remains named and unproven, and the \
                     spontaneous spell burden (spontaneous spells known, spell slots per day, \
@@ -1106,7 +1118,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     fabricated and no Sorcerer level 2+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-2+ progression",
+                    level-2+ progression (widening the now-grounded base attack/base save \
+                    formulas)",
             },
             SupportStateRow {
                 row_id: "class.wizard.progression_and_spell_burden",
