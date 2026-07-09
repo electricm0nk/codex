@@ -4412,9 +4412,11 @@ fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
 /// level-1 prepared divine spell-bearing baseline, while keeping it explicitly
 /// claim-blocked on its remaining burdens. The SD13-E4 Wild Empathy slice grounds
 /// Wild Empathy for real; the SD13-E5 Nature Sense / nature-bond-choice slice grounds
-/// Nature Sense for real and recognizes the deterministic nature-bond selection; the
-/// chosen bond's execution and the prepared divine spell posture burden remain
-/// claim-blocked.
+/// Nature Sense for real and recognizes the deterministic nature-bond selection; a
+/// later SD13-E5 slice grounds the foundational base-attack-bonus / base-save
+/// progression pillar that every other class row in this matrix already has and Druid
+/// never had; the chosen bond's execution and the prepared divine spell posture
+/// burden remain claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
 /// bond power execution (no companion stat block, no companion advancement, no link /
@@ -4424,6 +4426,11 @@ fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
 /// - leaves one recognition explanation so the `class:druid:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - leaves one grounded base-attack-bonus explanation (PF1 Core Rulebook Druid class
+///   table: 3/4 BAB, the same formula shape as Rogue/Monk) and three grounded
+///   base-save explanations (good Fortitude, good Will, poor Reflex), each a
+///   standalone record not wired into `PilotBaseChassisComputation.base_attack_bonus`,
+///   `compute_total_saves`, or `compute_combat_baseline`,
 /// - leaves one grounded Wild Empathy explanation (the flat druid-level +
 ///   Charisma-modifier modifier, not a d20 roll and not a Diplomacy-check execution
 ///   engine),
@@ -4440,8 +4447,9 @@ fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Druid prepared divine spell-bearing
-/// identity, its grounded Wild Empathy / Nature Sense values, its recognized
-/// nature-bond choice, and its remaining named burdens legible on the runtime path.
+/// identity, its grounded base-attack/base-save/Wild Empathy/Nature Sense values, its
+/// recognized nature-bond choice, and its remaining named burdens legible on the
+/// runtime path.
 fn explain_druid_level1_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -4471,6 +4479,66 @@ fn explain_druid_level1_spell_baseline(
              spellbook posture, no spells prepared per day, no spontaneous summon nature's ally \
              conversion, no spell slots per day, no spell save DCs, and no bonus spell slots from a \
              high Wisdom, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Grounded: the foundational base-attack-bonus / base-save progression pillar.
+    // Unlike every other class row in this matrix (Fighter, Barbarian, Monk, Rogue,
+    // Paladin all already ground this pillar), Druid had never had it grounded at
+    // all until this SD13-E5 slice. Both formulas were verified against the PF1
+    // Core Rulebook Druid class table (d20pfsrd and the legacy Paizo PRD mirror)
+    // before writing this code, cross-checking the level 4/5 base-attack-bonus
+    // values to disambiguate the exact fraction (level 1 alone floors both a 1/2
+    // and a 3/4 progression to the same +0, so it cannot disambiguate on its own).
+    let level_value = i16::from(DRUID_BASELINE_LEVEL);
+
+    // Grounded (1/2): 3/4-BAB base-attack progression, the same formula shape as
+    // Rogue/Monk (classlevel * 3 / 4). No PCGen .lst file exists for the Druid
+    // class in this repo, so the formula cites the PF1 Core Rulebook Druid class
+    // table directly.
+    let base_attack_bonus = level_value * 3 / 4;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.druid.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "Druid level {DRUID_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+             Druid class table's 3/4-BAB progression, the same formula shape as Rogue/Monk: \
+             classlevel * 3 / 4 = {base_attack_bonus}. This is a standalone explanation record; \
+             it is not wired into the integrated base_attack_bonus field or into \
+             compute_combat_baseline"
+        ),
+    });
+
+    // Grounded (2/2): base-save progression — good Fortitude, poor Reflex, good
+    // Will, verified against the PF1 Core Rulebook Druid class table (Fortitude
+    // +2, Reflex +0, Will +2 at level 1).
+    let good_save = level_value / 2 + 2;
+    let poor_save = level_value / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.druid.base_save.fortitude".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Druid level {DRUID_BASELINE_LEVEL} base Fortitude save (good save) from the PF1 \
+             Core Rulebook Druid class table: classlevel/2+2 = {good_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.druid.base_save.reflex".to_owned(),
+        value: poor_save,
+        detail: format!(
+            "Druid level {DRUID_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 Core \
+             Rulebook Druid class table: classlevel/3 = {poor_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.druid.base_save.will".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Druid level {DRUID_BASELINE_LEVEL} base Will save (good save) from the PF1 Core \
+             Rulebook Druid class table: classlevel/2+2 = {good_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
         ),
     });
 
