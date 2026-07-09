@@ -1,0 +1,45 @@
+# SD13-E5 deterministic Human Monk level 4 progression fixture.
+# Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human Monk
+# level-1/level-2/level-3 martial chassis baseline to level 4 as chosen input
+# only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat) and the deterministic ability/feat/skill/equipment posture from
+# the level-1/level-2/level-3 fixtures, adding only the level bump this
+# bounded tranche needs. The level-1 monk_bonus_feat choice (Stunning Fist) is
+# carried forward unchanged — PF1 also grants monks a SEPARATE bonus feat at
+# 2nd level, but this slice deliberately does not add a second choice-slot
+# for it (no fixture data and no recognition code exist for a level-2 bonus
+# feat grant; it stays named but unproven, unchanged by this widening).
+#
+# It deliberately avoids every later Monk burden surface: no execution of
+# what the recognized bonus feat actually does, no level-2 bonus feat grant
+# recognition, no ki-power execution (extra attack, AC bonus, or speed
+# bonus), no fall-damage engine, and no level-5+ progression. The unarmed
+# strike damage die (the 4th-level monk class table row's own die-size step
+# to 1d8, verified independently against d20pfsrd and legacy.aonprd.com), the
+# ki pool's flat size (a 4th-level monk class feature, verified independently
+# against both primary sources: "the number of points in a monk's ki pool is
+# equal to 1/2 his monk level + his Wisdom modifier" — no stated minimum in
+# the primary rule text), and Slow Fall (the 4th-level monk class feature,
+# "a monk within arm's reach of a wall can use it to slow his descent...
+# treats the fall as if it were 20 feet shorter") are the three new pillars
+# this fixture exercises, all grounded only as bounded flat-magnitude or
+# identity records, never wired into any damage-roll, resource-consumption,
+# or action-economy engine.
+case_id=pf1-crb-human-monk-level4
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:monk:4
+ability=strength:13
+ability=dexterity:16
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:10
+feat=feat:stunning_fist
+skill=skill:acrobatics:1
+equipment=item:shield:absent
+choice=choice:monk_bonus_feat:feat:stunning_fist
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md
