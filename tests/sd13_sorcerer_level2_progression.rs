@@ -223,9 +223,11 @@ fn sorcerer_level_3_was_later_widened_into_the_supported_tranche() {
     // to level 3 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Ranger
     // level-range gate idiom); this negative control is superseded, not
     // violated — pin the new truth here too so this file stays internally
-    // consistent. The frontier this file's own slice actually drew is now
-    // level 4, covered by `sorcerer_level_4_is_not_promoted_by_this_slice`
-    // below.
+    // consistent. Level 4 was in turn widened by a further SD13-E5 slice,
+    // covered by `sorcerer_level_4_was_later_widened_into_the_supported_tranche`
+    // below, and the frontier is now level 5, covered by
+    // `sorcerer_level_5_is_not_promoted_by_this_slice` in
+    // `tests/sd13_sorcerer_level4_progression.rs`.
     let level_3 = SORCERER_LEVEL2_FIXTURE.replace("class:sorcerer:2", "class:sorcerer:3");
     let input = load(&level_3);
     let computation = compute_pilot_base_chassis(&input);
@@ -240,21 +242,30 @@ fn sorcerer_level_3_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Negative control: level 4 was later widened into the supported tranche -----
 
 #[test]
-fn sorcerer_level_4_is_not_promoted_by_this_slice() {
+fn sorcerer_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_sorcerer_level4_progression.rs) widened the level-range gate
+    // to level 4 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Ranger
+    // level-range gate idiom); this negative control is superseded, not
+    // violated — pin the new truth here too so this file stays internally
+    // consistent. The frontier this file's own slice actually drew is now
+    // level 5, covered by `sorcerer_level_5_is_not_promoted_by_this_slice` in
+    // `tests/sd13_sorcerer_level4_progression.rs`.
     let level_4 = SORCERER_LEVEL2_FIXTURE.replace("class:sorcerer:2", "class:sorcerer:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.sorcerer.")
-                || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-4 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+        has_explanation(&computation, "class_chassis.sorcerer.base_attack_bonus"),
+        "level-4 Sorcerer is supported since the SD13-E5 level-4 slice: {:?}",
         computation.explanations
+    );
+    assert!(
+        has_explanation(&computation, "class_chassis.sorcerer.bloodline_choice"),
+        "level-4 Sorcerer must keep the bloodline choice recognition grounded at level 2"
     );
 }
 
