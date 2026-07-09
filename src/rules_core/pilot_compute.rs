@@ -384,13 +384,19 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// `supported_rogue_level` idiom. Monk's own level-range gate is
 /// `supported_monk_level` / `MAX_SUPPORTED_MONK_LEVEL`, unrelated to this
 /// Barbarian gate.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 2;
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 3;
 
 /// PF1 Core Rulebook level gate at which Barbarian gains Uncanny Dodge (2nd level,
 /// verified against two independent primary sources — d20pfsrd and legacy.aonprd.com
 /// both list "Rage power, uncanny dodge" as the Barbarian 2nd-level special feature
 /// entry).
 const BARBARIAN_UNCANNY_DODGE_LEVEL: u8 = 2;
+
+/// PF1 Core Rulebook level gate at which Barbarian gains Trap Sense (3rd level,
+/// verified independently against two primary sources — d20pfsrd and
+/// legacy.aonprd.com both list "Trap sense +1" as the Barbarian 3rd-level special
+/// feature entry).
+const BARBARIAN_TRAP_SENSE_LEVEL: u8 = 3;
 
 // SD13-E3/E5 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
@@ -3408,12 +3414,12 @@ fn supported_sorcerer_level(input: &CharacterInput) -> Option<u8> {
 
 /// The bounded Barbarian milestone level this decomposition surface grounds, if any.
 /// Returns the single Barbarian level when the chosen input is exactly a
-/// single-class Barbarian at one of the supported milestone levels (1 or 2). Returns
-/// `None` for no Barbarian, a non-Barbarian class, a multiclass mix, or any level-3+
-/// Barbarian this slice deliberately does not recognize — each of which stays
-/// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level` /
-/// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` level-range gate
-/// idiom.
+/// single-class Barbarian at one of the supported milestone levels (1, 2, or 3).
+/// Returns `None` for no Barbarian, a non-Barbarian class, a multiclass mix, or any
+/// level-4+ Barbarian this slice deliberately does not recognize — each of which
+/// stays claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level`
+/// / Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Monk
+/// `supported_monk_level` level-range gate idiom.
 fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
     match input.chosen.class_levels.as_slice() {
         [class_level]
@@ -3427,11 +3433,11 @@ fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Barbarian
-/// level-1/level-2 martial chassis. Base-attack progression, base-save progression, and
-/// the fast-movement speed-extension value are grounded directly at every supported
-/// level. The SD13-E5 slice resolves the formerly-named illiteracy burden as vacuous —
-/// the PF1 Core Rulebook Barbarian is NOT illiterate; illiteracy is a D&D 3.5e
-/// Barbarian trait that never existed in PF1, so under the fixture's
+/// level-1/level-2/level-3 martial chassis. Base-attack progression, base-save
+/// progression, and the fast-movement speed-extension value are grounded directly at
+/// every supported level. The SD13-E5 slice resolves the formerly-named illiteracy
+/// burden as vacuous — the PF1 Core Rulebook Barbarian is NOT illiterate; illiteracy
+/// is a D&D 3.5e Barbarian trait that never existed in PF1, so under the fixture's
 /// `pf1.core_rulebook` source package there was never anything to implement — and
 /// grounds Rage's flat numeric surface: rage rounds per day (4 + Constitution modifier,
 /// growing by 2 more rounds per level after 1st, claim-blocked instead of grounded
@@ -3451,21 +3457,30 @@ fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
 /// no invisibility-detection engine implemented. The level-2 row's other named entry,
 /// a Rage Power choice (a genuinely open-ended choice-list feature), is deliberately
 /// left named-but-unproven, mirroring the Monk level-2 bonus feat grant / Bard
-/// Versatile Performance precedent. Otherwise only the rage-state execution burden,
-/// the Rage Power choice, and weapon familiarity stay explicitly claim-blocked.
+/// Versatile Performance precedent. A still further SD13-E5 slice widens the gate to
+/// level 3 (`MAX_SUPPORTED_BARBARIAN_LEVEL = 3`, mirroring the Rogue/Monk level-3
+/// widening idiom) and grounds Trap Sense, the PF1 Core Rulebook Barbarian's 3rd-level
+/// "Special" class table entry (verified independently against d20pfsrd and
+/// legacy.aonprd.com, both naming "Trap sense +1" as the level-3 row), as a bounded
+/// flat-magnitude record only (`class_feature.barbarian.trap_sense`, barbarian level /
+/// 3, floor; +1 at level 3) — a level-gate-absence record below level 3, a
+/// flat-magnitude recognition record at or above it, mirroring exactly how Rogue's own
+/// Trap Sense was grounded, never applied to any actual Reflex-save total or Armor
+/// Class total. Otherwise only the rage-state execution burden, the Rage Power choice,
+/// and weapon familiarity stay explicitly claim-blocked.
 ///
 /// This deliberately does not compute a supported martial chassis: the grounded
-/// base-attack, base-save, fast-movement, rage, and Uncanny Dodge explanation
-/// records below are standalone (not wired into
+/// base-attack, base-save, fast-movement, rage, Uncanny Dodge, and Trap Sense
+/// explanation records below are standalone (not wired into
 /// `PilotBaseChassisComputation.base_attack_bonus`, `compute_total_saves`,
 /// `compute_combat_baseline`, the integrated ability modifiers, or any
 /// speed/movement/flat-footed/Armor-Class total), so the integrated pilot surface
 /// still reports a blocked posture on this input. It grounds no rage-state engine, no
 /// weapon familiarity, no Rage Power choice-list feature, no flat-footed-state
 /// tracking, no Armor Class computation, no invisibility-detection engine, and no
-/// level-3+ martial progression. It only:
+/// level-4+ martial progression. It only:
 /// - leaves one chassis-recognition explanation so the `class:barbarian:N` identity
-///   (at the supported level, 1 or 2) is acknowledged as a non-hybrid martial
+///   (at the supported level, 1, 2, or 3) is acknowledged as a non-hybrid martial
 ///   baseline rather than an undocumented packet placeholder (direct runtime
 ///   evidence, carrying no fabricated mechanical value),
 /// - leaves five grounded explanation records naming the full-BAB base-attack
@@ -3478,7 +3493,9 @@ fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
 ///   that sum is non-positive) and the four flat rage constants, values only,
 /// - leaves one grounded Uncanny Dodge identity/recognition record (level-gate
 ///   absence below level 2, granted-but-unexecuted rule-text recognition at or
-///   above it, value 0 either way), and
+///   above it, value 0 either way),
+/// - leaves one grounded Trap Sense flat-magnitude record (level-gate absence below
+///   level 3, value 0; flat magnitude at or above it, barbarian level / 3), and
 /// - emits one claim-blocking diagnostic naming the still-missing rage-state
 ///   execution engine explicitly (activation/deactivation, round-by-round rage
 ///   round consumption, fatigue after rage, and temporary application of the rage
@@ -3746,6 +3763,46 @@ fn explain_barbarian_level1_chassis(
                  non-fabricated): no flat-footed-state tracking, no Armor Class computation, and \
                  no invisibility-detection engine exists anywhere in this codebase to apply it, so \
                  this grounds no actual flat-footed immunity or Dexterity-to-AC retention"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): Trap Sense, a 3rd-level Barbarian class feature (verified
+    // independently against d20pfsrd and legacy.aonprd.com: both name "Trap sense +1"
+    // as the Barbarian 3rd-level "Special" class table entry). Below the level-3 gate
+    // this is a correct PF1 Core Rulebook level-gate absence (value 0); at or above it,
+    // it is a bounded flat-magnitude record only (barbarian level / 3, floor) naming
+    // the rule text — mirroring exactly how Rogue's own Trap Sense was grounded: the
+    // magnitude is never applied to any actual Reflex-save total or Armor Class total,
+    // since no saving-throw-resolution or armor-class-resolution engine exists in this
+    // codebase, and no trap-detection or trap-triggering engine exists to decide when
+    // it would apply.
+    if level < BARBARIAN_TRAP_SENSE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.trap_sense".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian Trap Sense at barbarian level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant magnitude is named but \
+                 not computed. Trap Sense is a 3rd-level barbarian class feature."
+            ),
+        });
+    } else {
+        let trap_sense_bonus = level_value / 3;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.trap_sense".to_owned(),
+            value: trap_sense_bonus,
+            detail: format!(
+                "Barbarian Trap Sense granted at barbarian level {level} (PF1 Core Rulebook, \
+                 3rd-level barbarian class feature): a +{trap_sense_bonus} bonus on Reflex \
+                 saves made to avoid traps and a +{trap_sense_bonus} dodge bonus to AC against \
+                 attacks made by traps (barbarian level / 3 = {trap_sense_bonus}; this bonus \
+                 rises further at 6th/9th/12th/15th/18th barbarian level, beyond this bounded \
+                 slice). This is a bounded flat-magnitude record only, non-fabricated: it is \
+                 never applied to any actual Reflex-save total or AC total, since no \
+                 saving-throw-resolution or armor-class-resolution engine exists anywhere in \
+                 this codebase to apply it, and no trap-detection or trap-triggering engine \
+                 exists to decide when it would apply"
             ),
         });
     }

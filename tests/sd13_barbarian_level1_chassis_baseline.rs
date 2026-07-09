@@ -607,9 +607,9 @@ fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_un
             "barbarian partial note must record the illiteracy rules correction ('{token}'): {note}"
         );
     }
-    // Rage's flat numeric surface is grounded (across both level 1 and the later
-    // SD13-E5 level-2 widening); the rage-state execution engine is the named
-    // remaining burden, and weapon familiarity / level-3+ stay unclaimed.
+    // Rage's flat numeric surface is grounded (across level 1 and the later SD13-E5
+    // level-2/level-3 widenings); the rage-state execution engine is the named
+    // remaining burden, and weapon familiarity / level-4+ stay unclaimed.
     for token in [
         "base attack",
         "base save",
@@ -617,7 +617,7 @@ fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_un
         "rage rounds",
         "rage execution",
         "weapon familiarity",
-        "level-3+",
+        "level-4+",
     ] {
         assert!(
             note.contains(token),
