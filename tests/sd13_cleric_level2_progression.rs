@@ -272,12 +272,38 @@ fn cleric_level1_truth_is_unchanged_by_this_widening() {
     assert_eq!(dice.value, 1, "Cleric level 1 Channel Energy die count must stay 1");
 }
 
-// ----- Negative control: level 3 stays unrecognized by this slice -----
+// ----- Cleric level 3 was later widened into the supported tranche -----
 
 #[test]
-fn cleric_level_3_is_not_promoted_by_this_slice() {
+fn cleric_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 3 was the next unproven milestone
+    // and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_cleric_level3_progression.rs) widened the level-range gate to
+    // level 3 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Bard/Druid/
+    // Sorcerer/Wizard level-range gate idiom) and extended every formula, changing
+    // both Channel Energy's die count (1 -> 2) and the domain spell slot count
+    // (1 -> 2) for real; this negative control is superseded, not violated — pin
+    // the new truth here too so this file stays internally consistent.
     let level_3 = CLERIC_LEVEL2_FIXTURE.replace("class:cleric:2", "class:cleric:3");
     let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.cleric.")
+                || e.id == "class_chassis.spell_baseline.cleric"),
+        "level-3 Cleric is supported since the SD13-E5 level-3 slice: {:?}",
+        computation.explanations
+    );
+}
+
+// ----- Negative control: level 4 stays unrecognized by this slice -----
+
+#[test]
+fn cleric_level_4_is_not_promoted_by_this_slice() {
+    let level_4 = CLERIC_LEVEL2_FIXTURE.replace("class:cleric:2", "class:cleric:4");
+    let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -285,7 +311,7 @@ fn cleric_level_3_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-3 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+        "level-4 Cleric must not gain any bounded cleric chassis explanation: {:?}",
         computation.explanations
     );
 }

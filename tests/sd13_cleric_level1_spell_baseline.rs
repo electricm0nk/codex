@@ -488,27 +488,63 @@ fn cleric_level_2_was_later_widened_into_the_supported_tranche() {
 }
 
 #[test]
-fn cleric_level_3_is_not_promoted() {
+fn cleric_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 3 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_cleric_level3_progression.rs) widened the level-range gate to
+    // level 3 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Bard/Druid/
+    // Sorcerer/Wizard level-range gate idiom) and confirmed Channel Energy's die
+    // count and the domain spell slot count both change for real at level 3;
+    // this negative control is superseded, not violated — pin the new truth
+    // here too so this file stays internally consistent.
     let level_3 = CLERIC_FIXTURE.replace("class:cleric:1", "class:cleric:3");
     let input = load(&level_3);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, RECOGNITION_ID),
-        "level-3 Cleric must not gain the bounded prepared-divine-spell-baseline recognition record"
+        has_explanation(&computation, RECOGNITION_ID),
+        "level-3 Cleric is supported since the SD13-E5 level-3 slice: {:?}",
+        computation.explanations
     );
     assert!(
-        !has_explanation(&computation, CHANNEL_ENERGY_DICE_ID)
-            && !has_explanation(&computation, CHANNEL_ENERGY_USES_PER_DAY_ID),
-        "level-3 Cleric must not gain the bounded Channel Energy grounding"
+        has_explanation(&computation, CHANNEL_ENERGY_DICE_ID)
+            && has_explanation(&computation, CHANNEL_ENERGY_USES_PER_DAY_ID),
+        "level-3 Cleric is supported since the SD13-E5 level-3 slice: {:?}",
+        computation.explanations
     );
     assert!(
-        !has_explanation(&computation, DOMAIN_CHOICE_ID)
-            && !has_explanation(&computation, DOMAIN_SPELL_SLOT_ID),
-        "level-3 Cleric must not gain the bounded domain choice seam or domain spell slot count"
+        has_explanation(&computation, DOMAIN_CHOICE_ID)
+            && has_explanation(&computation, DOMAIN_SPELL_SLOT_ID),
+        "level-3 Cleric is supported since the SD13-E5 level-3 slice: {:?}",
+        computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "level-3 Cleric must stay claim-blocked in this slice"
+    );
+}
+
+#[test]
+fn cleric_level_4_is_not_promoted() {
+    let level_4 = CLERIC_FIXTURE.replace("class:cleric:1", "class:cleric:4");
+    let input = load(&level_4);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !has_explanation(&computation, RECOGNITION_ID),
+        "level-4 Cleric must not gain the bounded prepared-divine-spell-baseline recognition record"
+    );
+    assert!(
+        !has_explanation(&computation, CHANNEL_ENERGY_DICE_ID)
+            && !has_explanation(&computation, CHANNEL_ENERGY_USES_PER_DAY_ID),
+        "level-4 Cleric must not gain the bounded Channel Energy grounding"
+    );
+    assert!(
+        !has_explanation(&computation, DOMAIN_CHOICE_ID)
+            && !has_explanation(&computation, DOMAIN_SPELL_SLOT_ID),
+        "level-4 Cleric must not gain the bounded domain choice seam or domain spell slot count"
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-4 Cleric must stay claim-blocked in this slice"
     );
 }
 
