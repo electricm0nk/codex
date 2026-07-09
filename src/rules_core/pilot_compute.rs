@@ -614,7 +614,7 @@ const IMPROVED_GRAPPLE_FEAT_SELECTION: &str = "feat:improved_grapple";
 const IMPROVED_TRIP_FEAT_SELECTION: &str = "feat:improved_trip";
 const STUNNING_FIST_FEAT_SELECTION: &str = "feat:stunning_fist";
 
-// Grounded SD13-E4/E5 Human Cleric level-1/level-2/level-3 prepared divine
+// Grounded SD13-E4/E5 Human Cleric level-1/level-2/level-3/level-4 prepared divine
 // spell-bearing baseline identity. Cleric is the canonical PF1 prepared divine full
 // caster; unlike the arcane Sorcerer/Wizard/Bard baselines already recognized, its
 // bounded burden is split across a domain powers class-feature family (the granted
@@ -630,7 +630,14 @@ const STUNNING_FIST_FEAT_SELECTION: &str = "feat:stunning_fist";
 // further SD13-E5 slice widens the gate again to level 1-3: Channel Energy's die
 // count and the domain spell slot count both change for real at level 3 (verified
 // independently against the PF1 Core Rulebook Cleric class table and spells-per-day
-// table), since level 3 is exactly when a cleric first casts 2nd-level spells.
+// table), since level 3 is exactly when a cleric first casts 2nd-level spells. A
+// further SD13-E5 slice widens the gate again to level 1-4: the Good domain's Touch
+// of Good sacred bonus genuinely changes for real at level 4 (half cleric level,
+// minimum 1, so `max(4/2, 1) = 2`, up from 1), verified independently against the PF1
+// Core Rulebook Good Domain granted-power rule text; Channel Energy's die count and
+// the domain spell slot count both stay unchanged at level 4 (verified independently
+// against the class table's blank level-4 "Special" column and the spells-per-day
+// table's still-blank 3rd-level spell column at level 4).
 const CLERIC_CLASS_ID: &str = "class:cleric";
 /// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -645,8 +652,16 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 /// becomes 2d6 (`ceil(3 / 2) = 2`, the class table's level-3 "Special" column reads
 /// "Channel energy 2d6") and a level-3 cleric casts 2nd-level cleric spells for the
 /// first time (verified against the raw Cleric spells-per-day table rows), so the
-/// domain spell slot count also changes for real at level 3.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 3;
+/// domain spell slot count also changes for real at level 3. A further SD13-E5 slice
+/// widens this to 1..=4, verified independently against both primary sources: the
+/// class table's level-4 "Special" column is blank (no new class feature is gained),
+/// Channel Energy's die count stays 2d6 (`ceil(4 / 2) = 2`, unchanged from level 3, it
+/// next increases only at level 5), and the domain spell slot count stays 2 (a
+/// level-4 cleric's 3rd-level spell column is still "—" on the raw spells-per-day
+/// table — 3rd-level cleric spells begin only at level 5) — but the Good domain's
+/// Touch of Good sacred bonus (half cleric level, minimum 1) genuinely increases to 2
+/// via the same pre-existing formula (`max(4/2, 1) = 2`).
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 4;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -6014,8 +6029,8 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E4/E5 runtime evidence for the deterministic Human Cleric
-/// level-1/level-2/level-3 prepared divine spell-bearing baseline, while keeping it
-/// explicitly claim-blocked on its remaining still-missing burdens.
+/// level-1/level-2/level-3/level-4 prepared divine spell-bearing baseline, while
+/// keeping it explicitly claim-blocked on its remaining still-missing burdens.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds Channel
 /// Energy's flat die-count and uses-per-day math, the domain choice seam, the flat
@@ -6038,7 +6053,15 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// a cleric first casts 2nd-level spells (verified independently against both
 /// primary sources' raw class table and spells-per-day table rows); the level-3
 /// "Special" column names only the Channel Energy die-count increase, so no new
-/// pillar record is added. It only:
+/// pillar record is added. A further SD13-E5 slice widens the gate again to 1..=4
+/// (`MAX_SUPPORTED_CLERIC_LEVEL = 4`): the Good domain's Touch of Good sacred bonus
+/// changes for real at level 4 (half cleric level, minimum 1: `max(4/2, 1) = 2`, up
+/// from 1), verified independently against the PF1 Core Rulebook Good Domain
+/// granted-power rule text; Channel Energy's die count and the domain spell slot
+/// count both stay unchanged at level 4 (verified independently against both primary
+/// sources: the class table's level-4 "Special" column is blank, and the
+/// spells-per-day table's 3rd-level spell column is still "—" at level 4), so no new
+/// pillar record is added at level 4 either. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
@@ -6299,8 +6322,11 @@ fn explain_cleric_level1_spell_baseline(
         // At level 1 this floors to the minimum (0 / 2 = 0, floored up to 1); at
         // levels 2-3 it is naturally 1 without needing the floor (2 / 2 = 1,
         // 3 / 2 = 1, integer division) — all three land on the same value,
-        // confirmed via the same formula, not a new record (it next increases
-        // only at level 4, 4 / 2 = 2).
+        // confirmed via the same formula, not a new record. A further SD13-E5
+        // slice confirms this genuinely increases to 2 at level 4 (4 / 2 = 2),
+        // verified independently against the PF1 Core Rulebook Good Domain
+        // granted-power rule text, via the same pre-existing formula, not
+        // re-derived (it next increases again only at level 6, 6 / 2 = 3).
         let touch_of_good_bonus = (level_value / 2).max(1);
         explanations.push(ComputationExplanation {
             id: "class_chassis.cleric.domain_power_good_touch_of_good_bonus".to_owned(),

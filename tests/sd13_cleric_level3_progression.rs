@@ -303,20 +303,22 @@ fn cleric_level2_truth_is_unchanged_by_this_widening() {
     );
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Negative control (was: level 4 stays unrecognized). Level 4 was later
+// widened into the supported tranche by tests/sd13_cleric_level4_progression.rs;
+// coverage for that level moved there. -----
 
 #[test]
-fn cleric_level_4_is_not_promoted_by_this_slice() {
+fn cleric_level_4_was_later_widened_into_the_supported_tranche() {
     let level_4 = CLERIC_LEVEL3_FIXTURE.replace("class:cleric:3", "class:cleric:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
-                || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-4 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+            .any(|e| e.id == "class_chassis.spell_baseline.cleric"),
+        "level-4 Cleric is now supported by a later SD13-E5 slice \
+         (tests/sd13_cleric_level4_progression.rs): {:?}",
         computation.explanations
     );
 }
