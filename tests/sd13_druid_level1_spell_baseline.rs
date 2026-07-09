@@ -480,17 +480,50 @@ fn fighter_sorcerer_wizard_and_cleric_do_not_gain_druid_recognition() {
 }
 
 #[test]
-fn druid_level_2_is_not_promoted_by_this_slice() {
+fn druid_level_2_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 2 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_druid_level2_progression.rs) widened the level-1-only gate to
+    // level 2 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Bard
+    // level-range gate idiom) and confirmed every one of the formulas below
+    // extends to level 2 unchanged; this negative control is superseded, not
+    // violated — pin the new truth here too so this file stays internally
+    // consistent.
     let level_2 = DRUID_FIXTURE.replace("class:druid:1", "class:druid:2");
     let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, RECOGNITION_ID),
-        "level-2 Druid must not gain the bounded level-1 prepared-divine-spell-baseline recognition record"
+        has_explanation(&computation, RECOGNITION_ID),
+        "level-2 Druid is supported since the SD13-E5 level-2 slice: {:?}",
+        computation.explanations
+    );
+    assert!(
+        has_explanation(&computation, WILD_EMPATHY_ID) && has_explanation(&computation, NATURE_SENSE_ID),
+        "level-2 Druid is supported since the SD13-E5 level-2 slice: {:?}",
+        computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "level-2 Druid must stay claim-blocked in this slice"
+    );
+}
+
+#[test]
+fn druid_level_3_is_not_promoted() {
+    let level_3 = DRUID_FIXTURE.replace("class:druid:1", "class:druid:3");
+    let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !has_explanation(&computation, RECOGNITION_ID),
+        "level-3 Druid must not gain the bounded prepared-divine-spell-baseline recognition record"
+    );
+    assert!(
+        !has_explanation(&computation, WILD_EMPATHY_ID) && !has_explanation(&computation, NATURE_SENSE_ID),
+        "level-3 Druid must not gain the bounded Wild Empathy / Nature Sense grounding"
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-3 Druid must stay claim-blocked in this slice"
     );
 }
 

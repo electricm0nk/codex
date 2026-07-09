@@ -410,11 +410,17 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
 const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs + \
     tests/sd13_cleric_level2_progression.rs";
 
-/// SD13-E4 dedicated proof surface for the bounded Human Druid level-1 prepared
-/// divine spell baseline: direct computed recognition of the prepared divine
-/// spell-bearing identity that stays explicitly blocked on the nature bond / wild
-/// empathy burden and the prepared divine spell posture burden.
-const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs";
+/// SD13-E4/E5 dedicated proof surface for the bounded Human Druid level-1/level-2
+/// prepared divine spell baseline: direct computed recognition of the prepared
+/// divine spell-bearing identity, with base attack bonus, base save progression,
+/// Wild Empathy, Nature Sense, the nature-bond choice recognition, and (at level 2)
+/// Woodland Stride grounded for real, that stays explicitly blocked on the animal
+/// companion execution burden and the prepared divine spell posture burden, widened
+/// to level 2 by a later SD13-E5 slice (the level-range gate plus every named pillar
+/// formula extended to level 2 via the same formula), citing both proof files as one
+/// combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`] / [`SD13_BARD_LEVEL1_TEST`].
+const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs + \
+    tests/sd13_druid_level2_progression.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -951,10 +957,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
-                            level-1 prepared divine spell baseline, with base attack bonus, base \
-                            save progression, Wild Empathy, Nature Sense, and the nature-bond \
-                            choice recognition now grounded, and the animal-companion execution \
-                            burden and the prepared divine spell posture burden still blocked",
+                            level-1/level-2 prepared divine spell baseline, with base attack bonus, \
+                            base save progression, Wild Empathy, Nature Sense, the nature-bond \
+                            choice recognition, and (at level 2) Woodland Stride grounded for real \
+                            at both supported levels, and the animal-companion execution burden \
+                            and the prepared divine spell posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -977,16 +984,30 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     formula shape as Rogue/Monk) and base save progression (good Fortitude, good \
                     Will, poor Reflex), both verified against the PF1 Core Rulebook Druid class \
                     table and grounded as standalone explanation records not wired into \
-                    compute_total_saves or compute_combat_baseline. The row is Partial, not \
-                    Supported: the animal companion execution burden (the companion's stat block, \
-                    its advancement, and its link / share spells abilities) remains named and \
-                    unproven, and the prepared divine spell posture burden (spells prepared from \
-                    the full Druid list, spontaneous summon nature's ally conversion, spell slots \
-                    per day, bonus spells from a high Wisdom, spell save DCs) is still entirely \
-                    unproven. No spell math is fabricated and no Druid level 2+ is proven",
+                    compute_total_saves or compute_combat_baseline, AND a later SD13-E5 slice widens \
+                    the level-1-only gate to a level-range gate (level 1-2), extending every one of \
+                    the above formulas to level 2 via the same formula, not re-derived (verified \
+                    independently against the PF1 Core Rulebook Druid class table via d20pfsrd and \
+                    legacy.aonprd.com): level 2 base attack bonus is +1, base Fortitude/Will are +3, \
+                    base Reflex is +0; Wild Empathy's modifier is level-generic by construction and \
+                    grounds correctly to 3 (2 + Charisma modifier 1) at level 2; Nature Sense stays \
+                    the flat +2 bonus and the nature-bond choice recognition is not level-gated, both \
+                    confirmed unchanged at level 2 via the same formula, not new records; and the \
+                    Druid class table's level-2 \"Special\" column reads \"Woodland stride\" \
+                    (verified independently against both primary sources), a new, flat/identity- \
+                    shaped class feature grounded as a bounded identity record (value 0, mirroring \
+                    exactly how Rogue's/Monk's own Evasion was grounded): a druid may move through \
+                    natural undergrowth at normal speed without damage or impediment, with no \
+                    terrain-detection engine and no movement-execution engine fabricated. The row is \
+                    Partial, not Supported: the animal companion execution burden (the companion's \
+                    stat block, its advancement, and its link / share spells abilities) remains \
+                    named and unproven, and the prepared divine spell posture burden (spells \
+                    prepared from the full Druid list, spontaneous summon nature's ally conversion, \
+                    spell slots per day, bonus spells from a high Wisdom, spell save DCs) is still \
+                    entirely unproven. No spell math is fabricated and no Druid level 3+ is proven",
                 next_required_uplift: "SD13-E5 Druid animal companion execution slice, or the \
-                    prepared divine spell burden slice, then level-2+ progression (widening the \
-                    now-grounded base attack/base save formulas to level 2+)",
+                    prepared divine spell burden slice, then Druid level 3+ progression (out of \
+                    scope for this slice)",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",
