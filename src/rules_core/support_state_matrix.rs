@@ -405,18 +405,23 @@ const SD13_HALF_ORC_LEVEL1_TEST: &str = "tests/sd13_half_orc_race_semantics_reco
 const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs";
 
 /// SD13-E4-F7/SD13-E4/SD13-E5 dedicated proof surface for the bounded Human Bard
-/// level-1/level-2 spell baseline: direct computed recognition of the spontaneous
-/// arcane spell-bearing identity, the grounded Bardic Knowledge and flat Bardic
-/// Performance pillars (rounds per day, inspire courage magnitude), the flat
-/// Fascinate DC / affected-creature-count formulas, and (at level 2) the flat
-/// Well-Versed magnitude, with the bardic performance-execution burden (including
-/// Countersong, Distraction, and Versatile Performance) and the spontaneous
-/// known-spell / slot posture burden still blocked, widened to level 2 by a later
-/// SD13-E5 slice (the level-range gate plus every named pillar formula extended to
-/// level 2 via the same formula), citing both proof files as one combined literal,
-/// mirroring [`SD13_CLERIC_LEVEL1_TEST`].
+/// level-1/level-2/level-3 spell baseline: direct computed recognition of the
+/// spontaneous arcane spell-bearing identity, the grounded Bardic Knowledge and
+/// flat Bardic Performance pillars (rounds per day, inspire courage magnitude), the
+/// flat Fascinate DC / affected-creature-count formulas, (at level 2) the flat
+/// Well-Versed magnitude, and (at level 3) the flat Inspire Competence magnitude,
+/// with the bardic performance-execution burden (including Countersong,
+/// Distraction, and Versatile Performance) and the spontaneous known-spell / slot
+/// posture burden still blocked, widened to level 2 by a later SD13-E5 slice (the
+/// level-range gate plus every named pillar formula extended to level 2 via the
+/// same formula), widened again to level 3 by a further SD13-E5 slice (the
+/// level-range gate plus every named pillar formula extended to level 3 via the
+/// same formula, with Inspire Competence newly grounded as a flat +2 magnitude;
+/// unlike Wizard/Cleric's level-3 spell-slot-count doubling, Bard has no grounded
+/// spell-slot-count pillar for the doubling precedent to apply to), citing all
+/// three proof files as one combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`].
 const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + \
-    tests/sd13_bard_level2_progression.rs";
+    tests/sd13_bard_level2_progression.rs + tests/sd13_bard_level3_progression.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -889,14 +894,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Bard level-1/level-2 spell baseline, with base attack bonus, base \
-                            save progression, Bardic Knowledge, the flat Bardic Performance \
-                            surface (rounds per day, inspire courage magnitude), the flat \
-                            Fascinate DC / affected-creature-count formulas, and (at level 2) \
-                            the flat Well-Versed magnitude grounded for real at both supported \
-                            levels, and the bardic performance-execution burden (including \
-                            Countersong, Distraction, and Versatile Performance) and the \
-                            spontaneous known-spell / slot posture burden still blocked",
+                            Bard level-1/level-2/level-3 spell baseline, with base attack \
+                            bonus, base save progression, Bardic Knowledge, the flat Bardic \
+                            Performance surface (rounds per day, inspire courage magnitude), \
+                            the flat Fascinate DC / affected-creature-count formulas, (at level \
+                            2) the flat Well-Versed magnitude, and (at level 3) the flat \
+                            Inspire Competence magnitude, all grounded for real at every \
+                            supported level, and the bardic performance-execution burden \
+                            (including Countersong, Distraction, and Versatile Performance) and \
+                            the spontaneous known-spell / slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -943,25 +949,45 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Versatile Performance itself is NOT flat (it requires a choice of Perform \
                     type and an actual skill-substitution engine) and is deliberately left \
                     named-but-unproven, mirroring how the Monk level-2 bonus feat grant was \
-                    deliberately left unrecognized. The row is Partial, not Supported: the \
-                    performance-state engine (start/maintain action economy, round \
-                    tracking/consumption of the grounded budget, no application of the grounded \
-                    fascinate DC, count, or Well-Versed magnitude to any actual save or \
-                    targeting) is not implemented, the two remaining level-1 performances \
-                    (countersong, distraction) and Versatile Performance are not grounded at all \
-                    — Countersong/Distraction require an opposed Perform-check-vs-effect \
-                    substitution resolution and Versatile Performance requires a choice-gated \
-                    skill-substitution engine, neither a flat number — and the entire \
-                    spontaneous spell burden (spontaneous spells known, spells per day, bonus \
-                    spell slots from CHA, spell save DCs, school choice, prepared posture) is \
-                    not computed. No performance-execution math and no spell math is fabricated \
-                    and no Bard level 3+ is proven",
+                    deliberately left unrecognized. A further SD13-E5 slice widens the \
+                    level-range gate to level 3 (mirroring the \
+                    Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Druid/Sorcerer/Wizard idiom), \
+                    extending every formula above to level 3 via the same formula (level 3 base \
+                    attack +2, base saves +1/+3/+3 Fortitude/Reflex/Will, Bardic Knowledge stays \
+                    1, Bardic Performance rounds per day rises to 10 on the fixture, Inspire \
+                    Courage stays +1, Fascinate DC 13 and affected-creature count 1 on the \
+                    fixture, Well-Versed stays granted at +4), and grounds Inspire Competence, \
+                    the PF1 Core Rulebook Bard class table's level-3 Special column entry \
+                    (\"Inspire competence +2\"), as a flat +2 standalone magnitude (a competence \
+                    bonus on skill checks with a particular skill) — verified this is genuinely \
+                    flat/identity-shaped at the one supported level, mirroring the Fighter \
+                    Bravery / Rogue Trap Sense / Barbarian Trap Sense / Monk Still Mind idiom: \
+                    never applied to any actual skill-check total, since no \
+                    skill-check-resolution engine exists in this codebase. Unlike the Wizard \
+                    specialist-bonus-slot or Cleric domain-slot doubling at level 3, Bard has no \
+                    grounded spell-slot-count pillar at all to which an analogous doubling could \
+                    apply (the Bard spells-per-day table's own 2nd-level spell column does not \
+                    turn non-blank until 4th level, verified independently, and the entire \
+                    spontaneous spell posture stays named-but-unproven below), so no such \
+                    formula was added. The row is Partial, not Supported: the performance-state \
+                    engine (start/maintain action economy, round tracking/consumption of the \
+                    grounded budget, no application of the grounded fascinate DC, count, \
+                    Well-Versed, or Inspire Competence magnitude to any actual save, skill \
+                    check, or targeting) is not implemented, the two remaining level-1 \
+                    performances (countersong, distraction) and Versatile Performance are not \
+                    grounded at all — Countersong/Distraction require an opposed \
+                    Perform-check-vs-effect substitution resolution and Versatile Performance \
+                    requires a choice-gated skill-substitution engine, neither a flat number — \
+                    and the entire spontaneous spell burden (spontaneous spells known, spells \
+                    per day, bonus spell slots from CHA, spell save DCs, school choice, prepared \
+                    posture) is not computed. No performance-execution math and no spell math is \
+                    fabricated and no Bard level 4+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
-                    Inspire Courage / Fascinate / Well-Versed magnitudes, Countersong / \
-                    Distraction opposed Perform-check-vs-effect grounding, Versatile \
-                    Performance's choice-gated skill-substitution engine), then the spontaneous \
-                    spell-slot burden, then level-3+ progression",
+                    Inspire Courage / Fascinate / Well-Versed / Inspire Competence magnitudes, \
+                    Countersong / Distraction opposed Perform-check-vs-effect grounding, \
+                    Versatile Performance's choice-gated skill-substitution engine), then the \
+                    spontaneous spell-slot burden, then level-4+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",

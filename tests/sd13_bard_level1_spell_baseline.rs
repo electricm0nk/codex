@@ -59,6 +59,7 @@ const BARDIC_PERFORMANCE_ROUNDS_ID: &str = "class_chassis.bard.bardic_performanc
 const INSPIRE_COURAGE_ID: &str = "class_chassis.bard.inspire_courage_bonus";
 const FASCINATE_DC_ID: &str = "class_chassis.bard.fascinate_dc";
 const FASCINATE_AFFECTED_CREATURES_ID: &str = "class_chassis.bard.fascinate_affected_creatures";
+const INSPIRE_COMPETENCE_ID: &str = "class_feature.bard.inspire_competence";
 const PERFORMANCE_EXECUTION_BLOCKER_ID: &str =
     "class_feature.bard.bardic_performance_execution.unsupported";
 const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.bard.spontaneous_known_and_per_day.unsupported";
@@ -163,12 +164,14 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
 
     // No explanation may fabricate spell slots, spells known, DCs, bonus spells, prepared
     // posture, school choice, or general spell totals, and none may fabricate bardic
-    // performance execution. The recognition record and the five grounded flat pillars
+    // performance execution. The recognition record and the grounded flat pillars
     // (Bardic Knowledge, the bardic performance rounds-per-day budget, the Inspire
-    // Courage flat magnitude, and — as of SD13-E5 — the Fascinate flat Will-save DC and
-    // affected-creature-count formulas) are the only allowed spell/bardic-tagged
-    // explanations. Fascinate's own resolution (an actual Will save, targeting,
-    // range/attention checking) stays ungrounded; only its two flat numbers are allowed.
+    // Courage flat magnitude, the Fascinate flat Will-save DC and
+    // affected-creature-count formulas, and — as of a further SD13-E5 slice — the
+    // Inspire Competence level-gate record, correctly absent (value 0) at level 1) are
+    // the only allowed spell/bardic-tagged explanations. Fascinate's own resolution (an
+    // actual Will save, targeting, range/attention checking) stays ungrounded; only its
+    // two flat numbers are allowed.
     let allowed_ids = [
         RECOGNITION_ID,
         BARDIC_KNOWLEDGE_ID,
@@ -176,6 +179,7 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
         INSPIRE_COURAGE_ID,
         FASCINATE_DC_ID,
         FASCINATE_AFFECTED_CREATURES_ID,
+        INSPIRE_COMPETENCE_ID,
     ];
     for explanation in &computation.explanations {
         assert!(
@@ -528,21 +532,48 @@ fn bard_level_2_was_later_widened_into_the_supported_tranche() {
 }
 
 #[test]
-fn bard_level_3_is_not_promoted() {
+fn bard_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 3 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_bard_level3_progression.rs) widened the level-range gate to
+    // level 3 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Druid/
+    // Sorcerer/Wizard level-range gate idiom) and confirmed every one of the
+    // formulas below extends to level 3 unchanged or via the same formula; this
+    // negative control is superseded, not violated — pin the new truth here too
+    // so this file stays internally consistent.
     let level_3 = BARD_FIXTURE.replace("class:bard:1", "class:bard:3");
     let input = load(&level_3);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, RECOGNITION_ID),
-        "level-3 Bard must not gain the bounded spell-baseline recognition record"
+        has_explanation(&computation, RECOGNITION_ID),
+        "level-3 Bard is supported since the SD13-E5 level-3 slice"
     );
     assert!(
-        !has_explanation(&computation, BARDIC_PERFORMANCE_ROUNDS_ID),
-        "level-3 Bard must not gain the bounded bardic performance grounding"
+        has_explanation(&computation, BARDIC_PERFORMANCE_ROUNDS_ID),
+        "level-3 Bard is supported since the SD13-E5 level-3 slice"
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "level-3 Bard must stay claim-blocked in this slice"
+    );
+}
+
+#[test]
+fn bard_level_4_is_not_promoted() {
+    let level_4 = BARD_FIXTURE.replace("class:bard:1", "class:bard:4");
+    let input = load(&level_4);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !has_explanation(&computation, RECOGNITION_ID),
+        "level-4 Bard must not gain the bounded spell-baseline recognition record"
+    );
+    assert!(
+        !has_explanation(&computation, BARDIC_PERFORMANCE_ROUNDS_ID),
+        "level-4 Bard must not gain the bounded bardic performance grounding"
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-4 Bard must stay claim-blocked in this slice"
     );
 }
 
