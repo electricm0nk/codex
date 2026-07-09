@@ -355,28 +355,37 @@ fn barbarian_level3_stays_blocked_on_rage_execution() {
     );
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Negative control: level 4 was later widened into the supported tranche -----
+//
+// This control originally asserted level 4 stayed unrecognized by the level-3
+// widening slice. A later SD13-E5 slice (tests/sd13_barbarian_level4_progression.rs)
+// widened `supported_barbarian_level` to 1..=4 and grounds level 4 for real, so this
+// control is renamed to document that widening rather than assert a now-false
+// negative; the level-5 negative control moved to the new level-4 test file,
+// mirroring the Rogue/Monk/Cleric/Bard/Druid/Sorcerer/Wizard/Ranger precedent.
 
 #[test]
-fn barbarian_level_4_is_not_promoted_by_this_slice() {
+fn barbarian_level_4_was_later_widened_into_the_supported_tranche() {
     let level_4 = BARBARIAN_LEVEL3_FIXTURE.replace("class:barbarian:3", "class:barbarian:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.barbarian.")),
-        "level-4 Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+        "level-4 Barbarian was later widened into the supported tranche by \
+         tests/sd13_barbarian_level4_progression.rs and must now gain bounded barbarian chassis \
+         explanations: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, BARBARIAN_UNCANNY_DODGE_ID),
-        "level-4 Barbarian must not gain the Uncanny Dodge explanation from this bounded slice"
+        has_explanation(&computation, BARBARIAN_UNCANNY_DODGE_ID),
+        "level-4 Barbarian must keep the Uncanny Dodge explanation grounded"
     );
     assert!(
-        !has_explanation(&computation, BARBARIAN_TRAP_SENSE_ID),
-        "level-4 Barbarian must not gain the Trap Sense explanation from this bounded slice"
+        has_explanation(&computation, BARBARIAN_TRAP_SENSE_ID),
+        "level-4 Barbarian must keep the Trap Sense explanation grounded"
     );
 }
 
