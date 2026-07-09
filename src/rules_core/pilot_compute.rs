@@ -370,9 +370,15 @@ const TWO_WEAPON_FIGHTING_FEAT_SELECTION: &str = "feat:two_weapon_fighting";
 // by the pre-existing `arcane_bond_and_bloodline_progression.unsupported` diagnostic's
 // "bonus spells/feats at 3rd+ level" and "bloodline power" language, unchanged. This
 // widening extends only the already-grounded base-attack/base-save/bloodline-choice
-// pillars to level 3.
+// pillars to level 3. A further SD13-E5 slice widens the gate again to level 4: the PF1
+// Core Rulebook Sorcerer class table's level-4 "Special" column is blank (verified
+// independently against d20pfsrd and legacy.aonprd.com), UNLIKE the level-3 row's
+// "Bloodline power, bloodline spell" entry, so no new class feature is gained at 4th
+// level and no new pillar record is added — this widening extends only the
+// already-grounded base-attack/base-save/bloodline-choice/bloodline-class-skill-choice
+// pillars to level 4 via the same formulas, without re-derivation.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 3;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 4;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -3874,8 +3880,8 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.
 /// Returns the single Sorcerer level when the chosen input is exactly a single-class
-/// Sorcerer at one of the supported milestone levels (1, 2, or 3). Returns `None` for no
-/// Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-4+ Sorcerer this
+/// Sorcerer at one of the supported milestone levels (1, 2, 3, or 4). Returns `None` for
+/// no Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-5+ Sorcerer this
 /// slice deliberately does not recognize — each of which stays claim-blocked exactly
 /// as before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -5259,6 +5265,18 @@ fn explain_rogue_level1_chassis(
 /// Rogue's Trap Sense or Monk's Still Mind are, so this slice grounds neither: both stay
 /// named by the pre-existing `arcane_bond_and_bloodline_progression.unsupported`
 /// diagnostic, unchanged.
+///
+/// A further SD13-E5 slice widens the level-1..=3 gate to level 4
+/// (`MAX_SUPPORTED_SORCERER_LEVEL = 4`) and extends every one of the formulas above to
+/// level 4 via the same formula, without re-derivation, verified independently against
+/// the PF1 Core Rulebook Sorcerer class table (d20pfsrd and legacy.aonprd.com): level 4
+/// base attack bonus is +2, base saves are +1/+1/+4 (Fortitude/Reflex/Will); the
+/// bloodline choice and bloodline class-skill choice recognitions are not level-gated,
+/// so both still fire at level 4 for the same fixture selections. UNLIKE the level-3
+/// "Special" column's "Bloodline power, bloodline spell" entry, the level-4 "Special"
+/// column is blank (verified independently against both primary sources, checked rather
+/// than assumed), so this slice grounds no new pillar for level 4 — only the existing
+/// pillars are widened.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Sorcerer spell-bearing identity, the

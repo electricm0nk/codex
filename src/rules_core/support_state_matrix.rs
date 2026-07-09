@@ -366,7 +366,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs + \
     tests/sd13_sorcerer_bloodline_class_skill_choice.rs + \
     tests/sd13_sorcerer_level2_progression.rs + \
-    tests/sd13_sorcerer_level3_progression.rs";
+    tests/sd13_sorcerer_level3_progression.rs + \
+    tests/sd13_sorcerer_level4_progression.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -1436,8 +1437,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Sorcerer level-1/level-2/level-3 spell baseline, with base attack \
-                            bonus, base save progression, Eschew Materials, the canonical \
+                            Sorcerer level-1/level-2/level-3/level-4 spell baseline, with base \
+                            attack bonus, base save progression, Eschew Materials, the canonical \
                             bloodline choice recognition, and the Arcane bloodline's class-skill \
                             choice (a player's choice of any one Knowledge skill) grounded for \
                             real and the Arcane Bond / bloodline progression burden and the \
@@ -1502,16 +1503,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Monk's Still Mind are, so this slice grounds no new pillar for level 3 either \
                     — both entries stay named by the existing Arcane Bond / bloodline progression \
                     blocker's \"bonus spells/feats at 3rd+ level\" and \"bloodline power\" \
-                    language, unchanged. The row is Partial, not Supported: the Arcane Bond / \
+                    language, unchanged — AND a further SD13-E5 slice widens the level-range gate \
+                    again (supported_sorcerer_level, 1..=4) and extends every one of the formulas \
+                    above to level 4 via the same formula, without re-derivation, verified \
+                    independently against the PF1 Core Rulebook Sorcerer class table (d20pfsrd and \
+                    legacy.aonprd.com): level 4 base attack bonus is +2, base saves are +1/+1/+4 \
+                    (Fortitude/Reflex/Will); the bloodline choice and bloodline class-skill choice \
+                    recognitions are not level-gated, so both still fire at level 4 for the same \
+                    fixture selections; UNLIKE the level-3 \"Bloodline power, bloodline spell\" \
+                    entry, the Sorcerer class table's level-4 \"Special\" column is blank (verified \
+                    independently against both primary sources, checked rather than assumed), so \
+                    this slice grounds no new pillar for level 4 either — only the existing \
+                    pillars are widened. The row is Partial, not Supported: the Arcane Bond / \
                     bloodline progression burden (Arcane Bond execution, the conditional \
                     bloodline arcana, the 3rd-level bloodline power and bloodline spell, and \
                     further bonus spells/feats at higher levels) remains named and unproven, and \
                     the spontaneous spell burden (spontaneous spells known, spell slots per day, \
                     bonus spell slots, spell save DCs) is entirely unproven. No spell math is \
-                    fabricated and no Sorcerer level 4+ is proven",
+                    fabricated and no Sorcerer level 5+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-4+ progression (widening the now-grounded base attack/base save \
+                    level-5+ progression (widening the now-grounded base attack/base save \
                     formulas)",
             },
             SupportStateRow {

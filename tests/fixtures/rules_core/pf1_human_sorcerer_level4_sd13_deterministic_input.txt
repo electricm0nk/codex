@@ -1,0 +1,33 @@
+# SD13-E5 deterministic Human Sorcerer level 4 progression fixture.
+# Widens the accepted SD13-E4/E5 deterministic PF1 Core Rulebook Human Sorcerer
+# level-1/level-2/level-3 spontaneous spell-burden baseline to level 4 as
+# chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic ability/feat posture from
+# the level-1/level-2/level-3 fixtures, and the same canonical bloodline and
+# bloodline class-skill selections (Arcane, Knowledge [arcana]), adding only
+# the level bump this bounded tranche needs.
+#
+# It deliberately avoids every later Sorcerer burden surface: no Arcane Bond
+# execution, no bloodline arcana, no bonus spells/feats at 3rd+ level (the PF1
+# CRB Sorcerer class table's level-4 "Special" column is blank — verified
+# independently against both d20pfsrd and legacy.aonprd.com, unlike the
+# level-3 row's "Bloodline power, bloodline spell" entry — so this fixture
+# grounds no new class feature at level 4), no spellbook, no spells known, no
+# spell slots, no spell DCs, and no level-5+ progression.
+case_id=pf1-crb-human-sorcerer-level4
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:sorcerer:4
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:17
+feat=feat:dodge
+choice=choice:sorcerer_bloodline:bloodline:arcane
+choice=choice:sorcerer_bloodline_class_skill:knowledge:arcana
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md
