@@ -2895,7 +2895,9 @@ fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
 /// level-1 chassis as a per-pillar decomposition of the F6 combined non-spell
 /// class-feature blocker, grounding all three named pillars for real (Track by
 /// the SD13-E3 slice, the Favored Enemy flat surface by the SD13-E5 slice, and
-/// the combat style level-gate absence by a later SD13-E5 slice).
+/// the combat style level-gate absence by a later SD13-E5 slice), plus the
+/// foundational base-attack-bonus / base-save progression pillar grounded by a
+/// later SD13-E5 slice still.
 ///
 /// This sits on top of the accepted SD13-F6 hybrid baseline: F6 already proves
 /// the deterministic Human Ranger level-1 hybrid identity is acknowledged on the
@@ -2903,6 +2905,19 @@ fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
 /// (naming favored enemy, combat style, and skill/tracking together) plus a
 /// single combined later-spell blocker. This slice proves the per-pillar
 /// separation Ranger actually needs:
+///
+/// - one grounded numeric explanation set (SD13-E5) for the foundational
+///   base-attack-bonus / base-save progression pillar, verified against the PF1
+///   Core Rulebook Ranger class table (d20pfsrd and legacy.aonprd.com), reading
+///   the raw level 1-5 table rows directly and cross-checking the level 4/5
+///   base-attack-bonus values to disambiguate full BAB from 3/4 BAB (level 1
+///   alone does not disambiguate): full BAB (classlevel), good Fortitude, good
+///   Reflex, poor Will (`classlevel/2+2` for the two good saves, `classlevel/3`
+///   for the poor save). Grounded as flat, standalone `ComputationExplanation`
+///   records, mirroring the Barbarian/Monk/Druid/Cleric/Bard/Sorcerer/Wizard
+///   "not wired into `PilotBaseChassisComputation.base_attack_bonus`,
+///   `compute_total_saves`, or `compute_combat_baseline`" idiom. Ranger level 2+
+///   progression stays deliberately out of scope for this slice.
 ///
 /// - one grounded level-gate explanation (value 0) for the combat style
 ///   pillar, which retires the `class_feature.ranger.combat_style.unsupported`
@@ -2960,6 +2975,74 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
+
+    // Grounded (SD13-E5): the foundational base-attack-bonus / base-save progression
+    // pillar. Unlike every other class row in this matrix (Fighter, Barbarian, Monk,
+    // Rogue, Paladin, Druid, Cleric, Bard, Sorcerer, Wizard all already ground this
+    // pillar), Ranger had never had it grounded at all until this slice. Both
+    // formulas were verified against the PF1 Core Rulebook Ranger class table
+    // (d20pfsrd and the legacy Paizo PRD mirror) before writing this code, reading
+    // the raw level 1-5 table rows directly (BAB +1/+2/+3/+4/+5, Fort +2/+3/+3/+4/+4,
+    // Ref +2/+3/+3/+4/+4, Will +0/+0/+1/+1/+1) and cross-checking the level 4/5
+    // base-attack-bonus values to disambiguate the exact fraction: a full-BAB
+    // progression shows +4/+5 at those levels, while a 3/4-BAB progression would show
+    // +3/+3 -- the table confirms full BAB, the same shape as Fighter/Barbarian/
+    // Paladin. Ranger level 2+ progression (the combat-style bonus-feat grant, the
+    // favored-enemy conditional-application engine, and the ranger spell burden) is
+    // deliberately out of scope for this slice; only the flat level-1 base-attack and
+    // base-save numbers are grounded here.
+    let level_value = i16::from(HYBRID_BASELINE_LEVEL);
+
+    // Grounded (1/2): full-BAB base-attack progression, the same formula shape as
+    // Fighter/Barbarian/Paladin (classlevel). No PCGen .lst file exists for the
+    // Ranger class in this repo, so the formula cites the PF1 Core Rulebook Ranger
+    // class table directly.
+    let base_attack_bonus = level_value;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "Ranger level {HYBRID_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+             Ranger class table (full base-attack progression, the same formula shape as \
+             Fighter/Barbarian/Paladin): classlevel = {base_attack_bonus}. This is a standalone \
+             explanation record; it is not wired into the integrated base_attack_bonus field or \
+             into compute_combat_baseline"
+        ),
+    });
+
+    // Grounded (2/2): base-save progression — good Fortitude, good Reflex, poor
+    // Will, verified against the PF1 Core Rulebook Ranger class table (Fortitude +2,
+    // Reflex +2, Will +0 at level 1; +4/+4/+1 at level 4, confirming the same
+    // formula shape).
+    let good_save = level_value / 2 + 2;
+    let poor_save = level_value / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.base_save.fortitude".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Ranger level {HYBRID_BASELINE_LEVEL} base Fortitude save (good save) from the PF1 \
+             Core Rulebook Ranger class table: classlevel/2+2 = {good_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.base_save.reflex".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Ranger level {HYBRID_BASELINE_LEVEL} base Reflex save (good save) from the PF1 Core \
+             Rulebook Ranger class table: classlevel/2+2 = {good_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.base_save.will".to_owned(),
+        value: poor_save,
+        detail: format!(
+            "Ranger level {HYBRID_BASELINE_LEVEL} base Will save (poor save) from the PF1 Core \
+             Rulebook Ranger class table: classlevel/3 = {poor_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
 
     // Combat style is a correct ABSENCE at this bounded level-1 baseline, grounded
     // as a level-gate explanation (value 0), mirroring the Paladin mercy idiom. The

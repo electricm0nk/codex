@@ -325,13 +325,14 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_level2_lay_on_hands_divine_grace.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
-/// both F6 (chassis identity) and the Ranger-only per-pillar decomposition +
-/// Track / Favored-Enemy-flat-surface grounding test as one literal, mirroring
-/// [`SD13_PALADIN_ROW_GROUNDING_REF`]. Both .contains() consumers (the F6 test
-/// and this slice's test) read their respective substring from this combined
-/// grounding reference.
+/// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
+/// Favored-Enemy-flat-surface grounding test, and the SD13-E5 base-attack/
+/// base-save progression test as one literal, mirroring
+/// [`SD13_PALADIN_ROW_GROUNDING_REF`]. Each `.contains()` consumer reads its
+/// respective substring from this combined grounding reference.
 const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs + \
-    tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs";
+    tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs + \
+    tests/sd13_ranger_base_attack_and_saves.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2 spell baseline: direct computed recognition of the
@@ -1133,9 +1134,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Ranger level-1 chassis baseline, with Track, the favored-enemy \
-                            flat surface, and the combat-style level-gate absence grounded \
-                            for real and the later spell burden still blocked",
+                            Ranger level-1 chassis baseline, with base attack bonus, base save \
+                            progression, Track, the favored-enemy flat surface, and the \
+                            combat-style level-gate absence grounded for real and the later \
+                            spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1154,16 +1156,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     PF1 Core Rulebook grants the archery-vs-two-weapon-combat style choice and its \
                     first bonus feat TOGETHER at 2nd level, not split across a level-1 choice and a \
                     level-2 grant as an earlier version of this row's note incorrectly claimed; \
-                    there was never a level-1 style choice to ground. The row is Partial, not \
-                    Supported: the favored-enemy conditional-application engine (target-type \
-                    matching that would decide whether a specific check or attack is made against \
-                    the favored enemy) is not implemented, the level-2 combat-style feat grant \
-                    itself remains unproven pending Ranger level-2+ progression, and the later \
-                    ranger spell burden (spell slots, spell source, spells known/prepared) is \
-                    still deferred to SD13-E4. No Ranger level 2+ is proven",
-                next_required_uplift: "Ranger level-2+ progression (to ground the combat-style \
-                    feat grant at 2nd level) and a favored-enemy conditional-application engine, \
-                    then SD13-E4 ranger spell burden",
+                    there was never a level-1 style choice to ground. A still later SD13-E5 slice \
+                    grounds the foundational base attack bonus and base save progression pillar \
+                    for the first time (full BAB = classlevel, good Fortitude/good Reflex/poor \
+                    Will = classlevel/2+2 and classlevel/3, verified against the PF1 Core \
+                    Rulebook Ranger class table, cross-checking level 4/5 BAB to disambiguate \
+                    full BAB from 3/4 BAB), grounded as flat standalone explanation records not \
+                    wired into the integrated base_attack_bonus field, compute_total_saves, or \
+                    compute_combat_baseline. The row is Partial, not Supported: the favored-enemy \
+                    conditional-application engine (target-type matching that would decide \
+                    whether a specific check or attack is made against the favored enemy) is not \
+                    implemented, the level-2 combat-style feat grant itself remains unproven \
+                    pending Ranger level-2+ progression, and the later ranger spell burden (spell \
+                    slots, spell source, spells known/prepared) is still deferred to SD13-E4. No \
+                    Ranger level 2+ is proven",
+                next_required_uplift: "Ranger level-2+ progression (to widen the base \
+                    attack/base save grounding and ground the combat-style feat grant at 2nd \
+                    level) and a favored-enemy conditional-application engine, then SD13-E4 \
+                    ranger spell burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",
