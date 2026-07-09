@@ -245,21 +245,28 @@ fn druid_level_3_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: level 4 stays unrecognized (coverage moved here) -----
+// ----- Druid level 4 was later widened into the supported tranche -----
 
 #[test]
-fn druid_level_4_does_not_gain_base_attack_or_save_grounding() {
+fn druid_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 stayed unrecognized. A later
+    // SD13-E5 slice (tests/sd13_druid_level4_progression.rs) widened the
+    // level-range gate to level 4 and extended the base-attack/base-save
+    // formulas; this negative control is superseded, not violated — pin the new
+    // truth here too so this file stays internally consistent. The equivalent
+    // level-5 negative control now lives in the new
+    // tests/sd13_druid_level4_progression.rs file where the coverage moved.
     let level_4 = DRUID_FIXTURE.replace("class:druid:1", "class:druid:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, BASE_ATTACK_ID),
-        "level-4 Druid must not gain the bounded level-1/level-2/level-3 base-attack grounding: {:?}",
+        has_explanation(&computation, BASE_ATTACK_ID),
+        "level-4 Druid is supported since the SD13-E5 level-4 slice: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, BASE_SAVE_FORTITUDE_ID),
-        "level-4 Druid must not gain the bounded level-1/level-2/level-3 base-save grounding: {:?}",
+        has_explanation(&computation, BASE_SAVE_FORTITUDE_ID),
+        "level-4 Druid is supported since the SD13-E5 level-4 slice: {:?}",
         computation.explanations
     );
 }

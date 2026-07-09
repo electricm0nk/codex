@@ -727,8 +727,31 @@ const DRUID_CLASS_ID: &str = "class:druid";
 /// "Trackless step" (a new, flat/identity-shaped class feature grounded separately
 /// below); Druid has no currently-grounded spell-slot-count pillar (unlike Wizard's
 /// specialist bonus slot or Cleric's domain slot), so there is no analogous level-3
-/// doubling to widen.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 3;
+/// doubling to widen. A further SD13-E5 slice widens the gate to level 4 (verified
+/// independently against d20pfsrd and legacy.aonprd.com): level 4 base attack bonus
+/// is +3, base saves are +4/+1/+4 (Fortitude/Reflex/Will), extended via the same
+/// formulas; Woodland Stride and Trackless Step both stay granted, not re-derived.
+/// The class table's level-4 "Special" column reads "Resist nature's lure, wild
+/// shape (1/day)" — TWO distinct entries, both checked independently rather than
+/// assumed. Resist Nature's Lure is flat/identity-shaped (a standalone +4
+/// saving-throw bonus against the spell-like and supernatural abilities of fey,
+/// and against spells/effects that target plants) and is grounded separately below,
+/// mirroring the Woodland Stride/Trackless Step idiom. Wild Shape is NOT flat — it
+/// is a full shapeshifting subsystem (new form, new stat block, duration tracking)
+/// with no execution engine anywhere in this codebase — so it is deliberately left
+/// named-but-unproven, exactly like the animal-companion execution burden.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 4;
+/// PF1 Core Rulebook level gate at which Druid gains Resist Nature's Lure (4th
+/// level, verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Resist nature's lure" as part of the Druid
+/// 4th-level special feature entry, alongside "Wild shape (1/day)").
+const DRUID_RESIST_NATURES_LURE_LEVEL: u8 = 4;
+/// PF1 Core Rulebook Resist Nature's Lure flat magnitude: "a druid gains a +4
+/// bonus on saving throws against the spell-like and supernatural abilities of
+/// fey. This bonus also applies to spells and effects that utilize or target
+/// plants, such as blight, entangle, spike growth, and warp wood." Flat and
+/// level-independent once granted (it does not scale further with druid level).
+const DRUID_RESIST_NATURES_LURE_BONUS: i16 = 4;
 /// PF1 Core Rulebook level gate at which Druid gains Woodland Stride (2nd level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Woodland stride" as the Druid 2nd-level special
@@ -6471,8 +6494,20 @@ fn supported_druid_level(input: &CharacterInput) -> Option<u8> {
 /// Trackless Step, the class table's level-3 "Special" column entry, as a bounded
 /// identity record (flat/identity-shaped, no numeric formula) mirroring the Woodland
 /// Stride idiom exactly; Druid has no currently-grounded spell-slot-count pillar, so
-/// there is no analogous level-3 doubling to widen. The chosen bond's execution and
-/// the prepared divine spell posture burden remain claim-blocked.
+/// there is no analogous level-3 doubling to widen. A further SD13-E5 slice widens the
+/// gate to level 4 (`supported_druid_level`, 1..=4), extending every formula above to
+/// level 4 via the same formula (level 4 base attack bonus is +3, base saves are
+/// +4/+1/+4 Fortitude/Reflex/Will), keeping Woodland Stride and Trackless Step both
+/// granted (not re-derived), and grounds Resist Nature's Lure, one of two distinct
+/// entries in the class table's level-4 "Special" column, as a bounded flat-magnitude
+/// identity record (+4 saving-throw bonus against fey spell-like/supernatural abilities
+/// and plant-targeting spells/effects, never applied to any actual save total),
+/// mirroring the Woodland Stride/Trackless Step idiom. The other level-4 "Special"
+/// entry, Wild Shape (1/day), was checked and confirmed NOT flat (a full shapeshifting
+/// subsystem with no execution engine anywhere in this codebase), so it is deliberately
+/// left named-but-unproven, exactly like the animal-companion execution burden. The
+/// chosen bond's execution and the prepared divine spell posture burden remain
+/// claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
 /// bond power execution (no companion stat block, no companion advancement, no link /
@@ -6739,6 +6774,47 @@ fn explain_druid_level1_spell_baseline(
                  non-fabricated): no tracking-resolution engine and no terrain-detection engine \
                  exists anywhere in this codebase to apply it, so this grounds no actual \
                  tracking-check or trail-detection resolution"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): Resist Nature's Lure, one of two distinct entries in the
+    // class table's 4th-level "Special" column, verified independently against two
+    // primary PF1 sources (d20pfsrd and legacy.aonprd.com both list "Resist nature's
+    // lure" alongside "Wild shape (1/day)" as the Druid 4th-level special feature
+    // entry). Below the level-4 gate this is a correct PF1 Core Rulebook level-gate
+    // absence (value 0); at or above it, it is a bounded flat-magnitude identity
+    // record only (the rule's own flat +4 magnitude, non-fabricated as an applied
+    // total) — mirroring exactly how Bravery/Divine Grace/Trap Sense were grounded:
+    // this record is never wired into any actual saving-throw total, since no
+    // saving-throw resolution engine exists in this codebase. The class table's
+    // other level-4 entry, Wild Shape (1/day), was checked and confirmed NOT flat —
+    // it is a full shapeshifting subsystem (new form, new stat block, duration
+    // tracking) with no execution engine anywhere in this codebase — so it is
+    // deliberately left named-but-unproven here, exactly like the animal-companion
+    // execution burden below, and no record or diagnostic for it is fabricated.
+    if level < DRUID_RESIST_NATURES_LURE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.resist_natures_lure".to_owned(),
+            value: 0,
+            detail: format!(
+                "Druid Resist Nature's Lure at druid level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant flat magnitude is named but \
+                 not computed. Resist Nature's Lure is a 4th-level druid class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.resist_natures_lure".to_owned(),
+            value: DRUID_RESIST_NATURES_LURE_BONUS,
+            detail: format!(
+                "Druid Resist Nature's Lure granted at druid level {level} (PF1 Core Rulebook, \
+                 4th-level druid class feature): a druid gains a +{DRUID_RESIST_NATURES_LURE_BONUS} \
+                 bonus on saving throws against the spell-like and supernatural abilities of fey; \
+                 this bonus also applies to spells and effects that utilize or target plants, such \
+                 as blight, entangle, spike growth, and warp wood. This is a bounded flat-magnitude \
+                 identity record only: no saving-throw resolution engine exists anywhere in this \
+                 codebase to apply it, so this grounds no actual saving-throw total"
             ),
         });
     }

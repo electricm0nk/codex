@@ -273,21 +273,26 @@ fn druid_level_3_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Druid level 4 was later widened into the supported tranche -----
 
 #[test]
-fn druid_level_4_is_not_promoted_by_this_slice() {
+fn druid_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 stayed unrecognized. A later
+    // SD13-E5 slice (tests/sd13_druid_level4_progression.rs) widened the
+    // level-range gate to level 4; this negative control is superseded, not
+    // violated — pin the new truth here too so this file stays internally
+    // consistent. The equivalent level-5 negative control now lives in the new
+    // tests/sd13_druid_level4_progression.rs file where the coverage moved.
     let level_4 = DRUID_LEVEL2_FIXTURE.replace("class:druid:2", "class:druid:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id == "class_chassis.spell_baseline.druid"
-                || e.id == "class_feature.druid.woodland_stride"),
-        "level-4 Druid must not gain any bounded druid chassis explanation: {:?}",
+            .any(|e| e.id == "class_chassis.druid.base_attack_bonus"),
+        "level-4 Druid is now recognized by a later slice and must gain the bounded druid \
+         chassis explanation: {:?}",
         computation.explanations
     );
 }

@@ -293,22 +293,37 @@ fn druid_level2_truth_is_unchanged_by_this_widening() {
     assert_eq!(wild_empathy.value, 3, "Druid level 2 wild empathy modifier must stay 3");
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Druid level 4 was later widened into the supported tranche -----
 
 #[test]
-fn druid_level_4_is_not_promoted_by_this_slice() {
+fn druid_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 stayed unrecognized. A later
+    // SD13-E5 slice (tests/sd13_druid_level4_progression.rs) widened the
+    // level-range gate to level 4 and extended the base-attack/base-save/Wild
+    // Empathy/Nature Sense formulas, kept Woodland Stride/Trackless Step granted,
+    // and grounded Resist Nature's Lure; this negative control is superseded, not
+    // violated — pin the new truth here too so this file stays internally
+    // consistent. The equivalent level-5 negative control now lives in the new
+    // tests/sd13_druid_level4_progression.rs file where the coverage moved.
     let level_4 = DRUID_LEVEL3_FIXTURE.replace("class:druid:3", "class:druid:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id == "class_chassis.spell_baseline.druid"
-                || e.id == DRUID_WOODLAND_STRIDE_ID
-                || e.id == DRUID_TRACKLESS_STEP_ID),
-        "level-4 Druid must not gain any bounded druid chassis explanation: {:?}",
+            .any(|e| e.id == "class_chassis.druid.base_attack_bonus"),
+        "level-4 Druid is now recognized by a later slice and must gain the bounded druid \
+         chassis explanation: {:?}",
+        computation.explanations
+    );
+    assert!(
+        computation
+            .explanations
+            .iter()
+            .any(|e| e.id == DRUID_WOODLAND_STRIDE_ID || e.id == DRUID_TRACKLESS_STEP_ID),
+        "level-4 Druid is now recognized by a later slice and must keep Woodland Stride/ \
+         Trackless Step grounded: {:?}",
         computation.explanations
     );
 }
