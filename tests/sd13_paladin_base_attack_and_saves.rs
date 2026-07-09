@@ -297,26 +297,32 @@ fn paladin_level2_base_attack_and_saves_do_not_disturb_existing_pillars_or_block
     assert!(spell_blocker.claim_blocking);
 }
 
-// ----- Negative control: Paladin level 3 stays unrecognized (out of scope this slice) -----
+// ----- Negative control (retired): Paladin level 3 was later widened into the -----
+// ----- supported tranche; see tests/sd13_paladin_level3_mercy.rs               -----
 
 #[test]
-fn paladin_level_3_stays_unrecognized_by_this_slice() {
-    // Paladin level 3+ progression is deliberately out of scope for this slice (mercy
-    // at level 3, and every burden beyond the supported 1..=2 level-range gate). The
-    // level-range gate (`supported_paladin_level`, 1..=2) is unchanged, so level 3 does
-    // not gain this slice's base-attack/base-save grounding.
+fn paladin_level_3_was_later_widened_into_the_supported_tranche() {
+    // A subsequent SD13-E5 slice (tests/sd13_paladin_level3_mercy.rs) widened
+    // `supported_paladin_level` from 1..=2 to 1..=3, so level 3 now gains this
+    // slice's base-attack/base-save grounding via the same formulas. This control
+    // now asserts the widened truth rather than the original (now-stale) "level 3
+    // stays unrecognized" claim; the equivalent negative control for the current
+    // boundary (level 4) lives in tests/sd13_paladin_level3_mercy.rs's
+    // `paladin_level_4_is_not_promoted_by_this_slice`.
     let level_3 = PALADIN_LEVEL2_FIXTURE.replace("class:paladin:2", "class:paladin:3");
     let input = load(&level_3);
     let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !has_explanation(&computation, BASE_ATTACK_ID),
-        "level-3 Paladin must not gain the bounded level-range-only base-attack grounding: {:?}",
-        computation.explanations
+    let base_attack = explanation(&computation, BASE_ATTACK_ID);
+    assert_eq!(
+        base_attack.value, 3,
+        "level-3 Paladin must now gain the widened base-attack grounding (classlevel = 3): {:?}",
+        base_attack
     );
-    assert!(
-        !has_explanation(&computation, BASE_SAVE_FORTITUDE_ID),
-        "level-3 Paladin must not gain the bounded level-range-only base-save grounding: {:?}",
-        computation.explanations
+    let fortitude = explanation(&computation, BASE_SAVE_FORTITUDE_ID);
+    assert_eq!(
+        fortitude.value, 3,
+        "level-3 Paladin must now gain the widened base-save grounding (classlevel/2+2 = 3): {:?}",
+        fortitude
     );
 }
 
