@@ -357,15 +357,19 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_level2_progression.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
-/// level-2 martial chassis baseline: direct computed chassis-recognition evidence,
-/// plus grounded base-attack, base-save, fast-movement, and flat Rage pillar values
-/// (rage rounds per day and the rage constants, values only) and the vacuous
-/// illiteracy-burden rules correction at level 1, widened to level 2 by a later
-/// SD13-E5 slice (the level-range gate plus the extended formulas), that stays
-/// explicitly blocked only on the remaining named rage-state execution burden and
-/// weapon familiarity.
+/// level-2/level-3 martial chassis baseline: direct computed chassis-recognition
+/// evidence, plus grounded base-attack, base-save, fast-movement, and flat Rage
+/// pillar values (rage rounds per day and the rage constants, values only) and the
+/// vacuous illiteracy-burden rules correction at level 1, widened to level 2 by a
+/// later SD13-E5 slice (the level-range gate plus the extended formulas, plus the
+/// Uncanny Dodge identity/recognition record), widened to level 3 by a further
+/// SD13-E5 slice (the level-range gate plus the extended formulas, plus the Trap
+/// Sense flat-magnitude record), that stays explicitly blocked only on the
+/// remaining named rage-state execution burden, the Rage Power choice-list feature,
+/// and weapon familiarity.
 const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_baseline.rs + \
-    tests/sd13_barbarian_level2_progression.rs";
+    tests/sd13_barbarian_level2_progression.rs + \
+    tests/sd13_barbarian_level3_progression.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -795,10 +799,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:barbarian",
                 dimension: "bounded Barbarian chassis progression: the deterministic Human \
-                    Barbarian level-1/level-2 martial chassis identity, with base-attack, \
-                    base-save, fast-movement, and flat Rage pillar values grounded across both \
-                    levels, and the rage-state execution / weapon-familiarity / level-3+ \
-                    remainder still unproven",
+                    Barbarian level-1/level-2/level-3 martial chassis identity, with \
+                    base-attack, base-save, fast-movement, and flat Rage pillar values grounded \
+                    across all three levels, Uncanny Dodge grounded as a level-2 \
+                    identity/recognition record, Trap Sense grounded as a level-3 \
+                    flat-magnitude record, and the rage-state execution / Rage Power \
+                    choice-list / weapon-familiarity / level-4+ remainder still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -836,19 +842,34 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     level-2 row's other named entry, a Rage Power choice (a genuinely \
                     open-ended choice-list feature, a new-subsystem-shaped burden), is \
                     deliberately left named-but-unproven, mirroring the Monk level-2 bonus feat \
-                    grant / Bard Versatile Performance precedent. None of the grounded records \
-                    are wired into the integrated base_attack_bonus/base-saves/speed/ability/\
-                    Armor-Class totals, so the integrated pilot surface still reports a blocked \
-                    posture. The row remains explicitly blocked on the rage execution engine \
-                    (activation/deactivation, rage-round consumption, fatigue after rage, \
-                    temporary stat application). No weapon familiarity, Rage Power choice-list \
-                    grounding, or level-3+ martial progression is claimed",
+                    grant / Bard Versatile Performance precedent. A still further SD13-E5 slice \
+                    widens the gate to level 3 (verified independently against d20pfsrd and \
+                    legacy.aonprd.com, both naming \"Trap sense +1\" as the level-3 row): \
+                    base-attack (classlevel = 3), base-save (Fortitude +3, Reflex +1, Will +1), \
+                    fast movement (unchanged flat +10 ft.), and rage rounds per day (4 + \
+                    Constitution modifier + 2 * (level - 1), 11 on the Con 16 fixture at level 3, \
+                    i.e. Constitution modifier + 8) are extended to level 3 via the same \
+                    formulas, Uncanny Dodge stays granted (not re-derived), and Trap Sense is \
+                    newly grounded as a bounded flat-magnitude record only (barbarian level / 3, \
+                    floor; +1 at level 3): a bonus on Reflex saves made to avoid traps and an \
+                    equal dodge bonus to AC against attacks made by traps, mirroring exactly how \
+                    Rogue's own Trap Sense was grounded, never applied to any actual Reflex-save \
+                    total or AC total, since no saving-throw-resolution or \
+                    armor-class-resolution engine exists in this codebase, and no \
+                    trap-detection or trap-triggering engine exists to decide when it would \
+                    apply. None of the grounded records are wired into the integrated \
+                    base_attack_bonus/base-saves/speed/ability/Armor-Class totals, so the \
+                    integrated pilot surface still reports a blocked posture. The row remains \
+                    explicitly blocked on the rage execution engine (activation/deactivation, \
+                    rage-round consumption, fatigue after rage, temporary stat application). No \
+                    weapon familiarity, Rage Power choice-list grounding, or level-4+ martial \
+                    progression is claimed",
                 next_required_uplift: "ground the Barbarian rage-state execution engine \
                     (activation/deactivation, rage-round consumption, post-rage fatigue, \
                     temporary application of the rage constants), the Rage Power choice-list \
                     feature, and wire the grounded base-attack / base-save / fast-movement / \
-                    Uncanny Dodge values into the integrated pilot surface, later widening into \
-                    weapon familiarity and level-3+ martial progression",
+                    Uncanny Dodge / Trap Sense values into the integrated pilot surface, later \
+                    widening into weapon familiarity and level-4+ martial progression",
             },
             SupportStateRow {
                 row_id: "class.bard.progression_and_spell_burden",

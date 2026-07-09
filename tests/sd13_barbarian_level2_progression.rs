@@ -356,29 +356,29 @@ fn barbarian_level2_stays_blocked_on_rage_execution() {
     );
 }
 
-// ----- Negative control: level 3 stays unrecognized by this slice -----
+// ----- Negative control: level 3 was later widened into the supported tranche -----
+//
+// This control originally asserted level 3 stayed unrecognized by the level-2
+// widening slice. A later SD13-E5 slice (tests/sd13_barbarian_level3_progression.rs)
+// widened `supported_barbarian_level` to 1..=3 and grounds level 3 for real, so this
+// control is renamed to document that widening rather than assert a now-false
+// negative; the level-4 negative control moved to the new level-3 test file,
+// mirroring the Rogue/Monk/Cleric/Bard/Druid/Sorcerer/Wizard/Ranger precedent.
 
 #[test]
-fn barbarian_level_3_is_not_promoted_by_this_slice() {
+fn barbarian_level_3_was_later_widened_into_the_supported_tranche() {
     let level_3 = BARBARIAN_LEVEL2_FIXTURE.replace("class:barbarian:2", "class:barbarian:3");
     let input = load(&level_3);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.barbarian.")),
-        "level-3 Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+        "level-3 Barbarian was later widened into the supported tranche by \
+         tests/sd13_barbarian_level3_progression.rs and must now gain bounded barbarian chassis \
+         explanations: {:?}",
         computation.explanations
-    );
-    assert!(
-        !computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id.starts_with("class_feature.barbarian.")),
-        "level-3 Barbarian must not surface the barbarian burden diagnostics from this bounded \
-         slice: {:?}",
-        computation.diagnostics
     );
 }
 
