@@ -231,14 +231,19 @@ fn fighter_does_not_gain_ranger_favored_terrain_recognition() {
 }
 
 #[test]
-fn ranger_level_4_is_not_promoted_by_this_slice() {
+fn ranger_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven
+    // milestone and Favored Terrain did not extend to it. A later SD13-E5
+    // slice (tests/sd13_ranger_level4_progression.rs) widened the level-range
+    // gate to level 4 and confirmed Favored Terrain stays granted, unchanged;
+    // this negative control is superseded, not violated — pin the new truth
+    // here too so this file stays internally consistent.
     let level_4 = RANGER_LEVEL3_FIXTURE.replace("class:ranger:3", "class:ranger:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, FAVORED_TERRAIN_CHOICE_ID)
-            && !has_explanation(&computation, FAVORED_TERRAIN_BONUS_ID),
-        "level-4 Ranger must not gain any bounded ranger favored-terrain explanation from this \
+        has_explanation(&computation, FAVORED_TERRAIN_BONUS_ID),
+        "level-4 Ranger keeps the Favored Terrain explanation grounded since the SD13-E5 level-4 \
          slice: {:?}",
         computation.explanations
     );

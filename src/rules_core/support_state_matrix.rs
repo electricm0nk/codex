@@ -345,7 +345,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_base_attack_and_saves.rs + \
     tests/sd13_ranger_level2_progression.rs + \
     tests/sd13_ranger_level3_progression.rs + \
-    tests/sd13_ranger_favored_terrain_choice.rs";
+    tests/sd13_ranger_favored_terrain_choice.rs + \
+    tests/sd13_ranger_level4_progression.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -1330,11 +1331,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Ranger level-1/level-2/level-3 chassis baseline, with base attack \
-                            bonus, base save progression, Track, the favored-enemy flat surface, \
-                            the combat-style choice-and-bonus-feat recognition, and (level 3) \
-                            Endurance and the Favored Terrain choice-and-flat-magnitude surface \
-                            grounded for real and the later spell burden still blocked",
+                            Ranger level-1/level-2/level-3/level-4 chassis baseline, with base \
+                            attack bonus, base save progression, Track, the favored-enemy flat \
+                            surface, the combat-style choice-and-bonus-feat recognition, (level \
+                            3) Endurance and the Favored Terrain choice-and-flat-magnitude \
+                            surface, and (level 4) the Hunter's Bond choice-and-flat-magnitude \
+                            surface grounded for real and the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1396,16 +1398,38 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     whether the character is actually in the chosen terrain, so no Initiative \
                     total or skill-check total is modified by this record. The level-8th/13th/18th \
                     additional-terrain and bonus-increase progression stays out of scope this \
-                    slice. The row is Partial, not Supported: the favored-enemy \
-                    conditional-application engine (target-type matching that would decide \
-                    whether a specific check or attack is made against the favored enemy) is not \
-                    implemented, the recognized combat-style bonus feat's own mechanics remain \
-                    unproven, the Favored Terrain level-8th/13th/18th breadth is unproven, Ranger \
-                    level 4+ is not proven, and the later ranger spell burden (spell slots, spell \
-                    source, spells known/prepared) is still deferred to SD13-E4",
-                next_required_uplift: "Ranger level-4+ progression, a favored-enemy \
+                    slice. The most recent SD13-E5 slice widens the level-range gate once more to \
+                    level 4, extending base attack/base save/Track/the favored-enemy flat surface \
+                    to level 4 via the same formulas (Track becomes 2, max(4/2, 1); the \
+                    favored-enemy flat bonus stays +2, PF1 CRB only increases it at 5th ranger \
+                    level and beyond, verified independently against d20pfsrd and \
+                    legacy.aonprd.com), keeps Endurance and Favored Terrain granted unchanged, and \
+                    grounds Hunter's Bond, the class table's 4th-level \"Special\" column entry \
+                    (verified independently against both primary sources): a restricted \
+                    two-option choice recognition (choice:ranger_hunters_bond -> form:bond or \
+                    form:companion, mirroring the combat-style choice idiom) as a bounded +0 \
+                    record, an unconditional grant-only identity record (mirroring the \
+                    Endurance/Favored Terrain idiom), and — only for the \"bond\" form — a flat, \
+                    non-applied magnitude equal to half the already-grounded favored-enemy bonus, \
+                    grantable via a move action to allies within 30 feet who can see or hear the \
+                    ranger against a single target of the appropriate type. No \
+                    move-action/action-economy engine, no ally-range-and-perception check, and no \
+                    favored-enemy target-type matching is implemented; the \"companion\" form's \
+                    own animal-companion stat block/advancement subsystem is deliberately left \
+                    named-but-unproven, since it does not exist anywhere in this codebase. The row \
+                    is Partial, not Supported: the favored-enemy conditional-application engine \
+                    (target-type matching that would decide whether a specific check or attack is \
+                    made against the favored enemy) is not implemented, the recognized \
+                    combat-style bonus feat's own mechanics remain unproven, the Favored Terrain \
+                    level-8th/13th/18th breadth is unproven, Hunter's Bond's ally-bonus \
+                    application and the animal-companion form are unproven, Ranger level 5+ is \
+                    not proven, and the later ranger spell burden (spell slots, spell source, \
+                    spells known/prepared) is still deferred to SD13-E4",
+                next_required_uplift: "Ranger level-5+ progression, a favored-enemy \
                     conditional-application engine, execution of the recognized combat-style bonus \
-                    feat's own mechanics, then SD13-E4 ranger spell burden",
+                    feat's own mechanics, Hunter's Bond ally-bonus application and the \
+                    animal-companion stat block/advancement subsystem, then SD13-E4 ranger spell \
+                    burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",

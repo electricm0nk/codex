@@ -242,24 +242,30 @@ fn ranger_level2_endurance_is_a_correct_level_gate_absence() {
     );
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Negative control: level 4 was later widened into the supported tranche -----
 
 #[test]
-fn ranger_level_4_is_not_promoted_by_this_slice() {
+fn ranger_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_ranger_level4_progression.rs) widened the level-range gate to
+    // level 4 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk level-range
+    // gate idiom) and grounded Hunter's Bond; this negative control is
+    // superseded, not violated — pin the new truth here too so this file stays
+    // internally consistent. The frontier this file's own slice actually drew
+    // is now level 5, covered by
+    // `tests/sd13_ranger_level4_progression.rs::ranger_level_5_is_not_promoted_by_this_slice`.
     let level_4 = RANGER_LEVEL3_FIXTURE.replace("class:ranger:3", "class:ranger:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")),
-        "level-4 Ranger must not gain any bounded ranger chassis explanation: {:?}",
+        has_explanation(&computation, BASE_ATTACK_ID),
+        "level-4 Ranger is supported since the SD13-E5 level-4 slice: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, ENDURANCE_ID),
-        "level-4 Ranger must not gain the Endurance explanation from this bounded slice"
+        has_explanation(&computation, ENDURANCE_ID),
+        "level-4 Ranger must keep the Endurance explanation grounded at level 3"
     );
 }
 

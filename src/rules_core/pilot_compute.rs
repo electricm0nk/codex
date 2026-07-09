@@ -253,10 +253,11 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // SD13-E5 Ranger level-range widening. The accepted level-1 Ranger per-pillar
 // decomposition (base attack/base save progression, Track, the Favored Enemy flat
 // surface, and the combat-style level-gate absence) is joined by level 2, the PF1
-// Core Rulebook level gate at which Combat Style Feat is actually granted, and by
-// level 3 (SD13-E5), the level gate at which Endurance is granted. Nothing here
-// grounds level 4+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 3;
+// Core Rulebook level gate at which Combat Style Feat is actually granted, by
+// level 3 (SD13-E5), the level gate at which Endurance and Favored Terrain are
+// granted, and by level 4 (SD13-E5), the level gate at which Hunter's Bond is
+// granted. Nothing here grounds level 5+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 4;
 
 /// PF1 Core Rulebook level gate at which Ranger gains Endurance (3rd level,
 /// verified independently against two primary sources: d20pfsrd and
@@ -293,6 +294,33 @@ const RANGER_FAVORED_TERRAIN_LEVEL: u8 = 3;
 /// idiom exactly -- no enum validation against the Table: Ranger Favored Terrains
 /// list is performed here.
 const RANGER_FAVORED_TERRAIN_CHOICE_ID: &str = "choice:ranger_favored_terrain";
+
+/// PF1 Core Rulebook level gate at which Ranger gains Hunter's Bond (4th level,
+/// verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Hunter's bond" as the Ranger 4th-level "Special"
+/// column entry, and both state the exact rule text: "At 4th level, a ranger
+/// forms a bond with his hunting companions. This bond can take one of two
+/// forms. Once the form is chosen, it cannot be changed." The first form, a
+/// bond to his companions, grants the ranger the ability to spend a move action
+/// to grant allies within 30 feet who can see or hear him half his favored-enemy
+/// bonus against a single target of the appropriate type -- a genuinely
+/// flat-shaped magnitude (half the already-grounded Favored Enemy bonus), grounded
+/// as a standalone, non-applied record: no move-action/action-economy engine, no
+/// ally-range-and-perception check, and no favored-enemy target-type matching is
+/// implemented. The second form, an animal companion, is deliberately left
+/// named-but-unproven: it would require a full animal-companion stat
+/// block/advancement subsystem that does not exist anywhere in this codebase, a
+/// new-subsystem-shaped burden, not a slice-shaped one.
+const RANGER_HUNTERS_BOND_LEVEL: u8 = 4;
+
+/// SD13-E5 Ranger Hunter's Bond choice-slot id. The deterministic fixture names
+/// which of the two mutually exclusive forms was chosen (`form:bond` or
+/// `form:companion`), mirroring `choice:ranger_combat_style`'s restricted
+/// two-option recognition idiom (unlike the open-ended Favored Enemy/Favored
+/// Terrain choice-slots, Hunter's Bond only has two legal forms).
+const RANGER_HUNTERS_BOND_CHOICE_ID: &str = "choice:ranger_hunters_bond";
+const RANGER_HUNTERS_BOND_COMPANION_SELECTION: &str = "form:companion";
+const RANGER_HUNTERS_BOND_BOND_SELECTION: &str = "form:bond";
 
 // SD13-E5 Ranger combat style choice-slot recognition, grounded once the level-range
 // gate reaches RANGER_COMBAT_STYLE_LEVEL (2nd level). PF1 Core Rulebook Combat Style
@@ -3205,10 +3233,10 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
 
 /// The bounded Ranger milestone level this decomposition surface grounds, if any.
 /// Returns the single Ranger level when the chosen input is exactly a single-class
-/// Ranger at one of the supported milestone levels (1, 2, or 3). Returns `None` for
-/// no Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid (which has
-/// its own decomposition lane), or any level-4+ Ranger this slice deliberately does
-/// not recognize — each of which stays claim-blocked exactly as before. Mirrors the
+/// Ranger at one of the supported milestone levels (1, 2, 3, or 4). Returns `None`
+/// for no Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid (which
+/// has its own decomposition lane), or any level-5+ Ranger this slice deliberately
+/// does not recognize — each of which stays claim-blocked exactly as before. Mirrors the
 /// Fighter `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
 /// `supported_rogue_level` / Barbarian `supported_barbarian_level` / Monk
 /// `supported_monk_level` / Cleric `supported_cleric_level` / Bard
@@ -3308,12 +3336,31 @@ fn supported_ranger_level(input: &CharacterInput) -> Option<u8> {
 ///   Endurance. No terrain-detection engine and no application of the `+2` to any
 ///   actual Initiative total or skill-check total is grounded here.
 ///
+/// - a still later SD13-E5 slice widens the level-range gate once more to level
+///   4 (`MAX_SUPPORTED_RANGER_LEVEL`), extending base attack/base save/Track/the
+///   Favored Enemy flat surface to level 4 via the same formulas (no
+///   re-derivation; PF1 Core Rulebook only increases the Favored Enemy bonus at
+///   5th ranger level and beyond, so it stays the flat `+2` through level 4),
+///   and grounds Hunter's Bond, the class table's 4th-level "Special" column
+///   entry: a restricted two-option choice recognition
+///   (`choice:ranger_hunters_bond` -> `form:bond` or `form:companion`, mirroring
+///   the combat-style choice idiom) is grounded as a `+0` record, an
+///   unconditional grant-only identity record (mirroring the Endurance/Favored
+///   Terrain idiom) is emitted once the level-4 gate is reached, and -- only
+///   when the "bond" form is chosen -- the rule's own flat magnitude (half the
+///   already-grounded Favored Enemy bonus) is grounded as a standalone,
+///   non-applied record. No move-action/action-economy engine, no
+///   ally-range-and-perception check, and no favored-enemy target-type matching
+///   is implemented; the "companion" form's own animal-companion stat
+///   block/advancement subsystem is deliberately left named-but-unproven.
+///
 /// This deliberately does not compute a supported class-feature surface. It
 /// grounds no favored-enemy conditional application, no combat-style feat
 /// grant, no animal companion, no favored-terrain breadth (the level-8th/13th/
-/// 18th additional-terrain and bonus-increase progression), and no spell
-/// posture. It only emits the grounded Track / Favored Enemy / combat-style /
-/// Endurance / Favored Terrain level-gate values that prove the F6 surface
+/// 18th additional-terrain and bonus-increase progression), no Hunter's Bond
+/// ally-bonus application or animal-companion stat block, and no spell posture.
+/// It only emits the grounded Track / Favored Enemy / combat-style / Endurance /
+/// Favored Terrain / Hunter's Bond level-gate values that prove the F6 surface
 /// remains separable on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
@@ -3350,9 +3397,15 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // A still later SD13-E5 slice widens the gate again to level 3, extending both
     // formulas once more and grounding Endurance (a grant-only identity record) and
     // Favored Terrain (a choice recognition record plus a flat +2 magnitude record).
-    // Ranger level 4+ progression, the favored-enemy conditional-application engine,
-    // the level-8th/13th/18th Favored Terrain breadth, and the ranger spell burden
-    // remain deliberately out of scope.
+    // A still later SD13-E5 slice widens the gate again to level 4, extending both
+    // formulas once more (favored enemy stays flat +2 through level 4; PF1 CRB only
+    // increases it at 5th ranger level and beyond) and grounding Hunter's Bond (a
+    // restricted two-option choice recognition, a grant-only identity record, and --
+    // for the "bond" form only -- a flat, non-applied ally-bonus magnitude record).
+    // Ranger level 5+ progression, the favored-enemy conditional-application engine,
+    // the level-8th/13th/18th Favored Terrain breadth, Hunter's Bond ally-bonus
+    // application/animal-companion stat block, and the ranger spell burden remain
+    // deliberately out of scope.
     let level_value = i16::from(level);
 
     // Grounded (1/2): full-BAB base-attack progression, the same formula shape as
@@ -3709,6 +3762,113 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  skill-check total is modified by this record"
             ),
         });
+    }
+
+    // Grounded (SD13-E5): Hunter's Bond, the class table's 4th-level "Special"
+    // column entry, verified independently against two primary PF1 sources
+    // (d20pfsrd and legacy.aonprd.com both list "Hunter's bond" as the Ranger
+    // 4th-level special feature entry, and both state the exact rule text: "At
+    // 4th level, a ranger forms a bond with his hunting companions. This bond
+    // can take one of two forms. Once the form is chosen, it cannot be
+    // changed."). Below the level-4 gate this is a correct level-gate absence
+    // (value 0); at or above it: the chosen form (when present in chosen input)
+    // is recognized as a bounded `+0` identity record naming whichever of the
+    // two restricted forms was selected -- mirroring the combat-style choice
+    // idiom (a restricted two-option recognition, unlike the open-ended Favored
+    // Enemy/Favored Terrain choice-slots) -- and an unconditional grant-only
+    // identity record is emitted, mirroring the Endurance/Favored Terrain grant
+    // idiom. Only when the "bond" form is chosen is a further flat magnitude
+    // grounded: half the already-grounded Favored Enemy bonus, granted to allies
+    // within 30 feet who can see or hear the ranger against a single target of
+    // the appropriate type. This grounds only the flat magnitude: no
+    // move-action/action-economy engine, no ally-range-and-perception check, and
+    // no favored-enemy target-type matching is implemented, so no ally's attack
+    // or damage total is ever modified by this record. The "companion" form's
+    // own animal-companion stat block/advancement subsystem is deliberately left
+    // named-but-unproven: it does not exist anywhere in this codebase.
+    if level < RANGER_HUNTERS_BOND_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.hunters_bond".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Hunter's Bond at ranger level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant form choice and the \
+                 bond form's ally-bonus magnitude are named but not computed. Hunter's Bond is \
+                 a 4th-level ranger class feature."
+            ),
+        });
+    } else {
+        let bond_selection = choice_selection(input, RANGER_HUNTERS_BOND_CHOICE_ID);
+        let bond_form_name = bond_selection.and_then(|selection| {
+            if selection == RANGER_HUNTERS_BOND_BOND_SELECTION {
+                Some("a bond to his hunting companions")
+            } else if selection == RANGER_HUNTERS_BOND_COMPANION_SELECTION {
+                Some("an animal companion")
+            } else {
+                None
+            }
+        });
+
+        if let Some(selection) = bond_selection {
+            let detail = if let Some(form) = bond_form_name {
+                format!(
+                    "Ranger Hunter's Bond form selection at ranger level {level} \
+                     ({RANGER_HUNTERS_BOND_CHOICE_ID} -> {selection}): names {form}, one of the \
+                     two PF1 Core Rulebook Hunter's Bond forms granted at {RANGER_HUNTERS_BOND_LEVEL}th \
+                     level. This is a recognition record of the choice slot only (+0): {form}'s own \
+                     mechanics are not grounded here beyond the standalone flat magnitude recorded \
+                     separately for the bond form, and no animal-companion stat block/advancement \
+                     engine exists in this codebase"
+                )
+            } else {
+                format!(
+                    "Ranger Hunter's Bond form selection at ranger level {level} is present \
+                     ({RANGER_HUNTERS_BOND_CHOICE_ID} -> {selection}), but only the PF1 Core \
+                     Rulebook restricted pair (a bond to his hunting companions, an animal \
+                     companion) is recognized on this bounded seam; no form identity is grounded \
+                     and no mechanical value is fabricated (+0)"
+                )
+            };
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.hunters_bond_choice".to_owned(),
+                value: 0,
+                detail,
+            });
+        }
+
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.hunters_bond".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Hunter's Bond granted at ranger level {level} (PF1 Core Rulebook, \
+                 4th-level ranger class feature): the ranger forms a bond with his hunting \
+                 companions, taking one of two forms once chosen permanently. This is a bounded \
+                 grant-only identity record (value 0, non-fabricated): the chosen form's own \
+                 mechanical effects are not computed here beyond the standalone flat magnitude \
+                 recorded separately for the bond form, since no move-action/action-economy \
+                 engine and no animal-companion stat block/advancement engine exist anywhere in \
+                 this codebase"
+            ),
+        });
+
+        if bond_form_name == Some("a bond to his hunting companions") {
+            let hunters_bond_ally_bonus = favored_enemy_bonus / 2;
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.hunters_bond_ally_bonus".to_owned(),
+                value: hunters_bond_ally_bonus,
+                detail: format!(
+                    "Ranger Hunter's Bond ally-bonus magnitude (PF1 Core Rulebook, level \
+                     {level}, \"bond to his hunting companions\" form): half the ranger's own \
+                     favored-enemy bonus ({favored_enemy_bonus} / 2 = {hunters_bond_ally_bonus}), \
+                     grantable via a move action to allies within 30 feet who can see or hear the \
+                     ranger, against a single target of the appropriate type. This grounds only \
+                     the flat +{hunters_bond_ally_bonus} magnitude; no move-action/action-economy \
+                     engine, no ally-range-and-perception check, and no favored-enemy \
+                     target-type matching is implemented, so no ally's attack or damage total is \
+                     ever modified by this record"
+                ),
+            });
+        }
     }
 }
 
