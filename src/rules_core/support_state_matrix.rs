@@ -335,7 +335,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
 /// identity, plus the SD13-E4 decomposition slice's grounded Eschew Materials bonus-feat
 /// grant, while the bloodline-power burden and the spontaneous known-spell / slot
 /// posture burden stay explicitly blocked.
-const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs";
+const SD13_SORCERER_LEVEL1_TEST: &str =
+    "tests/sd13_sorcerer_level1_spell_baseline.rs + tests/sd13_sorcerer_bloodline_class_skill_choice.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2 martial chassis baseline: direct computed chassis-recognition evidence,
@@ -1053,10 +1054,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Sorcerer level-1 spell baseline, with Eschew Materials and the \
-                            canonical bloodline choice recognition grounded for real and the \
-                            Arcane Bond / bloodline progression burden and the spontaneous \
-                            known-spell / slot posture burden still blocked",
+                            Sorcerer level-1 spell baseline, with Eschew Materials, the \
+                            canonical bloodline choice recognition, and the Arcane bloodline's \
+                            class-skill choice (a player's choice of any one Knowledge skill) \
+                            grounded for real and the Arcane Bond / bloodline progression burden \
+                            and the spontaneous known-spell / slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1066,18 +1068,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     recognized on the compute seam, the SD13-E4 Sorcerer decomposition slice \
                     grounds Eschew Materials (the universal, bloodline-independent bonus feat every \
                     1st-level Sorcerer receives: casting a spell with a material component costing \
-                    1 gp or less without needing that material component) for real, AND the \
-                    SD13-E5 bloodline-choice slice recognizes the canonical deterministic \
-                    bloodline selection (choice:sorcerer_bloodline -> bloodline:arcane) as chosen \
-                    input — recognition only, since the Arcane bloodline's level-1 power is Arcane \
-                    Bond (a familiar or a bonded object), an execution engine rather than a flat \
-                    number, so no power value is fabricated. The row is Partial, not Supported: \
-                    the Arcane Bond / bloodline progression burden (Arcane Bond execution, the \
-                    conditional bloodline arcana, the bloodline class skill grant, and the bonus \
-                    spells/feats at 3rd+ level) remains named and unproven, and the spontaneous \
-                    spell burden (spontaneous spells known, spell slots per day, bonus spell \
-                    slots, spell save DCs) is entirely unproven. No spell math is fabricated and \
-                    no Sorcerer level 2+ is proven",
+                    1 gp or less without needing that material component) for real, the SD13-E5 \
+                    bloodline-choice slice recognizes the canonical deterministic bloodline \
+                    selection (choice:sorcerer_bloodline -> bloodline:arcane) as chosen input — \
+                    recognition only, since the Arcane bloodline's level-1 power is Arcane Bond \
+                    (a familiar or a bonded object), an execution engine rather than a flat \
+                    number, so no power value is fabricated — AND a further SD13-E5 slice \
+                    grounds the Arcane bloodline's class-skill grant for real: the PF1 Core \
+                    Rulebook text reads \"Class Skill: Knowledge (any one)\" (verified against \
+                    d20pfsrd and the legacy Paizo PRD mirror, correcting an earlier imprecise \
+                    framing of this grant as a fixed Knowledge [arcana] award), a player's choice \
+                    of any one Knowledge skill, recognized here as a +0 recognition record only \
+                    (granting a class skill confers no flat modifier by itself in this codebase). \
+                    The row is Partial, not Supported: the Arcane Bond / bloodline progression \
+                    burden (Arcane Bond execution, the conditional bloodline arcana, and the \
+                    bonus spells/feats at 3rd+ level) remains named and unproven, and the \
+                    spontaneous spell burden (spontaneous spells known, spell slots per day, \
+                    bonus spell slots, spell save DCs) is entirely unproven. No spell math is \
+                    fabricated and no Sorcerer level 2+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
                     level-2+ progression",

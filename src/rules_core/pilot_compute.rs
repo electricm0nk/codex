@@ -240,6 +240,14 @@ const SORCERER_BASELINE_LEVEL: u8 = 1;
 const SORCERER_BLOODLINE_CHOICE_ID: &str = "choice:sorcerer_bloodline";
 const ARCANE_BLOODLINE_SELECTION_ID: &str = "bloodline:arcane";
 
+// SD13-E5 Arcane bloodline class-skill choice seam. The PF1 Core Rulebook Arcane
+// bloodline entry reads "Class Skill: Knowledge (any one)" (verified against both
+// d20pfsrd and the legacy Paizo PRD mirror) — a player's choice of any one Knowledge
+// skill, not a fixed grant of Knowledge (arcana) specifically. This choice-slot
+// selection is recognized only when the Arcane bloodline itself was recognized above,
+// since this class-skill grant belongs to that bloodline.
+const SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID: &str = "choice:sorcerer_bloodline_class_skill";
+
 // SD13-E4-F7 spell-bearing baseline identity. Bard is a spontaneous arcane caster with a
 // distinct chassis-class-feature burden (Bardic Knowledge and Bardic Music); this slice
 // recognizes only its bounded single-class level-1 identity as direct runtime evidence and
@@ -1726,6 +1734,19 @@ fn choice_selection<'a>(input: &'a CharacterInput, choice_set_id: &str) -> Optio
         .iter()
         .find(|c| c.choice_set_id == choice_set_id)
         .map(|c| c.selection_id.as_str())
+}
+
+/// Return a human-readable display name (e.g. "Knowledge (arcana)") when the given
+/// selection names a specific Knowledge skill (a "knowledge:<skill>"-shaped token).
+/// Returns `None` for any selection that is not itself shaped that way. This recognizes
+/// the whole Knowledge skill family rather than a restricted enum list, because the PF1
+/// Core Rulebook Arcane bloodline's own class-skill grant text reads "Knowledge (any
+/// one)" — any Knowledge skill is legal, not just Knowledge (arcana).
+fn knowledge_skill_display_name(selection: &str) -> Option<String> {
+    selection
+        .strip_prefix("knowledge:")
+        .filter(|skill| !skill.is_empty())
+        .map(|skill| format!("Knowledge ({skill})"))
 }
 
 /// Look up the already-computed modifier for a named ability. Unknown ability names
@@ -3811,23 +3832,86 @@ fn explain_sorcerer_level1_spell_baseline(
         });
     }
 
+    // Grounded for real: the Arcane bloodline's "Class Skill: Knowledge (any one)" grant
+    // — a player's choice of any one Knowledge skill, verified against both d20pfsrd and
+    // the legacy Paizo PRD mirror, NOT a fixed grant of Knowledge (arcana) specifically —
+    // is recognized as chosen input. This is specific to the Arcane bloodline, so it is
+    // only recognized when the Arcane bloodline selection itself was recognized above; it
+    // is never fabricated for an unrecognized or absent bloodline choice.
+    let bloodline_class_skill_selection =
+        choice_selection(input, SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID);
+    let recognized_bloodline_class_skill_name = bloodline_class_skill_selection
+        .filter(|_| recognized_arcane_bloodline)
+        .and_then(knowledge_skill_display_name);
+    if recognized_arcane_bloodline
+        && let Some(selection) = bloodline_class_skill_selection
+    {
+        let detail = if let Some(skill_name) = &recognized_bloodline_class_skill_name {
+            format!(
+                "Sorcerer level {SORCERER_BASELINE_LEVEL} Arcane bloodline class-skill choice \
+                 recognized: the canonical deterministic selection \
+                 ({SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID} -> {selection}) names {skill_name} \
+                 as the player's chosen class skill. The PF1 Core Rulebook Arcane bloodline \
+                 grants \"Class Skill: Knowledge (any one)\" — a player's choice of any one \
+                 Knowledge skill, not a fixed grant of Knowledge (arcana) specifically. This is \
+                 a recognition record of the choice slot only, so it carries no fabricated \
+                 mechanical value (+0): granting a class skill confers no flat modifier by \
+                 itself in this codebase (no skill-rank allocation or untrained-skill-use engine \
+                 exists here), so no skill-check total is computed or fabricated"
+            )
+        } else {
+            format!(
+                "Sorcerer level {SORCERER_BASELINE_LEVEL} Arcane bloodline class-skill choice \
+                 slot is present ({SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID} -> {selection}), \
+                 but only a \"knowledge:<skill>\"-shaped selection is recognized as the PF1 Core \
+                 Rulebook's \"Class Skill: Knowledge (any one)\" grant on this bounded seam; no \
+                 class-skill identity is grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.sorcerer.bloodline_class_skill_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
     // Still blocked (1/2): with the bloodline choice recognized above, narrow the former
     // combined bloodline-power blocker to what actually remains unimplemented. The message
     // names the Arcane bloodline specifically only when it was actually the recognized
     // selection above; when no bloodline is chosen, or a different bloodline is chosen,
     // it stays bloodline-agnostic so it never asserts a specific bloodline's mechanics as
-    // "remaining" for a character whose chosen bloodline this seam did not recognize.
+    // "remaining" for a character whose chosen bloodline this seam did not recognize. Once
+    // the class-skill choice above is also recognized, the class-skill grant is dropped
+    // from this "not implemented" list — it is grounded separately above — and the message
+    // states the corrected rule ("a player's choice of any one Knowledge skill") rather
+    // than repeating the earlier imprecise "(Knowledge [arcana])" wording.
     let arcane_bond_message = if recognized_arcane_bloodline {
-        format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its Arcane Bond and \
-             bloodline progression burden: the Arcane bloodline's level-1 power Arcane Bond (a \
-             familiar or a bonded object — an execution engine, not a flat number), the \
-             bloodline arcana (+1 spell save DC on spells modified by a metamagic feat that \
-             raises the spell's level — a conditional effect), the bloodline class skill grant \
-             (Knowledge [arcana]), and the bloodline bonus spells and bonus feats at 3rd+ level \
-             are not implemented in this bounded spell baseline, so no Sorcerer bloodline-power \
-             support is claimed"
-        )
+        if recognized_bloodline_class_skill_name.is_some() {
+            format!(
+                "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its Arcane Bond and \
+                 bloodline progression burden: the Arcane bloodline's level-1 power Arcane Bond \
+                 (a familiar or a bonded object — an execution engine, not a flat number), the \
+                 bloodline arcana (+1 spell save DC on spells modified by a metamagic feat that \
+                 raises the spell's level — a conditional effect), and the bloodline bonus \
+                 spells and bonus feats at 3rd+ level are not implemented in this bounded spell \
+                 baseline, so no Sorcerer bloodline-power support is claimed. The bloodline \
+                 class skill grant (a player's choice of any one Knowledge skill, per \"Class \
+                 Skill: Knowledge [any one]\") is grounded separately above as a recognition \
+                 record and is no longer part of this blocker"
+            )
+        } else {
+            format!(
+                "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its Arcane Bond and \
+                 bloodline progression burden: the Arcane bloodline's level-1 power Arcane Bond \
+                 (a familiar or a bonded object — an execution engine, not a flat number), the \
+                 bloodline arcana (+1 spell save DC on spells modified by a metamagic feat that \
+                 raises the spell's level — a conditional effect), the bloodline class skill \
+                 grant (a player's choice of any one Knowledge skill, per \"Class Skill: \
+                 Knowledge [any one]\"), and the bloodline bonus spells and bonus feats at 3rd+ \
+                 level are not implemented in this bounded spell baseline, so no Sorcerer \
+                 bloodline-power support is claimed"
+            )
+        }
     } else {
         format!(
             "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline power and \
