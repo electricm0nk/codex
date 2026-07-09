@@ -491,19 +491,58 @@ fn fighter_sorcerer_and_rogue_do_not_gain_bard_recognition() {
 }
 
 #[test]
-fn bard_level_2_is_not_promoted_by_this_slice() {
-    // The slice is bounded to level 1; a level-2 Bard must not gain the level-1
-    // spell-baseline recognition record and stays blocked.
+fn bard_level_2_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 2 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_bard_level2_progression.rs) widened the level-1-only gate to
+    // level 2 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric
+    // level-range gate idiom) and confirmed every one of the formulas below
+    // extends to level 2 unchanged or via the same formula; this negative
+    // control is superseded, not violated — pin the new truth here too so this
+    // file stays internally consistent.
     let level_2 = BARD_FIXTURE.replace("class:bard:1", "class:bard:2");
     let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, RECOGNITION_ID),
-        "level-2 Bard must not gain the bounded level-1 spell-baseline recognition record"
+        has_explanation(&computation, RECOGNITION_ID),
+        "level-2 Bard is supported since the SD13-E5 level-2 slice: {:?}",
+        computation.explanations
+    );
+    assert!(
+        has_explanation(&computation, BARDIC_KNOWLEDGE_ID)
+            && has_explanation(&computation, BARDIC_PERFORMANCE_ROUNDS_ID)
+            && has_explanation(&computation, INSPIRE_COURAGE_ID),
+        "level-2 Bard is supported since the SD13-E5 level-2 slice: {:?}",
+        computation.explanations
+    );
+    assert!(
+        has_explanation(&computation, FASCINATE_DC_ID)
+            && has_explanation(&computation, FASCINATE_AFFECTED_CREATURES_ID),
+        "level-2 Bard is supported since the SD13-E5 level-2 slice: {:?}",
+        computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "level-2 Bard must stay claim-blocked in this slice"
+    );
+}
+
+#[test]
+fn bard_level_3_is_not_promoted() {
+    let level_3 = BARD_FIXTURE.replace("class:bard:1", "class:bard:3");
+    let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !has_explanation(&computation, RECOGNITION_ID),
+        "level-3 Bard must not gain the bounded spell-baseline recognition record"
+    );
+    assert!(
+        !has_explanation(&computation, BARDIC_PERFORMANCE_ROUNDS_ID),
+        "level-3 Bard must not gain the bounded bardic performance grounding"
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-3 Bard must stay claim-blocked in this slice"
     );
 }
 
