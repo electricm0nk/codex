@@ -392,12 +392,16 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
 /// prepared spellbook / spell-slot posture burden.
 const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs";
 
-/// SD13-E4 dedicated proof surface for the bounded Human Cleric level-1 prepared
-/// divine spell baseline: direct computed recognition of the prepared divine
+/// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2
+/// prepared divine spell baseline: direct computed recognition of the prepared divine
 /// spell-bearing identity, with Channel Energy, the domain choice seam, and the
 /// flat domain spell slot count grounded for real, that stays explicitly blocked
-/// on the domain powers burden and the prepared divine spell posture burden.
-const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs";
+/// on the domain powers burden and the prepared divine spell posture burden, widened
+/// to level 2 by a later SD13-E5 slice (the level-range gate plus every named pillar
+/// formula extended to level 2 via the same formula), citing both proof files as one
+/// combined literal, mirroring [`SD13_MONK_LEVEL1_TEST`] / [`SD13_ROGUE_LEVEL1_TEST`].
+const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs + \
+    tests/sd13_cleric_level2_progression.rs";
 
 /// SD13-E4 dedicated proof surface for the bounded Human Druid level-1 prepared
 /// divine spell baseline: direct computed recognition of the prepared divine
@@ -849,11 +853,12 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:cleric",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Cleric \
-                            level-1 prepared divine spell baseline, with base attack bonus, base save \
-                            progression, Channel Energy, the domain choice seam, the flat domain spell \
-                            slot count, Touch of Good (Good domain, in full), and Rebuke Death's uses \
-                            per day (Healing domain, partial) grounded for real and the Rebuke Death \
-                            heal amount and the prepared divine spell posture burden still blocked",
+                            level-1/level-2 prepared divine spell baseline, with base attack bonus, \
+                            base save progression, Channel Energy, the domain choice seam, the flat \
+                            domain spell slot count, Touch of Good (Good domain, in full), and Rebuke \
+                            Death's uses per day (Healing domain, partial) grounded for real at both \
+                            supported levels and the Rebuke Death heal amount and the prepared divine \
+                            spell posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -882,22 +887,36 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     * 3 / 4, the same formula shape as Rogue/Monk/Druid) and base save progression \
                     (good Fortitude, good Will, poor Reflex), both verified against the PF1 Core \
                     Rulebook Cleric class table and grounded as standalone explanation records not \
-                    wired into compute_total_saves or compute_combat_baseline. The row is Partial, \
-                    not Supported: Rebuke Death's heal amount (1d4 points of damage plus 1 for every \
-                    two cleric levels, usable only on a creature below 0 hit points) is not a flat \
-                    number and remains named and unproven, the domain spell-list contents that could \
-                    fill the grounded domain spell slot remain named and unproven, and the prepared \
-                    divine spell posture burden (spells prepared from the full Cleric list, \
-                    spontaneous cure/inflict conversion, spell slots per day, bonus spells from a \
-                    high Wisdom, spell save DCs) is still entirely unproven. No touch-attack \
-                    resolution, healing-application engine, hit-point-state gating check, or per-use \
-                    consumption tracking is fabricated and no Cleric level 2+ is proven",
+                    wired into compute_total_saves or compute_combat_baseline, AND a later SD13-E5 \
+                    slice widens the level-1-only gate to a level-range gate (level 1-2), extending \
+                    every one of the above formulas to level 2 via the same formula, not re-derived \
+                    (verified independently against the PF1 Core Rulebook Cleric class table via \
+                    d20pfsrd and legacy.aonprd.com): level 2 base attack bonus is +1, base \
+                    Fortitude/Will are +3, base Reflex is +0; Channel Energy stays 1d6 (it next \
+                    increases only at level 3); the domain spell slot count stays exactly 1 (a \
+                    level-2 cleric still only casts 1st-level cleric spells — 2nd-level cleric spells \
+                    begin at caster level 3); Touch of Good's sacred bonus stays 1 (reached naturally \
+                    at level 2 rather than via the level-1 floor); and Cleric gains no new class \
+                    feature at 2nd level (the class table's level-2 Special column is blank, unlike \
+                    Rogue/Monk's Evasion), so no new pillar was added, only the existing ones widened. \
+                    The row is Partial, not Supported: Rebuke Death's heal amount (1d4 points of \
+                    damage plus 1 for every two cleric levels, usable only on a creature below 0 hit \
+                    points) is not a flat number and remains named and unproven, the domain \
+                    spell-list contents that could fill the grounded domain spell slot remain named \
+                    and unproven, the prepared divine spell posture burden (spells prepared from the \
+                    full Cleric list, spontaneous cure/inflict conversion, spell slots per day, bonus \
+                    spells from a high Wisdom, spell save DCs) is still entirely unproven, and no \
+                    Cleric level 3+ is proven. No touch-attack resolution, healing-application \
+                    engine, hit-point-state gating check, or per-use consumption tracking is \
+                    fabricated",
                 next_required_uplift: "SD13-E5+ Cleric domain power grounding: the Rebuke Death \
                     heal-amount piece (requires a dice-roll execution engine and a hit-point-state \
                     gating check, a new-subsystem-shaped burden deliberately not attempted this \
                     slice) and domain spell-list contents, then the prepared divine spell posture \
-                    burden, then level-2+ progression (widening the now-grounded base attack/base \
-                    save formulas to level 2+)",
+                    burden, then Cleric level 3+ progression (Channel Energy increases to 2d6 at \
+                    level 3, and a level-3 cleric first gains 2nd-level domain spell slots — both \
+                    verified against the PF1 Core Rulebook Cleric class table but out of scope for \
+                    this slice)",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",
