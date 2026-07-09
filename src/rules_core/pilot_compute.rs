@@ -228,9 +228,15 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
 // caster; this slice recognizes only its bounded single-class level-1 identity as direct
 // runtime evidence and grounds no bloodline power and no spell math (spell slots, spells
-// known, spell DCs, bonus spells, or prepared posture) for it.
+// known, spell DCs, bonus spells, or prepared posture) for it. A further SD13-E5 slice
+// widens the level-1-only gate to a level-range gate (`supported_sorcerer_level`,
+// 1..=MAX_SUPPORTED_SORCERER_LEVEL), mirroring the Fighter/Paladin/Rogue/Barbarian/
+// Monk/Cleric/Bard/Druid idiom: the PF1 Core Rulebook Sorcerer class table's level-2
+// "Special" column is blank (verified against d20pfsrd and legacy.aonprd.com), so no new
+// class feature is gained at 2nd level, unlike Rogue/Monk/Druid's Evasion/Woodland
+// Stride — this widening extends the existing pillars only, adding no new one.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const SORCERER_BASELINE_LEVEL: u8 = 1;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 2;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -2935,17 +2941,26 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     });
 }
 
-/// Return `true` when the chosen input is exactly a single-class Sorcerer at the bounded
-/// spell baseline level (1). Returns `false` for any other class, a multiclass mix, or a
-/// level-2+ Sorcerer this slice deliberately does not recognize — each of which stays
-/// blocked exactly as before.
-fn is_single_class_sorcerer_level1(input: &CharacterInput) -> bool {
-    matches!(
-        input.chosen.class_levels.as_slice(),
+/// The bounded Sorcerer milestone level this decomposition surface grounds, if any.
+/// Returns the single Sorcerer level when the chosen input is exactly a single-class
+/// Sorcerer at one of the supported milestone levels (1 or 2). Returns `None` for no
+/// Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-3+ Sorcerer this
+/// slice deliberately does not recognize — each of which stays claim-blocked exactly
+/// as before. Mirrors the Fighter `supported_fighter_level` / Paladin
+/// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
+/// `supported_cleric_level` / Bard `supported_bard_level` / Druid
+/// `supported_druid_level` level-range gate idiom.
+fn supported_sorcerer_level(input: &CharacterInput) -> Option<u8> {
+    match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == SORCERER_CLASS_ID
-                && class_level.level == SORCERER_BASELINE_LEVEL
-    )
+                && (1..=MAX_SUPPORTED_SORCERER_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
+        }
+        _ => None,
+    }
 }
 
 /// The bounded Barbarian milestone level this decomposition surface grounds, if any.
@@ -3917,21 +3932,22 @@ fn explain_sorcerer_level1_spell_baseline(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    if !is_single_class_sorcerer_level1(input) {
+    let Some(level) = supported_sorcerer_level(input) else {
         return;
-    }
+    };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
 
-    // Direct runtime evidence: recognize the deterministic Human Sorcerer level-1
-    // spell-bearing identity. This is a recognition record only; it fabricates no spell math.
+    // Direct runtime evidence: recognize the deterministic Human Sorcerer level-1/
+    // level-2 spell-bearing identity. This is a recognition record only; it fabricates
+    // no spell math.
     explanations.push(ComputationExplanation {
         id: "class_chassis.spell_baseline.sorcerer".to_owned(),
         value: 0,
         detail: format!(
-            "Recognized deterministic Human Sorcerer level {SORCERER_BASELINE_LEVEL} spell-bearing \
-             baseline: the {SORCERER_CLASS_ID}:{SORCERER_BASELINE_LEVEL} class identity is acknowledged \
+            "Recognized deterministic Human Sorcerer level {level} spell-bearing \
+             baseline: the {SORCERER_CLASS_ID}:{level} class identity is acknowledged \
              as a spontaneous arcane spell-bearing class on the rules-core seam rather than an \
              undocumented packet placeholder. This is a bounded recognition record only; it grounds no \
              bloodline power and no spell math (spell slots, spells known, spell DCs, bonus spells, or \
@@ -3951,8 +3967,13 @@ fn explain_sorcerer_level1_spell_baseline(
     // 4/5 BAB values (+2 at both) disambiguate the 1/2-vs-3/4 fraction (level 1 alone
     // floors every fraction to +0) and confirm Sorcerer is 1/2 BAB, UNLIKE the 3/4 BAB
     // shared by Rogue/Monk/Druid/Cleric/Bard, and the raw Fort/Ref/Will columns
-    // independently confirm good Will only, poor Fortitude, poor Reflex.
-    let level_value = i16::from(SORCERER_BASELINE_LEVEL);
+    // independently confirm good Will only, poor Fortitude, poor Reflex. A further
+    // SD13-E5 slice widens the level-1-only gate to level 2 and extends both formulas
+    // via the same formula, without re-derivation, verified independently against the
+    // PF1 Core Rulebook Sorcerer class table: level 2 base attack bonus is +1, base
+    // saves are +0/+0/+3 (Fortitude/Reflex/Will); the class table's level-2 "Special"
+    // column is blank, so no new class feature is gained at 2nd level.
+    let level_value = i16::from(level);
 
     // Grounded (1/2): 1/2-BAB base-attack progression (classlevel / 2) — the Sorcerer's
     // own class table, NOT the 3/4-BAB shape shared by Rogue/Monk/Druid/Cleric/Bard. No
@@ -3963,7 +3984,7 @@ fn explain_sorcerer_level1_spell_baseline(
         id: "class_chassis.sorcerer.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} base attack bonus from the PF1 Core \
+            "Sorcerer level {level} base attack bonus from the PF1 Core \
              Rulebook Sorcerer class table's 1/2-BAB progression — UNLIKE the 3/4-BAB shape \
              shared by Rogue/Monk/Druid/Cleric/Bard: classlevel / 2 = {base_attack_bonus}. This \
              is a standalone explanation record; it is not wired into the integrated \
@@ -3980,7 +4001,7 @@ fn explain_sorcerer_level1_spell_baseline(
         id: "class_chassis.sorcerer.base_save.fortitude".to_owned(),
         value: poor_save,
         detail: format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} base Fortitude save (poor save) from the \
+            "Sorcerer level {level} base Fortitude save (poor save) from the \
              PF1 Core Rulebook Sorcerer class table: classlevel/3 = {poor_save}. This is a \
              standalone explanation record; it is not wired into compute_total_saves"
         ),
@@ -3989,7 +4010,7 @@ fn explain_sorcerer_level1_spell_baseline(
         id: "class_chassis.sorcerer.base_save.reflex".to_owned(),
         value: poor_save,
         detail: format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 \
+            "Sorcerer level {level} base Reflex save (poor save) from the PF1 \
              Core Rulebook Sorcerer class table: classlevel/3 = {poor_save}. This is a \
              standalone explanation record; it is not wired into compute_total_saves"
         ),
@@ -3998,7 +4019,7 @@ fn explain_sorcerer_level1_spell_baseline(
         id: "class_chassis.sorcerer.base_save.will".to_owned(),
         value: good_save,
         detail: format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} base Will save (good save) from the PF1 \
+            "Sorcerer level {level} base Will save (good save) from the PF1 \
              Core Rulebook Sorcerer class table: classlevel/2+2 = {good_save}. This is a \
              standalone explanation record; it is not wired into compute_total_saves"
         ),
@@ -4012,7 +4033,7 @@ fn explain_sorcerer_level1_spell_baseline(
         id: "class_chassis.sorcerer.eschew_materials".to_owned(),
         value: 0,
         detail: format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} Eschew Materials bonus feat: the PF1 Core \
+            "Sorcerer level {level} Eschew Materials bonus feat: the PF1 Core \
              Rulebook grants every Sorcerer the Eschew Materials feat at 1st level regardless of \
              chosen bloodline, letting them cast a spell with a material component costing 1 gp or \
              less without needing that material component. This is a boolean feat grant, not a \
@@ -4031,7 +4052,7 @@ fn explain_sorcerer_level1_spell_baseline(
     if let Some(selection) = bloodline_selection {
         let detail = if recognized_arcane_bloodline {
             format!(
-                "Sorcerer level {SORCERER_BASELINE_LEVEL} bloodline choice recognized: the \
+                "Sorcerer level {level} bloodline choice recognized: the \
                  canonical deterministic selection ({SORCERER_BLOODLINE_CHOICE_ID} -> \
                  {selection}) names the Arcane bloodline as chosen input on the compute seam. \
                  This is a recognition record of the choice slot only, so it carries no \
@@ -4042,7 +4063,7 @@ fn explain_sorcerer_level1_spell_baseline(
             )
         } else {
             format!(
-                "Sorcerer level {SORCERER_BASELINE_LEVEL} bloodline choice slot is present \
+                "Sorcerer level {level} bloodline choice slot is present \
                  ({SORCERER_BLOODLINE_CHOICE_ID} -> {selection}), but only the canonical \
                  deterministic Arcane bloodline selection is recognized on this bounded seam; \
                  no bloodline power is grounded and no mechanical value is fabricated (+0)"
@@ -4071,7 +4092,7 @@ fn explain_sorcerer_level1_spell_baseline(
     {
         let detail = if let Some(skill_name) = &recognized_bloodline_class_skill_name {
             format!(
-                "Sorcerer level {SORCERER_BASELINE_LEVEL} Arcane bloodline class-skill choice \
+                "Sorcerer level {level} Arcane bloodline class-skill choice \
                  recognized: the canonical deterministic selection \
                  ({SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID} -> {selection}) names {skill_name} \
                  as the player's chosen class skill. The PF1 Core Rulebook Arcane bloodline \
@@ -4084,7 +4105,7 @@ fn explain_sorcerer_level1_spell_baseline(
             )
         } else {
             format!(
-                "Sorcerer level {SORCERER_BASELINE_LEVEL} Arcane bloodline class-skill choice \
+                "Sorcerer level {level} Arcane bloodline class-skill choice \
                  slot is present ({SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID} -> {selection}), \
                  but only a \"knowledge:<skill>\"-shaped selection is recognized as the PF1 Core \
                  Rulebook's \"Class Skill: Knowledge (any one)\" grant on this bounded seam; no \
@@ -4111,7 +4132,7 @@ fn explain_sorcerer_level1_spell_baseline(
     let arcane_bond_message = if recognized_arcane_bloodline {
         if recognized_bloodline_class_skill_name.is_some() {
             format!(
-                "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its Arcane Bond and \
+                "Sorcerer level {level} remains blocked on its Arcane Bond and \
                  bloodline progression burden: the Arcane bloodline's level-1 power Arcane Bond \
                  (a familiar or a bonded object — an execution engine, not a flat number), the \
                  bloodline arcana (+1 spell save DC on spells modified by a metamagic feat that \
@@ -4124,7 +4145,7 @@ fn explain_sorcerer_level1_spell_baseline(
             )
         } else {
             format!(
-                "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its Arcane Bond and \
+                "Sorcerer level {level} remains blocked on its Arcane Bond and \
                  bloodline progression burden: the Arcane bloodline's level-1 power Arcane Bond \
                  (a familiar or a bonded object — an execution engine, not a flat number), the \
                  bloodline arcana (+1 spell save DC on spells modified by a metamagic feat that \
@@ -4137,7 +4158,7 @@ fn explain_sorcerer_level1_spell_baseline(
         }
     } else {
         format!(
-            "Sorcerer level {SORCERER_BASELINE_LEVEL} remains blocked on its bloodline power and \
+            "Sorcerer level {level} remains blocked on its bloodline power and \
              progression burden: no bloodline power, bloodline arcana, bloodline class skill \
              grant, or bonus spells/feats at 3rd+ level are implemented for any bloodline in this \
              bounded spell baseline, so no Sorcerer bloodline-power support is claimed"
