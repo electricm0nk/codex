@@ -293,21 +293,37 @@ const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1: i16 = 1;
 // grounded as standalone records. No rage-state execution engine, weapon
 // familiarity, or level-2+ martial progression is grounded.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
-const MARTIAL_BASELINE_LEVEL: u8 = 1;
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
-/// `supported_rogue_level` idiom. `MARTIAL_BASELINE_LEVEL` above stays 1 and
-/// is unaffected: it is still used by the (unrelated, still level-1-only)
-/// Monk martial-chassis gate.
+/// `supported_rogue_level` idiom. Monk's own level-range gate is
+/// `supported_monk_level` / `MAX_SUPPORTED_MONK_LEVEL`, unrelated to this
+/// Barbarian gate.
 const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 2;
 
-// SD13-E3 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
+// SD13-E3/E5 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
-// slice recognizes only its bounded single-class level-1 identity as direct runtime
-// evidence and grounds no base-attack / base-save progression, no unarmed strike
-// damage die, no Flurry of Blows execution, no AC Bonus computation, no level-1
-// bonus feat grant, no ki pool, and no level-2+ martial progression.
+// slice recognizes its bounded single-class level-1/level-2 identity as direct
+// runtime evidence and grounds base-attack / base-save progression, unarmed strike
+// damage die, the Flurry of Blows flat surface, AC Bonus, the level-1 bonus feat
+// choice-slot recognition, and (SD13-E5) Evasion at level 2, but no level-1 bonus
+// feat mechanics execution, no ki pool, and no level-3+ martial progression.
 const MONK_CLASS_ID: &str = "class:monk";
+/// SD13-E5 Monk level-range gate, mirroring the Fighter `supported_fighter_level` /
+/// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// `supported_barbarian_level` idiom.
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 2;
+/// PF1 Core Rulebook level gate at which Monk gains Evasion (2nd level, verified
+/// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
+/// list "Bonus feat, evasion" as the Monk 2nd-level special feature entry).
+const MONK_EVASION_LEVEL: u8 = 2;
+/// The PF1 Core Rulebook level at which the level-1 monk bonus feat (and the
+/// automatic Improved Unarmed Strike grant) always occurs, independent of the
+/// character's current supported level. Kept distinct from the generic
+/// `supported_monk_level` current-level value so widening to level 2 does not
+/// accidentally relabel the level-1-specific bonus feat grant as a level-2 one —
+/// PF1 grants monks a SEPARATE bonus feat at 2nd level that this bounded seam
+/// deliberately does not recognize.
+const MONK_BONUS_FEAT_GRANT_LEVEL: u8 = 1;
 
 // SD13-E5 Monk level-1 bonus feat choice-slot recognition. The PF1 Core Rulebook
 // restricted Monk bonus feat list this bounded recognition seam knows is Combat
@@ -3171,54 +3187,69 @@ fn explain_barbarian_level1_chassis(
     });
 }
 
-/// Return `true` when the chosen input is exactly a single-class Monk at the bounded
-/// martial baseline level (1). Returns `false` for any other class, a multiclass mix,
-/// or a level-2+ Monk this slice deliberately does not recognize — each of which stays
-/// blocked exactly as before.
-fn is_single_class_monk_level1(input: &CharacterInput) -> bool {
-    matches!(
-        input.chosen.class_levels.as_slice(),
+/// The bounded Monk milestone level this decomposition surface grounds, if any.
+/// Returns the single Monk level when the chosen input is exactly a single-class
+/// Monk at one of the supported milestone levels (1 or 2). Returns `None` for no
+/// Monk, a non-Monk class, a multiclass mix, or any level-3+ Monk this slice
+/// deliberately does not recognize — each of which stays claim-blocked exactly as
+/// before. Mirrors the Fighter `supported_fighter_level` / Paladin
+/// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// `supported_barbarian_level` level-range gate idiom.
+fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
+    match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == MONK_CLASS_ID
-                && class_level.level == MARTIAL_BASELINE_LEVEL
-    )
+                && (1..=MAX_SUPPORTED_MONK_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
+        }
+        _ => None,
+    }
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Monk
-/// level-1 martial chassis, mirroring the Barbarian level-1 baseline pattern, and
-/// now grounding five named pillar burdens (base-attack, base-save, AC Bonus, the
-/// unarmed strike die / Flurry of Blows flat surface, and the level-1 bonus feat
-/// choice-slot recognition) while keeping it explicitly claim-blocked on the
-/// recognized bonus feat's own mechanics (an execution engine, not a flat
-/// number).
+/// level-1/level-2 martial chassis, mirroring the Barbarian/Rogue level-range-gate
+/// pattern, and now grounding six named pillar burdens at every supported level
+/// (base-attack, base-save, AC Bonus, the unarmed strike die / Flurry of Blows
+/// flat surface, the level-1 bonus feat choice-slot recognition, and, at level 2,
+/// Evasion) while keeping it explicitly claim-blocked on the recognized bonus
+/// feat's own mechanics (an execution engine, not a flat number).
 ///
 /// This grounds the Monk base-attack progression (3/4 BAB: `classlevel * 3 / 4`),
 /// the base-save progression (good Fortitude, Reflex, and Will: `classlevel/2+2`
 /// each — Monk is unusual among the martial classes recognized so far in having all
 /// three saves good rather than a 2-good/1-poor or 1-good/2-poor split), the AC
 /// Bonus (the positive Wisdom modifier added to AC, asserted unconditionally on this
-/// deterministic unarmored fixture), the Medium-monk level-1 unarmed strike damage
-/// die size (1d6 — die size only, mirroring the Rogue sneak-attack die-count record:
-/// no damage roll or damage total is computed), the level-1 Flurry of Blows flat
-/// surface (two attacks, each at monk level - 2 = -1 before ability modifiers), and
-/// (SD13-E5) the level-1 bonus feat choice-slot selection when it names one of the
-/// PF1 Core Rulebook restricted Monk bonus feat list's five feats (Combat
-/// Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, Stunning Fist),
-/// mirroring the Sorcerer bloodline choice / Cleric domain choice / Druid
-/// nature-bond choice recognition idiom. It still grounds no attack-resolution or
-/// damage-roll engine, no monk-weapon flurry, no level-4+ unarmed damage die
-/// progression, no ki pool, no level-4+ AC Bonus dodge-bonus progression, no
-/// "unarmored and unencumbered" runtime state-check engine, no wiring into
-/// integrated combat totals, no level-2+ martial progression, and no execution of
-/// what the recognized bonus feat actually does (no attack-of-opportunity engine
-/// for Combat Reflexes, no grapple-check engine for Improved Grapple, no DC/save
-/// engine for Stunning Fist, and so on). It:
-/// - leaves one chassis-recognition explanation so the `class:monk:1` identity is
+/// deterministic unarmored fixture), the Medium-monk unarmed strike damage die size
+/// (1d6 at levels 1-3 — die size only, mirroring the Rogue sneak-attack die-count
+/// record: no damage roll or damage total is computed), the Flurry of Blows flat
+/// surface (two attacks, each at monk level - 2 before ability modifiers), the
+/// level-1 bonus feat choice-slot selection when it names one of the PF1 Core
+/// Rulebook restricted Monk bonus feat list's five feats (Combat Reflexes, Deflect
+/// Arrows, Improved Grapple, Improved Trip, Stunning Fist), mirroring the Sorcerer
+/// bloodline choice / Cleric domain choice / Druid nature-bond choice recognition
+/// idiom, and (SD13-E5) Evasion, a 2nd-level Monk class feature verified
+/// independently against two primary PF1 sources (d20pfsrd and legacy.aonprd.com
+/// both list "Bonus feat, evasion" as the Monk 2nd-level special feature entry) —
+/// grounded as a bounded identity/recognition record only, mirroring exactly how
+/// Rogue's own `class_feature.rogue.evasion` was grounded (value 0, correct
+/// level-gate absence below level 2, granted-but-unexecuted rule text at level 2,
+/// no saving-throw-resolution or damage-resolution engine). It still grounds no
+/// attack-resolution or damage-roll engine, no monk-weapon flurry, no level-4+
+/// unarmed damage die progression, no ki pool, no level-4+ AC Bonus dodge-bonus
+/// progression, no "unarmored and unencumbered" runtime state-check engine, no
+/// wiring into integrated combat totals, no level-3+ martial progression, no
+/// level-2 bonus feat grant (PF1 grants monks a SEPARATE bonus feat at 2nd level;
+/// this widening does not add a second choice-slot or recognition for it), and no
+/// execution of what the recognized level-1 bonus feat actually does (no
+/// attack-of-opportunity engine for Combat Reflexes, no grapple-check engine for
+/// Improved Grapple, no DC/save engine for Stunning Fist, and so on). It:
+/// - leaves one chassis-recognition explanation so the `class:monk:N` identity is
 ///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves grounded explanation records for base-attack, the three base saves,
-///   AC Bonus, the unarmed strike damage die, and the flurry flat attack
-///   bonus/attack count,
+///   AC Bonus, the unarmed strike damage die, the flurry flat attack
+///   bonus/attack count, and Evasion,
 /// - conditionally leaves one grounded explanation recognizing the level-1 bonus
 ///   feat choice-slot selection when a `choice:monk_bonus_feat` selection is
 ///   present (carrying no fabricated mechanical value, since the recognized
@@ -3239,34 +3270,34 @@ fn explain_monk_level1_chassis(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    if !is_single_class_monk_level1(input) {
+    let Some(level) = supported_monk_level(input) else {
         return;
-    }
+    };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
 
-    // Direct runtime evidence: recognize the deterministic Human Monk level-1 martial
-    // chassis identity. This is a recognition record only; it fabricates no mechanical
-    // value.
+    // Direct runtime evidence: recognize the deterministic Human Monk martial
+    // chassis identity at the supported level. This is a recognition record only;
+    // it fabricates no mechanical value.
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.bounded_progression".to_owned(),
         value: 0,
         detail: format!(
-            "Recognized deterministic Human Monk level {MARTIAL_BASELINE_LEVEL} martial chassis: \
-             the {MONK_CLASS_ID}:{MARTIAL_BASELINE_LEVEL} class identity is acknowledged as a pure \
-             non-hybrid martial baseline on the rules-core seam rather than an undocumented packet \
-             placeholder. This is a bounded chassis-recognition record only; the base-attack, \
-             base-save, AC Bonus, unarmed-strike-die, and Flurry of Blows flat-surface values are \
+            "Recognized deterministic Human Monk level {level} martial chassis: the \
+             {MONK_CLASS_ID}:{level} class identity is acknowledged as a pure non-hybrid martial \
+             baseline on the rules-core seam rather than an undocumented packet placeholder. \
+             This is a bounded chassis-recognition record only; the base-attack, base-save, AC \
+             Bonus, unarmed-strike-die, Flurry of Blows flat-surface, and Evasion values are \
              grounded separately below, and this record itself grounds no level-1 bonus feat \
-             grant, no attack-resolution engine, no ki pool, and no level-2+ martial progression, \
+             grant, no attack-resolution engine, no ki pool, and no level-3+ martial progression, \
              so it carries no fabricated mechanical value (+0)"
         ),
     });
 
-    let level_value = i16::from(MARTIAL_BASELINE_LEVEL);
+    let level_value = i16::from(level);
 
-    // Grounded (1/5): Monk 3/4-BAB base-attack progression from the PF1 Core
+    // Grounded (1/6): Monk 3/4-BAB base-attack progression from the PF1 Core
     // Rulebook Monk class table. No PCGen cr_classes.lst entry is used here (this
     // repo carries no Monk .lst source), so the formula cites the rulebook table
     // directly rather than inventing a line reference.
@@ -3275,12 +3306,12 @@ fn explain_monk_level1_chassis(
         id: "class_chassis.monk.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook Monk \
-             class table's 3/4-BAB progression: classlevel * 3 / 4 = {base_attack_bonus}"
+            "Monk level {level} base attack bonus from the PF1 Core Rulebook Monk class table's \
+             3/4-BAB progression: classlevel * 3 / 4 = {base_attack_bonus}"
         ),
     });
 
-    // Grounded (2/5): Monk base-save progression. Unlike Fighter/Barbarian/Rogue's
+    // Grounded (2/6): Monk base-save progression. Unlike Fighter/Barbarian/Rogue's
     // 2-good/1-poor or 1-good/2-poor split, the PF1 Core Rulebook Monk class table
     // gives all three base saves (Fortitude, Reflex, and Will) the good progression.
     let base_save_value = level_value / 2 + 2;
@@ -3288,8 +3319,8 @@ fn explain_monk_level1_chassis(
         id: "class_chassis.monk.base_save.fortitude".to_owned(),
         value: base_save_value,
         detail: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} base Fortitude save from the PF1 Core Rulebook \
-             Monk class table: Monk is unusual in having all three saves good (unlike Fighter's/\
+            "Monk level {level} base Fortitude save from the PF1 Core Rulebook Monk class \
+             table: Monk is unusual in having all three saves good (unlike Fighter's/\
              Barbarian's/Rogue's mixed good/poor split), so Fortitude uses the good-save formula \
              classlevel/2+2 = {base_save_value}"
         ),
@@ -3298,9 +3329,9 @@ fn explain_monk_level1_chassis(
         id: "class_chassis.monk.base_save.reflex".to_owned(),
         value: base_save_value,
         detail: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} base Reflex save from the PF1 Core Rulebook Monk \
-             class table: Monk is unusual in having all three saves good (unlike Fighter's/\
-             Barbarian's/Rogue's mixed good/poor split), so Reflex uses the good-save formula \
+            "Monk level {level} base Reflex save from the PF1 Core Rulebook Monk class table: \
+             Monk is unusual in having all three saves good (unlike Fighter's/Barbarian's/\
+             Rogue's mixed good/poor split), so Reflex uses the good-save formula \
              classlevel/2+2 = {base_save_value}"
         ),
     });
@@ -3308,28 +3339,29 @@ fn explain_monk_level1_chassis(
         id: "class_chassis.monk.base_save.will".to_owned(),
         value: base_save_value,
         detail: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} base Will save from the PF1 Core Rulebook Monk \
-             class table: Monk is unusual in having all three saves good (unlike Fighter's/\
-             Barbarian's/Rogue's mixed good/poor split), so Will uses the good-save formula \
+            "Monk level {level} base Will save from the PF1 Core Rulebook Monk class table: \
+             Monk is unusual in having all three saves good (unlike Fighter's/Barbarian's/\
+             Rogue's mixed good/poor split), so Will uses the good-save formula \
              classlevel/2+2 = {base_save_value}"
         ),
     });
 
-    // Grounded (3/5): AC Bonus (Wisdom-to-AC). PF1: "she adds her Wisdom bonus, if
+    // Grounded (3/6): AC Bonus (Wisdom-to-AC). PF1: "she adds her Wisdom bonus, if
     // any, to her AC" — only a positive Wisdom modifier is added, never subtracted
-    // here for a negative Wisdom modifier. This grounds only the flat level-1 value;
-    // it grounds no level-4+ dodge-bonus progression and no "unarmored and
-    // unencumbered" runtime state-check engine (no such engine exists anywhere in
-    // this codebase yet), so the value is asserted unconditionally on the
-    // deterministic Human Monk fixture, which is by construction unarmored.
+    // here for a negative Wisdom modifier. This grounds only the flat value at the
+    // supported level; it grounds no level-4+ dodge-bonus progression and no
+    // "unarmored and unencumbered" runtime state-check engine (no such engine
+    // exists anywhere in this codebase yet), so the value is asserted
+    // unconditionally on the deterministic Human Monk fixture, which is by
+    // construction unarmored.
     let ac_bonus = ability_modifiers.wisdom.max(0);
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.ac_bonus".to_owned(),
         value: ac_bonus,
         detail: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} AC Bonus: Wisdom bonus (if positive) added to AC \
-             and CMD while unarmored and unencumbered = max({}, 0) = {ac_bonus}. This grounds only \
-             the flat level-1 Wisdom-to-AC value, not the level-4+ dodge-bonus progression, and not \
+            "Monk level {level} AC Bonus: Wisdom bonus (if positive) added to AC and CMD while \
+             unarmored and unencumbered = max({}, 0) = {ac_bonus}. This grounds only the flat \
+             Wisdom-to-AC value at this level, not the level-4+ dodge-bonus progression, and not \
              an \"unarmored and unencumbered\" runtime state-check engine (none exists in this \
              codebase yet); the value is asserted unconditionally on the deterministic Human Monk \
              fixture, which is by construction unarmored",
@@ -3337,61 +3369,106 @@ fn explain_monk_level1_chassis(
         ),
     });
 
-    // Grounded (4/5): unarmed strike damage die. PF1 Core Rulebook Monk class table:
+    // Grounded (4/6): unarmed strike damage die. PF1 Core Rulebook Monk class table:
     // a Medium monk deals 1d6 unarmed strike damage at levels 1-3. Mirroring the
     // Rogue sneak-attack die-count record, only the die-size facet (6, i.e. 1d6) is
     // grounded here — no damage roll, damage total, or attack-resolution engine is
     // computed, and the level-4+ die progression (1d8 and beyond) is not grounded.
+    // This value stays unchanged (6) at every level this seam supports (1-2), since
+    // the PF1 Core Rulebook 1d6 band does not change again until level 4.
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.unarmed_strike_damage_die".to_owned(),
         value: 6,
         detail: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} unarmed strike from the PF1 Core Rulebook Monk \
-             class table: a Medium monk deals 1d6 unarmed strike damage at level \
-             {MARTIAL_BASELINE_LEVEL}. Only the die-size facet (6, i.e. 1d6) is grounded here; \
-             no damage roll or damage total is computed and no attack-resolution engine exists. \
-             Two PF1 unarmed-strike rules are recorded as statements only: the monk may choose \
-             to deal lethal or nonlethal damage with no penalty on the attack roll, and monk \
-             unarmed strikes carry no off-hand penalty (a monk applies her full Strength bonus \
-             on damage rolls for all her unarmed strikes). The higher-level unarmed damage die \
-             progression (1d8 at levels 4-7 and beyond) is not grounded"
+            "Monk level {level} unarmed strike from the PF1 Core Rulebook Monk class table: a \
+             Medium monk deals 1d6 unarmed strike damage at levels 1-3, so it stays 1d6 at level \
+             {level}. Only the die-size facet (6, i.e. 1d6) is grounded here; no damage roll or \
+             damage total is computed and no attack-resolution engine exists. Two PF1 \
+             unarmed-strike rules are recorded as statements only: the monk may choose to deal \
+             lethal or nonlethal damage with no penalty on the attack roll, and monk unarmed \
+             strikes carry no off-hand penalty (a monk applies her full Strength bonus on damage \
+             rolls for all her unarmed strikes). The higher-level unarmed damage die progression \
+             (1d8 at levels 4-7 and beyond) is not grounded"
         ),
     });
 
-    // Grounded (5/5): Flurry of Blows flat attack surface, in two facets. PF1 Core
+    // Grounded (5/6): Flurry of Blows flat attack surface, in two facets. PF1 Core
     // Rulebook: when making a flurry of blows as a full-attack action, the monk uses
     // her monk level in place of her base attack bonus and takes a -2 penalty on all
-    // attacks; at level 1 the flurry grants one additional attack, i.e. two attacks
-    // at -1/-1 before ability modifiers. Only these flat facets are grounded; no
-    // attack-resolution engine, no monk-weapon flurry, and no wiring into integrated
-    // combat totals is implemented.
+    // attacks; the flat pre-ability-modifier attack bonus is monk level - 2 (-1 at
+    // level 1, +0 at level 2, matching the PF1 CRB table's "-1/-1" and "+0/+0"
+    // entries), and the flurry grants two attacks at every level this seam
+    // supports (1-2) — Monk gains additional flurry attacks only at higher levels,
+    // not level 2. Only these flat facets are grounded; no attack-resolution
+    // engine, no monk-weapon flurry, and no wiring into integrated combat totals is
+    // implemented.
     let flurry_attack_bonus = level_value - 2;
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.flurry_of_blows_attack_bonus".to_owned(),
         value: flurry_attack_bonus,
         detail: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} Flurry of Blows flat attack modifier from the \
-             PF1 Core Rulebook: when using flurry as a full-attack action the monk uses her \
-             monk level in place of her base attack bonus and takes a -2 penalty on all attack \
-             rolls, so the flat modifier is monk level - 2 = {level_value} - 2 = \
-             {flurry_attack_bonus} on each flurry attack, before ability modifiers. Only this \
-             flat pre-ability modifier is grounded; no attack-resolution engine, no monk-weapon \
-             flurry, and no wiring into integrated combat totals is implemented"
+            "Monk level {level} Flurry of Blows flat attack modifier from the PF1 Core Rulebook: \
+             when using flurry as a full-attack action the monk uses her monk level in place of \
+             her base attack bonus and takes a -2 penalty on all attack rolls, so the flat \
+             modifier is monk level - 2 = {level_value} - 2 = {flurry_attack_bonus} on each \
+             flurry attack, before ability modifiers. Only this flat pre-ability modifier is \
+             grounded; no attack-resolution engine, no monk-weapon flurry, and no wiring into \
+             integrated combat totals is implemented"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.flurry_of_blows_attack_count".to_owned(),
         value: 2,
         detail: format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} Flurry of Blows attack count from the PF1 Core \
-             Rulebook: a level-{MARTIAL_BASELINE_LEVEL} flurry grants one additional attack on \
-             a full attack, i.e. two attacks, each at the flat pre-ability modifier grounded \
-             separately. Only the count facet (2) is grounded; no attack-resolution engine and \
-             no monk-weapon flurry support is implemented"
+            "Monk level {level} Flurry of Blows attack count from the PF1 Core Rulebook: a \
+             level-{level} flurry grants one additional attack on a full attack, i.e. two \
+             attacks, each at the flat pre-ability modifier grounded separately. The attack \
+             count stays 2 at every level this seam supports (1-2) — Monk gains additional \
+             flurry attacks only at higher levels, not level 2. Only the count facet (2) is \
+             grounded; no attack-resolution engine and no monk-weapon flurry support is \
+             implemented"
         ),
     });
 
-    // Grounded (6/6, SD13-E5): the level-1 bonus feat choice-slot selection is
+    // Grounded (6/6, SD13-E5): Evasion, a 2nd-level Monk class feature verified
+    // independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Bonus feat, evasion" as the Monk 2nd-level
+    // special feature entry — the same rule text and level gate as Rogue's own
+    // Evasion). Below the level-2 gate this is a correct PF1 Core Rulebook
+    // level-gate absence (value 0); at or above it, it is a bounded
+    // identity/recognition record only (value 0, non-fabricated) naming the rule
+    // text — mirroring exactly how Rogue's own `class_feature.rogue.evasion` was
+    // grounded, without folding into an actual saving-throw-resolution or
+    // damage-resolution engine, neither of which exists in this codebase.
+    if level < MONK_EVASION_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.evasion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Evasion at monk level {level}: correctly absent at level {level} by PF1 \
+                 Core Rulebook level gate; the at-grant rule is named but not computed. Evasion \
+                 is a 2nd-level monk class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.evasion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Evasion granted at monk level {level} (PF1 Core Rulebook, 2nd-level monk \
+                 class feature): if the monk makes a successful Reflex saving throw against an \
+                 attack that normally deals half damage on a successful save, she instead takes \
+                 no damage; Evasion has no effect if the monk fails the saving throw, and it has \
+                 no effect at all against attacks that do not allow a saving throw for half \
+                 damage. This is a bounded identity/recognition record only (value 0, \
+                 non-fabricated): no saving-throw-resolution engine and no damage-resolution \
+                 engine exists anywhere in this codebase to apply it, so this grounds no actual \
+                 damage reduction on any save outcome"
+            ),
+        });
+    }
+
+    // Recognized (SD13-E5): the level-1 bonus feat choice-slot selection is
     // recognized as chosen input when it names one of the PF1 Core Rulebook
     // restricted Monk bonus feat list's five feats (Combat Reflexes, Deflect
     // Arrows, Improved Grapple, Improved Trip, Stunning Fist), mirroring the
@@ -3404,7 +3481,10 @@ fn explain_monk_level1_chassis(
     // outside this restricted list is acknowledged without naming a specific
     // restricted-list feat, mirroring the Sorcerer bloodline choice's
     // present-but-unrecognized branch, so no restricted-list feat identity is
-    // fabricated for a selection this bounded seam does not know.
+    // fabricated for a selection this bounded seam does not know. This is always
+    // the level-1 bonus feat (`MONK_BONUS_FEAT_GRANT_LEVEL`), carried forward
+    // unchanged at level 2 — PF1 grants monks a SEPARATE bonus feat at 2nd level
+    // that this bounded seam deliberately does not recognize.
     let bonus_feat_selection = choice_selection(input, MONK_BONUS_FEAT_CHOICE_ID);
     let recognized_bonus_feat_name = bonus_feat_selection.and_then(|selection| {
         if selection == COMBAT_REFLEXES_FEAT_SELECTION {
@@ -3424,22 +3504,22 @@ fn explain_monk_level1_chassis(
     if let Some(selection) = bonus_feat_selection {
         let detail = if let Some(feat_name) = recognized_bonus_feat_name {
             format!(
-                "Monk level {MARTIAL_BASELINE_LEVEL} bonus feat choice recognized: the canonical \
-                 deterministic selection ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}) names \
-                 {feat_name}, drawn from the PF1 Core Rulebook restricted Monk bonus feat list \
-                 (Combat Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, Stunning \
-                 Fist), as chosen input on the compute seam. This is a recognition record of the \
-                 choice slot only, so it carries no fabricated mechanical value (+0): \
-                 {feat_name}'s own mechanics are not grounded here, and no attack-resolution, \
-                 grapple-check, trip-check, or DC/save engine exists in this codebase. Improved \
-                 Unarmed Strike is not part of this restricted choice set because the PF1 Core \
-                 Rulebook grants it to every monk automatically at level {MARTIAL_BASELINE_LEVEL}, \
-                 separate from this chosen bonus feat, and this codebase does not ground that \
-                 automatic grant either"
+                "Monk level {MONK_BONUS_FEAT_GRANT_LEVEL} bonus feat choice recognized: the \
+                 canonical deterministic selection ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}) \
+                 names {feat_name}, drawn from the PF1 Core Rulebook restricted Monk bonus feat \
+                 list (Combat Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, \
+                 Stunning Fist), as chosen input on the compute seam. This is a recognition \
+                 record of the choice slot only, so it carries no fabricated mechanical value \
+                 (+0): {feat_name}'s own mechanics are not grounded here, and no \
+                 attack-resolution, grapple-check, trip-check, or DC/save engine exists in this \
+                 codebase. Improved Unarmed Strike is not part of this restricted choice set \
+                 because the PF1 Core Rulebook grants it to every monk automatically at level \
+                 {MONK_BONUS_FEAT_GRANT_LEVEL}, separate from this chosen bonus feat, and this \
+                 codebase does not ground that automatic grant either"
             )
         } else {
             format!(
-                "Monk level {MARTIAL_BASELINE_LEVEL} bonus feat choice slot is present \
+                "Monk level {MONK_BONUS_FEAT_GRANT_LEVEL} bonus feat choice slot is present \
                  ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}), but only the PF1 Core Rulebook \
                  restricted Monk bonus feat list (Combat Reflexes, Deflect Arrows, Improved \
                  Grapple, Improved Trip, Stunning Fist) is recognized on this bounded seam; no \
@@ -3464,19 +3544,19 @@ fn explain_monk_level1_chassis(
     // not recognize.
     let bonus_feat_message = if let Some(feat_name) = recognized_bonus_feat_name {
         format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its level-1 bonus feat's own \
-             mechanics: the recognized choice ({feat_name}) is acknowledged as chosen input \
-             only — {feat_name}'s actual feat effect requires a general feat-selection or \
+            "Monk level {level} remains blocked on its level-1 bonus feat's own mechanics: the \
+             recognized choice ({feat_name}) is acknowledged as chosen input only — \
+             {feat_name}'s actual feat effect requires a general feat-selection or \
              feat-prerequisite/effect engine that does not exist in this bounded martial chassis \
              baseline, so no Monk bonus-feat execution support is claimed"
         )
     } else {
         format!(
-            "Monk level {MARTIAL_BASELINE_LEVEL} remains blocked on its level-1 bonus feat grant: \
-             the free bonus feat drawn from the restricted Monk feat list (Combat Reflexes, Deflect \
-             Arrows, Improved Grapple, Improved Trip, Stunning Fist) is not recognized as chosen \
-             input in this bounded martial chassis baseline — no feat-selection or \
-             feat-prerequisite engine exists here — so no Monk bonus-feat support is claimed"
+            "Monk level {level} remains blocked on its level-1 bonus feat grant: the free bonus \
+             feat drawn from the restricted Monk feat list (Combat Reflexes, Deflect Arrows, \
+             Improved Grapple, Improved Trip, Stunning Fist) is not recognized as chosen input \
+             in this bounded martial chassis baseline — no feat-selection or feat-prerequisite \
+             engine exists here — so no Monk bonus-feat support is claimed"
         )
     };
     diagnostics.push(ComputationDiagnostic {

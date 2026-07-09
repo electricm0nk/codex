@@ -1,0 +1,372 @@
+//! SD13-E5 Monk level-2 progression grounding proof.
+//!
+//! Widens the accepted Monk level-1 martial chassis baseline
+//! (`tests/sd13_monk_level1_chassis_baseline.rs`) to monk level 2, mirroring
+//! the Fighter `supported_fighter_level` / Paladin `supported_paladin_level` /
+//! Rogue `supported_rogue_level` level-range-gate idiom (the level-1-only gate
+//! `is_single_class_monk_level1` is generalized to `supported_monk_level`, an
+//! `Option<u8>` helper gated by `MAX_SUPPORTED_MONK_LEVEL = 2`). Both PF1 CRB
+//! primary sources (d20pfsrd and legacy.aonprd.com Monk class table) were read
+//! directly before writing any code or test: level 2 base attack bonus is +1,
+//! all three base saves are +3, unarmed damage stays 1d6, the Flurry of Blows
+//! attack bonus improves to +0/+0 (two attacks), and the level-2 special
+//! feature list is "Bonus feat, evasion". It proves:
+//!
+//! - base attack bonus at level 2 is grounded by the same 3/4-BAB formula
+//!   (`level * 3 / 4`) already grounded at level 1: `2 * 3 / 4 = 1`.
+//! - base saves at level 2 are grounded by the same all-good formula
+//!   (`level / 2 + 2`) already grounded at level 1: `2 / 2 + 2 = 3` for
+//!   Fortitude, Reflex, and Will alike (Monk is unusual in having all three
+//!   saves good).
+//! - the unarmed strike damage die stays `6` (i.e. `1d6`) at level 2 — the
+//!   PF1 Core Rulebook Monk class table only increases the die at level 4
+//!   (to 1d8); this is confirmed via the same formula/value, not a new
+//!   record.
+//! - the Flurry of Blows flat attack bonus is grounded by the same
+//!   `level - 2` formula already grounded at level 1, correctly producing
+//!   `0` at level 2 (`2 - 2 = 0`, matching the primary source's "+0/+0"),
+//!   and the attack count stays `2` at level 2 (Monk gains additional
+//!   flurry attacks only at higher levels, not level 2), confirmed via the
+//!   same formula, not a new record.
+//! - Evasion is granted at level 2, grounded as a bounded
+//!   identity/recognition record only (value 0, non-fabricated): no damage on
+//!   a successful Reflex save against an effect that normally allows half
+//!   damage on a successful save, no benefit on a failed save — mirroring how
+//!   Divine Grace, Bravery, and Rogue's own Evasion grounding were grounded as
+//!   flat rules-text records without folding into an actual
+//!   saving-throw-resolution or damage-resolution engine.
+//!
+//! It deliberately does not implement the recognized bonus feat's own
+//! mechanics (unchanged from level 1), the level-2 bonus feat grant (PF1
+//! grants monks a SEPARATE bonus feat at 2nd level; this slice does not add a
+//! second choice-slot or recognition for it — it stays named but unproven,
+//! same as before), the ki pool, any attack-resolution or damage-resolution
+//! engine, and it does not ground Monk level 3+. It also preserves the
+//! accepted Monk level-1 truth (unchanged), the Fighter negative control, and
+//! the multiclass negative control.
+
+use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::pilot_compute::{
+    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
+};
+use codex::rules_core::support_state_matrix::{
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+};
+
+const MONK_LEVEL1_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_monk_level1_sd13_deterministic_input.txt");
+
+const MONK_LEVEL2_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_monk_level2_sd13_deterministic_input.txt");
+
+const FIGHTER_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+);
+
+const MONK_EVASION_ID: &str = "class_feature.monk.evasion";
+
+fn load(fixture: &str) -> CharacterInput {
+    let result = load_character_input_fixture(fixture);
+    assert!(
+        result.diagnostics.is_empty(),
+        "fixture should load cleanly: {:?}",
+        result.diagnostics
+    );
+    result
+        .character_input
+        .expect("valid fixture should produce a character input record")
+}
+
+fn explanation<'a>(
+    computation: &'a PilotBaseChassisComputation,
+    id: &str,
+) -> &'a ComputationExplanation {
+    computation
+        .explanations
+        .iter()
+        .find(|e| e.id == id)
+        .unwrap_or_else(|| {
+            panic!(
+                "expected explanation id '{id}', got {:?}",
+                computation.explanations
+            )
+        })
+}
+
+fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
+    computation.explanations.iter().any(|e| e.id == id)
+}
+
+// ----- Base attack bonus at level 2 -----
+
+#[test]
+fn monk_level2_base_attack_bonus_is_grounded_by_the_same_formula() {
+    let input = load(MONK_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let base_attack = explanation(&computation, "class_chassis.monk.base_attack_bonus");
+    assert_eq!(
+        base_attack.value, 1,
+        "Monk level 2 3/4-BAB progression (2 * 3 / 4) must equal 1: {}",
+        base_attack.detail
+    );
+    assert!(
+        base_attack.detail.contains("3/4") || base_attack.detail.to_lowercase().contains("bab"),
+        "monk base-attack explanation must name the 3/4-BAB progression: {}",
+        base_attack.detail
+    );
+}
+
+// ----- Base saves at level 2 (all three good) -----
+
+#[test]
+fn monk_level2_base_saves_are_grounded_by_the_same_formulas() {
+    let input = load(MONK_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let fortitude = explanation(&computation, "class_chassis.monk.base_save.fortitude");
+    assert_eq!(fortitude.value, 3, "Monk level 2 good Fortitude (2/2+2) must equal 3");
+    assert!(
+        fortitude.detail.to_lowercase().contains("good"),
+        "monk Fortitude explanation must name it as a good save: {}",
+        fortitude.detail
+    );
+
+    let reflex = explanation(&computation, "class_chassis.monk.base_save.reflex");
+    assert_eq!(reflex.value, 3, "Monk level 2 good Reflex (2/2+2) must equal 3");
+    assert!(
+        reflex.detail.to_lowercase().contains("good"),
+        "monk Reflex explanation must name it as a good save: {}",
+        reflex.detail
+    );
+
+    let will = explanation(&computation, "class_chassis.monk.base_save.will");
+    assert_eq!(will.value, 3, "Monk level 2 good Will (2/2+2) must equal 3");
+    assert!(
+        will.detail.to_lowercase().contains("good"),
+        "monk Will explanation must name it as a good save: {}",
+        will.detail
+    );
+}
+
+// ----- Unarmed strike damage die stays 1d6 at level 2 -----
+
+#[test]
+fn monk_level2_unarmed_strike_damage_die_stays_one_d6() {
+    let input = load(MONK_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let unarmed = explanation(&computation, "class_chassis.monk.unarmed_strike_damage_die");
+    assert_eq!(
+        unarmed.value, 6,
+        "Monk level 2 unarmed strike damage die must stay 6 (i.e. 1d6), not a new record: {}",
+        unarmed.detail
+    );
+    assert!(
+        unarmed.detail.contains("1d6"),
+        "monk unarmed-strike explanation must name the 1d6 damage die at level 2: {}",
+        unarmed.detail
+    );
+}
+
+// ----- Flurry of Blows flat attack bonus/count at level 2 -----
+
+#[test]
+fn monk_level2_flurry_attack_bonus_is_grounded_by_the_same_formula() {
+    let input = load(MONK_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let attack_bonus = explanation(&computation, "class_chassis.monk.flurry_of_blows_attack_bonus");
+    assert_eq!(
+        attack_bonus.value, 0,
+        "Monk level 2 Flurry of Blows flat attack modifier (2 - 2) must equal 0, matching the \
+         PF1 CRB table's +0/+0 at level 2: {}",
+        attack_bonus.detail
+    );
+}
+
+#[test]
+fn monk_level2_flurry_attack_count_stays_two() {
+    let input = load(MONK_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let attack_count = explanation(&computation, "class_chassis.monk.flurry_of_blows_attack_count");
+    assert_eq!(
+        attack_count.value, 2,
+        "Monk level 2 Flurry of Blows attack count must stay 2, not a new record: {}",
+        attack_count.detail
+    );
+}
+
+// ----- Evasion is granted at level 2, as an identity/recognition record only -----
+
+#[test]
+fn monk_level2_grounds_evasion_as_identity_record_only() {
+    let input = load(MONK_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let evasion = explanation(&computation, MONK_EVASION_ID);
+    assert_eq!(
+        evasion.value, 0,
+        "Evasion must carry no fabricated mechanical value: {}",
+        evasion.detail
+    );
+    assert!(
+        evasion.detail.contains("Evasion"),
+        "evasion explanation must name the Evasion class feature: {}",
+        evasion.detail
+    );
+    assert!(
+        evasion.detail.to_lowercase().contains("reflex")
+            && evasion.detail.to_lowercase().contains("half damage"),
+        "evasion explanation must state the actual rule text (successful Reflex save against \
+         an effect that normally allows half damage): {}",
+        evasion.detail
+    );
+    assert!(
+        evasion.detail.to_lowercase().contains("no effect")
+            || evasion.detail.to_lowercase().contains("no benefit"),
+        "evasion explanation must disclaim any effect on a failed save: {}",
+        evasion.detail
+    );
+    assert!(
+        evasion.detail.contains("saving-throw-resolution")
+            && evasion.detail.contains("damage-resolution"),
+        "evasion explanation must disclaim both a saving-throw-resolution engine and a \
+         damage-resolution engine: {}",
+        evasion.detail
+    );
+    assert!(
+        evasion.detail.to_lowercase().contains("granted"),
+        "evasion explanation at level 2 must state it is granted, not absent: {}",
+        evasion.detail
+    );
+}
+
+#[test]
+fn monk_level1_evasion_is_a_correct_level_gate_absence() {
+    let input = load(MONK_LEVEL1_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let evasion = explanation(&computation, MONK_EVASION_ID);
+    assert_eq!(
+        evasion.value, 0,
+        "Evasion at level 1 must be a correct level-gate absence, value 0: {}",
+        evasion.detail
+    );
+    assert!(
+        evasion.detail.to_lowercase().contains("absent"),
+        "evasion explanation at level 1 must state it is correctly absent: {}",
+        evasion.detail
+    );
+}
+
+// ----- The existing bonus-feat-mechanics diagnostic still fires at level 2 -----
+
+#[test]
+fn monk_level2_still_claim_blocks_the_recognized_bonus_feat_mechanics() {
+    let input = load(MONK_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_feature.monk.bounded_progression.bonus_feat.unsupported"
+                && d.claim_blocking),
+        "level-2 Monk must still claim-block on the recognized bonus feat's own mechanics: {:?}",
+        computation.diagnostics
+    );
+}
+
+// ----- Negative control: level 3 stays unrecognized by this slice -----
+
+#[test]
+fn monk_level_3_is_not_promoted_by_this_slice() {
+    let level_3 = MONK_LEVEL2_FIXTURE.replace("class:monk:2", "class:monk:3");
+    let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.monk.")),
+        "level-3 Monk must not gain any bounded monk chassis explanation: {:?}",
+        computation.explanations
+    );
+    assert!(
+        !has_explanation(&computation, MONK_EVASION_ID),
+        "level-3 Monk must not gain the Evasion explanation from this bounded slice"
+    );
+}
+
+// ----- Negative control: the monk path must not leak onto other classes -----
+
+#[test]
+fn fighter_does_not_gain_monk_level2_recognition() {
+    let fighter = load(FIGHTER_FIXTURE);
+    let fighter_computation = compute_pilot_base_chassis(&fighter);
+    assert!(
+        !fighter_computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.monk.") || e.id == MONK_EVASION_ID),
+        "the Fighter chassis must not surface any monk-namespaced explanation: {:?}",
+        fighter_computation.explanations
+    );
+}
+
+// ----- Negative control: multiclass Monk is not promoted -----
+
+#[test]
+fn multiclass_monk_level2_is_not_promoted_by_this_slice() {
+    let multiclass = MONK_LEVEL2_FIXTURE.replace(
+        "class_level=class:monk:2",
+        "class_level=class:monk:2\nclass_level=class:fighter:1",
+    );
+    let input = load(&multiclass);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.monk.") || e.id == MONK_EVASION_ID),
+        "multiclass Monk must not gain any bounded monk chassis explanation: {:?}",
+        computation.explanations
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "multiclass Monk must stay claim-blocked in this slice"
+    );
+}
+
+// ----- Control plane: the matrix note names the level-2 widening -----
+
+#[test]
+fn matrix_monk_row_names_level_2_widening_and_evasion() {
+    let matrix = seeded_sd13_e1_f1_current_truth();
+    let monk = matrix
+        .row("class.monk.bounded_progression")
+        .expect("monk bounded_progression row must exist");
+
+    assert_eq!(monk.support_state, SupportState::Partial);
+    assert_eq!(monk.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(
+        monk.evidence_freshness,
+        EvidenceFreshness::RefreshableFromLiveProof
+    );
+    assert!(
+        monk.grounding_ref.contains("sd13_monk_level2_progression"),
+        "monk row must cite the live SD13-E5 level-2 proof surface: {}",
+        monk.grounding_ref
+    );
+    let note = monk.blocker_or_lossiness_note;
+    assert!(
+        note.to_lowercase().contains("evasion"),
+        "monk partial note must name Evasion as newly grounded: {note}"
+    );
+    assert!(
+        note.contains("bonus feat"),
+        "monk partial note must keep naming the bonus feat's own mechanics as unproven: {note}"
+    );
+}
