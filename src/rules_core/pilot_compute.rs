@@ -3750,10 +3750,27 @@ fn explain_rogue_level1_chassis(
 ///   otherwise it stays bloodline-agnostic so it never claims a specific bloodline's
 ///   facts for a character whose chosen bloodline this seam did not recognize.
 ///
+/// The SD13-E5 Sorcerer base-attack/base-save slice grounds the foundational martial
+/// pillar that every other class row in this matrix (Fighter, Barbarian, Monk, Rogue,
+/// Paladin, Druid, Cleric, Bard) already has and Sorcerer never had: base attack bonus
+/// (1/2 BAB, `classlevel / 2`) and base save progression (good Will only, poor
+/// Fortitude, poor Reflex). Unlike every other class this loop has grounded so far
+/// (Rogue/Monk/Druid/Cleric/Bard are all 3/4 BAB), the Sorcerer's own PF1 Core Rulebook
+/// class table was verified independently (d20pfsrd and the legacy Paizo PRD mirror,
+/// reading the raw level 1-6 rows: BAB +0/+1/+1/+2/+2/+3, Fort +0/+0/+1/+1/+1/+2, Ref
+/// +0/+0/+1/+1/+1/+2, Will +2/+3/+3/+4/+4/+5) and found to be 1/2 BAB, not 3/4 — the
+/// level 4/5 BAB values (+2 at both) disambiguate the 1/2-vs-3/4 fraction since level 1
+/// alone floors every fraction to the same +0. Both pillars are grounded as flat,
+/// standalone `ComputationExplanation` records, mirroring the exact "standalone, not
+/// wired into the integrated `PilotBaseChassisComputation`" idiom already used for every
+/// other class's own base-attack/base-save grounding: neither is wired into
+/// `base_attack_bonus`, `compute_total_saves`, or `compute_combat_baseline`.
+///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Sorcerer spell-bearing identity, the
-/// grounded Eschew Materials grant, the grounded bloodline choice recognition, and the
-/// two remaining named burdens legible on the runtime path.
+/// grounded Eschew Materials grant, the grounded bloodline choice recognition, the
+/// grounded base-attack/base-save progression, and the two remaining named burdens
+/// legible on the runtime path.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -3778,6 +3795,71 @@ fn explain_sorcerer_level1_spell_baseline(
              undocumented packet placeholder. This is a bounded recognition record only; it grounds no \
              bloodline power and no spell math (spell slots, spells known, spell DCs, bonus spells, or \
              prepared posture), so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Grounded: the foundational base-attack-bonus / base-save progression pillar.
+    // Unlike every other class row in this matrix (Fighter, Barbarian, Monk, Rogue,
+    // Paladin, Druid, Cleric, Bard all already ground this pillar), Sorcerer had never
+    // had it grounded at all until this SD13-E5 slice. Both formulas were verified
+    // against the PF1 Core Rulebook Sorcerer class table (d20pfsrd and the legacy Paizo
+    // PRD mirror) before writing this code, reading the raw level 1-6 table rows
+    // directly (BAB +0/+1/+1/+2/+2/+3, Fort +0/+0/+1/+1/+1/+2, Ref +0/+0/+1/+1/+1/+2,
+    // Will +2/+3/+3/+4/+4/+5) rather than trusting memory or assuming Sorcerer's shape
+    // merely because it resembles another spontaneous/spell-bearing class: the level
+    // 4/5 BAB values (+2 at both) disambiguate the 1/2-vs-3/4 fraction (level 1 alone
+    // floors every fraction to +0) and confirm Sorcerer is 1/2 BAB, UNLIKE the 3/4 BAB
+    // shared by Rogue/Monk/Druid/Cleric/Bard, and the raw Fort/Ref/Will columns
+    // independently confirm good Will only, poor Fortitude, poor Reflex.
+    let level_value = i16::from(SORCERER_BASELINE_LEVEL);
+
+    // Grounded (1/2): 1/2-BAB base-attack progression (classlevel / 2) — the Sorcerer's
+    // own class table, NOT the 3/4-BAB shape shared by Rogue/Monk/Druid/Cleric/Bard. No
+    // PCGen .lst file exists for the Sorcerer class in this repo, so the formula cites
+    // the PF1 Core Rulebook Sorcerer class table directly.
+    let base_attack_bonus = level_value / 2;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.sorcerer.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} base attack bonus from the PF1 Core \
+             Rulebook Sorcerer class table's 1/2-BAB progression — UNLIKE the 3/4-BAB shape \
+             shared by Rogue/Monk/Druid/Cleric/Bard: classlevel / 2 = {base_attack_bonus}. This \
+             is a standalone explanation record; it is not wired into the integrated \
+             base_attack_bonus field or into compute_combat_baseline"
+        ),
+    });
+
+    // Grounded (2/2): base-save progression — poor Fortitude, poor Reflex, good Will,
+    // verified against the PF1 Core Rulebook Sorcerer class table (Fortitude +0, Reflex
+    // +0, Will +2 at level 1).
+    let good_save = level_value / 2 + 2;
+    let poor_save = level_value / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.sorcerer.base_save.fortitude".to_owned(),
+        value: poor_save,
+        detail: format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} base Fortitude save (poor save) from the \
+             PF1 Core Rulebook Sorcerer class table: classlevel/3 = {poor_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.sorcerer.base_save.reflex".to_owned(),
+        value: poor_save,
+        detail: format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 \
+             Core Rulebook Sorcerer class table: classlevel/3 = {poor_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.sorcerer.base_save.will".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Sorcerer level {SORCERER_BASELINE_LEVEL} base Will save (good save) from the PF1 \
+             Core Rulebook Sorcerer class table: classlevel/2+2 = {good_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
         ),
     });
 
