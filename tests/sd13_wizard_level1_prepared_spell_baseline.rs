@@ -491,19 +491,44 @@ fn fighter_and_sorcerer_do_not_gain_wizard_recognition() {
 }
 
 #[test]
-fn wizard_level_2_is_not_promoted_by_this_slice() {
-    // The slice is bounded to level 1; a level-2 Wizard must not gain the level-1
-    // prepared-spell-baseline recognition record and stays blocked.
+fn wizard_level_2_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 2 was the next unproven milestone
+    // and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_wizard_level2_progression.rs) widened the level-1-only gate to
+    // level 2 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Bard/Druid/
+    // Sorcerer level-range gate idiom); this negative control is superseded, not
+    // violated — pin the new truth here too so this file stays internally
+    // consistent.
     let level_2 = WIZARD_FIXTURE.replace("class:wizard:1", "class:wizard:2");
     let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, RECOGNITION_ID),
-        "level-2 Wizard must not gain the bounded level-1 prepared-spell-baseline recognition record"
+        has_explanation(&computation, RECOGNITION_ID),
+        "level-2 Wizard is supported since the SD13-E5 level-2 slice: {:?}",
+        computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "level-2 Wizard must stay claim-blocked in this slice"
+    );
+}
+
+#[test]
+fn wizard_level_3_is_not_promoted_by_this_slice() {
+    // Level 3 stays out of scope for this slice; a level-3 Wizard must not gain the
+    // bounded level-1/level-2 prepared-spell-baseline recognition record and stays
+    // blocked.
+    let level_3 = WIZARD_FIXTURE.replace("class:wizard:1", "class:wizard:3");
+    let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !has_explanation(&computation, RECOGNITION_ID),
+        "level-3 Wizard must not gain the bounded level-1/level-2 prepared-spell-baseline \
+         recognition record"
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-3 Wizard must stay claim-blocked in this slice"
     );
 }
 

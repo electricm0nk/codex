@@ -398,14 +398,20 @@ const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_reco
 const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + \
     tests/sd13_bard_level2_progression.rs";
 
-/// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1 prepared
-/// arcane spell baseline: direct computed recognition of the prepared arcane
-/// spell-bearing identity, plus a later SD13-E4 decomposition slice grounding the
-/// Scribe Scroll bonus feat grant and the SD13-E5 slice grounding the school
-/// specialization choice and flat specialist-bonus-slot count for real, that stays
-/// explicitly blocked on the school-powers / opposed-school-cost burden and the
-/// prepared spellbook / spell-slot posture burden.
-const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs";
+/// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-2
+/// prepared arcane spell baseline: direct computed recognition of the prepared
+/// arcane spell-bearing identity, plus a later SD13-E4 decomposition slice grounding
+/// the Scribe Scroll bonus feat grant and the SD13-E5 slices grounding the school
+/// specialization choice, flat specialist-bonus-slot count, and base attack/save
+/// progression for real, widened to level 2 by a further SD13-E5 slice (the
+/// level-range gate plus every named pillar formula extended to level 2 via the same
+/// formula, with no new class feature gained at 2nd level per the PF1 Core Rulebook
+/// Wizard class table's blank level-2 "Special" column), that stays explicitly
+/// blocked on the school-powers / opposed-school-cost burden and the prepared
+/// spellbook / spell-slot posture burden, citing both proof files as one combined
+/// literal, mirroring [`SD13_SORCERER_LEVEL1_TEST`].
+const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs + \
+    tests/sd13_wizard_level2_progression.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2
 /// prepared divine spell baseline: direct computed recognition of the prepared divine
@@ -1246,15 +1252,22 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // slice grounds the foundational base-attack-bonus / base-save
                 // progression pillar (1/2 BAB, the same shape as Sorcerer; good
                 // Will only, poor Fortitude, poor Reflex), independently verified
-                // against the PF1 Core Rulebook Wizard class table.
+                // against the PF1 Core Rulebook Wizard class table. A further
+                // SD13-E5 slice widens the level-1-only gate (`supported_wizard_level`,
+                // 1..=2) and extends every one of the formulas above to level 2 via
+                // the same formula, without re-derivation, verified independently
+                // against the PF1 Core Rulebook Wizard class table (d20pfsrd and
+                // legacy.aonprd.com): Wizard gains no new class feature at 2nd level
+                // (the class table's level-2 "Special" column is blank), so no new
+                // pillar is added, only the existing ones widened.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1 prepared arcane spell baseline, with base attack \
-                            bonus, base save progression, Scribe Scroll, the school \
+                            Wizard level-1/level-2 prepared arcane spell baseline, with base \
+                            attack bonus, base save progression, Scribe Scroll, the school \
                             specialization choice, the specialist-bonus-slot flat count, and the \
                             Intense Spells / Force Missile school-power flat magnitudes grounded \
-                            for real, and the school-power execution machinery, the \
-                            opposed-school-cost burden, and the prepared spellbook / spell-slot \
-                            posture burden still blocked",
+                            for real through level 2, and the school-power execution machinery, \
+                            the opposed-school-cost burden, and the prepared spellbook / \
+                            spell-slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1284,18 +1297,32 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     raw level 1-6 table rows directly to disambiguate the 1/2-vs-3/4 fraction \
                     since level 1 alone floors every fraction to +0, both grounded as standalone \
                     explanation records not wired into compute_total_saves or \
-                    compute_combat_baseline. The row is Partial, not Supported: neither school \
-                    power's execution machinery is implemented (no evocation spell-damage \
-                    application for Intense Spells, no force-missile casting execution / 1d4 \
-                    damage roll / automatic-hit targeting for Force Missile), the opposed-school \
-                    preparation cost (each opposed-school spell occupies two prepared slots) \
-                    remains named and unproven, and the prepared spell posture burden (spellbook \
-                    content, spells prepared per day, spell slots per day, bonus slots from high \
+                    compute_combat_baseline, AND a further SD13-E5 slice widens the level-1-only \
+                    gate to a level-range gate (level 1-2) and extends every one of the above \
+                    formulas to level 2 via the same formula, without re-derivation, verified \
+                    independently against the PF1 Core Rulebook Wizard class table (d20pfsrd and \
+                    legacy.aonprd.com): level 2 base attack bonus is +1, base saves are +0/+0/+3 \
+                    (Fortitude/Reflex/Will); the specialist bonus slot stays exactly 1 (a level-2 \
+                    wizard still only casts 1st-level spells, since 2nd-level wizard spells begin \
+                    at caster level 3); Intense Spells' bonus damage stays 1, reached naturally \
+                    (max(2/2, 1) = 1) rather than via the level-1 floor; Force Missile's \
+                    uses-per-day pool is level-independent and unchanged; Scribe Scroll is \
+                    granted once, at 1st level only, and stays recognized as an already-held \
+                    grant; the class table's level-2 \"Special\" column is blank, so no new class \
+                    feature is gained at 2nd level (unlike Rogue/Monk/Druid's Evasion/Woodland \
+                    Stride, but like Cleric/Sorcerer) — this slice widens existing pillars only, \
+                    adds no new one. The row is Partial, not Supported: neither school power's \
+                    execution machinery is implemented (no evocation spell-damage application for \
+                    Intense Spells, no force-missile casting execution / 1d4 damage roll / \
+                    automatic-hit targeting for Force Missile), the opposed-school preparation \
+                    cost (each opposed-school spell occupies two prepared slots) remains named \
+                    and unproven, and the prepared spell posture burden (spellbook content, \
+                    spells prepared per day, spell slots per day, bonus slots from high \
                     Intelligence, spell save DCs) is still entirely unproven. No spell math is \
-                    fabricated and no Wizard level 2+ is proven",
+                    fabricated and no Wizard level 3+ is proven",
                 next_required_uplift: "SD13-E5 Wizard school-power execution and opposed-school \
                     preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-2+ progression (widening the now-grounded base \
+                    posture slice, then level-3+ progression (widening the now-grounded base \
                     attack/base save formulas)",
             },
             // ----- Interaction rows (2) -----
