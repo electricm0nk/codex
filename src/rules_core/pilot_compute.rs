@@ -304,7 +304,18 @@ const FASCINATE_DC_BASE: i16 = 10;
 // spell slots per day) and the school specialization (one school chosen, two
 // opposed schools locked, specialty school bonus at later levels).
 const WIZARD_CLASS_ID: &str = "class:wizard";
-const WIZARD_BASELINE_LEVEL: u8 = 1;
+
+// SD13-E5 Wizard level-2 progression widening: mirrors the Fighter
+// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
+// `supported_rogue_level` / Barbarian `supported_barbarian_level` / Monk
+// `supported_monk_level` / Cleric `supported_cleric_level` / Bard
+// `supported_bard_level` / Druid `supported_druid_level` / Sorcerer
+// `supported_sorcerer_level` idiom (an `Option<u8>` level-range gate) rather than a
+// boolean level-1-only check. Verified against the PF1 Core Rulebook Wizard class
+// table (d20pfsrd and legacy.aonprd.com): the level-2 "Special" column is blank, so
+// no new class feature is gained at 2nd level (like Cleric/Sorcerer, unlike
+// Rogue/Monk/Druid's Evasion/Woodland Stride).
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 2;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -318,7 +329,10 @@ const TRANSMUTATION_SCHOOL_SELECTION: &str = "school:transmutation";
 /// PF1 Core Rulebook arcane school class feature: a specialist wizard gains one
 /// additional spell slot of each spell level she can cast, 1st and up, usable only
 /// for spells of the chosen school. At the bounded baseline level 1 that is exactly
-/// one 1st-level slot; there is no cantrip-level bonus slot.
+/// one 1st-level slot; there is no cantrip-level bonus slot. Confirmed unchanged at
+/// level 2 (SD13-E5): a level-2 wizard still only casts 1st-level wizard spells
+/// (2nd-level wizard spells require caster level 3), so the count stays exactly 1
+/// through the whole level 1-2 range this seam supports.
 const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1: i16 = 1;
 
 // SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
@@ -4183,17 +4197,27 @@ fn explain_sorcerer_level1_spell_baseline(
     });
 }
 
-/// Return `true` when the chosen input is exactly a single-class Wizard at the bounded
-/// prepared spell baseline level (1). Returns `false` for any other class, a multiclass
-/// mix, or a level-2+ Wizard this slice deliberately does not recognize — each of which
-/// stays blocked exactly as before.
-fn is_single_class_wizard_level1(input: &CharacterInput) -> bool {
-    matches!(
-        input.chosen.class_levels.as_slice(),
+/// The bounded Wizard milestone level this decomposition surface grounds, if any.
+/// Returns the single Wizard level when the chosen input is exactly a single-class
+/// Wizard at one of the supported milestone levels (1 or 2). Returns `None` for no
+/// Wizard, a non-Wizard class, a multiclass mix, or any level-3+ Wizard this slice
+/// deliberately does not recognize — each of which stays claim-blocked exactly as
+/// before. Mirrors the Fighter `supported_fighter_level` / Paladin
+/// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
+/// `supported_cleric_level` / Bard `supported_bard_level` / Druid
+/// `supported_druid_level` / Sorcerer `supported_sorcerer_level` level-range gate
+/// idiom.
+fn supported_wizard_level(input: &CharacterInput) -> Option<u8> {
+    match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == WIZARD_CLASS_ID
-                && class_level.level == WIZARD_BASELINE_LEVEL
-    )
+                && (1..=MAX_SUPPORTED_WIZARD_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
+        }
+        _ => None,
+    }
 }
 
 /// Return `true` when the input carries exactly the canonical deterministic school
@@ -4291,15 +4315,31 @@ fn wizard_has_canonical_specialization_selections(input: &CharacterInput) -> boo
 /// (Unverified/Observed → Blocked/Computed, then Blocked → Partial once Scribe
 /// Scroll is grounded) is recorded by this proof surface and applied to the
 /// in-source carrier directly (see `seeded_sd13_e1_f1_current_truth`).
+///
+/// A further SD13-E5 slice widens the level-1-only gate (`supported_wizard_level`,
+/// 1..=2) and extends every one of the formulas above to level 2 via the same
+/// formula, without re-derivation, verified independently against the PF1 Core
+/// Rulebook Wizard class table (d20pfsrd and legacy.aonprd.com): level 2 base attack
+/// bonus is +1, base saves are +0/+0/+3 (Fortitude/Reflex/Will); the specialist bonus
+/// slot count stays exactly 1 (a level-2 wizard still only casts 1st-level spells,
+/// since 2nd-level wizard spells require caster level 3); Intense Spells' bonus
+/// damage stays 1, reached naturally (`max(2/2, 1) = 1`) rather than via the level-1
+/// floor; Force Missile's uses-per-day pool is level-independent and unchanged;
+/// Scribe Scroll is granted once, at 1st level only, and stays recognized as an
+/// already-held grant (its detail text hardcodes "1st level" as the level it was
+/// granted, never re-deriving a level-2 grant event). The class table's level-2
+/// "Special" column is blank (verified independently against both sources), so no
+/// new class feature is gained at 2nd level, unlike Rogue/Monk/Druid's Evasion/
+/// Woodland Stride — this slice widens existing pillars only, adds no new one.
 fn explain_wizard_level1_prepared_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    if !is_single_class_wizard_level1(input) {
+    let Some(level) = supported_wizard_level(input) else {
         return;
-    }
+    };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
@@ -4312,12 +4352,12 @@ fn explain_wizard_level1_prepared_spell_baseline(
         id: "class_chassis.spell_baseline.wizard".to_owned(),
         value: 0,
         detail: format!(
-            "Recognized deterministic Human Wizard level {WIZARD_BASELINE_LEVEL} prepared arcane \
-             spell-bearing baseline: the {WIZARD_CLASS_ID}:{WIZARD_BASELINE_LEVEL} class identity \
-             is acknowledged as a prepared arcane spell-bearing class on the rules-core seam \
-             rather than an undocumented packet placeholder. This is a bounded recognition record \
-             only; it grounds no spellbook content, no spells prepared per day, no spell slots \
-             per day, no spell save DCs, no bonus spell slots from a high Intelligence, no school \
+            "Recognized deterministic Human Wizard level {level} prepared arcane spell-bearing \
+             baseline: the {WIZARD_CLASS_ID}:{level} class identity is acknowledged as a \
+             prepared arcane spell-bearing class on the rules-core seam rather than an \
+             undocumented packet placeholder. This is a bounded recognition record only; it \
+             grounds no spellbook content, no spells prepared per day, no spell slots per day, \
+             no spell save DCs, no bonus spell slots from a high Intelligence, no school \
              specialization mechanics, no opposed-school bookkeeping, and no specialty school \
              bonus, so it carries no fabricated mechanical value (+0)"
         ),
@@ -4337,7 +4377,7 @@ fn explain_wizard_level1_prepared_spell_baseline(
     // and the raw Fort/Ref/Will columns independently confirm good Will only, poor
     // Fortitude, poor Reflex (also matching Sorcerer's shape, confirmed rather than
     // assumed).
-    let wizard_level_value = i16::from(WIZARD_BASELINE_LEVEL);
+    let wizard_level_value = i16::from(level);
 
     // Grounded (1/2): 1/2-BAB base-attack progression (classlevel / 2) — the same
     // shape as Sorcerer, NOT the 3/4-BAB shape shared by Rogue/Monk/Druid/Cleric/Bard.
@@ -4346,44 +4386,44 @@ fn explain_wizard_level1_prepared_spell_baseline(
         id: "class_chassis.wizard.base_attack_bonus".to_owned(),
         value: wizard_base_attack_bonus,
         detail: format!(
-            "Wizard level {WIZARD_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
-             Wizard class table's 1/2-BAB progression — the same shape as Sorcerer, UNLIKE the \
-             3/4-BAB shape shared by Rogue/Monk/Druid/Cleric/Bard: classlevel / 2 = \
-             {wizard_base_attack_bonus}. This is a standalone explanation record; it is not \
-             wired into the integrated base_attack_bonus field or into compute_combat_baseline"
+            "Wizard level {level} base attack bonus from the PF1 Core Rulebook Wizard class \
+             table's 1/2-BAB progression — the same shape as Sorcerer, UNLIKE the 3/4-BAB shape \
+             shared by Rogue/Monk/Druid/Cleric/Bard: classlevel / 2 = {wizard_base_attack_bonus}. \
+             This is a standalone explanation record; it is not wired into the integrated \
+             base_attack_bonus field or into compute_combat_baseline"
         ),
     });
 
     // Grounded (2/2): base-save progression — poor Fortitude, poor Reflex, good Will,
     // verified against the PF1 Core Rulebook Wizard class table (Fortitude +0, Reflex
-    // +0, Will +2 at level 1).
+    // +0, Will +2 at level 1; +0, +0, +3 at level 2 — same formulas, not re-derived).
     let wizard_good_save = wizard_level_value / 2 + 2;
     let wizard_poor_save = wizard_level_value / 3;
     explanations.push(ComputationExplanation {
         id: "class_chassis.wizard.base_save.fortitude".to_owned(),
         value: wizard_poor_save,
         detail: format!(
-            "Wizard level {WIZARD_BASELINE_LEVEL} base Fortitude save (poor save) from the PF1 \
-             Core Rulebook Wizard class table: classlevel/3 = {wizard_poor_save}. This is a \
-             standalone explanation record; it is not wired into compute_total_saves"
+            "Wizard level {level} base Fortitude save (poor save) from the PF1 Core Rulebook \
+             Wizard class table: classlevel/3 = {wizard_poor_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.wizard.base_save.reflex".to_owned(),
         value: wizard_poor_save,
         detail: format!(
-            "Wizard level {WIZARD_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 Core \
-             Rulebook Wizard class table: classlevel/3 = {wizard_poor_save}. This is a \
-             standalone explanation record; it is not wired into compute_total_saves"
+            "Wizard level {level} base Reflex save (poor save) from the PF1 Core Rulebook Wizard \
+             class table: classlevel/3 = {wizard_poor_save}. This is a standalone explanation \
+             record; it is not wired into compute_total_saves"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.wizard.base_save.will".to_owned(),
         value: wizard_good_save,
         detail: format!(
-            "Wizard level {WIZARD_BASELINE_LEVEL} base Will save (good save) from the PF1 Core \
-             Rulebook Wizard class table: classlevel/2+2 = {wizard_good_save}. This is a \
-             standalone explanation record; it is not wired into compute_total_saves"
+            "Wizard level {level} base Will save (good save) from the PF1 Core Rulebook Wizard \
+             class table: classlevel/2+2 = {wizard_good_save}. This is a standalone explanation \
+             record; it is not wired into compute_total_saves"
         ),
     });
 
@@ -4391,17 +4431,24 @@ fn explain_wizard_level1_prepared_spell_baseline(
     // Wizard class feature (every 1st-level Wizard is granted it regardless of
     // which school, if any, is later chosen), so it is separable from the
     // school-specialization burden. It is a boolean grant, not a numeric formula.
+    // Verified against both PF1 CRB primary sources (d20pfsrd and legacy.aonprd.com):
+    // Scribe Scroll is granted exactly once, in the level-1 "Special" column, never
+    // re-granted at 2nd level or later. Since the wizard keeps the feat once granted,
+    // this record's header cites the character's current level (still recognized at
+    // level 2+ within this seam's supported range), but its body text hardcodes "1st
+    // level" as the level the feat was actually granted, mirroring the Sorcerer
+    // Eschew Materials idiom exactly: no level-2 grant event is re-derived.
     explanations.push(ComputationExplanation {
         id: "class_chassis.wizard.scribe_scroll".to_owned(),
         value: 0,
         detail: format!(
-            "Recognized Wizard level {WIZARD_BASELINE_LEVEL} Scribe Scroll bonus feat grant: \
-             every Wizard, regardless of arcane school specialization, is granted Scribe Scroll \
-             as a bonus feat at level {WIZARD_BASELINE_LEVEL} (PF1 Core Rulebook Wizard class \
-             feature), letting the Wizard create scrolls of spells they know. This is a bounded \
-             grant-only recognition: it carries no fabricated mechanical value (+0) and computes \
-             no scroll creation cost, no crafting time, no spellbook content, and no spell-slot \
-             machinery"
+            "Recognized Wizard level {level} Scribe Scroll bonus feat grant: every Wizard, \
+             regardless of arcane school specialization, is granted Scribe Scroll as a bonus \
+             feat at 1st level (PF1 Core Rulebook Wizard class feature), letting the Wizard \
+             create scrolls of spells they know. This is a one-time grant recognized once and \
+             kept thereafter, not re-granted at 2nd level or later. This is a bounded grant-only \
+             recognition: it carries no fabricated mechanical value (+0) and computes no scroll \
+             creation cost, no crafting time, no spellbook content, and no spell-slot machinery"
         ),
     });
 
@@ -4415,30 +4462,38 @@ fn explain_wizard_level1_prepared_spell_baseline(
             id: "class_chassis.wizard.specialization_choice".to_owned(),
             value: 0,
             detail: format!(
-                "Recognized Wizard level {WIZARD_BASELINE_LEVEL} school specialization choice: \
-                 the canonical deterministic selections choose Evocation as the specialty arcane \
-                 school ({WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID} -> \
-                 {EVOCATION_SCHOOL_SELECTION}) with Necromancy and Transmutation as the two \
-                 opposed schools ({WIZARD_OPPOSED_SCHOOLS_CHOICE_ID} -> \
-                 {NECROMANCY_SCHOOL_SELECTION}, {TRANSMUTATION_SCHOOL_SELECTION}), per the PF1 \
-                 Core Rulebook arcane school class feature. This is a bounded recognition record \
-                 of the choice identity only: it carries no fabricated mechanical value (+0) and \
-                 computes no school power, no opposed-school preparation cost, and no spell math"
+                "Recognized Wizard level {level} school specialization choice: the canonical \
+                 deterministic selections choose Evocation as the specialty arcane school \
+                 ({WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID} -> {EVOCATION_SCHOOL_SELECTION}) with \
+                 Necromancy and Transmutation as the two opposed schools \
+                 ({WIZARD_OPPOSED_SCHOOLS_CHOICE_ID} -> {NECROMANCY_SCHOOL_SELECTION}, \
+                 {TRANSMUTATION_SCHOOL_SELECTION}), per the PF1 Core Rulebook arcane school class \
+                 feature. A wizard's chosen school does not change by level, so this recognition \
+                 is not level-gated. This is a bounded recognition record of the choice identity \
+                 only: it carries no fabricated mechanical value (+0) and computes no school \
+                 power, no opposed-school preparation cost, and no spell math"
             ),
         });
+        // Grounded for real: the specialist bonus slot flat count. Confirmed unchanged
+        // at level 2 (SD13-E5): a level-2 wizard still only casts 1st-level wizard
+        // spells (2nd-level wizard spells require caster level 3, verified against
+        // both primary sources' raw spells-per-day table rows), so "one additional
+        // spell slot of each spell level she can cast" is still exactly one 1st-level
+        // slot at both levels 1 and 2 this seam supports.
         explanations.push(ComputationExplanation {
             id: "class_chassis.wizard.specialist_bonus_slot".to_owned(),
             value: WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1,
             detail: format!(
-                "Wizard level {WIZARD_BASELINE_LEVEL} specialist bonus spell slot: a specialist \
-                 wizard gains one additional spell slot of each spell level she can cast, 1st \
-                 and up, usable only for spells of the chosen school (PF1 Core Rulebook arcane \
-                 school class feature). At level {WIZARD_BASELINE_LEVEL} that is exactly one \
-                 1st-level Evocation-only bonus slot \
+                "Wizard level {level} specialist bonus spell slot: a specialist wizard gains one \
+                 additional spell slot of each spell level she can cast, 1st and up, usable only \
+                 for spells of the chosen school (PF1 Core Rulebook arcane school class feature). \
+                 At level {level} that is exactly one 1st-level Evocation-only bonus slot \
                  ({WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1:+} flat count); there is no \
-                 cantrip-level bonus slot. This grounds the flat count only: no slot contents, \
-                 no spells prepared per day, no per-day slot totals, and no bonus slots from a \
-                 high Intelligence are computed"
+                 cantrip-level bonus slot, and the count stays unchanged from level 1 since a \
+                 level-2 wizard still only casts 1st-level spells (2nd-level wizard spells begin \
+                 at caster level 3). This grounds the flat count only: no slot contents, no \
+                 spells prepared per day, no per-day slot totals, and no bonus slots from a high \
+                 Intelligence are computed"
             ),
         });
 
@@ -4448,19 +4503,20 @@ fn explain_wizard_level1_prepared_spell_baseline(
         // Verified against the legacy Paizo PRD mirror rather than trusted from
         // memory or the pre-existing blocker-message claim. This is a flat,
         // non-dice magnitude, so it grounds for real, mirroring the Cleric Touch of
-        // Good sacred-bonus idiom exactly.
-        let intense_spells_bonus_damage = (i16::from(WIZARD_BASELINE_LEVEL) / 2).max(1);
+        // Good sacred-bonus idiom exactly. Confirmed at level 2: max(2/2, 1) = 1,
+        // reached naturally via the formula rather than via the level-1 floor.
+        let intense_spells_bonus_damage = (wizard_level_value / 2).max(1);
         explanations.push(ComputationExplanation {
             id: "class_chassis.wizard.intense_bonus_damage".to_owned(),
             value: intense_spells_bonus_damage,
             detail: format!(
-                "Wizard level {WIZARD_BASELINE_LEVEL} Evocation school power Intense Spells \
-                 bonus-damage magnitude (PF1 Core Rulebook Evocation School): whenever an \
-                 evocation spell that deals hit point damage is cast, add half wizard level \
-                 (minimum 1) to the damage. At Wizard level {WIZARD_BASELINE_LEVEL} this is \
-                 max({WIZARD_BASELINE_LEVEL} / 2, 1) = {intense_spells_bonus_damage}. This \
-                 grounds only the flat bonus-damage magnitude; it applies no bonus to any \
-                 actual spell-damage roll and implements no spell-damage-application engine"
+                "Wizard level {level} Evocation school power Intense Spells bonus-damage \
+                 magnitude (PF1 Core Rulebook Evocation School): whenever an evocation spell \
+                 that deals hit point damage is cast, add half wizard level (minimum 1) to the \
+                 damage. At Wizard level {level} this is max({level} / 2, 1) = \
+                 {intense_spells_bonus_damage}. This grounds only the flat bonus-damage \
+                 magnitude; it applies no bonus to any actual spell-damage roll and implements \
+                 no spell-damage-application engine"
             ),
         });
 
@@ -4474,15 +4530,16 @@ fn explain_wizard_level1_prepared_spell_baseline(
         // confirmed the power is genuinely core and the "3 + Int-mod" pool the
         // pre-existing blocker text already claimed is correct. Only the flat
         // daily-use count is a non-dice formula; the 1d4 damage roll and the
-        // automatic-hit casting execution are not flat, so they stay unproven.
+        // automatic-hit casting execution are not flat, so they stay unproven. This
+        // pool is level-independent and confirmed unchanged at level 2.
         let force_missile_uses_per_day = (3 + ability_modifiers.intelligence).max(0);
         explanations.push(ComputationExplanation {
             id: "class_chassis.wizard.force_missile_uses_per_day".to_owned(),
             value: force_missile_uses_per_day,
             detail: format!(
-                "Wizard level {WIZARD_BASELINE_LEVEL} Evocation school power Force Missile uses \
-                 per day (PF1 Core Rulebook Evocation School): 3 + Intelligence modifier, \
-                 floored at 0. At Intelligence modifier {} this is max(3 + {}, 0) = \
+                "Wizard level {level} Evocation school power Force Missile uses per day (PF1 \
+                 Core Rulebook Evocation School): 3 + Intelligence modifier, floored at 0. At \
+                 Intelligence modifier {} this is max(3 + {}, 0) = \
                  {force_missile_uses_per_day}. This grounds only the flat daily-use count; it \
                  casts no force missile, applies no 1d4 damage roll, resolves no automatic-hit \
                  magic-missile-style targeting, and tracks no action economy or per-use \
@@ -4499,8 +4556,8 @@ fn explain_wizard_level1_prepared_spell_baseline(
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported".to_owned(),
         message: format!(
-            "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school-power execution \
-             and opposed-school preparation-cost burden: the Evocation intense spells flat \
+            "Wizard level {level} remains blocked on its school-power execution and \
+             opposed-school preparation-cost burden: the Evocation intense spells flat \
              bonus-damage magnitude and the force missile flat 3 + Int-mod uses-per-day pool are \
              now grounded as flat numbers in dedicated explanation records, but no evocation \
              spell-damage application, no force-missile casting execution (the 1d4 damage roll \
