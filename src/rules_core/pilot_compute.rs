@@ -4560,18 +4560,24 @@ fn explain_monk_level1_chassis(
 }
 
 const ROGUE_CLASS_ID: &str = "class:rogue";
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 3;
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 4;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
 const ROGUE_TRAP_SENSE_LEVEL: u8 = 3;
+/// PF1 Core Rulebook level gate at which Rogue gains Uncanny Dodge (4th
+/// level, verified independently against d20pfsrd and legacy.aonprd.com —
+/// the Rogue class table's level-4 "Special" column reads "Rogue talent,
+/// uncanny dodge" — NOT the same level as Barbarian's own 2nd-level Uncanny
+/// Dodge grant).
+const ROGUE_UNCANNY_DODGE_LEVEL: u8 = 4;
 
 /// The bounded Rogue milestone level this decomposition surface grounds, if
 /// any. Returns the single Rogue level when the chosen input is exactly a
-/// single-class Rogue at one of the supported milestone levels (1, 2, or 3).
-/// Returns `None` for no Rogue, a non-Rogue class, a multiclass mix, or any
-/// level-4+ Rogue this slice deliberately does not recognize — each of which
-/// stays claim-blocked exactly as before. Mirrors the Fighter
+/// single-class Rogue at one of the supported milestone levels (1, 2, 3, or
+/// 4). Returns `None` for no Rogue, a non-Rogue class, a multiclass mix, or
+/// any level-5+ Rogue this slice deliberately does not recognize — each of
+/// which stays claim-blocked exactly as before. Mirrors the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` level-range
 /// gate idiom.
 fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
@@ -4587,8 +4593,8 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Rogue
-/// level-1/level-2/level-3 chassis, mirroring the Barbarian/Monk level-1 baseline
-/// pattern and the Fighter `supported_fighter_level` / Paladin
+/// level-1/level-2/level-3/level-4 chassis, mirroring the Barbarian/Monk level-1
+/// baseline pattern and the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` level-range-gate idiom.
 /// The SD13-E3 pillar-grounding slice grounds three of the four named
 /// burdens directly (base-attack progression, base-save progression, and
@@ -4599,20 +4605,25 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 /// class table's next milestone) and grounds Evasion as a bounded
 /// identity/recognition record; a further SD13-E5 slice widens the gate to
 /// level 3 and grounds Trap Sense (the class table's 3rd-level "Special"
-/// entry) as a bounded flat-magnitude record.
+/// entry) as a bounded flat-magnitude record; a further SD13-E5 slice widens
+/// the gate to level 4 and grounds Uncanny Dodge (the class table's
+/// 4th-level "Special" entry, verified independently against d20pfsrd and
+/// legacy.aonprd.com — NOT the same level as Barbarian's own 2nd-level
+/// Uncanny Dodge) as a bounded identity/recognition record.
 ///
 /// This deliberately does not compute a full Rogue class engine. It grounds,
-/// at every supported level (1, 2, and 3):
+/// at every supported level (1, 2, 3, and 4):
 /// - base-attack progression (3/4 BAB, `level * 3 / 4`),
 /// - base-save progression (good Reflex, poor Fortitude, poor Will),
 /// - the sneak attack damage-die *count* only (`(level + 1) / 2`, i.e. `1`
-///   at levels 1-2 and `2` at level 3, `1d6`/`2d6`) — not damage-roll
+///   at levels 1-2 and `2` at levels 3-4, `1d6`/`2d6`) — not damage-roll
 ///   execution and not the flanking / Dexterity-denial trigger-condition
 ///   engine,
 /// - the Trapfinding flat numeric bonus (`max(level / 2, 1)`, `+1` at levels
-///   1-3) on Perception checks to locate traps and on Disable Device checks,
-///   plus the magic-trap-disarm statement — not a check-execution engine, no
-///   trap DC resolution, and no magic-trap disarm engine,
+///   1-3 and `+2` at level 4) on Perception checks to locate traps and on
+///   Disable Device checks, plus the magic-trap-disarm statement — not a
+///   check-execution engine, no trap DC resolution, and no magic-trap disarm
+///   engine,
 /// - Evasion (a 2nd-level Rogue class feature): below level 2 it is grounded
 ///   as a correct PF1 Core Rulebook level-gate absence (value 0); at level 2
 ///   and above it is grounded as a bounded identity/recognition record only
@@ -4621,34 +4632,49 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 ///   damage on a successful save; no benefit on a failed save) — mirroring
 ///   how Divine Grace and Bravery were grounded as flat rules-text records
 ///   without folding into an actual saving-throw-resolution or
-///   damage-resolution engine, neither of which exists in this codebase, and
+///   damage-resolution engine, neither of which exists in this codebase,
 /// - Trap Sense (a 3rd-level Rogue class feature, verified independently
 ///   against d20pfsrd and legacy.aonprd.com): below level 3 it is grounded as
 ///   a correct PF1 Core Rulebook level-gate absence (value 0); at level 3 and
 ///   above it is grounded as a bounded flat-magnitude record only
-///   (`level / 3`, floor; `+1` at level 3) naming the rule text (a bonus on
-///   Reflex saves made to avoid traps and an equal dodge bonus to AC against
-///   attacks made by traps) — mirroring the Fighter Bravery / Paladin Divine
-///   Grace idiom: the magnitude is never applied to any actual Reflex-save
-///   total or AC total, since no saving-throw-resolution or
-///   armor-class-resolution engine exists in this codebase, and no
+///   (`level / 3`, floor; `+1` at levels 3-4) naming the rule text (a bonus
+///   on Reflex saves made to avoid traps and an equal dodge bonus to AC
+///   against attacks made by traps) — mirroring the Fighter Bravery /
+///   Paladin Divine Grace idiom: the magnitude is never applied to any
+///   actual Reflex-save total or AC total, since no saving-throw-resolution
+///   or armor-class-resolution engine exists in this codebase, and no
 ///   trap-detection or trap-triggering engine exists to decide when it would
-///   apply.
+///   apply, and
+/// - Uncanny Dodge (a 4th-level Rogue class feature, verified independently
+///   against d20pfsrd and legacy.aonprd.com): below level 4 it is grounded as
+///   a correct PF1 Core Rulebook level-gate absence (value 0); at level 4 and
+///   above it is grounded as a bounded identity/recognition record only
+///   (value 0, non-fabricated) naming the rule text (cannot be caught
+///   flat-footed; retains Dexterity bonus to AC even against an invisible
+///   attacker; still loses it if immobilized) — mirroring exactly how
+///   Barbarian's own Uncanny Dodge was grounded, without folding into any
+///   actual flat-footed-state tracking, Armor Class computation, or
+///   invisibility-detection engine, none of which exists in this codebase.
+///   The level-4 row's OTHER named entry, a Rogue Talent (an open-ended
+///   choice-list feature), is deliberately left named-but-unproven this
+///   slice, mirroring the Monk level-2 bonus feat / Barbarian Rage Power
+///   precedent.
 ///
 /// It still grounds no rogue talent (a level-2+ choice-list feature, and a
 /// genuinely open-ended talent tree — a new-subsystem-shaped burden left
-/// named but unproven) and no level-4+ progression. These
+/// named but unproven) and no level-5+ progression. These
 /// `class_chassis.rogue.*` / `class_feature.rogue.evasion` /
-/// `class_feature.rogue.trap_sense` explanation records are standalone: they
-/// are not wired into `compute_fighter_chassis`, `compute_total_saves`, or
+/// `class_feature.rogue.trap_sense` / `class_feature.rogue.uncanny_dodge`
+/// explanation records are standalone: they are not wired into
+/// `compute_fighter_chassis`, `compute_total_saves`, or
 /// `compute_combat_baseline`, so `defense.total_save.*` is still never
 /// computed for Rogue here. It only:
 /// - leaves one chassis-recognition explanation so the `class:rogue:N`
 ///   identity is acknowledged rather than an undocumented packet placeholder
 ///   (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - leaves seven grounded pillar explanations (base-attack, base-save
+/// - leaves eight grounded pillar explanations (base-attack, base-save
 ///   fortitude/reflex/will, sneak-attack die count, trapfinding, Evasion,
-///   Trap Sense).
+///   Trap Sense, Uncanny Dodge).
 ///
 /// The named Rogue claim-blocking diagnostic set is now empty; the four
 /// generic chassis diagnostics (`class_chassis.unsupported`,
@@ -4681,13 +4707,13 @@ fn explain_rogue_level1_chassis(
              {ROGUE_CLASS_ID}:{level} class identity is acknowledged on the \
              rules-core seam rather than an undocumented packet placeholder. This is a bounded \
              chassis-recognition record only; the base-attack, base-save, sneak-attack \
-             die-count, trapfinding, Evasion, and Trap Sense pillars are grounded separately \
-             below, but this record still grounds no rogue talent and no level-4+ progression, \
-             so it carries no fabricated mechanical value (+0)"
+             die-count, trapfinding, Evasion, Trap Sense, and Uncanny Dodge pillars are \
+             grounded separately below, but this record still grounds no rogue talent and no \
+             level-5+ progression, so it carries no fabricated mechanical value (+0)"
         ),
     });
 
-    // Grounded (1/6): base-attack progression (3/4 BAB).
+    // Grounded (1/7): base-attack progression (3/4 BAB).
     let level_value = i16::from(level);
     let base_attack_bonus = level_value * 3 / 4;
     explanations.push(ComputationExplanation {
@@ -4699,7 +4725,7 @@ fn explain_rogue_level1_chassis(
         ),
     });
 
-    // Grounded (2/6): base-save progression (good Reflex, poor Fortitude, poor Will).
+    // Grounded (2/7): base-save progression (good Reflex, poor Fortitude, poor Will).
     let base_save_fortitude = level_value / 3;
     let base_save_reflex = level_value / 2 + 2;
     let base_save_will = level_value / 3;
@@ -4728,7 +4754,7 @@ fn explain_rogue_level1_chassis(
         ),
     });
 
-    // Grounded (3/6): sneak attack damage-die count only. PF1 Core Rulebook:
+    // Grounded (3/7): sneak attack damage-die count only. PF1 Core Rulebook:
     // the sneak attack die count increases by 1d6 every two rogue levels
     // (1d6 at levels 1-2, 2d6 at level 3+): (level + 1) / 2.
     let sneak_attack_die_count = (level_value + 1) / 2;
@@ -4746,7 +4772,7 @@ fn explain_rogue_level1_chassis(
         ),
     });
 
-    // Grounded (4/6): trapfinding — the flat numeric bonus and the
+    // Grounded (4/7): trapfinding — the flat numeric bonus and the
     // magic-trap-disarm statement only, mirroring the grounded Ranger Track
     // record (no check-execution engine behind it).
     let trapfinding_bonus = (level_value / 2).max(1);
@@ -4765,7 +4791,7 @@ fn explain_rogue_level1_chassis(
         ),
     });
 
-    // Grounded (5/6): Evasion, a 2nd-level Rogue class feature. Below the
+    // Grounded (5/7): Evasion, a 2nd-level Rogue class feature. Below the
     // level-2 gate this is a correct PF1 Core Rulebook level-gate absence
     // (value 0); at or above it, it is a bounded identity/recognition record
     // only (value 0, non-fabricated) naming the rule text — mirroring how
@@ -4800,7 +4826,7 @@ fn explain_rogue_level1_chassis(
         });
     }
 
-    // Grounded (6/6): Trap Sense, a 3rd-level Rogue class feature (verified
+    // Grounded (6/7): Trap Sense, a 3rd-level Rogue class feature (verified
     // independently against d20pfsrd and legacy.aonprd.com). Below the
     // level-3 gate this is a correct PF1 Core Rulebook level-gate absence
     // (value 0); at or above it, it is a bounded flat-magnitude record only
@@ -4835,6 +4861,50 @@ fn explain_rogue_level1_chassis(
                  armor-class-resolution engine exists anywhere in this codebase to apply it, and \
                  no trap-detection or trap-triggering engine exists to decide when it would \
                  apply"
+            ),
+        });
+    }
+
+    // Grounded (7/7): Uncanny Dodge, a 4th-level Rogue class feature (verified
+    // independently against d20pfsrd and legacy.aonprd.com: the Rogue class table's
+    // level-4 "Special" column reads "Rogue talent, uncanny dodge" — NOT the same
+    // level as Barbarian's own 2nd-level Uncanny Dodge grant, verified rather than
+    // assumed). Below the level-4 gate this is a correct PF1 Core Rulebook
+    // level-gate absence (value 0); at or above it, it is a bounded
+    // identity/recognition record only (value 0, non-fabricated) naming the rule
+    // text — mirroring exactly how Barbarian's own Uncanny Dodge was grounded,
+    // without folding into any actual flat-footed-state tracking, Armor Class
+    // computation, or invisibility-detection engine, none of which exists in this
+    // codebase. The level-4 row's OTHER named entry, a Rogue Talent (a genuinely
+    // open-ended choice-list feature, a new-subsystem-shaped burden), is
+    // deliberately left named-but-unproven this slice, mirroring the Monk level-2
+    // bonus feat / Barbarian Rage Power precedent: no new choice-slot and no new
+    // diagnostic was added for it.
+    if level < ROGUE_UNCANNY_DODGE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.uncanny_dodge".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Uncanny Dodge at rogue level {level}: correctly absent at level {level} \
+                 by PF1 Core Rulebook level gate; the at-grant rule is named but not computed. \
+                 Uncanny Dodge is a 4th-level rogue class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.uncanny_dodge".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Uncanny Dodge granted at rogue level {level} (PF1 Core Rulebook, \
+                 4th-level rogue class feature, part of the \"Rogue talent, uncanny dodge\" \
+                 table entry): she cannot be caught flat-footed, and she retains her Dexterity \
+                 bonus to Armor Class even if the attacker is invisible; she still loses her \
+                 Dexterity bonus to Armor Class if immobilized, and a successful feint action \
+                 can still strip it away. This is a bounded identity/recognition record only \
+                 (value 0, non-fabricated): no flat-footed-state tracking, no Armor Class \
+                 computation, and no invisibility-detection engine exists anywhere in this \
+                 codebase to apply it, so this grounds no actual flat-footed immunity or \
+                 Dexterity-to-AC retention"
             ),
         });
     }

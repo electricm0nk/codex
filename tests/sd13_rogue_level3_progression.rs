@@ -283,28 +283,58 @@ fn rogue_level3_leaves_no_named_pillar_diagnostic() {
     );
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Negative control: level 4 was later widened into the supported tranche -----
 
 #[test]
-fn rogue_level_4_is_not_promoted_by_this_slice() {
+fn rogue_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_rogue_level4_progression.rs) widened the level-range gate
+    // to level 4 (mirroring the Fighter/Paladin level-range gate idiom) and
+    // grounded Uncanny Dodge; this negative control is superseded, not
+    // violated — pin the new truth here too so this file stays internally
+    // consistent. The frontier this file's own slice actually drew is now
+    // level 5, covered by `rogue_level_5_is_not_promoted_by_this_slice` below.
     let level_4 = ROGUE_LEVEL3_FIXTURE.replace("class:rogue:3", "class:rogue:4");
     let input = load(&level_4);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        has_explanation(&computation, "class_chassis.rogue.base_attack_bonus"),
+        "level-4 Rogue is supported since the SD13-E5 level-4 slice: {:?}",
+        computation.explanations
+    );
+    assert!(
+        has_explanation(&computation, ROGUE_EVASION_ID),
+        "level-4 Rogue must keep the Evasion explanation grounded at level 2"
+    );
+    assert!(
+        has_explanation(&computation, ROGUE_TRAP_SENSE_ID),
+        "level-4 Rogue must keep the Trap Sense explanation grounded at level 3"
+    );
+}
+
+// ----- Negative control: level 5 stays unrecognized by this slice -----
+
+#[test]
+fn rogue_level_5_is_not_promoted_by_this_slice() {
+    let level_5 = ROGUE_LEVEL3_FIXTURE.replace("class:rogue:3", "class:rogue:5");
+    let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.rogue.")),
-        "level-4 Rogue must not gain any bounded rogue chassis explanation: {:?}",
+        "level-5 Rogue must not gain any bounded rogue chassis explanation: {:?}",
         computation.explanations
     );
     assert!(
         !has_explanation(&computation, ROGUE_EVASION_ID),
-        "level-4 Rogue must not gain the Evasion explanation from this bounded slice"
+        "level-5 Rogue must not gain the Evasion explanation from this bounded slice"
     );
     assert!(
         !has_explanation(&computation, ROGUE_TRAP_SENSE_ID),
-        "level-4 Rogue must not gain the Trap Sense explanation from this bounded slice"
+        "level-5 Rogue must not gain the Trap Sense explanation from this bounded slice"
     );
 }
 
