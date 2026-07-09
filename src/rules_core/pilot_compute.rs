@@ -4220,15 +4220,21 @@ fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
 /// This deliberately does not compute a supported spell surface. It grounds Channel
 /// Energy's flat die-count and uses-per-day math, the domain choice seam, the flat
 /// domain spell slot count, the Good domain's Touch of Good (flat sacred-bonus
-/// magnitude and flat uses-per-day count), and the Healing domain's Rebuke Death (flat
-/// uses-per-day count only), but grounds no Rebuke Death heal amount, no domain
-/// spell-list contents, no channel energy save DC or damage/healing resolution, no
-/// spellbook posture, no spells prepared, no spontaneous cure/inflict conversion, no
-/// general spell slots per day, no spell save DCs, and no bonus spell slots from a high
-/// Wisdom. It only:
+/// magnitude and flat uses-per-day count), the Healing domain's Rebuke Death (flat
+/// uses-per-day count only), and the foundational base-attack-bonus / base-save
+/// progression pillar that every other class row in this matrix already has and Cleric
+/// never had; it grounds no Rebuke Death heal amount, no domain spell-list contents, no
+/// channel energy save DC or damage/healing resolution, no spellbook posture, no spells
+/// prepared, no spontaneous cure/inflict conversion, no general spell slots per day, no
+/// spell save DCs, and no bonus spell slots from a high Wisdom. It only:
 /// - leaves one recognition explanation so the `class:cleric:1` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - leaves one grounded base-attack-bonus explanation (PF1 Core Rulebook Cleric class
+///   table: 3/4 BAB, the same formula shape as Rogue/Monk/Druid) and three grounded
+///   base-save explanations (good Fortitude, good Will, poor Reflex), each a standalone
+///   record not wired into `PilotBaseChassisComputation.base_attack_bonus`,
+///   `compute_total_saves`, or `compute_combat_baseline`,
 /// - grounds Channel Energy's die count and daily use count for real (PF1 Core
 ///   Rulebook Channel Energy: `ceil(cleric level / 2)` d6, minimum 1d6; usable
 ///   `3 + Charisma modifier` times per day),
@@ -4255,8 +4261,9 @@ fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Cleric prepared divine spell-bearing
-/// identity, its grounded Channel Energy / domain-choice / domain-slot-count / domain
-/// power pillars, and its two named remaining burdens legible on the runtime path.
+/// identity, its grounded base-attack/base-save/Channel-Energy/domain-choice/
+/// domain-slot-count/domain-power pillars, and its two named remaining burdens legible
+/// on the runtime path.
 fn explain_cleric_level1_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -4285,6 +4292,67 @@ fn explain_cleric_level1_spell_baseline(
              spellbook posture, no spells prepared per day, no spontaneous cure/inflict conversion, no \
              spell slots per day, no spell save DCs, and no bonus spell slots from a high Wisdom, so it \
              carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Grounded: the foundational base-attack-bonus / base-save progression pillar.
+    // Unlike every other class row in this matrix (Fighter, Barbarian, Monk, Rogue,
+    // Paladin, Druid all already ground this pillar), Cleric had never had it
+    // grounded at all until this SD13-E5 slice. Both formulas were verified against
+    // the PF1 Core Rulebook Cleric class table (d20pfsrd and the legacy Paizo PRD
+    // mirror) before writing this code, cross-checking the level 2-5 base-attack-bonus
+    // values (+0/+1/+2/+3/+3) to disambiguate the exact fraction (level 1 alone floors
+    // both a 1/2 and a 3/4 progression to the same +0, so it cannot disambiguate on its
+    // own).
+    let level_value = i16::from(CLERIC_BASELINE_LEVEL);
+
+    // Grounded (1/2): 3/4-BAB base-attack progression, the same formula shape as
+    // Rogue/Monk/Druid (classlevel * 3 / 4). No PCGen .lst file exists for the Cleric
+    // class in this repo, so the formula cites the PF1 Core Rulebook Cleric class
+    // table directly.
+    let base_attack_bonus = level_value * 3 / 4;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.cleric.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "Cleric level {CLERIC_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+             Cleric class table's 3/4-BAB progression, the same formula shape as \
+             Rogue/Monk/Druid: classlevel * 3 / 4 = {base_attack_bonus}. This is a standalone \
+             explanation record; it is not wired into the integrated base_attack_bonus field or \
+             into compute_combat_baseline"
+        ),
+    });
+
+    // Grounded (2/2): base-save progression — good Fortitude, poor Reflex, good
+    // Will, verified against the PF1 Core Rulebook Cleric class table (Fortitude
+    // +2, Reflex +0, Will +2 at level 1).
+    let good_save = level_value / 2 + 2;
+    let poor_save = level_value / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.cleric.base_save.fortitude".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Cleric level {CLERIC_BASELINE_LEVEL} base Fortitude save (good save) from the PF1 \
+             Core Rulebook Cleric class table: classlevel/2+2 = {good_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.cleric.base_save.reflex".to_owned(),
+        value: poor_save,
+        detail: format!(
+            "Cleric level {CLERIC_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 \
+             Core Rulebook Cleric class table: classlevel/3 = {poor_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.cleric.base_save.will".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Cleric level {CLERIC_BASELINE_LEVEL} base Will save (good save) from the PF1 Core \
+             Rulebook Cleric class table: classlevel/2+2 = {good_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
         ),
     });
 
