@@ -221,21 +221,45 @@ fn druid_level_2_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: level 3 stays unrecognized (coverage moved here) -----
+// ----- Druid level 3 was later widened into the supported tranche -----
 
 #[test]
-fn druid_level_3_does_not_gain_base_attack_or_save_grounding() {
+fn druid_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 3 stayed unrecognized. A later
+    // SD13-E5 slice (tests/sd13_druid_level3_progression.rs) widened the
+    // level-range gate to level 3 and extended the base-attack/base-save
+    // formulas; this negative control is superseded, not violated — pin the new
+    // truth here too so this file stays internally consistent.
     let level_3 = DRUID_FIXTURE.replace("class:druid:1", "class:druid:3");
     let input = load(&level_3);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
+        has_explanation(&computation, BASE_ATTACK_ID),
+        "level-3 Druid is supported since the SD13-E5 level-3 slice: {:?}",
+        computation.explanations
+    );
+    assert!(
+        has_explanation(&computation, BASE_SAVE_FORTITUDE_ID),
+        "level-3 Druid is supported since the SD13-E5 level-3 slice: {:?}",
+        computation.explanations
+    );
+}
+
+// ----- Negative control: level 4 stays unrecognized (coverage moved here) -----
+
+#[test]
+fn druid_level_4_does_not_gain_base_attack_or_save_grounding() {
+    let level_4 = DRUID_FIXTURE.replace("class:druid:1", "class:druid:4");
+    let input = load(&level_4);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
         !has_explanation(&computation, BASE_ATTACK_ID),
-        "level-3 Druid must not gain the bounded level-1/level-2 base-attack grounding: {:?}",
+        "level-4 Druid must not gain the bounded level-1/level-2/level-3 base-attack grounding: {:?}",
         computation.explanations
     );
     assert!(
         !has_explanation(&computation, BASE_SAVE_FORTITUDE_ID),
-        "level-3 Druid must not gain the bounded level-1/level-2 base-save grounding: {:?}",
+        "level-4 Druid must not gain the bounded level-1/level-2/level-3 base-save grounding: {:?}",
         computation.explanations
     );
 }

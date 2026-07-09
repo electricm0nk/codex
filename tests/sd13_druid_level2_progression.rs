@@ -251,12 +251,34 @@ fn druid_level1_truth_is_unchanged_by_this_widening() {
     assert_eq!(wild_empathy.value, 2, "Druid level 1 wild empathy modifier must stay 2");
 }
 
-// ----- Negative control: level 3 stays unrecognized by this slice -----
+// ----- Negative control: level 3 was later widened into the supported tranche -----
 
 #[test]
-fn druid_level_3_is_not_promoted_by_this_slice() {
+fn druid_level_3_was_later_widened_into_the_supported_tranche() {
+    // Level 3 is now recognized by a later SD13-E5 slice
+    // (`tests/sd13_druid_level3_progression.rs`); this control now asserts the
+    // widened truth rather than an absence, mirroring the Rogue/Barbarian/Monk/
+    // Cleric/Bard precedent.
     let level_3 = DRUID_LEVEL2_FIXTURE.replace("class:druid:2", "class:druid:3");
     let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        computation
+            .explanations
+            .iter()
+            .any(|e| e.id == "class_chassis.druid.base_attack_bonus"),
+        "level-3 Druid is now recognized by a later slice and must gain the bounded druid \
+         chassis explanation: {:?}",
+        computation.explanations
+    );
+}
+
+// ----- Negative control: level 4 stays unrecognized by this slice -----
+
+#[test]
+fn druid_level_4_is_not_promoted_by_this_slice() {
+    let level_4 = DRUID_LEVEL2_FIXTURE.replace("class:druid:2", "class:druid:4");
+    let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -265,7 +287,7 @@ fn druid_level_3_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.druid.")
                 || e.id == "class_chassis.spell_baseline.druid"
                 || e.id == "class_feature.druid.woodland_stride"),
-        "level-3 Druid must not gain any bounded druid chassis explanation: {:?}",
+        "level-4 Druid must not gain any bounded druid chassis explanation: {:?}",
         computation.explanations
     );
 }
