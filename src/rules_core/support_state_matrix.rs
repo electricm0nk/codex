@@ -487,7 +487,7 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs 
 /// grounding reference.
 const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs + \
     tests/sd13_monk_bonus_feat_choice.rs + tests/sd13_monk_level2_progression.rs + \
-    tests/sd13_monk_level3_progression.rs";
+    tests/sd13_monk_level3_progression.rs + tests/sd13_monk_level4_progression.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -1166,31 +1166,33 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:monk",
                 dimension: "bounded Monk martial chassis progression: the deterministic Human \
-                            Monk level-1/level-2/level-3 martial chassis identity, with \
+                            Monk level-1/level-2/level-3/level-4 martial chassis identity, with \
                             base-attack, base-save, AC Bonus, the unarmed strike damage die, the \
                             Flurry of Blows flat attack surface, and the level-1 bonus feat \
-                            choice-slot selection grounded across all three levels, Evasion \
+                            choice-slot selection grounded across all four levels, Evasion \
                             grounded as a level-2 identity/recognition record, Still Mind \
-                            grounded as a level-3 flat-magnitude record, and the recognized \
-                            bonus feat's own mechanics still unproven",
+                            grounded as a level-3 flat-magnitude record, the ki pool's flat size \
+                            and Slow Fall grounded as level-4 records, and the recognized bonus \
+                            feat's own mechanics still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_MONK_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3/E5 leaves direct computed evidence that the \
-                    deterministic Human Monk level-1/level-2/level-3 martial chassis identity is \
-                    recognized on the compute seam, and now grounds seven named pillar burdens \
-                    across all three levels: base attack progression (3/4 BAB), base save \
-                    progression (good Fortitude, Reflex, and Will), AC Bonus (Wisdom-to-AC, the \
-                    flat value at the supported level), the unarmed strike / Flurry of Blows flat \
-                    surface (Medium monk 1d6 unarmed damage — die size only, no damage roll or \
-                    total, unchanged across levels 1-3 — and the flurry posture of two attacks at \
-                    monk level - 2 before ability modifiers, i.e. -1 at level 1, +0 at level 2, \
-                    and +1 at level 3, with the attack count staying 2 at all three levels), the \
-                    level-1 bonus feat choice-slot selection (recognized when it names one of the \
-                    PF1 Core Rulebook restricted Monk bonus feat list's five feats: Combat \
-                    Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, Stunning Fist — a \
-                    +0 recognition record with no feat-effect execution, mirroring the Sorcerer \
+                    deterministic Human Monk level-1/level-2/level-3/level-4 martial chassis \
+                    identity is recognized on the compute seam, and now grounds nine named \
+                    pillar burdens across all four levels: base attack progression (3/4 BAB), \
+                    base save progression (good Fortitude, Reflex, and Will), AC Bonus \
+                    (Wisdom-to-AC, the flat value at the supported level), the unarmed strike / \
+                    Flurry of Blows flat surface (Medium monk 1d6 unarmed damage at levels 1-3, \
+                    stepping up to 1d8 at level 4 — die size only, no damage roll or total — and \
+                    the flurry posture of two attacks at monk level - 2 before ability \
+                    modifiers, i.e. -1 at level 1, +0 at level 2, +1 at level 3, and +2 at level \
+                    4, with the attack count staying 2 at all four levels), the level-1 bonus \
+                    feat choice-slot selection (recognized when it names one of the PF1 Core \
+                    Rulebook restricted Monk bonus feat list's five feats: Combat Reflexes, \
+                    Deflect Arrows, Improved Grapple, Improved Trip, Stunning Fist — a +0 \
+                    recognition record with no feat-effect execution, mirroring the Sorcerer \
                     bloodline choice / Cleric domain choice / Druid nature-bond choice \
                     recognition idiom), (SD13-E5) Evasion, a 2nd-level Monk class feature \
                     verified independently against two primary PF1 sources (d20pfsrd and \
@@ -1198,28 +1200,38 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     (value 0, non-fabricated): no damage on a successful Reflex save against an \
                     effect that normally allows half damage on a successful save, no benefit on a \
                     failed save — naming the rule text with no saving-throw-resolution or \
-                    damage-resolution engine behind it, and (SD13-E5) Still Mind, a 3rd-level \
+                    damage-resolution engine behind it, (SD13-E5) Still Mind, a 3rd-level \
                     Monk class feature verified independently against the same two primary \
                     sources, grounded as a bounded flat-magnitude record (a flat +2 bonus on \
                     saving throws against enchantment spells and effects, value 0 as a correct \
                     level-gate absence below level 3), mirroring the Fighter Bravery / Paladin \
                     Divine Grace / Rogue Trap Sense idiom: never applied to any actual save \
-                    total, since no saving-throw-resolution engine exists in this codebase. Fast \
-                    Movement and Maneuver Training, the class table's other two 3rd-level \
+                    total, since no saving-throw-resolution engine exists in this codebase, and \
+                    (SD13-E5) the ki pool's flat size and Slow Fall, both 4th-level Monk class \
+                    features verified independently against the same two primary sources (both \
+                    list \"Ki pool (magic), slow fall 20 ft.\" as the Monk 4th-level special \
+                    feature entry): the ki pool is grounded as a standalone flat-magnitude \
+                    record (1/2 monk level + Wisdom modifier — no stated minimum in either \
+                    primary source's rule text — mirroring the Barbarian rage rounds-per-day / \
+                    Paladin lay-on-hands-uses-per-day idiom, with no ki-point consumption \
+                    tracking, no action-economy engine, and no application of any ki power), and \
+                    Slow Fall is grounded as a bounded grant-only identity record (mirroring the \
+                    Barbarian/Rogue Uncanny Dodge idiom, with no fall-damage-resolution engine). \
+                    Fast Movement and Maneuver Training, the class table's other two 3rd-level \
                     \"Special\" column entries, are deliberately left named-but-unproven (no \
                     speed-total engine and no CMB/CMD engine exist in this codebase to attach \
                     either to). One named burden remains unproven: the recognized bonus feat's \
                     own mechanics (no attack-resolution, grapple-check, trip-check, or DC/save \
                     engine exists for any of the restricted-list feats). The level-2 bonus feat \
                     grant (PF1 grants monks a SEPARATE bonus feat at 2nd level, not recognized by \
-                    this widening), the level-4+ unarmed damage die progression, flurry with \
-                    special monk weapons, wiring into integrated combat totals, ki pool, and Monk \
-                    level 4+ all remain unproven, and no martial math beyond the grounded flat \
-                    surfaces is fabricated",
+                    this widening), the level-8+ unarmed damage die progression, flurry with \
+                    special monk weapons, wiring into integrated combat totals, any ki-power \
+                    execution engine, and Monk level 5+ all remain unproven, and no martial math \
+                    beyond the grounded flat surfaces is fabricated",
                 next_required_uplift: "later SD13-E5/E6 slice grounding the one remaining named \
                     Monk martial pillar burden (the recognized bonus feat's own mechanics — an \
                     execution engine per feat, not a flat number), then the level-2 bonus feat \
-                    grant recognition and Monk level 4+ progression",
+                    grant recognition and Monk level 5+ progression",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",

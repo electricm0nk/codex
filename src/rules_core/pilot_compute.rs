@@ -520,7 +520,7 @@ const MONK_CLASS_ID: &str = "class:monk";
 /// SD13-E5 Monk level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` idiom.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 3;
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 4;
 /// PF1 Core Rulebook level gate at which Monk gains Evasion (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Bonus feat, evasion" as the Monk 2nd-level special feature entry).
@@ -536,6 +536,17 @@ const MONK_EVASION_LEVEL: u8 = 2;
 /// vs. enchantment spells and effects) matching the Fighter Bravery / Paladin
 /// Divine Grace / Rogue Trap Sense idiom exactly.
 const MONK_STILL_MIND_LEVEL: u8 = 3;
+/// PF1 Core Rulebook level gate at which the Medium-monk unarmed strike damage
+/// die steps up from 1d6 to 1d8 (4th level, verified independently against two
+/// primary sources: d20pfsrd and legacy.aonprd.com both give the Medium-monk
+/// unarmed damage progression as 1d6 at levels 1-3, 1d8 at levels 4-7, 1d10 at
+/// levels 8-11, 2d6 at levels 12-15, 2d8 at levels 16-19, and 2d10 at level 20).
+const MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL: u8 = 4;
+/// PF1 Core Rulebook level gate at which Monk gains the ki pool and Slow Fall
+/// (4th level, verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Ki pool (magic), slow fall 20 ft." as the Monk
+/// 4th-level special feature entry).
+const MONK_KI_POOL_AND_SLOW_FALL_LEVEL: u8 = 4;
 /// The PF1 Core Rulebook level at which the level-1 monk bonus feat (and the
 /// automatic Improved Unarmed Strike grant) always occurs, independent of the
 /// character's current supported level. Kept distinct from the generic
@@ -4135,10 +4146,10 @@ fn explain_barbarian_level1_chassis(
 
 /// The bounded Monk milestone level this decomposition surface grounds, if any.
 /// Returns the single Monk level when the chosen input is exactly a single-class
-/// Monk at one of the supported milestone levels (1 or 2). Returns `None` for no
-/// Monk, a non-Monk class, a multiclass mix, or any level-3+ Monk this slice
-/// deliberately does not recognize — each of which stays claim-blocked exactly as
-/// before. Mirrors the Fighter `supported_fighter_level` / Paladin
+/// Monk at one of the supported milestone levels (1, 2, 3, or 4). Returns `None`
+/// for no Monk, a non-Monk class, a multiclass mix, or any level-5+ Monk this
+/// slice deliberately does not recognize — each of which stays claim-blocked
+/// exactly as before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` level-range gate idiom.
 fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
@@ -4154,13 +4165,13 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Monk
-/// level-1/level-2/level-3 martial chassis, mirroring the Barbarian/Rogue
-/// level-range-gate pattern, and now grounding seven named pillar burdens at every
+/// level-1/level-2/level-3/level-4 martial chassis, mirroring the Barbarian/Rogue
+/// level-range-gate pattern, and now grounding nine named pillar burdens at every
 /// supported level (base-attack, base-save, AC Bonus, the unarmed strike die /
 /// Flurry of Blows flat surface, the level-1 bonus feat choice-slot recognition,
-/// at level 2, Evasion, and at level 3, Still Mind) while keeping it explicitly
-/// claim-blocked on the recognized bonus feat's own mechanics (an execution
-/// engine, not a flat number).
+/// at level 2, Evasion, at level 3, Still Mind, and at level 4, the ki pool's flat
+/// size and Slow Fall) while keeping it explicitly claim-blocked on the recognized
+/// bonus feat's own mechanics (an execution engine, not a flat number).
 ///
 /// This grounds the Monk base-attack progression (3/4 BAB: `classlevel * 3 / 4`),
 /// the base-save progression (good Fortitude, Reflex, and Will: `classlevel/2+2`
@@ -4189,23 +4200,31 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 /// value 0 as a correct level-gate absence below level 3), mirroring the Fighter
 /// Bravery / Paladin Divine Grace / Rogue Trap Sense idiom, never applied to any
 /// actual save total. Fast Movement and Maneuver Training, the class table's other
-/// two 3rd-level "Special" column entries, stay named-but-unproven. It still
-/// grounds no attack-resolution or damage-roll engine, no monk-weapon flurry, no
-/// level-4+ unarmed damage die progression, no ki pool, no level-4+ AC Bonus
-/// dodge-bonus progression, no "unarmored and unencumbered" runtime state-check
-/// engine, no wiring into integrated combat totals, no level-4+ martial
-/// progression, no level-2 bonus feat grant (PF1 grants monks a SEPARATE bonus
-/// feat at 2nd level; this widening does not add a second choice-slot or
-/// recognition for it), and no execution of what the recognized level-1 bonus
-/// feat actually does (no attack-of-opportunity engine for Combat Reflexes, no
-/// grapple-check engine for Improved Grapple, no DC/save engine for Stunning
-/// Fist, and so on). It:
+/// two 3rd-level "Special" column entries, stay named-but-unproven. At level 4,
+/// the unarmed strike damage die steps up from 1d6 to 1d8 (verified independently
+/// against the same two primary sources' Medium-monk damage progression table),
+/// the ki pool's flat size is grounded as a standalone flat-magnitude record
+/// (1/2 monk level + Wisdom modifier, mirroring the Barbarian rage rounds-per-day
+/// / Paladin lay-on-hands-uses-per-day idiom — no ki-point consumption tracking,
+/// no action-economy engine, and no application of any ki power), and Slow Fall
+/// is grounded as a bounded grant-only identity record (no fall-damage-resolution
+/// engine exists in this codebase). It still grounds no attack-resolution or
+/// damage-roll engine, no monk-weapon flurry, no level-8+ unarmed damage die
+/// progression, no ki-power execution, no level-4+ AC Bonus dodge-bonus
+/// progression, no "unarmored and unencumbered" runtime state-check engine, no
+/// wiring into integrated combat totals, no level-5+ martial progression, no
+/// level-2 bonus feat grant (PF1 grants monks a SEPARATE bonus feat at 2nd
+/// level; this widening does not add a second choice-slot or recognition for
+/// it), and no execution of what the recognized level-1 bonus feat actually does
+/// (no attack-of-opportunity engine for Combat Reflexes, no grapple-check engine
+/// for Improved Grapple, no DC/save engine for Stunning Fist, and so on). It:
 /// - leaves one chassis-recognition explanation so the `class:monk:N` identity is
 ///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves grounded explanation records for base-attack, the three base saves,
 ///   AC Bonus, the unarmed strike damage die, the flurry flat attack
-///   bonus/attack count, Evasion, and Still Mind,
+///   bonus/attack count, Evasion, Still Mind, the ki pool's flat size, and Slow
+///   Fall,
 /// - conditionally leaves one grounded explanation recognizing the level-1 bonus
 ///   feat choice-slot selection when a `choice:monk_bonus_feat` selection is
 ///   present (carrying no fabricated mechanical value, since the recognized
@@ -4326,25 +4345,33 @@ fn explain_monk_level1_chassis(
     });
 
     // Grounded (4/6): unarmed strike damage die. PF1 Core Rulebook Monk class table:
-    // a Medium monk deals 1d6 unarmed strike damage at levels 1-3. Mirroring the
-    // Rogue sneak-attack die-count record, only the die-size facet (6, i.e. 1d6) is
-    // grounded here — no damage roll, damage total, or attack-resolution engine is
-    // computed, and the level-4+ die progression (1d8 and beyond) is not grounded.
-    // This value stays unchanged (6) at every level this seam supports (1-3), since
-    // the PF1 Core Rulebook 1d6 band does not change again until level 4.
+    // a Medium monk deals 1d6 unarmed strike damage at levels 1-3, stepping up to
+    // 1d8 at levels 4-7 (verified independently against d20pfsrd and
+    // legacy.aonprd.com: the full Medium-monk progression is 1d6/1d8/1d10/2d6/2d8/2d10
+    // at levels 1-3/4-7/8-11/12-15/16-19/20). Mirroring the Rogue sneak-attack
+    // die-count record, only the die-size facet is grounded here — no damage roll,
+    // damage total, or attack-resolution engine is computed, and the level-8+ die
+    // progression (1d10 and beyond) is not grounded.
+    let (unarmed_die_value, unarmed_die_name) =
+        if level < MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL {
+            (6, "1d6")
+        } else {
+            (8, "1d8")
+        };
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.unarmed_strike_damage_die".to_owned(),
-        value: 6,
+        value: unarmed_die_value,
         detail: format!(
             "Monk level {level} unarmed strike from the PF1 Core Rulebook Monk class table: a \
-             Medium monk deals 1d6 unarmed strike damage at levels 1-3, so it stays 1d6 at level \
-             {level}. Only the die-size facet (6, i.e. 1d6) is grounded here; no damage roll or \
+             Medium monk deals 1d6 unarmed strike damage at levels 1-3, stepping up to 1d8 at \
+             levels 4-7, so it is {unarmed_die_name} at level {level}. Only the die-size facet \
+             ({unarmed_die_value}, i.e. {unarmed_die_name}) is grounded here; no damage roll or \
              damage total is computed and no attack-resolution engine exists. Two PF1 \
              unarmed-strike rules are recorded as statements only: the monk may choose to deal \
              lethal or nonlethal damage with no penalty on the attack roll, and monk unarmed \
              strikes carry no off-hand penalty (a monk applies her full Strength bonus on damage \
              rolls for all her unarmed strikes). The higher-level unarmed damage die progression \
-             (1d8 at levels 4-7 and beyond) is not grounded"
+             (1d10 at levels 8-11 and beyond) is not grounded"
         ),
     });
 
@@ -4457,6 +4484,83 @@ fn explain_monk_level1_chassis(
                  scale further with level. This is a bounded flat-magnitude record only, \
                  non-fabricated: it is never applied to any actual save total, since no \
                  saving-throw-resolution engine exists anywhere in this codebase to apply it"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): the ki pool's flat size, a 4th-level Monk class
+    // feature verified independently against two primary PF1 sources (d20pfsrd
+    // and legacy.aonprd.com both give the formula: "the number of points in a
+    // monk's ki pool is equal to 1/2 his monk level + his Wisdom modifier" —
+    // neither primary source states a minimum floor on the pool itself, unlike
+    // some other flat-magnitude records this codebase grounds elsewhere).
+    // Below the level-4 gate this is a correct PF1 Core Rulebook level-gate
+    // absence (value 0); at or above it, it is a bounded flat-magnitude record
+    // only (the standalone pool-size number), mirroring the Barbarian rage
+    // rounds-per-day / Paladin lay-on-hands-uses-per-day idiom: this grounds
+    // only the flat resource-count magnitude. No ki-point consumption tracking,
+    // no action-economy engine, and no application of any ki power (the extra
+    // attack, the +4 AC dodge bonus, or the +20-ft. speed bonus usable as a
+    // swift action) is computed anywhere in this codebase.
+    if level < MONK_KI_POOL_AND_SLOW_FALL_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.ki_pool_size".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk ki pool at monk level {level}: correctly absent at level {level} by PF1 \
+                 Core Rulebook level gate; the at-grant formula is named but not computed. The \
+                 ki pool is a 4th-level monk class feature."
+            ),
+        });
+    } else {
+        let ki_pool_size = level_value / 2 + ability_modifiers.wisdom;
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.ki_pool_size".to_owned(),
+            value: ki_pool_size,
+            detail: format!(
+                "Monk ki pool granted at monk level {level} (PF1 Core Rulebook, 4th-level monk \
+                 class feature): \"the number of points in a monk's ki pool is equal to 1/2 his \
+                 monk level + his Wisdom modifier\" = {level_value} / 2 + {} = {ki_pool_size}. \
+                 This grounds only the flat pool-size number; it computes no ki-point \
+                 consumption tracking, no action-economy engine, and no application of any ki \
+                 power (the extra attack, the +4 AC dodge bonus, or the +20-ft. speed bonus \
+                 usable as a swift action), none of which exists anywhere in this codebase",
+                ability_modifiers.wisdom
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): Slow Fall, the other 4th-level Monk class feature
+    // verified independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Ki pool (magic), slow fall 20 ft." as the
+    // Monk 4th-level special feature entry). Below the level-4 gate this is a
+    // correct PF1 Core Rulebook level-gate absence (value 0); at or above it,
+    // it is a bounded grant-only identity record (value 0, non-fabricated)
+    // naming the rule text — mirroring the Barbarian Uncanny Dodge / Rogue
+    // Uncanny Dodge / Druid Woodland Stride grant-only idiom: no
+    // fall-damage-resolution engine exists anywhere in this codebase to apply
+    // the 20-foot reduction to.
+    if level < MONK_KI_POOL_AND_SLOW_FALL_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.slow_fall".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Slow Fall at monk level {level}: correctly absent at level {level} by PF1 \
+                 Core Rulebook level gate; the at-grant rule is named but not computed. Slow \
+                 Fall is a 4th-level monk class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.slow_fall".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Slow Fall granted at monk level {level} (PF1 Core Rulebook, 4th-level monk \
+                 class feature): \"a monk within arm's reach of a wall can use it to slow his \
+                 descent\" — when first gaining this ability she takes falling damage as if the \
+                 fall were 20 feet shorter than it actually is. This is a bounded grant-only \
+                 identity record only (value 0, non-fabricated): no fall-damage-resolution \
+                 engine exists anywhere in this codebase to apply the 20-foot reduction to"
             ),
         });
     }
