@@ -339,7 +339,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs + \
     tests/sd13_ranger_base_attack_and_saves.rs + \
     tests/sd13_ranger_level2_progression.rs + \
-    tests/sd13_ranger_level3_progression.rs";
+    tests/sd13_ranger_level3_progression.rs + \
+    tests/sd13_ranger_favored_terrain_choice.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2 spell baseline: direct computed recognition of the
@@ -1206,7 +1207,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             Ranger level-1/level-2/level-3 chassis baseline, with base attack \
                             bonus, base save progression, Track, the favored-enemy flat surface, \
                             the combat-style choice-and-bonus-feat recognition, and (level 3) \
-                            Endurance grounded for real and the later spell burden still blocked",
+                            Endurance and the Favored Terrain choice-and-flat-magnitude surface \
+                            grounded for real and the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1255,22 +1257,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     independently against d20pfsrd and legacy.aonprd.com), as a bounded grant-only \
                     identity record (value 0, non-fabricated): the ranger gains Endurance as a \
                     bonus feat automatically, with no player choice involved, mirroring the Wizard \
-                    Scribe Scroll / Barbarian Uncanny Dodge idiom. Favored Terrain, the class \
-                    table's other 3rd-level \"Special\" column entry, is deliberately left \
-                    named-but-unproven: it is a player choice of terrain type with a flat +2 bonus \
-                    on Initiative/Knowledge (geography)/Perception/Stealth/Survival checks made in \
-                    that terrain, which would require a NEW choice-slot with no existing fixture \
-                    selection — out of scope this slice. The row is Partial, not Supported: the \
-                    favored-enemy conditional-application engine (target-type matching that would \
-                    decide whether a specific check or attack is made against the favored enemy) \
-                    is not implemented, the recognized combat-style bonus feat's own mechanics \
-                    remain unproven, Favored Terrain stays named-but-unproven, Ranger level 4+ is \
-                    not proven, and the later ranger spell burden (spell slots, spell source, \
-                    spells known/prepared) is still deferred to SD13-E4",
+                    Scribe Scroll / Barbarian Uncanny Dodge idiom. A still later SD13-E5 slice \
+                    grounds Favored Terrain, the class table's other 3rd-level \"Special\" column \
+                    entry, for real: a new choice:ranger_favored_terrain choice-slot recognizes \
+                    whichever terrain type was selected as a bounded +0 identity record \
+                    (mirroring the Favored Enemy choice-recognition idiom exactly — raw string \
+                    interpolation, no restricted-list validation), and the rule's own flat +2 \
+                    magnitude on Initiative checks and Knowledge (geography), Perception, Stealth, \
+                    and Survival checks made in the chosen terrain (verified independently against \
+                    d20pfsrd and legacy.aonprd.com's Table: Ranger Favored Terrains) is grounded \
+                    as a standalone, non-applied record — no terrain-detection engine decides \
+                    whether the character is actually in the chosen terrain, so no Initiative \
+                    total or skill-check total is modified by this record. The level-8th/13th/18th \
+                    additional-terrain and bonus-increase progression stays out of scope this \
+                    slice. The row is Partial, not Supported: the favored-enemy \
+                    conditional-application engine (target-type matching that would decide \
+                    whether a specific check or attack is made against the favored enemy) is not \
+                    implemented, the recognized combat-style bonus feat's own mechanics remain \
+                    unproven, the Favored Terrain level-8th/13th/18th breadth is unproven, Ranger \
+                    level 4+ is not proven, and the later ranger spell burden (spell slots, spell \
+                    source, spells known/prepared) is still deferred to SD13-E4",
                 next_required_uplift: "Ranger level-4+ progression, a favored-enemy \
                     conditional-application engine, execution of the recognized combat-style bonus \
-                    feat's own mechanics, Favored Terrain (a new choice-slot burden), then SD13-E4 \
-                    ranger spell burden",
+                    feat's own mechanics, then SD13-E4 ranger spell burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",
