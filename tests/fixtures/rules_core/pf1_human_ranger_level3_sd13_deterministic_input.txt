@@ -5,14 +5,17 @@
 # bonus-feat) and stays a single-class, level-3 hybrid baseline, mirroring the
 # level-2 fixture's shape with the class level swapped.
 #
-# Level 3 does not add any new deterministic choice selection: Endurance (the PF1
-# Core Rulebook's 3rd-level Ranger class feature this slice grounds) is an automatic
-# bonus-feat grant with no player choice involved, and Favored Terrain (the class
-# table's other 3rd-level entry) is deliberately left named-but-unproven this slice
-# (it would need its own new choice-slot, out of scope). This fixture carries forward
-# the same combat-style selections (Archery, Point-Blank Shot) from the level-2
-# fixture unchanged, since combat-style's own bonus feat is a one-time 2nd-level
-# grant, not re-granted at 3rd level.
+# Level 3 adds one new deterministic choice selection: Favored Terrain
+# (choice:ranger_favored_terrain -> terrain:forest), the PF1 Core Rulebook's other
+# 3rd-level Ranger "Special" entry alongside Endurance. Endurance itself is an
+# automatic bonus-feat grant with no player choice involved, so it needs no
+# choice-slot. Favored Terrain is a genuine player choice of terrain type, drawn from
+# Table: Ranger Favored Terrains (Cold, Desert, Forest, Jungle, Mountain, Plains,
+# Planes, Swamp, Underground, Urban, Water); Forest is an arbitrary but deterministic
+# pick among those eleven legal options. This fixture carries forward the same
+# combat-style selections (Archery, Point-Blank Shot) from the level-2 fixture
+# unchanged, since combat-style's own bonus feat is a one-time 2nd-level grant, not
+# re-granted at 3rd level.
 case_id=pf1-crb-human-ranger-level3
 source_package_id=pf1.core_rulebook
 race_id=race:human
@@ -34,4 +37,5 @@ choice=choice:human_ability_bonus:ability:strength
 choice=choice:ranger_favored_enemy:enemy:humanoid_orc
 choice=choice:ranger_combat_style:style:archery
 choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_favored_terrain:terrain:forest
 provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e3-r5-paladin-and-ranger-hybrid-chassis-baseline-execution-handoff-2026-07-01.md

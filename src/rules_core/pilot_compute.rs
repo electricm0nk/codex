@@ -242,15 +242,34 @@ const MAX_SUPPORTED_RANGER_LEVEL: u8 = 3;
 /// automatically, with no player choice involved ("A ranger gains Endurance as a
 /// bonus feat at 3rd level"), so it is grounded as a bounded grant-only identity
 /// record, mirroring the Wizard Scribe Scroll / Barbarian Uncanny Dodge idiom.
-/// Favored Terrain, the class table's other 3rd-level "Special" column entry, is
-/// deliberately left named-but-unproven this slice: PF1 grants it as a player
-/// choice of terrain type (from Table: Ranger Favored Terrains) with a flat +2
-/// bonus on Initiative checks and Knowledge (geography)/Perception/Stealth/
-/// Survival checks made in that terrain, which would require a NEW choice-slot
-/// with no existing fixture data selecting one -- out of this bounded slice's
-/// scope, mirroring how the Sorcerer bloodline-class-skill choice needed its own
-/// dedicated slice once a choice-id and fixture selection existed.
 const RANGER_ENDURANCE_LEVEL: u8 = 3;
+
+/// PF1 Core Rulebook level gate at which Ranger gains Favored Terrain (3rd level,
+/// the same gate as Endurance -- both are the two named entries in the class
+/// table's 3rd-level "Special" column, verified independently against two primary
+/// sources: d20pfsrd and legacy.aonprd.com both list "Endurance, favored terrain"
+/// and both state the exact bonus text: "+2 bonus on Initiative checks and
+/// Knowledge (geography), Perception, Stealth, and Survival skill checks" made
+/// when the ranger is in the chosen terrain, selected from Table: Ranger Favored
+/// Terrains' fixed eleven-entry list (Cold, Desert, Forest, Jungle, Mountain,
+/// Plains, Planes, Swamp, Underground, Urban, Water). Unlike Endurance, Favored
+/// Terrain is a genuine player choice, so this slice grounds a choice-slot
+/// recognition record (naming whichever terrain was selected, mirroring the
+/// Favored Enemy choice-recognition idiom exactly) plus the rule's own flat +2
+/// magnitude, grounded as a standalone, non-applied record -- no
+/// terrain-detection engine decides whether the character is actually in the
+/// chosen terrain, and the +2 is never wired into any actual Initiative total or
+/// skill-check total. The level-8th/13th/18th additional-terrain and
+/// bonus-increase progression stays out of scope for this bounded slice.
+const RANGER_FAVORED_TERRAIN_LEVEL: u8 = 3;
+
+/// SD13-E5 Ranger Favored Terrain choice-slot id. The deterministic fixture names
+/// a chosen terrain (e.g. `terrain:forest`); the compute seam recognizes whichever
+/// raw terrain string was actually selected, mirroring
+/// `choice:ranger_favored_enemy`'s open-ended (non-restricted-list) recognition
+/// idiom exactly -- no enum validation against the Table: Ranger Favored Terrains
+/// list is performed here.
+const RANGER_FAVORED_TERRAIN_CHOICE_ID: &str = "choice:ranger_favored_terrain";
 
 // SD13-E5 Ranger combat style choice-slot recognition, grounded once the level-range
 // gate reaches RANGER_COMBAT_STYLE_LEVEL (2nd level). PF1 Core Rulebook Combat Style
@@ -3115,16 +3134,26 @@ fn supported_ranger_level(input: &CharacterInput) -> Option<u8> {
 ///   re-derivation), and grounds Endurance, the PF1 CRB's 3rd-level Ranger
 ///   class feature, as a bounded grant-only identity record (value 0): the
 ///   ranger gains Endurance as a bonus feat automatically, with no player
-///   choice involved. Favored Terrain, the class table's other 3rd-level
-///   entry, is deliberately left named-but-unproven — it needs a new
-///   choice-slot with no existing fixture selection, out of scope this slice.
+///   choice involved.
+///
+/// - a still later SD13-E5 slice grounds Favored Terrain, the class table's
+///   other 3rd-level "Special" column entry, once a `choice:ranger_favored_terrain`
+///   choice-slot exists in chosen input: a `+0` recognition record naming
+///   whichever terrain was selected (mirroring the Favored Enemy choice-recognition
+///   idiom exactly — raw string interpolation, no restricted-list validation), and
+///   the rule's own flat `+2` magnitude on Initiative/Knowledge (geography)/
+///   Perception/Stealth/Survival checks made in the chosen terrain, grounded as a
+///   standalone, non-applied record, level-gated at 3rd level exactly like
+///   Endurance. No terrain-detection engine and no application of the `+2` to any
+///   actual Initiative total or skill-check total is grounded here.
 ///
 /// This deliberately does not compute a supported class-feature surface. It
 /// grounds no favored-enemy conditional application, no combat-style feat
-/// grant, no animal companion, no favored-terrain breadth, and no spell
+/// grant, no animal companion, no favored-terrain breadth (the level-8th/13th/
+/// 18th additional-terrain and bonus-increase progression), and no spell
 /// posture. It only emits the grounded Track / Favored Enemy / combat-style /
-/// Endurance level-gate values that prove the F6 surface remains separable on
-/// the runtime path.
+/// Endurance / Favored Terrain level-gate values that prove the F6 surface
+/// remains separable on the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -3158,9 +3187,11 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // formulas via the same shape (no re-derivation) and finally grounding the
     // combat-style pillar for real at the 2nd-level gate it was always named for.
     // A still later SD13-E5 slice widens the gate again to level 3, extending both
-    // formulas once more and grounding Endurance (a grant-only identity record).
+    // formulas once more and grounding Endurance (a grant-only identity record) and
+    // Favored Terrain (a choice recognition record plus a flat +2 magnitude record).
     // Ranger level 4+ progression, the favored-enemy conditional-application engine,
-    // Favored Terrain, and the ranger spell burden remain deliberately out of scope.
+    // the level-8th/13th/18th Favored Terrain breadth, and the ranger spell burden
+    // remain deliberately out of scope.
     let level_value = i16::from(level);
 
     // Grounded (1/2): full-BAB base-attack progression, the same formula shape as
@@ -3429,12 +3460,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // a bounded grant-only identity record (value 0, non-fabricated) — mirroring
     // the Wizard Scribe Scroll / Barbarian Uncanny Dodge idiom: no feat-effect
     // execution engine exists anywhere in this codebase to apply Endurance's own
-    // mechanical benefits. Favored Terrain, the class table's other 3rd-level
-    // "Special" column entry, is deliberately left named-but-unproven this
-    // slice: it is a player choice of terrain type with a flat +2 bonus on
-    // Initiative/Knowledge (geography)/Perception/Stealth/Survival checks made
-    // in that terrain, which would require a NEW choice-slot with no existing
-    // fixture selection — out of scope this slice.
+    // mechanical benefits.
     if level < RANGER_ENDURANCE_LEVEL {
         explanations.push(ComputationExplanation {
             id: "class_feature.ranger.endurance".to_owned(),
@@ -3455,6 +3481,71 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  with no player choice involved. This is a bounded grant-only identity record \
                  (value 0, non-fabricated): Endurance's own mechanical effects are not computed, \
                  since no feat-effect execution engine exists anywhere in this codebase"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): Favored Terrain, the class table's other 3rd-level
+    // "Special" column entry alongside Endurance, verified independently against
+    // two primary PF1 sources (d20pfsrd and legacy.aonprd.com both list
+    // "Endurance, favored terrain" as the Ranger 3rd-level special feature entry,
+    // and both state the exact bonus text: "+2 bonus on Initiative checks and
+    // Knowledge (geography), Perception, Stealth, and Survival skill checks" made
+    // when the ranger is in the chosen terrain, selected from Table: Ranger
+    // Favored Terrains' fixed eleven-entry list). Below the level-3 gate this is
+    // a correct level-gate absence (value 0); at or above it: the chosen terrain
+    // (when present in chosen input) is recognized as a bounded `+0` identity
+    // record naming whichever raw terrain string was actually selected —
+    // mirroring the Favored Enemy choice-recognition idiom exactly, with no
+    // restricted-list validation — and the rule's own flat `+2` magnitude is
+    // grounded as a standalone, non-applied record: no terrain-detection engine
+    // decides whether the character is actually in the chosen terrain, so no
+    // Initiative total or skill-check total is modified by this record. The
+    // level-8th/13th/18th additional-terrain and bonus-increase progression
+    // stays out of scope for this bounded slice.
+    if level < RANGER_FAVORED_TERRAIN_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.favored_terrain".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Favored Terrain at ranger level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant terrain choice and \
+                 magnitude are named but not computed. Favored Terrain is a 3rd-level ranger \
+                 class feature."
+            ),
+        });
+    } else {
+        if let Some(favored_terrain) = choice_selection(input, RANGER_FAVORED_TERRAIN_CHOICE_ID) {
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_choice".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Ranger Favored Terrain selection \
+                     ({RANGER_FAVORED_TERRAIN_CHOICE_ID} -> {favored_terrain}): the \
+                     level-{level} favored terrain type chosen for this character is \
+                     {favored_terrain}. This is a bounded recognition record of the chosen \
+                     terrain type only; the flat bonus magnitude is grounded separately, and no \
+                     terrain-detection or conditional-application engine is implemented, so it \
+                     carries no fabricated mechanical value (+0)"
+                ),
+            });
+        }
+
+        let favored_terrain_bonus: i16 = 2;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.favored_terrain".to_owned(),
+            value: favored_terrain_bonus,
+            detail: format!(
+                "Ranger Favored Terrain bonus granted at ranger level {level} (PF1 Core \
+                 Rulebook, 3rd-level ranger class feature): a flat \
+                 +{favored_terrain_bonus} bonus on Initiative checks and Knowledge \
+                 (geography), Perception, Stealth, and Survival checks made when the ranger is \
+                 in the chosen favored terrain (drawn from Table: Ranger Favored Terrains --  \
+                 Cold, Desert, Forest, Jungle, Mountain, Plains, Planes, Swamp, Underground, \
+                 Urban, Water). This is a bounded flat-magnitude record only, non-fabricated: \
+                 no terrain-detection engine decides whether the character is actually in the \
+                 chosen terrain anywhere in this codebase, so no Initiative total or \
+                 skill-check total is modified by this record"
             ),
         });
     }
