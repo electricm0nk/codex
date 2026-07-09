@@ -347,7 +347,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_level2_progression.rs + \
     tests/sd13_ranger_level3_progression.rs + \
     tests/sd13_ranger_favored_terrain_choice.rs + \
-    tests/sd13_ranger_level4_progression.rs";
+    tests/sd13_ranger_level4_progression.rs + \
+    tests/sd13_ranger_level5_progression.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -1439,12 +1440,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Ranger level-1/level-2/level-3/level-4 chassis baseline, with base \
-                            attack bonus, base save progression, Track, the favored-enemy flat \
-                            surface, the combat-style choice-and-bonus-feat recognition, (level \
-                            3) Endurance and the Favored Terrain choice-and-flat-magnitude \
-                            surface, and (level 4) the Hunter's Bond choice-and-flat-magnitude \
-                            surface grounded for real and the later spell burden still blocked",
+                            Ranger level-1/level-2/level-3/level-4/level-5 chassis baseline, with \
+                            base attack bonus, base save progression, Track, the favored-enemy \
+                            flat surface, the combat-style choice-and-bonus-feat recognition, \
+                            (level 3) Endurance and the Favored Terrain \
+                            choice-and-flat-magnitude surface, (level 4) the Hunter's Bond \
+                            choice-and-flat-magnitude surface, and (level 5) the Favored Enemy \
+                            rule's 5th-level interval (second favored-enemy selection plus the \
+                            bonus-increase target choice) grounded for real and the later spell \
+                            burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1524,16 +1528,42 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     move-action/action-economy engine, no ally-range-and-perception check, and no \
                     favored-enemy target-type matching is implemented; the \"companion\" form's \
                     own animal-companion stat block/advancement subsystem is deliberately left \
-                    named-but-unproven, since it does not exist anywhere in this codebase. The row \
-                    is Partial, not Supported: the favored-enemy conditional-application engine \
+                    named-but-unproven, since it does not exist anywhere in this codebase. The \
+                    most recent SD13-E5 slice widens the level-range gate once more to level 5, \
+                    extending base attack/base save/Track to level 5 via the same formulas (Track \
+                    stays 2, max(5/2, 1); base Fortitude/Reflex/Will all stay 4/4/1, integer-\
+                    division coincidences, not signs the formulas stopped scaling), keeps \
+                    Endurance, Favored Terrain, combat style, and Hunter's Bond granted unchanged, \
+                    and grounds the Favored Enemy rule's own 5th-level interval, the class \
+                    table's 5th-level \"Special\" column entry (\"2nd favored enemy\", verified \
+                    independently against both primary sources — no other new class feature is \
+                    gained at 5th level). The rule text (\"At 5th level and every five levels \
+                    thereafter... the ranger may select an additional favored enemy. In addition, \
+                    at each such interval, the bonus against any one favored enemy (including the \
+                    one just selected, if so desired) increases by 2\") is NOT an automatic bump \
+                    to the first favored enemy — it is the ranger's own free choice which ONE \
+                    favored enemy is boosted. This slice grounds three things: a second \
+                    favored-enemy TYPE selection (choice:ranger_favored_enemy_2, mirroring the \
+                    first favored enemy's own open-ended choice-recognition idiom, plus the same \
+                    flat +2 base magnitude formula), a restricted two-option choice recognizing \
+                    WHICH one favored enemy is the bonus-increase target \
+                    (choice:ranger_favored_enemy_bonus_increase_target -> enemy:first or \
+                    enemy:second, mirroring the Hunter's Bond/combat-style restricted two-option \
+                    idiom), and the resulting +4 magnitude applied only to whichever favored \
+                    enemy the target choice actually names — absent an explicit target \
+                    selection, both favored enemies correctly stay the flat +2, since nothing is \
+                    fabricated about which one the ranger picked. Hunter's Bond's own ally-bonus \
+                    magnitude (half the FIRST favored enemy's bonus) naturally recomputes from \
+                    the same unchanged formula once that magnitude widens to +4. The row is \
+                    Partial, not Supported: the favored-enemy conditional-application engine \
                     (target-type matching that would decide whether a specific check or attack is \
                     made against the favored enemy) is not implemented, the recognized \
                     combat-style bonus feat's own mechanics remain unproven, the Favored Terrain \
                     level-8th/13th/18th breadth is unproven, Hunter's Bond's ally-bonus \
-                    application and the animal-companion form are unproven, Ranger level 5+ is \
+                    application and the animal-companion form are unproven, Ranger level 6+ is \
                     not proven, and the later ranger spell burden (spell slots, spell source, \
                     spells known/prepared) is still deferred to SD13-E4",
-                next_required_uplift: "Ranger level-5+ progression, a favored-enemy \
+                next_required_uplift: "Ranger level-6+ progression, a favored-enemy \
                     conditional-application engine, execution of the recognized combat-style bonus \
                     feat's own mechanics, Hunter's Bond ally-bonus application and the \
                     animal-companion stat block/advancement subsystem, then SD13-E4 ranger spell \

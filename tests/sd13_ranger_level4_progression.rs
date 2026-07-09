@@ -367,32 +367,27 @@ fn ranger_hunters_bond_companion_form_grounds_no_ally_bonus() {
     );
 }
 
-// ----- Negative control: level 5 stays unrecognized by this slice -----
-
+// ----- Historical control: level 5 was later widened into the supported tranche -----
+//
+// This test previously asserted level 5 stayed unrecognized by this slice. A later
+// SD13-E5 slice (`tests/sd13_ranger_level5_progression.rs`) widened
+// `supported_ranger_level` to include level 5, so the negative-control coverage moved
+// there (including the new level-6 negative control). This test is retained, renamed,
+// to document that the widening happened and to keep the level-4 fixture's own
+// baseline behavior pinned.
 #[test]
-fn ranger_level_5_is_not_promoted_by_this_slice() {
+fn ranger_level_5_was_later_widened_into_the_supported_tranche() {
     let level_5 = RANGER_LEVEL4_FIXTURE.replace("class:ranger:4", "class:ranger:5");
     let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
+    // Level 5 IS now recognized (widened by a later slice); the level-4 fixture's
+    // ranger_favored_terrain/hunters_bond selections still carry over cleanly, so the
+    // base chassis pillars are still recognized at level 5 too.
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")),
-        "level-5 Ranger must not gain any bounded ranger chassis explanation: {:?}",
+        has_explanation(&computation, ENDURANCE_ID),
+        "level-5 Ranger (mutated from the level-4 fixture) is recognized by the later \
+         level-5-widening slice: {:?}",
         computation.explanations
-    );
-    assert!(
-        !has_explanation(&computation, ENDURANCE_ID),
-        "level-5 Ranger must not gain the Endurance explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, FAVORED_TERRAIN_ID),
-        "level-5 Ranger must not gain the Favored Terrain explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, HUNTERS_BOND_ID),
-        "level-5 Ranger must not gain the Hunter's Bond explanation from this bounded slice"
     );
 }
 

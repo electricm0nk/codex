@@ -255,9 +255,47 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // surface, and the combat-style level-gate absence) is joined by level 2, the PF1
 // Core Rulebook level gate at which Combat Style Feat is actually granted, by
 // level 3 (SD13-E5), the level gate at which Endurance and Favored Terrain are
-// granted, and by level 4 (SD13-E5), the level gate at which Hunter's Bond is
-// granted. Nothing here grounds level 5+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 4;
+// granted, by level 4 (SD13-E5), the level gate at which Hunter's Bond is
+// granted, and by level 5 (SD13-E5), the level gate at which the Favored Enemy
+// rule's own 5th-level interval (a second favored enemy plus a +2 bonus increase
+// to any one favored enemy of the ranger's choice) is granted. Nothing here
+// grounds level 6+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 5;
+
+/// PF1 Core Rulebook level gate at which the Favored Enemy rule's 5th-level
+/// interval is granted (verified independently against two primary sources:
+/// both d20pfsrd and legacy.aonprd.com list "2nd favored enemy" as the Ranger
+/// 5th-level "Special" column entry, and both state the exact rule text: "At
+/// 5th level and every five levels thereafter (10th, 15th, and 20th level), the
+/// ranger may select an additional favored enemy. In addition, at each such
+/// interval, the bonus against any one favored enemy (including the one just
+/// selected, if so desired) increases by 2." This is genuinely two things at
+/// once: a second favored-enemy TYPE selection (open-ended, mirroring the first
+/// favored enemy's own choice-slot idiom) and a separate, independent choice of
+/// WHICH one favored enemy (the newly selected one or an already-held one)
+/// receives the +2 magnitude increase -- it is NOT an automatic bump to the
+/// first favored enemy, so this slice grounds the target as its own restricted
+/// two-option choice-slot (mirroring the Hunter's Bond/combat-style restricted
+/// two-option idiom) rather than assuming a specific outcome.
+const RANGER_FAVORED_ENEMY_SECOND_INTERVAL_LEVEL: u8 = 5;
+
+/// SD13-E5 Ranger second favored-enemy choice-slot id. The deterministic fixture
+/// names a second favored-enemy type (e.g. `enemy:undead`); the compute seam
+/// recognizes whichever raw enemy-type string was actually selected, mirroring
+/// `choice:ranger_favored_enemy`'s open-ended (non-restricted-list) recognition
+/// idiom exactly.
+const RANGER_FAVORED_ENEMY_SECOND_CHOICE_ID: &str = "choice:ranger_favored_enemy_2";
+
+/// SD13-E5 Ranger favored-enemy bonus-increase target choice-slot id. Names
+/// which ONE of the (now two) favored enemies receives the rule's own +2
+/// magnitude increase at the 5th-level interval -- a restricted two-option
+/// choice (`enemy:first` or `enemy:second`), mirroring the Hunter's Bond
+/// restricted two-option choice idiom exactly (unlike the open-ended favored
+/// enemy TYPE choice-slots themselves).
+const RANGER_FAVORED_ENEMY_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_enemy_bonus_increase_target";
+const RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION: &str = "enemy:first";
+const RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION: &str = "enemy:second";
 
 /// PF1 Core Rulebook level gate at which Ranger gains Endurance (3rd level,
 /// verified independently against two primary sources: d20pfsrd and
@@ -3314,9 +3352,9 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
 
 /// The bounded Ranger milestone level this decomposition surface grounds, if any.
 /// Returns the single Ranger level when the chosen input is exactly a single-class
-/// Ranger at one of the supported milestone levels (1, 2, 3, or 4). Returns `None`
+/// Ranger at one of the supported milestone levels (1, 2, 3, 4, or 5). Returns `None`
 /// for no Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid (which
-/// has its own decomposition lane), or any level-5+ Ranger this slice deliberately
+/// has its own decomposition lane), or any level-6+ Ranger this slice deliberately
 /// does not recognize — each of which stays claim-blocked exactly as before. Mirrors the
 /// Fighter `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
 /// `supported_rogue_level` / Barbarian `supported_barbarian_level` / Monk
@@ -3434,6 +3472,31 @@ fn supported_ranger_level(input: &CharacterInput) -> Option<u8> {
 ///   ally-range-and-perception check, and no favored-enemy target-type matching
 ///   is implemented; the "companion" form's own animal-companion stat
 ///   block/advancement subsystem is deliberately left named-but-unproven.
+///
+/// - a still later SD13-E5 slice widens the level-range gate once more to level
+///   5 (`MAX_SUPPORTED_RANGER_LEVEL`), extending base attack/base save/Track to
+///   level 5 via the same formulas (no re-derivation), and grounds the Favored
+///   Enemy rule's own 5th-level interval, the class table's 5th-level "Special"
+///   column entry ("2nd favored enemy", verified independently against both
+///   primary sources): the rule text is "At 5th level and every five levels
+///   thereafter... the ranger may select an additional favored enemy. In
+///   addition, at each such interval, the bonus against any one favored enemy
+///   (including the one just selected, if so desired) increases by 2" — NOT an
+///   automatic bump to the first favored enemy. This grounds three things: a
+///   second favored-enemy TYPE selection (`choice:ranger_favored_enemy_2`,
+///   mirroring the first favored enemy's own open-ended choice-recognition
+///   idiom, plus the same flat `+2` base magnitude formula), a restricted
+///   two-option choice recognizing WHICH one favored enemy is the
+///   bonus-increase target (`choice:ranger_favored_enemy_bonus_increase_target`
+///   -> `enemy:first` or `enemy:second`, mirroring the Hunter's Bond/combat-style
+///   restricted two-option idiom), and the resulting `+4` magnitude applied only
+///   to whichever favored enemy the target choice actually names — absent an
+///   explicit target selection, both favored enemies stay the flat `+2`, since
+///   nothing is fabricated about which one the ranger picked. Endurance,
+///   Favored Terrain, combat style, and Hunter's Bond all stay granted at level
+///   5, not re-derived; Hunter's Bond's own ally-bonus magnitude (half the
+///   FIRST favored enemy's bonus) naturally recomputes from the same unchanged
+///   formula once that magnitude widens to `+4`.
 ///
 /// This deliberately does not compute a supported class-feature surface. It
 /// grounds no favored-enemy conditional application, no combat-style feat
@@ -3715,7 +3778,62 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         });
     }
 
-    let favored_enemy_bonus: i16 = 2;
+    // SD13-E5 ranger level 5: recognize the bonus-increase TARGET choice, only
+    // meaningful once the ranger has reached the Favored Enemy rule's 5th-level
+    // interval. PF1 Core Rulebook: "the bonus against any one favored enemy
+    // (including the one just selected, if so desired) increases by 2" -- a
+    // genuine, free player choice of which ONE favored enemy is boosted, not an
+    // automatic bump to the first one. Absent an explicit target selection in
+    // chosen input, nothing is fabricated: both favored enemies stay at the flat
+    // base magnitude.
+    let favored_enemy_bonus_increase_target = if level >= RANGER_FAVORED_ENEMY_SECOND_INTERVAL_LEVEL
+    {
+        choice_selection(input, RANGER_FAVORED_ENEMY_BONUS_INCREASE_CHOICE_ID)
+    } else {
+        None
+    };
+
+    if let Some(target) = favored_enemy_bonus_increase_target {
+        let target_name = if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION {
+            Some("the first favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION {
+            Some("the second favored enemy")
+        } else {
+            None
+        };
+        let detail = if let Some(name) = target_name {
+            format!(
+                "Ranger Favored Enemy bonus-increase target selection at ranger level {level} \
+                 ({RANGER_FAVORED_ENEMY_BONUS_INCREASE_CHOICE_ID} -> {target}): names {name} as \
+                 the one favored enemy whose bonus increases by +2 at this 5th-level interval, \
+                 per the PF1 Core Rulebook rule that the bonus against any ONE favored enemy -- \
+                 including a newly selected one, if so desired -- increases by 2 at each such \
+                 interval (5th, 10th, 15th, and 20th ranger level). This is a recognition record \
+                 of the choice slot only (+0); the increased magnitude itself is grounded \
+                 separately on whichever favored enemy was actually named"
+            )
+        } else {
+            format!(
+                "Ranger Favored Enemy bonus-increase target selection at ranger level {level} is \
+                 present ({RANGER_FAVORED_ENEMY_BONUS_INCREASE_CHOICE_ID} -> {target}), but only \
+                 the PF1 Core Rulebook restricted pair (the first favored enemy, the second \
+                 favored enemy) is recognized on this bounded seam; no target identity is \
+                 grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_bonus_increase_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    let first_favored_enemy_targeted =
+        favored_enemy_bonus_increase_target == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION);
+    let second_favored_enemy_targeted = favored_enemy_bonus_increase_target
+        == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION);
+
+    let favored_enemy_bonus: i16 = if first_favored_enemy_targeted { 4 } else { 2 };
     explanations.push(ComputationExplanation {
         id: "class_chassis.ranger.favored_enemy_skill_bonus".to_owned(),
         value: favored_enemy_bonus,
@@ -3744,6 +3862,62 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
              modified by this record"
         ),
     });
+
+    // SD13-E5 ranger level 5: recognize the SECOND favored-enemy selection, the
+    // rule's other 5th-level interval grant. Mirrors the first favored enemy's
+    // own choice-recognition idiom exactly (open-ended, raw string
+    // interpolation, no restricted-list validation) and its own flat magnitude
+    // formula (base +2, or +4 if this interval's bonus-increase target names the
+    // second favored enemy).
+    if level >= RANGER_FAVORED_ENEMY_SECOND_INTERVAL_LEVEL
+        && let Some(second_favored_enemy) =
+            choice_selection(input, RANGER_FAVORED_ENEMY_SECOND_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_2_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger 2nd Favored Enemy selection \
+                 ({RANGER_FAVORED_ENEMY_SECOND_CHOICE_ID} -> {second_favored_enemy}): at \
+                 ranger level {level}, PF1 Core Rulebook Favored Enemy grants \"an additional \
+                 favored enemy\" at the 5th-level interval. The level-{level} SECOND \
+                 favored-enemy type chosen for this character is {second_favored_enemy}. This \
+                 is a bounded recognition record of the chosen enemy type only; the flat bonus \
+                 magnitude is grounded separately, and no target-type matching or \
+                 conditional-application engine is implemented, so it carries no fabricated \
+                 mechanical value (+0)"
+            ),
+        });
+
+        let second_favored_enemy_bonus: i16 = if second_favored_enemy_targeted { 4 } else { 2 };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_2_skill_bonus".to_owned(),
+            value: second_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 2nd Favored Enemy skill bonus (PF1 Core Rulebook, level {level}): \
+                 +{second_favored_enemy_bonus} on Bluff, Knowledge, Perception, Sense Motive, \
+                 and Survival checks against the second favored enemy. This grounds only the \
+                 flat +{second_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific skill \
+                 check is actually made against this favored enemy is never resolved and no \
+                 skill total is modified by this record"
+            ),
+        });
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_2_attack_damage_bonus".to_owned(),
+            value: second_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 2nd Favored Enemy weapon attack/damage bonus (PF1 Core Rulebook, \
+                 level {level}): +{second_favored_enemy_bonus} on weapon attack rolls AND \
+                 weapon damage rolls against the second favored enemy. This grounds only the \
+                 flat +{second_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific attack \
+                 is actually made against this favored enemy is never resolved and no combat \
+                 baseline is modified by this record"
+            ),
+        });
+    }
 
     // Grounded (SD13-E5): Endurance, a 3rd-level Ranger class feature verified
     // independently against two primary PF1 sources (d20pfsrd and
