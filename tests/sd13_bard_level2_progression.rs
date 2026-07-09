@@ -314,12 +314,38 @@ fn bard_level1_truth_is_unchanged_by_this_widening() {
     assert_eq!(rounds.value, 6, "Bard level 1 bardic performance rounds per day must stay 6");
 }
 
-// ----- Negative control: level 3 stays unrecognized by this slice -----
+// ----- Bard level 3 was later widened into the supported tranche -----
 
 #[test]
-fn bard_level_3_is_not_promoted_by_this_slice() {
+fn bard_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 3 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_bard_level3_progression.rs) widened the level-range gate to
+    // level 3 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Druid/
+    // Sorcerer/Wizard level-range gate idiom) and extended every formula below;
+    // this negative control is superseded, not violated — pin the new truth
+    // here too so this file stays internally consistent.
     let level_3 = BARD_LEVEL2_FIXTURE.replace("class:bard:2", "class:bard:3");
     let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.bard.")
+                || e.id == "class_chassis.spell_baseline.bard"
+                || e.id == WELL_VERSED_ID),
+        "level-3 Bard is supported since the SD13-E5 level-3 slice: {:?}",
+        computation.explanations
+    );
+}
+
+// ----- Negative control: level 4 stays unrecognized by this slice -----
+
+#[test]
+fn bard_level_4_is_not_promoted_by_this_slice() {
+    let level_4 = BARD_LEVEL2_FIXTURE.replace("class:bard:2", "class:bard:4");
+    let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -328,7 +354,7 @@ fn bard_level_3_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id == "class_chassis.spell_baseline.bard"
                 || e.id == WELL_VERSED_ID),
-        "level-3 Bard must not gain any bounded bard chassis explanation: {:?}",
+        "level-4 Bard must not gain any bounded bard chassis explanation: {:?}",
         computation.explanations
     );
 }

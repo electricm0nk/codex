@@ -358,8 +358,19 @@ const BARD_CLASS_ID: &str = "class:bard";
 /// not increase until level 5, and the level-2 "Special" column reads "Versatile
 /// performance, well-versed" — Well-Versed (a flat, non-level-scaled +4 save bonus)
 /// is grounded this slice; Versatile Performance (a choice-gated skill-substitution
-/// engine) is deliberately left named-but-unproven.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 2;
+/// engine) is deliberately left named-but-unproven. Widened again to level 3 by a
+/// further SD13-E5 slice: level 3 base attack +2, base saves +1/+3/+3
+/// (Fortitude/Reflex/Will), every other flat formula (Bardic Knowledge, Bardic
+/// Performance rounds/day, Inspire Courage, Fascinate DC/affected-creature-count,
+/// Well-Versed) extends via the same formula with no re-derivation, and the
+/// level-3 "Special" column reads "Inspire competence +2" — a flat, identity-shaped
+/// class feature grounded this slice. Unlike Wizard's specialist-bonus-slot or
+/// Cleric's domain-slot doubling at level 3, Bard has no grounded spell-slot-count
+/// pillar at all (the Bard spells-per-day table's own 2nd-level spell column does
+/// not turn non-blank until 4th level, verified independently, and this row's
+/// still-unproven list already names the entire spontaneous spell posture as
+/// ungrounded), so no analogous slot-count doubling applies here.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 3;
 /// PF1 Core Rulebook level gate at which Bard gains Well-Versed (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Versatile performance, well-versed" as the Bard 2nd-level special feature
@@ -376,6 +387,17 @@ const BARD_WELL_VERSED_BONUS: i16 = 4;
 /// per day" (verified against d20pfsrd and legacy.aonprd.com, not assumed from
 /// Barbarian's superficially similar Rage-rounds progression).
 const BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL: i16 = 2;
+/// PF1 Core Rulebook level gate at which Bard gains Inspire Competence (3rd level,
+/// verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Inspire competence +2" as the Bard 3rd-level
+/// special feature entry).
+const BARD_INSPIRE_COMPETENCE_LEVEL: u8 = 3;
+/// PF1 Core Rulebook Inspire Competence magnitude at the level it is first gained: a
+/// flat +2 competence bonus on skill checks with a particular skill. Verified
+/// against both primary sources; the magnitude does not increase again until bard
+/// level 7 (+1 every four levels beyond 3rd), out of scope for this bounded slice
+/// since only Bard levels 1-3 are supported.
+const BARD_INSPIRE_COMPETENCE_BONUS: i16 = 2;
 
 // SD13-E5 Fascinate flat DC base. PF1 Core Rulebook Fascinate Will save DC is
 // 10 + 1/2 bard level + Charisma modifier; only the fixed base term is a named
@@ -6207,8 +6229,8 @@ fn explain_druid_level1_spell_baseline(
 
 /// The bounded Bard milestone level this decomposition surface grounds, if any.
 /// Returns the single Bard level when the chosen input is exactly a single-class
-/// Bard at one of the supported milestone levels (1 or 2). Returns `None` for no
-/// Bard, a non-Bard class, a multiclass mix, or any level-3+ Bard this slice
+/// Bard at one of the supported milestone levels (1, 2, or 3). Returns `None` for
+/// no Bard, a non-Bard class, a multiclass mix, or any level-4+ Bard this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -6227,14 +6249,15 @@ fn supported_bard_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E4-F7/SD13-E4/SD13-E5 runtime evidence for the deterministic
-/// Human Bard level-1/level-2 spontaneous arcane spell-bearing baseline: one
+/// Human Bard level-1/level-2/level-3 spontaneous arcane spell-bearing baseline: one
 /// recognition record, the foundational base-attack-bonus / base-save progression
 /// pillar (four standalone records), five grounded chassis-class-feature pillars
 /// (Bardic Knowledge, the Bardic Performance rounds-per-day budget, the Inspire
 /// Courage flat magnitude, and the Fascinate flat Will-save DC and
 /// affected-creature-count formulas), a sixth pillar grounded only at level 2
-/// (Well-Versed's flat +4 save-bonus magnitude), and two remaining named
-/// claim-blocking burdens (the bardic performance-execution engine, the
+/// (Well-Versed's flat +4 save-bonus magnitude), a seventh pillar grounded only at
+/// level 3 (Inspire Competence's flat +2 skill-check magnitude), and two remaining
+/// named claim-blocking burdens (the bardic performance-execution engine, the
 /// spontaneous spell posture).
 ///
 /// This deliberately does not compute a supported Bard chassis. It grounds no
@@ -6295,7 +6318,16 @@ fn supported_bard_level(input: &CharacterInput) -> Option<u8> {
 ///   feature) is NOT flat — it requires a choice of Perform type and an actual
 ///   skill-substitution engine — so it is deliberately left named-but-unproven,
 ///   mirroring how the Monk level-2 bonus feat grant was deliberately left
-///   unrecognized by the Monk level-2 widening slice, and
+///   unrecognized by the Monk level-2 widening slice,
+/// - grounds Inspire Competence (SD13-E5, a 3rd-level Bard class feature verified
+///   independently against two primary PF1 sources — d20pfsrd and
+///   legacy.aonprd.com both list "Inspire competence +2" as the Bard 3rd-level
+///   special feature entry) as a flat +2 standalone magnitude (a competence bonus
+///   on skill checks with a particular skill), mirroring the Fighter Bravery /
+///   Rogue Trap Sense / Barbarian Trap Sense / Monk Still Mind idiom: never
+///   applied to any actual skill-check total, since no skill-check-resolution
+///   engine exists in this codebase, and no task-selection/action-economy engine
+///   decides which skill or ally it targets, and
 /// - emits two distinct claim-blocking diagnostics naming the still-unproven bardic
 ///   performance-execution burden (start/maintain action economy, round tracking and
 ///   consumption, no application of any grounded magnitude/DC/count to an actual
@@ -6571,6 +6603,44 @@ fn explain_bard_level1_spell_baseline(
                  standalone explanation record only; it is never applied to any actual save \
                  total because no saving-throw-resolution engine exists anywhere in this \
                  codebase"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): Inspire Competence, a 3rd-level Bard class feature
+    // verified independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Inspire competence +2" as the Bard 3rd-level
+    // special feature entry). Below the level-3 gate this is a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it, it is a flat +2
+    // standalone magnitude (a competence bonus on skill checks with a particular
+    // skill, verified against both primary sources), mirroring the Fighter
+    // Bravery / Rogue Trap Sense / Barbarian Trap Sense / Monk Still Mind idiom —
+    // never applied to any actual skill-check total, since no
+    // skill-check-resolution engine exists in this codebase, and no
+    // task-selection/action-economy engine decides which skill or ally it
+    // targets. The magnitude does not increase again until bard level 7, out of
+    // scope for this bounded slice.
+    if level < BARD_INSPIRE_COMPETENCE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.inspire_competence".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bard Inspire Competence at bard level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Inspire Competence is a 3rd-level Bard class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.inspire_competence".to_owned(),
+            value: BARD_INSPIRE_COMPETENCE_BONUS,
+            detail: format!(
+                "Bard Inspire Competence granted at bard level {level} (PF1 Core Rulebook, \
+                 3rd-level Bard class feature): a flat +{BARD_INSPIRE_COMPETENCE_BONUS} \
+                 competence bonus on skill checks with a particular skill. This is a standalone \
+                 explanation record only; it is never applied to any actual skill-check total \
+                 because no skill-check-resolution engine exists anywhere in this codebase, and \
+                 no task-selection/action-economy engine decides which skill or ally it targets"
             ),
         });
     }
