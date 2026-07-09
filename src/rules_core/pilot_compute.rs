@@ -308,9 +308,20 @@ const TWO_WEAPON_FIGHTING_FEAT_SELECTION: &str = "feat:two_weapon_fighting";
 // Monk/Cleric/Bard/Druid idiom: the PF1 Core Rulebook Sorcerer class table's level-2
 // "Special" column is blank (verified against d20pfsrd and legacy.aonprd.com), so no new
 // class feature is gained at 2nd level, unlike Rogue/Monk/Druid's Evasion/Woodland
-// Stride — this widening extends the existing pillars only, adding no new one.
+// Stride — this widening extends the existing pillars only, adding no new one. A further
+// SD13-E5 slice widens the gate again to level 3: the PF1 Core Rulebook Sorcerer class
+// table's level-3 "Special" column reads "Bloodline power, bloodline spell" (verified
+// against d20pfsrd and legacy.aonprd.com), NOT blank like level 2 — but both entries are
+// bloodline-specific (they name a different power/spell per bloodline, e.g. the Arcane
+// bloodline's own 3rd-level power is Metamagic Adept and its 3rd-level bloodline spell is
+// Identify) and neither is flat/identity-shaped the way Rogue's Trap Sense or Monk's Still
+// Mind are, so no new pillar record is added for level 3 either — both entries stay named
+// by the pre-existing `arcane_bond_and_bloodline_progression.unsupported` diagnostic's
+// "bonus spells/feats at 3rd+ level" and "bloodline power" language, unchanged. This
+// widening extends only the already-grounded base-attack/base-save/bloodline-choice
+// pillars to level 3.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 2;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 3;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -3553,8 +3564,8 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.
 /// Returns the single Sorcerer level when the chosen input is exactly a single-class
-/// Sorcerer at one of the supported milestone levels (1 or 2). Returns `None` for no
-/// Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-3+ Sorcerer this
+/// Sorcerer at one of the supported milestone levels (1, 2, or 3). Returns `None` for no
+/// Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-4+ Sorcerer this
 /// slice deliberately does not recognize — each of which stays claim-blocked exactly
 /// as before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -4747,11 +4758,27 @@ fn explain_rogue_level1_chassis(
 /// other class's own base-attack/base-save grounding: neither is wired into
 /// `base_attack_bonus`, `compute_total_saves`, or `compute_combat_baseline`.
 ///
+/// A further SD13-E5 slice widens the level-1..=2 gate to level 3
+/// (`MAX_SUPPORTED_SORCERER_LEVEL = 3`) and extends every one of the formulas above to
+/// level 3 via the same formula, without re-derivation, verified independently against
+/// the PF1 Core Rulebook Sorcerer class table (d20pfsrd and legacy.aonprd.com): level 3
+/// base attack bonus is +1, base saves are +1/+1/+3 (Fortitude/Reflex/Will); the bloodline
+/// choice and bloodline class-skill choice recognitions are not level-gated, so both
+/// still fire at level 3 for the same fixture selections. UNLIKE Sorcerer's own blank
+/// level-2 "Special" column, the level-3 "Special" column reads "Bloodline power,
+/// bloodline spell" (verified independently against both primary sources) — this was
+/// checked, not assumed away, but both named entries are bloodline-specific (they vary
+/// per bloodline, e.g. the Arcane bloodline's own 3rd-level power is Metamagic Adept and
+/// its 3rd-level bloodline spell is Identify) and neither is flat/identity-shaped the way
+/// Rogue's Trap Sense or Monk's Still Mind are, so this slice grounds neither: both stay
+/// named by the pre-existing `arcane_bond_and_bloodline_progression.unsupported`
+/// diagnostic, unchanged.
+///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Sorcerer spell-bearing identity, the
 /// grounded Eschew Materials grant, the grounded bloodline choice recognition, the
-/// grounded base-attack/base-save progression, and the two remaining named burdens
-/// legible on the runtime path.
+/// grounded base-attack/base-save progression through level 3, and the two remaining
+/// named burdens legible on the runtime path.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,

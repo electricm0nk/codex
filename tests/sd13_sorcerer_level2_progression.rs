@@ -213,12 +213,39 @@ fn sorcerer_level1_truth_is_unchanged_by_this_widening() {
     assert_eq!(will.value, 2, "Sorcerer level 1 good Will save must stay 2");
 }
 
-// ----- Negative control: level 3 stays unrecognized by this slice -----
+// ----- Negative control: level 3 was later widened into the supported tranche -----
 
 #[test]
-fn sorcerer_level_3_is_not_promoted_by_this_slice() {
+fn sorcerer_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 3 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_sorcerer_level3_progression.rs) widened the level-range gate
+    // to level 3 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Ranger
+    // level-range gate idiom); this negative control is superseded, not
+    // violated — pin the new truth here too so this file stays internally
+    // consistent. The frontier this file's own slice actually drew is now
+    // level 4, covered by `sorcerer_level_4_is_not_promoted_by_this_slice`
+    // below.
     let level_3 = SORCERER_LEVEL2_FIXTURE.replace("class:sorcerer:2", "class:sorcerer:3");
     let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        has_explanation(&computation, "class_chassis.sorcerer.base_attack_bonus"),
+        "level-3 Sorcerer is supported since the SD13-E5 level-3 slice: {:?}",
+        computation.explanations
+    );
+    assert!(
+        has_explanation(&computation, "class_chassis.sorcerer.bloodline_choice"),
+        "level-3 Sorcerer must keep the bloodline choice recognition grounded at level 2"
+    );
+}
+
+// ----- Negative control: level 4 stays unrecognized by this slice -----
+
+#[test]
+fn sorcerer_level_4_is_not_promoted_by_this_slice() {
+    let level_4 = SORCERER_LEVEL2_FIXTURE.replace("class:sorcerer:2", "class:sorcerer:4");
+    let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -226,7 +253,7 @@ fn sorcerer_level_3_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.sorcerer.")
                 || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-3 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+        "level-4 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
         computation.explanations
     );
 }

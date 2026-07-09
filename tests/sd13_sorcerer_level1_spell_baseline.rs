@@ -503,21 +503,45 @@ fn sorcerer_level_2_was_later_widened_into_the_supported_tranche() {
 }
 
 #[test]
-fn sorcerer_level_3_is_not_promoted_by_this_slice() {
-    // Level 3 stays out of scope for this slice; a level-3 Sorcerer must not gain
-    // the bounded level-1/level-2 spell-baseline recognition record and stays
-    // blocked.
+fn sorcerer_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 3 was the next unproven milestone
+    // and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_sorcerer_level3_progression.rs) widened the level-range gate to
+    // level 3 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Ranger level-range
+    // gate idiom); this negative control is superseded, not violated — pin the new
+    // truth here too so this file stays internally consistent. The frontier this
+    // file's own slice actually drew is now level 4, covered by
+    // `sorcerer_level_4_is_not_promoted_by_this_slice` below.
     let level_3 = SORCERER_FIXTURE.replace("class:sorcerer:1", "class:sorcerer:3");
     let input = load(&level_3);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, RECOGNITION_ID),
-        "level-3 Sorcerer must not gain the bounded level-1/level-2 spell-baseline recognition \
-         record"
+        has_explanation(&computation, RECOGNITION_ID),
+        "level-3 Sorcerer is supported since the SD13-E5 level-3 slice: {:?}",
+        computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "level-3 Sorcerer must stay claim-blocked in this slice"
+    );
+}
+
+#[test]
+fn sorcerer_level_4_is_not_promoted_by_this_slice() {
+    // Level 4 stays out of scope for this slice; a level-4 Sorcerer must not gain
+    // the bounded level-1/level-2/level-3 spell-baseline recognition record and
+    // stays blocked.
+    let level_4 = SORCERER_FIXTURE.replace("class:sorcerer:1", "class:sorcerer:4");
+    let input = load(&level_4);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !has_explanation(&computation, RECOGNITION_ID),
+        "level-4 Sorcerer must not gain the bounded level-1/level-2/level-3 spell-baseline \
+         recognition record"
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-4 Sorcerer must stay claim-blocked in this slice"
     );
 }
 
