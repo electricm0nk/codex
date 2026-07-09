@@ -248,14 +248,43 @@ const ARCANE_BLOODLINE_SELECTION_ID: &str = "bloodline:arcane";
 // since this class-skill grant belongs to that bloodline.
 const SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID: &str = "choice:sorcerer_bloodline_class_skill";
 
-// SD13-E4-F7 spell-bearing baseline identity. Bard is a spontaneous arcane caster with a
-// distinct chassis-class-feature burden (Bardic Knowledge and Bardic Music); this slice
-// recognizes only its bounded single-class level-1 identity as direct runtime evidence and
-// grounds no Bardic Knowledge check resolution, no Bardic Music / Inspire Courage execution,
-// and no spell math (spells known, spells per day, spell DCs, bonus spells, school choice, or
-// prepared posture) for it.
+// SD13-E4-F7/SD13-E5 spell-bearing baseline identity. Bard is a spontaneous arcane
+// caster with a distinct chassis-class-feature burden (Bardic Knowledge and Bardic
+// Music); this slice recognizes its bounded single-class level-1/level-2 identity as
+// direct runtime evidence and grounds no performance-state engine (no
+// start/maintain action economy, no round tracking or consumption), no Countersong,
+// Distraction, or Versatile Performance execution, and no spell math (spells known,
+// spells per day, spell DCs, bonus spells, school choice, or prepared posture) for
+// it.
 const BARD_CLASS_ID: &str = "class:bard";
-const BARD_BASELINE_LEVEL: u8 = 1;
+/// SD13-E5 Bard level-range gate, mirroring the Fighter `supported_fighter_level` /
+/// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
+/// `supported_cleric_level` idiom. Verified against the PF1 Core Rulebook Bard class
+/// table (d20pfsrd and legacy.aonprd.com) before widening: level 2 base attack +1,
+/// base saves +0/+3/+3 (Fortitude/Reflex/Will), Bardic Performance rounds per day
+/// gains 2 additional rounds after 1st level, Inspire Courage's flat magnitude does
+/// not increase until level 5, and the level-2 "Special" column reads "Versatile
+/// performance, well-versed" — Well-Versed (a flat, non-level-scaled +4 save bonus)
+/// is grounded this slice; Versatile Performance (a choice-gated skill-substitution
+/// engine) is deliberately left named-but-unproven.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 2;
+/// PF1 Core Rulebook level gate at which Bard gains Well-Versed (2nd level, verified
+/// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
+/// list "Versatile performance, well-versed" as the Bard 2nd-level special feature
+/// entry).
+const BARD_WELL_VERSED_LEVEL: u8 = 2;
+/// PF1 Core Rulebook Well-Versed magnitude: a flat +4 bonus on saving throws against
+/// bardic performance, sonic, and language-dependent effects. Unlike Bardic
+/// Knowledge or Fascinate, this magnitude is NOT level-scaled (it stays +4 for the
+/// class feature's entire existence), verified against both primary sources rather
+/// than assumed to follow the "half level" idiom used elsewhere on this seam.
+const BARD_WELL_VERSED_BONUS: i16 = 4;
+/// PF1 Core Rulebook Bardic Performance additional-rounds-per-level constant: "At
+/// each level after 1st a bard can use bardic performance for 2 additional rounds
+/// per day" (verified against d20pfsrd and legacy.aonprd.com, not assumed from
+/// Barbarian's superficially similar Rage-rounds progression).
+const BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL: i16 = 2;
 
 // SD13-E5 Fascinate flat DC base. PF1 Core Rulebook Fascinate Will save DC is
 // 10 + 1/2 bard level + Charisma modifier; only the fixed base term is a named
@@ -5082,36 +5111,47 @@ fn explain_druid_level1_spell_baseline(
     });
 }
 
-/// Return `true` when the chosen input is exactly a single-class Bard at the bounded
-/// spell baseline level (1). Returns `false` for any other class, a multiclass mix, or a
-/// level-2+ Bard this slice deliberately does not recognize — each of which stays
-/// blocked exactly as before.
-fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
-    matches!(
-        input.chosen.class_levels.as_slice(),
+/// The bounded Bard milestone level this decomposition surface grounds, if any.
+/// Returns the single Bard level when the chosen input is exactly a single-class
+/// Bard at one of the supported milestone levels (1 or 2). Returns `None` for no
+/// Bard, a non-Bard class, a multiclass mix, or any level-3+ Bard this slice
+/// deliberately does not recognize — each of which stays claim-blocked exactly as
+/// before. Mirrors the Fighter `supported_fighter_level` / Paladin
+/// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
+/// `supported_cleric_level` level-range gate idiom.
+fn supported_bard_level(input: &CharacterInput) -> Option<u8> {
+    match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == BARD_CLASS_ID
-                && class_level.level == BARD_BASELINE_LEVEL
-    )
+                && (1..=MAX_SUPPORTED_BARD_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
+        }
+        _ => None,
+    }
 }
 
 /// Surface direct SD13-E4-F7/SD13-E4/SD13-E5 runtime evidence for the deterministic
-/// Human Bard level-1 spontaneous arcane spell-bearing baseline: one recognition
-/// record, the foundational base-attack-bonus / base-save progression pillar (four
-/// standalone records), five grounded chassis-class-feature pillars (Bardic
-/// Knowledge, the Bardic Performance rounds-per-day budget, the Inspire Courage flat
-/// level-1 magnitude, and the Fascinate flat Will-save DC and affected-creature-count
-/// formulas), and two remaining named claim-blocking burdens (the bardic
-/// performance-execution engine, the spontaneous spell posture).
+/// Human Bard level-1/level-2 spontaneous arcane spell-bearing baseline: one
+/// recognition record, the foundational base-attack-bonus / base-save progression
+/// pillar (four standalone records), five grounded chassis-class-feature pillars
+/// (Bardic Knowledge, the Bardic Performance rounds-per-day budget, the Inspire
+/// Courage flat magnitude, and the Fascinate flat Will-save DC and
+/// affected-creature-count formulas), a sixth pillar grounded only at level 2
+/// (Well-Versed's flat +4 save-bonus magnitude), and two remaining named
+/// claim-blocking burdens (the bardic performance-execution engine, the
+/// spontaneous spell posture).
 ///
 /// This deliberately does not compute a supported Bard chassis. It grounds no
 /// bardic performance execution — no start/maintain action economy, no round
 /// tracking or consumption, and no Will-save/targeting resolution for Fascinate,
-/// nor anything at all for Countersong or Distraction (both require an opposed
-/// Perform-check-vs-effect substitution resolution, not a flat number) — and no
-/// spell math whatsoever: no spells known, no spells per day, no spell DCs, no
-/// bonus spells, no prepared posture, no school choice. It only:
-/// - leaves one recognition explanation so the `class:bard:1` identity is acknowledged
+/// nor anything at all for Countersong, Distraction, or Versatile Performance
+/// (all three require either an opposed Perform-check-vs-effect substitution
+/// resolution or a choice-gated skill-substitution engine, not a flat number) —
+/// and no spell math whatsoever: no spells known, no spells per day, no spell
+/// DCs, no bonus spells, no prepared posture, no school choice. It only:
+/// - leaves one recognition explanation so the `class:bard:N` identity is acknowledged
 ///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - grounds the foundational base-attack-bonus / base-save progression pillar that
@@ -5135,18 +5175,33 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
 ///   level-only value; this grounds only that flat bonus, not a full Knowledge-check
 ///   resolution,
 /// - grounds the flat Bardic Performance surface for real: the rounds-per-day
-///   budget (PF1 Core Rulebook Bardic Performance: a level-1 bard can use bardic
-///   performance for 4 + Charisma modifier rounds per day, floored at 0) and the
-///   Inspire Courage flat level-1 magnitude (+1 competence bonus on attack and
-///   weapon damage rolls, +1 morale bonus on saving throws against charm and fear
-///   effects). These are bounded flat values only; no performance-state engine
-///   applies them anywhere,
+///   budget (PF1 Core Rulebook Bardic Performance: 4 + Charisma modifier rounds
+///   per day at level 1, plus 2 additional rounds per day at each level after
+///   1st — verified against d20pfsrd and legacy.aonprd.com rather than assumed
+///   from Barbarian's superficially similar Rage-rounds progression, floored at
+///   0) and the Inspire Courage flat magnitude (+1 competence bonus on attack
+///   and weapon damage rolls, +1 morale bonus on saving throws against charm and
+///   fear effects — confirmed unchanged through level 2, since the PF1 Core
+///   Rulebook bonus first increases only at bard level 5). These are bounded
+///   flat values only; no performance-state engine applies them anywhere,
 /// - grounds the Fascinate flat Will-save DC (10 + 1/2 bard level + Charisma
 ///   modifier) and the Fascinate flat affected-creature count (1 at 1st level,
 ///   plus one more for every three bard levels beyond 1st) for real, verified
 ///   against the PF1 Core Rulebook Fascinate rule text rather than assumed from
 ///   memory. Both are bounded flat values only; neither is ever applied to an
-///   actual Will save or targeting outcome, and
+///   actual Will save or targeting outcome,
+/// - grounds Well-Versed (SD13-E5, a 2nd-level Bard class feature verified
+///   independently against two primary PF1 sources — d20pfsrd and
+///   legacy.aonprd.com both list "Versatile performance, well-versed" as the
+///   Bard 2nd-level special feature entry) as a flat, non-level-scaled +4
+///   standalone magnitude on saving throws against bardic performance, sonic,
+///   and language-dependent effects, mirroring the Fighter Bravery idiom: never
+///   applied to any actual save total, since no save-resolution engine exists
+///   in this codebase. Versatile Performance (the Bard's OTHER 2nd-level
+///   feature) is NOT flat — it requires a choice of Perform type and an actual
+///   skill-substitution engine — so it is deliberately left named-but-unproven,
+///   mirroring how the Monk level-2 bonus feat grant was deliberately left
+///   unrecognized by the Monk level-2 widening slice, and
 /// - emits two distinct claim-blocking diagnostics naming the still-unproven bardic
 ///   performance-execution burden (start/maintain action economy, round tracking and
 ///   consumption, no application of any grounded magnitude/DC/count to an actual
@@ -5163,47 +5218,51 @@ fn explain_bard_level1_spell_baseline(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    if !is_single_class_bard_level1(input) {
+    let Some(level) = supported_bard_level(input) else {
         return;
-    }
+    };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
 
-    // Direct runtime evidence: recognize the deterministic Human Bard level-1
-    // spell-bearing identity. This is a recognition record only; it fabricates no
-    // spell math.
+    // Direct runtime evidence: recognize the deterministic Human Bard spell-bearing
+    // identity at the supported level. This is a recognition record only; it
+    // fabricates no spell math.
     explanations.push(ComputationExplanation {
         id: "class_chassis.spell_baseline.bard".to_owned(),
         value: 0,
         detail: format!(
-            "Recognized deterministic Human Bard level {BARD_BASELINE_LEVEL} spell-bearing \
-             baseline: the {BARD_CLASS_ID}:{BARD_BASELINE_LEVEL} class identity is acknowledged \
-             as a spontaneous arcane spell-bearing class with its named bardic \
-             performance-execution chassis-class-feature burden on the rules-core seam rather \
-             than an undocumented packet placeholder. This is a bounded recognition record \
-             only; it grounds no bardic performance execution (no start/maintain action \
-             economy, no round tracking or consumption, no countersong / distraction / \
-             fascinate resolution) and no spell math (spells known, spells per day, spell DCs, \
-             bonus spells, or prepared posture), so it carries no fabricated mechanical value \
-             (+0)"
+            "Recognized deterministic Human Bard level {level} spell-bearing baseline: the \
+             {BARD_CLASS_ID}:{level} class identity is acknowledged as a spontaneous arcane \
+             spell-bearing class with its named bardic performance-execution \
+             chassis-class-feature burden on the rules-core seam rather than an undocumented \
+             packet placeholder. This is a bounded recognition record only; it grounds no \
+             bardic performance execution (no start/maintain action economy, no round tracking \
+             or consumption, no countersong / distraction / fascinate resolution) and no spell \
+             math (spells known, spells per day, spell DCs, bonus spells, or prepared posture), \
+             so it carries no fabricated mechanical value (+0)"
         ),
     });
 
     // Grounded: the foundational base-attack-bonus / base-save progression pillar.
     // Unlike every other class row in this matrix (Fighter, Barbarian, Monk, Rogue,
     // Paladin, Druid, Cleric all already ground this pillar), Bard had never had it
-    // grounded at all until this SD13-E5 slice. Both formulas were verified against
-    // the PF1 Core Rulebook Bard class table (d20pfsrd and the legacy Paizo PRD
-    // mirror) before writing this code, reading the raw level 1-6 table rows
-    // directly (BAB +0/+1/+2/+3/+3/+4, Fort +0/+0/+1/+1/+1/+2, Ref +2/+3/+3/+4/+4/+5,
-    // Will +2/+3/+3/+4/+4/+5) rather than trusting memory or assuming Bard's save
-    // shape merely because it resembles Rogue's: the level 4/5 BAB values (+3 at
-    // both) disambiguate the 3/4-vs-1/2 fraction (level 1 alone floors both to +0),
-    // and the raw Fort/Ref/Will columns independently confirm good Reflex, good
-    // Will, poor Fortitude — the same save shape as Rogue, but checked against
-    // Bard's own table rather than assumed from Rogue's.
-    let level_value = i16::from(BARD_BASELINE_LEVEL);
+    // grounded at all until an earlier SD13-E5 slice. Both formulas were verified
+    // against the PF1 Core Rulebook Bard class table (d20pfsrd and the legacy
+    // Paizo PRD mirror) before writing this code, reading the raw level 1-6 table
+    // rows directly (BAB +0/+1/+2/+3/+3/+4, Fort +0/+0/+1/+1/+1/+2, Ref
+    // +2/+3/+3/+4/+4/+5, Will +2/+3/+3/+4/+4/+5) rather than trusting memory or
+    // assuming Bard's save shape merely because it resembles Rogue's: the level
+    // 4/5 BAB values (+3 at both) disambiguate the 3/4-vs-1/2 fraction (level 1
+    // alone floors both to +0), and the raw Fort/Ref/Will columns independently
+    // confirm good Reflex, good Will, poor Fortitude — the same save shape as
+    // Rogue, but checked against Bard's own table rather than assumed from
+    // Rogue's. A later SD13-E5 slice widens the level-1-only gate to level 2 and
+    // extends every one of the formulas below to level 2 via the same formula,
+    // without re-derivation, verified independently against the PF1 Core
+    // Rulebook Bard class table: level 2 base attack +1, base saves +0/+3/+3
+    // (Fortitude/Reflex/Will).
+    let level_value = i16::from(level);
 
     // Grounded (1/2): 3/4-BAB base-attack progression, the same formula shape as
     // Rogue/Monk/Druid/Cleric (classlevel * 3 / 4). No PCGen .lst file exists for
@@ -5214,44 +5273,45 @@ fn explain_bard_level1_spell_baseline(
         id: "class_chassis.bard.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "Bard level {BARD_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook Bard \
-             class table's 3/4-BAB progression, the same formula shape as Rogue/Monk/Druid/ \
-             Cleric: classlevel * 3 / 4 = {base_attack_bonus}. This is a standalone explanation \
-             record; it is not wired into the integrated base_attack_bonus field or into \
+            "Bard level {level} base attack bonus from the PF1 Core Rulebook Bard class \
+             table's 3/4-BAB progression, the same formula shape as Rogue/Monk/Druid/Cleric: \
+             classlevel * 3 / 4 = {base_attack_bonus}. This is a standalone explanation record; \
+             it is not wired into the integrated base_attack_bonus field or into \
              compute_combat_baseline"
         ),
     });
 
     // Grounded (2/2): base-save progression — poor Fortitude, good Reflex, good
     // Will, verified against the PF1 Core Rulebook Bard class table (Fortitude
-    // +0, Reflex +2, Will +2 at level 1).
+    // +0, Reflex +2, Will +2 at level 1; Fortitude +0, Reflex +3, Will +3 at
+    // level 2).
     let good_save = level_value / 2 + 2;
     let poor_save = level_value / 3;
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.base_save.fortitude".to_owned(),
         value: poor_save,
         detail: format!(
-            "Bard level {BARD_BASELINE_LEVEL} base Fortitude save (poor save) from the PF1 Core \
-             Rulebook Bard class table: classlevel/3 = {poor_save}. This is a standalone \
-             explanation record; it is not wired into compute_total_saves"
+            "Bard level {level} base Fortitude save (poor save) from the PF1 Core Rulebook \
+             Bard class table: classlevel/3 = {poor_save}. This is a standalone explanation \
+             record; it is not wired into compute_total_saves"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.base_save.reflex".to_owned(),
         value: good_save,
         detail: format!(
-            "Bard level {BARD_BASELINE_LEVEL} base Reflex save (good save) from the PF1 Core \
-             Rulebook Bard class table: classlevel/2+2 = {good_save}. This is a standalone \
-             explanation record; it is not wired into compute_total_saves"
+            "Bard level {level} base Reflex save (good save) from the PF1 Core Rulebook Bard \
+             class table: classlevel/2+2 = {good_save}. This is a standalone explanation \
+             record; it is not wired into compute_total_saves"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.base_save.will".to_owned(),
         value: good_save,
         detail: format!(
-            "Bard level {BARD_BASELINE_LEVEL} base Will save (good save) from the PF1 Core \
-             Rulebook Bard class table: classlevel/2+2 = {good_save}. This is a standalone \
-             explanation record; it is not wired into compute_total_saves"
+            "Bard level {level} base Will save (good save) from the PF1 Core Rulebook Bard \
+             class table: classlevel/2+2 = {good_save}. This is a standalone explanation \
+             record; it is not wired into compute_total_saves"
         ),
     });
 
@@ -5261,8 +5321,11 @@ fn explain_bard_level1_spell_baseline(
     // competence bonus, not "half level + INT modifier": the Intelligence modifier
     // is already part of the ordinary Knowledge skill check total (rank + ability
     // modifier + misc bonuses), so it is not an additional term this class-feature
-    // bonus contributes on its own.
-    let bardic_knowledge_bonus = (i16::from(BARD_BASELINE_LEVEL) / 2).max(1);
+    // bonus contributes on its own. Confirmed unchanged at level 2
+    // (max(2/2, 1) = 1, the same value as level 1's floor-forced 1, but reached
+    // naturally this time rather than via the floor), via the same formula, not a
+    // new record.
+    let bardic_knowledge_bonus = (level_value / 2).max(1);
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.bardic_knowledge".to_owned(),
         value: bardic_knowledge_bonus,
@@ -5270,49 +5333,62 @@ fn explain_bard_level1_spell_baseline(
             "Bard Bardic Knowledge class feature: grants a competence bonus on Knowledge \
              skill checks equal to max(bard level / 2, 1) (PF1 Core Rulebook Bardic Knowledge: \
              half bard level, minimum +1), and lets the bard make any Knowledge skill check \
-             untrained. At Bard level {BARD_BASELINE_LEVEL} this bonus is \
-             max({BARD_BASELINE_LEVEL} / 2, 1) = {bardic_knowledge_bonus}. This grounds only \
-             the flat Knowledge-check competence bonus; it is not a full Knowledge-check \
-             resolution engine and adds no skill rank, no ability modifier, and no untrained-\
-             check gate, and it grounds no bardic performance execution"
+             untrained. At Bard level {level} this bonus is max({level} / 2, 1) = \
+             {bardic_knowledge_bonus}. This grounds only the flat Knowledge-check competence \
+             bonus; it is not a full Knowledge-check resolution engine and adds no skill rank, \
+             no ability modifier, and no untrained-check gate, and it grounds no bardic \
+             performance execution"
         ),
     });
 
     // Grounded for real: the Bardic Performance rounds-per-day budget. PF1 Core
     // Rulebook Bardic Performance: a level-1 bard can use bardic performance for a
-    // number of rounds per day equal to 4 + his Charisma modifier (each level after
-    // 1st adds 2 more rounds; this bounded level-1 baseline grounds only the level-1
-    // budget), floored at 0 mirroring the Cleric channel-energy uses-per-day floor.
-    let bardic_performance_rounds_per_day = (4 + ability_modifiers.charisma).max(0);
+    // number of rounds per day equal to 4 + his Charisma modifier. "At each level
+    // after 1st a bard can use bardic performance for 2 additional rounds per
+    // day" (verified against d20pfsrd and legacy.aonprd.com before widening,
+    // rather than assumed to match Barbarian's superficially similar Rage-rounds
+    // progression), so the formula widens to
+    // 4 + Charisma modifier + 2 * (level - 1), floored at 0 mirroring the Cleric
+    // channel-energy uses-per-day floor.
+    let bardic_performance_rounds_per_day = (4
+        + ability_modifiers.charisma
+        + BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL * (level_value - 1))
+        .max(0);
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.bardic_performance_rounds_per_day".to_owned(),
         value: bardic_performance_rounds_per_day,
         detail: format!(
-            "Bard Bardic Performance rounds per day: 4 + Charisma modifier at bard level \
-             {BARD_BASELINE_LEVEL} (PF1 Core Rulebook Bardic Performance), floored at 0. At \
-             Charisma modifier {} this is max(4 + {}, 0) = {bardic_performance_rounds_per_day}. \
-             This grounds only the flat daily round budget; no round tracking or consumption, \
-             no start/maintain action economy, and no per-performance execution is computed",
+            "Bard Bardic Performance rounds per day at bard level {level} (PF1 Core Rulebook \
+             Bardic Performance): 4 + Charisma modifier at level 1, plus 2 additional rounds \
+             per day at each level after 1st, floored at 0. At Charisma modifier {} this is \
+             max(4 + {} + {BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL} * ({level} - 1), 0) = \
+             {bardic_performance_rounds_per_day}. This grounds only the flat daily round \
+             budget; no round tracking or consumption, no start/maintain action economy, and \
+             no per-performance execution is computed",
             ability_modifiers.charisma, ability_modifiers.charisma
         ),
     });
 
-    // Grounded for real: the Inspire Courage flat level-1 magnitude. PF1 Core
-    // Rulebook Inspire Courage at bard level 1: affected allies receive a +1 morale
-    // bonus on saving throws against charm and fear effects and a +1 competence
-    // bonus on attack and weapon damage rolls. Only the flat magnitude is grounded;
-    // no performance-state engine exists to start the performance or apply the
-    // bonus to any computed total.
+    // Grounded for real: the Inspire Courage flat magnitude. PF1 Core Rulebook
+    // Inspire Courage at bard level 1: affected allies receive a +1 morale bonus
+    // on saving throws against charm and fear effects and a +1 competence bonus
+    // on attack and weapon damage rolls. Confirmed unchanged at level 2: the PF1
+    // Core Rulebook Inspire Courage bonus first increases (to +2) only at bard
+    // level 5, verified against d20pfsrd and legacy.aonprd.com before widening,
+    // so level 2 is not the level it first increases. Only the flat magnitude is
+    // grounded; no performance-state engine exists to start the performance or
+    // apply the bonus to any computed total.
     let inspire_courage_bonus = 1_i16;
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.inspire_courage_bonus".to_owned(),
         value: inspire_courage_bonus,
         detail: format!(
-            "Bard Inspire Courage magnitude at bard level {BARD_BASELINE_LEVEL} (PF1 Core \
-             Rulebook Inspire Courage): a +{inspire_courage_bonus} competence bonus on attack \
-             rolls and weapon damage rolls and a +{inspire_courage_bonus} morale bonus on \
-             saving throws against charm and fear effects for affected allies. This grounds \
-             only the flat level-1 magnitude of the fixture's chosen performance \
+            "Bard Inspire Courage magnitude at bard level {level} (PF1 Core Rulebook Inspire \
+             Courage): a +{inspire_courage_bonus} competence bonus on attack rolls and weapon \
+             damage rolls and a +{inspire_courage_bonus} morale bonus on saving throws against \
+             charm and fear effects for affected allies. This magnitude first increases only at \
+             bard level 5, so it stays +{inspire_courage_bonus} through level {level}. This \
+             grounds only the flat magnitude of the fixture's chosen performance \
              (choice:bard_bardic_music -> performance:inspire_courage); it is never applied to \
              any attack, damage, or save total because the performance-state engine \
              (start/maintain action economy, round tracking) is not implemented"
@@ -5323,22 +5399,23 @@ fn explain_bard_level1_spell_baseline(
     // Rulebook Fascinate: each creature within range receives a Will save (DC
     // 10 + 1/2 the bard's level + the bard's Charisma modifier) to negate the
     // effect. Verified against the PF1 Core Rulebook Fascinate rule text (d20pfsrd
-    // and the legacy Paizo PRD mirror), not trusted from memory alone. Only the
-    // flat DC magnitude is grounded; no Will-save resolution and no application of
-    // this DC to any actual save total is computed.
-    let fascinate_dc =
-        FASCINATE_DC_BASE + (i16::from(BARD_BASELINE_LEVEL) / 2) + ability_modifiers.charisma;
+    // and the legacy Paizo PRD mirror), not trusted from memory alone. This
+    // formula already takes bard level as an input variable, so it extends to
+    // level 2 without re-derivation. Only the flat DC magnitude is grounded; no
+    // Will-save resolution and no application of this DC to any actual save
+    // total is computed.
+    let fascinate_dc = FASCINATE_DC_BASE + (level_value / 2) + ability_modifiers.charisma;
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.fascinate_dc".to_owned(),
         value: fascinate_dc,
         detail: format!(
-            "Bard Fascinate Will save DC at bard level {BARD_BASELINE_LEVEL} (PF1 Core Rulebook \
-             Fascinate): DC = 10 + 1/2 bard level + Charisma modifier. At bard level \
-             {BARD_BASELINE_LEVEL} and Charisma modifier {} this is {FASCINATE_DC_BASE} + \
-             ({BARD_BASELINE_LEVEL} / 2) + {} = {fascinate_dc}. This grounds only the flat DC \
-             magnitude; no Will-save resolution, no range/line-of-sight/attention-requirement \
-             checking, and no application of this DC to any actual save total is computed \
-             because the performance-state engine is not implemented",
+            "Bard Fascinate Will save DC at bard level {level} (PF1 Core Rulebook Fascinate): \
+             DC = 10 + 1/2 bard level + Charisma modifier. At bard level {level} and Charisma \
+             modifier {} this is {FASCINATE_DC_BASE} + ({level} / 2) + {} = {fascinate_dc}. \
+             This grounds only the flat DC magnitude; no Will-save resolution, no \
+             range/line-of-sight/attention-requirement checking, and no application of this DC \
+             to any actual save total is computed because the performance-state engine is not \
+             implemented",
             ability_modifiers.charisma, ability_modifiers.charisma
         ),
     });
@@ -5351,42 +5428,82 @@ fn explain_bard_level1_spell_baseline(
     // different-looking formula that happens to coincide with the correct one
     // only at level 1, which is exactly the kind of from-memory error a primary
     // source check catches (mirroring the earlier Ranger combat-style and
-    // Paladin mercy level-gate corrections).
-    let fascinate_affected_creatures = 1 + (i16::from(BARD_BASELINE_LEVEL) - 1) / 3;
+    // Paladin mercy level-gate corrections). This formula already takes bard
+    // level as an input variable, so it extends to level 2 without re-derivation.
+    let fascinate_affected_creatures = 1 + (level_value - 1) / 3;
     explanations.push(ComputationExplanation {
         id: "class_chassis.bard.fascinate_affected_creatures".to_owned(),
         value: fascinate_affected_creatures,
         detail: format!(
-            "Bard Fascinate affected-creature count at bard level {BARD_BASELINE_LEVEL} (PF1 \
-             Core Rulebook Fascinate): 1 creature at 1st level, plus one additional creature for \
-             every three bard levels attained beyond 1st — formula 1 + (bard level - 1) / 3. At \
-             bard level {BARD_BASELINE_LEVEL} this is 1 + ({BARD_BASELINE_LEVEL} - 1) / 3 = \
-             {fascinate_affected_creatures}. This grounds only the flat creature-count \
-             magnitude; no range/line-of-sight/attention-requirement checking and no application \
-             of this count to any actual targeting resolution is computed"
+            "Bard Fascinate affected-creature count at bard level {level} (PF1 Core Rulebook \
+             Fascinate): 1 creature at 1st level, plus one additional creature for every three \
+             bard levels attained beyond 1st — formula 1 + (bard level - 1) / 3. At bard level \
+             {level} this is 1 + ({level} - 1) / 3 = {fascinate_affected_creatures}. This \
+             grounds only the flat creature-count magnitude; no \
+             range/line-of-sight/attention-requirement checking and no application of this \
+             count to any actual targeting resolution is computed"
         ),
     });
+
+    // Grounded (SD13-E5): Well-Versed, a 2nd-level Bard class feature verified
+    // independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Versatile performance, well-versed" as the
+    // Bard 2nd-level special feature entry). Below the level-2 gate this is a
+    // correct PF1 Core Rulebook level-gate absence (value 0); at or above it, it
+    // is a flat, non-level-scaled +4 standalone magnitude (verified against both
+    // primary sources: unlike Bardic Knowledge or Fascinate, this bonus does NOT
+    // scale with level), mirroring the Fighter Bravery idiom — never applied to
+    // any actual save total, since no save-resolution engine exists in this
+    // codebase.
+    if level < BARD_WELL_VERSED_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.well_versed".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bard Well-Versed at bard level {level}: correctly absent at level {level} by \
+                 PF1 Core Rulebook level gate; the at-grant rule is named but not computed. \
+                 Well-Versed is a 2nd-level Bard class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.well_versed".to_owned(),
+            value: BARD_WELL_VERSED_BONUS,
+            detail: format!(
+                "Bard Well-Versed granted at bard level {level} (PF1 Core Rulebook, 2nd-level \
+                 Bard class feature): a flat +{BARD_WELL_VERSED_BONUS} bonus on saving throws \
+                 made against bardic performance, sonic, and language-dependent effects. Unlike \
+                 Bardic Knowledge or Fascinate, this magnitude is not level-scaled. This is a \
+                 standalone explanation record only; it is never applied to any actual save \
+                 total because no saving-throw-resolution engine exists anywhere in this \
+                 codebase"
+            ),
+        });
+    }
 
     // Still blocked (1/2): name the narrowed bardic performance-execution burden
     // explicitly, now separated from the grounded flat pillars (Bardic Knowledge,
     // the rounds-per-day budget, the Inspire Courage magnitude, and the Fascinate
-    // DC / affected-creature-count formulas). The performance-state engine and the
-    // two remaining level-1 performances (Countersong, Distraction) remain
-    // unproven — both require an opposed Perform-check-vs-effect substitution
-    // resolution, not a flat number, so neither is attempted here.
+    // DC / affected-creature-count formulas). The performance-state engine, the
+    // two remaining level-1 performances (Countersong, Distraction), and
+    // Versatile Performance (the Bard's other 2nd-level class feature, which
+    // requires a choice-gated skill-substitution engine, not a flat number)
+    // remain unproven — none is attempted here.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.bard.bardic_performance_execution.unsupported".to_owned(),
         message: format!(
-            "Bard level {BARD_BASELINE_LEVEL} remains blocked on its bardic \
-             performance-execution burden: the performance-state engine is not implemented \
-             (no start/maintain action economy, no round tracking or consumption of the \
-             grounded rounds-per-day budget, no application of the grounded inspire courage \
-             magnitude to any attack, damage, or save total, no application of the grounded \
-             fascinate DC or affected-creature-count to any actual Will-save resolution or \
-             targeting), and the two remaining level-1 performances (countersong, distraction) \
-             are not grounded at all — both require an opposed Perform-check-vs-effect \
-             substitution resolution rather than a flat number, so no Bard bardic-performance \
-             execution support is claimed"
+            "Bard level {level} remains blocked on its bardic performance-execution burden: \
+             the performance-state engine is not implemented (no start/maintain action \
+             economy, no round tracking or consumption of the grounded rounds-per-day budget, \
+             no application of the grounded inspire courage magnitude to any attack, damage, \
+             or save total, no application of the grounded fascinate DC or \
+             affected-creature-count to any actual Will-save resolution or targeting), the two \
+             remaining level-1 performances (countersong, distraction) are not grounded at all \
+             — both require an opposed Perform-check-vs-effect substitution resolution rather \
+             than a flat number — and Versatile Performance (the Bard's other 2nd-level class \
+             feature) is not grounded either — it requires a choice-gated skill-substitution \
+             engine rather than a flat number — so no Bard bardic-performance execution \
+             support is claimed"
         ),
         claim_blocking: true,
     });

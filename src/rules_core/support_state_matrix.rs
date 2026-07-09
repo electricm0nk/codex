@@ -376,12 +376,19 @@ const SD13_HALF_ORC_LEVEL1_TEST: &str = "tests/sd13_half_orc_race_semantics_reco
 /// surface.
 const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs";
 
-/// SD13-E4-F7/SD13-E4/SD13-E5 dedicated proof surface for the bounded Human Bard level-1
-/// spell baseline: direct computed recognition of the spontaneous arcane spell-bearing
-/// identity, the grounded Bardic Knowledge and flat Bardic Performance pillars (rounds
-/// per day, inspire courage magnitude), and the still-blocked bardic
-/// performance-execution burden and spontaneous known-spell / slot posture burden.
-const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs";
+/// SD13-E4-F7/SD13-E4/SD13-E5 dedicated proof surface for the bounded Human Bard
+/// level-1/level-2 spell baseline: direct computed recognition of the spontaneous
+/// arcane spell-bearing identity, the grounded Bardic Knowledge and flat Bardic
+/// Performance pillars (rounds per day, inspire courage magnitude), the flat
+/// Fascinate DC / affected-creature-count formulas, and (at level 2) the flat
+/// Well-Versed magnitude, with the bardic performance-execution burden (including
+/// Countersong, Distraction, and Versatile Performance) and the spontaneous
+/// known-spell / slot posture burden still blocked, widened to level 2 by a later
+/// SD13-E5 slice (the level-range gate plus every named pillar formula extended to
+/// level 2 via the same formula), citing both proof files as one combined literal,
+/// mirroring [`SD13_CLERIC_LEVEL1_TEST`].
+const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + \
+    tests/sd13_bard_level2_progression.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1 prepared
 /// arcane spell baseline: direct computed recognition of the prepared arcane
@@ -795,13 +802,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Bard level-1 spell baseline, with base attack bonus, base save \
-                            progression, Bardic Knowledge, the flat Bardic Performance surface \
-                            (rounds per day, inspire courage magnitude), and the flat Fascinate \
-                            DC / affected-creature-count formulas grounded for real and the \
-                            bardic performance-execution burden (including Countersong and \
-                            Distraction) and the spontaneous known-spell / slot posture burden \
-                            still blocked",
+                            Bard level-1/level-2 spell baseline, with base attack bonus, base \
+                            save progression, Bardic Knowledge, the flat Bardic Performance \
+                            surface (rounds per day, inspire courage magnitude), the flat \
+                            Fascinate DC / affected-creature-count formulas, and (at level 2) \
+                            the flat Well-Versed magnitude grounded for real at both supported \
+                            levels, and the bardic performance-execution burden (including \
+                            Countersong, Distraction, and Versatile Performance) and the \
+                            spontaneous known-spell / slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -812,41 +820,61 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     bardic knowledge (the Knowledge-check competence bonus equal to max(bard \
                     level / 2, 1), i.e. +1 at level 1, computed against the fixture with no \
                     dependency on the Bard's Intelligence modifier or skill ranks) for real, AND \
-                    the SD13-E5 slice grounds the flat bardic performance surface: the bardic \
-                    performance rounds per day budget (4 + CHA modifier, i.e. 6 against the \
-                    fixture's Charisma 15) and the flat inspire courage level-1 magnitude (+1 \
-                    competence bonus on attack and weapon damage rolls, +1 morale bonus on \
-                    saves against charm and fear effects), AND a further SD13-E5 slice grounds \
-                    the fascinate flat Will-save DC (10 + 1/2 bard level + CHA modifier, i.e. 12 \
-                    against the fixture) and the fascinate flat affected-creature count (1 at \
-                    1st level, plus one more for every three bard levels beyond 1st, i.e. 1 at \
-                    level 1) — both verified against the PF1 Core Rulebook Fascinate rule text, \
-                    not assumed from memory, AND a further SD13-E5 slice grounds the \
-                    foundational base-attack-bonus / base-save progression pillar that every \
-                    other class row in this matrix (Fighter, Barbarian, Monk, Rogue, Paladin, \
-                    Druid, Cleric) already had and Bard never had: base attack bonus (3/4 BAB, \
-                    classlevel * 3 / 4, the same formula shape as Rogue/Monk/Druid/Cleric) and \
-                    base save progression (good Reflex, good Will, poor Fortitude — the same \
-                    save shape as Rogue, confirmed independently against the raw PF1 Core \
-                    Rulebook Bard class table rather than assumed from Rogue's own pattern), \
-                    both grounded as standalone explanation records not wired into \
-                    compute_total_saves or compute_combat_baseline. The row is Partial, not \
-                    Supported: the performance-state engine (start/maintain action economy, \
-                    round tracking/consumption of the grounded budget, no application of the \
-                    grounded fascinate DC or count to any actual Will save or targeting) is not \
-                    implemented, the two remaining level-1 performances (countersong, \
-                    distraction) are not grounded at all — both require an opposed \
-                    Perform-check-vs-effect substitution resolution, not a flat number — and the \
-                    entire spontaneous spell burden (spontaneous spells known, spells per day, \
-                    bonus spell slots from CHA, spell save DCs, school choice, prepared posture) \
-                    is not computed. No performance-execution math and no spell math is \
-                    fabricated and no Bard level 2+ is proven",
+                    an earlier SD13-E5 slice grounds the flat bardic performance surface: the \
+                    bardic performance rounds per day budget (4 + CHA modifier, i.e. 6 against \
+                    the fixture's Charisma 15 at level 1) and the flat inspire courage level-1 \
+                    magnitude (+1 competence bonus on attack and weapon damage rolls, +1 morale \
+                    bonus on saves against charm and fear effects), AND a further SD13-E5 slice \
+                    grounds the fascinate flat Will-save DC (10 + 1/2 bard level + CHA modifier, \
+                    i.e. 12 against the fixture at level 1) and the fascinate flat \
+                    affected-creature count (1 at 1st level, plus one more for every three bard \
+                    levels beyond 1st, i.e. 1 at level 1) — both verified against the PF1 Core \
+                    Rulebook Fascinate rule text, not assumed from memory, AND a further \
+                    SD13-E5 slice grounds the foundational base-attack-bonus / base-save \
+                    progression pillar that every other class row in this matrix (Fighter, \
+                    Barbarian, Monk, Rogue, Paladin, Druid, Cleric) already had and Bard never \
+                    had: base attack bonus (3/4 BAB, classlevel * 3 / 4, the same formula shape \
+                    as Rogue/Monk/Druid/Cleric) and base save progression (good Reflex, good \
+                    Will, poor Fortitude — the same save shape as Rogue, confirmed \
+                    independently against the raw PF1 Core Rulebook Bard class table rather \
+                    than assumed from Rogue's own pattern), both grounded as standalone \
+                    explanation records not wired into compute_total_saves or \
+                    compute_combat_baseline, AND a further SD13-E5 slice widens the level-1-only \
+                    gate to level 2 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric \
+                    level-range gate idiom), extending every formula above to level 2 via the \
+                    same formula (level 2 base attack +1, base saves +0/+3/+3 \
+                    Fortitude/Reflex/Will, Bardic Knowledge stays 1, Fascinate DC 13 and \
+                    affected-creature count 1 on the fixture), widens the Bardic Performance \
+                    rounds-per-day budget for real (PF1 Core Rulebook: 2 additional rounds per \
+                    day at each level after 1st, i.e. 8 against the fixture's Charisma 15 at \
+                    level 2, up from 6 at level 1 — verified this scales, unlike Inspire \
+                    Courage's flat magnitude which is confirmed unchanged through level 2, first \
+                    increasing only at bard level 5), and grounds Well-Versed, the flat \
+                    non-level-scaled +4 bonus on saving throws against bardic performance, \
+                    sonic, and language-dependent effects that the PF1 Core Rulebook Bard class \
+                    table's level-2 Special column grants alongside Versatile Performance — \
+                    Versatile Performance itself is NOT flat (it requires a choice of Perform \
+                    type and an actual skill-substitution engine) and is deliberately left \
+                    named-but-unproven, mirroring how the Monk level-2 bonus feat grant was \
+                    deliberately left unrecognized. The row is Partial, not Supported: the \
+                    performance-state engine (start/maintain action economy, round \
+                    tracking/consumption of the grounded budget, no application of the grounded \
+                    fascinate DC, count, or Well-Versed magnitude to any actual save or \
+                    targeting) is not implemented, the two remaining level-1 performances \
+                    (countersong, distraction) and Versatile Performance are not grounded at all \
+                    — Countersong/Distraction require an opposed Perform-check-vs-effect \
+                    substitution resolution and Versatile Performance requires a choice-gated \
+                    skill-substitution engine, neither a flat number — and the entire \
+                    spontaneous spell burden (spontaneous spells known, spells per day, bonus \
+                    spell slots from CHA, spell save DCs, school choice, prepared posture) is \
+                    not computed. No performance-execution math and no spell math is fabricated \
+                    and no Bard level 3+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
-                    Inspire Courage / Fascinate magnitudes, Countersong / Distraction opposed \
-                    Perform-check-vs-effect grounding), then the spontaneous spell-slot burden, \
-                    then level-2+ progression (widening the now-grounded base attack/base save \
-                    formulas)",
+                    Inspire Courage / Fascinate / Well-Versed magnitudes, Countersong / \
+                    Distraction opposed Perform-check-vs-effect grounding, Versatile \
+                    Performance's choice-gated skill-substitution engine), then the spontaneous \
+                    spell-slot burden, then level-3+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",
