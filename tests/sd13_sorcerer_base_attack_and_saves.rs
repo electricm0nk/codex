@@ -201,23 +201,30 @@ fn sorcerer_level1_base_attack_and_saves_do_not_disturb_existing_pillars_or_bloc
     assert!(spontaneous_spells.claim_blocking);
 }
 
-// ----- Sorcerer level 2+ stays out of scope for this slice -----
+// ----- Sorcerer level 2 was later widened into the supported tranche -----
 
 #[test]
-fn sorcerer_level_2_does_not_gain_base_attack_or_save_grounding_from_this_slice() {
+fn sorcerer_level_2_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 2 was the next unproven milestone
+    // and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_sorcerer_level2_progression.rs) widened the level-1-only gate to
+    // level 2 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Bard/Druid
+    // level-range gate idiom) and extended the base-attack/base-save formulas; this
+    // negative control is superseded, not violated — pin the new truth here too so
+    // this file stays internally consistent.
     let level_2 = SORCERER_FIXTURE.replace("class:sorcerer:1", "class:sorcerer:2");
     let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, BASE_ATTACK_ID),
-        "level-2 Sorcerer must not gain the level-1-bounded base-attack grounding: {:?}",
+        has_explanation(&computation, BASE_ATTACK_ID),
+        "level-2 Sorcerer is supported since the SD13-E5 level-2 slice: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, BASE_SAVE_FORTITUDE_ID),
-        "level-2 Sorcerer must not gain the level-1-bounded base-save grounding: {:?}",
+        has_explanation(&computation, BASE_SAVE_FORTITUDE_ID),
+        "level-2 Sorcerer is supported since the SD13-E5 level-2 slice: {:?}",
         computation.explanations
     );
-    assert!(!has_explanation(&computation, BASE_SAVE_REFLEX_ID));
-    assert!(!has_explanation(&computation, BASE_SAVE_WILL_ID));
+    assert!(has_explanation(&computation, BASE_SAVE_REFLEX_ID));
+    assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 }

@@ -330,13 +330,21 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
 const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs + \
     tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs";
 
-/// SD13-E4-F7 / SD13-E4 dedicated proof surface for the bounded Human Sorcerer level-1
-/// spell baseline: direct computed recognition of the spontaneous arcane spell-bearing
-/// identity, plus the SD13-E4 decomposition slice's grounded Eschew Materials bonus-feat
-/// grant, while the bloodline-power burden and the spontaneous known-spell / slot
-/// posture burden stay explicitly blocked.
-const SD13_SORCERER_LEVEL1_TEST: &str =
-    "tests/sd13_sorcerer_level1_spell_baseline.rs + tests/sd13_sorcerer_bloodline_class_skill_choice.rs";
+/// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
+/// Sorcerer level-1/level-2 spell baseline: direct computed recognition of the
+/// spontaneous arcane spell-bearing identity, plus the SD13-E4 decomposition slice's
+/// grounded Eschew Materials bonus-feat grant, the SD13-E5 bloodline-choice and
+/// bloodline-class-skill-choice recognition slices, and the base-attack/base-save
+/// progression pillar, widened to level 2 by a later SD13-E5 slice (the level-range
+/// gate plus every named pillar formula extended to level 2 via the same formula,
+/// with no new class feature gained at 2nd level per the PF1 Core Rulebook Sorcerer
+/// class table's blank level-2 "Special" column), while the Arcane Bond / bloodline
+/// progression burden and the spontaneous known-spell / slot posture burden stay
+/// explicitly blocked, citing the proof files as one combined literal, mirroring
+/// [`SD13_CLERIC_LEVEL1_TEST`] / [`SD13_DRUID_LEVEL1_TEST`].
+const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs + \
+    tests/sd13_sorcerer_bloodline_class_skill_choice.rs + \
+    tests/sd13_sorcerer_level2_progression.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2 martial chassis baseline: direct computed chassis-recognition evidence,
@@ -1153,8 +1161,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Sorcerer level-1 spell baseline, with base attack bonus, base save \
-                            progression, Eschew Materials, the canonical bloodline choice \
+                            Sorcerer level-1/level-2 spell baseline, with base attack bonus, base \
+                            save progression, Eschew Materials, the canonical bloodline choice \
                             recognition, and the Arcane bloodline's class-skill choice (a \
                             player's choice of any one Knowledge skill) grounded for real and \
                             the Arcane Bond / bloodline progression burden and the spontaneous \
@@ -1190,16 +1198,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Paizo PRD mirror), reading the raw level 1-6 table rows directly to \
                     disambiguate the 1/2-vs-3/4 fraction since level 1 alone floors every \
                     fraction to +0, both grounded as standalone explanation records not wired \
-                    into compute_total_saves or compute_combat_baseline. The row is Partial, not \
+                    into compute_total_saves or compute_combat_baseline — AND a further SD13-E5 \
+                    slice widens the level-1-only gate (supported_sorcerer_level, 1..=2) and \
+                    extends every one of the formulas above to level 2 via the same formula, \
+                    without re-derivation, verified independently against the PF1 Core Rulebook \
+                    Sorcerer class table (d20pfsrd and legacy.aonprd.com): level 2 base attack \
+                    bonus is +1, base saves are +0/+0/+3 (Fortitude/Reflex/Will); the bloodline \
+                    choice and bloodline class-skill choice recognitions are not level-gated (a \
+                    sorcerer's bloodline does not change by level), so both still fire at level 2 \
+                    for the same fixture selections; the Sorcerer class table's level-2 \"Special\" \
+                    column is blank (verified independently against both primary sources), so \
+                    Sorcerer gains no new class feature at 2nd level (unlike Rogue/Monk/Druid's \
+                    Evasion/Woodland Stride, but like Cleric), so no new pillar burden is added \
+                    this slice — only the existing pillars are widened. The row is Partial, not \
                     Supported: the Arcane Bond / bloodline progression \
                     burden (Arcane Bond execution, the conditional bloodline arcana, and the \
                     bonus spells/feats at 3rd+ level) remains named and unproven, and the \
                     spontaneous spell burden (spontaneous spells known, spell slots per day, \
                     bonus spell slots, spell save DCs) is entirely unproven. No spell math is \
-                    fabricated and no Sorcerer level 2+ is proven",
+                    fabricated and no Sorcerer level 3+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-2+ progression (widening the now-grounded base attack/base save \
+                    level-3+ progression (widening the now-grounded base attack/base save \
                     formulas)",
             },
             SupportStateRow {
