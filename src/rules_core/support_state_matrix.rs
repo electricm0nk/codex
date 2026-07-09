@@ -437,16 +437,19 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
 const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs + \
     tests/sd13_wizard_level2_progression.rs + tests/sd13_wizard_level3_progression.rs";
 
-/// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2
-/// prepared divine spell baseline: direct computed recognition of the prepared divine
-/// spell-bearing identity, with Channel Energy, the domain choice seam, and the
-/// flat domain spell slot count grounded for real, that stays explicitly blocked
-/// on the domain powers burden and the prepared divine spell posture burden, widened
-/// to level 2 by a later SD13-E5 slice (the level-range gate plus every named pillar
-/// formula extended to level 2 via the same formula), citing both proof files as one
-/// combined literal, mirroring [`SD13_MONK_LEVEL1_TEST`] / [`SD13_ROGUE_LEVEL1_TEST`].
+/// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2/
+/// level-3 prepared divine spell baseline: direct computed recognition of the
+/// prepared divine spell-bearing identity, with Channel Energy, the domain choice
+/// seam, and the flat domain spell slot count grounded for real, that stays
+/// explicitly blocked on the domain powers burden and the prepared divine spell
+/// posture burden, widened to level 2 by a later SD13-E5 slice (the level-range gate
+/// plus every named pillar formula extended to level 2 via the same formula), widened
+/// again to level 3 by a further SD13-E5 slice (Channel Energy's die count and the
+/// domain spell slot count both change for real at level 3), citing all three proof
+/// files as one combined literal, mirroring [`SD13_MONK_LEVEL1_TEST`] /
+/// [`SD13_ROGUE_LEVEL1_TEST`] / [`SD13_WIZARD_LEVEL1_TEST`].
 const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs + \
-    tests/sd13_cleric_level2_progression.rs";
+    tests/sd13_cleric_level2_progression.rs + tests/sd13_cleric_level3_progression.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Druid level-1/level-2
 /// prepared divine spell baseline: direct computed recognition of the prepared
@@ -965,12 +968,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:cleric",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Cleric \
-                            level-1/level-2 prepared divine spell baseline, with base attack bonus, \
-                            base save progression, Channel Energy, the domain choice seam, the flat \
-                            domain spell slot count, Touch of Good (Good domain, in full), and Rebuke \
-                            Death's uses per day (Healing domain, partial) grounded for real at both \
-                            supported levels and the Rebuke Death heal amount and the prepared divine \
-                            spell posture burden still blocked",
+                            level-1/level-2/level-3 prepared divine spell baseline, with base attack \
+                            bonus, base save progression, Channel Energy (die count increasing to \
+                            2d6 at level 3), the domain choice seam, the flat domain spell slot count \
+                            (increasing to 2 at level 3), Touch of Good (Good domain, in full), and \
+                            Rebuke Death's uses per day (Healing domain, partial) grounded for real at \
+                            every supported level and the Rebuke Death heal amount and the prepared \
+                            divine spell posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1011,24 +1015,34 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     at level 2 rather than via the level-1 floor); and Cleric gains no new class \
                     feature at 2nd level (the class table's level-2 Special column is blank, unlike \
                     Rogue/Monk's Evasion), so no new pillar was added, only the existing ones widened. \
+                    A further SD13-E5 slice widens the gate again to level 3 (verified independently \
+                    against the PF1 Core Rulebook Cleric class table and spells-per-day table via \
+                    d20pfsrd and legacy.aonprd.com): level 3 base attack bonus is +2, base \
+                    Fortitude/Will are +3, base Reflex is +1; Channel Energy's die count genuinely \
+                    increases to 2d6 (ceil(3/2) = 2, the class table's level-3 Special column reads \
+                    \"Channel energy 2d6\"); the domain spell slot count genuinely increases to 2 (a \
+                    level-3 cleric casts 2nd-level cleric spells for the first time, so the count is \
+                    one 1st-level plus one 2nd-level domain slot, mirroring the Wizard specialist \
+                    bonus slot's own level-3 doubling); Touch of Good's sacred bonus stays 1 (3/2 = 1, \
+                    reached naturally, unchanged); and Cleric's level-3 Special column names only the \
+                    Channel Energy increase, so no new pillar was added at level 3, only the existing \
+                    ones widened (two of them, Channel Energy dice and the domain spell slot count, \
+                    to genuinely new values). \
                     The row is Partial, not Supported: Rebuke Death's heal amount (1d4 points of \
                     damage plus 1 for every two cleric levels, usable only on a creature below 0 hit \
                     points) is not a flat number and remains named and unproven, the domain \
-                    spell-list contents that could fill the grounded domain spell slot remain named \
+                    spell-list contents that could fill the grounded domain spell slots remain named \
                     and unproven, the prepared divine spell posture burden (spells prepared from the \
                     full Cleric list, spontaneous cure/inflict conversion, spell slots per day, bonus \
                     spells from a high Wisdom, spell save DCs) is still entirely unproven, and no \
-                    Cleric level 3+ is proven. No touch-attack resolution, healing-application \
+                    Cleric level 4+ is proven. No touch-attack resolution, healing-application \
                     engine, hit-point-state gating check, or per-use consumption tracking is \
                     fabricated",
                 next_required_uplift: "SD13-E5+ Cleric domain power grounding: the Rebuke Death \
                     heal-amount piece (requires a dice-roll execution engine and a hit-point-state \
                     gating check, a new-subsystem-shaped burden deliberately not attempted this \
                     slice) and domain spell-list contents, then the prepared divine spell posture \
-                    burden, then Cleric level 3+ progression (Channel Energy increases to 2d6 at \
-                    level 3, and a level-3 cleric first gains 2nd-level domain spell slots — both \
-                    verified against the PF1 Core Rulebook Cleric class table but out of scope for \
-                    this slice)",
+                    burden, then Cleric level 4+ progression",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",

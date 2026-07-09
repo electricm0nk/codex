@@ -513,19 +513,23 @@ const IMPROVED_GRAPPLE_FEAT_SELECTION: &str = "feat:improved_grapple";
 const IMPROVED_TRIP_FEAT_SELECTION: &str = "feat:improved_trip";
 const STUNNING_FIST_FEAT_SELECTION: &str = "feat:stunning_fist";
 
-// Grounded SD13-E4/E5 Human Cleric level-1/level-2 prepared divine spell-bearing
-// baseline identity. Cleric is the canonical PF1 prepared divine full caster; unlike
-// the arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
-// is split across a domain powers class-feature family (the granted powers of
-// the chosen domains and the domain spell-list contents — Channel Energy has
-// been grounded for real: ceil(cleric level / 2) d6, minimum 1d6, usable
+// Grounded SD13-E4/E5 Human Cleric level-1/level-2/level-3 prepared divine
+// spell-bearing baseline identity. Cleric is the canonical PF1 prepared divine full
+// caster; unlike the arcane Sorcerer/Wizard/Bard baselines already recognized, its
+// bounded burden is split across a domain powers class-feature family (the granted
+// powers of the chosen domains and the domain spell-list contents — Channel Energy
+// has been grounded for real: ceil(cleric level / 2) d6, minimum 1d6, usable
 // 3 + Charisma modifier times per day; and the SD13-E5 domain slice grounds the
 // domain choice seam and the flat domain spell slot count) and a prepared divine
 // spell posture family (spells prepared from the full Cleric list, spontaneous
 // cure/inflict conversion, spell slots per day, bonus spells from a high Wisdom,
 // spell save DCs). A later SD13-E5 slice widens the level-1-only gate to a
 // level-range gate (level 1-2), extending base attack/base save/Channel
-// Energy/domain-spell-slot/domain-power formulas to level 2 without re-derivation.
+// Energy/domain-spell-slot/domain-power formulas to level 2 without re-derivation. A
+// further SD13-E5 slice widens the gate again to level 1-3: Channel Energy's die
+// count and the domain spell slot count both change for real at level 3 (verified
+// independently against the PF1 Core Rulebook Cleric class table and spells-per-day
+// table), since level 3 is exactly when a cleric first casts 2nd-level spells.
 const CLERIC_CLASS_ID: &str = "class:cleric";
 /// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -535,27 +539,42 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 /// cleric spells begin at caster level 3), gains no new class feature at 2nd level
 /// (the Cleric class table's level-2 "Special" column is blank), and Channel Energy
 /// stays 1d6 through level 2 (it next increases at level 3), so every level-1 formula
-/// this seam already grounds extends to level 2 without re-derivation.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 2;
+/// this seam already grounds extends to level 2 without re-derivation. A further
+/// SD13-E5 slice widens this to 1..=3: a level-3 cleric's Channel Energy die count
+/// becomes 2d6 (`ceil(3 / 2) = 2`, the class table's level-3 "Special" column reads
+/// "Channel energy 2d6") and a level-3 cleric casts 2nd-level cleric spells for the
+/// first time (verified against the raw Cleric spells-per-day table rows), so the
+/// domain spell slot count also changes for real at level 3.
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 3;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
-// deterministic domain selections on the level-1/level-2 seam (a cleric chooses two
-// domains from among those belonging to her deity). This slice surfaces the named
-// selections as an explicit choice seam only and grounds no domain power and no
-// domain spell-list contents, mirroring the Fighter bonus-feat choice-slot seam
-// pattern.
+// deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
+// chooses two domains from among those belonging to her deity). This slice surfaces
+// the named selections as an explicit choice seam only and grounds no domain power
+// and no domain spell-list contents, mirroring the Fighter bonus-feat choice-slot
+// seam pattern.
 const CLERIC_DOMAIN_CHOICE_ID: &str = "choice:cleric_domain";
 const GOOD_DOMAIN_SELECTION: &str = "domain:good";
 const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
 
 // PF1 Core Rulebook Domains: a cleric gains one domain spell slot per level of
-// cleric spells she can cast, 1st and up. At every level this bounded seam supports
-// (1-2) she casts only 1st-level cleric spells (2nd-level cleric spells begin at
-// caster level 3, verified against the PF1 Core Rulebook Cleric spells-per-day
-// table via d20pfsrd and legacy.aonprd.com), so exactly one 1st-level domain slot is
-// granted at both supported levels — this is confirmed unchanged at level 2, not a
-// new record.
-const CLERIC_DOMAIN_SPELL_SLOT_COUNT: i16 = 1;
+// cleric spells she can cast, 1st and up. At levels 1-2 this bounded seam supports
+// she casts only 1st-level cleric spells (2nd-level cleric spells begin at caster
+// level 3, verified against the PF1 Core Rulebook Cleric spells-per-day table via
+// d20pfsrd and legacy.aonprd.com), so exactly one 1st-level domain slot is granted —
+// confirmed unchanged at level 2, not a new record. At level 3 a cleric casts
+// 2nd-level cleric spells for the first time (the raw spells-per-day table's level-3
+// row is the first to show a non-"—" 2nd-level column), so the domain spell slot
+// count genuinely becomes 2 at level 3: one 1st-level domain slot plus one
+// 2nd-level domain slot, mirroring exactly the Wizard specialist-bonus-slot
+// level-3 widening (`WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3`).
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_1_AND_2: i16 = 1;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_3: i16 = 2;
+/// The cleric level at which 2nd-level cleric spells (and so the second domain
+/// spell slot) first become available, verified against the raw PF1 Core Rulebook
+/// Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com): level 2 shows
+/// "4/2+1/—", level 3 shows "4/2+1/1+1" — the first non-"—" 2nd-level column.
+const CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 3;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
 // identity. Druid is a prepared divine caster whose bounded burden splits across
@@ -5476,8 +5495,8 @@ fn explain_wizard_level1_prepared_spell_baseline(
 
 /// The bounded Cleric milestone level this decomposition surface grounds, if any.
 /// Returns the single Cleric level when the chosen input is exactly a single-class
-/// Cleric at one of the supported milestone levels (1 or 2). Returns `None` for no
-/// Cleric, a non-Cleric class, a multiclass mix, or any level-3+ Cleric this slice
+/// Cleric at one of the supported milestone levels (1, 2, or 3). Returns `None` for
+/// no Cleric, a non-Cleric class, a multiclass mix, or any level-4+ Cleric this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -5495,8 +5514,8 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E4/E5 runtime evidence for the deterministic Human Cleric
-/// level-1/level-2 prepared divine spell-bearing baseline, while keeping it explicitly
-/// claim-blocked on its remaining still-missing burdens.
+/// level-1/level-2/level-3 prepared divine spell-bearing baseline, while keeping it
+/// explicitly claim-blocked on its remaining still-missing burdens.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds Channel
 /// Energy's flat die-count and uses-per-day math, the domain choice seam, the flat
@@ -5513,7 +5532,13 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// verified independently against the PF1 Core Rulebook Cleric class table (d20pfsrd
 /// and legacy.aonprd.com): Cleric gains no new class feature at 2nd level (the class
 /// table's level-2 "Special" column is blank), so no new pillar is added, only the
-/// existing ones widened. It only:
+/// existing ones widened. A further SD13-E5 slice widens the gate again to 1..=3
+/// (`MAX_SUPPORTED_CLERIC_LEVEL = 3`): Channel Energy's die count and the domain
+/// spell slot count both change for real at level 3, since level 3 is exactly when
+/// a cleric first casts 2nd-level spells (verified independently against both
+/// primary sources' raw class table and spells-per-day table rows); the level-3
+/// "Special" column names only the Channel Energy die-count increase, so no new
+/// pillar record is added. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
@@ -5525,16 +5550,18 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// - grounds Channel Energy's die count and daily use count for real (PF1 Core
 ///   Rulebook Channel Energy: `ceil(cleric level / 2)` d6, minimum 1d6; usable
 ///   `3 + Charisma modifier` times per day; confirmed the die count stays 1d6 at
-///   level 2, via the same formula, not a new record),
+///   level 2 and becomes 2d6 at level 3, both via the same formula, the level-3
+///   value not re-derived),
 /// - surfaces the canonical two-domain choice seam (`choice:cleric_domain ->
 ///   domain:good` and `choice:cleric_domain -> domain:healing`) as an explicit
 ///   recognition record carrying no mechanical value, mirroring the Fighter
 ///   bonus-feat choice-slot seam,
 /// - grounds the flat domain spell slot count for real (PF1 Core Rulebook Domains:
 ///   one domain spell slot per level of cleric spells she can cast, 1st and up —
-///   exactly one 1st-level domain slot at every level this seam supports (1-2),
-///   since a level-2 cleric still only casts 1st-level cleric spells; the slot's
-///   contents are not grounded),
+///   exactly one 1st-level domain slot at levels 1-2, since a level-2 cleric still
+///   only casts 1st-level cleric spells; at level 3 a cleric casts 2nd-level cleric
+///   spells for the first time, so the count becomes 2 — one 1st-level plus one
+///   2nd-level domain slot; the slots' contents are not grounded at any level),
 /// - grounds the Good domain's Touch of Good in full when Good is a chosen domain
 ///   (PF1 Core Rulebook Good Domain: a flat sacred bonus equal to half cleric level,
 ///   minimum 1, and a flat `3 + Wisdom modifier` uses-per-day count — both formulas
@@ -5650,9 +5677,11 @@ fn explain_cleric_level1_spell_baseline(
     // Grounded for real: Channel Energy's flat die count. PF1 Core Rulebook Channel
     // Energy: the cleric channels a number of d6s equal to ceil(cleric level / 2),
     // minimum 1d6. At level 1 this is ceil(1 / 2) = 1d6; confirmed unchanged at level
-    // 2 (ceil(2 / 2) = 1d6 too, via the same formula, not a new record — Channel
-    // Energy next increases to 2d6 only at level 3, verified against the PF1 Core
-    // Rulebook Cleric class table).
+    // 2 (ceil(2 / 2) = 1d6 too, via the same formula, not a new record). A further
+    // SD13-E5 slice confirms this genuinely increases to 2d6 at level 3
+    // (ceil(3 / 2) = 2), verified against the PF1 Core Rulebook Cleric class table's
+    // level-3 "Special" column ("Channel energy 2d6") — via the same pre-existing
+    // formula, not re-derived.
     let channel_energy_dice = (level_value + 1) / 2;
     explanations.push(ComputationExplanation {
         id: "class_chassis.cleric.channel_energy_dice".to_owned(),
@@ -5724,16 +5753,32 @@ fn explain_cleric_level1_spell_baseline(
     // level 2 (a level-2 cleric still only casts 1st-level cleric spells — 2nd-level
     // cleric spells begin at caster level 3, verified against the PF1 Core Rulebook
     // Cleric spells-per-day table via d20pfsrd and legacy.aonprd.com), so this is the
-    // same value at level 2, not a new record.
+    // same value at level 2, not a new record. A further SD13-E5 slice widens this for
+    // real at level 3: a level-3 cleric casts 2nd-level cleric spells for the first
+    // time (verified independently against both primary sources' raw spells-per-day
+    // table rows), so the count genuinely becomes 2 — one 1st-level domain slot plus
+    // one 2nd-level domain slot — mirroring exactly the Wizard specialist-bonus-slot
+    // level-3 widening.
+    let domain_spell_slot_count = if level >= CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_3
+    } else {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_1_AND_2
+    };
     explanations.push(ComputationExplanation {
         id: "class_chassis.cleric.domain_spell_slot".to_owned(),
-        value: CLERIC_DOMAIN_SPELL_SLOT_COUNT,
+        value: domain_spell_slot_count,
         detail: format!(
             "Cleric domain spell slot count: one domain spell slot per level of cleric spells \
-             she can cast, 1st and up (PF1 Core Rulebook Domains). At Cleric level \
-             {level} she casts only 1st-level cleric spells (2nd-level cleric spells begin at \
-             caster level 3), so exactly {CLERIC_DOMAIN_SPELL_SLOT_COUNT} 1st-level domain \
-             spell slot is granted at every level this bounded seam supports (1-2). \
+             she can cast, 1st and up (PF1 Core Rulebook Domains). At levels 1-2 a cleric \
+             casts only 1st-level cleric spells, so the flat count is exactly \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_1_AND_2} 1st-level domain spell slot; \
+             at level {CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a cleric also casts \
+             2nd-level cleric spells for the first time (2nd-level cleric spells begin at \
+             caster level 3, verified against both primary sources' raw spells-per-day table \
+             rows), so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_3} (one 1st-level domain slot plus one \
+             2nd-level domain slot). At Cleric level {level} this is \
+             {domain_spell_slot_count} domain spell slot(s). \
              This grounds only the flat slot count; it grounds no slot contents (which domain \
              spell may fill it), no domain spell lists, and no prepared-spell posture"
         ),
@@ -5752,8 +5797,10 @@ fn explain_cleric_level1_spell_baseline(
     // seam above).
     if domain_selections.contains(&GOOD_DOMAIN_SELECTION) {
         // At level 1 this floors to the minimum (0 / 2 = 0, floored up to 1); at
-        // level 2 it is naturally 1 without needing the floor (2 / 2 = 1) — both
-        // land on the same value, confirmed via the same formula, not a new record.
+        // levels 2-3 it is naturally 1 without needing the floor (2 / 2 = 1,
+        // 3 / 2 = 1, integer division) — all three land on the same value,
+        // confirmed via the same formula, not a new record (it next increases
+        // only at level 4, 4 / 2 = 2).
         let touch_of_good_bonus = (level_value / 2).max(1);
         explanations.push(ComputationExplanation {
             id: "class_chassis.cleric.domain_power_good_touch_of_good_bonus".to_owned(),
