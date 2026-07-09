@@ -301,16 +301,19 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
 const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
-/// both the SD13-E3-F5 mandatory-milestone classification proof (which level-1
+/// the SD13-E3-F5 mandatory-milestone classification proof (which level-1
 /// mandatory milestones are proven versus unproven for the level-10 progression
-/// matrix) and the SD13-E5 level-1 hit-point baseline proof (level-1 hit points
+/// matrix), the SD13-E5 level-1 hit-point baseline proof (level-1 hit points
 /// = maximized d10 hit die 10 + Constitution modifier as a standalone grounded
-/// explanation record) as one literal (paladin-row idiom). Both `.contains()`
-/// consumers read their respective substring from this combined grounding
-/// reference.
+/// explanation record), and the SD13-E5 favored-class bonus choice recognition
+/// proof (which of the PF1 Core Rulebook Favored Class rule's two options, +1
+/// hp or +1 skill rank, was selected, as a standalone flat-magnitude record)
+/// as one literal (paladin-row idiom). Each `.contains()` consumer reads its
+/// respective substring from this combined grounding reference.
 const SD13_FIGHTER_LEVEL1_ROW_GROUNDING_REF: &str =
     "tests/sd13_fighter_level1_mandatory_milestone_classification.rs + \
-     tests/sd13_fighter_level1_hit_point_baseline.rs";
+     tests/sd13_fighter_level1_hit_point_baseline.rs + \
+     tests/sd13_fighter_favored_class_bonus_choice.rs";
 
 /// The combined grounding reference for the Paladin hybrid baseline row, citing
 /// F6 (chassis identity), the per-burden decomposition test, the SD13-E5

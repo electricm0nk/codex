@@ -735,6 +735,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_fighter_level1_hit_points(input, &ability_modifiers, &mut explanations);
 
+    explain_fighter_favored_class_bonus_choice(input, &mut explanations);
+
     explain_hybrid_level1_chassis(input, &mut explanations, &mut diagnostics);
     explain_barbarian_level1_chassis(
         input,
@@ -2250,6 +2252,14 @@ fn explain_fighter_class_features(
 /// +1 skill-rank choice (no input surface exists for it), hit points at
 /// levels 2+ (no average/rolled hit-die policy is grounded), and Toughness /
 /// feat hit-point interplay.
+///
+/// SD13-E5 update: the favored-class bonus CHOICE itself (which of the two
+/// legal options, +1 hp or +1 skill rank, was picked) is now recognized as a
+/// standalone record by [`explain_fighter_favored_class_bonus_choice`]. That
+/// record's own +1 magnitude is never wired into this hit-point total (nor
+/// into any selected-skill-rank total) — the sentence above stays accurate
+/// for this record specifically, which still carries no favored-class
+/// contribution of its own.
 fn explain_fighter_level1_hit_points(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -2273,6 +2283,97 @@ fn explain_fighter_level1_hit_points(
              hit points at levels 2+ (no average/rolled hit-die policy is grounded), and \
              Toughness / feat hit-point interplay"
         ),
+    });
+}
+
+/// Choice-slot id for the PF1 Core Rulebook Favored Class rule (Core Rulebook
+/// pg. 31, verified against the Archives of Nethys primary source: "Whenever a
+/// character gains a level in his favored class, he receives either +1 hit
+/// point or +1 skill rank"). A Human's favored class is Any (PF1 Core Rulebook
+/// Human racial traits), which trivially includes Fighter, so this choice
+/// applies at Fighter level 1 on this codebase's Human-only Fighter chassis
+/// seam without needing to resolve the later "any race, any class" errata.
+const FAVORED_CLASS_BONUS_CHOICE_ID: &str = "choice:favored_class_bonus";
+const FAVORED_CLASS_BONUS_HP_SELECTION: &str = "bonus:hp";
+const FAVORED_CLASS_BONUS_SKILL_RANK_SELECTION: &str = "bonus:skill_rank";
+
+/// Ground the Fighter level-1 favored-class bonus CHOICE as a standalone
+/// recognition record, mirroring the already-landed Sorcerer bloodline choice
+/// / Cleric domain choice / Druid nature-bond choice / Monk bonus-feat choice
+/// recognition idiom: recognize which of the two PF1 Core Rulebook Favored
+/// Class rule options (`bonus:hp` or `bonus:skill_rank`) was selected, and
+/// name the rule's own genuinely flat +1 magnitude (verified against the
+/// Archives of Nethys primary source: the bonus is always exactly +1
+/// regardless of which option is chosen, so this is not a fabricated number).
+///
+/// This is recognition of the choice slot only. It never applies the +1 to
+/// the level-1 hit-point total grounded by [`explain_fighter_level1_hit_points`]
+/// (`class_chassis.fighter.level_1_hit_points`) nor to any selected-skill-rank
+/// total — doing so would require wiring into the integrated hit-point /
+/// skill-rank computation, which stays out of scope for this slice. A
+/// selection present but naming neither legal option is acknowledged without
+/// claiming a resolved hp/skill-rank identity, mirroring the Monk bonus-feat
+/// choice's "present but unrecognized" branch. No record is emitted at all
+/// when the choice slot is absent, so no favored-class input is fabricated
+/// for a fixture that never selected one.
+fn explain_fighter_favored_class_bonus_choice(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if supported_fighter_level(input) != Some(1) {
+        return;
+    }
+
+    let Some(selection) = choice_selection(input, FAVORED_CLASS_BONUS_CHOICE_ID) else {
+        return;
+    };
+
+    let (value, detail) = if selection == FAVORED_CLASS_BONUS_HP_SELECTION {
+        (
+            1,
+            format!(
+                "Favored Class bonus choice ({FAVORED_CLASS_BONUS_CHOICE_ID} -> {selection}): \
+                 PF1 Core Rulebook pg. 31 grants a character +1 hit point or +1 skill rank for \
+                 each level taken in his favored class; a Human's favored class is Any, which \
+                 trivially includes Fighter, so this level-1 Fighter class level qualifies. This \
+                 selection chooses the +1 hit point option. This is a flat, non-fabricated bonus \
+                 magnitude only (+1) — it is standalone and not applied to the level-1 hit-point \
+                 total (`class_chassis.fighter.level_1_hit_points`), since that would require \
+                 wiring into the integrated hit-point computation, never attempted in this \
+                 codebase"
+            ),
+        )
+    } else if selection == FAVORED_CLASS_BONUS_SKILL_RANK_SELECTION {
+        (
+            1,
+            format!(
+                "Favored Class bonus choice ({FAVORED_CLASS_BONUS_CHOICE_ID} -> {selection}): \
+                 PF1 Core Rulebook pg. 31 grants a character +1 hit point or +1 skill rank for \
+                 each level taken in his favored class; a Human's favored class is Any, which \
+                 trivially includes Fighter, so this level-1 Fighter class level qualifies. This \
+                 selection chooses the +1 skill rank option. This is a flat, non-fabricated bonus \
+                 magnitude only (+1) — it is standalone and not applied to any selected-skill-rank \
+                 total, since that would require wiring into a general class-skill-rank \
+                 allocation engine, never attempted in this codebase"
+            ),
+        )
+    } else {
+        (
+            0,
+            format!(
+                "Favored Class bonus choice slot is present ({FAVORED_CLASS_BONUS_CHOICE_ID} -> \
+                 {selection}), but only the PF1 Core Rulebook's two legal options \
+                 ({FAVORED_CLASS_BONUS_HP_SELECTION} or \
+                 {FAVORED_CLASS_BONUS_SKILL_RANK_SELECTION}) are recognized on this bounded seam; \
+                 no hp/skill-rank identity is resolved and no mechanical value is fabricated (+0)"
+            ),
+        )
+    };
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.fighter.favored_class_bonus_choice".to_owned(),
+        value,
+        detail,
     });
 }
 
