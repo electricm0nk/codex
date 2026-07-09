@@ -855,8 +855,19 @@ const DRUID_CLASS_ID: &str = "class:druid";
 /// mirroring the Woodland Stride/Trackless Step idiom. Wild Shape is NOT flat — it
 /// is a full shapeshifting subsystem (new form, new stat block, duration tracking)
 /// with no execution engine anywhere in this codebase — so it is deliberately left
-/// named-but-unproven, exactly like the animal-companion execution burden.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 4;
+/// named-but-unproven, exactly like the animal-companion execution burden. A still
+/// further SD13-E5 slice widens the gate to level 5 (verified independently against
+/// d20pfsrd and legacy.aonprd.com): level 5 base attack bonus is +3, base saves are
+/// +4/+1/+4 (Fortitude/Reflex/Will) — all three numerically unchanged from level 4
+/// (integer-division coincidences of `level * 3 / 4`, `level / 2 + 2`, and
+/// `level / 3`, not a sign any formula stopped scaling), extended via the same
+/// formulas, not re-derived; Wild Empathy grounds correctly to 6 (5 + Charisma
+/// modifier 1) via the same level-generic formula; Nature Sense stays the flat +2
+/// bonus; Woodland Stride, Trackless Step, and Resist Nature's Lure all stay
+/// granted, not re-derived. The class table's level-5 "Special" column is genuinely
+/// blank (verified independently against both primary sources rather than assumed),
+/// so this slice grounds no new pillar — only the existing pillars are widened.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 5;
 /// PF1 Core Rulebook level gate at which Druid gains Resist Nature's Lure (4th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Resist nature's lure" as part of the Druid
@@ -6902,8 +6913,16 @@ fn supported_druid_level(input: &CharacterInput) -> Option<u8> {
 /// mirroring the Woodland Stride/Trackless Step idiom. The other level-4 "Special"
 /// entry, Wild Shape (1/day), was checked and confirmed NOT flat (a full shapeshifting
 /// subsystem with no execution engine anywhere in this codebase), so it is deliberately
-/// left named-but-unproven, exactly like the animal-companion execution burden. The
-/// chosen bond's execution and the prepared divine spell posture burden remain
+/// left named-but-unproven, exactly like the animal-companion execution burden. A still
+/// further SD13-E5 slice widens the gate to level 5 (`supported_druid_level`, 1..=5),
+/// extending every formula above to level 5 via the same formula (level 5 base attack
+/// bonus is +3, base saves are +4/+1/+4 Fortitude/Reflex/Will, all three numerically
+/// unchanged from level 4 as an integer-division coincidence, not a stopped-scaling
+/// formula), keeping Woodland Stride, Trackless Step, and Resist Nature's Lure all
+/// granted (not re-derived); the PF1 Core Rulebook Druid class table's level-5
+/// "Special" column is genuinely blank (verified independently against d20pfsrd and
+/// legacy.aonprd.com rather than assumed), so no new pillar is grounded at level 5.
+/// The chosen bond's execution and the prepared divine spell posture burden remain
 /// claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
