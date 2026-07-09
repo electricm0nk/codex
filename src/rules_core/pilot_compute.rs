@@ -414,9 +414,22 @@ const TWO_WEAPON_FIGHTING_FEAT_SELECTION: &str = "feat:two_weapon_fighting";
 // "Bloodline power, bloodline spell" entry, so no new class feature is gained at 4th
 // level and no new pillar record is added — this widening extends only the
 // already-grounded base-attack/base-save/bloodline-choice/bloodline-class-skill-choice
-// pillars to level 4 via the same formulas, without re-derivation.
+// pillars to level 4 via the same formulas, without re-derivation. A further SD13-E5
+// slice widens the gate again to level 5: the PF1 Core Rulebook Sorcerer class table's
+// level-5 "Special" column reads "Bloodline spell" (verified independently against
+// d20pfsrd and legacy.aonprd.com), UNLIKE the blank level-4 column, so this was checked
+// rather than assumed away — this is the sorcerer's second bloodline spell grant (the
+// first came at level 3, alongside the level-3 bloodline power), and the Arcane
+// bloodline's own 5th-level bloodline spell is invisibility, but the entry is
+// bloodline-specific (it names a different spell per bloodline) and not
+// flat/identity-shaped the way Rogue's Trap Sense or Monk's Still Mind are, so no new
+// pillar record is added for level 5 either, mirroring exactly how the level-3
+// "Bloodline power, bloodline spell" entry was left unproven — this widening extends
+// only the already-grounded base-attack/base-save/bloodline-choice/
+// bloodline-class-skill-choice pillars to level 5 via the same formulas, without
+// re-derivation.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 4;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 5;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -5721,6 +5734,22 @@ fn explain_rogue_level1_chassis(
 /// column is blank (verified independently against both primary sources, checked rather
 /// than assumed), so this slice grounds no new pillar for level 4 — only the existing
 /// pillars are widened.
+///
+/// A further SD13-E5 slice widens the level-1..=4 gate to level 5
+/// (`MAX_SUPPORTED_SORCERER_LEVEL = 5`) and extends every one of the formulas above to
+/// level 5 via the same formula, without re-derivation, verified independently against
+/// the PF1 Core Rulebook Sorcerer class table (d20pfsrd and legacy.aonprd.com): level 5
+/// base attack bonus is +2, base saves are +1/+1/+4 (Fortitude/Reflex/Will) — every one
+/// of these four values is numerically unchanged from level 4, an integer-division
+/// coincidence, not a sign any formula stopped scaling; the bloodline choice and
+/// bloodline class-skill choice recognitions are not level-gated, so both still fire at
+/// level 5 for the same fixture selections. UNLIKE the blank level-4 "Special" column,
+/// the level-5 column reads "Bloodline spell" (verified independently against both
+/// primary sources, checked rather than assumed away) — the sorcerer's second bloodline
+/// spell grant (the Arcane bloodline's own 5th-level bloodline spell is invisibility),
+/// but the entry is bloodline-specific and not flat/identity-shaped, so this slice
+/// grounds no new pillar for level 5 either, mirroring exactly how the level-3
+/// "Bloodline power, bloodline spell" entry was left unproven.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Sorcerer spell-bearing identity, the

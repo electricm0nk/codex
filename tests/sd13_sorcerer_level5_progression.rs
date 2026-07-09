@@ -1,42 +1,53 @@
-//! SD13-E5 Sorcerer level-4 progression grounding proof.
+//! SD13-E5 Sorcerer level-5 progression grounding proof.
 //!
-//! Widens the accepted Sorcerer level-1/level-2/level-3 spontaneous
+//! Widens the accepted Sorcerer level-1/level-2/level-3/level-4 spontaneous
 //! spell-burden baseline (`tests/sd13_sorcerer_level1_spell_baseline.rs`,
 //! `tests/sd13_sorcerer_base_attack_and_saves.rs`,
 //! `tests/sd13_sorcerer_bloodline_class_skill_choice.rs`,
 //! `tests/sd13_sorcerer_level2_progression.rs`,
-//! `tests/sd13_sorcerer_level3_progression.rs`) to Sorcerer level 4, mirroring
-//! the Fighter/Paladin/Rogue/Barbarian/Monk/Ranger level-range-gate idiom
-//! (`supported_sorcerer_level` is generalized from `1..=3` to `1..=4` via
-//! `MAX_SUPPORTED_SORCERER_LEVEL = 4`). Both PF1 CRB primary sources
-//! (d20pfsrd and legacy.aonprd.com Sorcerer class table) were read directly
-//! before writing any code or test:
+//! `tests/sd13_sorcerer_level3_progression.rs`,
+//! `tests/sd13_sorcerer_level4_progression.rs`) to Sorcerer level 5, mirroring
+//! the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Bard/Druid/Ranger
+//! level-range-gate idiom (`supported_sorcerer_level` is generalized from
+//! `1..=4` to `1..=5` via `MAX_SUPPORTED_SORCERER_LEVEL = 5`). Both PF1 CRB
+//! primary sources (d20pfsrd and legacy.aonprd.com Sorcerer class table) were
+//! read directly before writing any code or test:
 //!
-//! - level 4 base attack bonus is +2 (`4 / 2 = 2`, the Sorcerer's own
+//! - level 5 base attack bonus is +2 (`5 / 2 = 2`, the Sorcerer's own
 //!   1/2-BAB progression, UNLIKE the 3/4 BAB shared by
 //!   Rogue/Monk/Druid/Cleric/Bard) and base saves are +1 Fortitude (poor,
-//!   `4 / 3 = 1`), +1 Reflex (poor, `4 / 3 = 1`), +4 Will (good,
-//!   `4 / 2 + 2 = 4`) — confirmed by the same formulas already grounded at
-//!   levels 1-3, not re-derived.
+//!   `5 / 3 = 1`), +1 Reflex (poor, `5 / 3 = 1`), +4 Will (good,
+//!   `5 / 2 + 2 = 4`) — confirmed by the same formulas already grounded at
+//!   levels 1-4, not re-derived. Every one of these four values is
+//!   numerically unchanged from level 4 (an integer-division coincidence,
+//!   not a sign any formula stopped scaling: `5/2 = 4/2 = 2` and
+//!   `5/3 = 4/3 = 1`).
 //! - the bloodline choice recognition and the Arcane bloodline's class-skill
 //!   choice recognition are not level-gated (a sorcerer's bloodline does not
-//!   change by level), so both still fire at level 4 for the same fixture
+//!   change by level), so both still fire at level 5 for the same fixture
 //!   selections, confirmed neither is accidentally hardcoded to fire only at
 //!   a lower level.
-//! - the PF1 Core Rulebook Sorcerer class table's level-4 "Special" column is
-//!   blank (verified independently against both primary sources) — UNLIKE
-//!   the level-3 row's "Bloodline power, bloodline spell" entry, this was
-//!   checked rather than assumed away, and confirmed genuinely blank, so no
-//!   new pillar record is added at level 4 — only the existing pillars are
-//!   widened.
+//! - the PF1 Core Rulebook Sorcerer class table's level-5 "Special" column
+//!   reads "Bloodline spell" (verified independently against both primary
+//!   sources) — UNLIKE the blank level-4 column, this was checked rather
+//!   than assumed away. This is the sorcerer's SECOND bloodline spell grant
+//!   (the first came at level 3, alongside the level-3 bloodline power); the
+//!   Arcane bloodline's own 5th-level bloodline spell is invisibility, but
+//!   the entry is bloodline-specific (it names a different spell per
+//!   bloodline) and not flat/identity-shaped the way Rogue's Trap Sense or
+//!   Monk's Still Mind are, so this slice grounds no new pillar for level 5
+//!   either — mirroring exactly how the level-3 "Bloodline power, bloodline
+//!   spell" entry was left unproven. Both stay named by the pre-existing
+//!   `arcane_bond_and_bloodline_progression.unsupported` diagnostic,
+//!   unchanged.
 //!
 //! It deliberately does not touch Arcane Bond, bloodline arcana, the
-//! bloodline power or bloodline spell gained at 3rd level, bonus spells/feats
-//! at 3rd+, or the spontaneous spell burden (all stay named-but-unproven,
-//! unchanged from level 1/2/3), and it does not ground Sorcerer level 5+. It
-//! also preserves the accepted Sorcerer level-1/level-2/level-3 truth
-//! (unchanged), the Fighter negative control, and the multiclass negative
-//! control.
+//! bloodline powers or bloodline spells gained at 3rd/5th level, bonus
+//! spells/feats at 3rd+, or the spontaneous spell burden (all stay
+//! named-but-unproven, unchanged from level 1/2/3/4), and it does not ground
+//! Sorcerer level 6+. It also preserves the accepted Sorcerer
+//! level-1/level-2/level-3/level-4 truth (unchanged), the Fighter negative
+//! control, and the multiclass negative control.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -46,11 +57,11 @@ use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
 };
 
-const SORCERER_LEVEL3_FIXTURE: &str =
-    include_str!("fixtures/rules_core/pf1_human_sorcerer_level3_sd13_deterministic_input.txt");
-
 const SORCERER_LEVEL4_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_sorcerer_level4_sd13_deterministic_input.txt");
+
+const SORCERER_LEVEL5_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_sorcerer_level5_sd13_deterministic_input.txt");
 
 const FIGHTER_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
@@ -88,43 +99,43 @@ fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool 
     computation.explanations.iter().any(|e| e.id == id)
 }
 
-// ----- Base attack bonus at level 4 -----
+// ----- Base attack bonus at level 5 -----
 
 #[test]
-fn sorcerer_level4_base_attack_bonus_is_grounded_by_the_same_formula() {
-    let input = load(SORCERER_LEVEL4_FIXTURE);
+fn sorcerer_level5_base_attack_bonus_is_grounded_by_the_same_formula() {
+    let input = load(SORCERER_LEVEL5_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let base_attack = explanation(&computation, "class_chassis.sorcerer.base_attack_bonus");
     assert_eq!(
         base_attack.value, 2,
-        "Sorcerer level 4 1/2-BAB progression (4 / 2) must equal 2: {}",
+        "Sorcerer level 5 1/2-BAB progression (5 / 2) must equal 2: {}",
         base_attack.detail
     );
 }
 
-// ----- Base saves at level 4 (good Will only, poor Fortitude, poor Reflex) -----
+// ----- Base saves at level 5 (good Will only, poor Fortitude, poor Reflex) -----
 
 #[test]
-fn sorcerer_level4_base_saves_are_grounded_by_the_same_formulas() {
-    let input = load(SORCERER_LEVEL4_FIXTURE);
+fn sorcerer_level5_base_saves_are_grounded_by_the_same_formulas() {
+    let input = load(SORCERER_LEVEL5_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let fortitude = explanation(&computation, "class_chassis.sorcerer.base_save.fortitude");
-    assert_eq!(fortitude.value, 1, "Sorcerer level 4 poor Fortitude (4/3) must equal 1");
+    assert_eq!(fortitude.value, 1, "Sorcerer level 5 poor Fortitude (5/3) must equal 1");
 
     let reflex = explanation(&computation, "class_chassis.sorcerer.base_save.reflex");
-    assert_eq!(reflex.value, 1, "Sorcerer level 4 poor Reflex (4/3) must equal 1");
+    assert_eq!(reflex.value, 1, "Sorcerer level 5 poor Reflex (5/3) must equal 1");
 
     let will = explanation(&computation, "class_chassis.sorcerer.base_save.will");
-    assert_eq!(will.value, 4, "Sorcerer level 4 good Will (4/2+2) must equal 4");
+    assert_eq!(will.value, 4, "Sorcerer level 5 good Will (5/2+2) must equal 4");
 }
 
-// ----- Bloodline choice recognition still fires at level 4 -----
+// ----- Bloodline choice recognition still fires at level 5 -----
 
 #[test]
-fn sorcerer_level4_still_recognizes_the_bloodline_choice() {
-    let input = load(SORCERER_LEVEL4_FIXTURE);
+fn sorcerer_level5_still_recognizes_the_bloodline_choice() {
+    let input = load(SORCERER_LEVEL5_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let choice = explanation(&computation, "class_chassis.sorcerer.bloodline_choice");
@@ -134,16 +145,16 @@ fn sorcerer_level4_still_recognizes_the_bloodline_choice() {
     );
     assert!(
         choice.detail.contains("Arcane"),
-        "bloodline choice recognition must still name the Arcane bloodline at level 4: {}",
+        "bloodline choice recognition must still name the Arcane bloodline at level 5: {}",
         choice.detail
     );
 }
 
-// ----- Arcane bloodline class-skill choice recognition still fires at level 4 -----
+// ----- Arcane bloodline class-skill choice recognition still fires at level 5 -----
 
 #[test]
-fn sorcerer_level4_still_recognizes_the_bloodline_class_skill_choice() {
-    let input = load(SORCERER_LEVEL4_FIXTURE);
+fn sorcerer_level5_still_recognizes_the_bloodline_class_skill_choice() {
+    let input = load(SORCERER_LEVEL5_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let choice = explanation(
@@ -157,23 +168,23 @@ fn sorcerer_level4_still_recognizes_the_bloodline_class_skill_choice() {
     assert!(
         choice.detail.contains("Knowledge (arcana)"),
         "class-skill choice recognition must still name the selected Knowledge skill at level \
-         4: {}",
+         5: {}",
         choice.detail
     );
 }
 
-// ----- The two existing burden diagnostics still fire at level 4 -----
+// ----- The two existing burden diagnostics still fire at level 5 -----
 
 #[test]
-fn sorcerer_level4_still_claim_blocks_arcane_bond_and_spontaneous_spell_burdens() {
-    let input = load(SORCERER_LEVEL4_FIXTURE);
+fn sorcerer_level5_still_claim_blocks_arcane_bond_and_spontaneous_spell_burdens() {
+    let input = load(SORCERER_LEVEL5_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.id
             == "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
             && d.claim_blocking),
-        "level-4 Sorcerer must still claim-block on the Arcane Bond / bloodline \
+        "level-5 Sorcerer must still claim-block on the Arcane Bond / bloodline \
          progression burden: {:?}",
         computation.diagnostics
     );
@@ -182,67 +193,61 @@ fn sorcerer_level4_still_claim_blocks_arcane_bond_and_spontaneous_spell_burdens(
             .diagnostics
             .iter()
             .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported" && d.claim_blocking),
-        "level-4 Sorcerer must still claim-block on the spontaneous spell posture burden: {:?}",
+        "level-5 Sorcerer must still claim-block on the spontaneous spell posture burden: {:?}",
         computation.diagnostics
     );
 }
 
-// ----- The chassis recognition record is still present at level 4 -----
+// ----- The chassis recognition record is still present at level 5 -----
 
 #[test]
-fn sorcerer_level4_still_recognizes_the_spell_bearing_baseline() {
-    let input = load(SORCERER_LEVEL4_FIXTURE);
+fn sorcerer_level5_still_recognizes_the_spell_bearing_baseline() {
+    let input = load(SORCERER_LEVEL5_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         has_explanation(&computation, "class_chassis.spell_baseline.sorcerer"),
-        "level-4 Sorcerer must still recognize the spell-bearing baseline identity: {:?}",
+        "level-5 Sorcerer must still recognize the spell-bearing baseline identity: {:?}",
         computation.explanations
     );
 }
 
-// ----- The accepted Sorcerer level-3 truth is unaffected -----
+// ----- The accepted Sorcerer level-4 truth is unaffected -----
 
 #[test]
-fn sorcerer_level3_truth_is_unchanged_by_this_widening() {
-    let input = load(SORCERER_LEVEL3_FIXTURE);
+fn sorcerer_level4_truth_is_unchanged_by_this_widening() {
+    let input = load(SORCERER_LEVEL4_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let base_attack = explanation(&computation, "class_chassis.sorcerer.base_attack_bonus");
-    assert_eq!(base_attack.value, 1, "Sorcerer level 3 base attack bonus must stay 1");
+    assert_eq!(base_attack.value, 2, "Sorcerer level 4 base attack bonus must stay 2");
 
     let will = explanation(&computation, "class_chassis.sorcerer.base_save.will");
-    assert_eq!(will.value, 3, "Sorcerer level 3 good Will save must stay 3");
+    assert_eq!(will.value, 4, "Sorcerer level 4 good Will save must stay 4");
 }
 
-// ----- Negative control: level 5 was later widened into the supported tranche -----
+// ----- Negative control: level 6 stays unrecognized by this slice -----
 
 #[test]
-fn sorcerer_level_5_was_later_widened_into_the_supported_tranche() {
-    // At the time this file's slice landed, level 5 was the next unproven milestone
-    // and stayed unrecognized. A later SD13-E5 slice
-    // (tests/sd13_sorcerer_level5_progression.rs) widened the level-range gate to
-    // level 5 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Bard/Druid/
-    // Ranger level-range gate idiom); this negative control is superseded, not
-    // violated — pin the new truth here too so this file stays internally consistent.
-    let level_5 = SORCERER_LEVEL4_FIXTURE.replace("class:sorcerer:4", "class:sorcerer:5");
-    let input = load(&level_5);
+fn sorcerer_level_6_is_not_promoted_by_this_slice() {
+    let level_6 = SORCERER_LEVEL5_FIXTURE.replace("class:sorcerer:5", "class:sorcerer:6");
+    let input = load(&level_6);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        has_explanation(&computation, "class_chassis.sorcerer.base_attack_bonus"),
-        "level-5 Sorcerer is supported since the SD13-E5 level-5 slice: {:?}",
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.sorcerer.")
+                || e.id == "class_chassis.spell_baseline.sorcerer"),
+        "level-6 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
         computation.explanations
-    );
-    assert!(
-        has_explanation(&computation, "class_chassis.sorcerer.bloodline_choice"),
-        "level-5 Sorcerer must keep the bloodline choice recognition grounded at level 4"
     );
 }
 
 // ----- Negative control: the sorcerer path must not leak onto other classes -----
 
 #[test]
-fn fighter_does_not_gain_sorcerer_level4_recognition() {
+fn fighter_does_not_gain_sorcerer_level5_recognition() {
     let fighter = load(FIGHTER_FIXTURE);
     let fighter_computation = compute_pilot_base_chassis(&fighter);
     assert!(
@@ -259,10 +264,10 @@ fn fighter_does_not_gain_sorcerer_level4_recognition() {
 // ----- Negative control: multiclass Sorcerer is not promoted -----
 
 #[test]
-fn multiclass_sorcerer_level4_is_not_promoted_by_this_slice() {
-    let multiclass = SORCERER_LEVEL4_FIXTURE.replace(
-        "class_level=class:sorcerer:4",
-        "class_level=class:sorcerer:4\nclass_level=class:fighter:1",
+fn multiclass_sorcerer_level5_is_not_promoted_by_this_slice() {
+    let multiclass = SORCERER_LEVEL5_FIXTURE.replace(
+        "class_level=class:sorcerer:5",
+        "class_level=class:sorcerer:5\nclass_level=class:fighter:1",
     );
     let input = load(&multiclass);
     let computation = compute_pilot_base_chassis(&input);
@@ -281,10 +286,10 @@ fn multiclass_sorcerer_level4_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the matrix note names the level-4 widening -----
+// ----- Control plane: the matrix note names the level-5 widening -----
 
 #[test]
-fn matrix_sorcerer_row_names_level_4_widening() {
+fn matrix_sorcerer_row_names_level_5_widening() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let sorcerer = matrix
         .row("class.sorcerer.progression_and_spell_burden")
@@ -299,13 +304,13 @@ fn matrix_sorcerer_row_names_level_4_widening() {
     assert!(
         sorcerer
             .grounding_ref
-            .contains("sd13_sorcerer_level4_progression"),
-        "sorcerer row must cite the live SD13-E5 level-4 proof surface: {}",
+            .contains("sd13_sorcerer_level5_progression"),
+        "sorcerer row must cite the live SD13-E5 level-5 proof surface: {}",
         sorcerer.grounding_ref
     );
     let note = sorcerer.blocker_or_lossiness_note;
     assert!(
-        note.contains("level 4") || note.contains("level-4"),
-        "sorcerer partial note must name the level-4 widening: {note}"
+        note.contains("level 5") || note.contains("level-5"),
+        "sorcerer partial note must name the level-5 widening: {note}"
     );
 }
