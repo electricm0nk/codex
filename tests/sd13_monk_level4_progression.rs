@@ -397,36 +397,42 @@ fn monk_level4_still_claim_blocks_the_recognized_bonus_feat_mechanics() {
     );
 }
 
-// ----- Negative control: level 5 stays unrecognized by this slice -----
+// ----- Negative control: level 5 was later widened into the supported tranche -----
 
 #[test]
-fn monk_level_5_is_not_promoted_by_this_slice() {
+fn monk_level_5_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 5 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_monk_level5_progression.rs) widened the level-range gate to
+    // level 5 (mirroring the Fighter/Paladin/Rogue/Barbarian/Cleric/Druid
+    // level-range gate idiom) and grounded Purity of Body; this negative
+    // control is superseded, not violated — pin the new truth here too so
+    // this file stays internally consistent. The frontier this file's own
+    // slice actually drew is now level 6, covered by
+    // `tests/sd13_monk_level5_progression.rs::monk_level_6_is_not_promoted_by_this_slice`.
     let level_5 = MONK_LEVEL4_FIXTURE.replace("class:monk:4", "class:monk:5");
     let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.monk.")),
-        "level-5 Monk must not gain any bounded monk chassis explanation: {:?}",
+        has_explanation(&computation, "class_chassis.monk.base_attack_bonus"),
+        "level-5 Monk is supported since the SD13-E5 level-5 slice: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, MONK_EVASION_ID),
-        "level-5 Monk must not gain the Evasion explanation from this bounded slice"
+        has_explanation(&computation, MONK_EVASION_ID),
+        "level-5 Monk must keep the Evasion explanation grounded at level 2"
     );
     assert!(
-        !has_explanation(&computation, MONK_STILL_MIND_ID),
-        "level-5 Monk must not gain the Still Mind explanation from this bounded slice"
+        has_explanation(&computation, MONK_STILL_MIND_ID),
+        "level-5 Monk must keep the Still Mind explanation grounded at level 3"
     );
     assert!(
-        !has_explanation(&computation, MONK_KI_POOL_ID),
-        "level-5 Monk must not gain the ki pool explanation from this bounded slice"
+        has_explanation(&computation, MONK_KI_POOL_ID),
+        "level-5 Monk must keep the ki pool explanation grounded at level 4"
     );
     assert!(
-        !has_explanation(&computation, MONK_SLOW_FALL_ID),
-        "level-5 Monk must not gain the Slow Fall explanation from this bounded slice"
+        has_explanation(&computation, MONK_SLOW_FALL_ID),
+        "level-5 Monk must keep the Slow Fall explanation grounded at level 4"
     );
 }
 
