@@ -437,11 +437,17 @@ const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_reco
 /// to level 4 by a further SD13-E5 slice (the level-range gate plus every named
 /// pillar formula extended to level 4 via the same formula; verified against both
 /// primary sources that the PF1 Core Rulebook Bard class table's level-4 Special
-/// column is blank, so no new pillar is introduced), citing all four proof files
-/// as one combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`].
+/// column is blank, so no new pillar is introduced), widened again to level 5 by
+/// a further SD13-E5 slice (the level-range gate plus every named pillar formula
+/// extended to level 5 via the same formula, with the Inspire Courage flat
+/// magnitude genuinely increasing to +2 and Lore Master newly grounded as a
+/// bounded grant-only flat 1/day take-20 usage-count record, verified
+/// independently against both primary sources rather than trusted from an
+/// earlier cycle's phrasing at face value), citing all five proof files as one
+/// combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`].
 const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + \
     tests/sd13_bard_level2_progression.rs + tests/sd13_bard_level3_progression.rs + \
-    tests/sd13_bard_level4_progression.rs";
+    tests/sd13_bard_level4_progression.rs + tests/sd13_bard_level5_progression.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -985,16 +991,16 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Bard level-1/level-2/level-3/level-4 spell baseline, with base \
-                            attack bonus, base save progression, Bardic Knowledge, the flat \
+                            Bard level-1/level-2/level-3/level-4/level-5 spell baseline, with \
+                            base attack bonus, base save progression, Bardic Knowledge, the flat \
                             Bardic Performance surface (rounds per day, inspire courage \
                             magnitude), the flat Fascinate DC / affected-creature-count \
-                            formulas, (at level 2) the flat Well-Versed magnitude, and (at \
-                            level 3) the flat Inspire Competence magnitude, all grounded for \
-                            real at every supported level, and the bardic performance-execution \
-                            burden (including Countersong, Distraction, and Versatile \
-                            Performance) and the spontaneous known-spell / slot posture burden \
-                            still blocked",
+                            formulas, (at level 2) the flat Well-Versed magnitude, (at level 3) \
+                            the flat Inspire Competence magnitude, and (at level 5) the flat \
+                            Lore Master take-20 uses-per-day magnitude, all grounded for real at \
+                            every supported level, and the bardic performance-execution burden \
+                            (including Countersong, Distraction, and Versatile Performance) and \
+                            the spontaneous known-spell / slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1072,26 +1078,51 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     independently against both primary sources (d20pfsrd and \
                     legacy.aonprd.com) that the PF1 Core Rulebook Bard class table's level-4 \
                     Special column is BLANK (the next new class feature, Lore Master, is not \
-                    gained until 5th level), so this widening grounds no new pillar. The row is \
+                    gained until 5th level), so this widening grounds no new pillar. A further \
+                    SD13-E5 slice widens the level-range gate to level 5 (mirroring the \
+                    Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Druid/Sorcerer/Wizard/Ranger \
+                    idiom), extending every formula above to level 5 via the same formula \
+                    (level 5 base attack +3, base saves +1/+4/+4 Fortitude/Reflex/Will — both \
+                    saves and the base attack numerically unchanged from level 4, an \
+                    integer-division coincidence, not a sign either formula stopped scaling — \
+                    Bardic Knowledge stays 2, Bardic Performance rounds per day rises to 14 on \
+                    the fixture, Fascinate DC 14 and affected-creature count 2 on the fixture, \
+                    both also numerically unchanged from level 4, Well-Versed stays granted at \
+                    +4, Inspire Competence stays granted at +2) and grounds two genuinely NEW \
+                    values at level 5, both re-verified independently against both primary \
+                    sources rather than trusted from an earlier cycle's phrasing at face value: \
+                    the Inspire Courage flat magnitude genuinely increases from +1 to +2 exactly \
+                    at level 5 (PF1 Core Rulebook: \"At 5th level, and every six bard levels \
+                    thereafter, this bonus increases by +1\" — the earlier cycle's \"stays +1 \
+                    through level 5\" framing turns out to have been precise, not imprecise: \
+                    level 4 stays +1, and level 5 is exactly the level the increase lands on), \
+                    and Lore Master, the PF1 Core Rulebook's 5th-level Bard class feature \
+                    (\"Inspire courage +2, lore master 1/day\"), is newly grounded as a bounded \
+                    grant-only flat 1/day take-20 usage-count record only — the rule's OTHER \
+                    capability, an at-will take-10-on-Knowledge-checks-with-ranks toggle, has no \
+                    flat magnitude to ground, and neither the take-10 nor the take-20 mechanic \
+                    is actually executed against any Knowledge check, since no \
+                    skill-check-resolution engine exists anywhere in this codebase. The row is \
                     Partial, not Supported: the performance-state \
                     engine (start/maintain action economy, round tracking/consumption of the \
                     grounded budget, no application of the grounded fascinate DC, count, \
-                    Well-Versed, or Inspire Competence magnitude to any actual save, skill \
-                    check, or targeting) is not implemented, the two remaining level-1 \
-                    performances (countersong, distraction) and Versatile Performance are not \
-                    grounded at all — Countersong/Distraction require an opposed \
+                    Well-Versed, Inspire Competence, or Lore Master magnitude to any actual \
+                    save, skill check, or targeting) is not implemented, the two remaining \
+                    level-1 performances (countersong, distraction) and Versatile Performance are \
+                    not grounded at all — Countersong/Distraction require an opposed \
                     Perform-check-vs-effect substitution resolution and Versatile Performance \
                     requires a choice-gated skill-substitution engine, neither a flat number — \
                     and the entire spontaneous spell burden (spontaneous spells known, spells \
                     per day, bonus spell slots from CHA, spell save DCs, school choice, prepared \
                     posture) is not computed. No performance-execution math and no spell math is \
-                    fabricated and no Bard level 5+ is proven",
+                    fabricated and no Bard level 6+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
-                    Inspire Courage / Fascinate / Well-Versed / Inspire Competence magnitudes, \
-                    Countersong / Distraction opposed Perform-check-vs-effect grounding, \
-                    Versatile Performance's choice-gated skill-substitution engine), then the \
-                    spontaneous spell-slot burden, then level-5+ progression",
+                    Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
+                    magnitudes, Countersong / Distraction opposed Perform-check-vs-effect \
+                    grounding, Versatile Performance's choice-gated skill-substitution engine, \
+                    Lore Master's own take-10/take-20 skill-check-resolution execution), then \
+                    the spontaneous spell-slot burden, then level-6+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",

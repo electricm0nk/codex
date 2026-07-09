@@ -63,6 +63,7 @@ const FIGHTER_FIXTURE: &str =
 
 const WELL_VERSED_ID: &str = "class_feature.bard.well_versed";
 const INSPIRE_COMPETENCE_ID: &str = "class_feature.bard.inspire_competence";
+const LORE_MASTER_ID: &str = "class_feature.bard.lore_master";
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -233,7 +234,12 @@ fn bard_level4_does_not_fabricate_a_new_class_feature() {
     // Both primary sources confirm the Bard class table's level-4 "Special"
     // column is blank (no new feature until Lore Master at level 5), so the
     // only bard-namespaced explanation ids must be the same identifiers
-    // already grounded at level 1-3, none of them new.
+    // already grounded at level 1-3, none of them new. A later SD13-E5 slice
+    // (tests/sd13_bard_level5_progression.rs) introduced
+    // "class_feature.bard.lore_master" as a level-gate record that fires at
+    // every supported level, correctly absent (value 0) below level 5; it is
+    // listed here too so this level-4 test stays accurate about the current
+    // shape of the seam without asserting a fabricated level-4 grant.
     let known_bard_ids = [
         "class_chassis.spell_baseline.bard",
         "class_chassis.bard.base_attack_bonus",
@@ -247,6 +253,7 @@ fn bard_level4_does_not_fabricate_a_new_class_feature() {
         "class_chassis.bard.fascinate_affected_creatures",
         WELL_VERSED_ID,
         INSPIRE_COMPETENCE_ID,
+        LORE_MASTER_ID,
     ];
     assert!(
         computation
@@ -305,23 +312,39 @@ fn bard_level3_truth_is_unchanged_by_this_widening() {
     assert_eq!(knowledge.value, 1, "Bard level 3 Bardic Knowledge must stay 1");
 }
 
-// ----- Negative control: level 5 stays unrecognized by this slice -----
+// ----- Negative control superseded: level 5 was later widened into the supported tranche -----
 
 #[test]
-fn bard_level_5_is_not_promoted_by_this_slice() {
+fn bard_level_5_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 5 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_bard_level5_progression.rs) widened the level-range gate to
+    // level 5 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Druid/
+    // Sorcerer/Wizard/Ranger level-range gate idiom) and grounded the genuine
+    // Inspire Courage increase to +2 plus the new Lore Master grant; this
+    // negative control is superseded, not violated — pin the new truth here too
+    // so this file stays internally consistent. The frontier this file's own
+    // slice actually drew is now level 6, covered by
+    // `bard_level_6_is_not_promoted_by_this_slice` in
+    // `tests/sd13_bard_level5_progression.rs`.
     let level_5 = BARD_LEVEL4_FIXTURE.replace("class:bard:4", "class:bard:5");
     let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id == "class_chassis.spell_baseline.bard"
-                || e.id == WELL_VERSED_ID
-                || e.id == INSPIRE_COMPETENCE_ID),
-        "level-5 Bard must not gain any bounded bard chassis explanation: {:?}",
+            .any(|e| e.id == "class_chassis.bard.base_attack_bonus"),
+        "level-5 Bard is supported since the SD13-E5 level-5 slice: {:?}",
         computation.explanations
+    );
+    assert!(
+        computation.explanations.iter().any(|e| e.id == WELL_VERSED_ID),
+        "level-5 Bard must keep Well-Versed granted at level 2"
+    );
+    assert!(
+        computation.explanations.iter().any(|e| e.id == INSPIRE_COMPETENCE_ID),
+        "level-5 Bard must keep Inspire Competence granted at level 3"
     );
 }
 
