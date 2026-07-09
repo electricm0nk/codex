@@ -536,10 +536,9 @@ fn sorcerer_level_4_was_later_widened_into_the_supported_tranche() {
     // (tests/sd13_sorcerer_level4_progression.rs) widened the level-range gate to
     // level 4 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Ranger level-range
     // gate idiom); this negative control is superseded, not violated — pin the new
-    // truth here too so this file stays internally consistent. The frontier the
-    // level-4 slice actually drew is now level 5, covered by
-    // `sorcerer_level_5_is_not_promoted_by_this_slice` in
-    // `tests/sd13_sorcerer_level4_progression.rs`.
+    // truth here too so this file stays internally consistent. Level 5 was in turn
+    // widened by a further SD13-E5 slice, covered by
+    // `sorcerer_level_5_was_later_widened_into_the_supported_tranche` below.
     let level_4 = SORCERER_FIXTURE.replace("class:sorcerer:1", "class:sorcerer:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
@@ -551,6 +550,27 @@ fn sorcerer_level_4_was_later_widened_into_the_supported_tranche() {
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "level-4 Sorcerer must stay claim-blocked in this slice"
+    );
+}
+
+#[test]
+fn sorcerer_level_5_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 5 was not yet the frontier (level 1
+    // was). A further SD13-E5 slice (tests/sd13_sorcerer_level5_progression.rs) widened
+    // the level-range gate to level 5 (mirroring the Fighter/Paladin/Rogue/Barbarian/
+    // Monk/Cleric/Bard/Druid/Ranger level-range gate idiom); pin the new truth here too
+    // so this file stays internally consistent.
+    let level_5 = SORCERER_FIXTURE.replace("class:sorcerer:1", "class:sorcerer:5");
+    let input = load(&level_5);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        has_explanation(&computation, RECOGNITION_ID),
+        "level-5 Sorcerer is supported since the SD13-E5 level-5 slice: {:?}",
+        computation.explanations
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-5 Sorcerer must stay claim-blocked in this slice"
     );
 }
 
