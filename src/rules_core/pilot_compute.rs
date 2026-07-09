@@ -338,9 +338,9 @@ const IMPROVED_GRAPPLE_FEAT_SELECTION: &str = "feat:improved_grapple";
 const IMPROVED_TRIP_FEAT_SELECTION: &str = "feat:improved_trip";
 const STUNNING_FIST_FEAT_SELECTION: &str = "feat:stunning_fist";
 
-// Grounded SD13-E4 Human Cleric level-1 prepared divine spell-bearing baseline
-// identity. Cleric is the canonical PF1 prepared divine full caster; unlike the
-// arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
+// Grounded SD13-E4/E5 Human Cleric level-1/level-2 prepared divine spell-bearing
+// baseline identity. Cleric is the canonical PF1 prepared divine full caster; unlike
+// the arcane Sorcerer/Wizard/Bard baselines already recognized, its bounded burden
 // is split across a domain powers class-feature family (the granted powers of
 // the chosen domains and the domain spell-list contents — Channel Energy has
 // been grounded for real: ceil(cleric level / 2) d6, minimum 1d6, usable
@@ -348,23 +348,39 @@ const STUNNING_FIST_FEAT_SELECTION: &str = "feat:stunning_fist";
 // domain choice seam and the flat domain spell slot count) and a prepared divine
 // spell posture family (spells prepared from the full Cleric list, spontaneous
 // cure/inflict conversion, spell slots per day, bonus spells from a high Wisdom,
-// spell save DCs).
+// spell save DCs). A later SD13-E5 slice widens the level-1-only gate to a
+// level-range gate (level 1-2), extending base attack/base save/Channel
+// Energy/domain-spell-slot/domain-power formulas to level 2 without re-derivation.
 const CLERIC_CLASS_ID: &str = "class:cleric";
-const CLERIC_BASELINE_LEVEL: u8 = 1;
+/// SD13-E5 Cleric level-range gate, mirroring the Fighter `supported_fighter_level` /
+/// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// `supported_barbarian_level` / Monk `supported_monk_level` idiom. Verified against
+/// the PF1 Core Rulebook Cleric class table (d20pfsrd and legacy.aonprd.com) before
+/// widening: a level-2 cleric still only casts 1st-level cleric spells (2nd-level
+/// cleric spells begin at caster level 3), gains no new class feature at 2nd level
+/// (the Cleric class table's level-2 "Special" column is blank), and Channel Energy
+/// stays 1d6 through level 2 (it next increases at level 3), so every level-1 formula
+/// this seam already grounds extends to level 2 without re-derivation.
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 2;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
-// deterministic domain selections on the level-1 seam (a cleric chooses two domains
-// from among those belonging to her deity). This slice surfaces the named selections
-// as an explicit choice seam only and grounds no domain power and no domain
-// spell-list contents, mirroring the Fighter bonus-feat choice-slot seam pattern.
+// deterministic domain selections on the level-1/level-2 seam (a cleric chooses two
+// domains from among those belonging to her deity). This slice surfaces the named
+// selections as an explicit choice seam only and grounds no domain power and no
+// domain spell-list contents, mirroring the Fighter bonus-feat choice-slot seam
+// pattern.
 const CLERIC_DOMAIN_CHOICE_ID: &str = "choice:cleric_domain";
 const GOOD_DOMAIN_SELECTION: &str = "domain:good";
 const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
 
 // PF1 Core Rulebook Domains: a cleric gains one domain spell slot per level of
-// cleric spells she can cast, 1st and up. At the bounded level-1 baseline she casts
-// only 1st-level cleric spells, so exactly one 1st-level domain slot is granted.
-const CLERIC_LEVEL1_DOMAIN_SPELL_SLOT_COUNT: i16 = 1;
+// cleric spells she can cast, 1st and up. At every level this bounded seam supports
+// (1-2) she casts only 1st-level cleric spells (2nd-level cleric spells begin at
+// caster level 3, verified against the PF1 Core Rulebook Cleric spells-per-day
+// table via d20pfsrd and legacy.aonprd.com), so exactly one 1st-level domain slot is
+// granted at both supported levels — this is confirmed unchanged at level 2, not a
+// new record.
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT: i16 = 1;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
 // identity. Druid is a prepared divine caster whose bounded burden splits across
@@ -4444,22 +4460,29 @@ fn explain_wizard_level1_prepared_spell_baseline(
     });
 }
 
-/// Return `true` when the chosen input is exactly a single-class Cleric at the bounded
-/// prepared divine spell baseline level (1). Returns `false` for any other class, a
-/// multiclass mix, or a level-2+ Cleric this slice deliberately does not recognize —
-/// each of which stays blocked exactly as before.
-fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
-    matches!(
-        input.chosen.class_levels.as_slice(),
+/// The bounded Cleric milestone level this decomposition surface grounds, if any.
+/// Returns the single Cleric level when the chosen input is exactly a single-class
+/// Cleric at one of the supported milestone levels (1 or 2). Returns `None` for no
+/// Cleric, a non-Cleric class, a multiclass mix, or any level-3+ Cleric this slice
+/// deliberately does not recognize — each of which stays claim-blocked exactly as
+/// before. Mirrors the Fighter `supported_fighter_level` / Paladin
+/// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// `supported_barbarian_level` / Monk `supported_monk_level` level-range gate idiom.
+fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
+    match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == CLERIC_CLASS_ID
-                && class_level.level == CLERIC_BASELINE_LEVEL
-    )
+                && (1..=MAX_SUPPORTED_CLERIC_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
+        }
+        _ => None,
+    }
 }
 
-/// Surface direct SD13-E4 runtime evidence for the deterministic Human Cleric level-1
-/// prepared divine spell-bearing baseline, while keeping it explicitly claim-blocked on
-/// its remaining still-missing burdens.
+/// Surface direct SD13-E4/E5 runtime evidence for the deterministic Human Cleric
+/// level-1/level-2 prepared divine spell-bearing baseline, while keeping it explicitly
+/// claim-blocked on its remaining still-missing burdens.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds Channel
 /// Energy's flat die-count and uses-per-day math, the domain choice seam, the flat
@@ -4470,8 +4493,14 @@ fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
 /// never had; it grounds no Rebuke Death heal amount, no domain spell-list contents, no
 /// channel energy save DC or damage/healing resolution, no spellbook posture, no spells
 /// prepared, no spontaneous cure/inflict conversion, no general spell slots per day, no
-/// spell save DCs, and no bonus spell slots from a high Wisdom. It only:
-/// - leaves one recognition explanation so the `class:cleric:1` identity is acknowledged
+/// spell save DCs, and no bonus spell slots from a high Wisdom. A later SD13-E5 slice
+/// widens the level-1-only gate (`supported_cleric_level`, 1..=2) and extends every one
+/// of the formulas below to level 2 via the same formula, without re-derivation,
+/// verified independently against the PF1 Core Rulebook Cleric class table (d20pfsrd
+/// and legacy.aonprd.com): Cleric gains no new class feature at 2nd level (the class
+/// table's level-2 "Special" column is blank), so no new pillar is added, only the
+/// existing ones widened. It only:
+/// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves one grounded base-attack-bonus explanation (PF1 Core Rulebook Cleric class
@@ -4481,19 +4510,21 @@ fn is_single_class_cleric_level1(input: &CharacterInput) -> bool {
 ///   `compute_total_saves`, or `compute_combat_baseline`,
 /// - grounds Channel Energy's die count and daily use count for real (PF1 Core
 ///   Rulebook Channel Energy: `ceil(cleric level / 2)` d6, minimum 1d6; usable
-///   `3 + Charisma modifier` times per day),
+///   `3 + Charisma modifier` times per day; confirmed the die count stays 1d6 at
+///   level 2, via the same formula, not a new record),
 /// - surfaces the canonical two-domain choice seam (`choice:cleric_domain ->
 ///   domain:good` and `choice:cleric_domain -> domain:healing`) as an explicit
 ///   recognition record carrying no mechanical value, mirroring the Fighter
 ///   bonus-feat choice-slot seam,
 /// - grounds the flat domain spell slot count for real (PF1 Core Rulebook Domains:
 ///   one domain spell slot per level of cleric spells she can cast, 1st and up —
-///   exactly one 1st-level domain slot at level 1; the slot's contents are not
-///   grounded),
+///   exactly one 1st-level domain slot at every level this seam supports (1-2),
+///   since a level-2 cleric still only casts 1st-level cleric spells; the slot's
+///   contents are not grounded),
 /// - grounds the Good domain's Touch of Good in full when Good is a chosen domain
 ///   (PF1 Core Rulebook Good Domain: a flat sacred bonus equal to half cleric level,
 ///   minimum 1, and a flat `3 + Wisdom modifier` uses-per-day count — both formulas
-///   are non-dice, so both ground for real),
+///   are non-dice, so both ground for real at every supported level),
 /// - grounds only the Healing domain's Rebuke Death uses-per-day count when Healing
 ///   is a chosen domain (PF1 Core Rulebook Healing Domain: `3 + Wisdom modifier`
 ///   times per day), leaving its heal amount (`1d4` plus a per-level bonus, gated on
@@ -4514,22 +4545,22 @@ fn explain_cleric_level1_spell_baseline(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    if !is_single_class_cleric_level1(input) {
+    let Some(level) = supported_cleric_level(input) else {
         return;
-    }
+    };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
 
-    // Direct runtime evidence: recognize the deterministic Human Cleric level-1
-    // prepared divine spell-bearing identity. This is a recognition record only; it
-    // fabricates no domain power math and no spell math.
+    // Direct runtime evidence: recognize the deterministic Human Cleric level-1/
+    // level-2 prepared divine spell-bearing identity. This is a recognition record
+    // only; it fabricates no domain power math and no spell math.
     explanations.push(ComputationExplanation {
         id: "class_chassis.spell_baseline.cleric".to_owned(),
         value: 0,
         detail: format!(
-            "Recognized deterministic Human Cleric level {CLERIC_BASELINE_LEVEL} prepared divine \
-             spell-bearing baseline: the {CLERIC_CLASS_ID}:{CLERIC_BASELINE_LEVEL} class identity is \
+            "Recognized deterministic Human Cleric level {level} prepared divine \
+             spell-bearing baseline: the {CLERIC_CLASS_ID}:{level} class identity is \
              acknowledged as a prepared divine spell-bearing class on the rules-core seam rather than \
              an undocumented packet placeholder. This is a bounded recognition record only; it grounds \
              no domain selection, no domain spells, no domain powers, no channel energy execution, no \
@@ -4547,8 +4578,10 @@ fn explain_cleric_level1_spell_baseline(
     // mirror) before writing this code, cross-checking the level 2-5 base-attack-bonus
     // values (+0/+1/+2/+3/+3) to disambiguate the exact fraction (level 1 alone floors
     // both a 1/2 and a 3/4 progression to the same +0, so it cannot disambiguate on its
-    // own).
-    let level_value = i16::from(CLERIC_BASELINE_LEVEL);
+    // own). A later SD13-E5 slice widens this level-1-only gate to level 2; the
+    // formula is extended, not re-derived (level 2 base attack +1, all base saves +3,
+    // confirmed against the raw class table).
+    let level_value = i16::from(level);
 
     // Grounded (1/2): 3/4-BAB base-attack progression, the same formula shape as
     // Rogue/Monk/Druid (classlevel * 3 / 4). No PCGen .lst file exists for the Cleric
@@ -4559,7 +4592,7 @@ fn explain_cleric_level1_spell_baseline(
         id: "class_chassis.cleric.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "Cleric level {CLERIC_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+            "Cleric level {level} base attack bonus from the PF1 Core Rulebook \
              Cleric class table's 3/4-BAB progression, the same formula shape as \
              Rogue/Monk/Druid: classlevel * 3 / 4 = {base_attack_bonus}. This is a standalone \
              explanation record; it is not wired into the integrated base_attack_bonus field or \
@@ -4576,7 +4609,7 @@ fn explain_cleric_level1_spell_baseline(
         id: "class_chassis.cleric.base_save.fortitude".to_owned(),
         value: good_save,
         detail: format!(
-            "Cleric level {CLERIC_BASELINE_LEVEL} base Fortitude save (good save) from the PF1 \
+            "Cleric level {level} base Fortitude save (good save) from the PF1 \
              Core Rulebook Cleric class table: classlevel/2+2 = {good_save}. This is a \
              standalone explanation record; it is not wired into compute_total_saves"
         ),
@@ -4585,7 +4618,7 @@ fn explain_cleric_level1_spell_baseline(
         id: "class_chassis.cleric.base_save.reflex".to_owned(),
         value: poor_save,
         detail: format!(
-            "Cleric level {CLERIC_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 \
+            "Cleric level {level} base Reflex save (poor save) from the PF1 \
              Core Rulebook Cleric class table: classlevel/3 = {poor_save}. This is a standalone \
              explanation record; it is not wired into compute_total_saves"
         ),
@@ -4594,7 +4627,7 @@ fn explain_cleric_level1_spell_baseline(
         id: "class_chassis.cleric.base_save.will".to_owned(),
         value: good_save,
         detail: format!(
-            "Cleric level {CLERIC_BASELINE_LEVEL} base Will save (good save) from the PF1 Core \
+            "Cleric level {level} base Will save (good save) from the PF1 Core \
              Rulebook Cleric class table: classlevel/2+2 = {good_save}. This is a standalone \
              explanation record; it is not wired into compute_total_saves"
         ),
@@ -4602,15 +4635,18 @@ fn explain_cleric_level1_spell_baseline(
 
     // Grounded for real: Channel Energy's flat die count. PF1 Core Rulebook Channel
     // Energy: the cleric channels a number of d6s equal to ceil(cleric level / 2),
-    // minimum 1d6. At the bounded level-1 baseline this is ceil(1 / 2) = 1d6.
-    let channel_energy_dice = (i16::from(CLERIC_BASELINE_LEVEL) + 1) / 2;
+    // minimum 1d6. At level 1 this is ceil(1 / 2) = 1d6; confirmed unchanged at level
+    // 2 (ceil(2 / 2) = 1d6 too, via the same formula, not a new record — Channel
+    // Energy next increases to 2d6 only at level 3, verified against the PF1 Core
+    // Rulebook Cleric class table).
+    let channel_energy_dice = (level_value + 1) / 2;
     explanations.push(ComputationExplanation {
         id: "class_chassis.cleric.channel_energy_dice".to_owned(),
         value: channel_energy_dice,
         detail: format!(
             "Cleric Channel Energy die count: ceil(cleric level / 2) d6 (PF1 Core Rulebook Channel \
-             Energy), minimum 1d6. At Cleric level {CLERIC_BASELINE_LEVEL} this is \
-             ceil({CLERIC_BASELINE_LEVEL} / 2) = {channel_energy_dice}d6. This grounds only the flat \
+             Energy), minimum 1d6. At Cleric level {level} this is \
+             ceil({level} / 2) = {channel_energy_dice}d6. This grounds only the flat \
              d6 die count; it computes no channel energy save DC and no positive/negative energy \
              burst damage or healing resolution"
         ),
@@ -4654,7 +4690,7 @@ fn explain_cleric_level1_spell_baseline(
             id: "class_chassis.cleric.domain_choice".to_owned(),
             value: 0,
             detail: format!(
-                "Cleric level {CLERIC_BASELINE_LEVEL} chooses two domains from among those \
+                "Cleric level {level} chooses two domains from among those \
                  belonging to her deity (PF1 Core Rulebook Domains); the named canonical \
                  selections ({CLERIC_DOMAIN_CHOICE_ID} -> {GOOD_DOMAIN_SELECTION}, \
                  {CLERIC_DOMAIN_CHOICE_ID} -> {HEALING_DOMAIN_SELECTION}) are surfaced as an \
@@ -4670,15 +4706,20 @@ fn explain_cleric_level1_spell_baseline(
     // a cleric gains one domain spell slot per level of cleric spells she can cast,
     // 1st and up. This count is class-chassis math independent of which domains were
     // chosen; only the slot's contents (which domain spell may fill it) depend on the
-    // chosen domains, and those are deliberately not grounded.
+    // chosen domains, and those are deliberately not grounded. Confirmed unchanged at
+    // level 2 (a level-2 cleric still only casts 1st-level cleric spells — 2nd-level
+    // cleric spells begin at caster level 3, verified against the PF1 Core Rulebook
+    // Cleric spells-per-day table via d20pfsrd and legacy.aonprd.com), so this is the
+    // same value at level 2, not a new record.
     explanations.push(ComputationExplanation {
         id: "class_chassis.cleric.domain_spell_slot".to_owned(),
-        value: CLERIC_LEVEL1_DOMAIN_SPELL_SLOT_COUNT,
+        value: CLERIC_DOMAIN_SPELL_SLOT_COUNT,
         detail: format!(
             "Cleric domain spell slot count: one domain spell slot per level of cleric spells \
              she can cast, 1st and up (PF1 Core Rulebook Domains). At Cleric level \
-             {CLERIC_BASELINE_LEVEL} she casts only 1st-level cleric spells, so exactly \
-             {CLERIC_LEVEL1_DOMAIN_SPELL_SLOT_COUNT} 1st-level domain spell slot is granted. \
+             {level} she casts only 1st-level cleric spells (2nd-level cleric spells begin at \
+             caster level 3), so exactly {CLERIC_DOMAIN_SPELL_SLOT_COUNT} 1st-level domain \
+             spell slot is granted at every level this bounded seam supports (1-2). \
              This grounds only the flat slot count; it grounds no slot contents (which domain \
              spell may fill it), no domain spell lists, and no prepared-spell posture"
         ),
@@ -4696,7 +4737,10 @@ fn explain_cleric_level1_spell_baseline(
     // domains (an absent selection is not fabricated, mirroring the domain-choice
     // seam above).
     if domain_selections.contains(&GOOD_DOMAIN_SELECTION) {
-        let touch_of_good_bonus = (i16::from(CLERIC_BASELINE_LEVEL) / 2).max(1);
+        // At level 1 this floors to the minimum (0 / 2 = 0, floored up to 1); at
+        // level 2 it is naturally 1 without needing the floor (2 / 2 = 1) — both
+        // land on the same value, confirmed via the same formula, not a new record.
+        let touch_of_good_bonus = (level_value / 2).max(1);
         explanations.push(ComputationExplanation {
             id: "class_chassis.cleric.domain_power_good_touch_of_good_bonus".to_owned(),
             value: touch_of_good_bonus,
@@ -4704,8 +4748,8 @@ fn explain_cleric_level1_spell_baseline(
                 "Cleric Good domain granted power Touch of Good sacred bonus (PF1 Core Rulebook \
                  Good Domain): half cleric level, minimum 1, applied for 1 round to attack \
                  rolls, skill checks, ability checks, and saving throws after a touch. At \
-                 Cleric level {CLERIC_BASELINE_LEVEL} this is \
-                 max({CLERIC_BASELINE_LEVEL} / 2, 1) = {touch_of_good_bonus}. This grounds only \
+                 Cleric level {level} this is \
+                 max({level} / 2, 1) = {touch_of_good_bonus}. This grounds only \
                  the flat sacred-bonus magnitude; it computes no touch-attack resolution and no \
                  application of the bonus to any actual attack roll, skill check, ability \
                  check, or saving throw"
@@ -4763,7 +4807,7 @@ fn explain_cleric_level1_spell_baseline(
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
         message: format!(
-            "Cleric level {CLERIC_BASELINE_LEVEL} remains blocked on its domain powers burden: \
+            "Cleric level {level} remains blocked on its domain powers burden: \
              the granted powers of the chosen domains (Good: Touch of Good; Healing: Rebuke \
              Death — each usable 3 + Wisdom modifier times per day) narrow to a single unproven \
              piece each cycle grounds more of. Touch of Good's flat sacred-bonus magnitude and \
