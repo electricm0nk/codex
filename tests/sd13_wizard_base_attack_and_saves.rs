@@ -248,16 +248,40 @@ fn wizard_level_3_was_later_widened_into_the_supported_tranche() {
     assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 }
 
-// ----- Negative control: level 4 stays unrecognized -----
+// ----- Wizard level 4 was later widened into the supported tranche -----
 
 #[test]
-fn wizard_level_4_does_not_gain_base_attack_or_save_grounding() {
+fn wizard_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven milestone
+    // and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_wizard_level4_progression.rs) widened the level-range gate to
+    // level 4 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Bard/Druid/
+    // Sorcerer level-range gate idiom) and extended the base-attack/base-save
+    // formulas; this negative control is superseded, not violated — pin the new
+    // truth here too so this file stays internally consistent.
     let level_4 = WIZARD_FIXTURE.replace("class:wizard:1", "class:wizard:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
+        has_explanation(&computation, BASE_ATTACK_ID),
+        "level-4 Wizard is supported since the SD13-E5 level-4 slice: {:?}",
+        computation.explanations
+    );
+    assert!(has_explanation(&computation, BASE_SAVE_FORTITUDE_ID));
+    assert!(has_explanation(&computation, BASE_SAVE_REFLEX_ID));
+    assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
+}
+
+// ----- Negative control: level 5 stays unrecognized -----
+
+#[test]
+fn wizard_level_5_does_not_gain_base_attack_or_save_grounding() {
+    let level_5 = WIZARD_FIXTURE.replace("class:wizard:1", "class:wizard:5");
+    let input = load(&level_5);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
         !has_explanation(&computation, BASE_ATTACK_ID),
-        "level-4 Wizard must not gain the bounded base-attack grounding: {:?}",
+        "level-5 Wizard must not gain the bounded base-attack grounding: {:?}",
         computation.explanations
     );
     assert!(!has_explanation(&computation, BASE_SAVE_FORTITUDE_ID));
