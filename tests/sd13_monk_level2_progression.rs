@@ -279,24 +279,30 @@ fn monk_level2_still_claim_blocks_the_recognized_bonus_feat_mechanics() {
     );
 }
 
-// ----- Negative control: level 3 stays unrecognized by this slice -----
+// ----- Negative control: level 3 was later widened into the supported tranche -----
 
 #[test]
-fn monk_level_3_is_not_promoted_by_this_slice() {
+fn monk_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 3 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_monk_level3_progression.rs) widened the level-range gate
+    // to level 3 (mirroring the Fighter/Paladin/Rogue level-range gate
+    // idiom) and grounded Still Mind; this negative control is superseded,
+    // not violated — pin the new truth here too so this file stays
+    // internally consistent. The frontier this file's own slice actually
+    // drew is now level 4, covered by
+    // `tests/sd13_monk_level3_progression.rs::monk_level_4_is_not_promoted_by_this_slice`.
     let level_3 = MONK_LEVEL2_FIXTURE.replace("class:monk:2", "class:monk:3");
     let input = load(&level_3);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.monk.")),
-        "level-3 Monk must not gain any bounded monk chassis explanation: {:?}",
+        has_explanation(&computation, "class_chassis.monk.base_attack_bonus"),
+        "level-3 Monk is supported since the SD13-E5 level-3 slice: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, MONK_EVASION_ID),
-        "level-3 Monk must not gain the Evasion explanation from this bounded slice"
+        has_explanation(&computation, MONK_EVASION_ID),
+        "level-3 Monk must keep the Evasion explanation grounded at level 2"
     );
 }
 

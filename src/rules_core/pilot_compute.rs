@@ -394,20 +394,32 @@ const BARBARIAN_UNCANNY_DODGE_LEVEL: u8 = 2;
 
 // SD13-E3/E5 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
-// slice recognizes its bounded single-class level-1/level-2 identity as direct
-// runtime evidence and grounds base-attack / base-save progression, unarmed strike
-// damage die, the Flurry of Blows flat surface, AC Bonus, the level-1 bonus feat
-// choice-slot recognition, and (SD13-E5) Evasion at level 2, but no level-1 bonus
-// feat mechanics execution, no ki pool, and no level-3+ martial progression.
+// slice recognizes its bounded single-class level-1/level-2/level-3 identity as
+// direct runtime evidence and grounds base-attack / base-save progression, unarmed
+// strike damage die, the Flurry of Blows flat surface, AC Bonus, the level-1 bonus
+// feat choice-slot recognition, (SD13-E5) Evasion at level 2, and (SD13-E5) Still
+// Mind at level 3, but no level-1 bonus feat mechanics execution, no ki pool, and no
+// level-4+ martial progression.
 const MONK_CLASS_ID: &str = "class:monk";
 /// SD13-E5 Monk level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` idiom.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 2;
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 3;
 /// PF1 Core Rulebook level gate at which Monk gains Evasion (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Bonus feat, evasion" as the Monk 2nd-level special feature entry).
 const MONK_EVASION_LEVEL: u8 = 2;
+/// PF1 Core Rulebook level gate at which Monk gains Still Mind (3rd level, verified
+/// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
+/// list "Fast movement, maneuver training, still mind" as the Monk 3rd-level
+/// special feature entry). Fast Movement (a speed bonus) and Maneuver Training (a
+/// CMB/CMD-substitution rule) are also granted at this same level but are
+/// deliberately left named-but-unproven this slice: no speed-total engine and no
+/// CMB/CMD engine exist anywhere in this codebase to attach either to. Still Mind
+/// alone is grounded, since it is a flat, non-level-scaled magnitude (+2 on saves
+/// vs. enchantment spells and effects) matching the Fighter Bravery / Paladin
+/// Divine Grace / Rogue Trap Sense idiom exactly.
+const MONK_STILL_MIND_LEVEL: u8 = 3;
 /// The PF1 Core Rulebook level at which the level-1 monk bonus feat (and the
 /// automatic Improved Unarmed Strike grant) always occurs, independent of the
 /// character's current supported level. Kept distinct from the generic
@@ -3774,12 +3786,13 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Monk
-/// level-1/level-2 martial chassis, mirroring the Barbarian/Rogue level-range-gate
-/// pattern, and now grounding six named pillar burdens at every supported level
-/// (base-attack, base-save, AC Bonus, the unarmed strike die / Flurry of Blows
-/// flat surface, the level-1 bonus feat choice-slot recognition, and, at level 2,
-/// Evasion) while keeping it explicitly claim-blocked on the recognized bonus
-/// feat's own mechanics (an execution engine, not a flat number).
+/// level-1/level-2/level-3 martial chassis, mirroring the Barbarian/Rogue
+/// level-range-gate pattern, and now grounding seven named pillar burdens at every
+/// supported level (base-attack, base-save, AC Bonus, the unarmed strike die /
+/// Flurry of Blows flat surface, the level-1 bonus feat choice-slot recognition,
+/// at level 2, Evasion, and at level 3, Still Mind) while keeping it explicitly
+/// claim-blocked on the recognized bonus feat's own mechanics (an execution
+/// engine, not a flat number).
 ///
 /// This grounds the Monk base-attack progression (3/4 BAB: `classlevel * 3 / 4`),
 /// the base-save progression (good Fortitude, Reflex, and Will: `classlevel/2+2`
@@ -3794,28 +3807,37 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 /// Rulebook restricted Monk bonus feat list's five feats (Combat Reflexes, Deflect
 /// Arrows, Improved Grapple, Improved Trip, Stunning Fist), mirroring the Sorcerer
 /// bloodline choice / Cleric domain choice / Druid nature-bond choice recognition
-/// idiom, and (SD13-E5) Evasion, a 2nd-level Monk class feature verified
+/// idiom, (SD13-E5) Evasion, a 2nd-level Monk class feature verified
 /// independently against two primary PF1 sources (d20pfsrd and legacy.aonprd.com
 /// both list "Bonus feat, evasion" as the Monk 2nd-level special feature entry) —
 /// grounded as a bounded identity/recognition record only, mirroring exactly how
 /// Rogue's own `class_feature.rogue.evasion` was grounded (value 0, correct
 /// level-gate absence below level 2, granted-but-unexecuted rule text at level 2,
-/// no saving-throw-resolution or damage-resolution engine). It still grounds no
-/// attack-resolution or damage-roll engine, no monk-weapon flurry, no level-4+
-/// unarmed damage die progression, no ki pool, no level-4+ AC Bonus dodge-bonus
-/// progression, no "unarmored and unencumbered" runtime state-check engine, no
-/// wiring into integrated combat totals, no level-3+ martial progression, no
-/// level-2 bonus feat grant (PF1 grants monks a SEPARATE bonus feat at 2nd level;
-/// this widening does not add a second choice-slot or recognition for it), and no
-/// execution of what the recognized level-1 bonus feat actually does (no
-/// attack-of-opportunity engine for Combat Reflexes, no grapple-check engine for
-/// Improved Grapple, no DC/save engine for Stunning Fist, and so on). It:
+/// no saving-throw-resolution or damage-resolution engine), and (SD13-E5) Still
+/// Mind, a 3rd-level Monk class feature verified independently against the same
+/// two primary sources (both list "Fast movement, maneuver training, still mind"
+/// as the Monk 3rd-level special feature entry) — grounded as a bounded
+/// flat-magnitude record (a flat +2 on saves vs. enchantment spells and effects,
+/// value 0 as a correct level-gate absence below level 3), mirroring the Fighter
+/// Bravery / Paladin Divine Grace / Rogue Trap Sense idiom, never applied to any
+/// actual save total. Fast Movement and Maneuver Training, the class table's other
+/// two 3rd-level "Special" column entries, stay named-but-unproven. It still
+/// grounds no attack-resolution or damage-roll engine, no monk-weapon flurry, no
+/// level-4+ unarmed damage die progression, no ki pool, no level-4+ AC Bonus
+/// dodge-bonus progression, no "unarmored and unencumbered" runtime state-check
+/// engine, no wiring into integrated combat totals, no level-4+ martial
+/// progression, no level-2 bonus feat grant (PF1 grants monks a SEPARATE bonus
+/// feat at 2nd level; this widening does not add a second choice-slot or
+/// recognition for it), and no execution of what the recognized level-1 bonus
+/// feat actually does (no attack-of-opportunity engine for Combat Reflexes, no
+/// grapple-check engine for Improved Grapple, no DC/save engine for Stunning
+/// Fist, and so on). It:
 /// - leaves one chassis-recognition explanation so the `class:monk:N` identity is
 ///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves grounded explanation records for base-attack, the three base saves,
 ///   AC Bonus, the unarmed strike damage die, the flurry flat attack
-///   bonus/attack count, and Evasion,
+///   bonus/attack count, Evasion, and Still Mind,
 /// - conditionally leaves one grounded explanation recognizing the level-1 bonus
 ///   feat choice-slot selection when a `choice:monk_bonus_feat` selection is
 ///   present (carrying no fabricated mechanical value, since the recognized
@@ -3854,10 +3876,10 @@ fn explain_monk_level1_chassis(
              {MONK_CLASS_ID}:{level} class identity is acknowledged as a pure non-hybrid martial \
              baseline on the rules-core seam rather than an undocumented packet placeholder. \
              This is a bounded chassis-recognition record only; the base-attack, base-save, AC \
-             Bonus, unarmed-strike-die, Flurry of Blows flat-surface, and Evasion values are \
-             grounded separately below, and this record itself grounds no level-1 bonus feat \
-             grant, no attack-resolution engine, no ki pool, and no level-3+ martial progression, \
-             so it carries no fabricated mechanical value (+0)"
+             Bonus, unarmed-strike-die, Flurry of Blows flat-surface, Evasion, and Still Mind \
+             values are grounded separately below, and this record itself grounds no level-1 \
+             bonus feat grant, no attack-resolution engine, no ki pool, and no level-4+ martial \
+             progression, so it carries no fabricated mechanical value (+0)"
         ),
     });
 
@@ -3940,7 +3962,7 @@ fn explain_monk_level1_chassis(
     // Rogue sneak-attack die-count record, only the die-size facet (6, i.e. 1d6) is
     // grounded here — no damage roll, damage total, or attack-resolution engine is
     // computed, and the level-4+ die progression (1d8 and beyond) is not grounded.
-    // This value stays unchanged (6) at every level this seam supports (1-2), since
+    // This value stays unchanged (6) at every level this seam supports (1-3), since
     // the PF1 Core Rulebook 1d6 band does not change again until level 4.
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.unarmed_strike_damage_die".to_owned(),
@@ -3962,10 +3984,10 @@ fn explain_monk_level1_chassis(
     // Rulebook: when making a flurry of blows as a full-attack action, the monk uses
     // her monk level in place of her base attack bonus and takes a -2 penalty on all
     // attacks; the flat pre-ability-modifier attack bonus is monk level - 2 (-1 at
-    // level 1, +0 at level 2, matching the PF1 CRB table's "-1/-1" and "+0/+0"
-    // entries), and the flurry grants two attacks at every level this seam
-    // supports (1-2) — Monk gains additional flurry attacks only at higher levels,
-    // not level 2. Only these flat facets are grounded; no attack-resolution
+    // level 1, +0 at level 2, +1 at level 3, matching the PF1 CRB table's "-1/-1",
+    // "+0/+0", and "+1/+1" entries), and the flurry grants two attacks at every
+    // level this seam supports (1-3) — Monk gains a third flurry attack only at a
+    // much higher level. Only these flat facets are grounded; no attack-resolution
     // engine, no monk-weapon flurry, and no wiring into integrated combat totals is
     // implemented.
     let flurry_attack_bonus = level_value - 2;
@@ -3989,10 +4011,9 @@ fn explain_monk_level1_chassis(
             "Monk level {level} Flurry of Blows attack count from the PF1 Core Rulebook: a \
              level-{level} flurry grants one additional attack on a full attack, i.e. two \
              attacks, each at the flat pre-ability modifier grounded separately. The attack \
-             count stays 2 at every level this seam supports (1-2) — Monk gains additional \
-             flurry attacks only at higher levels, not level 2. Only the count facet (2) is \
-             grounded; no attack-resolution engine and no monk-weapon flurry support is \
-             implemented"
+             count stays 2 at every level this seam supports (1-3) — Monk gains a third flurry \
+             attack only at a much higher level. Only the count facet (2) is grounded; no \
+             attack-resolution engine and no monk-weapon flurry support is implemented"
         ),
     });
 
@@ -4030,6 +4051,44 @@ fn explain_monk_level1_chassis(
                  non-fabricated): no saving-throw-resolution engine and no damage-resolution \
                  engine exists anywhere in this codebase to apply it, so this grounds no actual \
                  damage reduction on any save outcome"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): Still Mind, a 3rd-level Monk class feature verified
+    // independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Fast movement, maneuver training, still mind"
+    // as the Monk 3rd-level special feature entry). Below the level-3 gate this is
+    // a correct PF1 Core Rulebook level-gate absence (value 0); at or above it, it
+    // is a bounded flat-magnitude record only (a flat +2, not level-scaled) naming
+    // the rule text — mirroring the Fighter Bravery / Paladin Divine Grace / Rogue
+    // Trap Sense idiom: never applied to any actual save total, since no
+    // saving-throw-resolution engine exists anywhere in this codebase. Fast
+    // Movement and Maneuver Training, the class table's other two 3rd-level
+    // "Special" column entries, are deliberately left named-but-unproven this
+    // slice: no speed-total engine and no CMB/CMD engine exist in this codebase to
+    // attach either to.
+    if level < MONK_STILL_MIND_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.still_mind".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Still Mind at monk level {level}: correctly absent at level {level} by \
+                 PF1 Core Rulebook level gate; the at-grant magnitude is named but not computed. \
+                 Still Mind is a 3rd-level monk class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.still_mind".to_owned(),
+            value: 2,
+            detail: format!(
+                "Monk Still Mind granted at monk level {level} (PF1 Core Rulebook, 3rd-level \
+                 monk class feature): a monk of 3rd level or higher gains a flat +2 bonus on \
+                 saving throws against enchantment spells and effects; this magnitude does not \
+                 scale further with level. This is a bounded flat-magnitude record only, \
+                 non-fabricated: it is never applied to any actual save total, since no \
+                 saving-throw-resolution engine exists anywhere in this codebase to apply it"
             ),
         });
     }
