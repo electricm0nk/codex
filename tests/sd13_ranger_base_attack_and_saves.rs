@@ -254,27 +254,28 @@ fn ranger_level_3_was_later_widened_into_the_supported_tranche() {
     assert_eq!(fortitude.value, 3, "level-3 Ranger good Fortitude save must be +3");
 }
 
-// ----- Negative control: Ranger level 4 stays unrecognized (out of scope this slice) -----
+// ----- Negative control: level 4 was later widened into the supported tranche -----
 
 #[test]
-fn ranger_level_4_stays_unrecognized_by_this_slice() {
-    // Ranger level 4+ progression is deliberately out of scope for the level-3
-    // widening (the combat-style bonus-feat mechanics, the favored-enemy
-    // conditional-application engine, Favored Terrain, and the ranger spell burden
-    // all remain unproven). The level-range gate (`supported_ranger_level`, 1..=3)
-    // does not recognize level 4, so level 4 does not gain this slice's
-    // base-attack/base-save grounding.
+fn ranger_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_ranger_level4_progression.rs) widened the level-range gate to
+    // level 4 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk level-range
+    // gate idiom) and grounded Hunter's Bond; this negative control is
+    // superseded, not violated — pin the new truth here too so this file stays
+    // internally consistent.
     let level_4 = RANGER_FIXTURE.replace("class:ranger:1", "class:ranger:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, BASE_ATTACK_ID),
-        "level-4 Ranger must not gain the bounded level-1/level-2/level-3 base-attack grounding: {:?}",
+        has_explanation(&computation, BASE_ATTACK_ID),
+        "level-4 Ranger is supported since the SD13-E5 level-4 slice: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, BASE_SAVE_FORTITUDE_ID),
-        "level-4 Ranger must not gain the bounded level-1/level-2/level-3 base-save grounding: {:?}",
+        has_explanation(&computation, BASE_SAVE_FORTITUDE_ID),
+        "level-4 Ranger keeps the base-save grounding since the SD13-E5 level-4 slice: {:?}",
         computation.explanations
     );
 }

@@ -574,24 +574,46 @@ fn ranger_level_3_was_later_widened_into_the_supported_tranche() {
 }
 
 #[test]
-fn ranger_level4_is_not_promoted_by_this_slice() {
+fn ranger_level4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_ranger_level4_progression.rs) widened the level-range gate to
+    // level 4 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk level-range
+    // gate idiom) and grounded Hunter's Bond; this negative control is
+    // superseded, not violated — pin the new truth here too so this file stays
+    // internally consistent. The retired blockers and the level-1-only
+    // combat-style level-gate marker correctly stay absent at level 4 (the
+    // combat-style pillar is recognized differently once the 2nd-level gate is
+    // reached); the active per-pillar records stay grounded.
     let level_4 = RANGER_FIXTURE.replace("class:ranger:1", "class:ranger:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
 
-    for id in RANGER_PER_PILLAR_RECORD_IDS {
+    for id in [
+        RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_LEVEL_GATE_ID,
+    ] {
         assert!(
             !has_diagnostic(&computation, id) && !has_explanation(&computation, id),
-            "level-4 ranger must not gain the bounded level-1/level-2/level-3 per-pillar record '{id}'"
+            "level-4 ranger must still not carry the retired/level-1-only record '{id}'"
+        );
+    }
+    for id in [
+        RANGER_TRACK_ID,
+        RANGER_FAVORED_ENEMY_CHOICE_ID,
+        RANGER_FAVORED_ENEMY_SKILL_BONUS_ID,
+        RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID,
+    ] {
+        assert!(
+            has_explanation(&computation, id),
+            "level-4 ranger is supported since the SD13-E5 level-4 slice and must gain the \
+             per-pillar record '{id}'"
         );
     }
     assert!(
-        !has_explanation(&computation, "class_feature.ranger.endurance"),
-        "level-4 ranger must not gain the bounded level-3 Endurance record"
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-4 ranger must stay claim-blocked in this slice"
+        has_explanation(&computation, "class_feature.ranger.endurance"),
+        "level-4 ranger must keep the bounded level-3 Endurance record grounded"
     );
 }
 
