@@ -286,12 +286,39 @@ fn wizard_level2_truth_is_unchanged_by_this_widening() {
     );
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Wizard level 4 was later widened into the supported tranche -----
 
 #[test]
-fn wizard_level_4_is_not_promoted_by_this_slice() {
+fn wizard_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven milestone
+    // and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_wizard_level4_progression.rs) widened the level-range gate to
+    // level 4 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Bard/Druid/
+    // Sorcerer level-range gate idiom) and extended every formula (Intense Spells'
+    // bonus-damage magnitude changes for real, 1 -> 2, while the specialist bonus
+    // slot count is checked and correctly stays at 2); this negative control is
+    // superseded, not violated — pin the new truth here too so this file stays
+    // internally consistent.
     let level_4 = WIZARD_LEVEL3_FIXTURE.replace("class:wizard:3", "class:wizard:4");
     let input = load(&level_4);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.wizard.")
+                || e.id == "class_chassis.spell_baseline.wizard"),
+        "level-4 Wizard is supported since the SD13-E5 level-4 slice: {:?}",
+        computation.explanations
+    );
+}
+
+// ----- Negative control: level 5 stays unrecognized by this slice -----
+
+#[test]
+fn wizard_level_5_is_not_promoted_by_this_slice() {
+    let level_5 = WIZARD_LEVEL3_FIXTURE.replace("class:wizard:3", "class:wizard:5");
+    let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -299,7 +326,7 @@ fn wizard_level_4_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-4 Wizard must not gain any bounded wizard chassis explanation: {:?}",
+        "level-5 Wizard must not gain any bounded wizard chassis explanation: {:?}",
         computation.explanations
     );
 }

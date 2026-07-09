@@ -447,12 +447,19 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
 /// 3 by a further SD13-E5 slice (the level-range gate extended to 1..=3; the
 /// specialist bonus slot flat count changes for real at level 3, from 1 to 2, since
 /// a level-3 wizard casts 2nd-level spells for the first time; the level-3 "Special"
-/// column is also blank, so no new pillar is added), that stays explicitly blocked
-/// on the school-powers / opposed-school-cost burden and the prepared spellbook /
-/// spell-slot posture burden, citing all three proof files as one combined literal,
-/// mirroring [`SD13_SORCERER_LEVEL1_TEST`].
+/// column is also blank, so no new pillar is added), then widened again to level 4
+/// by a further SD13-E5 slice (the level-range gate extended to 1..=4; the
+/// specialist bonus slot flat count is checked rather than assumed to double again
+/// and correctly stays at 2, since 3rd-level wizard spells do not become available
+/// until wizard level 5; Intense Spells' bonus-damage magnitude changes for real at
+/// level 4, from 1 to 2, via the pre-existing half-wizard-level-minimum-1 formula;
+/// the level-4 "Special" column is also blank, so no new pillar is added), that
+/// stays explicitly blocked on the school-powers / opposed-school-cost burden and
+/// the prepared spellbook / spell-slot posture burden, citing all four proof files
+/// as one combined literal, mirroring [`SD13_SORCERER_LEVEL1_TEST`].
 const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs + \
-    tests/sd13_wizard_level2_progression.rs + tests/sd13_wizard_level3_progression.rs";
+    tests/sd13_wizard_level2_progression.rs + tests/sd13_wizard_level3_progression.rs + \
+    tests/sd13_wizard_level4_progression.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -1563,15 +1570,25 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // 3, from 1 to 2, since a level-3 wizard casts 2nd-level spells for
                 // the first time (verified independently against both primary
                 // sources' raw spells-per-day table rows); the level-3 "Special"
-                // column is also blank, so no new pillar is added.
+                // column is also blank, so no new pillar is added. A further SD13-E5
+                // slice widens the gate again to 1..=4 (`MAX_SUPPORTED_WIZARD_LEVEL =
+                // 4`): the specialist bonus slot flat count is checked rather than
+                // assumed to double again and correctly stays at 2 (3rd-level wizard
+                // spells do not become available until wizard level 5, verified
+                // independently against both primary sources' raw spells-per-day
+                // table rows); Intense Spells' bonus-damage magnitude changes for
+                // real at level 4, from 1 to 2, via the pre-existing half-wizard-
+                // level-minimum-1 formula; the level-4 "Special" column is also
+                // blank, so no new pillar is added.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1/level-3 prepared arcane spell baseline, with base \
+                            Wizard level-1/level-4 prepared arcane spell baseline, with base \
                             attack bonus, base save progression, Scribe Scroll, the school \
                             specialization choice, the specialist-bonus-slot flat count (which \
-                            becomes 2 at level 3), and the Intense Spells / Force Missile \
-                            school-power flat magnitudes grounded for real through level 3, and \
-                            the school-power execution machinery, the opposed-school-cost \
-                            burden, and the prepared spellbook / spell-slot posture burden still \
+                            becomes 2 at level 3 and stays 2 at level 4), and the Intense Spells \
+                            / Force Missile school-power flat magnitudes (Intense Spells becomes \
+                            2 at level 4) grounded for real through level 4, and the \
+                            school-power execution machinery, the opposed-school-cost burden, \
+                            and the prepared spellbook / spell-slot posture burden still \
                             blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -1632,18 +1649,38 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     column is also blank, so no new class feature is gained at 3rd level (unlike \
                     Rogue/Monk/Barbarian's own 3rd-level Trap Sense/Still Mind/Trap Sense features) \
                     — this slice widens existing pillars only (one of them, the specialist bonus \
-                    slot count, to a new value), adds no new pillar record. The row is Partial, \
-                    not Supported: neither school power's execution machinery is implemented (no \
-                    evocation spell-damage application for Intense Spells, no force-missile \
-                    casting execution / 1d4 damage roll / automatic-hit targeting for Force \
-                    Missile), the opposed-school preparation cost (each opposed-school spell \
-                    occupies two prepared slots) remains named and unproven, and the prepared \
-                    spell posture burden (spellbook content, spells prepared per day, spell slots \
-                    per day, bonus slots from high Intelligence, spell save DCs) is still entirely \
-                    unproven. No spell math is fabricated and no Wizard level 4+ is proven",
+                    slot count, to a new value), adds no new pillar record. AND a further SD13-E5 \
+                    slice widens the level-range gate to level 1-4 and extends the base \
+                    attack/base save/specialization-choice/specialist-bonus-slot/Intense-Spells/ \
+                    Force-Missile/Scribe-Scroll formulas to level 4 via the same formulas, without \
+                    re-derivation, verified independently against the PF1 Core Rulebook Wizard \
+                    class table (d20pfsrd and legacy.aonprd.com): level 4 base attack bonus is +2, \
+                    base saves are +1/+1/+4 (Fortitude/Reflex/Will); the specialist bonus slot flat \
+                    count was checked rather than assumed to double again at level 4 (mirroring \
+                    the level-3 doubling precedent) and correctly STAYS at 2, since the raw \
+                    Wizard spells-per-day table's level-4 row is still \"4/3/2/—/—\" — 3rd-level \
+                    wizard spells do not become available until wizard level 5 (level 5 row: \
+                    \"4/3/2/1/—\", the first non-\"—\" 3rd-level column); Intense Spells' \
+                    bonus-damage magnitude, in contrast, DOES change for real at level 4: \
+                    max(4/2, 1) = 2, up from 1 at levels 1-3, via the pre-existing formula, not \
+                    re-derived; Force Missile's uses-per-day pool is level-independent and \
+                    unchanged; Scribe Scroll stays recognized as an already-held grant. The class \
+                    table's level-4 \"Special\" column is also blank (verified independently \
+                    against both sources: the Wizard's own next class feature, a bonus feat, is \
+                    granted at 5th level, not 4th) — this slice widens existing pillars only (one \
+                    of them, Intense Spells, to a genuinely new value), adds no new pillar record. \
+                    The row is Partial, not Supported: neither school power's execution machinery \
+                    is implemented (no evocation spell-damage application for Intense Spells, no \
+                    force-missile casting execution / 1d4 damage roll / automatic-hit targeting \
+                    for Force Missile), the opposed-school preparation cost (each opposed-school \
+                    spell occupies two prepared slots) remains named and unproven, and the \
+                    prepared spell posture burden (spellbook content, spells prepared per day, \
+                    spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
+                    still entirely unproven. No spell math is fabricated and no Wizard level 5+ is \
+                    proven",
                 next_required_uplift: "SD13-E5 Wizard school-power execution and opposed-school \
                     preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-4+ progression (widening the now-grounded base \
+                    posture slice, then level-5+ progression (widening the now-grounded base \
                     attack/base save formulas)",
             },
             // ----- Interaction rows (2) -----
