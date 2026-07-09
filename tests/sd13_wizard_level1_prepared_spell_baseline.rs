@@ -514,21 +514,45 @@ fn wizard_level_2_was_later_widened_into_the_supported_tranche() {
 }
 
 #[test]
-fn wizard_level_3_is_not_promoted_by_this_slice() {
-    // Level 3 stays out of scope for this slice; a level-3 Wizard must not gain the
-    // bounded level-1/level-2 prepared-spell-baseline recognition record and stays
-    // blocked.
+fn wizard_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 3 was out of scope and stayed
+    // unrecognized. A later SD13-E5 slice (tests/sd13_wizard_level3_progression.rs)
+    // widened the level-range gate to level 3 (mirroring the
+    // Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Bard/Druid/Sorcerer level-range
+    // gate idiom); this negative control is superseded, not violated — pin the new
+    // truth here too so this file stays internally consistent. Level 3 still stays
+    // claim-blocked (the school-power execution and prepared spellbook posture
+    // burdens remain unproven).
     let level_3 = WIZARD_FIXTURE.replace("class:wizard:1", "class:wizard:3");
     let input = load(&level_3);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, RECOGNITION_ID),
-        "level-3 Wizard must not gain the bounded level-1/level-2 prepared-spell-baseline \
-         recognition record"
+        has_explanation(&computation, RECOGNITION_ID),
+        "level-3 Wizard is supported since the SD13-E5 level-3 slice: {:?}",
+        computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
         "level-3 Wizard must stay claim-blocked in this slice"
+    );
+}
+
+#[test]
+fn wizard_level_4_is_not_promoted_by_this_slice() {
+    // Level 4 stays out of scope for this slice; a level-4 Wizard must not gain the
+    // bounded level-1/level-2/level-3 prepared-spell-baseline recognition record and
+    // stays blocked.
+    let level_4 = WIZARD_FIXTURE.replace("class:wizard:1", "class:wizard:4");
+    let input = load(&level_4);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !has_explanation(&computation, RECOGNITION_ID),
+        "level-4 Wizard must not gain the bounded level-1/level-2/level-3 \
+         prepared-spell-baseline recognition record"
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-4 Wizard must stay claim-blocked in this slice"
     );
 }
 

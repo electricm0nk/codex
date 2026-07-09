@@ -390,17 +390,20 @@ const FASCINATE_DC_BASE: i16 = 10;
 // opposed schools locked, specialty school bonus at later levels).
 const WIZARD_CLASS_ID: &str = "class:wizard";
 
-// SD13-E5 Wizard level-2 progression widening: mirrors the Fighter
+// SD13-E5 Wizard level-2/level-3 progression widening: mirrors the Fighter
 // `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
 // `supported_rogue_level` / Barbarian `supported_barbarian_level` / Monk
 // `supported_monk_level` / Cleric `supported_cleric_level` / Bard
 // `supported_bard_level` / Druid `supported_druid_level` / Sorcerer
 // `supported_sorcerer_level` idiom (an `Option<u8>` level-range gate) rather than a
 // boolean level-1-only check. Verified against the PF1 Core Rulebook Wizard class
-// table (d20pfsrd and legacy.aonprd.com): the level-2 "Special" column is blank, so
-// no new class feature is gained at 2nd level (like Cleric/Sorcerer, unlike
-// Rogue/Monk/Druid's Evasion/Woodland Stride).
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 2;
+// table (d20pfsrd and legacy.aonprd.com): the level-2 AND level-3 "Special" columns
+// are both blank, so no new class feature is gained at 2nd or 3rd level (like
+// Cleric/Sorcerer's level-2 gate, unlike Rogue/Monk/Druid's Evasion/Woodland Stride
+// or Rogue/Monk/Barbarian's own 3rd-level features); the specialist bonus slot flat
+// count DOES change at level 3 (see `explain_wizard_level1_prepared_spell_baseline`),
+// since a level-3 wizard casts 2nd-level spells for the first time.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 3;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -418,7 +421,21 @@ const TRANSMUTATION_SCHOOL_SELECTION: &str = "school:transmutation";
 /// level 2 (SD13-E5): a level-2 wizard still only casts 1st-level wizard spells
 /// (2nd-level wizard spells require caster level 3), so the count stays exactly 1
 /// through the whole level 1-2 range this seam supports.
-const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1: i16 = 1;
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVELS_1_AND_2: i16 = 1;
+
+/// SD13-E5 level-3 widening: a level-3 wizard casts 2nd-level spells for the first
+/// time (verified independently against both primary sources' raw Wizard
+/// spells-per-day table rows: level 2 shows "4/2/—/—", level 3 shows "4/2/1/—" — the
+/// first non-"—" 2nd-level column), so a specialist wizard now gains one bonus slot
+/// of EACH spell level she can cast: one 1st-level bonus slot plus one 2nd-level
+/// bonus slot, for a flat count of 2.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3: i16 = 2;
+
+/// PF1 Core Rulebook Wizard spells-per-day table: the wizard class level at which
+/// 2nd-level wizard spells first become available (verified independently against
+/// both primary sources: level 1-2 wizards cast only 1st-level spells; level 3 is
+/// the first row with a non-"—" 2nd-level column).
+const WIZARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 3;
 
 // SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
 // martial class; the bounded single-class level-1 identity is recognized as
@@ -5037,10 +5054,10 @@ fn explain_sorcerer_level1_spell_baseline(
 
 /// The bounded Wizard milestone level this decomposition surface grounds, if any.
 /// Returns the single Wizard level when the chosen input is exactly a single-class
-/// Wizard at one of the supported milestone levels (1 or 2). Returns `None` for no
-/// Wizard, a non-Wizard class, a multiclass mix, or any level-3+ Wizard this slice
-/// deliberately does not recognize — each of which stays claim-blocked exactly as
-/// before. Mirrors the Fighter `supported_fighter_level` / Paladin
+/// Wizard at one of the supported milestone levels (1, 2, or 3). Returns `None` for
+/// no Wizard, a non-Wizard class, a multiclass mix, or any level-4+ Wizard this
+/// slice deliberately does not recognize — each of which stays claim-blocked exactly
+/// as before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
 /// `supported_cleric_level` / Bard `supported_bard_level` / Druid
@@ -5169,6 +5186,26 @@ fn wizard_has_canonical_specialization_selections(input: &CharacterInput) -> boo
 /// "Special" column is blank (verified independently against both sources), so no
 /// new class feature is gained at 2nd level, unlike Rogue/Monk/Druid's Evasion/
 /// Woodland Stride — this slice widens existing pillars only, adds no new one.
+///
+/// A further SD13-E5 slice widens the gate again (`supported_wizard_level`, 1..=3)
+/// and extends the same formulas to level 3, without re-derivation, verified
+/// independently against the PF1 Core Rulebook Wizard class table (d20pfsrd and
+/// legacy.aonprd.com): level 3 base attack bonus is +1, base saves are +1/+1/+3
+/// (Fortitude/Reflex/Will); Intense Spells' bonus damage stays 1
+/// (`max(3/2, 1) = 1`); Force Missile's uses-per-day pool is level-independent and
+/// unchanged; Scribe Scroll stays recognized as an already-held grant. The
+/// specialist bonus slot flat count, in contrast, CHANGES for real at level 3: the
+/// PF1 Core Rulebook arcane school class feature grants "an additional spell slot of
+/// each spell level he can cast, from 1st on up" (verified against both primary
+/// sources' exact rule text), and the raw Wizard spells-per-day table rows (also
+/// verified against both sources) show a level-3 wizard casts 2nd-level spells for
+/// the first time (level 2: "4/2/—/—"; level 3: "4/2/1/—"), so the flat count
+/// becomes 2 (one 1st-level bonus slot plus one 2nd-level bonus slot), up from 1.
+/// The class table's level-3 "Special" column is also blank (verified
+/// independently against both sources), so no new class feature is gained at 3rd
+/// level either, unlike Rogue/Monk/Barbarian's own 3rd-level features — this slice
+/// widens existing pillars only (one of them to a new value), adds no new pillar
+/// record.
 fn explain_wizard_level1_prepared_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -5317,20 +5354,36 @@ fn explain_wizard_level1_prepared_spell_baseline(
         // spells (2nd-level wizard spells require caster level 3, verified against
         // both primary sources' raw spells-per-day table rows), so "one additional
         // spell slot of each spell level she can cast" is still exactly one 1st-level
-        // slot at both levels 1 and 2 this seam supports.
+        // slot at both levels 1 and 2 this seam supports. A further SD13-E5 slice
+        // widens this for real at level 3: a level-3 wizard casts 2nd-level spells
+        // for the first time (verified independently against both primary sources'
+        // raw spells-per-day table rows), so the specialist now gains one bonus slot
+        // of EACH spell level she can cast — one 1st-level bonus slot plus one
+        // 2nd-level bonus slot, a flat count of 2.
+        let wizard_specialist_bonus_slot_count =
+            if level >= WIZARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3
+            } else {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVELS_1_AND_2
+            };
         explanations.push(ComputationExplanation {
             id: "class_chassis.wizard.specialist_bonus_slot".to_owned(),
-            value: WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1,
+            value: wizard_specialist_bonus_slot_count,
             detail: format!(
                 "Wizard level {level} specialist bonus spell slot: a specialist wizard gains one \
-                 additional spell slot of each spell level she can cast, 1st and up, usable only \
-                 for spells of the chosen school (PF1 Core Rulebook arcane school class feature). \
-                 At level {level} that is exactly one 1st-level Evocation-only bonus slot \
-                 ({WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_1:+} flat count); there is no \
-                 cantrip-level bonus slot, and the count stays unchanged from level 1 since a \
-                 level-2 wizard still only casts 1st-level spells (2nd-level wizard spells begin \
-                 at caster level 3). This grounds the flat count only: no slot contents, no \
-                 spells prepared per day, no per-day slot totals, and no bonus slots from a high \
+                 additional Evocation-only spell slot of each spell level she can cast, 1st and \
+                 up, usable only for spells of the chosen school (PF1 Core Rulebook arcane \
+                 school class feature). At levels 1-2 a wizard casts only 1st-level spells, so \
+                 the flat count is exactly one 1st-level Evocation-only bonus slot \
+                 ({WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVELS_1_AND_2:+}); at level \
+                 {WIZARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 2nd-level \
+                 spells for the first time (verified against both primary sources' raw \
+                 spells-per-day table rows), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3:+} (one 1st-level Evocation-only bonus \
+                 slot plus one 2nd-level Evocation-only bonus slot). At level {level} this is \
+                 {wizard_specialist_bonus_slot_count:+} flat count; there is no cantrip-level \
+                 bonus slot. This grounds the flat count only: no slot contents, no spells \
+                 prepared per day, no per-day slot totals, and no bonus slots from a high \
                  Intelligence are computed"
             ),
         });
