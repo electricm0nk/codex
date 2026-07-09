@@ -29,11 +29,30 @@
 //! - the illiteracy-absence rules-correction record still applies,
 //!   unconditionally, at level 2.
 //!
+//! - Uncanny Dodge, the PF1 Core Rulebook Barbarian's 2nd-level "Special"
+//!   class table entry (verified independently against d20pfsrd and
+//!   legacy.aonprd.com: the level-2 row reads "Rage power, uncanny dodge"),
+//!   is grounded as a bounded identity/recognition record only (value 0),
+//!   mirroring exactly how Rogue's/Monk's own Evasion and Druid's Woodland
+//!   Stride were grounded: a level-gate-absence record below level 2, a
+//!   granted-but-unexecuted rule-text recognition record at or above it, with
+//!   no flat-footed-state tracking, no Armor Class computation, and no
+//!   invisibility-detection engine implemented anywhere in this codebase to
+//!   apply it. The level-2 row's OTHER named entry, a Rage Power choice (a
+//!   genuinely open-ended choice-list feature, a new-subsystem-shaped
+//!   burden), is deliberately left named-but-unproven this slice, mirroring
+//!   how the Monk level-2 bonus feat grant and the Bard Versatile
+//!   Performance were each deliberately left unrecognized by their own
+//!   level-2 widening slices: no new choice-slot and no new diagnostic was
+//!   added for it.
+//!
 //! It deliberately does not implement the rage-state execution engine
 //! (activation, round consumption, fatigue, stat application), weapon
-//! familiarity, or level-3+ Barbarian progression. It also preserves the
-//! accepted Barbarian level-1 truth (unchanged), the Fighter/Paladin/Ranger
-//! negative controls, and the multiclass negative control.
+//! familiarity, flat-footed-state tracking, Armor Class computation,
+//! invisibility detection, the Rage Power choice-list feature, or level-3+
+//! Barbarian progression. It also preserves the accepted Barbarian level-1
+//! truth (unchanged), the Fighter/Paladin/Ranger negative controls, and the
+//! multiclass negative control.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -59,6 +78,8 @@ const BARBARIAN_LEVEL1_LOW_CONSTITUTION_FIXTURE: &str = include_str!(
 const FIGHTER_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
 );
+
+const BARBARIAN_UNCANNY_DODGE_ID: &str = "class_feature.barbarian.uncanny_dodge";
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -253,6 +274,70 @@ fn barbarian_level2_illiteracy_absence_still_applies() {
     );
 }
 
+// ----- Uncanny Dodge is granted at level 2, as an identity/recognition record only -----
+
+#[test]
+fn barbarian_level2_grounds_uncanny_dodge_as_identity_record_only() {
+    let input = load(BARBARIAN_LEVEL2_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let uncanny_dodge = explanation(&computation, BARBARIAN_UNCANNY_DODGE_ID);
+    assert_eq!(
+        uncanny_dodge.value, 0,
+        "Uncanny Dodge must carry no fabricated mechanical value: {}",
+        uncanny_dodge.detail
+    );
+    assert!(
+        uncanny_dodge.detail.contains("Uncanny Dodge"),
+        "uncanny dodge explanation must name the Uncanny Dodge class feature: {}",
+        uncanny_dodge.detail
+    );
+    assert!(
+        uncanny_dodge.detail.to_lowercase().contains("flat-footed")
+            && uncanny_dodge.detail.to_lowercase().contains("invisible"),
+        "uncanny dodge explanation must state the actual rule text (cannot be caught \
+         flat-footed, retains Dexterity bonus to AC even against an invisible attacker): {}",
+        uncanny_dodge.detail
+    );
+    assert!(
+        uncanny_dodge.detail.to_lowercase().contains("immobilized"),
+        "uncanny dodge explanation must disclaim the immobilized exception (still loses the \
+         Dexterity bonus to AC if immobilized): {}",
+        uncanny_dodge.detail
+    );
+    assert!(
+        uncanny_dodge.detail.contains("flat-footed-state")
+            && uncanny_dodge.detail.contains("Armor Class")
+            && uncanny_dodge.detail.contains("invisibility-detection"),
+        "uncanny dodge explanation must disclaim a flat-footed-state tracking engine, an Armor \
+         Class computation, and an invisibility-detection engine: {}",
+        uncanny_dodge.detail
+    );
+    assert!(
+        uncanny_dodge.detail.to_lowercase().contains("granted"),
+        "uncanny dodge explanation at level 2 must state it is granted, not absent: {}",
+        uncanny_dodge.detail
+    );
+}
+
+#[test]
+fn barbarian_level1_uncanny_dodge_is_a_correct_level_gate_absence() {
+    let input = load(BARBARIAN_LEVEL1_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let uncanny_dodge = explanation(&computation, BARBARIAN_UNCANNY_DODGE_ID);
+    assert_eq!(
+        uncanny_dodge.value, 0,
+        "Uncanny Dodge at level 1 must be a correct level-gate absence, value 0: {}",
+        uncanny_dodge.detail
+    );
+    assert!(
+        uncanny_dodge.detail.to_lowercase().contains("absent"),
+        "uncanny dodge explanation at level 1 must state it is correctly absent: {}",
+        uncanny_dodge.detail
+    );
+}
+
 // ----- Still blocked: rage-state execution engine and generic diagnostics -----
 
 #[test]
@@ -385,5 +470,14 @@ fn matrix_barbarian_row_names_level_2_widening() {
         note.contains("rage execution") || note.contains("rage-state execution"),
         "barbarian partial note must keep naming the rage-state execution engine as unproven: \
          {note}"
+    );
+    assert!(
+        note.to_lowercase().contains("uncanny dodge"),
+        "barbarian partial note must name Uncanny Dodge as newly grounded: {note}"
+    );
+    assert!(
+        note.to_lowercase().contains("rage power"),
+        "barbarian partial note must keep naming the Rage Power choice-list feature as \
+         unproven: {note}"
     );
 }
