@@ -572,7 +572,7 @@ const MONK_CLASS_ID: &str = "class:monk";
 /// SD13-E5 Monk level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` idiom.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 4;
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 5;
 /// PF1 Core Rulebook level gate at which Monk gains Evasion (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Bonus feat, evasion" as the Monk 2nd-level special feature entry).
@@ -599,6 +599,19 @@ const MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL: u8 = 4;
 /// legacy.aonprd.com both list "Ki pool (magic), slow fall 20 ft." as the Monk
 /// 4th-level special feature entry).
 const MONK_KI_POOL_AND_SLOW_FALL_LEVEL: u8 = 4;
+/// PF1 Core Rulebook level gate at which Monk gains Purity of Body (5th level,
+/// verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "High jump, purity of body" as the Monk
+/// 5th-level special feature entry). High Jump, the OTHER 5th-level "Special"
+/// column entry, is deliberately left named-but-unproven this slice: it
+/// requires wiring the monk's level into an Acrobatics-check total (no
+/// skill-check-total engine exists in this codebase) and spending a ki point
+/// (an action-economy/resource-consumption engine this codebase deliberately
+/// does not implement for the ki pool either), so it is checked and confirmed
+/// NOT flat rather than fabricated. Purity of Body alone is grounded, since
+/// it is a flat, non-level-scaled grant (disease immunity) matching the
+/// Barbarian/Rogue Uncanny Dodge / Monk Slow Fall grant-only idiom exactly.
+const MONK_PURITY_OF_BODY_LEVEL: u8 = 5;
 /// The PF1 Core Rulebook level at which the level-1 monk bonus feat (and the
 /// automatic Improved Unarmed Strike grant) always occurs, independent of the
 /// character's current supported level. Kept distinct from the generic
@@ -4381,12 +4394,12 @@ fn explain_barbarian_level1_chassis(
 
 /// The bounded Monk milestone level this decomposition surface grounds, if any.
 /// Returns the single Monk level when the chosen input is exactly a single-class
-/// Monk at one of the supported milestone levels (1, 2, 3, or 4). Returns `None`
-/// for no Monk, a non-Monk class, a multiclass mix, or any level-5+ Monk this
-/// slice deliberately does not recognize — each of which stays claim-blocked
-/// exactly as before. Mirrors the Fighter `supported_fighter_level` / Paladin
-/// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
-/// `supported_barbarian_level` level-range gate idiom.
+/// Monk at one of the supported milestone levels (1, 2, 3, 4, or 5). Returns
+/// `None` for no Monk, a non-Monk class, a multiclass mix, or any level-6+ Monk
+/// this slice deliberately does not recognize — each of which stays
+/// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level`
+/// / Paladin `supported_paladin_level` / Rogue `supported_rogue_level` /
+/// Barbarian `supported_barbarian_level` level-range gate idiom.
 fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
     match input.chosen.class_levels.as_slice() {
         [class_level]
@@ -4400,13 +4413,14 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Monk
-/// level-1/level-2/level-3/level-4 martial chassis, mirroring the Barbarian/Rogue
-/// level-range-gate pattern, and now grounding nine named pillar burdens at every
-/// supported level (base-attack, base-save, AC Bonus, the unarmed strike die /
-/// Flurry of Blows flat surface, the level-1 bonus feat choice-slot recognition,
-/// at level 2, Evasion, at level 3, Still Mind, and at level 4, the ki pool's flat
-/// size and Slow Fall) while keeping it explicitly claim-blocked on the recognized
-/// bonus feat's own mechanics (an execution engine, not a flat number).
+/// level-1/level-2/level-3/level-4/level-5 martial chassis, mirroring the
+/// Barbarian/Rogue level-range-gate pattern, and now grounding ten named pillar
+/// burdens at every supported level (base-attack, base-save, AC Bonus, the
+/// unarmed strike die / Flurry of Blows flat surface, the level-1 bonus feat
+/// choice-slot recognition, at level 2, Evasion, at level 3, Still Mind, at level
+/// 4, the ki pool's flat size and Slow Fall, and at level 5, Purity of Body)
+/// while keeping it explicitly claim-blocked on the recognized bonus feat's own
+/// mechanics (an execution engine, not a flat number).
 ///
 /// This grounds the Monk base-attack progression (3/4 BAB: `classlevel * 3 / 4`),
 /// the base-save progression (good Fortitude, Reflex, and Will: `classlevel/2+2`
@@ -4443,23 +4457,29 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 /// / Paladin lay-on-hands-uses-per-day idiom — no ki-point consumption tracking,
 /// no action-economy engine, and no application of any ki power), and Slow Fall
 /// is grounded as a bounded grant-only identity record (no fall-damage-resolution
-/// engine exists in this codebase). It still grounds no attack-resolution or
-/// damage-roll engine, no monk-weapon flurry, no level-8+ unarmed damage die
-/// progression, no ki-power execution, no level-4+ AC Bonus dodge-bonus
-/// progression, no "unarmored and unencumbered" runtime state-check engine, no
-/// wiring into integrated combat totals, no level-5+ martial progression, no
-/// level-2 bonus feat grant (PF1 grants monks a SEPARATE bonus feat at 2nd
-/// level; this widening does not add a second choice-slot or recognition for
-/// it), and no execution of what the recognized level-1 bonus feat actually does
-/// (no attack-of-opportunity engine for Combat Reflexes, no grapple-check engine
-/// for Improved Grapple, no DC/save engine for Stunning Fist, and so on). It:
+/// engine exists in this codebase). At level 5, Purity of Body is grounded as a
+/// bounded grant-only identity record (a flat disease-immunity grant, no
+/// disease-resolution engine exists in this codebase); High Jump, the level-5
+/// class table's OTHER "Special" column entry, is checked and confirmed NOT flat
+/// (it requires wiring the monk's level into an Acrobatics-check total and
+/// spending a ki point) and is deliberately left named-but-unproven. It still
+/// grounds no attack-resolution or damage-roll engine, no monk-weapon flurry, no
+/// level-8+ unarmed damage die progression, no ki-power execution, no level-4+ AC
+/// Bonus dodge-bonus progression, no "unarmored and unencumbered" runtime
+/// state-check engine, no wiring into integrated combat totals, no level-6+
+/// martial progression, no level-2 bonus feat grant (PF1 grants monks a SEPARATE
+/// bonus feat at 2nd level; this widening does not add a second choice-slot or
+/// recognition for it), and no execution of what the recognized level-1 bonus
+/// feat actually does (no attack-of-opportunity engine for Combat Reflexes, no
+/// grapple-check engine for Improved Grapple, no DC/save engine for Stunning
+/// Fist, and so on). It:
 /// - leaves one chassis-recognition explanation so the `class:monk:N` identity is
 ///   acknowledged as a non-hybrid martial baseline rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves grounded explanation records for base-attack, the three base saves,
 ///   AC Bonus, the unarmed strike damage die, the flurry flat attack
-///   bonus/attack count, Evasion, Still Mind, the ki pool's flat size, and Slow
-///   Fall,
+///   bonus/attack count, Evasion, Still Mind, the ki pool's flat size, Slow
+///   Fall, and Purity of Body,
 /// - conditionally leaves one grounded explanation recognizing the level-1 bonus
 ///   feat choice-slot selection when a `choice:monk_bonus_feat` selection is
 ///   present (carrying no fabricated mechanical value, since the recognized
@@ -4796,6 +4816,49 @@ fn explain_monk_level1_chassis(
                  fall were 20 feet shorter than it actually is. This is a bounded grant-only \
                  identity record only (value 0, non-fabricated): no fall-damage-resolution \
                  engine exists anywhere in this codebase to apply the 20-foot reduction to"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): Purity of Body, a 5th-level Monk class feature
+    // verified independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "High jump, purity of body" as the Monk
+    // 5th-level special feature entry). Below the level-5 gate this is a
+    // correct PF1 Core Rulebook level-gate absence (value 0); at or above it,
+    // it is a bounded grant-only identity record (value 0, non-fabricated)
+    // naming the rule text — mirroring the Barbarian/Rogue Uncanny Dodge /
+    // Monk Slow Fall grant-only idiom: no disease-resolution engine exists
+    // anywhere in this codebase to apply the immunity to. High Jump, the
+    // level-5 class table's OTHER "Special" column entry, was checked and
+    // confirmed NOT flat this cycle (it requires wiring the monk's level
+    // into an Acrobatics-check total — no skill-check-total engine exists in
+    // this codebase — and spending a ki point, an action-economy/resource-
+    // consumption engine this codebase deliberately does not implement for
+    // the ki pool either), so it is deliberately left named-but-unproven; no
+    // record or diagnostic for it was fabricated.
+    if level < MONK_PURITY_OF_BODY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.purity_of_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Purity of Body at monk level {level}: correctly absent at level {level} by \
+                 PF1 Core Rulebook level gate; the at-grant rule is named but not computed. \
+                 Purity of Body is a 5th-level monk class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.purity_of_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Purity of Body granted at monk level {level} (PF1 Core Rulebook, 5th-level \
+                 monk class feature): \"at 5th level, a monk gains immunity to all diseases, \
+                 including supernatural and magical diseases.\" This is a bounded grant-only \
+                 identity record only (value 0, non-fabricated): no disease-resolution engine \
+                 exists anywhere in this codebase to apply the immunity to. High Jump, the \
+                 level-5 class table's other \"Special\" column entry, is checked and confirmed \
+                 not flat (it requires an Acrobatics-check-total engine and ki-point-spending \
+                 action, neither of which exists here) and is deliberately not grounded"
             ),
         });
     }
