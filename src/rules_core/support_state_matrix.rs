@@ -482,7 +482,7 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
 /// [`SD13_ROGUE_LEVEL1_TEST`] / [`SD13_WIZARD_LEVEL1_TEST`].
 const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.rs + \
     tests/sd13_cleric_level2_progression.rs + tests/sd13_cleric_level3_progression.rs + \
-    tests/sd13_cleric_level4_progression.rs";
+    tests/sd13_cleric_level4_progression.rs + tests/sd13_cleric_level5_progression.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Druid level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -1098,14 +1098,16 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:cleric",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Cleric \
-                            level-1/level-2/level-3/level-4 prepared divine spell baseline, with base \
-                            attack bonus, base save progression, Channel Energy (die count increasing \
-                            to 2d6 at level 3, unchanged at level 4), the domain choice seam, the flat \
-                            domain spell slot count (increasing to 2 at level 3, unchanged at level 4), \
-                            Touch of Good (Good domain, in full, sacred bonus increasing to 2 at level \
-                            4), and Rebuke Death's uses per day (Healing domain, partial) grounded for \
-                            real at every supported level and the Rebuke Death heal amount and the \
-                            prepared divine spell posture burden still blocked",
+                            level-1/level-2/level-3/level-4/level-5 prepared divine spell baseline, \
+                            with base attack bonus, base save progression, Channel Energy (die count \
+                            increasing to 2d6 at level 3, unchanged at level 4, increasing to 3d6 at \
+                            level 5), the domain choice seam, the flat domain spell slot count \
+                            (increasing to 2 at level 3, unchanged at level 4, increasing to 3 at \
+                            level 5), Touch of Good (Good domain, in full, sacred bonus increasing to \
+                            2 at level 4, unchanged at level 5), and Rebuke Death's uses per day \
+                            (Healing domain, partial) grounded for real at every supported level and \
+                            the Rebuke Death heal amount and the prepared divine spell posture burden \
+                            still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1171,6 +1173,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     3 + Wisdom modifier formula, unchanged; and Cleric's level-4 Special column is \
                     blank (no new class feature is gained at 4th level), so no new pillar was added at \
                     level 4, only the existing Touch of Good pillar widened to a genuinely new value. \
+                    A further SD13-E5 slice widens the gate again to level 5 (verified independently \
+                    against the PF1 Core Rulebook Cleric class table and spells-per-day table via \
+                    d20pfsrd and legacy.aonprd.com): level 5 base attack bonus is +3, base \
+                    Fortitude/Will are +4, base Reflex is +1 (unchanged from level 4, reached \
+                    naturally); Channel Energy's die count genuinely increases to 3d6 (ceil(5/2) = 3, \
+                    the class table's level-5 Special column reads \"Channel energy 3d6\"); the \
+                    domain spell slot count genuinely increases to 3 (a level-5 cleric casts \
+                    3rd-level cleric spells for the first time, so the count is one 1st-level plus \
+                    one 2nd-level plus one 3rd-level domain slot); the Good domain's Touch of Good \
+                    sacred bonus stays 2 (max(5/2, 1) = 2, unchanged from level 4, it next increases \
+                    only at level 6); Rebuke Death's uses per day stays the same 3 + Wisdom modifier \
+                    formula, unchanged; and Cleric's level-5 Special column names only the Channel \
+                    Energy increase, so no new pillar was added at level 5, only the existing Channel \
+                    Energy and domain spell slot count pillars widened to genuinely new values. \
                     The row is Partial, not Supported: Rebuke Death's heal amount (1d4 points of \
                     damage plus 1 for every two cleric levels, usable only on a creature below 0 hit \
                     points) is not a flat number and remains named and unproven, the domain \
@@ -1178,14 +1194,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     and unproven, the prepared divine spell posture burden (spells prepared from the \
                     full Cleric list, spontaneous cure/inflict conversion, spell slots per day, bonus \
                     spells from a high Wisdom, spell save DCs) is still entirely unproven, and no \
-                    Cleric level 5+ is proven. No touch-attack resolution, healing-application \
+                    Cleric level 6+ is proven. No touch-attack resolution, healing-application \
                     engine, hit-point-state gating check, or per-use consumption tracking is \
                     fabricated",
                 next_required_uplift: "SD13-E5+ Cleric domain power grounding: the Rebuke Death \
                     heal-amount piece (requires a dice-roll execution engine and a hit-point-state \
                     gating check, a new-subsystem-shaped burden deliberately not attempted this \
                     slice) and domain spell-list contents, then the prepared divine spell posture \
-                    burden, then Cleric level 5+ progression",
+                    burden, then Cleric level 6+ progression",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",

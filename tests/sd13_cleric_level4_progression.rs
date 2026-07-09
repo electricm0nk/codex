@@ -306,21 +306,33 @@ fn cleric_level3_truth_is_unchanged_by_this_widening() {
     );
 }
 
-// ----- Negative control: level 5 stays unrecognized by this slice -----
+// ----- Negative control: level 5 was later widened into the supported tranche -----
 
 #[test]
-fn cleric_level_5_is_not_promoted_by_this_slice() {
+fn cleric_level_5_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 5 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_cleric_level5_progression.rs) widened the level-range gate to
+    // level 5 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Bard/Druid/
+    // Sorcerer/Wizard/Ranger level-range gate idiom) and confirmed Channel
+    // Energy's die count and the domain spell slot count both change for real
+    // at level 5, while Touch of Good's sacred bonus stays unchanged from
+    // level 4; this negative control is superseded, not violated — pin the
+    // new truth here too so this file stays internally consistent.
     let level_5 = CLERIC_LEVEL4_FIXTURE.replace("class:cleric:4", "class:cleric:5");
     let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
-                || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-5 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+            .any(|e| e.id == "class_chassis.spell_baseline.cleric"),
+        "level-5 Cleric is supported since the SD13-E5 level-5 slice: {:?}",
         computation.explanations
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-5 Cleric must stay claim-blocked in this slice"
     );
 }
 

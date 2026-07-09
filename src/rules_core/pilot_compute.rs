@@ -724,8 +724,16 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 /// level-4 cleric's 3rd-level spell column is still "—" on the raw spells-per-day
 /// table — 3rd-level cleric spells begin only at level 5) — but the Good domain's
 /// Touch of Good sacred bonus (half cleric level, minimum 1) genuinely increases to 2
-/// via the same pre-existing formula (`max(4/2, 1) = 2`).
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 4;
+/// via the same pre-existing formula (`max(4/2, 1) = 2`). A further SD13-E5 slice
+/// widens this to 1..=5, verified independently against both primary sources: the
+/// class table's level-5 "Special" column reads "Channel energy 3d6" — Channel
+/// Energy's die count genuinely increases to 3d6 (`ceil(5 / 2) = 3`) — and a
+/// level-5 cleric casts 3rd-level cleric spells for the first time (the raw
+/// spells-per-day table's level-5 row is the first to show a non-"—" 3rd-level
+/// column, "1+1"), so the domain spell slot count also changes for real, to 3, at
+/// level 5. The Good domain's Touch of Good sacred bonus stays 2 at level 5
+/// (`max(5/2, 1) = 2`, integer division; it next increases only at level 6).
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 5;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -747,14 +755,25 @@ const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
 // row is the first to show a non-"—" 2nd-level column), so the domain spell slot
 // count genuinely becomes 2 at level 3: one 1st-level domain slot plus one
 // 2nd-level domain slot, mirroring exactly the Wizard specialist-bonus-slot
-// level-3 widening (`WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3`).
+// level-3 widening (`WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3`). At level 5 a
+// cleric casts 3rd-level cleric spells for the first time (the raw
+// spells-per-day table's level-5 row is the first to show a non-"—" 3rd-level
+// column), so the count genuinely becomes 3: one 1st-level, one 2nd-level, and
+// one 3rd-level domain slot.
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_1_AND_2: i16 = 1;
-const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_3: i16 = 2;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_3_AND_4: i16 = 2;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_5: i16 = 3;
 /// The cleric level at which 2nd-level cleric spells (and so the second domain
 /// spell slot) first become available, verified against the raw PF1 Core Rulebook
 /// Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com): level 2 shows
 /// "4/2+1/—", level 3 shows "4/2+1/1+1" — the first non-"—" 2nd-level column.
 const CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 3;
+/// The cleric level at which 3rd-level cleric spells (and so the third domain
+/// spell slot) first become available, verified against the raw PF1 Core Rulebook
+/// Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com): level 4 shows
+/// "5/3+1/2+1/—", level 5 shows "5/3+1/2+1/1+1" — the first non-"—" 3rd-level
+/// column.
+const CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 5;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
 // identity. Druid is a prepared divine caster whose bounded burden splits across
@@ -6358,8 +6377,8 @@ fn explain_wizard_level1_prepared_spell_baseline(
 
 /// The bounded Cleric milestone level this decomposition surface grounds, if any.
 /// Returns the single Cleric level when the chosen input is exactly a single-class
-/// Cleric at one of the supported milestone levels (1, 2, or 3). Returns `None` for
-/// no Cleric, a non-Cleric class, a multiclass mix, or any level-4+ Cleric this slice
+/// Cleric at one of the supported milestone levels (1 through 5). Returns `None` for
+/// no Cleric, a non-Cleric class, a multiclass mix, or any level-6+ Cleric this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -6409,7 +6428,16 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// count both stay unchanged at level 4 (verified independently against both primary
 /// sources: the class table's level-4 "Special" column is blank, and the
 /// spells-per-day table's 3rd-level spell column is still "—" at level 4), so no new
-/// pillar record is added at level 4 either. It only:
+/// pillar record is added at level 4 either. A further SD13-E5 slice widens the gate
+/// again to 1..=5 (`MAX_SUPPORTED_CLERIC_LEVEL = 5`): Channel Energy's die count
+/// genuinely increases to 3d6 (`ceil(5/2) = 3`, the class table's level-5 "Special"
+/// column reads "Channel energy 3d6") and the domain spell slot count genuinely
+/// increases to 3 (a level-5 cleric casts 3rd-level cleric spells for the first
+/// time, verified independently against both primary sources' raw spells-per-day
+/// table rows), while the Good domain's Touch of Good sacred bonus stays 2
+/// (`max(5/2, 1) = 2`, unchanged from level 4 — it next increases only at level 6),
+/// so only the two pillars whose underlying formulas genuinely change are widened;
+/// no new pillar record is added at level 5 either. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
@@ -6629,9 +6657,16 @@ fn explain_cleric_level1_spell_baseline(
     // time (verified independently against both primary sources' raw spells-per-day
     // table rows), so the count genuinely becomes 2 — one 1st-level domain slot plus
     // one 2nd-level domain slot — mirroring exactly the Wizard specialist-bonus-slot
-    // level-3 widening.
-    let domain_spell_slot_count = if level >= CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_3
+    // level-3 widening. Confirmed unchanged at level 4 (the level-4 3rd-level spell
+    // column is still "—"). A further SD13-E5 slice widens this for real at level 5:
+    // a level-5 cleric casts 3rd-level cleric spells for the first time (verified
+    // independently against both primary sources' raw spells-per-day table rows), so
+    // the count genuinely becomes 3 — one 1st-level, one 2nd-level, and one
+    // 3rd-level domain slot.
+    let domain_spell_slot_count = if level >= CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_5
+    } else if level >= CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_3_AND_4
     } else {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_1_AND_2
     };
@@ -6643,12 +6678,16 @@ fn explain_cleric_level1_spell_baseline(
              she can cast, 1st and up (PF1 Core Rulebook Domains). At levels 1-2 a cleric \
              casts only 1st-level cleric spells, so the flat count is exactly \
              {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_1_AND_2} 1st-level domain spell slot; \
-             at level {CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a cleric also casts \
-             2nd-level cleric spells for the first time (2nd-level cleric spells begin at \
-             caster level 3, verified against both primary sources' raw spells-per-day table \
-             rows), so the flat count becomes \
-             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_3} (one 1st-level domain slot plus one \
-             2nd-level domain slot). At Cleric level {level} this is \
+             at levels {CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}-4 a cleric also casts \
+             2nd-level cleric spells (2nd-level cleric spells begin at caster level 3, \
+             verified against both primary sources' raw spells-per-day table rows), so the \
+             flat count becomes {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_3_AND_4} (one \
+             1st-level domain slot plus one 2nd-level domain slot); at level \
+             {CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a cleric also casts 3rd-level \
+             cleric spells for the first time (verified against both primary sources' raw \
+             spells-per-day table rows), so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_5} (one 1st-level, one 2nd-level, and \
+             one 3rd-level domain slot). At Cleric level {level} this is \
              {domain_spell_slot_count} domain spell slot(s). \
              This grounds only the flat slot count; it grounds no slot contents (which domain \
              spell may fill it), no domain spell lists, and no prepared-spell posture"
