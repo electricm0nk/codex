@@ -313,28 +313,33 @@ fn rogue_level_4_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: level 5 stays unrecognized by this slice -----
+// ----- Negative control: level 5 was later widened into the supported tranche -----
 
 #[test]
-fn rogue_level_5_is_not_promoted_by_this_slice() {
+fn rogue_level_5_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 5 stayed unrecognized. Two
+    // later SD13-E5 slices (tests/sd13_rogue_level4_progression.rs,
+    // tests/sd13_rogue_level5_progression.rs) widened the level-range gate
+    // through level 5 (mirroring the Fighter/Paladin level-range gate idiom)
+    // and grounded Uncanny Dodge (level 4) and the genuine sneak-attack
+    // die-count increase to 3d6 (level 5); this negative control is
+    // superseded, not violated — pin the new truth here too so this file
+    // stays internally consistent.
     let level_5 = ROGUE_LEVEL3_FIXTURE.replace("class:rogue:3", "class:rogue:5");
     let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")),
-        "level-5 Rogue must not gain any bounded rogue chassis explanation: {:?}",
+        has_explanation(&computation, "class_chassis.rogue.base_attack_bonus"),
+        "level-5 Rogue is supported since the SD13-E5 level-5 slice: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, ROGUE_EVASION_ID),
-        "level-5 Rogue must not gain the Evasion explanation from this bounded slice"
+        has_explanation(&computation, ROGUE_EVASION_ID),
+        "level-5 Rogue must keep the Evasion explanation grounded at level 2"
     );
     assert!(
-        !has_explanation(&computation, ROGUE_TRAP_SENSE_ID),
-        "level-5 Rogue must not gain the Trap Sense explanation from this bounded slice"
+        has_explanation(&computation, ROGUE_TRAP_SENSE_ID),
+        "level-5 Rogue must keep the Trap Sense explanation grounded at level 3"
     );
 }
 
