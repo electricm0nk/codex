@@ -559,17 +559,25 @@ fn bard_level_3_was_later_widened_into_the_supported_tranche() {
 }
 
 #[test]
-fn bard_level_4_is_not_promoted() {
+fn bard_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_bard_level4_progression.rs) widened the level-range gate to
+    // level 4 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Druid/
+    // Sorcerer/Wizard level-range gate idiom) and confirmed every one of the
+    // formulas below extends to level 4 unchanged or via the same formula; this
+    // negative control is superseded, not violated — pin the new truth here too
+    // so this file stays internally consistent.
     let level_4 = BARD_FIXTURE.replace("class:bard:1", "class:bard:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, RECOGNITION_ID),
-        "level-4 Bard must not gain the bounded spell-baseline recognition record"
+        has_explanation(&computation, RECOGNITION_ID),
+        "level-4 Bard is supported since the SD13-E5 level-4 slice"
     );
     assert!(
-        !has_explanation(&computation, BARDIC_PERFORMANCE_ROUNDS_ID),
-        "level-4 Bard must not gain the bounded bardic performance grounding"
+        has_explanation(&computation, BARDIC_PERFORMANCE_ROUNDS_ID),
+        "level-4 Bard is supported since the SD13-E5 level-4 slice"
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
