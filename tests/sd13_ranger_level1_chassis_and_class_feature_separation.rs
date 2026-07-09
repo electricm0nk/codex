@@ -518,20 +518,80 @@ fn ranger_level2_was_later_widened_into_the_supported_tranche() {
 }
 
 #[test]
-fn ranger_level3_is_not_promoted_by_this_slice() {
+fn ranger_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file was written, Ranger level 3+ was entirely out of scope
+    // (the level-range gate `supported_ranger_level` only recognized 1..=2). A later
+    // SD13-E5 slice (`tests/sd13_ranger_level3_progression.rs`) widened the gate to
+    // 1..=3 and extended Track and the Favored Enemy flat surface to level 3 via the
+    // same formulas (this ad-hoc fixture, built by a simple level-number replace,
+    // still carries the fixture's original `choice:ranger_favored_enemy` selection,
+    // so those records now ground). The retired F6 blockers stay retired either way.
+    // The combat-style level-gate ABSENCE record is level-1-ONLY and stays correctly
+    // retired at level 3 too -- this ad-hoc fixture carries no
+    // `choice:ranger_combat_style` selection, so there is nothing for the widened
+    // seam to recognize in its place. See `tests/sd13_ranger_level3_progression.rs`
+    // for the dedicated fixture that does carry a combat-style selection and
+    // Endurance's own grounding.
     let level_3 = RANGER_FIXTURE.replace("class:ranger:1", "class:ranger:3");
     let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+
+    for id in [
+        RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_LEVEL_GATE_ID,
+    ] {
+        assert!(
+            !has_diagnostic(&computation, id) && !has_explanation(&computation, id),
+            "level-3 ranger must not gain the retired/level-1-only record '{id}': {:?} / {:?}",
+            computation.diagnostics,
+            computation.explanations
+        );
+    }
+    for id in [
+        RANGER_TRACK_ID,
+        RANGER_FAVORED_ENEMY_CHOICE_ID,
+        RANGER_FAVORED_ENEMY_SKILL_BONUS_ID,
+        RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID,
+    ] {
+        assert!(
+            has_explanation(&computation, id),
+            "level-3 ranger must now carry the widened per-pillar record '{id}': {:?}",
+            computation.explanations
+        );
+    }
+    assert!(
+        has_explanation(&computation, "class_feature.ranger.endurance"),
+        "level-3 ranger must now carry the newly-grounded Endurance record: {:?}",
+        computation.explanations
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-3 ranger must stay claim-blocked overall (spell burden, favored-enemy \
+         conditional-application engine, and combat-style bonus-feat mechanics all remain \
+         unproven)"
+    );
+}
+
+#[test]
+fn ranger_level4_is_not_promoted_by_this_slice() {
+    let level_4 = RANGER_FIXTURE.replace("class:ranger:1", "class:ranger:4");
+    let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
 
     for id in RANGER_PER_PILLAR_RECORD_IDS {
         assert!(
             !has_diagnostic(&computation, id) && !has_explanation(&computation, id),
-            "level-3 ranger must not gain the bounded level-1/level-2 per-pillar record '{id}'"
+            "level-4 ranger must not gain the bounded level-1/level-2/level-3 per-pillar record '{id}'"
         );
     }
     assert!(
+        !has_explanation(&computation, "class_feature.ranger.endurance"),
+        "level-4 ranger must not gain the bounded level-3 Endurance record"
+    );
+    assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-3 ranger must stay claim-blocked in this slice"
+        "level-4 ranger must stay claim-blocked in this slice"
     );
 }
 

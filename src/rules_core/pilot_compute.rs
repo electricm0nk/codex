@@ -230,9 +230,27 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // SD13-E5 Ranger level-range widening. The accepted level-1 Ranger per-pillar
 // decomposition (base attack/base save progression, Track, the Favored Enemy flat
 // surface, and the combat-style level-gate absence) is joined by level 2, the PF1
-// Core Rulebook level gate at which Combat Style Feat is actually granted. Nothing
-// here grounds level 3+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 2;
+// Core Rulebook level gate at which Combat Style Feat is actually granted, and by
+// level 3 (SD13-E5), the level gate at which Endurance is granted. Nothing here
+// grounds level 4+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 3;
+
+/// PF1 Core Rulebook level gate at which Ranger gains Endurance (3rd level,
+/// verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Endurance, favored terrain" as the Ranger
+/// 3rd-level special feature entry). Endurance is a bonus feat granted
+/// automatically, with no player choice involved ("A ranger gains Endurance as a
+/// bonus feat at 3rd level"), so it is grounded as a bounded grant-only identity
+/// record, mirroring the Wizard Scribe Scroll / Barbarian Uncanny Dodge idiom.
+/// Favored Terrain, the class table's other 3rd-level "Special" column entry, is
+/// deliberately left named-but-unproven this slice: PF1 grants it as a player
+/// choice of terrain type (from Table: Ranger Favored Terrains) with a flat +2
+/// bonus on Initiative checks and Knowledge (geography)/Perception/Stealth/
+/// Survival checks made in that terrain, which would require a NEW choice-slot
+/// with no existing fixture data selecting one -- out of this bounded slice's
+/// scope, mirroring how the Sorcerer bloodline-class-skill choice needed its own
+/// dedicated slice once a choice-id and fixture selection existed.
+const RANGER_ENDURANCE_LEVEL: u8 = 3;
 
 // SD13-E5 Ranger combat style choice-slot recognition, grounded once the level-range
 // gate reaches RANGER_COMBAT_STYLE_LEVEL (2nd level). PF1 Core Rulebook Combat Style
@@ -3007,10 +3025,10 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
 
 /// The bounded Ranger milestone level this decomposition surface grounds, if any.
 /// Returns the single Ranger level when the chosen input is exactly a single-class
-/// Ranger at one of the supported milestone levels (1 or 2). Returns `None` for no
-/// Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid (which has its
-/// own decomposition lane), or any level-3+ Ranger this slice deliberately does not
-/// recognize — each of which stays claim-blocked exactly as before. Mirrors the
+/// Ranger at one of the supported milestone levels (1, 2, or 3). Returns `None` for
+/// no Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid (which has
+/// its own decomposition lane), or any level-4+ Ranger this slice deliberately does
+/// not recognize — each of which stays claim-blocked exactly as before. Mirrors the
 /// Fighter `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
 /// `supported_rogue_level` / Barbarian `supported_barbarian_level` / Monk
 /// `supported_monk_level` / Cleric `supported_cleric_level` / Bard
@@ -3091,12 +3109,22 @@ fn supported_ranger_level(input: &CharacterInput) -> Option<u8> {
 ///   conditional-application engine decides whether any specific check or
 ///   attack is actually made against the favored enemy.
 ///
+/// - a still later SD13-E5 slice widens the level-range gate to level 3
+///   (`MAX_SUPPORTED_RANGER_LEVEL`), extending base attack/base save/Track/the
+///   Favored Enemy flat surface to level 3 via the same formulas (no
+///   re-derivation), and grounds Endurance, the PF1 CRB's 3rd-level Ranger
+///   class feature, as a bounded grant-only identity record (value 0): the
+///   ranger gains Endurance as a bonus feat automatically, with no player
+///   choice involved. Favored Terrain, the class table's other 3rd-level
+///   entry, is deliberately left named-but-unproven — it needs a new
+///   choice-slot with no existing fixture selection, out of scope this slice.
+///
 /// This deliberately does not compute a supported class-feature surface. It
 /// grounds no favored-enemy conditional application, no combat-style feat
 /// grant, no animal companion, no favored-terrain breadth, and no spell
-/// posture. It only emits the grounded Track / Favored Enemy / combat-style
-/// level-gate values that prove the F6 surface remains separable on the
-/// runtime path.
+/// posture. It only emits the grounded Track / Favored Enemy / combat-style /
+/// Endurance level-gate values that prove the F6 surface remains separable on
+/// the runtime path.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input;
 /// the F6 hybrid chassis emission already preserves a single class-feature
@@ -3129,8 +3157,10 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // (`supported_ranger_level`, 1..=MAX_SUPPORTED_RANGER_LEVEL), extending both
     // formulas via the same shape (no re-derivation) and finally grounding the
     // combat-style pillar for real at the 2nd-level gate it was always named for.
-    // Ranger level 3+ progression, the favored-enemy conditional-application engine,
-    // and the ranger spell burden remain deliberately out of scope.
+    // A still later SD13-E5 slice widens the gate again to level 3, extending both
+    // formulas once more and grounding Endurance (a grant-only identity record).
+    // Ranger level 4+ progression, the favored-enemy conditional-application engine,
+    // Favored Terrain, and the ranger spell burden remain deliberately out of scope.
     let level_value = i16::from(level);
 
     // Grounded (1/2): full-BAB base-attack progression, the same formula shape as
@@ -3388,6 +3418,46 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
              modified by this record"
         ),
     });
+
+    // Grounded (SD13-E5): Endurance, a 3rd-level Ranger class feature verified
+    // independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Endurance, favored terrain" as the Ranger
+    // 3rd-level special feature entry). Endurance is a bonus feat granted
+    // automatically, with no player choice involved (PF1 Core Rulebook: "A
+    // ranger gains Endurance as a bonus feat at 3rd level"). Below the level-3
+    // gate this is a correct level-gate absence (value 0); at or above it, it is
+    // a bounded grant-only identity record (value 0, non-fabricated) — mirroring
+    // the Wizard Scribe Scroll / Barbarian Uncanny Dodge idiom: no feat-effect
+    // execution engine exists anywhere in this codebase to apply Endurance's own
+    // mechanical benefits. Favored Terrain, the class table's other 3rd-level
+    // "Special" column entry, is deliberately left named-but-unproven this
+    // slice: it is a player choice of terrain type with a flat +2 bonus on
+    // Initiative/Knowledge (geography)/Perception/Stealth/Survival checks made
+    // in that terrain, which would require a NEW choice-slot with no existing
+    // fixture selection — out of scope this slice.
+    if level < RANGER_ENDURANCE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.endurance".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Endurance at ranger level {level}: correctly absent at level {level} by \
+                 PF1 Core Rulebook level gate; the at-grant feat is named but not computed. \
+                 Endurance is a 3rd-level ranger class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.endurance".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Endurance granted at ranger level {level} (PF1 Core Rulebook, 3rd-level \
+                 ranger class feature): the ranger gains Endurance as a bonus feat automatically, \
+                 with no player choice involved. This is a bounded grant-only identity record \
+                 (value 0, non-fabricated): Endurance's own mechanical effects are not computed, \
+                 since no feat-effect execution engine exists anywhere in this codebase"
+            ),
+        });
+    }
 }
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.

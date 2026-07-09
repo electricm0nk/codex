@@ -231,27 +231,50 @@ fn ranger_level_2_was_later_widened_into_the_supported_tranche() {
     assert_eq!(fortitude.value, 3, "level-2 Ranger good Fortitude save must be +3");
 }
 
-// ----- Negative control: Ranger level 3 stays unrecognized (out of scope this slice) -----
+// ----- Negative control: Ranger level 3 was later widened into the supported tranche -----
 
 #[test]
-fn ranger_level_3_stays_unrecognized_by_this_slice() {
-    // Ranger level 3+ progression is deliberately out of scope for the level-2
-    // widening (the combat-style bonus-feat mechanics, the favored-enemy
-    // conditional-application engine, and the ranger spell burden all remain
-    // unproven). The level-range gate (`supported_ranger_level`, 1..=2) does not
-    // recognize level 3, so level 3 does not gain this slice's base-attack/base-save
-    // grounding.
+fn ranger_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file was written, Ranger level 3+ progression was out of
+    // scope (the level-range gate `supported_ranger_level` only recognized 1..=2).
+    // A later SD13-E5 slice (`tests/sd13_ranger_level3_progression.rs`) widened the
+    // gate to 1..=3 and extended this exact base-attack/base-save grounding to
+    // level 3 via the same formulas. This control now pins the widened truth
+    // instead of the stale level-2-only absence, and a level-4 negative control
+    // takes over the "still out of scope" role.
     let level_3 = RANGER_FIXTURE.replace("class:ranger:1", "class:ranger:3");
     let input = load(&level_3);
     let computation = compute_pilot_base_chassis(&input);
+    let base_attack = explanation(&computation, BASE_ATTACK_ID);
+    assert_eq!(
+        base_attack.value, 3,
+        "level-3 Ranger base attack bonus (full BAB) must be +3: {base_attack:?}"
+    );
+    let fortitude = explanation(&computation, BASE_SAVE_FORTITUDE_ID);
+    assert_eq!(fortitude.value, 3, "level-3 Ranger good Fortitude save must be +3");
+}
+
+// ----- Negative control: Ranger level 4 stays unrecognized (out of scope this slice) -----
+
+#[test]
+fn ranger_level_4_stays_unrecognized_by_this_slice() {
+    // Ranger level 4+ progression is deliberately out of scope for the level-3
+    // widening (the combat-style bonus-feat mechanics, the favored-enemy
+    // conditional-application engine, Favored Terrain, and the ranger spell burden
+    // all remain unproven). The level-range gate (`supported_ranger_level`, 1..=3)
+    // does not recognize level 4, so level 4 does not gain this slice's
+    // base-attack/base-save grounding.
+    let level_4 = RANGER_FIXTURE.replace("class:ranger:1", "class:ranger:4");
+    let input = load(&level_4);
+    let computation = compute_pilot_base_chassis(&input);
     assert!(
         !has_explanation(&computation, BASE_ATTACK_ID),
-        "level-3 Ranger must not gain the bounded level-1/level-2 base-attack grounding: {:?}",
+        "level-4 Ranger must not gain the bounded level-1/level-2/level-3 base-attack grounding: {:?}",
         computation.explanations
     );
     assert!(
         !has_explanation(&computation, BASE_SAVE_FORTITUDE_ID),
-        "level-3 Ranger must not gain the bounded level-1/level-2 base-save grounding: {:?}",
+        "level-4 Ranger must not gain the bounded level-1/level-2/level-3 base-save grounding: {:?}",
         computation.explanations
     );
 }

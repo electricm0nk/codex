@@ -320,19 +320,44 @@ fn ranger_level1_truth_is_unchanged_by_this_widening() {
     assert_eq!(track.value, 1, "Ranger level 1 Track bonus must stay 1");
 }
 
-// ----- Negative control: level 3 stays unrecognized by this slice -----
+// ----- Negative control: Ranger level 3 was later widened into the supported tranche -----
 
 #[test]
-fn ranger_level_3_is_not_promoted_by_this_slice() {
+fn ranger_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file was written, Ranger level 3+ progression was out of
+    // scope (the level-range gate `supported_ranger_level` only recognized 1..=2).
+    // A later SD13-E5 slice (`tests/sd13_ranger_level3_progression.rs`) widened the
+    // gate to 1..=3 and extended this exact base-attack/save/Track/favored-enemy
+    // grounding to level 3 via the same formulas, plus grounded Endurance as a new
+    // 3rd-level record. This control now pins the widened truth instead of the
+    // stale level-2-only absence, and a level-4 negative control takes over the
+    // "still out of scope" role.
     let level_3 = RANGER_LEVEL2_FIXTURE.replace("class:ranger:2", "class:ranger:3");
     let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.ranger.")),
+        "level-3 Ranger must now gain the widened bounded ranger chassis explanations: {:?}",
+        computation.explanations
+    );
+}
+
+// ----- Negative control: level 4 stays unrecognized by this slice -----
+
+#[test]
+fn ranger_level_4_stays_unrecognized_by_this_slice() {
+    let level_4 = RANGER_LEVEL2_FIXTURE.replace("class:ranger:2", "class:ranger:4");
+    let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")),
-        "level-3 Ranger must not gain any bounded ranger chassis explanation: {:?}",
+        "level-4 Ranger must not gain any bounded ranger chassis explanation: {:?}",
         computation.explanations
     );
 }
