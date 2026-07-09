@@ -220,10 +220,47 @@ const PALADIN_MERCY_LEVEL: u8 = 3;
 // feature in the PF1 Core Rulebook: the ranger selects a combat style (archery or
 // two-weapon combat) and gains its first bonus feat TOGETHER at 2nd level -- these
 // are not separable into a level-1 style choice plus a level-2 feat grant, as an
-// earlier version of the Ranger combat-style diagnostic incorrectly claimed. This
-// bounded slice does not ground any level past HYBRID_BASELINE_LEVEL (1), so combat
-// style is always a correct ABSENCE on this surface, mirroring PALADIN_MERCY_LEVEL.
+// earlier version of the Ranger combat-style diagnostic incorrectly claimed. Below
+// this gate, combat style is always a correct ABSENCE, mirroring PALADIN_MERCY_LEVEL;
+// at or above it (SD13-E5 level-2 widening), the style choice and its bonus feat are
+// finally grounded for real as recognition records -- see
+// RANGER_COMBAT_STYLE_CHOICE_ID below.
 const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
+
+// SD13-E5 Ranger level-range widening. The accepted level-1 Ranger per-pillar
+// decomposition (base attack/base save progression, Track, the Favored Enemy flat
+// surface, and the combat-style level-gate absence) is joined by level 2, the PF1
+// Core Rulebook level gate at which Combat Style Feat is actually granted. Nothing
+// here grounds level 3+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 2;
+
+// SD13-E5 Ranger combat style choice-slot recognition, grounded once the level-range
+// gate reaches RANGER_COMBAT_STYLE_LEVEL (2nd level). PF1 Core Rulebook Combat Style
+// Feat: at 2nd level a ranger selects one combat style -- Archery or Two-Weapon
+// Combat, the two PF1 Core Rulebook options -- and gains the first bonus feat from
+// that style's own restricted list (verified against legacy.aonprd.com's Core
+// Rulebook Ranger page before writing any code): the Archery style's 2nd-level list
+// is Far Shot, Point-Blank Shot, Precise Shot, and Rapid Shot; the Two-Weapon Combat
+// style's 2nd-level list is Double Slice, Improved Shield Bash, Quick Draw, and
+// Two-Weapon Fighting. Both the STYLE CHOICE and the chosen BONUS FEAT are
+// recognized as chosen-input identity only (+0 each); no feat's own mechanical
+// effect (e.g. Point-Blank Shot's attack/damage bonus within 30 ft.) is computed
+// anywhere in this codebase.
+const RANGER_COMBAT_STYLE_CHOICE_ID: &str = "choice:ranger_combat_style";
+const RANGER_COMBAT_STYLE_ARCHERY_SELECTION: &str = "style:archery";
+const RANGER_COMBAT_STYLE_TWO_WEAPON_COMBAT_SELECTION: &str = "style:two_weapon_combat";
+
+const RANGER_COMBAT_STYLE_BONUS_FEAT_CHOICE_ID: &str = "choice:ranger_combat_style_bonus_feat";
+// PF1 Core Rulebook Archery combat style, 2nd-level bonus feat list.
+const FAR_SHOT_FEAT_SELECTION: &str = "feat:far_shot";
+const POINT_BLANK_SHOT_FEAT_SELECTION: &str = "feat:point_blank_shot";
+const PRECISE_SHOT_FEAT_SELECTION: &str = "feat:precise_shot";
+const RAPID_SHOT_FEAT_SELECTION: &str = "feat:rapid_shot";
+// PF1 Core Rulebook Two-Weapon Combat style, 2nd-level bonus feat list.
+const DOUBLE_SLICE_FEAT_SELECTION: &str = "feat:double_slice";
+const IMPROVED_SHIELD_BASH_FEAT_SELECTION: &str = "feat:improved_shield_bash";
+const QUICK_DRAW_FEAT_SELECTION: &str = "feat:quick_draw";
+const TWO_WEAPON_FIGHTING_FEAT_SELECTION: &str = "feat:two_weapon_fighting";
 
 // SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
 // caster; this slice recognizes only its bounded single-class level-1 identity as direct
@@ -2944,18 +2981,28 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     });
 }
 
-/// Return `true` when the chosen input is exactly a single-class Ranger at the
-/// bounded hybrid baseline level (1). Returns `false` for any other class, a
-/// multiclass mix, the Paladin hybrid (which has its own decomposition lane), or
-/// any level-2+ Ranger this slice deliberately does not recognize — each of which
-/// stays blocked exactly as before.
-fn is_single_class_ranger_level1(input: &CharacterInput) -> bool {
-    matches!(
-        input.chosen.class_levels.as_slice(),
+/// The bounded Ranger milestone level this decomposition surface grounds, if any.
+/// Returns the single Ranger level when the chosen input is exactly a single-class
+/// Ranger at one of the supported milestone levels (1 or 2). Returns `None` for no
+/// Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid (which has its
+/// own decomposition lane), or any level-3+ Ranger this slice deliberately does not
+/// recognize — each of which stays claim-blocked exactly as before. Mirrors the
+/// Fighter `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
+/// `supported_rogue_level` / Barbarian `supported_barbarian_level` / Monk
+/// `supported_monk_level` / Cleric `supported_cleric_level` / Bard
+/// `supported_bard_level` / Druid `supported_druid_level` / Sorcerer
+/// `supported_sorcerer_level` / Wizard `supported_wizard_level` level-range gate
+/// idiom.
+fn supported_ranger_level(input: &CharacterInput) -> Option<u8> {
+    match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == RANGER_CLASS_ID
-                && class_level.level == HYBRID_BASELINE_LEVEL
-    )
+                && (1..=MAX_SUPPORTED_RANGER_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
+        }
+        _ => None,
+    }
 }
 
 /// Surface direct SD13-E3 runtime evidence for the deterministic Human Ranger
@@ -3036,9 +3083,9 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    if !is_single_class_ranger_level1(input) {
+    let Some(level) = supported_ranger_level(input) else {
         return;
-    }
+    };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
@@ -3054,11 +3101,13 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // base-attack-bonus values to disambiguate the exact fraction: a full-BAB
     // progression shows +4/+5 at those levels, while a 3/4-BAB progression would show
     // +3/+3 -- the table confirms full BAB, the same shape as Fighter/Barbarian/
-    // Paladin. Ranger level 2+ progression (the combat-style bonus-feat grant, the
-    // favored-enemy conditional-application engine, and the ranger spell burden) is
-    // deliberately out of scope for this slice; only the flat level-1 base-attack and
-    // base-save numbers are grounded here.
-    let level_value = i16::from(HYBRID_BASELINE_LEVEL);
+    // Paladin. A later SD13-E5 slice widens the level-1-only gate to level 2
+    // (`supported_ranger_level`, 1..=MAX_SUPPORTED_RANGER_LEVEL), extending both
+    // formulas via the same shape (no re-derivation) and finally grounding the
+    // combat-style pillar for real at the 2nd-level gate it was always named for.
+    // Ranger level 3+ progression, the favored-enemy conditional-application engine,
+    // and the ranger spell burden remain deliberately out of scope.
+    let level_value = i16::from(level);
 
     // Grounded (1/2): full-BAB base-attack progression, the same formula shape as
     // Fighter/Barbarian/Paladin (classlevel). No PCGen .lst file exists for the
@@ -3069,7 +3118,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         id: "class_chassis.ranger.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "Ranger level {HYBRID_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+            "Ranger level {level} base attack bonus from the PF1 Core Rulebook \
              Ranger class table (full base-attack progression, the same formula shape as \
              Fighter/Barbarian/Paladin): classlevel = {base_attack_bonus}. This is a standalone \
              explanation record; it is not wired into the integrated base_attack_bonus field or \
@@ -3087,7 +3136,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         id: "class_chassis.ranger.base_save.fortitude".to_owned(),
         value: good_save,
         detail: format!(
-            "Ranger level {HYBRID_BASELINE_LEVEL} base Fortitude save (good save) from the PF1 \
+            "Ranger level {level} base Fortitude save (good save) from the PF1 \
              Core Rulebook Ranger class table: classlevel/2+2 = {good_save}. This is a standalone \
              explanation record; it is not wired into compute_total_saves"
         ),
@@ -3096,7 +3145,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         id: "class_chassis.ranger.base_save.reflex".to_owned(),
         value: good_save,
         detail: format!(
-            "Ranger level {HYBRID_BASELINE_LEVEL} base Reflex save (good save) from the PF1 Core \
+            "Ranger level {level} base Reflex save (good save) from the PF1 Core \
              Rulebook Ranger class table: classlevel/2+2 = {good_save}. This is a standalone \
              explanation record; it is not wired into compute_total_saves"
         ),
@@ -3105,68 +3154,179 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         id: "class_chassis.ranger.base_save.will".to_owned(),
         value: poor_save,
         detail: format!(
-            "Ranger level {HYBRID_BASELINE_LEVEL} base Will save (poor save) from the PF1 Core \
+            "Ranger level {level} base Will save (poor save) from the PF1 Core \
              Rulebook Ranger class table: classlevel/3 = {poor_save}. This is a standalone \
              explanation record; it is not wired into compute_total_saves"
         ),
     });
 
-    // Combat style is a correct ABSENCE at this bounded level-1 baseline, grounded
-    // as a level-gate explanation (value 0), mirroring the Paladin mercy idiom. The
-    // former `class_feature.ranger.combat_style.unsupported` blocker is retired: it
-    // incorrectly claimed the archery-vs-two-weapon-combat style choice was a
-    // level-1 decision separate from a level-2 bonus-feat grant. PF1 Core Rulebook
-    // actually grants the style choice and its first bonus feat TOGETHER at 2nd
-    // level (RANGER_COMBAT_STYLE_LEVEL), so at level 1 there is nothing to
-    // recognize: no style is chosen and no bonus feat is granted.
-    explanations.push(ComputationExplanation {
-        id: "class_chassis.ranger.level_gate.combat_style".to_owned(),
-        value: 0,
-        detail: format!(
-            "Ranger combat style at ranger level {HYBRID_BASELINE_LEVEL}: correctly absent at \
-             level {HYBRID_BASELINE_LEVEL} by PF1 CRB level gate; at-grant selection named but not \
-             computed. Combat Style Feat is a {RANGER_COMBAT_STYLE_LEVEL}nd-level ranger feature: \
-             the ranger selects one combat style (archery or two-weapon combat) and gains its \
-             first bonus feat together at {RANGER_COMBAT_STYLE_LEVEL}nd level -- the style choice \
-             and the bonus-feat grant are not separable into a level-1 decision plus a level-2 \
-             grant. (Correction: an earlier version of this record, \
-             `class_feature.ranger.combat_style.unsupported`, incorrectly described the style \
-             choice as a level-1 decision distinct from the level-2 bonus-feat grant; PF1 Core \
-             Rulebook grants both together at 2nd level.)"
-        ),
-    });
+    if level < RANGER_COMBAT_STYLE_LEVEL {
+        // Combat style is a correct ABSENCE below the 2nd-level gate, grounded as a
+        // level-gate explanation (value 0), mirroring the Paladin mercy idiom. The
+        // former `class_feature.ranger.combat_style.unsupported` blocker is retired: it
+        // incorrectly claimed the archery-vs-two-weapon-combat style choice was a
+        // level-1 decision separate from a level-2 bonus-feat grant. PF1 Core Rulebook
+        // actually grants the style choice and its first bonus feat TOGETHER at 2nd
+        // level (RANGER_COMBAT_STYLE_LEVEL), so below that gate there is nothing to
+        // recognize: no style is chosen and no bonus feat is granted.
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.level_gate.combat_style".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger combat style at ranger level {level}: correctly absent at \
+                 level {level} by PF1 CRB level gate; at-grant selection named but not \
+                 computed. Combat Style Feat is a {RANGER_COMBAT_STYLE_LEVEL}nd-level ranger feature: \
+                 the ranger selects one combat style (archery or two-weapon combat) and gains its \
+                 first bonus feat together at {RANGER_COMBAT_STYLE_LEVEL}nd level -- the style choice \
+                 and the bonus-feat grant are not separable into a level-1 decision plus a level-2 \
+                 grant. (Correction: an earlier version of this record, \
+                 `class_feature.ranger.combat_style.unsupported`, incorrectly described the style \
+                 choice as a level-1 decision distinct from the level-2 bonus-feat grant; PF1 Core \
+                 Rulebook grants both together at 2nd level.)"
+            ),
+        });
+    } else {
+        // Grounded (SD13-E5 level-2 widening): Combat Style Feat is finally grounded
+        // for real at the gate it was always named for. Both the STYLE CHOICE and its
+        // restricted-list BONUS FEAT are recognized as chosen-input identity only
+        // (+0 each), mirroring the Monk bonus-feat-choice idiom exactly: no style's
+        // or feat's own mechanical effect is computed anywhere in this codebase.
+        // Nothing is fabricated when the fixture carries no
+        // `choice:ranger_combat_style` selection -- mirroring the Favored Enemy
+        // choice-absence idiom below.
+        let style_selection = choice_selection(input, RANGER_COMBAT_STYLE_CHOICE_ID);
+        let style_name = style_selection.and_then(|selection| {
+            if selection == RANGER_COMBAT_STYLE_ARCHERY_SELECTION {
+                Some("Archery")
+            } else if selection == RANGER_COMBAT_STYLE_TWO_WEAPON_COMBAT_SELECTION {
+                Some("Two-Weapon Combat")
+            } else {
+                None
+            }
+        });
+
+        if let Some(selection) = style_selection {
+            let detail = if let Some(style) = style_name {
+                format!(
+                    "Ranger combat style selection at ranger level {level} \
+                     ({RANGER_COMBAT_STYLE_CHOICE_ID} -> {selection}): names {style}, one of the \
+                     two PF1 Core Rulebook combat styles (Archery or Two-Weapon Combat) granted \
+                     together with its first bonus feat at {RANGER_COMBAT_STYLE_LEVEL}nd level. \
+                     This is a recognition record of the choice slot only (+0): {style}'s own \
+                     bonus-feat mechanics are not grounded here, and no feat-selection or \
+                     feat-effect engine exists in this codebase"
+                )
+            } else {
+                format!(
+                    "Ranger combat style selection at ranger level {level} is present \
+                     ({RANGER_COMBAT_STYLE_CHOICE_ID} -> {selection}), but only the PF1 Core \
+                     Rulebook restricted pair (Archery, Two-Weapon Combat) is recognized on this \
+                     bounded seam; no style identity is grounded and no mechanical value is \
+                     fabricated (+0)"
+                )
+            };
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.combat_style_choice".to_owned(),
+                value: 0,
+                detail,
+            });
+
+            // The bonus feat is recognized only once the style itself is recognized,
+            // since the restricted feat list to validate against depends on which
+            // style was chosen -- mirroring how Cleric's domain powers are gated on
+            // the domain choice itself being recognized.
+            if let Some(style) = style_name
+                && let Some(feat_selection) =
+                    choice_selection(input, RANGER_COMBAT_STYLE_BONUS_FEAT_CHOICE_ID)
+            {
+                let recognized_feat_name = if style == "Archery" {
+                    if feat_selection == FAR_SHOT_FEAT_SELECTION {
+                        Some("Far Shot")
+                    } else if feat_selection == POINT_BLANK_SHOT_FEAT_SELECTION {
+                        Some("Point-Blank Shot")
+                    } else if feat_selection == PRECISE_SHOT_FEAT_SELECTION {
+                        Some("Precise Shot")
+                    } else if feat_selection == RAPID_SHOT_FEAT_SELECTION {
+                        Some("Rapid Shot")
+                    } else {
+                        None
+                    }
+                } else if feat_selection == DOUBLE_SLICE_FEAT_SELECTION {
+                    Some("Double Slice")
+                } else if feat_selection == IMPROVED_SHIELD_BASH_FEAT_SELECTION {
+                    Some("Improved Shield Bash")
+                } else if feat_selection == QUICK_DRAW_FEAT_SELECTION {
+                    Some("Quick Draw")
+                } else if feat_selection == TWO_WEAPON_FIGHTING_FEAT_SELECTION {
+                    Some("Two-Weapon Fighting")
+                } else {
+                    None
+                };
+
+                let detail = if let Some(feat_name) = recognized_feat_name {
+                    format!(
+                        "Ranger {style} combat style bonus feat at ranger level {level} \
+                         ({RANGER_COMBAT_STYLE_BONUS_FEAT_CHOICE_ID} -> {feat_selection}) \
+                         names {feat_name}, drawn from the PF1 Core Rulebook {style} combat \
+                         style's own {RANGER_COMBAT_STYLE_LEVEL}nd-level restricted feat list. \
+                         This is a recognition record of the choice slot only, so it carries \
+                         no fabricated mechanical value (+0): {feat_name}'s own mechanics (an \
+                         attack/damage-range bonus, a two-weapon penalty reduction, or similar, \
+                         depending on the feat) are not grounded here, and no such execution \
+                         engine exists in this codebase"
+                    )
+                } else {
+                    format!(
+                        "Ranger combat style bonus feat at ranger level {level} is present \
+                         ({RANGER_COMBAT_STYLE_BONUS_FEAT_CHOICE_ID} -> {feat_selection}), but \
+                         only the PF1 Core Rulebook {style} combat style's own \
+                         {RANGER_COMBAT_STYLE_LEVEL}nd-level restricted feat list is recognized \
+                         on this bounded seam; no restricted-list feat identity is grounded and \
+                         no mechanical value is fabricated (+0)"
+                    )
+                };
+                explanations.push(ComputationExplanation {
+                    id: "class_chassis.ranger.combat_style_bonus_feat_choice".to_owned(),
+                    value: 0,
+                    detail,
+                });
+            }
+        }
+    }
 
     // The third named F6 pillar, Track, is grounded for real: a bounded, flat
     // numeric Survival bonus with no execution engine behind it.
-    let track_bonus = (i16::from(HYBRID_BASELINE_LEVEL) / 2).max(1);
+    let track_bonus = (level_value / 2).max(1);
     explanations.push(ComputationExplanation {
         id: "class_chassis.ranger.track".to_owned(),
         value: track_bonus,
         detail: format!(
             "Ranger Track class feature: grants a bonus on Survival checks made to follow tracks \
              equal to max(ranger level / 2, 1) (PF1 Core Rulebook Track: +1/2 ranger level, minimum \
-             +1). At Ranger level {HYBRID_BASELINE_LEVEL} this bonus is \
-             max({HYBRID_BASELINE_LEVEL} / 2, 1) = {track_bonus}. This grounds only the flat numeric \
+             +1). At Ranger level {level} this bonus is \
+             max({level} / 2, 1) = {track_bonus}. This grounds only the flat numeric \
              Track bonus on Survival checks to follow tracks; it is not a tracking-check execution \
              engine and computes no full Survival check, no DC resolution, and no tracking narrative"
         ),
     });
 
     // The Favored Enemy FLAT surface is grounded for real (SD13-E5). PF1 Core
-    // Rulebook, Ranger level 1: the ranger selects one favored-enemy type and
-    // gains a +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and
-    // Survival checks against it, plus a +2 bonus on weapon attack and damage
-    // rolls against it (PF1 includes attack rolls, unlike D&D 3.5). Only the
-    // flat magnitudes are grounded: no target-type matching and no
-    // conditional-application engine decides whether any specific check or
-    // attack is actually made against the favored enemy.
+    // Rulebook: the ranger selects one favored-enemy type and gains a +2 bonus on
+    // Bluff, Knowledge, Perception, Sense Motive, and Survival checks against it,
+    // plus a +2 bonus on weapon attack and damage rolls against it (PF1 includes
+    // attack rolls, unlike D&D 3.5). PF1 Core Rulebook only increases this bonus at
+    // 4th ranger level and beyond, so it stays the flat +2 at both level 1 and level
+    // 2 via the same formula, not a new record. Only the flat magnitudes are
+    // grounded: no target-type matching and no conditional-application engine
+    // decides whether any specific check or attack is actually made against the
+    // favored enemy.
     if let Some(favored_enemy) = choice_selection(input, "choice:ranger_favored_enemy") {
         explanations.push(ComputationExplanation {
             id: "class_chassis.ranger.favored_enemy_choice".to_owned(),
             value: 0,
             detail: format!(
                 "Ranger Favored Enemy selection (choice:ranger_favored_enemy -> {favored_enemy}): \
-                 the level-{HYBRID_BASELINE_LEVEL} favored-enemy type chosen for this character is \
+                 the level-{level} favored-enemy type chosen for this character is \
                  {favored_enemy}. This is a bounded recognition record of the chosen enemy type \
                  only; the flat bonus magnitudes are grounded separately, and no target-type \
                  matching or conditional-application engine is implemented, so it carries no \
@@ -3181,7 +3341,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         value: favored_enemy_bonus,
         detail: format!(
             "Ranger Favored Enemy skill bonus (PF1 Core Rulebook, level \
-             {HYBRID_BASELINE_LEVEL}): +{favored_enemy_bonus} on Bluff, Knowledge, Perception, \
+             {level}): +{favored_enemy_bonus} on Bluff, Knowledge, Perception, \
              Sense Motive, and Survival checks against the chosen favored enemy. This grounds only \
              the flat +{favored_enemy_bonus} magnitude; no target-type matching and no \
              conditional-application engine is implemented, so whether any specific skill check is \
@@ -3195,7 +3355,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         value: favored_enemy_bonus,
         detail: format!(
             "Ranger Favored Enemy weapon attack/damage bonus (PF1 Core Rulebook, level \
-             {HYBRID_BASELINE_LEVEL}): +{favored_enemy_bonus} on weapon attack rolls AND weapon \
+             {level}): +{favored_enemy_bonus} on weapon attack rolls AND weapon \
              damage rolls against the chosen favored enemy — PF1 includes attack rolls, unlike the \
              damage-only D&D 3.5 favored enemy. This grounds only the flat \
              +{favored_enemy_bonus} magnitude; no target-type matching and no \
