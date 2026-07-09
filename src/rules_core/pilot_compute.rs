@@ -671,7 +671,12 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
 
-    explain_wizard_level1_prepared_spell_baseline(input, &mut explanations, &mut diagnostics);
+    explain_wizard_level1_prepared_spell_baseline(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
     explain_cleric_level1_spell_baseline(
         input,
@@ -3911,23 +3916,38 @@ fn wizard_has_canonical_specialization_selections(input: &CharacterInput) -> boo
 ///   recognition record of the Evocation specialization with Necromancy and
 ///   Transmutation opposed (+0), plus the specialist bonus slot as a flat count
 ///   only — one 1st-level Evocation-only bonus slot at level 1 (+1), with no
-///   cantrip-level bonus slot and no slot contents, and
-/// - emits two distinct claim-blocking diagnostics naming the school-powers /
-///   opposed-school-preparation-cost burden (intense spells, the force missile
-///   3 + Int-mod/day pool, and the two-prepared-slot cost for opposed-school
-///   spells) and the prepared spellbook / spells-prepared / spell-slot posture
-///   burden explicitly, rather than hiding behind a generic "unsupported caster"
-///   label.
+///   cantrip-level bonus slot and no slot contents,
+/// - grounds two of the Evocation school's own 1st-level school powers as flat
+///   numeric magnitudes (a further SD13-E5 slice), gated on the same canonical
+///   Evocation selection: Intense Spells' bonus-damage magnitude (half wizard
+///   level, minimum 1) and Force Missile's uses-per-day pool (3 + Intelligence
+///   modifier). Both were independently verified against the PF1 Core Rulebook
+///   Evocation School rule text (the legacy Paizo PRD mirror, cross-checked by a
+///   second independent source) before grounding — Force Missile in particular
+///   was treated with skepticism (a name that could plausibly have been confused
+///   with non-core material) but confirmed as a genuine 1st-level Evocation
+///   school power with exactly the "3 + Int-mod" pool the pre-existing blocker
+///   text already claimed. Neither grounding applies any bonus to an actual
+///   spell-damage roll, casts any force missile, resolves any automatic-hit
+///   targeting, or tracks any action economy or per-use consumption, and
+/// - emits two distinct claim-blocking diagnostics naming the school-power
+///   execution / opposed-school-preparation-cost burden (the still-unimplemented
+///   spell-damage application for Intense Spells, the still-unimplemented
+///   casting execution for Force Missile, and the two-prepared-slot cost for
+///   opposed-school spells) and the prepared spellbook / spells-prepared /
+///   spell-slot posture burden explicitly, rather than hiding behind a generic
+///   "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this
 /// seam keeps that blocked posture but makes the Wizard prepared spell-bearing
-/// identity, its grounded class-feature surfaces, and its two remaining named
+/// identity, its grounded class-feature surfaces, and its remaining named
 /// burdens legible on the runtime path. The matrix file row transition
 /// (Unverified/Observed → Blocked/Computed, then Blocked → Partial once Scribe
 /// Scroll is grounded) is recorded by this proof surface and applied to the
 /// in-source carrier directly (see `seeded_sd13_e1_f1_current_truth`).
 fn explain_wizard_level1_prepared_spell_baseline(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -4011,20 +4031,72 @@ fn explain_wizard_level1_prepared_spell_baseline(
                  high Intelligence are computed"
             ),
         });
+
+        // Grounded for real (SD13-E5): Intense Spells' flat bonus-damage magnitude.
+        // PF1 Core Rulebook Evocation School: whenever an evocation spell that deals
+        // hit point damage is cast, add half wizard level (minimum 1) to the damage.
+        // Verified against the legacy Paizo PRD mirror rather than trusted from
+        // memory or the pre-existing blocker-message claim. This is a flat,
+        // non-dice magnitude, so it grounds for real, mirroring the Cleric Touch of
+        // Good sacred-bonus idiom exactly.
+        let intense_spells_bonus_damage = (i16::from(WIZARD_BASELINE_LEVEL) / 2).max(1);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.wizard.intense_bonus_damage".to_owned(),
+            value: intense_spells_bonus_damage,
+            detail: format!(
+                "Wizard level {WIZARD_BASELINE_LEVEL} Evocation school power Intense Spells \
+                 bonus-damage magnitude (PF1 Core Rulebook Evocation School): whenever an \
+                 evocation spell that deals hit point damage is cast, add half wizard level \
+                 (minimum 1) to the damage. At Wizard level {WIZARD_BASELINE_LEVEL} this is \
+                 max({WIZARD_BASELINE_LEVEL} / 2, 1) = {intense_spells_bonus_damage}. This \
+                 grounds only the flat bonus-damage magnitude; it applies no bonus to any \
+                 actual spell-damage roll and implements no spell-damage-application engine"
+            ),
+        });
+
+        // Grounded for real (SD13-E5): Force Missile's flat uses-per-day pool. PF1
+        // Core Rulebook Evocation School: as a standard action, a specialist
+        // Evocation wizard may unleash a force missile (as magic missile, dealing
+        // 1d4 points of damage plus the Intense Spells bonus) that automatically
+        // strikes a foe, usable 3 + Intelligence modifier times per day. Verified
+        // against the legacy Paizo PRD mirror with deliberate skepticism (a name
+        // that could plausibly have been confused with non-core material), which
+        // confirmed the power is genuinely core and the "3 + Int-mod" pool the
+        // pre-existing blocker text already claimed is correct. Only the flat
+        // daily-use count is a non-dice formula; the 1d4 damage roll and the
+        // automatic-hit casting execution are not flat, so they stay unproven.
+        let force_missile_uses_per_day = (3 + ability_modifiers.intelligence).max(0);
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.wizard.force_missile_uses_per_day".to_owned(),
+            value: force_missile_uses_per_day,
+            detail: format!(
+                "Wizard level {WIZARD_BASELINE_LEVEL} Evocation school power Force Missile uses \
+                 per day (PF1 Core Rulebook Evocation School): 3 + Intelligence modifier, \
+                 floored at 0. At Intelligence modifier {} this is max(3 + {}, 0) = \
+                 {force_missile_uses_per_day}. This grounds only the flat daily-use count; it \
+                 casts no force missile, applies no 1d4 damage roll, resolves no automatic-hit \
+                 magic-missile-style targeting, and tracks no action economy or per-use \
+                 consumption",
+                ability_modifiers.intelligence, ability_modifiers.intelligence
+            ),
+        });
     }
 
-    // Still blocked (1/2): with the specialization choice itself grounded above, the
-    // claim-blocker narrows to exactly what stays unimplemented — the school powers
-    // and the opposed-school preparation cost.
+    // Still blocked (1/2): with the specialization choice and two Evocation school
+    // powers' flat magnitudes grounded above, the claim-blocker narrows to exactly
+    // what stays unimplemented: the school-power execution machinery and the
+    // opposed-school preparation cost.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported".to_owned(),
         message: format!(
-            "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school-powers and \
-             opposed-school preparation-cost burden: the Evocation school powers (intense \
-             spells, and the force missile pool of 3 + Int-mod uses per day) and the \
-             opposed-school preparation cost (each opposed-school spell occupies two prepared \
-             slots) are not implemented in this bounded prepared spell baseline, so no Wizard \
-             school-power or opposed-school support is claimed"
+            "Wizard level {WIZARD_BASELINE_LEVEL} remains blocked on its school-power execution \
+             and opposed-school preparation-cost burden: the Evocation intense spells flat \
+             bonus-damage magnitude and the force missile flat 3 + Int-mod uses-per-day pool are \
+             now grounded as flat numbers in dedicated explanation records, but no evocation \
+             spell-damage application, no force-missile casting execution (the 1d4 damage roll \
+             and automatic-hit targeting), and no opposed-school preparation cost (each \
+             opposed-school spell occupies two prepared slots) are implemented, so no full \
+             Wizard school-power or opposed-school support is claimed"
         ),
         claim_blocking: true,
     });
