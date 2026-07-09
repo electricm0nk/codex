@@ -1141,14 +1141,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // magnitude and Force Missile's uses-per-day pool, narrowing the
                 // class-feature blocker to the school-power execution machinery
                 // and the opposed-school preparation cost; the prepared spell
-                // posture burden remains entirely unproven.
+                // posture burden remains entirely unproven. A further SD13-E5
+                // slice grounds the foundational base-attack-bonus / base-save
+                // progression pillar (1/2 BAB, the same shape as Sorcerer; good
+                // Will only, poor Fortitude, poor Reflex), independently verified
+                // against the PF1 Core Rulebook Wizard class table.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1 prepared arcane spell baseline, with Scribe Scroll, \
-                            the school specialization choice, the specialist-bonus-slot flat \
-                            count, and the Intense Spells / Force Missile school-power flat \
-                            magnitudes grounded for real, and the school-power execution \
-                            machinery, the opposed-school-cost burden, and the prepared \
-                            spellbook / spell-slot posture burden still blocked",
+                            Wizard level-1 prepared arcane spell baseline, with base attack \
+                            bonus, base save progression, Scribe Scroll, the school \
+                            specialization choice, the specialist-bonus-slot flat count, and the \
+                            Intense Spells / Force Missile school-power flat magnitudes grounded \
+                            for real, and the school-power execution machinery, the \
+                            opposed-school-cost burden, and the prepared spellbook / spell-slot \
+                            posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1166,19 +1171,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     grounds two of the Evocation school's own 1st-level school powers as flat \
                     numeric magnitudes after independent verification against the legacy Paizo \
                     PRD mirror: Intense Spells' bonus-damage magnitude (half wizard level, \
-                    minimum 1) and Force Missile's uses-per-day pool (3 + Intelligence modifier). \
-                    The row is Partial, not Supported: neither power's execution machinery is \
-                    implemented (no evocation spell-damage application for Intense Spells, no \
-                    force-missile casting execution / 1d4 damage roll / automatic-hit targeting \
-                    for Force Missile), the opposed-school preparation cost (each opposed-school \
-                    spell occupies two prepared slots) remains named and unproven, and the \
-                    prepared spell posture burden (spellbook content, spells prepared per day, \
-                    spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
-                    still entirely unproven. No spell math is fabricated and no Wizard level 2+ \
-                    is proven",
+                    minimum 1) and Force Missile's uses-per-day pool (3 + Intelligence modifier), \
+                    AND a further SD13-E5 slice grounds the foundational base-attack-bonus / \
+                    base-save progression pillar that every other class row in this matrix \
+                    (Fighter, Barbarian, Monk, Rogue, Paladin, Druid, Cleric, Bard, Sorcerer) \
+                    already had and Wizard never had: base attack bonus (1/2 BAB, classlevel / 2 \
+                    — the same shape as Sorcerer, UNLIKE the 3/4 BAB shared by \
+                    Rogue/Monk/Druid/Cleric/Bard) and base save progression (good Will only, \
+                    poor Fortitude, poor Reflex), both verified against the PF1 Core Rulebook \
+                    Wizard class table (d20pfsrd and the legacy Paizo PRD mirror), reading the \
+                    raw level 1-6 table rows directly to disambiguate the 1/2-vs-3/4 fraction \
+                    since level 1 alone floors every fraction to +0, both grounded as standalone \
+                    explanation records not wired into compute_total_saves or \
+                    compute_combat_baseline. The row is Partial, not Supported: neither school \
+                    power's execution machinery is implemented (no evocation spell-damage \
+                    application for Intense Spells, no force-missile casting execution / 1d4 \
+                    damage roll / automatic-hit targeting for Force Missile), the opposed-school \
+                    preparation cost (each opposed-school spell occupies two prepared slots) \
+                    remains named and unproven, and the prepared spell posture burden (spellbook \
+                    content, spells prepared per day, spell slots per day, bonus slots from high \
+                    Intelligence, spell save DCs) is still entirely unproven. No spell math is \
+                    fabricated and no Wizard level 2+ is proven",
                 next_required_uplift: "SD13-E5 Wizard school-power execution and opposed-school \
                     preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-2+ progression",
+                    posture slice, then level-2+ progression (widening the now-grounded base \
+                    attack/base save formulas)",
             },
             // ----- Interaction rows (2) -----
             SupportStateRow {

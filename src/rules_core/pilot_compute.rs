@@ -4095,7 +4095,25 @@ fn wizard_has_canonical_specialization_selections(input: &CharacterInput) -> boo
 ///   school power with exactly the "3 + Int-mod" pool the pre-existing blocker
 ///   text already claimed. Neither grounding applies any bonus to an actual
 ///   spell-damage roll, casts any force missile, resolves any automatic-hit
-///   targeting, or tracks any action economy or per-use consumption, and
+///   targeting, or tracks any action economy or per-use consumption,
+/// - grounds the foundational base-attack-bonus / base-save progression pillar
+///   (a further SD13-E5 slice) that every other class row in this matrix
+///   (Fighter, Barbarian, Monk, Rogue, Paladin, Druid, Cleric, Bard, Sorcerer)
+///   already has and Wizard never had: base attack bonus (1/2 BAB, `classlevel
+///   / 2` — the same shape as Sorcerer, UNLIKE the 3/4 BAB shared by
+///   Rogue/Monk/Druid/Cleric/Bard) and base save progression (good Will only,
+///   poor Fortitude, poor Reflex). Both were verified against the PF1 Core
+///   Rulebook Wizard class table (d20pfsrd and the legacy Paizo PRD mirror),
+///   reading the raw level 1-6 rows directly (BAB +0/+1/+1/+2/+2/+3, Fort
+///   +0/+0/+1/+1/+1/+2, Ref +0/+0/+1/+1/+1/+2, Will +2/+3/+3/+4/+4/+5) rather
+///   than assumed from Sorcerer's matching shape; the level 4/5 BAB values (+2
+///   at both) disambiguate the 1/2-vs-3/4 fraction since level 1 alone floors
+///   every fraction to +0. Both pillars are grounded as flat, standalone
+///   `ComputationExplanation` records mirroring the exact "standalone, not
+///   wired into the integrated `PilotBaseChassisComputation`" idiom already
+///   used for every other class's own base-attack/base-save grounding: neither
+///   is wired into `base_attack_bonus`, `compute_total_saves`, or
+///   `compute_combat_baseline`, and
 /// - emits two distinct claim-blocking diagnostics naming the school-power
 ///   execution / opposed-school-preparation-cost burden (the still-unimplemented
 ///   spell-damage application for Intense Spells, the still-unimplemented
@@ -4140,6 +4158,70 @@ fn explain_wizard_level1_prepared_spell_baseline(
              per day, no spell save DCs, no bonus spell slots from a high Intelligence, no school \
              specialization mechanics, no opposed-school bookkeeping, and no specialty school \
              bonus, so it carries no fabricated mechanical value (+0)"
+        ),
+    });
+
+    // Grounded (SD13-E5): the foundational base-attack-bonus / base-save progression
+    // pillar that every other class row in this matrix (Fighter, Barbarian, Monk,
+    // Rogue, Paladin, Druid, Cleric, Bard, Sorcerer) already has and Wizard never had
+    // at all. Both formulas were verified against the PF1 Core Rulebook Wizard class
+    // table (d20pfsrd and the legacy Paizo PRD mirror) before writing this code,
+    // reading the raw level 1-6 table rows directly (BAB +0/+1/+1/+2/+2/+3, Fort
+    // +0/+0/+1/+1/+1/+2, Ref +0/+0/+1/+1/+1/+2, Will +2/+3/+3/+4/+4/+5) rather than
+    // assuming Wizard's shape merely because it resembles another arcane class: the
+    // level 4/5 BAB values (+2 at both) disambiguate the 1/2-vs-3/4 fraction (level 1
+    // alone floors every fraction to +0) and confirm Wizard is 1/2 BAB — the SAME
+    // shape as Sorcerer, UNLIKE the 3/4 BAB shared by Rogue/Monk/Druid/Cleric/Bard —
+    // and the raw Fort/Ref/Will columns independently confirm good Will only, poor
+    // Fortitude, poor Reflex (also matching Sorcerer's shape, confirmed rather than
+    // assumed).
+    let wizard_level_value = i16::from(WIZARD_BASELINE_LEVEL);
+
+    // Grounded (1/2): 1/2-BAB base-attack progression (classlevel / 2) — the same
+    // shape as Sorcerer, NOT the 3/4-BAB shape shared by Rogue/Monk/Druid/Cleric/Bard.
+    let wizard_base_attack_bonus = wizard_level_value / 2;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.wizard.base_attack_bonus".to_owned(),
+        value: wizard_base_attack_bonus,
+        detail: format!(
+            "Wizard level {WIZARD_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+             Wizard class table's 1/2-BAB progression — the same shape as Sorcerer, UNLIKE the \
+             3/4-BAB shape shared by Rogue/Monk/Druid/Cleric/Bard: classlevel / 2 = \
+             {wizard_base_attack_bonus}. This is a standalone explanation record; it is not \
+             wired into the integrated base_attack_bonus field or into compute_combat_baseline"
+        ),
+    });
+
+    // Grounded (2/2): base-save progression — poor Fortitude, poor Reflex, good Will,
+    // verified against the PF1 Core Rulebook Wizard class table (Fortitude +0, Reflex
+    // +0, Will +2 at level 1).
+    let wizard_good_save = wizard_level_value / 2 + 2;
+    let wizard_poor_save = wizard_level_value / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.wizard.base_save.fortitude".to_owned(),
+        value: wizard_poor_save,
+        detail: format!(
+            "Wizard level {WIZARD_BASELINE_LEVEL} base Fortitude save (poor save) from the PF1 \
+             Core Rulebook Wizard class table: classlevel/3 = {wizard_poor_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.wizard.base_save.reflex".to_owned(),
+        value: wizard_poor_save,
+        detail: format!(
+            "Wizard level {WIZARD_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 Core \
+             Rulebook Wizard class table: classlevel/3 = {wizard_poor_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.wizard.base_save.will".to_owned(),
+        value: wizard_good_save,
+        detail: format!(
+            "Wizard level {WIZARD_BASELINE_LEVEL} base Will save (good save) from the PF1 Core \
+             Rulebook Wizard class table: classlevel/2+2 = {wizard_good_save}. This is a \
+             standalone explanation record; it is not wired into compute_total_saves"
         ),
     });
 
