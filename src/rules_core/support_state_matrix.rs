@@ -296,7 +296,8 @@ const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs + \
     tests/sd13_rogue_level2_progression.rs + \
     tests/sd13_rogue_level3_progression.rs + \
-    tests/sd13_rogue_level4_progression.rs";
+    tests/sd13_rogue_level4_progression.rs + \
+    tests/sd13_rogue_level5_progression.rs";
 
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group
@@ -795,12 +796,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:rogue",
                 dimension: "bounded Rogue chassis progression: the deterministic Human Rogue \
-                            level-1/level-2/level-3/level-4 chassis identity, with all four \
-                            named pillars grounded across all four levels (base-attack, \
+                            level-1/level-2/level-3/level-4/level-5 chassis identity, with all \
+                            four named pillars grounded across all five levels (base-attack, \
                             base-save, sneak-attack die count, and trapfinding), Evasion \
                             grounded as a level-2 identity/recognition record, Trap Sense \
                             grounded as a level-3 flat-magnitude record, Uncanny Dodge grounded \
-                            as a level-4 identity/recognition record, and the check-execution / \
+                            as a level-4 identity/recognition record, the sneak-attack die count \
+                            genuinely rising to 3d6 at level 5, and the check-execution / \
                             rogue-talent / integration remainder still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -839,11 +841,18 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     0, non-fabricated): cannot be caught flat-footed, retains Dexterity bonus to \
                     AC even against an invisible attacker, still loses it if immobilized — \
                     naming the rule text with no flat-footed-state tracking, Armor Class \
-                    computation, or invisibility-detection engine behind it. The row is Partial, \
-                    not Supported: no rogue talent (a level-2+/4+ choice-list feature, and a \
-                    genuinely open-ended talent tree left named but unproven) is proven, no \
-                    Rogue level 5+ is proven, and no mechanical math is fabricated beyond these \
-                    grounded pillars. tests/ge06_pilot_total_saves.rs \
+                    computation, or invisibility-detection engine behind it. A further SD13-E5 \
+                    slice widens the gate to level 5 (verified independently against d20pfsrd \
+                    and legacy.aonprd.com: the Rogue class table's level-5 \"Special\" column \
+                    reads only \"Sneak attack +3d6,\" no other new class feature) and the \
+                    pre-existing sneak-attack die-count formula ((level + 1) / 2) genuinely \
+                    produces 3d6 at level 5, up from 2d6 at levels 3-4, via the same formula, \
+                    not a new record; Evasion, Trap Sense, and Uncanny Dodge all stay granted at \
+                    level 5, not re-derived. The row is Partial, not Supported: no rogue talent \
+                    (a level-2+/4+ choice-list feature, and a genuinely open-ended talent tree \
+                    left named but unproven) is proven, no Rogue level 6+ is proven, and no \
+                    mechanical math is fabricated beyond these grounded pillars. \
+                    tests/ge06_pilot_total_saves.rs \
                     (unsupported_chassis_blocks_total_saves) still claim-blocks class:rogue:1 \
                     unmodified: the class_chassis.rogue.base_attack_bonus / base_save.* / \
                     sneak_attack / trapfinding / class_feature.rogue.evasion / \
@@ -853,7 +862,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     still never computed for Rogue.",
                 next_required_uplift: "later SD13 slice wiring the grounded Rogue pillar \
                     records into the integrated pilot surface (the generic chassis diagnostics \
-                    still claim-block), then rogue talents and level-5+ progression",
+                    still claim-block), then rogue talents and level-6+ progression",
             },
             SupportStateRow {
                 row_id: "class.barbarian.bounded_progression",
