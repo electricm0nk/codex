@@ -1085,19 +1085,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // pinned as its merge-receipt obligation. A further SD13-E4 Wizard
                 // decomposition slice then grounds Scribe Scroll for real,
                 // promoting the row from Blocked to Partial (mirroring the Ranger
-                // Track promotion). The SD13-E5 Wizard specialization slice then
+                // Track promotion). A SD13-E5 Wizard specialization slice then
                 // grounds the flat surface of the school specialization choice
                 // (canonical Evocation specialist, Necromancy and Transmutation
-                // opposed) plus the specialist bonus slot count, narrowing the
-                // class-feature blocker to the school powers and the opposed-school
-                // preparation cost; the prepared spell posture burden remains
-                // entirely unproven.
+                // opposed) plus the specialist bonus slot count. A further SD13-E5
+                // slice independently verifies (legacy Paizo PRD mirror) and then
+                // grounds two of the Evocation school's own 1st-level school
+                // powers as flat numeric magnitudes: Intense Spells' bonus-damage
+                // magnitude and Force Missile's uses-per-day pool, narrowing the
+                // class-feature blocker to the school-power execution machinery
+                // and the opposed-school preparation cost; the prepared spell
+                // posture burden remains entirely unproven.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Wizard level-1 prepared arcane spell baseline, with Scribe Scroll, \
-                            the school specialization choice, and the specialist-bonus-slot flat \
-                            count grounded for real, and the school-powers / opposed-school-cost \
-                            burden and the prepared spellbook / spell-slot posture burden still \
-                            blocked",
+                            the school specialization choice, the specialist-bonus-slot flat \
+                            count, and the Intense Spells / Force Missile school-power flat \
+                            magnitudes grounded for real, and the school-power execution \
+                            machinery, the opposed-school-cost burden, and the prepared \
+                            spellbook / spell-slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1107,19 +1112,25 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     recognized on the compute seam, a later SD13-E4 Wizard decomposition slice \
                     grounds Scribe Scroll (the free, specialization-independent bonus feat every \
                     1st-level Wizard is granted, letting them create scrolls of spells they know) \
-                    for real, AND the SD13-E5 specialization slice grounds the school \
-                    specialization choice (the canonical Evocation specialist with Necromancy and \
-                    Transmutation opposed) as a recognition record plus the specialist bonus slot \
-                    as a flat count only (one 1st-level Evocation-only bonus slot at level 1, no \
-                    cantrip-level bonus slot, no slot contents). The row is Partial, not \
-                    Supported: the school powers and opposed-school preparation-cost burden (the \
-                    Evocation intense spells and force missile 3 + Int-mod/day powers, and the \
-                    two-prepared-slot cost for opposed-school spells) remains named and unproven, \
-                    and the prepared spell posture burden (spellbook content, spells prepared per \
-                    day, spell slots per day, bonus slots from high Intelligence, spell save DCs) \
-                    is still entirely unproven. No spell math is fabricated and no Wizard level \
-                    2+ is proven",
-                next_required_uplift: "SD13-E5 Wizard school-powers and opposed-school \
+                    for real, a SD13-E5 specialization slice grounds the school specialization \
+                    choice (the canonical Evocation specialist with Necromancy and Transmutation \
+                    opposed) as a recognition record plus the specialist bonus slot as a flat \
+                    count only (one 1st-level Evocation-only bonus slot at level 1, no \
+                    cantrip-level bonus slot, no slot contents), AND a further SD13-E5 slice \
+                    grounds two of the Evocation school's own 1st-level school powers as flat \
+                    numeric magnitudes after independent verification against the legacy Paizo \
+                    PRD mirror: Intense Spells' bonus-damage magnitude (half wizard level, \
+                    minimum 1) and Force Missile's uses-per-day pool (3 + Intelligence modifier). \
+                    The row is Partial, not Supported: neither power's execution machinery is \
+                    implemented (no evocation spell-damage application for Intense Spells, no \
+                    force-missile casting execution / 1d4 damage roll / automatic-hit targeting \
+                    for Force Missile), the opposed-school preparation cost (each opposed-school \
+                    spell occupies two prepared slots) remains named and unproven, and the \
+                    prepared spell posture burden (spellbook content, spells prepared per day, \
+                    spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
+                    still entirely unproven. No spell math is fabricated and no Wizard level 2+ \
+                    is proven",
+                next_required_uplift: "SD13-E5 Wizard school-power execution and opposed-school \
                     preparation-cost grounding slice, then the prepared spellbook / spell-slot \
                     posture slice, then level-2+ progression",
             },
