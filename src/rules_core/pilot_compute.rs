@@ -426,8 +426,15 @@ const BARD_CLASS_ID: &str = "class:bard";
 /// pillar at all (the Bard spells-per-day table's own 2nd-level spell column does
 /// not turn non-blank until 4th level, verified independently, and this row's
 /// still-unproven list already names the entire spontaneous spell posture as
-/// ungrounded), so no analogous slot-count doubling applies here.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 3;
+/// ungrounded), so no analogous slot-count doubling applies here. A later SD13-E5
+/// slice widens this gate to level 4, verified independently against the PF1 Core
+/// Rulebook Bard class table (d20pfsrd and legacy.aonprd.com): the level-4
+/// "Special" column is BLANK (no new class feature is gained at 4th level; the
+/// next new feature, Lore Master, comes at 5th level), so that widening extends
+/// every already-grounded formula (base attack, base saves, Bardic Knowledge,
+/// Bardic Performance rounds/day, Fascinate DC/count) and keeps Well-Versed and
+/// Inspire Competence granted, without introducing any new pillar.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 4;
 /// PF1 Core Rulebook level gate at which Bard gains Well-Versed (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Versatile performance, well-versed" as the Bard 2nd-level special feature
@@ -6884,6 +6891,14 @@ fn supported_bard_level(input: &CharacterInput) -> Option<u8> {
 ///   total, and the fully-ungrounded Countersong / Distraction performances) and the
 ///   spontaneous known-spell / slot posture burden explicitly, rather than hiding
 ///   behind a generic "unsupported caster" label.
+///
+/// A later SD13-E5 slice widens the level-range gate to level 4, extending every
+/// formula above (base attack, base saves, Bardic Knowledge, Bardic Performance
+/// rounds/day, Fascinate DC/count) via the same level-valued formulas, and keeping
+/// Well-Versed and Inspire Competence granted, without re-deriving any of them.
+/// Verified independently against the PF1 Core Rulebook Bard class table
+/// (d20pfsrd and legacy.aonprd.com): the level-4 "Special" column is BLANK, so no
+/// new pillar is grounded at level 4.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Bard spell-bearing identity, the grounded

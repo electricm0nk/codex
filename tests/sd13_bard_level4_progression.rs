@@ -1,0 +1,396 @@
+//! SD13-E5 Bard level-4 progression grounding proof.
+//!
+//! Widens the accepted Bard level-1/level-2/level-3 spontaneous arcane
+//! spell-bearing baseline (`tests/sd13_bard_level1_spell_baseline.rs`,
+//! `tests/sd13_bard_base_attack_and_saves.rs`, `tests/sd13_bard_fascinate_dc.rs`,
+//! `tests/sd13_bard_level2_progression.rs`, `tests/sd13_bard_level3_progression.rs`)
+//! to Bard level 4, mirroring the
+//! Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Druid/Sorcerer/Wizard
+//! level-range-gate idiom (`supported_bard_level` is generalized from `1..=3` to
+//! `1..=4` via `MAX_SUPPORTED_BARD_LEVEL = 4`). Both PF1 CRB primary sources
+//! (d20pfsrd and legacy.aonprd.com Bard class table) were read directly before
+//! writing any code or test:
+//!
+//! - level 4 base attack bonus is +3 (`4 * 3 / 4`), base Reflex/Will are +4
+//!   (good, `4/2+2`), base Fortitude is +1 (poor, `4/3`) — confirmed by the same
+//!   formulas already grounded at levels 1-3, not re-derived.
+//! - Bardic Knowledge rises to `max(4/2, 1) = 2` at level 4 (up from 1 at
+//!   level 3), confirmed via the same formula, not a new record.
+//! - Bardic Performance rounds per day continues to scale: `4 + Charisma
+//!   modifier + 2 * (level - 1)` = 4 + 2 + 6 = 12 on the fixture's Charisma 15,
+//!   up from 10 at level 3, confirmed via the same formula, not a new record.
+//! - Inspire Courage's flat magnitude stays +1 at level 4: the PF1 Core
+//!   Rulebook Inspire Courage bonus first increases at bard level 5 (to +2),
+//!   confirmed via the same formula/constant, not a new record.
+//! - the Fascinate flat Will-save DC (`10 + level/2 + CHA modifier`) and the
+//!   flat affected-creature count (`1 + (level-1)/3`) both already take bard
+//!   level as an input variable, so both extend correctly to level 4 with no
+//!   re-derivation: DC 14 (10 + 2 + 2) and count 2 (1 + 1) on the fixture.
+//! - Well-Versed (the 2nd-level Bard class feature) and Inspire Competence
+//!   (the 3rd-level Bard class feature) both stay granted at level 4, not
+//!   re-derived — the same bounded identity/magnitude records already
+//!   grounded at levels 2 and 3.
+//! - the Bard class table's level-4 "Special" column is BLANK — verified
+//!   independently against both primary sources (d20pfsrd and
+//!   legacy.aonprd.com): neither lists any new class feature at 4th level (the
+//!   next new feature, Lore Master, is not gained until 5th level). This
+//!   slice therefore grounds no new pillar at level 4 beyond the arithmetic
+//!   extension above.
+//!
+//! It deliberately does not touch the performance-state/action-economy
+//! engine, Countersong, Distraction, Versatile Performance, or the
+//! spontaneous spell burden (all stay named-but-unproven, unchanged from
+//! level 1/2/3), and it does not ground Bard level 5+. It also preserves the
+//! accepted Bard level-1/level-2/level-3 truth (unchanged), the Fighter
+//! negative control, and the multiclass negative control.
+
+use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::pilot_compute::{
+    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
+};
+use codex::rules_core::support_state_matrix::{
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+};
+
+const BARD_LEVEL3_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_bard_level3_sd13_deterministic_input.txt");
+
+const BARD_LEVEL4_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_bard_level4_sd13_deterministic_input.txt");
+
+const FIGHTER_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
+
+const WELL_VERSED_ID: &str = "class_feature.bard.well_versed";
+const INSPIRE_COMPETENCE_ID: &str = "class_feature.bard.inspire_competence";
+
+fn load(fixture: &str) -> CharacterInput {
+    let result = load_character_input_fixture(fixture);
+    assert!(
+        result.diagnostics.is_empty(),
+        "fixture should load cleanly: {:?}",
+        result.diagnostics
+    );
+    result
+        .character_input
+        .expect("valid fixture should produce a character input record")
+}
+
+fn explanation<'a>(
+    computation: &'a PilotBaseChassisComputation,
+    id: &str,
+) -> &'a ComputationExplanation {
+    computation
+        .explanations
+        .iter()
+        .find(|e| e.id == id)
+        .unwrap_or_else(|| {
+            panic!(
+                "expected explanation id '{id}', got {:?}",
+                computation.explanations
+            )
+        })
+}
+
+// ----- Base attack bonus at level 4 -----
+
+#[test]
+fn bard_level4_base_attack_bonus_is_grounded_by_the_same_formula() {
+    let input = load(BARD_LEVEL4_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let base_attack = explanation(&computation, "class_chassis.bard.base_attack_bonus");
+    assert_eq!(
+        base_attack.value, 3,
+        "Bard level 4 3/4-BAB progression (4 * 3 / 4) must equal 3: {}",
+        base_attack.detail
+    );
+}
+
+// ----- Base saves at level 4 (good Reflex/Will, poor Fortitude) -----
+
+#[test]
+fn bard_level4_base_saves_are_grounded_by_the_same_formulas() {
+    let input = load(BARD_LEVEL4_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let fortitude = explanation(&computation, "class_chassis.bard.base_save.fortitude");
+    assert_eq!(fortitude.value, 1, "Bard level 4 poor Fortitude (4/3) must equal 1");
+
+    let reflex = explanation(&computation, "class_chassis.bard.base_save.reflex");
+    assert_eq!(reflex.value, 4, "Bard level 4 good Reflex (4/2+2) must equal 4");
+
+    let will = explanation(&computation, "class_chassis.bard.base_save.will");
+    assert_eq!(will.value, 4, "Bard level 4 good Will (4/2+2) must equal 4");
+}
+
+// ----- Bardic Knowledge rises to max(level/2, 1) = 2 at level 4 -----
+
+#[test]
+fn bard_level4_bardic_knowledge_rises_to_two() {
+    let input = load(BARD_LEVEL4_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let knowledge = explanation(&computation, "class_chassis.bard.bardic_knowledge");
+    assert_eq!(
+        knowledge.value, 2,
+        "Bard level 4 Bardic Knowledge (max(4/2, 1)) must equal 2: {}",
+        knowledge.detail
+    );
+}
+
+// ----- Bardic Performance rounds per day keeps scaling with level -----
+
+#[test]
+fn bard_level4_bardic_performance_rounds_per_day_keeps_scaling() {
+    let input = load(BARD_LEVEL4_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // PF1 Core Rulebook Bardic Performance: 4 + CHA modifier at level 1, plus 2
+    // additional rounds per day at each level after 1st. Fixture CHA 15 -> +2
+    // modifier. At level 4: 4 + 2 + 2 * (4 - 1) = 12.
+    let rounds = explanation(
+        &computation,
+        "class_chassis.bard.bardic_performance_rounds_per_day",
+    );
+    assert_eq!(
+        rounds.value, 12,
+        "Bard level 4 bardic performance rounds per day must equal 4 + CHA + 2*(level-1) \
+         = 4 + 2 + 6 = 12: {}",
+        rounds.detail
+    );
+}
+
+// ----- Inspire Courage stays +1 at level 4 (first increases at level 5) -----
+
+#[test]
+fn bard_level4_inspire_courage_stays_flat_plus_one() {
+    let input = load(BARD_LEVEL4_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let inspire_courage = explanation(&computation, "class_chassis.bard.inspire_courage_bonus");
+    assert_eq!(
+        inspire_courage.value, 1,
+        "Bard level 4 Inspire Courage magnitude must stay +1 (PF1: first increases at level \
+         5): {}",
+        inspire_courage.detail
+    );
+}
+
+// ----- Fascinate DC and affected-creature count extend to level 4 -----
+
+#[test]
+fn bard_level4_fascinate_dc_and_affected_creatures_extend_by_the_same_formulas() {
+    let input = load(BARD_LEVEL4_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // Fixture CHA 15 -> +2 modifier. DC = 10 + 4/2 + 2 = 14.
+    let dc = explanation(&computation, "class_chassis.bard.fascinate_dc");
+    assert_eq!(
+        dc.value, 14,
+        "Bard level 4 Fascinate DC must equal 10 + (4/2) + 2 = 14: {}",
+        dc.detail
+    );
+
+    // Affected creatures = 1 + (4-1)/3 = 2.
+    let count = explanation(&computation, "class_chassis.bard.fascinate_affected_creatures");
+    assert_eq!(
+        count.value, 2,
+        "Bard level 4 Fascinate affected-creature count must equal 1 + (4-1)/3 = 2: {}",
+        count.detail
+    );
+}
+
+// ----- Well-Versed and Inspire Competence both stay granted at level 4, not re-derived -----
+
+#[test]
+fn bard_level4_keeps_well_versed_and_inspire_competence_grounded() {
+    let input = load(BARD_LEVEL4_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let well_versed = explanation(&computation, WELL_VERSED_ID);
+    assert_eq!(
+        well_versed.value, 4,
+        "Well-Versed must stay the flat +4 bonus at level 4, not re-derived: {}",
+        well_versed.detail
+    );
+
+    let inspire_competence = explanation(&computation, INSPIRE_COMPETENCE_ID);
+    assert_eq!(
+        inspire_competence.value, 2,
+        "Inspire Competence must stay the flat +2 bonus at level 4, not re-derived: {}",
+        inspire_competence.detail
+    );
+}
+
+// ----- No new class feature is fabricated at level 4 (PF1 CRB "Special" column is blank) -----
+
+#[test]
+fn bard_level4_does_not_fabricate_a_new_class_feature() {
+    let input = load(BARD_LEVEL4_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    // Both primary sources confirm the Bard class table's level-4 "Special"
+    // column is blank (no new feature until Lore Master at level 5), so the
+    // only bard-namespaced explanation ids must be the same identifiers
+    // already grounded at level 1-3, none of them new.
+    let known_bard_ids = [
+        "class_chassis.spell_baseline.bard",
+        "class_chassis.bard.base_attack_bonus",
+        "class_chassis.bard.base_save.fortitude",
+        "class_chassis.bard.base_save.reflex",
+        "class_chassis.bard.base_save.will",
+        "class_chassis.bard.bardic_knowledge",
+        "class_chassis.bard.bardic_performance_rounds_per_day",
+        "class_chassis.bard.inspire_courage_bonus",
+        "class_chassis.bard.fascinate_dc",
+        "class_chassis.bard.fascinate_affected_creatures",
+        WELL_VERSED_ID,
+        INSPIRE_COMPETENCE_ID,
+    ];
+    assert!(
+        computation
+            .explanations
+            .iter()
+            .filter(|e| e.id.starts_with("class_chassis.bard.")
+                || e.id.starts_with("class_feature.bard.")
+                || e.id == "class_chassis.spell_baseline.bard")
+            .all(|e| known_bard_ids.contains(&e.id.as_str())),
+        "Bard level 4 must not gain any bard-namespaced explanation id beyond the \
+         already-grounded pillars (PF1 CRB level-4 Special column is blank): {:?}",
+        computation.explanations
+    );
+}
+
+// ----- The two existing burden diagnostics still fire at level 4 -----
+
+#[test]
+fn bard_level4_still_claim_blocks_performance_execution_and_spontaneous_spell_burdens() {
+    let input = load(BARD_LEVEL4_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        computation.diagnostics.iter().any(|d| d.id
+            == "class_feature.bard.bardic_performance_execution.unsupported"
+            && d.claim_blocking),
+        "level-4 Bard must still claim-block on the bardic performance-execution burden: {:?}",
+        computation.diagnostics
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.id
+            == "class_spell.bard.spontaneous_known_and_per_day.unsupported"
+            && d.claim_blocking),
+        "level-4 Bard must still claim-block on the spontaneous spell posture burden: {:?}",
+        computation.diagnostics
+    );
+}
+
+// ----- The accepted Bard level-3 truth is unaffected -----
+
+#[test]
+fn bard_level3_truth_is_unchanged_by_this_widening() {
+    let input = load(BARD_LEVEL3_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let base_attack = explanation(&computation, "class_chassis.bard.base_attack_bonus");
+    assert_eq!(base_attack.value, 2, "Bard level 3 base attack bonus must stay 2");
+
+    let rounds = explanation(
+        &computation,
+        "class_chassis.bard.bardic_performance_rounds_per_day",
+    );
+    assert_eq!(rounds.value, 10, "Bard level 3 bardic performance rounds per day must stay 10");
+
+    let knowledge = explanation(&computation, "class_chassis.bard.bardic_knowledge");
+    assert_eq!(knowledge.value, 1, "Bard level 3 Bardic Knowledge must stay 1");
+}
+
+// ----- Negative control: level 5 stays unrecognized by this slice -----
+
+#[test]
+fn bard_level_5_is_not_promoted_by_this_slice() {
+    let level_5 = BARD_LEVEL4_FIXTURE.replace("class:bard:4", "class:bard:5");
+    let input = load(&level_5);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.bard.")
+                || e.id == "class_chassis.spell_baseline.bard"
+                || e.id == WELL_VERSED_ID
+                || e.id == INSPIRE_COMPETENCE_ID),
+        "level-5 Bard must not gain any bounded bard chassis explanation: {:?}",
+        computation.explanations
+    );
+}
+
+// ----- Negative control: the bard path must not leak onto other classes -----
+
+#[test]
+fn fighter_does_not_gain_bard_level4_recognition() {
+    let fighter = load(FIGHTER_FIXTURE);
+    let fighter_computation = compute_pilot_base_chassis(&fighter);
+    assert!(
+        !fighter_computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.bard.")
+                || e.id == "class_chassis.spell_baseline.bard"
+                || e.id == WELL_VERSED_ID
+                || e.id == INSPIRE_COMPETENCE_ID),
+        "the Fighter chassis must not surface any bard-namespaced explanation: {:?}",
+        fighter_computation.explanations
+    );
+}
+
+// ----- Negative control: multiclass Bard is not promoted -----
+
+#[test]
+fn multiclass_bard_level4_is_not_promoted_by_this_slice() {
+    let multiclass = BARD_LEVEL4_FIXTURE.replace(
+        "class_level=class:bard:4",
+        "class_level=class:bard:4\nclass_level=class:fighter:1",
+    );
+    let input = load(&multiclass);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.bard.")
+                || e.id == "class_chassis.spell_baseline.bard"
+                || e.id == WELL_VERSED_ID
+                || e.id == INSPIRE_COMPETENCE_ID),
+        "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
+        computation.explanations
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "multiclass Bard must stay claim-blocked in this slice"
+    );
+}
+
+// ----- Control plane: the matrix note names the level-4 widening -----
+
+#[test]
+fn matrix_bard_row_names_level_4_widening() {
+    let matrix = seeded_sd13_e1_f1_current_truth();
+    let bard = matrix
+        .row("class.bard.progression_and_spell_burden")
+        .expect("bard progression_and_spell_burden row must exist");
+
+    assert_eq!(bard.support_state, SupportState::Partial);
+    assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(bard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
+    assert!(
+        bard.grounding_ref.contains("sd13_bard_level4_progression"),
+        "bard row must cite the live SD13-E5 level-4 proof surface: {}",
+        bard.grounding_ref
+    );
+    let note = bard.blocker_or_lossiness_note;
+    assert!(
+        note.contains("level 4") || note.contains("level-4"),
+        "bard partial note must name the level-4 widening: {note}"
+    );
+}

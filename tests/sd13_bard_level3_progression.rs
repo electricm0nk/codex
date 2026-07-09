@@ -325,22 +325,29 @@ fn bard_level2_truth_is_unchanged_by_this_widening() {
     assert_eq!(rounds.value, 8, "Bard level 2 bardic performance rounds per day must stay 8");
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Bard level 4 was later widened into the supported tranche -----
 
 #[test]
-fn bard_level_4_is_not_promoted_by_this_slice() {
+fn bard_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_bard_level4_progression.rs) widened the level-range gate to
+    // level 4 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Druid/
+    // Sorcerer/Wizard level-range gate idiom) and extended every formula below;
+    // this negative control is superseded, not violated — pin the new truth
+    // here too so this file stays internally consistent.
     let level_4 = BARD_LEVEL3_FIXTURE.replace("class:bard:3", "class:bard:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id == "class_chassis.spell_baseline.bard"
                 || e.id == WELL_VERSED_ID
                 || e.id == INSPIRE_COMPETENCE_ID),
-        "level-4 Bard must not gain any bounded bard chassis explanation: {:?}",
+        "level-4 Bard is supported since the SD13-E5 level-4 slice: {:?}",
         computation.explanations
     );
 }
