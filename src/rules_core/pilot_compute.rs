@@ -421,7 +421,23 @@ const CLERIC_DOMAIN_SPELL_SLOT_COUNT: i16 = 1;
 // the deterministic nature-bond choice recognition (SD13-E5) are grounded; the
 // chosen bond's execution and the whole spell posture stay claim-blocked.
 const DRUID_CLASS_ID: &str = "class:druid";
-const DRUID_BASELINE_LEVEL: u8 = 1;
+/// SD13-E5 Druid level-range gate, mirroring the Fighter `supported_fighter_level` /
+/// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
+/// `supported_cleric_level` / Bard `supported_bard_level` idiom. Verified against the
+/// PF1 Core Rulebook Druid class table (d20pfsrd and legacy.aonprd.com) before
+/// widening: level 2 base attack bonus is +1, base saves are +3/+0/+3
+/// (Fortitude/Reflex/Will), so every level-1 base-attack/base-save/Wild-Empathy
+/// formula this seam already grounds extends to level 2 without re-derivation; Nature
+/// Sense and the nature-bond choice recognition are level-independent and unaffected;
+/// the class table's level-2 "Special" column reads "Woodland stride" (a new,
+/// flat/identity-shaped class feature grounded separately below).
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 2;
+/// PF1 Core Rulebook level gate at which Druid gains Woodland Stride (2nd level,
+/// verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Woodland stride" as the Druid 2nd-level special
+/// feature entry).
+const DRUID_WOODLAND_STRIDE_LEVEL: u8 = 2;
 // PF1 Core Rulebook Nature Sense: a druid gains a +2 bonus on Knowledge (nature)
 // and Survival checks. Flat and level-independent.
 const DRUID_NATURE_SENSE_BONUS: i16 = 2;
@@ -4864,27 +4880,42 @@ fn explain_cleric_level1_spell_baseline(
     });
 }
 
-/// Return `true` when the chosen input is exactly a single-class Druid at the bounded
-/// prepared divine spell baseline level (1). Returns `false` for any other class, a
-/// multiclass mix, or a level-2+ Druid this slice deliberately does not recognize —
-/// each of which stays blocked exactly as before.
-fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
-    matches!(
-        input.chosen.class_levels.as_slice(),
+/// The bounded Druid milestone level this decomposition surface grounds, if any.
+/// Returns the single Druid level when the chosen input is exactly a single-class
+/// Druid at one of the supported milestone levels (1 or 2). Returns `None` for no
+/// Druid, a non-Druid class, a multiclass mix, or any level-3+ Druid this slice
+/// deliberately does not recognize — each of which stays claim-blocked exactly as
+/// before. Mirrors the Fighter `supported_fighter_level` / Paladin
+/// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
+/// `supported_cleric_level` / Bard `supported_bard_level` level-range gate idiom.
+fn supported_druid_level(input: &CharacterInput) -> Option<u8> {
+    match input.chosen.class_levels.as_slice() {
         [class_level]
             if class_level.class_id == DRUID_CLASS_ID
-                && class_level.level == DRUID_BASELINE_LEVEL
-    )
+                && (1..=MAX_SUPPORTED_DRUID_LEVEL).contains(&class_level.level) =>
+        {
+            Some(class_level.level)
+        }
+        _ => None,
+    }
 }
 
 /// Surface direct SD13-E4/SD13-E5 runtime evidence for the deterministic Human Druid
-/// level-1 prepared divine spell-bearing baseline, while keeping it explicitly
-/// claim-blocked on its remaining burdens. The SD13-E4 Wild Empathy slice grounds
-/// Wild Empathy for real; the SD13-E5 Nature Sense / nature-bond-choice slice grounds
-/// Nature Sense for real and recognizes the deterministic nature-bond selection; a
-/// later SD13-E5 slice grounds the foundational base-attack-bonus / base-save
-/// progression pillar that every other class row in this matrix already has and Druid
-/// never had; the chosen bond's execution and the prepared divine spell posture
+/// level-1/level-2 prepared divine spell-bearing baseline, while keeping it
+/// explicitly claim-blocked on its remaining burdens. The SD13-E4 Wild Empathy slice
+/// grounds Wild Empathy for real; the SD13-E5 Nature Sense / nature-bond-choice slice
+/// grounds Nature Sense for real and recognizes the deterministic nature-bond
+/// selection; a later SD13-E5 slice grounds the foundational base-attack-bonus /
+/// base-save progression pillar that every other class row in this matrix already
+/// has and Druid never had; a further SD13-E5 slice widens the level-1-only gate
+/// (`supported_druid_level`, 1..=2) and extends every one of the formulas below to
+/// level 2 via the same formula, without re-derivation, verified independently
+/// against the PF1 Core Rulebook Druid class table (d20pfsrd and legacy.aonprd.com):
+/// level 2 base attack bonus is +1, base saves are +3/+0/+3 (Fortitude/Reflex/Will).
+/// That same slice also grounds Woodland Stride, the class table's level-2 "Special"
+/// column entry, as a bounded identity record (flat/identity-shaped, no numeric
+/// formula). The chosen bond's execution and the prepared divine spell posture
 /// burden remain claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
@@ -4892,7 +4923,7 @@ fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
 /// share spells, no domain math), no spellbook posture, no spells prepared, no
 /// spontaneous summon nature's ally conversion, no spell slots per day, no spell save
 /// DCs, and no bonus spell slots from a high Wisdom. It only:
-/// - leaves one recognition explanation so the `class:druid:1` identity is acknowledged
+/// - leaves one recognition explanation so the `class:druid:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
 /// - leaves one grounded base-attack-bonus explanation (PF1 Core Rulebook Druid class
@@ -4909,38 +4940,42 @@ fn is_single_class_druid_level1(input: &CharacterInput) -> bool {
 /// - when the deterministic `choice:druid_nature_bond -> bond:animal_companion`
 ///   selection is present, leaves one +0 recognition record acknowledging that
 ///   selection without executing it (no record is fabricated when the selection is
-///   absent), and
+///   absent),
+/// - leaves one Woodland Stride explanation — a correct level-gate absence below
+///   level 2, and a bounded identity/recognition record (value 0) at or above it,
+///   mirroring exactly how Rogue's/Monk's own Evasion was grounded, with no
+///   terrain-detection engine and no movement-execution engine implemented, and
 /// - emits two distinct claim-blocking diagnostics naming the animal-companion
 ///   execution burden and the prepared divine spell posture burden explicitly,
 ///   rather than hiding behind a generic "unsupported caster" label.
 ///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Druid prepared divine spell-bearing
-/// identity, its grounded base-attack/base-save/Wild Empathy/Nature Sense values, its
-/// recognized nature-bond choice, and its remaining named burdens legible on the
-/// runtime path.
+/// identity, its grounded base-attack/base-save/Wild Empathy/Nature Sense/Woodland
+/// Stride values, its recognized nature-bond choice, and its remaining named burdens
+/// legible on the runtime path.
 fn explain_druid_level1_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
-    if !is_single_class_druid_level1(input) {
+    let Some(level) = supported_druid_level(input) else {
         return;
-    }
+    };
     if input.chosen.race_id != HUMAN_RACE_ID {
         return;
     }
 
-    // Direct runtime evidence: recognize the deterministic Human Druid level-1
-    // prepared divine spell-bearing identity. This is a recognition record only; it
-    // fabricates no nature-bond power math and no spell math.
+    // Direct runtime evidence: recognize the deterministic Human Druid level-1/
+    // level-2 prepared divine spell-bearing identity. This is a recognition record
+    // only; it fabricates no nature-bond power math and no spell math.
     explanations.push(ComputationExplanation {
         id: "class_chassis.spell_baseline.druid".to_owned(),
         value: 0,
         detail: format!(
-            "Recognized deterministic Human Druid level {DRUID_BASELINE_LEVEL} prepared divine \
-             spell-bearing baseline: the {DRUID_CLASS_ID}:{DRUID_BASELINE_LEVEL} class identity is \
+            "Recognized deterministic Human Druid level {level} prepared divine \
+             spell-bearing baseline: the {DRUID_CLASS_ID}:{level} class identity is \
              acknowledged as a prepared divine spell-bearing class on the rules-core seam rather than \
              an undocumented packet placeholder. This is a bounded recognition record only; the Wild \
              Empathy and Nature Sense values and the nature-bond choice recognition are grounded \
@@ -4958,8 +4993,11 @@ fn explain_druid_level1_spell_baseline(
     // Core Rulebook Druid class table (d20pfsrd and the legacy Paizo PRD mirror)
     // before writing this code, cross-checking the level 4/5 base-attack-bonus
     // values to disambiguate the exact fraction (level 1 alone floors both a 1/2
-    // and a 3/4 progression to the same +0, so it cannot disambiguate on its own).
-    let level_value = i16::from(DRUID_BASELINE_LEVEL);
+    // and a 3/4 progression to the same +0, so it cannot disambiguate on its own). A
+    // later SD13-E5 slice widens this level-1-only gate to level 2; the formula is
+    // extended, not re-derived (level 2 base attack +1, all base saves +3/+0/+3,
+    // confirmed against the raw class table).
+    let level_value = i16::from(level);
 
     // Grounded (1/2): 3/4-BAB base-attack progression, the same formula shape as
     // Rogue/Monk (classlevel * 3 / 4). No PCGen .lst file exists for the Druid
@@ -4970,7 +5008,7 @@ fn explain_druid_level1_spell_baseline(
         id: "class_chassis.druid.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "Druid level {DRUID_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook \
+            "Druid level {level} base attack bonus from the PF1 Core Rulebook \
              Druid class table's 3/4-BAB progression, the same formula shape as Rogue/Monk: \
              classlevel * 3 / 4 = {base_attack_bonus}. This is a standalone explanation record; \
              it is not wired into the integrated base_attack_bonus field or into \
@@ -4980,14 +5018,14 @@ fn explain_druid_level1_spell_baseline(
 
     // Grounded (2/2): base-save progression — good Fortitude, poor Reflex, good
     // Will, verified against the PF1 Core Rulebook Druid class table (Fortitude
-    // +2, Reflex +0, Will +2 at level 1).
+    // +2, Reflex +0, Will +2 at level 1; +3/+0/+3 at level 2).
     let good_save = level_value / 2 + 2;
     let poor_save = level_value / 3;
     explanations.push(ComputationExplanation {
         id: "class_chassis.druid.base_save.fortitude".to_owned(),
         value: good_save,
         detail: format!(
-            "Druid level {DRUID_BASELINE_LEVEL} base Fortitude save (good save) from the PF1 \
+            "Druid level {level} base Fortitude save (good save) from the PF1 \
              Core Rulebook Druid class table: classlevel/2+2 = {good_save}. This is a standalone \
              explanation record; it is not wired into compute_total_saves"
         ),
@@ -4996,7 +5034,7 @@ fn explain_druid_level1_spell_baseline(
         id: "class_chassis.druid.base_save.reflex".to_owned(),
         value: poor_save,
         detail: format!(
-            "Druid level {DRUID_BASELINE_LEVEL} base Reflex save (poor save) from the PF1 Core \
+            "Druid level {level} base Reflex save (poor save) from the PF1 Core \
              Rulebook Druid class table: classlevel/3 = {poor_save}. This is a standalone \
              explanation record; it is not wired into compute_total_saves"
         ),
@@ -5005,7 +5043,7 @@ fn explain_druid_level1_spell_baseline(
         id: "class_chassis.druid.base_save.will".to_owned(),
         value: good_save,
         detail: format!(
-            "Druid level {DRUID_BASELINE_LEVEL} base Will save (good save) from the PF1 Core \
+            "Druid level {level} base Will save (good save) from the PF1 Core \
              Rulebook Druid class table: classlevel/2+2 = {good_save}. This is a standalone \
              explanation record; it is not wired into compute_total_saves"
         ),
@@ -5015,16 +5053,18 @@ fn explain_druid_level1_spell_baseline(
     // improve the attitude of an animal, resolved like a Diplomacy check: the
     // druid rolls 1d20 and adds her druid level and her Charisma modifier. Only
     // the flat level + Cha-modifier bonus is grounded here; no d20 roll and no
-    // Diplomacy-check/attitude-outcome execution engine is computed.
-    let wild_empathy_modifier = i16::from(DRUID_BASELINE_LEVEL) + ability_modifiers.charisma;
+    // Diplomacy-check/attitude-outcome execution engine is computed. This formula
+    // was already level-generic (it takes `level` as a value, not a hardcoded
+    // baseline), so it extends correctly to level 2 without re-derivation.
+    let wild_empathy_modifier = level_value + ability_modifiers.charisma;
     explanations.push(ComputationExplanation {
         id: "class_chassis.druid.wild_empathy".to_owned(),
         value: wild_empathy_modifier,
         detail: format!(
             "Druid Wild Empathy modifier (PF1 Core Rulebook): a druid uses Wild Empathy to improve \
              an animal's attitude as if making a Diplomacy check, rolling 1d20 and adding her druid \
-             level and her Charisma modifier. At Druid level {DRUID_BASELINE_LEVEL} with a Charisma \
-             modifier of {}, the modifier is {DRUID_BASELINE_LEVEL} + {} = {wild_empathy_modifier}. \
+             level and her Charisma modifier. At Druid level {level} with a Charisma \
+             modifier of {}, the modifier is {level} + {} = {wild_empathy_modifier}. \
              This grounds only the flat druid-level + Charisma-modifier bonus; it computes no d20 \
              roll, no Diplomacy-check resolution, and no attitude-improvement outcome",
             ability_modifiers.charisma, ability_modifiers.charisma
@@ -5034,7 +5074,8 @@ fn explain_druid_level1_spell_baseline(
     // Grounded: Nature Sense (PF1 Core Rulebook). A druid gains a +2 bonus on
     // Knowledge (nature) and Survival checks. Flat and level-independent; grounded
     // as a standalone record only — it is not wired into any skill-check total and
-    // resolves no Knowledge (nature) or Survival check.
+    // resolves no Knowledge (nature) or Survival check. Confirmed unchanged at
+    // level 2 via the same formula, not a new record.
     explanations.push(ComputationExplanation {
         id: "class_chassis.druid.nature_sense".to_owned(),
         value: DRUID_NATURE_SENSE_BONUS,
@@ -5051,7 +5092,8 @@ fn explain_druid_level1_spell_baseline(
     // `choice:druid_nature_bond -> bond:animal_companion`; when that selection is
     // present it is acknowledged as chosen input, carrying no fabricated bond
     // execution. When the selection is absent (the desktop composer threads no
-    // nature-bond slot) no record is fabricated.
+    // nature-bond slot) no record is fabricated. This recognition is not
+    // level-gated; it still fires at level 2 for the same fixture selection.
     let animal_companion_chosen = choice_selection(input, DRUID_NATURE_BOND_CHOICE_ID)
         == Some(DRUID_NATURE_BOND_ANIMAL_COMPANION_SELECTION_ID);
     if animal_companion_chosen {
@@ -5070,6 +5112,42 @@ fn explain_druid_level1_spell_baseline(
         });
     }
 
+    // Grounded (SD13-E5): Woodland Stride, a 2nd-level Druid class feature verified
+    // independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Woodland stride" as the Druid 2nd-level special
+    // feature entry). Below the level-2 gate this is a correct PF1 Core Rulebook
+    // level-gate absence (value 0); at or above it, it is a bounded
+    // identity/recognition record only (value 0, non-fabricated) naming the rule
+    // text — mirroring exactly how Rogue's/Monk's own Evasion was grounded, without
+    // folding into any actual terrain-detection engine or movement-execution
+    // engine, neither of which exists in this codebase.
+    if level < DRUID_WOODLAND_STRIDE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.woodland_stride".to_owned(),
+            value: 0,
+            detail: format!(
+                "Druid Woodland Stride at druid level {level}: correctly absent at level {level} \
+                 by PF1 Core Rulebook level gate; the at-grant rule is named but not computed. \
+                 Woodland Stride is a 2nd-level druid class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.woodland_stride".to_owned(),
+            value: 0,
+            detail: format!(
+                "Druid Woodland Stride granted at druid level {level} (PF1 Core Rulebook, \
+                 2nd-level druid class feature): starting at 2nd level, a druid may move through \
+                 any sort of undergrowth (natural thorns, briars, overgrown areas, and similar \
+                 terrain) at her normal speed and without taking damage or suffering any other \
+                 impairment; magically manipulated terrain still affects her. This is a bounded \
+                 identity/recognition record only (value 0, non-fabricated): no terrain-detection \
+                 engine and no movement-execution engine exists anywhere in this codebase to apply \
+                 it, so this grounds no actual movement or terrain-impediment resolution"
+            ),
+        });
+    }
+
     // Still blocked (1/2): name the animal companion execution burden explicitly. Wild
     // Empathy, Nature Sense, and (when recognized) the nature-bond choice recognition
     // are grounded above and no longer named here as blockers. The message must not
@@ -5080,7 +5158,7 @@ fn explain_druid_level1_spell_baseline(
         id: "class_feature.druid.animal_companion.unsupported".to_owned(),
         message: if animal_companion_chosen {
             format!(
-                "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its animal companion \
+                "Druid level {level} remains blocked on its animal companion \
                  execution burden: the chosen nature bond (an animal companion) is recognized as \
                  input only — the companion's stat block, its advancement, and its link and share \
                  spells abilities are not implemented in this bounded prepared divine spell \
@@ -5088,7 +5166,7 @@ fn explain_druid_level1_spell_baseline(
             )
         } else {
             format!(
-                "Druid level {DRUID_BASELINE_LEVEL} remains blocked on its animal companion \
+                "Druid level {level} remains blocked on its animal companion \
                  execution burden: no nature bond selection is recognized as chosen input in \
                  this bounded prepared divine spell baseline, and even when an animal companion \
                  bond is chosen its stat block, its advancement, and its link and share spells \
