@@ -334,23 +334,38 @@ fn druid_level3_truth_is_unchanged_by_this_widening() {
     assert_eq!(wild_empathy.value, 4, "Druid level 3 wild empathy modifier must stay 4");
 }
 
-// ----- Negative control: level 5 stays unrecognized by this slice -----
+// ----- Druid level 5 was later widened into the supported tranche -----
 
 #[test]
-fn druid_level_5_is_not_promoted_by_this_slice() {
+fn druid_level_5_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 5 stayed unrecognized. A later
+    // SD13-E5 slice (tests/sd13_druid_level5_progression.rs) widened the
+    // level-range gate to level 5 and extended the base-attack/base-save/Wild
+    // Empathy/Nature Sense formulas, kept Woodland Stride/Trackless Step/Resist
+    // Nature's Lure granted, and confirmed the level-5 "Special" column is
+    // genuinely blank; this negative control is superseded, not violated — pin
+    // the new truth here too so this file stays internally consistent. The
+    // equivalent level-6 negative control now lives in the new
+    // tests/sd13_druid_level5_progression.rs file where the coverage moved.
     let level_5 = DRUID_LEVEL4_FIXTURE.replace("class:druid:4", "class:druid:5");
     let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id == "class_chassis.spell_baseline.druid"
-                || e.id == DRUID_WOODLAND_STRIDE_ID
-                || e.id == DRUID_TRACKLESS_STEP_ID
-                || e.id == DRUID_RESIST_NATURES_LURE_ID),
-        "level-5 Druid must not gain any bounded druid chassis explanation: {:?}",
+            .any(|e| e.id == "class_chassis.druid.base_attack_bonus"),
+        "level-5 Druid is now recognized by a later slice and must gain the bounded druid \
+         chassis explanation: {:?}",
+        computation.explanations
+    );
+    assert!(
+        computation
+            .explanations
+            .iter()
+            .any(|e| e.id == DRUID_RESIST_NATURES_LURE_ID),
+        "level-5 Druid is now recognized by a later slice and must keep Resist Nature's \
+         Lure grounded: {:?}",
         computation.explanations
     );
 }
