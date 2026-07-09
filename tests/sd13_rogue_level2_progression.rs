@@ -288,24 +288,29 @@ fn rogue_level_3_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Negative control: level 4 was later widened into the supported tranche -----
 
 #[test]
-fn rogue_level_4_is_not_promoted_by_this_slice() {
+fn rogue_level_4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 stayed unrecognized. A
+    // later SD13-E5 slice (tests/sd13_rogue_level4_progression.rs) widened
+    // the level-range gate to level 4 (mirroring the Fighter/Paladin
+    // level-range gate idiom) and grounded Uncanny Dodge; this negative
+    // control is superseded, not violated — pin the new truth here too so
+    // this file stays internally consistent. The frontier is tracked going
+    // forward by tests/sd13_rogue_level3_progression.rs and
+    // tests/sd13_rogue_level4_progression.rs.
     let level_4 = ROGUE_LEVEL2_FIXTURE.replace("class:rogue:2", "class:rogue:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")),
-        "level-4 Rogue must not gain any bounded rogue chassis explanation: {:?}",
+        has_explanation(&computation, "class_chassis.rogue.base_attack_bonus"),
+        "level-4 Rogue is supported since the SD13-E5 level-4 slice: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, ROGUE_EVASION_ID),
-        "level-4 Rogue must not gain the Evasion explanation from this bounded slice"
+        has_explanation(&computation, ROGUE_EVASION_ID),
+        "level-4 Rogue must keep the Evasion explanation grounded at level 2"
     );
 }
 
