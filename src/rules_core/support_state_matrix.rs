@@ -790,12 +790,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Bard level-1 spell baseline, with Bardic Knowledge, the flat \
-                            Bardic Performance surface (rounds per day, inspire courage \
-                            magnitude), and the flat Fascinate DC / affected-creature-count \
-                            formulas grounded for real and the bardic performance-execution \
-                            burden (including Countersong and Distraction) and the spontaneous \
-                            known-spell / slot posture burden still blocked",
+                            Bard level-1 spell baseline, with base attack bonus, base save \
+                            progression, Bardic Knowledge, the flat Bardic Performance surface \
+                            (rounds per day, inspire courage magnitude), and the flat Fascinate \
+                            DC / affected-creature-count formulas grounded for real and the \
+                            bardic performance-execution burden (including Countersong and \
+                            Distraction) and the spontaneous known-spell / slot posture burden \
+                            still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -815,10 +816,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     against the fixture) and the fascinate flat affected-creature count (1 at \
                     1st level, plus one more for every three bard levels beyond 1st, i.e. 1 at \
                     level 1) — both verified against the PF1 Core Rulebook Fascinate rule text, \
-                    not assumed from memory. The row is Partial, not Supported: the \
-                    performance-state engine (start/maintain action economy, round \
-                    tracking/consumption of the grounded budget, no application of the grounded \
-                    fascinate DC or count to any actual Will save or targeting) is not \
+                    not assumed from memory, AND a further SD13-E5 slice grounds the \
+                    foundational base-attack-bonus / base-save progression pillar that every \
+                    other class row in this matrix (Fighter, Barbarian, Monk, Rogue, Paladin, \
+                    Druid, Cleric) already had and Bard never had: base attack bonus (3/4 BAB, \
+                    classlevel * 3 / 4, the same formula shape as Rogue/Monk/Druid/Cleric) and \
+                    base save progression (good Reflex, good Will, poor Fortitude — the same \
+                    save shape as Rogue, confirmed independently against the raw PF1 Core \
+                    Rulebook Bard class table rather than assumed from Rogue's own pattern), \
+                    both grounded as standalone explanation records not wired into \
+                    compute_total_saves or compute_combat_baseline. The row is Partial, not \
+                    Supported: the performance-state engine (start/maintain action economy, \
+                    round tracking/consumption of the grounded budget, no application of the \
+                    grounded fascinate DC or count to any actual Will save or targeting) is not \
                     implemented, the two remaining level-1 performances (countersong, \
                     distraction) are not grounded at all — both require an opposed \
                     Perform-check-vs-effect substitution resolution, not a flat number — and the \
@@ -830,7 +840,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     (start/maintain action economy, round tracking, application of the grounded \
                     Inspire Courage / Fascinate magnitudes, Countersong / Distraction opposed \
                     Perform-check-vs-effect grounding), then the spontaneous spell-slot burden, \
-                    then level-2+ progression",
+                    then level-2+ progression (widening the now-grounded base attack/base save \
+                    formulas)",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",

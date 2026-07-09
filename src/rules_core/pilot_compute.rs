@@ -4809,9 +4809,10 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
 
 /// Surface direct SD13-E4-F7/SD13-E4/SD13-E5 runtime evidence for the deterministic
 /// Human Bard level-1 spontaneous arcane spell-bearing baseline: one recognition
-/// record, five grounded chassis-class-feature pillars (Bardic Knowledge, the
-/// Bardic Performance rounds-per-day budget, the Inspire Courage flat level-1
-/// magnitude, and the Fascinate flat Will-save DC and affected-creature-count
+/// record, the foundational base-attack-bonus / base-save progression pillar (four
+/// standalone records), five grounded chassis-class-feature pillars (Bardic
+/// Knowledge, the Bardic Performance rounds-per-day budget, the Inspire Courage flat
+/// level-1 magnitude, and the Fascinate flat Will-save DC and affected-creature-count
 /// formulas), and two remaining named claim-blocking burdens (the bardic
 /// performance-execution engine, the spontaneous spell posture).
 ///
@@ -4825,6 +4826,18 @@ fn is_single_class_bard_level1(input: &CharacterInput) -> bool {
 /// - leaves one recognition explanation so the `class:bard:1` identity is acknowledged
 ///   as a spontaneous arcane spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
+/// - grounds the foundational base-attack-bonus / base-save progression pillar that
+///   every other class row in this matrix (Fighter, Barbarian, Monk, Rogue, Paladin,
+///   Druid, Cleric) already has and Bard never had: base attack bonus (3/4 BAB,
+///   `classlevel * 3 / 4`, the same formula shape as Rogue/Monk/Druid/Cleric) and
+///   base save progression (good Reflex, good Will, poor Fortitude — the same save
+///   shape as Rogue, confirmed independently against the raw PF1 Core Rulebook Bard
+///   class table rather than assumed from Rogue's own pattern). Both are grounded as
+///   flat, standalone `ComputationExplanation` records, mirroring the exact
+///   "standalone, not wired into the integrated `PilotBaseChassisComputation`" idiom
+///   already used for every other class's own base-attack/base-save grounding: neither
+///   is wired into `base_attack_bonus`, `compute_total_saves`, or
+///   `compute_combat_baseline`,
 /// - grounds the Bardic Knowledge chassis-class-feature pillar for real: PF1 Core
 ///   Rulebook Bardic Knowledge is a flat competence bonus on Knowledge checks equal
 ///   to half the bard's level (minimum 1), also letting the bard make any Knowledge
@@ -4886,6 +4899,71 @@ fn explain_bard_level1_spell_baseline(
              fascinate resolution) and no spell math (spells known, spells per day, spell DCs, \
              bonus spells, or prepared posture), so it carries no fabricated mechanical value \
              (+0)"
+        ),
+    });
+
+    // Grounded: the foundational base-attack-bonus / base-save progression pillar.
+    // Unlike every other class row in this matrix (Fighter, Barbarian, Monk, Rogue,
+    // Paladin, Druid, Cleric all already ground this pillar), Bard had never had it
+    // grounded at all until this SD13-E5 slice. Both formulas were verified against
+    // the PF1 Core Rulebook Bard class table (d20pfsrd and the legacy Paizo PRD
+    // mirror) before writing this code, reading the raw level 1-6 table rows
+    // directly (BAB +0/+1/+2/+3/+3/+4, Fort +0/+0/+1/+1/+1/+2, Ref +2/+3/+3/+4/+4/+5,
+    // Will +2/+3/+3/+4/+4/+5) rather than trusting memory or assuming Bard's save
+    // shape merely because it resembles Rogue's: the level 4/5 BAB values (+3 at
+    // both) disambiguate the 3/4-vs-1/2 fraction (level 1 alone floors both to +0),
+    // and the raw Fort/Ref/Will columns independently confirm good Reflex, good
+    // Will, poor Fortitude — the same save shape as Rogue, but checked against
+    // Bard's own table rather than assumed from Rogue's.
+    let level_value = i16::from(BARD_BASELINE_LEVEL);
+
+    // Grounded (1/2): 3/4-BAB base-attack progression, the same formula shape as
+    // Rogue/Monk/Druid/Cleric (classlevel * 3 / 4). No PCGen .lst file exists for
+    // the Bard class in this repo, so the formula cites the PF1 Core Rulebook Bard
+    // class table directly.
+    let base_attack_bonus = level_value * 3 / 4;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "Bard level {BARD_BASELINE_LEVEL} base attack bonus from the PF1 Core Rulebook Bard \
+             class table's 3/4-BAB progression, the same formula shape as Rogue/Monk/Druid/ \
+             Cleric: classlevel * 3 / 4 = {base_attack_bonus}. This is a standalone explanation \
+             record; it is not wired into the integrated base_attack_bonus field or into \
+             compute_combat_baseline"
+        ),
+    });
+
+    // Grounded (2/2): base-save progression — poor Fortitude, good Reflex, good
+    // Will, verified against the PF1 Core Rulebook Bard class table (Fortitude
+    // +0, Reflex +2, Will +2 at level 1).
+    let good_save = level_value / 2 + 2;
+    let poor_save = level_value / 3;
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.base_save.fortitude".to_owned(),
+        value: poor_save,
+        detail: format!(
+            "Bard level {BARD_BASELINE_LEVEL} base Fortitude save (poor save) from the PF1 Core \
+             Rulebook Bard class table: classlevel/3 = {poor_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.base_save.reflex".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Bard level {BARD_BASELINE_LEVEL} base Reflex save (good save) from the PF1 Core \
+             Rulebook Bard class table: classlevel/2+2 = {good_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.base_save.will".to_owned(),
+        value: good_save,
+        detail: format!(
+            "Bard level {BARD_BASELINE_LEVEL} base Will save (good save) from the PF1 Core \
+             Rulebook Bard class table: classlevel/2+2 = {good_save}. This is a standalone \
+             explanation record; it is not wired into compute_total_saves"
         ),
     });
 
