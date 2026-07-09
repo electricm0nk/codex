@@ -453,25 +453,35 @@ fn fighter_barbarian_paladin_ranger_do_not_gain_monk_recognition() {
 }
 
 #[test]
-fn monk_level_2_is_not_promoted_by_this_slice() {
+fn monk_level_2_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 2 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_monk_level2_progression.rs) widened the level-1-only gate to
+    // level 2 (mirroring the Fighter/Paladin/Rogue level-range gate idiom) and
+    // grounded Evasion; this negative control is superseded, not violated —
+    // pin the new truth here too so this file stays internally consistent.
     let level_2 = MONK_FIXTURE.replace("class:monk:1", "class:monk:2");
     let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, "class_chassis.monk.bounded_progression"),
-        "level-2 Monk must not gain the bounded level-1 martial recognition record"
+        has_explanation(&computation, "class_chassis.monk.bounded_progression"),
+        "level-2 Monk is supported since the SD13-E5 level-2 slice: {:?}",
+        computation.explanations
     );
     assert!(
         !computation
             .diagnostics
             .iter()
-            .any(|d| d.id.starts_with("class_feature.monk.")),
-        "level-2 Monk must not surface the level-1 monk burden diagnostics: {:?}",
+            .any(|d| d.id.starts_with("class_feature.monk.")
+                && d.id != "class_feature.monk.bounded_progression.bonus_feat.unsupported"),
+        "level-2 Monk must not surface any named monk burden diagnostic beyond the still-blocked \
+         bonus-feat-mechanics one (Evasion is grounded as an explanation record, not a \
+         diagnostic): {:?}",
         computation.diagnostics
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-2 Monk must stay claim-blocked in this slice"
+        "level-2 Monk must still be claim-blocked by the generic chassis diagnostics"
     );
 }
 
