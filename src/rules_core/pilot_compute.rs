@@ -789,7 +789,27 @@ const BARD_CLASS_ID: &str = "class:bard";
 /// this codebase), so it is deliberately left named-but-unproven, mirroring
 /// the Suggestion / Countersong / Distraction / Dirge-of-Doom precedent
 /// exactly -- no explanation record is fabricated for it.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 9;
+///
+/// A further SD13-E5 slice widens the gate to level 10 — the tranche ceiling
+/// (verified independently against d20pfsrd and legacy.aonprd.com): level 10
+/// base attack genuinely rises to +7 (10 * 3 / 4) and good Reflex/Will both
+/// genuinely rise to +7 (10 / 2 + 2), while poor Fortitude stays +3 (10 / 3,
+/// a coincidence); the performance rounds pool genuinely rises to 24, Bardic
+/// Knowledge genuinely rises to 5 (max(10/2, 1)), the Fascinate DC genuinely
+/// rises to 17 and its affected-creature count genuinely rises to 4
+/// (1 + (10-1)/3); Inspire Courage/Competence and Lore Master stay at their
+/// tiers (next rises at 11th); the level-10 "Special" column reads
+/// "Jack-of-all-trades, versatile performance": Jack-of-All-Trades' 10th-level
+/// piece (use any skill untrained) is grounded as a +0 identity/recognition
+/// record (BARD_JACK_OF_ALL_TRADES_LEVEL), mirroring the Woodland Stride /
+/// Purity of Body idiom, while the repeat Versatile Performance grant stays
+/// named-but-unproven exactly like the 2nd/6th-level grants before it.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 10;
+/// PF1 Core Rulebook level gate at which Bard gains Jack-of-All-Trades (10th
+/// level, verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Jack-of-all-trades, versatile performance" as
+/// the Bard 10th-level "Special" column entry).
+const BARD_JACK_OF_ALL_TRADES_LEVEL: u8 = 10;
 /// PF1 Core Rulebook level gate at which Bard gains Well-Versed (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Versatile performance, well-versed" as the Bard 2nd-level special feature
@@ -9374,6 +9394,36 @@ fn explain_bard_level1_spell_baseline(
                  at-will resolution-mode toggle, not a countable resource), and neither the \
                  take-10 nor the take-20 mechanic is actually executed against any Knowledge \
                  check, since no skill-check-resolution engine exists anywhere in this codebase"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5 level-10 slice): Jack-of-All-Trades' 10th-level piece,
+    // verified independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Jack-of-all-trades, versatile performance" as
+    // the Bard 10th-level "Special" entry). At 10th level the bard "can use any
+    // skill, even if the skill normally requires him to be trained" — a
+    // genuinely flat, no-choice, no-magnitude grant, grounded as a bounded +0
+    // identity/recognition record mirroring the Woodland Stride / Purity of
+    // Body idiom: no trained-only skill gating exists anywhere in this
+    // codebase's skill computation to lift, so no untrained-use effect is
+    // fabricated. The feature's OWN later tiers (16th: all skills become class
+    // skills; 19th: take 10 on any skill check) land beyond this tranche's
+    // level-10 ceiling and are not grounded or named as records. Below the
+    // level-10 gate no record is pushed at all.
+    if level >= BARD_JACK_OF_ALL_TRADES_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.jack_of_all_trades".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bard Jack-of-All-Trades granted at bard level {level} (PF1 Core Rulebook, \
+                 10th-level bard class feature): the bard can use any skill, even if the \
+                 skill normally requires him to be trained. This is a bounded \
+                 identity/recognition record only (value 0, non-fabricated): no trained-only \
+                 skill gating exists anywhere in this codebase's bounded skill computation to \
+                 lift, so this grounds no actual untrained-skill-use effect; the feature's \
+                 16th- and 19th-level tiers land beyond this tranche's level-10 ceiling and \
+                 are not grounded"
             ),
         });
     }

@@ -238,20 +238,20 @@ fn bard_level8_truth_is_unchanged_by_this_slice() {
     assert_eq!(fortitude.value, 2, "Bard level 8 poor Fortitude must stay 2");
 }
 
-// ----- Negative control: level 10 stays unrecognized by this slice -----
+// ----- Level 10 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn bard_level_10_is_not_promoted_by_this_slice() {
+fn bard_level_10_was_later_widened_into_the_supported_tranche() {
     let level_10 = BARD_LEVEL9_FIXTURE.replace("class:bard:9", "class:bard:10");
     let input = load(&level_10);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id == "class_chassis.spell_baseline.bard"),
-        "level-10 Bard must not gain any bounded bard chassis explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.bard.")),
+        "level-10 Bard is now recognized by the later level-10 widening slice \
+         (tests/sd13_bard_level10_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }
