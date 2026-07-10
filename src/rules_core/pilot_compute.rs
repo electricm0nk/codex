@@ -970,7 +970,20 @@ const MONK_CLASS_ID: &str = "class:monk";
 /// SD13-E5 Monk level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` idiom.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 8;
+// A further SD13-E5 slice widens the gate to level 9 (verified independently
+// against d20pfsrd and legacy.aonprd.com): level 9 base attack bonus stays +6
+// (9 * 3 / 4) and all three good saves stay +6 (9 / 2 + 2), integer-division
+// coincidences; the unarmed strike die stays 1d10 (the band spans levels
+// 8-11); the Flurry flat attack modifier genuinely rises to +7 (level - 2)
+// while the attack count stays 3 (the next count change lands at 15th); the
+// ki pool and Slow Fall's 40-ft reach both stay at their level-8 values (the
+// next Slow Fall reach increase lands at 10th); the level-9 "Special" column
+// reads "Improved evasion" — a genuinely NEW named entry, grounded by this
+// slice as a +0 identity/recognition record only
+// (MONK_IMPROVED_EVASION_LEVEL), mirroring the Evasion / Rogue
+// Improved-Uncanny-Dodge precedent; no damage-resolution engine exists here,
+// so no damage math is fabricated from it.
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 9;
 // PF1 Core Rulebook level gate at which Monk gains Wholeness of Body (7th
 // level, verified independently against two primary sources: d20pfsrd and
 // legacy.aonprd.com both name Wholeness of Body as the Monk 7th-level
@@ -1002,6 +1015,11 @@ const MAX_SUPPORTED_MONK_LEVEL: u8 = 8;
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Bonus feat, evasion" as the Monk 2nd-level special feature entry).
 const MONK_EVASION_LEVEL: u8 = 2;
+/// PF1 Core Rulebook level gate at which Monk gains Improved Evasion (9th level,
+/// verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Improved evasion" as the Monk 9th-level
+/// "Special" column entry).
+const MONK_IMPROVED_EVASION_LEVEL: u8 = 9;
 /// PF1 Core Rulebook level gate at which Monk gains Still Mind (3rd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Fast movement, maneuver training, still mind" as the Monk 3rd-level
@@ -5559,8 +5577,8 @@ fn explain_barbarian_level1_chassis(
 
 /// The bounded Monk milestone level this decomposition surface grounds, if any.
 /// Returns the single Monk level when the chosen input is exactly a single-class
-/// Monk at one of the supported milestone levels (1, 2, 3, 4, 5, 6, or 7). Returns
-/// `None` for no Monk, a non-Monk class, a multiclass mix, or any level-8+ Monk
+/// Monk at one of the supported milestone levels (1 through 9). Returns
+/// `None` for no Monk, a non-Monk class, a multiclass mix, or any level-10+ Monk
 /// this slice deliberately does not recognize — each of which stays
 /// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level`
 /// / Paladin `supported_paladin_level` / Rogue `supported_rogue_level` /
@@ -5906,6 +5924,35 @@ fn explain_monk_level1_chassis(
                  non-fabricated): no saving-throw-resolution engine and no damage-resolution \
                  engine exists anywhere in this codebase to apply it, so this grounds no actual \
                  damage reduction on any save outcome"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5 level-9 slice): Improved Evasion, the 9th-level Monk
+    // class feature verified independently against two primary PF1 sources
+    // (d20pfsrd and legacy.aonprd.com both list "Improved evasion" as the Monk
+    // 9th-level "Special" entry). An upgrade of the 2nd-level Evasion identity:
+    // the monk still takes no damage on a successful Reflex save, and
+    // henceforth takes only HALF damage on a failed save. Grounded as a bounded
+    // +0 identity/recognition record only below/at the gate, mirroring exactly
+    // how Evasion itself and Rogue's Improved Uncanny Dodge were grounded — no
+    // saving-throw-resolution or damage-resolution engine exists in this
+    // codebase, so no damage math is fabricated from the record. Below the
+    // level-9 gate no record is pushed at all (the level-8 slice's own negative
+    // control pins that absence).
+    if level >= MONK_IMPROVED_EVASION_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.monk.improved_evasion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Improved Evasion granted at monk level {level} (PF1 Core Rulebook, \
+                 9th-level monk class feature): the monk's Evasion improves — she still takes \
+                 no damage on a successful Reflex saving throw against attacks, and henceforth \
+                 takes only half damage on a failed save. This is a bounded \
+                 identity/recognition record only (value 0, non-fabricated): no \
+                 saving-throw-resolution engine and no damage-resolution engine exists anywhere \
+                 in this codebase to apply it, so this grounds no actual damage reduction on \
+                 any save outcome"
             ),
         });
     }
