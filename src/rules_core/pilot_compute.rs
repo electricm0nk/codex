@@ -885,8 +885,18 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 /// spells-per-day table's level-5 row is the first to show a non-"—" 3rd-level
 /// column, "1+1"), so the domain spell slot count also changes for real, to 3, at
 /// level 5. The Good domain's Touch of Good sacred bonus stays 2 at level 5
-/// (`max(5/2, 1) = 2`, integer division; it next increases only at level 6).
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 5;
+/// (`max(5/2, 1) = 2`, integer division; it next increases only at level 6). A
+/// further SD13-E5 slice widens this to 1..=6, verified independently against both
+/// primary sources: the class table's level-6 "Special" column is genuinely blank
+/// (no new class feature is gained at 6th level), Channel Energy's die count stays
+/// 3d6 (`ceil(6 / 2) = 3`, unchanged from level 5 — both primary sources confirm
+/// the die count rises only every odd cleric level, 1st/3rd/5th/7th/..., so level 6
+/// is not one of those levels), and the domain spell slot count stays 3 (the raw
+/// spells-per-day table's level-6 row still shows "—" in the 4th-level spell
+/// column, so 4th-level cleric spells do not begin at level 6) — but the Good
+/// domain's Touch of Good sacred bonus genuinely increases to 3 via the same
+/// pre-existing formula (`max(6/2, 1) = 3`).
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 6;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -912,10 +922,14 @@ const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
 // cleric casts 3rd-level cleric spells for the first time (the raw
 // spells-per-day table's level-5 row is the first to show a non-"—" 3rd-level
 // column), so the count genuinely becomes 3: one 1st-level, one 2nd-level, and
-// one 3rd-level domain slot.
+// one 3rd-level domain slot. Confirmed unchanged at level 6 (the raw
+// spells-per-day table's level-6 row still shows "—" in the 4th-level spell
+// column, verified independently against both primary sources), so the count
+// stays 3 through level 6 — it next changes only when 4th-level cleric spells
+// become available at a later level.
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_1_AND_2: i16 = 1;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_3_AND_4: i16 = 2;
-const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_5: i16 = 3;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_5_AND_6: i16 = 3;
 /// The cleric level at which 2nd-level cleric spells (and so the second domain
 /// spell slot) first become available, verified against the raw PF1 Core Rulebook
 /// Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com): level 2 shows
@@ -925,7 +939,9 @@ const CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 3;
 /// spell slot) first become available, verified against the raw PF1 Core Rulebook
 /// Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com): level 4 shows
 /// "5/3+1/2+1/—", level 5 shows "5/3+1/2+1/1+1" — the first non-"—" 3rd-level
-/// column.
+/// column. Confirmed the count stays at 3 domain slots through level 6 (the
+/// level-6 row's 4th-level spell column is still "—"), since 4th-level cleric
+/// spells are not yet available.
 const CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 5;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
@@ -6764,8 +6780,8 @@ fn explain_wizard_level1_prepared_spell_baseline(
 
 /// The bounded Cleric milestone level this decomposition surface grounds, if any.
 /// Returns the single Cleric level when the chosen input is exactly a single-class
-/// Cleric at one of the supported milestone levels (1 through 5). Returns `None` for
-/// no Cleric, a non-Cleric class, a multiclass mix, or any level-6+ Cleric this slice
+/// Cleric at one of the supported milestone levels (1 through 6). Returns `None` for
+/// no Cleric, a non-Cleric class, a multiclass mix, or any level-7+ Cleric this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -6824,7 +6840,16 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// table rows), while the Good domain's Touch of Good sacred bonus stays 2
 /// (`max(5/2, 1) = 2`, unchanged from level 4 — it next increases only at level 6),
 /// so only the two pillars whose underlying formulas genuinely change are widened;
-/// no new pillar record is added at level 5 either. It only:
+/// no new pillar record is added at level 5 either. A further SD13-E5 slice widens
+/// the gate again to 1..=6 (`MAX_SUPPORTED_CLERIC_LEVEL = 6`): the class table's
+/// level-6 "Special" column is genuinely blank (no new class feature is gained),
+/// Channel Energy's die count stays 3d6 (`ceil(6/2) = 3`, unchanged from level 5 —
+/// both primary sources confirm the die count rises only every odd cleric level),
+/// and the domain spell slot count stays 3 (the spells-per-day table's level-6 row
+/// still shows "—" in the 4th-level spell column), while the Good domain's Touch of
+/// Good sacred bonus genuinely increases to 3 (`max(6/2, 1) = 3`, up from 2) — so
+/// only the one pillar whose underlying formula genuinely changes is widened; no
+/// new pillar record is added at level 6 either. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
@@ -7049,9 +7074,11 @@ fn explain_cleric_level1_spell_baseline(
     // a level-5 cleric casts 3rd-level cleric spells for the first time (verified
     // independently against both primary sources' raw spells-per-day table rows), so
     // the count genuinely becomes 3 — one 1st-level, one 2nd-level, and one
-    // 3rd-level domain slot.
+    // 3rd-level domain slot. Confirmed unchanged at level 6 (the level-6 4th-level
+    // spell column is still "—", verified independently against both primary
+    // sources), so the count stays 3 through level 6 as well.
     let domain_spell_slot_count = if level >= CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
-        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_5
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_5_AND_6
     } else if level >= CLERIC_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_3_AND_4
     } else {
@@ -7070,11 +7097,12 @@ fn explain_cleric_level1_spell_baseline(
              verified against both primary sources' raw spells-per-day table rows), so the \
              flat count becomes {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_3_AND_4} (one \
              1st-level domain slot plus one 2nd-level domain slot); at level \
-             {CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a cleric also casts 3rd-level \
+             {CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}-6 a cleric also casts 3rd-level \
              cleric spells for the first time (verified against both primary sources' raw \
-             spells-per-day table rows), so the flat count becomes \
-             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_5} (one 1st-level, one 2nd-level, and \
-             one 3rd-level domain slot). At Cleric level {level} this is \
+             spells-per-day table rows, including the level-6 row's still-\"—\" 4th-level \
+             column), so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_5_AND_6} (one 1st-level, one \
+             2nd-level, and one 3rd-level domain slot). At Cleric level {level} this is \
              {domain_spell_slot_count} domain spell slot(s). \
              This grounds only the flat slot count; it grounds no slot contents (which domain \
              spell may fill it), no domain spell lists, and no prepared-spell posture"
@@ -7100,7 +7128,10 @@ fn explain_cleric_level1_spell_baseline(
         // slice confirms this genuinely increases to 2 at level 4 (4 / 2 = 2),
         // verified independently against the PF1 Core Rulebook Good Domain
         // granted-power rule text, via the same pre-existing formula, not
-        // re-derived (it next increases again only at level 6, 6 / 2 = 3).
+        // re-derived. A further SD13-E5 slice confirms this genuinely increases again
+        // to 3 at level 6 (6 / 2 = 3), verified independently against the PF1 Core
+        // Rulebook Good Domain granted-power rule text, via the same pre-existing
+        // formula, not re-derived.
         let touch_of_good_bonus = (level_value / 2).max(1);
         explanations.push(ComputationExplanation {
             id: "class_chassis.cleric.domain_power_good_touch_of_good_bonus".to_owned(),
