@@ -740,7 +740,7 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// `supported_rogue_level` idiom. Monk's own level-range gate is
 /// `supported_monk_level` / `MAX_SUPPORTED_MONK_LEVEL`, unrelated to this
 /// Barbarian gate.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 6;
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 7;
 
 /// PF1 Core Rulebook level gate at which Barbarian gains Uncanny Dodge (2nd level,
 /// verified against two independent primary sources — d20pfsrd and legacy.aonprd.com
@@ -759,6 +759,14 @@ const BARBARIAN_TRAP_SENSE_LEVEL: u8 = 3;
 /// legacy.aonprd.com both list "Improved uncanny dodge" as the Barbarian 5th-level
 /// special feature entry).
 const BARBARIAN_IMPROVED_UNCANNY_DODGE_LEVEL: u8 = 5;
+
+/// PF1 Core Rulebook level gate at which Barbarian gains Damage Reduction (7th
+/// level, verified independently against two primary sources — d20pfsrd and
+/// legacy.aonprd.com both list "Damage reduction 1/-" as the Barbarian 7th-level
+/// special feature entry, and both give the rule text "At 7th level, a barbarian
+/// gains damage reduction. Subtract 1 from the damage the barbarian takes each
+/// time she is dealt damage from a weapon or a natural attack").
+const BARBARIAN_DAMAGE_REDUCTION_LEVEL: u8 = 7;
 
 // SD13-E3/E5 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
@@ -4565,9 +4573,9 @@ fn supported_sorcerer_level(input: &CharacterInput) -> Option<u8> {
 
 /// The bounded Barbarian milestone level this decomposition surface grounds, if any.
 /// Returns the single Barbarian level when the chosen input is exactly a
-/// single-class Barbarian at one of the supported milestone levels (1, 2, 3, 4, 5, or
-/// 6). Returns `None` for no Barbarian, a non-Barbarian class, a multiclass mix, or
-/// any level-7+ Barbarian this slice deliberately does not recognize — each of which
+/// single-class Barbarian at one of the supported milestone levels (1, 2, 3, 4, 5, 6,
+/// or 7). Returns `None` for no Barbarian, a non-Barbarian class, a multiclass mix, or
+/// any level-8+ Barbarian this slice deliberately does not recognize — each of which
 /// stays claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level`
 /// / Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Monk
 /// `supported_monk_level` level-range gate idiom.
@@ -4671,22 +4679,47 @@ fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
 /// same genuinely open-ended choice-list feature already deliberately left
 /// named-but-unproven at levels 2 and 4, not a new type of class feature — so this
 /// widening grounds no new pillar beyond the arithmetic extension and the Trap Sense
-/// magnitude rise above. Otherwise only the rage-state execution burden, the Rage
-/// Power choice-list feature, weapon familiarity, and the Improved Uncanny Dodge
-/// flanking-resolution engine stay explicitly claim-blocked.
+/// magnitude rise above. A still further SD13-E5 slice widens the gate to level 7
+/// (`MAX_SUPPORTED_BARBARIAN_LEVEL = 7`, mirroring the Rogue's own level-7 widening
+/// idiom, verified independently against d20pfsrd and legacy.aonprd.com: the level-7
+/// row is BAB +7, Fort +5, Ref +2, Will +2, Special "Damage reduction 1/-"):
+/// base-attack (classlevel = 7), base-save (Fortitude +5, Reflex +2, Will +2), fast
+/// movement (unchanged flat +10 ft.), and rage rounds per day (4 + Constitution
+/// modifier + 2 * (level - 1), 19 on the Con 16 fixture at level 7) are extended to
+/// level 7 via the same formulas, and Uncanny Dodge, Trap Sense, and Improved Uncanny
+/// Dodge all stay granted (not re-derived; Trap Sense stays at the same +2 magnitude,
+/// since the PF1 Core Rulebook bonus does not rise again until barbarian level 9). The
+/// level-7 row's "Special" entry, Damage Reduction 1/- (verified independently against
+/// d20pfsrd and legacy.aonprd.com: "at 7th level, a barbarian gains damage reduction.
+/// Subtract 1 from the damage the barbarian takes each time she is dealt damage from a
+/// weapon or a natural attack"), IS a genuinely new class feature, NOT another Rage
+/// Power grant — both primary sources confirm Rage Powers are granted at 2nd, 4th,
+/// 6th, 8th, and 10th barbarian level, not 7th, so there is no new Rage Power grant to
+/// leave named-but-unproven at this level and no rage-power-selection-slot-count
+/// engine is invented. Damage Reduction's own flat magnitude (1 point) is
+/// flat/identity-shaped exactly like Trap Sense's own magnitude, so it is newly
+/// grounded as a bounded flat-magnitude record only
+/// (`class_feature.barbarian.damage_reduction`, value 1 at or above level 7, value 0
+/// below it): the rule's own APPLICATION piece (subtracting the value from incoming
+/// weapon/natural-attack damage) is not computed, since no damage-resolution engine
+/// and no incoming-damage total exists anywhere in this codebase. Otherwise only the
+/// rage-state execution burden, the Rage Power choice-list feature, weapon
+/// familiarity, the Improved Uncanny Dodge flanking-resolution engine, and the Damage
+/// Reduction application engine stay explicitly claim-blocked.
 ///
 /// This deliberately does not compute a supported martial chassis: the grounded
-/// base-attack, base-save, fast-movement, rage, Uncanny Dodge, Trap Sense, and
-/// Improved Uncanny Dodge explanation records below are standalone (not wired into
-/// `PilotBaseChassisComputation.base_attack_bonus`, `compute_total_saves`,
+/// base-attack, base-save, fast-movement, rage, Uncanny Dodge, Trap Sense, Improved
+/// Uncanny Dodge, and Damage Reduction explanation records below are standalone (not
+/// wired into `PilotBaseChassisComputation.base_attack_bonus`, `compute_total_saves`,
 /// `compute_combat_baseline`, the integrated ability modifiers, or any
-/// speed/movement/flat-footed/Armor-Class total), so the integrated pilot surface
-/// still reports a blocked posture on this input. It grounds no rage-state engine, no
-/// weapon familiarity, no Rage Power choice-list feature, no flat-footed-state
-/// tracking, no Armor Class computation, no invisibility-detection engine, no
-/// flanking-resolution engine, and no level-7+ martial progression. It only:
+/// speed/movement/flat-footed/Armor-Class/incoming-damage total), so the integrated
+/// pilot surface still reports a blocked posture on this input. It grounds no
+/// rage-state engine, no weapon familiarity, no Rage Power choice-list feature, no
+/// flat-footed-state tracking, no Armor Class computation, no invisibility-detection
+/// engine, no flanking-resolution engine, no damage-reduction-resolution engine, and
+/// no level-8+ martial progression. It only:
 /// - leaves one chassis-recognition explanation so the `class:barbarian:N` identity
-///   (at the supported level, 1, 2, 3, 4, 5, or 6) is acknowledged as a non-hybrid
+///   (at the supported level, 1, 2, 3, 4, 5, 6, or 7) is acknowledged as a non-hybrid
 ///   martial baseline rather than an undocumented packet placeholder (direct runtime
 ///   evidence, carrying no fabricated mechanical value),
 /// - leaves five grounded explanation records naming the full-BAB base-attack
@@ -4704,7 +4737,10 @@ fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
 ///   level 3, value 0; flat magnitude at or above it, barbarian level / 3),
 /// - leaves one grounded Improved Uncanny Dodge identity/recognition record
 ///   (level-gate absence below level 5, granted-but-unexecuted rule-text recognition
-///   at or above it, value 0 either way), and
+///   at or above it, value 0 either way),
+/// - leaves one grounded Damage Reduction flat-magnitude record (level-gate absence
+///   below level 7, value 0; flat magnitude of 1 at or above it, never applied to any
+///   incoming-damage total), and
 /// - emits one claim-blocking diagnostic naming the still-missing rage-state
 ///   execution engine explicitly (activation/deactivation, round-by-round rage
 ///   round consumption, fatigue after rage, and temporary application of the rage
@@ -5053,6 +5089,47 @@ fn explain_barbarian_level1_chassis(
                  flanking-resolution engine, no attacker-level-comparison engine, and no \
                  sneak-attack-trigger engine exists anywhere in this codebase to apply it, so \
                  this grounds no actual flanking immunity or sneak-attack denial"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): Damage Reduction, a 7th-level Barbarian class feature
+    // (verified independently against d20pfsrd and legacy.aonprd.com: both name
+    // "Damage reduction 1/-" as the Barbarian 7th-level "Special" class table entry,
+    // with the rule text "At 7th level, a barbarian gains damage reduction. Subtract 1
+    // from the damage the barbarian takes each time she is dealt damage from a weapon
+    // or a natural attack"). Below the level-7 gate this is a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it, it is a bounded
+    // flat-magnitude record only (a flat value of 1, non-fabricated) naming the rule
+    // text — mirroring exactly how Trap Sense's own flat magnitude was grounded: the
+    // magnitude is never applied to any actual incoming-damage total, since no
+    // damage-resolution engine or incoming-damage total exists anywhere in this
+    // codebase. Both primary sources' level-7 "Special" column names Damage Reduction
+    // only, not a Rage Power grant — Rage Powers are granted at 2nd, 4th, 6th, 8th,
+    // and 10th barbarian level, not 7th — so no rage-power-selection-slot-count engine
+    // is invented here.
+    if level < BARBARIAN_DAMAGE_REDUCTION_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.damage_reduction".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian Damage Reduction at barbarian level {level}: correctly absent at \
+                 level {level} by PF1 Core Rulebook level gate; the at-grant magnitude is named \
+                 but not computed. Damage Reduction is a 7th-level barbarian class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.damage_reduction".to_owned(),
+            value: 1,
+            detail: format!(
+                "Barbarian Damage Reduction granted at barbarian level {level} (PF1 Core \
+                 Rulebook, 7th-level barbarian class feature, \"Damage reduction 1/-\"): \
+                 subtract 1 from the damage the barbarian takes each time she is dealt damage \
+                 from a weapon or a natural attack. This is a bounded flat-magnitude record \
+                 only (value 1, non-fabricated): no damage-resolution engine and no \
+                 incoming-damage total exists anywhere in this codebase to apply it, so this \
+                 grounds no actual damage reduction"
             ),
         });
     }
