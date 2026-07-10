@@ -897,7 +897,22 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // (verified independently against both primary sources — the Wizard's bonus
 // feats land at levels 5, 10, 15, and 20), so no new class feature is gained
 // at 8th level.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 8;
+//
+// A further SD13-E5 slice widens the gate again to level 9
+// (`MAX_SUPPORTED_WIZARD_LEVEL = 9`): base attack stays +4 (`9/2 = 4`) and
+// good Will stays +6 (`9/2+2 = 6`), integer-division coincidences, while
+// poor Fortitude/Reflex both GENUINELY RISE to +3 (`9/3 = 3`); the
+// specialist bonus slot flat count GENUINELY RISES to 5 (the raw
+// spells-per-day table's level-9 row is "4/4/4/3/2/1", the first non-"—"
+// 5th-level column — a level-9 specialist now casts 5th-level spells for
+// the first time, so the bonus slot count becomes one of each spell level
+// 1st through 5th, via WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL);
+// Intense Spells' bonus-damage magnitude STAYS at 4 (`max(9/2, 1) = 4`,
+// another integer-division coincidence — the next rise lands at level 10);
+// the level-9 "Special" column is genuinely blank (verified independently
+// against both primary sources), so no new class feature is gained at 9th
+// level.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 9;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -948,6 +963,7 @@ const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_5: i16 = 3;
 /// for a flat count of 4, up from 3 at levels 5-6, mirroring exactly the Cleric
 /// domain-spell-slot level-7 widening idiom (`CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7`).
 const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7: i16 = 4;
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_9: i16 = 5;
 
 /// PF1 Core Rulebook Wizard spells-per-day table: the wizard class level at which
 /// 2nd-level wizard spells first become available (verified independently against
@@ -966,6 +982,13 @@ const WIZARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 5;
 /// both primary sources: levels 5-6 wizards cast only up to 3rd-level spells; level
 /// 7 is the first row with a non-"—" 4th-level column).
 const WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
+/// The wizard level at which 5th-level wizard spells (and so the fifth
+/// Evocation-only specialist bonus slot) first become available, verified
+/// against the raw PF1 Core Rulebook Wizard spells-per-day table rows
+/// (d20pfsrd and legacy.aonprd.com): level 8 shows a still-"—" 5th-level
+/// column, level 9 is the first to show a non-"—" 5th-level column ("1", the
+/// level-9 row reading "4/4/4/3/2/1").
+const WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
 
 // SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
 // martial class; the bounded single-class level-1 identity is recognized as
@@ -7202,8 +7225,8 @@ fn explain_sorcerer_level1_spell_baseline(
 
 /// The bounded Wizard milestone level this decomposition surface grounds, if any.
 /// Returns the single Wizard level when the chosen input is exactly a single-class
-/// Wizard at one of the supported milestone levels (1 through 8). Returns `None` for
-/// no Wizard, a non-Wizard class, a multiclass mix, or any level-9+ Wizard this slice
+/// Wizard at one of the supported milestone levels (1 through 9). Returns `None` for
+/// no Wizard, a non-Wizard class, a multiclass mix, or any level-10+ Wizard this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -7597,7 +7620,9 @@ fn explain_wizard_level1_prepared_spell_baseline(
         // of EACH spell level she can cast — one 1st-level bonus slot plus one
         // 2nd-level bonus slot, a flat count of 2.
         let wizard_specialist_bonus_slot_count =
-            if level >= WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            if level >= WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_9
+            } else if level >= WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7
             } else if level >= WIZARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_5
