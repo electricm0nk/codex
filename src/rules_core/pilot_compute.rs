@@ -549,9 +549,18 @@ const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
 // "Bloodline power, bloodline spell" entry was left unproven — this widening extends
 // only the already-grounded base-attack/base-save/bloodline-choice/
 // bloodline-class-skill-choice pillars to level 5 via the same formulas, without
+// re-derivation. A further SD13-E5 slice widens the gate again to level 8: the PF1
+// Core Rulebook Sorcerer class table's level-8 "Special" column is blank (verified
+// independently against d20pfsrd and legacy.aonprd.com, checked rather than assumed
+// away) — like levels 2, 4, and 6, and UNLIKE the level-7 "Bloodline feat, bloodline
+// spell" row — so no new class feature is gained at 8th level. The first 4th-level
+// spell slots arrive at 8th, but spells per day belong to the spontaneous spell
+// burden that stays named-but-unproven, so this widening extends only the
+// already-grounded base-attack/base-save/bloodline-choice/
+// bloodline-class-skill-choice pillars to level 8 via the same formulas, without
 // re-derivation.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 7;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 8;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -4884,8 +4893,8 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.
 /// Returns the single Sorcerer level when the chosen input is exactly a single-class
-/// Sorcerer at one of the supported milestone levels (1 through 7). Returns `None` for
-/// no Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-8+ Sorcerer this
+/// Sorcerer at one of the supported milestone levels (1 through 8). Returns `None` for
+/// no Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-9+ Sorcerer this
 /// slice deliberately does not recognize — each of which stays claim-blocked exactly
 /// as before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
