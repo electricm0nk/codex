@@ -593,8 +593,26 @@ const BARD_CLASS_ID: &str = "class:bard";
 /// 6th-level Versatile Performance grant is merely an additional instance
 /// of the same choice-gated skill-substitution engine already deliberately
 /// left named-but-unproven at 2nd level, not a new type of class feature —
-/// so no new pillar record is grounded at level 6.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 6;
+/// so no new pillar record is grounded at level 6. A still further SD13-E5
+/// slice widens this gate to level 7, verified independently against the
+/// PF1 Core Rulebook Bard class table (d20pfsrd and the legacy.aonprd.com
+/// mirror): the level-7 row is BAB +5, Fort +2, Ref +5, Will +5 — base
+/// attack genuinely rises to 5 (`7 * 3 / 4`) while all three base saves
+/// stay numerically unchanged from level 6 (an integer-division
+/// coincidence, re-verified against the raw table row rather than
+/// assumed). Bardic Knowledge stays 3 (`max(7/2, 1)`, unchanged), Bardic
+/// Performance rounds per day continues scaling, the Fascinate DC stays 15
+/// (`10 + 7/2 + CHA`, an integer-division coincidence with level 6), and
+/// the Fascinate affected-creature count genuinely rises to 3
+/// (`1 + (7-1)/3`), up from 2 at level 6. The level-7 "Special" column
+/// reads "Inspire competence +3" (verified independently against both
+/// primary sources): the Inspire Competence rule text itself confirms this
+/// is a flat magnitude increase on an already-grounded pillar ("This bonus
+/// increases by +1 for every four levels the bard has attained beyond 3rd
+/// (+3 at 7th, +4 at 11th, +5 at 15th, and +6 at 19th)"), the same kind of
+/// arithmetic tier-widening as Inspire Courage's own second tier at level
+/// 5, not a new class feature — grounded as a genuine rise to +3.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 7;
 /// PF1 Core Rulebook level gate at which Bard gains Well-Versed (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Versatile performance, well-versed" as the Bard 2nd-level special feature
@@ -616,12 +634,23 @@ const BARD_PERFORMANCE_ADDITIONAL_ROUNDS_PER_LEVEL: i16 = 2;
 /// legacy.aonprd.com both list "Inspire competence +2" as the Bard 3rd-level
 /// special feature entry).
 const BARD_INSPIRE_COMPETENCE_LEVEL: u8 = 3;
+/// PF1 Core Rulebook level at which the Inspire Competence flat magnitude first
+/// increases from +2 to +3 (7th level, verified independently against two
+/// primary sources: d20pfsrd and legacy.aonprd.com both list "Inspire
+/// competence +3" as the Bard 7th-level special feature entry, and both state
+/// the rule text "This bonus increases by +1 for every four levels the bard
+/// has attained beyond 3rd (+3 at 7th, +4 at 11th, +5 at 15th, and +6 at
+/// 19th)"). The next increase (to +4) lands at bard level 11, out of scope
+/// since only Bard levels 1-7 are supported.
+const BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL: u8 = 7;
 /// PF1 Core Rulebook Inspire Competence magnitude at the level it is first gained: a
 /// flat +2 competence bonus on skill checks with a particular skill. Verified
-/// against both primary sources; the magnitude does not increase again until bard
-/// level 7 (+1 every four levels beyond 3rd), out of scope for this bounded slice
-/// since only Bard levels 1-3 are supported.
-const BARD_INSPIRE_COMPETENCE_BONUS: i16 = 2;
+/// against both primary sources.
+const BARD_INSPIRE_COMPETENCE_BONUS_FIRST_TIER: i16 = 2;
+/// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
+/// second-tier level gate (7th level and beyond, until the next tier at 11th
+/// level, out of scope here).
+const BARD_INSPIRE_COMPETENCE_BONUS_SECOND_TIER: i16 = 3;
 /// PF1 Core Rulebook level at which the Inspire Courage flat magnitude first
 /// increases from +1 to +2 (5th level, verified independently against two
 /// primary sources: d20pfsrd and legacy.aonprd.com both list "Inspire courage
@@ -7982,8 +8011,8 @@ fn explain_druid_level1_spell_baseline(
 /// The bounded Bard milestone level this decomposition surface grounds, if any.
 /// Returns the single Bard level when the chosen input is exactly a single-class
 /// Bard at one of the supported milestone levels (1 through `MAX_SUPPORTED_BARD_LEVEL`,
-/// currently 6). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
-/// any level-7+ Bard this slice deliberately does not recognize — each of which stays
+/// currently 7). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
+/// any level-8+ Bard this slice deliberately does not recognize — each of which stays
 /// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
@@ -8382,15 +8411,20 @@ fn explain_bard_level1_spell_baseline(
     // verified independently against two primary PF1 sources (d20pfsrd and
     // legacy.aonprd.com both list "Inspire competence +2" as the Bard 3rd-level
     // special feature entry). Below the level-3 gate this is a correct PF1 Core
-    // Rulebook level-gate absence (value 0); at or above it, it is a flat +2
+    // Rulebook level-gate absence (value 0); at or above it, it is a flat
     // standalone magnitude (a competence bonus on skill checks with a particular
     // skill, verified against both primary sources), mirroring the Fighter
     // Bravery / Rogue Trap Sense / Barbarian Trap Sense / Monk Still Mind idiom —
     // never applied to any actual skill-check total, since no
     // skill-check-resolution engine exists in this codebase, and no
     // task-selection/action-economy engine decides which skill or ally it
-    // targets. The magnitude does not increase again until bard level 7, out of
-    // scope for this bounded slice.
+    // targets. The magnitude genuinely increases from +2 to +3 exactly at bard
+    // level 7 (SD13-E5, verified independently against two primary sources: both
+    // list "Inspire competence +3" as the Bard 7th-level special feature entry,
+    // and both state the rule text "This bonus increases by +1 for every four
+    // levels the bard has attained beyond 3rd"), mirroring the Inspire Courage
+    // second-tier idiom exactly; the next increase (to +4) lands at bard level
+    // 11, out of scope for this bounded slice.
     if level < BARD_INSPIRE_COMPETENCE_LEVEL {
         explanations.push(ComputationExplanation {
             id: "class_feature.bard.inspire_competence".to_owned(),
@@ -8402,16 +8436,26 @@ fn explain_bard_level1_spell_baseline(
             ),
         });
     } else {
+        let inspire_competence_bonus = if level >= BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL {
+            BARD_INSPIRE_COMPETENCE_BONUS_SECOND_TIER
+        } else {
+            BARD_INSPIRE_COMPETENCE_BONUS_FIRST_TIER
+        };
         explanations.push(ComputationExplanation {
             id: "class_feature.bard.inspire_competence".to_owned(),
-            value: BARD_INSPIRE_COMPETENCE_BONUS,
+            value: inspire_competence_bonus,
             detail: format!(
                 "Bard Inspire Competence granted at bard level {level} (PF1 Core Rulebook, \
-                 3rd-level Bard class feature): a flat +{BARD_INSPIRE_COMPETENCE_BONUS} \
-                 competence bonus on skill checks with a particular skill. This is a standalone \
-                 explanation record only; it is never applied to any actual skill-check total \
-                 because no skill-check-resolution engine exists anywhere in this codebase, and \
-                 no task-selection/action-economy engine decides which skill or ally it targets"
+                 3rd-level Bard class feature): a flat +{inspire_competence_bonus} competence \
+                 bonus on skill checks with a particular skill. This magnitude increases from \
+                 +2 to +3 exactly at bard level {BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL} (PF1 \
+                 Core Rulebook: \"This bonus increases by +1 for every four levels the bard has \
+                 attained beyond 3rd\"), so it is +{inspire_competence_bonus} at level {level}; \
+                 the next increase (to +4) is at bard level 11, out of scope for this bounded \
+                 slice. This is a standalone explanation record only; it is never applied to any \
+                 actual skill-check total because no skill-check-resolution engine exists \
+                 anywhere in this codebase, and no task-selection/action-economy engine decides \
+                 which skill or ally it targets"
             ),
         });
     }
