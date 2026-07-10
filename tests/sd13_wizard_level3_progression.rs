@@ -313,20 +313,25 @@ fn wizard_level_4_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: level 5 stays unrecognized by this slice -----
+// ----- Negative control: level 5 was later widened into the supported tranche -----
 
 #[test]
-fn wizard_level_5_is_not_promoted_by_this_slice() {
+fn wizard_level_5_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 5 was out of scope and stayed
+    // unrecognized. A later SD13-E5 slice (tests/sd13_wizard_level5_progression.rs)
+    // widened the level-range gate to level 5; this negative control is superseded,
+    // not violated — pin the new truth here too so this file stays internally
+    // consistent.
     let level_5 = WIZARD_LEVEL3_FIXTURE.replace("class:wizard:3", "class:wizard:5");
     let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-5 Wizard must not gain any bounded wizard chassis explanation: {:?}",
+        "level-5 Wizard is supported since the SD13-E5 level-5 slice: {:?}",
         computation.explanations
     );
 }
