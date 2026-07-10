@@ -291,20 +291,20 @@ fn cleric_level8_still_recognizes_the_spell_bearing_baseline() {
     );
 }
 
-// ----- Negative control: level 9 stays unrecognized by this slice -----
+// ----- Level 9 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn cleric_level_9_is_not_promoted_by_this_slice() {
+fn cleric_level_9_was_later_widened_into_the_supported_tranche() {
     let level_9 = CLERIC_LEVEL8_FIXTURE.replace("class:cleric:8", "class:cleric:9");
     let input = load(&level_9);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
-                || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-9 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.cleric.")),
+        "level-9 Cleric is now recognized by the later level-9 widening slice \
+         (tests/sd13_cleric_level9_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }

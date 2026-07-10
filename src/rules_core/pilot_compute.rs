@@ -1225,7 +1225,19 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 /// bonus GENUINELY increases to 4 via the same pre-existing formula
 /// (`max(8/2, 1) = 4`), confirming the level-7 comment's own forecast that it next
 /// increases at level 8.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 8;
+// A further SD13-E5 slice widens the gate to level 9 (verified independently
+// against d20pfsrd and legacy.aonprd.com): level 9 base attack stays +6
+// (9 * 3 / 4) and good Fortitude/Will both stay +6 (9 / 2 + 2),
+// integer-division coincidences, while poor Reflex genuinely rises to +3
+// (9 / 3); the level-9 "Special" column reads "Channel energy 5d6" — a
+// tier-rise on the already-grounded die-count pillar ((level + 1) / 2 = 5,
+// the odd-level cadence), not a new class feature; 5th-level cleric spells
+// first appear at 9th, so the domain spell slot count genuinely rises to 5
+// via the same one-slot-per-castable-spell-level rule
+// (CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL); Touch of Good's bonus
+// stays 4 (9 / 2, a coincidence) and both domain-power uses-per-day pools
+// stay level-independent; no new pillar is grounded.
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 9;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -1264,6 +1276,7 @@ const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_1_AND_2: i16 = 1;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_3_AND_4: i16 = 2;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_5_AND_6: i16 = 3;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7: i16 = 4;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9: i16 = 5;
 /// The cleric level at which 2nd-level cleric spells (and so the second domain
 /// spell slot) first become available, verified against the raw PF1 Core Rulebook
 /// Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com): level 2 shows
@@ -1286,6 +1299,13 @@ const CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 5;
 /// "—", verified independently against both primary sources), since 5th-level
 /// cleric spells are not yet available — they first appear at level 9.
 const CLERIC_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
+/// The cleric level at which 5th-level cleric spells (and so the fifth domain
+/// spell slot) first become available, verified against the raw PF1 Core
+/// Rulebook Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com):
+/// level 8 shows a still-"—" 5th-level column, level 9 is the first to show a
+/// non-"—" 5th-level column ("1+1", the level-9 row reading
+/// "4/4+1/4+1/3+1/2+1/1+1").
+const CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
 // identity. Druid is a prepared divine caster whose bounded burden splits across
@@ -7630,8 +7650,8 @@ fn explain_wizard_level1_prepared_spell_baseline(
 
 /// The bounded Cleric milestone level this decomposition surface grounds, if any.
 /// Returns the single Cleric level when the chosen input is exactly a single-class
-/// Cleric at one of the supported milestone levels (1 through 8). Returns `None` for
-/// no Cleric, a non-Cleric class, a multiclass mix, or any level-9+ Cleric this slice
+/// Cleric at one of the supported milestone levels (1 through 9). Returns `None` for
+/// no Cleric, a non-Cleric class, a multiclass mix, or any level-10+ Cleric this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -7944,7 +7964,9 @@ fn explain_cleric_level1_spell_baseline(
     // primary sources' raw spells-per-day table rows), so the count genuinely
     // becomes 4 — one 1st-level, one 2nd-level, one 3rd-level, and one
     // 4th-level domain slot.
-    let domain_spell_slot_count = if level >= CLERIC_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+    let domain_spell_slot_count = if level >= CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9
+    } else if level >= CLERIC_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7
     } else if level >= CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_5_AND_6
