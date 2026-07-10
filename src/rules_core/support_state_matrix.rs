@@ -388,8 +388,13 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
 /// primary sources, so no new pillar is added — the first 4th-level spell slots arrive
 /// at 8th but belong to the still-unproven spontaneous spell burden), while the Arcane
 /// Bond / bloodline progression burden and the spontaneous known-spell / slot posture
-/// burden stay explicitly blocked, citing the proof files as one combined literal,
-/// mirroring [`SD13_CLERIC_LEVEL1_TEST`] / [`SD13_DRUID_LEVEL1_TEST`].
+/// burden stay explicitly blocked, widened again to level 9 by a still further
+/// SD13-E5 slice (poor Fortitude/Reflex both genuinely rise to +3 while base attack
+/// and good Will stay put, integer-division coincidences; the level-9 "Special"
+/// column's "Bloodline power, bloodline spell" entries were checked against both
+/// primary sources and confirmed bloodline-specific, not flat, so both stay
+/// named-but-unproven per the level-3/5/7 precedent), citing the proof files as one
+/// combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`] / [`SD13_DRUID_LEVEL1_TEST`].
 const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseline.rs + \
     tests/sd13_sorcerer_bloodline_class_skill_choice.rs + \
     tests/sd13_sorcerer_level2_progression.rs + \
@@ -398,7 +403,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_level5_progression.rs + \
     tests/sd13_sorcerer_level6_progression.rs + \
     tests/sd13_sorcerer_level7_progression.rs + \
-    tests/sd13_sorcerer_level8_progression.rs";
+    tests/sd13_sorcerer_level8_progression.rs + \
+    tests/sd13_sorcerer_level9_progression.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -2387,7 +2393,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Sorcerer level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
-                            level-8 \
+                            level-8/level-9 \
                             spell baseline, with base attack bonus, base save progression, Eschew \
                             Materials, the canonical bloodline choice recognition, and the \
                             Arcane bloodline's class-skill choice (a player's choice of any one \
@@ -2531,17 +2537,35 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     arrive at 8th per the class table, but spells per day belong to the \
                     spontaneous spell burden that stays named-but-unproven, so this slice \
                     grounds no new pillar for level 8 either — only the existing pillars are \
-                    widened. The row is \
+                    widened — AND a further SD13-E5 slice widens the level-range gate again \
+                    (supported_sorcerer_level, 1..=9) and extends every one of the formulas \
+                    above to level 9 via the same formula, without re-derivation, verified \
+                    independently against the PF1 Core Rulebook Sorcerer class table (d20pfsrd \
+                    and legacy.aonprd.com): level 9 base attack bonus stays +4 (9 / 2) and good \
+                    Will stays +6 (9 / 2 + 2), integer-division coincidences, while poor \
+                    Fortitude and poor Reflex both genuinely rise to +3 (9 / 3); the bloodline \
+                    choice and bloodline class-skill choice recognitions are not level-gated, \
+                    so both still fire at level 9 for the same fixture selections; UNLIKE the \
+                    blank level-8 column, the Sorcerer class table's level-9 \"Special\" \
+                    column reads \"Bloodline power, bloodline spell\" (verified independently \
+                    against both primary sources, checked rather than assumed away) — the \
+                    second bloodline power (the Arcane bloodline's own 9th-level power is New \
+                    Arcana) and the fourth bloodline spell (the Arcane bloodline's own \
+                    9th-level bloodline spell is overland flight) — but both entries are \
+                    bloodline-specific and not flat/identity-shaped, so this slice grounds no \
+                    new pillar for level 9 either, mirroring exactly how the level-3, level-5, \
+                    and level-7 bloodline entries were left unproven — only the existing \
+                    pillars are widened. The row is \
                     Partial, not Supported: the Arcane Bond / bloodline progression burden (Arcane \
                     Bond execution, the conditional bloodline arcana, the 3rd-level bloodline \
                     power, the 3rd-, 5th-, and 7th-level bloodline spells, the 7th-level bloodline \
                     feat, and further bonus spells/feats at higher levels) remains named and \
                     unproven, and the spontaneous spell burden (spontaneous spells known, spell \
                     slots per day, bonus spell slots, spell save DCs) is entirely unproven. No \
-                    spell math is fabricated and no Sorcerer level 9+ is proven",
+                    spell math is fabricated and no Sorcerer level 10+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-9+ progression (widening the now-grounded base attack/base save \
+                    level-10+ progression (widening the now-grounded base attack/base save \
                     formulas)",
             },
             SupportStateRow {

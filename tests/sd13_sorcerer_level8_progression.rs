@@ -227,20 +227,20 @@ fn sorcerer_level7_truth_is_unchanged_by_this_slice() {
     assert_eq!(will.value, 5, "Sorcerer level 7 good Will save must stay 5");
 }
 
-// ----- Negative control: level 9 stays unrecognized by this slice -----
+// ----- Level 9 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn sorcerer_level_9_is_not_promoted_by_this_slice() {
+fn sorcerer_level_9_was_later_widened_into_the_supported_tranche() {
     let level_9 = SORCERER_LEVEL8_FIXTURE.replace("class:sorcerer:8", "class:sorcerer:9");
     let input = load(&level_9);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.sorcerer.")
-                || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-9 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.sorcerer.")),
+        "level-9 Sorcerer is now recognized by the later level-9 widening slice \
+         (tests/sd13_sorcerer_level9_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }
