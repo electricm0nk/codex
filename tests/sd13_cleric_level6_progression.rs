@@ -283,20 +283,23 @@ fn cleric_level6_still_recognizes_the_spell_bearing_baseline() {
     );
 }
 
-// ----- Negative control: level 7 stays unrecognized by this slice -----
+// ----- Negative control (superseded): level 7 was later widened into the
+// supported tranche by `tests/sd13_cleric_level7_progression.rs`, whose new
+// level-8 negative control now carries the "next level stays unrecognized"
+// coverage. -----
 
 #[test]
-fn cleric_level_7_is_not_promoted_by_this_slice() {
+fn cleric_level_7_was_later_widened_into_the_supported_tranche() {
     let level_7 = CLERIC_LEVEL6_FIXTURE.replace("class:cleric:6", "class:cleric:7");
     let input = load(&level_7);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
-                || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-7 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.cleric.")),
+        "level-7 Cleric was later widened into the supported tranche and must now gain \
+         bounded cleric chassis explanations: {:?}",
         computation.explanations
     );
 }
