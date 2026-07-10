@@ -282,14 +282,37 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // granted, by level 4 (SD13-E5), the level gate at which Hunter's Bond is
 // granted, by level 5 (SD13-E5), the level gate at which the Favored Enemy
 // rule's own 5th-level interval (a second favored enemy plus a +2 bonus increase
-// to any one favored enemy of the ranger's choice) is granted, and by level 6
+// to any one favored enemy of the ranger's choice) is granted, by level 6
 // (SD13-E5), the level gate at which the ranger's SECOND combat-style bonus feat
 // is granted (verified independently against d20pfsrd and legacy.aonprd.com: both
 // state "The ranger's expertise manifests in the form of bonus feats at 2nd, 6th,
 // 10th, 14th, and 18th level" -- 6th level is the very next milestone after 2nd,
-// not 3rd/4th/5th as some earlier framings assumed). Nothing here grounds level
-// 7+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 6;
+// not 3rd/4th/5th as some earlier framings assumed), and by level 7 (SD13-E5),
+// the level gate at which Woodland Stride is granted (verified independently
+// against d20pfsrd and legacy.aonprd.com: both list "Woodland stride" as the
+// Ranger 7th-level "Special" column entry, and both state the exact rule text,
+// "a ranger may move through any sort of undergrowth ... at his normal speed and
+// without taking damage or suffering any other impairment ... magically
+// manipulated undergrowth ... still affects him normally" -- an automatic,
+// no-choice, no-numeric-magnitude grant, grounded as a bounded identity record
+// only, mirroring the Endurance grant-only idiom). Neither the Favored Enemy
+// rule's next interval (10th level) nor the Combat Style Feat's next bonus feat
+// (10th level) is reached at level 7, so both stay unchanged, re-verified rather
+// than assumed. Nothing here grounds level 8+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 7;
+
+/// PF1 Core Rulebook level gate at which Woodland Stride is granted (verified
+/// independently against two primary sources: both d20pfsrd and
+/// legacy.aonprd.com list "Woodland stride" as the Ranger 7th-level "Special"
+/// column entry, with no other new class feature named at 7th level). Woodland
+/// Stride is an automatic, no-choice grant with no numeric magnitude of its own:
+/// "a ranger may move through any sort of undergrowth (such as natural thorns,
+/// briars, overgrown areas, and similar terrain) at his normal speed and without
+/// taking damage or suffering any other impairment. However, magically
+/// manipulated undergrowth still affects him normally." No terrain-detection or
+/// movement-resolution engine exists in this codebase, so only the grant
+/// identity itself is grounded.
+const RANGER_WOODLAND_STRIDE_LEVEL: u8 = 7;
 
 /// PF1 Core Rulebook level gate at which the Favored Enemy rule's 5th-level
 /// interval is granted (verified independently against two primary sources:
@@ -3705,9 +3728,9 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
 
 /// The bounded Ranger milestone level this decomposition surface grounds, if any.
 /// Returns the single Ranger level when the chosen input is exactly a single-class
-/// Ranger at one of the supported milestone levels (1, 2, 3, 4, 5, or 6). Returns
+/// Ranger at one of the supported milestone levels (1, 2, 3, 4, 5, 6, or 7). Returns
 /// `None` for no Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid
-/// (which has its own decomposition lane), or any level-7+ Ranger this slice
+/// (which has its own decomposition lane), or any level-8+ Ranger this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the
 /// Fighter `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
@@ -3907,8 +3930,12 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // to level 6, extending both formulas once more (Track genuinely rises to 3) and
     // grounding the ranger's SECOND combat-style bonus feat (a restricted-list
     // choice recognition gated on the same style already chosen at 2nd level,
-    // mirroring the first bonus feat's own grounding idiom exactly).
-    // Ranger level 7+ progression, the favored-enemy conditional-application engine,
+    // mirroring the first bonus feat's own grounding idiom exactly). A still later
+    // SD13-E5 slice widens the gate once more to level 7, extending both formulas
+    // once more (both stay numerically unchanged from level 6, integer-division
+    // coincidences) and grounding Woodland Stride (a grant-only identity record,
+    // no numeric magnitude, mirroring the Endurance idiom).
+    // Ranger level 8+ progression, the favored-enemy conditional-application engine,
     // either combat-style bonus feat's own mechanics, the level-8th/13th/18th
     // Favored Terrain breadth, Hunter's Bond ally-bonus
     // application/animal-companion stat block, and the ranger spell burden remain
@@ -4546,6 +4573,48 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                 ),
             });
         }
+    }
+
+    // Grounded (SD13-E5): Woodland Stride, the class table's 7th-level "Special"
+    // column entry, verified independently against two primary PF1 sources
+    // (d20pfsrd and legacy.aonprd.com both list "Woodland stride" as the Ranger
+    // 7th-level special feature entry, with no other new class feature named at
+    // 7th level). Unlike Track or Favored Terrain, Woodland Stride carries no
+    // numeric magnitude of its own -- it is a pure boolean, no-choice grant, so
+    // it mirrors the Endurance grant-only identity idiom exactly rather than a
+    // flat-magnitude record. Below the level-7 gate this is a correct
+    // level-gate absence (value 0); at or above it, it is a bounded grant-only
+    // identity record (value 0, non-fabricated): no terrain-detection or
+    // movement-resolution engine exists anywhere in this codebase to determine
+    // whether the ranger is actually moving through undergrowth, so only the
+    // grant itself is recorded.
+    if level < RANGER_WOODLAND_STRIDE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.woodland_stride".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Woodland Stride at ranger level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant undergrowth-movement \
+                 identity is named but not computed. Woodland Stride is a 7th-level ranger \
+                 class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.woodland_stride".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Woodland Stride granted at ranger level {level} (PF1 Core Rulebook, \
+                 7th-level ranger class feature): the ranger may move through any sort of \
+                 undergrowth (such as natural thorns, briars, overgrown areas, and similar \
+                 terrain) at his normal speed and without taking damage or suffering any other \
+                 impairment; magically manipulated undergrowth still affects him normally. This \
+                 is a bounded grant-only identity record (value 0, non-fabricated): no \
+                 terrain-detection or movement-resolution engine exists anywhere in this \
+                 codebase to determine whether the ranger is actually moving through \
+                 undergrowth, so this only records the grant itself"
+            ),
+        });
     }
 }
 
