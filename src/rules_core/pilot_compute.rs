@@ -567,26 +567,34 @@ const FASCINATE_DC_BASE: i16 = 10;
 // opposed schools locked, specialty school bonus at later levels).
 const WIZARD_CLASS_ID: &str = "class:wizard";
 
-// SD13-E5 Wizard level-2/level-3/level-4 progression widening: mirrors the Fighter
-// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
+// SD13-E5 Wizard level-2/level-3/level-4/level-5 progression widening: mirrors the
+// Fighter `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
 // `supported_rogue_level` / Barbarian `supported_barbarian_level` / Monk
 // `supported_monk_level` / Cleric `supported_cleric_level` / Bard
 // `supported_bard_level` / Druid `supported_druid_level` / Sorcerer
 // `supported_sorcerer_level` idiom (an `Option<u8>` level-range gate) rather than a
 // boolean level-1-only check. Verified against the PF1 Core Rulebook Wizard class
-// table (d20pfsrd and legacy.aonprd.com): the level-2, level-3, AND level-4 "Special"
-// columns are all blank, so no new class feature is gained at 2nd, 3rd, or 4th level
-// (like Cleric/Sorcerer's level-2 gate, unlike Rogue/Monk/Druid's Evasion/Woodland
-// Stride or Rogue/Monk/Barbarian's own 3rd-level features; the Wizard's own next
-// class feature, a bonus feat, is granted at 5th level, not 4th, verified rather
-// than assumed); the specialist bonus slot flat count DOES change at level 3 (see
+// table (d20pfsrd and a second independent Archives of Nethys mirror): the level-2,
+// level-3, AND level-4 "Special" columns are all blank, so no new class feature is
+// gained at 2nd, 3rd, or 4th level (like Cleric/Sorcerer's level-2 gate, unlike
+// Rogue/Monk/Druid's Evasion/Woodland Stride or Rogue/Monk/Barbarian's own 3rd-level
+// features); the level-5 "Special" column reads "Bonus feat" — a genuinely NEW class
+// feature, verified rather than assumed, but checked and confirmed NOT flat (a choice
+// among an open-ended set of metamagic feats, item creation feats, or Spell Mastery —
+// a general feat-selection/feat-prerequisite engine, mirroring the Monk High Jump
+// precedent exactly), so it is deliberately left named-but-unproven and grounds no
+// record; the specialist bonus slot flat count DOES change at level 3 (see
 // `explain_wizard_level1_prepared_spell_baseline`), since a level-3 wizard casts
-// 2nd-level spells for the first time, then STAYS at that same value through level 4
+// 2nd-level spells for the first time, STAYS at that same value through level 4
 // (3rd-level wizard spells do not become available until level 5, verified
-// independently against both primary sources' raw spells-per-day table rows); the
-// Intense Spells bonus-damage magnitude DOES change at level 4 (half wizard level,
-// minimum 1, reaches 2 for the first time via the pre-existing formula).
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 4;
+// independently against both primary sources' raw spells-per-day table rows), then
+// DOES change again for real at level 5 (a level-5 wizard casts 3rd-level spells for
+// the first time, so the specialist bonus slot count becomes 3: one bonus slot of
+// each of 1st/2nd/3rd spell level); the Intense Spells bonus-damage magnitude DOES
+// change at level 4 (half wizard level, minimum 1, reaches 2 for the first time via
+// the pre-existing formula) then STAYS at 2 through level 5 (`max(5/2, 1) = 2`, an
+// integer-division coincidence, not a formula that stopped scaling).
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 5;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -616,14 +624,29 @@ const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVELS_1_AND_2: i16 = 1;
 /// become available until wizard level 5 (level 5 row: "4/3/2/1/—", the first
 /// non-"—" 3rd-level column), verified independently against both primary sources
 /// rather than assumed from the level-3 doubling precedent — so the flat count stays
-/// exactly 2 through the whole level 3-4 range this constant now covers.
+/// exactly 2 through the level 3-4 range this constant covers.
 const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3: i16 = 2;
+
+/// SD13-E5 level-5 widening: a level-5 wizard casts 3rd-level spells for the first
+/// time (verified independently against both primary sources' raw Wizard
+/// spells-per-day table rows: level 4 shows "4/3/2/—/—", level 5 shows "4/3/2/1/—" —
+/// the first non-"—" 3rd-level column), so a specialist wizard now gains one bonus
+/// slot of EACH spell level she can cast, 1st through 3rd: one 1st-level bonus slot,
+/// one 2nd-level bonus slot, and one 3rd-level bonus slot, for a flat count of 3, up
+/// from 2 at levels 3-4.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_5: i16 = 3;
 
 /// PF1 Core Rulebook Wizard spells-per-day table: the wizard class level at which
 /// 2nd-level wizard spells first become available (verified independently against
 /// both primary sources: level 1-2 wizards cast only 1st-level spells; level 3 is
 /// the first row with a non-"—" 2nd-level column).
 const WIZARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 3;
+
+/// PF1 Core Rulebook Wizard spells-per-day table: the wizard class level at which
+/// 3rd-level wizard spells first become available (verified independently against
+/// both primary sources: levels 3-4 wizards cast only up to 2nd-level spells; level
+/// 5 is the first row with a non-"—" 3rd-level column).
+const WIZARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 5;
 
 // SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
 // martial class; the bounded single-class level-1 identity is recognized as
@@ -6187,6 +6210,34 @@ fn wizard_has_canonical_specialization_selections(input: &CharacterInput) -> boo
 /// feature, a bonus feat, is granted at 5th level, not 4th) — this slice widens
 /// existing pillars only (one of them, Intense Spells, to a genuinely new value),
 /// adds no new pillar record.
+///
+/// A further SD13-E5 slice widens the gate again (`supported_wizard_level`, 1..=5)
+/// and extends the same formulas to level 5, without re-derivation, verified
+/// independently against the PF1 Core Rulebook Wizard class table (d20pfsrd and a
+/// second independent Archives of Nethys mirror): level 5 base attack bonus is +2,
+/// base saves are +1/+1/+4 (Fortitude/Reflex/Will) — all four values numerically
+/// IDENTICAL to level 4, an integer-division coincidence (`5 / 2` and `4 / 2` both
+/// floor to `2`; `5 / 3` and `4 / 3` both floor to `1`), not a sign any formula
+/// stopped scaling. The specialist bonus slot flat count is the exact question this
+/// cycle was briefed to verify: the raw Wizard spells-per-day table's level-5 row is
+/// "4/3/2/1/—" — 3rd-level wizard spells become available for the first time at
+/// wizard level 5 (level 4 row was "4/3/2/—/—") — so a level-5 specialist now casts
+/// 1st-, 2nd-, and 3rd-level spells, and the flat count genuinely becomes 3 (one
+/// bonus slot of each spell level 1st through 3rd), up from 2 at levels 3-4. Intense
+/// Spells' bonus-damage magnitude, in contrast, STAYS at 2 at level 5: `max(5 / 2, 1)
+/// = 2`, another integer-division coincidence, not a formula that stopped scaling.
+/// Force Missile's uses-per-day pool is level-independent and unchanged; Scribe
+/// Scroll stays recognized as an already-held grant. The class table's level-5
+/// "Special" column reads "Bonus feat" (verified independently against both
+/// sources) — a genuinely NEW Wizard class feature at 5th level, but checked and
+/// confirmed NOT flat: the feat is chosen from an open-ended set of metamagic feats,
+/// item creation feats (each its own family with its own prerequisites), or the
+/// single named Spell Mastery feature — a general feat-selection/feat-prerequisite
+/// engine, not a flat magnitude, mirroring the Monk High Jump precedent exactly
+/// (checked rather than assumed, deliberately left named-but-unproven, no record or
+/// diagnostic fabricated for it). This slice widens existing pillars only (one of
+/// them, the specialist bonus slot count, to a genuinely new value), adds no new
+/// pillar record.
 fn explain_wizard_level1_prepared_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -6342,7 +6393,9 @@ fn explain_wizard_level1_prepared_spell_baseline(
         // of EACH spell level she can cast — one 1st-level bonus slot plus one
         // 2nd-level bonus slot, a flat count of 2.
         let wizard_specialist_bonus_slot_count =
-            if level >= WIZARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            if level >= WIZARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_5
+            } else if level >= WIZARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3
             } else {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVELS_1_AND_2
@@ -6361,7 +6414,12 @@ fn explain_wizard_level1_prepared_spell_baseline(
                  spells for the first time (verified against both primary sources' raw \
                  spells-per-day table rows), so the flat count becomes \
                  {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3:+} (one 1st-level Evocation-only bonus \
-                 slot plus one 2nd-level Evocation-only bonus slot). At level {level} this is \
+                 slot plus one 2nd-level Evocation-only bonus slot); at level \
+                 {WIZARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 3rd-level \
+                 spells for the first time (verified against both primary sources' raw \
+                 spells-per-day table rows), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_5:+} (one 1st-level, one 2nd-level, and \
+                 one 3rd-level Evocation-only bonus slot). At level {level} this is \
                  {wizard_specialist_bonus_slot_count:+} flat count; there is no cantrip-level \
                  bonus slot. This grounds the flat count only: no slot contents, no spells \
                  prepared per day, no per-day slot totals, and no bonus slots from a high \

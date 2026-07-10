@@ -272,19 +272,24 @@ fn wizard_level_4_was_later_widened_into_the_supported_tranche() {
     assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 }
 
-// ----- Negative control: level 5 stays unrecognized -----
+// ----- Wizard level 5 was later widened into the supported tranche -----
 
 #[test]
-fn wizard_level_5_does_not_gain_base_attack_or_save_grounding() {
+fn wizard_level_5_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 5 was out of scope and stayed
+    // unrecognized. A later SD13-E5 slice (tests/sd13_wizard_level5_progression.rs)
+    // widened the level-range gate to level 5 and extended the base-attack/base-save
+    // formulas; this negative control is superseded, not violated — pin the new
+    // truth here too so this file stays internally consistent.
     let level_5 = WIZARD_FIXTURE.replace("class:wizard:1", "class:wizard:5");
     let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, BASE_ATTACK_ID),
-        "level-5 Wizard must not gain the bounded base-attack grounding: {:?}",
+        has_explanation(&computation, BASE_ATTACK_ID),
+        "level-5 Wizard is supported since the SD13-E5 level-5 slice: {:?}",
         computation.explanations
     );
-    assert!(!has_explanation(&computation, BASE_SAVE_FORTITUDE_ID));
-    assert!(!has_explanation(&computation, BASE_SAVE_REFLEX_ID));
-    assert!(!has_explanation(&computation, BASE_SAVE_WILL_ID));
+    assert!(has_explanation(&computation, BASE_SAVE_FORTITUDE_ID));
+    assert!(has_explanation(&computation, BASE_SAVE_REFLEX_ID));
+    assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 }

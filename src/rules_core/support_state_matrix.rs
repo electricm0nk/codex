@@ -468,13 +468,21 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
 /// and correctly stays at 2, since 3rd-level wizard spells do not become available
 /// until wizard level 5; Intense Spells' bonus-damage magnitude changes for real at
 /// level 4, from 1 to 2, via the pre-existing half-wizard-level-minimum-1 formula;
-/// the level-4 "Special" column is also blank, so no new pillar is added), that
-/// stays explicitly blocked on the school-powers / opposed-school-cost burden and
-/// the prepared spellbook / spell-slot posture burden, citing all four proof files
-/// as one combined literal, mirroring [`SD13_SORCERER_LEVEL1_TEST`].
+/// the level-4 "Special" column is also blank, so no new pillar is added), then
+/// widened again to level 5 by a further SD13-E5 slice (the level-range gate
+/// extended to 1..=5; the specialist bonus slot flat count changes for real at level
+/// 5, from 2 to 3, since a level-5 wizard casts 3rd-level spells for the first time;
+/// Intense Spells' bonus-damage magnitude stays 2, an integer-division coincidence;
+/// the level-5 "Special" column reads "Bonus feat", a genuinely new class feature
+/// checked and confirmed not flat — a choice among an open-ended metamagic/item
+/// creation feat set or Spell Mastery — so it is deliberately left
+/// named-but-unproven, mirroring the Monk High Jump precedent), that stays
+/// explicitly blocked on the school-powers / opposed-school-cost burden and the
+/// prepared spellbook / spell-slot posture burden, citing all five proof files as
+/// one combined literal, mirroring [`SD13_SORCERER_LEVEL1_TEST`].
 const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_baseline.rs + \
     tests/sd13_wizard_level2_progression.rs + tests/sd13_wizard_level3_progression.rs + \
-    tests/sd13_wizard_level4_progression.rs";
+    tests/sd13_wizard_level4_progression.rs + tests/sd13_wizard_level5_progression.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -1785,17 +1793,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // table rows); Intense Spells' bonus-damage magnitude changes for
                 // real at level 4, from 1 to 2, via the pre-existing half-wizard-
                 // level-minimum-1 formula; the level-4 "Special" column is also
-                // blank, so no new pillar is added.
+                // blank, so no new pillar is added. A further SD13-E5 slice widens
+                // the gate again to 1..=5 (`MAX_SUPPORTED_WIZARD_LEVEL = 5`): the
+                // specialist bonus slot flat count changes for real at level 5, from
+                // 2 to 3, since a level-5 wizard casts 3rd-level spells for the
+                // first time (verified independently against both primary sources'
+                // raw spells-per-day table rows); Intense Spells' bonus-damage
+                // magnitude stays 2 (max(5/2, 1) = 2, an integer-division
+                // coincidence); the level-5 "Special" column reads "Bonus feat" — a
+                // genuinely new Wizard class feature, checked and confirmed NOT flat
+                // (a choice among an open-ended metamagic/item creation feat set or
+                // Spell Mastery, mirroring the Monk High Jump precedent), so it is
+                // deliberately left named-but-unproven and no record is fabricated.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1/level-4 prepared arcane spell baseline, with base \
+                            Wizard level-1/level-5 prepared arcane spell baseline, with base \
                             attack bonus, base save progression, Scribe Scroll, the school \
                             specialization choice, the specialist-bonus-slot flat count (which \
-                            becomes 2 at level 3 and stays 2 at level 4), and the Intense Spells \
-                            / Force Missile school-power flat magnitudes (Intense Spells becomes \
-                            2 at level 4) grounded for real through level 4, and the \
-                            school-power execution machinery, the opposed-school-cost burden, \
-                            and the prepared spellbook / spell-slot posture burden still \
-                            blocked",
+                            becomes 2 at level 3, stays 2 at level 4, and becomes 3 at level 5), \
+                            and the Intense Spells / Force Missile school-power flat magnitudes \
+                            (Intense Spells becomes 2 at level 4 and stays 2 at level 5) grounded \
+                            for real through level 5, and the school-power execution machinery, \
+                            the opposed-school-cost burden, the level-5 bonus-feat \
+                            selection/execution, and the prepared spellbook / spell-slot posture \
+                            burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1875,18 +1895,44 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     against both sources: the Wizard's own next class feature, a bonus feat, is \
                     granted at 5th level, not 4th) — this slice widens existing pillars only (one \
                     of them, Intense Spells, to a genuinely new value), adds no new pillar record. \
-                    The row is Partial, not Supported: neither school power's execution machinery \
-                    is implemented (no evocation spell-damage application for Intense Spells, no \
-                    force-missile casting execution / 1d4 damage roll / automatic-hit targeting \
-                    for Force Missile), the opposed-school preparation cost (each opposed-school \
-                    spell occupies two prepared slots) remains named and unproven, and the \
-                    prepared spell posture burden (spellbook content, spells prepared per day, \
-                    spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
-                    still entirely unproven. No spell math is fabricated and no Wizard level 5+ is \
-                    proven",
+                    AND a further SD13-E5 slice widens the level-range gate to level 1-5 and \
+                    extends the base attack/base save/specialization-choice/specialist-bonus-slot/ \
+                    Intense-Spells/Force-Missile/Scribe-Scroll formulas to level 5 via the same \
+                    formulas, without re-derivation, verified independently against the PF1 Core \
+                    Rulebook Wizard class table (d20pfsrd and a second independent Archives of \
+                    Nethys mirror): level 5 base attack bonus is +2, base saves are +1/+1/+4 \
+                    (Fortitude/Reflex/Will) — all four values numerically IDENTICAL to level 4, an \
+                    integer-division coincidence, not a sign any formula stopped scaling; the \
+                    specialist bonus slot flat count DOES change for real at level 5: the raw \
+                    Wizard spells-per-day table's level-5 row is \"4/3/2/1/—\" — 3rd-level wizard \
+                    spells become available for the first time at wizard level 5 — so the flat \
+                    count becomes 3 (one bonus slot of each spell level 1st through 3rd), up from \
+                    2 at levels 3-4; Intense Spells' bonus-damage magnitude, in contrast, STAYS at \
+                    2 at level 5 (max(5/2, 1) = 2, another integer-division coincidence); Force \
+                    Missile's uses-per-day pool is level-independent and unchanged; Scribe Scroll \
+                    stays recognized as an already-held grant. The class table's level-5 \"Special\" \
+                    column reads \"Bonus feat\" (verified independently against both sources) — a \
+                    genuinely NEW Wizard class feature at 5th level, but checked and confirmed NOT \
+                    flat: the feat is chosen from an open-ended set of metamagic feats, item \
+                    creation feats, or the single named Spell Mastery feature — a general \
+                    feat-selection/feat-prerequisite engine, not a flat magnitude, mirroring the \
+                    Monk High Jump precedent exactly, so it is deliberately left \
+                    named-but-unproven; no record or diagnostic is fabricated for it. This slice \
+                    widens existing pillars only (one of them, the specialist bonus slot count, to \
+                    a genuinely new value), adds no new pillar record. The row is Partial, not \
+                    Supported: neither school power's execution machinery is implemented (no \
+                    evocation spell-damage application for Intense Spells, no force-missile \
+                    casting execution / 1d4 damage roll / automatic-hit targeting for Force \
+                    Missile), the opposed-school preparation cost (each opposed-school spell \
+                    occupies two prepared slots) remains named and unproven, the level-5 bonus \
+                    feat's own selection/execution (a general feat-selection/feat-prerequisite \
+                    engine) remains named and unproven, and the prepared spell posture burden \
+                    (spellbook content, spells prepared per day, spell slots per day, bonus slots \
+                    from high Intelligence, spell save DCs) is still entirely unproven. No spell \
+                    math is fabricated and no Wizard level 6+ is proven",
                 next_required_uplift: "SD13-E5 Wizard school-power execution and opposed-school \
                     preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-5+ progression (widening the now-grounded base \
+                    posture slice, then level-6+ progression (widening the now-grounded base \
                     attack/base save formulas)",
             },
             // ----- Interaction rows (2) -----
