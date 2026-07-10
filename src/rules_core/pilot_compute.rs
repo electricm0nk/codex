@@ -642,34 +642,39 @@ const FASCINATE_DC_BASE: i16 = 10;
 // opposed schools locked, specialty school bonus at later levels).
 const WIZARD_CLASS_ID: &str = "class:wizard";
 
-// SD13-E5 Wizard level-2/level-3/level-4/level-5 progression widening: mirrors the
-// Fighter `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
-// `supported_rogue_level` / Barbarian `supported_barbarian_level` / Monk
+// SD13-E5 Wizard level-2/level-3/level-4/level-5/level-6 progression widening:
+// mirrors the Fighter `supported_fighter_level` / Paladin `supported_paladin_level` /
+// Rogue `supported_rogue_level` / Barbarian `supported_barbarian_level` / Monk
 // `supported_monk_level` / Cleric `supported_cleric_level` / Bard
 // `supported_bard_level` / Druid `supported_druid_level` / Sorcerer
 // `supported_sorcerer_level` idiom (an `Option<u8>` level-range gate) rather than a
 // boolean level-1-only check. Verified against the PF1 Core Rulebook Wizard class
 // table (d20pfsrd and a second independent Archives of Nethys mirror): the level-2,
-// level-3, AND level-4 "Special" columns are all blank, so no new class feature is
-// gained at 2nd, 3rd, or 4th level (like Cleric/Sorcerer's level-2 gate, unlike
-// Rogue/Monk/Druid's Evasion/Woodland Stride or Rogue/Monk/Barbarian's own 3rd-level
-// features); the level-5 "Special" column reads "Bonus feat" — a genuinely NEW class
-// feature, verified rather than assumed, but checked and confirmed NOT flat (a choice
-// among an open-ended set of metamagic feats, item creation feats, or Spell Mastery —
-// a general feat-selection/feat-prerequisite engine, mirroring the Monk High Jump
-// precedent exactly), so it is deliberately left named-but-unproven and grounds no
-// record; the specialist bonus slot flat count DOES change at level 3 (see
-// `explain_wizard_level1_prepared_spell_baseline`), since a level-3 wizard casts
-// 2nd-level spells for the first time, STAYS at that same value through level 4
-// (3rd-level wizard spells do not become available until level 5, verified
-// independently against both primary sources' raw spells-per-day table rows), then
-// DOES change again for real at level 5 (a level-5 wizard casts 3rd-level spells for
-// the first time, so the specialist bonus slot count becomes 3: one bonus slot of
-// each of 1st/2nd/3rd spell level); the Intense Spells bonus-damage magnitude DOES
-// change at level 4 (half wizard level, minimum 1, reaches 2 for the first time via
-// the pre-existing formula) then STAYS at 2 through level 5 (`max(5/2, 1) = 2`, an
-// integer-division coincidence, not a formula that stopped scaling).
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 5;
+// level-3, level-4, AND level-6 "Special" columns are all blank, so no new class
+// feature is gained at 2nd, 3rd, 4th, or 6th level (like Cleric/Sorcerer's level-2
+// gate, unlike Rogue/Monk/Druid's Evasion/Woodland Stride or Rogue/Monk/Barbarian's
+// own 3rd-level features); the level-5 "Special" column reads "Bonus feat" — a
+// genuinely NEW class feature, verified rather than assumed, but checked and
+// confirmed NOT flat (a choice among an open-ended set of metamagic feats, item
+// creation feats, or Spell Mastery — a general feat-selection/feat-prerequisite
+// engine, mirroring the Monk High Jump precedent exactly), so it is deliberately left
+// named-but-unproven and grounds no record; the specialist bonus slot flat count DOES
+// change at level 3 (see `explain_wizard_level1_prepared_spell_baseline`), since a
+// level-3 wizard casts 2nd-level spells for the first time, STAYS at that same value
+// through level 4 (3rd-level wizard spells do not become available until level 5,
+// verified independently against both primary sources' raw spells-per-day table
+// rows), DOES change again for real at level 5 (a level-5 wizard casts 3rd-level
+// spells for the first time, so the specialist bonus slot count becomes 3: one bonus
+// slot of each of 1st/2nd/3rd spell level), then STAYS at 3 through level 6
+// (4th-level wizard spells do not become available until level 7, verified
+// independently against both primary sources' raw spells-per-day table rows); the
+// Intense Spells bonus-damage magnitude DOES change at level 4 (half wizard level,
+// minimum 1, reaches 2 for the first time via the pre-existing formula), STAYS at 2
+// through level 5 (`max(5/2, 1) = 2`, an integer-division coincidence, not a formula
+// that stopped scaling), then DOES change again for real at level 6
+// (`max(6/2, 1) = 3`, up from 2 at level 5, via the same pre-existing formula, not
+// re-derived).
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 6;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -6353,10 +6358,10 @@ fn explain_sorcerer_level1_spell_baseline(
 
 /// The bounded Wizard milestone level this decomposition surface grounds, if any.
 /// Returns the single Wizard level when the chosen input is exactly a single-class
-/// Wizard at one of the supported milestone levels (1, 2, 3, or 4). Returns `None`
-/// for no Wizard, a non-Wizard class, a multiclass mix, or any level-5+ Wizard this
-/// slice deliberately does not recognize — each of which stays claim-blocked exactly
-/// as before. Mirrors the Fighter `supported_fighter_level` / Paladin
+/// Wizard at one of the supported milestone levels (1 through 6). Returns `None` for
+/// no Wizard, a non-Wizard class, a multiclass mix, or any level-7+ Wizard this slice
+/// deliberately does not recognize — each of which stays claim-blocked exactly as
+/// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
 /// `supported_cleric_level` / Bard `supported_bard_level` / Druid
@@ -6554,6 +6559,26 @@ fn wizard_has_canonical_specialization_selections(input: &CharacterInput) -> boo
 /// diagnostic fabricated for it). This slice widens existing pillars only (one of
 /// them, the specialist bonus slot count, to a genuinely new value), adds no new
 /// pillar record.
+///
+/// A further SD13-E5 slice widens the gate again (`supported_wizard_level`, 1..=6)
+/// and extends the same formulas to level 6, without re-derivation, verified
+/// independently against the PF1 Core Rulebook Wizard class table (d20pfsrd and
+/// legacy.aonprd.com): level 6 base attack bonus is +3, base saves are +2/+2/+5
+/// (Fortitude/Reflex/Will) — all four values genuinely NEW, up from +2/+1/+1/+4 at
+/// level 5. The specialist bonus slot flat count, checked rather than assumed to
+/// rise again, STAYS at 3: the raw Wizard spells-per-day table's level-6 row is
+/// "4/3/3/2/—" — 4th-level wizard spells do not become available until wizard level
+/// 7 (level 7 row: "4/4/3/2/1", the first non-"—" 4th-level column) — so a level-6
+/// specialist still only casts 1st-, 2nd-, and 3rd-level spells. Intense Spells'
+/// bonus-damage magnitude, in contrast, CHANGES for real at level 6: `max(6 / 2, 1) =
+/// 3`, up from 2 at level 5, via the same pre-existing formula, not re-derived.
+/// Force Missile's uses-per-day pool is level-independent and unchanged; Scribe
+/// Scroll stays recognized as an already-held grant. The class table's level-6
+/// "Special" column is genuinely BLANK (verified independently against both
+/// sources, checked rather than assumed away) — UNLIKE the level-5 "Bonus feat"
+/// entry, no new Wizard class feature is gained at 6th level — this slice widens
+/// existing pillars only (one of them, Intense Spells, to a genuinely new value),
+/// adds no new pillar record.
 fn explain_wizard_level1_prepared_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,

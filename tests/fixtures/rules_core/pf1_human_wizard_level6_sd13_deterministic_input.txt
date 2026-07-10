@@ -1,0 +1,33 @@
+# SD13-E5 deterministic Human Wizard level 6 progression fixture.
+# Widens the accepted SD13-E4-R3/E5 deterministic PF1 Core Rulebook Human Wizard
+# level-1/level-2/level-3/level-4/level-5 prepared arcane spell-burden baseline to
+# level 6 as chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic ability/feat posture from the
+# level-1/level-2/level-3/level-4/level-5 fixtures, and the same canonical school
+# specialization selections (Evocation chosen, Necromancy/Transmutation opposed),
+# adding only the level bump this bounded tranche needs.
+#
+# It deliberately avoids every later Wizard burden surface: no evocation spell-damage
+# application, no force-missile casting execution, no opposed-school preparation cost,
+# no spellbook, no spells prepared, no spell slots, no spell DCs, no bonus-feat
+# selection/execution for the 5th-level "Bonus feat" grant (a genuinely open-ended
+# metamagic/item-creation/Spell Mastery choice, deliberately not attempted this
+# slice either), and no level-7+ progression.
+case_id=pf1-crb-human-wizard-level6
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:6
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:evocation
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md
