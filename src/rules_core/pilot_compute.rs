@@ -199,12 +199,12 @@ const PALADIN_CLASS_ID: &str = "class:paladin";
 const RANGER_CLASS_ID: &str = "class:ranger";
 const HYBRID_BASELINE_LEVEL: u8 = 1;
 
-// SD13-E5 Paladin milestone widening. The accepted level-1/level-2 chassis-and-
-// spell-burden separation is now joined by level 3, the PF1 Core Rulebook level
-// gate at which Mercy is actually granted. Nothing here grounds level 4+ Paladin
-// (Smite Evil's uses/day would first increase at level 4, which stays out of
-// scope for this bounded surface).
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 3;
+// SD13-E5 Paladin milestone widening. The accepted level-1/level-2/level-3
+// chassis-and-spell-burden separation is now joined by level 4, the PF1 Core
+// Rulebook level gate at which Smite Evil's uses/day genuinely increases (to
+// 2/day) and Channel Positive Energy is newly granted. Nothing here grounds
+// level 5+ Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 4;
 
 // Lay on hands and divine grace are both 2nd-level paladin features in the PF1 Core
 // Rulebook. Below this level their honest computed surface is their correct
@@ -231,6 +231,20 @@ const PALADIN_LAY_ON_HANDS_DIVINE_GRACE_LEVEL: u8 = 2;
 // used) is NOT computed, since no lay-on-hands execution engine exists
 // anywhere in this codebase.
 const PALADIN_MERCY_LEVEL: u8 = 3;
+
+// Channel Positive Energy is a 4th-level paladin feature in the PF1 Core
+// Rulebook (verified independently against legacy.aonprd.com's Core Rulebook
+// Paladin page): "When a paladin reaches 4th level, she gains the
+// supernatural ability to channel positive energy like a cleric. Using this
+// ability consumes two uses of her lay on hands ability. A paladin uses her
+// level as her effective cleric level when channeling positive energy."
+// Below this level its honest computed surface is its correct ABSENCE; at or
+// above it (SD13-E5 level-4 widening), this slice grounds only the flat
+// channel-energy die-count magnitude (ceil(effective cleric level / 2)),
+// mirroring the Cleric Channel Energy dice-count idiom exactly. No
+// healing/damage-resolution execution, no heal-vs-harm target selection, and
+// no lay-on-hands-resource-consumption bookkeeping is computed.
+const PALADIN_CHANNEL_POSITIVE_ENERGY_LEVEL: u8 = 4;
 
 /// SD13-E5 Paladin Mercy choice-slot id. The deterministic level-3 fixture names a
 /// chosen mercy (e.g. `mercy:shaken`); the compute seam recognizes whichever raw
@@ -3248,7 +3262,14 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         ),
     });
 
-    let smite_evil_uses_per_day: i16 = 1;
+    // Smite Evil uses per day genuinely increases at level 4 (PF1 Core Rulebook:
+    // 1/day below level 4, +1 at level 4 and every three levels thereafter, to a
+    // maximum of 7/day at level 19 -- verified independently against d20pfsrd
+    // and legacy.aonprd.com rather than assumed to stay at 1). The formula
+    // `1 + (paladin level - 1) / 3` correctly yields 1 at levels 1-3 and 2 at
+    // level 4 (the next increase does not land until level 7, out of scope for
+    // this bounded level-{MAX_SUPPORTED_PALADIN_LEVEL} baseline).
+    let smite_evil_uses_per_day: i16 = 1 + (paladin_level - 1) / 3;
     let smite_evil_attack_bonus = charisma_modifier.max(0);
     let smite_evil_damage_bonus = paladin_level;
 
@@ -3257,10 +3278,10 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         value: smite_evil_uses_per_day,
         detail: format!(
             "Paladin Smite Evil uses per day at paladin level {level} (PF1 Core Rulebook: 1/day \
-             below level 4, +1 at level 4 and every three levels thereafter, none of which this \
-             bounded level-{MAX_SUPPORTED_PALADIN_LEVEL} baseline grounds): \
-             {smite_evil_uses_per_day}. This grounds only the flat per-day resource count; it \
-             computes no swift-action activation bookkeeping and no per-use consumption tracking"
+             below level 4, +1 at level 4 and every three levels thereafter, to a maximum of \
+             7/day at level 19): 1 + ({paladin_level} - 1) / 3 = {smite_evil_uses_per_day}. This \
+             grounds only the flat per-day resource count; it computes no swift-action activation \
+             bookkeeping and no per-use consumption tracking"
         ),
     });
 
@@ -3412,6 +3433,48 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
                 ),
             });
         }
+    }
+
+    // Channel Positive Energy: below the level-4 gate (levels 1-3), this stays a
+    // correct level-gate absence record (value 0); at or above it (SD13-E5
+    // level-4 widening), it transitions to a bounded, flat-magnitude record
+    // grounding only the channel-energy die count, mirroring the Cleric Channel
+    // Energy dice-count idiom exactly (ceil(effective level / 2)). No
+    // healing/damage-resolution execution, no heal-vs-harm target selection,
+    // and no lay-on-hands-resource-consumption bookkeeping is computed.
+    if level < PALADIN_CHANNEL_POSITIVE_ENERGY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.level_gate.channel_positive_energy".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin channel positive energy at paladin level {level}: correctly absent at \
+                 level {level} by PF1 CRB level gate (channel positive energy is a \
+                 {PALADIN_CHANNEL_POSITIVE_ENERGY_LEVEL}th-level paladin feature); at-grant \
+                 formula named but not computed. Channel positive energy lets a paladin channel \
+                 positive energy like a cleric, using her paladin level as her effective cleric \
+                 level, consuming two uses of lay on hands per use"
+            ),
+        });
+    } else {
+        let channel_positive_energy_dice = (paladin_level + 1) / 2;
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.channel_positive_energy_dice".to_owned(),
+            value: channel_positive_energy_dice,
+            detail: format!(
+                "Paladin channel positive energy dice at paladin level {level} (PF1 Core \
+                 Rulebook, {PALADIN_CHANNEL_POSITIVE_ENERGY_LEVEL}th-level paladin feature, \
+                 verified independently against d20pfsrd and legacy.aonprd.com: \"When a paladin \
+                 reaches 4th level, she gains the supernatural ability to channel positive \
+                 energy like a cleric. Using this ability consumes two uses of her lay on hands \
+                 ability. A paladin uses her level as her effective cleric level when channeling \
+                 positive energy.\"): ceil(paladin level / 2) = ceil({paladin_level} / 2) = \
+                 {channel_positive_energy_dice}d6, mirroring the same die-count formula already \
+                 grounded for Cleric's own Channel Energy. This grounds only the flat die-count \
+                 magnitude and the lay-on-hands-use-cost identity; it computes no \
+                 healing/damage-resolution execution, no heal-vs-harm target selection, and no \
+                 lay-on-hands-resource-consumption bookkeeping"
+            ),
+        });
     }
 
     // SD13-E5: ground the partial-caster IDENTITY itself as one more flat

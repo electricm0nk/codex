@@ -287,28 +287,38 @@ fn paladin_level2_mercy_absence_gate_is_unaffected_by_the_level3_widening() {
     );
 }
 
-// ----- Negative control: level 4 stays unrecognized by this slice -----
+// ----- Negative control (retired): Paladin level 4 was later widened into the -----
+// ----- supported tranche; see tests/sd13_paladin_level4_progression.rs           -----
 
 #[test]
-fn paladin_level_4_is_not_promoted_by_this_slice() {
+fn paladin_level_4_was_later_widened_into_the_supported_tranche() {
+    // A subsequent SD13-E5 slice (tests/sd13_paladin_level4_progression.rs) widened
+    // `supported_paladin_level` from 1..=3 to 1..=4, so level 4 now gains this
+    // slice's grounding via the same formulas (Smite Evil uses/day genuinely
+    // increasing to 2/day, Channel Positive Energy newly grounded, and the
+    // effective caster level genuinely becoming 1). This control now asserts the
+    // widened truth rather than the original (now-stale) "level 4 stays
+    // unrecognized" claim; the equivalent negative control for the current
+    // boundary (level 5) lives in tests/sd13_paladin_level4_progression.rs's
+    // `paladin_level_5_is_not_promoted_by_this_slice`. Mercy stays granted
+    // (not re-derived) at level 4.
     let level_4 = PALADIN_LEVEL3_FIXTURE.replace("class:paladin:3", "class:paladin:4");
     let input = load(&level_4);
     let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-4 Paladin must not gain any bounded paladin chassis explanation: {:?}",
-        computation.explanations
+    let base_attack = explanation(&computation, BASE_ATTACK_ID);
+    assert_eq!(
+        base_attack.value, 4,
+        "level-4 Paladin must now gain the widened base-attack grounding (classlevel = 4): {:?}",
+        base_attack
     );
     assert!(
-        !has_explanation(&computation, MERCY_GRANTED_ID),
-        "level-4 Paladin must not gain the Mercy grant explanation from this bounded slice"
+        has_explanation(&computation, MERCY_GRANTED_ID),
+        "level-4 Paladin must still gain the Mercy grant explanation (granted once at level 3, \
+         unchanged at level 4)"
     );
     assert!(
-        !has_explanation(&computation, MERCY_CHOICE_ID),
-        "level-4 Paladin must not gain the Mercy choice explanation from this bounded slice"
+        has_explanation(&computation, MERCY_CHOICE_ID),
+        "level-4 Paladin must still gain the Mercy choice explanation (unchanged at level 4)"
     );
 }
 
