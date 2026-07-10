@@ -772,7 +772,24 @@ const MONK_CLASS_ID: &str = "class:monk";
 /// SD13-E5 Monk level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` idiom.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 6;
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 7;
+// PF1 Core Rulebook level gate at which Monk gains Wholeness of Body (7th
+// level, verified independently against two primary sources: d20pfsrd and
+// legacy.aonprd.com both name Wholeness of Body as the Monk 7th-level
+// special feature entry, alongside an upgrade to the ki pool's
+// damage-reduction-bypass material). Wholeness of Body itself ("a monk can
+// heal his own wounds as a standard action... a number of hit points of
+// damage equal to his monk level by using 2 points from his ki pool") is
+// checked and confirmed NOT flat: it requires both a ki-point-consumption/
+// action-economy engine and a healing-resolution engine, neither of which
+// exists anywhere in this codebase (mirroring exactly why the ki pool's own
+// point-spending was already left unimplemented at level 4). The ki pool's
+// material-bypass upgrade likewise requires a damage-reduction-bypass-
+// resolution engine that does not exist here. Neither is grounded as a
+// record at level 7, mirroring the Bard Suggestion / Monk High Jump
+// precedent of naming a checked-but-unproven feature without fabricating a
+// value for it. No new const is introduced for this level gate since no
+// code branches on it.
 /// PF1 Core Rulebook level gate at which Monk gains Evasion (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Bonus feat, evasion" as the Monk 2nd-level special feature entry).
@@ -5057,8 +5074,8 @@ fn explain_barbarian_level1_chassis(
 
 /// The bounded Monk milestone level this decomposition surface grounds, if any.
 /// Returns the single Monk level when the chosen input is exactly a single-class
-/// Monk at one of the supported milestone levels (1, 2, 3, 4, or 5). Returns
-/// `None` for no Monk, a non-Monk class, a multiclass mix, or any level-6+ Monk
+/// Monk at one of the supported milestone levels (1, 2, 3, 4, 5, 6, or 7). Returns
+/// `None` for no Monk, a non-Monk class, a multiclass mix, or any level-8+ Monk
 /// this slice deliberately does not recognize — each of which stays
 /// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level`
 /// / Paladin `supported_paladin_level` / Rogue `supported_rogue_level` /
@@ -5076,9 +5093,9 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Monk
-/// level-1/level-2/level-3/level-4/level-5 martial chassis, mirroring the
-/// Barbarian/Rogue level-range-gate pattern, and now grounding ten named pillar
-/// burdens at every supported level (base-attack, base-save, AC Bonus, the
+/// level-1/level-2/level-3/level-4/level-5/level-6/level-7 martial chassis,
+/// mirroring the Barbarian/Rogue level-range-gate pattern, and now grounding ten
+/// named pillar burdens at every supported level (base-attack, base-save, AC Bonus, the
 /// unarmed strike die / Flurry of Blows flat surface, the level-1 bonus feat
 /// choice-slot recognition, at level 2, Evasion, at level 3, Still Mind, at level
 /// 4, the ki pool's flat size and Slow Fall, and at level 5, Purity of Body)
@@ -5125,14 +5142,24 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 /// disease-resolution engine exists in this codebase); High Jump, the level-5
 /// class table's OTHER "Special" column entry, is checked and confirmed NOT flat
 /// (it requires wiring the monk's level into an Acrobatics-check total and
-/// spending a ki point) and is deliberately left named-but-unproven. It still
+/// spending a ki point) and is deliberately left named-but-unproven. Further
+/// SD13-E5 slices widen the gate to level 6 (Slow Fall's own reach magnitude
+/// genuinely rising from 20 ft to 30 ft) and to level 7 (base attack, base
+/// saves, the unarmed strike die, and the Flurry of Blows flat surface all
+/// extend via the same pre-existing formulas with no re-derivation; Wholeness
+/// of Body, the level-7 "Special" column's new feature, is checked and
+/// confirmed NOT flat — it requires a ki-point-consumption/action-economy
+/// engine and a healing-resolution engine, neither of which exists in this
+/// codebase — and is deliberately left named-but-unproven, mirroring the High
+/// Jump precedent). It still
 /// grounds no attack-resolution or damage-roll engine, no monk-weapon flurry, no
 /// level-8+ unarmed damage die progression, no ki-power execution, no level-4+ AC
 /// Bonus dodge-bonus progression, no "unarmored and unencumbered" runtime
-/// state-check engine, no wiring into integrated combat totals, no level-6+
-/// martial progression, no level-2 bonus feat grant (PF1 grants monks a SEPARATE
-/// bonus feat at 2nd level; this widening does not add a second choice-slot or
-/// recognition for it), and no execution of what the recognized level-1 bonus
+/// state-check engine, no wiring into integrated combat totals, no level-8+
+/// martial progression, no Wholeness of Body execution, no level-2/level-6 bonus
+/// feat grant (PF1 grants monks SEPARATE bonus feats at 2nd and 6th level; this
+/// widening does not add a second choice-slot or recognition for either), and no
+/// execution of what the recognized level-1 bonus
 /// feat actually does (no attack-of-opportunity engine for Combat Reflexes, no
 /// grapple-check engine for Improved Grapple, no DC/save engine for Stunning
 /// Fist, and so on). It:
@@ -5297,10 +5324,11 @@ fn explain_monk_level1_chassis(
     // Rulebook: when making a flurry of blows as a full-attack action, the monk uses
     // her monk level in place of her base attack bonus and takes a -2 penalty on all
     // attacks; the flat pre-ability-modifier attack bonus is monk level - 2 (-1 at
-    // level 1, +0 at level 2, +1 at level 3, matching the PF1 CRB table's "-1/-1",
-    // "+0/+0", and "+1/+1" entries), and the flurry grants two attacks at every
-    // level this seam supports (1-3) — Monk gains a third flurry attack only at a
-    // much higher level. Only these flat facets are grounded; no attack-resolution
+    // level 1, +0 at level 2, +1 at level 3, ..., +5 at level 7, matching the PF1 CRB
+    // table's "-1/-1" through "+5/+5" entries), and the flurry grants two attacks at
+    // every level this seam supports (1-7) — Monk gains a third flurry attack only at
+    // 8th level, verified independently against both primary sources' verbatim
+    // Flurry of Blows rule text. Only these flat facets are grounded; no attack-resolution
     // engine, no monk-weapon flurry, and no wiring into integrated combat totals is
     // implemented.
     let flurry_attack_bonus = level_value - 2;
@@ -5324,8 +5352,9 @@ fn explain_monk_level1_chassis(
             "Monk level {level} Flurry of Blows attack count from the PF1 Core Rulebook: a \
              level-{level} flurry grants one additional attack on a full attack, i.e. two \
              attacks, each at the flat pre-ability modifier grounded separately. The attack \
-             count stays 2 at every level this seam supports (1-3) — Monk gains a third flurry \
-             attack only at a much higher level. Only the count facet (2) is grounded; no \
+             count stays 2 at every level this seam supports (1-7) — Monk gains a third flurry \
+             attack only at 8th level, verified independently against both primary sources' \
+             verbatim Flurry of Blows rule text. Only the count facet (2) is grounded; no \
              attack-resolution engine and no monk-weapon flurry support is implemented"
         ),
     });
