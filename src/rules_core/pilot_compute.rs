@@ -5410,7 +5410,7 @@ fn explain_monk_level1_chassis(
 }
 
 const ROGUE_CLASS_ID: &str = "class:rogue";
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 5;
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 6;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
@@ -5425,8 +5425,8 @@ const ROGUE_UNCANNY_DODGE_LEVEL: u8 = 4;
 /// The bounded Rogue milestone level this decomposition surface grounds, if
 /// any. Returns the single Rogue level when the chosen input is exactly a
 /// single-class Rogue at one of the supported milestone levels (1, 2, 3, 4,
-/// or 5). Returns `None` for no Rogue, a non-Rogue class, a multiclass mix,
-/// or any level-6+ Rogue this slice deliberately does not recognize — each
+/// 5, or 6). Returns `None` for no Rogue, a non-Rogue class, a multiclass mix,
+/// or any level-7+ Rogue this slice deliberately does not recognize — each
 /// of which stays claim-blocked exactly as before. Mirrors the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` level-range
 /// gate idiom.
@@ -5443,9 +5443,10 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Rogue
-/// level-1/level-2/level-3/level-4/level-5 chassis, mirroring the Barbarian/Monk
-/// level-1 baseline pattern and the Fighter `supported_fighter_level` / Paladin
-/// `supported_paladin_level` level-range-gate idiom.
+/// level-1/level-2/level-3/level-4/level-5/level-6 chassis, mirroring the
+/// Barbarian/Monk level-1 baseline pattern and the Fighter
+/// `supported_fighter_level` / Paladin `supported_paladin_level`
+/// level-range-gate idiom.
 /// The SD13-E3 pillar-grounding slice grounds three of the four named
 /// burdens directly (base-attack progression, base-save progression, and
 /// sneak attack die count); the SD13-E5 trapfinding slice grounds the
@@ -5465,21 +5466,31 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 /// column reads only "Sneak attack +3d6," no other new feature) and the
 /// pre-existing sneak-attack die-count formula genuinely produces `3` (i.e.
 /// `3d6`) at level 5, with Evasion, Trap Sense, and Uncanny Dodge all
-/// staying granted, not re-derived.
+/// staying granted, not re-derived; a further SD13-E5 slice widens the gate
+/// to level 6 (verified independently against d20pfsrd and
+/// legacy.aonprd.com: the class table's level-6 "Special" column reads
+/// "Rogue talent, trap sense +2") — the pre-existing Trap Sense
+/// flat-magnitude formula (`level / 3`, floor) genuinely rises to `2` at
+/// level 6, the pre-existing sneak-attack die-count formula stays at `3`
+/// (i.e. `3d6`, unchanged from level 5), and Trapfinding genuinely rises to
+/// `3` via the same pre-existing formula, with Evasion and Uncanny Dodge
+/// staying granted, not re-derived; the level-6 row's OTHER named entry, a
+/// second Rogue Talent slot, is deliberately left named-but-unproven this
+/// slice, mirroring the level-2/level-4 rogue-talent precedent.
 ///
 /// This deliberately does not compute a full Rogue class engine. It grounds,
-/// at every supported level (1, 2, 3, 4, and 5):
+/// at every supported level (1, 2, 3, 4, 5, and 6):
 /// - base-attack progression (3/4 BAB, `level * 3 / 4`),
 /// - base-save progression (good Reflex, poor Fortitude, poor Will),
 /// - the sneak attack damage-die *count* only (`(level + 1) / 2`, i.e. `1`
-///   at levels 1-2, `2` at levels 3-4, and `3` at level 5, `1d6`/`2d6`/`3d6`)
-///   — not damage-roll execution and not the flanking / Dexterity-denial
-///   trigger-condition engine,
+///   at levels 1-2, `2` at levels 3-4, and `3` at levels 5-6, `1d6`/`2d6`/
+///   `3d6`) — not damage-roll execution and not the flanking /
+///   Dexterity-denial trigger-condition engine,
 /// - the Trapfinding flat numeric bonus (`max(level / 2, 1)`, `+1` at levels
-///   1-3 and `+2` at levels 4-5) on Perception checks to locate traps and on
-///   Disable Device checks, plus the magic-trap-disarm statement — not a
-///   check-execution engine, no trap DC resolution, and no magic-trap disarm
-///   engine,
+///   1-3, `+2` at levels 4-5, and `+3` at level 6) on Perception checks to
+///   locate traps and on Disable Device checks, plus the magic-trap-disarm
+///   statement — not a check-execution engine, no trap DC resolution, and
+///   no magic-trap disarm engine,
 /// - Evasion (a 2nd-level Rogue class feature): below level 2 it is grounded
 ///   as a correct PF1 Core Rulebook level-gate absence (value 0); at level 2
 ///   and above it is grounded as a bounded identity/recognition record only
@@ -5493,14 +5504,14 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 ///   against d20pfsrd and legacy.aonprd.com): below level 3 it is grounded as
 ///   a correct PF1 Core Rulebook level-gate absence (value 0); at level 3 and
 ///   above it is grounded as a bounded flat-magnitude record only
-///   (`level / 3`, floor; `+1` at levels 3-4) naming the rule text (a bonus
-///   on Reflex saves made to avoid traps and an equal dodge bonus to AC
-///   against attacks made by traps) — mirroring the Fighter Bravery /
-///   Paladin Divine Grace idiom: the magnitude is never applied to any
-///   actual Reflex-save total or AC total, since no saving-throw-resolution
-///   or armor-class-resolution engine exists in this codebase, and no
-///   trap-detection or trap-triggering engine exists to decide when it would
-///   apply, and
+///   (`level / 3`, floor; `+1` at levels 3-5, genuinely rising to `+2` at
+///   level 6) naming the rule text (a bonus on Reflex saves made to avoid
+///   traps and an equal dodge bonus to AC against attacks made by traps) —
+///   mirroring the Fighter Bravery / Paladin Divine Grace idiom: the
+///   magnitude is never applied to any actual Reflex-save total or AC total,
+///   since no saving-throw-resolution or armor-class-resolution engine
+///   exists in this codebase, and no trap-detection or trap-triggering
+///   engine exists to decide when it would apply, and
 /// - Uncanny Dodge (a 4th-level Rogue class feature, verified independently
 ///   against d20pfsrd and legacy.aonprd.com): below level 4 it is grounded as
 ///   a correct PF1 Core Rulebook level-gate absence (value 0); at level 4 and
@@ -5516,9 +5527,9 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 ///   slice, mirroring the Monk level-2 bonus feat / Barbarian Rage Power
 ///   precedent.
 ///
-/// It still grounds no rogue talent (a level-2+ choice-list feature, and a
-/// genuinely open-ended talent tree — a new-subsystem-shaped burden left
-/// named but unproven) and no level-6+ progression. These
+/// It still grounds no rogue talent (a level-2+/level-6+ choice-list
+/// feature, and a genuinely open-ended talent tree — a new-subsystem-shaped
+/// burden left named but unproven) and no level-7+ progression. These
 /// `class_chassis.rogue.*` / `class_feature.rogue.evasion` /
 /// `class_feature.rogue.trap_sense` / `class_feature.rogue.uncanny_dodge`
 /// explanation records are standalone: they are not wired into
@@ -5565,7 +5576,7 @@ fn explain_rogue_level1_chassis(
              chassis-recognition record only; the base-attack, base-save, sneak-attack \
              die-count, trapfinding, Evasion, Trap Sense, and Uncanny Dodge pillars are \
              grounded separately below, but this record still grounds no rogue talent and no \
-             level-6+ progression, so it carries no fabricated mechanical value (+0)"
+             level-7+ progression, so it carries no fabricated mechanical value (+0)"
         ),
     });
 
@@ -5710,7 +5721,7 @@ fn explain_rogue_level1_chassis(
                 "Rogue Trap Sense granted at rogue level {level} (PF1 Core Rulebook, 3rd-level \
                  rogue class feature): a +{trap_sense_bonus} bonus on Reflex saves made to avoid \
                  traps and a +{trap_sense_bonus} dodge bonus to AC against attacks made by traps \
-                 (rogue level / 3 = {trap_sense_bonus}; this bonus rises further at 6th/9th/12th/\
+                 (rogue level / 3 = {trap_sense_bonus}; this bonus rises further at 9th/12th/\
                  15th/18th rogue level, beyond this bounded slice). This is a bounded \
                  flat-magnitude record only, non-fabricated: it is never applied to any actual \
                  Reflex-save total or AC total, since no saving-throw-resolution or \
