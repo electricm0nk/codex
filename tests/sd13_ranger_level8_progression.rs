@@ -330,44 +330,30 @@ fn ranger_level8_does_not_fabricate_a_second_favored_terrain() {
     );
 }
 
-// ----- Negative control: level 9 stays unrecognized by this slice -----
+// ----- Level 9 was later widened into the supported tranche by a further slice -----
 //
-// This supersedes `tests/sd13_ranger_level7_progression.rs`'s
-// `ranger_level_8_is_not_promoted_by_this_slice`, whose coverage moves here now that
-// level 8 is itself promoted into the supported tranche.
+// This block previously superseded `tests/sd13_ranger_level7_progression.rs`'s
+// level-8 negative control; its own coverage moves to
+// `tests/sd13_ranger_level9_progression.rs`'s level-10 control now that level 9
+// is itself promoted into the supported tranche.
 
 #[test]
-fn ranger_level_9_is_not_promoted_by_this_slice() {
+fn ranger_level_9_was_later_widened_into_the_supported_tranche() {
     let level_9 = RANGER_LEVEL8_FIXTURE.replace("class:ranger:8", "class:ranger:9");
     let input = load(&level_9);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")),
-        "level-9 Ranger must not gain any bounded ranger chassis explanation: {:?}",
+        "level-9 Ranger is now recognized by the later level-9 widening slice \
+         (tests/sd13_ranger_level9_progression.rs carries its proof): {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, ENDURANCE_ID),
-        "level-9 Ranger must not gain the Endurance explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, FAVORED_TERRAIN_ID),
-        "level-9 Ranger must not gain the Favored Terrain explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, HUNTERS_BOND_ID),
-        "level-9 Ranger must not gain the Hunter's Bond explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, WOODLAND_STRIDE_ID),
-        "level-9 Ranger must not gain the Woodland Stride explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, SWIFT_TRACKER_ID),
-        "level-9 Ranger must not gain the Swift Tracker explanation from this bounded slice"
+        has_explanation(&computation, ENDURANCE_ID),
+        "level-9 Ranger now carries the Endurance record via the widened gate"
     );
 }
 

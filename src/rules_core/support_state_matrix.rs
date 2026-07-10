@@ -366,7 +366,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_level5_progression.rs + \
     tests/sd13_ranger_level6_progression.rs + \
     tests/sd13_ranger_level7_progression.rs + \
-    tests/sd13_ranger_level8_progression.rs";
+    tests/sd13_ranger_level8_progression.rs + \
+    tests/sd13_ranger_level9_progression.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -2127,7 +2128,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7/ \
-                            level-8 chassis baseline, with base attack bonus, base save \
+                            level-8/level-9 chassis baseline, with base attack bonus, base save \
                             progression, Track, the favored-enemy flat surface, the \
                             combat-style choice-and-bonus-feat recognition, (level 3) \
                             Endurance and the Favored Terrain choice-and-flat-magnitude \
@@ -2307,7 +2308,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     favored terrain\" (mirroring the already-grounded Favored Enemy 5th-level \
                     idiom: a second terrain-type selection plus a bonus-increase-target choice), \
                     is a real, newly discovered multi-record burden deliberately left \
-                    named-but-unproven this slice, not an invented one. The row is Partial, not \
+                    named-but-unproven this slice, not an invented one — AND a further SD13-E5 \
+                    slice widens the level-range gate again (supported_ranger_level, 1..=9) and \
+                    extends every one of the formulas above to level 9 via the same formula, \
+                    without re-derivation, verified independently against the PF1 Core Rulebook \
+                    Ranger class table (d20pfsrd and legacy.aonprd.com): level 9 base attack \
+                    genuinely rises to +9 (full BAB; the table's own \"+9/+4\" iterative \
+                    notation is not modeled anywhere in this codebase, only the flat base \
+                    value) and poor Will genuinely rises to +3 (9 / 3), while both good saves \
+                    stay +6 (9 / 2 + 2, integer-division coincidences); Track stays 4 \
+                    (max(9/2, 1), a coincidence); the favored-enemy skill bonuses, \
+                    favored-terrain count, Hunter's Bond ally bonus, Endurance, Woodland \
+                    Stride, Swift Tracker, and both combat-style bonus-feat recognitions all \
+                    carry over unchanged (the next favored-enemy grant lands at 10th and the \
+                    next favored-terrain grant at 13th, both checked rather than assumed); the \
+                    level-9 \"Special\" column reads \"Evasion\" (verified independently \
+                    against both primary sources, checked rather than assumed away) — a \
+                    genuinely NEW class feature carrying the same rule text as Rogue's and \
+                    Monk's own Evasion, grounded by this slice as a +0 identity/recognition \
+                    record only (class_feature.ranger.evasion), mirroring those precedents \
+                    exactly — no saving-throw-resolution or damage-resolution engine exists in \
+                    this codebase, so no damage math is fabricated from the record. The row is Partial, not \
                     Supported: the favored-enemy conditional-application engine (target-type \
                     matching that would decide whether a specific check or attack is made \
                     against the favored enemy) is not implemented, neither recognized \
@@ -2316,11 +2337,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     unproven, Hunter's Bond's ally-bonus application and the animal-companion \
                     form are unproven, Woodland Stride's own terrain-movement application and \
                     Swift Tracker's own tracking-penalty application are both unproven, Ranger \
-                    level 9+ is not proven, and the later ranger spell burden (spell slots, spell \
+                    level 10+ is not proven, and the later ranger spell burden (spell slots, spell \
                     source, spells known/prepared) is still deferred to SD13-E4",
                 next_required_uplift: "the PF1 CRB level-8 2nd favored-terrain selection \
                     (mirroring the already-grounded Favored Enemy 5th-level idiom), Ranger \
-                    level-9+ progression, a favored-enemy conditional-application engine, \
+                    level-10+ progression, a favored-enemy conditional-application engine, \
                     execution of either recognized combat-style bonus feat's own mechanics, \
                     Hunter's Bond ally-bonus application and the animal-companion stat \
                     block/advancement subsystem, a terrain-detection/movement-resolution engine \
