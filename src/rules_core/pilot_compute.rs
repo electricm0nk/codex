@@ -213,8 +213,19 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // stat-block/advancement subsystem, neither of which exists in this
 // codebase, mirroring the Monk High Jump / Wizard level-5 bonus feat
 // precedent exactly -- so it is deliberately left named-but-unproven, not
-// fabricated. Nothing here grounds level 6+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 6;
+// fabricated. Level 6 joined next (both good saves and lay on hands/heal
+// dice genuinely increase again; the level-6 repeat Mercy grant was checked
+// and confirmed to need a mercy-list-growth mechanism this codebase has not
+// grounded, so it stays named-but-unproven). Level 7 joins next in turn (PF1
+// CRB level-7 "Special" column: "Smite evil 3/day" only, verified
+// independently against d20pfsrd and legacy.aonprd.com -- base saves and lay
+// on hands both stay numerically unchanged from level 6, an
+// integer-division coincidence, while Smite Evil uses/day, the
+// effective-caster-level gate, and Channel Positive Energy's die count all
+// genuinely increase again; level 7 is not one of the repeat-Mercy-grant
+// levels, 3/6/9/..., so nothing new is left unproven for Mercy here).
+// Nothing here grounds level 8+ Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 7;
 
 // Lay on hands and divine grace are both 2nd-level paladin features in the PF1 Core
 // Rulebook. Below this level their honest computed surface is their correct
@@ -3320,9 +3331,9 @@ fn explain_hybrid_level1_chassis(
 /// The bounded Paladin milestone level this decomposition surface grounds, if
 /// any. Returns the single Paladin level when the chosen input is exactly a
 /// single-class Paladin at one of the supported milestone levels (1 through
-/// 5). Returns `None` for no Paladin, a non-Paladin class, a multiclass mix,
+/// 7). Returns `None` for no Paladin, a non-Paladin class, a multiclass mix,
 /// the Ranger hybrid (which has its own F6 class-feature decomposition
-/// lane), or any level-6+ Paladin this slice deliberately does not
+/// lane), or any level-8+ Paladin this slice deliberately does not
 /// recognize — each of which stays claim-blocked exactly as before.
 fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
     match input.chosen.class_levels.as_slice() {
@@ -3350,13 +3361,21 @@ fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
 /// level-5 milestone (the effective-caster-level gate and Channel Positive
 /// Energy's die count both genuinely widen again; Divine Bond, the level-5
 /// "Special" column's other entry, was checked and confirmed NOT flat, so it
-/// stays deliberately named-but-unproven), and this file's own level-6
-/// milestone (both good base saves and lay on hands genuinely widen again,
-/// and the effective-caster-level gate widens again; the level-6 "Special"
-/// column's repeat "Mercy" entry -- an additional mercy becomes selectable at
-/// 6th level -- was checked and confirmed to require a mercy-list-growth
+/// stays deliberately named-but-unproven), the level-6 milestone (both good
+/// base saves and lay on hands genuinely widen again, and the
+/// effective-caster-level gate widens again; the level-6 "Special" column's
+/// repeat "Mercy" entry -- an additional mercy becomes selectable at 6th
+/// level -- was checked and confirmed to require a mercy-list-growth
 /// mechanism this codebase has not already grounded, so it stays
-/// deliberately named-but-unproven, mirroring the Divine Bond precedent):
+/// deliberately named-but-unproven, mirroring the Divine Bond precedent),
+/// and this file's own level-7 milestone (Smite Evil's uses/day, the
+/// effective-caster-level gate, and Channel Positive Energy's die count all
+/// genuinely widen again; base saves and lay on hands stay numerically
+/// unchanged from level 6, an integer-division coincidence; the level-7
+/// "Special" column reads "Smite evil 3/day" only, verified independently
+/// against d20pfsrd and legacy.aonprd.com, and level 7 is not one of the
+/// repeat-Mercy-grant levels 3/6/9/..., so nothing new is left unproven for
+/// Mercy here):
 ///
 /// - one grounded numeric explanation set for the foundational base-attack-
 ///   bonus / base-save progression pillar, computed for real at every
@@ -3432,7 +3451,7 @@ fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
 ///     runtime path.
 ///
 /// This deliberately does not compute a supported spell surface, and it does
-/// not ground level 7+, Divine Bond (the level-5 "Special" column's other
+/// not ground level 8+, Divine Bond (the level-5 "Special" column's other
 /// entry, checked against a primary source and confirmed to need an
 /// activation/resource-consumption engine plus either a weapon-enhancement
 /// subsystem or a full mount stat-block/advancement subsystem), or a second
@@ -3487,11 +3506,13 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // +0/+0/+1/+1/+1/+2, Will +2/+3/+3/+4/+4/+5) rather than assuming Paladin
     // matched Ranger's exact shape: Paladin is full BAB (the same shape as
     // Fighter/Barbarian/Ranger), but its good saves are Fortitude AND Will (poor
-    // Reflex) -- NOT Ranger's good Fortitude/Reflex, poor Will. Paladin level 7+
+    // Reflex) -- NOT Ranger's good Fortitude/Reflex, poor Will. Paladin level 8+
     // remains out of scope; the flat base-attack and base-save numbers are
-    // grounded here, extended across the now-supported level 1..=6 range (level
+    // grounded here, extended across the now-supported level 1..=7 range (level
     // 5's Fortitude/Will/Reflex values were numerically unchanged from level 4, an
-    // integer-division coincidence; level 6's values genuinely increase again).
+    // integer-division coincidence; level 6's values genuinely increase again;
+    // level 7's values stay numerically unchanged from level 6, another
+    // integer-division coincidence, re-verified rather than assumed).
     let good_save = paladin_level / 2 + 2;
     let poor_save = paladin_level / 3;
 
@@ -3540,9 +3561,11 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // maximum of 7/day at level 19 -- verified independently against d20pfsrd
     // and legacy.aonprd.com rather than assumed to stay at 1). The formula
     // `1 + (paladin level - 1) / 3` correctly yields 1 at levels 1-3 and 2 at
-    // levels 4-6 (the next increase does not land until level 7, out of scope
-    // for this bounded level-6 baseline) -- re-verified independently for level
-    // 6 rather than trusted from the level-5 cycle's phrasing at face value.
+    // levels 4-6, then GENUINELY increases to 3 at level 7 (the PF1 CRB
+    // level-7 "Special" column reads "Smite evil 3/day", verified
+    // independently rather than assumed to stay at 2; the next increase does
+    // not land until level 10, out of scope for this bounded level-7
+    // baseline).
     let smite_evil_uses_per_day: i16 = 1 + (paladin_level - 1) / 3;
     let smite_evil_attack_bonus = charisma_modifier.max(0);
     let smite_evil_damage_bonus = paladin_level;
@@ -3759,22 +3782,26 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // for lay on hands / divine grace / mercy above. This grounds only the
     // caster-level gate arithmetic; it fabricates no spells known, no spells
     // per day, no bonus spell slots, and no spell save DCs. The gate
-    // genuinely widened at level 5 (to 2, up from 1 at level 4) and widens
-    // again at level 6 (to 3, up from 2 at level 5), via the same
-    // pre-existing formula, no re-derivation. Divine Bond, the level-5
-    // "Special" column's other entry, was checked against a primary source
-    // and confirmed to require an activation/resource-consumption engine
-    // plus either a weapon-enhancement subsystem or a full mount
-    // stat-block/advancement subsystem, so it stays deliberately
-    // named-but-unproven -- no explanation or diagnostic record is
-    // fabricated for it. Similarly, the level-6 "Special" column's repeat
-    // "Mercy" entry (PF1 CRB: an additional mercy becomes selectable at 6th
-    // level and every three levels thereafter) was checked and confirmed to
-    // require a mercy-list-growth mechanism this codebase has not already
-    // grounded (the existing mercy grant/choice records are a single,
-    // ungated recognition, not a per-level slot count), so it too stays
-    // deliberately named-but-unproven -- no second mercy-choice explanation
-    // record is fabricated for it.
+    // genuinely widened at level 5 (to 2, up from 1 at level 4), widened
+    // again at level 6 (to 3, up from 2 at level 5), and widens again at
+    // level 7 (to 4, up from 3 at level 6), via the same pre-existing
+    // formula, no re-derivation. Divine Bond, the level-5 "Special" column's
+    // other entry, was checked against a primary source and confirmed to
+    // require an activation/resource-consumption engine plus either a
+    // weapon-enhancement subsystem or a full mount stat-block/advancement
+    // subsystem, so it stays deliberately named-but-unproven -- no
+    // explanation or diagnostic record is fabricated for it. Similarly, the
+    // level-6 "Special" column's repeat "Mercy" entry (PF1 CRB: an additional
+    // mercy becomes selectable at 6th level and every three levels
+    // thereafter) was checked and confirmed to require a mercy-list-growth
+    // mechanism this codebase has not already grounded (the existing mercy
+    // grant/choice records are a single, ungated recognition, not a
+    // per-level slot count), so it too stays deliberately named-but-unproven
+    // -- no second mercy-choice explanation record is fabricated for it.
+    // Level 7's own "Special" column reads "Smite evil 3/day" only (verified
+    // independently against d20pfsrd and legacy.aonprd.com) -- level 7 is not
+    // one of the repeat-Mercy-grant levels (3, 6, 9, ...), so nothing new is
+    // left unproven for Mercy at level 7.
     let paladin_effective_caster_level = (paladin_level - 3).max(0);
     explanations.push(ComputationExplanation {
         id: "class_chassis.paladin.partial_caster.effective_caster_level".to_owned(),
