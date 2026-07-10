@@ -1013,8 +1013,28 @@ const DRUID_CLASS_ID: &str = "class:druid";
 /// bonus; Woodland Stride, Trackless Step, and Resist Nature's Lure all stay
 /// granted, not re-derived. The class table's level-5 "Special" column is genuinely
 /// blank (verified independently against both primary sources rather than assumed),
-/// so this slice grounds no new pillar — only the existing pillars are widened.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 5;
+/// so this slice grounds no new pillar — only the existing pillars are widened. A
+/// still further SD13-E5 slice widens the gate to level 6 (verified independently
+/// against d20pfsrd and legacy.aonprd.com): level 6 base attack bonus is +4, base
+/// saves are +5/+2/+5 (Fortitude/Reflex/Will), all three genuinely new values, up
+/// from +3/+1/+4 at level 5, extended via the same formulas, not re-derived; Wild
+/// Empathy grounds correctly to 7 (6 + Charisma modifier 1) via the same
+/// level-generic formula; Nature Sense stays the flat +2 bonus; Woodland Stride,
+/// Trackless Step, and Resist Nature's Lure all stay granted, not re-derived. The
+/// class table's level-6 "Special" column reads "Wild shape (2/day)" — checked per
+/// the operator brief's explicit instruction to verify whether Druid gains an
+/// actual new class feature at 6th level, and confirmed NOT a genuinely separable
+/// flat/identity-shaped element: the rule text bundles the "2/day" frequency
+/// increase together with a form-list expansion (a druid can now wild shape into a
+/// Large or Tiny animal or a Small elemental) and a functioning-level upgrade (the
+/// animal form now functions as beast shape II, the elemental form as elemental
+/// body I) — none of which exist in this codebase's engine-free record set, and
+/// none of which are separable from the "2/day" numeral without misrepresenting the
+/// bundled feature as fully flat. Wild Shape (including its level-6 frequency
+/// increase and form-list expansion) is therefore deliberately left entirely
+/// named-but-unproven, exactly as at level 4/5 — no explanation or diagnostic
+/// record is fabricated for it this slice either.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 6;
 /// PF1 Core Rulebook level gate at which Druid gains Resist Nature's Lure (4th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Resist nature's lure" as part of the Druid
@@ -7307,8 +7327,17 @@ fn supported_druid_level(input: &CharacterInput) -> Option<u8> {
 /// granted (not re-derived); the PF1 Core Rulebook Druid class table's level-5
 /// "Special" column is genuinely blank (verified independently against d20pfsrd and
 /// legacy.aonprd.com rather than assumed), so no new pillar is grounded at level 5.
-/// The chosen bond's execution and the prepared divine spell posture burden remain
-/// claim-blocked.
+/// A still further SD13-E5 slice widens the gate to level 6 (`supported_druid_level`,
+/// 1..=6), extending every formula above to level 6 via the same formula (level 6
+/// base attack bonus is +4, base saves are +5/+2/+5 Fortitude/Reflex/Will, all three
+/// genuinely new values), keeping Woodland Stride, Trackless Step, and Resist
+/// Nature's Lure all granted (not re-derived). The class table's level-6 "Special"
+/// column ("Wild shape (2/day)") was checked and confirmed NOT a genuinely separable
+/// flat/identity-shaped element — the frequency increase is bundled with a
+/// form-list expansion and a functioning-level upgrade, neither of which exist in
+/// this codebase — so it is deliberately left named-but-unproven, exactly as at
+/// level 4/5; no new pillar is grounded at level 6 either. The chosen bond's
+/// execution and the prepared divine spell posture burden remain claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
 /// bond power execution (no companion stat block, no companion advancement, no link /
