@@ -5916,7 +5916,7 @@ fn explain_monk_level1_chassis(
 }
 
 const ROGUE_CLASS_ID: &str = "class:rogue";
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 7;
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 8;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
@@ -5927,12 +5927,19 @@ const ROGUE_TRAP_SENSE_LEVEL: u8 = 3;
 /// uncanny dodge" — NOT the same level as Barbarian's own 2nd-level Uncanny
 /// Dodge grant).
 const ROGUE_UNCANNY_DODGE_LEVEL: u8 = 4;
+/// PF1 Core Rulebook level gate at which Rogue gains Improved Uncanny Dodge
+/// (8th level, verified independently against d20pfsrd and
+/// legacy.aonprd.com — the Rogue class table's level-8 "Special" column
+/// reads "Improved uncanny dodge, rogue talent." This is a DIFFERENT gate
+/// level than Barbarian's own Improved Uncanny Dodge grant, which is at
+/// barbarian level 5, not rogue's level 8; verified rather than assumed).
+const ROGUE_IMPROVED_UNCANNY_DODGE_LEVEL: u8 = 8;
 
 /// The bounded Rogue milestone level this decomposition surface grounds, if
 /// any. Returns the single Rogue level when the chosen input is exactly a
 /// single-class Rogue at one of the supported milestone levels (1, 2, 3, 4,
-/// 5, 6, or 7). Returns `None` for no Rogue, a non-Rogue class, a multiclass
-/// mix, or any level-8+ Rogue this slice deliberately does not recognize —
+/// 5, 6, 7, or 8). Returns `None` for no Rogue, a non-Rogue class, a multiclass
+/// mix, or any level-9+ Rogue this slice deliberately does not recognize —
 /// each of which stays claim-blocked exactly as before. Mirrors the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` level-range
 /// gate idiom.
@@ -5949,7 +5956,7 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Rogue
-/// level-1/level-2/level-3/level-4/level-5/level-6/level-7 chassis, mirroring the
+/// level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8 chassis, mirroring the
 /// Barbarian/Monk level-1 baseline pattern and the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level`
 /// level-range-gate idiom.
@@ -5992,21 +5999,36 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 /// flat-magnitude formula stays at `2` (unchanged from level 6, the next
 /// rise is at 9th level); Trapfinding stays at `3` (`max(7 / 2, 1)`, an
 /// integer-division coincidence with level 6); Evasion and Uncanny Dodge
-/// both stay granted, not re-derived.
+/// both stay granted, not re-derived. A further SD13-E5 slice widens the
+/// gate to level 8 (verified independently against d20pfsrd and
+/// legacy.aonprd.com: the class table's level-8 "Special" column reads
+/// "Improved uncanny dodge, rogue talent") — the pre-existing sneak-attack
+/// die-count formula (`(level + 1) / 2`) stays at `4` (i.e. `4d6`, unchanged
+/// from level 7, since the die count only rises at odd rogue levels); the
+/// pre-existing Trap Sense flat-magnitude formula stays at `2` (unchanged
+/// from level 7, the next rise is at 9th level); Trapfinding genuinely rises
+/// to `4` (`max(8 / 2, 1)`, up from `3` at level 7, via the same formula);
+/// Evasion and Uncanny Dodge both stay granted, not re-derived; Improved
+/// Uncanny Dodge is newly granted and grounded as a bounded
+/// identity/recognition record only, mirroring exactly how Barbarian's own
+/// Improved Uncanny Dodge was grounded at barbarian level 5. The level-8
+/// row's OTHER named entry, a third Rogue Talent slot, is deliberately left
+/// named-but-unproven this slice, mirroring the level-2/level-4/level-6
+/// rogue-talent precedent.
 ///
 /// This deliberately does not compute a full Rogue class engine. It grounds,
-/// at every supported level (1, 2, 3, 4, 5, 6, and 7):
+/// at every supported level (1, 2, 3, 4, 5, 6, 7, and 8):
 /// - base-attack progression (3/4 BAB, `level * 3 / 4`),
 /// - base-save progression (good Reflex, poor Fortitude, poor Will),
 /// - the sneak attack damage-die *count* only (`(level + 1) / 2`, i.e. `1`
-///   at levels 1-2, `2` at levels 3-4, `3` at levels 5-6, and `4` at level
-///   7, `1d6`/`2d6`/`3d6`/`4d6`) — not damage-roll execution and not the
+///   at levels 1-2, `2` at levels 3-4, `3` at levels 5-6, and `4` at levels
+///   7-8, `1d6`/`2d6`/`3d6`/`4d6`) — not damage-roll execution and not the
 ///   flanking / Dexterity-denial trigger-condition engine,
 /// - the Trapfinding flat numeric bonus (`max(level / 2, 1)`, `+1` at levels
-///   1-3, `+2` at levels 4-5, and `+3` at levels 6-7) on Perception checks to
-///   locate traps and on Disable Device checks, plus the magic-trap-disarm
-///   statement — not a check-execution engine, no trap DC resolution, and
-///   no magic-trap disarm engine,
+///   1-3, `+2` at levels 4-5, `+3` at levels 6-7, and `+4` at level 8) on
+///   Perception checks to locate traps and on Disable Device checks, plus
+///   the magic-trap-disarm statement — not a check-execution engine, no
+///   trap DC resolution, and no magic-trap disarm engine,
 /// - Evasion (a 2nd-level Rogue class feature): below level 2 it is grounded
 ///   as a correct PF1 Core Rulebook level-gate absence (value 0); at level 2
 ///   and above it is grounded as a bounded identity/recognition record only
@@ -6041,14 +6063,28 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 ///   The level-4 row's OTHER named entry, a Rogue Talent (an open-ended
 ///   choice-list feature), is deliberately left named-but-unproven this
 ///   slice, mirroring the Monk level-2 bonus feat / Barbarian Rage Power
-///   precedent.
+///   precedent, and
+/// - Improved Uncanny Dodge (an 8th-level Rogue class feature, verified
+///   independently against d20pfsrd and legacy.aonprd.com): below level 8 it
+///   is grounded as a correct PF1 Core Rulebook level-gate absence (value 0);
+///   at level 8 and above it is grounded as a bounded identity/recognition
+///   record only (value 0, non-fabricated) naming the rule text (can no
+///   longer be flanked; denies another rogue the ability to sneak attack by
+///   flanking unless the attacker has at least four more rogue levels) —
+///   mirroring exactly how Barbarian's own Improved Uncanny Dodge was
+///   grounded, without folding into any actual flanking-resolution or
+///   attacker-level-comparison engine, neither of which exists in this
+///   codebase. The level-8 row's OTHER named entry, a third Rogue Talent
+///   slot, is deliberately left named-but-unproven this slice, mirroring the
+///   level-2/level-4/level-6 rogue-talent precedent.
 ///
-/// It still grounds no rogue talent (a level-2+/level-4+/level-6+
+/// It still grounds no rogue talent (a level-2+/level-4+/level-6+/level-8+
 /// choice-list feature, and a genuinely open-ended talent tree — a
-/// new-subsystem-shaped burden left named but unproven) and no level-8+
+/// new-subsystem-shaped burden left named but unproven) and no level-9+
 /// progression. These
 /// `class_chassis.rogue.*` / `class_feature.rogue.evasion` /
-/// `class_feature.rogue.trap_sense` / `class_feature.rogue.uncanny_dodge`
+/// `class_feature.rogue.trap_sense` / `class_feature.rogue.uncanny_dodge` /
+/// `class_feature.rogue.improved_uncanny_dodge`
 /// explanation records are standalone: they are not wired into
 /// `compute_fighter_chassis`, `compute_total_saves`, or
 /// `compute_combat_baseline`, so `defense.total_save.*` is still never
@@ -6056,9 +6092,9 @@ fn supported_rogue_level(input: &CharacterInput) -> Option<u8> {
 /// - leaves one chassis-recognition explanation so the `class:rogue:N`
 ///   identity is acknowledged rather than an undocumented packet placeholder
 ///   (direct runtime evidence, carrying no fabricated mechanical value), and
-/// - leaves eight grounded pillar explanations (base-attack, base-save
+/// - leaves nine grounded pillar explanations (base-attack, base-save
 ///   fortitude/reflex/will, sneak-attack die count, trapfinding, Evasion,
-///   Trap Sense, Uncanny Dodge).
+///   Trap Sense, Uncanny Dodge, Improved Uncanny Dodge).
 ///
 /// The named Rogue claim-blocking diagnostic set is now empty; the four
 /// generic chassis diagnostics (`class_chassis.unsupported`,
@@ -6091,13 +6127,14 @@ fn explain_rogue_level1_chassis(
              {ROGUE_CLASS_ID}:{level} class identity is acknowledged on the \
              rules-core seam rather than an undocumented packet placeholder. This is a bounded \
              chassis-recognition record only; the base-attack, base-save, sneak-attack \
-             die-count, trapfinding, Evasion, Trap Sense, and Uncanny Dodge pillars are \
-             grounded separately below, but this record still grounds no rogue talent and no \
-             level-8+ progression, so it carries no fabricated mechanical value (+0)"
+             die-count, trapfinding, Evasion, Trap Sense, Uncanny Dodge, and Improved Uncanny \
+             Dodge pillars are grounded separately below, but this record still grounds no \
+             rogue talent and no level-9+ progression, so it carries no fabricated mechanical \
+             value (+0)"
         ),
     });
 
-    // Grounded (1/7): base-attack progression (3/4 BAB).
+    // Grounded (1/8): base-attack progression (3/4 BAB).
     let level_value = i16::from(level);
     let base_attack_bonus = level_value * 3 / 4;
     explanations.push(ComputationExplanation {
@@ -6109,7 +6146,7 @@ fn explain_rogue_level1_chassis(
         ),
     });
 
-    // Grounded (2/7): base-save progression (good Reflex, poor Fortitude, poor Will).
+    // Grounded (2/8): base-save progression (good Reflex, poor Fortitude, poor Will).
     let base_save_fortitude = level_value / 3;
     let base_save_reflex = level_value / 2 + 2;
     let base_save_will = level_value / 3;
@@ -6138,7 +6175,7 @@ fn explain_rogue_level1_chassis(
         ),
     });
 
-    // Grounded (3/7): sneak attack damage-die count only. PF1 Core Rulebook:
+    // Grounded (3/8): sneak attack damage-die count only. PF1 Core Rulebook:
     // the sneak attack die count increases by 1d6 every two rogue levels
     // (1d6 at levels 1-2, 2d6 at level 3+): (level + 1) / 2.
     let sneak_attack_die_count = (level_value + 1) / 2;
@@ -6156,7 +6193,7 @@ fn explain_rogue_level1_chassis(
         ),
     });
 
-    // Grounded (4/7): trapfinding — the flat numeric bonus and the
+    // Grounded (4/8): trapfinding — the flat numeric bonus and the
     // magic-trap-disarm statement only, mirroring the grounded Ranger Track
     // record (no check-execution engine behind it).
     let trapfinding_bonus = (level_value / 2).max(1);
@@ -6175,7 +6212,7 @@ fn explain_rogue_level1_chassis(
         ),
     });
 
-    // Grounded (5/7): Evasion, a 2nd-level Rogue class feature. Below the
+    // Grounded (5/8): Evasion, a 2nd-level Rogue class feature. Below the
     // level-2 gate this is a correct PF1 Core Rulebook level-gate absence
     // (value 0); at or above it, it is a bounded identity/recognition record
     // only (value 0, non-fabricated) naming the rule text — mirroring how
@@ -6210,7 +6247,7 @@ fn explain_rogue_level1_chassis(
         });
     }
 
-    // Grounded (6/7): Trap Sense, a 3rd-level Rogue class feature (verified
+    // Grounded (6/8): Trap Sense, a 3rd-level Rogue class feature (verified
     // independently against d20pfsrd and legacy.aonprd.com). Below the
     // level-3 gate this is a correct PF1 Core Rulebook level-gate absence
     // (value 0); at or above it, it is a bounded flat-magnitude record only
@@ -6249,7 +6286,7 @@ fn explain_rogue_level1_chassis(
         });
     }
 
-    // Grounded (7/7): Uncanny Dodge, a 4th-level Rogue class feature (verified
+    // Grounded (7/8): Uncanny Dodge, a 4th-level Rogue class feature (verified
     // independently against d20pfsrd and legacy.aonprd.com: the Rogue class table's
     // level-4 "Special" column reads "Rogue talent, uncanny dodge" — NOT the same
     // level as Barbarian's own 2nd-level Uncanny Dodge grant, verified rather than
@@ -6289,6 +6326,53 @@ fn explain_rogue_level1_chassis(
                  computation, and no invisibility-detection engine exists anywhere in this \
                  codebase to apply it, so this grounds no actual flat-footed immunity or \
                  Dexterity-to-AC retention"
+            ),
+        });
+    }
+
+    // Grounded (8/8): Improved Uncanny Dodge, an 8th-level Rogue class feature
+    // (verified independently against d20pfsrd and legacy.aonprd.com: both name
+    // "Improved uncanny dodge, rogue talent" as the Rogue 8th-level "Special"
+    // class table entry). Below the level-8 gate this is a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it, it is a bounded
+    // identity/recognition record only (value 0, non-fabricated) naming the rule
+    // text — mirroring exactly how Barbarian's own Improved Uncanny Dodge was
+    // grounded at barbarian level 5. The rule's own CONDITIONAL piece (comparing
+    // the attacking rogue's own levels against this rogue's own levels to decide
+    // whether the immunity is actually pierced) is never applied: no
+    // flanking-resolution engine, no attacker-level-comparison engine, and no
+    // sneak-attack-trigger engine exists anywhere in this codebase, so this
+    // grounds no actual flanking immunity or sneak-attack denial. The level-8
+    // row's OTHER named entry, a third Rogue Talent (a genuinely open-ended
+    // choice-list feature, a new-subsystem-shaped burden), is deliberately left
+    // named-but-unproven this slice, mirroring the level-2/level-4/level-6
+    // rogue-talent precedent: no new choice-slot and no new diagnostic was added
+    // for it.
+    if level < ROGUE_IMPROVED_UNCANNY_DODGE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.improved_uncanny_dodge".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Improved Uncanny Dodge at rogue level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Improved Uncanny Dodge is an 8th-level rogue class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.improved_uncanny_dodge".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Improved Uncanny Dodge granted at rogue level {level} (PF1 Core \
+                 Rulebook, 8th-level rogue class feature, part of the \"Improved uncanny \
+                 dodge, rogue talent\" table entry): a rogue of 8th level or higher can no \
+                 longer be flanked, denying another rogue the ability to sneak attack her by \
+                 flanking unless the attacker has at least four more rogue levels than she \
+                 has. This is a bounded identity/recognition record only (value 0, \
+                 non-fabricated): no flanking-resolution engine, no \
+                 attacker-level-comparison engine, and no sneak-attack-trigger engine exists \
+                 anywhere in this codebase to apply it, so this grounds no actual flanking \
+                 immunity or sneak-attack denial"
             ),
         });
     }

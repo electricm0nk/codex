@@ -287,32 +287,33 @@ fn rogue_level7_leaves_no_named_pillar_diagnostic() {
     );
 }
 
-// ----- Negative control: level 8 stays unrecognized by this slice -----
+// ----- Negative control retired: level 8 was later widened into the supported tranche -----
 
 #[test]
-fn rogue_level_8_is_not_promoted_by_this_slice() {
+fn rogue_level_8_was_later_widened_into_the_supported_tranche() {
     let level_8 = ROGUE_LEVEL7_FIXTURE.replace("class:rogue:7", "class:rogue:8");
     let input = load(&level_8);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.rogue.")),
-        "level-8 Rogue must not gain any bounded rogue chassis explanation: {:?}",
+        "level-8 Rogue was later widened into the supported tranche and must now gain bounded \
+         rogue chassis explanations: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, ROGUE_EVASION_ID),
-        "level-8 Rogue must not gain the Evasion explanation from this bounded slice"
+        has_explanation(&computation, ROGUE_EVASION_ID),
+        "level-8 Rogue was later widened and must now carry the Evasion explanation"
     );
     assert!(
-        !has_explanation(&computation, ROGUE_TRAP_SENSE_ID),
-        "level-8 Rogue must not gain the Trap Sense explanation from this bounded slice"
+        has_explanation(&computation, ROGUE_TRAP_SENSE_ID),
+        "level-8 Rogue was later widened and must now carry the Trap Sense explanation"
     );
     assert!(
-        !has_explanation(&computation, ROGUE_UNCANNY_DODGE_ID),
-        "level-8 Rogue must not gain the Uncanny Dodge explanation from this bounded slice"
+        has_explanation(&computation, ROGUE_UNCANNY_DODGE_ID),
+        "level-8 Rogue was later widened and must now carry the Uncanny Dodge explanation"
     );
 }
 
