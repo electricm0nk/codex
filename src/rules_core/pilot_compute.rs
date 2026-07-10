@@ -1358,8 +1358,19 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // via the same one-slot-per-castable-spell-level rule
 // (CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL); Touch of Good's bonus
 // stays 4 (9 / 2, a coincidence) and both domain-power uses-per-day pools
-// stay level-independent; no new pillar is grounded.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 9;
+// stay level-independent; no new pillar is grounded. A further SD13-E5 slice
+// widens the gate to level 10 — the tranche ceiling (verified independently
+// against d20pfsrd and legacy.aonprd.com): level 10 base attack genuinely
+// rises to +7 (10 * 3 / 4) and both good saves genuinely rise to +7
+// (10 / 2 + 2), while poor Reflex stays +3 (10 / 3, a coincidence); the
+// level-10 "Special" column is genuinely blank (the die-count rises land at
+// odd levels) so Channel Energy stays 5d6 ((10 + 1) / 2, next rise 11th);
+// the domain spell slot count stays 5 (6th-level cleric spells first appear
+// at 11th, the level-10 spells-per-day row's 6th-level column still "—");
+// Touch of Good's bonus genuinely rises to 5 (10 / 2) via the same
+// half-cleric-level formula; both domain-power uses-per-day pools stay
+// level-independent; no new pillar is grounded.
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 10;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -7844,8 +7855,8 @@ fn explain_wizard_level1_prepared_spell_baseline(
 
 /// The bounded Cleric milestone level this decomposition surface grounds, if any.
 /// Returns the single Cleric level when the chosen input is exactly a single-class
-/// Cleric at one of the supported milestone levels (1 through 9). Returns `None` for
-/// no Cleric, a non-Cleric class, a multiclass mix, or any level-10+ Cleric this slice
+/// Cleric at one of the supported milestone levels (1 through 10). Returns `None` for
+/// no Cleric, a non-Cleric class, a multiclass mix, or any level-11+ Cleric this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian

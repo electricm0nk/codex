@@ -242,20 +242,20 @@ fn cleric_level8_truth_is_unchanged_by_this_slice() {
     assert_eq!(reflex.value, 2, "Cleric level 8 poor Reflex must stay 2");
 }
 
-// ----- Negative control: level 10 stays unrecognized by this slice -----
+// ----- Level 10 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn cleric_level_10_is_not_promoted_by_this_slice() {
+fn cleric_level_10_was_later_widened_into_the_supported_tranche() {
     let level_10 = CLERIC_LEVEL9_FIXTURE.replace("class:cleric:9", "class:cleric:10");
     let input = load(&level_10);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
-                || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-10 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.cleric.")),
+        "level-10 Cleric is now recognized by the later level-10 widening slice \
+         (tests/sd13_cleric_level10_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }
