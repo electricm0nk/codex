@@ -817,7 +817,23 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // coincidence); the level-7 "Special" column is genuinely blank (verified
 // independently against both primary sources), so no new class feature is
 // gained at 7th level.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 7;
+//
+// A further SD13-E5 slice widens the gate again to level 8
+// (`MAX_SUPPORTED_WIZARD_LEVEL = 8`): base attack bonus GENUINELY RISES to +4
+// (`8/2 = 4`, up from +3) and good Will GENUINELY RISES to +6 (`8/2+2 = 6`, up
+// from +5), while poor Fortitude/Reflex both STAY at +2 (`8/3 = 2`,
+// integer-division coincidences); the specialist bonus slot flat count STAYS
+// at 4 (the raw spells-per-day table's level-8 row is "4/4/3/3/2" with the
+// 5th-level column still "—" — 5th-level spells first appear at level 9, so
+// the next slot-count rise lands there, not at level 8, a threshold stasis
+// verified against both primary sources' raw table rows rather than assumed);
+// Intense Spells' bonus-damage magnitude GENUINELY RISES to 4
+// (`max(8/2, 1) = 4`, up from 3 at levels 6-7, via the same pre-existing
+// formula, not re-derived); the level-8 "Special" column is genuinely blank
+// (verified independently against both primary sources — the Wizard's bonus
+// feats land at levels 5, 10, 15, and 20), so no new class feature is gained
+// at 8th level.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 8;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -6984,8 +7000,8 @@ fn explain_sorcerer_level1_spell_baseline(
 
 /// The bounded Wizard milestone level this decomposition surface grounds, if any.
 /// Returns the single Wizard level when the chosen input is exactly a single-class
-/// Wizard at one of the supported milestone levels (1 through 6). Returns `None` for
-/// no Wizard, a non-Wizard class, a multiclass mix, or any level-7+ Wizard this slice
+/// Wizard at one of the supported milestone levels (1 through 8). Returns `None` for
+/// no Wizard, a non-Wizard class, a multiclass mix, or any level-9+ Wizard this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
