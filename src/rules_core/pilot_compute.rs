@@ -590,9 +590,22 @@ const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
 // burden that stays named-but-unproven, so this widening extends only the
 // already-grounded base-attack/base-save/bloodline-choice/
 // bloodline-class-skill-choice pillars to level 8 via the same formulas, without
-// re-derivation.
+// re-derivation. A further SD13-E5 slice widens the gate again to level 9: the
+// PF1 Core Rulebook Sorcerer class table's level-9 "Special" column reads
+// "Bloodline power, bloodline spell" (verified independently against d20pfsrd
+// and legacy.aonprd.com, checked rather than assumed away) — UNLIKE the blank
+// level-8 column — but both entries are bloodline-specific (the Arcane
+// bloodline's own 9th-level power is New Arcana and its 9th-level bloodline
+// spell is overland flight) and neither is flat/identity-shaped, so no new
+// pillar record is added for level 9 either, mirroring exactly how the
+// level-3/5/7 bloodline entries were left unproven — this widening extends
+// only the already-grounded base-attack/base-save/bloodline-choice/
+// bloodline-class-skill-choice pillars to level 9 via the same formulas,
+// without re-derivation (poor Fortitude/Reflex both genuinely rise to +3 at
+// level 9 while base attack and good Will stay put, integer-division
+// coincidences).
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 8;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 9;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -5056,8 +5069,8 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.
 /// Returns the single Sorcerer level when the chosen input is exactly a single-class
-/// Sorcerer at one of the supported milestone levels (1 through 8). Returns `None` for
-/// no Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-9+ Sorcerer this
+/// Sorcerer at one of the supported milestone levels (1 through 9). Returns `None` for
+/// no Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-10+ Sorcerer this
 /// slice deliberately does not recognize — each of which stays claim-blocked exactly
 /// as before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
