@@ -608,8 +608,9 @@ fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_un
         );
     }
     // Rage's flat numeric surface is grounded (across level 1 and the later SD13-E5
-    // level-2/level-3/level-4/level-5 widenings); the rage-state execution engine is
-    // the named remaining burden, and weapon familiarity / level-6+ stay unclaimed.
+    // level-2/level-3/level-4/level-5/level-6 widenings); the rage-state execution
+    // engine is the named remaining burden, and weapon familiarity / level-7+ stay
+    // unclaimed.
     for token in [
         "base attack",
         "base save",
@@ -617,7 +618,7 @@ fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_un
         "rage rounds",
         "rage execution",
         "weapon familiarity",
-        "level-6+",
+        "level-7+",
     ] {
         assert!(
             note.contains(token),

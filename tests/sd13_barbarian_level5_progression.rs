@@ -385,33 +385,38 @@ fn barbarian_level5_stays_blocked_on_rage_execution() {
     );
 }
 
-// ----- Negative control: level 6 stays unrecognized by this slice -----
+// ----- Negative control: level 6 was later widened into the supported tranche -----
 
 #[test]
-fn barbarian_level_6_is_not_promoted_by_this_slice() {
+fn barbarian_level_6_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 6 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_barbarian_level6_progression.rs) widened the level-range gate
+    // to level 6 (mirroring the Rogue level-range gate idiom) and grounded Trap
+    // Sense's own rise to +2; this negative control is superseded, not
+    // violated — pin the new truth here too so this file stays internally
+    // consistent. The frontier this file's own slice actually drew is now
+    // level 7, covered by `barbarian_level_7_is_not_promoted_by_this_slice` in
+    // `tests/sd13_barbarian_level6_progression.rs`.
     let level_6 = BARBARIAN_LEVEL5_FIXTURE.replace("class:barbarian:5", "class:barbarian:6");
     let input = load(&level_6);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
-        "level-6 Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+        has_explanation(&computation, "class_chassis.barbarian.base_attack_bonus"),
+        "level-6 Barbarian is supported since the SD13-E5 level-6 slice: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, BARBARIAN_UNCANNY_DODGE_ID),
-        "level-6 Barbarian must not gain the Uncanny Dodge explanation from this bounded slice"
+        has_explanation(&computation, BARBARIAN_UNCANNY_DODGE_ID),
+        "level-6 Barbarian must keep the Uncanny Dodge explanation grounded at level 2"
     );
     assert!(
-        !has_explanation(&computation, BARBARIAN_TRAP_SENSE_ID),
-        "level-6 Barbarian must not gain the Trap Sense explanation from this bounded slice"
+        has_explanation(&computation, BARBARIAN_TRAP_SENSE_ID),
+        "level-6 Barbarian must keep the Trap Sense explanation grounded at level 3"
     );
     assert!(
-        !has_explanation(&computation, BARBARIAN_IMPROVED_UNCANNY_DODGE_ID),
-        "level-6 Barbarian must not gain the Improved Uncanny Dodge explanation from this \
-         bounded slice"
+        has_explanation(&computation, BARBARIAN_IMPROVED_UNCANNY_DODGE_ID),
+        "level-6 Barbarian must keep the Improved Uncanny Dodge explanation grounded at level 5"
     );
 }
 

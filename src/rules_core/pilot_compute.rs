@@ -684,7 +684,7 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// `supported_rogue_level` idiom. Monk's own level-range gate is
 /// `supported_monk_level` / `MAX_SUPPORTED_MONK_LEVEL`, unrelated to this
 /// Barbarian gate.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 5;
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 6;
 
 /// PF1 Core Rulebook level gate at which Barbarian gains Uncanny Dodge (2nd level,
 /// verified against two independent primary sources — d20pfsrd and legacy.aonprd.com
@@ -4370,9 +4370,9 @@ fn supported_sorcerer_level(input: &CharacterInput) -> Option<u8> {
 
 /// The bounded Barbarian milestone level this decomposition surface grounds, if any.
 /// Returns the single Barbarian level when the chosen input is exactly a
-/// single-class Barbarian at one of the supported milestone levels (1, 2, 3, 4, or
-/// 5). Returns `None` for no Barbarian, a non-Barbarian class, a multiclass mix, or
-/// any level-6+ Barbarian this slice deliberately does not recognize — each of which
+/// single-class Barbarian at one of the supported milestone levels (1, 2, 3, 4, 5, or
+/// 6). Returns `None` for no Barbarian, a non-Barbarian class, a multiclass mix, or
+/// any level-7+ Barbarian this slice deliberately does not recognize — each of which
 /// stays claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level`
 /// / Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Monk
 /// `supported_monk_level` level-range gate idiom.
@@ -4459,9 +4459,26 @@ fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
 /// immunity is actually pierced — is not computed: no flanking-resolution engine, no
 /// attacker-level-comparison engine, and no sneak-attack-trigger engine exists
 /// anywhere in this codebase, so this slice grounds only the bounded grant, mirroring
-/// exactly how Uncanny Dodge itself was grounded. Otherwise only the rage-state
-/// execution burden, the Rage Power choice-list feature, weapon familiarity, and the
-/// Improved Uncanny Dodge flanking-resolution engine stay explicitly claim-blocked.
+/// exactly how Uncanny Dodge itself was grounded. A still further SD13-E5 slice widens
+/// the gate to level 6 (`MAX_SUPPORTED_BARBARIAN_LEVEL = 6`, mirroring the Rogue's own
+/// level-6 widening idiom, verified independently against d20pfsrd and
+/// legacy.aonprd.com: the level-6 row is BAB +6, Fort +5, Ref +2, Will +2, Special
+/// "Rage power, trap sense +2"): base-attack (classlevel = 6), base-save (Fortitude
+/// +5, Reflex +2, Will +2), fast movement (unchanged flat +10 ft.), and rage rounds
+/// per day (4 + Constitution modifier + 2 * (level - 1), 17 on the Con 16 fixture at
+/// level 6) are extended to level 6 via the same formulas, and Uncanny Dodge and
+/// Improved Uncanny Dodge both stay granted (not re-derived). Trap Sense's own flat
+/// magnitude GENUINELY RISES at level 6 (barbarian level / 3, floor: `6 / 3 = 2`, up
+/// from `1` at levels 3-5) via the same pre-existing formula, matching the class
+/// table's own "trap sense +2" entry exactly — this is a value change, not a new
+/// record, mirroring exactly how Rogue's own level-6 Trap Sense rise was grounded.
+/// The level-6 row's other named "Special" entry is another Rage Power grant — the
+/// same genuinely open-ended choice-list feature already deliberately left
+/// named-but-unproven at levels 2 and 4, not a new type of class feature — so this
+/// widening grounds no new pillar beyond the arithmetic extension and the Trap Sense
+/// magnitude rise above. Otherwise only the rage-state execution burden, the Rage
+/// Power choice-list feature, weapon familiarity, and the Improved Uncanny Dodge
+/// flanking-resolution engine stay explicitly claim-blocked.
 ///
 /// This deliberately does not compute a supported martial chassis: the grounded
 /// base-attack, base-save, fast-movement, rage, Uncanny Dodge, Trap Sense, and
@@ -4472,9 +4489,9 @@ fn supported_barbarian_level(input: &CharacterInput) -> Option<u8> {
 /// still reports a blocked posture on this input. It grounds no rage-state engine, no
 /// weapon familiarity, no Rage Power choice-list feature, no flat-footed-state
 /// tracking, no Armor Class computation, no invisibility-detection engine, no
-/// flanking-resolution engine, and no level-6+ martial progression. It only:
+/// flanking-resolution engine, and no level-7+ martial progression. It only:
 /// - leaves one chassis-recognition explanation so the `class:barbarian:N` identity
-///   (at the supported level, 1, 2, 3, 4, or 5) is acknowledged as a non-hybrid
+///   (at the supported level, 1, 2, 3, 4, 5, or 6) is acknowledged as a non-hybrid
 ///   martial baseline rather than an undocumented packet placeholder (direct runtime
 ///   evidence, carrying no fabricated mechanical value),
 /// - leaves five grounded explanation records naming the full-BAB base-attack
