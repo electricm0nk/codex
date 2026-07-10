@@ -294,23 +294,21 @@ fn druid_level4_truth_is_unchanged_by_this_widening() {
     assert_eq!(wild_empathy.value, 5, "Druid level 4 wild empathy modifier must stay 5");
 }
 
-// ----- Negative control: level 6 stays unrecognized by this slice -----
+// ----- Negative control: level 6 was later widened into the supported tranche -----
 
 #[test]
-fn druid_level_6_is_not_promoted_by_this_slice() {
+fn druid_level_6_was_later_widened_into_the_supported_tranche() {
     let level_6 = DRUID_LEVEL5_FIXTURE.replace("class:druid:5", "class:druid:6");
     let input = load(&level_6);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id == "class_chassis.spell_baseline.druid"
-                || e.id == DRUID_WOODLAND_STRIDE_ID
-                || e.id == DRUID_TRACKLESS_STEP_ID
-                || e.id == DRUID_RESIST_NATURES_LURE_ID),
-        "level-6 Druid must not gain any bounded druid chassis explanation: {:?}",
+                || e.id == "class_chassis.spell_baseline.druid"),
+        "level-6 Druid was later widened into the supported tranche and must now gain bounded \
+         druid chassis explanations: {:?}",
         computation.explanations
     );
 }
