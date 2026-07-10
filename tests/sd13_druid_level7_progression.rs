@@ -302,23 +302,20 @@ fn druid_level6_truth_is_unchanged_by_this_widening() {
     assert_eq!(wild_empathy.value, 7, "Druid level 6 wild empathy modifier must stay 7");
 }
 
-// ----- Negative control: level 8 stays unrecognized by this slice -----
+// ----- Level 8 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn druid_level_8_is_not_promoted_by_this_slice() {
+fn druid_level_8_was_later_widened_into_the_supported_tranche() {
     let level_8 = DRUID_LEVEL7_FIXTURE.replace("class:druid:7", "class:druid:8");
     let input = load(&level_8);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id == "class_chassis.spell_baseline.druid"
-                || e.id == DRUID_WOODLAND_STRIDE_ID
-                || e.id == DRUID_TRACKLESS_STEP_ID
-                || e.id == DRUID_RESIST_NATURES_LURE_ID),
-        "level-8 Druid must not gain any bounded druid chassis explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.druid.")),
+        "level-8 Druid is now recognized by the later level-8 widening slice \
+         (tests/sd13_druid_level8_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }

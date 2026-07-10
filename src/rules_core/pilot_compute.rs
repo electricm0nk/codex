@@ -1312,8 +1312,26 @@ const DRUID_CLASS_ID: &str = "class:druid";
 /// bundled feature as fully flat. Wild Shape (including its level-6 frequency
 /// increase and form-list expansion) is therefore deliberately left entirely
 /// named-but-unproven, exactly as at level 4/5 — no explanation or diagnostic
-/// record is fabricated for it this slice either.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 7;
+/// record is fabricated for it this slice either. A still further SD13-E5 slice
+/// widens the gate to level 8 (verified independently against d20pfsrd and
+/// legacy.aonprd.com): level 8 base attack bonus is +6 (genuinely risen from +5;
+/// the class table's own "+6/+1" iterative-attack notation is not modeled
+/// anywhere in this codebase, only the flat base value), base saves are +6/+2/+6
+/// (Fortitude/Reflex/Will — both good saves genuinely rise from +5, while poor
+/// Reflex stays +2, an integer-division coincidence), extended via the same
+/// formulas, not re-derived; Wild Empathy genuinely rises to 9 (8 + Charisma
+/// modifier 1) via the same level-generic formula; Nature Sense stays the flat
+/// +2; Woodland Stride, Trackless Step, and Resist Nature's Lure all stay
+/// granted, not re-derived. The class table's level-8 "Special" column reads
+/// "Wild shape (3/day)" — checked rather than assumed away, and confirmed to be
+/// the same non-separable bundled shape as at level 6: the frequency increase
+/// arrives together with a form-list expansion (Huge/Diminutive animal, Medium
+/// elemental, Small/Medium plant) and functioning-level upgrades (beast shape
+/// III / elemental body II / plant shape I), so Wild Shape (including its
+/// level-8 frequency increase) stays entirely named-but-unproven, exactly as at
+/// level 4/6 — no explanation or diagnostic record is fabricated for it this
+/// slice either.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 8;
 /// PF1 Core Rulebook level gate at which Druid gains Resist Nature's Lure (4th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Resist nature's lure" as part of the Druid
@@ -8000,8 +8018,8 @@ fn explain_cleric_level1_spell_baseline(
 
 /// The bounded Druid milestone level this decomposition surface grounds, if any.
 /// Returns the single Druid level when the chosen input is exactly a single-class
-/// Druid at one of the supported milestone levels (1, 2, or 3). Returns `None` for no
-/// Druid, a non-Druid class, a multiclass mix, or any level-4+ Druid this slice
+/// Druid at one of the supported milestone levels (1 through 8). Returns `None` for no
+/// Druid, a non-Druid class, a multiclass mix, or any level-9+ Druid this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
