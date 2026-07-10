@@ -374,7 +374,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_level2_progression.rs + \
     tests/sd13_sorcerer_level3_progression.rs + \
     tests/sd13_sorcerer_level4_progression.rs + \
-    tests/sd13_sorcerer_level5_progression.rs";
+    tests/sd13_sorcerer_level5_progression.rs + \
+    tests/sd13_sorcerer_level6_progression.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -1822,12 +1823,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Sorcerer level-1/level-2/level-3/level-4/level-5 spell baseline, with \
-                            base attack bonus, base save progression, Eschew Materials, the canonical \
-                            bloodline choice recognition, and the Arcane bloodline's class-skill \
-                            choice (a player's choice of any one Knowledge skill) grounded for \
-                            real and the Arcane Bond / bloodline progression burden and the \
-                            spontaneous known-spell / slot posture burden still blocked",
+                            Sorcerer level-1/level-2/level-3/level-4/level-5/level-6 spell \
+                            baseline, with base attack bonus, base save progression, Eschew \
+                            Materials, the canonical bloodline choice recognition, and the \
+                            Arcane bloodline's class-skill choice (a player's choice of any one \
+                            Knowledge skill) grounded for real and the Arcane Bond / bloodline \
+                            progression burden and the spontaneous known-spell / slot posture \
+                            burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1915,17 +1917,30 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     5th-level bloodline spell is invisibility), but the entry is bloodline-specific \
                     and not flat/identity-shaped, so this slice grounds no new pillar for level 5 \
                     either, mirroring exactly how the level-3 \"Bloodline power, bloodline spell\" \
-                    entry was left unproven — only the existing pillars are widened. The row is \
+                    entry was left unproven — only the existing pillars are widened — AND a \
+                    further SD13-E5 slice widens the level-range gate again \
+                    (supported_sorcerer_level, 1..=6) and extends every one of the formulas above \
+                    to level 6 via the same formula, without re-derivation, verified independently \
+                    against the PF1 Core Rulebook Sorcerer class table (d20pfsrd and \
+                    legacy.aonprd.com): level 6 base attack bonus is +3, base saves are +2/+2/+5 \
+                    (Fortitude/Reflex/Will) — every one of these four values is a genuinely NEW \
+                    value, up from +2/+1/+1/+4 at level 5; the bloodline choice and bloodline \
+                    class-skill choice recognitions are not level-gated, so both still fire at \
+                    level 6 for the same fixture selections; UNLIKE the level-5 \"Bloodline \
+                    spell\" entry, the Sorcerer class table's level-6 \"Special\" column is \
+                    genuinely blank (verified independently against both primary sources, checked \
+                    rather than assumed away), so this slice grounds no new pillar for level 6 \
+                    either — only the existing pillars are widened. The row is \
                     Partial, not Supported: the Arcane Bond / bloodline progression burden (Arcane \
                     Bond execution, the conditional bloodline arcana, the 3rd-level bloodline \
                     power, the 3rd- and 5th-level bloodline spells, and further bonus spells/feats \
                     at higher levels) remains named and unproven, and the spontaneous spell burden \
                     (spontaneous spells known, spell slots per day, bonus spell slots, spell save \
                     DCs) is entirely unproven. No spell math is fabricated and no Sorcerer level \
-                    6+ is proven",
+                    7+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-6+ progression (widening the now-grounded base attack/base save \
+                    level-7+ progression (widening the now-grounded base attack/base save \
                     formulas)",
             },
             SupportStateRow {

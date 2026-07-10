@@ -486,7 +486,7 @@ const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
 // bloodline-class-skill-choice pillars to level 5 via the same formulas, without
 // re-derivation.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 5;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 6;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -4504,8 +4504,8 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.
 /// Returns the single Sorcerer level when the chosen input is exactly a single-class
-/// Sorcerer at one of the supported milestone levels (1, 2, 3, or 4). Returns `None` for
-/// no Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-5+ Sorcerer this
+/// Sorcerer at one of the supported milestone levels (1 through 6). Returns `None` for
+/// no Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-7+ Sorcerer this
 /// slice deliberately does not recognize — each of which stays claim-blocked exactly
 /// as before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -6077,10 +6077,23 @@ fn explain_rogue_level1_chassis(
 /// grounds no new pillar for level 5 either, mirroring exactly how the level-3
 /// "Bloodline power, bloodline spell" entry was left unproven.
 ///
+/// A further SD13-E5 slice widens the level-1..=5 gate to level 6
+/// (`MAX_SUPPORTED_SORCERER_LEVEL = 6`) and extends every one of the formulas above to
+/// level 6 via the same formula, without re-derivation, verified independently against
+/// the PF1 Core Rulebook Sorcerer class table (d20pfsrd and legacy.aonprd.com): level 6
+/// base attack bonus is +3, base saves are +2/+2/+5 (Fortitude/Reflex/Will) — every one
+/// of these four values is a genuinely NEW value, up from +2/+1/+1/+4 at level 5; the
+/// bloodline choice and bloodline class-skill choice recognitions are not level-gated,
+/// so both still fire at level 6 for the same fixture selections. UNLIKE the level-5
+/// "Bloodline spell" entry, the level-6 "Special" column is genuinely blank (verified
+/// independently against both primary sources, checked rather than assumed away), so
+/// this slice grounds no new pillar for level 6 either — only the existing pillars are
+/// widened.
+///
 /// The bounded Fighter-shaped compute path already claim-blocks this input; this seam
 /// keeps that blocked posture but makes the Sorcerer spell-bearing identity, the
 /// grounded Eschew Materials grant, the grounded bloodline choice recognition, the
-/// grounded base-attack/base-save progression through level 3, and the two remaining
+/// grounded base-attack/base-save progression through level 6, and the two remaining
 /// named burdens legible on the runtime path.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
