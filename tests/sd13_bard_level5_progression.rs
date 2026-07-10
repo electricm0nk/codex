@@ -355,24 +355,28 @@ fn bard_level4_truth_is_unchanged_by_this_widening() {
     assert_eq!(rounds.value, 12, "Bard level 4 bardic performance rounds per day must stay 12");
 }
 
-// ----- Negative control: level 6 stays unrecognized by this slice -----
+// ----- Negative control retired: level 6 Bard
+// was later widened into the supported tranche by
+// tests/sd13_bard_level6_progression.rs; the level-7 negative control now
+// lives there) -----
 
 #[test]
-fn bard_level_6_is_not_promoted_by_this_slice() {
+fn bard_level_6_was_later_widened_into_the_supported_tranche() {
     let level_6 = BARD_LEVEL5_FIXTURE.replace("class:bard:5", "class:bard:6");
     let input = load(&level_6);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id == "class_chassis.spell_baseline.bard"
-                || e.id == WELL_VERSED_ID
-                || e.id == INSPIRE_COMPETENCE_ID
-                || e.id == LORE_MASTER_ID),
-        "level-6 Bard must not gain any bounded bard chassis explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.bard.")),
+        "level-6 Bard was later widened into the supported tranche and must now gain bounded \
+         bard chassis explanations: {:?}",
         computation.explanations
+    );
+    assert!(
+        computation.explanations.iter().any(|e| e.id == LORE_MASTER_ID),
+        "level-6 Bard was later widened and must now carry the Lore Master explanation"
     );
 }
 

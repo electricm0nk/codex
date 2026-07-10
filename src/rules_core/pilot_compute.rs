@@ -552,8 +552,26 @@ const BARD_CLASS_ID: &str = "class:bard";
 /// text describes), and Lore Master is newly grounded as a bounded grant-only
 /// flat 1/day usage-count record for its take-20 half only (the take-10 half
 /// has no flat magnitude to ground and neither mechanic is executed against
-/// any actual Knowledge check).
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 5;
+/// any actual Knowledge check). A still further SD13-E5 slice widens this
+/// gate to level 6, verified independently against the PF1 Core Rulebook
+/// Bard class table (d20pfsrd and the legacy.aonprd.com mirror): the
+/// level-6 row is BAB +4, Fort +2, Ref +5, Will +5 — all extended via the
+/// same pre-existing formulas, no re-derivation. Bardic Knowledge genuinely
+/// rises to 3 (`max(6/2, 1)`), Bardic Performance rounds per day continues
+/// scaling, and the Fascinate DC genuinely rises to 15 (`10 + 6/2 + CHA`);
+/// the Fascinate affected-creature count stays 2 (an integer-division
+/// coincidence with level 5), and Inspire Courage stays +2 (the next
+/// increase does not land until bard level 11). The level-6 "Special"
+/// column reads "Suggestion, Versatile performance" (verified independently
+/// against both primary sources). Both entries were checked and confirmed
+/// NOT flat: Suggestion is a spell-like ability requiring a
+/// fascinated-target prerequisite and the "suggestion" spell's own
+/// effect-resolution engine (neither exists in this codebase), and the
+/// 6th-level Versatile Performance grant is merely an additional instance
+/// of the same choice-gated skill-substitution engine already deliberately
+/// left named-but-unproven at 2nd level, not a new type of class feature —
+/// so no new pillar record is grounded at level 6.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 6;
 /// PF1 Core Rulebook level gate at which Bard gains Well-Versed (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Versatile performance, well-versed" as the Bard 2nd-level special feature
@@ -7645,11 +7663,11 @@ fn explain_druid_level1_spell_baseline(
 
 /// The bounded Bard milestone level this decomposition surface grounds, if any.
 /// Returns the single Bard level when the chosen input is exactly a single-class
-/// Bard at one of the supported milestone levels (1, 2, or 3). Returns `None` for
-/// no Bard, a non-Bard class, a multiclass mix, or any level-4+ Bard this slice
-/// deliberately does not recognize — each of which stays claim-blocked exactly as
-/// before. Mirrors the Fighter `supported_fighter_level` / Paladin
-/// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
+/// Bard at one of the supported milestone levels (1 through `MAX_SUPPORTED_BARD_LEVEL`,
+/// currently 6). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
+/// any level-7+ Bard this slice deliberately does not recognize — each of which stays
+/// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level` /
+/// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
 /// `supported_cleric_level` level-range gate idiom.
 fn supported_bard_level(input: &CharacterInput) -> Option<u8> {
