@@ -873,7 +873,7 @@ const MONK_CLASS_ID: &str = "class:monk";
 /// SD13-E5 Monk level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` idiom.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 7;
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 8;
 // PF1 Core Rulebook level gate at which Monk gains Wholeness of Body (7th
 // level, verified independently against two primary sources: d20pfsrd and
 // legacy.aonprd.com both name Wholeness of Body as the Monk 7th-level
@@ -887,10 +887,20 @@ const MAX_SUPPORTED_MONK_LEVEL: u8 = 7;
 // point-spending was already left unimplemented at level 4). The ki pool's
 // material-bypass upgrade likewise requires a damage-reduction-bypass-
 // resolution engine that does not exist here. Neither is grounded as a
-// record at level 7, mirroring the Bard Suggestion / Monk High Jump
-// precedent of naming a checked-but-unproven feature without fabricating a
-// value for it. No new const is introduced for this level gate since no
-// code branches on it.
+// record at level 7 or level 8 (it stays granted-but-unexecuted, unchanged),
+// mirroring the Bard Suggestion / Monk High Jump precedent of naming a
+// checked-but-unproven feature without fabricating a value for it. No new
+// const is introduced for this level gate since no code branches on it.
+// PF1 Core Rulebook level gate at which Monk gains an actual new "Special"
+// entry at 8th level: verified independently against two primary sources
+// (d20pfsrd and legacy.aonprd.com), the Monk class table's level-8 row names
+// only "Slow fall 40 ft." — a rise in the already-grounded Slow Fall
+// record's own reach magnitude, not a brand-new class feature. Both primary
+// sources were checked specifically for Improved Uncanny Dodge (a
+// commonly-repeated but WRONG assumption for Monk, carried over from other
+// classes' 8th-level tables): neither source lists it anywhere on the Monk
+// class table at any level, so no such record is grounded or fabricated
+// here.
 /// PF1 Core Rulebook level gate at which Monk gains Evasion (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Bonus feat, evasion" as the Monk 2nd-level special feature entry).
@@ -912,6 +922,29 @@ const MONK_STILL_MIND_LEVEL: u8 = 3;
 /// unarmed damage progression as 1d6 at levels 1-3, 1d8 at levels 4-7, 1d10 at
 /// levels 8-11, 2d6 at levels 12-15, 2d8 at levels 16-19, and 2d10 at level 20).
 const MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL: u8 = 4;
+/// PF1 Core Rulebook level gate at which the Medium-monk unarmed strike damage
+/// die steps up again from 1d8 to 1d10 (8th level, verified independently
+/// against the same two primary sources' Medium-monk unarmed damage
+/// progression table: the 1d10 band runs levels 8-11).
+const MONK_UNARMED_DAMAGE_DIE_SECOND_STEP_UP_LEVEL: u8 = 8;
+/// PF1 Core Rulebook level gate at which Flurry of Blows grants a third
+/// attack (8th level, verified independently against two primary sources'
+/// verbatim Flurry of Blows rule text: "At 8th level, the monk can make two
+/// additional attacks when he uses flurry of blows, as if using Improved
+/// Two-Weapon Fighting" — i.e. two bonus attacks instead of one, for three
+/// total attacks on a flurry full-attack action, up from two at levels 1-7).
+const MONK_FLURRY_THIRD_ATTACK_LEVEL: u8 = 8;
+/// PF1 Core Rulebook level gate at which Slow Fall's own reach magnitude
+/// increases again, from 30 ft to 40 ft (8th level, verified independently
+/// against two primary sources' Monk class table: the level-8 "Special"
+/// column reads "Slow fall 40 ft." — the full progression is 20 ft at 4th,
+/// 30 ft at 6th, 40 ft at 8th, and 50 ft at 10th). This is the level-8 row's
+/// ONLY "Special" column entry per both primary sources — checked and
+/// confirmed NOT a new class feature (specifically confirmed NOT Improved
+/// Uncanny Dodge, which Monk never gains at any level per either primary
+/// source) — so, mirroring the level-6 precedent, the record's own `value`
+/// field still stays 0 and only the detail text's reach figure changes.
+const MONK_SLOW_FALL_FORTY_FOOT_REACH_LEVEL: u8 = 8;
 /// PF1 Core Rulebook level gate at which Monk gains the ki pool and Slow Fall
 /// (4th level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Ki pool (magic), slow fall 20 ft." as the Monk
@@ -5349,7 +5382,7 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Surface direct SD13-E3/E5 runtime evidence for the deterministic Human Monk
-/// level-1/level-2/level-3/level-4/level-5/level-6/level-7 martial chassis,
+/// level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8 martial chassis,
 /// mirroring the Barbarian/Rogue level-range-gate pattern, and now grounding ten
 /// named pillar burdens at every supported level (base-attack, base-save, AC Bonus, the
 /// unarmed strike die / Flurry of Blows flat surface, the level-1 bonus feat
@@ -5407,11 +5440,23 @@ fn supported_monk_level(input: &CharacterInput) -> Option<u8> {
 /// confirmed NOT flat — it requires a ki-point-consumption/action-economy
 /// engine and a healing-resolution engine, neither of which exists in this
 /// codebase — and is deliberately left named-but-unproven, mirroring the High
-/// Jump precedent). It still
+/// Jump precedent). A still further SD13-E5 slice widens the gate to level 8
+/// (base attack and base saves extend via the same pre-existing formulas; the
+/// unarmed strike damage die genuinely rises to 1d10 — the 1d10 band starts at
+/// level 8; the Flurry of Blows attack count genuinely rises from 2 to 3 —
+/// verified independently against both primary sources' verbatim Flurry of
+/// Blows rule text, "At 8th level, the monk can make two additional attacks";
+/// Slow Fall's own reach magnitude genuinely rises from 30 ft to 40 ft; the ki
+/// pool's flat size genuinely rises via the same pre-existing formula; Evasion,
+/// Still Mind, and Purity of Body all stay granted unchanged. Both primary
+/// sources' level-8 "Special" column names only the Slow Fall reach rise —
+/// checked and specifically confirmed NOT Improved Uncanny Dodge, which Monk
+/// never gains at any level per either source — so no new class-feature
+/// record is grounded or fabricated at level 8). It still
 /// grounds no attack-resolution or damage-roll engine, no monk-weapon flurry, no
-/// level-8+ unarmed damage die progression, no ki-power execution, no level-4+ AC
+/// level-9+ unarmed damage die progression, no ki-power execution, no level-4+ AC
 /// Bonus dodge-bonus progression, no "unarmored and unencumbered" runtime
-/// state-check engine, no wiring into integrated combat totals, no level-8+
+/// state-check engine, no wiring into integrated combat totals, no level-9+
 /// martial progression, no Wholeness of Body execution, no level-2/level-6 bonus
 /// feat grant (PF1 grants monks SEPARATE bonus feats at 2nd and 6th level; this
 /// widening does not add a second choice-slot or recognition for either), and no
@@ -5556,8 +5601,10 @@ fn explain_monk_level1_chassis(
     let (unarmed_die_value, unarmed_die_name) =
         if level < MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL {
             (6, "1d6")
-        } else {
+        } else if level < MONK_UNARMED_DAMAGE_DIE_SECOND_STEP_UP_LEVEL {
             (8, "1d8")
+        } else {
+            (10, "1d10")
         };
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.unarmed_strike_damage_die".to_owned(),
@@ -5565,14 +5612,14 @@ fn explain_monk_level1_chassis(
         detail: format!(
             "Monk level {level} unarmed strike from the PF1 Core Rulebook Monk class table: a \
              Medium monk deals 1d6 unarmed strike damage at levels 1-3, stepping up to 1d8 at \
-             levels 4-7, so it is {unarmed_die_name} at level {level}. Only the die-size facet \
-             ({unarmed_die_value}, i.e. {unarmed_die_name}) is grounded here; no damage roll or \
-             damage total is computed and no attack-resolution engine exists. Two PF1 \
-             unarmed-strike rules are recorded as statements only: the monk may choose to deal \
-             lethal or nonlethal damage with no penalty on the attack roll, and monk unarmed \
-             strikes carry no off-hand penalty (a monk applies her full Strength bonus on damage \
-             rolls for all her unarmed strikes). The higher-level unarmed damage die progression \
-             (1d10 at levels 8-11 and beyond) is not grounded"
+             levels 4-7, then to 1d10 at levels 8-11, so it is {unarmed_die_name} at level \
+             {level}. Only the die-size facet ({unarmed_die_value}, i.e. {unarmed_die_name}) is \
+             grounded here; no damage roll or damage total is computed and no attack-resolution \
+             engine exists. Two PF1 unarmed-strike rules are recorded as statements only: the \
+             monk may choose to deal lethal or nonlethal damage with no penalty on the attack \
+             roll, and monk unarmed strikes carry no off-hand penalty (a monk applies her full \
+             Strength bonus on damage rolls for all her unarmed strikes). The higher-level \
+             unarmed damage die progression beyond level 11 (2d6 and beyond) is not grounded"
         ),
     });
 
@@ -5580,13 +5627,14 @@ fn explain_monk_level1_chassis(
     // Rulebook: when making a flurry of blows as a full-attack action, the monk uses
     // her monk level in place of her base attack bonus and takes a -2 penalty on all
     // attacks; the flat pre-ability-modifier attack bonus is monk level - 2 (-1 at
-    // level 1, +0 at level 2, +1 at level 3, ..., +5 at level 7, matching the PF1 CRB
-    // table's "-1/-1" through "+5/+5" entries), and the flurry grants two attacks at
-    // every level this seam supports (1-7) — Monk gains a third flurry attack only at
-    // 8th level, verified independently against both primary sources' verbatim
-    // Flurry of Blows rule text. Only these flat facets are grounded; no attack-resolution
-    // engine, no monk-weapon flurry, and no wiring into integrated combat totals is
-    // implemented.
+    // level 1, +0 at level 2, +1 at level 3, ..., +5 at level 7, +6 at level 8,
+    // matching the PF1 CRB table's "-1/-1" through "+6/+6" entries), and the flurry
+    // grants two attacks at levels 1-7, rising to three attacks at level 8 —
+    // verified independently against both primary sources' verbatim Flurry of Blows
+    // rule text ("At 8th level, the monk can make two additional attacks when he
+    // uses flurry of blows, as if using Improved Two-Weapon Fighting"). Only these
+    // flat facets are grounded; no attack-resolution engine, no monk-weapon flurry,
+    // and no wiring into integrated combat totals is implemented.
     let flurry_attack_bonus = level_value - 2;
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.flurry_of_blows_attack_bonus".to_owned(),
@@ -5601,17 +5649,30 @@ fn explain_monk_level1_chassis(
              integrated combat totals is implemented"
         ),
     });
+    let flurry_attack_count = if level < MONK_FLURRY_THIRD_ATTACK_LEVEL { 2 } else { 3 };
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.flurry_of_blows_attack_count".to_owned(),
-        value: 2,
+        value: flurry_attack_count,
         detail: format!(
             "Monk level {level} Flurry of Blows attack count from the PF1 Core Rulebook: a \
-             level-{level} flurry grants one additional attack on a full attack, i.e. two \
-             attacks, each at the flat pre-ability modifier grounded separately. The attack \
-             count stays 2 at every level this seam supports (1-7) — Monk gains a third flurry \
-             attack only at 8th level, verified independently against both primary sources' \
-             verbatim Flurry of Blows rule text. Only the count facet (2) is grounded; no \
-             attack-resolution engine and no monk-weapon flurry support is implemented"
+             level-{level} flurry grants {additional_attacks} on a full attack, i.e. \
+             {attack_count_words}, each at the flat pre-ability modifier grounded separately. \
+             The attack count stays 2 at levels 1-7 and rises to 3 at level 8 — verified \
+             independently against both primary sources' verbatim Flurry of Blows rule text \
+             (\"At 8th level, the monk can make two additional attacks when he uses flurry of \
+             blows, as if using Improved Two-Weapon Fighting\"). Only the count facet \
+             ({flurry_attack_count}) is grounded; no attack-resolution engine and no \
+             monk-weapon flurry support is implemented",
+            additional_attacks = if level < MONK_FLURRY_THIRD_ATTACK_LEVEL {
+                "one additional attack"
+            } else {
+                "two additional attacks"
+            },
+            attack_count_words = if level < MONK_FLURRY_THIRD_ATTACK_LEVEL {
+                "two attacks"
+            } else {
+                "three attacks"
+            }
         ),
     });
 
@@ -5756,20 +5817,23 @@ fn explain_monk_level1_chassis(
     } else {
         let slow_fall_reach_feet = if level < MONK_SLOW_FALL_INCREASED_REACH_LEVEL {
             20
-        } else {
+        } else if level < MONK_SLOW_FALL_FORTY_FOOT_REACH_LEVEL {
             30
+        } else {
+            40
         };
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.slow_fall".to_owned(),
             value: 0,
             detail: format!(
                 "Monk Slow Fall granted at monk level {level} (PF1 Core Rulebook, 4th-level monk \
-                 class feature whose own reach magnitude increases to 30 ft. at 6th level): \"a \
-                 monk within arm's reach of a wall can use it to slow his descent\" — she takes \
-                 falling damage as if the fall were {slow_fall_reach_feet} feet shorter than it \
-                 actually is. This is a bounded grant-only identity record only (value 0, \
-                 non-fabricated): no fall-damage-resolution engine exists anywhere in this \
-                 codebase to apply the {slow_fall_reach_feet}-foot reduction to"
+                 class feature whose own reach magnitude increases to 30 ft. at 6th level and \
+                 40 ft. at 8th level): \"a monk within arm's reach of a wall can use it to slow \
+                 his descent\" — she takes falling damage as if the fall were \
+                 {slow_fall_reach_feet} feet shorter than it actually is. This is a bounded \
+                 grant-only identity record only (value 0, non-fabricated): no \
+                 fall-damage-resolution engine exists anywhere in this codebase to apply the \
+                 {slow_fall_reach_feet}-foot reduction to"
             ),
         });
     }
