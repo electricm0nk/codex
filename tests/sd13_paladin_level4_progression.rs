@@ -322,19 +322,33 @@ fn paladin_level3_channel_positive_energy_absence_gate_is_unaffected_by_the_leve
     );
 }
 
-// ----- Negative control: level 5 stays unrecognized by this slice -----
+// ----- Negative control (superseded): level 5 was later widened into the supported tranche -----
 
 #[test]
-fn paladin_level_5_is_not_promoted_by_this_slice() {
+fn paladin_level_5_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 5 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_paladin_level5_progression.rs) widened the level-range
+    // gate to level 5 (mirroring the Fighter/Rogue/Barbarian/Monk/Cleric/
+    // Bard/Druid/Sorcerer/Wizard/Ranger level-range-gate idiom) and grounded
+    // the genuine effective-caster-level and Channel Positive Energy dice
+    // increases; this negative control is superseded, not violated -- pin
+    // the new truth here too so this file stays internally consistent. The
+    // frontier this file's own slice actually drew is now level 6, covered
+    // by `paladin_level_6_is_not_promoted_by_this_slice` in
+    // `tests/sd13_paladin_level5_progression.rs`.
     let level_5 = PALADIN_LEVEL4_FIXTURE.replace("class:paladin:4", "class:paladin:5");
     let input = load(&level_5);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-5 Paladin must not gain any bounded paladin chassis explanation: {:?}",
+        has_explanation(&computation, BASE_ATTACK_ID),
+        "level-5 Paladin is supported since the SD13-E5 level-5 slice: {:?}",
+        computation.explanations
+    );
+    assert!(
+        has_explanation(&computation, CHANNEL_POSITIVE_ENERGY_DICE_ID),
+        "level-5 Paladin's channel positive energy dice count is supported since the SD13-E5 \
+         level-5 slice: {:?}",
         computation.explanations
     );
 }
