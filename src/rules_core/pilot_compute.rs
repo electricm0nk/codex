@@ -726,7 +726,21 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // that stopped scaling), then DOES change again for real at level 6
 // (`max(6/2, 1) = 3`, up from 2 at level 5, via the same pre-existing formula, not
 // re-derived).
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 6;
+//
+// A further SD13-E5 slice widens the gate again to level 7
+// (`MAX_SUPPORTED_WIZARD_LEVEL = 7`): base attack bonus and all three base saves
+// are numerically UNCHANGED from level 6 (`7/2 = 3`, `7/3 = 2`, `7/2+2 = 5`), an
+// integer-division coincidence re-verified against the raw PF1 CRB Wizard class
+// table rather than assumed; the specialist bonus slot flat count GENUINELY RISES
+// to 4 (the raw spells-per-day table's level-7 row is "4/4/3/2/1", the first
+// non-"—" 4th-level column — a level-7 specialist now casts 4th-level spells for
+// the first time, so the bonus slot count becomes one of each spell level 1st
+// through 4th); Intense Spells' bonus-damage magnitude STAYS at 3
+// (`max(7/2, 1) = 3`, unchanged from level 6, another integer-division
+// coincidence); the level-7 "Special" column is genuinely blank (verified
+// independently against both primary sources), so no new class feature is
+// gained at 7th level.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 7;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -768,6 +782,16 @@ const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3: i16 = 2;
 /// from 2 at levels 3-4.
 const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_5: i16 = 3;
 
+/// SD13-E5 level-7 widening: a level-7 wizard casts 4th-level spells for the first
+/// time (verified independently against both primary sources' raw Wizard
+/// spells-per-day table rows: level 6 shows "4/3/3/2/—", level 7 shows "4/4/3/2/1" —
+/// the first non-"—" 4th-level column), so a specialist wizard now gains one bonus
+/// slot of EACH spell level she can cast, 1st through 4th: one 1st-level bonus slot,
+/// one 2nd-level bonus slot, one 3rd-level bonus slot, and one 4th-level bonus slot,
+/// for a flat count of 4, up from 3 at levels 5-6, mirroring exactly the Cleric
+/// domain-spell-slot level-7 widening idiom (`CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7`).
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7: i16 = 4;
+
 /// PF1 Core Rulebook Wizard spells-per-day table: the wizard class level at which
 /// 2nd-level wizard spells first become available (verified independently against
 /// both primary sources: level 1-2 wizards cast only 1st-level spells; level 3 is
@@ -779,6 +803,12 @@ const WIZARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 3;
 /// both primary sources: levels 3-4 wizards cast only up to 2nd-level spells; level
 /// 5 is the first row with a non-"—" 3rd-level column).
 const WIZARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 5;
+
+/// PF1 Core Rulebook Wizard spells-per-day table: the wizard class level at which
+/// 4th-level wizard spells first become available (verified independently against
+/// both primary sources: levels 5-6 wizards cast only up to 3rd-level spells; level
+/// 7 is the first row with a non-"—" 4th-level column).
+const WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 
 // SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
 // martial class; the bounded single-class level-1 identity is recognized as
@@ -6853,6 +6883,25 @@ fn wizard_has_canonical_specialization_selections(input: &CharacterInput) -> boo
 /// entry, no new Wizard class feature is gained at 6th level — this slice widens
 /// existing pillars only (one of them, Intense Spells, to a genuinely new value),
 /// adds no new pillar record.
+///
+/// A further SD13-E5 slice widens the gate again (`supported_wizard_level`, 1..=7)
+/// and extends the same formulas to level 7, without re-derivation, verified
+/// independently against the PF1 Core Rulebook Wizard class table (d20pfsrd and
+/// legacy.aonprd.com): level 7 base attack bonus and all three base saves are
+/// numerically UNCHANGED from level 6 (+3 base attack, +2/+2/+5
+/// Fortitude/Reflex/Will) — an integer-division coincidence, re-verified rather
+/// than assumed. The specialist bonus slot flat count, checked rather than assumed
+/// to stay put, GENUINELY RISES to 4: the raw Wizard spells-per-day table's
+/// level-7 row is "4/4/3/2/1" — the first non-"—" 4th-level column — so a level-7
+/// specialist now casts 4th-level spells for the first time. Intense Spells'
+/// bonus-damage magnitude STAYS at 3 (`max(7/2, 1) = 3`, unchanged from level 6,
+/// another integer-division coincidence). Force Missile's uses-per-day pool is
+/// level-independent and unchanged; Scribe Scroll stays recognized as an
+/// already-held grant. The class table's level-7 "Special" column is genuinely
+/// BLANK (verified independently against both sources), so no new Wizard class
+/// feature is gained at 7th level — this slice widens existing pillars only (one
+/// of them, the specialist bonus slot, to a genuinely new value), adds no new
+/// pillar record.
 fn explain_wizard_level1_prepared_spell_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -7008,7 +7057,9 @@ fn explain_wizard_level1_prepared_spell_baseline(
         // of EACH spell level she can cast — one 1st-level bonus slot plus one
         // 2nd-level bonus slot, a flat count of 2.
         let wizard_specialist_bonus_slot_count =
-            if level >= WIZARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            if level >= WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7
+            } else if level >= WIZARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_5
             } else if level >= WIZARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_3
@@ -7034,8 +7085,13 @@ fn explain_wizard_level1_prepared_spell_baseline(
                  spells for the first time (verified against both primary sources' raw \
                  spells-per-day table rows), so the flat count becomes \
                  {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_5:+} (one 1st-level, one 2nd-level, and \
-                 one 3rd-level Evocation-only bonus slot). At level {level} this is \
-                 {wizard_specialist_bonus_slot_count:+} flat count; there is no cantrip-level \
+                 one 3rd-level Evocation-only bonus slot); at level \
+                 {WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 4th-level \
+                 spells for the first time (verified against both primary sources' raw \
+                 spells-per-day table rows), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7:+} (one 1st-level, one 2nd-level, one \
+                 3rd-level, and one 4th-level Evocation-only bonus slot). At level {level} this \
+                 is {wizard_specialist_bonus_slot_count:+} flat count; there is no cantrip-level \
                  bonus slot. This grounds the flat count only: no slot contents, no spells \
                  prepared per day, no per-day slot totals, and no bonus slots from a high \
                  Intelligence are computed"
