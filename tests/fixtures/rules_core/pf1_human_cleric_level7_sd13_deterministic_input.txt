@@ -1,0 +1,30 @@
+# SD13-E5 deterministic Human Cleric level 7 progression fixture.
+# Widens the accepted SD13-E4/E5 deterministic PF1 Core Rulebook Human Cleric
+# level-1/level-2/level-3/level-4/level-5/level-6 prepared divine spell-bearing
+# baseline to level 7 as chosen input only. It names selections; it does not
+# contain derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-6 fixtures, and the same
+# canonical domain selections (Good, Healing), adding only the level bump this
+# bounded tranche needs.
+#
+# It deliberately avoids every later Cleric burden surface: no spellbook, no
+# spells prepared, no spell slots, no spell DCs, no bonus spells, no domain
+# power execution beyond the flat facets already grounded at levels 1-6, no
+# domain spell-list contents, and no level-8+ progression.
+case_id=pf1-crb-human-cleric-level7
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:cleric:7
+ability=strength:10
+ability=dexterity:12
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:14
+feat=feat:dodge
+choice=choice:cleric_domain:domain:good
+choice=choice:cleric_domain:domain:healing
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md
