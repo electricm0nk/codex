@@ -354,7 +354,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_favored_terrain_choice.rs + \
     tests/sd13_ranger_level4_progression.rs + \
     tests/sd13_ranger_level5_progression.rs + \
-    tests/sd13_ranger_level6_progression.rs";
+    tests/sd13_ranger_level6_progression.rs + \
+    tests/sd13_ranger_level7_progression.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -1749,16 +1750,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Ranger level-1/level-2/level-3/level-4/level-5/level-6 chassis \
-                            baseline, with base attack bonus, base save progression, Track, the \
-                            favored-enemy flat surface, the combat-style choice-and-bonus-feat \
-                            recognition, (level 3) Endurance and the Favored Terrain \
-                            choice-and-flat-magnitude surface, (level 4) the Hunter's Bond \
-                            choice-and-flat-magnitude surface, (level 5) the Favored Enemy \
-                            rule's 5th-level interval (second favored-enemy selection plus the \
-                            bonus-increase target choice), and (level 6) the SECOND \
-                            combat-style bonus feat choice recognition grounded for real and \
-                            the later spell burden still blocked",
+                            Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7 \
+                            chassis baseline, with base attack bonus, base save progression, \
+                            Track, the favored-enemy flat surface, the combat-style \
+                            choice-and-bonus-feat recognition, (level 3) Endurance and the \
+                            Favored Terrain choice-and-flat-magnitude surface, (level 4) the \
+                            Hunter's Bond choice-and-flat-magnitude surface, (level 5) the \
+                            Favored Enemy rule's 5th-level interval (second favored-enemy \
+                            selection plus the bonus-increase target choice), (level 6) the \
+                            SECOND combat-style bonus feat choice recognition, and (level 7) \
+                            Woodland Stride (a grant-only identity record) grounded for real \
+                            and the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1884,20 +1886,41 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     (Archery: Improved Precise Shot, Manyshot; Two-Weapon Combat: Improved \
                     Two-Weapon Fighting, Two-Weapon Defense) — mirroring the first bonus feat's \
                     own grounding idiom exactly (+0, no mechanical effect computed, no execution \
-                    engine exists in this codebase). The row is \
+                    engine exists in this codebase). The most recent SD13-E5 slice widens the \
+                    level-range gate once more to level 7, extending base attack/base save/Track \
+                    to level 7 via the same formulas (all three stay numerically unchanged from \
+                    level 6 — 7/2+2 = 5, 7/3 = 2, max(7/2, 1) = 3 — integer-division \
+                    coincidences, re-verified rather than assumed), keeps Endurance, Favored \
+                    Terrain, both favored enemies, both combat-style bonus feats, and Hunter's \
+                    Bond granted unchanged (neither the Favored Enemy rule's next interval nor \
+                    the Combat Style Feat's next bonus feat arrives before 10th level, re-verified \
+                    independently against both primary sources), and grounds the class table's \
+                    7th-level \"Special\" column entry (\"Woodland stride\", verified \
+                    independently against both primary sources — no other new class feature is \
+                    gained at 7th level). Woodland Stride (\"a ranger may move through any sort \
+                    of undergrowth ... at his normal speed and without taking damage or suffering \
+                    any other impairment ... magically manipulated undergrowth ... still affects \
+                    him normally\") carries no numeric magnitude of its own, unlike Track or \
+                    Favored Terrain — it is grounded as a bounded grant-only identity record \
+                    (value 0, non-fabricated), mirroring the Endurance idiom exactly: no \
+                    terrain-detection or movement-resolution engine exists anywhere in this \
+                    codebase to determine whether the ranger is actually moving through \
+                    undergrowth, so only the grant itself is recorded. The row is \
                     Partial, not Supported: the favored-enemy conditional-application engine \
                     (target-type matching that would decide whether a specific check or attack is \
                     made against the favored enemy) is not implemented, neither recognized \
                     combat-style bonus feat's own mechanics are proven, the Favored Terrain \
                     level-8th/13th/18th breadth is unproven, Hunter's Bond's ally-bonus \
-                    application and the animal-companion form are unproven, Ranger level 7+ is \
-                    not proven, and the later ranger spell burden (spell slots, spell source, \
-                    spells known/prepared) is still deferred to SD13-E4",
-                next_required_uplift: "Ranger level-7+ progression, a favored-enemy \
+                    application and the animal-companion form are unproven, Woodland Stride's own \
+                    terrain-movement application is unproven, Ranger level 8+ is not proven, and \
+                    the later ranger spell burden (spell slots, spell source, spells \
+                    known/prepared) is still deferred to SD13-E4",
+                next_required_uplift: "Ranger level-8+ progression, a favored-enemy \
                     conditional-application engine, execution of either recognized combat-style \
                     bonus feat's own mechanics, Hunter's Bond ally-bonus application and the \
-                    animal-companion stat block/advancement subsystem, then SD13-E4 ranger spell \
-                    burden",
+                    animal-companion stat block/advancement subsystem, a \
+                    terrain-detection/movement-resolution engine for Woodland Stride's own \
+                    effect, then SD13-E4 ranger spell burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",
