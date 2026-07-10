@@ -224,8 +224,23 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // effective-caster-level gate, and Channel Positive Energy's die count all
 // genuinely increase again; level 7 is not one of the repeat-Mercy-grant
 // levels, 3/6/9/..., so nothing new is left unproven for Mercy here).
-// Nothing here grounds level 8+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 7;
+// Level 8 joins next in turn (PF1 CRB level-8 "Special" column: "Aura of
+// resolve" only, verified independently against d20pfsrd and
+// legacy.aonprd.com -- base attack and both good saves genuinely rise, poor
+// Reflex stays +2, an integer-division coincidence; Lay on Hands genuinely
+// rises on both axes (uses 6, heal dice 4) and Smite Evil's damage bonus
+// rises to 8 (= paladin level) while its uses/day stay 3, the next rise
+// landing at 10th; the effective caster level rises to 5 (8 - 3); Channel
+// Positive Energy's die count stays 4, the effective-cleric dice rising at
+// odd levels so the next rise lands at 9th. Aura of Resolve itself was
+// checked rather than assumed away and confirmed NOT flat: immunity to
+// charm spells/spell-like abilities plus a +4 morale aura for allies within
+// 10 feet while conscious needs a condition-immunity engine and an
+// ally-aura/positional engine, neither of which exists in this codebase --
+// exactly like Aura of Courage and Divine Health before it, it stays
+// deliberately named-but-unproven, not fabricated). Nothing here grounds
+// level 9+ Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 8;
 
 // Lay on hands and divine grace are both 2nd-level paladin features in the PF1 Core
 // Rulebook. Below this level their honest computed surface is their correct
@@ -3481,9 +3496,9 @@ fn explain_hybrid_level1_chassis(
 /// The bounded Paladin milestone level this decomposition surface grounds, if
 /// any. Returns the single Paladin level when the chosen input is exactly a
 /// single-class Paladin at one of the supported milestone levels (1 through
-/// 7). Returns `None` for no Paladin, a non-Paladin class, a multiclass mix,
+/// 8). Returns `None` for no Paladin, a non-Paladin class, a multiclass mix,
 /// the Ranger hybrid (which has its own F6 class-feature decomposition
-/// lane), or any level-8+ Paladin this slice deliberately does not
+/// lane), or any level-9+ Paladin this slice deliberately does not
 /// recognize — each of which stays claim-blocked exactly as before.
 fn supported_paladin_level(input: &CharacterInput) -> Option<u8> {
     match input.chosen.class_levels.as_slice() {

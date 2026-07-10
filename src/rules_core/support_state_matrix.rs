@@ -340,7 +340,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_level4_progression.rs + \
     tests/sd13_paladin_level5_progression.rs + \
     tests/sd13_paladin_level6_progression.rs + \
-    tests/sd13_paladin_level7_progression.rs";
+    tests/sd13_paladin_level7_progression.rs + \
+    tests/sd13_paladin_level8_progression.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -1862,24 +1863,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Paladin level-1/level-2/level-3/level-4/level-5/level-6/level-7 \
+                            Paladin level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
+                            level-8 \
                             chassis baseline, with smite evil's uses-per-day / attack-bonus / \
                             damage-bonus formula grounded at every level (uses-per-day \
                             genuinely increasing to 2/day at level 4, staying 2/day through \
-                            level 6, and genuinely increasing to 3/day at level 7), lay on \
-                            hands and divine grace grounded for real at levels 2-7 (correct PF1 \
+                            level 6, genuinely increasing to 3/day at level 7, and staying \
+                            3/day at level 8), lay on \
+                            hands and divine grace grounded for real at levels 2-8 (correct PF1 \
                             CRB level-gate absence at level 1, lay on hands genuinely \
-                            increasing again at level 6 and staying numerically unchanged at \
-                            level 7), mercy grounded as a correct PF1 CRB level-gate absence at \
-                            levels 1-2 and a granted choice-recognition record at levels 3-7, \
+                            increasing again at level 6, staying numerically unchanged at \
+                            level 7, and genuinely increasing on both axes at level 8), mercy \
+                            grounded as a correct PF1 CRB level-gate absence at \
+                            levels 1-2 and a granted choice-recognition record at levels 3-8, \
                             channel positive energy grounded as a correct PF1 CRB level-gate \
-                            absence at levels 1-3 and a flat die-count magnitude at levels 4-7 \
+                            absence at levels 1-3 and a flat die-count magnitude at levels 4-8 \
                             (genuinely increasing from 2d6 to 3d6 at level 5, staying 3d6 at \
-                            level 6, and genuinely increasing to 4d6 at level 7), the \
+                            level 6, genuinely increasing to 4d6 at level 7, and staying 4d6 \
+                            at level 8), the \
                             partial-caster effective-caster-level gate grounded as a correct \
                             zero absence at levels 1-3, a genuine value of 1 at level 4, a \
-                            genuine value of 2 at level 5, a genuine value of 3 at level 6, and \
-                            a genuine value of 4 at level 7, and the hybrid chassis pair plus \
+                            genuine value of 2 at level 5, a genuine value of 3 at level 6, a \
+                            genuine value of 4 at level 7, and a genuine value of 5 at level \
+                            8, and the hybrid chassis pair plus \
                             the spells-known/spells-per-day/spell-DC spell burden still named \
                             and unproven",
                 support_state: SupportState::Partial,
@@ -1980,9 +1986,36 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     form / Druid animal companion), so it is deliberately left \
                     named-but-unproven, mirroring the Monk High Jump / Wizard level-5 bonus \
                     feat precedent exactly -- no explanation or diagnostic record is fabricated \
-                    for it, unaffected by the level-7 widening. The row is Partial, not \
+                    for it, unaffected by the level-7 widening -- AND a further SD13-E5 slice \
+                    widens the level-range gate again (supported_paladin_level, 1..=8) and \
+                    extends every one of the formulas above to level 8 via the same formula, \
+                    without re-derivation, verified independently against the PF1 Core \
+                    Rulebook Paladin class table (d20pfsrd and legacy.aonprd.com): level 8 \
+                    base attack bonus is +8 (genuinely risen; the table's own \"+8/+3\" \
+                    iterative notation is not modeled anywhere in this codebase, only the flat \
+                    base value) and base saves are +6/+2/+6 (Fortitude/Reflex/Will -- both \
+                    good saves genuinely rise from +5 while poor Reflex stays +2, an \
+                    integer-division coincidence); Smite Evil stays 3/day (the next rise \
+                    lands at 10th, a threshold stasis checked rather than assumed) with its \
+                    damage bonus genuinely rising to 8 (= paladin level); Lay on Hands \
+                    genuinely rises on both axes (uses 6, heal dice 4); the effective caster \
+                    level genuinely rises to 5 (8 - 3); Channel Positive Energy's die count \
+                    stays 4 (the effective-cleric dice rise at odd levels, so the next rise \
+                    lands at 9th); level 8 is not a repeat-Mercy-grant level (3/6/9/...), so \
+                    the single granted mercy recognition carries over unchanged; UNLIKE the \
+                    level-7 \"Smite evil 3/day\" column, the class table's level-8 \
+                    \"Special\" column reads \"Aura of resolve\" (verified independently \
+                    against both primary sources, checked rather than assumed away) -- a \
+                    genuinely NEW class feature, and confirmed NOT flat/identity-shaped: \
+                    immunity to charm spells and spell-like abilities plus a +4 morale bonus \
+                    against charm effects for allies within 10 feet while the paladin is \
+                    conscious needs a condition-immunity engine and an ally-aura/positional \
+                    engine, neither of which exists in this codebase, so Aura of Resolve is \
+                    deliberately left named-but-unproven, exactly like Aura of Courage and \
+                    Divine Health before it, with a dedicated negative test pinning that no \
+                    aura record or diagnostic is fabricated. The row is Partial, not \
                     Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
-                    claim-blocking as accepted hybrid truth, no Paladin level 8+ is proven, \
+                    claim-blocking as accepted hybrid truth, no Paladin level 9+ is proven, \
                     Divine Bond stays named-but-unproven, the level-6 repeat mercy selection \
                     stays named-but-unproven, and the partial-caster spell burden itself \
                     remains named and unproven beyond the grounded caster-level gate arithmetic \
@@ -1994,7 +2027,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 next_required_uplift: "ground the paladin spells-known/spells-per-day/spell-DC \
                     burden content now that the effective-caster-level gate is grounded and \
                     nonzero (spells begin at paladin level 4, caster level = paladin level - 3, \
-                    now 4 at level 7), then paladin level-8+ progression",
+                    now 5 at level 8), then paladin level-9+ progression",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
