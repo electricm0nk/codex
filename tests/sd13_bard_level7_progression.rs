@@ -359,15 +359,16 @@ fn bard_level6_truth_is_unchanged_by_this_widening() {
     );
 }
 
-// ----- Negative control: level 8 stays unrecognized by this slice -----
+// ----- Level 8 was later widened into the supported tranche (see
+// tests/sd13_bard_level8_progression.rs, which owns the full level-8 coverage) -----
 
 #[test]
-fn bard_level_8_is_not_promoted_by_this_slice() {
+fn bard_level_8_was_later_widened_into_the_supported_tranche() {
     let level_8 = BARD_LEVEL7_FIXTURE.replace("class:bard:7", "class:bard:8");
     let input = load(&level_8);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.bard.")
@@ -375,7 +376,8 @@ fn bard_level_8_is_not_promoted_by_this_slice() {
                 || e.id == WELL_VERSED_ID
                 || e.id == INSPIRE_COMPETENCE_ID
                 || e.id == LORE_MASTER_ID),
-        "level-8 Bard must not gain any bounded bard chassis explanation: {:?}",
+        "level-8 Bard is now recognized by a later SD13-E5 slice \
+         (tests/sd13_bard_level8_progression.rs): {:?}",
         computation.explanations
     );
 }
