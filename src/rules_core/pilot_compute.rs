@@ -930,7 +930,20 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// `supported_rogue_level` idiom. Monk's own level-range gate is
 /// `supported_monk_level` / `MAX_SUPPORTED_MONK_LEVEL`, unrelated to this
 /// Barbarian gate.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 8;
+///
+/// A further SD13-E5 slice widens the gate to level 9 (verified independently
+/// against d20pfsrd and legacy.aonprd.com): level 9 base attack bonus
+/// genuinely rises to +9 (full BAB) while poor Reflex/Will both genuinely
+/// rise to +3 (9 / 3) and good Fortitude stays +6 (9 / 2 + 2, an
+/// integer-division coincidence); the rage rounds-per-day pool genuinely
+/// rises to 23 (4 + Con mod + 2 per level after 1st) while the four flat
+/// rage-surface magnitudes stay at their standard-rage values (the next
+/// change is Greater Rage at 11th); the level-9 "Special" column reads
+/// "Trap sense +3" — a tier-rise on the already-grounded Trap Sense formula
+/// pillar (level / 3), not a new class feature; Damage Reduction stays 1/—
+/// (the next DR rise lands at 10th); level 9 is NOT a rage-power level
+/// (powers land at 2/4/6/8/10...), so no new pillar is grounded.
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 9;
 
 /// PF1 Core Rulebook level gate at which Barbarian gains Uncanny Dodge (2nd level,
 /// verified against two independent primary sources — d20pfsrd and legacy.aonprd.com
@@ -4982,9 +4995,9 @@ fn supported_sorcerer_level(input: &CharacterInput) -> Option<u8> {
 
 /// The bounded Barbarian milestone level this decomposition surface grounds, if any.
 /// Returns the single Barbarian level when the chosen input is exactly a
-/// single-class Barbarian at one of the supported milestone levels (1, 2, 3, 4, 5, 6,
-/// 7, or 8). Returns `None` for no Barbarian, a non-Barbarian class, a multiclass mix,
-/// or any level-9+ Barbarian this slice deliberately does not recognize — each of which
+/// single-class Barbarian at one of the supported milestone levels (1 through
+/// 9). Returns `None` for no Barbarian, a non-Barbarian class, a multiclass mix,
+/// or any level-10+ Barbarian this slice deliberately does not recognize — each of which
 /// stays claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level`
 /// / Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Monk
 /// `supported_monk_level` level-range gate idiom.

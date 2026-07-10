@@ -125,9 +125,6 @@ fn explanation<'a>(
         })
 }
 
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 fn claim_blocking<'a>(
     computation: &'a PilotBaseChassisComputation,
@@ -383,38 +380,21 @@ fn barbarian_level8_stays_blocked_on_rage_execution() {
     );
 }
 
-// ----- Negative control: level 9 stays unrecognized by this slice -----
+// ----- Level 9 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn barbarian_level_9_is_not_promoted_by_this_slice() {
+fn barbarian_level_9_was_later_widened_into_the_supported_tranche() {
     let level_9 = BARBARIAN_LEVEL8_FIXTURE.replace("class:barbarian:8", "class:barbarian:9");
     let input = load(&level_9);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.barbarian.")),
-        "level-9 Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+        "level-9 Barbarian is now recognized by the later level-9 widening slice \
+         (tests/sd13_barbarian_level9_progression.rs carries its proof): {:?}",
         computation.explanations
-    );
-    assert!(
-        !has_explanation(&computation, BARBARIAN_UNCANNY_DODGE_ID),
-        "level-9 Barbarian must not gain the Uncanny Dodge explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, BARBARIAN_TRAP_SENSE_ID),
-        "level-9 Barbarian must not gain the Trap Sense explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, BARBARIAN_IMPROVED_UNCANNY_DODGE_ID),
-        "level-9 Barbarian must not gain the Improved Uncanny Dodge explanation from this \
-         bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, BARBARIAN_DAMAGE_REDUCTION_ID),
-        "level-9 Barbarian must not gain the Damage Reduction explanation from this bounded \
-         slice"
     );
 }
 
