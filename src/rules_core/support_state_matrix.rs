@@ -497,13 +497,21 @@ const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_reco
 /// numerically unchanged at 3, Inspire Courage and Inspire Competence both
 /// stay at their existing tiers, and the level-8 "Special" column's Dirge
 /// of Doom entry was checked against two primary sources and confirmed NOT
-/// flat, so it is deliberately left named-but-unproven), citing all eight
+/// flat, so it is deliberately left named-but-unproven), widened again to
+/// level 9 by a still further SD13-E5 slice (the performance rounds pool
+/// genuinely rises to 22 and poor Fortitude genuinely rises to +3 while every
+/// other pillar stays put, integer-division coincidences and pre-10th/11th
+/// tier gates each checked rather than assumed; the level-9 "Special"
+/// column's Inspire Greatness entry was checked against both primary sources
+/// and confirmed NOT flat — bonus Hit Dice, temporary hit points, and
+/// competence bonuses behind the ungrounded performance-state engine — so it
+/// is deliberately left named-but-unproven), citing all nine
 /// proof files as one combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`].
 const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + \
     tests/sd13_bard_level2_progression.rs + tests/sd13_bard_level3_progression.rs + \
     tests/sd13_bard_level4_progression.rs + tests/sd13_bard_level5_progression.rs + \
     tests/sd13_bard_level6_progression.rs + tests/sd13_bard_level7_progression.rs + \
-    tests/sd13_bard_level8_progression.rs";
+    tests/sd13_bard_level8_progression.rs + tests/sd13_bard_level9_progression.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1241,7 +1249,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8 \
+                            Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
+                            level-9 \
                             spell baseline, with base attack bonus, base save progression, Bardic \
                             Knowledge, the flat Bardic Performance surface (rounds per day, \
                             inspire courage magnitude), the flat Fascinate DC / \
@@ -1416,7 +1425,30 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     already left ungrounded and a fear/shaken-condition resolution engine, \
                     neither of which exists in this codebase, so it is deliberately left \
                     named-but-unproven, mirroring the Suggestion / Countersong / Distraction \
-                    precedent exactly — no explanation record is fabricated for it. The row is \
+                    precedent exactly — no explanation record is fabricated for it — AND a \
+                    further SD13-E5 slice widens the level-range gate again \
+                    (supported_bard_level, 1..=9) and extends every one of the formulas above \
+                    to level 9 via the same formula, without re-derivation, verified \
+                    independently against the PF1 Core Rulebook Bard class table (d20pfsrd and \
+                    legacy.aonprd.com): level 9 base attack stays +6 (9 * 3 / 4) and good \
+                    Reflex/Will both stay +6 (9 / 2 + 2), integer-division coincidences, while \
+                    poor Fortitude genuinely rises to +3 (9 / 3); the Bardic Performance \
+                    rounds-per-day pool genuinely rises to 22 (4 + Charisma modifier 2 + 2 per \
+                    level after 1st); Bardic Knowledge stays 4, the Fascinate DC stays 16 and \
+                    its affected-creature count stays 3 (the next rise lands at 10th), Inspire \
+                    Courage stays +2 and Inspire Competence stays +3 (both next tiers land at \
+                    11th), Well-Versed stays +4, and Lore Master stays 1/day (next rise at \
+                    11th) — each checked rather than assumed; UNLIKE the level-8 Dirge of Doom \
+                    entry, the level-9 \"Special\" column reads \"Inspire greatness\" \
+                    (verified independently against both primary sources, checked rather than \
+                    assumed away) — a genuinely NEW bardic-performance type confirmed NOT flat \
+                    (it grants 2 bonus Hit Dice with commensurate temporary hit points, a +2 \
+                    competence attack bonus, and a +1 competence Fortitude bonus to a willing \
+                    ally, requiring the performance-state engine plus \
+                    temporary-Hit-Dice/temporary-hit-point mechanics, none of which exist in \
+                    this codebase), so it is deliberately left named-but-unproven, mirroring \
+                    the Suggestion / Countersong / Distraction / Dirge-of-Doom precedent \
+                    exactly — no explanation record or diagnostic is fabricated for it. The row is \
                     Partial, not Supported: the performance-state \
                     engine (start/maintain action economy, round tracking/consumption of the \
                     grounded budget, no application of the grounded fascinate DC, count, \
@@ -1434,16 +1466,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spontaneous spell burden (spontaneous spells known, spells per day, bonus \
                     spell slots from CHA, spell save DCs, school choice, prepared posture) is not \
                     computed. No performance-execution math and no spell math is fabricated and \
-                    no Bard level 9+ is proven",
+                    no Bard level 10+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
                     Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
                     magnitudes, Countersong / Distraction opposed Perform-check-vs-effect \
                     grounding, Versatile Performance's choice-gated skill-substitution engine \
                     (both grants), Suggestion's fascinated-target-plus-spell-effect resolution, \
-                    Dirge of Doom's fear/shaken-condition resolution, Lore Master's own \
+                    Dirge of Doom's fear/shaken-condition resolution, Inspire Greatness's \
+                    bonus-Hit-Dice/temporary-hit-point mechanics, Lore Master's own \
                     take-10/take-20 skill-check-resolution execution), then the spontaneous \
-                    spell-slot burden, then level-9+ progression",
+                    spell-slot burden, then level-10+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",

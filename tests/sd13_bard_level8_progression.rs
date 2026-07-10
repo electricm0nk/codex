@@ -360,23 +360,20 @@ fn bard_level7_truth_is_unchanged_by_this_widening() {
     );
 }
 
-// ----- Negative control: level 9 stays unrecognized by this slice -----
+// ----- Level 9 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn bard_level_9_is_not_promoted_by_this_slice() {
+fn bard_level_9_was_later_widened_into_the_supported_tranche() {
     let level_9 = BARD_LEVEL8_FIXTURE.replace("class:bard:8", "class:bard:9");
     let input = load(&level_9);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id == "class_chassis.spell_baseline.bard"
-                || e.id == WELL_VERSED_ID
-                || e.id == INSPIRE_COMPETENCE_ID
-                || e.id == LORE_MASTER_ID),
-        "level-9 Bard must not gain any bounded bard chassis explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.bard.")),
+        "level-9 Bard is now recognized by the later level-9 widening slice \
+         (tests/sd13_bard_level9_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }

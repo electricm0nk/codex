@@ -721,7 +721,26 @@ const BARD_CLASS_ID: &str = "class:bard";
 /// in this codebase, so it is deliberately left named-but-unproven,
 /// mirroring the Suggestion / Countersong / Distraction precedent exactly
 /// -- no explanation record is fabricated for it.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 8;
+///
+/// A further SD13-E5 slice widens the gate to level 9 (verified independently
+/// against d20pfsrd and legacy.aonprd.com): level 9 base attack stays +6
+/// (9 * 3 / 4) and good Reflex/Will both stay +6 (9 / 2 + 2),
+/// integer-division coincidences, while poor Fortitude genuinely rises to +3
+/// (9 / 3); the Bardic Performance rounds-per-day pool genuinely rises to 22
+/// (4 + Cha mod + 2 per level after 1st); Bardic Knowledge, the Fascinate
+/// DC/count, Inspire Courage, Inspire Competence, Well-Versed, and Lore
+/// Master all carry over unchanged (the next Fascinate-count rise lands at
+/// 10th and the next Inspire/Lore tiers at 11th, checked rather than
+/// assumed); the level-9 "Special" column reads "Inspire greatness" -- a
+/// genuinely NEW bardic-performance type checked and confirmed NOT flat (it
+/// grants 2 bonus Hit Dice with commensurate temporary hit points, a +2
+/// competence attack bonus, and a +1 competence Fortitude bonus to a willing
+/// ally, requiring the performance-state engine plus
+/// temporary-Hit-Dice/temporary-hit-point mechanics, none of which exist in
+/// this codebase), so it is deliberately left named-but-unproven, mirroring
+/// the Suggestion / Countersong / Distraction / Dirge-of-Doom precedent
+/// exactly -- no explanation record is fabricated for it.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 9;
 /// PF1 Core Rulebook level gate at which Bard gains Well-Versed (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Versatile performance, well-versed" as the Bard 2nd-level special feature
