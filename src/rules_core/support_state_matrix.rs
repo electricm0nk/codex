@@ -551,7 +551,7 @@ const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.r
 const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs + \
     tests/sd13_druid_level2_progression.rs + tests/sd13_druid_level3_progression.rs + \
     tests/sd13_druid_level4_progression.rs + tests/sd13_druid_level5_progression.rs + \
-    tests/sd13_druid_level6_progression.rs";
+    tests/sd13_druid_level6_progression.rs + tests/sd13_druid_level7_progression.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -1427,11 +1427,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
-                            level-1/level-2/level-3/level-4/level-5/level-6 prepared divine spell \
-                            baseline, with base attack bonus, base save progression, Wild \
+                            level-1/level-2/level-3/level-4/level-5/level-6/level-7 prepared divine \
+                            spell baseline, with base attack bonus, base save progression, Wild \
                             Empathy, Nature Sense, the nature-bond choice recognition, (at level \
                             2) Woodland Stride, (at level 3) Trackless Step, and (at level 4) \
-                            Resist Nature's Lure grounded for real at all six supported levels, \
+                            Resist Nature's Lure grounded for real at all seven supported levels, \
                             and the animal-companion execution burden, the Wild Shape execution \
                             burden, and the prepared divine spell posture burden still blocked",
                 support_state: SupportState::Partial,
@@ -1526,18 +1526,32 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     elemental forms) and a functioning-level upgrade (beast shape II / elemental body \
                     I), none of which exist in this codebase's engine-free record set, so Wild Shape \
                     (including this level-6 change) stays deliberately named-but-unproven and this \
-                    slice grounds no new pillar at level 6 either. The row is Partial, not Supported: \
-                    the animal companion execution burden (the companion's stat block, its \
-                    advancement, and its link / share spells abilities) remains named and unproven, \
-                    the Wild Shape execution burden (new form, new stat block, duration tracking, \
-                    frequency, and the level-6 form-list expansion) remains named and unproven, and \
-                    the prepared divine spell posture burden (spells prepared from the full Druid \
-                    list, spontaneous summon nature's ally conversion, spell slots per day, bonus \
-                    spells from a high Wisdom, spell save DCs) is still entirely unproven. No spell \
-                    math is fabricated and no Druid level 7+ is proven",
+                    slice grounds no new pillar at level 6 either. A still further SD13-E5 slice \
+                    widens the gate to level 7 (verified independently against d20pfsrd and \
+                    legacy.aonprd.com): level 7 base attack bonus is +5, a genuinely new value up \
+                    from +4 at level 6; base saves are +5/+2/+5 (Fortitude/Reflex/Will), all three \
+                    numerically unchanged from level 6 (an integer-division coincidence, \
+                    re-verified against the raw class table rather than assumed), extended via the \
+                    same formulas, not re-derived; Wild Empathy grounds correctly to 8 (7 + \
+                    Charisma modifier 1) and Nature Sense stays the flat +2 bonus, both via the \
+                    same formula, not new records; Woodland Stride, Trackless Step, and Resist \
+                    Nature's Lure all stay granted, not re-derived; and the Druid class table's \
+                    level-7 \"Special\" column is genuinely blank (verified independently against \
+                    both primary sources rather than assumed) — Wild Shape's next usage-count \
+                    increase (\"Wild shape (3/day)\") does not land until 8th level, so this slice \
+                    makes no Wild Shape claim at level 7 either way, and no new pillar is grounded \
+                    at level 7. The row is Partial, not Supported: the animal companion execution \
+                    burden (the companion's stat block, its advancement, and its link / share \
+                    spells abilities) remains named and unproven, the Wild Shape execution burden \
+                    (new form, new stat block, duration tracking, frequency, and the level-6 \
+                    form-list expansion) remains named and unproven, and the prepared divine spell \
+                    posture burden (spells prepared from the full Druid list, spontaneous summon \
+                    nature's ally conversion, spell slots per day, bonus spells from a high Wisdom, \
+                    spell save DCs) is still entirely unproven. No spell math is fabricated and no \
+                    Druid level 8+ is proven",
                 next_required_uplift: "SD13-E5 Druid animal companion execution slice, the Wild \
                     Shape execution slice, or the prepared divine spell burden slice, then Druid \
-                    level 7+ progression (out of scope for this slice)",
+                    level 8+ progression (out of scope for this slice)",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",

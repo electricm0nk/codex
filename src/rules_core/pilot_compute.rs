@@ -1140,7 +1140,7 @@ const DRUID_CLASS_ID: &str = "class:druid";
 /// increase and form-list expansion) is therefore deliberately left entirely
 /// named-but-unproven, exactly as at level 4/5 — no explanation or diagnostic
 /// record is fabricated for it this slice either.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 6;
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 7;
 /// PF1 Core Rulebook level gate at which Druid gains Resist Nature's Lure (4th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Resist nature's lure" as part of the Druid
@@ -7672,8 +7672,20 @@ fn supported_druid_level(input: &CharacterInput) -> Option<u8> {
 /// flat/identity-shaped element — the frequency increase is bundled with a
 /// form-list expansion and a functioning-level upgrade, neither of which exist in
 /// this codebase — so it is deliberately left named-but-unproven, exactly as at
-/// level 4/5; no new pillar is grounded at level 6 either. The chosen bond's
-/// execution and the prepared divine spell posture burden remain claim-blocked.
+/// level 4/5; no new pillar is grounded at level 6 either. A still further SD13-E5
+/// slice widens the gate to level 7 (`supported_druid_level`, 1..=7), extending
+/// every formula above to level 7 via the same formula (level 7 base attack bonus
+/// is +5, a genuinely new value up from +4 at level 6; base saves are +5/+2/+5
+/// Fortitude/Reflex/Will, all three numerically unchanged from level 6 — an
+/// integer-division coincidence, re-verified against the raw class table rather
+/// than assumed), keeping Woodland Stride, Trackless Step, and Resist Nature's
+/// Lure all granted (not re-derived). The class table's level-7 "Special" column
+/// is genuinely blank (verified independently against d20pfsrd and
+/// legacy.aonprd.com rather than assumed): Wild Shape's next usage-count increase
+/// ("Wild shape (3/day)") does not land until 8th level, so this slice makes no
+/// Wild Shape claim at level 7 either way, and no new pillar is grounded at level
+/// 7. The chosen bond's execution and the prepared divine spell posture burden
+/// remain claim-blocked.
 ///
 /// This deliberately does not compute a supported spell surface. It grounds no nature
 /// bond power execution (no companion stat block, no companion advancement, no link /
