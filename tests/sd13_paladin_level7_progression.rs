@@ -1,85 +1,84 @@
-//! SD13-E5 Paladin level-6 progression grounding proof.
+//! SD13-E5 Paladin level-7 progression grounding proof.
 //!
-//! Widens the accepted Paladin level-1/level-2/level-3/level-4/level-5
+//! Widens the accepted Paladin level-1/level-2/level-3/level-4/level-5/level-6
 //! chassis-and-spell-burden separation
 //! (`tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs`,
 //! `tests/sd13_paladin_level2_lay_on_hands_divine_grace.rs`,
 //! `tests/sd13_paladin_base_attack_and_saves.rs`,
 //! `tests/sd13_paladin_level3_mercy.rs`,
 //! `tests/sd13_paladin_level4_progression.rs`,
-//! `tests/sd13_paladin_level5_progression.rs`) to paladin level 6, mirroring
+//! `tests/sd13_paladin_level5_progression.rs`,
+//! `tests/sd13_paladin_level6_progression.rs`) to paladin level 7, mirroring
 //! the Fighter/Rogue/Barbarian/Monk/Cleric/Bard/Druid/Sorcerer/Wizard/Ranger
 //! level-range-gate idiom (`supported_paladin_level` is generalized from
-//! `1..=5` to `1..=6` via `MAX_SUPPORTED_PALADIN_LEVEL = 6`). Both PF1 CRB
+//! `1..=6` to `1..=7` via `MAX_SUPPORTED_PALADIN_LEVEL = 7`). Both PF1 CRB
 //! primary sources (d20pfsrd and legacy.aonprd.com Paladin class table) were
-//! read directly before writing any code or test: level 6 base attack bonus
-//! is +6/+1, Fortitude/Will are +5, Reflex is +2, and the level-6 "Special"
-//! column reads "Mercy" (a second mercy becomes selectable at 6th level and
-//! every three levels thereafter). It proves:
+//! read directly before writing any code or test: level 7 base attack bonus
+//! is +7/+2, Fortitude/Will are +5, Reflex is +2, and the level-7 "Special"
+//! column reads "Smite evil 3/day" only (Aura of Resolve does not land until
+//! 8th level; the next repeat Mercy grant does not land until 9th level). It
+//! proves:
 //!
-//! - base attack bonus at level 6 is grounded by the same full-BAB formula
-//!   already grounded at levels 1-5: `6` (the iterative-attack notation
-//!   +6/+1 is not modeled anywhere in this codebase; only the flat leading
+//! - base attack bonus at level 7 is grounded by the same full-BAB formula
+//!   already grounded at levels 1-6: `7` (the iterative-attack notation
+//!   +7/+2 is not modeled anywhere in this codebase; only the flat leading
 //!   number is grounded, mirroring every other full-BAB class row).
-//! - base saves at level 6 are grounded by the same good-Fortitude/good-Will/
-//!   poor-Reflex formulas already grounded at levels 1-5, and BOTH good
-//!   saves GENUINELY increase: Fortitude/Will `6 / 2 + 2 = 5` (up from 4 at
-//!   level 5) and Reflex `6 / 3 = 2` (up from 1 at level 5) -- real value
-//!   changes, verified independently against both primary sources' level-6
-//!   table row, not re-derivations.
+//! - base saves at level 7 are grounded by the same good-Fortitude/good-Will/
+//!   poor-Reflex formulas already grounded at levels 1-6, and all three stay
+//!   NUMERICALLY UNCHANGED from level 6: Fortitude/Will `7 / 2 + 2 = 5`
+//!   (unchanged from 5 at level 6) and Reflex `7 / 3 = 2` (unchanged from 2
+//!   at level 6) -- integer-division coincidences, verified independently
+//!   against both primary sources' level-7 table row, not signs either
+//!   formula stopped scaling.
 //! - Smite Evil's uses-per-day formula `1 + (paladin level - 1) / 3`
-//!   correctly stays 2/day at level 6 (`1 + 5/3 = 2`), unchanged from level
-//!   5; the next increase does not land until level 7, out of scope. Attack
-//!   bonus stays the Charisma modifier and damage bonus keeps scaling via
-//!   the same pre-existing formula (damage bonus = paladin level = 6).
-//! - lay on hands GENUINELY increases at level 6 via the same pre-existing
-//!   formulas: uses/day = 1/2 paladin level + Charisma modifier =
-//!   `6/2 + 2 = 5` (up from 4 at level 5) and heal dice = paladin level / 2
-//!   = `6/2 = 3` (up from 2 at level 5). Divine grace save bonus stays the
-//!   positive Charisma modifier, unchanged.
-//! - the effective caster level gate GENUINELY changes at level 6:
-//!   `max(6 - 3, 0) = 3` (PF1 Core Rulebook: paladin spells begin at level
+//!   GENUINELY increases to 3/day at level 7 (`1 + 6/3 = 3`), up from 2/day
+//!   at level 6; both primary sources' level-7 "Special" column reads
+//!   "Smite evil 3/day", verified independently rather than assumed to stay
+//!   at 2 (the PF1 CRB rule text: "At 4th level, and at every three levels
+//!   thereafter, the paladin may smite evil one additional time per day").
+//!   Attack bonus stays the Charisma modifier and damage bonus keeps scaling
+//!   via the same pre-existing formula (damage bonus = paladin level = 7).
+//! - lay on hands and divine grace stay NUMERICALLY UNCHANGED at level 7 via
+//!   the same pre-existing formulas: uses/day = 1/2 paladin level + Charisma
+//!   modifier = `7/2 + 2 = 5` (unchanged from 5 at level 6) and heal dice =
+//!   paladin level / 2 = `7/2 = 3` (unchanged from 3 at level 6) --
+//!   integer-division coincidences, not stalled formulas. Divine grace save
+//!   bonus stays the positive Charisma modifier, unchanged.
+//! - the effective caster level gate GENUINELY changes at level 7:
+//!   `max(7 - 3, 0) = 4` (PF1 Core Rulebook: paladin spells begin at level
 //!   4, effective caster level = paladin level - 3) -- a real value change
-//!   from `2` at level 5, grounded via the same pre-existing formula (no
+//!   from `3` at level 6, grounded via the same pre-existing formula (no
 //!   re-derivation). This grounds only the caster-level gate arithmetic; it
 //!   fabricates no spells known, no spells per day, no bonus spell slots,
 //!   and no spell save DCs, and the partial-caster spell blocker keeps
 //!   firing.
-//! - Channel Positive Energy's flat die count stays 3 at level 6
-//!   (`ceil(paladin level / 2) = ceil(6/2) = 3`), numerically unchanged from
-//!   level 5 -- an integer-division coincidence (`6/2` and the ceiling of
-//!   `5/2` both land on `3`), not a sign the formula stopped scaling; the
-//!   next increase lands at level 7 (`ceil(7/2) = 4`).
+//! - Channel Positive Energy's flat die count GENUINELY increases at level 7:
+//!   `ceil(paladin level / 2) = ceil(7/2) = 4`, up from 3 at level 6 --
+//!   verified independently rather than assumed, mirroring the Cleric
+//!   Channel Energy die-count widening idiom exactly.
 //! - Mercy, granted once at 3rd level, stays granted (not re-derived) at
-//!   level 6: the grant and single choice-recognition record both persist
+//!   level 7: the grant and single choice-recognition record both persist
 //!   unchanged (`mercy:shaken`). This cycle was specifically briefed to
-//!   check whether Paladin gains an actual new class feature at 6th level:
+//!   check whether Paladin gains an actual new class feature at 7th level:
 //!   verified independently against d20pfsrd and legacy.aonprd.com, the
-//!   level-6 "Special" column reads "Mercy" again -- PF1 CRB grants a
-//!   paladin an ADDITIONAL mercy to select at 6th level and every three
-//!   levels thereafter ("these abilities are cumulative"). Since the
-//!   existing mercy mechanism in this codebase is a single, ungated
-//!   choice-recognition record (it does not track how many mercies have
-//!   been selected or enforce a count), this genuinely-new 6th-level grant
-//!   is NOT a flat/identity-shaped burden this codebase has already
-//!   modeled -- grounding a second mercy SLOT would require inventing a
-//!   mercy-list-growth mechanism that does not exist yet, which the
-//!   operator brief explicitly forbids. It is therefore deliberately left
-//!   named-but-unproven, mirroring the Rogue second-talent-slot / Barbarian
-//!   Rage Power / Monk second-bonus-feat precedent exactly: no new
-//!   choice-slot and no new diagnostic is added for it.
-//! - Divine Bond (the level-5 grant) stays not fabricated at level 6,
+//!   level-7 "Special" column reads "Smite evil 3/day" only -- the repeat
+//!   Mercy grant (PF1 CRB: "At 3rd level, and every three levels
+//!   thereafter") lands at 3, 6, 9, 12... and level 7 is NOT one of those
+//!   levels, so there is nothing new to leave named-but-unproven for Mercy
+//!   at level 7 (unlike level 6, which WAS one of those levels).
+//! - Divine Bond (the level-5 grant) stays not fabricated at level 7,
 //!   unaffected by this widening.
 //!
 //! It deliberately does not implement any lay-on-hands execution engine, any
 //! channel-positive-energy healing/damage-resolution engine, any Divine Bond
 //! execution engine, any mercy-list-growth/multi-slot mechanism, and it does
-//! not ground Paladin level 7+ or the partial-caster spell burden's actual
+//! not ground Paladin level 8+ or the partial-caster spell burden's actual
 //! content (spells known/prepared, spells per day, bonus spell slots, spell
-//! save DCs -- the effective-caster-level gate widening to 3 does NOT mean
+//! save DCs -- the effective-caster-level gate widening to 4 does NOT mean
 //! spell slots are grounded here). It also preserves the accepted Paladin
-//! level-1/level-2/level-3/level-4/level-5 truth (unchanged), the F6 hybrid
-//! baseline, the Ranger negative control, and the Fighter negative control.
+//! level-1/level-2/level-3/level-4/level-5/level-6 truth (unchanged), the F6
+//! hybrid baseline, the Ranger negative control, and the Fighter negative
+//! control.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -87,11 +86,11 @@ use codex::rules_core::pilot_compute::{
 };
 use codex::rules_core::support_state_matrix::{SupportState, seeded_sd13_e1_f1_current_truth};
 
-const PALADIN_LEVEL5_FIXTURE: &str =
-    include_str!("fixtures/rules_core/pf1_human_paladin_level5_sd13_deterministic_input.txt");
-
 const PALADIN_LEVEL6_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_paladin_level6_sd13_deterministic_input.txt");
+
+const PALADIN_LEVEL7_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_paladin_level7_sd13_deterministic_input.txt");
 
 const RANGER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_ranger_level1_sd13_deterministic_input.txt");
@@ -152,52 +151,52 @@ fn explanation<'a>(
         })
 }
 
-// ----- Base attack / base save at level 6 (both good saves genuinely increase) -----
+// ----- Base attack / base save at level 7 (both good saves stay numerically unchanged) -----
 
 #[test]
-fn paladin_level6_base_attack_and_saves_are_grounded_by_the_same_formulas() {
-    let input = load(PALADIN_LEVEL6_FIXTURE);
+fn paladin_level7_base_attack_and_saves_are_grounded_by_the_same_formulas() {
+    let input = load(PALADIN_LEVEL7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let base_attack = explanation(&computation, BASE_ATTACK_ID);
     assert_eq!(
-        base_attack.value, 6,
-        "Paladin level 6 full BAB (classlevel) must equal 6: {}",
+        base_attack.value, 7,
+        "Paladin level 7 full BAB (classlevel) must equal 7: {}",
         base_attack.detail
     );
 
     let fortitude = explanation(&computation, BASE_SAVE_FORTITUDE_ID);
     assert_eq!(
         fortitude.value, 5,
-        "Paladin level 6 good Fortitude (6/2+2) must genuinely increase to 5, up from 4 at \
-         level 5"
+        "Paladin level 7 good Fortitude (7/2+2) must equal 5, numerically unchanged from level 6"
     );
 
     let reflex = explanation(&computation, BASE_SAVE_REFLEX_ID);
     assert_eq!(
         reflex.value, 2,
-        "Paladin level 6 poor Reflex (6/3) must genuinely increase to 2, up from 1 at level 5"
+        "Paladin level 7 poor Reflex (7/3) must equal 2, numerically unchanged from level 6"
     );
 
     let will = explanation(&computation, BASE_SAVE_WILL_ID);
     assert_eq!(
         will.value, 5,
-        "Paladin level 6 good Will (6/2+2) must genuinely increase to 5, up from 4 at level 5"
+        "Paladin level 7 good Will (7/2+2) must equal 5, numerically unchanged from level 6"
     );
 }
 
-// ----- Smite Evil stays at 2/day at level 6 (next increase is level 7) -----
+// ----- Smite Evil GENUINELY increases to 3/day at level 7 -----
 
 #[test]
-fn paladin_level6_smite_evil_stays_2_per_day() {
-    let input = load(PALADIN_LEVEL6_FIXTURE);
+fn paladin_level7_smite_evil_increases_to_3_per_day() {
+    let input = load(PALADIN_LEVEL7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let uses_per_day = explanation(&computation, SMITE_EVIL_USES_PER_DAY_ID);
     assert_eq!(
-        uses_per_day.value, 2,
-        "smite evil uses per day stays 2/day at level 6 (1 + (6-1)/3 = 2); the next increase \
-         does not land until level 7: {uses_per_day:?}"
+        uses_per_day.value, 3,
+        "smite evil uses per day must genuinely increase to 3/day at level 7 (1 + (7-1)/3 = 3), \
+         up from 2/day at level 6, matching the PF1 CRB level-7 \"Special\" column \"Smite evil \
+         3/day\": {uses_per_day:?}"
     );
 
     let attack_bonus = explanation(&computation, SMITE_EVIL_ATTACK_BONUS_ID);
@@ -208,59 +207,59 @@ fn paladin_level6_smite_evil_stays_2_per_day() {
 
     let damage_bonus = explanation(&computation, SMITE_EVIL_DAMAGE_BONUS_ID);
     assert_eq!(
-        damage_bonus.value, 6,
-        "smite evil damage bonus must equal paladin level (6 at level 6): {damage_bonus:?}"
+        damage_bonus.value, 7,
+        "smite evil damage bonus must equal paladin level (7 at level 7): {damage_bonus:?}"
     );
 }
 
-// ----- Lay on hands GENUINELY increases; divine grace stays unchanged at level 6 -----
+// ----- Lay on hands / divine grace stay numerically unchanged at level 7 -----
 
 #[test]
-fn paladin_level6_lay_on_hands_increases_and_divine_grace_stays_unchanged() {
-    let input = load(PALADIN_LEVEL6_FIXTURE);
+fn paladin_level7_lay_on_hands_and_divine_grace_stay_unchanged() {
+    let input = load(PALADIN_LEVEL7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let uses_per_day = explanation(&computation, LAY_ON_HANDS_USES_PER_DAY_ID);
     assert_eq!(
         uses_per_day.value, 5,
-        "lay on hands uses per day at level 6 (1/2 paladin level + Charisma modifier = 3 + 2) \
-         must genuinely increase to 5, up from 4 at level 5: {uses_per_day:?}"
+        "lay on hands uses per day at level 7 (1/2 paladin level + Charisma modifier = 3 + 2) \
+         must equal 5, numerically unchanged from level 6: {uses_per_day:?}"
     );
 
     let heal_amount = explanation(&computation, LAY_ON_HANDS_HEAL_AMOUNT_ID);
     assert_eq!(
         heal_amount.value, 3,
-        "lay on hands heal amount at level 6 (paladin level / 2 = 3) must genuinely increase to \
-         3, up from 2 at level 5: {heal_amount:?}"
+        "lay on hands heal amount at level 7 (paladin level / 2 = 3) must equal 3, numerically \
+         unchanged from level 6: {heal_amount:?}"
     );
 
     let save_bonus = explanation(&computation, DIVINE_GRACE_SAVE_BONUS_ID);
     assert_eq!(
         save_bonus.value, 2,
-        "divine grace save bonus at level 6 must still equal the positive Charisma modifier, \
+        "divine grace save bonus at level 7 must still equal the positive Charisma modifier, \
          unchanged: {save_bonus:?}"
     );
 }
 
-// ----- Effective caster level GENUINELY becomes 3 at level 6 -----
+// ----- Effective caster level GENUINELY becomes 4 at level 7 -----
 
 #[test]
-fn paladin_level6_effective_caster_level_genuinely_becomes_3() {
-    let input = load(PALADIN_LEVEL6_FIXTURE);
+fn paladin_level7_effective_caster_level_genuinely_becomes_4() {
+    let input = load(PALADIN_LEVEL7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let caster_level = explanation(&computation, EFFECTIVE_CASTER_LEVEL_ID);
     assert_eq!(
-        caster_level.value, 3,
-        "effective caster level at paladin level 6 (max(6 - 3, 0)) must genuinely become 3, up \
-         from 2 at level 5: {caster_level:?}"
+        caster_level.value, 4,
+        "effective caster level at paladin level 7 (max(7 - 3, 0)) must genuinely become 4, up \
+         from 3 at level 6: {caster_level:?}"
     );
 
     let spell_blocker = computation
         .diagnostics
         .iter()
         .find(|d| d.id == PARTIAL_CASTER_BLOCKER_ID)
-        .expect("paladin partial-caster spell blocker must still fire at level 6");
+        .expect("paladin partial-caster spell blocker must still fire at level 7");
     assert!(
         spell_blocker.claim_blocking,
         "the partial-caster spell burden stays claim-blocking; no spell slots are fabricated \
@@ -268,30 +267,30 @@ fn paladin_level6_effective_caster_level_genuinely_becomes_3() {
     );
 }
 
-// ----- Mercy stays granted (not re-derived) at level 6; no second slot fabricated -----
+// ----- Mercy stays granted (not re-derived) at level 7; no second slot fabricated -----
 
 #[test]
-fn paladin_level6_mercy_stays_granted_unchanged() {
-    let input = load(PALADIN_LEVEL6_FIXTURE);
+fn paladin_level7_mercy_stays_granted_unchanged() {
+    let input = load(PALADIN_LEVEL7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let granted = explanation(&computation, MERCY_GRANTED_ID);
     assert_eq!(
         granted.value, 0,
-        "mercy grant record still carries no fabricated mechanical value at level 6: {granted:?}"
+        "mercy grant record still carries no fabricated mechanical value at level 7: {granted:?}"
     );
 
     let choice = explanation(&computation, MERCY_CHOICE_ID);
     assert!(
         choice.detail.contains("mercy:shaken"),
-        "mercy choice detail must still name the selected mercy (mercy:shaken) at level 6: {}",
+        "mercy choice detail must still name the selected mercy (mercy:shaken) at level 7: {}",
         choice.detail
     );
 }
 
 #[test]
-fn paladin_level6_does_not_fabricate_a_second_mercy_slot() {
-    let input = load(PALADIN_LEVEL6_FIXTURE);
+fn paladin_level7_does_not_fabricate_a_second_mercy_slot() {
+    let input = load(PALADIN_LEVEL7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert_eq!(
@@ -301,34 +300,33 @@ fn paladin_level6_does_not_fabricate_a_second_mercy_slot() {
             .filter(|e| e.id == MERCY_CHOICE_ID)
             .count(),
         1,
-        "the level-6 repeat mercy grant (PF1 CRB: an additional mercy is selectable at 6th \
-         level and every three levels thereafter) must not fabricate a second mercy-choice \
-         explanation record, since no mercy-list-growth mechanism exists in this codebase: {:?}",
+        "level 7 is not one of the PF1 CRB's repeat-mercy-grant levels (3rd level and every \
+         three levels thereafter: 3, 6, 9...); no second mercy-choice explanation record must be \
+         fabricated: {:?}",
         computation.explanations
     );
 }
 
-// ----- Channel Positive Energy dice count stays 3 at level 6 (integer-division coincidence) -----
+// ----- Channel Positive Energy dice count GENUINELY increases to 4 at level 7 -----
 
 #[test]
-fn paladin_level6_channel_positive_energy_dice_stays_at_3() {
-    let input = load(PALADIN_LEVEL6_FIXTURE);
+fn paladin_level7_channel_positive_energy_dice_increases_to_4() {
+    let input = load(PALADIN_LEVEL7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let dice = explanation(&computation, CHANNEL_POSITIVE_ENERGY_DICE_ID);
     assert_eq!(
-        dice.value, 3,
-        "channel positive energy dice count at level 6 (ceil(paladin level / 2) = ceil(6/2)) \
-         stays 3, numerically unchanged from level 5, not a sign the formula stopped scaling \
-         (the next increase lands at level 7): {dice:?}"
+        dice.value, 4,
+        "channel positive energy dice count at level 7 (ceil(paladin level / 2) = ceil(7/2)) \
+         must genuinely increase to 4, up from 3 at level 6: {dice:?}"
     );
 }
 
-// ----- Divine Bond: still not fabricated at level 6 -----
+// ----- Divine Bond: still not fabricated at level 7 -----
 
 #[test]
-fn paladin_level6_does_not_fabricate_divine_bond() {
-    let input = load(PALADIN_LEVEL6_FIXTURE);
+fn paladin_level7_does_not_fabricate_divine_bond() {
+    let input = load(PALADIN_LEVEL7_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
@@ -339,7 +337,7 @@ fn paladin_level6_does_not_fabricate_divine_bond() {
         "Divine Bond (the PF1 CRB's 5th-level paladin class feature) still requires an \
          activation/resource-consumption engine and either a weapon-enhancement subsystem or a \
          full mount stat-block/advancement subsystem, neither of which exists in this codebase; \
-         no explanation record must be fabricated for it at level 6 either: {:?}",
+         no explanation record must be fabricated for it at level 7 either: {:?}",
         computation.explanations
     );
     assert!(
@@ -347,27 +345,24 @@ fn paladin_level6_does_not_fabricate_divine_bond() {
             .diagnostics
             .iter()
             .any(|d| d.id.contains("divine_bond")),
-        "no diagnostic record should be fabricated for Divine Bond either, at level 6: {:?}",
+        "no diagnostic record should be fabricated for Divine Bond either, at level 7: {:?}",
         computation.diagnostics
     );
 }
 
-// ----- Negative control: level 7 stays unrecognized by this slice (level 7
-// was later widened into the supported tranche by a subsequent SD13-E5
-// slice; see tests/sd13_paladin_level7_progression.rs) -----
+// ----- Negative control: level 8 stays unrecognized by this slice -----
 
 #[test]
-fn paladin_level_7_was_later_widened_into_the_supported_tranche() {
-    let level_7 = PALADIN_LEVEL6_FIXTURE.replace("class:paladin:6", "class:paladin:7");
-    let input = load(&level_7);
+fn paladin_level_8_is_not_promoted_by_this_slice() {
+    let level_8 = PALADIN_LEVEL7_FIXTURE.replace("class:paladin:7", "class:paladin:8");
+    let input = load(&level_8);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        computation
+        !computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-7 Paladin was later widened into the supported tranche and must now gain bounded \
-         paladin chassis explanations: {:?}",
+        "level-8 Paladin must not gain any bounded paladin chassis explanation: {:?}",
         computation.explanations
     );
 }
@@ -375,7 +370,7 @@ fn paladin_level_7_was_later_widened_into_the_supported_tranche() {
 // ----- Negative control: the grounding must not leak onto other classes -----
 
 #[test]
-fn fighter_and_ranger_do_not_gain_paladin_level6_recognition() {
+fn fighter_and_ranger_do_not_gain_paladin_level7_recognition() {
     let fighter = load(FIGHTER_FIXTURE);
     let fighter_computation = compute_pilot_base_chassis(&fighter);
     assert!(!has_explanation(&fighter_computation, CHANNEL_POSITIVE_ENERGY_DICE_ID));
@@ -384,39 +379,39 @@ fn fighter_and_ranger_do_not_gain_paladin_level6_recognition() {
     assert!(!has_explanation(&ranger_computation, CHANNEL_POSITIVE_ENERGY_DICE_ID));
 }
 
-// ----- Sanity: level 5 fixture is unaffected by the level-6 widening -----
+// ----- Sanity: level 6 fixture is unaffected by the level-7 widening -----
 
 #[test]
-fn paladin_level5_values_stay_unaffected_after_the_level6_widening() {
-    let input = load(PALADIN_LEVEL5_FIXTURE);
+fn paladin_level6_values_stay_unaffected_after_the_level7_widening() {
+    let input = load(PALADIN_LEVEL6_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let caster_level = explanation(&computation, EFFECTIVE_CASTER_LEVEL_ID);
     assert_eq!(
-        caster_level.value, 2,
-        "level 5 effective caster level must remain 2, unaffected by the level-6 widening: \
+        caster_level.value, 3,
+        "level 6 effective caster level must remain 3, unaffected by the level-7 widening: \
          {caster_level:?}"
     );
 
     let dice = explanation(&computation, CHANNEL_POSITIVE_ENERGY_DICE_ID);
     assert_eq!(
         dice.value, 3,
-        "level 5 channel positive energy dice count must remain 3, unaffected by the level-6 \
+        "level 6 channel positive energy dice count must remain 3, unaffected by the level-7 \
          widening: {dice:?}"
     );
 
-    let fortitude = explanation(&computation, BASE_SAVE_FORTITUDE_ID);
+    let smite = explanation(&computation, SMITE_EVIL_USES_PER_DAY_ID);
     assert_eq!(
-        fortitude.value, 4,
-        "level 5 base Fortitude save must remain 4, unaffected by the level-6 widening: \
-         {fortitude:?}"
+        smite.value, 2,
+        "level 6 smite evil uses per day must remain 2, unaffected by the level-7 widening: \
+         {smite:?}"
     );
 }
 
-// ----- Control plane: the matrix row's note names the level-6 widening -----
+// ----- Control plane: the matrix row's note names the level-7 widening -----
 
 #[test]
-fn matrix_paladin_row_names_level_6_widening_and_effective_caster_level() {
+fn matrix_paladin_row_names_level_7_widening_and_effective_caster_level() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
@@ -425,14 +420,14 @@ fn matrix_paladin_row_names_level_6_widening_and_effective_caster_level() {
     assert_eq!(paladin.support_state, SupportState::Partial);
     assert_ne!(paladin.support_state, SupportState::Supported);
     assert!(
-        paladin.grounding_ref.contains("sd13_paladin_level6_progression"),
-        "paladin row must cite the live SD13-E5 level-6 progression proof surface: {}",
+        paladin.grounding_ref.contains("sd13_paladin_level7_progression"),
+        "paladin row must cite the live SD13-E5 level-7 progression proof surface: {}",
         paladin.grounding_ref
     );
     let note = paladin.blocker_or_lossiness_note;
     assert!(
         note.to_lowercase().contains("effective caster level")
-            || note.to_lowercase().contains("level 6"),
-        "paladin partial note must name the level-6 widening: {note}"
+            || note.to_lowercase().contains("level 7"),
+        "paladin partial note must name the level-7 widening: {note}"
     );
 }
