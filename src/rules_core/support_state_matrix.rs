@@ -298,7 +298,8 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
     tests/sd13_rogue_level3_progression.rs + \
     tests/sd13_rogue_level4_progression.rs + \
     tests/sd13_rogue_level5_progression.rs + \
-    tests/sd13_rogue_level6_progression.rs";
+    tests/sd13_rogue_level6_progression.rs + \
+    tests/sd13_rogue_level7_progression.rs";
 
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group
@@ -840,14 +841,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:rogue",
                 dimension: "bounded Rogue chassis progression: the deterministic Human Rogue \
-                            level-1/level-2/level-3/level-4/level-5/level-6 chassis identity, \
-                            with all four named pillars grounded across all six levels \
-                            (base-attack, base-save, sneak-attack die count, and trapfinding), \
-                            Evasion grounded as a level-2 identity/recognition record, Trap \
-                            Sense grounded as a level-3 flat-magnitude record (genuinely rising \
-                            to +2 at level 6), Uncanny Dodge grounded as a level-4 \
-                            identity/recognition record, the sneak-attack die count genuinely \
-                            rising to 3d6 at level 5 and staying there at level 6, and the \
+                            level-1/level-2/level-3/level-4/level-5/level-6/level-7 chassis \
+                            identity, with all four named pillars grounded across all seven \
+                            levels (base-attack, base-save, sneak-attack die count, and \
+                            trapfinding), Evasion grounded as a level-2 identity/recognition \
+                            record, Trap Sense grounded as a level-3 flat-magnitude record \
+                            (genuinely rising to +2 at level 6, unchanged at level 7), Uncanny \
+                            Dodge grounded as a level-4 identity/recognition record, the \
+                            sneak-attack die count genuinely rising to 3d6 at level 5, staying \
+                            there at level 6, and rising to 4d6 at level 7, and the \
                             check-execution / rogue-talent / integration remainder still \
                             unproven",
                 support_state: SupportState::Partial,
@@ -904,10 +906,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     +3 (max(rogue level / 2, 1)); Evasion and Uncanny Dodge both stay granted, \
                     not re-derived. The level-6 row's other named entry, a second Rogue Talent \
                     slot, is deliberately left named-but-unproven, mirroring the level-2/level-4 \
-                    rogue-talent precedent. The row is Partial, not Supported: no rogue talent \
-                    (a level-2+/4+/6+ choice-list feature, and a genuinely open-ended talent \
-                    tree left named but unproven) is proven, no Rogue level 7+ is proven, and no \
-                    mechanical math is fabricated beyond these grounded pillars. \
+                    rogue-talent precedent. A further SD13-E5 slice widens the gate to level 7 \
+                    (verified independently against d20pfsrd and legacy.aonprd.com: the Rogue \
+                    class table's level-7 \"Special\" column reads only \"Sneak attack +4d6,\" \
+                    no other new feature) and the pre-existing sneak-attack die-count formula \
+                    ((level + 1) / 2) genuinely rises to 4d6 at level 7, up from 3d6 at level 6, \
+                    via the same formula, not a new record; the pre-existing Trap Sense \
+                    flat-magnitude formula stays at +2 (unchanged from level 6, the next rise is \
+                    at 9th level); Trapfinding stays at +3 (max(rogue level / 2, 1), an \
+                    integer-division coincidence with level 6); Evasion and Uncanny Dodge both \
+                    stay granted, not re-derived. The row is Partial, not Supported: no rogue \
+                    talent (a level-2+/4+/6+ choice-list feature, and a genuinely open-ended \
+                    talent tree left named but unproven) is proven, no Rogue level 8+ is proven, \
+                    and no mechanical math is fabricated beyond these grounded pillars. \
                     tests/ge06_pilot_total_saves.rs \
                     (unsupported_chassis_blocks_total_saves) still claim-blocks class:rogue:1 \
                     unmodified: the class_chassis.rogue.base_attack_bonus / base_save.* / \
@@ -918,7 +929,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     still never computed for Rogue.",
                 next_required_uplift: "later SD13 slice wiring the grounded Rogue pillar \
                     records into the integrated pilot surface (the generic chassis diagnostics \
-                    still claim-block), then rogue talents and level-7+ progression",
+                    still claim-block), then rogue talents and level-8+ progression",
             },
             SupportStateRow {
                 row_id: "class.barbarian.bounded_progression",
