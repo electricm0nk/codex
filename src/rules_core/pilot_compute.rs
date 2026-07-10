@@ -341,8 +341,20 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // terrain-type selection plus a bonus-increase-target choice), but is a
 // multi-record burden of its own -- deliberately left named-but-unproven this
 // slice, a real newly discovered burden for a future slice, not an invented
-// one. Nothing here grounds level 9+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 8;
+// one. A further SD13-E5 slice widens the gate to level 9 (verified
+// independently against d20pfsrd and legacy.aonprd.com): level 9 base attack
+// genuinely rises to +9 (full BAB) and poor Will genuinely rises to +3
+// (9 / 3), while both good saves stay +6 (9 / 2 + 2, integer-division
+// coincidences); Track stays 4 (max(9/2, 1), a coincidence); the
+// favored-enemy/favored-terrain/hunter's-bond facets all carry over unchanged
+// (the next favored-enemy grant lands at 10th, the next favored-terrain grant
+// at 13th, both checked rather than assumed); the level-9 "Special" column
+// reads "Evasion" — a genuinely NEW class feature, grounded as a +0
+// identity/recognition record only (RANGER_EVASION_LEVEL), mirroring Rogue's
+// and Monk's own Evasion records; no damage-resolution engine exists here, so
+// no damage math is fabricated from it. Nothing here grounds level 10+
+// Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 9;
 
 /// PF1 Core Rulebook level gate at which Woodland Stride is granted (verified
 /// independently against two primary sources: both d20pfsrd and
@@ -370,6 +382,11 @@ const RANGER_WOODLAND_STRIDE_LEVEL: u8 = 7;
 /// magnitude), so only the grant identity itself is grounded, mirroring the
 /// Woodland Stride idiom exactly.
 const RANGER_SWIFT_TRACKER_LEVEL: u8 = 8;
+/// PF1 Core Rulebook level gate at which Ranger gains Evasion (9th level,
+/// verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Evasion" as the Ranger 9th-level "Special"
+/// column entry — the same rule text as Rogue's and Monk's own Evasion).
+const RANGER_EVASION_LEVEL: u8 = 9;
 
 /// PF1 Core Rulebook level gate at which the Favored Enemy rule's 5th-level
 /// interval is granted (verified independently against two primary sources:
@@ -4054,9 +4071,9 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
 
 /// The bounded Ranger milestone level this decomposition surface grounds, if any.
 /// Returns the single Ranger level when the chosen input is exactly a single-class
-/// Ranger at one of the supported milestone levels (1, 2, 3, 4, 5, 6, or 7). Returns
+/// Ranger at one of the supported milestone levels (1 through 9). Returns
 /// `None` for no Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid
-/// (which has its own decomposition lane), or any level-8+ Ranger this slice
+/// (which has its own decomposition lane), or any level-10+ Ranger this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the
 /// Fighter `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
@@ -4986,6 +5003,33 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  record (value 0, non-fabricated): no tracking-while-moving \
                  check-execution/movement-penalty engine exists anywhere in this codebase to \
                  apply the reduced penalty, so this only records the grant itself"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5 level-9 slice): Evasion, the 9th-level Ranger class
+    // feature verified independently against two primary PF1 sources (d20pfsrd
+    // and legacy.aonprd.com both list "Evasion" as the Ranger 9th-level
+    // "Special" entry — the same rule text as Rogue's and Monk's own Evasion).
+    // Grounded as a bounded +0 identity/recognition record at or above the
+    // gate, mirroring exactly how Rogue's and Monk's Evasion records were
+    // grounded — no saving-throw-resolution or damage-resolution engine exists
+    // in this codebase, so no damage math is fabricated from the record. Below
+    // the level-9 gate no record is pushed at all (the level-9 slice's own
+    // level-8 control pins that absence).
+    if level >= RANGER_EVASION_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.evasion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Evasion granted at ranger level {level} (PF1 Core Rulebook, 9th-level \
+                 ranger class feature): if the ranger makes a successful Reflex saving throw \
+                 against an attack that normally deals half damage on a successful save, he \
+                 instead takes no damage; Evasion can be used only when wearing light armor, \
+                 medium armor, or no armor. This is a bounded identity/recognition record only \
+                 (value 0, non-fabricated): no saving-throw-resolution engine and no \
+                 damage-resolution engine exists anywhere in this codebase to apply it, so \
+                 this grounds no actual damage reduction on any save outcome"
             ),
         });
     }
