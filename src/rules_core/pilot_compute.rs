@@ -716,7 +716,7 @@ const MONK_CLASS_ID: &str = "class:monk";
 /// SD13-E5 Monk level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` idiom.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 5;
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 6;
 /// PF1 Core Rulebook level gate at which Monk gains Evasion (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Bonus feat, evasion" as the Monk 2nd-level special feature entry).
@@ -743,6 +743,26 @@ const MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL: u8 = 4;
 /// legacy.aonprd.com both list "Ki pool (magic), slow fall 20 ft." as the Monk
 /// 4th-level special feature entry).
 const MONK_KI_POOL_AND_SLOW_FALL_LEVEL: u8 = 4;
+/// PF1 Core Rulebook level gate at which Slow Fall's own reach magnitude
+/// increases from 20 ft to 30 ft (6th level, verified independently against
+/// two primary sources: d20pfsrd and legacy.aonprd.com both list "Bonus feat,
+/// slow fall 30 ft." as the Monk 6th-level special feature entry — the full
+/// progression is 20 ft at 4th, 30 ft at 6th, 40 ft at 8th, and 50 ft at
+/// 10th). This is a genuine flat-magnitude increase in the rule text, mirroring
+/// the Rogue Trap Sense idiom; the record's own `value` field still stays 0
+/// (still a bounded grant-only identity record, since no fall-damage-
+/// resolution engine exists in this codebase to apply any reduction to), but
+/// the detail text names the level-accurate reach so it is never a stale,
+/// fabricated-by-omission "20 feet" claim at level 6. The level-6 "Special"
+/// column's OTHER entry, "Bonus feat," was checked and confirmed to be the
+/// SAME open-ended repeat bonus-feat choice-list shape already deliberately
+/// left named-but-unproven at 2nd level (not a new automatic class feature,
+/// and not Improved Trip specifically — Improved Trip is merely one of the
+/// five feats already recognized as a possible *choice* for this and every
+/// other Monk bonus feat grant) — mirroring exactly the Rogue level-6 "second
+/// Rogue Talent slot" precedent: no new choice-slot and no new diagnostic was
+/// added for it.
+const MONK_SLOW_FALL_INCREASED_REACH_LEVEL: u8 = 6;
 /// PF1 Core Rulebook level gate at which Monk gains Purity of Body (5th level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "High jump, purity of body" as the Monk
@@ -5254,16 +5274,22 @@ fn explain_monk_level1_chassis(
             ),
         });
     } else {
+        let slow_fall_reach_feet = if level < MONK_SLOW_FALL_INCREASED_REACH_LEVEL {
+            20
+        } else {
+            30
+        };
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.slow_fall".to_owned(),
             value: 0,
             detail: format!(
                 "Monk Slow Fall granted at monk level {level} (PF1 Core Rulebook, 4th-level monk \
-                 class feature): \"a monk within arm's reach of a wall can use it to slow his \
-                 descent\" — when first gaining this ability she takes falling damage as if the \
-                 fall were 20 feet shorter than it actually is. This is a bounded grant-only \
-                 identity record only (value 0, non-fabricated): no fall-damage-resolution \
-                 engine exists anywhere in this codebase to apply the 20-foot reduction to"
+                 class feature whose own reach magnitude increases to 30 ft. at 6th level): \"a \
+                 monk within arm's reach of a wall can use it to slow his descent\" — she takes \
+                 falling damage as if the fall were {slow_fall_reach_feet} feet shorter than it \
+                 actually is. This is a bounded grant-only identity record only (value 0, \
+                 non-fabricated): no fall-damage-resolution engine exists anywhere in this \
+                 codebase to apply the {slow_fall_reach_feet}-foot reduction to"
             ),
         });
     }

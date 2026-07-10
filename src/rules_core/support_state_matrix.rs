@@ -533,7 +533,7 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs 
 const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs + \
     tests/sd13_monk_bonus_feat_choice.rs + tests/sd13_monk_level2_progression.rs + \
     tests/sd13_monk_level3_progression.rs + tests/sd13_monk_level4_progression.rs + \
-    tests/sd13_monk_level5_progression.rs";
+    tests/sd13_monk_level5_progression.rs + tests/sd13_monk_level6_progression.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -1365,23 +1365,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:monk",
                 dimension: "bounded Monk martial chassis progression: the deterministic Human \
-                            Monk level-1/level-2/level-3/level-4/level-5 martial chassis \
+                            Monk level-1/level-2/level-3/level-4/level-5/level-6 martial chassis \
                             identity, with base-attack, base-save, AC Bonus, the unarmed strike \
                             damage die, the Flurry of Blows flat attack surface, and the level-1 \
-                            bonus feat choice-slot selection grounded across all five levels, \
+                            bonus feat choice-slot selection grounded across all six levels, \
                             Evasion grounded as a level-2 identity/recognition record, Still Mind \
                             grounded as a level-3 flat-magnitude record, the ki pool's flat size \
-                            and Slow Fall grounded as level-4 records, Purity of Body grounded as \
-                            a level-5 grant-only identity record (High Jump checked and confirmed \
-                            not flat), and the recognized bonus feat's own mechanics still \
-                            unproven",
+                            (genuinely rising to 6 at level 6) and Slow Fall grounded as level-4 \
+                            records (Slow Fall's own reach magnitude genuinely rising to 30 ft. \
+                            at level 6), Purity of Body grounded as a level-5 grant-only identity \
+                            record (High Jump checked and confirmed not flat), and the recognized \
+                            bonus feat's own mechanics still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_MONK_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3/E5 leaves direct computed evidence that the \
-                    deterministic Human Monk level-1/level-2/level-3/level-4/level-5 martial \
-                    chassis identity is recognized on the compute seam, and now grounds ten \
+                    deterministic Human Monk level-1/level-2/level-3/level-4/level-5/level-6 \
+                    martial chassis identity is recognized on the compute seam, and now grounds ten \
                     named pillar burdens across all five levels: base attack progression (3/4 \
                     BAB), base save progression (good Fortitude, Reflex, and Will), AC Bonus \
                     (Wisdom-to-AC, the flat value at the supported level), the unarmed strike / \
@@ -1431,19 +1432,36 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     named-but-unproven, not fabricated. Fast Movement and Maneuver Training, the \
                     class table's other two 3rd-level \"Special\" column entries, are also \
                     deliberately left named-but-unproven (no speed-total engine and no CMB/CMD \
-                    engine exist in this codebase to attach either to). One named burden remains \
-                    unproven: the recognized bonus feat's own mechanics (no attack-resolution, \
-                    grapple-check, trip-check, or DC/save engine exists for any of the \
-                    restricted-list feats). The level-2 bonus feat grant (PF1 grants monks a \
-                    SEPARATE bonus feat at 2nd level, not recognized by this widening), the \
-                    level-8+ unarmed damage die progression, flurry with special monk weapons, \
-                    wiring into integrated combat totals, any ki-power execution engine, High \
-                    Jump's own Acrobatics/ki-point mechanics, and Monk level 6+ all remain \
-                    unproven, and no martial math beyond the grounded flat surfaces is fabricated",
+                    engine exist in this codebase to attach either to). A further SD13-E5 slice \
+                    widens the gate to level 6 (verified independently against d20pfsrd and \
+                    legacy.aonprd.com: the Monk class table's level-6 \"Special\" column reads \
+                    \"Bonus feat, slow fall 30 ft.\"): the pre-existing base-attack, base-save, \
+                    and Flurry of Blows formulas produce +4 BAB, +5/+5/+5 saves, and a +4/+4 \
+                    flurry (attack count staying 2 — both primary sources' verbatim Flurry of \
+                    Blows rule text confirms the third attack is not gained until 8th level, not \
+                    6th), the ki pool's pre-existing formula genuinely rises to 6, and Slow \
+                    Fall's own reach magnitude genuinely rises from 20 ft to 30 ft via the same \
+                    grant-only identity record (value stays 0, non-fabricated; only the \
+                    descriptive reach figure is level-accurate) — none of this is a new record, \
+                    all of it is the same pre-existing formulas/records extended. The level-6 \
+                    \"Special\" column's OTHER entry, \"Bonus feat,\" was checked and confirmed \
+                    to be the same open-ended repeat bonus-feat choice-list shape already \
+                    deliberately left named-but-unproven at 2nd level (mirroring the Rogue \
+                    level-6 \"second Rogue Talent slot\" precedent), not a new automatic class \
+                    feature; no new choice-slot and no new diagnostic was added for it. One named \
+                    burden remains unproven: the recognized bonus feat's own mechanics (no \
+                    attack-resolution, grapple-check, trip-check, or DC/save engine exists for \
+                    any of the restricted-list feats). The level-2 and level-6 bonus feat grants \
+                    (PF1 grants monks SEPARATE bonus feats at 2nd and 6th level, neither \
+                    recognized by this widening), the level-8+ unarmed damage die progression, \
+                    flurry with special monk weapons, wiring into integrated combat totals, any \
+                    ki-power execution engine, High Jump's own Acrobatics/ki-point mechanics, and \
+                    Monk level 7+ all remain unproven, and no martial math beyond the grounded \
+                    flat surfaces is fabricated",
                 next_required_uplift: "later SD13-E5/E6 slice grounding the one remaining named \
                     Monk martial pillar burden (the recognized bonus feat's own mechanics — an \
-                    execution engine per feat, not a flat number), then the level-2 bonus feat \
-                    grant recognition and Monk level 6+ progression",
+                    execution engine per feat, not a flat number), then the level-2/level-6 \
+                    bonus feat grant recognition and Monk level 7+ progression",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
