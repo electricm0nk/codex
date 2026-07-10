@@ -1113,8 +1113,22 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 /// only at level 8). No other new class feature is gained at 7th level (verified
 /// independently against both primary sources' level-7 Special column), so no new
 /// pillar record is added at level 7 either — only the Channel Energy and domain
-/// spell slot count pillars are widened to genuinely new values.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 7;
+/// spell slot count pillars are widened to genuinely new values. A further SD13-E5
+/// slice widens this to 1..=8, verified independently against both primary sources:
+/// the class table's level-8 "Special" column is genuinely blank (no new class
+/// feature is gained at 8th level — the iterative-attack notation "+6/+1" on the
+/// level-8 base-attack column is not modeled anywhere in this codebase, only the
+/// flat base value of 6), Channel Energy's die count stays 4d6
+/// (`ceil(8 / 2) = 4`, unchanged from level 7 — both primary sources confirm the
+/// die count rises only every odd cleric level, 1st/3rd/5th/7th/9th/..., so level 8
+/// is not one of those levels), and the domain spell slot count stays 4 (the raw
+/// spells-per-day table's level-8 row still shows "—" in the 5th-level spell
+/// column, verified independently against both primary sources — 5th-level cleric
+/// spells do not begin until level 9) — but the Good domain's Touch of Good sacred
+/// bonus GENUINELY increases to 4 via the same pre-existing formula
+/// (`max(8/2, 1) = 4`), confirming the level-7 comment's own forecast that it next
+/// increases at level 8.
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 8;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -1170,7 +1184,10 @@ const CLERIC_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 5;
 /// spell slot) first become available, verified against the raw PF1 Core
 /// Rulebook Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com):
 /// level 6 shows a still-"—" 4th-level column, level 7 is the first to show a
-/// non-"—" 4th-level column ("1+1").
+/// non-"—" 4th-level column ("1+1"). Confirmed the count stays at 4 domain
+/// slots through level 8 (the level-8 row's 5th-level spell column is still
+/// "—", verified independently against both primary sources), since 5th-level
+/// cleric spells are not yet available — they first appear at level 9.
 const CLERIC_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
@@ -7456,8 +7473,8 @@ fn explain_wizard_level1_prepared_spell_baseline(
 
 /// The bounded Cleric milestone level this decomposition surface grounds, if any.
 /// Returns the single Cleric level when the chosen input is exactly a single-class
-/// Cleric at one of the supported milestone levels (1 through 7). Returns `None` for
-/// no Cleric, a non-Cleric class, a multiclass mix, or any level-8+ Cleric this slice
+/// Cleric at one of the supported milestone levels (1 through 8). Returns `None` for
+/// no Cleric, a non-Cleric class, a multiclass mix, or any level-9+ Cleric this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -7831,7 +7848,10 @@ fn explain_cleric_level1_spell_baseline(
         // re-derived. A further SD13-E5 slice confirms this genuinely increases again
         // to 3 at level 6 (6 / 2 = 3), verified independently against the PF1 Core
         // Rulebook Good Domain granted-power rule text, via the same pre-existing
-        // formula, not re-derived.
+        // formula, not re-derived. A further SD13-E5 slice confirms this genuinely
+        // increases again to 4 at level 8 (8 / 2 = 4), verified independently
+        // against the PF1 Core Rulebook Good Domain granted-power rule text, via
+        // the same pre-existing formula, not re-derived.
         let touch_of_good_bonus = (level_value / 2).max(1);
         explanations.push(ComputationExplanation {
             id: "class_chassis.cleric.domain_power_good_touch_of_good_bonus".to_owned(),
