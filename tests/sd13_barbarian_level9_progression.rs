@@ -264,20 +264,20 @@ fn barbarian_level8_truth_is_unchanged_by_this_slice() {
     assert_eq!(trap_sense.value, 2, "Barbarian level 8 Trap Sense must stay +2");
 }
 
-// ----- Negative control: level 10 stays unrecognized by this slice -----
+// ----- Level 10 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn barbarian_level_10_is_not_promoted_by_this_slice() {
+fn barbarian_level_10_was_later_widened_into_the_supported_tranche() {
     let level_10 = BARBARIAN_LEVEL9_FIXTURE.replace("class:barbarian:9", "class:barbarian:10");
     let input = load(&level_10);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.barbarian.")
-                || e.id.starts_with("class_feature.barbarian.")),
-        "level-10 Barbarian must not gain any bounded barbarian explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
+        "level-10 Barbarian is now recognized by the later level-10 widening slice \
+         (tests/sd13_barbarian_level10_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }

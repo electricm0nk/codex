@@ -1028,7 +1028,20 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// pillar (level / 3), not a new class feature; Damage Reduction stays 1/—
 /// (the next DR rise lands at 10th); level 9 is NOT a rage-power level
 /// (powers land at 2/4/6/8/10...), so no new pillar is grounded.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 9;
+///
+/// A further SD13-E5 slice widens the gate to level 10 — the tranche ceiling
+/// (verified independently against d20pfsrd and legacy.aonprd.com): level 10
+/// base attack genuinely rises to +10 (full BAB) and good Fortitude
+/// genuinely rises to +7 (10 / 2 + 2), while poor Reflex/Will both stay +3
+/// (10 / 3, coincidences); the rage rounds-per-day pool genuinely rises to
+/// 25 (4 + Con mod + 2 per level after 1st) with the rage-surface magnitudes
+/// staying standard (Greater Rage at 11th); the level-10 "Special" column
+/// reads "Damage reduction 2/—, rage power": DR genuinely rises to 2
+/// (BARBARIAN_DAMAGE_REDUCTION_TWO_LEVEL — rising by 1 at 10th and every
+/// three levels thereafter) as a tier on the existing flat-magnitude pillar,
+/// and the rage-power entry is the same open-ended choice-list feature left
+/// named-but-unproven at 2/4/6/8; Trap Sense stays +3 (next rise 12th).
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 10;
 
 /// PF1 Core Rulebook level gate at which Barbarian gains Uncanny Dodge (2nd level,
 /// verified against two independent primary sources — d20pfsrd and legacy.aonprd.com
@@ -1055,6 +1068,11 @@ const BARBARIAN_IMPROVED_UNCANNY_DODGE_LEVEL: u8 = 5;
 /// gains damage reduction. Subtract 1 from the damage the barbarian takes each
 /// time she is dealt damage from a weapon or a natural attack").
 const BARBARIAN_DAMAGE_REDUCTION_LEVEL: u8 = 7;
+/// PF1 Core Rulebook level gate at which Barbarian Damage Reduction rises to
+/// 2/— (10th level — "At 10th level, and every three barbarian levels
+/// thereafter, this damage reduction rises by 1 point", verified
+/// independently against d20pfsrd and legacy.aonprd.com).
+const BARBARIAN_DAMAGE_REDUCTION_TWO_LEVEL: u8 = 10;
 
 // SD13-E3/E5 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
@@ -5166,8 +5184,8 @@ fn supported_sorcerer_level(input: &CharacterInput) -> Option<u8> {
 /// The bounded Barbarian milestone level this decomposition surface grounds, if any.
 /// Returns the single Barbarian level when the chosen input is exactly a
 /// single-class Barbarian at one of the supported milestone levels (1 through
-/// 9). Returns `None` for no Barbarian, a non-Barbarian class, a multiclass mix,
-/// or any level-10+ Barbarian this slice deliberately does not recognize — each of which
+/// 10). Returns `None` for no Barbarian, a non-Barbarian class, a multiclass mix,
+/// or any level-11+ Barbarian this slice deliberately does not recognize — each of which
 /// stays claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level`
 /// / Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Monk
 /// `supported_monk_level` level-range gate idiom.
@@ -5728,15 +5746,24 @@ fn explain_barbarian_level1_chassis(
             ),
         });
     } else {
+        let damage_reduction_value: i16 = if level < BARBARIAN_DAMAGE_REDUCTION_TWO_LEVEL {
+            1
+        } else {
+            2
+        };
         explanations.push(ComputationExplanation {
             id: "class_feature.barbarian.damage_reduction".to_owned(),
-            value: 1,
+            value: damage_reduction_value,
             detail: format!(
                 "Barbarian Damage Reduction granted at barbarian level {level} (PF1 Core \
-                 Rulebook, 7th-level barbarian class feature, \"Damage reduction 1/-\"): \
-                 subtract 1 from the damage the barbarian takes each time she is dealt damage \
+                 Rulebook, 7th-level barbarian class feature, \"Damage reduction 1/-\", \
+                 rising by 1 point at 10th level and every three levels thereafter — the \
+                 level-{level} magnitude is {damage_reduction_value}/-): \
+                 subtract {damage_reduction_value} from the damage the barbarian takes each \
+                 time she is dealt damage \
                  from a weapon or a natural attack. This is a bounded flat-magnitude record \
-                 only (value 1, non-fabricated): no damage-resolution engine and no \
+                 only (value {damage_reduction_value}, non-fabricated): no damage-resolution \
+                 engine and no \
                  incoming-damage total exists anywhere in this codebase to apply it, so this \
                  grounds no actual damage reduction"
             ),
