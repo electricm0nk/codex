@@ -280,11 +280,16 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // Core Rulebook level gate at which Combat Style Feat is actually granted, by
 // level 3 (SD13-E5), the level gate at which Endurance and Favored Terrain are
 // granted, by level 4 (SD13-E5), the level gate at which Hunter's Bond is
-// granted, and by level 5 (SD13-E5), the level gate at which the Favored Enemy
+// granted, by level 5 (SD13-E5), the level gate at which the Favored Enemy
 // rule's own 5th-level interval (a second favored enemy plus a +2 bonus increase
-// to any one favored enemy of the ranger's choice) is granted. Nothing here
-// grounds level 6+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 5;
+// to any one favored enemy of the ranger's choice) is granted, and by level 6
+// (SD13-E5), the level gate at which the ranger's SECOND combat-style bonus feat
+// is granted (verified independently against d20pfsrd and legacy.aonprd.com: both
+// state "The ranger's expertise manifests in the form of bonus feats at 2nd, 6th,
+// 10th, 14th, and 18th level" -- 6th level is the very next milestone after 2nd,
+// not 3rd/4th/5th as some earlier framings assumed). Nothing here grounds level
+// 7+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 6;
 
 /// PF1 Core Rulebook level gate at which the Favored Enemy rule's 5th-level
 /// interval is granted (verified independently against two primary sources:
@@ -411,6 +416,34 @@ const DOUBLE_SLICE_FEAT_SELECTION: &str = "feat:double_slice";
 const IMPROVED_SHIELD_BASH_FEAT_SELECTION: &str = "feat:improved_shield_bash";
 const QUICK_DRAW_FEAT_SELECTION: &str = "feat:quick_draw";
 const TWO_WEAPON_FIGHTING_FEAT_SELECTION: &str = "feat:two_weapon_fighting";
+
+// SD13-E5 Ranger SECOND combat style bonus feat, granted at 6th level (verified
+// independently against d20pfsrd and legacy.aonprd.com's Core Rulebook Ranger
+// page before writing any code: "The ranger's expertise manifests in the form of
+// bonus feats at 2nd, 6th, 10th, 14th, and 18th level" -- 6th level is the very
+// next milestone after 2nd). PF1 Core Rulebook Combat Style Feat text: "He can
+// choose feats from his selected combat style, even if he does not have the
+// normal prerequisites." Both primary sources agree on which feats each style's
+// list gains specifically at 6th level (as distinct from the 2nd-level list
+// already grounded above): the Archery style's 6th-level list is Improved
+// Precise Shot and Manyshot; the Two-Weapon Combat style's 6th-level list is
+// Improved Two-Weapon Fighting and Two-Weapon Defense. This grounds only a
+// restricted-list recognition of the specific feat named at this milestone
+// (gated on the same style choice already recognized at 2nd level); it does not
+// validate the second choice against the cumulative (2nd+6th level) list, so a
+// selection re-picking one of the 2nd-level list's own feats at this gate is
+// deliberately left unrecognized rather than silently accepted as if it were
+// general-purpose feat validation. No feat's own mechanical effect is computed
+// anywhere in this codebase.
+const RANGER_COMBAT_STYLE_BONUS_FEAT_2_LEVEL: u8 = 6;
+const RANGER_COMBAT_STYLE_BONUS_FEAT_2_CHOICE_ID: &str =
+    "choice:ranger_combat_style_bonus_feat_2";
+// PF1 Core Rulebook Archery combat style, 6th-level bonus feat list.
+const IMPROVED_PRECISE_SHOT_FEAT_SELECTION: &str = "feat:improved_precise_shot";
+const MANYSHOT_FEAT_SELECTION: &str = "feat:manyshot";
+// PF1 Core Rulebook Two-Weapon Combat style, 6th-level bonus feat list.
+const IMPROVED_TWO_WEAPON_FIGHTING_FEAT_SELECTION: &str = "feat:improved_two_weapon_fighting";
+const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
 
 // SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
 // caster; this slice recognizes only its bounded single-class level-1 identity as direct
@@ -3571,10 +3604,11 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
 
 /// The bounded Ranger milestone level this decomposition surface grounds, if any.
 /// Returns the single Ranger level when the chosen input is exactly a single-class
-/// Ranger at one of the supported milestone levels (1, 2, 3, 4, or 5). Returns `None`
-/// for no Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid (which
-/// has its own decomposition lane), or any level-6+ Ranger this slice deliberately
-/// does not recognize — each of which stays claim-blocked exactly as before. Mirrors the
+/// Ranger at one of the supported milestone levels (1, 2, 3, 4, 5, or 6). Returns
+/// `None` for no Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid
+/// (which has its own decomposition lane), or any level-7+ Ranger this slice
+/// deliberately does not recognize — each of which stays claim-blocked exactly as
+/// before. Mirrors the
 /// Fighter `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
 /// `supported_rogue_level` / Barbarian `supported_barbarian_level` / Monk
 /// `supported_monk_level` / Cleric `supported_cleric_level` / Bard
@@ -3765,8 +3799,17 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // increases it at 5th ranger level and beyond) and grounding Hunter's Bond (a
     // restricted two-option choice recognition, a grant-only identity record, and --
     // for the "bond" form only -- a flat, non-applied ally-bonus magnitude record).
-    // Ranger level 5+ progression, the favored-enemy conditional-application engine,
-    // the level-8th/13th/18th Favored Terrain breadth, Hunter's Bond ally-bonus
+    // A still later SD13-E5 slice widens the gate again to level 5, extending both
+    // formulas once more and grounding the Favored Enemy rule's own 5th-level
+    // interval (a second favored-enemy selection plus a restricted-choice
+    // bonus-increase target). A still later SD13-E5 slice widens the gate once more
+    // to level 6, extending both formulas once more (Track genuinely rises to 3) and
+    // grounding the ranger's SECOND combat-style bonus feat (a restricted-list
+    // choice recognition gated on the same style already chosen at 2nd level,
+    // mirroring the first bonus feat's own grounding idiom exactly).
+    // Ranger level 7+ progression, the favored-enemy conditional-application engine,
+    // either combat-style bonus feat's own mechanics, the level-8th/13th/18th
+    // Favored Terrain breadth, Hunter's Bond ally-bonus
     // application/animal-companion stat block, and the ranger spell burden remain
     // deliberately out of scope.
     let level_value = i16::from(level);
@@ -3951,6 +3994,65 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                     id: "class_chassis.ranger.combat_style_bonus_feat_choice".to_owned(),
                     value: 0,
                     detail,
+                });
+            }
+
+            // SD13-E5 level-6 widening: the ranger's SECOND combat-style bonus feat,
+            // gated on both the level-6 milestone and the same style already
+            // recognized above. Mirrors the first bonus feat's grounding idiom
+            // exactly (a restricted-list choice recognition, +0, no mechanical
+            // effect computed), validated against each style's own 6th-level list
+            // only (Archery: Improved Precise Shot, Manyshot; Two-Weapon Combat:
+            // Improved Two-Weapon Fighting, Two-Weapon Defense) rather than the
+            // cumulative 2nd+6th-level list.
+            if let Some(style) = style_name
+                && level >= RANGER_COMBAT_STYLE_BONUS_FEAT_2_LEVEL
+                && let Some(feat_selection_2) =
+                    choice_selection(input, RANGER_COMBAT_STYLE_BONUS_FEAT_2_CHOICE_ID)
+            {
+                let recognized_feat_name_2 = if style == "Archery" {
+                    if feat_selection_2 == IMPROVED_PRECISE_SHOT_FEAT_SELECTION {
+                        Some("Improved Precise Shot")
+                    } else if feat_selection_2 == MANYSHOT_FEAT_SELECTION {
+                        Some("Manyshot")
+                    } else {
+                        None
+                    }
+                } else if feat_selection_2 == IMPROVED_TWO_WEAPON_FIGHTING_FEAT_SELECTION {
+                    Some("Improved Two-Weapon Fighting")
+                } else if feat_selection_2 == TWO_WEAPON_DEFENSE_FEAT_SELECTION {
+                    Some("Two-Weapon Defense")
+                } else {
+                    None
+                };
+
+                let detail_2 = if let Some(feat_name) = recognized_feat_name_2 {
+                    format!(
+                        "Ranger {style} SECOND combat style bonus feat at ranger level {level} \
+                         ({RANGER_COMBAT_STYLE_BONUS_FEAT_2_CHOICE_ID} -> {feat_selection_2}) \
+                         names {feat_name}, drawn from the PF1 Core Rulebook {style} combat \
+                         style's own {RANGER_COMBAT_STYLE_BONUS_FEAT_2_LEVEL}th-level restricted \
+                         feat list (verified independently against d20pfsrd and \
+                         legacy.aonprd.com: the ranger's combat style grants bonus feats at 2nd, \
+                         6th, 10th, 14th, and 18th level). This is a recognition record of the \
+                         choice slot only, so it carries no fabricated mechanical value (+0): \
+                         {feat_name}'s own mechanics are not grounded here, and no such \
+                         execution engine exists in this codebase"
+                    )
+                } else {
+                    format!(
+                        "Ranger SECOND combat style bonus feat at ranger level {level} is \
+                         present ({RANGER_COMBAT_STYLE_BONUS_FEAT_2_CHOICE_ID} -> \
+                         {feat_selection_2}), but only the PF1 Core Rulebook {style} combat \
+                         style's own {RANGER_COMBAT_STYLE_BONUS_FEAT_2_LEVEL}th-level restricted \
+                         feat list is recognized on this bounded seam; no restricted-list feat \
+                         identity is grounded and no mechanical value is fabricated (+0)"
+                    )
+                };
+                explanations.push(ComputationExplanation {
+                    id: "class_chassis.ranger.combat_style_bonus_feat_2_choice".to_owned(),
+                    value: 0,
+                    detail: detail_2,
                 });
             }
         }

@@ -348,36 +348,38 @@ fn ranger_level5_hunters_bond_ally_bonus_recomputes_from_the_widened_favored_ene
     );
 }
 
-// ----- Negative control: level 6 stays unrecognized by this slice -----
+// ----- Level 6 was later widened into the supported tranche -----
 //
-// This supersedes `tests/sd13_ranger_level4_progression.rs`'s
-// `ranger_level_5_is_not_promoted_by_this_slice`, whose coverage moves here now that
-// level 5 is itself promoted into the supported tranche.
+// This supersedes the original `ranger_level_6_is_not_promoted_by_this_slice`
+// negative control now that a later SD13-E5 slice promotes level 6 into the
+// supported tranche; the level-7 negative control now lives in
+// `tests/sd13_ranger_level6_progression.rs`.
 
 #[test]
-fn ranger_level_6_is_not_promoted_by_this_slice() {
+fn ranger_level_6_was_later_widened_into_the_supported_tranche() {
     let level_6 = RANGER_LEVEL5_FIXTURE.replace("class:ranger:5", "class:ranger:6");
     let input = load(&level_6);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")),
-        "level-6 Ranger must not gain any bounded ranger chassis explanation: {:?}",
+        "level-6 Ranger was later widened into the supported tranche and must now gain bounded \
+         ranger chassis explanations: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, ENDURANCE_ID),
-        "level-6 Ranger must not gain the Endurance explanation from this bounded slice"
+        has_explanation(&computation, ENDURANCE_ID),
+        "level-6 Ranger was later widened and must now carry the Endurance explanation"
     );
     assert!(
-        !has_explanation(&computation, FAVORED_TERRAIN_ID),
-        "level-6 Ranger must not gain the Favored Terrain explanation from this bounded slice"
+        has_explanation(&computation, FAVORED_TERRAIN_ID),
+        "level-6 Ranger was later widened and must now carry the Favored Terrain explanation"
     );
     assert!(
-        !has_explanation(&computation, HUNTERS_BOND_ID),
-        "level-6 Ranger must not gain the Hunter's Bond explanation from this bounded slice"
+        has_explanation(&computation, HUNTERS_BOND_ID),
+        "level-6 Ranger was later widened and must now carry the Hunter's Bond explanation"
     );
 }
 
