@@ -376,7 +376,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_level6_progression.rs + \
     tests/sd13_ranger_level7_progression.rs + \
     tests/sd13_ranger_level8_progression.rs + \
-    tests/sd13_ranger_level9_progression.rs";
+    tests/sd13_ranger_level9_progression.rs + \
+    tests/sd13_ranger_level10_progression.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -2311,7 +2312,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7/ \
-                            level-8/level-9 chassis baseline, with base attack bonus, base save \
+                            level-8/level-9/level-10 chassis baseline, with base attack bonus, base save \
                             progression, Track, the favored-enemy flat surface, the \
                             combat-style choice-and-bonus-feat recognition, (level 3) \
                             Endurance and the Favored Terrain choice-and-flat-magnitude \
@@ -2511,7 +2512,33 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Monk's own Evasion, grounded by this slice as a +0 identity/recognition \
                     record only (class_feature.ranger.evasion), mirroring those precedents \
                     exactly — no saving-throw-resolution or damage-resolution engine exists in \
-                    this codebase, so no damage math is fabricated from the record. The row is Partial, not \
+                    this codebase, so no damage math is fabricated from the record — AND a \
+                    further SD13-E5 slice widens the level-range gate again \
+                    (supported_ranger_level, 1..=10), reaching the tranche ceiling, and extends \
+                    every one of the formulas above to level 10 via the same formula, without \
+                    re-derivation, verified independently against the PF1 Core Rulebook Ranger \
+                    class table (d20pfsrd and legacy.aonprd.com): level 10 base attack \
+                    genuinely rises to +10 (full BAB; the table's own \"+10/+5\" iterative \
+                    notation is not modeled anywhere in this codebase, only the flat base \
+                    value) and both good saves genuinely rise to +7 (10 / 2 + 2), while poor \
+                    Will stays +3 (10 / 3, an integer-division coincidence); Track genuinely \
+                    rises to 5 (max(10/2, 1)); the level-10 \"Special\" column reads \"3rd \
+                    favored enemy, combat style feat\" (verified independently against both \
+                    primary sources, checked rather than assumed away): the THIRD combat-style \
+                    bonus feat is grounded as a restricted-list choice recognition \
+                    (class_chassis.ranger.combat_style_bonus_feat_3_choice), mirroring the \
+                    2nd/6th-level grants exactly — the Archery style's own 10th-level list \
+                    adds Pinpoint Targeting and Shot on the Run, the Two-Weapon Combat style's \
+                    own adds Greater Two-Weapon Fighting and Two-Weapon Rend, and the \
+                    deterministic fixture selects Shot on the Run (+0 recognition only, no \
+                    feat mechanics grounded) — while the \"3rd favored enemy\" interval (a \
+                    third enemy-type selection PLUS the rule's own second +2 \
+                    bonus-increase-target choice at the 10th-level interval) is a real, \
+                    newly-discovered multi-record burden deliberately left named-but-unproven \
+                    this slice, mirroring the level-8 2nd-favored-terrain deferral precedent \
+                    exactly — the grounded favored-enemy magnitudes carry over unchanged \
+                    (+4/+2, the 5th-level interval's increase target still naming the first \
+                    enemy) and nothing is fabricated for the deferred interval. The row is Partial, not \
                     Supported: the favored-enemy conditional-application engine (target-type \
                     matching that would decide whether a specific check or attack is made \
                     against the favored enemy) is not implemented, neither recognized \
@@ -2520,11 +2547,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     unproven, Hunter's Bond's ally-bonus application and the animal-companion \
                     form are unproven, Woodland Stride's own terrain-movement application and \
                     Swift Tracker's own tracking-penalty application are both unproven, Ranger \
-                    level 10+ is not proven, and the later ranger spell burden (spell slots, spell \
+                    level 11+ is not proven, and the later ranger spell burden (spell slots, spell \
                     source, spells known/prepared) is still deferred to SD13-E4",
                 next_required_uplift: "the PF1 CRB level-8 2nd favored-terrain selection \
-                    (mirroring the already-grounded Favored Enemy 5th-level idiom), Ranger \
-                    level-10+ progression, a favored-enemy conditional-application engine, \
+                    (mirroring the already-grounded Favored Enemy 5th-level idiom), the 10th-level \
+                    3rd-favored-enemy interval (third enemy-type selection plus its own \
+                    bonus-increase-target choice), Ranger \
+                    level-11+ progression, a favored-enemy conditional-application engine, \
                     execution of either recognized combat-style bonus feat's own mechanics, \
                     Hunter's Bond ally-bonus application and the animal-companion stat \
                     block/advancement subsystem, a terrain-detection/movement-resolution engine \

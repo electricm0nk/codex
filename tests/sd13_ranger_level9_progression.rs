@@ -251,20 +251,20 @@ fn ranger_level8_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 10 stays unrecognized by this slice -----
+// ----- Level 10 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn ranger_level_10_is_not_promoted_by_this_slice() {
+fn ranger_level_10_was_later_widened_into_the_supported_tranche() {
     let level_10 = RANGER_LEVEL9_FIXTURE.replace("class:ranger:9", "class:ranger:10");
     let input = load(&level_10);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger.")),
-        "level-10 Ranger must not gain any bounded ranger explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.ranger.")),
+        "level-10 Ranger is now recognized by the later level-10 widening slice \
+         (tests/sd13_ranger_level10_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }
