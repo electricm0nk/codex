@@ -351,7 +351,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_level3_progression.rs + \
     tests/sd13_ranger_favored_terrain_choice.rs + \
     tests/sd13_ranger_level4_progression.rs + \
-    tests/sd13_ranger_level5_progression.rs";
+    tests/sd13_ranger_level5_progression.rs + \
+    tests/sd13_ranger_level6_progression.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -1595,15 +1596,16 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Ranger level-1/level-2/level-3/level-4/level-5 chassis baseline, with \
-                            base attack bonus, base save progression, Track, the favored-enemy \
-                            flat surface, the combat-style choice-and-bonus-feat recognition, \
-                            (level 3) Endurance and the Favored Terrain \
+                            Ranger level-1/level-2/level-3/level-4/level-5/level-6 chassis \
+                            baseline, with base attack bonus, base save progression, Track, the \
+                            favored-enemy flat surface, the combat-style choice-and-bonus-feat \
+                            recognition, (level 3) Endurance and the Favored Terrain \
                             choice-and-flat-magnitude surface, (level 4) the Hunter's Bond \
-                            choice-and-flat-magnitude surface, and (level 5) the Favored Enemy \
+                            choice-and-flat-magnitude surface, (level 5) the Favored Enemy \
                             rule's 5th-level interval (second favored-enemy selection plus the \
-                            bonus-increase target choice) grounded for real and the later spell \
-                            burden still blocked",
+                            bonus-increase target choice), and (level 6) the SECOND \
+                            combat-style bonus feat choice recognition grounded for real and \
+                            the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1709,18 +1711,38 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     selection, both favored enemies correctly stay the flat +2, since nothing is \
                     fabricated about which one the ranger picked. Hunter's Bond's own ally-bonus \
                     magnitude (half the FIRST favored enemy's bonus) naturally recomputes from \
-                    the same unchanged formula once that magnitude widens to +4. The row is \
+                    the same unchanged formula once that magnitude widens to +4. The most recent \
+                    SD13-E5 slice widens the level-range gate once more to level 6, extending \
+                    base attack/base save/Track to level 6 via the same formulas (Track \
+                    genuinely rises to 3, max(6/2, 1); base Fortitude/Reflex rise to 5 \
+                    (6/2+2) and base Will rises to 2 (6/3), all genuinely new values, verified \
+                    independently against d20pfsrd and legacy.aonprd.com), keeps Endurance, \
+                    Favored Terrain, both favored enemies, and Hunter's Bond granted unchanged, \
+                    and grounds the class table's 6th-level \"Special\" column entry (\"Combat \
+                    style feat\", verified independently against both primary sources — no other \
+                    new class feature is gained at 6th level). The Combat Style Feat rule's own \
+                    cadence (\"bonus feats at 2nd, 6th, 10th, 14th, and 18th level\", verified \
+                    independently against both primary sources) confirms the ranger's SECOND \
+                    combat-style bonus feat lands here, not at 3rd/4th/5th level as an earlier \
+                    cycle's check already anticipated. This slice grounds the SECOND combat-style \
+                    bonus feat as a restricted-list choice recognition (choice:\
+                    ranger_combat_style_bonus_feat_2), gated on the same style already recognized \
+                    at 2nd level, validated against each style's own 6th-level feat list only \
+                    (Archery: Improved Precise Shot, Manyshot; Two-Weapon Combat: Improved \
+                    Two-Weapon Fighting, Two-Weapon Defense) — mirroring the first bonus feat's \
+                    own grounding idiom exactly (+0, no mechanical effect computed, no execution \
+                    engine exists in this codebase). The row is \
                     Partial, not Supported: the favored-enemy conditional-application engine \
                     (target-type matching that would decide whether a specific check or attack is \
-                    made against the favored enemy) is not implemented, the recognized \
-                    combat-style bonus feat's own mechanics remain unproven, the Favored Terrain \
+                    made against the favored enemy) is not implemented, neither recognized \
+                    combat-style bonus feat's own mechanics are proven, the Favored Terrain \
                     level-8th/13th/18th breadth is unproven, Hunter's Bond's ally-bonus \
-                    application and the animal-companion form are unproven, Ranger level 6+ is \
+                    application and the animal-companion form are unproven, Ranger level 7+ is \
                     not proven, and the later ranger spell burden (spell slots, spell source, \
                     spells known/prepared) is still deferred to SD13-E4",
-                next_required_uplift: "Ranger level-6+ progression, a favored-enemy \
-                    conditional-application engine, execution of the recognized combat-style bonus \
-                    feat's own mechanics, Hunter's Bond ally-bonus application and the \
+                next_required_uplift: "Ranger level-7+ progression, a favored-enemy \
+                    conditional-application engine, execution of either recognized combat-style \
+                    bonus feat's own mechanics, Hunter's Bond ally-bonus application and the \
                     animal-companion stat block/advancement subsystem, then SD13-E4 ranger spell \
                     burden",
             },
