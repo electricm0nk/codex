@@ -365,9 +365,23 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // reads "Evasion" — a genuinely NEW class feature, grounded as a +0
 // identity/recognition record only (RANGER_EVASION_LEVEL), mirroring Rogue's
 // and Monk's own Evasion records; no damage-resolution engine exists here, so
-// no damage math is fabricated from it. Nothing here grounds level 10+
-// Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 9;
+// no damage math is fabricated from it. A further SD13-E5 slice widens the
+// gate to level 10 — the tranche ceiling (verified independently against
+// d20pfsrd and legacy.aonprd.com): level 10 base attack genuinely rises to
+// +10 (full BAB) and both good saves genuinely rise to +7 (10 / 2 + 2),
+// while poor Will stays +3 (10 / 3, a coincidence); Track genuinely rises to
+// 5 (max(10/2, 1)); the level-10 "Special" column reads "3rd favored enemy,
+// combat style feat": the THIRD combat-style bonus feat is grounded as a
+// restricted-list choice recognition mirroring the 2nd/6th grants exactly
+// (RANGER_COMBAT_STYLE_BONUS_FEAT_3_LEVEL; Archery adds Pinpoint Targeting
+// and Shot on the Run at 10th, Two-Weapon Combat adds Greater Two-Weapon
+// Fighting and Two-Weapon Rend), while the "3rd favored enemy" interval (a
+// third enemy-type selection PLUS the rule's own second +2
+// bonus-increase-target choice) is a real, newly-discovered multi-record
+// burden deliberately left named-but-unproven this slice, mirroring the
+// level-8 2nd-favored-terrain deferral precedent exactly. Nothing here
+// grounds level 11+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 10;
 
 /// PF1 Core Rulebook level gate at which Woodland Stride is granted (verified
 /// independently against two primary sources: both d20pfsrd and
@@ -548,6 +562,15 @@ const TWO_WEAPON_FIGHTING_FEAT_SELECTION: &str = "feat:two_weapon_fighting";
 const RANGER_COMBAT_STYLE_BONUS_FEAT_2_LEVEL: u8 = 6;
 const RANGER_COMBAT_STYLE_BONUS_FEAT_2_CHOICE_ID: &str =
     "choice:ranger_combat_style_bonus_feat_2";
+const RANGER_COMBAT_STYLE_BONUS_FEAT_3_LEVEL: u8 = 10;
+const RANGER_COMBAT_STYLE_BONUS_FEAT_3_CHOICE_ID: &str =
+    "choice:ranger_combat_style_bonus_feat_3";
+// PF1 Core Rulebook Archery combat style, 10th-level bonus feat list.
+const PINPOINT_TARGETING_FEAT_SELECTION: &str = "feat:pinpoint_targeting";
+const SHOT_ON_THE_RUN_FEAT_SELECTION: &str = "feat:shot_on_the_run";
+// PF1 Core Rulebook Two-Weapon Combat style, 10th-level bonus feat list.
+const GREATER_TWO_WEAPON_FIGHTING_FEAT_SELECTION: &str = "feat:greater_two_weapon_fighting";
+const TWO_WEAPON_REND_FEAT_SELECTION: &str = "feat:two_weapon_rend";
 // PF1 Core Rulebook Archery combat style, 6th-level bonus feat list.
 const IMPROVED_PRECISE_SHOT_FEAT_SELECTION: &str = "feat:improved_precise_shot";
 const MANYSHOT_FEAT_SELECTION: &str = "feat:manyshot";
@@ -4206,9 +4229,9 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
 
 /// The bounded Ranger milestone level this decomposition surface grounds, if any.
 /// Returns the single Ranger level when the chosen input is exactly a single-class
-/// Ranger at one of the supported milestone levels (1 through 9). Returns
+/// Ranger at one of the supported milestone levels (1 through 10). Returns
 /// `None` for no Ranger, a non-Ranger class, a multiclass mix, the Paladin hybrid
-/// (which has its own decomposition lane), or any level-10+ Ranger this slice
+/// (which has its own decomposition lane), or any level-11+ Ranger this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the
 /// Fighter `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
@@ -4659,6 +4682,67 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                     id: "class_chassis.ranger.combat_style_bonus_feat_2_choice".to_owned(),
                     value: 0,
                     detail: detail_2,
+                });
+            }
+
+            // SD13-E5 level-10 widening: the ranger's THIRD combat-style bonus
+            // feat, gated on both the level-10 milestone and the same style
+            // already recognized above. Mirrors the first and second bonus
+            // feats' grounding idiom exactly (a restricted-list choice
+            // recognition, +0, no mechanical effect computed), validated
+            // against each style's own 10th-level list only (Archery: Pinpoint
+            // Targeting, Shot on the Run; Two-Weapon Combat: Greater
+            // Two-Weapon Fighting, Two-Weapon Rend — verified independently
+            // against d20pfsrd and legacy.aonprd.com) rather than the
+            // cumulative 2nd+6th+10th-level list.
+            if let Some(style) = style_name
+                && level >= RANGER_COMBAT_STYLE_BONUS_FEAT_3_LEVEL
+                && let Some(feat_selection_3) =
+                    choice_selection(input, RANGER_COMBAT_STYLE_BONUS_FEAT_3_CHOICE_ID)
+            {
+                let recognized_feat_name_3 = if style == "Archery" {
+                    if feat_selection_3 == PINPOINT_TARGETING_FEAT_SELECTION {
+                        Some("Pinpoint Targeting")
+                    } else if feat_selection_3 == SHOT_ON_THE_RUN_FEAT_SELECTION {
+                        Some("Shot on the Run")
+                    } else {
+                        None
+                    }
+                } else if feat_selection_3 == GREATER_TWO_WEAPON_FIGHTING_FEAT_SELECTION {
+                    Some("Greater Two-Weapon Fighting")
+                } else if feat_selection_3 == TWO_WEAPON_REND_FEAT_SELECTION {
+                    Some("Two-Weapon Rend")
+                } else {
+                    None
+                };
+
+                let detail_3 = if let Some(feat_name) = recognized_feat_name_3 {
+                    format!(
+                        "Ranger {style} THIRD combat style bonus feat at ranger level {level} \
+                         ({RANGER_COMBAT_STYLE_BONUS_FEAT_3_CHOICE_ID} -> {feat_selection_3}) \
+                         names {feat_name}, drawn from the PF1 Core Rulebook {style} combat \
+                         style's own {RANGER_COMBAT_STYLE_BONUS_FEAT_3_LEVEL}th-level restricted \
+                         feat list (verified independently against d20pfsrd and \
+                         legacy.aonprd.com: the ranger's combat style grants bonus feats at 2nd, \
+                         6th, 10th, 14th, and 18th level). This is a recognition record of the \
+                         choice slot only, so it carries no fabricated mechanical value (+0): \
+                         {feat_name}'s own mechanics are not grounded here, and no such \
+                         execution engine exists in this codebase"
+                    )
+                } else {
+                    format!(
+                        "Ranger THIRD combat style bonus feat at ranger level {level} is \
+                         present ({RANGER_COMBAT_STYLE_BONUS_FEAT_3_CHOICE_ID} -> \
+                         {feat_selection_3}), but only the PF1 Core Rulebook {style} combat \
+                         style's own {RANGER_COMBAT_STYLE_BONUS_FEAT_3_LEVEL}th-level restricted \
+                         feat list is recognized on this bounded seam; no restricted-list feat \
+                         identity is grounded and no mechanical value is fabricated (+0)"
+                    )
+                };
+                explanations.push(ComputationExplanation {
+                    id: "class_chassis.ranger.combat_style_bonus_feat_3_choice".to_owned(),
+                    value: 0,
+                    detail: detail_3,
                 });
             }
         }
