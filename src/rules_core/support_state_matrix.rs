@@ -472,12 +472,21 @@ const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_reco
 /// Bardic Knowledge stays 3, the Fascinate DC stays 15, the Fascinate
 /// affected-creature count genuinely rises to 3, and Inspire Competence
 /// genuinely rises from +2 to +3 per the PF1 Core Rulebook's own "+1 for
-/// every four levels beyond 3rd" rule text), citing all seven proof files as
-/// one combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`].
+/// every four levels beyond 3rd" rule text), widened again to level 8 by a
+/// still further SD13-E5 slice (base attack genuinely rises to 6, base
+/// Fortitude stays numerically unchanged while Reflex/Will both genuinely
+/// rise to 6, Bardic Knowledge genuinely rises to 4, the Fascinate DC
+/// genuinely rises to 16, the Fascinate affected-creature count stays
+/// numerically unchanged at 3, Inspire Courage and Inspire Competence both
+/// stay at their existing tiers, and the level-8 "Special" column's Dirge
+/// of Doom entry was checked against two primary sources and confirmed NOT
+/// flat, so it is deliberately left named-but-unproven), citing all eight
+/// proof files as one combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`].
 const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + \
     tests/sd13_bard_level2_progression.rs + tests/sd13_bard_level3_progression.rs + \
     tests/sd13_bard_level4_progression.rs + tests/sd13_bard_level5_progression.rs + \
-    tests/sd13_bard_level6_progression.rs + tests/sd13_bard_level7_progression.rs";
+    tests/sd13_bard_level6_progression.rs + tests/sd13_bard_level7_progression.rs + \
+    tests/sd13_bard_level8_progression.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1156,8 +1165,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7 spell \
-                            baseline, with base attack bonus, base save progression, Bardic \
+                            Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8 \
+                            spell baseline, with base attack bonus, base save progression, Bardic \
                             Knowledge, the flat Bardic Performance surface (rounds per day, \
                             inspire courage magnitude), the flat Fascinate DC / \
                             affected-creature-count formulas, (at level 2) the flat Well-Versed \
@@ -1309,30 +1318,56 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     exactly rather than treating this as a new class feature). The PF1 Core \
                     Rulebook Bard class table's level-7 \"Special\" column (verified \
                     independently against both primary sources) reads only \"Inspire competence \
-                    +3\", so no other new pillar record is grounded at level 7. The row is \
+                    +3\", so no other new pillar record is grounded at level 7. A still further \
+                    SD13-E5 slice widens the level-range gate to level 8 (mirroring the \
+                    Fighter/Paladin/Rogue/Barbarian/Monk/Cleric/Druid/Sorcerer/Wizard/Ranger \
+                    idiom), extending every formula above to level 8 via the same formula (level \
+                    8 base attack genuinely rises to 6, up from 5 at level 7, the class table's \
+                    own iterative-attack notation \"+6/+1\" not modeled anywhere in this \
+                    codebase, only the flat base value; base Fortitude stays 2, an \
+                    integer-division coincidence with level 7; base Reflex and Will both \
+                    genuinely rise to 6, up from 5; Bardic Knowledge genuinely rises to 4, up \
+                    from 3; Bardic Performance rounds per day continues scaling; the Fascinate DC \
+                    genuinely rises to 16, up from 15; the Fascinate affected-creature count \
+                    stays 3, an integer-division coincidence confirmed by direct arithmetic \
+                    against the primary source rule text rather than trusted from the formula \
+                    alone; Inspire Courage stays +2 and Inspire Competence stays +3, neither's \
+                    next tier landing until bard level 11; Well-Versed and Lore Master both stay \
+                    granted). The PF1 Core Rulebook Bard class table's level-8 \"Special\" column \
+                    (verified independently against both primary sources) reads \"Dirge of doom\" \
+                    — a genuinely NEW bardic-performance type, checked and confirmed NOT \
+                    flat/identity-shaped: it requires both the same performance-state engine \
+                    already left ungrounded and a fear/shaken-condition resolution engine, \
+                    neither of which exists in this codebase, so it is deliberately left \
+                    named-but-unproven, mirroring the Suggestion / Countersong / Distraction \
+                    precedent exactly — no explanation record is fabricated for it. The row is \
                     Partial, not Supported: the performance-state \
                     engine (start/maintain action economy, round tracking/consumption of the \
                     grounded budget, no application of the grounded fascinate DC, count, \
                     Well-Versed, Inspire Competence, or Lore Master magnitude to any actual \
                     save, skill check, or targeting) is not implemented, the two remaining \
                     level-1 performances (countersong, distraction), Versatile Performance (both \
-                    its 2nd-level and 6th-level grants), and Suggestion are not grounded at all \
+                    its 2nd-level and 6th-level grants), Suggestion, and Dirge of Doom (the \
+                    level-8 \"Special\" column entry) are not grounded at all \
                     — Countersong/Distraction require an opposed Perform-check-vs-effect \
                     substitution resolution, Versatile Performance requires a choice-gated \
-                    skill-substitution engine, and Suggestion requires a fascinated-target \
-                    prerequisite plus the suggestion spell's own effect-resolution engine, none \
-                    a flat number — and the entire spontaneous spell burden (spontaneous spells \
-                    known, spells per day, bonus spell slots from CHA, spell save DCs, school \
-                    choice, prepared posture) is not computed. No performance-execution math and \
-                    no spell math is fabricated and no Bard level 8+ is proven",
+                    skill-substitution engine, Suggestion requires a fascinated-target \
+                    prerequisite plus the suggestion spell's own effect-resolution engine, and \
+                    Dirge of Doom requires both the performance-state engine and a \
+                    fear/shaken-condition resolution engine, none a flat number — and the entire \
+                    spontaneous spell burden (spontaneous spells known, spells per day, bonus \
+                    spell slots from CHA, spell save DCs, school choice, prepared posture) is not \
+                    computed. No performance-execution math and no spell math is fabricated and \
+                    no Bard level 9+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
                     Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
                     magnitudes, Countersong / Distraction opposed Perform-check-vs-effect \
                     grounding, Versatile Performance's choice-gated skill-substitution engine \
                     (both grants), Suggestion's fascinated-target-plus-spell-effect resolution, \
-                    Lore Master's own take-10/take-20 skill-check-resolution execution), then \
-                    the spontaneous spell-slot burden, then level-8+ progression",
+                    Dirge of Doom's fear/shaken-condition resolution, Lore Master's own \
+                    take-10/take-20 skill-check-resolution execution), then the spontaneous \
+                    spell-slot burden, then level-9+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",

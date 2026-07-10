@@ -654,7 +654,33 @@ const BARD_CLASS_ID: &str = "class:bard";
 /// (+3 at 7th, +4 at 11th, +5 at 15th, and +6 at 19th)"), the same kind of
 /// arithmetic tier-widening as Inspire Courage's own second tier at level
 /// 5, not a new class feature — grounded as a genuine rise to +3.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 7;
+/// A still further SD13-E5 slice widens this gate to level 8, verified
+/// independently against the PF1 Core Rulebook Bard class table (d20pfsrd
+/// and the legacy.aonprd.com mirror): the level-8 row is BAB +6/+1, Fort +2,
+/// Ref +6, Will +6 -- base attack genuinely rises to 6 (`8 * 3 / 4`, the
+/// class table's own iterative-attack notation "+6/+1" not modeled anywhere
+/// in this codebase, only the flat base value, mirroring the Cleric
+/// level-8 precedent), base Fortitude stays 2 (`8/3`, an integer-division
+/// coincidence with level 7, re-verified rather than assumed), and base
+/// Reflex/Will both genuinely rise to 6 (`8/2+2`), up from 5 at level 7.
+/// Bardic Knowledge genuinely rises to 4 (`max(8/2, 1)`), up from 3 at
+/// level 7. Bardic Performance rounds per day continues scaling. The
+/// Fascinate DC genuinely rises to 16 (`10 + 8/2 + CHA`), up from 15 at
+/// level 7, while the Fascinate affected-creature count stays 3
+/// (`1 + (8-1)/3 = 1 + 7/3 = 3`), an integer-division coincidence with
+/// level 7, confirmed by direct arithmetic against the primary source rule
+/// text rather than trusted from the formula alone. Inspire Courage stays
+/// +2 and Inspire Competence stays +3 (neither's next tier lands until
+/// bard level 11). The level-8 "Special" column reads "Dirge of doom"
+/// (verified independently against both primary sources): a genuinely NEW
+/// bardic-performance type, checked and confirmed NOT flat/identity-shaped
+/// -- it requires both the same performance-state engine already left
+/// ungrounded (start/maintain action economy, round tracking/consumption)
+/// and a fear/shaken-condition resolution engine, neither of which exists
+/// in this codebase, so it is deliberately left named-but-unproven,
+/// mirroring the Suggestion / Countersong / Distraction precedent exactly
+/// -- no explanation record is fabricated for it.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 8;
 /// PF1 Core Rulebook level gate at which Bard gains Well-Versed (2nd level, verified
 /// independently against two primary sources: d20pfsrd and legacy.aonprd.com both
 /// list "Versatile performance, well-versed" as the Bard 2nd-level special feature
@@ -683,7 +709,7 @@ const BARD_INSPIRE_COMPETENCE_LEVEL: u8 = 3;
 /// the rule text "This bonus increases by +1 for every four levels the bard
 /// has attained beyond 3rd (+3 at 7th, +4 at 11th, +5 at 15th, and +6 at
 /// 19th)"). The next increase (to +4) lands at bard level 11, out of scope
-/// since only Bard levels 1-7 are supported.
+/// since only Bard levels 1-8 are supported.
 const BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL: u8 = 7;
 /// PF1 Core Rulebook Inspire Competence magnitude at the level it is first gained: a
 /// flat +2 competence bonus on skill checks with a particular skill. Verified
@@ -8387,8 +8413,8 @@ fn explain_druid_level1_spell_baseline(
 /// The bounded Bard milestone level this decomposition surface grounds, if any.
 /// Returns the single Bard level when the chosen input is exactly a single-class
 /// Bard at one of the supported milestone levels (1 through `MAX_SUPPORTED_BARD_LEVEL`,
-/// currently 7). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
-/// any level-8+ Bard this slice deliberately does not recognize — each of which stays
+/// currently 8). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
+/// any level-9+ Bard this slice deliberately does not recognize — each of which stays
 /// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
