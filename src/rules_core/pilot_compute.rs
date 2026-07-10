@@ -1080,8 +1080,22 @@ const MONK_CLASS_ID: &str = "class:monk";
 // slice as a +0 identity/recognition record only
 // (MONK_IMPROVED_EVASION_LEVEL), mirroring the Evasion / Rogue
 // Improved-Uncanny-Dodge precedent; no damage-resolution engine exists here,
-// so no damage math is fabricated from it.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 9;
+// so no damage math is fabricated from it. A further SD13-E5 slice widens
+// the gate to level 10 — the tranche ceiling (verified independently against
+// d20pfsrd and legacy.aonprd.com): level 10 base attack genuinely rises to
+// +7 (10 * 3 / 4) and all three good saves genuinely rise to +7
+// (10 / 2 + 2); the unarmed die stays 1d10 (band 8-11); the Flurry flat
+// attack modifier genuinely rises to +8 (level - 2) with the count staying 3
+// (next change 15th); the ki pool genuinely rises to 8 (10 / 2 + Wis mod)
+// and Slow Fall's reach genuinely rises to 50 ft
+// (MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL, named explicitly in the level-10
+// "Special" column); the column's other two entries stay named-but-unproven:
+// the repeat "Bonus feat" grant (like the level-2/6 repeats) and "ki pool
+// (lawful)" — the ki-strike lawful DR-bypass property needs a
+// DR/attack-resolution engine that does not exist here, mirroring how the
+// 4th-level magic and 7th-level cold-iron/silver ki-strike properties were
+// never fabricated either.
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 10;
 // PF1 Core Rulebook level gate at which Monk gains Wholeness of Body (7th
 // level, verified independently against two primary sources: d20pfsrd and
 // legacy.aonprd.com both name Wholeness of Body as the Monk 7th-level
@@ -1158,6 +1172,11 @@ const MONK_FLURRY_THIRD_ATTACK_LEVEL: u8 = 8;
 /// source) — so, mirroring the level-6 precedent, the record's own `value`
 /// field still stays 0 and only the detail text's reach figure changes.
 const MONK_SLOW_FALL_FORTY_FOOT_REACH_LEVEL: u8 = 8;
+/// PF1 Core Rulebook level gate at which Monk's Slow Fall reach rises to 50
+/// ft (10th level — the class table's level-10 "Special" column names "slow
+/// fall 50 ft." explicitly, verified independently against d20pfsrd and
+/// legacy.aonprd.com).
+const MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL: u8 = 10;
 /// PF1 Core Rulebook level gate at which Monk gains the ki pool and Slow Fall
 /// (4th level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Ki pool (magic), slow fall 20 ft." as the Monk
@@ -5741,8 +5760,8 @@ fn explain_barbarian_level1_chassis(
 
 /// The bounded Monk milestone level this decomposition surface grounds, if any.
 /// Returns the single Monk level when the chosen input is exactly a single-class
-/// Monk at one of the supported milestone levels (1 through 9). Returns
-/// `None` for no Monk, a non-Monk class, a multiclass mix, or any level-10+ Monk
+/// Monk at one of the supported milestone levels (1 through 10). Returns
+/// `None` for no Monk, a non-Monk class, a multiclass mix, or any level-11+ Monk
 /// this slice deliberately does not recognize — each of which stays
 /// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level`
 /// / Paladin `supported_paladin_level` / Rogue `supported_rogue_level` /
@@ -6226,8 +6245,10 @@ fn explain_monk_level1_chassis(
             20
         } else if level < MONK_SLOW_FALL_FORTY_FOOT_REACH_LEVEL {
             30
-        } else {
+        } else if level < MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL {
             40
+        } else {
+            50
         };
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.slow_fall".to_owned(),
