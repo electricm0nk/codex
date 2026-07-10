@@ -580,7 +580,7 @@ const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs 
     tests/sd13_monk_bonus_feat_choice.rs + tests/sd13_monk_level2_progression.rs + \
     tests/sd13_monk_level3_progression.rs + tests/sd13_monk_level4_progression.rs + \
     tests/sd13_monk_level5_progression.rs + tests/sd13_monk_level6_progression.rs + \
-    tests/sd13_monk_level7_progression.rs";
+    tests/sd13_monk_level7_progression.rs + tests/sd13_monk_level8_progression.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -1593,19 +1593,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:monk",
                 dimension: "bounded Monk martial chassis progression: the deterministic Human \
-                            Monk level-1/level-2/level-3/level-4/level-5/level-6/level-7 martial \
-                            chassis identity, with base-attack, base-save, AC Bonus, the unarmed \
-                            strike damage die, the Flurry of Blows flat attack surface, and the \
-                            level-1 bonus feat choice-slot selection grounded across all seven \
-                            levels, Evasion grounded as a level-2 identity/recognition record, \
-                            Still Mind grounded as a level-3 flat-magnitude record, the ki pool's \
-                            flat size (genuinely rising to 6 at level 6, unchanged at level 7) \
-                            and Slow Fall grounded as level-4 records (Slow Fall's own reach \
-                            magnitude genuinely rising to 30 ft. at level 6, unchanged at level \
-                            7), Purity of Body grounded as a level-5 grant-only identity record \
-                            (High Jump checked and confirmed not flat), Wholeness of Body (the \
-                            level-7 class table's new named feature) checked and confirmed not \
-                            flat, and the recognized bonus feat's own mechanics still unproven",
+                            Monk level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8 \
+                            martial chassis identity, with base-attack, base-save, AC Bonus, the \
+                            unarmed strike damage die (genuinely rising to 1d10 at level 8), the \
+                            Flurry of Blows flat attack surface (attack count genuinely rising to \
+                            3 at level 8), and the level-1 bonus feat choice-slot selection \
+                            grounded across all eight levels, Evasion grounded as a level-2 \
+                            identity/recognition record, Still Mind grounded as a level-3 \
+                            flat-magnitude record, the ki pool's flat size (genuinely rising to 6 \
+                            at level 6, unchanged at level 7, rising to 7 at level 8) and Slow \
+                            Fall grounded as level-4 records (Slow Fall's own reach magnitude \
+                            genuinely rising to 30 ft. at level 6 and 40 ft. at level 8), Purity \
+                            of Body grounded as a level-5 grant-only identity record (High Jump \
+                            checked and confirmed not flat), Wholeness of Body (the level-7 class \
+                            table's new named feature) checked and confirmed not flat and staying \
+                            granted-but-unexecuted at level 8, the level-8 \"Special\" column \
+                            checked and confirmed to name only the Slow Fall reach rise (not \
+                            Improved Uncanny Dodge, which Monk never gains at any level), and the \
+                            recognized bonus feat's own mechanics still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1696,22 +1701,44 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     NOT flat: it requires both a ki-point-consumption/action-economy engine and a \
                     healing-resolution engine, neither of which exists in this codebase, so it is \
                     deliberately left named-but-unproven, not fabricated, mirroring the High Jump \
-                    precedent. One named burden remains unproven: the recognized bonus feat's own \
+                    precedent. A further SD13-E5 slice widens the gate to level 8 (verified \
+                    independently against d20pfsrd and legacy.aonprd.com: the Monk class table's \
+                    level-8 \"Special\" column reads \"Slow fall 40 ft.\" only): the pre-existing \
+                    base-attack and base-save formulas produce +6 BAB and +6/+6/+6 saves, the \
+                    unarmed strike damage die genuinely rises from 1d8 to 1d10 (the 1d10 band \
+                    runs levels 8-11), the Flurry of Blows flat attack modifier rises to +6/+6 \
+                    and the attack count genuinely rises from 2 to 3 (verified independently \
+                    against both primary sources' verbatim Flurry of Blows rule text, \"At 8th \
+                    level, the monk can make two additional attacks when he uses flurry of \
+                    blows, as if using Improved Two-Weapon Fighting\" — correcting a prior \
+                    web-search error that wrongly suggested the third attack lands at level 6 or \
+                    7), the ki pool's pre-existing formula genuinely rises to 7, and Slow Fall's \
+                    own reach magnitude genuinely rises from 30 ft to 40 ft via the same \
+                    grant-only identity record (value stays 0, non-fabricated; only the \
+                    descriptive reach figure is level-accurate) — none of this is a new record, \
+                    all of it is the same pre-existing formulas/records extended. The level-8 \
+                    \"Special\" column was checked and specifically confirmed NOT to name \
+                    Improved Uncanny Dodge (a commonly-repeated but WRONG assumption for Monk, \
+                    carried over from other classes' 8th-level tables): neither primary source \
+                    lists it anywhere on the Monk class table at any level, so no such record is \
+                    grounded or fabricated; Wholeness of Body (granted at level 7) stays \
+                    granted-but-unexecuted, unchanged. One named burden remains unproven: the \
+                    recognized bonus feat's own \
                     mechanics (no \
                     attack-resolution, grapple-check, trip-check, or DC/save engine exists for \
                     any of the restricted-list feats). The level-2 and level-6 bonus feat grants \
                     (PF1 grants monks SEPARATE bonus feats at 2nd and 6th level, neither \
                     recognized by this widening), Wholeness of Body's own execution, the \
-                    level-8+ unarmed damage die progression, \
+                    level-9+ unarmed damage die progression, \
                     flurry with special monk weapons, wiring into integrated combat totals, any \
                     ki-power execution engine, High Jump's own Acrobatics/ki-point mechanics, and \
-                    Monk level 8+ all remain unproven, and no martial math beyond the grounded \
+                    Monk level 9+ all remain unproven, and no martial math beyond the grounded \
                     flat surfaces is fabricated",
                 next_required_uplift: "later SD13-E5/E6 slice grounding the one remaining named \
                     Monk martial pillar burden (the recognized bonus feat's own mechanics — an \
                     execution engine per feat, not a flat number), then the level-2/level-6 \
                     bonus feat grant recognition, Wholeness of Body's own execution, and Monk \
-                    level 8+ progression",
+                    level 9+ progression",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
