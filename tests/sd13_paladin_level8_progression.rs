@@ -346,19 +346,20 @@ fn paladin_level7_truth_is_unchanged_by_this_slice() {
     assert_eq!(caster_level.value, 4, "Paladin level 7 effective caster level must stay 4");
 }
 
-// ----- Negative control: level 9 stays unrecognized by this slice -----
+// ----- Level 9 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn paladin_level_9_is_not_promoted_by_this_slice() {
+fn paladin_level_9_was_later_widened_into_the_supported_tranche() {
     let level_9 = PALADIN_LEVEL8_FIXTURE.replace("class:paladin:8", "class:paladin:9");
     let input = load(&level_9);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-9 Paladin must not gain any bounded paladin chassis explanation: {:?}",
+        "level-9 Paladin is now recognized by the later level-9 widening slice \
+         (tests/sd13_paladin_level9_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }
