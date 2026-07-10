@@ -124,9 +124,6 @@ fn explanation<'a>(
         })
 }
 
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 // ----- Base attack bonus at level 8 -----
 
@@ -414,40 +411,21 @@ fn monk_level8_still_claim_blocks_the_recognized_bonus_feat_mechanics() {
     );
 }
 
-// ----- Negative control: level 9 stays unrecognized by this slice -----
+// ----- Level 9 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn monk_level_9_is_not_promoted_by_this_slice() {
+fn monk_level_9_was_later_widened_into_the_supported_tranche() {
     let level_9 = MONK_LEVEL8_FIXTURE.replace("class:monk:8", "class:monk:9");
     let input = load(&level_9);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.monk.")),
-        "level-9 Monk must not gain any bounded monk chassis explanation: {:?}",
+        "level-9 Monk is now recognized by the later level-9 widening slice \
+         (tests/sd13_monk_level9_progression.rs carries its proof): {:?}",
         computation.explanations
-    );
-    assert!(
-        !has_explanation(&computation, MONK_EVASION_ID),
-        "level-9 Monk must not gain the Evasion explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, MONK_STILL_MIND_ID),
-        "level-9 Monk must not gain the Still Mind explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, MONK_KI_POOL_ID),
-        "level-9 Monk must not gain the ki pool explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, MONK_SLOW_FALL_ID),
-        "level-9 Monk must not gain the Slow Fall explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, MONK_PURITY_OF_BODY_ID),
-        "level-9 Monk must not gain the Purity of Body explanation from this bounded slice"
     );
 }
 
