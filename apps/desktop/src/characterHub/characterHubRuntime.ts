@@ -7,9 +7,16 @@ import {
   type CreateCharacterOutcomeSurface,
 } from './buildCreateCharacterOutcomeSurface';
 import { CLASS_OPTIONS } from './characterHubModel';
+import { hasTauriRuntime } from '../boundary/runtime';
+import { buildPreviewListSurface } from './previewData';
 
 /** Thin wrapper composing the real boundary loaders with the pure mappers. */
 export async function loadCharacterHubListSurfaceRuntime(): Promise<CharacterHubListSurface> {
+  // Browser preview (no desktop backend): surface a sample character so the
+  // Load → sheet flow stays walkable without the Tauri runtime.
+  if (!hasTauriRuntime()) {
+    return buildPreviewListSurface();
+  }
   const snapshot = await loadListSavedCharacters();
   return buildCharacterHubListSurface(snapshot);
 }

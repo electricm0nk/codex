@@ -64,7 +64,7 @@ export function Sd16PendingRollbackPanel({
         style={{
           margin: '8px 0 0 0',
           fontSize: '11px',
-          color: '#57606a',
+          color: 'var(--color-text-muted)',
           fontStyle: 'italic',
         }}
       >
