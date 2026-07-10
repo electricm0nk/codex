@@ -117,9 +117,6 @@ fn explanation<'a>(
         })
 }
 
-fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool {
-    computation.explanations.iter().any(|e| e.id == id)
-}
 
 // ----- Base attack bonus at level 8 -----
 
@@ -348,37 +345,21 @@ fn rogue_level8_leaves_no_named_pillar_diagnostic() {
     );
 }
 
-// ----- Negative control: level 9 stays unrecognized by this slice -----
+// ----- Level 9 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn rogue_level_9_is_not_promoted_by_this_slice() {
+fn rogue_level_9_was_later_widened_into_the_supported_tranche() {
     let level_9 = ROGUE_LEVEL8_FIXTURE.replace("class:rogue:8", "class:rogue:9");
     let input = load(&level_9);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.rogue.")),
-        "level-9 Rogue must not gain any bounded rogue chassis explanation: {:?}",
+        "level-9 Rogue is now recognized by the later level-9 widening slice \
+         (tests/sd13_rogue_level9_progression.rs carries its proof): {:?}",
         computation.explanations
-    );
-    assert!(
-        !has_explanation(&computation, ROGUE_EVASION_ID),
-        "level-9 Rogue must not gain the Evasion explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, ROGUE_TRAP_SENSE_ID),
-        "level-9 Rogue must not gain the Trap Sense explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, ROGUE_UNCANNY_DODGE_ID),
-        "level-9 Rogue must not gain the Uncanny Dodge explanation from this bounded slice"
-    );
-    assert!(
-        !has_explanation(&computation, ROGUE_IMPROVED_UNCANNY_DODGE_ID),
-        "level-9 Rogue must not gain the Improved Uncanny Dodge explanation from this bounded \
-         slice"
     );
 }
 

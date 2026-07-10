@@ -6176,7 +6176,20 @@ fn explain_monk_level1_chassis(
 }
 
 const ROGUE_CLASS_ID: &str = "class:rogue";
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 8;
+// A further SD13-E5 slice widens the gate to level 9 — the first level-9 slice
+// in the tranche (verified independently against d20pfsrd and
+// legacy.aonprd.com): level 9 base attack bonus stays +6 (9 * 3 / 4, an
+// integer-division coincidence with level 8) while poor Fortitude/Will both
+// genuinely rise to +3 (9 / 3) and good Reflex stays +6 (9 / 2 + 2, another
+// coincidence); the level-9 "Special" column reads "Sneak attack +5d6, trap
+// sense +3" — BOTH entries are tier-rises on already-grounded formula pillars,
+// not new class features: the sneak attack die count genuinely rises to 5 via
+// the pre-existing (level + 1) / 2 formula and Trap Sense genuinely rises to
+// +3 via the pre-existing level / 3 formula; Trapfinding stays 4
+// (max(9/2, 1), a coincidence); level 9 is NOT a rogue-talent level (talents
+// land at 2/4/6/8/10...), so no new pillar is grounded and nothing new is
+// left unproven for the talent tree either.
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 9;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
@@ -6197,9 +6210,9 @@ const ROGUE_IMPROVED_UNCANNY_DODGE_LEVEL: u8 = 8;
 
 /// The bounded Rogue milestone level this decomposition surface grounds, if
 /// any. Returns the single Rogue level when the chosen input is exactly a
-/// single-class Rogue at one of the supported milestone levels (1, 2, 3, 4,
-/// 5, 6, 7, or 8). Returns `None` for no Rogue, a non-Rogue class, a multiclass
-/// mix, or any level-9+ Rogue this slice deliberately does not recognize —
+/// single-class Rogue at one of the supported milestone levels (1 through
+/// 9). Returns `None` for no Rogue, a non-Rogue class, a multiclass
+/// mix, or any level-10+ Rogue this slice deliberately does not recognize —
 /// each of which stays claim-blocked exactly as before. Mirrors the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` level-range
 /// gate idiom.
