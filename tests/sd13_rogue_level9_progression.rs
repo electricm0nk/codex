@@ -227,20 +227,20 @@ fn rogue_level8_truth_is_unchanged_by_this_slice() {
     assert_eq!(fortitude.value, 2, "Rogue level 8 poor Fortitude must stay 2");
 }
 
-// ----- Negative control: level 10 stays unrecognized by this slice -----
+// ----- Level 10 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn rogue_level_10_is_not_promoted_by_this_slice() {
+fn rogue_level_10_was_later_widened_into_the_supported_tranche() {
     let level_10 = ROGUE_LEVEL9_FIXTURE.replace("class:rogue:9", "class:rogue:10");
     let input = load(&level_10);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")
-                || e.id.starts_with("class_feature.rogue.")),
-        "level-10 Rogue must not gain any bounded rogue explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.rogue.")),
+        "level-10 Rogue is now recognized by the later level-10 widening slice \
+         (tests/sd13_rogue_level10_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }

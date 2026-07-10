@@ -6399,8 +6399,21 @@ const ROGUE_CLASS_ID: &str = "class:rogue";
 // +3 via the pre-existing level / 3 formula; Trapfinding stays 4
 // (max(9/2, 1), a coincidence); level 9 is NOT a rogue-talent level (talents
 // land at 2/4/6/8/10...), so no new pillar is grounded and nothing new is
-// left unproven for the talent tree either.
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 9;
+// left unproven for the talent tree either. A further SD13-E5 slice widens
+// the gate to level 10 — the first level-10 slice, opening the tranche's
+// final level band (verified independently against d20pfsrd and
+// legacy.aonprd.com): level 10 base attack genuinely rises to +7
+// (10 * 3 / 4) and good Reflex genuinely rises to +7 (10 / 2 + 2), while
+// poor Fortitude/Will both stay +3 (10 / 3, integer-division coincidences);
+// sneak attack stays 5d6 ((10 + 1) / 2, the odd-level cadence — next rise
+// at 11th) and Trap Sense stays +3 (10 / 3, next rise at 12th), while
+// Trapfinding genuinely rises to +5 (max(10/2, 1)); the level-10 "Special"
+// column reads "Advanced talents, rogue talent" — BOTH parts of the same
+// genuinely open-ended choice-list feature already left named-but-unproven
+// at levels 2/4/6/8 (the advanced-talent unlock is a list expansion of that
+// feature, not a new pillar), so no new pillar is grounded at level 10
+// either.
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 10;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
@@ -6422,8 +6435,8 @@ const ROGUE_IMPROVED_UNCANNY_DODGE_LEVEL: u8 = 8;
 /// The bounded Rogue milestone level this decomposition surface grounds, if
 /// any. Returns the single Rogue level when the chosen input is exactly a
 /// single-class Rogue at one of the supported milestone levels (1 through
-/// 9). Returns `None` for no Rogue, a non-Rogue class, a multiclass
-/// mix, or any level-10+ Rogue this slice deliberately does not recognize —
+/// 10). Returns `None` for no Rogue, a non-Rogue class, a multiclass
+/// mix, or any level-11+ Rogue this slice deliberately does not recognize —
 /// each of which stays claim-blocked exactly as before. Mirrors the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` level-range
 /// gate idiom.
