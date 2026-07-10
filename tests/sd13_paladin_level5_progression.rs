@@ -327,19 +327,22 @@ fn paladin_level5_does_not_fabricate_divine_bond() {
     );
 }
 
-// ----- Negative control: level 6 stays unrecognized by this slice -----
+// ----- Negative control: level 6 stays unrecognized by this slice (level 6
+// was later widened into the supported tranche by a subsequent SD13-E5
+// slice; see tests/sd13_paladin_level6_progression.rs) -----
 
 #[test]
-fn paladin_level_6_is_not_promoted_by_this_slice() {
+fn paladin_level_6_was_later_widened_into_the_supported_tranche() {
     let level_6 = PALADIN_LEVEL5_FIXTURE.replace("class:paladin:5", "class:paladin:6");
     let input = load(&level_6);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-6 Paladin must not gain any bounded paladin chassis explanation: {:?}",
+        "level-6 Paladin was later widened into the supported tranche and must now gain bounded \
+         paladin chassis explanations: {:?}",
         computation.explanations
     );
 }
