@@ -301,20 +301,25 @@ fn wizard_level4_truth_is_unchanged_by_this_widening() {
     );
 }
 
-// ----- Negative control: level 6 stays unrecognized by this slice -----
+// ----- Level 6 was later widened into the supported tranche -----
+//
+// This supersedes the original `wizard_level_6_is_not_promoted_by_this_slice`
+// negative control now that a later SD13-E5 slice promotes level 6 into the
+// supported tranche; the level-7 negative control now lives in
+// `tests/sd13_wizard_level6_progression.rs`.
 
 #[test]
-fn wizard_level_6_is_not_promoted_by_this_slice() {
+fn wizard_level_6_was_later_widened_into_the_supported_tranche() {
     let level_6 = WIZARD_LEVEL5_FIXTURE.replace("class:wizard:5", "class:wizard:6");
     let input = load(&level_6);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
-                || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-6 Wizard must not gain any bounded wizard chassis explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.wizard.")),
+        "level-6 Wizard was later widened into the supported tranche and must now gain \
+         bounded wizard chassis explanations: {:?}",
         computation.explanations
     );
 }
