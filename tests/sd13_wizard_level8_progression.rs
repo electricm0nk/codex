@@ -282,20 +282,20 @@ fn wizard_level7_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 9 stays unrecognized by this slice -----
+// ----- Level 9 was later widened into the supported tranche by a further slice -----
 
 #[test]
-fn wizard_level_9_is_not_promoted_by_this_slice() {
+fn wizard_level_9_was_later_widened_into_the_supported_tranche() {
     let level_9 = WIZARD_LEVEL8_FIXTURE.replace("class:wizard:8", "class:wizard:9");
     let input = load(&level_9);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
-                || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-9 Wizard must not gain any bounded wizard chassis explanation: {:?}",
+            .any(|e| e.id.starts_with("class_chassis.wizard.")),
+        "level-9 Wizard is now recognized by the later level-9 widening slice \
+         (tests/sd13_wizard_level9_progression.rs carries its proof): {:?}",
         computation.explanations
     );
 }
