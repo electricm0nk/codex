@@ -309,8 +309,25 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // only, mirroring the Endurance grant-only idiom). Neither the Favored Enemy
 // rule's next interval (10th level) nor the Combat Style Feat's next bonus feat
 // (10th level) is reached at level 7, so both stay unchanged, re-verified rather
-// than assumed. Nothing here grounds level 8+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 7;
+// than assumed. A still later SD13-E5 slice widens the gate once more to level 8,
+// the level gate at which Swift Tracker is granted (verified independently
+// against d20pfsrd and legacy.aonprd.com: both list the level-8 "Special" column
+// as naming TWO entries, "Swift tracker" and "2nd favored terrain"). Swift
+// Tracker ("a ranger can move at his normal speed while using Survival to follow
+// tracks without taking the normal -5 penalty. He takes only a -10 penalty
+// (instead of the normal -20) when moving at up to twice normal speed while
+// tracking") only modifies a tracking-while-moving penalty resolution that does
+// not exist anywhere in this codebase (this codebase grounds only the flat Track
+// skill-bonus magnitude, never a check-execution/movement-penalty engine), so it
+// is a genuinely flat/identity-shaped, no-choice, no-magnitude grant, grounded
+// as a bounded identity record only, mirroring the Woodland Stride grant-only
+// idiom exactly. The level-8 "2nd favored terrain" entry mirrors the Favored
+// Enemy 5th-level idiom already grounded in this codebase (a second
+// terrain-type selection plus a bonus-increase-target choice), but is a
+// multi-record burden of its own -- deliberately left named-but-unproven this
+// slice, a real newly discovered burden for a future slice, not an invented
+// one. Nothing here grounds level 9+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 8;
 
 /// PF1 Core Rulebook level gate at which Woodland Stride is granted (verified
 /// independently against two primary sources: both d20pfsrd and
@@ -324,6 +341,20 @@ const MAX_SUPPORTED_RANGER_LEVEL: u8 = 7;
 /// movement-resolution engine exists in this codebase, so only the grant
 /// identity itself is grounded.
 const RANGER_WOODLAND_STRIDE_LEVEL: u8 = 7;
+
+/// PF1 Core Rulebook level gate at which Swift Tracker is granted (verified
+/// independently against two primary sources: both d20pfsrd and
+/// legacy.aonprd.com list "Swift tracker" as one of two Ranger 8th-level
+/// "Special" column entries, alongside "2nd favored terrain"). Swift Tracker is
+/// an automatic, no-choice grant with no numeric magnitude of its own: "a
+/// ranger can move at his normal speed while using Survival to follow tracks
+/// without taking the normal -5 penalty. He takes only a -10 penalty (instead
+/// of the normal -20) when moving at up to twice normal speed while tracking."
+/// No tracking-while-moving check-execution/movement-penalty engine exists in
+/// this codebase (this codebase grounds only the flat Track skill-bonus
+/// magnitude), so only the grant identity itself is grounded, mirroring the
+/// Woodland Stride idiom exactly.
+const RANGER_SWIFT_TRACKER_LEVEL: u8 = 8;
 
 /// PF1 Core Rulebook level gate at which the Favored Enemy rule's 5th-level
 /// interval is granted (verified independently against two primary sources:
@@ -4756,6 +4787,53 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  terrain-detection or movement-resolution engine exists anywhere in this \
                  codebase to determine whether the ranger is actually moving through \
                  undergrowth, so this only records the grant itself"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5): Swift Tracker, one of the class table's two 8th-level
+    // "Special" column entries, verified independently against two primary PF1
+    // sources (d20pfsrd and legacy.aonprd.com both list "Swift tracker" and "2nd
+    // favored terrain" as the Ranger 8th-level special feature entries). Swift
+    // Tracker only modifies a tracking-while-moving penalty resolution ("a
+    // ranger can move at his normal speed while using Survival to follow tracks
+    // without taking the normal -5 penalty. He takes only a -10 penalty
+    // (instead of the normal -20) when moving at up to twice normal speed while
+    // tracking") that does not exist anywhere in this codebase -- this codebase
+    // grounds only the flat Track skill-bonus magnitude, never a
+    // check-execution/movement-penalty engine -- so, exactly like Woodland
+    // Stride, it is a genuinely flat/identity-shaped, no-choice, no-magnitude
+    // grant. Below the level-8 gate this is a correct level-gate absence (value
+    // 0); at or above it, it is a bounded grant-only identity record (value 0,
+    // non-fabricated). The level-8 row's OTHER named entry, "2nd favored
+    // terrain" (mirroring the Favored Enemy 5th-level idiom: a second
+    // terrain-type selection plus a bonus-increase-target choice), is
+    // deliberately left named-but-unproven this slice -- a real, newly
+    // discovered multi-record burden, not an invented one.
+    if level < RANGER_SWIFT_TRACKER_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.swift_tracker".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Swift Tracker at ranger level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant track-penalty-reduction \
+                 identity is named but not computed. Swift Tracker is an 8th-level ranger \
+                 class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.swift_tracker".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Swift Tracker granted at ranger level {level} (PF1 Core Rulebook, \
+                 8th-level ranger class feature): the ranger can move at his normal speed \
+                 while using Survival to follow tracks without taking the normal -5 penalty, \
+                 and takes only a -10 penalty (instead of the normal -20) when moving at up \
+                 to twice normal speed while tracking. This is a bounded grant-only identity \
+                 record (value 0, non-fabricated): no tracking-while-moving \
+                 check-execution/movement-penalty engine exists anywhere in this codebase to \
+                 apply the reduced penalty, so this only records the grant itself"
             ),
         });
     }
