@@ -1,0 +1,49 @@
+# SD13-E5 deterministic Human Monk level 6 progression fixture.
+# Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human Monk
+# level-1/level-2/level-3/level-4/level-5 martial chassis baseline to level 6
+# as chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice
+# seam (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/skill/equipment posture from the level-1 through level-5
+# fixtures, adding only the level bump this bounded tranche needs. The
+# level-1 monk_bonus_feat choice (Stunning Fist) is carried forward
+# unchanged — PF1 also grants monks SEPARATE bonus feats at 2nd and 6th
+# level, but this slice deliberately does not add a new choice-slot for
+# either (mirroring the Rogue level-6 "second Rogue Talent slot" precedent:
+# no fixture data and no recognition code exist for a repeat bonus-feat
+# grant; it stays named but unproven, unchanged by this widening).
+#
+# It deliberately avoids every later Monk burden surface: no execution of
+# what the recognized bonus feat actually does, no level-2/level-6 bonus
+# feat grant recognition, no ki-power execution (extra attack, AC bonus, or
+# speed bonus), no fall-damage engine, no High Jump, and no level-7+
+# progression. The unarmed strike damage die (confirmed to stay 1d8 at
+# level 6, unchanged from levels 4-5, verified independently against
+# d20pfsrd and legacy.aonprd.com's Medium-monk damage progression table —
+# the 1d8 band runs levels 4-7), the Flurry of Blows flat attack bonus
+# (steps to +4/+4 at level 6 via the same `monk level - 2` formula, attack
+# count staying 2 — the third flurry attack is not gained until 8th level,
+# verified independently against both primary sources' verbatim Flurry of
+# Blows rule text), and Slow Fall's own reach magnitude (genuinely
+# increasing from 20 ft to 30 ft at level 6, per both primary sources'
+# level-6 "Special" column entry "Bonus feat, slow fall 30 ft.") are the
+# pillars this fixture exercises. Slow Fall stays a bounded grant-only
+# identity record (value 0, non-fabricated); only the descriptive reach
+# figure in its detail text is level-accurate.
+case_id=pf1-crb-human-monk-level6
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:monk:6
+ability=strength:13
+ability=dexterity:16
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:10
+feat=feat:stunning_fist
+skill=skill:acrobatics:1
+equipment=item:shield:absent
+choice=choice:monk_bonus_feat:feat:stunning_fist
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

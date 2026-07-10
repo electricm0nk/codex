@@ -387,40 +387,44 @@ fn monk_level5_still_claim_blocks_the_recognized_bonus_feat_mechanics() {
     );
 }
 
-// ----- Negative control: level 6 stays unrecognized by this slice -----
+// ----- Negative control: level 6 stays unrecognized by this slice (level 6
+// was later widened into the supported tranche by
+// tests/sd13_monk_level6_progression.rs; the level-7 negative control now
+// lives there) -----
 
 #[test]
-fn monk_level_6_is_not_promoted_by_this_slice() {
+fn monk_level_6_was_later_widened_into_the_supported_tranche() {
     let level_6 = MONK_LEVEL5_FIXTURE.replace("class:monk:5", "class:monk:6");
     let input = load(&level_6);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.monk.")),
-        "level-6 Monk must not gain any bounded monk chassis explanation: {:?}",
+        "level-6 Monk was later widened into the supported tranche and must now gain bounded \
+         monk chassis explanations: {:?}",
         computation.explanations
     );
     assert!(
-        !has_explanation(&computation, MONK_EVASION_ID),
-        "level-6 Monk must not gain the Evasion explanation from this bounded slice"
+        has_explanation(&computation, MONK_EVASION_ID),
+        "level-6 Monk was later widened and must now carry the Evasion explanation"
     );
     assert!(
-        !has_explanation(&computation, MONK_STILL_MIND_ID),
-        "level-6 Monk must not gain the Still Mind explanation from this bounded slice"
+        has_explanation(&computation, MONK_STILL_MIND_ID),
+        "level-6 Monk was later widened and must now carry the Still Mind explanation"
     );
     assert!(
-        !has_explanation(&computation, MONK_KI_POOL_ID),
-        "level-6 Monk must not gain the ki pool explanation from this bounded slice"
+        has_explanation(&computation, MONK_KI_POOL_ID),
+        "level-6 Monk was later widened and must now carry the ki pool explanation"
     );
     assert!(
-        !has_explanation(&computation, MONK_SLOW_FALL_ID),
-        "level-6 Monk must not gain the Slow Fall explanation from this bounded slice"
+        has_explanation(&computation, MONK_SLOW_FALL_ID),
+        "level-6 Monk was later widened and must now carry the Slow Fall explanation"
     );
     assert!(
-        !has_explanation(&computation, MONK_PURITY_OF_BODY_ID),
-        "level-6 Monk must not gain the Purity of Body explanation from this bounded slice"
+        has_explanation(&computation, MONK_PURITY_OF_BODY_ID),
+        "level-6 Monk was later widened and must now carry the Purity of Body explanation"
     );
 }
 

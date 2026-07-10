@@ -536,7 +536,7 @@ fn matrix_monk_row_is_partial_computed_and_names_remaining_burdens() {
             "monk partial note must name the '{token}' surface: {note}"
         );
     }
-    for honesty_token in ["die size only", "attack-resolution", "level 6+"] {
+    for honesty_token in ["die size only", "attack-resolution", "level 7+"] {
         assert!(
             note.contains(honesty_token),
             "monk partial note must keep the '{honesty_token}' honesty scope: {note}"
