@@ -366,23 +366,26 @@ fn bard_level5_truth_is_unchanged_by_this_widening() {
     assert_eq!(dc.value, 14, "Bard level 5 Fascinate DC must stay 14, unaffected by the level-6 widening");
 }
 
-// ----- Negative control: level 7 stays unrecognized by this slice -----
+// ----- Negative control retired: level 7 was later widened into the supported tranche -----
 
 #[test]
-fn bard_level_7_is_not_promoted_by_this_slice() {
+fn bard_level_7_was_later_widened_into_the_supported_tranche() {
+    // This test previously asserted that level-7 Bard stayed unrecognized by this
+    // slice. A later SD13-E5 slice widened `MAX_SUPPORTED_BARD_LEVEL` to 7 (see
+    // `tests/sd13_bard_level7_progression.rs`), so level 7 is now genuinely
+    // grounded. This control is retained, renamed, and inverted to document that
+    // history rather than silently deleted, mirroring the
+    // Rogue/Barbarian/Monk/Cleric level-6/level-7 precedent; the new level-8
+    // negative control lives in `tests/sd13_bard_level7_progression.rs`.
     let level_7 = BARD_LEVEL6_FIXTURE.replace("class:bard:6", "class:bard:7");
     let input = load(&level_7);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !computation
+        computation
             .explanations
             .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id == "class_chassis.spell_baseline.bard"
-                || e.id == WELL_VERSED_ID
-                || e.id == INSPIRE_COMPETENCE_ID
-                || e.id == LORE_MASTER_ID),
-        "level-7 Bard must not gain any bounded bard chassis explanation: {:?}",
+            .any(|e| e.id == "class_chassis.bard.base_attack_bonus"),
+        "level-7 Bard must now be recognized by the widened supported tranche: {:?}",
         computation.explanations
     );
 }
