@@ -333,7 +333,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_partial_caster_effective_caster_level.rs + \
     tests/sd13_paladin_level2_lay_on_hands_divine_grace.rs + \
     tests/sd13_paladin_base_attack_and_saves.rs + \
-    tests/sd13_paladin_level3_mercy.rs";
+    tests/sd13_paladin_level3_mercy.rs + \
+    tests/sd13_paladin_level4_progression.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -1435,22 +1436,25 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
-                            Paladin level-1/level-2/level-3 chassis baseline, with smite evil's \
-                            uses-per-day / attack-bonus / damage-bonus formula grounded at every \
-                            level, lay on hands and divine grace grounded for real at levels 2-3 \
+                            Paladin level-1/level-2/level-3/level-4 chassis baseline, with smite \
+                            evil's uses-per-day / attack-bonus / damage-bonus formula grounded at \
+                            every level (uses-per-day genuinely increasing to 2/day at level 4), \
+                            lay on hands and divine grace grounded for real at levels 2-4 \
                             (correct PF1 CRB level-gate absence at level 1), mercy grounded as a \
                             correct PF1 CRB level-gate absence at levels 1-2 and a granted \
-                            choice-recognition record at level 3, the partial-caster \
+                            choice-recognition record at levels 3-4, channel positive energy \
+                            grounded as a correct PF1 CRB level-gate absence at levels 1-3 and a \
+                            flat die-count magnitude at level 4, the partial-caster \
                             effective-caster-level gate grounded as a correct zero absence at \
-                            every level, and the hybrid chassis pair plus the \
-                            spells-known/spells-per-day/spell-DC spell burden still named and \
-                            unproven",
+                            levels 1-3 and a genuine value of 1 at level 4, and the hybrid \
+                            chassis pair plus the spells-known/spells-per-day/spell-DC spell \
+                            burden still named and unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_PALADIN_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3/E4/E5 leaves direct computed evidence that the \
-                    deterministic Human Paladin level-1/level-2/level-3 hybrid chassis is \
+                    deterministic Human Paladin level-1/level-2/level-3/level-4 hybrid chassis is \
                     recognized on the compute seam and that all four named non-spell \
                     class-feature burdens are grounded across those levels. The foundational \
                     base attack bonus / base save progression pillar is grounded for real at \
@@ -1460,47 +1464,64 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     two good saves, classlevel/3 for the poor save) -- NOT the same save shape \
                     as Ranger's good Fortitude/Reflex, poor Will, both verified independently \
                     against the PF1 Core Rulebook Paladin class table. The smite evil pillar is \
-                    grounded for real: uses per day = 1, attack-roll bonus = Charisma modifier \
-                    (if positive), damage bonus = paladin level (PF1 Core Rulebook), computed \
-                    against the deterministic fixtures as 1 / +2 / +1 at level 1, 1 / +2 / +2 at \
-                    level 2, and 1 / +2 / +3 at level 3; this grounds only that flat numeric \
-                    formula, not alignment/evil-subtype target resolution or \
-                    evil-outsider/dragon/undead damage doubling. Lay on hands and divine grace \
-                    are grounded for real at levels 2-3 (their PF1 CRB level gate): lay on hands \
-                    uses per day = 1/2 paladin level + Charisma modifier, with the heal amount \
-                    stated as a flat non-fabricated die-count magnitude (1d6 per two paladin \
-                    levels, never a rolled value); divine grace grants a Charisma-modifier \
-                    bonus, applied only if positive, on all saving throws. Below that gate, at \
-                    level 1, both remain correct level gate absences (value 0). Mercy stays a \
-                    grounded level gate absence at levels 1-2: mercy is a 3rd-level paladin \
-                    feature in the PF1 Core Rulebook, so it emits a value-0 record naming its \
-                    at-grant formula without computing it below the gate. At level 3 (SD13-E5), \
-                    mercy is newly GRANTED as a bounded grant-only identity record (verified \
-                    independently against legacy.aonprd.com's Core Rulebook Paladin page: \"a \
-                    paladin can select one mercy. Each mercy adds an effect to the paladin's lay \
-                    on hands ability\"; the first, 3rd-level tier of the mercy list is Fatigued, \
-                    Shaken, and Sickened), plus a choice-recognition record naming whichever \
-                    mercy was selected on the deterministic level-3 fixture (mercy:shaken) -- \
-                    mirroring the Ranger Favored Terrain / Sorcerer bloodline choice-slot idiom; \
-                    the selected mercy's own effect (curing the named condition when lay on hands \
-                    is used) is not computed, since no lay-on-hands execution engine exists in \
-                    this codebase. SD13-E5 additionally grounds the partial-caster IDENTITY \
-                    itself as one more flat level-gate record: effective caster level = \
-                    max(paladin level - 3, 0), which correctly grounds to 0 at every supported \
-                    level, including level 3 (PF1 Core Rulebook: paladin spells begin at paladin \
-                    level 4). The row is Partial, not Supported: the F6 hybrid chassis pair \
-                    (class-feature and spell) stays claim-blocking as accepted hybrid truth, no \
-                    Paladin level 4+ is proven, and the partial-caster spell burden itself \
-                    remains named and unproven beyond the grounded caster-level gate arithmetic — \
-                    no spell-source lineage, spells known or prepared posture, spells-per-day \
-                    progression, bonus spell slots, or spell save DCs are grounded. The F6 hybrid \
-                    baseline, the F6 hybrid blockers, and the F6 hybrid chassis recognition \
-                    explanation all remain in place (each gated to the bounded hybrid baseline \
-                    level, so they still fire only at level 1)",
+                    grounded for real: uses per day = 1 + (paladin level - 1) / 3, attack-roll \
+                    bonus = Charisma modifier (if positive), damage bonus = paladin level (PF1 \
+                    Core Rulebook), computed against the deterministic fixtures as 1 / +2 / +1 at \
+                    level 1, 1 / +2 / +2 at level 2, 1 / +2 / +3 at level 3, and GENUINELY 2 / \
+                    +2 / +4 at level 4 (the PF1 CRB level-4 \"Special\" column reads \"smite evil \
+                    2/day\", verified independently rather than assumed to stay at 1); this \
+                    grounds only that flat numeric formula, not alignment/evil-subtype target \
+                    resolution or evil-outsider/dragon/undead damage doubling. Lay on hands and \
+                    divine grace are grounded for real at levels 2-4 (their PF1 CRB level gate): \
+                    lay on hands uses per day = 1/2 paladin level + Charisma modifier, with the \
+                    heal amount stated as a flat non-fabricated die-count magnitude (1d6 per two \
+                    paladin levels, never a rolled value); divine grace grants a \
+                    Charisma-modifier bonus, applied only if positive, on all saving throws. \
+                    Below that gate, at level 1, both remain correct level gate absences (value \
+                    0). Mercy stays a grounded level gate absence at levels 1-2: mercy is a \
+                    3rd-level paladin feature in the PF1 Core Rulebook, so it emits a value-0 \
+                    record naming its at-grant formula without computing it below the gate. At \
+                    levels 3-4 (SD13-E5), mercy is newly GRANTED as a bounded grant-only identity \
+                    record (verified independently against legacy.aonprd.com's Core Rulebook \
+                    Paladin page: \"a paladin can select one mercy. Each mercy adds an effect to \
+                    the paladin's lay on hands ability\"; the first, 3rd-level tier of the mercy \
+                    list is Fatigued, Shaken, and Sickened), plus a choice-recognition record \
+                    naming whichever mercy was selected on the deterministic level-3/level-4 \
+                    fixtures (mercy:shaken) -- mirroring the Ranger Favored Terrain / Sorcerer \
+                    bloodline choice-slot idiom; the selected mercy's own effect (curing the \
+                    named condition when lay on hands is used) is not computed, since no \
+                    lay-on-hands execution engine exists in this codebase; the grant and choice \
+                    stay unchanged (not re-derived) at level 4. SD13-E5 additionally grounds the \
+                    partial-caster IDENTITY itself as one more flat level-gate record: effective \
+                    caster level = max(paladin level - 3, 0), which correctly grounds to 0 at \
+                    levels 1-3 and GENUINELY becomes 1 at level 4 (PF1 Core Rulebook: paladin \
+                    spells begin at paladin level 4) -- a real value change, not a re-derivation; \
+                    only the caster-level gate arithmetic itself is grounded, no spell slots are \
+                    fabricated. Channel Positive Energy, the PF1 CRB's OTHER 4th-level paladin \
+                    class feature (verified independently against legacy.aonprd.com's Core \
+                    Rulebook Paladin page: \"When a paladin reaches 4th level, she gains the \
+                    supernatural ability to channel positive energy like a cleric. Using this \
+                    ability consumes two uses of her lay on hands ability. A paladin uses her \
+                    level as her effective cleric level when channeling positive energy.\"), is a \
+                    grounded level-gate absence at levels 1-3 and a flat die-count magnitude \
+                    (ceil(paladin level / 2), mirroring Cleric's own Channel Energy dice-count \
+                    formula exactly) at level 4: 2d6. This grounds only the flat die-count \
+                    magnitude and the lay-on-hands-use-cost identity; no \
+                    healing/damage-resolution execution, no heal-vs-harm target selection, and no \
+                    lay-on-hands-resource-consumption bookkeeping is computed. The row is \
+                    Partial, not Supported: the F6 hybrid chassis pair (class-feature and spell) \
+                    stays claim-blocking as accepted hybrid truth, no Paladin level 5+ is proven, \
+                    and the partial-caster spell burden itself remains named and unproven beyond \
+                    the grounded caster-level gate arithmetic — no spell-source lineage, spells \
+                    known or prepared posture, spells-per-day progression, bonus spell slots, or \
+                    spell save DCs are grounded. The F6 hybrid baseline, the F6 hybrid blockers, \
+                    and the F6 hybrid chassis recognition explanation all remain in place (each \
+                    gated to the bounded hybrid baseline level, so they still fire only at level \
+                    1)",
                 next_required_uplift: "ground the paladin spells-known/spells-per-day/spell-DC \
-                    burden content now that the effective-caster-level gate is grounded (spells \
-                    begin at paladin level 4, caster level = paladin level - 3), then paladin \
-                    level-4+ progression (Smite Evil's uses-per-day first increases at level 4)",
+                    burden content now that the effective-caster-level gate is grounded and \
+                    nonzero (spells begin at paladin level 4, caster level = paladin level - 3, \
+                    now 1 at level 4), then paladin level-5+ progression",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
