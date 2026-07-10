@@ -1,0 +1,36 @@
+# SD13-E5 deterministic Human Sorcerer level 10 progression fixture.
+# Widens the accepted SD13-E4/E5 deterministic PF1 Core Rulebook Human Sorcerer
+# level-1/level-2/level-3/level-4/level-5/level-6/level-7 spontaneous spell-burden
+# baseline to level 8 as chosen input only. It names selections; it does not
+# contain derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1..level-9 fixtures, and the same
+# canonical bloodline and bloodline class-skill selections (Arcane, Knowledge
+# [arcana]), adding only the level bump this bounded tranche needs.
+#
+# It deliberately avoids every later Sorcerer burden surface: no Arcane Bond
+# execution, no bloodline arcana, no bonus spells/feats at 3rd+ level, no
+# spellbook, no spells known, no spell slots, no spell DCs, and no
+# level-11+ progression. The PF1 CRB Sorcerer class table's level-10
+# "Special" column is blank — verified independently against both d20pfsrd
+# and legacy.aonprd.com — like levels 2, 4, 6, and 8, so no new class feature
+# is gained at 10th level (the first 5th-level spell slots arrive at 10th,
+# but spell slots belong to the spontaneous spell burden that stays
+# named-but-unproven); this fixture only widens the existing
+# base-attack/base-save/bloodline-choice pillars.
+case_id=pf1-crb-human-sorcerer-level10
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:sorcerer:10
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:17
+feat=feat:dodge
+choice=choice:sorcerer_bloodline:bloodline:arcane
+choice=choice:sorcerer_bloodline_class_skill:knowledge:arcana
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md
