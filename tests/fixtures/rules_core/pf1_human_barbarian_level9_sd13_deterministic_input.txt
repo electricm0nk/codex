@@ -1,0 +1,42 @@
+# SD13-E5 deterministic Human Barbarian level 9 progression fixture.
+# Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human
+# Barbarian level-1..level-8 martial chassis baseline to level 9 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/skill/equipment posture from the level-1 through level-8
+# fixtures, adding only the level bump this bounded tranche needs. No
+# rage-power choice-slot line is present (rage powers are a
+# level-2/4/6/8/... choice-list feature this tranche deliberately does not
+# implement — a genuinely open-ended power list, not a flat arithmetic
+# burden — and level 9 is not a rage-power level anyway), so no new choice=
+# line is required beyond the level-1..level-8 baseline.
+#
+# It deliberately avoids every later Barbarian burden surface: no rage
+# execution (activation, round tracking, fatigue), no rage-power
+# recognition or execution, no damage-reduction application engine, and no
+# level-10+ progression. The PF1 Core Rulebook Barbarian class table's
+# level-9 "Special" column reads "Trap sense +3" (verified independently
+# against d20pfsrd and legacy.aonprd.com) — a tier-rise on the
+# already-grounded Trap Sense formula pillar (level / 3), not a new class
+# feature, so no new pillar is grounded at level 9 — only the existing
+# pillars are widened.
+case_id=pf1-crb-human-barbarian-level9
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:barbarian:9
+ability=strength:16
+ability=dexterity:14
+ability=constitution:16
+ability=intelligence:8
+ability=wisdom:10
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md
