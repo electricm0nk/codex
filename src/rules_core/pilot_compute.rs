@@ -1469,7 +1469,26 @@ const DRUID_CLASS_ID: &str = "class:druid";
 /// level-8 frequency increase) stays entirely named-but-unproven, exactly as at
 /// level 4/6 — no explanation or diagnostic record is fabricated for it this
 /// slice either.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 8;
+// A still further SD13-E5 slice widens the gate to level 9 (verified
+// independently against d20pfsrd and legacy.aonprd.com): level 9 base attack
+// stays +6 (9 * 3 / 4) and both good saves stay +6 (9 / 2 + 2),
+// integer-division coincidences, while poor Reflex genuinely rises to +3
+// (9 / 3); Wild Empathy genuinely rises to 10 (9 + Charisma modifier 1) via
+// the same level-generic formula; Nature Sense, Woodland Stride, Trackless
+// Step, and Resist Nature's Lure all stay granted, not re-derived; Wild
+// Shape's uses stay 3/day (the next rise lands at 10th, checked rather than
+// assumed) and it stays entirely named-but-unproven; the level-9 "Special"
+// column reads "Venom immunity" — a genuinely flat, no-choice, no-magnitude
+// grant (immunity to all poisons), grounded as a +0 identity/recognition
+// record only (DRUID_VENOM_IMMUNITY_LEVEL), mirroring Monk's Purity of Body
+// precedent exactly; no poison/condition engine exists here, so no immunity
+// effect is fabricated.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 9;
+/// PF1 Core Rulebook level gate at which Druid gains Venom Immunity (9th
+/// level, verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Venom immunity" as the Druid 9th-level
+/// "Special" column entry).
+const DRUID_VENOM_IMMUNITY_LEVEL: u8 = 9;
 /// PF1 Core Rulebook level gate at which Druid gains Resist Nature's Lure (4th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Resist nature's lure" as part of the Druid
@@ -8229,8 +8248,8 @@ fn explain_cleric_level1_spell_baseline(
 
 /// The bounded Druid milestone level this decomposition surface grounds, if any.
 /// Returns the single Druid level when the chosen input is exactly a single-class
-/// Druid at one of the supported milestone levels (1 through 8). Returns `None` for no
-/// Druid, a non-Druid class, a multiclass mix, or any level-9+ Druid this slice
+/// Druid at one of the supported milestone levels (1 through 9). Returns `None` for no
+/// Druid, a non-Druid class, a multiclass mix, or any level-10+ Druid this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -8619,6 +8638,31 @@ fn explain_druid_level1_spell_baseline(
                  as blight, entangle, spike growth, and warp wood. This is a bounded flat-magnitude \
                  identity record only: no saving-throw resolution engine exists anywhere in this \
                  codebase to apply it, so this grounds no actual saving-throw total"
+            ),
+        });
+    }
+
+    // Grounded (SD13-E5 level-9 slice): Venom Immunity, the 9th-level Druid class
+    // feature verified independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Venom immunity" as the Druid 9th-level "Special"
+    // entry, the rule text reading "At 9th level, a druid gains immunity to all
+    // poisons"). A genuinely flat/identity-shaped, no-choice, no-magnitude grant —
+    // exactly like Monk's Purity of Body (immunity to disease) — grounded as a
+    // bounded +0 identity/recognition record at or above the gate: no
+    // poison/condition-resolution engine exists anywhere in this codebase to apply
+    // it, so no immunity effect is fabricated. Below the level-9 gate no record is
+    // pushed at all (the level-9 slice's own level-8 control pins that absence).
+    if level >= DRUID_VENOM_IMMUNITY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.venom_immunity".to_owned(),
+            value: 0,
+            detail: format!(
+                "Druid Venom Immunity granted at druid level {level} (PF1 Core Rulebook, \
+                 9th-level druid class feature): the druid gains immunity to all poisons. \
+                 This is a bounded identity/recognition record only (value 0, non-fabricated): \
+                 no poison-application or condition-resolution engine exists anywhere in this \
+                 codebase to apply it, so this grounds no actual immunity effect on any \
+                 poison outcome"
             ),
         });
     }

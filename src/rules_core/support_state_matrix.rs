@@ -625,13 +625,20 @@ const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.r
 /// "Wild shape (3/day)" entry was checked against both primary sources and
 /// confirmed to be the same non-separable frequency-plus-form-expansion bundle as
 /// at level 6, so it stays entirely named-but-unproven and no new pillar is
-/// added), citing all eight proof files as one
+/// added), widened again to level 9 by a still further SD13-E5 slice (poor
+/// Reflex genuinely rises to +3 while base attack and both good saves stay
+/// put, integer-division coincidences; Wild Empathy genuinely rises to 10;
+/// the level-9 "Special" column's "Venom immunity" entry was checked against
+/// both primary sources and confirmed a genuinely flat, no-choice grant, so
+/// it is grounded as a +0 identity/recognition record mirroring Monk's
+/// Purity of Body precedent; Wild Shape's uses stay 3/day, its next rise
+/// landing at 10th), citing all nine proof files as one
 /// combined literal, mirroring [`SD13_CLERIC_LEVEL1_TEST`] / [`SD13_BARD_LEVEL1_TEST`].
 const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs + \
     tests/sd13_druid_level2_progression.rs + tests/sd13_druid_level3_progression.rs + \
     tests/sd13_druid_level4_progression.rs + tests/sd13_druid_level5_progression.rs + \
     tests/sd13_druid_level6_progression.rs + tests/sd13_druid_level7_progression.rs + \
-    tests/sd13_druid_level8_progression.rs";
+    tests/sd13_druid_level8_progression.rs + tests/sd13_druid_level9_progression.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -1673,7 +1680,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
-                            level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8 \
+                            level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
+                            level-9 \
                             prepared divine \
                             spell baseline, with base attack bonus, base save progression, Wild \
                             Empathy, Nature Sense, the nature-bond choice recognition, (at level \
@@ -1808,7 +1816,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     I), none of which are separable from the \"3/day\" numeral without \
                     misrepresenting the bundled feature as flat, so Wild Shape stays entirely \
                     named-but-unproven and no new pillar is grounded at level 8 either — only the \
-                    existing pillars are widened. The row is Partial, not Supported: the animal companion execution \
+                    existing pillars are widened — AND a further SD13-E5 slice widens the \
+                    level-range gate again (supported_druid_level, 1..=9) and extends every one \
+                    of the formulas above to level 9 via the same formula, without \
+                    re-derivation, verified independently against the PF1 Core Rulebook Druid \
+                    class table (d20pfsrd and legacy.aonprd.com): level 9 base attack stays +6 \
+                    (9 * 3 / 4) and both good saves stay +6 (9 / 2 + 2), integer-division \
+                    coincidences, while poor Reflex genuinely rises to +3 (9 / 3); Wild Empathy \
+                    genuinely rises to 10 (9 + Charisma modifier 1); Nature Sense, Woodland \
+                    Stride, Trackless Step, Resist Nature's Lure, and the nature-bond choice \
+                    recognition all carry over unchanged; Wild Shape's uses stay 3/day (the \
+                    next rise lands at 10th, checked rather than assumed) and Wild Shape stays \
+                    entirely named-but-unproven; UNLIKE the level-8 \"Wild shape (3/day)\" \
+                    entry, the class table's level-9 \"Special\" column reads \"Venom \
+                    immunity\" (verified independently against both primary sources, checked \
+                    rather than assumed away) — a genuinely NEW class feature and a genuinely \
+                    flat, no-choice, no-magnitude grant (\"a druid gains immunity to all \
+                    poisons\"), grounded by this slice as a +0 identity/recognition record \
+                    only (class_feature.druid.venom_immunity), mirroring Monk's Purity of Body \
+                    precedent exactly — no poison-application or condition-resolution engine \
+                    exists in this codebase, so no immunity effect is fabricated from the \
+                    record. The row is Partial, not Supported: the animal companion execution \
                     burden (the companion's stat block, its advancement, and its link / share \
                     spells abilities) remains named and unproven, the Wild Shape execution burden \
                     (new form, new stat block, duration tracking, frequency, and the level-6 \
@@ -1816,7 +1844,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     posture burden (spells prepared from the full Druid list, spontaneous summon \
                     nature's ally conversion, spell slots per day, bonus spells from a high Wisdom, \
                     spell save DCs) is still entirely unproven. No spell math is fabricated and no \
-                    Druid level 9+ is proven",
+                    Druid level 10+ is proven",
                 next_required_uplift: "SD13-E5 Druid animal companion execution slice, the Wild \
                     Shape execution slice, or the prepared divine spell burden slice, then Druid \
                     level 8+ progression (out of scope for this slice)",
