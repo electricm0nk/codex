@@ -419,7 +419,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_level7_progression.rs + \
     tests/sd13_sorcerer_level8_progression.rs + \
     tests/sd13_sorcerer_level9_progression.rs + \
-    tests/sd13_sorcerer_level10_progression.rs";
+    tests/sd13_sorcerer_level10_progression.rs + \
+    tests/sd13_sorcerer_spell_level_thresholds.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -2911,7 +2912,23 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     power, the 3rd-, 5th-, and 7th-level bloodline spells, the 7th-level bloodline \
                     feat, and further bonus spells/feats at higher levels) remains named and \
                     unproven, and the spontaneous spell burden (spontaneous spells known, spell \
-                    slots per day, bonus spell slots, spell save DCs) is entirely unproven. No \
+                    slots per day, bonus spell slots, spell save DCs) is unproven BEYOND the \
+                    spell-level ACCESS ladder a further SD13-E5 slice grounds \
+                    (class_chassis.sorcerer.spontaneous.spell_level_access, mirroring the \
+                    Paladin/Bard access-ladder records and the Cleric/Wizard \
+                    first-non-'—'-column threshold doctrine, verified against the raw \
+                    spells-per-day rows of both primary sources, identical on d20pfsrd and \
+                    legacy.aonprd.com: 1 at levels 1-3 — 1st-level spells from level 1, no \
+                    zero step, and no \"0\" spells-per-day entries anywhere at levels 1-10 — \
+                    2 at levels 4-5 (level 4 shows \"6/3/—/…\"), 3 at levels 6-7 (level 6 \
+                    shows \"6/5/3/—/…\", the sorcerer's two-level cadence rather than the \
+                    bard's three-level one), 4 at levels 8-9 (level 8 shows \
+                    \"6/6/5/3/—/…\"), and 5 at level 10 (level 10 shows \"6/6/6/5/3/—/…\", \
+                    one spell level deeper than any other class in the tranche); the \
+                    6th-level column stays '—' through level 10, so no 6th-level threshold is \
+                    grounded; cantrips are \"spells known\" only and sit outside the ladder; \
+                    the access ladder grounds ACCESS only and the spontaneous blocker stays \
+                    claim-blocking unchanged. No \
                     spell math is fabricated and no Sorcerer level 11+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
