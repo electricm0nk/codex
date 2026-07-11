@@ -741,6 +741,34 @@ const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 10;
 
+/// The sorcerer level at which 2nd-level sorcerer spells first become
+/// available, verified against the raw PF1 Core Rulebook Sorcerer
+/// spells-per-day table rows (d20pfsrd and legacy.aonprd.com, identical):
+/// level 3 shows "5/—/…", level 4 shows "6/3/—/…" — the first non-"—"
+/// 2nd-level column. Like the Bard and unlike the Paladin, the Sorcerer
+/// table has NO "0" spells-per-day entries at levels 1-10; 1st-level
+/// sorcerer spells are available from level 1 ("3/—/…"), so the ladder has
+/// no zero step and no 1st-level threshold const is needed.
+const SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 4;
+/// The sorcerer level at which 3rd-level sorcerer spells first become
+/// available, verified against the raw table rows (both sources): level 5
+/// shows "6/4/—/…", level 6 shows "6/5/3/—/…" — the first non-"—" 3rd-level
+/// column. This is the sorcerer's two-level cadence (4/6/8/10), not the
+/// bard's three-level one (4/7/10).
+const SORCERER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 6;
+/// The sorcerer level at which 4th-level sorcerer spells first become
+/// available, verified against the raw table rows (both sources): level 7
+/// shows "6/6/4/—/…", level 8 shows "6/6/5/3/—/…" — the first non-"—"
+/// 4th-level column.
+const SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 8;
+/// The sorcerer level at which 5th-level sorcerer spells first become
+/// available, verified against the raw table rows (both sources): level 9
+/// shows "6/6/6/4/—/…", level 10 shows "6/6/6/5/3/—/…" — the first non-"—"
+/// 5th-level column. The 6th-level column stays "—" through level 10
+/// (6th-level sorcerer spells begin at 12, outside the tranche ceiling), so
+/// no 6th-level threshold const is grounded.
+const SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
 // chosen input. Recognition only: the Arcane bloodline's level-1 power is Arcane Bond
@@ -7826,6 +7854,47 @@ fn explain_sorcerer_level1_spell_baseline(
         id: "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported".to_owned(),
         message: arcane_bond_message,
         claim_blocking: true,
+    });
+
+    // SD13-E5: the spontaneous spell-level ACCESS ladder, mirroring the
+    // Paladin/Bard spell_level_access records and the Cleric/Wizard
+    // <CLASS>_<N>TH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL threshold doctrine
+    // exactly ("first non-'—' spells-per-day column", verified against the
+    // raw table rows of both primary sources). This grounds the highest
+    // ACCESSIBLE sorcerer spell level only; the per-day counts themselves
+    // are never computed. Cantrips (0th level, "spells known" only) are
+    // outside the spells-per-day ladder and are not counted.
+    let sorcerer_spell_level_access: i16 =
+        if level >= SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            5
+        } else if level >= SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            4
+        } else if level >= SORCERER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            3
+        } else if level >= SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            2
+        } else {
+            1
+        };
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.sorcerer.spontaneous.spell_level_access".to_owned(),
+        value: sorcerer_spell_level_access,
+        detail: format!(
+            "Sorcerer spell-level access at sorcerer level {level}: the highest sorcerer spell \
+             level (1st+) with a non-\"—\" spells-per-day column in the PF1 Core Rulebook \
+             Sorcerer class table is {sorcerer_spell_level_access} (verified against the raw \
+             table rows of both primary sources: 1st-level spells from level 1 — the ladder \
+             has no zero step — 2nd-level at \
+             {SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
+             {SORCERER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
+             {SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 5th-level at \
+             {SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL} — the sorcerer's two-level \
+             cadence; the 6th-level column stays \"—\" through level 10). Cantrips are \
+             \"spells known\" only and sit outside the spells-per-day ladder, so they are \
+             not counted. This grounds the access ladder only: no spells-per-day counts, no \
+             spells-known posture, no bonus slots from a high Charisma, and no spell save DCs \
+             are computed"
+        ),
     });
 
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden explicitly.
