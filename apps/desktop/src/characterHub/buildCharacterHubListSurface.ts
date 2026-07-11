@@ -8,6 +8,8 @@ export interface CharacterHubListRowSurface {
   raceLabel: string;
   classSummary: string;
   savedAtLabel: string;
+  /** Campaign name — not yet persisted by the backend, so absent for real characters. */
+  campaign?: string;
 }
 
 export interface CharacterHubListSurface {

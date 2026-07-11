@@ -6,7 +6,7 @@ export function CharacterListRow(props: { row: CharacterHubListRowSurface }) {
     <div
       style={{
         alignItems: 'center',
-        border: '1px solid #cbd5e1',
+        border: '1px solid var(--color-border)',
         borderRadius: 12,
         display: 'flex',
         justifyContent: 'space-between',
@@ -14,12 +14,12 @@ export function CharacterListRow(props: { row: CharacterHubListRowSurface }) {
       }}
     >
       <div>
-        <p style={{ color: '#0f172a', fontSize: '1rem', fontWeight: 700, margin: 0 }}>{row.displayLabel}</p>
-        <p style={{ color: '#475569', fontSize: '0.85rem', margin: '0.25rem 0 0' }}>
+        <p style={{ color: 'var(--color-text)', fontSize: '1rem', fontWeight: 700, margin: 0 }}>{row.displayLabel}</p>
+        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.25rem 0 0' }}>
           {row.gameSystemLabel} · {row.raceLabel} {row.classSummary}
         </p>
       </div>
-      <p style={{ color: '#64748b', fontSize: '0.8rem', margin: 0 }}>{row.savedAtLabel}</p>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: 0 }}>{row.savedAtLabel}</p>
     </div>
   );
 }

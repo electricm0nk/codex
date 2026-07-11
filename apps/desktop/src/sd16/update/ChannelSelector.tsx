@@ -13,9 +13,9 @@ export interface Sd16ChannelSelectorProps {
 const SELECT_STYLE: CSSProperties = {
   padding: '4px 8px',
   borderRadius: '4px',
-  border: '1px solid #d0d7de',
+  border: '1px solid var(--color-border)',
   fontSize: '14px',
-  backgroundColor: '#ffffff',
+  backgroundColor: 'var(--color-surface)',
 };
 
 /**

@@ -104,7 +104,7 @@ function renderReleaseNotes(
     return (
       <p
         data-testid="sd16-release-notes-empty"
-        style={{ margin: 0, fontStyle: 'italic', color: '#57606a' }}
+        style={{ margin: 0, fontStyle: 'italic', color: 'var(--color-text-muted)' }}
       >
         No release notes available yet. Run Check to load them.
       </p>

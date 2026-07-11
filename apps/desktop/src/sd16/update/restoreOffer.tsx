@@ -18,11 +18,11 @@ export const RESTORE_OFFER_ID = 'restore-prior';
 const RESTORE_OFFER_STYLE: CSSProperties = {
   padding: '8px 12px',
   margin: '8px 0',
-  border: '1px solid #d0d7de',
+  border: '1px solid var(--color-border)',
   borderRadius: '4px',
-  backgroundColor: '#fff8c5',
+  backgroundColor: 'var(--color-warn-bg)',
   fontSize: '13px',
-  color: '#57606a',
+  color: 'var(--color-text-muted)',
 };
 
 export interface RestoreOfferProps {

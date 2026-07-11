@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import desktopPackage from '../package.json';
 import {
   loadSd11TesterWorkbenchSurfaceRuntime,
@@ -36,6 +36,9 @@ import {
   type Sd16MountTimeState,
 } from './sd16/update/controllerAdapter';
 import type { Sd16UpdateControllerDeps } from './sd16/update/updateModel';
+import { SettingsModal, type SettingsTab } from './settings/SettingsModal';
+import { AppearancePanel } from './settings/AppearancePanel';
+import { applyThemeMode, getStoredThemeMode, type ThemeMode } from './settings/themeMode';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -61,31 +64,31 @@ function derivePlatformLabel(): string {
 
 function toneColor(tone: 'info' | 'warning' | 'error'): string {
   if (tone === 'error') {
-    return '#b91c1c';
+    return 'var(--color-error)';
   }
 
   if (tone === 'warning') {
-    return '#b45309';
+    return 'var(--color-warn)';
   }
 
-  return '#0f766e';
+  return 'var(--color-accent)';
 }
 
 function AppCard(props: { label: string; value: string; detail?: string }) {
   return (
     <div
       style={{
-        backgroundColor: '#f8fafc',
-        border: '1px solid #cbd5e1',
+        backgroundColor: 'var(--color-surface)',
+        border: '1px solid var(--color-border)',
         borderRadius: 12,
         padding: '0.9rem 1rem',
       }}
     >
-      <p style={{ color: '#64748b', fontSize: '0.75rem', letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
         {props.label}
       </p>
-      <p style={{ color: '#0f172a', fontSize: '1rem', fontWeight: 700, margin: '0.35rem 0 0' }}>{props.value}</p>
-      {props.detail ? <p style={{ color: '#475569', fontSize: '0.875rem', margin: '0.4rem 0 0' }}>{props.detail}</p> : null}
+      <p style={{ color: 'var(--color-text)', fontSize: '1rem', fontWeight: 700, margin: '0.35rem 0 0' }}>{props.value}</p>
+      {props.detail ? <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem', margin: '0.4rem 0 0' }}>{props.detail}</p> : null}
     </div>
   );
 }
@@ -95,7 +98,7 @@ function EvidenceList(props: {
   items: Array<{ label: string; detail: string; machineRef: string }>;
 }) {
   if (!props.items.length) {
-    return <p style={{ color: '#475569', margin: 0 }}>{props.emptyMessage}</p>;
+    return <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>{props.emptyMessage}</p>;
   }
 
   return (
@@ -105,8 +108,8 @@ function EvidenceList(props: {
         // so the list index keeps sibling keys unique.
         <li key={createReferenceListKey(reference.label, `${reference.machineRef}#${index}`)} style={{ marginBottom: '0.6rem' }}>
           <strong>{reference.label}</strong>
-          <div style={{ color: '#475569', marginTop: '0.2rem' }}>{reference.detail}</div>
-          <code style={{ color: '#334155', fontSize: '0.8rem' }}>{reference.machineRef}</code>
+          <div style={{ color: 'var(--color-text-secondary)', marginTop: '0.2rem' }}>{reference.detail}</div>
+          <code style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>{reference.machineRef}</code>
         </li>
       ))}
     </ul>
@@ -138,9 +141,9 @@ function FeedbackEvidencePanel(props: { surface: Sd11TesterWorkbenchSurface }) {
   };
 
   return (
-    <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+    <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
       <h2 style={{ marginTop: 0 }}>Feedback evidence capture &amp; redaction</h2>
-      <p style={{ color: '#475569', lineHeight: 1.6 }}>
+      <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
         Shared substrate for the upcoming GitHub bug-report and enhancement-request flows. The auto-captured
         backbone below is reused by both flows without schema drift; tester-entered narrative fields are added
         by each composer, and attachments are never captured silently.
@@ -157,12 +160,12 @@ function FeedbackEvidencePanel(props: { surface: Sd11TesterWorkbenchSurface }) {
         ))}
       </div>
 
-      <div style={{ backgroundColor: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
-        <p style={{ color: '#64748b', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+      <div style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
           Attachment &amp; redaction policy
         </p>
-        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
-        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
           Attachments captured in this substrate slice: none. No screenshot, log, or save file is collected without
           explicit tester confirmation and a recorded redaction declaration.
         </p>
@@ -173,7 +176,7 @@ function FeedbackEvidencePanel(props: { surface: Sd11TesterWorkbenchSurface }) {
 
 function bugFieldStyle(): CSSProperties {
   return {
-    border: '1px solid #cbd5e1',
+    border: '1px solid var(--color-border)',
     borderRadius: 8,
     fontFamily: 'inherit',
     fontSize: '0.9rem',
@@ -199,7 +202,7 @@ function BugReportField(props: {
 
   return (
     <label style={{ display: 'block', marginTop: '0.9rem' }}>
-      <span style={{ color: '#334155', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+      <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
         {props.label}
       </span>
       {props.multiline ? <textarea rows={3} {...sharedProps} /> : <input type="text" {...sharedProps} />}
@@ -209,14 +212,14 @@ function BugReportField(props: {
 
 function outcomeTone(status: BugReportSubmissionOutcome['status']): string {
   if (status === 'submitted') {
-    return '#0f766e';
+    return 'var(--color-accent)';
   }
 
   if (status === 'blocked-incomplete') {
-    return '#b91c1c';
+    return 'var(--color-error)';
   }
 
-  return '#b45309';
+  return 'var(--color-warn)';
 }
 
 /**
@@ -228,7 +231,7 @@ function outcomeTone(status: BugReportSubmissionOutcome['status']): string {
 function BrowserHandoffResultPanel(props: { handoff: BrowserHandoffOutcome; copyablePayload: string }) {
   const [copied, setCopied] = useState(false);
   const confirmed = props.handoff.ui.status === 'confirmed';
-  const tone = confirmed ? '#0f766e' : '#b45309';
+  const tone = confirmed ? 'var(--color-accent)' : 'var(--color-warn)';
 
   async function onCopyPayload() {
     try {
@@ -244,7 +247,7 @@ function BrowserHandoffResultPanel(props: { handoff: BrowserHandoffOutcome; copy
   return (
     <div
       style={{
-        backgroundColor: '#f8fafc',
+        backgroundColor: 'var(--color-surface)',
         border: `1px solid ${tone}`,
         borderRadius: 12,
         marginTop: '1rem',
@@ -256,26 +259,26 @@ function BrowserHandoffResultPanel(props: { handoff: BrowserHandoffOutcome; copy
       </p>
       {confirmed ? (
         <>
-          <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+          <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
             A prefilled GitHub issue form was opened in your browser. Review it and press
             &ldquo;Create&rdquo; there to file the issue — the shell only confirms the form was
             opened; it does not claim the issue was submitted.
           </p>
           {props.handoff.ui.url ? (
-            <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0', wordBreak: 'break-all' }}>
+            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0', wordBreak: 'break-all' }}>
               Opened URL: <code>{props.handoff.ui.url}</code>
             </p>
           ) : null}
         </>
       ) : (
         <>
-          <p style={{ color: '#7c2d12', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+          <p style={{ color: 'var(--color-warn)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
             The prefilled GitHub issue form could not be opened
             {props.handoff.ui.reason ? ` (${props.handoff.ui.reason})` : ''}. Nothing was filed and
             no submission is claimed. Your structured draft is preserved below.
           </p>
           {props.handoff.manualUrl ? (
-            <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0', wordBreak: 'break-all' }}>
+            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0', wordBreak: 'break-all' }}>
               Open the validated prefilled form manually: <code>{props.handoff.manualUrl}</code>
             </p>
           ) : null}
@@ -285,10 +288,10 @@ function BrowserHandoffResultPanel(props: { handoff: BrowserHandoffOutcome; copy
         type="button"
         onClick={onCopyPayload}
         style={{
-          backgroundColor: '#334155',
+          backgroundColor: 'var(--color-accent)',
           border: 'none',
           borderRadius: 8,
-          color: '#ffffff',
+          color: 'var(--color-on-accent)',
           cursor: 'pointer',
           fontWeight: 700,
           marginTop: '0.6rem',
@@ -362,9 +365,9 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
   }
 
   return (
-    <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+    <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
       <h2 style={{ marginTop: 0 }}>Report a bug</h2>
-      <p style={{ color: '#475569', lineHeight: 1.6 }}>
+      <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
         This is the governed <strong>bug-report</strong> flow: it captures an observable failure with structured,
         required fields and composes a GitHub issue per the SD-11 bug-report intake contract. It is deliberately
         separate from enhancement requests, which are not handled here. Observed and expected behavior are kept
@@ -399,20 +402,20 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
         multiline
       />
 
-      <div style={{ backgroundColor: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
-        <p style={{ color: '#64748b', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+      <div style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
           Auto-captured metadata · attached to every report
         </p>
-        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
           Labels: {composed.draft.labels.join(', ')}
         </p>
-        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
       </div>
 
       {composed.problems.length ? (
-        <div style={{ backgroundColor: '#fffbeb', border: '1px solid #fde68a', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
-          <p style={{ color: '#92400e', fontWeight: 700, margin: 0 }}>Still required before this report can be submitted</p>
-          <ul style={{ color: '#92400e', margin: '0.45rem 0 0', paddingLeft: '1.2rem' }}>
+        <div style={{ backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+          <p style={{ color: 'var(--color-warn)', fontWeight: 700, margin: 0 }}>Still required before this report can be submitted</p>
+          <ul style={{ color: 'var(--color-warn)', margin: '0.45rem 0 0', paddingLeft: '1.2rem' }}>
             {composed.problems.map((problem) => (
               <li key={problem} style={{ marginBottom: '0.3rem' }}>{problem}</li>
             ))}
@@ -425,10 +428,10 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
         onClick={onPrepareSubmission}
         disabled={submitting}
         style={{
-          backgroundColor: composed.submittable ? '#0f766e' : '#64748b',
+          backgroundColor: composed.submittable ? 'var(--color-accent)' : 'var(--color-text-muted)',
           border: 'none',
           borderRadius: 8,
-          color: '#ffffff',
+          color: 'var(--color-on-accent)',
           cursor: submitting ? 'wait' : 'pointer',
           fontWeight: 700,
           marginTop: '1rem',
@@ -441,9 +444,9 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
       <h3 style={{ marginBottom: '0.4rem', marginTop: '1.25rem' }}>Composed issue preview</h3>
       <pre
         style={{
-          backgroundColor: '#0f172a',
+          backgroundColor: 'var(--color-accent)',
           borderRadius: 12,
-          color: '#e2e8f0',
+          color: 'var(--color-on-accent-muted)',
           fontSize: '0.8rem',
           lineHeight: 1.5,
           margin: 0,
@@ -458,7 +461,7 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
       {outcome ? (
         <div
           style={{
-            backgroundColor: '#f8fafc',
+            backgroundColor: 'var(--color-surface)',
             border: `1px solid ${outcomeTone(outcome.status)}`,
             borderRadius: 12,
             marginTop: '1rem',
@@ -468,13 +471,13 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
           <p style={{ color: outcomeTone(outcome.status), fontWeight: 700, margin: 0 }}>
             Submission status: {outcome.status}
           </p>
-          <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{outcome.message}</p>
+          <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{outcome.message}</p>
           {outcome.resultHandle ? (
-            <p style={{ color: '#0f766e', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+            <p style={{ color: 'var(--color-accent)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
               Filed issue: <a href={outcome.resultHandle.issueUrl}>{outcome.resultHandle.issueUrl}</a>
             </p>
           ) : (
-            <p style={{ color: '#7c2d12', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+            <p style={{ color: 'var(--color-warn)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
               No issue handle was returned, so no successful submission is claimed. Your structured report is
               preserved below — copy it to file the issue manually without losing any evidence.
             </p>
@@ -483,10 +486,10 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
             type="button"
             onClick={onCopyPayload}
             style={{
-              backgroundColor: '#334155',
+              backgroundColor: 'var(--color-accent)',
               border: 'none',
               borderRadius: 8,
-              color: '#ffffff',
+              color: 'var(--color-on-accent)',
               cursor: 'pointer',
               fontWeight: 700,
               marginTop: '0.6rem',
@@ -570,9 +573,9 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
   }
 
   return (
-    <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+    <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
       <h2 style={{ marginTop: 0 }}>Request an enhancement</h2>
-      <p style={{ color: '#475569', lineHeight: 1.6 }}>
+      <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
         This is the governed <strong>enhancement-request</strong> flow: it captures a real blocked workflow or
         missing capability with structured, required fields and composes a GitHub issue per the SD-11
         enhancement-request intake contract. It is deliberately separate from bug reports, which are not handled
@@ -615,20 +618,20 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
         onChange={(value) => setAffectedSurface(value)}
       />
 
-      <div style={{ backgroundColor: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
-        <p style={{ color: '#64748b', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+      <div style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
           Auto-captured metadata · attached to every request
         </p>
-        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
           Labels: {composed.draft.labels.join(', ')}
         </p>
-        <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
+        <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
       </div>
 
       {composed.problems.length ? (
-        <div style={{ backgroundColor: '#fffbeb', border: '1px solid #fde68a', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
-          <p style={{ color: '#92400e', fontWeight: 700, margin: 0 }}>Still required before this request can be submitted</p>
-          <ul style={{ color: '#92400e', margin: '0.45rem 0 0', paddingLeft: '1.2rem' }}>
+        <div style={{ backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', borderRadius: 12, marginTop: '1rem', padding: '0.9rem 1rem' }}>
+          <p style={{ color: 'var(--color-warn)', fontWeight: 700, margin: 0 }}>Still required before this request can be submitted</p>
+          <ul style={{ color: 'var(--color-warn)', margin: '0.45rem 0 0', paddingLeft: '1.2rem' }}>
             {composed.problems.map((problem) => (
               <li key={problem} style={{ marginBottom: '0.3rem' }}>{problem}</li>
             ))}
@@ -641,10 +644,10 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
         onClick={onPrepareSubmission}
         disabled={submitting}
         style={{
-          backgroundColor: composed.submittable ? '#0f766e' : '#64748b',
+          backgroundColor: composed.submittable ? 'var(--color-accent)' : 'var(--color-text-muted)',
           border: 'none',
           borderRadius: 8,
-          color: '#ffffff',
+          color: 'var(--color-on-accent)',
           cursor: submitting ? 'wait' : 'pointer',
           fontWeight: 700,
           marginTop: '1rem',
@@ -659,9 +662,9 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
       <h3 style={{ marginBottom: '0.4rem', marginTop: '1.25rem' }}>Composed issue preview</h3>
       <pre
         style={{
-          backgroundColor: '#0f172a',
+          backgroundColor: 'var(--color-accent)',
           borderRadius: 12,
-          color: '#e2e8f0',
+          color: 'var(--color-on-accent-muted)',
           fontSize: '0.8rem',
           lineHeight: 1.5,
           margin: 0,
@@ -676,7 +679,7 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
       {outcome ? (
         <div
           style={{
-            backgroundColor: '#f8fafc',
+            backgroundColor: 'var(--color-surface)',
             border: `1px solid ${outcomeTone(outcome.status)}`,
             borderRadius: 12,
             marginTop: '1rem',
@@ -686,13 +689,13 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
           <p style={{ color: outcomeTone(outcome.status), fontWeight: 700, margin: 0 }}>
             Submission status: {outcome.status}
           </p>
-          <p style={{ color: '#475569', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{outcome.message}</p>
+          <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{outcome.message}</p>
           {outcome.resultHandle ? (
-            <p style={{ color: '#0f766e', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+            <p style={{ color: 'var(--color-accent)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
               Filed issue: <a href={outcome.resultHandle.issueUrl}>{outcome.resultHandle.issueUrl}</a>
             </p>
           ) : (
-            <p style={{ color: '#7c2d12', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
+            <p style={{ color: 'var(--color-warn)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
               No issue handle was returned, so no successful submission is claimed. Your structured request is
               preserved below — copy it to file the issue manually without losing any evidence.
             </p>
@@ -701,10 +704,10 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
             type="button"
             onClick={onCopyPayload}
             style={{
-              backgroundColor: '#334155',
+              backgroundColor: 'var(--color-accent)',
               border: 'none',
               borderRadius: 8,
-              color: '#ffffff',
+              color: 'var(--color-on-accent)',
               cursor: 'pointer',
               fontWeight: 700,
               marginTop: '0.6rem',
@@ -765,15 +768,15 @@ function Sd16UpdateSection() {
 
   if (loadError) {
     return (
-      <section style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: 12, padding: '1rem 1.25rem' }}>
-        <h2 style={{ color: '#991b1b', marginTop: 0 }}>Update status load failure</h2>
-        <p style={{ color: '#7f1d1d', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{loadError}</p>
+      <section style={{ backgroundColor: 'var(--color-error-bg)', border: '1px solid var(--color-error-border)', borderRadius: 12, padding: '1rem 1.25rem' }}>
+        <h2 style={{ color: 'var(--color-error)', marginTop: 0 }}>Update status load failure</h2>
+        <p style={{ color: 'var(--color-error)', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{loadError}</p>
       </section>
     );
   }
 
   if (!mounted) {
-    return <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Loading update status…</p>;
+    return <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Loading update status…</p>;
   }
 
   return (
@@ -818,13 +821,13 @@ function SupportDebtPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
   }
 
   return (
-    <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+    <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
       <h2 style={{ marginTop: 0 }}>{debt.sectionLabel}</h2>
-      <p style={{ color: '#475569', lineHeight: 1.6 }}>{debt.lead}</p>
+      <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{debt.lead}</p>
 
       {debt.unavailableNotice ? (
-        <div style={{ backgroundColor: '#fff7ed', border: '1px solid #fdba74', borderRadius: 12, padding: '0.9rem 1rem' }}>
-          <p style={{ color: '#7c2d12', margin: 0 }}>{debt.unavailableNotice}</p>
+        <div style={{ backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', borderRadius: 12, padding: '0.9rem 1rem' }}>
+          <p style={{ color: 'var(--color-warn)', margin: 0 }}>{debt.unavailableNotice}</p>
         </div>
       ) : (
         <>
@@ -834,7 +837,7 @@ function SupportDebtPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
                 <span
                   key={tally.supportState}
                   style={{
-                    backgroundColor: '#f1f5f9',
+                    backgroundColor: 'var(--color-surface-2)',
                     border: `1px solid ${toneColor(supportStateTone(tally.supportState))}`,
                     borderRadius: 999,
                     color: toneColor(supportStateTone(tally.supportState)),
@@ -856,7 +859,7 @@ function SupportDebtPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
               <div
                 key={row.rowId}
                 style={{
-                  backgroundColor: '#f8fafc',
+                  backgroundColor: 'var(--color-surface)',
                   border: `1px solid ${toneColor(supportStateTone(row.supportState))}`,
                   borderRadius: 12,
                   padding: '0.9rem 1rem',
@@ -874,24 +877,24 @@ function SupportDebtPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
                 >
                   {row.supportState} · evidence: {row.evidenceTier}
                 </p>
-                <p style={{ color: '#0f172a', fontSize: '1rem', fontWeight: 700, margin: '0.35rem 0 0' }}>
-                  {row.subjectId} <span style={{ color: '#64748b', fontWeight: 400 }}>({row.subjectType})</span>
+                <p style={{ color: 'var(--color-text)', fontSize: '1rem', fontWeight: 700, margin: '0.35rem 0 0' }}>
+                  {row.subjectId} <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>({row.subjectType})</span>
                 </p>
-                <p style={{ color: '#475569', margin: '0.3rem 0 0' }}>{row.dimension}</p>
-                <p style={{ color: '#334155', lineHeight: 1.6, margin: '0.5rem 0 0' }}>{row.testerFacingStateLabel}</p>
+                <p style={{ color: 'var(--color-text-secondary)', margin: '0.3rem 0 0' }}>{row.dimension}</p>
+                <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.5rem 0 0' }}>{row.testerFacingStateLabel}</p>
                 {row.hasDebtNote ? (
-                  <p style={{ color: '#7c2d12', lineHeight: 1.6, margin: '0.5rem 0 0' }}>
+                  <p style={{ color: 'var(--color-warn)', lineHeight: 1.6, margin: '0.5rem 0 0' }}>
                     <strong>Blocker / lossiness:</strong> {row.blockerOrLossinessNote}
                   </p>
                 ) : null}
-                <p style={{ color: '#475569', fontSize: '0.85rem', margin: '0.5rem 0 0' }}>
-                  Grounding: <code style={{ color: '#334155' }}>{row.groundingRef}</code>
+                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.5rem 0 0' }}>
+                  Grounding: <code style={{ color: 'var(--color-text-secondary)' }}>{row.groundingRef}</code>
                 </p>
-                <p style={{ color: '#475569', fontSize: '0.85rem', margin: '0.3rem 0 0' }}>
+                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.3rem 0 0' }}>
                   Next uplift: {row.nextRequiredUplift}
                 </p>
                 <p style={{ margin: '0.4rem 0 0' }}>
-                  <code style={{ color: '#94a3b8', fontSize: '0.75rem' }}>{row.rowId}</code>
+                  <code style={{ color: 'var(--color-text-faint)', fontSize: '0.75rem' }}>{row.rowId}</code>
                 </p>
               </div>
             ))}
@@ -912,22 +915,22 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
   const postureTone: 'info' | 'warning' = audit.overallPosture === 'refresh-backed' ? 'info' : 'warning';
 
   return (
-    <section style={{ border: '1px dashed #94a3b8', borderRadius: 12, marginTop: '1rem', padding: '1.25rem' }}>
-      <p style={{ color: '#64748b', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+    <section style={{ border: '1px dashed var(--color-text-faint)', borderRadius: 12, marginTop: '1rem', padding: '1.25rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
         Audit surface · subordinate to the support and debt truth above
       </p>
       <h3 style={{ margin: '0.35rem 0 0' }}>{audit.sectionLabel}</h3>
-      <p style={{ color: '#475569', lineHeight: 1.6 }}>{audit.lead}</p>
+      <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{audit.lead}</p>
 
       {audit.unavailableNotice ? (
-        <div style={{ backgroundColor: '#fff7ed', border: '1px solid #fdba74', borderRadius: 12, padding: '0.9rem 1rem' }}>
-          <p style={{ color: '#7c2d12', margin: 0 }}>{audit.unavailableNotice}</p>
+        <div style={{ backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', borderRadius: 12, padding: '0.9rem 1rem' }}>
+          <p style={{ color: 'var(--color-warn)', margin: 0 }}>{audit.unavailableNotice}</p>
         </div>
       ) : (
         <>
           <div
             style={{
-              backgroundColor: '#f8fafc',
+              backgroundColor: 'var(--color-surface)',
               border: `1px solid ${toneColor(postureTone)}`,
               borderRadius: 12,
               padding: '0.9rem 1rem',
@@ -936,8 +939,8 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
             <p style={{ color: toneColor(postureTone), fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
               Overall posture: {audit.overallPosture}
             </p>
-            <p style={{ color: '#334155', lineHeight: 1.6, margin: '0.35rem 0 0' }}>{audit.overallLabel}</p>
-            <p style={{ color: '#475569', fontSize: '0.85rem', margin: '0.45rem 0 0' }}>
+            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.35rem 0 0' }}>{audit.overallLabel}</p>
+            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.45rem 0 0' }}>
               Refresh-required rows: {audit.refreshRequiredCount} · promoted breadth claims: {audit.positiveBreadthClaimCount}
             </p>
           </div>
@@ -948,10 +951,10 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
                 <span
                   key={tally.evidenceFreshness}
                   style={{
-                    backgroundColor: '#f1f5f9',
-                    border: '1px solid #94a3b8',
+                    backgroundColor: 'var(--color-surface-2)',
+                    border: '1px solid var(--color-text-faint)',
                     borderRadius: 999,
-                    color: '#334155',
+                    color: 'var(--color-text-secondary)',
                     fontSize: '0.75rem',
                     fontWeight: 700,
                     letterSpacing: '0.04em',
@@ -970,29 +973,29 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
               <div
                 key={row.rowId}
                 style={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #cbd5e1',
+                  backgroundColor: 'var(--color-surface)',
+                  border: '1px solid var(--color-border)',
                   borderRadius: 10,
                   padding: '0.75rem 0.9rem',
                 }}
               >
-                <p style={{ color: '#475569', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.06em', margin: 0, textTransform: 'uppercase' }}>
+                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.06em', margin: 0, textTransform: 'uppercase' }}>
                   {row.evidenceFreshness} · {row.supportState} · evidence: {row.evidenceTier}
                 </p>
-                <p style={{ color: '#0f172a', fontSize: '0.95rem', fontWeight: 700, margin: '0.3rem 0 0' }}>
-                  {row.subjectId} <span style={{ color: '#64748b', fontWeight: 400 }}>({row.subjectType})</span>
+                <p style={{ color: 'var(--color-text)', fontSize: '0.95rem', fontWeight: 700, margin: '0.3rem 0 0' }}>
+                  {row.subjectId} <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>({row.subjectType})</span>
                 </p>
-                <p style={{ color: '#7c2d12', lineHeight: 1.6, margin: '0.4rem 0 0' }}>{row.refreshAuditLabel}</p>
-                <p style={{ color: '#475569', fontSize: '0.85rem', margin: '0.4rem 0 0' }}>
-                  Grounding: <code style={{ color: '#334155' }}>{row.groundingRef}</code>
+                <p style={{ color: 'var(--color-warn)', lineHeight: 1.6, margin: '0.4rem 0 0' }}>{row.refreshAuditLabel}</p>
+                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.4rem 0 0' }}>
+                  Grounding: <code style={{ color: 'var(--color-text-secondary)' }}>{row.groundingRef}</code>
                 </p>
                 {row.blockerOrLossinessNote ? (
-                  <p style={{ color: '#7c2d12', fontSize: '0.85rem', lineHeight: 1.6, margin: '0.3rem 0 0' }}>
+                  <p style={{ color: 'var(--color-warn)', fontSize: '0.85rem', lineHeight: 1.6, margin: '0.3rem 0 0' }}>
                     <strong>Blocker / lossiness:</strong> {row.blockerOrLossinessNote}
                   </p>
                 ) : null}
                 <p style={{ margin: '0.35rem 0 0' }}>
-                  <code style={{ color: '#94a3b8', fontSize: '0.75rem' }}>{row.rowId}</code>
+                  <code style={{ color: 'var(--color-text-faint)', fontSize: '0.75rem' }}>{row.rowId}</code>
                 </p>
               </div>
             ))}
@@ -1003,10 +1006,57 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
   );
 }
 
+export type SheetTool = 'update' | 'bug' | 'enhancement';
+
+const SHEET_TOOL_TITLES: Record<SheetTool, string> = {
+  update: 'Update',
+  bug: 'Bug Report',
+  enhancement: 'Enhancement Request',
+};
+
+/** Centered modal hosting a single Menu tool (Update / Bug Report / Enhancement). */
+function ToolModal(props: { title: string; onClose: () => void; children: ReactNode }) {
+  return (
+    <div
+      role="presentation"
+      onClick={props.onClose}
+      style={{ alignItems: 'flex-start', backgroundColor: 'rgba(0, 0, 0, 0.55)', display: 'flex', inset: 0, justifyContent: 'center', overflowY: 'auto', padding: '3rem 1.5rem', position: 'fixed', zIndex: 1000 }}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={props.title}
+        onClick={(event) => event.stopPropagation()}
+        style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12, boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)', maxWidth: 900, width: '100%' }}
+      >
+        <header style={{ alignItems: 'center', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', padding: '1rem 1.5rem' }}>
+          <h2 style={{ fontSize: '1.1rem', margin: 0 }}>{props.title}</h2>
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={props.onClose}
+            style={{ background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '1.4rem', lineHeight: 1, padding: '0.15rem 0.35rem' }}
+          >
+            ×
+          </button>
+        </header>
+        <div style={{ padding: '1.25rem 1.5rem' }}>{props.children}</div>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
-  const [activeView, setActiveView] = useState<'hub' | 'developer'>('hub');
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsTab, setSettingsTab] = useState<SettingsTab>('appearance');
+  const [themeMode, setThemeMode] = useState<ThemeMode>(getStoredThemeMode);
+  const [activeTool, setActiveTool] = useState<SheetTool | null>(null);
   const [surface, setSurface] = useState<Sd11TesterWorkbenchSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    applyThemeMode(themeMode);
+  }, [themeMode]);
 
   useEffect(() => {
     loadSd11TesterWorkbenchSurfaceRuntime({
@@ -1021,58 +1071,79 @@ export default function App() {
 
   return (
     <main style={{ fontFamily: 'Inter, system-ui, sans-serif', margin: '0 auto', maxWidth: 1100, padding: '3rem 1.5rem' }}>
-      <header>
-        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
-          <button
-            type="button"
-            onClick={() => setActiveView('hub')}
-            style={{
-              backgroundColor: activeView === 'hub' ? '#0f172a' : 'white',
-              border: '1px solid #cbd5e1',
-              borderRadius: 8,
-              color: activeView === 'hub' ? 'white' : '#334155',
-              cursor: 'pointer',
-              padding: '0.5rem 1rem',
-            }}
-          >
-            Characters
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveView('developer')}
-            style={{
-              backgroundColor: activeView === 'developer' ? '#0f172a' : 'white',
-              border: '1px solid #cbd5e1',
-              borderRadius: 8,
-              color: activeView === 'developer' ? 'white' : '#334155',
-              cursor: 'pointer',
-              padding: '0.5rem 1rem',
-            }}
-          >
-            Developer
-          </button>
-        </div>
-      </header>
+      {/* Settings gear — fixed to the viewport top-right on every screen. */}
+      <button
+        type="button"
+        aria-label="Open settings"
+        title="Settings"
+        onClick={() => setSettingsOpen(true)}
+        style={{
+          alignItems: 'center',
+          background: 'var(--color-surface)',
+          border: '1px solid var(--color-border)',
+          borderRadius: 8,
+          color: 'var(--color-text-secondary)',
+          cursor: 'pointer',
+          display: 'flex',
+          fontSize: '1.2rem',
+          height: 38,
+          justifyContent: 'center',
+          position: 'fixed',
+          right: 14,
+          top: 8,
+          width: 38,
+          zIndex: 950,
+        }}
+      >
+        ⚙
+      </button>
 
-      {activeView === 'hub' ? <CharacterHubPage /> : null}
+      <CharacterHubPage onOpenTool={setActiveTool} />
 
-      {activeView === 'developer' ? (
-        <>
+      {activeTool ? (
+        <ToolModal title={SHEET_TOOL_TITLES[activeTool]} onClose={() => setActiveTool(null)}>
+          {activeTool === 'update' ? <Sd16UpdateSection /> : null}
+          {activeTool === 'bug' ? (
+            surface ? (
+              <BugReportComposer surface={surface} />
+            ) : (
+              <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Workbench data is unavailable, so a bug report cannot be composed right now.</p>
+            )
+          ) : null}
+          {activeTool === 'enhancement' ? (
+            surface ? (
+              <EnhancementRequestComposer surface={surface} />
+            ) : (
+              <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Workbench data is unavailable, so an enhancement request cannot be composed right now.</p>
+            )
+          ) : null}
+        </ToolModal>
+      ) : null}
+
+      <SettingsModal
+        open={settingsOpen}
+        activeTab={settingsTab}
+        onTabChange={setSettingsTab}
+        onClose={() => setSettingsOpen(false)}
+        panels={{
+          appearance: <AppearancePanel mode={themeMode} onModeChange={setThemeMode} />,
+          developer: (
+            <>
           <header>
-            <p style={{ color: '#64748b', fontSize: '0.875rem', letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
               {surface?.surfaceLabel ?? 'SD-11 tester workbench'}
             </p>
             <h1 style={{ marginBottom: '0.5rem' }}>{surface?.headline ?? 'Loading bounded tester workbench frame…'}</h1>
-            <p style={{ color: '#334155', lineHeight: 1.6, marginBottom: 0 }}>
+            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: 0 }}>
               {surface?.lead ??
                 'Loading the first bounded tester-facing workbench frame over the current desktop runtime seam.'}
             </p>
           </header>
 
           {error ? (
-        <section style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: 12, marginTop: '1.5rem', padding: '1rem 1.25rem' }}>
-          <h2 style={{ color: '#991b1b', marginTop: 0 }}>Workbench load failure</h2>
-          <p style={{ color: '#7f1d1d', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{error}</p>
+        <section style={{ backgroundColor: 'var(--color-error-bg)', border: '1px solid var(--color-error-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1rem 1.25rem' }}>
+          <h2 style={{ color: 'var(--color-error)', marginTop: 0 }}>Workbench load failure</h2>
+          <p style={{ color: 'var(--color-error)', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{error}</p>
         </section>
       ) : null}
 
@@ -1087,15 +1158,15 @@ export default function App() {
           </section>
 
           {surface.fallbackNotice ? (
-            <section style={{ backgroundColor: '#fff7ed', border: '1px solid #fdba74', borderRadius: 12, marginTop: '1.5rem', padding: '1rem 1.25rem' }}>
-              <h2 style={{ color: '#9a3412', marginTop: 0 }}>Explicit fallback</h2>
-              <p style={{ color: '#7c2d12', marginBottom: 0 }}>{surface.fallbackNotice}</p>
+            <section style={{ backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1rem 1.25rem' }}>
+              <h2 style={{ color: 'var(--color-warn)', marginTop: 0 }}>Explicit fallback</h2>
+              <p style={{ color: 'var(--color-warn)', marginBottom: 0 }}>{surface.fallbackNotice}</p>
             </section>
           ) : null}
 
-          <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+          <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
             <h2 style={{ marginTop: 0 }}>Current bounded workflow</h2>
-            <p style={{ color: '#475569', lineHeight: 1.6 }}>{surface.boundedScopeNotice}</p>
+            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{surface.boundedScopeNotice}</p>
             <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginTop: '1rem' }}>
               {surface.summaryRows.map((row) => (
                 <AppCard key={row.label} label={row.label} value={row.value} />
@@ -1103,9 +1174,9 @@ export default function App() {
             </div>
           </section>
 
-          <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+          <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
             <h2 style={{ marginTop: 0 }}>Diagnostics and explanation visibility</h2>
-            <p style={{ color: '#475569', lineHeight: 1.6 }}>{surface.feedbackStatusNotice}</p>
+            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{surface.feedbackStatusNotice}</p>
 
             <div style={{ display: 'grid', gap: '0.75rem', marginTop: '1rem' }}>
               {surface.diagnostics.length ? (
@@ -1113,8 +1184,8 @@ export default function App() {
                   <div
                     key={`${diagnostic.classLabel}-${index}`}
                     style={{
-                      backgroundColor: '#f8fafc',
-                      border: '1px solid #cbd5e1',
+                      backgroundColor: 'var(--color-surface)',
+                      border: '1px solid var(--color-border)',
                       borderRadius: 12,
                       padding: '0.9rem 1rem',
                     }}
@@ -1124,26 +1195,26 @@ export default function App() {
                     </p>
                     <p style={{ margin: '0.45rem 0 0' }}>{diagnostic.message}</p>
                     {diagnostic.subjectRef ? (
-                      <p style={{ color: '#475569', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
+                      <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
                         Subject reference: <code>{diagnostic.subjectRef}</code>
                       </p>
                     ) : null}
                     {diagnostic.claimBlocking ? (
-                      <p style={{ color: '#7c2d12', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
+                      <p style={{ color: 'var(--color-warn)', fontSize: '0.875rem', margin: '0.45rem 0 0' }}>
                         This diagnostic blocks at least one claim in the bounded snapshot.
                       </p>
                     ) : null}
                   </div>
                 ))
               ) : (
-                <p style={{ color: '#475569', margin: 0 }}>No diagnostics were returned for the current bounded snapshot.</p>
+                <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>No diagnostics were returned for the current bounded snapshot.</p>
               )}
             </div>
 
             <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', marginTop: '1rem' }}>
               <div>
                 <h3 style={{ marginBottom: '0.5rem' }}>Blocked claims</h3>
-                <p style={{ color: '#475569', fontSize: '0.875rem', lineHeight: 1.5, marginTop: 0 }}>
+                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem', lineHeight: 1.5, marginTop: 0 }}>
                   Runtime-blocked claims stay separate from broad unsupported-scope messaging so testers can tell a bounded workflow failure from an out-of-scope request.
                 </p>
                 {surface.blockedClaims.length ? (
@@ -1153,7 +1224,7 @@ export default function App() {
                     ))}
                   </ul>
                 ) : (
-                  <p style={{ color: '#475569', margin: 0 }}>No blocked claims surfaced in the current bounded snapshot.</p>
+                  <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>No blocked claims surfaced in the current bounded snapshot.</p>
                 )}
               </div>
               <div>
@@ -1173,7 +1244,7 @@ export default function App() {
             </div>
           </section>
 
-          <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+          <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
             <h2 style={{ marginTop: 0 }}>Update and support posture</h2>
             <div style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
               <AppCard label="Tester track" value={surface.status.channel.testerFacingLabel} detail={surface.status.channel.detail} />
@@ -1185,11 +1256,11 @@ export default function App() {
                 detail="Structured status object reused for later evidence capture."
               />
             </div>
-            <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: '0.75rem', marginTop: '1rem' }}>
+            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '0.75rem', marginTop: '1rem' }}>
               {surface.status.support.platformSupportDetail}
             </p>
-            <p style={{ color: '#475569', lineHeight: 1.6, marginBottom: '0.75rem' }}>{surface.status.update.detail}</p>
-            <p style={{ color: '#64748b', lineHeight: 1.6, marginBottom: 0 }}>
+            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '0.75rem' }}>{surface.status.update.detail}</p>
+            <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.6, marginBottom: 0 }}>
               Operator provenance remains {surface.status.channel.operatorPromotionPath}.
             </p>
           </section>
@@ -1198,17 +1269,11 @@ export default function App() {
 
           <BreadthClaimAuditPanel surface={surface} />
 
-          <Sd16UpdateSection />
-
           <FeedbackEvidencePanel surface={surface} />
 
-          <BugReportComposer surface={surface} />
-
-          <EnhancementRequestComposer surface={surface} />
-
-          <section style={{ border: '1px solid #cbd5e1', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+          <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
             <h2 style={{ marginTop: 0 }}>Bounded truth and next surface</h2>
-            <p style={{ color: '#475569', lineHeight: 1.6 }}>{surface.boundedScopeNotice}</p>
+            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{surface.boundedScopeNotice}</p>
             <ul style={{ marginBottom: 0, paddingLeft: '1.2rem' }}>
               {surface.notes.map((note) => (
                 <li key={note} style={{ marginBottom: '0.45rem' }}>{note}</li>
@@ -1217,8 +1282,10 @@ export default function App() {
           </section>
             </>
           ) : null}
-        </>
-      ) : null}
+            </>
+          ),
+        }}
+      />
     </main>
   );
 }
