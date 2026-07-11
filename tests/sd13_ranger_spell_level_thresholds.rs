@@ -192,11 +192,20 @@ fn ranger_level10_stays_claim_blocked_and_fabricates_no_spell_counts() {
         access.detail
     );
 
-    // No third spell-tagged ranger record beyond the grounded pair.
+    // No third spell-tagged ranger record beyond the grounded pair — excluding
+    // the base_spells_per_day family a further SD13-E5 slice grounded
+    // (tests/sd13_ranger_spells_per_day_counts.rs carries its proof), which
+    // this control could not have known about; its original claim (no
+    // fabricated third IDENTITY record) is preserved.
     let spell_tagged: Vec<_> = computation
         .explanations
         .iter()
-        .filter(|e| e.id.starts_with("class_chassis.ranger.partial_caster."))
+        .filter(|e| {
+            e.id.starts_with("class_chassis.ranger.partial_caster.")
+                && !e
+                    .id
+                    .starts_with("class_chassis.ranger.partial_caster.base_spells_per_day.")
+        })
         .collect();
     assert_eq!(
         spell_tagged.len(),
