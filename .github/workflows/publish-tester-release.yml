@@ -517,19 +517,39 @@ jobs:
         shell: bash
         working-directory: apps/desktop
         run: |
-          # Tauri places bundles under src-tauri/target/release/bundle/{msi,nsis}.
-          # Stage them; finalize consumes the platform-windows artifact tree.
+          # Tauri bundles targeting x86_64-pc-windows-msvc land under
+          # `src-tauri/target/<triple>/release/bundle/{msi,nsis}/`, NOT
+          # the cross-platform default `src-tauri/target/release/bundle/...`.
+          # The earlier flat `target/release/bundle/msi` path worked when
+          # `--target` was not passed (default triple = host triple);
+          # once we pass `--target x86_64-pc-windows-msvc` to build the
+          # MSI from neutral rustc on windows-latest runners, the bundle
+          # sub-path picks up the triple directory. Walk the bundle
+          # subtree with `find` so the Stage step works regardless of
+          # whether `--target` is passed.
           mkdir -p ../../release-staging
-          MSI=$(powershell -Command "Get-ChildItem -Path src-tauri/target/release/bundle/msi -Filter *.msi -File | Select-Object -First 1 -ExpandProperty FullName")
-          NSIS=$(powershell -Command "Get-ChildItem -Path src-tauri/target/release/bundle/nsis -Filter *.exe -File | Select-Object -First 1 -ExpandProperty FullName")
-          if [ -z "$MSI" ]; then echo "ERROR: No .msi artifact found."; exit 1; fi
-          if [ -z "$NSIS" ]; then echo "ERROR: No .exe (NSIS) artifact found."; exit 1; fi
-          MSI_NAME=$(basename "$MSI" | tr ' ' '.')
-          NSIS_NAME=$(basename "$NSIS" | tr ' ' '.')
-          cp "$MSI" "../../release-staging/$MSI_NAME"
-          cp "$NSIS" "../../release-staging/$NSIS_NAME"
-          echo "msi_name=$MSI_NAME" >> "$GITHUB_OUTPUT"
-          echo "nsis_name=$NSIS_NAME" >> "$GITHUB_OUTPUT"
+          MSI=$(find src-tauri/target -path '*/release/bundle/msi/*.msi' -type f 2>/dev/null | head -1 || true)
+          NSIS=$(find src-tauri/target -path '*/release/bundle/nsis/*.exe' -type f 2>/dev/null | head -1 || true)
+          # Resolve to absolute Windows paths for the `cp` command
+          # (bash on Windows is fine with mixed / and \\ but the
+          # output goes back to a Linux-style GITHUB_OUTPUT write).
+          MSI=$(cygpath -wa "${MSI}" 2>/dev/null || echo "${MSI}")
+          NSIS=$(cygpath -wa "${NSIS}" 2>/dev/null || echo "${NSIS}")
+          if [ -z "${MSI}" ] || [ ! -f "${MSI}" ]; then
+            echo "ERROR: No .msi artifact found under src-tauri/target/*/release/bundle/msi/"
+            find src-tauri/target -type d -name 'release' 2>/dev/null || true
+            exit 1
+          fi
+          if [ -z "${NSIS}" ] || [ ! -f "${NSIS}" ]; then
+            echo "ERROR: No .exe (NSIS) artifact found under src-tauri/target/*/release/bundle/nsis/"
+            exit 1
+          fi
+          MSI_NAME=$(basename "${MSI}")
+          NSIS_NAME=$(basename "${NSIS}")
+          cp "${MSI}" "../../release-staging/${MSI_NAME}"
+          cp "${NSIS}" "../../release-staging/${NSIS_NAME}"
+          echo "msi_name=${MSI_NAME}" >> "$GITHUB_OUTPUT"
+          echo "nsis_name=${NSIS_NAME}" >> "$GITHUB_OUTPUT"
 
       - name: Upload windows platform artifacts
         uses: actions/upload-artifact@v4
