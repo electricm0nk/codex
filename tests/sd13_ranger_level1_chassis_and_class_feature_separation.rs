@@ -722,10 +722,14 @@ fn matrix_ranger_row_is_promoted_to_partial_and_names_remaining_pillars() {
         note.contains("Track") && (note.contains("grounds") || note.contains("grounded")),
         "ranger partial note must name Track as grounded, not unproven: {note}"
     );
-    // The spell burden is still named as deferred to SD13-E4.
+    // The spell burden was originally deferred to SD13-E4; a further SD13-E5
+    // slice grounded the partial-caster identity pair, and the note now names
+    // the remaining burden as unproven BEYOND that pair.
     assert!(
-        note.contains("SD13-E4"),
-        "ranger partial note must still defer the spell burden to SD13-E4: {note}"
+        note.contains("partial_caster.spell_level_access")
+            && note.contains("unproven BEYOND"),
+        "ranger partial note must name the grounded partial-caster pair and the \
+         still-unproven remainder of the spell burden: {note}"
     );
 }
 

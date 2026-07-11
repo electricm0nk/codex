@@ -550,9 +550,12 @@ fn matrix_ranger_row_does_not_borrow_paladin_separated_burden_note() {
         "lay on hands",
         "divine grace",
         "mercy",
-        "partial-caster",
-        "partial caster",
     ] {
+    // "partial-caster" was removed from this forbidden-token list by the further
+    // SD13-E5 ranger partial-caster slice: the ranger note now legitimately names
+    // the ranger's OWN grounded partial-caster identity pair (the ranger is a
+    // Wisdom-based partial caster with the same level - 3 rule), not borrowed
+    // paladin text; the paladin-specific feature tokens above still may not leak.
         assert!(
             !ranger_note.contains(token),
             "ranger blocked note must not borrow paladin per-feature burden '{token}': {ranger_note}"
