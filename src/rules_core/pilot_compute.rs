@@ -766,6 +766,28 @@ const SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID: &str = "choice:sorcerer_bloodlin
 // spells per day, spell DCs, bonus spells, school choice, or prepared posture) for
 // it.
 const BARD_CLASS_ID: &str = "class:bard";
+
+/// The bard level at which 2nd-level bard spells first become available,
+/// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
+/// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
+/// level 4 shows "3/1/—/…" — the first non-"—" 2nd-level column. Unlike the
+/// Paladin table, the Bard table has NO "0" spells-per-day entries at levels
+/// 1-10; every non-"—" entry is a positive count. 1st-level bard spells are
+/// available from level 1 ("1/—/…"), so the ladder has no zero step and no
+/// 1st-level threshold const is needed.
+const BARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 4;
+/// The bard level at which 3rd-level bard spells first become available,
+/// verified against the raw table rows (both sources): level 6 shows
+/// "4/3/—/…", level 7 shows "4/3/1/—/…" — the first non-"—" 3rd-level column.
+const BARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
+/// The bard level at which 4th-level bard spells first become available,
+/// verified against the raw table rows (both sources): level 9 shows
+/// "5/4/3/—/…", level 10 shows "5/4/3/1/—/—" — the first non-"—" 4th-level
+/// column. The 5th-level column stays "—" through level 10 (5th-level bard
+/// spells begin at 13, outside the tranche ceiling), so no 5th-level
+/// threshold const is grounded.
+const BARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+
 /// SD13-E5 Bard level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
@@ -9841,6 +9863,42 @@ fn explain_bard_level1_spell_baseline(
              support is claimed"
         ),
         claim_blocking: true,
+    });
+
+    // SD13-E5: the spontaneous spell-level ACCESS ladder, mirroring the
+    // Paladin spell_level_access record and the Cleric/Wizard
+    // <CLASS>_<N>TH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL threshold doctrine
+    // exactly ("first non-'—' spells-per-day column", verified against the
+    // raw table rows of both primary sources). This grounds the highest
+    // ACCESSIBLE bard spell level only; the per-day counts themselves are
+    // never computed. Cantrips (0th level, "spells known" only) are outside
+    // the spells-per-day ladder and are not counted.
+    let bard_spell_level_access: i16 =
+        if level >= BARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            4
+        } else if level >= BARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            3
+        } else if level >= BARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            2
+        } else {
+            1
+        };
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.spontaneous.spell_level_access".to_owned(),
+        value: bard_spell_level_access,
+        detail: format!(
+            "Bard spell-level access at bard level {level}: the highest bard spell level \
+             (1st+) with a non-\"—\" spells-per-day column in the PF1 Core Rulebook Bard \
+             class table is {bard_spell_level_access} (verified against the raw table rows of \
+             both primary sources: 1st-level spells from level 1 — the ladder has no zero \
+             step — 2nd-level at {BARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level \
+             at {BARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
+             {BARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}; the 5th-level column stays \
+             \"—\" through level 10). Cantrips are \"spells known\" only and sit outside \
+             the spells-per-day ladder, so they are not counted. This grounds the access \
+             ladder only: no spells-per-day counts, no spells-known posture, no bonus slots \
+             from a high Charisma, and no spell save DCs are computed"
+        ),
     });
 
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden

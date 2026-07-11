@@ -311,6 +311,12 @@ fn bard_level6_gains_no_new_bard_namespaced_explanation_id() {
         WELL_VERSED_ID,
         INSPIRE_COMPETENCE_ID,
         LORE_MASTER_ID,
+        // Added by the further SD13-E5 access-ladder slice
+        // (tests/sd13_bard_spell_level_thresholds.rs): a
+        // spells-per-day-table access record that fires at every supported
+        // level; it is not a "Special"-column class feature, so listing it
+        // keeps this control accurate without weakening its claim.
+        "class_chassis.bard.spontaneous.spell_level_access",
     ];
     assert!(
         computation
