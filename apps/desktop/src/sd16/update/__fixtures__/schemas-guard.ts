@@ -30,21 +30,25 @@ import { loadChannelIndexSchema, loadUpdateManifestSchema } from '../loadSchemas
 interface CanonicalChannelIndexSchemaShape {
   readonly expectedId: string;
   readonly expectedTitle: string;
-  readonly expectedVersionConst: string;
+  // SD16-F-WINDOWS: the array-of-accepted-consts shape is uniform
+  // across both schemas. Channel-index stays at the historical
+  // ['1.0.0']; update-manifest carries ['1.0.0', '1.1.0'] because the
+  // bump was additive-only.
+  readonly expectedVersionConsts: ReadonlyArray<string>;
   readonly requiredTopLevelKeys: ReadonlyArray<string>;
 }
 
 interface CanonicalUpdateManifestSchemaShape {
   readonly expectedId: string;
   readonly expectedTitle: string;
-  readonly expectedVersionConst: string;
+  readonly expectedVersionConsts: ReadonlyArray<string>;
   readonly requiredTopLevelKeys: ReadonlyArray<string>;
 }
 
 const CHANNEL_INDEX_CANON: CanonicalChannelIndexSchemaShape = {
   expectedId: 'https://codex.electricm0nk/schemas/update/channel-index.schema.json',
   expectedTitle: 'Codex Channel Index',
-  expectedVersionConst: '1.0.0',
+  expectedVersionConsts: ['1.0.0'],
   requiredTopLevelKeys: [
     'schema_version',
     'channel',
@@ -60,12 +64,7 @@ const CHANNEL_INDEX_CANON: CanonicalChannelIndexSchemaShape = {
 const UPDATE_MANIFEST_CANON: CanonicalUpdateManifestSchemaShape = {
   expectedId: 'https://codex.electricm0nk/schemas/update/update-manifest.schema.json',
   expectedTitle: 'Codex Update Manifest',
-  // SD16-F-WINDOWS: bumped 1.0.0 -> 1.1.0 alongside
-  // schemas/update/update-manifest.schema.json. The 1.1.0 schema still
-  // admits every v1.0.0 manifest (windows_msi and macos_dmg are
-  // OPTIONAL; linux_appimage remains required). When the schema bumps
-  // again, this constant must move in lockstep.
-  expectedVersionConst: '1.1.0',
+  expectedVersionConsts: ['1.0.0', '1.1.0'],
   requiredTopLevelKeys: [
     'schema_version',
     'channel',
@@ -111,12 +110,43 @@ function assertCanonical(
     );
   }
   const versionProperty = schema.properties?.schema_version;
-  if (!versionProperty || versionProperty.const !== expectation.expectedVersionConst) {
+  if (!versionProperty) {
     throw new Error(
-      `[sd16/update/__fixtures__/schemas-guard] ${label} schema version const mismatch. ` +
-        `Expected const="${expectation.expectedVersionConst}" on properties.schema_version; ` +
-        `got ${JSON.stringify(versionProperty)}. The canonical schema contract has bumped without a guard refresh.`,
+      `[sd16/update/__fixtures__/schemas-guard] ${label} schema is missing properties.schema_version. The canonical contract must declare schema_version with an enum / oneOf / const.`,
     );
+  }
+  // The pin accepts either a single `const` (channel-index shape)
+  // or a `oneOf` array of `const` entries (update-manifest v1.1.0+
+  // additive pattern). Extract the accepted const values uniformly.
+  const acceptedConsts: ReadonlyArray<string> = (() => {
+    if (typeof versionProperty.const === 'string') {
+      return [versionProperty.const];
+    }
+    if (Array.isArray(versionProperty.oneOf)) {
+      const out: string[] = [];
+      for (const e of versionProperty.oneOf) {
+        if (e && typeof e.const === 'string') out.push(e.const);
+      }
+      return out;
+    }
+    return [];
+  })();
+  if (acceptedConsts.length === 0) {
+    throw new Error(
+      `[sd16/update/__fixtures__/schemas-guard] ${label} schema properties.schema_version has neither a ` +
+        `string const nor a oneOf of const entries. Expected: const="..." or oneOf=[{const:"a"}, {const:"b"}].`,
+    );
+  }
+  const expectedConsts = expectation.expectedVersionConsts;
+  for (const expected of expectedConsts) {
+    if (!acceptedConsts.includes(expected)) {
+      throw new Error(
+        `[sd16/update/__fixtures__/schemas-guard] ${label} schema version const mismatch. ` +
+          `Expected const="${expected}" to be accepted by properties.schema_version; ` +
+          `got accepted consts=[${acceptedConsts.map((s) => `"${s}"`).join(',')}] from ${JSON.stringify(versionProperty)}. ` +
+          `The canonical schema contract has bumped without a guard refresh.`,
+      );
+    }
   }
   const required: ReadonlyArray<string> = Array.isArray(schema.required) ? schema.required : [];
   const missing = expectation.requiredTopLevelKeys.filter((k) => !required.includes(k));
