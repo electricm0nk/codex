@@ -34,7 +34,9 @@
       "resources/ge08/guard-stance-package/"
     ],
     "icon": [
-      "icons/icon.png"
+      "icons/icon.png",
+      "icons/icon.ico",
+      "icons/icon.icns"
     ],
     "linux": {
       "deb": {},
