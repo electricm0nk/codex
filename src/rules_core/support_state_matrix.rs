@@ -414,7 +414,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_level6_progression.rs + \
     tests/sd13_sorcerer_level7_progression.rs + \
     tests/sd13_sorcerer_level8_progression.rs + \
-    tests/sd13_sorcerer_level9_progression.rs";
+    tests/sd13_sorcerer_level9_progression.rs + \
+    tests/sd13_sorcerer_level10_progression.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -2598,7 +2599,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Sorcerer level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
-                            level-8/level-9 \
+                            level-8/level-9/level-10 \
                             spell baseline, with base attack bonus, base save progression, Eschew \
                             Materials, the canonical bloodline choice recognition, and the \
                             Arcane bloodline's class-skill choice (a player's choice of any one \
@@ -2760,17 +2761,33 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     bloodline-specific and not flat/identity-shaped, so this slice grounds no \
                     new pillar for level 9 either, mirroring exactly how the level-3, level-5, \
                     and level-7 bloodline entries were left unproven — only the existing \
-                    pillars are widened. The row is \
+                    pillars are widened — AND a further SD13-E5 slice widens the level-range \
+                    gate again (supported_sorcerer_level, 1..=10), reaching the tranche \
+                    ceiling, and extends every one of the formulas above to level 10 via the \
+                    same formula, without re-derivation, verified independently against the \
+                    PF1 Core Rulebook Sorcerer class table (d20pfsrd and legacy.aonprd.com): \
+                    level 10 base attack bonus genuinely rises to +5 (10 / 2) and good Will \
+                    genuinely rises to +7 (10 / 2 + 2), while poor Fortitude and poor Reflex \
+                    both stay +3 (10 / 3, integer-division coincidences); the bloodline choice \
+                    and bloodline class-skill choice recognitions are not level-gated, so both \
+                    still fire at level 10 for the same fixture selections; the level-10 \
+                    \"Special\" column is genuinely blank (verified independently against \
+                    both primary sources, checked rather than assumed away) — like levels 2, \
+                    4, 6, and 8 — so no new class feature is gained at 10th level; the first \
+                    5th-level spell slots arrive at 10th per the class table but belong to the \
+                    spontaneous spell burden that stays named-but-unproven, so this slice \
+                    grounds no new pillar for level 10 either — only the existing pillars are \
+                    widened. The row is \
                     Partial, not Supported: the Arcane Bond / bloodline progression burden (Arcane \
                     Bond execution, the conditional bloodline arcana, the 3rd-level bloodline \
                     power, the 3rd-, 5th-, and 7th-level bloodline spells, the 7th-level bloodline \
                     feat, and further bonus spells/feats at higher levels) remains named and \
                     unproven, and the spontaneous spell burden (spontaneous spells known, spell \
                     slots per day, bonus spell slots, spell save DCs) is entirely unproven. No \
-                    spell math is fabricated and no Sorcerer level 10+ is proven",
+                    spell math is fabricated and no Sorcerer level 11+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-10+ progression (widening the now-grounded base attack/base save \
+                    level-11+ progression (widening the now-grounded base attack/base save \
                     formulas)",
             },
             SupportStateRow {

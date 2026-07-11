@@ -639,9 +639,19 @@ const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
 // bloodline-class-skill-choice pillars to level 9 via the same formulas,
 // without re-derivation (poor Fortitude/Reflex both genuinely rise to +3 at
 // level 9 while base attack and good Will stay put, integer-division
-// coincidences).
+// coincidences). A further SD13-E5 slice widens the gate again to level 10 —
+// the tranche ceiling: the PF1 Core Rulebook Sorcerer class table's level-10
+// "Special" column is blank (verified independently against d20pfsrd and
+// legacy.aonprd.com, checked rather than assumed away) — like levels 2, 4,
+// 6, and 8, and UNLIKE the level-9 "Bloodline power, bloodline spell" row —
+// so no new class feature is gained at 10th level; the first 5th-level spell
+// slots arrive at 10th but belong to the spontaneous spell burden that stays
+// named-but-unproven; this widening extends only the already-grounded
+// pillars to level 10 via the same formulas (base attack genuinely rises to
+// +5 and good Will genuinely rises to +7, while poor Fortitude/Reflex stay
+// +3, integer-division coincidences).
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 9;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 10;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -5276,8 +5286,8 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.
 /// Returns the single Sorcerer level when the chosen input is exactly a single-class
-/// Sorcerer at one of the supported milestone levels (1 through 9). Returns `None` for
-/// no Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-10+ Sorcerer this
+/// Sorcerer at one of the supported milestone levels (1 through 10). Returns `None` for
+/// no Sorcerer, a non-Sorcerer class, a multiclass mix, or any level-11+ Sorcerer this
 /// slice deliberately does not recognize — each of which stays claim-blocked exactly
 /// as before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
