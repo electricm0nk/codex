@@ -38,15 +38,6 @@ jobs:
         working-directory: apps/desktop
         run: npm ci
 
-      # SD16-F-WINDOWS: regenerate the platform icon set from the source
-      # icon.png so Windows (.ico) and macOS (.icns) bundlers both have a
-      # valid resource. Tauri 2's build script refuses to compile a
-      # Windows bundle without `icons/icon.ico`. The Tauri CLI handles
-      # the format conversion via `tauri icon`.
-      - name: Generate platform icons
-        working-directory: apps/desktop
-        run: npx tauri icon src-tauri/icons/icon.png
-
       # SD16: derive a monotonically increasing build version so every
       # release is distinguishable by version, not only by its SHA suffix.
       # The repo keeps "0.0.0" as the committed placeholder; the publish
@@ -93,7 +84,6 @@ jobs:
           path: |
             apps/desktop/package.json
             apps/desktop/src-tauri/tauri.conf.json
-            apps/desktop/src-tauri/icons/
           if-no-files-found: error
 
   test:
