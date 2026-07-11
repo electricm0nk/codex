@@ -487,8 +487,10 @@ const RANGER_ENDURANCE_LEVEL: u8 = 3;
 /// magnitude, grounded as a standalone, non-applied record -- no
 /// terrain-detection engine decides whether the character is actually in the
 /// chosen terrain, and the +2 is never wired into any actual Initiative total or
-/// skill-check total. The level-8th/13th/18th additional-terrain and
-/// bonus-increase progression stays out of scope for this bounded slice.
+/// skill-check total. The 8th-level additional-terrain and bonus-increase
+/// interval is grounded by a later SD13-E5 slice (see
+/// `RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL`); the 13th/18th intervals
+/// stay out of scope.
 const RANGER_FAVORED_TERRAIN_LEVEL: u8 = 3;
 
 /// SD13-E5 Ranger Favored Terrain choice-slot id. The deterministic fixture names
@@ -498,6 +500,33 @@ const RANGER_FAVORED_TERRAIN_LEVEL: u8 = 3;
 /// idiom exactly -- no enum validation against the Table: Ranger Favored Terrains
 /// list is performed here.
 const RANGER_FAVORED_TERRAIN_CHOICE_ID: &str = "choice:ranger_favored_terrain";
+
+/// PF1 Core Rulebook level gate at which Ranger gains an additional favored
+/// terrain (verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both state "At 8th level and every five levels
+/// thereafter, the ranger may select an additional favored terrain. In
+/// addition, at each such interval, the skill bonus and initiative bonus in
+/// any one favored terrain (including the one just selected, if so desired),
+/// increases by +2." — the exact structural mirror of the Favored Enemy
+/// 5th-level interval already grounded on this seam). Only the 8th-level
+/// interval is grounded here; the 13th/18th intervals stay out of scope.
+const RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL: u8 = 8;
+
+/// SD13-E5 Ranger SECOND Favored Terrain choice-slot id, mirroring
+/// `choice:ranger_favored_enemy_2`'s open-ended (non-restricted-list)
+/// recognition idiom exactly — no enum validation against Table: Ranger
+/// Favored Terrains is performed here.
+const RANGER_FAVORED_TERRAIN_SECOND_CHOICE_ID: &str = "choice:ranger_favored_terrain_2";
+
+/// SD13-E5 Ranger Favored Terrain bonus-increase TARGET choice-slot id,
+/// mirroring `choice:ranger_favored_enemy_bonus_increase_target`'s
+/// restricted-pair idiom exactly: only `terrain:first` / `terrain:second`
+/// are recognized; any other selection is surfaced without grounding a
+/// target identity and no boost is fabricated from it.
+const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_terrain_bonus_increase_target";
+const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION: &str = "terrain:first";
+const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION: &str = "terrain:second";
 
 /// PF1 Core Rulebook level gate at which Ranger gains Hunter's Bond (4th level,
 /// verified independently against two primary sources: d20pfsrd and
@@ -5081,7 +5110,64 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             });
         }
 
-        let favored_terrain_bonus: i16 = 2;
+        // SD13-E5 ranger level 8: recognize the bonus-increase TARGET choice,
+        // only meaningful once the ranger has reached the Favored Terrain
+        // rule's 8th-level interval. Mirrors the Favored Enemy 5th-level
+        // bonus-increase-target idiom exactly: a genuine, free player choice
+        // of which ONE favored terrain is boosted by +2, not an automatic
+        // bump to the first one. Absent an explicit target selection in
+        // chosen input, nothing is fabricated: both terrains stay at the
+        // flat base magnitude.
+        let favored_terrain_bonus_increase_target =
+            if level >= RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL {
+                choice_selection(input, RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID)
+            } else {
+                None
+            };
+
+        if let Some(target) = favored_terrain_bonus_increase_target {
+            let target_name = if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION {
+                Some("the first favored terrain")
+            } else if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION {
+                Some("the second favored terrain")
+            } else {
+                None
+            };
+            let detail = if let Some(name) = target_name {
+                format!(
+                    "Ranger Favored Terrain bonus-increase target selection at ranger level \
+                     {level} ({RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID} -> {target}): \
+                     names {name} as the one favored terrain whose skill and initiative bonus \
+                     increases by +2 at this 8th-level interval, per the PF1 Core Rulebook rule \
+                     that the bonus in any ONE favored terrain -- including a newly selected \
+                     one, if so desired -- increases by +2 at each such interval (8th, 13th, \
+                     and 18th ranger level). This is a recognition record of the choice slot \
+                     only (+0); the increased magnitude itself is grounded separately on \
+                     whichever favored terrain was actually named"
+                )
+            } else {
+                format!(
+                    "Ranger Favored Terrain bonus-increase target selection at ranger level \
+                     {level} is present ({RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID} -> \
+                     {target}), but only the PF1 Core Rulebook restricted pair (the first \
+                     favored terrain, the second favored terrain) is recognized on this bounded \
+                     seam; no target identity is grounded and no mechanical value is fabricated \
+                     (+0)"
+                )
+            };
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_bonus_increase_choice".to_owned(),
+                value: 0,
+                detail,
+            });
+        }
+
+        let first_favored_terrain_targeted = favored_terrain_bonus_increase_target
+            == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION);
+        let second_favored_terrain_targeted = favored_terrain_bonus_increase_target
+            == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION);
+
+        let favored_terrain_bonus: i16 = if first_favored_terrain_targeted { 4 } else { 2 };
         explanations.push(ComputationExplanation {
             id: "class_feature.ranger.favored_terrain".to_owned(),
             value: favored_terrain_bonus,
@@ -5098,6 +5184,50 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  skill-check total is modified by this record"
             ),
         });
+
+        // SD13-E5 ranger level 8: recognize the SECOND favored-terrain
+        // selection, the rule's 8th-level interval grant. Mirrors the second
+        // Favored Enemy's own choice-recognition idiom exactly (open-ended,
+        // raw string interpolation, no restricted-list validation) and its
+        // own flat magnitude formula (base +2, or +4 if this interval's
+        // bonus-increase target names the second favored terrain).
+        if level >= RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL
+            && let Some(second_favored_terrain) =
+                choice_selection(input, RANGER_FAVORED_TERRAIN_SECOND_CHOICE_ID)
+        {
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_2_choice".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Ranger 2nd Favored Terrain selection \
+                     ({RANGER_FAVORED_TERRAIN_SECOND_CHOICE_ID} -> {second_favored_terrain}): \
+                     at ranger level {level}, PF1 Core Rulebook Favored Terrain grants \"an \
+                     additional favored terrain\" at the 8th-level interval. The \
+                     level-{level} SECOND favored-terrain type chosen for this character is \
+                     {second_favored_terrain}. This is a bounded recognition record of the \
+                     chosen terrain type only; the flat bonus magnitude is grounded \
+                     separately, and no terrain-detection or conditional-application engine \
+                     is implemented, so it carries no fabricated mechanical value (+0)"
+                ),
+            });
+
+            let second_favored_terrain_bonus: i16 =
+                if second_favored_terrain_targeted { 4 } else { 2 };
+            explanations.push(ComputationExplanation {
+                id: "class_feature.ranger.favored_terrain_2".to_owned(),
+                value: second_favored_terrain_bonus,
+                detail: format!(
+                    "Ranger 2nd Favored Terrain bonus (PF1 Core Rulebook, 8th-level \
+                     interval): a flat +{second_favored_terrain_bonus} bonus on Initiative \
+                     checks and Knowledge (geography), Perception, Stealth, and Survival \
+                     checks made when the ranger is in this second chosen favored terrain. \
+                     This is a bounded flat-magnitude record only, non-fabricated: no \
+                     terrain-detection engine decides whether the character is actually in \
+                     the chosen terrain anywhere in this codebase, so no Initiative total or \
+                     skill-check total is modified by this record"
+                ),
+            });
+        }
     }
 
     // Grounded (SD13-E5): Hunter's Bond, the class table's 4th-level "Special"
