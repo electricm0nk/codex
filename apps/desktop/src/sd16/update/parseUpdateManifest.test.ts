@@ -17,7 +17,7 @@ import { assert, assertEqual } from '../../testSupport/asserts';
 import { parseUpdateManifest } from './parseUpdateManifest';
 
 const UPDATE_MANIFEST_JSON = `{
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "channel": "alpha",
   "version": "0.0.0-alpha.20260704.1",
   "tag": "alpha/0.0.0-alpha.20260704.1",
@@ -56,7 +56,7 @@ const MISSING_SIGNATURE_ALLOWED_JSON = UPDATE_MANIFEST_JSON.replace(
   '\n  }\n}',
 );
 const BAD_PATH_JSON = `{
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "channel": "alpha",
   "version": "0.0.0-alpha.20260704.1",
   "tag": "alpha/0.0.0-alpha.20260704.1",

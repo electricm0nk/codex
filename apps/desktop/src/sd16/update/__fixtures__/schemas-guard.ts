@@ -60,7 +60,12 @@ const CHANNEL_INDEX_CANON: CanonicalChannelIndexSchemaShape = {
 const UPDATE_MANIFEST_CANON: CanonicalUpdateManifestSchemaShape = {
   expectedId: 'https://codex.electricm0nk/schemas/update/update-manifest.schema.json',
   expectedTitle: 'Codex Update Manifest',
-  expectedVersionConst: '1.0.0',
+  // SD16-F-WINDOWS: bumped 1.0.0 -> 1.1.0 alongside
+  // schemas/update/update-manifest.schema.json. The 1.1.0 schema still
+  // admits every v1.0.0 manifest (windows_msi and macos_dmg are
+  // OPTIONAL; linux_appimage remains required). When the schema bumps
+  // again, this constant must move in lockstep.
+  expectedVersionConst: '1.1.0',
   requiredTopLevelKeys: [
     'schema_version',
     'channel',
