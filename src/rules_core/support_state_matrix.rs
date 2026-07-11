@@ -357,7 +357,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_level6_progression.rs + \
     tests/sd13_paladin_level7_progression.rs + \
     tests/sd13_paladin_level8_progression.rs + \
-    tests/sd13_paladin_level9_progression.rs";
+    tests/sd13_paladin_level9_progression.rs + \
+    tests/sd13_paladin_level10_progression.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -2174,29 +2175,33 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Paladin level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
-                            level-8/level-9 \
+                            level-8/level-9/level-10 \
                             chassis baseline, with smite evil's uses-per-day / attack-bonus / \
                             damage-bonus formula grounded at every level (uses-per-day \
                             genuinely increasing to 2/day at level 4, staying 2/day through \
-                            level 6, genuinely increasing to 3/day at level 7, and staying \
-                            3/day through level 9), lay on \
-                            hands and divine grace grounded for real at levels 2-9 (correct PF1 \
+                            level 6, genuinely increasing to 3/day at level 7, staying \
+                            3/day through level 9, and genuinely increasing to 4/day at \
+                            level 10), lay on \
+                            hands and divine grace grounded for real at levels 2-10 (correct PF1 \
                             CRB level-gate absence at level 1, lay on hands genuinely \
                             increasing again at level 6, staying numerically unchanged at \
-                            level 7, genuinely increasing on both axes at level 8, and staying \
-                            numerically unchanged at level 9), mercy \
+                            level 7, genuinely increasing on both axes at level 8, staying \
+                            numerically unchanged at level 9, and genuinely increasing on \
+                            both axes again at level 10), mercy \
                             grounded as a correct PF1 CRB level-gate absence at \
-                            levels 1-2 and a granted choice-recognition record at levels 3-9, \
+                            levels 1-2 and a granted choice-recognition record at levels 3-10, \
                             channel positive energy grounded as a correct PF1 CRB level-gate \
-                            absence at levels 1-3 and a flat die-count magnitude at levels 4-9 \
+                            absence at levels 1-3 and a flat die-count magnitude at levels 4-10 \
                             (genuinely increasing from 2d6 to 3d6 at level 5, staying 3d6 at \
                             level 6, genuinely increasing to 4d6 at level 7, staying 4d6 \
-                            at level 8, and genuinely increasing to 5d6 at level 9), the \
+                            at level 8, genuinely increasing to 5d6 at level 9, and staying 5d6 \
+                            at level 10), the \
                             partial-caster effective-caster-level gate grounded as a correct \
                             zero absence at levels 1-3, a genuine value of 1 at level 4, a \
                             genuine value of 2 at level 5, a genuine value of 3 at level 6, a \
                             genuine value of 4 at level 7, a genuine value of 5 at level \
-                            8, and a genuine value of 6 at level 9, and the hybrid chassis pair plus \
+                            8, a genuine value of 6 at level 9, and a genuine value of 7 at \
+                            level 10, and the hybrid chassis pair plus \
                             the spells-known/spells-per-day/spell-DC spell burden still named \
                             and unproven",
                 support_state: SupportState::Partial,
@@ -2344,9 +2349,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     grant before it, recognizing a second mercy selection needs the \
                     mercy-list-growth mechanism this codebase has never grounded, so the \
                     9th-level repeat grant stays deliberately named-but-unproven and the \
-                    single grounded level-3 selection carries over unchanged. The row is Partial, not \
+                    single grounded level-3 selection carries over unchanged — AND a further \
+                    SD13-E5 slice widens the level-range gate again (supported_paladin_level, \
+                    1..=10), closing the level-10 band across every level-banded class row at \
+                    the tranche ceiling, and extends every one of the formulas above to level \
+                    10 via the same formula, without re-derivation, verified independently \
+                    against the PF1 Core Rulebook Paladin class table (d20pfsrd and \
+                    legacy.aonprd.com): level 10 base attack genuinely rises to +10 (full \
+                    BAB; the table's own \"+10/+5\" iterative notation is not modeled \
+                    anywhere in this codebase, only the flat base value) and both good saves \
+                    genuinely rise to +7 (10 / 2 + 2) while poor Reflex stays +3 (10 / 3, an \
+                    integer-division coincidence); the level-10 \"Special\" column reads \
+                    \"Smite evil 4/day\" only (verified independently against both primary \
+                    sources, checked rather than assumed away) — Smite Evil's uses per day \
+                    GENUINELY RISE to 4 via the already-grounded threshold formula (1 + (10 - \
+                    1) / 3 = 4) with its damage bonus rising to 10 (= paladin level), so the \
+                    entire level-10 \"Special\" column is captured by grounded arithmetic \
+                    and nothing new is left unproven by this slice; Lay on Hands genuinely \
+                    rises on both axes (uses 7, heal dice 5); the effective caster level \
+                    genuinely rises to 7 (10 - 3); Channel Positive Energy's die count stays \
+                    5 (the effective-cleric dice rise at odd levels, so the next rise lands \
+                    at 11th, a threshold stasis checked rather than assumed); 10th is NOT a \
+                    repeat-Mercy-grant level (the 3rd/6th/9th cadence), so the single \
+                    grounded level-3 selection carries over unchanged. The row is Partial, not \
                     Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
-                    claim-blocking as accepted hybrid truth, no Paladin level 10+ is proven, \
+                    claim-blocking as accepted hybrid truth, no Paladin level 11+ is proven, \
                     Divine Bond stays named-but-unproven, the level-6 and level-9 repeat \
                     mercy selections \
                     stay named-but-unproven, and the partial-caster spell burden itself \
@@ -2359,7 +2386,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 next_required_uplift: "ground the paladin spells-known/spells-per-day/spell-DC \
                     burden content now that the effective-caster-level gate is grounded and \
                     nonzero (spells begin at paladin level 4, caster level = paladin level - 3, \
-                    now 6 at level 9), then paladin level-10+ progression",
+                    now 7 at level 10), then paladin level-11+ progression",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
