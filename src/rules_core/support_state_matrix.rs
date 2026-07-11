@@ -383,7 +383,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_level10_progression.rs + \
     tests/sd13_ranger_second_favored_terrain.rs + \
     tests/sd13_ranger_third_favored_enemy.rs + \
-    tests/sd13_ranger_spell_level_thresholds.rs";
+    tests/sd13_ranger_spell_level_thresholds.rs + \
+    tests/sd13_ranger_spells_per_day_counts.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -2742,14 +2743,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Charisma), 2 at 7-9 (level 7 shows \"1/0/—/—\"), and 3 at level 10 \
                     (level 10 shows \"2/1/0/—\"); 4th-level ranger spells begin at 13, \
                     outside the tranche ceiling, so no 4th-level threshold is grounded; both \
-                    records ground gate arithmetic and ACCESS only, no per-day counts / \
-                    prepared posture / bonus slots / DCs, and no new claim-blocking \
-                    diagnostic is added — the spell burden stays named by the accepted F6 \
-                    level-1 hybrid spell blocker and this note)",
-                next_required_uplift: "ground the ranger spells-per-day slot counts and \
-                    prepared-posture burden now that the effective-caster-level gate and the \
-                    spell-level access ladder (1st at 4, 2nd at 7, 3rd at 10) are both \
-                    grounded, then Ranger \
+                    records ground gate arithmetic and ACCESS only, and no new \
+                    claim-blocking diagnostic is added — the spell burden stays named by the \
+                    accepted F6 level-1 hybrid spell blocker and this note — AND a further \
+                    SD13-E5 slice grounds the BASE spells-per-day counts on top of the pair \
+                    (class_chassis.ranger.partial_caster.base_spells_per_day.spell_level_1/\
+                    2/3), one record per ACCESSIBLE spell level, as a literal table lookup \
+                    mirroring the Paladin per-day slice and the Cleric domain-slot-count \
+                    precedent, verified against the raw rows of both primary sources \
+                    (numerically identical to the Paladin's: \"0/—/—/—\" at 4 through \
+                    \"2/1/0/—\" at 10) — a \"0\" is a genuine table entry \
+                    (Wisdom-bonus-spells-only access), not an absence, inaccessible \"—\" \
+                    spell levels get no record, and only the base counts are grounded: \
+                    Wisdom bonus spells, prepared posture, spell-source lineage, and spell \
+                    save DCs stay unproven)",
+                next_required_uplift: "ground the ranger spell-DC arithmetic (10 + spell \
+                    level + Wisdom modifier) and the Wisdom bonus-spells and prepared-posture \
+                    burdens now that the caster-level gate, the access ladder, and the base \
+                    per-day counts are all grounded, then Ranger \
                     level-11+ progression, a favored-enemy conditional-application engine, \
                     execution of either recognized combat-style bonus feat's own mechanics, \
                     Hunter's Bond ally-bonus application and the animal-companion stat \
