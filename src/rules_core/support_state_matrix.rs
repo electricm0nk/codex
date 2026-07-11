@@ -659,7 +659,8 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs 
     tests/sd13_druid_level2_progression.rs + tests/sd13_druid_level3_progression.rs + \
     tests/sd13_druid_level4_progression.rs + tests/sd13_druid_level5_progression.rs + \
     tests/sd13_druid_level6_progression.rs + tests/sd13_druid_level7_progression.rs + \
-    tests/sd13_druid_level8_progression.rs + tests/sd13_druid_level9_progression.rs";
+    tests/sd13_druid_level8_progression.rs + tests/sd13_druid_level9_progression.rs + \
+    tests/sd13_druid_level10_progression.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -1783,7 +1784,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
                             level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9 \
+                            level-9/level-10 \
                             prepared divine \
                             spell baseline, with base attack bonus, base save progression, Wild \
                             Empathy, Nature Sense, the nature-bond choice recognition, (at level \
@@ -1938,7 +1939,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     only (class_feature.druid.venom_immunity), mirroring Monk's Purity of Body \
                     precedent exactly — no poison-application or condition-resolution engine \
                     exists in this codebase, so no immunity effect is fabricated from the \
-                    record. The row is Partial, not Supported: the animal companion execution \
+                    record — AND a further SD13-E5 slice widens the level-range gate again \
+                    (supported_druid_level, 1..=10), reaching the tranche ceiling, and extends \
+                    every one of the formulas above to level 10 via the same formula, without \
+                    re-derivation, verified independently against the PF1 Core Rulebook Druid \
+                    class table (d20pfsrd and legacy.aonprd.com): level 10 base attack \
+                    genuinely rises to +7 (10 * 3 / 4; the table's own \"+7/+2\" iterative \
+                    notation is not modeled anywhere in this codebase, only the flat base \
+                    value) and both good saves genuinely rise to +7 (10 / 2 + 2), while poor \
+                    Reflex stays +3 (10 / 3, an integer-division coincidence); Wild Empathy \
+                    genuinely rises to 11 (10 + Charisma modifier 1); Nature Sense, Woodland \
+                    Stride, Trackless Step, Resist Nature's Lure, Venom Immunity, and the \
+                    nature-bond choice recognition all carry over unchanged; the level-10 \
+                    \"Special\" column reads \"Wild shape (4/day)\" (verified independently \
+                    against both primary sources, checked rather than assumed away) — per the \
+                    level-4/6/8 precedent the rule text bundles that frequency increase with a \
+                    form-list expansion (a Large elemental or a Large plant creature) and \
+                    functioning-level upgrades (elemental body III / plant shape II), none of \
+                    which are separable from the \"4/day\" numeral without misrepresenting \
+                    the bundled feature as flat, so Wild Shape stays entirely \
+                    named-but-unproven and no new pillar is grounded at level 10 either — only \
+                    the existing pillars are widened. The row is Partial, not Supported: the animal companion execution \
                     burden (the companion's stat block, its advancement, and its link / share \
                     spells abilities) remains named and unproven, the Wild Shape execution burden \
                     (new form, new stat block, duration tracking, frequency, and the level-6 \
@@ -1946,7 +1967,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     posture burden (spells prepared from the full Druid list, spontaneous summon \
                     nature's ally conversion, spell slots per day, bonus spells from a high Wisdom, \
                     spell save DCs) is still entirely unproven. No spell math is fabricated and no \
-                    Druid level 10+ is proven",
+                    Druid level 11+ is proven",
                 next_required_uplift: "SD13-E5 Druid animal companion execution slice, the Wild \
                     Shape execution slice, or the prepared divine spell burden slice, then Druid \
                     level 8+ progression (out of scope for this slice)",

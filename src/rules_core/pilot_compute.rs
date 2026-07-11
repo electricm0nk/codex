@@ -1611,8 +1611,20 @@ const DRUID_CLASS_ID: &str = "class:druid";
 // grant (immunity to all poisons), grounded as a +0 identity/recognition
 // record only (DRUID_VENOM_IMMUNITY_LEVEL), mirroring Monk's Purity of Body
 // precedent exactly; no poison/condition engine exists here, so no immunity
-// effect is fabricated.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 9;
+// effect is fabricated. A further SD13-E5 slice widens the gate to level 10 —
+// the tranche ceiling (verified independently against d20pfsrd and
+// legacy.aonprd.com): level 10 base attack genuinely rises to +7
+// (10 * 3 / 4) and both good saves genuinely rise to +7 (10 / 2 + 2), while
+// poor Reflex stays +3 (10 / 3, a coincidence); Wild Empathy genuinely rises
+// to 11 (10 + Charisma modifier 1); Nature Sense, the granted features, and
+// Venom Immunity all carry over unchanged; the level-10 "Special" column
+// reads "Wild shape (4/day)" — checked rather than assumed away, and
+// confirmed the same non-separable frequency-plus-form-expansion bundle as
+// at levels 6/8 (a Large elemental or Large plant, functioning as elemental
+// body III / plant shape II), so Wild Shape stays entirely
+// named-but-unproven, exactly as at level 4/6/8 — no explanation or
+// diagnostic record is fabricated for it this slice either.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 10;
 /// PF1 Core Rulebook level gate at which Druid gains Venom Immunity (9th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Venom immunity" as the Druid 9th-level
@@ -8462,8 +8474,8 @@ fn explain_cleric_level1_spell_baseline(
 
 /// The bounded Druid milestone level this decomposition surface grounds, if any.
 /// Returns the single Druid level when the chosen input is exactly a single-class
-/// Druid at one of the supported milestone levels (1 through 9). Returns `None` for no
-/// Druid, a non-Druid class, a multiclass mix, or any level-10+ Druid this slice
+/// Druid at one of the supported milestone levels (1 through 10). Returns `None` for no
+/// Druid, a non-Druid class, a multiclass mix, or any level-11+ Druid this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
