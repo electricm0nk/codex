@@ -7,7 +7,7 @@ import { LandingScreen, type RuleSetId } from './LandingScreen';
 import { LoadCharacterScreen } from './LoadCharacterScreen';
 import { CharacterSheet } from './CharacterSheet';
 
-export function CharacterHubPage() {
+export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' | 'enhancement') => void }) {
   const [mode, setMode] = useState<'landing' | 'load' | 'create' | 'sheet'>('landing');
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
   const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
@@ -42,7 +42,7 @@ export function CharacterHubPage() {
   }
 
   if (mode === 'sheet' && sheet) {
-    return <CharacterSheet row={sheet.row} detail={sheet.detail} onClose={() => setMode('load')} />;
+    return <CharacterSheet row={sheet.row} detail={sheet.detail} onClose={() => setMode('load')} onOpenTool={props.onOpenTool} />;
   }
 
   if (mode === 'load') {

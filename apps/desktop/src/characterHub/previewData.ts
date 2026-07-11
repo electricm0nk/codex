@@ -10,6 +10,10 @@ import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterD
 
 export const PREVIEW_CHARACTER_ID = 'preview:aldric-ironhand';
 
+// Aldric is a Fighter 3 / Wizard 1 multiclass so the sheet exercises both the
+// per-class level rail and the multiclass "Next" options.
+const PREVIEW_CLASS_SUMMARY = 'class:fighter:3/class:wizard:1';
+
 export function buildPreviewListSurface(): CharacterHubListSurface {
   return {
     rows: [
@@ -18,8 +22,9 @@ export function buildPreviewListSurface(): CharacterHubListSurface {
         displayLabel: 'Aldric Ironhand',
         gameSystemLabel: 'Pathfinder 1st Edition',
         raceLabel: 'Human',
-        classSummary: 'class:fighter:1',
+        classSummary: PREVIEW_CLASS_SUMMARY,
         savedAtLabel: 'Preview',
+        campaign: 'The Trouble with Trolls',
       },
     ],
     isEmpty: false,
@@ -37,16 +42,17 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
       schemaVersion: 1,
       savedAt: 'preview',
       raceId: 'race:human',
-      classSummary: 'class:fighter:1',
+      classSummary: PREVIEW_CLASS_SUMMARY,
     },
     snapshot: {
-      abilityModifiers: { strength: 3, dexterity: 1, constitution: 2, intelligence: 0, wisdom: 1, charisma: -1 },
-      baseAttackBonus: 1,
-      baseSaves: { fortitude: 2, reflex: 0, will: 0 },
-      baselineMeleeAttackBonus: 4,
+      // Fighter 3 / Wizard 1: BAB +3, Fighter good Fort + Wizard good Will.
+      abilityModifiers: { strength: 3, dexterity: 1, constitution: 2, intelligence: 2, wisdom: 1, charisma: -1 },
+      baseAttackBonus: 3,
+      baseSaves: { fortitude: 3, reflex: 1, will: 3 },
+      baselineMeleeAttackBonus: 6,
       baselineArmorClass: 14,
-      totalSaves: { fortitude: 4, reflex: 1, will: 1 },
-      selectedSkillModifiers: { climb: 4, intimidate: 3, swim: 4 },
+      totalSaves: { fortitude: 5, reflex: 2, will: 4 },
+      selectedSkillModifiers: { climb: 6, intimidate: 3, swim: 6 },
     },
     diagnostics: [],
   };

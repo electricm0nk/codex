@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import desktopPackage from '../package.json';
 import {
   loadSd11TesterWorkbenchSurfaceRuntime,
@@ -1006,10 +1006,51 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
   );
 }
 
+export type SheetTool = 'update' | 'bug' | 'enhancement';
+
+const SHEET_TOOL_TITLES: Record<SheetTool, string> = {
+  update: 'Update',
+  bug: 'Bug Report',
+  enhancement: 'Enhancement Request',
+};
+
+/** Centered modal hosting a single Menu tool (Update / Bug Report / Enhancement). */
+function ToolModal(props: { title: string; onClose: () => void; children: ReactNode }) {
+  return (
+    <div
+      role="presentation"
+      onClick={props.onClose}
+      style={{ alignItems: 'flex-start', backgroundColor: 'rgba(0, 0, 0, 0.55)', display: 'flex', inset: 0, justifyContent: 'center', overflowY: 'auto', padding: '3rem 1.5rem', position: 'fixed', zIndex: 1000 }}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={props.title}
+        onClick={(event) => event.stopPropagation()}
+        style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12, boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)', maxWidth: 900, width: '100%' }}
+      >
+        <header style={{ alignItems: 'center', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', padding: '1rem 1.5rem' }}>
+          <h2 style={{ fontSize: '1.1rem', margin: 0 }}>{props.title}</h2>
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={props.onClose}
+            style={{ background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '1.4rem', lineHeight: 1, padding: '0.15rem 0.35rem' }}
+          >
+            ×
+          </button>
+        </header>
+        <div style={{ padding: '1.25rem 1.5rem' }}>{props.children}</div>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState<SettingsTab>('appearance');
   const [themeMode, setThemeMode] = useState<ThemeMode>(getStoredThemeMode);
+  const [activeTool, setActiveTool] = useState<SheetTool | null>(null);
   const [surface, setSurface] = useState<Sd11TesterWorkbenchSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -1030,31 +1071,54 @@ export default function App() {
 
   return (
     <main style={{ fontFamily: 'Inter, system-ui, sans-serif', margin: '0 auto', maxWidth: 1100, padding: '3rem 1.5rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1.5rem' }}>
-        <button
-          type="button"
-          aria-label="Open settings"
-          title="Settings"
-          onClick={() => setSettingsOpen(true)}
-          style={{
-            alignItems: 'center',
-            background: 'none',
-            border: '1px solid var(--color-border)',
-            borderRadius: 8,
-            color: 'var(--color-text-secondary)',
-            cursor: 'pointer',
-            display: 'flex',
-            fontSize: '1.25rem',
-            height: 40,
-            justifyContent: 'center',
-            width: 40,
-          }}
-        >
-          ⚙
-        </button>
-      </header>
+      {/* Settings gear — fixed to the viewport top-right on every screen. */}
+      <button
+        type="button"
+        aria-label="Open settings"
+        title="Settings"
+        onClick={() => setSettingsOpen(true)}
+        style={{
+          alignItems: 'center',
+          background: 'var(--color-surface)',
+          border: '1px solid var(--color-border)',
+          borderRadius: 8,
+          color: 'var(--color-text-secondary)',
+          cursor: 'pointer',
+          display: 'flex',
+          fontSize: '1.2rem',
+          height: 38,
+          justifyContent: 'center',
+          position: 'fixed',
+          right: 14,
+          top: 8,
+          width: 38,
+          zIndex: 950,
+        }}
+      >
+        ⚙
+      </button>
 
-      <CharacterHubPage />
+      <CharacterHubPage onOpenTool={setActiveTool} />
+
+      {activeTool ? (
+        <ToolModal title={SHEET_TOOL_TITLES[activeTool]} onClose={() => setActiveTool(null)}>
+          {activeTool === 'update' ? <Sd16UpdateSection /> : null}
+          {activeTool === 'bug' ? (
+            surface ? (
+              <BugReportComposer surface={surface} />
+            ) : (
+              <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Workbench data is unavailable, so a bug report cannot be composed right now.</p>
+            )
+          ) : null}
+          {activeTool === 'enhancement' ? (
+            surface ? (
+              <EnhancementRequestComposer surface={surface} />
+            ) : (
+              <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Workbench data is unavailable, so an enhancement request cannot be composed right now.</p>
+            )
+          ) : null}
+        </ToolModal>
+      ) : null}
 
       <SettingsModal
         open={settingsOpen}
@@ -1205,13 +1269,7 @@ export default function App() {
 
           <BreadthClaimAuditPanel surface={surface} />
 
-          <Sd16UpdateSection />
-
           <FeedbackEvidencePanel surface={surface} />
-
-          <BugReportComposer surface={surface} />
-
-          <EnhancementRequestComposer surface={surface} />
 
           <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
             <h2 style={{ marginTop: 0 }}>Bounded truth and next surface</h2>

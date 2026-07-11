@@ -3,6 +3,7 @@ import type { CharacterHubListSurface, CharacterHubListRowSurface } from './buil
 import { loadSavedCharacterDetail, type LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { hasTauriRuntime } from '../boundary/runtime';
 import { buildPreviewDetail } from './previewData';
+import { formatHeldClasses } from './characterProgression';
 
 /**
  * Load Character screen, patterned after Pathbuilder's loader: a selectable
@@ -13,14 +14,6 @@ import { buildPreviewDetail } from './previewData';
  * stubs until their persistence commands land; Load and Export operate on the
  * real bounded detail returned by the desktop runtime.
  */
-
-/** `class:fighter:1` -> `Fighter 1`. */
-function formatClassSummary(raw: string): string {
-  const parts = raw.replace(/^class:/, '').split(':');
-  const level = parts.length > 1 ? parts.pop() : null;
-  const name = parts.join(' ').replace(/\b\w/g, (c) => c.toUpperCase());
-  return level ? `${name} ${level}` : name;
-}
 
 const barButton = (variant: 'primary' | 'default' | 'danger', enabled: boolean): CSSProperties => ({
   backgroundColor: variant === 'primary' && enabled ? 'var(--color-accent)' : 'var(--color-surface-2)',
@@ -60,7 +53,7 @@ function DetailPane(props: { row: CharacterHubListRowSurface | null; detail: Loa
     <div>
       <div style={{ alignItems: 'baseline', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
         <h2 style={{ margin: 0 }}>{row.displayLabel}</h2>
-        <span style={{ color: 'var(--color-text-secondary)', fontWeight: 700 }}>{formatClassSummary(row.classSummary)}</span>
+        <span style={{ color: 'var(--color-text-secondary)', fontWeight: 700 }}>{formatHeldClasses(row.classSummary)}</span>
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', margin: '0.6rem 0' }}>
         {[row.raceLabel, row.gameSystemLabel].map((tag) => (
@@ -221,7 +214,7 @@ export function LoadCharacterScreen(props: {
                   {row.displayLabel}
                 </p>
                 <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.82rem', margin: '0.2rem 0 0' }}>
-                  {row.raceLabel} {formatClassSummary(row.classSummary)}
+                  {row.raceLabel} {formatHeldClasses(row.classSummary)}
                 </p>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.15rem 0 0' }}>
                   Last modified: {row.savedAtLabel}
