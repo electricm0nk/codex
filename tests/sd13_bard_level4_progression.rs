@@ -262,6 +262,12 @@ fn bard_level4_does_not_fabricate_a_new_class_feature() {
         INSPIRE_COMPETENCE_ID,
         LORE_MASTER_ID,
         "class_chassis.bard.spontaneous.spell_level_access",
+        // The base_spells_per_day family (a further SD13-E5 slice): literal
+        // spells-per-day table records, not "Special"-column class features.
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_1",
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_2",
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_3",
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_4",
     ];
     assert!(
         computation
