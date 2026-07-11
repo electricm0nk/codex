@@ -379,7 +379,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_level8_progression.rs + \
     tests/sd13_ranger_level9_progression.rs + \
     tests/sd13_ranger_level10_progression.rs + \
-    tests/sd13_ranger_second_favored_terrain.rs";
+    tests/sd13_ranger_second_favored_terrain.rs + \
+    tests/sd13_ranger_third_favored_enemy.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -2405,10 +2406,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             choice), (level 6) the SECOND combat-style bonus feat choice \
                             recognition, (level 7) Woodland Stride (a grant-only identity \
                             record), (level 8) Swift Tracker (a grant-only identity \
-                            record), and (level 8) the Favored Terrain rule's 8th-level \
+                            record), (level 8) the Favored Terrain rule's 8th-level \
                             interval (second favored-terrain selection plus the \
-                            bonus-increase target choice) grounded for real and the later \
-                            spell burden still blocked",
+                            bonus-increase target choice), and (level 10) the Favored Enemy \
+                            rule's 10th-level interval (third enemy-type selection plus its \
+                            own bonus-increase target choice, stacking with the 5th-level \
+                            increase when both name the same enemy) grounded for real and \
+                            the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -2645,7 +2649,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     not recognized below the 8th-level gate, and no terrain-detection or \
                     conditional-application engine decides whether the character is actually \
                     in either terrain, so no Initiative or skill-check total is modified by \
-                    any of these records. The row is Partial, not \
+                    any of these records — AND a further SD13-E5 slice grounds the 10th-level \
+                    \"3rd favored enemy\" interval that the level-10 chassis slice \
+                    deliberately deferred, mirroring the already-grounded 5th-level \
+                    favored-enemy and 8th-level favored-terrain intervals record-for-record \
+                    (verified independently against d20pfsrd and legacy.aonprd.com: \"At 5th \
+                    level and every five levels thereafter (10th, 15th, and 20th level), the \
+                    ranger may select an additional favored enemy. In addition, at each such \
+                    interval, the bonus against any one favored enemy (including the one just \
+                    selected, if so desired) increases by +2.\" — each interval grants its \
+                    OWN increase-target choice): a new choice:ranger_favored_enemy_3 \
+                    choice-slot recognizes whichever third enemy type was selected as a \
+                    bounded +0 identity record (class_chassis.ranger.favored_enemy_3_choice) \
+                    with its own standalone flat skill and attack/damage magnitudes \
+                    (class_chassis.ranger.favored_enemy_3_skill_bonus / \
+                    favored_enemy_3_attack_damage_bonus, base +2), and a new \
+                    choice:ranger_favored_enemy_bonus_increase_target_2 choice-slot \
+                    (restricted to the enemy:first / enemy:second / enemy:third set, +0 \
+                    recognition) names the ONE favored enemy whose flat magnitudes genuinely \
+                    rise by +2 at the interval — stacking with the 5th-level increase when \
+                    both target the same enemy (first enemy +6 on the proof fixture: 2 + 2 + \
+                    2); an unrecognized target grounds no identity and fabricates no boost, \
+                    absent selections fabricate nothing (the baseline level-10 fixture \
+                    computes exactly as before), the selections are correctly not recognized \
+                    below the 10th-level gate, and the 15th/20th intervals stay out of \
+                    scope. The row is Partial, not \
                     Supported: the favored-enemy conditional-application engine (target-type \
                     matching that would decide whether a specific check or attack is made \
                     against the favored enemy) is not implemented, neither recognized \
@@ -2656,9 +2684,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Swift Tracker's own tracking-penalty application are both unproven, Ranger \
                     level 11+ is not proven, and the later ranger spell burden (spell slots, spell \
                     source, spells known/prepared) is still deferred to SD13-E4",
-                next_required_uplift: "the 10th-level \
-                    3rd-favored-enemy interval (third enemy-type selection plus its own \
-                    bonus-increase-target choice), Ranger \
+                next_required_uplift: "Ranger \
                     level-11+ progression, a favored-enemy conditional-application engine, \
                     execution of either recognized combat-style bonus feat's own mechanics, \
                     Hunter's Bond ally-bonus application and the animal-companion stat \
