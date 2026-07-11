@@ -1,0 +1,46 @@
+{
+  "channel": "alpha",
+  "eligibility": {
+    "appimage_install": true,
+    "min_supported_version": "0.0.0",
+    "required_install_kind": "appimage"
+  },
+  "linux_appimage": {
+    "name": "Codex_0.0.0_amd64.AppImage",
+    "sha256": "57b3410dcd1b92b5ee8f36d2890ba6bbf72bce8f4f8ea07945fa0900d774621b",
+    "size_bytes": 78756344,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.0.82-15d073a9/Codex_0.0.0_amd64.AppImage"
+  },
+  "macos_dmg": {
+    "name": "Codex_0.0.0_aarch64.dmg",
+    "sha256": "f0755061f83f50646fafc885ae12b5d12e6224ca561be32a5395e88efb2c87ec",
+    "size_bytes": 3170399,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.0.82-15d073a9/Codex_0.0.0_aarch64.dmg"
+  },
+  "promotion_lineage": {
+    "promoted_at": "2026-07-11T20:03:10Z",
+    "source_branch": "develop",
+    "source_commit": "15d073a91233f8361b1544f4c6afc12a92e6d5ea"
+  },
+  "release_notes_hash": "cf1fdd887ee4ae34c0df20cba3d8c9cef4444be603210bc2e1f93eaaa7d30bb8",
+  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_url": "https://github.com/electricm0nk/codex/releases/tag/alpha-v0.0.82-15d073a9",
+  "schema_version": "1.1.0",
+  "signature": null,
+  "source_branch": "develop",
+  "source_commit": "15d073a91233f8361b1544f4c6afc12a92e6d5ea",
+  "tag": "alpha/v0.0.82-15d073a9",
+  "tranche_id": "STC-CODEX-SD-16",
+  "version": "0.0.82",
+  "windows_msi": {
+    "name": "Codex_0.0.0_x64_en-US.msi",
+    "sha256": "891fee59a3b2c3d21cef19c3cece73bc1def236b4a230f38a12eb006ca5eb5fe",
+    "size_bytes": 3260416,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.0.82-15d073a9/Codex_0.0.0_x64_en-US.msi"
+  },
+  "workflow_provenance": {
+    "run_attempt": 1,
+    "run_id": "29166127300",
+    "workflow": ".github/workflows/publish-tester-release.yml"
+  }
+}
