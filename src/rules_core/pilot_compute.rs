@@ -4462,6 +4462,55 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         ),
     });
 
+    // SD13-E5: the BASE spells-per-day counts, one record per ACCESSIBLE
+    // spell level, as a literal table lookup mirroring the Cleric
+    // domain-slot-count precedent — the PF1 spells-per-day table is a lookup
+    // table, not arithmetic, so no formula is invented for it. Verified
+    // against the raw table rows of both primary sources (identical on
+    // d20pfsrd and legacy.aonprd.com): level 4 "0/—/—/—", level 5 "1/—/—/—",
+    // level 6 "1/—/—/—", level 7 "1/0/—/—", level 8 "1/1/—/—", level 9
+    // "2/1/—/—", level 10 "2/1/0/—". A "0" is a genuine table entry
+    // (bonus-spells-only access), NOT an absence — inaccessible spell levels
+    // ("—" columns) get no record at all. Only the base counts are grounded:
+    // bonus spells per day from a high Charisma are never computed.
+    let paladin_base_spells_per_day: [Option<i16>; 3] = match level {
+        4 => [Some(0), None, None],
+        5 | 6 => [Some(1), None, None],
+        7 => [Some(1), Some(0), None],
+        8 => [Some(1), Some(1), None],
+        9 => [Some(2), Some(1), None],
+        10 => [Some(2), Some(1), Some(0)],
+        _ => [None, None, None],
+    };
+    for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = index + 1;
+        let zero_nuance = if *base_count == 0 {
+            " A base count of 0 is a genuine table entry, not an absence: per the PF1 rule \
+             text, the paladin gains only the bonus spells she would be entitled to based on \
+             her Charisma score for that spell level."
+        } else {
+            ""
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.paladin.partial_caster.base_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Paladin base spells per day at paladin level {level}, spell level \
+                 {spell_level}: {base_count}, read directly from the PF1 Core Rulebook \
+                 Paladin class table's spells-per-day row (verified against the raw table \
+                 rows of both primary sources; a literal table lookup, not a derived \
+                 formula).{zero_nuance} This grounds the base count only: bonus spells per \
+                 day from a high Charisma are never computed, no prepared posture or \
+                 spell-source lineage is grounded, and no spell save DCs are computed"
+            ),
+        });
+    }
+
     // The partial-caster spell burden is its own blocker, distinct from the
     // grounded non-spell chassis records above. Paladin is a divine partial
     // caster in PF1 Core Rulebook (spells begin at paladin level 4; effective
@@ -4475,9 +4524,11 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
              partial caster (spells begin at paladin level 4, with effective caster level = \
              paladin level - 3 in PF1 Core Rulebook), so spell-source lineage, spells known \
-             or prepared posture, spells-per-day progression, bonus spell slots, and spell save \
-             DCs are deferred to a later spellcasting slice; no partial-caster spell \
-             execution is fabricated in this bounded chassis baseline"
+             or prepared posture, bonus spell slots from a high Charisma, and spell save \
+             DCs are deferred to a later spellcasting slice (the spell-level access ladder \
+             and the BASE spells-per-day table counts are grounded separately as flat \
+             records); no partial-caster spell execution is fabricated in this bounded \
+             chassis baseline"
             .to_owned(),
         claim_blocking: true,
     });
