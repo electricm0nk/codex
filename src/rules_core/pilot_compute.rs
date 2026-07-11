@@ -463,6 +463,31 @@ const RANGER_FAVORED_ENEMY_BONUS_INCREASE_CHOICE_ID: &str =
 const RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION: &str = "enemy:first";
 const RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION: &str = "enemy:second";
 
+/// PF1 Core Rulebook level gate of the Favored Enemy rule's SECOND interval
+/// (verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both state "At 5th level and every five levels
+/// thereafter (10th, 15th, and 20th level), the ranger may select an
+/// additional favored enemy. In addition, at each such interval, the bonus
+/// against any one favored enemy (including the one just selected, if so
+/// desired) increases by +2." — each interval carries its OWN
+/// bonus-increase-target choice). Only the 10th-level interval is grounded
+/// here; the 15th/20th intervals stay out of scope.
+const RANGER_FAVORED_ENEMY_THIRD_INTERVAL_LEVEL: u8 = 10;
+
+/// SD13-E5 Ranger THIRD Favored Enemy choice-slot id, mirroring
+/// `choice:ranger_favored_enemy_2`'s open-ended (non-restricted-list)
+/// recognition idiom exactly.
+const RANGER_FAVORED_ENEMY_THIRD_CHOICE_ID: &str = "choice:ranger_favored_enemy_3";
+
+/// SD13-E5 Ranger 10th-level-interval bonus-increase TARGET choice-slot id,
+/// mirroring `choice:ranger_favored_enemy_bonus_increase_target`'s
+/// restricted idiom, widened to the three-enemy set (`enemy:first` /
+/// `enemy:second` / `enemy:third`); any other selection is surfaced without
+/// grounding a target identity and no boost is fabricated from it.
+const RANGER_FAVORED_ENEMY_SECOND_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_enemy_bonus_increase_target_2";
+const RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION: &str = "enemy:third";
+
 /// PF1 Core Rulebook level gate at which Ranger gains Endurance (3rd level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Endurance, favored terrain" as the Ranger
@@ -4943,7 +4968,74 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     let second_favored_enemy_targeted = favored_enemy_bonus_increase_target
         == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION);
 
-    let favored_enemy_bonus: i16 = if first_favored_enemy_targeted { 4 } else { 2 };
+    // SD13-E5 ranger level 10: recognize the SECOND interval's own
+    // bonus-increase TARGET choice, only meaningful once the ranger has
+    // reached the Favored Enemy rule's 10th-level interval. Each interval
+    // grants its own +2 increase to any ONE favored enemy — a genuine, free
+    // player choice, so an increase targeting the same enemy at both
+    // intervals STACKS (2 base + 2 + 2). Absent an explicit target
+    // selection in chosen input, nothing is fabricated.
+    let favored_enemy_second_bonus_increase_target =
+        if level >= RANGER_FAVORED_ENEMY_THIRD_INTERVAL_LEVEL {
+            choice_selection(input, RANGER_FAVORED_ENEMY_SECOND_BONUS_INCREASE_CHOICE_ID)
+        } else {
+            None
+        };
+
+    if let Some(target) = favored_enemy_second_bonus_increase_target {
+        let target_name = if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION {
+            Some("the first favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION {
+            Some("the second favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION {
+            Some("the third favored enemy")
+        } else {
+            None
+        };
+        let detail = if let Some(name) = target_name {
+            format!(
+                "Ranger Favored Enemy 10th-level-interval bonus-increase target selection at \
+                 ranger level {level} \
+                 ({RANGER_FAVORED_ENEMY_SECOND_BONUS_INCREASE_CHOICE_ID} -> {target}): names \
+                 {name} as the one favored enemy whose bonus increases by +2 at this \
+                 10th-level interval, per the PF1 Core Rulebook rule that the bonus against \
+                 any ONE favored enemy -- including a newly selected one, if so desired -- \
+                 increases by +2 at each such interval (5th, 10th, 15th, and 20th ranger \
+                 level); an increase targeting the same enemy at both grounded intervals \
+                 stacks. This is a recognition record of the choice slot only (+0); the \
+                 increased magnitude itself is grounded separately on whichever favored enemy \
+                 was actually named"
+            )
+        } else {
+            format!(
+                "Ranger Favored Enemy 10th-level-interval bonus-increase target selection at \
+                 ranger level {level} is present \
+                 ({RANGER_FAVORED_ENEMY_SECOND_BONUS_INCREASE_CHOICE_ID} -> {target}), but \
+                 only the PF1 Core Rulebook restricted set (the first, second, or third \
+                 favored enemy) is recognized on this bounded seam; no target identity is \
+                 grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_bonus_increase_2_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    let first_favored_enemy_targeted_at_second_interval =
+        favored_enemy_second_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION);
+    let second_favored_enemy_targeted_at_second_interval =
+        favored_enemy_second_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION);
+    let third_favored_enemy_targeted_at_second_interval =
+        favored_enemy_second_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION);
+
+    let favored_enemy_bonus: i16 = 2
+        + if first_favored_enemy_targeted { 2 } else { 0 }
+        + if first_favored_enemy_targeted_at_second_interval { 2 } else { 0 };
     explanations.push(ComputationExplanation {
         id: "class_chassis.ranger.favored_enemy_skill_bonus".to_owned(),
         value: favored_enemy_bonus,
@@ -4999,7 +5091,9 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             ),
         });
 
-        let second_favored_enemy_bonus: i16 = if second_favored_enemy_targeted { 4 } else { 2 };
+        let second_favored_enemy_bonus: i16 = 2
+            + if second_favored_enemy_targeted { 2 } else { 0 }
+            + if second_favored_enemy_targeted_at_second_interval { 2 } else { 0 };
         explanations.push(ComputationExplanation {
             id: "class_chassis.ranger.favored_enemy_2_skill_bonus".to_owned(),
             value: second_favored_enemy_bonus,
@@ -5022,6 +5116,63 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  level {level}): +{second_favored_enemy_bonus} on weapon attack rolls AND \
                  weapon damage rolls against the second favored enemy. This grounds only the \
                  flat +{second_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific attack \
+                 is actually made against this favored enemy is never resolved and no combat \
+                 baseline is modified by this record"
+            ),
+        });
+    }
+
+    // SD13-E5 ranger level 10: recognize the THIRD favored-enemy selection,
+    // the rule's 10th-level interval grant. Mirrors the second favored
+    // enemy's own choice-recognition idiom exactly (open-ended, raw string
+    // interpolation, no restricted-list validation) and its own flat
+    // magnitude formula (base +2, or +4 if the 10th-level interval's
+    // bonus-increase target names the third favored enemy).
+    if level >= RANGER_FAVORED_ENEMY_THIRD_INTERVAL_LEVEL
+        && let Some(third_favored_enemy) =
+            choice_selection(input, RANGER_FAVORED_ENEMY_THIRD_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_3_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger 3rd Favored Enemy selection \
+                 ({RANGER_FAVORED_ENEMY_THIRD_CHOICE_ID} -> {third_favored_enemy}): at ranger \
+                 level {level}, PF1 Core Rulebook Favored Enemy grants \"an additional \
+                 favored enemy\" at the 10th-level interval. The level-{level} THIRD \
+                 favored-enemy type chosen for this character is {third_favored_enemy}. This \
+                 is a bounded recognition record of the chosen enemy type only; the flat \
+                 bonus magnitude is grounded separately, and no target-type matching or \
+                 conditional-application engine is implemented, so it carries no fabricated \
+                 mechanical value (+0)"
+            ),
+        });
+
+        let third_favored_enemy_bonus: i16 =
+            if third_favored_enemy_targeted_at_second_interval { 4 } else { 2 };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_3_skill_bonus".to_owned(),
+            value: third_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 3rd Favored Enemy skill bonus (PF1 Core Rulebook, level {level}): \
+                 +{third_favored_enemy_bonus} on Bluff, Knowledge, Perception, Sense Motive, \
+                 and Survival checks against the third favored enemy. This grounds only the \
+                 flat +{third_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific skill \
+                 check is actually made against this favored enemy is never resolved and no \
+                 skill total is modified by this record"
+            ),
+        });
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_3_attack_damage_bonus".to_owned(),
+            value: third_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 3rd Favored Enemy weapon attack/damage bonus (PF1 Core Rulebook, \
+                 level {level}): +{third_favored_enemy_bonus} on weapon attack rolls AND \
+                 weapon damage rolls against the third favored enemy. This grounds only the \
+                 flat +{third_favored_enemy_bonus} magnitude; no target-type matching and no \
                  conditional-application engine is implemented, so whether any specific attack \
                  is actually made against this favored enemy is never resolved and no combat \
                  baseline is modified by this record"
