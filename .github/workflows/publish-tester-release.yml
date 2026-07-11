@@ -19,6 +19,14 @@ jobs:
     name: Stamp build version
     runs-on: ubuntu-latest
 
+    # SD16-F-WINDOWS: required for downstream `needs.stamp.outputs.version`
+    # access. Without this block, child jobs (publish-tester-release,
+    # publish-tester-release-{macos,windows}) read empty strings for
+    # `version` and the update-manifest fails the schema version check
+    # (`version: '' should be non-empty`).
+    outputs:
+      version: ${{ steps.stamp_version.outputs.version }}
+
     steps:
       - uses: actions/checkout@v7
 
@@ -29,6 +37,15 @@ jobs:
       - name: Install npm dependencies
         working-directory: apps/desktop
         run: npm ci
+
+      # SD16-F-WINDOWS: regenerate the platform icon set from the source
+      # icon.png so Windows (.ico) and macOS (.icns) bundlers both have a
+      # valid resource. Tauri 2's build script refuses to compile a
+      # Windows bundle without `icons/icon.ico`. The Tauri CLI handles
+      # the format conversion via `tauri icon`.
+      - name: Generate platform icons
+        working-directory: apps/desktop
+        run: npx tauri icon src-tauri/icons/icon.png
 
       # SD16: derive a monotonically increasing build version so every
       # release is distinguishable by version, not only by its SHA suffix.
@@ -76,6 +93,7 @@ jobs:
           path: |
             apps/desktop/package.json
             apps/desktop/src-tauri/tauri.conf.json
+            apps/desktop/src-tauri/icons/
           if-no-files-found: error
 
   test:
@@ -403,12 +421,21 @@ jobs:
         working-directory: apps/desktop
         run: npm ci
 
-      # Universal binary so x86_64 and aarch64 testers both get a single
-      # DMG. If dual-target becomes necessary, swap to
-      # `--target x86_64-apple-darwin,aarch64-apple-darwin --bundles app,dmg`.
+      # SD16-F-WINDOWS: build a single-arch DMG for the runner's native
+      # arch (macos-latest is Apple Silicon). A universal binary
+      # (`--target universal-apple-darwin`) requires both aarch64 and
+      # x86_64 Rust targets; macos-latest only pre-installs
+      # `aarch64-apple-darwin`. Building native-arch keeps the slice
+      # tight to runner capability. Intel-Mac testers running aarch64
+      # DMGs through Rosetta is supported by macOS; x86_64 native
+      # coverage is a follow-up (would need `macos-13` matrix). The
+      # CLI sees `--bundles app,dmg` and emits:
+      #   .app  — auto-derived from the binary when 'app' is in targets
+      #   .dmg — installer bundle, controlled by bundle.macOS.dmg in
+      #          tauri.conf.json
       - name: Build macOS artifact set
         working-directory: apps/desktop
-        run: npx tauri build --target universal-apple-darwin --bundles app,dmg --ci
+        run: npx tauri build --target aarch64-apple-darwin --bundles app,dmg --ci
 
       - name: Stage macOS release artifacts
         id: stage_macos
