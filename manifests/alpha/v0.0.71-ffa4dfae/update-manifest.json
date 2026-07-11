@@ -1,0 +1,34 @@
+{
+  "channel": "alpha",
+  "eligibility": {
+    "appimage_install": true,
+    "min_supported_version": "0.0.0",
+    "required_install_kind": "appimage"
+  },
+  "linux_appimage": {
+    "name": "Codex_0.0.71_amd64.AppImage",
+    "sha256": "bf28c3c2d8f6ed24a41ec9f8d6aa56ca3cd1697467ace364c57fa9233384ef9e",
+    "size_bytes": 78739960,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.0.71-ffa4dfae/Codex_0.0.71_amd64.AppImage"
+  },
+  "promotion_lineage": {
+    "promoted_at": "2026-07-11T12:40:31Z",
+    "source_branch": "develop",
+    "source_commit": "ffa4dfaefe6712f5c03682d8f65814031eeb3c76"
+  },
+  "release_notes_hash": "cf1fdd887ee4ae34c0df20cba3d8c9cef4444be603210bc2e1f93eaaa7d30bb8",
+  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_url": "https://github.com/electricm0nk/codex/releases/tag/alpha-v0.0.71-ffa4dfae",
+  "schema_version": "1.0.0",
+  "signature": null,
+  "source_branch": "develop",
+  "source_commit": "ffa4dfaefe6712f5c03682d8f65814031eeb3c76",
+  "tag": "alpha/v0.0.71-ffa4dfae",
+  "tranche_id": "STC-CODEX-SD-16",
+  "version": "0.0.71",
+  "workflow_provenance": {
+    "run_attempt": 1,
+    "run_id": "29152791329",
+    "workflow": ".github/workflows/publish-tester-release.yml"
+  }
+}
