@@ -182,13 +182,138 @@ export function test_parseUpdateManifest_invalid_json_returns_typed_error(): voi
   }
 }
 
+// ---------- SD16-F-WINDOWS: optional Windows MSI artifact identity ----------
+
+const WINDOWS_MSI_MANIFEST_JSON = `{
+  "schema_version": "1.1.0",
+  "channel": "alpha",
+  "version": "0.0.0-alpha.20260711.1",
+  "tag": "alpha/0.0.0-alpha.20260711.1",
+  "tranche_id": "STC-CODEX-SD-16",
+  "source_branch": "develop",
+  "source_commit": "d94edcbfc2f3a6f428895eb9c3e504fc7a363ade",
+  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/develop/programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "linux_appimage": {
+    "name": "codex_0.0.0-alpha.20260711.1_amd64.AppImage",
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha/0.0.0-alpha.20260711.1/codex_0.0.0-alpha.20260711.1_amd64.AppImage",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "size_bytes": 1
+  },
+  "windows_msi": {
+    "name": "Codex_0.0.0-alpha.20260711.1_x64_en-US.msi",
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha/0.0.0-alpha.20260711.1/Codex_0.0.0-alpha.20260711.1_x64_en-US.msi",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "size_bytes": 1
+  },
+  "workflow_provenance": {
+    "workflow": ".github/workflows/publish-tester-release.yml",
+    "run_id": 1,
+    "run_attempt": 1
+  },
+  "eligibility": {
+    "min_supported_version": "0.0.0-alpha.20260701.1",
+    "appimage_install": true,
+    "required_install_kind": "appimage"
+  },
+  "promotion_lineage": {
+    "source_branch": "develop",
+    "source_commit": "d94edcbfc2f3a6f428895eb9c3e504fc7a363ade",
+    "promoted_at": "2026-07-11T08:45:00Z"
+  },
+  "signature": null
+}`;
+
+const MACOS_DMG_MANIFEST_JSON = `{
+  "schema_version": "1.1.0",
+  "channel": "alpha",
+  "version": "0.0.0-alpha.20260711.1",
+  "tag": "alpha/0.0.0-alpha.20260711.1",
+  "tranche_id": "STC-CODEX-SD-16",
+  "source_branch": "develop",
+  "source_commit": "d94edcbfc2f3a6f428895eb9c3e504fc7a363ade",
+  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/develop/programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "linux_appimage": {
+    "name": "codex_0.0.0-alpha.20260711.1_amd64.AppImage",
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha/0.0.0-alpha.20260711.1/codex_0.0.0-alpha.20260711.1_amd64.AppImage",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "size_bytes": 1
+  },
+  "macos_dmg": {
+    "name": "Codex_0.0.0-alpha.20260711.1_universal.dmg",
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha/0.0.0-alpha.20260711.1/Codex_0.0.0-alpha.20260711.1_universal.dmg",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "size_bytes": 1
+  },
+  "workflow_provenance": {
+    "workflow": ".github/workflows/publish-tester-release.yml",
+    "run_id": 1,
+    "run_attempt": 1
+  },
+  "eligibility": {
+    "min_supported_version": "0.0.0-alpha.20260701.1",
+    "appimage_install": true,
+    "required_install_kind": "appimage"
+  },
+  "promotion_lineage": {
+    "source_branch": "develop",
+    "source_commit": "d94edcbfc2f3a6f428895eb9c3e504fc7a363ade",
+    "promoted_at": "2026-07-11T08:45:00Z"
+  },
+  "signature": null
+}`;
+
+export function test_sd16_f_windows_msi_block_optional_and_typed(): void {
+  const result = parseUpdateManifest(WINDOWS_MSI_MANIFEST_JSON);
+  assert(
+    result.ok,
+    `manifest with optional windows_msi must parse: ${JSON.stringify(result.ok ? null : result.errors)}`,
+  );
+  if (result.ok && result.data.windows_msi !== undefined) {
+    assertEqual(
+      result.data.windows_msi.name,
+      'Codex_0.0.0-alpha.20260711.1_x64_en-US.msi',
+      'windows_msi.name must round-trip',
+    );
+    assertEqual(result.data.windows_msi.size_bytes, 1, 'windows_msi.size_bytes must round-trip');
+  } else if (result.ok) {
+    assert(false, 'windows_msi must be present in this fixture');
+  }
+  if (result.ok) {
+    assertEqual(result.data.schema_version, '1.1.0', 'schema_version must round-trip as 1.1.0');
+  }
+}
+
+export function test_sd16_f_macos_dmg_block_optional_and_typed(): void {
+  const result = parseUpdateManifest(MACOS_DMG_MANIFEST_JSON);
+  assert(
+    result.ok,
+    `manifest with optional macos_dmg must parse: ${JSON.stringify(result.ok ? null : result.errors)}`,
+  );
+  if (result.ok && result.data.macos_dmg !== undefined) {
+    assertEqual(
+      result.data.macos_dmg.name,
+      'Codex_0.0.0-alpha.20260711.1_universal.dmg',
+      'macos_dmg.name must round-trip',
+    );
+    assertEqual(result.data.macos_dmg.size_bytes, 1, 'macos_dmg.size_bytes must round-trip');
+  } else if (result.ok) {
+    assert(false, 'macos_dmg must be present in this fixture');
+  }
+}
+
 function run(): void {
   test_av_sch_2_update_manifest_positive();
   test_av_sch_3_update_manifest_signature_missing_accepted();
   test_av_sch_5_manifest_tranche_id_and_path_locked_at_parse();
   test_av_sch_6_manifest_rejects_bad_path();
   test_parseUpdateManifest_invalid_json_returns_typed_error();
-  console.log('parseUpdateManifest.test.ts: 5/5 AV-SCH-* assertions passed');
+  test_sd16_f_windows_msi_block_optional_and_typed();
+  test_sd16_f_macos_dmg_block_optional_and_typed();
+  console.log('parseUpdateManifest.test.ts: 7/7 AV-SCH-* + SD16-F-WINDOWS + SD16-F-MACOS assertions passed');
 }
 
 run();

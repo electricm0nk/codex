@@ -24,9 +24,9 @@
   "properties": {
     "schema_version": {
       "type": "string",
-      "description": "Semantic version of this manifest contract. Bump on any field-list or cross-field-rule change (F1 closure schema-version discipline).",
+      "description": "Semantic version of this manifest contract. Bump on any field-list or cross-field-rule change (F1 closure schema-version discipline). Bumped 1.0.0 -> 1.1.0 in SD16-F-WINDOWS to admit two new optional platform-identity blocks paralleling linux_appimage: windows_msi and macos_dmg. The AppImage block remains required so prior publishers stay conformant. The schema remains closed-world: unknown top-level fields are still rejected.",
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
-      "const": "1.0.0"
+      "const": "1.1.0"
     },
     "channel": {
       "type": "string",
@@ -99,6 +99,62 @@
         "size_bytes": {
           "type": "integer",
           "description": "Size of the AppImage artifact in bytes.",
+          "minimum": 1
+        }
+      }
+    },
+    "windows_msi": {
+      "type": "object",
+      "description": "Windows MSI artifact identity (name, URL, hash, size). Optional parallel of linux_appimage for the tester Windows lane added in SD16-F-WINDOWS. Schema 1.0.0 publishers do not set this; schema 1.1.0 publishers set this when the publish-tester-release-windows job produces a .msi. The schema admits it as OPTIONAL so back-compat with v1.0.0 manifests remains intact.",
+      "additionalProperties": false,
+      "required": ["name", "url", "sha256", "size_bytes"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "File name of the Windows MSI artifact.",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Canonical URL where the Windows MSI artifact can be fetched."
+        },
+        "sha256": {
+          "type": "string",
+          "description": "SHA-256 hex digest of the Windows MSI artifact.",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "description": "Size of the Windows MSI artifact in bytes.",
+          "minimum": 1
+        }
+      }
+    },
+    "macos_dmg": {
+      "type": "object",
+      "description": "macOS DMG artifact identity (name, URL, hash, size). Optional parallel of linux_appimage / windows_msi for the tester macOS lane added in SD16-F-WINDOWS. Same contract: optional, closed-world, identical required-key shape so the discovery path can be generalized. Production macOS DMGs typically require Developer ID signing + notarization; that work is deferred and an unsigned DMG is shipped for tester delivery until the Apple-cert epic lands.",
+      "additionalProperties": false,
+      "required": ["name", "url", "sha256", "size_bytes"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "File name of the macOS DMG artifact.",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Canonical URL where the macOS DMG artifact can be fetched."
+        },
+        "sha256": {
+          "type": "string",
+          "description": "SHA-256 hex digest of the macOS DMG artifact.",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "description": "Size of the macOS DMG artifact in bytes.",
           "minimum": 1
         }
       }

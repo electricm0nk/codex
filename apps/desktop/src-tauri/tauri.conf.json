@@ -24,7 +24,11 @@
     "active": true,
     "targets": [
       "deb",
-      "appimage"
+      "appimage",
+      "msi",
+      "nsis",
+      "app",
+      "dmg"
     ],
     "resources": [
       "resources/ge08/guard-stance-package/"
@@ -35,6 +39,14 @@
     "linux": {
       "deb": {},
       "appimage": {}
+    },
+    "windows": {
+      "msi": {},
+      "nsis": {}
+    },
+    "macOS": {
+      "app": {},
+      "dmg": {}
     }
   }
 }
