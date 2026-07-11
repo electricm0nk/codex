@@ -540,7 +540,7 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_level4_progression.rs + tests/sd13_bard_level5_progression.rs + \
     tests/sd13_bard_level6_progression.rs + tests/sd13_bard_level7_progression.rs + \
     tests/sd13_bard_level8_progression.rs + tests/sd13_bard_level9_progression.rs + \
-    tests/sd13_bard_level10_progression.rs";
+    tests/sd13_bard_level10_progression.rs + tests/sd13_bard_spell_level_thresholds.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1572,10 +1572,23 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     skill-substitution engine, Suggestion requires a fascinated-target \
                     prerequisite plus the suggestion spell's own effect-resolution engine, and \
                     Dirge of Doom requires both the performance-state engine and a \
-                    fear/shaken-condition resolution engine, none a flat number — and the entire \
-                    spontaneous spell burden (spontaneous spells known, spells per day, bonus \
-                    spell slots from CHA, spell save DCs, school choice, prepared posture) is not \
-                    computed. No performance-execution math and no spell math is fabricated and \
+                    fear/shaken-condition resolution engine, none a flat number — and the spontaneous spell burden \
+                    (spontaneous spells known, spells per day, bonus spell slots from CHA, spell \
+                    save DCs, school choice, prepared posture) is not computed BEYOND the \
+                    spell-level ACCESS ladder a further SD13-E5 slice grounds \
+                    (class_chassis.bard.spontaneous.spell_level_access, mirroring the Paladin \
+                    access-ladder record and the Cleric/Wizard first-non-'—'-column threshold \
+                    doctrine, verified against the raw spells-per-day rows of both primary \
+                    sources, identical on d20pfsrd and legacy.aonprd.com: 1 at levels 1-3 — a \
+                    bard casts 1st-level spells from level 1, so the ladder has no zero step \
+                    and, unlike the Paladin table, no \"0\" spells-per-day entries appear at \
+                    levels 1-10 — 2 at levels 4-6 (level 4 shows \"3/1/—/…\"), 3 at levels \
+                    7-9 (level 7 shows \"4/3/1/—/…\"), and 4 at level 10 (level 10 shows \
+                    \"5/4/3/1/—/—\"); the 5th-level column stays '—' through level 10, so no \
+                    5th-level threshold is grounded; cantrips are \"spells known\" only and \
+                    sit outside the ladder; the access ladder grounds ACCESS only and the \
+                    spontaneous known/per-day blocker stays claim-blocking unchanged). No \
+                    performance-execution math and no spell math is fabricated and \
                     no Bard level 11+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \

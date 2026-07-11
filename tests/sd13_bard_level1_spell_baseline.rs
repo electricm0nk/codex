@@ -60,6 +60,7 @@ const INSPIRE_COURAGE_ID: &str = "class_chassis.bard.inspire_courage_bonus";
 const FASCINATE_DC_ID: &str = "class_chassis.bard.fascinate_dc";
 const FASCINATE_AFFECTED_CREATURES_ID: &str = "class_chassis.bard.fascinate_affected_creatures";
 const INSPIRE_COMPETENCE_ID: &str = "class_feature.bard.inspire_competence";
+const SPELL_LEVEL_ACCESS_ID: &str = "class_chassis.bard.spontaneous.spell_level_access";
 const PERFORMANCE_EXECUTION_BLOCKER_ID: &str =
     "class_feature.bard.bardic_performance_execution.unsupported";
 const SPONTANEOUS_BLOCKER_ID: &str = "class_spell.bard.spontaneous_known_and_per_day.unsupported";
@@ -168,8 +169,11 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
     // (Bardic Knowledge, the bardic performance rounds-per-day budget, the Inspire
     // Courage flat magnitude, the Fascinate flat Will-save DC and
     // affected-creature-count formulas, and — as of a further SD13-E5 slice — the
-    // Inspire Competence level-gate record, correctly absent (value 0) at level 1) are
-    // the only allowed spell/bardic-tagged explanations. Fascinate's own resolution (an
+    // Inspire Competence level-gate record, correctly absent (value 0) at level 1, and
+    // — as of the further SD13-E5 access-ladder slice — the spontaneous spell-level
+    // ACCESS record, which carries value 1 at level 1 because a bard casts 1st-level
+    // spells from level 1 per the raw table row "1/—/…", grounding access only, never
+    // per-day counts) are the only allowed spell/bardic-tagged explanations. Fascinate's own resolution (an
     // actual Will save, targeting, range/attention checking) stays ungrounded; only its
     // two flat numbers are allowed.
     let allowed_ids = [
@@ -180,6 +184,7 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
         FASCINATE_DC_ID,
         FASCINATE_AFFECTED_CREATURES_ID,
         INSPIRE_COMPETENCE_ID,
+        SPELL_LEVEL_ACCESS_ID,
     ];
     for explanation in &computation.explanations {
         assert!(
