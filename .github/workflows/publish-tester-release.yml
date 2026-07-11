@@ -503,6 +503,18 @@ jobs:
 
       - name: Stage Windows release artifacts
         id: stage_windows
+        # SD16-F-WINDOWS: Windows-latest preinstalls setup-pwsh, which makes
+        # GitHub Actions default the step's `shell:` to PowerShell 7.
+        # `actions/checkout`'s default default shell on Windows is now
+        # `pwsh`, not `bash`, on this runner image. The `run:` body is
+        # bash syntax (uses `[ -z "$VAR" ]`, `tr`, `basename`,
+        # `cp`, $GITHUB_OUTPUT). Explicitly pin `shell: bash` so the
+        # body parses. Without this, PowerShell sees the `if [ -z ]`
+        # as its own `if`/comparison syntax and fails with
+        # `ParserError: Missing '(' after 'if' in if statement.` —
+        # observed in run 29162839096 (post-PR #251) and again in
+        # 29165597856 (post-develop churn).
+        shell: bash
         working-directory: apps/desktop
         run: |
           # Tauri places bundles under src-tauri/target/release/bundle/{msi,nsis}.
