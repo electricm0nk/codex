@@ -598,7 +598,8 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
     tests/sd13_wizard_level2_progression.rs + tests/sd13_wizard_level3_progression.rs + \
     tests/sd13_wizard_level4_progression.rs + tests/sd13_wizard_level5_progression.rs + \
     tests/sd13_wizard_level6_progression.rs + tests/sd13_wizard_level7_progression.rs + \
-    tests/sd13_wizard_level8_progression.rs + tests/sd13_wizard_level9_progression.rs";
+    tests/sd13_wizard_level8_progression.rs + tests/sd13_wizard_level9_progression.rs + \
+    tests/sd13_wizard_level10_progression.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -2879,17 +2880,18 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // magnitude genuinely rises to 4 (max(8/2, 1) = 4); the level-8
                 // "Special" column is genuinely blank, so no new pillar is added.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1/level-9 prepared arcane spell baseline, with base \
+                            Wizard level-1/level-10 prepared arcane spell baseline, with base \
                             attack bonus, base save progression, Scribe Scroll, the school \
                             specialization choice, the specialist-bonus-slot flat count (which \
                             becomes 2 at level 3, stays 2 at level 4, becomes 3 at level 5, stays \
-                            3 at level 6, becomes 4 at level 7, stays 4 at level 8, and becomes \
-                            5 at level 9), and the \
+                            3 at level 6, becomes 4 at level 7, stays 4 at level 8, becomes \
+                            5 at level 9, and stays 5 at level 10), and the \
                             Intense Spells / \
                             Force Missile school-power flat magnitudes (Intense Spells becomes 2 \
                             at level 4, stays 2 at level 5, becomes 3 at level 6, stays 3 at \
-                            level 7, becomes 4 at level 8, and stays 4 at level 9) grounded for \
-                            real through level 9, \
+                            level 7, becomes 4 at level 8, stays 4 at level 9, and becomes 5 at \
+                            level 10) grounded for \
+                            real through level 10, \
                             and the school-power \
                             execution machinery, the opposed-school-cost burden, the level-5 \
                             bonus-feat selection/execution, and the prepared spellbook / \
@@ -3074,7 +3076,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Missile's pool is level-independent and unchanged; Scribe Scroll stays \
                     recognized as an already-held grant; the level-9 \"Special\" column is \
                     genuinely BLANK (verified independently against both sources), so no new \
-                    Wizard class feature is gained at 9th level either. The row is \
+                    Wizard class feature is gained at 9th level either — AND a further SD13-E5 \
+                    slice widens the level-range gate again (supported_wizard_level, 1..=10), \
+                    reaching the tranche ceiling, and extends every one of the formulas above \
+                    to level 10 via the same formula, without re-derivation, verified \
+                    independently against the PF1 Core Rulebook Wizard class table (d20pfsrd \
+                    and legacy.aonprd.com): level 10 base attack genuinely rises to +5 \
+                    (10 / 2) and good Will genuinely rises to +7 (10 / 2 + 2), while poor \
+                    Fortitude/Reflex stay +3 (10 / 3, integer-division coincidences); the \
+                    specialist bonus slot flat count STAYS at 5 (the raw spells-per-day \
+                    table's level-10 row is \"4/4/4/3/3/2\" with the 6th-level column still \
+                    \"—\" — 6th-level wizard spells first appear at 11th, a threshold stasis \
+                    checked rather than assumed); Intense Spells' bonus-damage magnitude \
+                    GENUINELY RISES to 5 (max(10/2, 1), up from 4 at levels 8-9); Force \
+                    Missile's pool is level-independent and unchanged; Scribe Scroll stays \
+                    recognized as an already-held grant; the level-10 \"Special\" column \
+                    reads \"Bonus feat\" (verified independently against both primary \
+                    sources, checked rather than assumed away) — the same genuinely open-ended \
+                    metamagic/item-creation/Spell-Mastery choice already deliberately left \
+                    named-but-unproven at 5th level, not a new type of class feature — so no \
+                    new pillar record is grounded at level 10 beyond widening the Intense \
+                    Spells pillar to a genuinely new value. The row is \
                     Partial, not Supported: neither school power's \
                     execution machinery is implemented (no evocation spell-damage application for \
                     Intense Spells, no force-missile casting execution / 1d4 damage roll / \
@@ -3084,11 +3106,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     feat-selection/feat-prerequisite engine) remains named and unproven, and the \
                     prepared spell posture burden (spellbook content, spells prepared per day, \
                     spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
-                    still entirely unproven. No spell math is fabricated and no Wizard level 10+ is \
+                    still entirely unproven. No spell math is fabricated and no Wizard level 11+ is \
                     proven",
                 next_required_uplift: "SD13-E5 Wizard school-power execution and opposed-school \
                     preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-10+ progression (widening the now-grounded base \
+                    posture slice, then level-11+ progression (widening the now-grounded base \
                     attack/base save formulas)",
             },
             // ----- Interaction rows (2) -----

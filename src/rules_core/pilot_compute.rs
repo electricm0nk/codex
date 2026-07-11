@@ -978,7 +978,22 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // the level-9 "Special" column is genuinely blank (verified independently
 // against both primary sources), so no new class feature is gained at 9th
 // level.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 9;
+//
+// A further SD13-E5 slice widens the gate again to level 10 — the tranche
+// ceiling (`MAX_SUPPORTED_WIZARD_LEVEL = 10`): base attack GENUINELY RISES
+// to +5 (`10/2 = 5`) and good Will GENUINELY RISES to +7 (`10/2+2 = 7`),
+// while poor Fortitude/Reflex stay +3 (`10/3 = 3`, integer-division
+// coincidences); the specialist bonus slot flat count STAYS at 5 (the raw
+// spells-per-day table's level-10 row is "4/4/4/3/3/2" with the 6th-level
+// column still "—" — 6th-level spells first appear at 11th, a threshold
+// stasis checked rather than assumed); Intense Spells' bonus-damage
+// magnitude GENUINELY RISES to 5 (`max(10/2, 1) = 5`, up from 4 at levels
+// 8-9); the level-10 "Special" column reads "Bonus feat" (verified
+// independently against both primary sources) — the same genuinely
+// open-ended metamagic/item-creation/Spell-Mastery choice already left
+// named-but-unproven at 5th level, not a new type of class feature, so no
+// new pillar record is grounded at level 10.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 10;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -7443,8 +7458,8 @@ fn explain_sorcerer_level1_spell_baseline(
 
 /// The bounded Wizard milestone level this decomposition surface grounds, if any.
 /// Returns the single Wizard level when the chosen input is exactly a single-class
-/// Wizard at one of the supported milestone levels (1 through 9). Returns `None` for
-/// no Wizard, a non-Wizard class, a multiclass mix, or any level-10+ Wizard this slice
+/// Wizard at one of the supported milestone levels (1 through 10). Returns `None` for
+/// no Wizard, a non-Wizard class, a multiclass mix, or any level-11+ Wizard this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
