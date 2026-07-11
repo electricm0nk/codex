@@ -39,6 +39,31 @@ export interface LinuxAppImageArtifact {
   size_bytes: number;
 }
 
+// SD16-F-WINDOWS: parallel to LinuxAppImageArtifact, for the Windows MSI
+// the publish-tester-release-windows job produces. Optional because
+// schema 1.0.0 manifests and Linux-only builds do not set it. Same
+// required-key shape as LinuxAppImageArtifact so the discovery path can
+// be generalized later without contract churn.
+export interface WindowsMsiArtifact {
+  name: string;
+  url: string;
+  sha256: string;
+  size_bytes: number;
+}
+
+// SD16-F-WINDOWS: parallel to LinuxAppImageArtifact + WindowsMsiArtifact,
+// for the macOS DMG the publish-tester-release-macos job produces.
+// Optional and same-shape; optional because schema 1.0.0 manifests and
+// Linux-only / Windows-only builds do not set it. Three-platform
+// discoverability later happens in the shell by iterating over whichever
+// blocks the schema validates.
+export interface MacosDmgArtifact {
+  name: string;
+  url: string;
+  sha256: string;
+  size_bytes: number;
+}
+
 export interface WorkflowProvenance {
   workflow: string;
   run_id: number | string;
@@ -69,6 +94,8 @@ export interface UpdateManifestFile {
   release_notes_url: string;
   release_notes_hash: string;
   linux_appimage: LinuxAppImageArtifact;
+  windows_msi?: WindowsMsiArtifact;
+  macos_dmg?: MacosDmgArtifact;
   workflow_provenance: WorkflowProvenance;
   eligibility: Eligibility;
   promotion_lineage: PromotionLineage;

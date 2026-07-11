@@ -53,12 +53,14 @@ import sys
 from pathlib import Path
 from typing import Any, NoReturn
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
 TRANCHE_ID = "STC-CODEX-SD-16"
 ALLOWED_CHANNELS = ("alpha", "beta", "stable")
 RELEASE_NOTES_PATH_PATTERN = re.compile(r"^programs/codex/requirements/[^/]+/release-notes\.md$")
 SOURCE_COMMIT_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 TAG_PATTERN = re.compile(r"^(alpha|beta|stable)/.+$")
+WINDOWS_MSI_OPTIONALS = ("windows_msi_name", "windows_msi_path", "windows_msi_url")
+MACOS_DMG_OPTIONALS = ("macos_dmg_name", "macos_dmg_path", "macos_dmg_url")
 
 
 def _fail(msg: str) -> NoReturn:
@@ -96,6 +98,84 @@ def _appimage_identity(name: str, path: Path) -> tuple[str, int]:
         for chunk in iter(lambda: f.read(65536), b""):
             h.update(chunk)
     return (h.hexdigest(), size)
+
+
+def _msi_identity(name: str, path: Path) -> tuple[str, int]:
+    """SD16-F-WINDOWS: parallel of _appimage_identity for the optional Windows MSI block.
+
+    Called only when the operator passes --windows-msi-* flags; otherwise the
+    field is omitted from the manifest so v1.0.0-shaped manifests are
+    unaffected. Same hash + size discipline as the AppImage block.
+    """
+    if not name:
+        _fail("Windows MSI name is empty")
+    if not path.is_file():
+        _fail(f"Windows MSI artifact does not exist on disk: {path}")
+    size = path.stat().st_size
+    if size < 1:
+        _fail(f"Windows MSI artifact is empty: {path}")
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            h.update(chunk)
+    return (h.hexdigest(), size)
+
+
+def _dmg_identity(name: str, path: Path) -> tuple[str, int]:
+    """SD16-F-WINDOWS: parallel of _appimage_identity for the optional macOS DMG block.
+
+    Called only when the operator passes --macos-dmg-* flags; otherwise
+    the field is omitted. The macOS publish job emits this; the linux
+    and windows publish jobs do not. Same hash + size discipline.
+    """
+    if not name:
+        _fail("macOS DMG name is empty")
+    if not path.is_file():
+        _fail(f"macOS DMG artifact does not exist on disk: {path}")
+    size = path.stat().st_size
+    if size < 1:
+        _fail(f"macOS DMG artifact is empty: {path}")
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            h.update(chunk)
+    return (h.hexdigest(), size)
+
+
+def _optional_platform_block(
+    args: argparse.Namespace,
+    flag_triple: tuple[str, str, str],
+    identity_fn,
+) -> dict[str, Any] | None:
+    """SD16-F-WINDOWS: shared helper for optional platform-identity blocks.
+
+    Each platform (windows_msi, macos_dmg) adds three CLI flags; if any
+    one of them is supplied, all three must be supplied. Failing closed
+    here keeps the manifest semantically clean. The `_build_manifest`
+    function calls this once per platform and inserts the result if
+    non-None. Returns a fresh dict ready to be assigned to
+    manifest[<key>].
+    """
+    set_name, set_path, set_url = (
+        getattr(args, flag_triple[0]),
+        getattr(args, flag_triple[1]),
+        getattr(args, flag_triple[2]),
+    )
+    any_set = bool(set_name or set_path or set_url)
+    all_set = bool(set_name and set_path and set_url)
+    if all_set:
+        sha, size = identity_fn(set_name, set_path)
+        key = "windows_msi" if flag_triple is WINDOWS_MSI_OPTIONALS else "macos_dmg"
+        return {
+            "name": set_name,
+            "url": set_url,
+            "sha256": sha,
+            "size_bytes": size,
+        }
+    if any_set:
+        names = ", ".join(flag_triple)
+        _fail(f"{names} must be supplied as a complete triple. Partial sets are rejected to keep the manifest semantically clean.")
+    return None
 
 
 def _build_manifest(args: argparse.Namespace) -> dict[str, Any]:
@@ -165,6 +245,21 @@ def _build_manifest(args: argparse.Namespace) -> dict[str, Any]:
         },
         "signature": None,
     }
+
+    # SD16-F-WINDOWS: optional platform-identity blocks. Each block
+    # (windows_msi, macos_dmg) is added only when ALL THREE of its CLI
+    # flags were supplied. Partial flag sets are rejected per the
+    # `_optional_platform_block` helper. v1.0.0-shaped manifests remain
+    # unaffected because none of these flags are required.
+    for flag_triple, identity_fn in (
+        (WINDOWS_MSI_OPTIONALS, _msi_identity),
+        (MACOS_DMG_OPTIONALS, _dmg_identity),
+    ):
+        block = _optional_platform_block(args, flag_triple, identity_fn)
+        if block is not None:
+            key = "windows_msi" if flag_triple is WINDOWS_MSI_OPTIONALS else "macos_dmg"
+            manifest[key] = block
+
     return manifest
 
 
@@ -196,6 +291,44 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--min-supported-version", required=True, dest="min_supported_version")
     parser.add_argument("--appimage-install", required=True, choices=["true", "false"])
     parser.add_argument("--required-install-kind", required=True, dest="required_install_kind", choices=["appimage", "dev", "any"])
+    parser.add_argument(
+        "--windows-msi-name",
+        required=False,
+        dest="windows_msi_name",
+        help="SD16-F-WINDOWS: file name of the Windows MSI artifact. Must be supplied together with --windows-msi-path and --windows-msi-url; partial sets are rejected.",
+    )
+    parser.add_argument(
+        "--windows-msi-path",
+        required=False,
+        dest="windows_msi_path",
+        type=Path,
+        help="SD16-F-WINDOWS: path to the staged Windows MSI artifact on disk (used to compute sha256 + size).",
+    )
+    parser.add_argument(
+        "--windows-msi-url",
+        required=False,
+        dest="windows_msi_url",
+        help="SD16-F-WINDOWS: canonical URL where the Windows MSI can be fetched.",
+    )
+    parser.add_argument(
+        "--macos-dmg-name",
+        required=False,
+        dest="macos_dmg_name",
+        help="SD16-F-WINDOWS: file name of the macOS DMG artifact. Must be supplied together with --macos-dmg-path and --macos-dmg-url; partial sets are rejected.",
+    )
+    parser.add_argument(
+        "--macos-dmg-path",
+        required=False,
+        dest="macos_dmg_path",
+        type=Path,
+        help="SD16-F-WINDOWS: path to the staged macOS DMG artifact on disk (used to compute sha256 + size).",
+    )
+    parser.add_argument(
+        "--macos-dmg-url",
+        required=False,
+        dest="macos_dmg_url",
+        help="SD16-F-WINDOWS: canonical URL where the macOS DMG can be fetched.",
+    )
     parser.add_argument("--output", required=True, type=Path, help="Destination path for update-manifest.json.")
     args = parser.parse_args(argv)
 
