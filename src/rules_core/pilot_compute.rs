@@ -10153,6 +10153,55 @@ fn explain_bard_level1_spell_baseline(
         ),
     });
 
+    // SD13-E5: the BASE spells-per-day counts, one record per ACCESSIBLE
+    // spell level, as a literal table lookup mirroring the Paladin/Ranger
+    // per-day slices and the Cleric domain-slot-count precedent — the PF1
+    // spells-per-day table is a lookup table, not arithmetic, so no formula
+    // is invented for it. Verified against the raw table rows of both
+    // primary sources (identical on d20pfsrd and legacy.aonprd.com): level
+    // 1 "1/—/—/—", level 2 "2/—/—/—", level 3 "3/—/—/—", level 4 "3/1/—/—",
+    // level 5 "4/2/—/—", level 6 "4/3/—/—", level 7 "4/3/1/—", level 8
+    // "4/4/2/—", level 9 "5/4/3/—", level 10 "5/4/3/1". Unlike the
+    // Paladin/Ranger tables there are NO "0" entries at levels 1-10 —
+    // every accessible column carries a positive base count. Inaccessible
+    // spell levels ("—" columns) get no record at all. Only the base
+    // counts are grounded: bonus spells per day from a high Charisma are
+    // never computed, and spells KNOWN (a separate table) stays untouched.
+    let bard_base_spells_per_day: [Option<i16>; 4] = match level {
+        1 => [Some(1), None, None, None],
+        2 => [Some(2), None, None, None],
+        3 => [Some(3), None, None, None],
+        4 => [Some(3), Some(1), None, None],
+        5 => [Some(4), Some(2), None, None],
+        6 => [Some(4), Some(3), None, None],
+        7 => [Some(4), Some(3), Some(1), None],
+        8 => [Some(4), Some(4), Some(2), None],
+        9 => [Some(5), Some(4), Some(3), None],
+        10 => [Some(5), Some(4), Some(3), Some(1)],
+        _ => [None, None, None, None],
+    };
+    for (index, base_count) in bard_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = index + 1;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Bard base spells per day at bard level {level}, spell level {spell_level}: \
+                 {base_count}, read directly from the PF1 Core Rulebook Bard class table's \
+                 spells-per-day row (verified against the raw table rows of both primary \
+                 sources; a literal table lookup, not a derived formula; the Bard table has \
+                 no \"0\" entries at levels 1-10). This grounds the base count only: bonus \
+                 spells per day from a high Charisma are never computed, spells KNOWN (a \
+                 separate table) is not grounded, and no spell save DCs are computed"
+            ),
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
     // explicitly. Bard spells known and spells per day are gated by Bard level and CHA
     // modifier on the Bard spell list; this slice grounds no spells known, no spells per

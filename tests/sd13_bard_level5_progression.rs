@@ -300,6 +300,12 @@ fn bard_level5_gains_only_lore_master_as_a_new_class_feature() {
         // level; it is not a "Special"-column class feature, so listing it
         // keeps this control accurate without weakening its claim.
         "class_chassis.bard.spontaneous.spell_level_access",
+        // The base_spells_per_day family (a further SD13-E5 slice): literal
+        // spells-per-day table records, not "Special"-column class features.
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_1",
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_2",
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_3",
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_4",
     ];
     assert!(
         computation

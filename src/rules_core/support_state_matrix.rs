@@ -544,7 +544,8 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_level4_progression.rs + tests/sd13_bard_level5_progression.rs + \
     tests/sd13_bard_level6_progression.rs + tests/sd13_bard_level7_progression.rs + \
     tests/sd13_bard_level8_progression.rs + tests/sd13_bard_level9_progression.rs + \
-    tests/sd13_bard_level10_progression.rs + tests/sd13_bard_spell_level_thresholds.rs";
+    tests/sd13_bard_level10_progression.rs + tests/sd13_bard_spell_level_thresholds.rs + \
+    tests/sd13_bard_spells_per_day_counts.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1591,7 +1592,18 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     \"5/4/3/1/—/—\"); the 5th-level column stays '—' through level 10, so no \
                     5th-level threshold is grounded; cantrips are \"spells known\" only and \
                     sit outside the ladder; the access ladder grounds ACCESS only and the \
-                    spontaneous known/per-day blocker stays claim-blocking unchanged). No \
+                    spontaneous known/per-day blocker stays claim-blocking unchanged — AND a \
+                    further SD13-E5 slice grounds the BASE spells-per-day counts on top of \
+                    the ladder \
+                    (class_chassis.bard.spontaneous.base_spells_per_day.spell_level_1/2/3/4), \
+                    one record per ACCESSIBLE spell level, as a literal table lookup \
+                    mirroring the Paladin/Ranger per-day slices and the Cleric \
+                    domain-slot-count precedent, verified against the raw rows of both \
+                    primary sources (\"1/—/—/—\" at 1 through \"5/4/3/1\" at 10; unlike \
+                    the Paladin/Ranger tables there are NO \"0\" entries at levels 1-10) — \
+                    inaccessible \"—\" spell levels get no record, and only the base \
+                    counts are grounded: Charisma bonus spells, spells KNOWN (a separate \
+                    table, deliberately untouched), and spell save DCs stay unproven). No \
                     performance-execution math and no spell math is fabricated and \
                     no Bard level 11+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
