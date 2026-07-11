@@ -1,0 +1,40 @@
+# SD13-E5 deterministic Human Fighter level 1 fixture, favored-class bonus
+# choice variant (skill-rank flavor). Identical to the canonical GE-06
+# deterministic input contract fixture
+# (pf1_human_fighter_level1_ge06_deterministic_input.txt) except for the added
+# choice=choice:favored_class_bonus:bonus:skill_rank selection, which grounds
+# the PF1 Core Rulebook Favored Class rule (pg. 31): "Whenever a character
+# gains a level in his favored class, he receives either +1 hit point or +1
+# skill rank." A Human's favored class is Any (PF1 Core Rulebook, Human racial
+# traits), which trivially includes Fighter, so the choice applies at Fighter
+# level 1. This variant selects the +1 skill rank option.
+#
+# A dedicated fixture variant is used rather than mutating the shared GE-06
+# fixture directly, because dozens of sibling test files across this codebase
+# include that exact fixture text and depend on its current shape.
+case_id=pf1-crb-human-fighter-level1-favored-class-bonus-skill-rank
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:1
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:favored_class_bonus:bonus:skill_rank
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

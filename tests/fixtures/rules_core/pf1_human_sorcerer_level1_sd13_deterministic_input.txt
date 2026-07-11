@@ -22,6 +22,7 @@ ability=wisdom:12
 ability=charisma:17
 feat=feat:dodge
 choice=choice:sorcerer_bloodline:bloodline:arcane
+choice=choice:sorcerer_bloodline_class_skill:knowledge:arcana
 choice=choice:human_bonus_feat:feat:dodge
 choice=choice:human_ability_bonus:ability:charisma
 provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e4-r2-spellcasting-and-hybrid-level-10-progression-execution-handoff-2026-07-01.md

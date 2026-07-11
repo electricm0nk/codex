@@ -1,20 +1,26 @@
 //! SD13-E3 Ranger level-1 chassis-and-class-feature separation proof, extended
-//! by the SD13-E5 Favored Enemy flat-surface grounding slice.
+//! by the SD13-E5 Favored Enemy flat-surface grounding slice and the later
+//! SD13-E5 Combat Style level-gate correction slice.
 //!
 //! Proves the deeper Ranger-only decomposition that sits on top of the accepted
-//! SD13-F6 hybrid baseline: the live rules-core surface emits a distinct
-//! claim-blocking diagnostic for the still-missing Ranger combat-style pillar,
-//! grounds Track for real as a bounded flat Survival-check bonus
-//! (`max(ranger level / 2, 1)`, i.e. `1` at the bounded level-1 baseline), and
-//! — as of the SD13-E5 slice — grounds the Favored Enemy flat surface for real:
-//! recognition of the chosen favored-enemy type from the fixture's
-//! `choice:ranger_favored_enemy` selection, the flat +2 bonus on Bluff,
-//! Knowledge, Perception, Sense Motive, and Survival checks against the favored
-//! enemy, and the flat +2 bonus on weapon attack and damage rolls against the
-//! favored enemy (PF1 CRB — attack rolls are included, unlike D&D 3.5). The
-//! support-state matrix row for `class.ranger.hybrid_chassis_and_spell_burden`
-//! stays `Partial`: combat style, the favored-enemy conditional-application
-//! engine, and the later spell burden remain named and unproven.
+//! SD13-F6 hybrid baseline: the live rules-core surface grounds Track for real
+//! as a bounded flat Survival-check bonus (`max(ranger level / 2, 1)`, i.e. `1`
+//! at the bounded level-1 baseline), grounds the Favored Enemy flat surface for
+//! real (SD13-E5): recognition of the chosen favored-enemy type from the
+//! fixture's `choice:ranger_favored_enemy` selection, the flat +2 bonus on
+//! Bluff, Knowledge, Perception, Sense Motive, and Survival checks against the
+//! favored enemy, and the flat +2 bonus on weapon attack and damage rolls
+//! against the favored enemy (PF1 CRB — attack rolls are included, unlike D&D
+//! 3.5), and grounds the combat-style pillar as a correct level-1 ABSENCE
+//! (value 0, a later SD13-E5 slice): PF1 Core Rulebook grants the
+//! archery-vs-two-weapon-combat style choice and its first bonus feat TOGETHER
+//! at 2nd level, not split across a level-1 choice and a level-2 grant as an
+//! earlier version of this record (the now-retired
+//! `class_feature.ranger.combat_style.unsupported` claim-blocking diagnostic)
+//! incorrectly claimed. The support-state matrix row for
+//! `class.ranger.hybrid_chassis_and_spell_burden` stays `Partial`: the
+//! favored-enemy conditional-application engine, the level-2 combat-style feat
+//! grant itself, and the later spell burden remain named and unproven.
 //!
 //! It is intentionally not a Ranger class engine. It grounds no favored-enemy
 //! target-type matching or conditional-application engine (the flat magnitudes
@@ -52,7 +58,9 @@ const FIGHTER_FIXTURE: &str =
 // Favored Enemy flat-surface grounding slice; it must no longer be emitted.
 const RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID: &str =
     "class_feature.ranger.favored_enemy.unsupported";
-const RANGER_COMBAT_STYLE_ID: &str = "class_feature.ranger.combat_style.unsupported";
+// The combat-style claim-blocking diagnostic is RETIRED by the later SD13-E5
+// Combat Style level-gate correction slice; it must no longer be emitted.
+const RANGER_COMBAT_STYLE_RETIRED_BLOCKER_ID: &str = "class_feature.ranger.combat_style.unsupported";
 const RANGER_TRACK_ID: &str = "class_chassis.ranger.track";
 
 // Grounded Favored Enemy flat-surface records (SD13-E5).
@@ -61,15 +69,21 @@ const RANGER_FAVORED_ENEMY_SKILL_BONUS_ID: &str = "class_chassis.ranger.favored_
 const RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID: &str =
     "class_chassis.ranger.favored_enemy_attack_damage_bonus";
 
+// Grounded combat-style level-gate absence record (later SD13-E5 slice): PF1
+// grants the style choice and its first bonus feat together at 2nd level, so
+// this bounded level-1 baseline grounds a correct value-0 ABSENCE.
+const RANGER_COMBAT_STYLE_LEVEL_GATE_ID: &str = "class_chassis.ranger.level_gate.combat_style";
+
 // Every Ranger-only per-pillar record id — used by the negative controls to
 // prove none of them leak onto sibling classes, level 2+, or multiclass.
-const RANGER_PER_PILLAR_RECORD_IDS: [&str; 6] = [
+const RANGER_PER_PILLAR_RECORD_IDS: [&str; 7] = [
     RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID,
-    RANGER_COMBAT_STYLE_ID,
+    RANGER_COMBAT_STYLE_RETIRED_BLOCKER_ID,
     RANGER_TRACK_ID,
     RANGER_FAVORED_ENEMY_CHOICE_ID,
     RANGER_FAVORED_ENEMY_SKILL_BONUS_ID,
     RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID,
+    RANGER_COMBAT_STYLE_LEVEL_GATE_ID,
 ];
 
 // F6 hybrid blockers are accepted truth and must still be claim-blocking for
@@ -137,24 +151,31 @@ fn has_explanation(computation: &PilotBaseChassisComputation, id: &str) -> bool 
 // ----- The remaining per-pillar Ranger chassis blocker must be present and claim-blocking -----
 
 #[test]
-fn ranger_level1_emits_combat_style_blocker_and_no_retired_favored_enemy_blocker() {
+fn ranger_level1_grounds_combat_style_level_gate_and_no_retired_blockers() {
     let input = load(RANGER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let diag = claim_blocking(&computation, RANGER_COMBAT_STYLE_ID);
-    assert!(
-        !diag.message.is_empty(),
-        "per-pillar ranger combat-style blocker must carry a non-empty message"
+    let combat_style = explanation(&computation, RANGER_COMBAT_STYLE_LEVEL_GATE_ID);
+    assert_eq!(
+        combat_style.value, 0,
+        "combat-style level-gate record is a correct level-1 absence and must carry no \
+         fabricated mechanical value, got {}",
+        combat_style.value
     );
 
-    // The favored-enemy claim-blocking diagnostic is retired: the flat surface
-    // is grounded for real, so the blocker must no longer be emitted.
-    assert!(
-        !has_diagnostic(&computation, RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID),
-        "the retired favored-enemy blocker '{RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID}' must no \
-         longer be emitted, got {:?}",
-        computation.diagnostics
-    );
+    // Both the favored-enemy AND the combat-style claim-blocking diagnostics are
+    // retired: the flat favored-enemy surface and the combat-style level-gate
+    // absence are both grounded for real, so neither blocker must be emitted.
+    for id in [
+        RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_RETIRED_BLOCKER_ID,
+    ] {
+        assert!(
+            !has_diagnostic(&computation, id),
+            "the retired blocker '{id}' must no longer be emitted, got {:?}",
+            computation.diagnostics
+        );
+    }
 }
 
 // ----- The Favored Enemy flat surface is grounded for real (SD13-E5) -----
@@ -275,25 +296,36 @@ fn ranger_without_favored_enemy_choice_grounds_magnitudes_but_not_recognition() 
 }
 
 #[test]
-fn ranger_combat_style_blocker_names_level1_choice_and_level2_feat_grant() {
+fn ranger_combat_style_level_gate_names_level2_milestone_only() {
     let input = load(RANGER_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    let combat_style = claim_blocking(&computation, RANGER_COMBAT_STYLE_ID);
+    let combat_style = explanation(&computation, RANGER_COMBAT_STYLE_LEVEL_GATE_ID);
     assert!(
-        combat_style.message.contains("combat style"),
-        "ranger combat-style blocker must name the combat-style burden: {}",
-        combat_style.message
+        combat_style.detail.contains("combat style") || combat_style.detail.contains("Combat Style"),
+        "ranger combat-style level-gate record must name the combat-style feature: {}",
+        combat_style.detail
+    );
+    // PF1 Core Rulebook grants the style choice AND its first bonus feat
+    // together at 2nd level -- the record must name the 2nd-level milestone.
+    assert!(
+        combat_style.detail.contains("2nd level"),
+        "ranger combat-style level-gate record must name the 2nd-level PF1 CRB milestone: {}",
+        combat_style.detail
+    );
+    // Corrected framing: must not resurrect the retired claim that the style
+    // choice is itself a level-1 decision separate from the level-2 feat grant.
+    assert!(
+        !combat_style
+            .detail
+            .contains("is a level-1 decision, but the bonus feat"),
+        "ranger combat-style level-gate record must not resurrect the retired mistaken framing: {}",
+        combat_style.detail
     );
     assert!(
-        combat_style.message.contains("level-1") || combat_style.message.contains("level 1"),
-        "ranger combat-style blocker must name the level-1 style choice: {}",
-        combat_style.message
-    );
-    assert!(
-        combat_style.message.contains("level-2") || combat_style.message.contains("level 2"),
-        "ranger combat-style blocker must name the level-2 bonus-feat milestone: {}",
-        combat_style.message
+        combat_style.detail.contains("correctly absent"),
+        "ranger combat-style level-gate record must state the correct level-1 ABSENCE: {}",
+        combat_style.detail
     );
 }
 
@@ -431,23 +463,157 @@ fn ranger_rogue_barbarian_monk_do_not_gain_ranger_pillar_records() {
     }
 }
 
-// ----- Level-2+ Ranger and multiclass are not promoted by this slice -----
+// ----- Level-2 Ranger was later widened into the supported tranche, level-3+ and multiclass are not -----
 
 #[test]
-fn ranger_level2_is_not_promoted_by_this_slice() {
+fn ranger_level2_was_later_widened_into_the_supported_tranche() {
+    // At the time this file was written, Ranger level 2+ was entirely out of scope
+    // (the level-1-only gate `is_single_class_ranger_level1` did not recognize it). A
+    // later SD13-E5 slice (`tests/sd13_ranger_level2_progression.rs`) widened the gate
+    // to a level-range gate (`supported_ranger_level`, 1..=2) and extended Track and
+    // the Favored Enemy flat surface to level 2 via the same formulas (this ad-hoc
+    // fixture, built by a simple level-number replace, still carries the fixture's
+    // original `choice:ranger_favored_enemy` selection, so those records now ground).
+    // The retired F6 blockers stay retired either way. The combat-style level-gate
+    // ABSENCE record is level-1-ONLY and is correctly retired at level 2 too -- this
+    // ad-hoc fixture carries no `choice:ranger_combat_style` selection, so there is
+    // nothing for the widened seam to recognize in its place (mirroring the Favored
+    // Enemy choice-absence idiom); see `tests/sd13_ranger_level2_progression.rs` for
+    // the dedicated fixture that does carry a combat-style selection and grounds the
+    // choice-recognition records.
     let level_2 = RANGER_FIXTURE.replace("class:ranger:1", "class:ranger:2");
     let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
 
-    for id in RANGER_PER_PILLAR_RECORD_IDS {
+    for id in [
+        RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_LEVEL_GATE_ID,
+    ] {
         assert!(
             !has_diagnostic(&computation, id) && !has_explanation(&computation, id),
-            "level-2 ranger must not gain the bounded level-1 per-pillar record '{id}'"
+            "level-2 ranger must not gain the retired/level-1-only record '{id}': {:?} / {:?}",
+            computation.diagnostics,
+            computation.explanations
+        );
+    }
+    for id in [
+        RANGER_TRACK_ID,
+        RANGER_FAVORED_ENEMY_CHOICE_ID,
+        RANGER_FAVORED_ENEMY_SKILL_BONUS_ID,
+        RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID,
+    ] {
+        assert!(
+            has_explanation(&computation, id),
+            "level-2 ranger must now carry the widened per-pillar record '{id}': {:?}",
+            computation.explanations
         );
     }
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-2 ranger must stay claim-blocked in this slice"
+        "level-2 ranger must stay claim-blocked overall (spell burden, favored-enemy \
+         conditional-application engine, and combat-style bonus-feat mechanics all remain \
+         unproven)"
+    );
+}
+
+#[test]
+fn ranger_level_3_was_later_widened_into_the_supported_tranche() {
+    // At the time this file was written, Ranger level 3+ was entirely out of scope
+    // (the level-range gate `supported_ranger_level` only recognized 1..=2). A later
+    // SD13-E5 slice (`tests/sd13_ranger_level3_progression.rs`) widened the gate to
+    // 1..=3 and extended Track and the Favored Enemy flat surface to level 3 via the
+    // same formulas (this ad-hoc fixture, built by a simple level-number replace,
+    // still carries the fixture's original `choice:ranger_favored_enemy` selection,
+    // so those records now ground). The retired F6 blockers stay retired either way.
+    // The combat-style level-gate ABSENCE record is level-1-ONLY and stays correctly
+    // retired at level 3 too -- this ad-hoc fixture carries no
+    // `choice:ranger_combat_style` selection, so there is nothing for the widened
+    // seam to recognize in its place. See `tests/sd13_ranger_level3_progression.rs`
+    // for the dedicated fixture that does carry a combat-style selection and
+    // Endurance's own grounding.
+    let level_3 = RANGER_FIXTURE.replace("class:ranger:1", "class:ranger:3");
+    let input = load(&level_3);
+    let computation = compute_pilot_base_chassis(&input);
+
+    for id in [
+        RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_LEVEL_GATE_ID,
+    ] {
+        assert!(
+            !has_diagnostic(&computation, id) && !has_explanation(&computation, id),
+            "level-3 ranger must not gain the retired/level-1-only record '{id}': {:?} / {:?}",
+            computation.diagnostics,
+            computation.explanations
+        );
+    }
+    for id in [
+        RANGER_TRACK_ID,
+        RANGER_FAVORED_ENEMY_CHOICE_ID,
+        RANGER_FAVORED_ENEMY_SKILL_BONUS_ID,
+        RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID,
+    ] {
+        assert!(
+            has_explanation(&computation, id),
+            "level-3 ranger must now carry the widened per-pillar record '{id}': {:?}",
+            computation.explanations
+        );
+    }
+    assert!(
+        has_explanation(&computation, "class_feature.ranger.endurance"),
+        "level-3 ranger must now carry the newly-grounded Endurance record: {:?}",
+        computation.explanations
+    );
+    assert!(
+        computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "level-3 ranger must stay claim-blocked overall (spell burden, favored-enemy \
+         conditional-application engine, and combat-style bonus-feat mechanics all remain \
+         unproven)"
+    );
+}
+
+#[test]
+fn ranger_level4_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 4 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_ranger_level4_progression.rs) widened the level-range gate to
+    // level 4 (mirroring the Fighter/Paladin/Rogue/Barbarian/Monk level-range
+    // gate idiom) and grounded Hunter's Bond; this negative control is
+    // superseded, not violated — pin the new truth here too so this file stays
+    // internally consistent. The retired blockers and the level-1-only
+    // combat-style level-gate marker correctly stay absent at level 4 (the
+    // combat-style pillar is recognized differently once the 2nd-level gate is
+    // reached); the active per-pillar records stay grounded.
+    let level_4 = RANGER_FIXTURE.replace("class:ranger:1", "class:ranger:4");
+    let input = load(&level_4);
+    let computation = compute_pilot_base_chassis(&input);
+
+    for id in [
+        RANGER_FAVORED_ENEMY_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_RETIRED_BLOCKER_ID,
+        RANGER_COMBAT_STYLE_LEVEL_GATE_ID,
+    ] {
+        assert!(
+            !has_diagnostic(&computation, id) && !has_explanation(&computation, id),
+            "level-4 ranger must still not carry the retired/level-1-only record '{id}'"
+        );
+    }
+    for id in [
+        RANGER_TRACK_ID,
+        RANGER_FAVORED_ENEMY_CHOICE_ID,
+        RANGER_FAVORED_ENEMY_SKILL_BONUS_ID,
+        RANGER_FAVORED_ENEMY_ATTACK_DAMAGE_BONUS_ID,
+    ] {
+        assert!(
+            has_explanation(&computation, id),
+            "level-4 ranger is supported since the SD13-E5 level-4 slice and must gain the \
+             per-pillar record '{id}'"
+        );
+    }
+    assert!(
+        has_explanation(&computation, "class_feature.ranger.endurance"),
+        "level-4 ranger must keep the bounded level-3 Endurance record grounded"
     );
 }
 
@@ -471,11 +637,11 @@ fn multiclass_ranger_is_not_promoted_by_this_slice() {
 
 #[test]
 fn ranger_level1_still_yields_blocked_headless_receipt_and_view_model() {
-    // Grounding Track and the Favored Enemy flat surface does not unblock the
-    // whole character: combat style and the shared F6 hybrid burdens are still
-    // claim-blocking diagnostics, so the per-character receipt status stays
-    // Blocked even though the row's SupportState is Partial at the matrix
-    // (documentary) level.
+    // Grounding Track, the Favored Enemy flat surface, and the combat-style
+    // level-gate absence does not unblock the whole character: the shared F6
+    // hybrid burdens are still claim-blocking diagnostics, so the
+    // per-character receipt status stays Blocked even though the row's
+    // SupportState is Partial at the matrix (documentary) level.
     let input = load(RANGER_FIXTURE);
     let receipt = build_pilot_headless_receipt(&input);
     assert_eq!(
@@ -526,10 +692,19 @@ fn matrix_ranger_row_is_promoted_to_partial_and_names_remaining_pillars() {
 
     let note = ranger.blocker_or_lossiness_note;
     assert!(!note.is_empty(), "ranger partial row must carry a note");
-    // Combat style remains the named, unproven class-feature pillar.
+    // Combat style is named; the level-1 surface is a grounded correct absence,
+    // and the level-2 bonus-feat grant remains the unproven remainder.
     assert!(
         note.contains("combat style"),
-        "ranger partial note must name the still-unproven 'combat style' pillar: {note}"
+        "ranger partial note must name the 'combat style' pillar: {note}"
+    );
+    assert!(
+        note.contains("2nd level") || note.contains("level-2"),
+        "ranger partial note must name the level-2 combat-style milestone: {note}"
+    );
+    assert!(
+        !note.contains("the level-1 style choice and its level-2 bonus-feat grant"),
+        "ranger partial note must not resurrect the retired mistaken framing: {note}"
     );
     // The favored-enemy FLAT SURFACE is grounded; the conditional-application
     // engine (target-type matching) stays named and unproven.

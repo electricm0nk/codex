@@ -506,38 +506,43 @@ fn fighter_paladin_ranger_do_not_gain_barbarian_recognition() {
 }
 
 #[test]
-fn barbarian_level_2_is_not_promoted_by_this_slice() {
-    // The slice is bounded to level 1; a level-2 Barbarian must not gain the
-    // level-1 martial recognition record and stays blocked.
+fn barbarian_level_2_was_later_widened_into_the_supported_tranche() {
+    // At the time this file's slice landed, level 2 was the next unproven
+    // milestone and stayed unrecognized. A later SD13-E5 slice
+    // (tests/sd13_barbarian_level2_progression.rs) widened the level-1-only gate
+    // to level 2 (mirroring the Fighter/Paladin/Rogue level-range gate idiom) and
+    // extended the base-attack/base-save/fast-movement/rage-rounds formulas; this
+    // negative control is superseded, not violated — pin the new truth here too
+    // so this file stays internally consistent.
     let level_2 = BARBARIAN_FIXTURE.replace("class:barbarian:1", "class:barbarian:2");
     let input = load(&level_2);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
-        !has_explanation(&computation, "class_chassis.barbarian.bounded_progression"),
-        "level-2 Barbarian must not gain the bounded level-1 martial recognition record"
-    );
-    // A level-2 barbarian must NOT surface the rage-execution burden diagnostic, nor
-    // any of the grounded level-1 explanation records; level-2 promotion is reserved
-    // for a later slice.
-    assert!(
-        !computation
-            .diagnostics
-            .iter()
-            .any(|d| d.id.starts_with("class_feature.barbarian.")),
-        "level-2 Barbarian must not surface the level-1 barbarian burden diagnostics: {:?}",
-        computation.diagnostics
-    );
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
-        "level-2 Barbarian must not surface the level-1 barbarian chassis explanations: {:?}",
+        has_explanation(&computation, "class_chassis.barbarian.bounded_progression"),
+        "level-2 Barbarian is supported since the SD13-E5 level-2 slice: {:?}",
         computation.explanations
     );
     assert!(
+        has_explanation(&computation, "class_chassis.barbarian.base_attack_bonus"),
+        "level-2 Barbarian is supported since the SD13-E5 level-2 slice: {:?}",
+        computation.explanations
+    );
+    // No named Barbarian pillar diagnostic remains at level 2 (only the still-named
+    // rage-execution burden, which is a diagnostic by design, not a pillar gap).
+    assert!(
+        computation
+            .diagnostics
+            .iter()
+            .filter(|d| d.id.starts_with("class_feature.barbarian."))
+            .all(|d| d.id == "class_feature.barbarian.bounded_progression.rage_execution.unsupported"),
+        "level-2 Barbarian must not surface any named barbarian burden diagnostic beyond the \
+         still-unproven rage-execution engine: {:?}",
+        computation.diagnostics
+    );
+    assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-2 Barbarian must stay claim-blocked in this slice"
+        "level-2 Barbarian must still be claim-blocked by the generic chassis diagnostics and \
+         the rage-execution diagnostic"
     );
 }
 
@@ -602,8 +607,10 @@ fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_un
             "barbarian partial note must record the illiteracy rules correction ('{token}'): {note}"
         );
     }
-    // Rage's flat numeric surface is grounded; the rage-state execution engine is
-    // the named remaining burden, and weapon familiarity / level-2+ stay unclaimed.
+    // Rage's flat numeric surface is grounded (across level 1 and the later SD13-E5
+    // level-2 through level-9 widenings); the
+    // rage-state execution engine is the named remaining burden, and weapon
+    // familiarity / level-11+ stay unclaimed.
     for token in [
         "base attack",
         "base save",
@@ -611,7 +618,7 @@ fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_un
         "rage rounds",
         "rage execution",
         "weapon familiarity",
-        "level-2+",
+        "level-11+",
     ] {
         assert!(
             note.contains(token),

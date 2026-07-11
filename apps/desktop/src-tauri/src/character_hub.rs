@@ -616,7 +616,6 @@ mod tests {
             generic_plus(&[
                 "class_feature.hybrid.ranger.unsupported",
                 "class_spell.hybrid.ranger.unsupported",
-                "class_feature.ranger.combat_style.unsupported",
             ])
         );
 
@@ -689,11 +688,13 @@ mod tests {
             "non-Human Paladin must not receive any named Paladin diagnostic"
         );
 
-        // Proves the level-1-only gate: the named Paladin seam does not fire at level 2.
+        // Proves the SD13-E5 level-2 widening: lay on hands, divine grace, smite evil,
+        // and the effective-caster-level gate are all grounded at level 2, so only the
+        // still-unproven spell burden diagnostic remains claim-blocking.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:paladin", 2),
-            generic_ids(),
-            "the named Paladin seam is level-1-only; level 2 must fall back to generic-only"
+            generic_plus(&["class_spell.paladin.partial_caster.unsupported"]),
+            "Paladin level 2 chassis is grounded; only the spell burden stays claim-blocking"
         );
     }
 

@@ -1,0 +1,44 @@
+# SD13-E5 deterministic Human Monk level 10 progression fixture.
+# Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human Monk
+# level-1..level-9 martial chassis baseline to level 10 as chosen input only.
+# It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus
+# and bonus-feat) and the deterministic ability/feat/skill/equipment posture
+# from the level-1 through level-9 fixtures, adding only the level bump this
+# bounded tranche needs. The level-1 monk_bonus_feat choice (Stunning Fist)
+# is carried forward unchanged — PF1 also grants monks SEPARATE bonus feats
+# at 2nd and 6th level, but this slice deliberately does not add a new
+# choice-slot for either (it stays named but unproven, unchanged by this
+# widening).
+#
+# It deliberately avoids every later Monk burden surface: no execution of
+# what the recognized bonus feat actually does, no level-2/level-6/level-10
+# repeat bonus-feat grant recognition, no ki-power execution (extra attack,
+# AC bonus, or speed bonus), no ki-strike damage-reduction-bypass resolution
+# (the level-10 "ki pool (lawful)" entry needs a DR/attack-resolution engine
+# that does not exist in this codebase, so it stays named-but-unproven,
+# mirroring the level-7 cold-iron/silver upgrade's own precedent), no
+# fall-damage engine, no High Jump, no Wholeness of Body execution, and no
+# level-11+ progression. The PF1 CRB Monk class table's level-10 "Special"
+# column reads "Bonus feat, ki pool (lawful), slow fall 50 ft." (verified
+# independently against both d20pfsrd and legacy.aonprd.com) — the only
+# grounded change is Slow Fall's reach rising to 50 ft via the same
+# grant-only identity record; the repeat bonus feat and the ki-lawful
+# DR-bypass property both stay named-but-unproven.
+case_id=pf1-crb-human-monk-level10
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:monk:10
+ability=strength:13
+ability=dexterity:16
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:10
+feat=feat:stunning_fist
+skill=skill:acrobatics:1
+equipment=item:shield:absent
+choice=choice:monk_bonus_feat:feat:stunning_fist
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md
