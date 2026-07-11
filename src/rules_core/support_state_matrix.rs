@@ -358,7 +358,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_level7_progression.rs + \
     tests/sd13_paladin_level8_progression.rs + \
     tests/sd13_paladin_level9_progression.rs + \
-    tests/sd13_paladin_level10_progression.rs";
+    tests/sd13_paladin_level10_progression.rs + \
+    tests/sd13_paladin_spell_level_thresholds.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -2373,7 +2374,22 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     5 (the effective-cleric dice rise at odd levels, so the next rise lands \
                     at 11th, a threshold stasis checked rather than assumed); 10th is NOT a \
                     repeat-Mercy-grant level (the 3rd/6th/9th cadence), so the single \
-                    grounded level-3 selection carries over unchanged. The row is Partial, not \
+                    grounded level-3 selection carries over unchanged — AND a further SD13-E5 \
+                    slice grounds the partial-caster spell-level ACCESS ladder \
+                    (class_chassis.paladin.partial_caster.spell_level_access), mirroring the \
+                    Cleric/Wizard first-non-'—'-column threshold doctrine exactly, verified \
+                    against the raw spells-per-day table rows of both primary sources \
+                    (identical on d20pfsrd and legacy.aonprd.com): 0 at levels 1-3 (no \
+                    spells-per-day columns at all — a correct level-gate absence), 1 at \
+                    levels 4-6 (level 4 shows \"0/—/—/—\", the first non-'—' 1st-level \
+                    column, where a \"0\" entry is access via Charisma bonus spells only \
+                    per the PF1 rule text, surfaced in the record), 2 at levels 7-9 (level 7 \
+                    shows \"1/0/—/—\"), and 3 at level 10 (level 10 shows \"2/1/0/—\"); \
+                    the 4th-level column stays '—' through level 10 (4th-level paladin \
+                    spells begin at 13, outside the tranche ceiling), so no 4th-level \
+                    threshold is grounded. The ladder grounds ACCESS only — the per-day slot \
+                    values themselves are never computed, and the partial-caster blocker \
+                    stays claim-blocking unchanged. The row is Partial, not \
                     Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
                     claim-blocking as accepted hybrid truth, no Paladin level 11+ is proven, \
                     Divine Bond stays named-but-unproven, the level-6 and level-9 repeat \
@@ -2385,10 +2401,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     grounded. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid \
                     chassis recognition explanation all remain in place (each gated to the \
                     bounded hybrid baseline level, so they still fire only at level 1)",
-                next_required_uplift: "ground the paladin spells-known/spells-per-day/spell-DC \
-                    burden content now that the effective-caster-level gate is grounded and \
-                    nonzero (spells begin at paladin level 4, caster level = paladin level - 3, \
-                    now 7 at level 10), then paladin level-11+ progression",
+                next_required_uplift: "ground the paladin spells-per-day slot counts and \
+                    spell-DC burden content now that the effective-caster-level gate and the \
+                    spell-level access ladder (1st at 4, 2nd at 7, 3rd at 10) are both \
+                    grounded, then paladin level-11+ progression",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",

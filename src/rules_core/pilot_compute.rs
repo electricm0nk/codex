@@ -308,6 +308,27 @@ const PALADIN_MERCY_LEVEL: u8 = 3;
 // no lay-on-hands-resource-consumption bookkeeping is computed.
 const PALADIN_CHANNEL_POSITIVE_ENERGY_LEVEL: u8 = 4;
 
+/// The paladin level at which 1st-level paladin spells first become available,
+/// verified against the raw PF1 Core Rulebook Paladin spells-per-day table rows
+/// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows no spells-per-day
+/// columns at all, level 4 shows "0/—/—/—" — the first non-"—" 1st-level
+/// column. A "0" entry is real access, not absence: "When Table: Paladin
+/// indicates that the paladin gets 0 spells per day of a given spell level,
+/// she gains only the bonus spells she would be entitled to based on her
+/// Charisma score for that spell level" (quoted identically by both sources).
+const PALADIN_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 4;
+/// The paladin level at which 2nd-level paladin spells first become available,
+/// verified against the raw table rows (both sources): level 6 shows
+/// "1/—/—/—", level 7 shows "1/0/—/—" — the first non-"—" 2nd-level column.
+const PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
+/// The paladin level at which 3rd-level paladin spells first become available,
+/// verified against the raw table rows (both sources): level 9 shows
+/// "2/1/—/—", level 10 shows "2/1/0/—" — the first non-"—" 3rd-level column.
+/// The 4th-level column stays "—" through level 10 (4th-level paladin spells
+/// begin at 13, outside the tranche ceiling), so no 4th-level threshold const
+/// is grounded.
+const PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+
 /// SD13-E5 Paladin Mercy choice-slot id. The deterministic level-3 fixture names a
 /// chosen mercy (e.g. `mercy:shaken`); the compute seam recognizes whichever raw
 /// mercy string was actually selected, mirroring `choice:ranger_favored_terrain`'s
@@ -4327,6 +4348,42 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
              paladin spells begin at paladin level 4). This grounds only the caster-level gate \
              arithmetic; it computes no spells known, no spells per day, no bonus spell slots, \
              and no spell save DCs"
+        ),
+    });
+
+    // SD13-E5: the partial-caster spell-level ACCESS ladder, mirroring the
+    // Cleric/Wizard <CLASS>_<N>TH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL
+    // threshold doctrine exactly ("first non-'—' spells-per-day column",
+    // verified against the raw table rows of both primary sources, never
+    // derived from the effective-caster-level arithmetic). This grounds the
+    // highest ACCESSIBLE paladin spell level only; the per-day slot values
+    // themselves ("0", "1", "2") are never computed, and the "0"-entry
+    // bonus-spells-only nuance is surfaced in the record text.
+    let paladin_spell_level_access: i16 =
+        if level >= PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            3
+        } else if level >= PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            2
+        } else if level >= PALADIN_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            1
+        } else {
+            0
+        };
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.partial_caster.spell_level_access".to_owned(),
+        value: paladin_spell_level_access,
+        detail: format!(
+            "Paladin spell-level access at paladin level {level}: the highest paladin spell \
+             level with a non-\"—\" spells-per-day column in the PF1 Core Rulebook Paladin \
+             class table is {paladin_spell_level_access} (verified against the raw table rows \
+             of both primary sources: 1st-level spells begin at paladin level \
+             {PALADIN_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 2nd-level at \
+             {PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
+             {PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}; the 4th-level column stays \
+             \"—\" through level 10). A gate-level \"0\" spells-per-day entry is access via \
+             Charisma bonus spells only, per the PF1 rule text. This grounds the access ladder \
+             only: no spell slot counts, no spells per day, no spells known or prepared \
+             posture, no bonus slots from a high Charisma, and no spell save DCs are computed"
         ),
     });
 
