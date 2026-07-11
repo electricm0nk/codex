@@ -381,7 +381,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_level9_progression.rs + \
     tests/sd13_ranger_level10_progression.rs + \
     tests/sd13_ranger_second_favored_terrain.rs + \
-    tests/sd13_ranger_third_favored_enemy.rs";
+    tests/sd13_ranger_third_favored_enemy.rs + \
+    tests/sd13_ranger_spell_level_thresholds.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -2713,8 +2714,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     form are unproven, Woodland Stride's own terrain-movement application and \
                     Swift Tracker's own tracking-penalty application are both unproven, Ranger \
                     level 11+ is not proven, and the later ranger spell burden (spell slots, spell \
-                    source, spells known/prepared) is still deferred to SD13-E4",
-                next_required_uplift: "Ranger \
+                    source, spells known/prepared) is still unproven BEYOND the partial-caster \
+                    identity pair a further SD13-E5 slice grounds \
+                    (class_chassis.ranger.partial_caster.effective_caster_level and \
+                    class_chassis.ranger.partial_caster.spell_level_access, mirroring the \
+                    Paladin pair record-for-record; verified against the raw spells-per-day \
+                    rows and rule text of both primary sources, identical on d20pfsrd and \
+                    legacy.aonprd.com: \"At 4th level and higher, his caster level is equal \
+                    to his ranger level – 3\", so the effective caster level is max(level - \
+                    3, 0) — 0 at levels 1-3, 7 at level 10; the access ladder is 0 at levels \
+                    1-3 (no spells-per-day columns at all), 1 at 4-6 (level 4 shows \
+                    \"0/—/—/—\", the first non-'—' 1st-level column, where a \"0\" entry \
+                    is access via Wisdom bonus spells only — Wisdom, not the Paladin's \
+                    Charisma), 2 at 7-9 (level 7 shows \"1/0/—/—\"), and 3 at level 10 \
+                    (level 10 shows \"2/1/0/—\"); 4th-level ranger spells begin at 13, \
+                    outside the tranche ceiling, so no 4th-level threshold is grounded; both \
+                    records ground gate arithmetic and ACCESS only, no per-day counts / \
+                    prepared posture / bonus slots / DCs, and no new claim-blocking \
+                    diagnostic is added — the spell burden stays named by the accepted F6 \
+                    level-1 hybrid spell blocker and this note)",
+                next_required_uplift: "ground the ranger spells-per-day slot counts and \
+                    prepared-posture burden now that the effective-caster-level gate and the \
+                    spell-level access ladder (1st at 4, 2nd at 7, 3rd at 10) are both \
+                    grounded, then Ranger \
                     level-11+ progression, a favored-enemy conditional-application engine, \
                     execution of either recognized combat-style bonus feat's own mechanics, \
                     Hunter's Bond ally-bonus application and the animal-companion stat \

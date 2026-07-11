@@ -574,6 +574,31 @@ const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID: &str =
 const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION: &str = "terrain:first";
 const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION: &str = "terrain:second";
 
+/// The ranger level at which 1st-level ranger spells first become available,
+/// verified against the raw PF1 Core Rulebook Ranger spells-per-day table rows
+/// (d20pfsrd and legacy.aonprd.com, identical): levels 1-3 show no
+/// spells-per-day columns at all, level 4 shows "0/—/—/—" — the first non-"—"
+/// 1st-level column. A "0" entry is real access, not absence: "When Table:
+/// Ranger indicates that the ranger gets 0 spells per day of a given spell
+/// level, he gains only the bonus spells he would be entitled to based on his
+/// Wisdom score for that spell level" (quoted identically by both sources —
+/// Wisdom, not the Paladin's Charisma). The same sources state the
+/// caster-level rule: "At 4th level and higher, his caster level is equal to
+/// his ranger level – 3" — the exact rule shape already grounded for the
+/// Paladin.
+const RANGER_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 4;
+/// The ranger level at which 2nd-level ranger spells first become available,
+/// verified against the raw table rows (both sources): level 6 shows
+/// "1/—/—/—", level 7 shows "1/0/—/—" — the first non-"—" 2nd-level column.
+const RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
+/// The ranger level at which 3rd-level ranger spells first become available,
+/// verified against the raw table rows (both sources): level 9 shows
+/// "2/1/—/—", level 10 shows "2/1/0/—" — the first non-"—" 3rd-level column.
+/// The 4th-level column stays "—" through level 10 (4th-level ranger spells
+/// begin at 13, outside the tranche ceiling), so no 4th-level threshold const
+/// is grounded.
+const RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+
 /// PF1 Core Rulebook level gate at which Ranger gains Hunter's Bond (4th level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Hunter's bond" as the Ranger 4th-level "Special"
@@ -5710,6 +5735,62 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             ),
         });
     }
+
+    // SD13-E5: the Ranger partial-caster identity pair, mirroring the
+    // Paladin's effective_caster_level + spell_level_access records
+    // record-for-record (PF1 CRB Ranger Spells: "At 4th level and higher,
+    // his caster level is equal to his ranger level – 3"; access ladder per
+    // the Cleric/Wizard "first non-'—' spells-per-day column" threshold
+    // doctrine, verified against the raw table rows of both primary
+    // sources). Both records ground gate arithmetic and the access ladder
+    // ONLY — no per-day counts, no prepared posture (Wisdom-based, from the
+    // ranger list), no bonus slots, and no spell save DCs — and NO new
+    // claim-blocking diagnostic is added: the ranger spell burden stays
+    // named by the accepted F6 level-1 hybrid spell blocker and the matrix
+    // row's note, and the computation stays claim-blocked overall via the
+    // generic chassis diagnostics.
+    let ranger_effective_caster_level = (level_value - 3).max(0);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.partial_caster.effective_caster_level".to_owned(),
+        value: ranger_effective_caster_level,
+        detail: format!(
+            "Ranger effective caster level at ranger level {level}: max(ranger level - 3, 0) = \
+             max({level_value} - 3, 0) = {ranger_effective_caster_level} (PF1 Core Rulebook: \
+             \"At 4th level and higher, his caster level is equal to his ranger level – 3\"; \
+             ranger spells begin at ranger level 4). This grounds only the caster-level gate \
+             arithmetic; it computes no spells known or prepared, no spells per day, no bonus \
+             spell slots, and no spell save DCs"
+        ),
+    });
+
+    let ranger_spell_level_access: i16 =
+        if level >= RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            3
+        } else if level >= RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            2
+        } else if level >= RANGER_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            1
+        } else {
+            0
+        };
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.partial_caster.spell_level_access".to_owned(),
+        value: ranger_spell_level_access,
+        detail: format!(
+            "Ranger spell-level access at ranger level {level}: the highest ranger spell level \
+             with a non-\"—\" spells-per-day column in the PF1 Core Rulebook Ranger class \
+             table is {ranger_spell_level_access} (verified against the raw table rows of \
+             both primary sources: 1st-level spells begin at ranger level \
+             {RANGER_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 2nd-level at \
+             {RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
+             {RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}; the 4th-level column stays \
+             \"—\" through level 10). A gate-level \"0\" spells-per-day entry is access \
+             via Wisdom bonus spells only, per the PF1 rule text — Wisdom, not the Paladin's \
+             Charisma. This grounds the access ladder only: no spells-per-day counts, no \
+             spells known or prepared posture, no bonus slots from a high Wisdom, and no \
+             spell save DCs are computed"
+        ),
+    });
 }
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.
