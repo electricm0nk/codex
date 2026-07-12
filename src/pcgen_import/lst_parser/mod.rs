@@ -3,6 +3,7 @@
 pub mod class;
 pub mod metadata;
 pub mod race_ability;
+pub mod spell;
 
 // Preserve the slice APIs while avoiding collisions between their diagnostic
 // types. The metadata API retains the umbrella names because it landed first;
