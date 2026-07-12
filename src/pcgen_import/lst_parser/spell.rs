@@ -344,7 +344,8 @@ pub fn parse_lst_spell_row(
             continue;
         }
         for (slot, (tag, _name)) in KNOWN_TAGS.iter().enumerate() {
-            if let (true, Some(stripped)) = (field_values[slot].is_none(), value.strip_prefix(tag)) {
+            if let (true, Some(stripped)) = (field_values[slot].is_none(), value.strip_prefix(tag))
+            {
                 let cleaned = stripped.trim();
                 if !cleaned.is_empty() {
                     field_values[slot] = Some(cleaned.to_string());
@@ -483,7 +484,5 @@ pub fn parse_lst_spell_file(path: impl AsRef<Path>) -> Result<LstSpellFile, LstP
 }
 
 fn starts_with_known_tag(value: &str) -> bool {
-    KNOWN_TAGS
-        .iter()
-        .any(|(tag, _name)| value.starts_with(tag))
+    KNOWN_TAGS.iter().any(|(tag, _name)| value.starts_with(tag))
 }

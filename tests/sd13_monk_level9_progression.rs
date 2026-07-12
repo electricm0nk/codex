@@ -29,7 +29,7 @@
 //!   checked rather than assumed).
 //! - Still Mind stays the flat +2; Purity of Body and Evasion stay granted
 //!   +0 identity records, not re-derived; the level-1 bonus-feat choice
-//!   recognition (Stunning Fist) still fires and its execution burden still
+//!   recognition (Deflect Arrows, per the SD13-E5 list correction) still fires and its execution burden still
 //!   claim-blocks.
 //! - the PF1 Core Rulebook Monk class table's level-9 "Special" column
 //!   reads "Improved evasion" (verified independently against both primary

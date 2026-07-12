@@ -348,7 +348,9 @@ fn matrix_ranger_row_is_partial_computed_and_names_remaining_burdens() {
         !note.is_empty(),
         "ranger partial row must carry an explicit non-empty note"
     );
-    for token in ["favored enemy", "combat style", "SD13-E4"] {
+    // "SD13-E4" was the original deferral token; the note now names the spell
+    // burden as unproven BEYOND the grounded partial-caster identity pair.
+    for token in ["favored enemy", "combat style", "partial_caster.spell_level_access"] {
         assert!(
             note.contains(token),
             "ranger partial note must name the '{token}' burden: {note}"

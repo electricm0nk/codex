@@ -9,9 +9,8 @@ use std::fs;
 use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use codex::pcgen_import::lst_parser::{
-    LstParseDiagnosticKind, LstSpellFile, LstSpellRecord, parse_lst_spell_file,
-    parse_lst_spell_row,
+use codex::pcgen_import::lst_parser::spell::{
+    LstParseDiagnosticKind, LstSpellFile, LstSpellRecord, parse_lst_spell_file, parse_lst_spell_row,
 };
 
 // A tight TSV row (the ce_spells.lst shape): exactly 16 columns, no
@@ -20,8 +19,7 @@ use codex::pcgen_import::lst_parser::{
 // detects fields by tag, so both shapes share the same parse path.
 const HAND_BUILT_TSV: &str = "Acid Splash\tTYPE:Arcane\tCLASSES:Sorcerer=0|Wizard=0\tSCHOOL:Conjuration\tDESCRIPTOR:Acid\tCOMPS:V, S\tCASTTIME:1 standard action\tRANGE:Close\tITEM:Scroll\tTARGETAREA:One target\tDURATION:Instantaneous\tSAVEINFO:None\tSPELLRES:No\tSOURCEPAGE:p.241\tSOURCELINK:http://example/acid-splash.html\tDESC:1d3 acid damage.\n";
 
-const HAND_BUILT_TSV_NO_TABS_AT_ALL: &str =
-    "Acid Splash; TYPE:Arcane; SCHOOL:Conjuration";
+const HAND_BUILT_TSV_NO_TABS_AT_ALL: &str = "Acid Splash; TYPE:Arcane; SCHOOL:Conjuration";
 
 const HAND_BUILT_TSV_EMPTY_NAME: &str = "\tTYPE:Arcane\tCLASSES:Wizard=0\tSCHOOL:Conjuration\t\tCOMPS:V, S\tCASTTIME:1 standard action\tRANGE:Close\t\tTARGETAREA:One target\tDURATION:Instantaneous\tSAVEINFO:None\tSPELLRES:No\tSOURCEPAGE:p.1\tSOURCELINK:http://example/x.html\tDESC:no name\n";
 
@@ -37,18 +35,13 @@ const HAND_BUILT_CONTINUATION: &str = "CLASSES:Paladin=4|Inquisitor=5\tCLASSES:P
 const HAND_BUILT_HEADER: &str = "# CVS $Revision: 1 $\nSOURCELONG:Core\tSOURCESHORT:CR\n###Block: Acid\n# Spell Name\tType\tClasses of caster\tSchool\tDescriptor\tComponents\tCasting Time\tRange\tItem\tTarget Area or Effect\tDuration\tSave Info\tSpell Resistance\tSource Page\tSource Pub Link\tDescription\nAcid Splash\tTYPE:Arcane\tCLASSES:Wizard=0\tSCHOOL:Conjuration\tDESCRIPTOR:Acid\tCOMPS:V, S\tCASTTIME:1 standard action\tRANGE:Close\tITEM:Scroll\tTARGETAREA:One target\tDURATION:Instantaneous\tSAVEINFO:None\tSPELLRES:No\tSOURCEPAGE:p.241\tSOURCELINK:http://example/acid-splash.html\tDESC:1d3 acid damage.\n";
 
 // Description carrying the canonical PCGen pipe-delimited meta-annotation.
-const HAND_BUILT_TSV_WITH_PRERULE: &str =
-    "Acid Splash\tTYPE:Arcane\tCLASSES:Wizard=0\tSCHOOL:Conjuration\tDESCRIPTOR:Acid\tCOMPS:V, S\tCASTTIME:1 standard action\tRANGE:Close\tITEM:Scroll\tTARGETAREA:One target\tDURATION:Instantaneous\tSAVEINFO:None\tSPELLRES:No\tSOURCEPAGE:p.241\tSOURCELINK:http://example/acid-splash.html\tDESC:1d3 acid damage.|!PRERULE:1,DisplayFullSpell\n";
+const HAND_BUILT_TSV_WITH_PRERULE: &str = "Acid Splash\tTYPE:Arcane\tCLASSES:Wizard=0\tSCHOOL:Conjuration\tDESCRIPTOR:Acid\tCOMPS:V, S\tCASTTIME:1 standard action\tRANGE:Close\tITEM:Scroll\tTARGETAREA:One target\tDURATION:Instantaneous\tSAVEINFO:None\tSPELLRES:No\tSOURCEPAGE:p.241\tSOURCELINK:http://example/acid-splash.html\tDESC:1d3 acid damage.|!PRERULE:1,DisplayFullSpell\n";
 
 fn corpus_root() -> Option<PathBuf> {
     match std::env::var("CORPUS_ROOT") {
         Ok(value) => {
             let path = PathBuf::from(value);
-            if path.is_dir() {
-                Some(path)
-            } else {
-                None
-            }
+            if path.is_dir() { Some(path) } else { None }
         }
         Err(_) => None,
     }
@@ -109,7 +102,10 @@ fn parse_hand_built_tsv_extracts_all_tagged_fields() {
 fn parse_hand_built_tsv_returns_malformed_diagnostic_when_no_tab_separator() {
     let parsed = parse_lst_spell_row("test_input.lst", 1, HAND_BUILT_TSV_NO_TABS_AT_ALL);
 
-    assert!(parsed.record.is_none(), "no-tab row must not produce a record");
+    assert!(
+        parsed.record.is_none(),
+        "no-tab row must not produce a record"
+    );
 
     let diagnostics = parsed.diagnostics();
     assert!(
@@ -370,10 +366,7 @@ fn parse_lst_spell_file_round_trips_known_pf1_spell_name() {
         .expect("Corruption Resistance must appear in apg_spells.lst");
 
     assert_eq!(found.school.as_deref(), Some("Abjuration"));
-    assert_eq!(
-        found.classes.as_deref(),
-        Some("Antipaladin,Paladin=2")
-    );
+    assert_eq!(found.classes.as_deref(), Some("Antipaladin,Paladin=2"));
     assert_eq!(found.components.as_deref(), Some("V, S, DF"));
     assert_eq!(found.casting_time.as_deref(), Some("1 standard action"));
     assert_eq!(found.range.as_deref(), Some("Touch"));
