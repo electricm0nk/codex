@@ -362,7 +362,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_spell_level_thresholds.rs + \
     tests/sd13_paladin_spells_per_day_counts.rs + \
     tests/sd13_paladin_spell_save_dcs.rs + \
-    tests/sd13_paladin_bonus_spells.rs";
+    tests/sd13_paladin_bonus_spells.rs + \
+    tests/sd13_paladin_total_spells_per_day.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -2501,9 +2502,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     verified on both class pages; the level-4 \"0\"-base/1-bonus pair \
                     makes the bonus-spells-only access visible as two grounded records side \
                     by side; live arithmetic — a dedicated test lowers the fixture Charisma \
-                    and the bonuses zero; the bonus is never added to the base counts — the \
-                    base+bonus TOTAL integration is the remaining slot burden the blocker \
-                    now defers). The row is Partial, not \
+                    and the bonuses zero; the bonus is never added to the base counts by the \
+                    bonus record itself — AND a further SD13-E5 slice grounds the integrated \
+                    TOTAL \
+                    (class_chassis.paladin.partial_caster.total_spells_per_day.spell_level_\
+                    1..3, the pure sum of the two separately grounded records per \
+                    ACCESSIBLE spell level — level-10 totals 3/2/0 on the fixture, where \
+                    the 3rd-level total is the tranche's first honest ZERO total: a \"0\" \
+                    base entry plus a modifier-below-spell-level 0 bonus, accessible but \
+                    currently uncastable at Charisma 14; the level-4 \"0\"-base/1-bonus \
+                    pair lands as arithmetic, total 1; live end-to-end — a dedicated test \
+                    raises the fixture Charisma and the 3rd-level total turns 1; counts \
+                    only, no casting execution, slot consumption, or tracking; the blocker \
+                    now defers exactly spell-source lineage and the prepared posture). The row is Partial, not \
                     Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
                     claim-blocking as accepted hybrid truth, no Paladin level 11+ is proven, \
                     Divine Bond stays named-but-unproven, the level-6 and level-9 repeat \
@@ -2515,10 +2526,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     grounded. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid \
                     chassis recognition explanation all remain in place (each gated to the \
                     bounded hybrid baseline level, so they still fire only at level 1)",
-                next_required_uplift: "ground the paladin Charisma bonus-spells-per-day \
-                    table burden and the prepared-posture/spell-source-lineage burdens now \
-                    that the caster-level gate, the access ladder, the base per-day counts, \
-                    and the base spell-save DCs are all grounded, then paladin level-11+ \
+                next_required_uplift: "ground the paladin prepared-posture and \
+                    spell-source-lineage burdens now that the caster-level gate, the access \
+                    ladder, the base per-day counts, the base spell-save DCs, the Charisma \
+                    bonus-slot counts, and the integrated totals are all grounded, then \
+                    paladin level-11+ \
                     progression",
             },
             SupportStateRow {

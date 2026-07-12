@@ -4581,6 +4581,45 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
+    // SD13-E5: the TOTAL spells per day — the pure sum of the two records
+    // grounded above (base table count + Charisma bonus count) per
+    // ACCESSIBLE spell level, mirroring the Sorcerer/Bard total slices. No
+    // new rules content: each input record carries its own two-source
+    // verification. The level-4 "0"-base/1-bonus pair lands here as
+    // arithmetic (total 1), and the level-10 3rd-level total is an honest
+    // ZERO (a "0" base entry plus a modifier-below-spell-level 0 bonus):
+    // accessible but currently uncastable. Counts only — no
+    // prepared-posture selection, no casting execution, no slot
+    // consumption or tracking, no save resolution.
+    for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = (index + 1) as i16;
+        let bonus_spells = if charisma_modifier < spell_level {
+            0
+        } else {
+            (charisma_modifier - spell_level) / 4 + 1
+        };
+        let total_spells = base_count + bonus_spells;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.paladin.partial_caster.total_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: total_spells,
+            detail: format!(
+                "Paladin total spells per day at paladin level {level}, spell level \
+                 {spell_level}: base table count {base_count} + Charisma bonus \
+                 {bonus_spells} = {total_spells} — the pure sum of the two separately \
+                 grounded records (each carrying its own two-source verification), giving \
+                 the actual castable slot count per day; a total of 0 is honest arithmetic \
+                 (accessible spell level, no castable slots at this Charisma). This grounds \
+                 the count only: no prepared-posture selection, no casting execution, no \
+                 slot consumption or tracking, and no spell save resolution"
+            ),
+        });
+    }
+
     // The partial-caster spell burden is its own blocker, distinct from the
     // grounded non-spell chassis records above. Paladin is a divine partial
     // caster in PF1 Core Rulebook (spells begin at paladin level 4; effective
@@ -4593,12 +4632,12 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
         message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
              partial caster (spells begin at paladin level 4, with effective caster level = \
-             paladin level - 3 in PF1 Core Rulebook), so spell-source lineage, spells known \
-             or prepared posture, and the base+bonus spells-per-day TOTAL integration are \
+             paladin level - 3 in PF1 Core Rulebook), so spell-source lineage and the \
+             spells known or prepared posture are \
              deferred \
              to a later spellcasting slice (the spell-level access ladder, the BASE \
-             spells-per-day table counts, the base spell-save-DC arithmetic, and the \
-             Charisma bonus spell slot counts are \
+             spells-per-day table counts, the base spell-save-DC arithmetic, the \
+             Charisma bonus spell slot counts, and the integrated base+bonus totals are \
              grounded separately as flat records); no partial-caster spell execution is \
              fabricated in this bounded chassis baseline"
             .to_owned(),
