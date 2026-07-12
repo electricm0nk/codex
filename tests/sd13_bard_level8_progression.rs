@@ -298,6 +298,31 @@ fn bard_level8_gains_no_new_bard_namespaced_explanation_id() {
         WELL_VERSED_ID,
         INSPIRE_COMPETENCE_ID,
         LORE_MASTER_ID,
+        // Added by the further SD13-E5 access-ladder slice
+        // (tests/sd13_bard_spell_level_thresholds.rs): a
+        // spells-per-day-table access record that fires at every supported
+        // level; it is not a "Special"-column class feature, so listing it
+        // keeps this control accurate without weakening its claim.
+        "class_chassis.bard.spontaneous.spell_level_access",
+        // The base_spells_per_day family (a further SD13-E5 slice): literal
+        // spells-per-day table records, not "Special"-column class features.
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_1",
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_2",
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_3",
+        "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_4",
+        // The spell_save_dc family (a further SD13-E5 slice): base DC
+        // arithmetic records, not "Special"-column class features.
+        "class_chassis.bard.spontaneous.spell_save_dc.spell_level_1",
+        "class_chassis.bard.spontaneous.spell_save_dc.spell_level_2",
+        "class_chassis.bard.spontaneous.spell_save_dc.spell_level_3",
+        "class_chassis.bard.spontaneous.spell_save_dc.spell_level_4",
+        // The spells_known family (a further SD13-E5 slice): base known-count
+        // table records, not "Special"-column class features.
+        "class_chassis.bard.spontaneous.spells_known.spell_level_0",
+        "class_chassis.bard.spontaneous.spells_known.spell_level_1",
+        "class_chassis.bard.spontaneous.spells_known.spell_level_2",
+        "class_chassis.bard.spontaneous.spells_known.spell_level_3",
+        "class_chassis.bard.spontaneous.spells_known.spell_level_4",
     ];
     assert!(
         computation

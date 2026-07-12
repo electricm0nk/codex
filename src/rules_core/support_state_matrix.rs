@@ -358,7 +358,10 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_level7_progression.rs + \
     tests/sd13_paladin_level8_progression.rs + \
     tests/sd13_paladin_level9_progression.rs + \
-    tests/sd13_paladin_level10_progression.rs";
+    tests/sd13_paladin_level10_progression.rs + \
+    tests/sd13_paladin_spell_level_thresholds.rs + \
+    tests/sd13_paladin_spells_per_day_counts.rs + \
+    tests/sd13_paladin_spell_save_dcs.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -378,7 +381,12 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_level7_progression.rs + \
     tests/sd13_ranger_level8_progression.rs + \
     tests/sd13_ranger_level9_progression.rs + \
-    tests/sd13_ranger_level10_progression.rs";
+    tests/sd13_ranger_level10_progression.rs + \
+    tests/sd13_ranger_second_favored_terrain.rs + \
+    tests/sd13_ranger_third_favored_enemy.rs + \
+    tests/sd13_ranger_spell_level_thresholds.rs + \
+    tests/sd13_ranger_spells_per_day_counts.rs + \
+    tests/sd13_ranger_spell_save_dcs.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -416,7 +424,12 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_level7_progression.rs + \
     tests/sd13_sorcerer_level8_progression.rs + \
     tests/sd13_sorcerer_level9_progression.rs + \
-    tests/sd13_sorcerer_level10_progression.rs";
+    tests/sd13_sorcerer_level10_progression.rs + \
+    tests/sd13_sorcerer_spell_level_thresholds.rs + \
+    tests/sd13_sorcerer_spells_per_day_counts.rs + \
+    tests/sd13_sorcerer_spell_save_dcs.rs + \
+    tests/sd13_sorcerer_spells_known_counts.rs + \
+    tests/sd13_sorcerer_bonus_spells.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -537,7 +550,9 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_level4_progression.rs + tests/sd13_bard_level5_progression.rs + \
     tests/sd13_bard_level6_progression.rs + tests/sd13_bard_level7_progression.rs + \
     tests/sd13_bard_level8_progression.rs + tests/sd13_bard_level9_progression.rs + \
-    tests/sd13_bard_level10_progression.rs";
+    tests/sd13_bard_level10_progression.rs + tests/sd13_bard_spell_level_thresholds.rs + \
+    tests/sd13_bard_spells_per_day_counts.rs + tests/sd13_bard_spell_save_dcs.rs + \
+    tests/sd13_bard_spells_known_counts.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1569,10 +1584,57 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     skill-substitution engine, Suggestion requires a fascinated-target \
                     prerequisite plus the suggestion spell's own effect-resolution engine, and \
                     Dirge of Doom requires both the performance-state engine and a \
-                    fear/shaken-condition resolution engine, none a flat number — and the entire \
-                    spontaneous spell burden (spontaneous spells known, spells per day, bonus \
-                    spell slots from CHA, spell save DCs, school choice, prepared posture) is not \
-                    computed. No performance-execution math and no spell math is fabricated and \
+                    fear/shaken-condition resolution engine, none a flat number — and the spontaneous spell burden \
+                    (spontaneous spells known, spells per day, bonus spell slots from CHA, spell \
+                    save DCs, school choice, prepared posture) is not computed BEYOND the \
+                    spell-level ACCESS ladder a further SD13-E5 slice grounds \
+                    (class_chassis.bard.spontaneous.spell_level_access, mirroring the Paladin \
+                    access-ladder record and the Cleric/Wizard first-non-'—'-column threshold \
+                    doctrine, verified against the raw spells-per-day rows of both primary \
+                    sources, identical on d20pfsrd and legacy.aonprd.com: 1 at levels 1-3 — a \
+                    bard casts 1st-level spells from level 1, so the ladder has no zero step \
+                    and, unlike the Paladin table, no \"0\" spells-per-day entries appear at \
+                    levels 1-10 — 2 at levels 4-6 (level 4 shows \"3/1/—/…\"), 3 at levels \
+                    7-9 (level 7 shows \"4/3/1/—/…\"), and 4 at level 10 (level 10 shows \
+                    \"5/4/3/1/—/—\"); the 5th-level column stays '—' through level 10, so no \
+                    5th-level threshold is grounded; cantrips are \"spells known\" only and \
+                    sit outside the ladder; the access ladder grounds ACCESS only and the \
+                    spontaneous known/per-day blocker stays claim-blocking unchanged — AND a \
+                    further SD13-E5 slice grounds the BASE spells-per-day counts on top of \
+                    the ladder \
+                    (class_chassis.bard.spontaneous.base_spells_per_day.spell_level_1/2/3/4), \
+                    one record per ACCESSIBLE spell level, as a literal table lookup \
+                    mirroring the Paladin/Ranger per-day slices and the Cleric \
+                    domain-slot-count precedent, verified against the raw rows of both \
+                    primary sources (\"1/—/—/—\" at 1 through \"5/4/3/1\" at 10; unlike \
+                    the Paladin/Ranger tables there are NO \"0\" entries at levels 1-10) — \
+                    inaccessible \"—\" spell levels get no record, and only the base \
+                    counts are grounded: Charisma bonus spells and spells KNOWN (a separate \
+                    table, deliberately untouched) stay unproven — AND a further SD13-E5 \
+                    slice grounds the base spell-save-DC arithmetic on top of the ladder \
+                    (class_chassis.bard.spontaneous.spell_save_dc.spell_level_1..4, one \
+                    record per ACCESSIBLE spell level, value 10 + spell level + Charisma \
+                    modifier per the rule text verified identically on both primary \
+                    sources; live arithmetic over the chosen ability score — a dedicated \
+                    test lowers the fixture Charisma and the DCs drop; a DIFFERENT formula \
+                    family from the grounded Fascinate DC, which is keyed to bard level, \
+                    not spell level; no saving-throw resolution, target, spell selection, \
+                    or feat DC modifier is computed; the spontaneous blocker's message now \
+                    defers only spells known, the CHA-modified per-day totals, and bonus \
+                    slots) — AND a further SD13-E5 slice grounds the BASE spells-KNOWN \
+                    counts \
+                    (class_chassis.bard.spontaneous.spells_known.spell_level_0..4, one \
+                    record per non-'—' column of the Bard Spells Known table, a literal \
+                    table lookup verified against the raw rows of both primary sources: \
+                    \"4/2/—/—/—\" at 1 through \"6/5/5/4/2\" at 10 — UNLIKE the \
+                    per-day table this one includes the 0th level, cantrips being \
+                    \"spells known\" only, so a level-1 bard carries two known-count \
+                    records but one per-day record; only the known COUNTS are grounded — \
+                    the selection of WHICH spells are known is never computed, no \
+                    spell-list content, spell identities, or swap/retraining rules, and \
+                    the spontaneous blocker now defers exactly that which-spells \
+                    selection plus the CHA-modified totals and bonus slots)). No \
+                    performance-execution math and no spell math is fabricated and \
                     no Bard level 11+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
@@ -2371,7 +2433,42 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     5 (the effective-cleric dice rise at odd levels, so the next rise lands \
                     at 11th, a threshold stasis checked rather than assumed); 10th is NOT a \
                     repeat-Mercy-grant level (the 3rd/6th/9th cadence), so the single \
-                    grounded level-3 selection carries over unchanged. The row is Partial, not \
+                    grounded level-3 selection carries over unchanged — AND a further SD13-E5 \
+                    slice grounds the partial-caster spell-level ACCESS ladder \
+                    (class_chassis.paladin.partial_caster.spell_level_access), mirroring the \
+                    Cleric/Wizard first-non-'—'-column threshold doctrine exactly, verified \
+                    against the raw spells-per-day table rows of both primary sources \
+                    (identical on d20pfsrd and legacy.aonprd.com): 0 at levels 1-3 (no \
+                    spells-per-day columns at all — a correct level-gate absence), 1 at \
+                    levels 4-6 (level 4 shows \"0/—/—/—\", the first non-'—' 1st-level \
+                    column, where a \"0\" entry is access via Charisma bonus spells only \
+                    per the PF1 rule text, surfaced in the record), 2 at levels 7-9 (level 7 \
+                    shows \"1/0/—/—\"), and 3 at level 10 (level 10 shows \"2/1/0/—\"); \
+                    the 4th-level column stays '—' through level 10 (4th-level paladin \
+                    spells begin at 13, outside the tranche ceiling), so no 4th-level \
+                    threshold is grounded. The ladder grounds ACCESS only — AND a further \
+                    SD13-E5 slice grounds the BASE spells-per-day counts on top of it \
+                    (class_chassis.paladin.partial_caster.base_spells_per_day.spell_level_1/\
+                    2/3), one record per ACCESSIBLE spell level, as a literal table lookup \
+                    mirroring the Cleric domain-slot-count precedent (the spells-per-day \
+                    table is a lookup table, not arithmetic; verified against the raw rows \
+                    of both primary sources: \"0/—/—/—\" at 4, \"1/—/—/—\" at 5-6, \
+                    \"1/0/—/—\" at 7, \"1/1/—/—\" at 8, \"2/1/—/—\" at 9, \
+                    \"2/1/0/—\" at 10) — a \"0\" is a genuine table entry \
+                    (Charisma-bonus-spells-only access), not an absence, and inaccessible \
+                    \"—\" spell levels get no record at all; only the base counts are \
+                    grounded — bonus spells per day from a high Charisma are never computed, \
+                    and the partial-caster blocker stays claim-blocking — AND a further \
+                    SD13-E5 slice grounds the base spell-save-DC arithmetic on top of the \
+                    ladder \
+                    (class_chassis.paladin.partial_caster.spell_save_dc.spell_level_1..3, \
+                    one record per ACCESSIBLE spell level, value 10 + spell level + Charisma \
+                    modifier per the rule text verified identically on both primary sources; \
+                    live arithmetic over the chosen ability score — a dedicated test lowers \
+                    the fixture Charisma and the DCs drop; no saving-throw resolution, \
+                    target, spell selection, or feat DC modifier is computed; the blocker's \
+                    message now defers only the genuinely-unproven remainder: spell-source \
+                    lineage, prepared posture, Charisma bonus slots). The row is Partial, not \
                     Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
                     claim-blocking as accepted hybrid truth, no Paladin level 11+ is proven, \
                     Divine Bond stays named-but-unproven, the level-6 and level-9 repeat \
@@ -2383,10 +2480,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     grounded. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid \
                     chassis recognition explanation all remain in place (each gated to the \
                     bounded hybrid baseline level, so they still fire only at level 1)",
-                next_required_uplift: "ground the paladin spells-known/spells-per-day/spell-DC \
-                    burden content now that the effective-caster-level gate is grounded and \
-                    nonzero (spells begin at paladin level 4, caster level = paladin level - 3, \
-                    now 7 at level 10), then paladin level-11+ progression",
+                next_required_uplift: "ground the paladin Charisma bonus-spells-per-day \
+                    table burden and the prepared-posture/spell-source-lineage burdens now \
+                    that the caster-level gate, the access ladder, the base per-day counts, \
+                    and the base spell-save DCs are all grounded, then paladin level-11+ \
+                    progression",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
@@ -2403,9 +2501,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             (second favored-enemy selection plus the bonus-increase target \
                             choice), (level 6) the SECOND combat-style bonus feat choice \
                             recognition, (level 7) Woodland Stride (a grant-only identity \
-                            record), and (level 8) Swift Tracker (a grant-only identity \
-                            record) grounded for real and the later spell burden still \
-                            blocked",
+                            record), (level 8) Swift Tracker (a grant-only identity \
+                            record), (level 8) the Favored Terrain rule's 8th-level \
+                            interval (second favored-terrain selection plus the \
+                            bonus-increase target choice), and (level 10) the Favored Enemy \
+                            rule's 10th-level interval (third enemy-type selection plus its \
+                            own bonus-increase target choice, stacking with the 5th-level \
+                            increase when both name the same enemy) grounded for real and \
+                            the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -2620,21 +2723,105 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     this slice, mirroring the level-8 2nd-favored-terrain deferral precedent \
                     exactly — the grounded favored-enemy magnitudes carry over unchanged \
                     (+4/+2, the 5th-level interval's increase target still naming the first \
-                    enemy) and nothing is fabricated for the deferred interval. The row is Partial, not \
+                    enemy) and nothing is fabricated for the deferred interval — AND a further SD13-E5 \
+                    slice grounds the level-8 \"2nd favored terrain\" burden that the \
+                    level-8 chassis slice deliberately deferred, mirroring the \
+                    already-grounded Favored Enemy 5th-level interval record-for-record \
+                    (verified independently against d20pfsrd and legacy.aonprd.com: \"At 8th \
+                    level and every five levels thereafter, the ranger may select an \
+                    additional favored terrain. In addition, at each such interval, the skill \
+                    bonus and initiative bonus in any one favored terrain (including the one \
+                    just selected, if so desired), increases by +2.\"): a new \
+                    choice:ranger_favored_terrain_2 choice-slot recognizes whichever second \
+                    terrain type was selected as a bounded +0 identity record \
+                    (class_chassis.ranger.favored_terrain_2_choice) with its own standalone \
+                    flat magnitude (class_feature.ranger.favored_terrain_2, base +2), and a \
+                    new choice:ranger_favored_terrain_bonus_increase_target choice-slot \
+                    (restricted to the terrain:first / terrain:second pair, +0 recognition) \
+                    names the ONE favored terrain whose flat magnitude genuinely rises to +4 \
+                    at the interval — an unrecognized target string grounds no identity and \
+                    fabricates no boost, absent selections fabricate nothing (the baseline \
+                    level-8 fixture computes exactly as before), the selections are correctly \
+                    not recognized below the 8th-level gate, and no terrain-detection or \
+                    conditional-application engine decides whether the character is actually \
+                    in either terrain, so no Initiative or skill-check total is modified by \
+                    any of these records — AND a further SD13-E5 slice grounds the 10th-level \
+                    \"3rd favored enemy\" interval that the level-10 chassis slice \
+                    deliberately deferred, mirroring the already-grounded 5th-level \
+                    favored-enemy and 8th-level favored-terrain intervals record-for-record \
+                    (verified independently against d20pfsrd and legacy.aonprd.com: \"At 5th \
+                    level and every five levels thereafter (10th, 15th, and 20th level), the \
+                    ranger may select an additional favored enemy. In addition, at each such \
+                    interval, the bonus against any one favored enemy (including the one just \
+                    selected, if so desired) increases by +2.\" — each interval grants its \
+                    OWN increase-target choice): a new choice:ranger_favored_enemy_3 \
+                    choice-slot recognizes whichever third enemy type was selected as a \
+                    bounded +0 identity record (class_chassis.ranger.favored_enemy_3_choice) \
+                    with its own standalone flat skill and attack/damage magnitudes \
+                    (class_chassis.ranger.favored_enemy_3_skill_bonus / \
+                    favored_enemy_3_attack_damage_bonus, base +2), and a new \
+                    choice:ranger_favored_enemy_bonus_increase_target_2 choice-slot \
+                    (restricted to the enemy:first / enemy:second / enemy:third set, +0 \
+                    recognition) names the ONE favored enemy whose flat magnitudes genuinely \
+                    rise by +2 at the interval — stacking with the 5th-level increase when \
+                    both target the same enemy (first enemy +6 on the proof fixture: 2 + 2 + \
+                    2); an unrecognized target grounds no identity and fabricates no boost, \
+                    absent selections fabricate nothing (the baseline level-10 fixture \
+                    computes exactly as before), the selections are correctly not recognized \
+                    below the 10th-level gate, and the 15th/20th intervals stay out of \
+                    scope. The row is Partial, not \
                     Supported: the favored-enemy conditional-application engine (target-type \
                     matching that would decide whether a specific check or attack is made \
                     against the favored enemy) is not implemented, neither recognized \
-                    combat-style bonus feat's own mechanics are proven, the 2nd favored-terrain \
-                    selection and the Favored Terrain level-13th/18th breadth beyond it are \
+                    combat-style bonus feat's own mechanics are proven, the Favored Terrain \
+                    level-13th/18th breadth beyond the grounded 8th-level interval is \
                     unproven, Hunter's Bond's ally-bonus application and the animal-companion \
                     form are unproven, Woodland Stride's own terrain-movement application and \
                     Swift Tracker's own tracking-penalty application are both unproven, Ranger \
                     level 11+ is not proven, and the later ranger spell burden (spell slots, spell \
-                    source, spells known/prepared) is still deferred to SD13-E4",
-                next_required_uplift: "the PF1 CRB level-8 2nd favored-terrain selection \
-                    (mirroring the already-grounded Favored Enemy 5th-level idiom), the 10th-level \
-                    3rd-favored-enemy interval (third enemy-type selection plus its own \
-                    bonus-increase-target choice), Ranger \
+                    source, spells known/prepared) is still unproven BEYOND the partial-caster \
+                    identity pair a further SD13-E5 slice grounds \
+                    (class_chassis.ranger.partial_caster.effective_caster_level and \
+                    class_chassis.ranger.partial_caster.spell_level_access, mirroring the \
+                    Paladin pair record-for-record; verified against the raw spells-per-day \
+                    rows and rule text of both primary sources, identical on d20pfsrd and \
+                    legacy.aonprd.com: \"At 4th level and higher, his caster level is equal \
+                    to his ranger level – 3\", so the effective caster level is max(level - \
+                    3, 0) — 0 at levels 1-3, 7 at level 10; the access ladder is 0 at levels \
+                    1-3 (no spells-per-day columns at all), 1 at 4-6 (level 4 shows \
+                    \"0/—/—/—\", the first non-'—' 1st-level column, where a \"0\" entry \
+                    is access via Wisdom bonus spells only — Wisdom, not the Paladin's \
+                    Charisma), 2 at 7-9 (level 7 shows \"1/0/—/—\"), and 3 at level 10 \
+                    (level 10 shows \"2/1/0/—\"); 4th-level ranger spells begin at 13, \
+                    outside the tranche ceiling, so no 4th-level threshold is grounded; both \
+                    records ground gate arithmetic and ACCESS only, and no new \
+                    claim-blocking diagnostic is added — the spell burden stays named by the \
+                    accepted F6 level-1 hybrid spell blocker and this note — AND a further \
+                    SD13-E5 slice grounds the BASE spells-per-day counts on top of the pair \
+                    (class_chassis.ranger.partial_caster.base_spells_per_day.spell_level_1/\
+                    2/3), one record per ACCESSIBLE spell level, as a literal table lookup \
+                    mirroring the Paladin per-day slice and the Cleric domain-slot-count \
+                    precedent, verified against the raw rows of both primary sources \
+                    (numerically identical to the Paladin's: \"0/—/—/—\" at 4 through \
+                    \"2/1/0/—\" at 10) — a \"0\" is a genuine table entry \
+                    (Wisdom-bonus-spells-only access), not an absence, inaccessible \"—\" \
+                    spell levels get no record, and only the base counts are grounded: \
+                    Wisdom bonus spells, prepared posture, and spell-source lineage stay \
+                    unproven — AND a further SD13-E5 slice grounds the base spell-save-DC \
+                    arithmetic on top of the ladder \
+                    (class_chassis.ranger.partial_caster.spell_save_dc.spell_level_1..3, one \
+                    record per ACCESSIBLE spell level, value 10 + spell level + Wisdom \
+                    modifier per the rule text verified identically on both primary sources \
+                    — Wisdom, not the Paladin's Charisma, the family's only Wisdom caster; \
+                    live arithmetic over the chosen ability score — a dedicated test raises \
+                    the fixture Wisdom and the DCs rise; no saving-throw resolution, target, \
+                    spell selection, or feat DC modifier is computed; no new claim-blocking \
+                    diagnostic is added, the spell burden staying named by the F6 level-1 \
+                    hybrid blocker and this note)",
+                next_required_uplift: "ground the ranger Wisdom bonus-spells and \
+                    prepared-posture/spell-source-lineage burdens now that the caster-level \
+                    gate, the access ladder, the base per-day counts, and the base \
+                    spell-save DCs are all grounded, then Ranger \
                     level-11+ progression, a favored-enemy conditional-application engine, \
                     execution of either recognized combat-style bonus feat's own mechanics, \
                     Hunter's Bond ally-bonus application and the animal-companion stat \
@@ -2832,7 +3019,73 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     power, the 3rd-, 5th-, and 7th-level bloodline spells, the 7th-level bloodline \
                     feat, and further bonus spells/feats at higher levels) remains named and \
                     unproven, and the spontaneous spell burden (spontaneous spells known, spell \
-                    slots per day, bonus spell slots, spell save DCs) is entirely unproven. No \
+                    slots per day, bonus spell slots, spell save DCs) is unproven BEYOND the \
+                    spell-level ACCESS ladder a further SD13-E5 slice grounds \
+                    (class_chassis.sorcerer.spontaneous.spell_level_access, mirroring the \
+                    Paladin/Bard access-ladder records and the Cleric/Wizard \
+                    first-non-'—'-column threshold doctrine, verified against the raw \
+                    spells-per-day rows of both primary sources, identical on d20pfsrd and \
+                    legacy.aonprd.com: 1 at levels 1-3 — 1st-level spells from level 1, no \
+                    zero step, and no \"0\" spells-per-day entries anywhere at levels 1-10 — \
+                    2 at levels 4-5 (level 4 shows \"6/3/—/…\"), 3 at levels 6-7 (level 6 \
+                    shows \"6/5/3/—/…\", the sorcerer's two-level cadence rather than the \
+                    bard's three-level one), 4 at levels 8-9 (level 8 shows \
+                    \"6/6/5/3/—/…\"), and 5 at level 10 (level 10 shows \"6/6/6/5/3/—/…\", \
+                    one spell level deeper than any other class in the tranche); the \
+                    6th-level column stays '—' through level 10, so no 6th-level threshold is \
+                    grounded; cantrips are \"spells known\" only and sit outside the ladder; \
+                    the access ladder grounds ACCESS only and the spontaneous blocker stays \
+                    claim-blocking unchanged — AND a further SD13-E5 slice grounds the BASE \
+                    spells-per-day counts on top of the ladder \
+                    (class_chassis.sorcerer.spontaneous.base_spells_per_day.spell_level_1/2/\
+                    3/4/5), one record per ACCESSIBLE spell level, as a literal table lookup \
+                    mirroring the Paladin/Ranger/Bard per-day slices and the Cleric \
+                    domain-slot-count precedent, verified against the raw rows of both \
+                    primary sources (\"3/—/—/—/—\" at 1 through \"6/6/6/5/3\" at 10 — \
+                    five accessible spell levels at the tranche ceiling, the deepest \
+                    per-day surface in the tranche; like the Bard, NO \"0\" entries at \
+                    levels 1-10) — inaccessible \"—\" spell levels get no record, and only \
+                    the base counts are grounded: Charisma bonus spells and spells KNOWN (a \
+                    separate table, deliberately untouched) stay \
+                    unproven — AND a further SD13-E5 slice grounds the base spell-save-DC \
+                    arithmetic on top of the ladder \
+                    (class_chassis.sorcerer.spontaneous.spell_save_dc.spell_level_1..5, one \
+                    record per ACCESSIBLE spell level, value 10 + spell level + Charisma \
+                    modifier per the rule text verified identically on both primary \
+                    sources; live arithmetic over the chosen ability score, not a hardcoded \
+                    table — a dedicated test lowers the fixture Charisma and the DCs drop; \
+                    no saving-throw resolution, target, spell selection, or \
+                    bloodline-arcana/feat DC modifier is computed; the spontaneous \
+                    blocker's message now defers only spells known and Charisma bonus \
+                    slots) — AND a further SD13-E5 slice grounds the BASE spells-KNOWN \
+                    counts \
+                    (class_chassis.sorcerer.spontaneous.spells_known.spell_level_0..5, one \
+                    record per non-'—' column of the Sorcerer Spells Known table, a literal \
+                    table lookup verified against the raw rows of both primary sources: \
+                    \"4/2/—/—/—/—\" at 1 through \"9/5/4/3/2/1\" at 10 — six known-count \
+                    records at the tranche ceiling, the deepest known surface in the \
+                    tranche; the known table includes the 0th level, cantrips being \
+                    \"spells known\" only, and its new-spell-level cadence matches the \
+                    grounded per-day access ladder exactly, checked rather than assumed; \
+                    only the known COUNTS are grounded — the selection of WHICH spells are \
+                    known is never computed, no spell-list content, spell identities, or \
+                    swap/retraining rules, and the 3rd/5th/7th-level bloodline bonus spells \
+                    remain part of the still-unproven bloodline progression burden; the \
+                    spontaneous blocker now defers exactly that which-spells selection plus \
+                    Charisma bonus slots — AND a further SD13-E5 slice grounds the Charisma \
+                    bonus spells per day \
+                    (class_chassis.sorcerer.spontaneous.bonus_spells_per_day.spell_level_1..\
+                    5, one record per ACCESSIBLE spell level from PF1's shared Table: \
+                    Ability Modifiers and Bonus Spells, verified identically on both primary \
+                    sources — for modifier m and spell level N the value is 0 when m < N, \
+                    otherwise (m - N)/4 + 1, gated by the grounded access ladder per the \
+                    rule text \"a spellcaster must be of a high enough class level to be \
+                    able to cast spells of a given spell level\"; cantrips never gain bonus \
+                    spells; live arithmetic — dedicated tests raise and lower the fixture \
+                    Charisma and the bonuses move; a computed 0 is an honest \
+                    modifier-below-spell-level result; the bonus is never added to the base \
+                    counts — the base+bonus TOTAL integration is the remaining slot burden \
+                    the blocker now defers, alongside the which-spells selection). No \
                     spell math is fabricated and no Sorcerer level 11+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \

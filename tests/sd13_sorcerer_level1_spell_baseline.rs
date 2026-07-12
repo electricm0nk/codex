@@ -159,12 +159,44 @@ fn sorcerer_level1_fabricates_no_spell_math() {
     let computation = compute_pilot_base_chassis(&input);
 
     // No explanation may fabricate spell slots, spells known, DCs, bonus spells, prepared
-    // posture, school choice, or general spell totals. The single recognition record is
-    // the only spell-bearing explanation, and it carries +0.
+    // posture, school choice, or general spell totals. The recognition record and — as
+    // of the further SD13-E5 access-ladder slice
+    // (tests/sd13_sorcerer_spell_level_thresholds.rs) — the spell-level ACCESS record
+    // (value 1 at level 1, because a sorcerer casts 1st-level spells from level 1 per
+    // the raw table row "3/—/…"; access only, never per-day counts) are the only
+    // spell-tagged explanations.
     for explanation in &computation.explanations {
         assert!(
-            explanation.id == RECOGNITION_ID || !explanation.id.contains("spell"),
-            "no fabricated spell explanation is allowed beyond the +0 recognition: {explanation:?}"
+            explanation.id == RECOGNITION_ID
+                || explanation.id == "class_chassis.sorcerer.spontaneous.spell_level_access"
+                // The base_spells_per_day family (a further SD13-E5 slice,
+                // tests/sd13_sorcerer_spells_per_day_counts.rs) fires at every
+                // supported level as literal table records; allowing it by
+                // prefix keeps this control accurate without weakening it.
+                || explanation
+                    .id
+                    .starts_with("class_chassis.sorcerer.spontaneous.base_spells_per_day.")
+                // The spell_save_dc family (a further SD13-E5 slice,
+                // tests/sd13_sorcerer_spell_save_dcs.rs): base DC arithmetic
+                // records, allowed by prefix like the per-day family.
+                || explanation
+                    .id
+                    .starts_with("class_chassis.sorcerer.spontaneous.spell_save_dc.")
+                // The spells_known family (a further SD13-E5 slice,
+                // tests/sd13_sorcerer_spells_known_counts.rs): base
+                // known-count table records, allowed by prefix.
+                || explanation
+                    .id
+                    .starts_with("class_chassis.sorcerer.spontaneous.spells_known.")
+                // The bonus_spells_per_day family (a further SD13-E5 slice,
+                // tests/sd13_sorcerer_bonus_spells.rs): Charisma bonus-slot
+                // counts from the shared PF1 table, allowed by prefix.
+                || explanation
+                    .id
+                    .starts_with("class_chassis.sorcerer.spontaneous.bonus_spells_per_day.")
+                || !explanation.id.contains("spell"),
+            "no fabricated spell explanation is allowed beyond the +0 recognition and the \
+             access-ladder record: {explanation:?}"
         );
     }
     // The recognition itself asserts it fabricates no spell math.

@@ -308,6 +308,27 @@ const PALADIN_MERCY_LEVEL: u8 = 3;
 // no lay-on-hands-resource-consumption bookkeeping is computed.
 const PALADIN_CHANNEL_POSITIVE_ENERGY_LEVEL: u8 = 4;
 
+/// The paladin level at which 1st-level paladin spells first become available,
+/// verified against the raw PF1 Core Rulebook Paladin spells-per-day table rows
+/// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows no spells-per-day
+/// columns at all, level 4 shows "0/—/—/—" — the first non-"—" 1st-level
+/// column. A "0" entry is real access, not absence: "When Table: Paladin
+/// indicates that the paladin gets 0 spells per day of a given spell level,
+/// she gains only the bonus spells she would be entitled to based on her
+/// Charisma score for that spell level" (quoted identically by both sources).
+const PALADIN_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 4;
+/// The paladin level at which 2nd-level paladin spells first become available,
+/// verified against the raw table rows (both sources): level 6 shows
+/// "1/—/—/—", level 7 shows "1/0/—/—" — the first non-"—" 2nd-level column.
+const PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
+/// The paladin level at which 3rd-level paladin spells first become available,
+/// verified against the raw table rows (both sources): level 9 shows
+/// "2/1/—/—", level 10 shows "2/1/0/—" — the first non-"—" 3rd-level column.
+/// The 4th-level column stays "—" through level 10 (4th-level paladin spells
+/// begin at 13, outside the tranche ceiling), so no 4th-level threshold const
+/// is grounded.
+const PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+
 /// SD13-E5 Paladin Mercy choice-slot id. The deterministic level-3 fixture names a
 /// chosen mercy (e.g. `mercy:shaken`); the compute seam recognizes whichever raw
 /// mercy string was actually selected, mirroring `choice:ranger_favored_terrain`'s
@@ -463,6 +484,31 @@ const RANGER_FAVORED_ENEMY_BONUS_INCREASE_CHOICE_ID: &str =
 const RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION: &str = "enemy:first";
 const RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION: &str = "enemy:second";
 
+/// PF1 Core Rulebook level gate of the Favored Enemy rule's SECOND interval
+/// (verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both state "At 5th level and every five levels
+/// thereafter (10th, 15th, and 20th level), the ranger may select an
+/// additional favored enemy. In addition, at each such interval, the bonus
+/// against any one favored enemy (including the one just selected, if so
+/// desired) increases by +2." — each interval carries its OWN
+/// bonus-increase-target choice). Only the 10th-level interval is grounded
+/// here; the 15th/20th intervals stay out of scope.
+const RANGER_FAVORED_ENEMY_THIRD_INTERVAL_LEVEL: u8 = 10;
+
+/// SD13-E5 Ranger THIRD Favored Enemy choice-slot id, mirroring
+/// `choice:ranger_favored_enemy_2`'s open-ended (non-restricted-list)
+/// recognition idiom exactly.
+const RANGER_FAVORED_ENEMY_THIRD_CHOICE_ID: &str = "choice:ranger_favored_enemy_3";
+
+/// SD13-E5 Ranger 10th-level-interval bonus-increase TARGET choice-slot id,
+/// mirroring `choice:ranger_favored_enemy_bonus_increase_target`'s
+/// restricted idiom, widened to the three-enemy set (`enemy:first` /
+/// `enemy:second` / `enemy:third`); any other selection is surfaced without
+/// grounding a target identity and no boost is fabricated from it.
+const RANGER_FAVORED_ENEMY_SECOND_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_enemy_bonus_increase_target_2";
+const RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION: &str = "enemy:third";
+
 /// PF1 Core Rulebook level gate at which Ranger gains Endurance (3rd level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Endurance, favored terrain" as the Ranger
@@ -487,8 +533,10 @@ const RANGER_ENDURANCE_LEVEL: u8 = 3;
 /// magnitude, grounded as a standalone, non-applied record -- no
 /// terrain-detection engine decides whether the character is actually in the
 /// chosen terrain, and the +2 is never wired into any actual Initiative total or
-/// skill-check total. The level-8th/13th/18th additional-terrain and
-/// bonus-increase progression stays out of scope for this bounded slice.
+/// skill-check total. The 8th-level additional-terrain and bonus-increase
+/// interval is grounded by a later SD13-E5 slice (see
+/// `RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL`); the 13th/18th intervals
+/// stay out of scope.
 const RANGER_FAVORED_TERRAIN_LEVEL: u8 = 3;
 
 /// SD13-E5 Ranger Favored Terrain choice-slot id. The deterministic fixture names
@@ -498,6 +546,58 @@ const RANGER_FAVORED_TERRAIN_LEVEL: u8 = 3;
 /// idiom exactly -- no enum validation against the Table: Ranger Favored Terrains
 /// list is performed here.
 const RANGER_FAVORED_TERRAIN_CHOICE_ID: &str = "choice:ranger_favored_terrain";
+
+/// PF1 Core Rulebook level gate at which Ranger gains an additional favored
+/// terrain (verified independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both state "At 8th level and every five levels
+/// thereafter, the ranger may select an additional favored terrain. In
+/// addition, at each such interval, the skill bonus and initiative bonus in
+/// any one favored terrain (including the one just selected, if so desired),
+/// increases by +2." — the exact structural mirror of the Favored Enemy
+/// 5th-level interval already grounded on this seam). Only the 8th-level
+/// interval is grounded here; the 13th/18th intervals stay out of scope.
+const RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL: u8 = 8;
+
+/// SD13-E5 Ranger SECOND Favored Terrain choice-slot id, mirroring
+/// `choice:ranger_favored_enemy_2`'s open-ended (non-restricted-list)
+/// recognition idiom exactly — no enum validation against Table: Ranger
+/// Favored Terrains is performed here.
+const RANGER_FAVORED_TERRAIN_SECOND_CHOICE_ID: &str = "choice:ranger_favored_terrain_2";
+
+/// SD13-E5 Ranger Favored Terrain bonus-increase TARGET choice-slot id,
+/// mirroring `choice:ranger_favored_enemy_bonus_increase_target`'s
+/// restricted-pair idiom exactly: only `terrain:first` / `terrain:second`
+/// are recognized; any other selection is surfaced without grounding a
+/// target identity and no boost is fabricated from it.
+const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_terrain_bonus_increase_target";
+const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION: &str = "terrain:first";
+const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION: &str = "terrain:second";
+
+/// The ranger level at which 1st-level ranger spells first become available,
+/// verified against the raw PF1 Core Rulebook Ranger spells-per-day table rows
+/// (d20pfsrd and legacy.aonprd.com, identical): levels 1-3 show no
+/// spells-per-day columns at all, level 4 shows "0/—/—/—" — the first non-"—"
+/// 1st-level column. A "0" entry is real access, not absence: "When Table:
+/// Ranger indicates that the ranger gets 0 spells per day of a given spell
+/// level, he gains only the bonus spells he would be entitled to based on his
+/// Wisdom score for that spell level" (quoted identically by both sources —
+/// Wisdom, not the Paladin's Charisma). The same sources state the
+/// caster-level rule: "At 4th level and higher, his caster level is equal to
+/// his ranger level – 3" — the exact rule shape already grounded for the
+/// Paladin.
+const RANGER_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 4;
+/// The ranger level at which 2nd-level ranger spells first become available,
+/// verified against the raw table rows (both sources): level 6 shows
+/// "1/—/—/—", level 7 shows "1/0/—/—" — the first non-"—" 2nd-level column.
+const RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
+/// The ranger level at which 3rd-level ranger spells first become available,
+/// verified against the raw table rows (both sources): level 9 shows
+/// "2/1/—/—", level 10 shows "2/1/0/—" — the first non-"—" 3rd-level column.
+/// The 4th-level column stays "—" through level 10 (4th-level ranger spells
+/// begin at 13, outside the tranche ceiling), so no 4th-level threshold const
+/// is grounded.
+const RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
 
 /// PF1 Core Rulebook level gate at which Ranger gains Hunter's Bond (4th level,
 /// verified independently against two primary sources: d20pfsrd and
@@ -666,6 +766,34 @@ const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
 const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 10;
 
+/// The sorcerer level at which 2nd-level sorcerer spells first become
+/// available, verified against the raw PF1 Core Rulebook Sorcerer
+/// spells-per-day table rows (d20pfsrd and legacy.aonprd.com, identical):
+/// level 3 shows "5/—/…", level 4 shows "6/3/—/…" — the first non-"—"
+/// 2nd-level column. Like the Bard and unlike the Paladin, the Sorcerer
+/// table has NO "0" spells-per-day entries at levels 1-10; 1st-level
+/// sorcerer spells are available from level 1 ("3/—/…"), so the ladder has
+/// no zero step and no 1st-level threshold const is needed.
+const SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 4;
+/// The sorcerer level at which 3rd-level sorcerer spells first become
+/// available, verified against the raw table rows (both sources): level 5
+/// shows "6/4/—/…", level 6 shows "6/5/3/—/…" — the first non-"—" 3rd-level
+/// column. This is the sorcerer's two-level cadence (4/6/8/10), not the
+/// bard's three-level one (4/7/10).
+const SORCERER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 6;
+/// The sorcerer level at which 4th-level sorcerer spells first become
+/// available, verified against the raw table rows (both sources): level 7
+/// shows "6/6/4/—/…", level 8 shows "6/6/5/3/—/…" — the first non-"—"
+/// 4th-level column.
+const SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 8;
+/// The sorcerer level at which 5th-level sorcerer spells first become
+/// available, verified against the raw table rows (both sources): level 9
+/// shows "6/6/6/4/—/…", level 10 shows "6/6/6/5/3/—/…" — the first non-"—"
+/// 5th-level column. The 6th-level column stays "—" through level 10
+/// (6th-level sorcerer spells begin at 12, outside the tranche ceiling), so
+/// no 6th-level threshold const is grounded.
+const SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
 // chosen input. Recognition only: the Arcane bloodline's level-1 power is Arcane Bond
@@ -691,6 +819,28 @@ const SORCERER_BLOODLINE_CLASS_SKILL_CHOICE_ID: &str = "choice:sorcerer_bloodlin
 // spells per day, spell DCs, bonus spells, school choice, or prepared posture) for
 // it.
 const BARD_CLASS_ID: &str = "class:bard";
+
+/// The bard level at which 2nd-level bard spells first become available,
+/// verified against the raw PF1 Core Rulebook Bard spells-per-day table rows
+/// (d20pfsrd and legacy.aonprd.com, identical): level 3 shows "3/—/…",
+/// level 4 shows "3/1/—/…" — the first non-"—" 2nd-level column. Unlike the
+/// Paladin table, the Bard table has NO "0" spells-per-day entries at levels
+/// 1-10; every non-"—" entry is a positive count. 1st-level bard spells are
+/// available from level 1 ("1/—/…"), so the ladder has no zero step and no
+/// 1st-level threshold const is needed.
+const BARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 4;
+/// The bard level at which 3rd-level bard spells first become available,
+/// verified against the raw table rows (both sources): level 6 shows
+/// "4/3/—/…", level 7 shows "4/3/1/—/…" — the first non-"—" 3rd-level column.
+const BARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
+/// The bard level at which 4th-level bard spells first become available,
+/// verified against the raw table rows (both sources): level 9 shows
+/// "5/4/3/—/…", level 10 shows "5/4/3/1/—/—" — the first non-"—" 4th-level
+/// column. The 5th-level column stays "—" through level 10 (5th-level bard
+/// spells begin at 13, outside the tranche ceiling), so no 5th-level
+/// threshold const is grounded.
+const BARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+
 /// SD13-E5 Bard level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
@@ -1979,10 +2129,16 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // immediately above.
     explain_ranger_level1_chassis_and_class_feature_separation(
         input,
+        &ability_modifiers,
         &mut explanations,
     );
 
-    explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+    explain_sorcerer_level1_spell_baseline(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
     explain_wizard_level1_prepared_spell_baseline(
         input,
@@ -4276,6 +4432,118 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         ),
     });
 
+    // SD13-E5: the partial-caster spell-level ACCESS ladder, mirroring the
+    // Cleric/Wizard <CLASS>_<N>TH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL
+    // threshold doctrine exactly ("first non-'—' spells-per-day column",
+    // verified against the raw table rows of both primary sources, never
+    // derived from the effective-caster-level arithmetic). This grounds the
+    // highest ACCESSIBLE paladin spell level only; the per-day slot values
+    // themselves ("0", "1", "2") are never computed, and the "0"-entry
+    // bonus-spells-only nuance is surfaced in the record text.
+    let paladin_spell_level_access: i16 =
+        if level >= PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            3
+        } else if level >= PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            2
+        } else if level >= PALADIN_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            1
+        } else {
+            0
+        };
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.paladin.partial_caster.spell_level_access".to_owned(),
+        value: paladin_spell_level_access,
+        detail: format!(
+            "Paladin spell-level access at paladin level {level}: the highest paladin spell \
+             level with a non-\"—\" spells-per-day column in the PF1 Core Rulebook Paladin \
+             class table is {paladin_spell_level_access} (verified against the raw table rows \
+             of both primary sources: 1st-level spells begin at paladin level \
+             {PALADIN_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 2nd-level at \
+             {PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
+             {PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}; the 4th-level column stays \
+             \"—\" through level 10). A gate-level \"0\" spells-per-day entry is access via \
+             Charisma bonus spells only, per the PF1 rule text. This grounds the access ladder \
+             only: no spell slot counts, no spells per day, no spells known or prepared \
+             posture, no bonus slots from a high Charisma, and no spell save DCs are computed"
+        ),
+    });
+
+    // SD13-E5: the BASE spells-per-day counts, one record per ACCESSIBLE
+    // spell level, as a literal table lookup mirroring the Cleric
+    // domain-slot-count precedent — the PF1 spells-per-day table is a lookup
+    // table, not arithmetic, so no formula is invented for it. Verified
+    // against the raw table rows of both primary sources (identical on
+    // d20pfsrd and legacy.aonprd.com): level 4 "0/—/—/—", level 5 "1/—/—/—",
+    // level 6 "1/—/—/—", level 7 "1/0/—/—", level 8 "1/1/—/—", level 9
+    // "2/1/—/—", level 10 "2/1/0/—". A "0" is a genuine table entry
+    // (bonus-spells-only access), NOT an absence — inaccessible spell levels
+    // ("—" columns) get no record at all. Only the base counts are grounded:
+    // bonus spells per day from a high Charisma are never computed.
+    let paladin_base_spells_per_day: [Option<i16>; 3] = match level {
+        4 => [Some(0), None, None],
+        5 | 6 => [Some(1), None, None],
+        7 => [Some(1), Some(0), None],
+        8 => [Some(1), Some(1), None],
+        9 => [Some(2), Some(1), None],
+        10 => [Some(2), Some(1), Some(0)],
+        _ => [None, None, None],
+    };
+    for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = index + 1;
+        let zero_nuance = if *base_count == 0 {
+            " A base count of 0 is a genuine table entry, not an absence: per the PF1 rule \
+             text, the paladin gains only the bonus spells she would be entitled to based on \
+             her Charisma score for that spell level."
+        } else {
+            ""
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.paladin.partial_caster.base_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Paladin base spells per day at paladin level {level}, spell level \
+                 {spell_level}: {base_count}, read directly from the PF1 Core Rulebook \
+                 Paladin class table's spells-per-day row (verified against the raw table \
+                 rows of both primary sources; a literal table lookup, not a derived \
+                 formula).{zero_nuance} This grounds the base count only: bonus spells per \
+                 day from a high Charisma are never computed, no prepared posture or \
+                 spell-source lineage is grounded, and no spell save DCs are computed"
+            ),
+        });
+    }
+
+    // SD13-E5: the base spell-save-DC arithmetic, one record per ACCESSIBLE
+    // spell level, mirroring the Sorcerer/Bard DC slices. Verified against
+    // both primary sources, which state the rule identically: "The
+    // Difficulty Class for a saving throw against a paladin's spell is 10 +
+    // the spell level + the paladin's Charisma modifier." This grounds only
+    // the base formula over values already on the seam (the chosen-ability
+    // Charisma modifier and the access ladder): no saving-throw resolution,
+    // no target, no spell selection, and no feat DC modifiers are computed.
+    for spell_level in 1..=paladin_spell_level_access {
+        let spell_save_dc = 10 + spell_level + charisma_modifier;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.paladin.partial_caster.spell_save_dc.spell_level_{spell_level}"
+            ),
+            value: spell_save_dc,
+            detail: format!(
+                "Paladin spell save DC at paladin level {level}, spell level {spell_level}: \
+                 10 + {spell_level} + Charisma modifier {charisma_modifier} = \
+                 {spell_save_dc} (PF1 Core Rulebook, verified identically on both primary \
+                 sources: \"The Difficulty Class for a saving throw against a paladin's \
+                 spell is 10 + the spell level + the paladin's Charisma modifier\"). This \
+                 grounds the base DC formula only: no saving-throw resolution, no target, no \
+                 spell selection, and no feat DC modifiers are computed"
+            ),
+        });
+    }
+
     // The partial-caster spell burden is its own blocker, distinct from the
     // grounded non-spell chassis records above. Paladin is a divine partial
     // caster in PF1 Core Rulebook (spells begin at paladin level 4; effective
@@ -4289,9 +4557,11 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
              partial caster (spells begin at paladin level 4, with effective caster level = \
              paladin level - 3 in PF1 Core Rulebook), so spell-source lineage, spells known \
-             or prepared posture, spells-per-day progression, bonus spell slots, and spell save \
-             DCs are deferred to a later spellcasting slice; no partial-caster spell \
-             execution is fabricated in this bounded chassis baseline"
+             or prepared posture, and bonus spell slots from a high Charisma are deferred \
+             to a later spellcasting slice (the spell-level access ladder, the BASE \
+             spells-per-day table counts, and the base spell-save-DC arithmetic are \
+             grounded separately as flat records); no partial-caster spell execution is \
+             fabricated in this bounded chassis baseline"
             .to_owned(),
         claim_blocking: true,
     });
@@ -4462,6 +4732,7 @@ fn supported_ranger_level(input: &CharacterInput) -> Option<u8> {
 /// continues to pass.
 fn explain_ranger_level1_chassis_and_class_feature_separation(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     let Some(level) = supported_ranger_level(input) else {
@@ -4914,7 +5185,74 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     let second_favored_enemy_targeted = favored_enemy_bonus_increase_target
         == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION);
 
-    let favored_enemy_bonus: i16 = if first_favored_enemy_targeted { 4 } else { 2 };
+    // SD13-E5 ranger level 10: recognize the SECOND interval's own
+    // bonus-increase TARGET choice, only meaningful once the ranger has
+    // reached the Favored Enemy rule's 10th-level interval. Each interval
+    // grants its own +2 increase to any ONE favored enemy — a genuine, free
+    // player choice, so an increase targeting the same enemy at both
+    // intervals STACKS (2 base + 2 + 2). Absent an explicit target
+    // selection in chosen input, nothing is fabricated.
+    let favored_enemy_second_bonus_increase_target =
+        if level >= RANGER_FAVORED_ENEMY_THIRD_INTERVAL_LEVEL {
+            choice_selection(input, RANGER_FAVORED_ENEMY_SECOND_BONUS_INCREASE_CHOICE_ID)
+        } else {
+            None
+        };
+
+    if let Some(target) = favored_enemy_second_bonus_increase_target {
+        let target_name = if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION {
+            Some("the first favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION {
+            Some("the second favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION {
+            Some("the third favored enemy")
+        } else {
+            None
+        };
+        let detail = if let Some(name) = target_name {
+            format!(
+                "Ranger Favored Enemy 10th-level-interval bonus-increase target selection at \
+                 ranger level {level} \
+                 ({RANGER_FAVORED_ENEMY_SECOND_BONUS_INCREASE_CHOICE_ID} -> {target}): names \
+                 {name} as the one favored enemy whose bonus increases by +2 at this \
+                 10th-level interval, per the PF1 Core Rulebook rule that the bonus against \
+                 any ONE favored enemy -- including a newly selected one, if so desired -- \
+                 increases by +2 at each such interval (5th, 10th, 15th, and 20th ranger \
+                 level); an increase targeting the same enemy at both grounded intervals \
+                 stacks. This is a recognition record of the choice slot only (+0); the \
+                 increased magnitude itself is grounded separately on whichever favored enemy \
+                 was actually named"
+            )
+        } else {
+            format!(
+                "Ranger Favored Enemy 10th-level-interval bonus-increase target selection at \
+                 ranger level {level} is present \
+                 ({RANGER_FAVORED_ENEMY_SECOND_BONUS_INCREASE_CHOICE_ID} -> {target}), but \
+                 only the PF1 Core Rulebook restricted set (the first, second, or third \
+                 favored enemy) is recognized on this bounded seam; no target identity is \
+                 grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_bonus_increase_2_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    let first_favored_enemy_targeted_at_second_interval =
+        favored_enemy_second_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION);
+    let second_favored_enemy_targeted_at_second_interval =
+        favored_enemy_second_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION);
+    let third_favored_enemy_targeted_at_second_interval =
+        favored_enemy_second_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION);
+
+    let favored_enemy_bonus: i16 = 2
+        + if first_favored_enemy_targeted { 2 } else { 0 }
+        + if first_favored_enemy_targeted_at_second_interval { 2 } else { 0 };
     explanations.push(ComputationExplanation {
         id: "class_chassis.ranger.favored_enemy_skill_bonus".to_owned(),
         value: favored_enemy_bonus,
@@ -4970,7 +5308,9 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             ),
         });
 
-        let second_favored_enemy_bonus: i16 = if second_favored_enemy_targeted { 4 } else { 2 };
+        let second_favored_enemy_bonus: i16 = 2
+            + if second_favored_enemy_targeted { 2 } else { 0 }
+            + if second_favored_enemy_targeted_at_second_interval { 2 } else { 0 };
         explanations.push(ComputationExplanation {
             id: "class_chassis.ranger.favored_enemy_2_skill_bonus".to_owned(),
             value: second_favored_enemy_bonus,
@@ -4993,6 +5333,63 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  level {level}): +{second_favored_enemy_bonus} on weapon attack rolls AND \
                  weapon damage rolls against the second favored enemy. This grounds only the \
                  flat +{second_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific attack \
+                 is actually made against this favored enemy is never resolved and no combat \
+                 baseline is modified by this record"
+            ),
+        });
+    }
+
+    // SD13-E5 ranger level 10: recognize the THIRD favored-enemy selection,
+    // the rule's 10th-level interval grant. Mirrors the second favored
+    // enemy's own choice-recognition idiom exactly (open-ended, raw string
+    // interpolation, no restricted-list validation) and its own flat
+    // magnitude formula (base +2, or +4 if the 10th-level interval's
+    // bonus-increase target names the third favored enemy).
+    if level >= RANGER_FAVORED_ENEMY_THIRD_INTERVAL_LEVEL
+        && let Some(third_favored_enemy) =
+            choice_selection(input, RANGER_FAVORED_ENEMY_THIRD_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_3_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger 3rd Favored Enemy selection \
+                 ({RANGER_FAVORED_ENEMY_THIRD_CHOICE_ID} -> {third_favored_enemy}): at ranger \
+                 level {level}, PF1 Core Rulebook Favored Enemy grants \"an additional \
+                 favored enemy\" at the 10th-level interval. The level-{level} THIRD \
+                 favored-enemy type chosen for this character is {third_favored_enemy}. This \
+                 is a bounded recognition record of the chosen enemy type only; the flat \
+                 bonus magnitude is grounded separately, and no target-type matching or \
+                 conditional-application engine is implemented, so it carries no fabricated \
+                 mechanical value (+0)"
+            ),
+        });
+
+        let third_favored_enemy_bonus: i16 =
+            if third_favored_enemy_targeted_at_second_interval { 4 } else { 2 };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_3_skill_bonus".to_owned(),
+            value: third_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 3rd Favored Enemy skill bonus (PF1 Core Rulebook, level {level}): \
+                 +{third_favored_enemy_bonus} on Bluff, Knowledge, Perception, Sense Motive, \
+                 and Survival checks against the third favored enemy. This grounds only the \
+                 flat +{third_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific skill \
+                 check is actually made against this favored enemy is never resolved and no \
+                 skill total is modified by this record"
+            ),
+        });
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_3_attack_damage_bonus".to_owned(),
+            value: third_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 3rd Favored Enemy weapon attack/damage bonus (PF1 Core Rulebook, \
+                 level {level}): +{third_favored_enemy_bonus} on weapon attack rolls AND \
+                 weapon damage rolls against the third favored enemy. This grounds only the \
+                 flat +{third_favored_enemy_bonus} magnitude; no target-type matching and no \
                  conditional-application engine is implemented, so whether any specific attack \
                  is actually made against this favored enemy is never resolved and no combat \
                  baseline is modified by this record"
@@ -5081,7 +5478,64 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             });
         }
 
-        let favored_terrain_bonus: i16 = 2;
+        // SD13-E5 ranger level 8: recognize the bonus-increase TARGET choice,
+        // only meaningful once the ranger has reached the Favored Terrain
+        // rule's 8th-level interval. Mirrors the Favored Enemy 5th-level
+        // bonus-increase-target idiom exactly: a genuine, free player choice
+        // of which ONE favored terrain is boosted by +2, not an automatic
+        // bump to the first one. Absent an explicit target selection in
+        // chosen input, nothing is fabricated: both terrains stay at the
+        // flat base magnitude.
+        let favored_terrain_bonus_increase_target =
+            if level >= RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL {
+                choice_selection(input, RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID)
+            } else {
+                None
+            };
+
+        if let Some(target) = favored_terrain_bonus_increase_target {
+            let target_name = if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION {
+                Some("the first favored terrain")
+            } else if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION {
+                Some("the second favored terrain")
+            } else {
+                None
+            };
+            let detail = if let Some(name) = target_name {
+                format!(
+                    "Ranger Favored Terrain bonus-increase target selection at ranger level \
+                     {level} ({RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID} -> {target}): \
+                     names {name} as the one favored terrain whose skill and initiative bonus \
+                     increases by +2 at this 8th-level interval, per the PF1 Core Rulebook rule \
+                     that the bonus in any ONE favored terrain -- including a newly selected \
+                     one, if so desired -- increases by +2 at each such interval (8th, 13th, \
+                     and 18th ranger level). This is a recognition record of the choice slot \
+                     only (+0); the increased magnitude itself is grounded separately on \
+                     whichever favored terrain was actually named"
+                )
+            } else {
+                format!(
+                    "Ranger Favored Terrain bonus-increase target selection at ranger level \
+                     {level} is present ({RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID} -> \
+                     {target}), but only the PF1 Core Rulebook restricted pair (the first \
+                     favored terrain, the second favored terrain) is recognized on this bounded \
+                     seam; no target identity is grounded and no mechanical value is fabricated \
+                     (+0)"
+                )
+            };
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_bonus_increase_choice".to_owned(),
+                value: 0,
+                detail,
+            });
+        }
+
+        let first_favored_terrain_targeted = favored_terrain_bonus_increase_target
+            == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION);
+        let second_favored_terrain_targeted = favored_terrain_bonus_increase_target
+            == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION);
+
+        let favored_terrain_bonus: i16 = if first_favored_terrain_targeted { 4 } else { 2 };
         explanations.push(ComputationExplanation {
             id: "class_feature.ranger.favored_terrain".to_owned(),
             value: favored_terrain_bonus,
@@ -5098,6 +5552,50 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  skill-check total is modified by this record"
             ),
         });
+
+        // SD13-E5 ranger level 8: recognize the SECOND favored-terrain
+        // selection, the rule's 8th-level interval grant. Mirrors the second
+        // Favored Enemy's own choice-recognition idiom exactly (open-ended,
+        // raw string interpolation, no restricted-list validation) and its
+        // own flat magnitude formula (base +2, or +4 if this interval's
+        // bonus-increase target names the second favored terrain).
+        if level >= RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL
+            && let Some(second_favored_terrain) =
+                choice_selection(input, RANGER_FAVORED_TERRAIN_SECOND_CHOICE_ID)
+        {
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_2_choice".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Ranger 2nd Favored Terrain selection \
+                     ({RANGER_FAVORED_TERRAIN_SECOND_CHOICE_ID} -> {second_favored_terrain}): \
+                     at ranger level {level}, PF1 Core Rulebook Favored Terrain grants \"an \
+                     additional favored terrain\" at the 8th-level interval. The \
+                     level-{level} SECOND favored-terrain type chosen for this character is \
+                     {second_favored_terrain}. This is a bounded recognition record of the \
+                     chosen terrain type only; the flat bonus magnitude is grounded \
+                     separately, and no terrain-detection or conditional-application engine \
+                     is implemented, so it carries no fabricated mechanical value (+0)"
+                ),
+            });
+
+            let second_favored_terrain_bonus: i16 =
+                if second_favored_terrain_targeted { 4 } else { 2 };
+            explanations.push(ComputationExplanation {
+                id: "class_feature.ranger.favored_terrain_2".to_owned(),
+                value: second_favored_terrain_bonus,
+                detail: format!(
+                    "Ranger 2nd Favored Terrain bonus (PF1 Core Rulebook, 8th-level \
+                     interval): a flat +{second_favored_terrain_bonus} bonus on Initiative \
+                     checks and Knowledge (geography), Perception, Stealth, and Survival \
+                     checks made when the ranger is in this second chosen favored terrain. \
+                     This is a bounded flat-magnitude record only, non-fabricated: no \
+                     terrain-detection engine decides whether the character is actually in \
+                     the chosen terrain anywhere in this codebase, so no Initiative total or \
+                     skill-check total is modified by this record"
+                ),
+            });
+        }
     }
 
     // Grounded (SD13-E5): Hunter's Bond, the class table's 4th-level "Special"
@@ -5319,6 +5817,142 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  (value 0, non-fabricated): no saving-throw-resolution engine and no \
                  damage-resolution engine exists anywhere in this codebase to apply it, so \
                  this grounds no actual damage reduction on any save outcome"
+            ),
+        });
+    }
+
+    // SD13-E5: the Ranger partial-caster identity pair, mirroring the
+    // Paladin's effective_caster_level + spell_level_access records
+    // record-for-record (PF1 CRB Ranger Spells: "At 4th level and higher,
+    // his caster level is equal to his ranger level – 3"; access ladder per
+    // the Cleric/Wizard "first non-'—' spells-per-day column" threshold
+    // doctrine, verified against the raw table rows of both primary
+    // sources). Both records ground gate arithmetic and the access ladder
+    // ONLY — no per-day counts, no prepared posture (Wisdom-based, from the
+    // ranger list), no bonus slots, and no spell save DCs — and NO new
+    // claim-blocking diagnostic is added: the ranger spell burden stays
+    // named by the accepted F6 level-1 hybrid spell blocker and the matrix
+    // row's note, and the computation stays claim-blocked overall via the
+    // generic chassis diagnostics.
+    let ranger_effective_caster_level = (level_value - 3).max(0);
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.partial_caster.effective_caster_level".to_owned(),
+        value: ranger_effective_caster_level,
+        detail: format!(
+            "Ranger effective caster level at ranger level {level}: max(ranger level - 3, 0) = \
+             max({level_value} - 3, 0) = {ranger_effective_caster_level} (PF1 Core Rulebook: \
+             \"At 4th level and higher, his caster level is equal to his ranger level – 3\"; \
+             ranger spells begin at ranger level 4). This grounds only the caster-level gate \
+             arithmetic; it computes no spells known or prepared, no spells per day, no bonus \
+             spell slots, and no spell save DCs"
+        ),
+    });
+
+    let ranger_spell_level_access: i16 =
+        if level >= RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            3
+        } else if level >= RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            2
+        } else if level >= RANGER_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            1
+        } else {
+            0
+        };
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.ranger.partial_caster.spell_level_access".to_owned(),
+        value: ranger_spell_level_access,
+        detail: format!(
+            "Ranger spell-level access at ranger level {level}: the highest ranger spell level \
+             with a non-\"—\" spells-per-day column in the PF1 Core Rulebook Ranger class \
+             table is {ranger_spell_level_access} (verified against the raw table rows of \
+             both primary sources: 1st-level spells begin at ranger level \
+             {RANGER_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 2nd-level at \
+             {RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
+             {RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}; the 4th-level column stays \
+             \"—\" through level 10). A gate-level \"0\" spells-per-day entry is access \
+             via Wisdom bonus spells only, per the PF1 rule text — Wisdom, not the Paladin's \
+             Charisma. This grounds the access ladder only: no spells-per-day counts, no \
+             spells known or prepared posture, no bonus slots from a high Wisdom, and no \
+             spell save DCs are computed"
+        ),
+    });
+
+    // SD13-E5: the BASE spells-per-day counts, one record per ACCESSIBLE
+    // spell level, as a literal table lookup mirroring the Paladin per-day
+    // slice and the Cleric domain-slot-count precedent — the PF1
+    // spells-per-day table is a lookup table, not arithmetic, so no formula
+    // is invented for it. Verified against the raw table rows of both
+    // primary sources (identical on d20pfsrd and legacy.aonprd.com, and
+    // numerically identical to the Paladin's rows): level 4 "0/—/—/—",
+    // level 5 "1/—/—/—", level 6 "1/—/—/—", level 7 "1/0/—/—", level 8
+    // "1/1/—/—", level 9 "2/1/—/—", level 10 "2/1/0/—". A "0" is a genuine
+    // table entry (Wisdom-bonus-spells-only access), NOT an absence —
+    // inaccessible spell levels ("—" columns) get no record at all. Only
+    // the base counts are grounded: bonus spells per day from a high
+    // Wisdom are never computed.
+    let ranger_base_spells_per_day: [Option<i16>; 3] = match level {
+        4 => [Some(0), None, None],
+        5 | 6 => [Some(1), None, None],
+        7 => [Some(1), Some(0), None],
+        8 => [Some(1), Some(1), None],
+        9 => [Some(2), Some(1), None],
+        10 => [Some(2), Some(1), Some(0)],
+        _ => [None, None, None],
+    };
+    for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = index + 1;
+        let zero_nuance = if *base_count == 0 {
+            " A base count of 0 is a genuine table entry, not an absence: per the PF1 rule \
+             text, the ranger gains only the bonus spells he would be entitled to based on \
+             his Wisdom score for that spell level."
+        } else {
+            ""
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.ranger.partial_caster.base_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Ranger base spells per day at ranger level {level}, spell level \
+                 {spell_level}: {base_count}, read directly from the PF1 Core Rulebook \
+                 Ranger class table's spells-per-day row (verified against the raw table \
+                 rows of both primary sources; a literal table lookup, not a derived \
+                 formula).{zero_nuance} This grounds the base count only: bonus spells per \
+                 day from a high Wisdom are never computed, no prepared posture or \
+                 spell-source lineage is grounded, and no spell save DCs are computed"
+            ),
+        });
+    }
+
+    // SD13-E5: the base spell-save-DC arithmetic, one record per ACCESSIBLE
+    // spell level, mirroring the Sorcerer/Bard/Paladin DC slices and
+    // completing the DC family. Verified against both primary sources,
+    // which state the rule identically: "The Difficulty Class for a saving
+    // throw against a ranger's spell is 10 + the spell level + the ranger's
+    // Wisdom modifier." — the family's only WISDOM caster. This grounds
+    // only the base formula over values already on the seam: no
+    // saving-throw resolution, no target, no spell selection, and no feat
+    // DC modifiers are computed.
+    for spell_level in 1..=ranger_spell_level_access {
+        let spell_save_dc = 10 + spell_level + ability_modifiers.wisdom;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.ranger.partial_caster.spell_save_dc.spell_level_{spell_level}"
+            ),
+            value: spell_save_dc,
+            detail: format!(
+                "Ranger spell save DC at ranger level {level}, spell level {spell_level}: \
+                 10 + {spell_level} + Wisdom modifier {} = {spell_save_dc} (PF1 Core \
+                 Rulebook, verified identically on both primary sources: \"The Difficulty \
+                 Class for a saving throw against a ranger's spell is 10 + the spell level \
+                 + the ranger's Wisdom modifier\" — Wisdom, not the Paladin's Charisma). \
+                 This grounds the base DC formula only: no saving-throw resolution, no \
+                 target, no spell selection, and no feat DC modifiers are computed",
+                ability_modifiers.wisdom
             ),
         });
     }
@@ -7227,6 +7861,7 @@ fn explain_rogue_level1_chassis(
 /// named burdens legible on the runtime path.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -7468,14 +8103,237 @@ fn explain_sorcerer_level1_spell_baseline(
         claim_blocking: true,
     });
 
-    // Still blocked (2/2): name the spontaneous known-spell / slot posture burden explicitly.
+    // SD13-E5: the spontaneous spell-level ACCESS ladder, mirroring the
+    // Paladin/Bard spell_level_access records and the Cleric/Wizard
+    // <CLASS>_<N>TH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL threshold doctrine
+    // exactly ("first non-'—' spells-per-day column", verified against the
+    // raw table rows of both primary sources). This grounds the highest
+    // ACCESSIBLE sorcerer spell level only; the per-day counts themselves
+    // are never computed. Cantrips (0th level, "spells known" only) are
+    // outside the spells-per-day ladder and are not counted.
+    let sorcerer_spell_level_access: i16 =
+        if level >= SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            5
+        } else if level >= SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            4
+        } else if level >= SORCERER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            3
+        } else if level >= SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            2
+        } else {
+            1
+        };
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.sorcerer.spontaneous.spell_level_access".to_owned(),
+        value: sorcerer_spell_level_access,
+        detail: format!(
+            "Sorcerer spell-level access at sorcerer level {level}: the highest sorcerer spell \
+             level (1st+) with a non-\"—\" spells-per-day column in the PF1 Core Rulebook \
+             Sorcerer class table is {sorcerer_spell_level_access} (verified against the raw \
+             table rows of both primary sources: 1st-level spells from level 1 — the ladder \
+             has no zero step — 2nd-level at \
+             {SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
+             {SORCERER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
+             {SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 5th-level at \
+             {SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL} — the sorcerer's two-level \
+             cadence; the 6th-level column stays \"—\" through level 10). Cantrips are \
+             \"spells known\" only and sit outside the spells-per-day ladder, so they are \
+             not counted. This grounds the access ladder only: no spells-per-day counts, no \
+             spells-known posture, no bonus slots from a high Charisma, and no spell save DCs \
+             are computed"
+        ),
+    });
+
+    // SD13-E5: the BASE spells-per-day counts, one record per ACCESSIBLE
+    // spell level, as a literal table lookup mirroring the
+    // Paladin/Ranger/Bard per-day slices and the Cleric domain-slot-count
+    // precedent — the PF1 spells-per-day table is a lookup table, not
+    // arithmetic, so no formula is invented for it. Verified against the
+    // raw table rows of both primary sources (identical on d20pfsrd and
+    // legacy.aonprd.com): level 1 "3/—/—/—/—", level 2 "4/—/—/—/—", level
+    // 3 "5/—/—/—/—", level 4 "6/3/—/—/—", level 5 "6/4/—/—/—", level 6
+    // "6/5/3/—/—", level 7 "6/6/4/—/—", level 8 "6/6/5/3/—", level 9
+    // "6/6/6/4/—", level 10 "6/6/6/5/3". Like the Bard and unlike the
+    // Paladin/Ranger, there are NO "0" entries at levels 1-10; every
+    // accessible column carries a positive base count. Inaccessible spell
+    // levels ("—" columns) get no record at all. Only the base counts are
+    // grounded: bonus spells per day from a high Charisma are never
+    // computed, and spells KNOWN (a separate table) stays untouched.
+    let sorcerer_base_spells_per_day: [Option<i16>; 5] = match level {
+        1 => [Some(3), None, None, None, None],
+        2 => [Some(4), None, None, None, None],
+        3 => [Some(5), None, None, None, None],
+        4 => [Some(6), Some(3), None, None, None],
+        5 => [Some(6), Some(4), None, None, None],
+        6 => [Some(6), Some(5), Some(3), None, None],
+        7 => [Some(6), Some(6), Some(4), None, None],
+        8 => [Some(6), Some(6), Some(5), Some(3), None],
+        9 => [Some(6), Some(6), Some(6), Some(4), None],
+        10 => [Some(6), Some(6), Some(6), Some(5), Some(3)],
+        _ => [None, None, None, None, None],
+    };
+    for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = index + 1;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.sorcerer.spontaneous.base_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Sorcerer base spells per day at sorcerer level {level}, spell level \
+                 {spell_level}: {base_count}, read directly from the PF1 Core Rulebook \
+                 Sorcerer class table's spells-per-day row (verified against the raw table \
+                 rows of both primary sources; a literal table lookup, not a derived \
+                 formula; the Sorcerer table has no \"0\" entries at levels 1-10). This \
+                 grounds the base count only: bonus spells per day from a high Charisma are \
+                 never computed, spells KNOWN (a separate table) is not grounded, and no \
+                 spell save DCs are computed"
+            ),
+        });
+    }
+
+    // SD13-E5: the base spell-save-DC arithmetic, one record per ACCESSIBLE
+    // spell level, mirroring the Bard Fascinate DC's 10-plus-modifier idiom.
+    // Verified against both primary sources, which state the rule
+    // identically: "The Difficulty Class for a saving throw against a
+    // sorcerer's spell is 10 + the spell level + the sorcerer's Charisma
+    // modifier." This grounds only the base formula over values already on
+    // the seam (the chosen-ability Charisma modifier and the access
+    // ladder): no saving-throw resolution, no target, no spell selection,
+    // and no bloodline-arcana or feat DC modifiers are computed.
+    let sorcerer_charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
+    for spell_level in 1..=sorcerer_spell_level_access {
+        let spell_save_dc = 10 + spell_level + sorcerer_charisma_modifier;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.sorcerer.spontaneous.spell_save_dc.spell_level_{spell_level}"
+            ),
+            value: spell_save_dc,
+            detail: format!(
+                "Sorcerer spell save DC at sorcerer level {level}, spell level {spell_level}: \
+                 10 + {spell_level} + Charisma modifier {sorcerer_charisma_modifier} = \
+                 {spell_save_dc} (PF1 Core Rulebook, verified identically on both primary \
+                 sources: \"The Difficulty Class for a saving throw against a sorcerer's \
+                 spell is 10 + the spell level + the sorcerer's Charisma modifier\"). This \
+                 grounds the base DC formula only: no saving-throw resolution, no target, no \
+                 spell selection, and no bloodline-arcana or feat DC modifiers are computed"
+            ),
+        });
+    }
+
+    // SD13-E5: the BASE spells-KNOWN counts, one record per spell level with
+    // a non-"—" column in the Sorcerer Spells Known table, as a literal
+    // table lookup mirroring the Bard known slice. Verified against the raw
+    // table rows of both primary sources (identical on d20pfsrd and
+    // legacy.aonprd.com): level 1 "4/2/—/—/—/—", level 2 "5/2/—/—/—/—",
+    // level 3 "5/3/—/—/—/—", level 4 "6/3/1/—/—/—", level 5 "6/4/2/—/—/—",
+    // level 6 "7/4/2/1/—/—", level 7 "7/5/3/2/—/—", level 8 "8/5/3/2/1/—",
+    // level 9 "8/5/4/3/2/—", level 10 "9/5/4/3/2/1" (0th through 5th spell
+    // level). The known table INCLUDES the 0th level (cantrips are "spells
+    // known" only), and its new-spell-level cadence matches the grounded
+    // per-day access ladder exactly (2nd at 4, 3rd at 6, 4th at 8, 5th at
+    // 10 — checked rather than assumed). Only the known COUNTS are
+    // grounded: the selection of WHICH spells are known is never computed,
+    // and the 3rd/5th/7th-level bloodline bonus spells are part of the
+    // still-unproven bloodline progression burden, not this table.
+    let sorcerer_spells_known: [Option<i16>; 6] = match level {
+        1 => [Some(4), Some(2), None, None, None, None],
+        2 => [Some(5), Some(2), None, None, None, None],
+        3 => [Some(5), Some(3), None, None, None, None],
+        4 => [Some(6), Some(3), Some(1), None, None, None],
+        5 => [Some(6), Some(4), Some(2), None, None, None],
+        6 => [Some(7), Some(4), Some(2), Some(1), None, None],
+        7 => [Some(7), Some(5), Some(3), Some(2), None, None],
+        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None],
+        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None],
+        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1)],
+        _ => [None, None, None, None, None, None],
+    };
+    for (spell_level, known_count) in sorcerer_spells_known.iter().enumerate() {
+        let Some(known_count) = known_count else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.sorcerer.spontaneous.spells_known.spell_level_{spell_level}"
+            ),
+            value: *known_count,
+            detail: format!(
+                "Sorcerer base spells known at sorcerer level {level}, spell level \
+                 {spell_level}: {known_count}, read directly from the PF1 Core Rulebook \
+                 Sorcerer Spells Known table (verified against the raw table rows of both \
+                 primary sources; a literal table lookup, not a derived formula; unlike the \
+                 spells-per-day table, this table includes the 0th level — cantrips are \
+                 spells known only). This grounds the base known count only: the selection \
+                 of WHICH spells are known is never computed — no spell-list content, no \
+                 spell identities, no swap/retraining rules, and no bloodline bonus-spell \
+                 additions (those are part of the still-unproven bloodline progression \
+                 burden)"
+            ),
+        });
+    }
+
+    // SD13-E5: the bonus spells per day from a high Charisma, one record
+    // per ACCESSIBLE spell level (1st+; the bonus table has no 0th-level
+    // column — cantrips never gain bonus spells), from PF1's shared Table:
+    // Ability Modifiers and Bonus Spells, verified against both primary
+    // sources (legacy.aonprd.com Getting Started / d20pfsrd Ability
+    // Scores): modifier +1 grants 1 bonus 1st-level spell, +2 grants 1/1,
+    // +3 grants 1/1/1, +4 grants 1/1/1/1, +5 grants 2/1/1/1/1 — for
+    // modifier m and spell level N, 0 when m < N, otherwise (m - N)/4 + 1.
+    // Both sources state the gating rule identically: "a spellcaster must
+    // be of a high enough class level to be able to cast spells of a given
+    // spell level" — exactly the grounded access ladder. A computed 0
+    // (modifier below the spell level) is an honest arithmetic result,
+    // distinct from the base table's literal "0" entries. The bonus is
+    // never added to the base per-day counts here — no total is computed;
+    // that integration is named as the next uplift.
+    for spell_level in 1..=sorcerer_spell_level_access {
+        let bonus_spells = if sorcerer_charisma_modifier < spell_level {
+            0
+        } else {
+            (sorcerer_charisma_modifier - spell_level) / 4 + 1
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.sorcerer.spontaneous.bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: bonus_spells,
+            detail: format!(
+                "Sorcerer bonus spells per day at sorcerer level {level}, spell level \
+                 {spell_level}: {bonus_spells} from Charisma modifier \
+                 {sorcerer_charisma_modifier} (PF1 Core Rulebook Table: Ability Modifiers \
+                 and Bonus Spells, verified identically on both primary sources; for \
+                 modifier m and spell level N the table value is 0 when m < N, otherwise \
+                 (m - N)/4 + 1, and bonus spells apply only to spell levels the character \
+                 is of a high enough class level to cast — the grounded access ladder). A \
+                 computed 0 means the modifier grants no bonus at this spell level; it is \
+                 never added to the base per-day count here — no total is computed, no \
+                 spell selection, and no spell save DCs"
+            ),
+        });
+    }
+
+    // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
+    // explicitly. The which-spells-are-known selection and the base+bonus
+    // per-day TOTAL integration stay ungrounded; the access ladder, base
+    // per-day counts, base save DCs, base known counts, and bonus-slot counts
+    // are grounded separately as flat records.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
         message:
             "Sorcerer remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting, spells known, spell slots per day, bonus spell slots from a high \
-             ability score, and spell save DCs are out of scope for this level-1 spell baseline and \
-             no spell math is fabricated"
+             spontaneous casting, the selection of WHICH spells known are actually chosen, \
+             and the base+bonus spells-per-day TOTAL integration are out of scope for this \
+             bounded baseline (the spell-level access \
+             ladder, the base spells-per-day table counts, the base spell-save-DC \
+             arithmetic, the base spells-known table counts, and the Charisma bonus \
+             spell slot counts are grounded separately as \
+             flat records) and \
+             no spell math is fabricated beyond them"
                 .to_owned(),
         claim_blocking: true,
     });
@@ -9505,18 +10363,182 @@ fn explain_bard_level1_spell_baseline(
         claim_blocking: true,
     });
 
+    // SD13-E5: the spontaneous spell-level ACCESS ladder, mirroring the
+    // Paladin spell_level_access record and the Cleric/Wizard
+    // <CLASS>_<N>TH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL threshold doctrine
+    // exactly ("first non-'—' spells-per-day column", verified against the
+    // raw table rows of both primary sources). This grounds the highest
+    // ACCESSIBLE bard spell level only; the per-day counts themselves are
+    // never computed. Cantrips (0th level, "spells known" only) are outside
+    // the spells-per-day ladder and are not counted.
+    let bard_spell_level_access: i16 =
+        if level >= BARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            4
+        } else if level >= BARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            3
+        } else if level >= BARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            2
+        } else {
+            1
+        };
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.bard.spontaneous.spell_level_access".to_owned(),
+        value: bard_spell_level_access,
+        detail: format!(
+            "Bard spell-level access at bard level {level}: the highest bard spell level \
+             (1st+) with a non-\"—\" spells-per-day column in the PF1 Core Rulebook Bard \
+             class table is {bard_spell_level_access} (verified against the raw table rows of \
+             both primary sources: 1st-level spells from level 1 — the ladder has no zero \
+             step — 2nd-level at {BARD_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level \
+             at {BARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
+             {BARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}; the 5th-level column stays \
+             \"—\" through level 10). Cantrips are \"spells known\" only and sit outside \
+             the spells-per-day ladder, so they are not counted. This grounds the access \
+             ladder only: no spells-per-day counts, no spells-known posture, no bonus slots \
+             from a high Charisma, and no spell save DCs are computed"
+        ),
+    });
+
+    // SD13-E5: the BASE spells-per-day counts, one record per ACCESSIBLE
+    // spell level, as a literal table lookup mirroring the Paladin/Ranger
+    // per-day slices and the Cleric domain-slot-count precedent — the PF1
+    // spells-per-day table is a lookup table, not arithmetic, so no formula
+    // is invented for it. Verified against the raw table rows of both
+    // primary sources (identical on d20pfsrd and legacy.aonprd.com): level
+    // 1 "1/—/—/—", level 2 "2/—/—/—", level 3 "3/—/—/—", level 4 "3/1/—/—",
+    // level 5 "4/2/—/—", level 6 "4/3/—/—", level 7 "4/3/1/—", level 8
+    // "4/4/2/—", level 9 "5/4/3/—", level 10 "5/4/3/1". Unlike the
+    // Paladin/Ranger tables there are NO "0" entries at levels 1-10 —
+    // every accessible column carries a positive base count. Inaccessible
+    // spell levels ("—" columns) get no record at all. Only the base
+    // counts are grounded: bonus spells per day from a high Charisma are
+    // never computed, and spells KNOWN (a separate table) stays untouched.
+    let bard_base_spells_per_day: [Option<i16>; 4] = match level {
+        1 => [Some(1), None, None, None],
+        2 => [Some(2), None, None, None],
+        3 => [Some(3), None, None, None],
+        4 => [Some(3), Some(1), None, None],
+        5 => [Some(4), Some(2), None, None],
+        6 => [Some(4), Some(3), None, None],
+        7 => [Some(4), Some(3), Some(1), None],
+        8 => [Some(4), Some(4), Some(2), None],
+        9 => [Some(5), Some(4), Some(3), None],
+        10 => [Some(5), Some(4), Some(3), Some(1)],
+        _ => [None, None, None, None],
+    };
+    for (index, base_count) in bard_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = index + 1;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Bard base spells per day at bard level {level}, spell level {spell_level}: \
+                 {base_count}, read directly from the PF1 Core Rulebook Bard class table's \
+                 spells-per-day row (verified against the raw table rows of both primary \
+                 sources; a literal table lookup, not a derived formula; the Bard table has \
+                 no \"0\" entries at levels 1-10). This grounds the base count only: bonus \
+                 spells per day from a high Charisma are never computed, spells KNOWN (a \
+                 separate table) is not grounded, and no spell save DCs are computed"
+            ),
+        });
+    }
+
+    // SD13-E5: the base spell-save-DC arithmetic, one record per ACCESSIBLE
+    // spell level, mirroring the Sorcerer DC slice. Verified against both
+    // primary sources, which state the rule identically: "The Difficulty
+    // Class for a saving throw against a bard's spell is 10 + the spell
+    // level + the bard's Charisma modifier." This is a DIFFERENT formula
+    // family from the grounded Fascinate DC (10 + 1/2 bard level + Charisma
+    // modifier — a performance DC keyed to bard level, not spell level);
+    // both coexist as separate records. This grounds only the base formula
+    // over values already on the seam: no saving-throw resolution, no
+    // target, no spell selection, and no feat DC modifiers are computed.
+    for spell_level in 1..=bard_spell_level_access {
+        let spell_save_dc = 10 + spell_level + ability_modifiers.charisma;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.bard.spontaneous.spell_save_dc.spell_level_{spell_level}"
+            ),
+            value: spell_save_dc,
+            detail: format!(
+                "Bard spell save DC at bard level {level}, spell level {spell_level}: 10 + \
+                 {spell_level} + Charisma modifier {} = {spell_save_dc} (PF1 Core Rulebook, \
+                 verified identically on both primary sources: \"The Difficulty Class for a \
+                 saving throw against a bard's spell is 10 + the spell level + the bard's \
+                 Charisma modifier\"). This grounds the base DC formula only: no \
+                 saving-throw resolution, no target, no spell selection, and no feat DC \
+                 modifiers are computed",
+                ability_modifiers.charisma
+            ),
+        });
+    }
+
+    // SD13-E5: the BASE spells-KNOWN counts, one record per spell level with
+    // a non-"—" column in the Bard Spells Known table, as a literal table
+    // lookup per the same doctrine as the per-day family. Verified against
+    // the raw table rows of both primary sources (identical on d20pfsrd and
+    // legacy.aonprd.com): level 1 "4/2/—/—/—", level 2 "5/3/—/—/—", level 3
+    // "6/4/—/—/—", level 4 "6/4/2/—/—", level 5 "6/4/3/—/—", level 6
+    // "6/4/4/—/—", level 7 "6/5/4/2/—", level 8 "6/5/4/3/—", level 9
+    // "6/5/4/4/—", level 10 "6/5/5/4/2" (0th through 4th spell level).
+    // UNLIKE the spells-per-day table, this table INCLUDES the 0th level
+    // (cantrips) — exactly where the access-ladder record's "cantrips are
+    // spells known only" note lands. Only the known COUNTS are grounded:
+    // the selection of WHICH spells are known is never computed.
+    let bard_spells_known: [Option<i16>; 5] = match level {
+        1 => [Some(4), Some(2), None, None, None],
+        2 => [Some(5), Some(3), None, None, None],
+        3 => [Some(6), Some(4), None, None, None],
+        4 => [Some(6), Some(4), Some(2), None, None],
+        5 => [Some(6), Some(4), Some(3), None, None],
+        6 => [Some(6), Some(4), Some(4), None, None],
+        7 => [Some(6), Some(5), Some(4), Some(2), None],
+        8 => [Some(6), Some(5), Some(4), Some(3), None],
+        9 => [Some(6), Some(5), Some(4), Some(4), None],
+        10 => [Some(6), Some(5), Some(5), Some(4), Some(2)],
+        _ => [None, None, None, None, None],
+    };
+    for (spell_level, known_count) in bard_spells_known.iter().enumerate() {
+        let Some(known_count) = known_count else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.bard.spontaneous.spells_known.spell_level_{spell_level}"),
+            value: *known_count,
+            detail: format!(
+                "Bard base spells known at bard level {level}, spell level {spell_level}: \
+                 {known_count}, read directly from the PF1 Core Rulebook Bard Spells Known \
+                 table (verified against the raw table rows of both primary sources; a \
+                 literal table lookup, not a derived formula; unlike the spells-per-day \
+                 table, this table includes the 0th level — cantrips are spells known \
+                 only). This grounds the base known count only: the selection of WHICH \
+                 spells are known from the Bard list is never computed — no spell-list \
+                 content, no spell identities, and no swap/retraining rules"
+            ),
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
-    // explicitly. Bard spells known and spells per day are gated by Bard level and CHA
-    // modifier on the Bard spell list; this slice grounds no spells known, no spells per
-    // day, no spell DCs, and no bonus spells from a high casting stat.
+    // explicitly. The which-spells-are-known selection stays ungrounded; the
+    // access ladder, base per-day counts, base save DCs, and base known counts
+    // are grounded separately as flat records.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned(),
         message:
             "Bard remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting, spells known (from the Bard list), spells per day (from \
-             the Bard table plus CHA modifier), bonus spell slots from a high casting stat, \
-             and spell save DCs are out of scope for this level-1 spell baseline and no \
-             spell math is fabricated"
+             spontaneous casting, the selection of WHICH spells known (from the Bard list) \
+             are actually chosen, the CHA-modified \
+             spells per day totals, and bonus spell slots from a high casting stat are out \
+             of scope for this bounded baseline (the spell-level access ladder, the base \
+             spells-per-day table counts, the base spell-save-DC arithmetic, and the base \
+             spells-known table counts are \
+             grounded separately as flat records) and no spell math is fabricated beyond \
+             them"
                 .to_owned(),
         claim_blocking: true,
     });
