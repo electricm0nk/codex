@@ -2132,7 +2132,12 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut explanations,
     );
 
-    explain_sorcerer_level1_spell_baseline(input, &mut explanations, &mut diagnostics);
+    explain_sorcerer_level1_spell_baseline(
+        input,
+        &ability_modifiers,
+        &mut explanations,
+        &mut diagnostics,
+    );
 
     explain_wizard_level1_prepared_spell_baseline(
         input,
@@ -7798,6 +7803,7 @@ fn explain_rogue_level1_chassis(
 /// named burdens legible on the runtime path.
 fn explain_sorcerer_level1_spell_baseline(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
@@ -8131,14 +8137,45 @@ fn explain_sorcerer_level1_spell_baseline(
         });
     }
 
+    // SD13-E5: the base spell-save-DC arithmetic, one record per ACCESSIBLE
+    // spell level, mirroring the Bard Fascinate DC's 10-plus-modifier idiom.
+    // Verified against both primary sources, which state the rule
+    // identically: "The Difficulty Class for a saving throw against a
+    // sorcerer's spell is 10 + the spell level + the sorcerer's Charisma
+    // modifier." This grounds only the base formula over values already on
+    // the seam (the chosen-ability Charisma modifier and the access
+    // ladder): no saving-throw resolution, no target, no spell selection,
+    // and no bloodline-arcana or feat DC modifiers are computed.
+    let sorcerer_charisma_modifier = ability_modifier_for(ability_modifiers, "charisma");
+    for spell_level in 1..=sorcerer_spell_level_access {
+        let spell_save_dc = 10 + spell_level + sorcerer_charisma_modifier;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.sorcerer.spontaneous.spell_save_dc.spell_level_{spell_level}"
+            ),
+            value: spell_save_dc,
+            detail: format!(
+                "Sorcerer spell save DC at sorcerer level {level}, spell level {spell_level}: \
+                 10 + {spell_level} + Charisma modifier {sorcerer_charisma_modifier} = \
+                 {spell_save_dc} (PF1 Core Rulebook, verified identically on both primary \
+                 sources: \"The Difficulty Class for a saving throw against a sorcerer's \
+                 spell is 10 + the spell level + the sorcerer's Charisma modifier\"). This \
+                 grounds the base DC formula only: no saving-throw resolution, no target, no \
+                 spell selection, and no bloodline-arcana or feat DC modifiers are computed"
+            ),
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden explicitly.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
         message:
             "Sorcerer remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting, spells known, spell slots per day, bonus spell slots from a high \
-             ability score, and spell save DCs are out of scope for this level-1 spell baseline and \
-             no spell math is fabricated"
+             spontaneous casting, spells known, and bonus spell slots from a high \
+             ability score are out of scope for this bounded baseline (the spell-level access \
+             ladder, the base spells-per-day table counts, and the base spell-save-DC \
+             arithmetic are grounded separately as flat records) and \
+             no spell math is fabricated beyond them"
                 .to_owned(),
         claim_blocking: true,
     });
