@@ -13,9 +13,12 @@
 //! - [`IRNode`] — the canonical IR node, one variant per B-family record kind.
 //! - [`IRDiagnostic`] — provenance + severity + code for the converter's
 //!   diagnostic surface.
-//! - [`ParsedLstRecord`] — the canonical input enum that
-//!   [`convert_to_ir`] dispatches on.
-//! - [`convert_to_ir`] — the public entry point named in the slice card body.
+//! - [`convert_to_ir`] — the public entry point that dispatches on
+//!   [`crate::pcgen_import::lst_parser::ParsedLstRecord`]. Slice D
+//!   relocated `ParsedLstRecord` from this module to the LST parser
+//!   surface; this module re-exports it for backward compatibility so
+//!   any external caller that imports
+//!   `pcgen_import::ir_converter::ParsedLstRecord` continues to work.
 //! - Per-family converters ([`convert_class_entry`], etc.) for typed callers.
 //! - Per-document converters ([`convert_class_parse_result`], etc.) that
 //!   consume the B-family parse-result containers.
@@ -52,6 +55,10 @@ use crate::pcgen_import::lst_parser::spell::{LstSpellFile, LstSpellRecord};
 use crate::pcgen_import::lst_parser::spellcasting_class::{
     SpellcastingClassDiagnostic, SpellcastingClassEntry, SpellcastingClassParseResult,
 };
+// Slice D relocation: ParsedLstRecord lives at the parser surface and is
+// re-exported here for backward compatibility. New callers should import
+// `crate::pcgen_import::lst_parser::ParsedLstRecord` directly.
+pub use crate::pcgen_import::lst_parser::ParsedLstRecord;
 
 // =============================================================================
 // IRSchema
@@ -324,9 +331,7 @@ impl IRNode {
             IRNode::Race(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
             IRNode::Ability(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
             IRNode::Spell(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
-            IRNode::Equipment(p) => {
-                (p.source_path.as_str(), p.line_number, p.raw_line.as_str())
-            }
+            IRNode::Equipment(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
             IRNode::Metadata(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
         }
     }
@@ -367,61 +372,15 @@ impl IRNode {
 }
 
 // =============================================================================
-// ParsedLstRecord — canonical input enum for convert_to_ir
+// ParsedLstRecord — relocated to crate::pcgen_import::lst_parser (Slice D).
+//
+// The canonical input enum for [`convert_to_ir`] lives at the LST
+// parser surface (`crate::pcgen_import::lst_parser::ParsedLstRecord`).
+// This module re-exports it via `pub use` at the top of this file so
+// existing callers that import `pcgen_import::ir_converter::ParsedLstRecord`
+// continue to resolve. New code should import the parser-surface name
+// directly.
 // =============================================================================
-
-/// Canonical input enum that [`convert_to_ir`] dispatches on.
-///
-/// Every variant borrows the B-family record by reference. The conversion
-/// is allocation-light because the B-family record lives in the caller's
-/// frame (R2 in the contract).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum ParsedLstRecord<'a> {
-    Class(&'a ClassEntry),
-    SpellcastingClass(&'a SpellcastingClassEntry),
-    Race(&'a RaceDeclaration),
-    Ability(&'a AbilityDeclaration),
-    Spell(&'a LstSpellRecord),
-    Equipment(&'a EquipmentRecord),
-    Metadata(&'a LstRecord),
-}
-
-impl<'a> ParsedLstRecord<'a> {
-    /// Convenience: build a `ParsedLstRecord::Class` from any `&ClassEntry`.
-    pub fn from_class(e: &'a ClassEntry) -> Self {
-        ParsedLstRecord::Class(e)
-    }
-
-    /// Convenience: build a `ParsedLstRecord::SpellcastingClass`.
-    pub fn from_spellcasting_class(e: &'a SpellcastingClassEntry) -> Self {
-        ParsedLstRecord::SpellcastingClass(e)
-    }
-
-    /// Convenience: build a `ParsedLstRecord::Race`.
-    pub fn from_race(r: &'a RaceDeclaration) -> Self {
-        ParsedLstRecord::Race(r)
-    }
-
-    /// Convenience: build a `ParsedLstRecord::Ability`.
-    pub fn from_ability(a: &'a AbilityDeclaration) -> Self {
-        ParsedLstRecord::Ability(a)
-    }
-
-    /// Convenience: build a `ParsedLstRecord::Spell`.
-    pub fn from_spell(s: &'a LstSpellRecord) -> Self {
-        ParsedLstRecord::Spell(s)
-    }
-
-    /// Convenience: build a `ParsedLstRecord::Equipment`.
-    pub fn from_equipment(e: &'a EquipmentRecord) -> Self {
-        ParsedLstRecord::Equipment(e)
-    }
-
-    /// Convenience: build a `ParsedLstRecord::Metadata`.
-    pub fn from_metadata(r: &'a LstRecord) -> Self {
-        ParsedLstRecord::Metadata(r)
-    }
-}
 
 // =============================================================================
 // convert_to_ir — public entry point
@@ -452,9 +411,7 @@ pub fn convert_to_ir(
 ) -> Result<IRNode, IRDiagnostic> {
     match parsed_record {
         ParsedLstRecord::Class(entry) => Ok(convert_class_entry(entry)),
-        ParsedLstRecord::SpellcastingClass(entry) => {
-            Ok(convert_spellcasting_class_entry(entry))
-        }
+        ParsedLstRecord::SpellcastingClass(entry) => Ok(convert_spellcasting_class_entry(entry)),
         ParsedLstRecord::Race(r) => Ok(convert_race_declaration(r)),
         ParsedLstRecord::Ability(a) => Ok(convert_ability_declaration(a)),
         ParsedLstRecord::Spell(s) => Ok(convert_spell_record(s)),
@@ -673,10 +630,7 @@ pub fn convert_spell_record_list(
 /// Convert the records from a B-4 [`LstSpellFile`] into IR nodes +
 /// forwarded diagnostics. O(n). Normalizes the `PathBuf` source_path
 /// to a `String` for the diagnostic surface.
-pub fn convert_spell_file(
-    r: &LstSpellFile,
-    schema: &IRSchema,
-) -> Vec<(IRNode, Vec<IRDiagnostic>)> {
+pub fn convert_spell_file(r: &LstSpellFile, schema: &IRSchema) -> Vec<(IRNode, Vec<IRDiagnostic>)> {
     let source_path = path_to_string(&r.source_path);
     let container_diagnostics: Vec<IRDiagnostic> = r
         .diagnostics
@@ -693,10 +647,7 @@ pub fn convert_spell_file(
         .collect();
     let mut out = Vec::with_capacity(r.records.len());
     for record in &r.records {
-        out.push((
-            convert_spell_record(record),
-            container_diagnostics.clone(),
-        ));
+        out.push((convert_spell_record(record), container_diagnostics.clone()));
     }
     // Add an extra IRNode-shaped placeholder for each container-level
     // diagnostic that has no record, so no diagnostic is silently dropped.
