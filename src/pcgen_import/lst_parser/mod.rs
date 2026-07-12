@@ -1,6 +1,7 @@
 //! PCGen LST parsers, partitioned by object kind.
 
 pub mod class;
+pub mod equipment;
 pub mod metadata;
 pub mod race_ability;
 pub mod spell;
@@ -15,6 +16,11 @@ pub mod spellcasting_class;
 pub use class::{
     ClassEntry, ClassFeatureBlock, ClassLevelLine, ClassParseResult, ClassToken,
     MARTIAL_CLASS_NAMES, parse_class_entries, parse_class_file,
+};
+pub use equipment::{
+    BonusToken, EquipmentDiagnostic, EquipmentDiagnosticKind, EquipmentParseResult,
+    EquipmentRecord, EquipmentRecordKind, EquipmentToken, parse_equipment_entries,
+    parse_equipment_file,
 };
 pub use metadata::{
     LstDiagnostic, LstDiagnosticKind, LstMetadataDocument, LstRecord, MetadataKind,
