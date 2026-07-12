@@ -8053,6 +8053,40 @@ fn explain_rogue_level1_chassis(
             ),
         });
     }
+
+    // SD13-E5: talents 3-5, the remaining numbered slots of the rogue's
+    // level-10 talent family (gates 6/8/10 per the same verified rule
+    // text), each the same open-ended +0 recognition. With these the full
+    // five-slot count at the tranche ceiling is recognized; the talent
+    // tree's effects stay the named new-subsystem burden.
+    let additional_talent_slots: [(u8, u8, &str); 3] = [
+        (3, 6, "choice:rogue_talent_3"),
+        (4, 8, "choice:rogue_talent_4"),
+        (5, 10, "choice:rogue_talent_5"),
+    ];
+    for (slot_number, grant_level, choice_id) in additional_talent_slots {
+        if level < grant_level {
+            continue;
+        }
+        let Some(talent) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.rogue.talent_{slot_number}_choice"),
+            value: 0,
+            detail: format!(
+                "Rogue talent slot {slot_number} selection ({choice_id} -> {talent}): PF1 \
+                 Core Rulebook, verified identically on both primary sources — \"She gains \
+                 an additional rogue talent for every 2 levels of rogue attained after 2nd \
+                 level. A rogue cannot select an individual talent more than once.\" — \
+                 this slot's grant lands at rogue level {grant_level}. The level-{level} \
+                 selection for this slot is {talent}, recognized as a bounded +0 record of \
+                 the numbered choice slot only (open-ended raw string, no talent-list \
+                 validation): the selected talent's own effect is not computed — no \
+                 talent-effect engine exists in this codebase"
+            ),
+        });
+    }
 }
 
 /// Surface direct SD13-E4-F7 runtime evidence for the deterministic Human Sorcerer

@@ -317,7 +317,8 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
     tests/sd13_rogue_level9_progression.rs + \
     tests/sd13_rogue_level10_progression.rs + \
     tests/sd13_rogue_talent_choice.rs + \
-    tests/sd13_rogue_second_talent.rs";
+    tests/sd13_rogue_second_talent.rs + \
+    tests/sd13_rogue_talents_three_through_five.rs";
 
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group
@@ -1143,8 +1144,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     SECOND talent (class_chassis.rogue.talent_2_choice, \
                     choice:rogue_talent_2, gated to rogue level >= 4, same open-ended +0 \
                     recognition; the proof fixture selects distinct talents for both slots, \
-                    honoring the no-repeat-selection clause); the 6th/8th/10th additional \
-                    talents stay named-but-unproven as further numbered slots, and the \
+                    honoring the no-repeat-selection clause); — and a further SD13-E5 slice grounds the remaining \
+                    numbered slots in one pass (class_chassis.rogue.talent_3_choice / \
+                    talent_4_choice / talent_5_choice, choice:rogue_talent_3/4/5, gates \
+                    6/8/10, the same open-ended +0 recognition; the proof fixture selects \
+                    five distinct talents and the gate ladder is pinned one level below \
+                    each gate), completing the rogue's full five-slot talent count at the \
+                    tranche ceiling; the \
                     talent tree's effects stay the new-subsystem burden.",
                 next_required_uplift: "later SD13 slice wiring the grounded Rogue pillar \
                     records into the integrated pilot surface (the generic chassis diagnostics \
