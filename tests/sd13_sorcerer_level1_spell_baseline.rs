@@ -182,6 +182,12 @@ fn sorcerer_level1_fabricates_no_spell_math() {
                 || explanation
                     .id
                     .starts_with("class_chassis.sorcerer.spontaneous.spell_save_dc.")
+                // The spells_known family (a further SD13-E5 slice,
+                // tests/sd13_sorcerer_spells_known_counts.rs): base
+                // known-count table records, allowed by prefix.
+                || explanation
+                    .id
+                    .starts_with("class_chassis.sorcerer.spontaneous.spells_known.")
                 || !explanation.id.contains("spell"),
             "no fabricated spell explanation is allowed beyond the +0 recognition and the \
              access-ladder record: {explanation:?}"

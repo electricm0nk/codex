@@ -427,7 +427,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_level10_progression.rs + \
     tests/sd13_sorcerer_spell_level_thresholds.rs + \
     tests/sd13_sorcerer_spells_per_day_counts.rs + \
-    tests/sd13_sorcerer_spell_save_dcs.rs";
+    tests/sd13_sorcerer_spell_save_dcs.rs + \
+    tests/sd13_sorcerer_spells_known_counts.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -3055,7 +3056,22 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     no saving-throw resolution, target, spell selection, or \
                     bloodline-arcana/feat DC modifier is computed; the spontaneous \
                     blocker's message now defers only spells known and Charisma bonus \
-                    slots). No \
+                    slots) — AND a further SD13-E5 slice grounds the BASE spells-KNOWN \
+                    counts \
+                    (class_chassis.sorcerer.spontaneous.spells_known.spell_level_0..5, one \
+                    record per non-'—' column of the Sorcerer Spells Known table, a literal \
+                    table lookup verified against the raw rows of both primary sources: \
+                    \"4/2/—/—/—/—\" at 1 through \"9/5/4/3/2/1\" at 10 — six known-count \
+                    records at the tranche ceiling, the deepest known surface in the \
+                    tranche; the known table includes the 0th level, cantrips being \
+                    \"spells known\" only, and its new-spell-level cadence matches the \
+                    grounded per-day access ladder exactly, checked rather than assumed; \
+                    only the known COUNTS are grounded — the selection of WHICH spells are \
+                    known is never computed, no spell-list content, spell identities, or \
+                    swap/retraining rules, and the 3rd/5th/7th-level bloodline bonus spells \
+                    remain part of the still-unproven bloodline progression burden; the \
+                    spontaneous blocker now defers exactly that which-spells selection plus \
+                    Charisma bonus slots). No \
                     spell math is fabricated and no Sorcerer level 11+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
