@@ -1,0 +1,24 @@
+# Synthetic fixture for SD-17 Slice B-5 equipment-modifier parser tests.
+#
+# The source path `equipmods_minimal.lst` contains the substring
+# `equipmods`, which the parser uses to classify rows as
+# `EquipmentRecordKind::EquipMod` rather than `Equip`.
+#
+# Both the directive-prefix form (`EQUIPMOD:<name>`) and the
+# corpus-typical row form are exercised here.
+#
+# Line numbers are deterministic; tests assert on these exact lines.
+# Field 1: SOURCELONG
+# Field 2: SOURCESHORT
+SOURCELONG:Synthetic Equipment Modifier Test Fixture	SOURCESHORT:SEMTF	SOURCEWEB:file:///tests/fixtures/lst/equipmods_minimal.lst	SOURCEDATE:2026-07-12
+
+###Block: Directive-prefix equipment-modifier rows
+EQUIPMOD:Material ~ Steel	KEY:Material ~ Steel	NAMEOPT:NOTHING	TYPE:BaseMaterial.Mundane.Armor.Weapon	COST:0	BONUS:ITEMCOST|TYPE.WEAPON|50
+EQUIPMOD:Masterwork	KEY:Special Quality ~ Masterwork ~ Weapon	NAMEOPT:TEXT=Masterwork	TYPE:MasterworkQuality.Weapon	COST:0	BONUS:WEAPON|TOHIT|1|TYPE=Enhancement
+
+###Block: Corpus-typical equipment-modifier rows (path contains equipmods)
+Cloth	KEY:Material ~ Cloth	NAMEOPT:NOTHING	TYPE:BaseMaterial.Mundane.Ammunition.Armor.Shield.Weapon	COST:0	BONUS:ITEMCOST|TYPE.CLOTH|0	PREMULT:1,[PRETYPE:1,EQMOD=Material ~ Cloth]
+Steel	KEY:Material ~ Steel	NAMEOPT:NOTHING	TYPE:BaseMaterial.Mundane.Ammunition.Armor.Shield.Weapon	COST:0	ITYPE:Metal	PREMULT:1,[PRETYPE:1,EQMOD=Material ~ Steel]
+
+# A malformed EQUIPMOD row to exercise the diagnostic path.
+EQUIPMOD:	KEY:MalformedEquipmodTest
