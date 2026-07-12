@@ -8393,21 +8393,59 @@ fn explain_sorcerer_level1_spell_baseline(
         });
     }
 
+    // SD13-E5: the TOTAL spells per day — the pure sum of the two records
+    // grounded above (base table count + Charisma bonus count) per
+    // ACCESSIBLE spell level. No new rules content: the base and bonus
+    // records each carry their own two-source verification; this record
+    // integrates them into the sorcerer's actual castable slot count per
+    // day. Counts only — no spell selection, no spontaneous-casting
+    // execution, no slot consumption or tracking, no save resolution.
+    for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = (index + 1) as i16;
+        let bonus_spells = if sorcerer_charisma_modifier < spell_level {
+            0
+        } else {
+            (sorcerer_charisma_modifier - spell_level) / 4 + 1
+        };
+        let total_spells = base_count + bonus_spells;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.sorcerer.spontaneous.total_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: total_spells,
+            detail: format!(
+                "Sorcerer total spells per day at sorcerer level {level}, spell level \
+                 {spell_level}: base table count {base_count} + Charisma bonus \
+                 {bonus_spells} = {total_spells} — the pure sum of the two separately \
+                 grounded records (each carrying its own two-source verification), giving \
+                 the actual castable slot count per day. This grounds the count only: no \
+                 spell selection (WHICH spells are known stays unproven), no \
+                 spontaneous-casting execution, no slot consumption or tracking, and no \
+                 spell save resolution"
+            ),
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
-    // explicitly. The which-spells-are-known selection and the base+bonus
-    // per-day TOTAL integration stay ungrounded; the access ladder, base
-    // per-day counts, base save DCs, base known counts, and bonus-slot counts
-    // are grounded separately as flat records.
+    // explicitly. The which-spells-are-known selection and the spontaneous
+    // casting execution stay ungrounded; the access ladder, base per-day
+    // counts, base save DCs, base known counts, bonus-slot counts, and the
+    // integrated totals are grounded as flat records.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
         message:
             "Sorcerer remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting, the selection of WHICH spells known are actually chosen, \
-             and the base+bonus spells-per-day TOTAL integration are out of scope for this \
+             spontaneous casting execution (slot consumption, tracking, and casting itself) \
+             and the selection of WHICH spells known are actually chosen \
+             are out of scope for this \
              bounded baseline (the spell-level access \
              ladder, the base spells-per-day table counts, the base spell-save-DC \
-             arithmetic, the base spells-known table counts, and the Charisma bonus \
-             spell slot counts are grounded separately as \
+             arithmetic, the base spells-known table counts, the Charisma bonus \
+             spell slot counts, and the integrated base+bonus totals are grounded \
+             separately as \
              flat records) and \
              no spell math is fabricated beyond them"
                 .to_owned(),
