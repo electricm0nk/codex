@@ -344,8 +344,10 @@ fn parses_a_fixture_from_disk_with_line_numbers_preserved() {
     // The merged record carries BOTH the KEY from the directive-prefix row
     // AND the ACCHECK/MAXDEX/SOURCEPAGE/BONUS tokens from the corpus-typical
     // row, proving the continuation semantics worked.
-    assert!(merged_padded.bonus_chains.len() >= 2,
-        "merged Padded Armor must carry at least 2 BONUS chains from both rows");
+    assert!(
+        merged_padded.bonus_chains.len() >= 2,
+        "merged Padded Armor must carry at least 2 BONUS chains from both rows"
+    );
     assert!(merged_padded.tokens.iter().any(|t| t.key == "ACCHECK"));
     assert!(merged_padded.tokens.iter().any(|t| t.key == "MAXDEX"));
 
@@ -407,17 +409,17 @@ fn parses_equipmods_fixture_from_disk_with_kind_inferred_from_path() {
     // carry BONUS: chains. The corpus-typical Cloth and Steel rows also
     // carry BONUS: tokens (visible in the fixture source).
     // Both `Material ~ Steel` rows (directive-prefix + corpus-typical) must
-        // carry BONUS: chains. The corpus-typical Cloth row carries a BONUS:
-        // token; the corpus-typical Steel row does not.
-        for entry in &result.entries {
-            if entry.name == "Material ~ Steel" || entry.name == "Cloth" {
-                assert!(
-                    !entry.bonus_chains.is_empty(),
-                    "expected BONUS chain on record '{}', got none",
-                    entry.name
-                );
-            }
+    // carry BONUS: chains. The corpus-typical Cloth row carries a BONUS:
+    // token; the corpus-typical Steel row does not.
+    for entry in &result.entries {
+        if entry.name == "Material ~ Steel" || entry.name == "Cloth" {
+            assert!(
+                !entry.bonus_chains.is_empty(),
+                "expected BONUS chain on record '{}', got none",
+                entry.name
+            );
         }
+    }
 }
 
 #[test]

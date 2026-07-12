@@ -10,3 +10,4 @@ pub mod include_resolver;
 pub mod ir_converter;
 pub mod lst_parser;
 pub mod pcc;
+pub mod source_content_payload;
