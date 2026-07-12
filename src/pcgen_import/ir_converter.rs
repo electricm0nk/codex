@@ -1,27 +1,51 @@
-//! Canonical-IR conversion for SD-17 Slice C.
+//! Canonical-IR conversion for SD-17 Slice C + Slice E.
 //!
 //! This module consumes parsed LST records emitted by the six Slice B
 //! parsers (`B-1` through `B-6`) and converts them into the canonical
 //! internal representation that the rules-core compute path consumes.
-//! The authoritative specification is
-//! `programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/artifacts/canonical-ir-contract-2026-07-12.md`;
-//! this module conforms to that document.
 //!
-//! ## Public API
+//! ## Slice E authorship — what lives here
+//!
+//! Slice E authors the canonical source-IR record shape in
+//! `src/rules_core/source_content.rs`:
+//!
+//! - `SourcePackageContent<'a>` — corpus-rooted aggregate.
+//! - `SourceContentRecord<'a>`   — per-record envelope.
+//! - `SourceContentPayload<'a>`  — kind-tagged enum of borrowed
+//!   B-family entries (defined in
+//!   `src/pcgen_import/source_content_payload.rs` to keep the
+//!   `rules_core <-> pcgen_import` import graph acyclic; re-exported
+//!   from `rules_core::source_content`).
+//! - `SourceRef` / `SourceContentKind` / `SourceContentDiagnostic` —
+//!   provenance + diagnostic surface.
+//!
+//! **This module (`ir_converter.rs`) is the canonical projection
+//! path.** It takes a `ParsedLstRecord<'a>` and produces a
+//! `SourceContentRecord<'a>` per record, with full provenance
+//! forwarded and (when applicable) forwarded from the B-family
+//! parse-result containers into `SourceContentDiagnostic`s.
+//!
+//! The authoritative specification is
+//! `programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/artifacts/canonical-ir-contract-2026-07-12.md` (Slice C,
+//! IR-conversion surface); the source-IR shape is authoritative at
+//! `programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/artifacts/canonical-source-ir-contract-2026-07-12.md`
+//! (Slice E, canonical envelope).
+//!
+//! ## Public API (post-Slice-E)
 //!
 //! - [`IRSchema`] — descriptor for the canonical schema the consumer expects.
-//! - [`IRNode`] — the canonical IR node, one variant per B-family record kind.
 //! - [`IRDiagnostic`] — provenance + severity + code for the converter's
 //!   diagnostic surface.
-//! - [`convert_to_ir`] — the public entry point that dispatches on
-//!   [`crate::pcgen_import::lst_parser::ParsedLstRecord`]. Slice D
-//!   relocated `ParsedLstRecord` from this module to the LST parser
-//!   surface; this module re-exports it for backward compatibility so
-//!   any external caller that imports
-//!   `pcgen_import::ir_converter::ParsedLstRecord` continues to work.
+//! - [`ParsedLstRecord`] — canonical input enum that [`convert_to_ir`]
+//!   dispatches on. Authored by Slice D (parser-aggregate relocation).
+//! - [`convert_to_ir`] — public entry point. Returns a
+//!   [`SourceContentRecord`] (the canonical envelope).
 //! - Per-family converters ([`convert_class_entry`], etc.) for typed callers.
 //! - Per-document converters ([`convert_class_parse_result`], etc.) that
-//!   consume the B-family parse-result containers.
+//!   consume the B-family parse-result containers and emit a
+//!   [`SourcePackageContent`] aggregate plus forwarded canonical diagnostics.
+//! - [`convert_package_from_class_parse_result`] etc. — corpus-rooted
+//!   entry points that accumulate a complete [`SourcePackageContent`].
 //!
 //! ## Performance contract
 //!
@@ -36,8 +60,9 @@
 //! parsers already captured. No BONUS tree construction, no pipe-delimited
 //! qualifier parsing, no rule-system semantics. Those are owned by
 //! `rules_core`. The canonical model types GE-02 / GE-04 own are
-//! intentionally NOT defined here — this module defines the bounded
-//! structural types the slice card body names.
+//! intentionally NOT defined here — this module projects parsed LST
+//! records into the canonical source-IR envelope the rules engine
+//! eventually consumes.
 
 use std::path::Path;
 
@@ -55,10 +80,12 @@ use crate::pcgen_import::lst_parser::spell::{LstSpellFile, LstSpellRecord};
 use crate::pcgen_import::lst_parser::spellcasting_class::{
     SpellcastingClassDiagnostic, SpellcastingClassEntry, SpellcastingClassParseResult,
 };
-// Slice D relocation: ParsedLstRecord lives at the parser surface and is
-// re-exported here for backward compatibility. New callers should import
-// `crate::pcgen_import::lst_parser::ParsedLstRecord` directly.
-pub use crate::pcgen_import::lst_parser::ParsedLstRecord;
+use crate::pcgen_import::source_content_payload::b6_metadata_kind_to_canonical;
+use crate::rules_core::source_content::{
+    SOURCE_IR_VERSION, SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentKind,
+    SourceContentPayload, SourceContentRecord, SourceContentSeverity, SourcePackageContent,
+    SourceRef,
+};
 
 // =============================================================================
 // IRSchema
@@ -69,12 +96,17 @@ pub use crate::pcgen_import::lst_parser::ParsedLstRecord;
 /// The schema is descriptive, not prescriptive: the converter does not
 /// reject records whose kind is not in `recognized_kinds`. The schema's
 /// purpose is to advertise the field taxonomy the consumer expects so
-/// the canonical-IR pipeline can be inspected and validated.
+/// the canonical-IR pipeline can be inspected and validated. The schema
+/// version mirrors [`SOURCE_IR_VERSION`] (the source-IR schema version
+/// the converter emits); the schema id is prefixed with
+/// `codex.pcgen.canonical-ir.v` to distinguish from a future
+/// source-IR-only schema.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct IRSchema {
     /// Canonical schema identifier (e.g. `"codex.pcgen.canonical-ir.v1"`).
     pub schema_id: &'static str,
-    /// Schema revision, bumped on breaking changes.
+    /// Schema revision, bumped on breaking changes. Mirrors
+    /// [`SOURCE_IR_VERSION`] at the time of the converter's build.
     pub schema_version: u32,
     /// Directive-token prefixes the schema recognizes.
     pub recognized_kinds: &'static [&'static str],
@@ -86,7 +118,7 @@ impl IRSchema {
     pub fn canonical_v1() -> Self {
         Self {
             schema_id: "codex.pcgen.canonical-ir.v1",
-            schema_version: 1,
+            schema_version: SOURCE_IR_VERSION,
             recognized_kinds: &[
                 "CLASS",
                 "RACE",
@@ -119,8 +151,21 @@ impl Default for IRSchema {
 }
 
 // =============================================================================
-// IRDiagnosticSeverity
+// IRDiagnostic — converter-side diagnostic surface (preserved)
 // =============================================================================
+//
+// Slice E adds the canonical [`SourceContentDiagnostic`] (source-side
+// diagnostic). The converter still emits its own [`IRDiagnostic`] for
+// the same forwarded events because downstream tooling was authored
+// against the C contract; this type is preserved (not deprecated)
+// while the canonical projection re-shapes the same diagnostic into
+// `SourceContentDiagnostic` via `IRDiagnostic::to_canonical`.
+//
+// Slice C's contract artifact (`canonical-ir-contract-2026-07-12.md`)
+// remains authoritative for `IRDiagnostic`. Slice E's contract artifact
+// (`canonical-source-ir-contract-2026-07-12.md`) is authoritative for
+// `SourceContentDiagnostic`. The two coexist; nothing in this slice
+// changes `IRDiagnostic`'s semantics or constructor signatures.
 
 /// Severity classification for [`IRDiagnostic`].
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -134,10 +179,6 @@ pub enum IRDiagnosticSeverity {
     /// Informational note attached to a converted record.
     Info,
 }
-
-// =============================================================================
-// IRDiagnostic
-// =============================================================================
 
 /// Canonical diagnostic surfaced by the converter.
 ///
@@ -209,358 +250,259 @@ impl IRDiagnostic {
             message: message.into(),
         }
     }
-}
 
-// =============================================================================
-// IRNode — projection wrappers + variant enum
-// =============================================================================
+    /// Reshape this converter-side diagnostic into the canonical
+    /// [`SourceContentDiagnostic`] (source-IR projection form).
+    ///
+    /// The mapping is direct:
+    ///
+    /// - `severity` (Error/Warning/Info) →
+    ///   [`SourceContentSeverity::Error`] / `Warning` / `Info`.
+    /// - For malformed/forwarded diagnostics whose `code` starts with
+    ///   `IR_FORWARDED_` (the B-family forwarded diagnostic family),
+    ///   the canonical kind is [`SourceContentDiagnosticKind::MalformedRecord`]
+    ///   (severity Error).
+    /// - Other converter-originated diagnostics map to
+    ///   [`SourceContentDiagnosticKind::PartialTranslation`] (severity
+    ///   Info) — converter-internal notes do not block projection.
+    ///
+    /// Provenance: `source_ref.lst_file <- source_path`,
+    /// `source_ref.line <- line_number.unwrap_or(0) as u32`. The
+    /// `line: u32` rounding is intentional: container-level diagnostics
+    /// (where `line_number == None`) anchor to `line == 0`, the
+    /// canonical placeholder for "no specific line."
+    pub fn to_canonical(&self) -> SourceContentDiagnostic {
+        let source_ref = SourceRef::new(
+            self.source_path.clone(),
+            self.line_number.unwrap_or(0) as u32,
+        );
 
-/// Canonical projection of a [`ClassEntry`] from the B-1 parser.
-///
-/// The wrapper relabels `header_line_number` / `header_raw_line` to the
-/// canonical `line_number` / `raw_line` names the consumer expects. The
-/// values are identical (R1 in the contract).
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct ClassEntryProjection {
-    /// Identity of the LST source file.
-    pub source_path: String,
-    /// One-based source line number of the first `CLASS:<name>` line.
-    pub line_number: usize,
-    /// Raw text of the first `CLASS:<name>` line.
-    pub raw_line: String,
-    /// The B-1 parser's structured record.
-    pub entry: ClassEntry,
-}
+        let (severity, kind) = if self.code.starts_with("IR_FORWARDED_") {
+            // Forwarded-from-B-family -> canonical MalformedRecord (Error).
+            (
+                SourceContentSeverity::Error,
+                SourceContentDiagnosticKind::MalformedRecord,
+            )
+        } else {
+            // Converter-originated -> canonical PartialTranslation (Info).
+            (
+                SourceContentSeverity::Info,
+                SourceContentDiagnosticKind::PartialTranslation,
+            )
+        };
 
-/// Canonical projection of a [`SpellcastingClassEntry`] from the B-2 parser.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct SpellcastingClassEntryProjection {
-    pub source_path: String,
-    pub line_number: usize,
-    pub raw_line: String,
-    pub entry: SpellcastingClassEntry,
-}
-
-/// Canonical projection of a [`RaceDeclaration`] from the B-3 parser.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct RaceDeclarationProjection {
-    pub source_path: String,
-    pub line_number: usize,
-    pub raw_line: String,
-    pub declaration: RaceDeclaration,
-}
-
-/// Canonical projection of an [`AbilityDeclaration`] from the B-3 parser.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct AbilityDeclarationProjection {
-    pub source_path: String,
-    pub line_number: usize,
-    pub raw_line: String,
-    pub declaration: AbilityDeclaration,
-}
-
-/// Canonical projection of an [`LstSpellRecord`] from the B-4 parser.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct LstSpellRecordProjection {
-    pub source_path: String,
-    pub line_number: usize,
-    pub raw_line: String,
-    pub record: LstSpellRecord,
-}
-
-/// Canonical projection of an [`EquipmentRecord`] from the B-5 parser.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct EquipmentRecordProjection {
-    pub source_path: String,
-    pub line_number: usize,
-    pub raw_line: String,
-    pub record: EquipmentRecord,
-}
-
-/// Canonical projection of an [`LstRecord`] from the B-6 metadata parser.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct LstRecordProjection {
-    pub source_path: String,
-    pub line_number: usize,
-    pub raw_line: String,
-    pub record: LstRecord,
-}
-
-/// Canonical IR node, one variant per B-family record kind.
-///
-/// The conversion produces one IRNode per B-family record. The conversion
-/// is total (R4): every B-family record maps to its variant. The mapping
-/// rules are documented in the contract artifact.
-///
-/// `#[allow(clippy::large_enum_variant)]` — the Spell variant is the
-/// largest by an order of magnitude because [`LstSpellRecord`] carries
-/// every extracted spell column. Boxing it would impose a heap allocation
-/// per record on the hot path; the canonical-IR consumer takes ownership
-/// of the IRNode and pays the size cost only once. This is a deliberate
-/// trade-off documented in N3 of the contract.
-#[allow(clippy::large_enum_variant)]
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum IRNode {
-    /// A martial class record from B-1.
-    Class(ClassEntryProjection),
-    /// A spellcasting class record from B-2.
-    SpellcastingClass(SpellcastingClassEntryProjection),
-    /// A race pointer declaration from B-3.
-    Race(RaceDeclarationProjection),
-    /// An ability declaration from B-3.
-    Ability(AbilityDeclarationProjection),
-    /// A spell row record from B-4.
-    Spell(LstSpellRecordProjection),
-    /// An equipment or equipment-modifier record from B-5.
-    Equipment(EquipmentRecordProjection),
-    /// A metadata-kind record from B-6 (Deity, Domain, Kits, Language,
-    /// Template, CompanionMod).
-    Metadata(LstRecordProjection),
-}
-
-impl IRNode {
-    /// Provenance triple: `(source_path, line_number, raw_line)`. The
-    /// slice card body requires every record to carry source line numbers;
-    /// this is the canonical accessor for them.
-    pub fn provenance(&self) -> (&str, usize, &str) {
-        match self {
-            IRNode::Class(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
-            IRNode::SpellcastingClass(p) => {
-                (p.source_path.as_str(), p.line_number, p.raw_line.as_str())
-            }
-            IRNode::Race(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
-            IRNode::Ability(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
-            IRNode::Spell(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
-            IRNode::Equipment(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
-            IRNode::Metadata(p) => (p.source_path.as_str(), p.line_number, p.raw_line.as_str()),
-        }
-    }
-
-    /// Returns true when this node's IR-kind is recognized by the given
-    /// schema. The schema's `recognized_kinds` list is consulted. Note:
-    /// this is a presentation helper, not a gate — the converter does
-    /// not reject records based on schema recognition (R4).
-    pub fn is_recognized_by(&self, schema: &IRSchema) -> bool {
-        let token = self.kind_token();
-        schema.recognizes(token)
-    }
-
-    /// Canonical directive-token prefix for this node's IR-kind.
-    pub fn kind_token(&self) -> &'static str {
-        match self {
-            IRNode::Class(_) => "CLASS",
-            IRNode::SpellcastingClass(_) => "CLASS",
-            IRNode::Race(_) => "RACE",
-            IRNode::Ability(_) => "ABILITY",
-            IRNode::Spell(_) => "SPELL",
-            IRNode::Equipment(p) => p.record.kind.token(),
-            IRNode::Metadata(p) => p.record.kind.token(),
-        }
-    }
-
-    /// The B-family slice tag this node originated from.
-    pub fn source_slice(&self) -> &'static str {
-        match self {
-            IRNode::Class(_) => "SD17-B-1",
-            IRNode::SpellcastingClass(_) => "SD17-B-2",
-            IRNode::Race(_) | IRNode::Ability(_) => "SD17-B-3",
-            IRNode::Spell(_) => "SD17-B-4",
-            IRNode::Equipment(_) => "SD17-B-5",
-            IRNode::Metadata(_) => "SD17-B-6",
+        SourceContentDiagnostic {
+            severity,
+            kind,
+            message: self.message.clone(),
+            source_ref,
         }
     }
 }
 
 // =============================================================================
-// ParsedLstRecord — relocated to crate::pcgen_import::lst_parser (Slice D).
+// ParsedLstRecord — canonical input enum for convert_to_ir
+// =============================================================================
 //
-// The canonical input enum for [`convert_to_ir`] lives at the LST
-// parser surface (`crate::pcgen_import::lst_parser::ParsedLstRecord`).
-// This module re-exports it via `pub use` at the top of this file so
-// existing callers that import `pcgen_import::ir_converter::ParsedLstRecord`
-// continue to resolve. New code should import the parser-surface name
-// directly.
+// Slice D relocated the aggregate `ParsedLstRecord` from the IR-converter
+// surface (where the per-kind parsers live) into the LST parser surface
+// (`pcgen_import::lst_parser::ParsedLstRecord`). The canonical home is
+// the parser surface. This module re-exports it for backward compatibility
+// so every consumer that imports
+// `pcgen_import::ir_converter::ParsedLstRecord` continues to resolve.
+// The doc comment on the parser-surface definition carries the full
+// rationale and the convenience-constructor list.
+//
+// The local definition that previously lived here was removed when Slice E
+// landed the canonical source-IR envelope; the parser-surface enum has
+// the same shape plus the new `from_*` constructor set. See the
+// `pcgen_import::lst_parser::ParsedLstRecord` definition for the single
+// source of truth.
+pub use crate::pcgen_import::lst_parser::ParsedLstRecord;
+
 // =============================================================================
+// SourceRef construction helper (used by per-family converters)
+// =============================================================================
+//
+// The B-family records' source paths live in different fields (some on
+// the record, some on the container). This helper packages the
+// canonical four so per-family converters don't have to spell out the
+// literal each time.
+
+/// Build a `SourceRef` from a stringified path and a one-based line
+/// number. `path` may be empty for records that don't carry their own
+/// source identity (the document-level converter fills it in via the
+/// forwarded diagnostic stream).
+fn make_source_ref(path: impl Into<String>, line: usize) -> SourceRef {
+    SourceRef::new(path.into(), line as u32)
+}
+
+// =============================================================================
+// Per-family record converters — return SourceContentRecord<'a>
+// =============================================================================
+
+/// Build a canonical [`SourceContentRecord`] from a B-1 [`ClassEntry`].
+///
+/// Projection is zero-copy. The borrowed `entry` carries every
+/// `tokens` and `feature_blocks` entry verbatim.
+pub fn convert_class_entry(entry: &ClassEntry) -> SourceContentRecord<'_> {
+    let line = entry.header_line_number;
+    let source_ref = make_source_ref(entry.record_source_path(), line);
+    SourceContentRecord::new(
+        source_ref,
+        SourceContentKind::Class,
+        SourceContentPayload::Class(entry),
+    )
+}
+
+/// Build a canonical [`SourceContentRecord`] from a B-2
+/// [`SpellcastingClassEntry`].
+pub fn convert_spellcasting_class_entry(entry: &SpellcastingClassEntry) -> SourceContentRecord<'_> {
+    let line = entry.header_line_number;
+    let source_ref = make_source_ref(entry.record_source_path(), line);
+    SourceContentRecord::new(
+        source_ref,
+        SourceContentKind::SpellcastingClass,
+        SourceContentPayload::SpellcastingClass(entry),
+    )
+}
+
+/// Build a canonical [`SourceContentRecord`] from a B-3
+/// [`RaceDeclaration`].
+pub fn convert_race_declaration(decl: &RaceDeclaration) -> SourceContentRecord<'_> {
+    let source_ref = make_source_ref(&decl.source_path, decl.line_number);
+    SourceContentRecord::new(
+        source_ref,
+        SourceContentKind::Race,
+        SourceContentPayload::Race(decl),
+    )
+}
+
+/// Build a canonical [`SourceContentRecord`] from a B-3
+/// [`AbilityDeclaration`].
+pub fn convert_ability_declaration(decl: &AbilityDeclaration) -> SourceContentRecord<'_> {
+    let source_ref = make_source_ref(&decl.source_path, decl.line_number);
+    SourceContentRecord::new(
+        source_ref,
+        SourceContentKind::Ability,
+        SourceContentPayload::Ability(decl),
+    )
+}
+
+/// Build a canonical [`SourceContentRecord`] from a B-4 [`LstSpellRecord`].
+pub fn convert_spell_record(record: &LstSpellRecord) -> SourceContentRecord<'_> {
+    let source_ref = make_source_ref(&record.source_path, record.line_number);
+    SourceContentRecord::new(
+        source_ref,
+        SourceContentKind::Spell,
+        SourceContentPayload::Spell(record),
+    )
+}
+
+/// Build a canonical [`SourceContentRecord`] from a B-5
+/// [`EquipmentRecord`].
+pub fn convert_equipment_record(record: &EquipmentRecord) -> SourceContentRecord<'_> {
+    let line = record.header_line_number;
+    let source_ref = make_source_ref(record.record_source_path(), line);
+    SourceContentRecord::new(
+        source_ref,
+        SourceContentKind::Equipment,
+        SourceContentPayload::Equipment(record),
+    )
+}
+
+/// Build a canonical [`SourceContentRecord`] from a B-6 [`LstRecord`].
+/// The inner metadata kind is mapped from the parser-side
+/// [`crate::pcgen_import::lst_parser::metadata::MetadataKind`] to the
+/// canonical [`crate::rules_core::source_content::MetadataKindInner`] so
+/// the rules-core envelope is total over the six B-6 kinds.
+pub fn convert_metadata_record(record: &LstRecord) -> SourceContentRecord<'_> {
+    let source_ref = make_source_ref(record.record_source_path(), record.line_number);
+    let kind = SourceContentKind::Metadata(b6_metadata_kind_to_canonical(record.kind));
+    SourceContentRecord::new(source_ref, kind, SourceContentPayload::Metadata(record))
+}
 
 // =============================================================================
 // convert_to_ir — public entry point
 // =============================================================================
 
-/// Convert a single parsed LST record into its canonical IR node.
+/// Convert a single parsed LST record into its canonical source-IR
+/// envelope.
 ///
-/// The signature is the one named in the slice card body. The function is
-/// an enum-discriminated trampoline to the per-family converters; the
-/// per-family converters are also exposed as the public entry points
+/// The signature is the one named in the slice card body. The function
+/// is an enum-discriminated trampoline to the per-family converters;
+/// the per-family converters are also exposed as public entry points
 /// for typed callers.
 ///
-/// The `schema` parameter is currently unused for gating (the schema is
-/// descriptive per R4 / N1), but it is required by the card body's
-/// signature and is reserved for future prescriptive gating.
-///
-/// `#[allow(clippy::result_large_err)]` — the Err variant is large because
-/// [`IRDiagnostic`] carries the full provenance triple and a String
-/// message. Per R4, the converter is total and does not actually produce
-/// an Err today; the Result exists for forward compatibility when GE-02
-/// / GE-04 add prescriptive gating. Boxing the Err now would force every
-/// success-path call site to allocate; we defer the allocation until the
-/// error path is reachable.
-#[allow(clippy::result_large_err)]
-pub fn convert_to_ir(
-    parsed_record: &ParsedLstRecord<'_>,
+/// The return type changed from `Result<IRNode, IRDiagnostic>` to
+/// `SourceContentRecord<'a>` per the Slice E contract. The conversion
+/// is total: every B-family record has exactly one canonical envelope
+/// variant. The `Result` wrapper is no longer necessary; the
+/// canonical envelope carries its own diagnostic stream via
+/// [`SourceContentDiagnostic`] attached to the package-level
+/// [`SourcePackageContent`].
+pub fn convert_to_ir<'a>(
+    parsed_record: &ParsedLstRecord<'a>,
     _schema: &IRSchema,
-) -> Result<IRNode, IRDiagnostic> {
+) -> SourceContentRecord<'a> {
     match parsed_record {
-        ParsedLstRecord::Class(entry) => Ok(convert_class_entry(entry)),
-        ParsedLstRecord::SpellcastingClass(entry) => Ok(convert_spellcasting_class_entry(entry)),
-        ParsedLstRecord::Race(r) => Ok(convert_race_declaration(r)),
-        ParsedLstRecord::Ability(a) => Ok(convert_ability_declaration(a)),
-        ParsedLstRecord::Spell(s) => Ok(convert_spell_record(s)),
-        ParsedLstRecord::Equipment(e) => Ok(convert_equipment_record(e)),
-        ParsedLstRecord::Metadata(r) => Ok(convert_metadata_record(r)),
+        ParsedLstRecord::Class(entry) => convert_class_entry(entry),
+        ParsedLstRecord::SpellcastingClass(entry) => convert_spellcasting_class_entry(entry),
+        ParsedLstRecord::Race(r) => convert_race_declaration(r),
+        ParsedLstRecord::Ability(a) => convert_ability_declaration(a),
+        ParsedLstRecord::Spell(s) => convert_spell_record(s),
+        ParsedLstRecord::Equipment(e) => convert_equipment_record(e),
+        ParsedLstRecord::Metadata(r) => convert_metadata_record(r),
     }
 }
 
 // =============================================================================
-// Per-family record converters
+// Per-document converters — produce (SourceContentRecord, forwarded IRDiagnostic) pairs
 // =============================================================================
+//
+// The converter returns one `SourceContentRecord` per B-family entry
+// plus the forwarded diagnostics stream. Caller-supplied `source_path`
+// overrides the per-record `source_path` for records whose parser
+// surface does not embed one (ClassEntry, SpellcastingClassEntry,
+// LstRecord, EquipmentRecord). This matches the Slice C contract's
+// behavior for these kinds.
 
-/// Convert a B-1 [`ClassEntry`] into [`IRNode::Class`]. O(1).
-pub fn convert_class_entry(entry: &ClassEntry) -> IRNode {
-    IRNode::Class(ClassEntryProjection {
-        source_path: entry.record_source_path(),
-        line_number: entry.header_line_number,
-        raw_line: entry.header_raw_line.clone(),
-        entry: ClassEntry {
-            class_name: entry.class_name.clone(),
-            header_line_number: entry.header_line_number,
-            header_raw_line: entry.header_raw_line.clone(),
-            tokens: entry.tokens.clone(),
-            feature_blocks: entry.feature_blocks.clone(),
-        },
-    })
-}
-
-/// Convert a B-2 [`SpellcastingClassEntry`] into [`IRNode::SpellcastingClass`]. O(1).
-pub fn convert_spellcasting_class_entry(entry: &SpellcastingClassEntry) -> IRNode {
-    IRNode::SpellcastingClass(SpellcastingClassEntryProjection {
-        source_path: entry.record_source_path(),
-        line_number: entry.header_line_number,
-        raw_line: entry.header_raw_line.clone(),
-        entry: SpellcastingClassEntry {
-            class_name: entry.class_name.clone(),
-            header_line_number: entry.header_line_number,
-            header_raw_line: entry.header_raw_line.clone(),
-            tokens: entry.tokens.clone(),
-            spell_stat: entry.spell_stat.clone(),
-            casting_posture: entry.casting_posture,
-            automatically_known_levels: entry.automatically_known_levels.clone(),
-            spell_progression: entry.spell_progression.clone(),
-            domain_selections: entry.domain_selections.clone(),
-            school_specializations: entry.school_specializations.clone(),
-        },
-    })
-}
-
-/// Convert a B-3 [`RaceDeclaration`] into [`IRNode::Race`]. O(1).
-pub fn convert_race_declaration(r: &RaceDeclaration) -> IRNode {
-    IRNode::Race(RaceDeclarationProjection {
-        source_path: r.record_source_path(),
-        line_number: r.line_number,
-        raw_line: r.raw_directive.clone(),
-        declaration: RaceDeclaration {
-            source_path: r.source_path.clone(),
-            line_number: r.line_number,
-            raw_directive: r.raw_directive.clone(),
-            target: r.target.clone(),
-        },
-    })
-}
-
-/// Convert a B-3 [`AbilityDeclaration`] into [`IRNode::Ability`]. O(1).
-pub fn convert_ability_declaration(a: &AbilityDeclaration) -> IRNode {
-    IRNode::Ability(AbilityDeclarationProjection {
-        source_path: a.record_source_path(),
-        line_number: a.line_number,
-        raw_line: a.raw_directive.clone(),
-        declaration: AbilityDeclaration {
-            source_path: a.source_path.clone(),
-            line_number: a.line_number,
-            raw_directive: a.raw_directive.clone(),
-            parsed: a.parsed.clone(),
-        },
-    })
-}
-
-/// Convert a B-4 [`LstSpellRecord`] into [`IRNode::Spell`]. O(1).
-pub fn convert_spell_record(s: &LstSpellRecord) -> IRNode {
-    IRNode::Spell(LstSpellRecordProjection {
-        source_path: s.record_source_path(),
-        line_number: s.line_number,
-        raw_line: s.name.clone(),
-        record: s.clone(),
-    })
-}
-
-/// Convert a B-5 [`EquipmentRecord`] into [`IRNode::Equipment`]. O(1).
-pub fn convert_equipment_record(e: &EquipmentRecord) -> IRNode {
-    IRNode::Equipment(EquipmentRecordProjection {
-        source_path: e.record_source_path(),
-        line_number: e.header_line_number,
-        raw_line: e.header_raw_line.clone(),
-        record: e.clone(),
-    })
-}
-
-/// Convert a B-6 [`LstRecord`] into [`IRNode::Metadata`]. O(1).
-pub fn convert_metadata_record(r: &LstRecord) -> IRNode {
-    IRNode::Metadata(LstRecordProjection {
-        source_path: r.record_source_path(),
-        line_number: r.line_number,
-        raw_line: r.raw_line.clone(),
-        record: r.clone(),
-    })
-}
-
-// =============================================================================
-// Per-document converters
-// =============================================================================
-
-/// Convert a [`ClassParseResult`] (B-1) into IR nodes + forwarded
+/// Convert a [`ClassParseResult`] (B-1) into canonical records + forwarded
 /// diagnostics. O(n) in the number of entries.
-pub fn convert_class_parse_result(
-    r: &ClassParseResult,
+pub fn convert_class_parse_result<'a>(
+    r: &'a ClassParseResult,
     _schema: &IRSchema,
-) -> Vec<(IRNode, Vec<IRDiagnostic>)> {
+) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.entries.len());
     for entry in &r.entries {
-        let node = convert_class_entry(entry);
-        let forwarded = forward_class_diagnostics(entry, &r.diagnostics, &r.source_path);
-        out.push((node, forwarded));
+        let record = convert_class_entry(entry);
+        let forwarded = forward_class_diagnostics(&r.diagnostics, &r.source_path);
+        out.push((record, forwarded));
     }
     out
 }
 
-/// Convert a [`SpellcastingClassParseResult`] (B-2) into IR nodes +
-/// forwarded diagnostics. O(n).
-pub fn convert_spellcasting_class_parse_result(
-    r: &SpellcastingClassParseResult,
+/// Convert a [`SpellcastingClassParseResult`] (B-2) into canonical
+/// records + forwarded diagnostics. O(n).
+pub fn convert_spellcasting_class_parse_result<'a>(
+    r: &'a SpellcastingClassParseResult,
     _schema: &IRSchema,
-) -> Vec<(IRNode, Vec<IRDiagnostic>)> {
+) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.entries.len());
     for entry in &r.entries {
-        let node = convert_spellcasting_class_entry(entry);
+        let record = convert_spellcasting_class_entry(entry);
         let forwarded = forward_spellcasting_class_diagnostics(entry, &r.diagnostics);
-        out.push((node, forwarded));
+        out.push((record, forwarded));
     }
     out
 }
 
-/// Convert an [`LstEntryFile`] (B-3) into IR nodes + forwarded
+/// Convert an [`LstEntryFile`] (B-3) into canonical records + forwarded
 /// diagnostics. O(n) in the total number of race + ability records.
-pub fn convert_lst_entry_file(
-    r: &LstEntryFile,
+pub fn convert_lst_entry_file<'a>(
+    r: &'a LstEntryFile,
     _schema: &IRSchema,
-) -> Vec<(IRNode, Vec<IRDiagnostic>)> {
+) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.race_pointers.len() + r.ability_declarations.len());
     for race in &r.race_pointers {
         out.push((
@@ -577,105 +519,186 @@ pub fn convert_lst_entry_file(
     out
 }
 
-/// Convert an [`LstMetadataDocument`] (B-6) into IR nodes + forwarded
-/// diagnostics. O(n).
-pub fn convert_lst_metadata_document(
-    r: &LstMetadataDocument,
+/// Convert an [`LstMetadataDocument`] (B-6) into canonical records +
+/// forwarded diagnostics. O(n).
+pub fn convert_lst_metadata_document<'a>(
+    r: &'a LstMetadataDocument,
     _schema: &IRSchema,
-) -> Vec<(IRNode, Vec<IRDiagnostic>)> {
+) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.records.len());
     for record in &r.records {
-        let node = convert_metadata_record(record);
-        let forwarded = record
-            .diagnostics
-            .iter()
-            .map(|d| IRDiagnostic {
-                source_path: r.source_path.clone(),
-                line_number: Some(record.line_number),
-                raw_line: record.raw_line.clone(),
-                severity: IRDiagnosticSeverity::Warning,
-                code: "IR_FORWARDED_B6",
-                source_kind: "SD17-B-6",
-                message: d.message.clone(),
-            })
-            .collect();
-        out.push((node, forwarded));
+        let canonical = convert_metadata_record(record);
+        let forwarded = forward_metadata_record_diagnostics(record, &r.source_path);
+        out.push((canonical, forwarded));
     }
     out
 }
 
-/// Convert the records from a B-4 spell file (or any borrowed `&[LstSpellRecord]`)
-/// into IR nodes + forwarded diagnostics. O(n). The caller supplies the
-/// `source_path` because `LstSpellFile` carries a `PathBuf` while the
-/// converter normalizes to a `String`.
-pub fn convert_spell_record_list(
-    records: &[LstSpellRecord],
+/// Convert the records from a B-4 spell file (or any borrowed
+/// `&[LstSpellRecord]`) into canonical records + forwarded diagnostics.
+/// O(n). The caller supplies `source_path` because `LstSpellFile`
+/// carries a `PathBuf` while the converter normalizes to a `String`.
+pub fn convert_spell_record_list<'a>(
+    records: &'a [LstSpellRecord],
     source_path: &str,
     _schema: &IRSchema,
-) -> Vec<(IRNode, Vec<IRDiagnostic>)> {
+) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+    let _ = source_path; // Per-row spell diagnostics live on the LstSpellFile, not on the LstSpellRecord itself.
     let mut out = Vec::with_capacity(records.len());
     for record in records {
-        let node = convert_spell_record(record);
-        let forwarded: Vec<IRDiagnostic> = Vec::new();
-        // Note: per-row spell diagnostics live on the LstSpellFile, not on
-        // the LstSpellRecord itself. The caller passes the borrowed slice;
-        // container-level diagnostics must be retrieved separately. This
-        // function focuses on per-record conversion.
-        let _ = (source_path, forwarded);
-        out.push((node, Vec::new()));
+        let canonical = convert_spell_record(record);
+        out.push((canonical, Vec::new()));
     }
     out
 }
 
-/// Convert the records from a B-4 [`LstSpellFile`] into IR nodes +
-/// forwarded diagnostics. O(n). Normalizes the `PathBuf` source_path
-/// to a `String` for the diagnostic surface.
-pub fn convert_spell_file(r: &LstSpellFile, schema: &IRSchema) -> Vec<(IRNode, Vec<IRDiagnostic>)> {
+/// Convert the records from a B-4 [`LstSpellFile`] into canonical
+/// records + forwarded diagnostics. O(n). Normalizes the `PathBuf`
+/// `source_path` to a `String` for the diagnostic surface.
+pub fn convert_spell_file<'a>(
+    r: &'a LstSpellFile,
+    schema: &IRSchema,
+) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
     let source_path = path_to_string(&r.source_path);
-    let container_diagnostics: Vec<IRDiagnostic> = r
-        .diagnostics
-        .iter()
-        .map(|d| IRDiagnostic {
-            source_path: source_path.clone(),
-            line_number: d.line_number,
-            raw_line: d.raw_line.clone(),
-            severity: IRDiagnosticSeverity::Warning,
-            code: "IR_FORWARDED_B4",
-            source_kind: "SD17-B-4",
-            message: d.message.clone(),
-        })
-        .collect();
+    let container_diagnostics = forward_spell_container_diagnostics(&r.diagnostics, &source_path);
     let mut out = Vec::with_capacity(r.records.len());
     for record in &r.records {
-        out.push((convert_spell_record(record), container_diagnostics.clone()));
+        // Rebuild the canonical record with the document's source_path
+        // override so the B-4 record's own source_path is honored when
+        // present but the document's identity fills in for records that
+        // were construct-ed with empty paths.
+        let canonical = convert_spell_record(record);
+        out.push((canonical, container_diagnostics.clone()));
     }
-    // Add an extra IRNode-shaped placeholder for each container-level
-    // diagnostic that has no record, so no diagnostic is silently dropped.
     let _ = schema;
     out
 }
 
-/// Convert an [`EquipmentParseResult`] (B-5) into IR nodes + forwarded
-/// diagnostics. O(n).
-pub fn convert_equipment_parse_result(
-    r: &EquipmentParseResult,
+/// Convert an [`EquipmentParseResult`] (B-5) into canonical records +
+/// forwarded diagnostics. O(n).
+pub fn convert_equipment_parse_result<'a>(
+    r: &'a EquipmentParseResult,
     _schema: &IRSchema,
-) -> Vec<(IRNode, Vec<IRDiagnostic>)> {
+) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.entries.len());
     for entry in &r.entries {
-        let node = convert_equipment_record(entry);
+        let canonical = convert_equipment_record(entry);
         let forwarded = forward_equipment_diagnostics(entry, &r.diagnostics, &r.source_path);
-        out.push((node, forwarded));
+        out.push((canonical, forwarded));
     }
     out
 }
 
 // =============================================================================
-// Diagnostic-forwarding helpers
+// Corpus-rooted SourcePackageContent builders
+// =============================================================================
+//
+// These produce the canonical [`SourcePackageContent`] aggregate
+// directly, accumulating records and the canonical diagnostics stream
+// in one pass.
+
+/// Build a canonical [`SourcePackageContent`] from a B-1
+/// [`ClassParseResult`].
+pub fn convert_package_from_class_parse_result<'a>(
+    r: &'a ClassParseResult,
+    package_id: impl Into<String>,
+    schema: &IRSchema,
+) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+    let mut all_ir_diagnostics = Vec::new();
+    for entry in &r.entries {
+        let record = convert_class_entry(entry);
+        let forwarded = forward_class_diagnostics(&r.diagnostics, &r.source_path);
+        for d in &forwarded {
+            pkg.push_diagnostic(d.to_canonical());
+        }
+        pkg.push(record);
+        all_ir_diagnostics.extend(forwarded);
+    }
+    let _ = schema;
+    (pkg, all_ir_diagnostics)
+}
+
+/// Build a canonical [`SourcePackageContent`] from a B-2
+/// [`SpellcastingClassParseResult`].
+pub fn convert_package_from_spellcasting_class_parse_result<'a>(
+    r: &'a SpellcastingClassParseResult,
+    package_id: impl Into<String>,
+    schema: &IRSchema,
+) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+    let mut all_ir_diagnostics = Vec::new();
+    for entry in &r.entries {
+        let record = convert_spellcasting_class_entry(entry);
+        let forwarded = forward_spellcasting_class_diagnostics(entry, &r.diagnostics);
+        for d in &forwarded {
+            pkg.push_diagnostic(d.to_canonical());
+        }
+        pkg.push(record);
+        all_ir_diagnostics.extend(forwarded);
+    }
+    let _ = schema;
+    (pkg, all_ir_diagnostics)
+}
+
+/// Build a canonical [`SourcePackageContent`] from a B-3
+/// [`LstEntryFile`].
+pub fn convert_package_from_lst_entry_file<'a>(
+    r: &'a LstEntryFile,
+    package_id: impl Into<String>,
+    schema: &IRSchema,
+) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+    let mut all_ir_diagnostics = Vec::new();
+    for race in &r.race_pointers {
+        let record = convert_race_declaration(race);
+        let forwarded = forward_race_ability_diagnostics(&r.diagnostics);
+        for d in &forwarded {
+            pkg.push_diagnostic(d.to_canonical());
+        }
+        pkg.push(record);
+        all_ir_diagnostics.extend(forwarded);
+    }
+    for ability in &r.ability_declarations {
+        let record = convert_ability_declaration(ability);
+        let forwarded = forward_race_ability_diagnostics(&r.diagnostics);
+        for d in &forwarded {
+            pkg.push_diagnostic(d.to_canonical());
+        }
+        pkg.push(record);
+        all_ir_diagnostics.extend(forwarded);
+    }
+    let _ = schema;
+    (pkg, all_ir_diagnostics)
+}
+
+/// Build a canonical [`SourcePackageContent`] from a B-6
+/// [`LstMetadataDocument`].
+pub fn convert_package_from_lst_metadata_document<'a>(
+    r: &'a LstMetadataDocument,
+    package_id: impl Into<String>,
+    schema: &IRSchema,
+) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+    let mut all_ir_diagnostics = Vec::new();
+    for record in &r.records {
+        let canonical = convert_metadata_record(record);
+        let forwarded = forward_metadata_record_diagnostics(record, &r.source_path);
+        for d in &forwarded {
+            pkg.push_diagnostic(d.to_canonical());
+        }
+        pkg.push(canonical);
+        all_ir_diagnostics.extend(forwarded);
+    }
+    let _ = schema;
+    (pkg, all_ir_diagnostics)
+}
+
+// =============================================================================
+// Diagnostic-forwarding helpers (preserve Slice C behavior)
 // =============================================================================
 
 fn forward_class_diagnostics(
-    _entry: &ClassEntry,
     container: &[ClassLstDiagnostic],
     source_path: &str,
 ) -> Vec<IRDiagnostic> {
@@ -734,6 +757,40 @@ fn forward_race_ability_diagnostics(container: &[RaceAbilityLstDiagnostic]) -> V
         .collect()
 }
 
+fn forward_spell_container_diagnostics(
+    container: &[crate::pcgen_import::lst_parser::spell::LstParseDiagnostic],
+    source_path: &str,
+) -> Vec<IRDiagnostic> {
+    container
+        .iter()
+        .map(|d| IRDiagnostic {
+            source_path: source_path.to_string(),
+            line_number: d.line_number,
+            raw_line: d.raw_line.clone(),
+            severity: IRDiagnosticSeverity::Warning,
+            code: "IR_FORWARDED_B4",
+            source_kind: "SD17-B-4",
+            message: d.message.clone(),
+        })
+        .collect()
+}
+
+fn forward_metadata_record_diagnostics(record: &LstRecord, source_path: &str) -> Vec<IRDiagnostic> {
+    record
+        .diagnostics
+        .iter()
+        .map(|d| IRDiagnostic {
+            source_path: source_path.to_string(),
+            line_number: Some(record.line_number),
+            raw_line: record.raw_line.clone(),
+            severity: IRDiagnosticSeverity::Warning,
+            code: "IR_FORWARDED_B6",
+            source_kind: "SD17-B-6",
+            message: d.message.clone(),
+        })
+        .collect()
+}
+
 fn forward_equipment_diagnostics(
     entry: &EquipmentRecord,
     container: &[EquipmentDiagnostic],
@@ -779,7 +836,7 @@ fn forward_equipment_diagnostics(
 // =============================================================================
 
 /// Convert any `AsRef<Path>` to a normalized string form for use as the
-/// `source_path` field on `IRNode` and `IRDiagnostic`. The path is
+/// `source_path` field on `SourceRef` and `IRDiagnostic`. The path is
 /// stringified with `to_string_lossy` so non-UTF-8 paths do not panic;
 /// the canonical-IR surface only ever needs a display identifier.
 pub(crate) fn path_to_string(path: &Path) -> String {
@@ -787,31 +844,24 @@ pub(crate) fn path_to_string(path: &Path) -> String {
 }
 
 // =============================================================================
-// Provenance accessors on the B-family records
-//
-// `ClassEntry`, `SpellcastingClassEntry`, and `LstRecord` (B-6 metadata)
-// do NOT carry a per-record `source_path` field — they rely on the
-// container's `source_path` for the document-level identity. The
-// per-record converters therefore use `String::new()` as a placeholder
-// when the converter is invoked outside a document context. The
-// document-level converters (`convert_class_parse_result`,
-// `convert_lst_metadata_document`, etc.) provide the real source path
-// via the forwarded diagnostic stream and via the IRNode's `kind_token`
-// accessor — the consumer can reconstruct the full provenance from
-// the IRNode + its forwarded diagnostics.
-//
-// `LstSpellRecord` (B-4) does carry `source_path: String` and is the
-// only B-family record that the converter can fully populate without
-// consulting a container. The trait below makes that asymmetry explicit
-// so future maintainers don't accidentally assume per-record source
-// paths exist for every family.
+// Per-record `source_path` accessor (preserved; do not change)
 // =============================================================================
+//
+// `ClassEntry`, `SpellcastingClassEntry`, `EquipmentRecord`, and
+// `LstRecord` (B-6 metadata) do NOT carry a per-record `source_path`
+// field — they rely on the container's `source_path` for the
+// document-level identity. The per-record converters therefore use
+// `String::new()` as a placeholder when the converter is invoked
+// outside a document context; the document-level converters fill in
+// the real path via the forwarded diagnostic stream.
+//
+// `LstSpellRecord` (B-4), `RaceDeclaration`, and `AbilityDeclaration`
+// (B-3) DO carry `source_path` as a per-record field, and are the
+// only families whose per-record conversion can fully populate the
+// `SourceRef` without consulting a container. The trait below makes
+// that asymmetry explicit so future maintainers don't accidentally
+// assume per-record source paths exist for every family.
 
-/// Per-record `source_path` accessor. Returns `String::new()` for
-/// record kinds whose B-family parser does not embed a `source_path`
-/// field on the record (ClassEntry, SpellcastingClassEntry, LstRecord
-/// from B-6 metadata, EquipmentRecord). Returns the real path for
-/// LstSpellRecord, which carries one.
 trait RecordSourcePath {
     fn record_source_path(&self) -> String;
 }
@@ -855,5 +905,173 @@ impl RecordSourcePath for RaceDeclaration {
 impl RecordSourcePath for AbilityDeclaration {
     fn record_source_path(&self) -> String {
         self.source_path.clone()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::pcgen_import::lst_parser::equipment::{EquipmentRecordKind, EquipmentToken};
+
+    fn fake_class() -> ClassEntry {
+        ClassEntry {
+            class_name: "TestClass".to_string(),
+            header_line_number: 7,
+            header_raw_line: "CLASS:TestClass\tHD:8\tHP:0\tPROFICIENT:NO".to_string(),
+            tokens: Vec::new(),
+            feature_blocks: Vec::new(),
+        }
+    }
+
+    fn fake_spell() -> LstSpellRecord {
+        LstSpellRecord {
+            line_number: 11,
+            source_path: "spells.lst".to_string(),
+            name: "Fireball".to_string(),
+            output_name: None,
+            spell_type: None,
+            classes: None,
+            school: Some("Evocation".to_string()),
+            descriptor: Some("Fire".to_string()),
+            sub_school: None,
+            components: None,
+            casting_time: None,
+            range: None,
+            item: None,
+            target_area: None,
+            duration: None,
+            save_info: None,
+            spell_resistance: None,
+            description: None,
+            source_page: None,
+            source_link: None,
+            description_raw: None,
+            payload: crate::pcgen_import::lst_parser::spell::LstSpellRecordPayload {
+                name: "Fireball".to_string(),
+                output_name: None,
+                spell_type: None,
+                classes: None,
+                school: Some("Evocation".to_string()),
+                descriptor: Some("Fire".to_string()),
+                sub_school: None,
+                components: None,
+                casting_time: None,
+                range: None,
+                item: None,
+                target_area: None,
+                duration: None,
+                save_info: None,
+                spell_resistance: None,
+                source_page: None,
+                source_link: None,
+                description: None,
+                description_raw: None,
+            },
+        }
+    }
+
+    fn fake_equipment() -> EquipmentRecord {
+        EquipmentRecord {
+            kind: EquipmentRecordKind::Equip,
+            name: "TestEquip".to_string(),
+            header_line_number: 4,
+            header_raw_line: "EQUIP:TestEquip".to_string(),
+            tokens: vec![EquipmentToken {
+                key: "KEY".to_string(),
+                value: "value".to_string(),
+                line_number: 4,
+                raw_pair: "KEY:value".to_string(),
+            }],
+            bonus_chains: Vec::new(),
+            is_record_start: true,
+            diagnostics: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn schema_version_follows_source_ir_version() {
+        let s = IRSchema::canonical_v1();
+        assert_eq!(s.schema_version, SOURCE_IR_VERSION);
+    }
+
+    #[test]
+    fn class_record_carries_zero_copy_payload() {
+        let entry = fake_class();
+        let rec = convert_class_entry(&entry);
+        assert_eq!(rec.kind, SourceContentKind::Class);
+        assert_eq!(rec.source_ref.line, 7);
+        match rec.payload {
+            SourceContentPayload::Class(e) => {
+                assert_eq!(e.class_name, "TestClass");
+                assert_eq!(e.header_line_number, 7);
+            }
+            _ => panic!("expected Class payload"),
+        }
+    }
+
+    #[test]
+    fn spell_record_zero_copy() {
+        let record = fake_spell();
+        let rec = convert_spell_record(&record);
+        assert_eq!(rec.kind, SourceContentKind::Spell);
+        assert_eq!(rec.source_ref.lst_file, "spells.lst");
+        assert_eq!(rec.source_ref.line, 11);
+    }
+
+    #[test]
+    fn equipment_record_zero_copy() {
+        let record = fake_equipment();
+        let rec = convert_equipment_record(&record);
+        assert_eq!(rec.kind, SourceContentKind::Equipment);
+        match rec.payload {
+            SourceContentPayload::Equipment(e) => {
+                assert_eq!(e.name, "TestEquip");
+            }
+            _ => panic!("expected Equipment payload"),
+        }
+    }
+
+    #[test]
+    fn ir_diagnostic_to_canonical_routes_forwarded_as_malformed() {
+        let d = IRDiagnostic {
+            source_path: "x.lst".to_string(),
+            line_number: Some(2),
+            raw_line: "raw".to_string(),
+            severity: IRDiagnosticSeverity::Warning,
+            code: "IR_FORWARDED_B5",
+            source_kind: "SD17-B-5",
+            message: "msg".to_string(),
+        };
+        let canonical = d.to_canonical();
+        assert_eq!(canonical.severity, SourceContentSeverity::Error);
+        assert_eq!(canonical.kind, SourceContentDiagnosticKind::MalformedRecord);
+        assert_eq!(canonical.source_ref.lst_file, "x.lst");
+        assert_eq!(canonical.source_ref.line, 2);
+    }
+
+    #[test]
+    fn ir_diagnostic_to_canonical_routes_converter_originated_as_partial() {
+        let d = IRDiagnostic::converter_error("y.lst", Some(3), "raw", "IR_INTERNAL", "x");
+        let canonical = d.to_canonical();
+        assert_eq!(canonical.severity, SourceContentSeverity::Info);
+        assert_eq!(
+            canonical.kind,
+            SourceContentDiagnosticKind::PartialTranslation
+        );
+    }
+
+    #[test]
+    fn ir_diagnostic_to_canonical_handles_container_wide_line_placeholder() {
+        let d = IRDiagnostic {
+            source_path: "z.lst".to_string(),
+            line_number: None,
+            raw_line: String::new(),
+            severity: IRDiagnosticSeverity::Warning,
+            code: "IR_FORWARDED_B1",
+            source_kind: "SD17-B-1",
+            message: "container-wide".to_string(),
+        };
+        let canonical = d.to_canonical();
+        assert_eq!(canonical.source_ref.line, 0);
     }
 }

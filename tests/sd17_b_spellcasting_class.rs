@@ -40,9 +40,9 @@ use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use codex::pcgen_import::lst_parser::spellcasting_class::{
-    ClassBlockKind, CastingPosture, SpellcastingClassDiagnostic, SpellcastingClassDiagnosticKind,
-    SpellcastingClassEntry, SpellcastingClassParseResult, SpellLevelRow, parse_spellcasting_class_entries,
-    parse_spellcasting_class_file,
+    CastingPosture, ClassBlockKind, SpellLevelRow, SpellcastingClassDiagnostic,
+    SpellcastingClassDiagnosticKind, SpellcastingClassEntry, SpellcastingClassParseResult,
+    parse_spellcasting_class_entries, parse_spellcasting_class_file,
 };
 
 /// The five spellcasting classes named in the slice card body.
@@ -310,8 +310,7 @@ fn recognizes_wizard_spellbook_posture_and_school_specializations() {
         wizard
             .school_specializations
             .iter()
-            .any(|school| school.school == "Universal"
-                && school.subclass_name == "Universalist"),
+            .any(|school| school.school == "Universal" && school.subclass_name == "Universalist"),
         "Universalist SUBCLASS without CHOICE:SCHOOL must map to the implicit Universal school"
     );
 }
@@ -525,9 +524,10 @@ fn parses_real_pathfinder_core_rulebook_spellcasting_classes() {
             "/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst"
         ),
     );
-    let result =
-        parse_spellcasting_class_file(&corpus.path("data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst"))
-            .expect("read real cr_classes.lst");
+    let result = parse_spellcasting_class_file(
+        &corpus.path("data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst"),
+    )
+    .expect("read real cr_classes.lst");
 
     let names: Vec<&str> = result
         .entries
@@ -555,7 +555,11 @@ fn parses_real_pathfinder_core_rulebook_spellcasting_classes() {
             .iter()
             .find(|entry| entry.class_name == *name)
             .unwrap_or_else(|| panic!("{name} parsed"));
-        assert_eq!(entry.casting_posture, Some(CastingPosture::Spontaneous), "{name}");
+        assert_eq!(
+            entry.casting_posture,
+            Some(CastingPosture::Spontaneous),
+            "{name}"
+        );
     }
     for name in ["Cleric", "Druid"] {
         let entry = result
@@ -563,7 +567,11 @@ fn parses_real_pathfinder_core_rulebook_spellcasting_classes() {
             .iter()
             .find(|entry| entry.class_name == *name)
             .unwrap_or_else(|| panic!("{name} parsed"));
-        assert_eq!(entry.casting_posture, Some(CastingPosture::Prepared), "{name}");
+        assert_eq!(
+            entry.casting_posture,
+            Some(CastingPosture::Prepared),
+            "{name}"
+        );
     }
     // Bard must surface exactly 20 progression rows.
     let bard = result
@@ -609,7 +617,10 @@ fn class_block_kind_classifier_distinguishes_progression_from_domain() {
     assert!(ClassBlockKind::from_label("Spell Level Progression").is_progression_curve());
     assert!(ClassBlockKind::from_label("Domain Selections").is_domain_selections());
     assert!(ClassBlockKind::from_label("Proficiencies").is_other());
-    assert_eq!(ClassBlockKind::from_label("Level progression").label(), "Level progression");
+    assert_eq!(
+        ClassBlockKind::from_label("Level progression").label(),
+        "Level progression"
+    );
 }
 
 #[test]
