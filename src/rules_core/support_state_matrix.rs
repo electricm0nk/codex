@@ -315,7 +315,8 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
     tests/sd13_rogue_level7_progression.rs + \
     tests/sd13_rogue_level8_progression.rs + \
     tests/sd13_rogue_level9_progression.rs + \
-    tests/sd13_rogue_level10_progression.rs";
+    tests/sd13_rogue_level10_progression.rs + \
+    tests/sd13_rogue_talent_choice.rs";
 
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group
@@ -1127,7 +1128,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     class_feature.rogue.improved_uncanny_dodge explanations are standalone \
                     records, not wired into compute_fighter_chassis, compute_total_saves, or \
                     compute_combat_baseline, so defense.total_save.* is still never computed \
-                    for Rogue.",
+                    for Rogue. A further SD13-E5 slice grounds the 2nd-level rogue talent \
+                    CHOICE SLOT (class_chassis.rogue.talent_choice, choice:rogue_talent, \
+                    gated to rogue level >= 2, an open-ended +0 recognition mirroring the \
+                    favored-enemy/terrain/mercy idiom; rule text verified identically on \
+                    both primary sources, including \"A rogue cannot select an individual \
+                    talent more than once\"): the selected rogue talent's own EFFECT stays \
+                    entirely unproven — the open-ended talent tree remains the \
+                    new-subsystem-shaped burden, no talent-effect engine exists, and the \
+                    4th/6th/8th/10th additional talents stay named-but-unproven as future \
+                    numbered slots per the proven monk-second-bonus-feat repeat-grant \
+                    idiom.",
                 next_required_uplift: "later SD13 slice wiring the grounded Rogue pillar \
                     records into the integrated pilot surface (the generic chassis diagnostics \
                     still claim-block), then rogue talents and level-11+ progression",
