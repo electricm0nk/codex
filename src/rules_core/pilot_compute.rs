@@ -8224,15 +8224,72 @@ fn explain_sorcerer_level1_spell_baseline(
         });
     }
 
-    // Still blocked (2/2): name the spontaneous known-spell / slot posture burden explicitly.
+    // SD13-E5: the BASE spells-KNOWN counts, one record per spell level with
+    // a non-"—" column in the Sorcerer Spells Known table, as a literal
+    // table lookup mirroring the Bard known slice. Verified against the raw
+    // table rows of both primary sources (identical on d20pfsrd and
+    // legacy.aonprd.com): level 1 "4/2/—/—/—/—", level 2 "5/2/—/—/—/—",
+    // level 3 "5/3/—/—/—/—", level 4 "6/3/1/—/—/—", level 5 "6/4/2/—/—/—",
+    // level 6 "7/4/2/1/—/—", level 7 "7/5/3/2/—/—", level 8 "8/5/3/2/1/—",
+    // level 9 "8/5/4/3/2/—", level 10 "9/5/4/3/2/1" (0th through 5th spell
+    // level). The known table INCLUDES the 0th level (cantrips are "spells
+    // known" only), and its new-spell-level cadence matches the grounded
+    // per-day access ladder exactly (2nd at 4, 3rd at 6, 4th at 8, 5th at
+    // 10 — checked rather than assumed). Only the known COUNTS are
+    // grounded: the selection of WHICH spells are known is never computed,
+    // and the 3rd/5th/7th-level bloodline bonus spells are part of the
+    // still-unproven bloodline progression burden, not this table.
+    let sorcerer_spells_known: [Option<i16>; 6] = match level {
+        1 => [Some(4), Some(2), None, None, None, None],
+        2 => [Some(5), Some(2), None, None, None, None],
+        3 => [Some(5), Some(3), None, None, None, None],
+        4 => [Some(6), Some(3), Some(1), None, None, None],
+        5 => [Some(6), Some(4), Some(2), None, None, None],
+        6 => [Some(7), Some(4), Some(2), Some(1), None, None],
+        7 => [Some(7), Some(5), Some(3), Some(2), None, None],
+        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None],
+        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None],
+        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1)],
+        _ => [None, None, None, None, None, None],
+    };
+    for (spell_level, known_count) in sorcerer_spells_known.iter().enumerate() {
+        let Some(known_count) = known_count else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.sorcerer.spontaneous.spells_known.spell_level_{spell_level}"
+            ),
+            value: *known_count,
+            detail: format!(
+                "Sorcerer base spells known at sorcerer level {level}, spell level \
+                 {spell_level}: {known_count}, read directly from the PF1 Core Rulebook \
+                 Sorcerer Spells Known table (verified against the raw table rows of both \
+                 primary sources; a literal table lookup, not a derived formula; unlike the \
+                 spells-per-day table, this table includes the 0th level — cantrips are \
+                 spells known only). This grounds the base known count only: the selection \
+                 of WHICH spells are known is never computed — no spell-list content, no \
+                 spell identities, no swap/retraining rules, and no bloodline bonus-spell \
+                 additions (those are part of the still-unproven bloodline progression \
+                 burden)"
+            ),
+        });
+    }
+
+    // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
+    // explicitly. The which-spells-are-known selection stays ungrounded; the
+    // access ladder, base per-day counts, base save DCs, and base known counts
+    // are grounded separately as flat records.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
         message:
             "Sorcerer remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting, spells known, and bonus spell slots from a high \
+             spontaneous casting, the selection of WHICH spells known are actually chosen, \
+             and bonus spell slots from a high \
              ability score are out of scope for this bounded baseline (the spell-level access \
-             ladder, the base spells-per-day table counts, and the base spell-save-DC \
-             arithmetic are grounded separately as flat records) and \
+             ladder, the base spells-per-day table counts, the base spell-save-DC \
+             arithmetic, and the base spells-known table counts are grounded separately as \
+             flat records) and \
              no spell math is fabricated beyond them"
                 .to_owned(),
         claim_blocking: true,
