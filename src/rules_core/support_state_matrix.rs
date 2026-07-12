@@ -366,7 +366,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_spells_per_day_counts.rs + \
     tests/sd13_paladin_spell_save_dcs.rs + \
     tests/sd13_paladin_bonus_spells.rs + \
-    tests/sd13_paladin_total_spells_per_day.rs";
+    tests/sd13_paladin_total_spells_per_day.rs + \
+    tests/sd13_paladin_mercies_two_and_three.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -2491,8 +2492,21 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     level (the 3rd/6th/9th cadence), but exactly like the level-6 repeat \
                     grant before it, recognizing a second mercy selection needs the \
                     mercy-list-growth mechanism this codebase has never grounded, so the \
-                    9th-level repeat grant stays deliberately named-but-unproven and the \
-                    single grounded level-3 selection carries over unchanged — AND a further \
+                    9th-level repeat grant stayed deliberately named-but-unproven and the \
+                    single grounded level-3 selection carried over unchanged — until a \
+                    further SD13-E5 slice grounded BOTH repeat grants as numbered choice \
+                    slots per the proven repeat-grant idiom \
+                    (class_chassis.paladin.mercy_2_choice / mercy_3_choice, \
+                    choice:paladin_mercy_2/3, gates 6/9, open-ended +0 recognitions \
+                    mirroring slot 1; the verified CRB tiers — 6th adds \
+                    Dazed/Diseased/Staggered, 9th adds \
+                    Cursed/Exhausted/Frightened/Nauseated/Poisoned per legacy.aonprd.com, \
+                    with d20pfsrd's supersets containing them and its extra entries being \
+                    non-CRB expansions outside this pf1.core_rulebook seam — are cited in \
+                    each detail; prerequisite chains are named, not validated; no mercy's \
+                    effect on lay on hands is computed; the gate ladder is pinned one level \
+                    below each gate), completing the paladin's full three-mercy count at \
+                    the tranche ceiling — AND a further \
                     SD13-E5 slice widens the level-range gate again (supported_paladin_level, \
                     1..=10), closing the level-10 band across every level-banded class row at \
                     the tranche ceiling, and extends every one of the formulas above to level \
