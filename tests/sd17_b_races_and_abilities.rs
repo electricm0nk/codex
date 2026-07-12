@@ -19,10 +19,18 @@
 //! error is the RED state. Implementation in `src/pcgen_import/lst_parser.rs`
 //! drives the transition to GREEN.
 
+use std::path::PathBuf;
+
 use codex::pcgen_import::lst_parser::race_ability::LstDiagnosticKind;
 use codex::pcgen_import::lst_parser::{AbilityKind, parse_lst_entry};
 
-const PCGEN_DATA: &str = "/home/ubuntu/workspace/repos/pcgen/data";
+fn corpus_root() -> Option<PathBuf> {
+    let configured = std::env::var_os("PCGEN_CORPUS_ROOT").map(PathBuf::from);
+    let default = PathBuf::from("/home/ubuntu/workspace/repos/pcgen/data");
+    configured
+        .or_else(|| default.is_dir().then_some(default))
+        .filter(|path| path.is_dir())
+}
 
 // --- Race pointer recognition (RACE: / RACES:) ----------------------------
 
@@ -195,6 +203,36 @@ fn parses_ability_category_prefix_and_trailing_modifiers() {
 }
 
 #[test]
+fn parses_ability_category_prefix_and_single_space_trailing_modifiers() {
+    let input = "ABILITY:CATEGORY=FEAT|Alertness FREE:YES STACK:YES\n";
+
+    let result = parse_lst_entry("legacy_spaces.lst", input);
+    assert_eq!(result.ability_declarations.len(), 1);
+    assert!(result.diagnostics.is_empty());
+
+    let parsed = result.ability_declarations[0]
+        .parsed
+        .as_ref()
+        .expect("single-space modifiers should be parsed");
+    assert_eq!(parsed.category.as_deref(), Some("FEAT"));
+    assert_eq!(parsed.name, "Alertness");
+    assert_eq!(parsed.trailing_modifiers, vec!["FREE:YES", "STACK:YES"]);
+}
+
+#[test]
+fn preserves_spaces_inside_ability_targets_without_modifiers() {
+    let input = "ABILITY:Dwarf Racial Trait|AUTOMATIC|Dwarf ~ Ability Scores\n";
+
+    let result = parse_lst_entry("target_spaces.lst", input);
+    let parsed = result.ability_declarations[0]
+        .parsed
+        .as_ref()
+        .expect("ability target should be parsed");
+    assert_eq!(parsed.target, "Dwarf ~ Ability Scores");
+    assert!(parsed.trailing_modifiers.is_empty());
+}
+
+#[test]
 fn parses_ability_virtual_kind() {
     let input = "ABILITY:Traits|VIRTUAL|%LIST\n";
     let result = parse_lst_entry("aasimar_abilities_race.lst", input);
@@ -273,6 +311,11 @@ fn every_record_carries_source_line_number() {
 
 #[test]
 fn parses_seven_core_pathfinder_races_deterministically() {
+    let Some(corpus_root) = corpus_root() else {
+        eprintln!("PCGEN_CORPUS_ROOT is unavailable; skipping canonical race corpus test");
+        return;
+    };
+
     // The Pathfinder core races whose `races.lst` files exist under
     // `core_essentials/races/<name>/`. Each entry is `(dir_name,
     // file_stem)` because the PCGen corpus spells some race directories
@@ -289,13 +332,19 @@ fn parses_seven_core_pathfinder_races_deterministically() {
     ];
 
     for (dir, stem) in race_files {
-        let races_path = format!(
-            "{}/pathfinder/paizo/roleplaying_game/core_essentials/races/{}/{}_races.lst",
-            PCGEN_DATA, dir, stem
-        );
-        let input = std::fs::read_to_string(&races_path)
-            .unwrap_or_else(|e| panic!("core race fixture missing: {} (error: {})", races_path, e));
-        let result = parse_lst_entry(&races_path, &input);
+        let races_path = corpus_root
+            .join("pathfinder/paizo/roleplaying_game/core_essentials/races")
+            .join(dir)
+            .join(format!("{stem}_races.lst"));
+        let input = std::fs::read_to_string(&races_path).unwrap_or_else(|e| {
+            panic!(
+                "core race fixture missing: {} (error: {})",
+                races_path.display(),
+                e
+            )
+        });
+        let source_path = races_path.to_string_lossy();
+        let result = parse_lst_entry(&source_path, &input);
 
         // For each core race's `<race>_races.lst`, the parser walks the
         // file with no errors (inline `ABILITY:<bundle>|AUTOMATIC|Racial
@@ -306,7 +355,7 @@ fn parses_seven_core_pathfinder_races_deterministically() {
         assert!(
             result.diagnostics.is_empty(),
             "core race fixture {} must parse with no diagnostics: {:?}",
-            races_path,
+            races_path.display(),
             result.diagnostics
         );
 
@@ -321,7 +370,7 @@ fn parses_seven_core_pathfinder_races_deterministically() {
         assert!(
             result.race_pointers.is_empty(),
             "core race {} (a races.lst, not a PCC file) must not produce race pointers, got {:?}",
-            races_path,
+            races_path.display(),
             result.race_pointers
         );
     }
@@ -361,15 +410,24 @@ fn hand_build_malformed_races_and_abilities_produces_malformed_sd17_b3_diagnosti
 
 #[test]
 fn parser_runs_in_linear_time_on_representative_lst() {
+    let Some(corpus_root) = corpus_root() else {
+        eprintln!("PCGEN_CORPUS_ROOT is unavailable; skipping canonical corpus perf test");
+        return;
+    };
+
     // 211 LST files contain `RACE:` lines per the operator-directed
     // corpus scan. Use the largest representative file (Darwin's World
     // combined `.lst` files) to demonstrate linear-time parsing.
-    let representative = format!(
-        "{}/darwins_world_2/rpg_objects/darwins_world_2/terrors_of_twisted_earth/dw2tte_kits_creatures_m_z.lst",
-        PCGEN_DATA
+    let representative = corpus_root.join(
+        "darwins_world_2/rpg_objects/darwins_world_2/terrors_of_twisted_earth/dw2tte_kits_creatures_m_z.lst",
     );
-    let input = std::fs::read_to_string(&representative)
-        .unwrap_or_else(|e| panic!("representative fixture missing: {} ({})", representative, e));
+    let input = std::fs::read_to_string(&representative).unwrap_or_else(|e| {
+        panic!(
+            "representative fixture missing: {} ({})",
+            representative.display(),
+            e
+        )
+    });
 
     let line_count = input.lines().count();
     assert!(
@@ -383,7 +441,7 @@ fn parser_runs_in_linear_time_on_representative_lst() {
     // simpler property that the parser completes well under a generous
     // per-line budget.
     let start = std::time::Instant::now();
-    let result = parse_lst_entry(&representative, &input);
+    let result = parse_lst_entry(&representative.to_string_lossy(), &input);
     let elapsed = start.elapsed();
 
     // Per-line budget: 1ms / 100 lines. For a ~hundreds-line file this is
