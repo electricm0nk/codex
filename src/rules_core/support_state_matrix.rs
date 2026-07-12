@@ -428,7 +428,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_spell_level_thresholds.rs + \
     tests/sd13_sorcerer_spells_per_day_counts.rs + \
     tests/sd13_sorcerer_spell_save_dcs.rs + \
-    tests/sd13_sorcerer_spells_known_counts.rs";
+    tests/sd13_sorcerer_spells_known_counts.rs + \
+    tests/sd13_sorcerer_bonus_spells.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -3071,7 +3072,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     swap/retraining rules, and the 3rd/5th/7th-level bloodline bonus spells \
                     remain part of the still-unproven bloodline progression burden; the \
                     spontaneous blocker now defers exactly that which-spells selection plus \
-                    Charisma bonus slots). No \
+                    Charisma bonus slots — AND a further SD13-E5 slice grounds the Charisma \
+                    bonus spells per day \
+                    (class_chassis.sorcerer.spontaneous.bonus_spells_per_day.spell_level_1..\
+                    5, one record per ACCESSIBLE spell level from PF1's shared Table: \
+                    Ability Modifiers and Bonus Spells, verified identically on both primary \
+                    sources — for modifier m and spell level N the value is 0 when m < N, \
+                    otherwise (m - N)/4 + 1, gated by the grounded access ladder per the \
+                    rule text \"a spellcaster must be of a high enough class level to be \
+                    able to cast spells of a given spell level\"; cantrips never gain bonus \
+                    spells; live arithmetic — dedicated tests raise and lower the fixture \
+                    Charisma and the bonuses move; a computed 0 is an honest \
+                    modifier-below-spell-level result; the bonus is never added to the base \
+                    counts — the base+bonus TOTAL integration is the remaining slot burden \
+                    the blocker now defers, alongside the which-spells selection). No \
                     spell math is fabricated and no Sorcerer level 11+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
