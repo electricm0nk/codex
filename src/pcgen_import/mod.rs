@@ -7,5 +7,6 @@
 //! are intentionally absent here.
 
 pub mod include_resolver;
+pub mod ir_converter;
 pub mod lst_parser;
 pub mod pcc;
