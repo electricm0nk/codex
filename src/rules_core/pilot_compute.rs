@@ -857,6 +857,37 @@ const BARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 /// threshold const is grounded.
 const BARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
 
+/// PF1 Core Rulebook Versatile Performance slots, verified identically on
+/// both primary sources: "At 2nd level, a bard can choose one type of
+/// Perform skill... At 6th level, and every 4 levels thereafter, the bard
+/// can select an additional type of Perform to substitute." — gates 2/6/10
+/// within the tranche ceiling. Numbered slots per the proven repeat-grant
+/// idiom; restricted-list recognition over the nine verified Perform types
+/// with their fixed associated-skill pairs.
+const BARD_VERSATILE_PERFORMANCE_SLOTS: [(u8, u8, &str); 3] = [
+    (1, 2, "choice:bard_versatile_performance"),
+    (2, 6, "choice:bard_versatile_performance_2"),
+    (3, 10, "choice:bard_versatile_performance_3"),
+];
+
+/// The nine verified Perform types as (selection, display name, associated
+/// skill pair) — identical on d20pfsrd and legacy.aonprd.com.
+const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
+    ("perform:act", "Act", "Bluff and Disguise"),
+    ("perform:comedy", "Comedy", "Bluff and Intimidate"),
+    ("perform:dance", "Dance", "Acrobatics and Fly"),
+    (
+        "perform:keyboard_instruments",
+        "Keyboard Instruments",
+        "Diplomacy and Intimidate",
+    ),
+    ("perform:oratory", "Oratory", "Diplomacy and Sense Motive"),
+    ("perform:percussion", "Percussion", "Handle Animal and Intimidate"),
+    ("perform:sing", "Sing", "Bluff and Sense Motive"),
+    ("perform:string", "String", "Bluff and Diplomacy"),
+    ("perform:wind", "Wind", "Diplomacy and Handle Animal"),
+];
+
 /// SD13-E5 Bard level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
@@ -11223,6 +11254,57 @@ fn explain_bard_level1_spell_baseline(
                  spontaneous-casting execution, no slot consumption or tracking, and no \
                  spell save resolution"
             ),
+        });
+    }
+
+    // SD13-E5: the three Versatile Performance choice slots (gates 2/6/10),
+    // the last row of the repeat-grant queue — numbered slots per the proven
+    // idiom, restricted-list recognitions over the nine verified Perform
+    // types. The skill-SUBSTITUTION engine (using the Perform bonus in
+    // place of the associated skills' bonuses) is exactly the choice-gated
+    // engine burden the performance blocker names; no skill total is
+    // modified and nothing is fabricated from these recognitions.
+    for (slot_number, grant_level, choice_id) in BARD_VERSATILE_PERFORMANCE_SLOTS {
+        if level < grant_level {
+            continue;
+        }
+        let Some(selection) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        let record_id = if slot_number == 1 {
+            "class_chassis.bard.versatile_performance_choice".to_owned()
+        } else {
+            format!("class_chassis.bard.versatile_performance_{slot_number}_choice")
+        };
+        let recognized = BARD_VERSATILE_PERFORMANCE_TYPES
+            .iter()
+            .find(|(sel, _, _)| *sel == selection);
+        let detail = if let Some((_, name, pair)) = recognized {
+            format!(
+                "Bard Versatile Performance slot {slot_number} selection ({choice_id} -> \
+                 {selection}) at the level-{grant_level} grant (PF1 Core Rulebook, verified \
+                 identically on both primary sources: \"At 2nd level, a bard can choose one \
+                 type of Perform skill... At 6th level, and every 4 levels thereafter, the \
+                 bard can select an additional type of Perform to substitute.\"). The \
+                 level-{level} selection names {name}, whose verified associated skills are \
+                 {pair}. This is a +0 recognition record of the numbered choice slot only: \
+                 the skill-substitution engine (using the Perform bonus in place of the \
+                 associated skills' bonuses) is the named engine burden and no skill total \
+                 is modified by this record"
+            )
+        } else {
+            format!(
+                "Bard Versatile Performance slot {slot_number} choice is present \
+                 ({choice_id} -> {selection}), but only the nine verified PF1 Core Rulebook \
+                 Perform types are recognized on this bounded seam; no Perform-type \
+                 identity is grounded, no skill pair is named, and no skill total is \
+                 modified (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: record_id,
+            value: 0,
+            detail,
         });
     }
 
