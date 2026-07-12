@@ -7494,6 +7494,16 @@ fn explain_monk_level1_chassis(
 }
 
 const ROGUE_CLASS_ID: &str = "class:rogue";
+
+/// PF1 Core Rulebook level gate of the Rogue's first talent, verified
+/// identically on both primary sources: "Starting at 2nd level, a rogue
+/// gains one rogue talent. She gains an additional rogue talent for every 2
+/// levels of rogue attained after 2nd level. A rogue cannot select an
+/// individual talent more than once." Only the 2nd-level slot is recognized
+/// here; the 4th/6th/8th/10th additional talents stay named-but-unproven as
+/// future NUMBERED slots per the proven monk-second-bonus-feat idiom.
+const ROGUE_TALENT_GRANT_LEVEL: u8 = 2;
+const ROGUE_TALENT_CHOICE_ID: &str = "choice:rogue_talent";
 // A further SD13-E5 slice widens the gate to level 9 — the first level-9 slice
 // in the tranche (verified independently against d20pfsrd and
 // legacy.aonprd.com): level 9 base attack bonus stays +6 (9 * 3 / 4, an
@@ -7977,6 +7987,36 @@ fn explain_rogue_level1_chassis(
                  attacker-level-comparison engine, and no sneak-attack-trigger engine exists \
                  anywhere in this codebase to apply it, so this grounds no actual flanking \
                  immunity or sneak-attack denial"
+            ),
+        });
+    }
+
+    // SD13-E5: the 2nd-level rogue talent choice slot, recognized via the
+    // open-ended (non-restricted-list) idiom of choice:ranger_favored_enemy /
+    // choice:ranger_favored_terrain / choice:paladin_mercy — deliberately NOT
+    // an encoding of the talent list, and deliberately NOT the talent tree's
+    // own effects (the new-subsystem-shaped burden stays unproven; no
+    // talent-effect engine exists in this codebase). The 4th/6th/8th/10th
+    // additional talents stay named-but-unproven as future numbered slots per
+    // the proven monk-second-bonus-feat repeat-grant idiom.
+    if level >= ROGUE_TALENT_GRANT_LEVEL
+        && let Some(talent_selection) = choice_selection(input, ROGUE_TALENT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.rogue.talent_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue talent selection ({ROGUE_TALENT_CHOICE_ID} -> {talent_selection}): \
+                 PF1 Core Rulebook, verified identically on both primary sources — \
+                 \"Starting at 2nd level, a rogue gains one rogue talent. She gains an \
+                 additional rogue talent for every 2 levels of rogue attained after 2nd \
+                 level. A rogue cannot select an individual talent more than once.\" The \
+                 level-{level} talent chosen for this character is {talent_selection}, \
+                 recognized as a bounded +0 record of the choice slot only (open-ended raw \
+                 string, no talent-list validation): the selected talent's own effect is \
+                 not computed — no talent-effect engine exists in this codebase — and the \
+                 4th/6th/8th/10th additional talents stay named-but-unproven as future \
+                 numbered slots"
             ),
         });
     }
