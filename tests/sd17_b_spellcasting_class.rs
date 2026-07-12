@@ -188,7 +188,7 @@ fn assert_first_class_entry<'a>(
     result: &'a SpellcastingClassParseResult,
     expected_name: &str,
 ) -> &'a SpellcastingClassEntry {
-    let entry = result
+    result
         .entries
         .iter()
         .find(|entry| entry.class_name == expected_name)
@@ -197,8 +197,7 @@ fn assert_first_class_entry<'a>(
                 "expected class entry for {expected_name} in result {:#?}",
                 result.entries
             )
-        });
-    entry
+        })
 }
 
 #[test]
@@ -225,7 +224,7 @@ fn parses_cleric_with_spell_progression_and_domain_selections() {
     // KNOWNSPELLS:LEVEL=0|...|LEVEL=9 → 10 entries.
     assert_eq!(
         cleric.automatically_known_levels,
-        (0..=9_u8).map(|level| level as u8).collect::<Vec<u8>>(),
+        (0..=9_u8).collect::<Vec<u8>>(),
         "KNOWNSPELLS list must surface every level present"
     );
     // Domain Selections block: four entries.

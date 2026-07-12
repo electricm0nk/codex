@@ -536,7 +536,7 @@ impl SpellcastingClassParseState {
             None => "",
         };
         let name = payload
-            .split(|ch| ch == '|' || ch == '\t')
+            .split(['|', '\t'])
             .next()
             .unwrap_or("")
             .trim()
@@ -716,12 +716,11 @@ fn parse_known_spells_levels(value: &str) -> Vec<u8> {
     let mut levels: Vec<u8> = Vec::new();
     for chunk in value.split('|') {
         let chunk = chunk.trim();
-        if let Some(rest) = chunk.strip_prefix("LEVEL=") {
-            if let Ok(n) = rest.trim().parse::<u8>() {
-                if n <= 9 {
-                    levels.push(n);
-                }
-            }
+        if let Some(rest) = chunk.strip_prefix("LEVEL=")
+            && let Ok(n) = rest.trim().parse::<u8>()
+            && n <= 9
+        {
+            levels.push(n);
         }
     }
     levels.sort_unstable();
