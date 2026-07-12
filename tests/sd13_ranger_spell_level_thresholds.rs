@@ -205,6 +205,12 @@ fn ranger_level10_stays_claim_blocked_and_fabricates_no_spell_counts() {
                 && !e
                     .id
                     .starts_with("class_chassis.ranger.partial_caster.base_spells_per_day.")
+                // The spell_save_dc family (a further SD13-E5 slice,
+                // tests/sd13_ranger_spell_save_dcs.rs) is likewise excluded;
+                // the original no-fabricated-third-identity-record claim holds.
+                && !e
+                    .id
+                    .starts_with("class_chassis.ranger.partial_caster.spell_save_dc.")
         })
         .collect();
     assert_eq!(

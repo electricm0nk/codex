@@ -385,7 +385,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_second_favored_terrain.rs + \
     tests/sd13_ranger_third_favored_enemy.rs + \
     tests/sd13_ranger_spell_level_thresholds.rs + \
-    tests/sd13_ranger_spells_per_day_counts.rs";
+    tests/sd13_ranger_spells_per_day_counts.rs + \
+    tests/sd13_ranger_spell_save_dcs.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -2790,12 +2791,22 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     \"2/1/0/—\" at 10) — a \"0\" is a genuine table entry \
                     (Wisdom-bonus-spells-only access), not an absence, inaccessible \"—\" \
                     spell levels get no record, and only the base counts are grounded: \
-                    Wisdom bonus spells, prepared posture, spell-source lineage, and spell \
-                    save DCs stay unproven)",
-                next_required_uplift: "ground the ranger spell-DC arithmetic (10 + spell \
-                    level + Wisdom modifier) and the Wisdom bonus-spells and prepared-posture \
-                    burdens now that the caster-level gate, the access ladder, and the base \
-                    per-day counts are all grounded, then Ranger \
+                    Wisdom bonus spells, prepared posture, and spell-source lineage stay \
+                    unproven — AND a further SD13-E5 slice grounds the base spell-save-DC \
+                    arithmetic on top of the ladder \
+                    (class_chassis.ranger.partial_caster.spell_save_dc.spell_level_1..3, one \
+                    record per ACCESSIBLE spell level, value 10 + spell level + Wisdom \
+                    modifier per the rule text verified identically on both primary sources \
+                    — Wisdom, not the Paladin's Charisma, the family's only Wisdom caster; \
+                    live arithmetic over the chosen ability score — a dedicated test raises \
+                    the fixture Wisdom and the DCs rise; no saving-throw resolution, target, \
+                    spell selection, or feat DC modifier is computed; no new claim-blocking \
+                    diagnostic is added, the spell burden staying named by the F6 level-1 \
+                    hybrid blocker and this note)",
+                next_required_uplift: "ground the ranger Wisdom bonus-spells and \
+                    prepared-posture/spell-source-lineage burdens now that the caster-level \
+                    gate, the access ladder, the base per-day counts, and the base \
+                    spell-save DCs are all grounded, then Ranger \
                     level-11+ progression, a favored-enemy conditional-application engine, \
                     execution of either recognized combat-style bonus feat's own mechanics, \
                     Hunter's Bond ally-bonus application and the animal-companion stat \

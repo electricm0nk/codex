@@ -2129,6 +2129,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // immediately above.
     explain_ranger_level1_chassis_and_class_feature_separation(
         input,
+        &ability_modifiers,
         &mut explanations,
     );
 
@@ -4731,6 +4732,7 @@ fn supported_ranger_level(input: &CharacterInput) -> Option<u8> {
 /// continues to pass.
 fn explain_ranger_level1_chassis_and_class_feature_separation(
     input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     let Some(level) = supported_ranger_level(input) else {
@@ -5922,6 +5924,35 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  formula).{zero_nuance} This grounds the base count only: bonus spells per \
                  day from a high Wisdom are never computed, no prepared posture or \
                  spell-source lineage is grounded, and no spell save DCs are computed"
+            ),
+        });
+    }
+
+    // SD13-E5: the base spell-save-DC arithmetic, one record per ACCESSIBLE
+    // spell level, mirroring the Sorcerer/Bard/Paladin DC slices and
+    // completing the DC family. Verified against both primary sources,
+    // which state the rule identically: "The Difficulty Class for a saving
+    // throw against a ranger's spell is 10 + the spell level + the ranger's
+    // Wisdom modifier." — the family's only WISDOM caster. This grounds
+    // only the base formula over values already on the seam: no
+    // saving-throw resolution, no target, no spell selection, and no feat
+    // DC modifiers are computed.
+    for spell_level in 1..=ranger_spell_level_access {
+        let spell_save_dc = 10 + spell_level + ability_modifiers.wisdom;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.ranger.partial_caster.spell_save_dc.spell_level_{spell_level}"
+            ),
+            value: spell_save_dc,
+            detail: format!(
+                "Ranger spell save DC at ranger level {level}, spell level {spell_level}: \
+                 10 + {spell_level} + Wisdom modifier {} = {spell_save_dc} (PF1 Core \
+                 Rulebook, verified identically on both primary sources: \"The Difficulty \
+                 Class for a saving throw against a ranger's spell is 10 + the spell level \
+                 + the ranger's Wisdom modifier\" — Wisdom, not the Paladin's Charisma). \
+                 This grounds the base DC formula only: no saving-throw resolution, no \
+                 target, no spell selection, and no feat DC modifiers are computed",
+                ability_modifiers.wisdom
             ),
         });
     }
