@@ -387,8 +387,11 @@ fn ranger_hybrid_row_is_partial_and_computed_with_named_burdens() {
         "partial ranger hybrid row must carry a non-empty note"
     );
     assert!(
-        hybrid.blocker_or_lossiness_note.contains("SD13-E4"),
-        "ranger hybrid row note must still defer the spell burden to SD13-E4: {}",
+        hybrid
+            .blocker_or_lossiness_note
+            .contains("partial_caster.spell_level_access"),
+        "ranger hybrid row note must name the grounded partial-caster pair (the original \
+         SD13-E4 wholesale deferral was superseded by the further SD13-E5 slice): {}",
         hybrid.blocker_or_lossiness_note
     );
     // Combat style stays a named, unproven burden; the favored-enemy flat

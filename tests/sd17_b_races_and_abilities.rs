@@ -19,9 +19,8 @@
 //! error is the RED state. Implementation in `src/pcgen_import/lst_parser.rs`
 //! drives the transition to GREEN.
 
-use codex::pcgen_import::lst_parser::{
-    AbilityKind, LstDiagnosticKind, parse_lst_entry,
-};
+use codex::pcgen_import::lst_parser::race_ability::LstDiagnosticKind;
+use codex::pcgen_import::lst_parser::{AbilityKind, parse_lst_entry};
 
 const PCGEN_DATA: &str = "/home/ubuntu/workspace/repos/pcgen/data";
 
@@ -80,9 +79,15 @@ fn race_pointer_without_target_emits_malformed_diagnostic() {
         result.diagnostics
     );
     assert_eq!(result.diagnostics[0].line_number, 1);
-    assert_eq!(result.diagnostics[0].kind, LstDiagnosticKind::MalformedRacePointer);
+    assert_eq!(
+        result.diagnostics[0].kind,
+        LstDiagnosticKind::MalformedRacePointer
+    );
     assert_eq!(result.diagnostics[1].line_number, 2);
-    assert_eq!(result.diagnostics[1].kind, LstDiagnosticKind::MalformedRacePointer);
+    assert_eq!(
+        result.diagnostics[1].kind,
+        LstDiagnosticKind::MalformedRacePointer
+    );
 }
 
 #[test]
@@ -129,7 +134,10 @@ fn parses_ability_pointer_with_line_number_and_raw_directive() {
     assert_eq!(first.raw_directive, "ABILITY:cr_abilities.lst");
     // Bare pointers carry no parsed-into-fields structure; they record the
     // pointer target so the wider GE-03 importer can resolve them.
-    assert_eq!(first.parsed.as_ref().map(|p| p.target.as_str()), Some("cr_abilities.lst"));
+    assert_eq!(
+        first.parsed.as_ref().map(|p| p.target.as_str()),
+        Some("cr_abilities.lst")
+    );
 
     let second = &result.ability_declarations[1];
     assert_eq!(second.line_number, 2);
@@ -151,7 +159,10 @@ fn parses_ability_pipe_delimited_declaration_with_fields() {
     assert_eq!(entry.line_number, 1);
     assert_eq!(entry.source_path, "dwarf_abilities_race.lst");
 
-    let parsed = entry.parsed.as_ref().expect("pipe-delimited ability should be parsed");
+    let parsed = entry
+        .parsed
+        .as_ref()
+        .expect("pipe-delimited ability should be parsed");
     // No CATEGORY= prefix → category is None.
     assert_eq!(parsed.category, None);
     assert_eq!(parsed.name, "Dwarf Racial Trait");
@@ -282,12 +293,8 @@ fn parses_seven_core_pathfinder_races_deterministically() {
             "{}/pathfinder/paizo/roleplaying_game/core_essentials/races/{}/{}_races.lst",
             PCGEN_DATA, dir, stem
         );
-        let input = std::fs::read_to_string(&races_path).unwrap_or_else(|e| {
-            panic!(
-                "core race fixture missing: {} (error: {})",
-                races_path, e
-            )
-        });
+        let input = std::fs::read_to_string(&races_path)
+            .unwrap_or_else(|e| panic!("core race fixture missing: {} (error: {})", races_path, e));
         let result = parse_lst_entry(&races_path, &input);
 
         // For each core race's `<race>_races.lst`, the parser walks the

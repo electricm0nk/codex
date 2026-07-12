@@ -521,7 +521,9 @@ fn split_trailing_modifiers(input: &str) -> (String, Vec<String>) {
     // honored for robustness against legacy LST formatting that uses
     // spaces in place of tabs.
     let tab_pos = input.find('\t');
-    let space_pos = input.find("  ").or_else(|| input.find(' ').filter(|_| false));
+    let space_pos = input
+        .find("  ")
+        .or_else(|| input.find(' ').filter(|_| false));
     // Above `find(' ').filter(...)` keeps the alternative quiet when the
     // input has no spaces; we prefer the tab boundary when both exist.
     let boundary = match (tab_pos, space_pos) {
