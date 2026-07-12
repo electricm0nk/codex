@@ -516,22 +516,20 @@ fn parse_ability_kind(token: &str) -> Option<AbilityKind> {
 ///      trailing = ["FREE:NO", "STACK:YES"]
 /// ```
 fn split_trailing_modifiers(input: &str) -> (String, Vec<String>) {
-    // The boundary between core fields and trailing modifiers is the
-    // first tab character. Whitespace-only runs (spaces) are also
-    // honored for robustness against legacy LST formatting that uses
-    // spaces in place of tabs.
-    let tab_pos = input.find('\t');
-    let space_pos = input
-        .find("  ")
-        .or_else(|| input.find(' ').filter(|_| false));
-    // Above `find(' ').filter(...)` keeps the alternative quiet when the
-    // input has no spaces; we prefer the tab boundary when both exist.
-    let boundary = match (tab_pos, space_pos) {
-        (Some(t), Some(s)) => Some(t.min(s)),
-        (Some(t), None) => Some(t),
-        (None, Some(s)) => Some(s),
-        (None, None) => None,
-    };
+    // Tabs are unambiguous modifier boundaries. For legacy space-separated
+    // rows, only treat a whitespace-delimited token containing `:` as the
+    // start of the trailing modifier list; ordinary spaces inside names and
+    // targets remain part of the core declaration.
+    let boundary = input.find('\t').or_else(|| {
+        input.char_indices().find_map(|(index, character)| {
+            if !character.is_whitespace() {
+                return None;
+            }
+            let tail = input[index..].trim_start();
+            let first_token = tail.split_whitespace().next()?;
+            first_token.contains(':').then_some(index)
+        })
+    });
 
     let Some(boundary) = boundary else {
         return (input.to_string(), Vec::new());
