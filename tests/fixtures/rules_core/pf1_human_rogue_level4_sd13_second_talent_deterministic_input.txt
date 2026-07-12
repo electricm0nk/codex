@@ -1,0 +1,44 @@
+# SD13-E5 Rogue level 4 SECOND-talent fixture: the level-4 chassis fixture
+# plus the level-2 talent selection (talent:trap_spotter) and the level-4
+# SECOND talent selection (choice:rogue_talent_2:talent:fast_stealth) — the
+# PF1 CRB "additional rogue talent for every 2 levels of rogue attained
+# after 2nd level", grounded as a numbered choice slot per the proven
+# monk-second-bonus-feat repeat-grant idiom. Distinct talents honor "A rogue
+# cannot select an individual talent more than once." Chosen input only; no
+# talent effect is computed.
+# SD13-E5 deterministic Human Rogue level 4 progression fixture.
+# Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human Rogue
+# level-1/level-2/level-3 chassis baseline to level 4 as chosen input only. It
+# names selections; it does not contain derived, computed, or parity values.
+# It preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat) and the deterministic ability/feat/skill posture from the
+# level-1/level-2/level-3 fixtures, adding only the level bump this bounded
+# tranche needs. Rogue grants no talent choice-slot line here (rogue talents
+# are a level-2+ choice-list feature this slice deliberately does not
+# implement — a genuinely open-ended talent tree, not a flat arithmetic
+# burden), so no new choice= line is required beyond the level-1/level-2/
+# level-3 baseline.
+#
+# It deliberately avoids every later Rogue burden surface: no check-execution
+# engine, no trap DC resolution, no magic-trap disarm engine, no rogue
+# talent, and no level-5+ progression. Uncanny Dodge (the 4th-level rogue
+# class feature this fixture newly exercises) is grounded only as a bounded
+# identity/recognition record, never applied to any actual flat-footed-state
+# tracking or Armor Class computation.
+case_id=pf1-crb-human-rogue-level4-second-talent
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:rogue:4
+ability=strength:10
+ability=dexterity:17
+ability=constitution:12
+ability=intelligence:12
+ability=wisdom:10
+ability=charisma:10
+feat=feat:weapon_finesse
+skill=skill:stealth:1
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:rogue_talent:talent:trap_spotter
+choice=choice:rogue_talent_2:talent:fast_stealth
+choice=choice:human_ability_bonus:ability:dexterity
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md
