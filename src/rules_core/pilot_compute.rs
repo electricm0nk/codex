@@ -336,6 +336,22 @@ const PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
 /// validation against the mercy list is performed here.
 const PALADIN_MERCY_CHOICE_ID: &str = "choice:paladin_mercy";
 
+/// PF1 Core Rulebook gates of the paladin's SECOND and THIRD mercies ("at
+/// 6th level and every three levels thereafter" per the level-3 mercy rule).
+/// The CRB mercy tiers were verified for this slice: legacy.aonprd.com (Core
+/// Rulebook only) gives 3rd = Fatigued/Shaken/Sickened, 6th ADDS
+/// Dazed/Diseased/Staggered, 9th ADDS
+/// Cursed/Exhausted/Frightened/Nauseated/Poisoned; d20pfsrd's lists are
+/// supersets whose CRB subset matches exactly — its extra entries are
+/// non-CRB expansions outside this seam's pf1.core_rulebook source package.
+/// Numbered slots per the proven repeat-grant idiom; this discharges the
+/// "mercy-list-growth mechanism" deferrals recorded by the level-6 and
+/// level-9 chassis slices.
+const PALADIN_SECOND_MERCY_GRANT_LEVEL: u8 = 6;
+const PALADIN_SECOND_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_2";
+const PALADIN_THIRD_MERCY_GRANT_LEVEL: u8 = 9;
+const PALADIN_THIRD_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_3";
+
 // SD13-E5 Ranger Combat Style correction. Combat Style Feat is a 2nd-level ranger
 // feature in the PF1 Core Rulebook: the ranger selects a combat style (archery or
 // two-weapon combat) and gains its first bonus feat TOGETHER at 2nd level -- these
@@ -4484,6 +4500,53 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // independently against d20pfsrd and legacy.aonprd.com) -- level 7 is not
     // one of the repeat-Mercy-grant levels (3, 6, 9, ...), so nothing new is
     // left unproven for Mercy at level 7.
+
+    // SD13-E5: the SECOND and THIRD mercies (gates 6/9), the repeat grants
+    // the level-6/9 chassis slices deferred, now grounded as numbered choice
+    // slots per the proven repeat-grant idiom — mirroring slot 1's
+    // open-ended recognition (whichever raw mercy string was selected, no
+    // tier-membership validation), with the verified CRB tier lists cited
+    // in each detail. No mercy's effect is computed (no lay-on-hands
+    // execution engine exists) and prerequisite chains (e.g. the frightened
+    // mercy requiring the shaken mercy) are named, not validated.
+    let repeat_mercy_slots: [(u8, u8, &str); 2] = [
+        (2, PALADIN_SECOND_MERCY_GRANT_LEVEL, PALADIN_SECOND_MERCY_CHOICE_ID),
+        (3, PALADIN_THIRD_MERCY_GRANT_LEVEL, PALADIN_THIRD_MERCY_CHOICE_ID),
+    ];
+    for (slot_number, grant_level, choice_id) in repeat_mercy_slots {
+        if level < grant_level {
+            continue;
+        }
+        let Some(mercy) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        let tier_text = if slot_number == 2 {
+            "the 6th-level CRB tier additions are Dazed, Diseased, and Staggered \
+             (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset contains them, its \
+             extra entries being non-CRB expansions outside this pf1.core_rulebook seam)"
+        } else {
+            "the 9th-level CRB tier additions are Cursed, Exhausted, Frightened, Nauseated, \
+             and Poisoned (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset \
+             contains them); the rule text chains prerequisites — Exhausted requires the \
+             fatigue mercy, Frightened requires the shaken mercy, Nauseated requires the \
+             sickened mercy — which this bounded recognition names but does not validate"
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.paladin.mercy_{slot_number}_choice"),
+            value: 0,
+            detail: format!(
+                "Paladin mercy slot {slot_number} selection ({choice_id} -> {mercy}) at the \
+                 level-{grant_level} repeat grant (PF1 Core Rulebook: a mercy at 3rd level \
+                 and an additional mercy at 6th level and every three levels thereafter). \
+                 The level-{level} selection for this slot is {mercy}, recognized as a \
+                 bounded +0 record of the numbered choice slot only (open-ended raw string, \
+                 mirroring slot 1 — no tier-membership validation); {tier_text}. The \
+                 selected mercy's own effect on lay on hands is not computed — no \
+                 lay-on-hands execution engine exists in this codebase"
+            ),
+        });
+    }
+
     let paladin_effective_caster_level = (paladin_level - 3).max(0);
     explanations.push(ComputationExplanation {
         id: "class_chassis.paladin.partial_caster.effective_caster_level".to_owned(),
