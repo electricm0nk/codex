@@ -1473,18 +1473,28 @@ const MONK_PURITY_OF_BODY_LEVEL: u8 = 5;
 /// deliberately does not recognize.
 const MONK_BONUS_FEAT_GRANT_LEVEL: u8 = 1;
 
-// SD13-E5 Monk level-1 bonus feat choice-slot recognition. The PF1 Core Rulebook
-// restricted Monk bonus feat list this bounded recognition seam knows is Combat
-// Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, and Stunning Fist.
-// Improved Unarmed Strike is deliberately excluded: the PF1 Core Rulebook grants
-// it to every monk automatically at level 1, separate from this chosen bonus
-// feat, and this codebase does not ground that automatic grant either, so it is
-// never treated as a choice-set member here.
+// SD13-E5 Monk level-1 bonus feat choice-slot recognition. RULES CORRECTION
+// (SD13-E5): an earlier version of this seam recognized Improved Trip and
+// Stunning Fist as restricted-list members and claimed that was the PF1 Core
+// Rulebook list. Both primary sources (d20pfsrd and legacy.aonprd.com, re-read
+// for this correction) give the actual PF1 CRB 1st/2nd-level list as Catch
+// Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple,
+// Scorpion Style, and Throw Anything ("At 6th level, the following feats are
+// added to the list: Gorgon's Fist, Improved Bull Rush, Improved Disarm,
+// Improved Feint, Improved Trip, and Mobility" — so Improved Trip is a
+// 6th-level addition, not a base member; the 6th/10th additions stay
+// unrecognized on this bounded seam). Improved Unarmed Strike AND Stunning
+// Fist are both deliberately excluded: the PF1 Core Rulebook grants each to
+// every monk automatically at level 1 ("At 1st level, the monk gains Stunning
+// Fist as a bonus feat, even if he does not meet the prerequisites"),
+// separate from this chosen bonus feat, and this codebase does not ground
+// those automatic grants either, so neither is ever a choice-set member here.
 const MONK_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat";
+const CATCH_OFF_GUARD_FEAT_SELECTION: &str = "feat:catch_off_guard";
 const DEFLECT_ARROWS_FEAT_SELECTION: &str = "feat:deflect_arrows";
 const IMPROVED_GRAPPLE_FEAT_SELECTION: &str = "feat:improved_grapple";
-const IMPROVED_TRIP_FEAT_SELECTION: &str = "feat:improved_trip";
-const STUNNING_FIST_FEAT_SELECTION: &str = "feat:stunning_fist";
+const SCORPION_STYLE_FEAT_SELECTION: &str = "feat:scorpion_style";
+const THROW_ANYTHING_FEAT_SELECTION: &str = "feat:throw_anything";
 
 // Grounded SD13-E4/E5 Human Cleric level-1/level-2/level-3/level-4 prepared divine
 // spell-bearing baseline identity. Cleric is the canonical PF1 prepared divine full
@@ -7308,16 +7318,20 @@ fn explain_monk_level1_chassis(
     // that this bounded seam deliberately does not recognize.
     let bonus_feat_selection = choice_selection(input, MONK_BONUS_FEAT_CHOICE_ID);
     let recognized_bonus_feat_name = bonus_feat_selection.and_then(|selection| {
-        if selection == COMBAT_REFLEXES_FEAT_SELECTION {
+        if selection == CATCH_OFF_GUARD_FEAT_SELECTION {
+            Some("Catch Off-Guard")
+        } else if selection == COMBAT_REFLEXES_FEAT_SELECTION {
             Some("Combat Reflexes")
         } else if selection == DEFLECT_ARROWS_FEAT_SELECTION {
             Some("Deflect Arrows")
+        } else if selection == "feat:dodge" {
+            Some("Dodge")
         } else if selection == IMPROVED_GRAPPLE_FEAT_SELECTION {
             Some("Improved Grapple")
-        } else if selection == IMPROVED_TRIP_FEAT_SELECTION {
-            Some("Improved Trip")
-        } else if selection == STUNNING_FIST_FEAT_SELECTION {
-            Some("Stunning Fist")
+        } else if selection == SCORPION_STYLE_FEAT_SELECTION {
+            Some("Scorpion Style")
+        } else if selection == THROW_ANYTHING_FEAT_SELECTION {
+            Some("Throw Anything")
         } else {
             None
         }
@@ -7328,22 +7342,31 @@ fn explain_monk_level1_chassis(
                 "Monk level {MONK_BONUS_FEAT_GRANT_LEVEL} bonus feat choice recognized: the \
                  canonical deterministic selection ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}) \
                  names {feat_name}, drawn from the PF1 Core Rulebook restricted Monk bonus feat \
-                 list (Combat Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, \
-                 Stunning Fist), as chosen input on the compute seam. This is a recognition \
+                 list (Catch Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved \
+                 Grapple, Scorpion Style, Throw Anything — verified identically on both \
+                 primary sources; the 6th/10th-level list additions, including Improved \
+                 Trip, stay unrecognized on this bounded seam), as chosen input on the \
+                 compute seam. This is a recognition \
                  record of the choice slot only, so it carries no fabricated mechanical value \
                  (+0): {feat_name}'s own mechanics are not grounded here, and no \
-                 attack-resolution, grapple-check, trip-check, or DC/save engine exists in this \
-                 codebase. Improved Unarmed Strike is not part of this restricted choice set \
-                 because the PF1 Core Rulebook grants it to every monk automatically at level \
-                 {MONK_BONUS_FEAT_GRANT_LEVEL}, separate from this chosen bonus feat, and this \
-                 codebase does not ground that automatic grant either"
+                 attack-resolution, grapple-check, or DC/save engine exists in this \
+                 codebase. Improved Unarmed Strike and Stunning Fist are not part of this \
+                 restricted choice set \
+                 because the PF1 Core Rulebook grants each to every monk automatically at level \
+                 {MONK_BONUS_FEAT_GRANT_LEVEL} (\"the monk gains Stunning Fist as a bonus \
+                 feat, even if he does not meet the prerequisites\"), separate from this \
+                 chosen bonus feat, and this \
+                 codebase does not ground those automatic grants either"
             )
         } else {
             format!(
                 "Monk level {MONK_BONUS_FEAT_GRANT_LEVEL} bonus feat choice slot is present \
                  ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}), but only the PF1 Core Rulebook \
-                 restricted Monk bonus feat list (Combat Reflexes, Deflect Arrows, Improved \
-                 Grapple, Improved Trip, Stunning Fist) is recognized on this bounded seam; no \
+                 restricted Monk bonus feat list (Catch Off-Guard, Combat Reflexes, Deflect \
+                 Arrows, Dodge, Improved Grapple, Scorpion Style, Throw Anything) is \
+                 recognized on this bounded seam — a feat:stunning_fist selection in \
+                 particular is not a list member because Stunning Fist is the automatic \
+                 1st-level monk grant, never a choice; no \
                  restricted-list feat identity is grounded and no mechanical value is fabricated \
                  (+0)"
             )

@@ -2104,11 +2104,18 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     and +3 at level 5, with the attack count staying 2 at all five levels), the \
                     level-1 bonus \
                     feat choice-slot selection (recognized when it names one of the PF1 Core \
-                    Rulebook restricted Monk bonus feat list's five feats: Combat Reflexes, \
-                    Deflect Arrows, Improved Grapple, Improved Trip, Stunning Fist — a +0 \
+                    Rulebook restricted Monk bonus feat list's seven 1st/2nd-level feats: \
+                    Catch Off-Guard, Combat Reflexes, \
+                    Deflect Arrows, Dodge, Improved Grapple, Scorpion Style, Throw Anything — \
+                    a RULES CORRECTION by a further SD13-E5 slice: an earlier version of this \
+                    note listed Improved Trip and Stunning Fist as members, but both primary \
+                    sources give Improved Trip as a 6th-level list addition and Stunning \
+                    Fist as the automatic 1st-level monk grant (\"even if he does not meet \
+                    the prerequisites\"), never a choice — a +0 \
                     recognition record with no feat-effect execution, mirroring the Sorcerer \
                     bloodline choice / Cleric domain choice / Druid nature-bond choice \
-                    recognition idiom), (SD13-E5) Evasion, a 2nd-level Monk class feature \
+                    recognition idiom; the 6th/10th-level list additions stay unrecognized \
+                    and the level-2/6/10 repeat bonus-feat grants stay named-but-unproven), (SD13-E5) Evasion, a 2nd-level Monk class feature \
                     verified independently against two primary PF1 sources (d20pfsrd and \
                     legacy.aonprd.com), grounded as a bounded identity/recognition record only \
                     (value 0, non-fabricated): no damage on a successful Reflex save against an \
