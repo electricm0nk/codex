@@ -563,7 +563,8 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_level10_progression.rs + tests/sd13_bard_spell_level_thresholds.rs + \
     tests/sd13_bard_spells_per_day_counts.rs + tests/sd13_bard_spell_save_dcs.rs + \
     tests/sd13_bard_spells_known_counts.rs + tests/sd13_bard_bonus_spells.rs + \
-    tests/sd13_bard_total_spells_per_day.rs";
+    tests/sd13_bard_total_spells_per_day.rs + \
+    tests/sd13_bard_versatile_performance_slots.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1626,7 +1627,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     level-8 \"Special\" column entry) are not grounded at all \
                     — Countersong/Distraction require an opposed Perform-check-vs-effect \
                     substitution resolution, Versatile Performance requires a choice-gated \
-                    skill-substitution engine, Suggestion requires a fascinated-target \
+                    skill-substitution engine for its EFFECT (a further SD13-E5 slice \
+                    grounds all three of its choice SLOTS as numbered +0 recognitions: \
+                    class_chassis.bard.versatile_performance_choice, \
+                    versatile_performance_2_choice, and versatile_performance_3_choice, \
+                    choice:bard_versatile_performance and _2/_3, gates 2/6/10 verified \
+                    identically on both primary sources, restricted to the nine verified \
+                    Perform types with each type's fixed associated-skill pair named in \
+                    the record — Act: Bluff/Disguise through Wind: Diplomacy/Handle Animal \
+                    — the gate ladder pinned one level below each gate; no skill total is \
+                    modified and the substitution engine itself stays the named burden), \
+                    Suggestion requires a fascinated-target \
                     prerequisite plus the suggestion spell's own effect-resolution engine, and \
                     Dirge of Doom requires both the performance-state engine and a \
                     fear/shaken-condition resolution engine, none a flat number — and the spontaneous spell burden \
