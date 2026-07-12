@@ -7504,6 +7504,14 @@ const ROGUE_CLASS_ID: &str = "class:rogue";
 /// future NUMBERED slots per the proven monk-second-bonus-feat idiom.
 const ROGUE_TALENT_GRANT_LEVEL: u8 = 2;
 const ROGUE_TALENT_CHOICE_ID: &str = "choice:rogue_talent";
+
+/// PF1 Core Rulebook level gate of the Rogue's SECOND talent — the first
+/// "additional rogue talent for every 2 levels of rogue attained after 2nd
+/// level" lands at rogue level 4. A numbered choice slot per the proven
+/// monk-second-bonus-feat repeat-grant idiom; the 6th/8th/10th additional
+/// talents stay named-but-unproven as further numbered slots.
+const ROGUE_SECOND_TALENT_GRANT_LEVEL: u8 = 4;
+const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // A further SD13-E5 slice widens the gate to level 9 — the first level-9 slice
 // in the tranche (verified independently against d20pfsrd and
 // legacy.aonprd.com): level 9 base attack bonus stays +6 (9 * 3 / 4, an
@@ -8017,6 +8025,31 @@ fn explain_rogue_level1_chassis(
                  not computed — no talent-effect engine exists in this codebase — and the \
                  4th/6th/8th/10th additional talents stay named-but-unproven as future \
                  numbered slots"
+            ),
+        });
+    }
+
+    // SD13-E5: the SECOND talent, the level-4 repeat grant, recognized as
+    // its own numbered choice slot per the proven monk-second-bonus-feat
+    // idiom — same open-ended recognition, same non-fabrication posture.
+    if level >= ROGUE_SECOND_TALENT_GRANT_LEVEL
+        && let Some(second_talent) = choice_selection(input, ROGUE_SECOND_TALENT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.rogue.talent_2_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue SECOND talent selection ({ROGUE_SECOND_TALENT_CHOICE_ID} -> \
+                 {second_talent}): PF1 Core Rulebook, verified identically on both primary \
+                 sources — \"She gains an additional rogue talent for every 2 levels of \
+                 rogue attained after 2nd level. A rogue cannot select an individual talent \
+                 more than once.\" — the first additional talent lands at rogue level \
+                 {ROGUE_SECOND_TALENT_GRANT_LEVEL}. The level-{level} second talent chosen \
+                 for this character is {second_talent}, recognized as a bounded +0 record of \
+                 the numbered choice slot only (open-ended raw string, no talent-list \
+                 validation): the selected talent's own effect is not computed — no \
+                 talent-effect engine exists in this codebase — and the 6th/8th/10th \
+                 additional talents stay named-but-unproven as further numbered slots"
             ),
         });
     }
