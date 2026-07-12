@@ -555,7 +555,8 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_level8_progression.rs + tests/sd13_bard_level9_progression.rs + \
     tests/sd13_bard_level10_progression.rs + tests/sd13_bard_spell_level_thresholds.rs + \
     tests/sd13_bard_spells_per_day_counts.rs + tests/sd13_bard_spell_save_dcs.rs + \
-    tests/sd13_bard_spells_known_counts.rs + tests/sd13_bard_bonus_spells.rs";
+    tests/sd13_bard_spells_known_counts.rs + tests/sd13_bard_bonus_spells.rs + \
+    tests/sd13_bard_total_spells_per_day.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1646,8 +1647,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     live arithmetic — a dedicated test raises the fixture Charisma and the \
                     3rd-level bonus appears; computed 0s are honest \
                     modifier-below-spell-level results; the bonus is never added to the \
-                    base counts — the base+bonus TOTAL integration is the remaining slot \
-                    burden the blocker now defers alongside the which-spells selection)). No \
+                    base counts by the bonus record itself — AND a further SD13-E5 slice \
+                    grounds the integrated TOTAL \
+                    (class_chassis.bard.spontaneous.total_spells_per_day.spell_level_1..4, \
+                    the pure sum of the two separately grounded records per ACCESSIBLE \
+                    spell level — totals 6/5/3/1 on the level-10 fixture, the bard's \
+                    actual castable slot count per day; live end-to-end arithmetic; counts \
+                    only, no spontaneous-casting execution, slot consumption, or tracking; \
+                    the blocker now defers exactly that execution plus the which-spells \
+                    selection)). No \
                     performance-execution math and no spell math is fabricated and \
                     no Bard level 11+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
