@@ -8276,19 +8276,62 @@ fn explain_sorcerer_level1_spell_baseline(
         });
     }
 
+    // SD13-E5: the bonus spells per day from a high Charisma, one record
+    // per ACCESSIBLE spell level (1st+; the bonus table has no 0th-level
+    // column — cantrips never gain bonus spells), from PF1's shared Table:
+    // Ability Modifiers and Bonus Spells, verified against both primary
+    // sources (legacy.aonprd.com Getting Started / d20pfsrd Ability
+    // Scores): modifier +1 grants 1 bonus 1st-level spell, +2 grants 1/1,
+    // +3 grants 1/1/1, +4 grants 1/1/1/1, +5 grants 2/1/1/1/1 — for
+    // modifier m and spell level N, 0 when m < N, otherwise (m - N)/4 + 1.
+    // Both sources state the gating rule identically: "a spellcaster must
+    // be of a high enough class level to be able to cast spells of a given
+    // spell level" — exactly the grounded access ladder. A computed 0
+    // (modifier below the spell level) is an honest arithmetic result,
+    // distinct from the base table's literal "0" entries. The bonus is
+    // never added to the base per-day counts here — no total is computed;
+    // that integration is named as the next uplift.
+    for spell_level in 1..=sorcerer_spell_level_access {
+        let bonus_spells = if sorcerer_charisma_modifier < spell_level {
+            0
+        } else {
+            (sorcerer_charisma_modifier - spell_level) / 4 + 1
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.sorcerer.spontaneous.bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: bonus_spells,
+            detail: format!(
+                "Sorcerer bonus spells per day at sorcerer level {level}, spell level \
+                 {spell_level}: {bonus_spells} from Charisma modifier \
+                 {sorcerer_charisma_modifier} (PF1 Core Rulebook Table: Ability Modifiers \
+                 and Bonus Spells, verified identically on both primary sources; for \
+                 modifier m and spell level N the table value is 0 when m < N, otherwise \
+                 (m - N)/4 + 1, and bonus spells apply only to spell levels the character \
+                 is of a high enough class level to cast — the grounded access ladder). A \
+                 computed 0 means the modifier grants no bonus at this spell level; it is \
+                 never added to the base per-day count here — no total is computed, no \
+                 spell selection, and no spell save DCs"
+            ),
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
-    // explicitly. The which-spells-are-known selection stays ungrounded; the
-    // access ladder, base per-day counts, base save DCs, and base known counts
+    // explicitly. The which-spells-are-known selection and the base+bonus
+    // per-day TOTAL integration stay ungrounded; the access ladder, base
+    // per-day counts, base save DCs, base known counts, and bonus-slot counts
     // are grounded separately as flat records.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
         message:
             "Sorcerer remains blocked on its spontaneous known-spell / slot posture burden: \
              spontaneous casting, the selection of WHICH spells known are actually chosen, \
-             and bonus spell slots from a high \
-             ability score are out of scope for this bounded baseline (the spell-level access \
+             and the base+bonus spells-per-day TOTAL integration are out of scope for this \
+             bounded baseline (the spell-level access \
              ladder, the base spells-per-day table counts, the base spell-save-DC \
-             arithmetic, and the base spells-known table counts are grounded separately as \
+             arithmetic, the base spells-known table counts, and the Charisma bonus \
+             spell slot counts are grounded separately as \
              flat records) and \
              no spell math is fabricated beyond them"
                 .to_owned(),
