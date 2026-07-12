@@ -464,7 +464,8 @@ const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_ba
     tests/sd13_barbarian_level7_progression.rs + \
     tests/sd13_barbarian_level8_progression.rs + \
     tests/sd13_barbarian_level9_progression.rs + \
-    tests/sd13_barbarian_level10_progression.rs";
+    tests/sd13_barbarian_level10_progression.rs + \
+    tests/sd13_barbarian_rage_power_slots.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -1360,9 +1361,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     totals, so the integrated pilot surface still reports a blocked posture. The \
                     row remains explicitly blocked on the rage execution engine \
                     (activation/deactivation, rage-round consumption, fatigue after rage, \
-                    temporary stat application). No weapon familiarity, Rage Power choice-list \
-                    grounding, Improved Uncanny Dodge flanking-resolution engine, Damage \
-                    Reduction application engine, or level-11+ martial progression is claimed",
+                    temporary stat application). No weapon familiarity, Improved Uncanny Dodge flanking-resolution engine, \
+                    Damage \
+                    Reduction application engine, or level-11+ martial progression is \
+                    claimed. A further SD13-E5 slice grounds all FIVE rage power choice \
+                    slots (class_chassis.barbarian.rage_power_choice and \
+                    rage_power_2_choice through rage_power_5_choice, \
+                    choice:barbarian_rage_power and _2.._5, gates \
+                    2/4/6/8/10, open-ended +0 recognitions per the proven repeat-grant \
+                    idiom; rule text verified identically on both primary sources including \
+                    the no-repeat clause; the d20pfsrd power list is a non-CRB superset, \
+                    sidestepped by the open-ended idiom; the gate ladder is pinned one \
+                    level below the 2/6/10 gates) — every selected power's EFFECT stays \
+                    unproven behind the rage-state execution engine, which remains the \
+                    named claim-blocking burden",
                 next_required_uplift: "ground the Barbarian rage-state execution engine \
                     (activation/deactivation, rage-round consumption, post-rage fatigue, \
                     temporary application of the rage constants), the Rage Power choice-list \
