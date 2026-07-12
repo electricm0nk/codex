@@ -202,6 +202,12 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
                 || explanation
                     .id
                     .starts_with("class_chassis.bard.spontaneous.spell_save_dc.")
+                // The spells_known family (a further SD13-E5 slice,
+                // tests/sd13_bard_spells_known_counts.rs): base known-count
+                // table records, allowed by prefix like the other families.
+                || explanation
+                    .id
+                    .starts_with("class_chassis.bard.spontaneous.spells_known.")
                 || (!explanation.id.contains("spell")
                     && !explanation.id.contains("bardic")
                     && !explanation.id.contains("music")

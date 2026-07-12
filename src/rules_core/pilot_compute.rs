@@ -10378,18 +10378,65 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
+    // SD13-E5: the BASE spells-KNOWN counts, one record per spell level with
+    // a non-"—" column in the Bard Spells Known table, as a literal table
+    // lookup per the same doctrine as the per-day family. Verified against
+    // the raw table rows of both primary sources (identical on d20pfsrd and
+    // legacy.aonprd.com): level 1 "4/2/—/—/—", level 2 "5/3/—/—/—", level 3
+    // "6/4/—/—/—", level 4 "6/4/2/—/—", level 5 "6/4/3/—/—", level 6
+    // "6/4/4/—/—", level 7 "6/5/4/2/—", level 8 "6/5/4/3/—", level 9
+    // "6/5/4/4/—", level 10 "6/5/5/4/2" (0th through 4th spell level).
+    // UNLIKE the spells-per-day table, this table INCLUDES the 0th level
+    // (cantrips) — exactly where the access-ladder record's "cantrips are
+    // spells known only" note lands. Only the known COUNTS are grounded:
+    // the selection of WHICH spells are known is never computed.
+    let bard_spells_known: [Option<i16>; 5] = match level {
+        1 => [Some(4), Some(2), None, None, None],
+        2 => [Some(5), Some(3), None, None, None],
+        3 => [Some(6), Some(4), None, None, None],
+        4 => [Some(6), Some(4), Some(2), None, None],
+        5 => [Some(6), Some(4), Some(3), None, None],
+        6 => [Some(6), Some(4), Some(4), None, None],
+        7 => [Some(6), Some(5), Some(4), Some(2), None],
+        8 => [Some(6), Some(5), Some(4), Some(3), None],
+        9 => [Some(6), Some(5), Some(4), Some(4), None],
+        10 => [Some(6), Some(5), Some(5), Some(4), Some(2)],
+        _ => [None, None, None, None, None],
+    };
+    for (spell_level, known_count) in bard_spells_known.iter().enumerate() {
+        let Some(known_count) = known_count else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.bard.spontaneous.spells_known.spell_level_{spell_level}"),
+            value: *known_count,
+            detail: format!(
+                "Bard base spells known at bard level {level}, spell level {spell_level}: \
+                 {known_count}, read directly from the PF1 Core Rulebook Bard Spells Known \
+                 table (verified against the raw table rows of both primary sources; a \
+                 literal table lookup, not a derived formula; unlike the spells-per-day \
+                 table, this table includes the 0th level — cantrips are spells known \
+                 only). This grounds the base known count only: the selection of WHICH \
+                 spells are known from the Bard list is never computed — no spell-list \
+                 content, no spell identities, and no swap/retraining rules"
+            ),
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
-    // explicitly. Bard spells known stays ungrounded; the access ladder, base
-    // per-day table counts, and base spell-save-DC arithmetic are grounded
-    // separately as flat records.
+    // explicitly. The which-spells-are-known selection stays ungrounded; the
+    // access ladder, base per-day counts, base save DCs, and base known counts
+    // are grounded separately as flat records.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned(),
         message:
             "Bard remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting, spells known (from the Bard list), the CHA-modified \
+             spontaneous casting, the selection of WHICH spells known (from the Bard list) \
+             are actually chosen, the CHA-modified \
              spells per day totals, and bonus spell slots from a high casting stat are out \
              of scope for this bounded baseline (the spell-level access ladder, the base \
-             spells-per-day table counts, and the base spell-save-DC arithmetic are \
+             spells-per-day table counts, the base spell-save-DC arithmetic, and the base \
+             spells-known table counts are \
              grounded separately as flat records) and no spell math is fabricated beyond \
              them"
                 .to_owned(),

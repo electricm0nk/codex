@@ -549,7 +549,8 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_level6_progression.rs + tests/sd13_bard_level7_progression.rs + \
     tests/sd13_bard_level8_progression.rs + tests/sd13_bard_level9_progression.rs + \
     tests/sd13_bard_level10_progression.rs + tests/sd13_bard_spell_level_thresholds.rs + \
-    tests/sd13_bard_spells_per_day_counts.rs + tests/sd13_bard_spell_save_dcs.rs";
+    tests/sd13_bard_spells_per_day_counts.rs + tests/sd13_bard_spell_save_dcs.rs + \
+    tests/sd13_bard_spells_known_counts.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1618,7 +1619,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     not spell level; no saving-throw resolution, target, spell selection, \
                     or feat DC modifier is computed; the spontaneous blocker's message now \
                     defers only spells known, the CHA-modified per-day totals, and bonus \
-                    slots)). No \
+                    slots) — AND a further SD13-E5 slice grounds the BASE spells-KNOWN \
+                    counts \
+                    (class_chassis.bard.spontaneous.spells_known.spell_level_0..4, one \
+                    record per non-'—' column of the Bard Spells Known table, a literal \
+                    table lookup verified against the raw rows of both primary sources: \
+                    \"4/2/—/—/—\" at 1 through \"6/5/5/4/2\" at 10 — UNLIKE the \
+                    per-day table this one includes the 0th level, cantrips being \
+                    \"spells known\" only, so a level-1 bard carries two known-count \
+                    records but one per-day record; only the known COUNTS are grounded — \
+                    the selection of WHICH spells are known is never computed, no \
+                    spell-list content, spell identities, or swap/retraining rules, and \
+                    the spontaneous blocker now defers exactly that which-spells \
+                    selection plus the CHA-modified totals and bonus slots)). No \
                     performance-execution math and no spell math is fabricated and \
                     no Bard level 11+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
