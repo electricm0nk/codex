@@ -4516,6 +4516,33 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
+    // SD13-E5: the base spell-save-DC arithmetic, one record per ACCESSIBLE
+    // spell level, mirroring the Sorcerer/Bard DC slices. Verified against
+    // both primary sources, which state the rule identically: "The
+    // Difficulty Class for a saving throw against a paladin's spell is 10 +
+    // the spell level + the paladin's Charisma modifier." This grounds only
+    // the base formula over values already on the seam (the chosen-ability
+    // Charisma modifier and the access ladder): no saving-throw resolution,
+    // no target, no spell selection, and no feat DC modifiers are computed.
+    for spell_level in 1..=paladin_spell_level_access {
+        let spell_save_dc = 10 + spell_level + charisma_modifier;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.paladin.partial_caster.spell_save_dc.spell_level_{spell_level}"
+            ),
+            value: spell_save_dc,
+            detail: format!(
+                "Paladin spell save DC at paladin level {level}, spell level {spell_level}: \
+                 10 + {spell_level} + Charisma modifier {charisma_modifier} = \
+                 {spell_save_dc} (PF1 Core Rulebook, verified identically on both primary \
+                 sources: \"The Difficulty Class for a saving throw against a paladin's \
+                 spell is 10 + the spell level + the paladin's Charisma modifier\"). This \
+                 grounds the base DC formula only: no saving-throw resolution, no target, no \
+                 spell selection, and no feat DC modifiers are computed"
+            ),
+        });
+    }
+
     // The partial-caster spell burden is its own blocker, distinct from the
     // grounded non-spell chassis records above. Paladin is a divine partial
     // caster in PF1 Core Rulebook (spells begin at paladin level 4; effective
@@ -4529,11 +4556,11 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
              partial caster (spells begin at paladin level 4, with effective caster level = \
              paladin level - 3 in PF1 Core Rulebook), so spell-source lineage, spells known \
-             or prepared posture, bonus spell slots from a high Charisma, and spell save \
-             DCs are deferred to a later spellcasting slice (the spell-level access ladder \
-             and the BASE spells-per-day table counts are grounded separately as flat \
-             records); no partial-caster spell execution is fabricated in this bounded \
-             chassis baseline"
+             or prepared posture, and bonus spell slots from a high Charisma are deferred \
+             to a later spellcasting slice (the spell-level access ladder, the BASE \
+             spells-per-day table counts, and the base spell-save-DC arithmetic are \
+             grounded separately as flat records); no partial-caster spell execution is \
+             fabricated in this bounded chassis baseline"
             .to_owned(),
         claim_blocking: true,
     });

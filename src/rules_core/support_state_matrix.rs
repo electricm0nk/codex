@@ -360,7 +360,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_level9_progression.rs + \
     tests/sd13_paladin_level10_progression.rs + \
     tests/sd13_paladin_spell_level_thresholds.rs + \
-    tests/sd13_paladin_spells_per_day_counts.rs";
+    tests/sd13_paladin_spells_per_day_counts.rs + \
+    tests/sd13_paladin_spell_save_dcs.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -2441,9 +2442,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     (Charisma-bonus-spells-only access), not an absence, and inaccessible \
                     \"—\" spell levels get no record at all; only the base counts are \
                     grounded — bonus spells per day from a high Charisma are never computed, \
-                    and the partial-caster blocker stays claim-blocking (its message now \
-                    defers only the genuinely-unproven remainder: spell-source lineage, \
-                    prepared posture, Charisma bonus slots, spell save DCs). The row is Partial, not \
+                    and the partial-caster blocker stays claim-blocking — AND a further \
+                    SD13-E5 slice grounds the base spell-save-DC arithmetic on top of the \
+                    ladder \
+                    (class_chassis.paladin.partial_caster.spell_save_dc.spell_level_1..3, \
+                    one record per ACCESSIBLE spell level, value 10 + spell level + Charisma \
+                    modifier per the rule text verified identically on both primary sources; \
+                    live arithmetic over the chosen ability score — a dedicated test lowers \
+                    the fixture Charisma and the DCs drop; no saving-throw resolution, \
+                    target, spell selection, or feat DC modifier is computed; the blocker's \
+                    message now defers only the genuinely-unproven remainder: spell-source \
+                    lineage, prepared posture, Charisma bonus slots). The row is Partial, not \
                     Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
                     claim-blocking as accepted hybrid truth, no Paladin level 11+ is proven, \
                     Divine Bond stays named-but-unproven, the level-6 and level-9 repeat \
@@ -2455,10 +2464,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     grounded. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid \
                     chassis recognition explanation all remain in place (each gated to the \
                     bounded hybrid baseline level, so they still fire only at level 1)",
-                next_required_uplift: "ground the paladin spell-DC arithmetic (10 + spell \
-                    level + Charisma modifier) and the Charisma bonus-spells-per-day table \
-                    burden now that the caster-level gate, the access ladder, and the base \
-                    per-day counts are all grounded, then paladin level-11+ progression",
+                next_required_uplift: "ground the paladin Charisma bonus-spells-per-day \
+                    table burden and the prepared-posture/spell-source-lineage burdens now \
+                    that the caster-level gate, the access ladder, the base per-day counts, \
+                    and the base spell-save DCs are all grounded, then paladin level-11+ \
+                    progression",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
