@@ -5995,6 +5995,43 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             ),
         });
     }
+
+    // SD13-E5: the bonus spells per day from a high Wisdom, one record per
+    // ACCESSIBLE spell level, from PF1's shared Table: Ability Modifiers
+    // and Bonus Spells, completing the bonus family across all four
+    // partial/spontaneous casters — verified against both primary sources'
+    // ability-scores pages: for modifier m and spell level N, 0 when
+    // m < N, otherwise (m - N)/4 + 1, gated by the grounded access ladder.
+    // The ranger-specific rule text ("he gains only the bonus spells he
+    // would be entitled to based on his Wisdom score for that spell
+    // level") was verified on both class pages — Wisdom, the family's only
+    // non-Charisma caster. The bonus is never added to the base per-day
+    // counts here — no total is computed.
+    for spell_level in 1..=ranger_spell_level_access {
+        let bonus_spells = if ability_modifiers.wisdom < spell_level {
+            0
+        } else {
+            (ability_modifiers.wisdom - spell_level) / 4 + 1
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.ranger.partial_caster.bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: bonus_spells,
+            detail: format!(
+                "Ranger bonus spells per day at ranger level {level}, spell level \
+                 {spell_level}: {bonus_spells} from Wisdom modifier {} (PF1 Core Rulebook \
+                 Table: Ability Modifiers and Bonus Spells, verified identically on both \
+                 primary sources; for modifier m and spell level N the table value is 0 \
+                 when m < N, otherwise (m - N)/4 + 1, and bonus spells apply only to spell \
+                 levels the character is of a high enough class level to cast — the \
+                 grounded access ladder). A computed 0 means the modifier grants no bonus \
+                 at this spell level; it is never added to the base per-day count here — no \
+                 total is computed, no spell selection, and no spell save DCs",
+                ability_modifiers.wisdom
+            ),
+        });
+    }
 }
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.

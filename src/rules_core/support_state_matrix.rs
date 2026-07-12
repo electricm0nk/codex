@@ -387,7 +387,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_third_favored_enemy.rs + \
     tests/sd13_ranger_spell_level_thresholds.rs + \
     tests/sd13_ranger_spells_per_day_counts.rs + \
-    tests/sd13_ranger_spell_save_dcs.rs";
+    tests/sd13_ranger_spell_save_dcs.rs + \
+    tests/sd13_ranger_bonus_spells.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -2842,7 +2843,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the fixture Wisdom and the DCs rise; no saving-throw resolution, target, \
                     spell selection, or feat DC modifier is computed; no new claim-blocking \
                     diagnostic is added, the spell burden staying named by the F6 level-1 \
-                    hybrid blocker and this note)",
+                    hybrid blocker and this note) — AND a further SD13-E5 slice grounds the \
+                    Wisdom bonus spells per day \
+                    (class_chassis.ranger.partial_caster.bonus_spells_per_day.spell_level_\
+                    1..3, one record per ACCESSIBLE spell level from PF1's shared Table: \
+                    Ability Modifiers and Bonus Spells, verified identically on both \
+                    primary sources' ability-scores pages — 0 when m < N, otherwise \
+                    (m − N)/4 + 1, gated by the grounded access ladder; Wisdom, the \
+                    family's only non-Charisma caster, per the ranger rule text verified on \
+                    both class pages; the level-4 \"0\"-base/1-bonus pair makes the \
+                    Wisdom bonus-spells-only access visible side by side; live arithmetic — \
+                    a dedicated test raises the fixture Wisdom and the 2nd/3rd-level \
+                    bonuses fill in; the bonus is never added to the base counts — the \
+                    base+bonus TOTAL integration remains, with prepared posture and \
+                    lineage, the named spell burden)",
                 next_required_uplift: "ground the ranger Wisdom bonus-spells and \
                     prepared-posture/spell-source-lineage burdens now that the caster-level \
                     gate, the access ladder, the base per-day counts, and the base \
