@@ -4544,6 +4544,43 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
+    // SD13-E5: the bonus spells per day from a high Charisma, one record
+    // per ACCESSIBLE spell level, from PF1's shared Table: Ability
+    // Modifiers and Bonus Spells, mirroring the Sorcerer/Bard bonus slices
+    // — verified against both primary sources' ability-scores pages: for
+    // modifier m and spell level N, 0 when m < N, otherwise (m - N)/4 + 1,
+    // gated by the grounded access ladder. The paladin-specific rule text
+    // ("she receives bonus spells per day if she has a high Charisma
+    // score") was verified on both class pages. Together with the literal
+    // "0" base entries this makes the bonus-spells-only access visible as
+    // two grounded records side by side. The bonus is never added to the
+    // base per-day counts here — no total is computed.
+    for spell_level in 1..=paladin_spell_level_access {
+        let bonus_spells = if charisma_modifier < spell_level {
+            0
+        } else {
+            (charisma_modifier - spell_level) / 4 + 1
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.paladin.partial_caster.bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: bonus_spells,
+            detail: format!(
+                "Paladin bonus spells per day at paladin level {level}, spell level \
+                 {spell_level}: {bonus_spells} from Charisma modifier {charisma_modifier} \
+                 (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells, verified \
+                 identically on both primary sources; for modifier m and spell level N the \
+                 table value is 0 when m < N, otherwise (m - N)/4 + 1, and bonus spells \
+                 apply only to spell levels the character is of a high enough class level \
+                 to cast — the grounded access ladder). A computed 0 means the modifier \
+                 grants no bonus at this spell level; it is never added to the base per-day \
+                 count here — no total is computed, no spell selection, and no spell save \
+                 DCs"
+            ),
+        });
+    }
+
     // The partial-caster spell burden is its own blocker, distinct from the
     // grounded non-spell chassis records above. Paladin is a divine partial
     // caster in PF1 Core Rulebook (spells begin at paladin level 4; effective
@@ -4557,9 +4594,11 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
              partial caster (spells begin at paladin level 4, with effective caster level = \
              paladin level - 3 in PF1 Core Rulebook), so spell-source lineage, spells known \
-             or prepared posture, and bonus spell slots from a high Charisma are deferred \
+             or prepared posture, and the base+bonus spells-per-day TOTAL integration are \
+             deferred \
              to a later spellcasting slice (the spell-level access ladder, the BASE \
-             spells-per-day table counts, and the base spell-save-DC arithmetic are \
+             spells-per-day table counts, the base spell-save-DC arithmetic, and the \
+             Charisma bonus spell slot counts are \
              grounded separately as flat records); no partial-caster spell execution is \
              fabricated in this bounded chassis baseline"
             .to_owned(),

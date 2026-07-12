@@ -361,7 +361,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_level10_progression.rs + \
     tests/sd13_paladin_spell_level_thresholds.rs + \
     tests/sd13_paladin_spells_per_day_counts.rs + \
-    tests/sd13_paladin_spell_save_dcs.rs";
+    tests/sd13_paladin_spell_save_dcs.rs + \
+    tests/sd13_paladin_bonus_spells.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -2479,7 +2480,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the fixture Charisma and the DCs drop; no saving-throw resolution, \
                     target, spell selection, or feat DC modifier is computed; the blocker's \
                     message now defers only the genuinely-unproven remainder: spell-source \
-                    lineage, prepared posture, Charisma bonus slots). The row is Partial, not \
+                    lineage, prepared posture — AND a further SD13-E5 slice grounds the \
+                    Charisma bonus spells per day \
+                    (class_chassis.paladin.partial_caster.bonus_spells_per_day.spell_level_\
+                    1..3, one record per ACCESSIBLE spell level from PF1's shared Table: \
+                    Ability Modifiers and Bonus Spells, verified identically on both primary \
+                    sources' ability-scores pages — 0 when m < N, otherwise (m − N)/4 + 1, \
+                    gated by the grounded access ladder; the paladin rule text \"she \
+                    receives bonus spells per day if she has a high Charisma score\" \
+                    verified on both class pages; the level-4 \"0\"-base/1-bonus pair \
+                    makes the bonus-spells-only access visible as two grounded records side \
+                    by side; live arithmetic — a dedicated test lowers the fixture Charisma \
+                    and the bonuses zero; the bonus is never added to the base counts — the \
+                    base+bonus TOTAL integration is the remaining slot burden the blocker \
+                    now defers). The row is Partial, not \
                     Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
                     claim-blocking as accepted hybrid truth, no Paladin level 11+ is proven, \
                     Divine Bond stays named-but-unproven, the level-6 and level-9 repeat \
