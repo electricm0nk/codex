@@ -312,6 +312,13 @@ fn bard_level5_gains_only_lore_master_as_a_new_class_feature() {
         "class_chassis.bard.spontaneous.spell_save_dc.spell_level_2",
         "class_chassis.bard.spontaneous.spell_save_dc.spell_level_3",
         "class_chassis.bard.spontaneous.spell_save_dc.spell_level_4",
+        // The spells_known family (a further SD13-E5 slice): base known-count
+        // table records, not "Special"-column class features.
+        "class_chassis.bard.spontaneous.spells_known.spell_level_0",
+        "class_chassis.bard.spontaneous.spells_known.spell_level_1",
+        "class_chassis.bard.spontaneous.spells_known.spell_level_2",
+        "class_chassis.bard.spontaneous.spells_known.spell_level_3",
+        "class_chassis.bard.spontaneous.spells_known.spell_level_4",
     ];
     assert!(
         computation
