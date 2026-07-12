@@ -24,7 +24,7 @@ use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis,
 };
 
-const MONK_FIXTURE_STUNNING_FIST: &str =
+const MONK_FIXTURE_DEFLECT_ARROWS: &str =
     include_str!("fixtures/rules_core/pf1_human_monk_level1_sd13_deterministic_input.txt");
 const MONK_FIXTURE_COMBAT_REFLEXES: &str = include_str!(
     "fixtures/rules_core/pf1_human_monk_level1_sd13_bonus_feat_combat_reflexes.txt"
@@ -82,9 +82,21 @@ fn claim_blocking<'a>(
     diag
 }
 
+// RULES CORRECTION (SD13-E5): an earlier version of this file treated
+// feat:stunning_fist as a member of the restricted Monk bonus feat list and
+// the seam's list included Improved Trip. Both primary sources (d20pfsrd and
+// legacy.aonprd.com, re-read for this correction) give the PF1 Core Rulebook
+// 1st/2nd-level list as Catch Off-Guard, Combat Reflexes, Deflect Arrows,
+// Dodge, Improved Grapple, Scorpion Style, and Throw Anything — Improved
+// Trip joins only at 6th level, and Stunning Fist is an AUTOMATIC 1st-level
+// grant ("At 1st level, the monk gains Stunning Fist as a bonus feat, even
+// if he does not meet the prerequisites"), never a choice-set member,
+// exactly like Improved Unarmed Strike. The deterministic fixtures now
+// select feat:deflect_arrows (a genuine list member; Dodge is avoided
+// because the Human bonus-feat slot already selects it).
 #[test]
-fn monk_level1_recognizes_the_stunning_fist_bonus_feat_choice() {
-    let input = load(MONK_FIXTURE_STUNNING_FIST);
+fn monk_level1_recognizes_the_deflect_arrows_bonus_feat_choice() {
+    let input = load(MONK_FIXTURE_DEFLECT_ARROWS);
     let computation = compute_pilot_base_chassis(&input);
 
     let choice = explanation(&computation, "class_chassis.monk.bonus_feat_choice");
@@ -93,16 +105,27 @@ fn monk_level1_recognizes_the_stunning_fist_bonus_feat_choice() {
         "bonus feat choice recognition must carry no fabricated mechanical value"
     );
     assert!(
-        choice.detail.contains("Stunning Fist")
+        choice.detail.contains("Deflect Arrows")
             && choice.detail.contains("choice:monk_bonus_feat")
-            && choice.detail.contains("feat:stunning_fist"),
+            && choice.detail.contains("feat:deflect_arrows"),
         "bonus feat choice recognition must name the recognized selection: {}",
         choice.detail
     );
     assert!(
-        choice.detail.contains("Improved Unarmed Strike"),
-        "bonus feat choice recognition must explain why Improved Unarmed Strike is excluded \
-         from the restricted choice set: {}",
+        choice.detail.contains("Catch Off-Guard")
+            && choice.detail.contains("Scorpion Style")
+            && choice.detail.contains("Throw Anything")
+            && choice.detail.contains("including Improved Trip, stay unrecognized"),
+        "the recognition must cite the corrected PF1 CRB restricted list (Catch Off-Guard, \
+         Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple, Scorpion Style, Throw \
+         Anything) and frame Improved Trip as a 6th-level addition outside this seam: {}",
+        choice.detail
+    );
+    assert!(
+        choice.detail.contains("Improved Unarmed Strike")
+            && choice.detail.contains("Stunning Fist"),
+        "the recognition must explain why Improved Unarmed Strike AND Stunning Fist are \
+         excluded from the restricted choice set (both are automatic 1st-level grants): {}",
         choice.detail
     );
 
@@ -113,9 +136,31 @@ fn monk_level1_recognizes_the_stunning_fist_bonus_feat_choice() {
         "class_feature.monk.bounded_progression.bonus_feat.unsupported",
     );
     assert!(
-        bonus_feat.message.contains("bonus feat") && bonus_feat.message.contains("Stunning Fist"),
-        "narrowed bonus-feat blocker must name the recognized Stunning Fist selection: {}",
+        bonus_feat.message.contains("bonus feat") && bonus_feat.message.contains("Deflect Arrows"),
+        "narrowed bonus-feat blocker must name the recognized Deflect Arrows selection: {}",
         bonus_feat.message
+    );
+}
+
+#[test]
+fn monk_level1_stunning_fist_selection_is_the_automatic_grant_not_a_list_member() {
+    let stunning = MONK_FIXTURE_DEFLECT_ARROWS
+        .replace("feat:deflect_arrows", "feat:stunning_fist");
+    let input = load(&stunning);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let choice = explanation(&computation, "class_chassis.monk.bonus_feat_choice");
+    assert_eq!(choice.value, 0);
+    assert!(
+        !choice.detail.contains("drawn from the PF1 Core Rulebook restricted"),
+        "a stunning_fist selection must NOT be recognized as a restricted-list member — \
+         Stunning Fist is the automatic 1st-level grant, not a choice: {}",
+        choice.detail
+    );
+    assert!(
+        choice.detail.contains("Stunning Fist") && choice.detail.contains("automatic"),
+        "the present-but-not-a-list-member branch must explain the automatic grant: {}",
+        choice.detail
     );
 }
 

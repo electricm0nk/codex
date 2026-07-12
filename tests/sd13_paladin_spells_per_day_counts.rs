@@ -200,9 +200,16 @@ fn paladin_level10_blocker_stays_and_no_bonus_slots_are_fabricated() {
         "the blocker must stop deferring the now-grounded base spells-per-day counts: {}",
         blocker.message
     );
+    // When this slice landed, bonus slots and DCs were the unproven remainder;
+    // further SD13-E5 slices grounded the base spell-save-DC arithmetic and the
+    // Charisma bonus-slot counts, so the remainder this control pins is now
+    // lineage, prepared posture, and the base+bonus TOTAL integration.
     assert!(
-        blocker.message.contains("bonus spell slots") && blocker.message.contains("DC"),
-        "the blocker must still name the genuinely-unproven remainder (bonus slots, DCs): {}",
+        blocker.message.contains("spell-source lineage")
+            && blocker.message.contains("prepared posture")
+            && (blocker.message.contains("TOTAL") || blocker.message.contains("total")),
+        "the blocker must still name the genuinely-unproven remainder (lineage, prepared \
+         posture, base+bonus TOTAL integration): {}",
         blocker.message
     );
 }

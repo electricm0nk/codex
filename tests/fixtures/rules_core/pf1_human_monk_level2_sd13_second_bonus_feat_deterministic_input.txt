@@ -1,3 +1,11 @@
+# SD13-E5 Monk level 2 SECOND-bonus-feat selection fixture: the level-2
+# chassis fixture plus exactly one additional chosen selection,
+# choice:monk_bonus_feat_2:feat:combat_reflexes — the PF1 CRB level-2 repeat
+# bonus feat ("At 1st level, 2nd level, and every 4 levels thereafter, a monk
+# may select a bonus feat"), drawn from the same corrected seven-feat
+# 1st/2nd-level list as slot 1. Combat Reflexes is selected because slot 1
+# takes Deflect Arrows and the Human bonus-feat slot takes Dodge — three
+# distinct feats, no double-selection.
 # SD13-E5 deterministic Human Monk level 2 progression fixture.
 # Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human Monk
 # level-1 martial chassis baseline to level 2 as chosen input only. It names
@@ -14,7 +22,7 @@
 # It deliberately avoids every later Monk burden surface: no ki pool, no
 # execution of what the recognized bonus feat actually does, no level-2
 # bonus feat grant recognition, and no level-3+ progression.
-case_id=pf1-crb-human-monk-level2
+case_id=pf1-crb-human-monk-level2-second-bonus-feat
 source_package_id=pf1.core_rulebook
 race_id=race:human
 class_level=class:monk:2
@@ -28,6 +36,7 @@ feat=feat:stunning_fist
 skill=skill:acrobatics:1
 equipment=item:shield:absent
 choice=choice:monk_bonus_feat:feat:deflect_arrows
+choice=choice:monk_bonus_feat_2:feat:combat_reflexes
 choice=choice:human_bonus_feat:feat:dodge
 choice=choice:human_ability_bonus:ability:wisdom
 provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

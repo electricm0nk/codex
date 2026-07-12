@@ -315,7 +315,10 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
     tests/sd13_rogue_level7_progression.rs + \
     tests/sd13_rogue_level8_progression.rs + \
     tests/sd13_rogue_level9_progression.rs + \
-    tests/sd13_rogue_level10_progression.rs";
+    tests/sd13_rogue_level10_progression.rs + \
+    tests/sd13_rogue_talent_choice.rs + \
+    tests/sd13_rogue_second_talent.rs + \
+    tests/sd13_rogue_talents_three_through_five.rs";
 
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group
@@ -361,7 +364,10 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_level10_progression.rs + \
     tests/sd13_paladin_spell_level_thresholds.rs + \
     tests/sd13_paladin_spells_per_day_counts.rs + \
-    tests/sd13_paladin_spell_save_dcs.rs";
+    tests/sd13_paladin_spell_save_dcs.rs + \
+    tests/sd13_paladin_bonus_spells.rs + \
+    tests/sd13_paladin_total_spells_per_day.rs + \
+    tests/sd13_paladin_mercies_two_and_three.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -386,7 +392,9 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_third_favored_enemy.rs + \
     tests/sd13_ranger_spell_level_thresholds.rs + \
     tests/sd13_ranger_spells_per_day_counts.rs + \
-    tests/sd13_ranger_spell_save_dcs.rs";
+    tests/sd13_ranger_spell_save_dcs.rs + \
+    tests/sd13_ranger_bonus_spells.rs + \
+    tests/sd13_ranger_total_spells_per_day.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -429,7 +437,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_spells_per_day_counts.rs + \
     tests/sd13_sorcerer_spell_save_dcs.rs + \
     tests/sd13_sorcerer_spells_known_counts.rs + \
-    tests/sd13_sorcerer_bonus_spells.rs";
+    tests/sd13_sorcerer_bonus_spells.rs + \
+    tests/sd13_sorcerer_total_spells_per_day.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -455,7 +464,8 @@ const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_ba
     tests/sd13_barbarian_level7_progression.rs + \
     tests/sd13_barbarian_level8_progression.rs + \
     tests/sd13_barbarian_level9_progression.rs + \
-    tests/sd13_barbarian_level10_progression.rs";
+    tests/sd13_barbarian_level10_progression.rs + \
+    tests/sd13_barbarian_rage_power_slots.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -552,7 +562,9 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_level8_progression.rs + tests/sd13_bard_level9_progression.rs + \
     tests/sd13_bard_level10_progression.rs + tests/sd13_bard_spell_level_thresholds.rs + \
     tests/sd13_bard_spells_per_day_counts.rs + tests/sd13_bard_spell_save_dcs.rs + \
-    tests/sd13_bard_spells_known_counts.rs";
+    tests/sd13_bard_spells_known_counts.rs + tests/sd13_bard_bonus_spells.rs + \
+    tests/sd13_bard_total_spells_per_day.rs + \
+    tests/sd13_bard_versatile_performance_slots.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -692,7 +704,9 @@ const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs 
     tests/sd13_monk_level3_progression.rs + tests/sd13_monk_level4_progression.rs + \
     tests/sd13_monk_level5_progression.rs + tests/sd13_monk_level6_progression.rs + \
     tests/sd13_monk_level7_progression.rs + tests/sd13_monk_level8_progression.rs + \
-    tests/sd13_monk_level9_progression.rs + tests/sd13_monk_level10_progression.rs";
+    tests/sd13_monk_level9_progression.rs + tests/sd13_monk_level10_progression.rs + \
+    tests/sd13_monk_second_bonus_feat.rs + \
+    tests/sd13_monk_bonus_feats_three_and_four.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -1120,7 +1134,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     class_feature.rogue.improved_uncanny_dodge explanations are standalone \
                     records, not wired into compute_fighter_chassis, compute_total_saves, or \
                     compute_combat_baseline, so defense.total_save.* is still never computed \
-                    for Rogue.",
+                    for Rogue. A further SD13-E5 slice grounds the 2nd-level rogue talent \
+                    CHOICE SLOT (class_chassis.rogue.talent_choice, choice:rogue_talent, \
+                    gated to rogue level >= 2, an open-ended +0 recognition mirroring the \
+                    favored-enemy/terrain/mercy idiom; rule text verified identically on \
+                    both primary sources, including \"A rogue cannot select an individual \
+                    talent more than once\"): the selected rogue talent's own EFFECT stays \
+                    entirely unproven — the open-ended talent tree remains the \
+                    new-subsystem-shaped burden, no talent-effect engine exists, and the \
+                    4th/6th/8th/10th additional talents were named-but-unproven as future \
+                    numbered slots per the proven monk-second-bonus-feat repeat-grant idiom \
+                    — and a further SD13-E5 slice grounds the FIRST of them: the level-4 \
+                    SECOND talent (class_chassis.rogue.talent_2_choice, \
+                    choice:rogue_talent_2, gated to rogue level >= 4, same open-ended +0 \
+                    recognition; the proof fixture selects distinct talents for both slots, \
+                    honoring the no-repeat-selection clause); — and a further SD13-E5 slice grounds the remaining \
+                    numbered slots in one pass (class_chassis.rogue.talent_3_choice / \
+                    talent_4_choice / talent_5_choice, choice:rogue_talent_3/4/5, gates \
+                    6/8/10, the same open-ended +0 recognition; the proof fixture selects \
+                    five distinct talents and the gate ladder is pinned one level below \
+                    each gate), completing the rogue's full five-slot talent count at the \
+                    tranche ceiling; the \
+                    talent tree's effects stay the new-subsystem burden.",
                 next_required_uplift: "later SD13 slice wiring the grounded Rogue pillar \
                     records into the integrated pilot surface (the generic chassis diagnostics \
                     still claim-block), then rogue talents and level-11+ progression",
@@ -1327,9 +1362,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     totals, so the integrated pilot surface still reports a blocked posture. The \
                     row remains explicitly blocked on the rage execution engine \
                     (activation/deactivation, rage-round consumption, fatigue after rage, \
-                    temporary stat application). No weapon familiarity, Rage Power choice-list \
-                    grounding, Improved Uncanny Dodge flanking-resolution engine, Damage \
-                    Reduction application engine, or level-11+ martial progression is claimed",
+                    temporary stat application). No weapon familiarity, Improved Uncanny Dodge flanking-resolution engine, \
+                    Damage \
+                    Reduction application engine, or level-11+ martial progression is \
+                    claimed. A further SD13-E5 slice grounds all FIVE rage power choice \
+                    slots (class_chassis.barbarian.rage_power_choice and \
+                    rage_power_2_choice through rage_power_5_choice, \
+                    choice:barbarian_rage_power and _2.._5, gates \
+                    2/4/6/8/10, open-ended +0 recognitions per the proven repeat-grant \
+                    idiom; rule text verified identically on both primary sources including \
+                    the no-repeat clause; the d20pfsrd power list is a non-CRB superset, \
+                    sidestepped by the open-ended idiom; the gate ladder is pinned one \
+                    level below the 2/6/10 gates) — every selected power's EFFECT stays \
+                    unproven behind the rage-state execution engine, which remains the \
+                    named claim-blocking burden",
                 next_required_uplift: "ground the Barbarian rage-state execution engine \
                     (activation/deactivation, rage-round consumption, post-rage fatigue, \
                     temporary application of the rage constants), the Rage Power choice-list \
@@ -1581,7 +1627,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     level-8 \"Special\" column entry) are not grounded at all \
                     — Countersong/Distraction require an opposed Perform-check-vs-effect \
                     substitution resolution, Versatile Performance requires a choice-gated \
-                    skill-substitution engine, Suggestion requires a fascinated-target \
+                    skill-substitution engine for its EFFECT (a further SD13-E5 slice \
+                    grounds all three of its choice SLOTS as numbered +0 recognitions: \
+                    class_chassis.bard.versatile_performance_choice, \
+                    versatile_performance_2_choice, and versatile_performance_3_choice, \
+                    choice:bard_versatile_performance and _2/_3, gates 2/6/10 verified \
+                    identically on both primary sources, restricted to the nine verified \
+                    Perform types with each type's fixed associated-skill pair named in \
+                    the record — Act: Bluff/Disguise through Wind: Diplomacy/Handle Animal \
+                    — the gate ladder pinned one level below each gate; no skill total is \
+                    modified and the substitution engine itself stays the named burden), \
+                    Suggestion requires a fascinated-target \
                     prerequisite plus the suggestion spell's own effect-resolution engine, and \
                     Dirge of Doom requires both the performance-state engine and a \
                     fear/shaken-condition resolution engine, none a flat number — and the spontaneous spell burden \
@@ -1633,7 +1689,25 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the selection of WHICH spells are known is never computed, no \
                     spell-list content, spell identities, or swap/retraining rules, and \
                     the spontaneous blocker now defers exactly that which-spells \
-                    selection plus the CHA-modified totals and bonus slots)). No \
+                    selection plus the CHA-modified totals and bonus slots) — AND a further \
+                    SD13-E5 slice grounds the Charisma bonus spells per day \
+                    (class_chassis.bard.spontaneous.bonus_spells_per_day.spell_level_1..4, \
+                    one record per ACCESSIBLE spell level from PF1's shared Table: Ability \
+                    Modifiers and Bonus Spells, verified identically on both primary \
+                    sources' ability-scores pages — 0 when m < N, otherwise (m − N)/4 + 1, \
+                    gated by the grounded access ladder; cantrips never gain bonus spells; \
+                    live arithmetic — a dedicated test raises the fixture Charisma and the \
+                    3rd-level bonus appears; computed 0s are honest \
+                    modifier-below-spell-level results; the bonus is never added to the \
+                    base counts by the bonus record itself — AND a further SD13-E5 slice \
+                    grounds the integrated TOTAL \
+                    (class_chassis.bard.spontaneous.total_spells_per_day.spell_level_1..4, \
+                    the pure sum of the two separately grounded records per ACCESSIBLE \
+                    spell level — totals 6/5/3/1 on the level-10 fixture, the bard's \
+                    actual castable slot count per day; live end-to-end arithmetic; counts \
+                    only, no spontaneous-casting execution, slot consumption, or tracking; \
+                    the blocker now defers exactly that execution plus the which-spells \
+                    selection)). No \
                     performance-execution math and no spell math is fabricated and \
                     no Bard level 11+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
@@ -2080,11 +2154,42 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     and +3 at level 5, with the attack count staying 2 at all five levels), the \
                     level-1 bonus \
                     feat choice-slot selection (recognized when it names one of the PF1 Core \
-                    Rulebook restricted Monk bonus feat list's five feats: Combat Reflexes, \
-                    Deflect Arrows, Improved Grapple, Improved Trip, Stunning Fist — a +0 \
+                    Rulebook restricted Monk bonus feat list's seven 1st/2nd-level feats: \
+                    Catch Off-Guard, Combat Reflexes, \
+                    Deflect Arrows, Dodge, Improved Grapple, Scorpion Style, Throw Anything — \
+                    a RULES CORRECTION by a further SD13-E5 slice: an earlier version of this \
+                    note listed Improved Trip and Stunning Fist as members, but both primary \
+                    sources give Improved Trip as a 6th-level list addition and Stunning \
+                    Fist as the automatic 1st-level monk grant (\"even if he does not meet \
+                    the prerequisites\"), never a choice — a +0 \
                     recognition record with no feat-effect execution, mirroring the Sorcerer \
                     bloodline choice / Cleric domain choice / Druid nature-bond choice \
-                    recognition idiom), (SD13-E5) Evasion, a 2nd-level Monk class feature \
+                    recognition idiom; the 6th/10th-level list additions stay unrecognized — \
+                    AND a further SD13-E5 slice grounds the LEVEL-2 REPEAT bonus feat as its \
+                    own numbered choice slot, the repeat-grant PROVING slice: \
+                    choice:monk_bonus_feat_2, gated to monk level >= 2, recognized as a \
+                    bounded +0 record (class_chassis.monk.bonus_feat_2_choice) drawing from \
+                    the same corrected seven-feat 1st/2nd-level list with the same \
+                    automatic-grant exclusions — no \"list-growth mechanism\" is needed, a \
+                    repeat grant is just a numbered slot with its own level gate, exactly \
+                    the ranger favored_enemy_2 / favored_terrain_2 / \
+                    combat_style_bonus_feat_2 idiom, and every other repeat-grant deferral \
+                    in the campaign (rogue 2nd talent, barbarian 2nd rage power, paladin \
+                    level-6/9 mercies, bard versatile-performance repeats) can now follow \
+                    this proven shape; absent the selection nothing is fabricated, below \
+                    the level-2 gate the selection is not recognized — and a further \
+                    SD13-E5 slice grounds the level-6/10 repeat grants too \
+                    (class_chassis.monk.bonus_feat_3_choice / bonus_feat_4_choice, \
+                    choice:monk_bonus_feat_3/4, gates 6/10, each drawing from its own \
+                    WIDENED list verified identically on both primary sources: the 6th \
+                    level adds Gorgon's Fist / Improved Bull Rush / Improved Disarm / \
+                    Improved Feint / Improved Trip / Mobility, the 10th adds Improved \
+                    Critical / Medusa's Wrath / Snatch Arrows / Spring Attack; the proof \
+                    fixture's slot 3 selects Improved Trip — the very feat the \
+                    list-correction slice removed from slots 1/2, genuinely legal at 6th — \
+                    and the gate ladder is pinned one level below each gate), completing \
+                    the monk's full four-slot bonus-feat count at the tranche ceiling; \
+                    every selected feat's own mechanics stay unproven), (SD13-E5) Evasion, a 2nd-level Monk class feature \
                     verified independently against two primary PF1 sources (d20pfsrd and \
                     legacy.aonprd.com), grounded as a bounded identity/recognition record only \
                     (value 0, non-fabricated): no damage on a successful Reflex save against an \
@@ -2410,8 +2515,21 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     level (the 3rd/6th/9th cadence), but exactly like the level-6 repeat \
                     grant before it, recognizing a second mercy selection needs the \
                     mercy-list-growth mechanism this codebase has never grounded, so the \
-                    9th-level repeat grant stays deliberately named-but-unproven and the \
-                    single grounded level-3 selection carries over unchanged — AND a further \
+                    9th-level repeat grant stayed deliberately named-but-unproven and the \
+                    single grounded level-3 selection carried over unchanged — until a \
+                    further SD13-E5 slice grounded BOTH repeat grants as numbered choice \
+                    slots per the proven repeat-grant idiom \
+                    (class_chassis.paladin.mercy_2_choice / mercy_3_choice, \
+                    choice:paladin_mercy_2/3, gates 6/9, open-ended +0 recognitions \
+                    mirroring slot 1; the verified CRB tiers — 6th adds \
+                    Dazed/Diseased/Staggered, 9th adds \
+                    Cursed/Exhausted/Frightened/Nauseated/Poisoned per legacy.aonprd.com, \
+                    with d20pfsrd's supersets containing them and its extra entries being \
+                    non-CRB expansions outside this pf1.core_rulebook seam — are cited in \
+                    each detail; prerequisite chains are named, not validated; no mercy's \
+                    effect on lay on hands is computed; the gate ladder is pinned one level \
+                    below each gate), completing the paladin's full three-mercy count at \
+                    the tranche ceiling — AND a further \
                     SD13-E5 slice widens the level-range gate again (supported_paladin_level, \
                     1..=10), closing the level-10 band across every level-banded class row at \
                     the tranche ceiling, and extends every one of the formulas above to level \
@@ -2468,7 +2586,30 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the fixture Charisma and the DCs drop; no saving-throw resolution, \
                     target, spell selection, or feat DC modifier is computed; the blocker's \
                     message now defers only the genuinely-unproven remainder: spell-source \
-                    lineage, prepared posture, Charisma bonus slots). The row is Partial, not \
+                    lineage, prepared posture — AND a further SD13-E5 slice grounds the \
+                    Charisma bonus spells per day \
+                    (class_chassis.paladin.partial_caster.bonus_spells_per_day.spell_level_\
+                    1..3, one record per ACCESSIBLE spell level from PF1's shared Table: \
+                    Ability Modifiers and Bonus Spells, verified identically on both primary \
+                    sources' ability-scores pages — 0 when m < N, otherwise (m − N)/4 + 1, \
+                    gated by the grounded access ladder; the paladin rule text \"she \
+                    receives bonus spells per day if she has a high Charisma score\" \
+                    verified on both class pages; the level-4 \"0\"-base/1-bonus pair \
+                    makes the bonus-spells-only access visible as two grounded records side \
+                    by side; live arithmetic — a dedicated test lowers the fixture Charisma \
+                    and the bonuses zero; the bonus is never added to the base counts by the \
+                    bonus record itself — AND a further SD13-E5 slice grounds the integrated \
+                    TOTAL \
+                    (class_chassis.paladin.partial_caster.total_spells_per_day.spell_level_\
+                    1..3, the pure sum of the two separately grounded records per \
+                    ACCESSIBLE spell level — level-10 totals 3/2/0 on the fixture, where \
+                    the 3rd-level total is the tranche's first honest ZERO total: a \"0\" \
+                    base entry plus a modifier-below-spell-level 0 bonus, accessible but \
+                    currently uncastable at Charisma 14; the level-4 \"0\"-base/1-bonus \
+                    pair lands as arithmetic, total 1; live end-to-end — a dedicated test \
+                    raises the fixture Charisma and the 3rd-level total turns 1; counts \
+                    only, no casting execution, slot consumption, or tracking; the blocker \
+                    now defers exactly spell-source lineage and the prepared posture). The row is Partial, not \
                     Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
                     claim-blocking as accepted hybrid truth, no Paladin level 11+ is proven, \
                     Divine Bond stays named-but-unproven, the level-6 and level-9 repeat \
@@ -2480,10 +2621,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     grounded. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid \
                     chassis recognition explanation all remain in place (each gated to the \
                     bounded hybrid baseline level, so they still fire only at level 1)",
-                next_required_uplift: "ground the paladin Charisma bonus-spells-per-day \
-                    table burden and the prepared-posture/spell-source-lineage burdens now \
-                    that the caster-level gate, the access ladder, the base per-day counts, \
-                    and the base spell-save DCs are all grounded, then paladin level-11+ \
+                next_required_uplift: "ground the paladin prepared-posture and \
+                    spell-source-lineage burdens now that the caster-level gate, the access \
+                    ladder, the base per-day counts, the base spell-save DCs, the Charisma \
+                    bonus-slot counts, and the integrated totals are all grounded, then \
+                    paladin level-11+ \
                     progression",
             },
             SupportStateRow {
@@ -2817,7 +2959,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the fixture Wisdom and the DCs rise; no saving-throw resolution, target, \
                     spell selection, or feat DC modifier is computed; no new claim-blocking \
                     diagnostic is added, the spell burden staying named by the F6 level-1 \
-                    hybrid blocker and this note)",
+                    hybrid blocker and this note) — AND a further SD13-E5 slice grounds the \
+                    Wisdom bonus spells per day \
+                    (class_chassis.ranger.partial_caster.bonus_spells_per_day.spell_level_\
+                    1..3, one record per ACCESSIBLE spell level from PF1's shared Table: \
+                    Ability Modifiers and Bonus Spells, verified identically on both \
+                    primary sources' ability-scores pages — 0 when m < N, otherwise \
+                    (m − N)/4 + 1, gated by the grounded access ladder; Wisdom, the \
+                    family's only non-Charisma caster, per the ranger rule text verified on \
+                    both class pages; the level-4 \"0\"-base/1-bonus pair makes the \
+                    Wisdom bonus-spells-only access visible side by side; live arithmetic — \
+                    a dedicated test raises the fixture Wisdom and the 2nd/3rd-level \
+                    bonuses fill in; the bonus is never added to the base counts by the bonus \
+                    record itself — AND a further SD13-E5 slice grounds the integrated TOTAL \
+                    (class_chassis.ranger.partial_caster.total_spells_per_day.spell_level_1..\
+                    3, the pure sum of the two separately grounded records per ACCESSIBLE \
+                    spell level — level-10 totals 3/1/0 on the fixture, with honest ZERO \
+                    totals at the gate levels where the \"0\" base entry meets a \
+                    modifier-below-spell-level 0 bonus, and the level-4 total 1 landing the \
+                    Wisdom bonus-only access as arithmetic; live end-to-end — a dedicated \
+                    test raises the fixture Wisdom and the totals fill to 3/2/1; counts \
+                    only, no casting execution, slot consumption, or tracking; prepared \
+                    posture and lineage remain the named spell burden)",
                 next_required_uplift: "ground the ranger Wisdom bonus-spells and \
                     prepared-posture/spell-source-lineage burdens now that the caster-level \
                     gate, the access ladder, the base per-day counts, and the base \
@@ -3084,8 +3247,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spells; live arithmetic — dedicated tests raise and lower the fixture \
                     Charisma and the bonuses move; a computed 0 is an honest \
                     modifier-below-spell-level result; the bonus is never added to the base \
-                    counts — the base+bonus TOTAL integration is the remaining slot burden \
-                    the blocker now defers, alongside the which-spells selection). No \
+                    counts by the bonus record itself — AND a further SD13-E5 slice grounds \
+                    the integrated TOTAL \
+                    (class_chassis.sorcerer.spontaneous.total_spells_per_day.spell_level_1..\
+                    5, the pure sum of the two separately grounded records per ACCESSIBLE \
+                    spell level — base 6/6/6/5/3 + bonus 1/1/1/0/0 = totals 7/7/7/5/3 on \
+                    the level-10 fixture, the sorcerer's actual castable slot count per \
+                    day and the first integrated spell total in the tranche; live \
+                    arithmetic end-to-end — a dedicated test raises the fixture Charisma \
+                    and the 4th-level total rises; counts only, no spontaneous-casting \
+                    execution, slot consumption, or tracking; the blocker now defers \
+                    exactly that execution plus the which-spells selection). No \
                     spell math is fabricated and no Sorcerer level 11+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
