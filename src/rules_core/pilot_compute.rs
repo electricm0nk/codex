@@ -1257,6 +1257,23 @@ const WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
 // grounded as standalone records. No rage-state execution engine, weapon
 // familiarity, or level-2+ martial progression is grounded.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
+
+/// PF1 Core Rulebook rage power slots, verified identically on both primary
+/// sources: "Starting at 2nd level, a barbarian gains a rage power. She
+/// gains another rage power for every two levels of barbarian attained
+/// after 2nd level." — gates 2/4/6/8/10 within the tranche ceiling. "Unless
+/// otherwise noted, a barbarian cannot select an individual power more than
+/// once." Numbered slots per the proven repeat-grant idiom; open-ended
+/// recognition (no power-list validation — d20pfsrd merges non-CRB powers
+/// into its list, the same superset pattern as the mercy tiers, and the
+/// open-ended idiom sidesteps list encoding entirely).
+const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 5] = [
+    (1, 2, "choice:barbarian_rage_power"),
+    (2, 4, "choice:barbarian_rage_power_2"),
+    (3, 6, "choice:barbarian_rage_power_3"),
+    (4, 8, "choice:barbarian_rage_power_4"),
+    (5, 10, "choice:barbarian_rage_power_5"),
+];
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
 /// `supported_rogue_level` idiom. Monk's own level-range gate is
@@ -6847,6 +6864,44 @@ fn explain_barbarian_level1_chassis(
                  engine and no \
                  incoming-damage total exists anywhere in this codebase to apply it, so this \
                  grounds no actual damage reduction"
+            ),
+        });
+    }
+
+    // SD13-E5: the five rage power choice slots (gates 2/4/6/8/10), the
+    // discharge of the rage-power-choice-list deferrals — numbered slots per
+    // the proven repeat-grant idiom, open-ended recognitions fabricating
+    // NOTHING about any power's effect: rage powers function only while
+    // raging, and the rage-state execution engine below stays the named
+    // engine burden untouched.
+    for (slot_number, grant_level, choice_id) in BARBARIAN_RAGE_POWER_SLOTS {
+        if level < grant_level {
+            continue;
+        }
+        let Some(power) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        let record_id = if slot_number == 1 {
+            "class_chassis.barbarian.rage_power_choice".to_owned()
+        } else {
+            format!("class_chassis.barbarian.rage_power_{slot_number}_choice")
+        };
+        explanations.push(ComputationExplanation {
+            id: record_id,
+            value: 0,
+            detail: format!(
+                "Barbarian rage power slot {slot_number} selection ({choice_id} -> {power}) \
+                 at the level-{grant_level} grant (PF1 Core Rulebook, verified identically \
+                 on both primary sources: \"Starting at 2nd level, a barbarian gains a rage \
+                 power. She gains another rage power for every two levels of barbarian \
+                 attained after 2nd level.\"; \"Unless otherwise noted, a barbarian cannot \
+                 select an individual power more than once.\"). The level-{level} selection \
+                 for this slot is {power}, recognized as a bounded +0 record of the numbered \
+                 choice slot only (open-ended raw string, no power-list validation): rage \
+                 powers grant their benefits only while raging, and the rage-state execution \
+                 engine — activation, round tracking, application of any power's effect — is \
+                 exactly the named engine burden this row still claim-blocks, so nothing is \
+                 fabricated from this recognition"
             ),
         });
     }
