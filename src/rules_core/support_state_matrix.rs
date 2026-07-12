@@ -552,7 +552,7 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_level8_progression.rs + tests/sd13_bard_level9_progression.rs + \
     tests/sd13_bard_level10_progression.rs + tests/sd13_bard_spell_level_thresholds.rs + \
     tests/sd13_bard_spells_per_day_counts.rs + tests/sd13_bard_spell_save_dcs.rs + \
-    tests/sd13_bard_spells_known_counts.rs";
+    tests/sd13_bard_spells_known_counts.rs + tests/sd13_bard_bonus_spells.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1633,7 +1633,18 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the selection of WHICH spells are known is never computed, no \
                     spell-list content, spell identities, or swap/retraining rules, and \
                     the spontaneous blocker now defers exactly that which-spells \
-                    selection plus the CHA-modified totals and bonus slots)). No \
+                    selection plus the CHA-modified totals and bonus slots) — AND a further \
+                    SD13-E5 slice grounds the Charisma bonus spells per day \
+                    (class_chassis.bard.spontaneous.bonus_spells_per_day.spell_level_1..4, \
+                    one record per ACCESSIBLE spell level from PF1's shared Table: Ability \
+                    Modifiers and Bonus Spells, verified identically on both primary \
+                    sources' ability-scores pages — 0 when m < N, otherwise (m − N)/4 + 1, \
+                    gated by the grounded access ladder; cantrips never gain bonus spells; \
+                    live arithmetic — a dedicated test raises the fixture Charisma and the \
+                    3rd-level bonus appears; computed 0s are honest \
+                    modifier-below-spell-level results; the bonus is never added to the \
+                    base counts — the base+bonus TOTAL integration is the remaining slot \
+                    burden the blocker now defers alongside the which-spells selection)). No \
                     performance-execution math and no spell math is fabricated and \
                     no Bard level 11+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \

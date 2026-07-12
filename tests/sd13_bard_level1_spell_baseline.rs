@@ -208,6 +208,12 @@ fn bard_level1_fabricates_no_spell_or_class_feature_math() {
                 || explanation
                     .id
                     .starts_with("class_chassis.bard.spontaneous.spells_known.")
+                // The bonus_spells_per_day family (a further SD13-E5 slice,
+                // tests/sd13_bard_bonus_spells.rs): Charisma bonus-slot
+                // counts from the shared PF1 table, allowed by prefix.
+                || explanation
+                    .id
+                    .starts_with("class_chassis.bard.spontaneous.bonus_spells_per_day.")
                 || (!explanation.id.contains("spell")
                     && !explanation.id.contains("bardic")
                     && !explanation.id.contains("music")

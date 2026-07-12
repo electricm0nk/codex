@@ -336,6 +336,12 @@ fn bard_level6_gains_no_new_bard_namespaced_explanation_id() {
         "class_chassis.bard.spontaneous.spells_known.spell_level_2",
         "class_chassis.bard.spontaneous.spells_known.spell_level_3",
         "class_chassis.bard.spontaneous.spells_known.spell_level_4",
+        // The bonus_spells_per_day family (a further SD13-E5 slice):
+        // Charisma bonus-slot counts, not "Special"-column class features.
+        "class_chassis.bard.spontaneous.bonus_spells_per_day.spell_level_1",
+        "class_chassis.bard.spontaneous.bonus_spells_per_day.spell_level_2",
+        "class_chassis.bard.spontaneous.bonus_spells_per_day.spell_level_3",
+        "class_chassis.bard.spontaneous.bonus_spells_per_day.spell_level_4",
     ];
     assert!(
         computation
