@@ -698,7 +698,8 @@ const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs 
     tests/sd13_monk_level3_progression.rs + tests/sd13_monk_level4_progression.rs + \
     tests/sd13_monk_level5_progression.rs + tests/sd13_monk_level6_progression.rs + \
     tests/sd13_monk_level7_progression.rs + tests/sd13_monk_level8_progression.rs + \
-    tests/sd13_monk_level9_progression.rs + tests/sd13_monk_level10_progression.rs";
+    tests/sd13_monk_level9_progression.rs + tests/sd13_monk_level10_progression.rs + \
+    tests/sd13_monk_second_bonus_feat.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -2114,8 +2115,22 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the prerequisites\"), never a choice — a +0 \
                     recognition record with no feat-effect execution, mirroring the Sorcerer \
                     bloodline choice / Cleric domain choice / Druid nature-bond choice \
-                    recognition idiom; the 6th/10th-level list additions stay unrecognized \
-                    and the level-2/6/10 repeat bonus-feat grants stay named-but-unproven), (SD13-E5) Evasion, a 2nd-level Monk class feature \
+                    recognition idiom; the 6th/10th-level list additions stay unrecognized — \
+                    AND a further SD13-E5 slice grounds the LEVEL-2 REPEAT bonus feat as its \
+                    own numbered choice slot, the repeat-grant PROVING slice: \
+                    choice:monk_bonus_feat_2, gated to monk level >= 2, recognized as a \
+                    bounded +0 record (class_chassis.monk.bonus_feat_2_choice) drawing from \
+                    the same corrected seven-feat 1st/2nd-level list with the same \
+                    automatic-grant exclusions — no \"list-growth mechanism\" is needed, a \
+                    repeat grant is just a numbered slot with its own level gate, exactly \
+                    the ranger favored_enemy_2 / favored_terrain_2 / \
+                    combat_style_bonus_feat_2 idiom, and every other repeat-grant deferral \
+                    in the campaign (rogue 2nd talent, barbarian 2nd rage power, paladin \
+                    level-6/9 mercies, bard versatile-performance repeats) can now follow \
+                    this proven shape; absent the selection nothing is fabricated, below \
+                    the level-2 gate the selection is not recognized, and the level-6/10 \
+                    repeat grants stay named-but-unproven with their own 6th/10th list \
+                    additions to verify), (SD13-E5) Evasion, a 2nd-level Monk class feature \
                     verified independently against two primary PF1 sources (d20pfsrd and \
                     legacy.aonprd.com), grounded as a bounded identity/recognition record only \
                     (value 0, non-fabricated): no damage on a successful Reflex save against an \

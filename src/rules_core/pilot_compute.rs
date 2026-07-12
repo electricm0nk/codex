@@ -1469,9 +1469,23 @@ const MONK_PURITY_OF_BODY_LEVEL: u8 = 5;
 /// character's current supported level. Kept distinct from the generic
 /// `supported_monk_level` current-level value so widening to level 2 does not
 /// accidentally relabel the level-1-specific bonus feat grant as a level-2 one —
-/// PF1 grants monks a SEPARATE bonus feat at 2nd level that this bounded seam
-/// deliberately does not recognize.
+/// PF1 grants monks a SEPARATE bonus feat at 2nd level, recognized by a further
+/// SD13-E5 slice as its own numbered choice slot (see
+/// `MONK_SECOND_BONUS_FEAT_GRANT_LEVEL`).
 const MONK_BONUS_FEAT_GRANT_LEVEL: u8 = 1;
+
+/// PF1 Core Rulebook level gate of the Monk's SECOND bonus feat ("At 1st
+/// level, 2nd level, and every 4 levels thereafter, a monk may select a bonus
+/// feat" — verified identically on both primary sources). The 2nd-level
+/// repeat grant draws from the same corrected seven-feat 1st/2nd-level list
+/// as slot 1; the 6th/10th-level repeat grants (with their own list
+/// additions) stay unrecognized on this bounded seam. This is the
+/// repeat-grant PROVING slot: a repeat grant grounds as a numbered choice
+/// slot with its own level gate, the idiom the ranger favored-enemy/terrain
+/// and combat-style-feat slices already established — no "list-growth
+/// mechanism" is needed.
+const MONK_SECOND_BONUS_FEAT_GRANT_LEVEL: u8 = 2;
+const MONK_SECOND_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat_2";
 
 // SD13-E5 Monk level-1 bonus feat choice-slot recognition. RULES CORRECTION
 // (SD13-E5): an earlier version of this seam recognized Improved Trip and
@@ -7378,6 +7392,74 @@ fn explain_monk_level1_chassis(
         });
     }
 
+    // SD13-E5: the SECOND bonus feat, the level-2 repeat grant, recognized
+    // as its own numbered choice slot (the repeat-grant proving slice —
+    // mirroring choice:ranger_favored_enemy_2 / favored_terrain_2 /
+    // combat_style_bonus_feat_2). Same corrected seven-feat list, same
+    // automatic-grant exclusions, same present-but-unrecognized branch.
+    if level >= MONK_SECOND_BONUS_FEAT_GRANT_LEVEL
+        && let Some(second_selection) =
+            choice_selection(input, MONK_SECOND_BONUS_FEAT_CHOICE_ID)
+    {
+        let recognized_second_name = if second_selection == CATCH_OFF_GUARD_FEAT_SELECTION {
+            Some("Catch Off-Guard")
+        } else if second_selection == COMBAT_REFLEXES_FEAT_SELECTION {
+            Some("Combat Reflexes")
+        } else if second_selection == DEFLECT_ARROWS_FEAT_SELECTION {
+            Some("Deflect Arrows")
+        } else if second_selection == "feat:dodge" {
+            Some("Dodge")
+        } else if second_selection == IMPROVED_GRAPPLE_FEAT_SELECTION {
+            Some("Improved Grapple")
+        } else if second_selection == SCORPION_STYLE_FEAT_SELECTION {
+            Some("Scorpion Style")
+        } else if second_selection == THROW_ANYTHING_FEAT_SELECTION {
+            Some("Throw Anything")
+        } else {
+            None
+        };
+        let detail = if let Some(feat_name) = recognized_second_name {
+            format!(
+                "Monk level {MONK_SECOND_BONUS_FEAT_GRANT_LEVEL} SECOND bonus feat choice \
+                 recognized ({MONK_SECOND_BONUS_FEAT_CHOICE_ID} -> {second_selection}): the \
+                 PF1 Core Rulebook grants a repeat bonus feat at 2nd level (\"At 1st level, \
+                 2nd level, and every 4 levels thereafter, a monk may select a bonus \
+                 feat\"), drawn from the same corrected restricted list as slot 1 (Catch \
+                 Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple, \
+                 Scorpion Style, Throw Anything — the 6th/10th-level list additions are not \
+                 yet available at 2nd level). This character's second selection names \
+                 {feat_name}. This is a recognition record of the numbered choice slot only \
+                 (+0) — the repeat grant needs no list-growth mechanism, just its own slot \
+                 and level gate, mirroring the ranger second-favored-enemy idiom; \
+                 {feat_name}'s own mechanics are not grounded, and the 6th/10th-level repeat \
+                 grants stay unrecognized"
+            )
+        } else if second_selection == "feat:stunning_fist" {
+            format!(
+                "Monk level {MONK_SECOND_BONUS_FEAT_GRANT_LEVEL} SECOND bonus feat choice \
+                 slot is present ({MONK_SECOND_BONUS_FEAT_CHOICE_ID} -> {second_selection}), \
+                 but Stunning Fist is the automatic 1st-level monk grant (\"even if he does \
+                 not meet the prerequisites\"), never a restricted-list choice member; no \
+                 feat identity is grounded and no mechanical value is fabricated (+0)"
+            )
+        } else {
+            format!(
+                "Monk level {MONK_SECOND_BONUS_FEAT_GRANT_LEVEL} SECOND bonus feat choice \
+                 slot is present ({MONK_SECOND_BONUS_FEAT_CHOICE_ID} -> {second_selection}), \
+                 but only the corrected PF1 Core Rulebook 1st/2nd-level restricted list \
+                 (Catch Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple, \
+                 Scorpion Style, Throw Anything) is recognized on this bounded seam; no \
+                 restricted-list feat identity is grounded and no mechanical value is \
+                 fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.bonus_feat_2_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
     // Still blocked (the one remaining named burden): the level-1 bonus feat's own
     // mechanics. The choice-slot identity is recognized above (when present and
     // in-list); this diagnostic narrows to naming only what remains
@@ -7397,8 +7479,9 @@ fn explain_monk_level1_chassis(
     } else {
         format!(
             "Monk level {level} remains blocked on its level-1 bonus feat grant: the free bonus \
-             feat drawn from the restricted Monk feat list (Combat Reflexes, Deflect Arrows, \
-             Improved Grapple, Improved Trip, Stunning Fist) is not recognized as chosen input \
+             feat drawn from the restricted Monk feat list (Catch Off-Guard, Combat Reflexes, \
+             Deflect Arrows, Dodge, Improved Grapple, Scorpion Style, Throw Anything) is not \
+             recognized as chosen input \
              in this bounded martial chassis baseline — no feat-selection or feat-prerequisite \
              engine exists here — so no Monk bonus-feat support is claimed"
         )
