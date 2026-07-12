@@ -22,9 +22,8 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use codex::pcgen_import::lst_parser::{
-    ClassToken, LstDiagnosticKind, parse_class_entries, parse_class_file,
-};
+use codex::pcgen_import::lst_parser::class::LstDiagnosticKind;
+use codex::pcgen_import::lst_parser::{ClassToken, parse_class_entries, parse_class_file};
 
 /// The six martial classes named in the slice card body.
 const MARTIAL_CLASSES: &[&str] = &["Fighter", "Barbarian", "Monk", "Rogue", "Ranger", "Paladin"];

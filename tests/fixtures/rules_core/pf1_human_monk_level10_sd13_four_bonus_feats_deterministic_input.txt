@@ -1,3 +1,10 @@
+# SD13-E5 Monk level 10 FOUR-bonus-feat fixture: the level-10 chassis fixture
+# plus all four PF1 CRB bonus-feat selections ("At 1st level, 2nd level, and
+# every 4 levels thereafter" = slots at 1/2/6/10). Slot 3 selects Improved
+# Trip — a 6th-level LIST ADDITION, legal here and deliberately illegal at
+# slots 1/2 (the list-correction slice); slot 4 selects Snatch Arrows, a
+# 10th-level list addition. All four feats distinct. Chosen input only; no
+# feat effect is computed.
 # SD13-E5 deterministic Human Monk level 10 progression fixture.
 # Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human Monk
 # level-1..level-9 martial chassis baseline to level 10 as chosen input only.
@@ -25,7 +32,7 @@
 # grounded change is Slow Fall's reach rising to 50 ft via the same
 # grant-only identity record; the repeat bonus feat and the ki-lawful
 # DR-bypass property both stay named-but-unproven.
-case_id=pf1-crb-human-monk-level10
+case_id=pf1-crb-human-monk-level10-four-bonus-feats
 source_package_id=pf1.core_rulebook
 race_id=race:human
 class_level=class:monk:10
@@ -39,6 +46,9 @@ feat=feat:stunning_fist
 skill=skill:acrobatics:1
 equipment=item:shield:absent
 choice=choice:monk_bonus_feat:feat:deflect_arrows
+choice=choice:monk_bonus_feat_2:feat:combat_reflexes
+choice=choice:monk_bonus_feat_3:feat:improved_trip
+choice=choice:monk_bonus_feat_4:feat:snatch_arrows
 choice=choice:human_bonus_feat:feat:dodge
 choice=choice:human_ability_bonus:ability:wisdom
 provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

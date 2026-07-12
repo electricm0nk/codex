@@ -1,0 +1,14 @@
+# Synthetic fixture for SD-17 Slice B-6 metadata-kind parser tests.
+#
+# Each recognized metadata kind appears exactly once as a record-start.
+# Line numbers are deterministic; tests assert on these exact lines.
+# Field 1: SOURCELONG
+# Field 2: SOURCESHORT
+SOURCELONG:Synthetic Metadata Test Fixture	SOURCESHORT:SMTT	SOURCEWEB:file:///tests/fixtures/lst/metadata_kinds_minimal.lst	SOURCEDATE:2026-07-12
+
+DEITY:Lamashtu	DOMAIN:Evil|Strength
+KITS:Starting Gold ~ CRB
+TEMPLATE:Lycanthrope
+LANGUAGE:Abyssal	TYPE:Spoken.Written.Read.Planar
+DOMAIN:Strength
+COMPANIONMOD:FOLLOWER:AnimalCompanionLVL=1	TYPE:Animal Companion

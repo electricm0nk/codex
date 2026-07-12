@@ -336,6 +336,22 @@ const PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
 /// validation against the mercy list is performed here.
 const PALADIN_MERCY_CHOICE_ID: &str = "choice:paladin_mercy";
 
+/// PF1 Core Rulebook gates of the paladin's SECOND and THIRD mercies ("at
+/// 6th level and every three levels thereafter" per the level-3 mercy rule).
+/// The CRB mercy tiers were verified for this slice: legacy.aonprd.com (Core
+/// Rulebook only) gives 3rd = Fatigued/Shaken/Sickened, 6th ADDS
+/// Dazed/Diseased/Staggered, 9th ADDS
+/// Cursed/Exhausted/Frightened/Nauseated/Poisoned; d20pfsrd's lists are
+/// supersets whose CRB subset matches exactly — its extra entries are
+/// non-CRB expansions outside this seam's pf1.core_rulebook source package.
+/// Numbered slots per the proven repeat-grant idiom; this discharges the
+/// "mercy-list-growth mechanism" deferrals recorded by the level-6 and
+/// level-9 chassis slices.
+const PALADIN_SECOND_MERCY_GRANT_LEVEL: u8 = 6;
+const PALADIN_SECOND_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_2";
+const PALADIN_THIRD_MERCY_GRANT_LEVEL: u8 = 9;
+const PALADIN_THIRD_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_3";
+
 // SD13-E5 Ranger Combat Style correction. Combat Style Feat is a 2nd-level ranger
 // feature in the PF1 Core Rulebook: the ranger selects a combat style (archery or
 // two-weapon combat) and gains its first bonus feat TOGETHER at 2nd level -- these
@@ -841,6 +857,37 @@ const BARD_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 /// threshold const is grounded.
 const BARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
 
+/// PF1 Core Rulebook Versatile Performance slots, verified identically on
+/// both primary sources: "At 2nd level, a bard can choose one type of
+/// Perform skill... At 6th level, and every 4 levels thereafter, the bard
+/// can select an additional type of Perform to substitute." — gates 2/6/10
+/// within the tranche ceiling. Numbered slots per the proven repeat-grant
+/// idiom; restricted-list recognition over the nine verified Perform types
+/// with their fixed associated-skill pairs.
+const BARD_VERSATILE_PERFORMANCE_SLOTS: [(u8, u8, &str); 3] = [
+    (1, 2, "choice:bard_versatile_performance"),
+    (2, 6, "choice:bard_versatile_performance_2"),
+    (3, 10, "choice:bard_versatile_performance_3"),
+];
+
+/// The nine verified Perform types as (selection, display name, associated
+/// skill pair) — identical on d20pfsrd and legacy.aonprd.com.
+const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
+    ("perform:act", "Act", "Bluff and Disguise"),
+    ("perform:comedy", "Comedy", "Bluff and Intimidate"),
+    ("perform:dance", "Dance", "Acrobatics and Fly"),
+    (
+        "perform:keyboard_instruments",
+        "Keyboard Instruments",
+        "Diplomacy and Intimidate",
+    ),
+    ("perform:oratory", "Oratory", "Diplomacy and Sense Motive"),
+    ("perform:percussion", "Percussion", "Handle Animal and Intimidate"),
+    ("perform:sing", "Sing", "Bluff and Sense Motive"),
+    ("perform:string", "String", "Bluff and Diplomacy"),
+    ("perform:wind", "Wind", "Diplomacy and Handle Animal"),
+];
+
 /// SD13-E5 Bard level-range gate, mirroring the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
@@ -1241,6 +1288,23 @@ const WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
 // grounded as standalone records. No rage-state execution engine, weapon
 // familiarity, or level-2+ martial progression is grounded.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
+
+/// PF1 Core Rulebook rage power slots, verified identically on both primary
+/// sources: "Starting at 2nd level, a barbarian gains a rage power. She
+/// gains another rage power for every two levels of barbarian attained
+/// after 2nd level." — gates 2/4/6/8/10 within the tranche ceiling. "Unless
+/// otherwise noted, a barbarian cannot select an individual power more than
+/// once." Numbered slots per the proven repeat-grant idiom; open-ended
+/// recognition (no power-list validation — d20pfsrd merges non-CRB powers
+/// into its list, the same superset pattern as the mercy tiers, and the
+/// open-ended idiom sidesteps list encoding entirely).
+const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 5] = [
+    (1, 2, "choice:barbarian_rage_power"),
+    (2, 4, "choice:barbarian_rage_power_2"),
+    (3, 6, "choice:barbarian_rage_power_3"),
+    (4, 8, "choice:barbarian_rage_power_4"),
+    (5, 10, "choice:barbarian_rage_power_5"),
+];
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
 /// `supported_rogue_level` idiom. Monk's own level-range gate is
@@ -1469,22 +1533,87 @@ const MONK_PURITY_OF_BODY_LEVEL: u8 = 5;
 /// character's current supported level. Kept distinct from the generic
 /// `supported_monk_level` current-level value so widening to level 2 does not
 /// accidentally relabel the level-1-specific bonus feat grant as a level-2 one —
-/// PF1 grants monks a SEPARATE bonus feat at 2nd level that this bounded seam
-/// deliberately does not recognize.
+/// PF1 grants monks a SEPARATE bonus feat at 2nd level, recognized by a further
+/// SD13-E5 slice as its own numbered choice slot (see
+/// `MONK_SECOND_BONUS_FEAT_GRANT_LEVEL`).
 const MONK_BONUS_FEAT_GRANT_LEVEL: u8 = 1;
 
-// SD13-E5 Monk level-1 bonus feat choice-slot recognition. The PF1 Core Rulebook
-// restricted Monk bonus feat list this bounded recognition seam knows is Combat
-// Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, and Stunning Fist.
-// Improved Unarmed Strike is deliberately excluded: the PF1 Core Rulebook grants
-// it to every monk automatically at level 1, separate from this chosen bonus
-// feat, and this codebase does not ground that automatic grant either, so it is
-// never treated as a choice-set member here.
+/// PF1 Core Rulebook level gate of the Monk's SECOND bonus feat ("At 1st
+/// level, 2nd level, and every 4 levels thereafter, a monk may select a bonus
+/// feat" — verified identically on both primary sources). The 2nd-level
+/// repeat grant draws from the same corrected seven-feat 1st/2nd-level list
+/// as slot 1; the 6th/10th-level repeat grants (with their own list
+/// additions) stay unrecognized on this bounded seam. This is the
+/// repeat-grant PROVING slot: a repeat grant grounds as a numbered choice
+/// slot with its own level gate, the idiom the ranger favored-enemy/terrain
+/// and combat-style-feat slices already established — no "list-growth
+/// mechanism" is needed.
+const MONK_SECOND_BONUS_FEAT_GRANT_LEVEL: u8 = 2;
+const MONK_SECOND_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat_2";
+
+/// PF1 Core Rulebook gates of the Monk's THIRD and FOURTH bonus feats ("every
+/// 4 levels thereafter" = 6th and 10th). Each slot draws from its own WIDENED
+/// list, verified identically on both primary sources: at 6th level
+/// "Gorgon's Fist, Improved Bull Rush, Improved Disarm, Improved Feint,
+/// Improved Trip, and Mobility" join the base seven; at 10th level "Improved
+/// Critical, Medusa's Wrath, Snatch Arrows, and Spring Attack" join. Note
+/// the deliberate symmetry with the list-correction slice: Improved Trip is
+/// NOT a base-list member but genuinely joins at 6th.
+const MONK_THIRD_BONUS_FEAT_GRANT_LEVEL: u8 = 6;
+const MONK_THIRD_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat_3";
+const MONK_FOURTH_BONUS_FEAT_GRANT_LEVEL: u8 = 10;
+const MONK_FOURTH_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat_4";
+
+/// The base seven-feat 1st/2nd-level list as (selection, display-name) pairs,
+/// shared by every monk bonus-feat slot's recognition.
+const MONK_BONUS_FEAT_BASE_LIST: [(&str, &str); 7] = [
+    ("feat:catch_off_guard", "Catch Off-Guard"),
+    ("feat:combat_reflexes", "Combat Reflexes"),
+    ("feat:deflect_arrows", "Deflect Arrows"),
+    ("feat:dodge", "Dodge"),
+    ("feat:improved_grapple", "Improved Grapple"),
+    ("feat:scorpion_style", "Scorpion Style"),
+    ("feat:throw_anything", "Throw Anything"),
+];
+/// The 6th-level list additions (slot 3 and later).
+const MONK_BONUS_FEAT_SIXTH_LEVEL_ADDITIONS: [(&str, &str); 6] = [
+    ("feat:gorgons_fist", "Gorgon's Fist"),
+    ("feat:improved_bull_rush", "Improved Bull Rush"),
+    ("feat:improved_disarm", "Improved Disarm"),
+    ("feat:improved_feint", "Improved Feint"),
+    ("feat:improved_trip", "Improved Trip"),
+    ("feat:mobility", "Mobility"),
+];
+/// The 10th-level list additions (slot 4).
+const MONK_BONUS_FEAT_TENTH_LEVEL_ADDITIONS: [(&str, &str); 4] = [
+    ("feat:improved_critical", "Improved Critical"),
+    ("feat:medusas_wrath", "Medusa's Wrath"),
+    ("feat:snatch_arrows", "Snatch Arrows"),
+    ("feat:spring_attack", "Spring Attack"),
+];
+
+// SD13-E5 Monk level-1 bonus feat choice-slot recognition. RULES CORRECTION
+// (SD13-E5): an earlier version of this seam recognized Improved Trip and
+// Stunning Fist as restricted-list members and claimed that was the PF1 Core
+// Rulebook list. Both primary sources (d20pfsrd and legacy.aonprd.com, re-read
+// for this correction) give the actual PF1 CRB 1st/2nd-level list as Catch
+// Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple,
+// Scorpion Style, and Throw Anything ("At 6th level, the following feats are
+// added to the list: Gorgon's Fist, Improved Bull Rush, Improved Disarm,
+// Improved Feint, Improved Trip, and Mobility" — so Improved Trip is a
+// 6th-level addition, not a base member; the 6th/10th additions stay
+// unrecognized on this bounded seam). Improved Unarmed Strike AND Stunning
+// Fist are both deliberately excluded: the PF1 Core Rulebook grants each to
+// every monk automatically at level 1 ("At 1st level, the monk gains Stunning
+// Fist as a bonus feat, even if he does not meet the prerequisites"),
+// separate from this chosen bonus feat, and this codebase does not ground
+// those automatic grants either, so neither is ever a choice-set member here.
 const MONK_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat";
+const CATCH_OFF_GUARD_FEAT_SELECTION: &str = "feat:catch_off_guard";
 const DEFLECT_ARROWS_FEAT_SELECTION: &str = "feat:deflect_arrows";
 const IMPROVED_GRAPPLE_FEAT_SELECTION: &str = "feat:improved_grapple";
-const IMPROVED_TRIP_FEAT_SELECTION: &str = "feat:improved_trip";
-const STUNNING_FIST_FEAT_SELECTION: &str = "feat:stunning_fist";
+const SCORPION_STYLE_FEAT_SELECTION: &str = "feat:scorpion_style";
+const THROW_ANYTHING_FEAT_SELECTION: &str = "feat:throw_anything";
 
 // Grounded SD13-E4/E5 Human Cleric level-1/level-2/level-3/level-4 prepared divine
 // spell-bearing baseline identity. Cleric is the canonical PF1 prepared divine full
@@ -4419,6 +4548,53 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // independently against d20pfsrd and legacy.aonprd.com) -- level 7 is not
     // one of the repeat-Mercy-grant levels (3, 6, 9, ...), so nothing new is
     // left unproven for Mercy at level 7.
+
+    // SD13-E5: the SECOND and THIRD mercies (gates 6/9), the repeat grants
+    // the level-6/9 chassis slices deferred, now grounded as numbered choice
+    // slots per the proven repeat-grant idiom — mirroring slot 1's
+    // open-ended recognition (whichever raw mercy string was selected, no
+    // tier-membership validation), with the verified CRB tier lists cited
+    // in each detail. No mercy's effect is computed (no lay-on-hands
+    // execution engine exists) and prerequisite chains (e.g. the frightened
+    // mercy requiring the shaken mercy) are named, not validated.
+    let repeat_mercy_slots: [(u8, u8, &str); 2] = [
+        (2, PALADIN_SECOND_MERCY_GRANT_LEVEL, PALADIN_SECOND_MERCY_CHOICE_ID),
+        (3, PALADIN_THIRD_MERCY_GRANT_LEVEL, PALADIN_THIRD_MERCY_CHOICE_ID),
+    ];
+    for (slot_number, grant_level, choice_id) in repeat_mercy_slots {
+        if level < grant_level {
+            continue;
+        }
+        let Some(mercy) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        let tier_text = if slot_number == 2 {
+            "the 6th-level CRB tier additions are Dazed, Diseased, and Staggered \
+             (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset contains them, its \
+             extra entries being non-CRB expansions outside this pf1.core_rulebook seam)"
+        } else {
+            "the 9th-level CRB tier additions are Cursed, Exhausted, Frightened, Nauseated, \
+             and Poisoned (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset \
+             contains them); the rule text chains prerequisites — Exhausted requires the \
+             fatigue mercy, Frightened requires the shaken mercy, Nauseated requires the \
+             sickened mercy — which this bounded recognition names but does not validate"
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.paladin.mercy_{slot_number}_choice"),
+            value: 0,
+            detail: format!(
+                "Paladin mercy slot {slot_number} selection ({choice_id} -> {mercy}) at the \
+                 level-{grant_level} repeat grant (PF1 Core Rulebook: a mercy at 3rd level \
+                 and an additional mercy at 6th level and every three levels thereafter). \
+                 The level-{level} selection for this slot is {mercy}, recognized as a \
+                 bounded +0 record of the numbered choice slot only (open-ended raw string, \
+                 mirroring slot 1 — no tier-membership validation); {tier_text}. The \
+                 selected mercy's own effect on lay on hands is not computed — no \
+                 lay-on-hands execution engine exists in this codebase"
+            ),
+        });
+    }
+
     let paladin_effective_caster_level = (paladin_level - 3).max(0);
     explanations.push(ComputationExplanation {
         id: "class_chassis.paladin.partial_caster.effective_caster_level".to_owned(),
@@ -4544,6 +4720,82 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
+    // SD13-E5: the bonus spells per day from a high Charisma, one record
+    // per ACCESSIBLE spell level, from PF1's shared Table: Ability
+    // Modifiers and Bonus Spells, mirroring the Sorcerer/Bard bonus slices
+    // — verified against both primary sources' ability-scores pages: for
+    // modifier m and spell level N, 0 when m < N, otherwise (m - N)/4 + 1,
+    // gated by the grounded access ladder. The paladin-specific rule text
+    // ("she receives bonus spells per day if she has a high Charisma
+    // score") was verified on both class pages. Together with the literal
+    // "0" base entries this makes the bonus-spells-only access visible as
+    // two grounded records side by side. The bonus is never added to the
+    // base per-day counts here — no total is computed.
+    for spell_level in 1..=paladin_spell_level_access {
+        let bonus_spells = if charisma_modifier < spell_level {
+            0
+        } else {
+            (charisma_modifier - spell_level) / 4 + 1
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.paladin.partial_caster.bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: bonus_spells,
+            detail: format!(
+                "Paladin bonus spells per day at paladin level {level}, spell level \
+                 {spell_level}: {bonus_spells} from Charisma modifier {charisma_modifier} \
+                 (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells, verified \
+                 identically on both primary sources; for modifier m and spell level N the \
+                 table value is 0 when m < N, otherwise (m - N)/4 + 1, and bonus spells \
+                 apply only to spell levels the character is of a high enough class level \
+                 to cast — the grounded access ladder). A computed 0 means the modifier \
+                 grants no bonus at this spell level; it is never added to the base per-day \
+                 count here — no total is computed, no spell selection, and no spell save \
+                 DCs"
+            ),
+        });
+    }
+
+    // SD13-E5: the TOTAL spells per day — the pure sum of the two records
+    // grounded above (base table count + Charisma bonus count) per
+    // ACCESSIBLE spell level, mirroring the Sorcerer/Bard total slices. No
+    // new rules content: each input record carries its own two-source
+    // verification. The level-4 "0"-base/1-bonus pair lands here as
+    // arithmetic (total 1), and the level-10 3rd-level total is an honest
+    // ZERO (a "0" base entry plus a modifier-below-spell-level 0 bonus):
+    // accessible but currently uncastable. Counts only — no
+    // prepared-posture selection, no casting execution, no slot
+    // consumption or tracking, no save resolution.
+    for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = (index + 1) as i16;
+        let bonus_spells = if charisma_modifier < spell_level {
+            0
+        } else {
+            (charisma_modifier - spell_level) / 4 + 1
+        };
+        let total_spells = base_count + bonus_spells;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.paladin.partial_caster.total_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: total_spells,
+            detail: format!(
+                "Paladin total spells per day at paladin level {level}, spell level \
+                 {spell_level}: base table count {base_count} + Charisma bonus \
+                 {bonus_spells} = {total_spells} — the pure sum of the two separately \
+                 grounded records (each carrying its own two-source verification), giving \
+                 the actual castable slot count per day; a total of 0 is honest arithmetic \
+                 (accessible spell level, no castable slots at this Charisma). This grounds \
+                 the count only: no prepared-posture selection, no casting execution, no \
+                 slot consumption or tracking, and no spell save resolution"
+            ),
+        });
+    }
+
     // The partial-caster spell burden is its own blocker, distinct from the
     // grounded non-spell chassis records above. Paladin is a divine partial
     // caster in PF1 Core Rulebook (spells begin at paladin level 4; effective
@@ -4556,10 +4808,12 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         id: "class_spell.paladin.partial_caster.unsupported".to_owned(),
         message: "Paladin remains blocked on its divine partial-caster spell burden: Paladin is a \
              partial caster (spells begin at paladin level 4, with effective caster level = \
-             paladin level - 3 in PF1 Core Rulebook), so spell-source lineage, spells known \
-             or prepared posture, and bonus spell slots from a high Charisma are deferred \
+             paladin level - 3 in PF1 Core Rulebook), so spell-source lineage and the \
+             spells known or prepared posture are \
+             deferred \
              to a later spellcasting slice (the spell-level access ladder, the BASE \
-             spells-per-day table counts, and the base spell-save-DC arithmetic are \
+             spells-per-day table counts, the base spell-save-DC arithmetic, the \
+             Charisma bonus spell slot counts, and the integrated base+bonus totals are \
              grounded separately as flat records); no partial-caster spell execution is \
              fabricated in this bounded chassis baseline"
             .to_owned(),
@@ -5956,6 +6210,82 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             ),
         });
     }
+
+    // SD13-E5: the bonus spells per day from a high Wisdom, one record per
+    // ACCESSIBLE spell level, from PF1's shared Table: Ability Modifiers
+    // and Bonus Spells, completing the bonus family across all four
+    // partial/spontaneous casters — verified against both primary sources'
+    // ability-scores pages: for modifier m and spell level N, 0 when
+    // m < N, otherwise (m - N)/4 + 1, gated by the grounded access ladder.
+    // The ranger-specific rule text ("he gains only the bonus spells he
+    // would be entitled to based on his Wisdom score for that spell
+    // level") was verified on both class pages — Wisdom, the family's only
+    // non-Charisma caster. The bonus is never added to the base per-day
+    // counts here — no total is computed.
+    for spell_level in 1..=ranger_spell_level_access {
+        let bonus_spells = if ability_modifiers.wisdom < spell_level {
+            0
+        } else {
+            (ability_modifiers.wisdom - spell_level) / 4 + 1
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.ranger.partial_caster.bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: bonus_spells,
+            detail: format!(
+                "Ranger bonus spells per day at ranger level {level}, spell level \
+                 {spell_level}: {bonus_spells} from Wisdom modifier {} (PF1 Core Rulebook \
+                 Table: Ability Modifiers and Bonus Spells, verified identically on both \
+                 primary sources; for modifier m and spell level N the table value is 0 \
+                 when m < N, otherwise (m - N)/4 + 1, and bonus spells apply only to spell \
+                 levels the character is of a high enough class level to cast — the \
+                 grounded access ladder). A computed 0 means the modifier grants no bonus \
+                 at this spell level; it is never added to the base per-day count here — no \
+                 total is computed, no spell selection, and no spell save DCs",
+                ability_modifiers.wisdom
+            ),
+        });
+    }
+
+    // SD13-E5: the TOTAL spells per day — the pure sum of the two records
+    // grounded above (base table count + Wisdom bonus count) per ACCESSIBLE
+    // spell level, completing the integrated totals across all four
+    // partial/spontaneous casters. No new rules content: each input record
+    // carries its own two-source verification. The gate-level "0"-base
+    // entries land as arithmetic (level-4 total 1 from the bonus alone;
+    // level-7 2nd and level-10 3rd are honest ZERO totals at Wisdom +1 —
+    // accessible but currently uncastable). Counts only — no
+    // prepared-posture selection, no casting execution, no slot consumption
+    // or tracking, no save resolution.
+    for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = (index + 1) as i16;
+        let bonus_spells = if ability_modifiers.wisdom < spell_level {
+            0
+        } else {
+            (ability_modifiers.wisdom - spell_level) / 4 + 1
+        };
+        let total_spells = base_count + bonus_spells;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.ranger.partial_caster.total_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: total_spells,
+            detail: format!(
+                "Ranger total spells per day at ranger level {level}, spell level \
+                 {spell_level}: base table count {base_count} + Wisdom bonus \
+                 {bonus_spells} = {total_spells} — the pure sum of the two separately \
+                 grounded records (each carrying its own two-source verification), giving \
+                 the actual castable slot count per day; a total of 0 is honest arithmetic \
+                 (accessible spell level, no castable slots at this Wisdom). This grounds \
+                 the count only: no prepared-posture selection, no casting execution, no \
+                 slot consumption or tracking, and no spell save resolution"
+            ),
+        });
+    }
 }
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.
@@ -6569,6 +6899,44 @@ fn explain_barbarian_level1_chassis(
         });
     }
 
+    // SD13-E5: the five rage power choice slots (gates 2/4/6/8/10), the
+    // discharge of the rage-power-choice-list deferrals — numbered slots per
+    // the proven repeat-grant idiom, open-ended recognitions fabricating
+    // NOTHING about any power's effect: rage powers function only while
+    // raging, and the rage-state execution engine below stays the named
+    // engine burden untouched.
+    for (slot_number, grant_level, choice_id) in BARBARIAN_RAGE_POWER_SLOTS {
+        if level < grant_level {
+            continue;
+        }
+        let Some(power) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        let record_id = if slot_number == 1 {
+            "class_chassis.barbarian.rage_power_choice".to_owned()
+        } else {
+            format!("class_chassis.barbarian.rage_power_{slot_number}_choice")
+        };
+        explanations.push(ComputationExplanation {
+            id: record_id,
+            value: 0,
+            detail: format!(
+                "Barbarian rage power slot {slot_number} selection ({choice_id} -> {power}) \
+                 at the level-{grant_level} grant (PF1 Core Rulebook, verified identically \
+                 on both primary sources: \"Starting at 2nd level, a barbarian gains a rage \
+                 power. She gains another rage power for every two levels of barbarian \
+                 attained after 2nd level.\"; \"Unless otherwise noted, a barbarian cannot \
+                 select an individual power more than once.\"). The level-{level} selection \
+                 for this slot is {power}, recognized as a bounded +0 record of the numbered \
+                 choice slot only (open-ended raw string, no power-list validation): rage \
+                 powers grant their benefits only while raging, and the rage-state execution \
+                 engine — activation, round tracking, application of any power's effect — is \
+                 exactly the named engine burden this row still claim-blocks, so nothing is \
+                 fabricated from this recognition"
+            ),
+        });
+    }
+
     // Still blocked: name the rage-state execution burden explicitly.
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.barbarian.bounded_progression.rage_execution.unsupported".to_owned(),
@@ -7154,16 +7522,20 @@ fn explain_monk_level1_chassis(
     // that this bounded seam deliberately does not recognize.
     let bonus_feat_selection = choice_selection(input, MONK_BONUS_FEAT_CHOICE_ID);
     let recognized_bonus_feat_name = bonus_feat_selection.and_then(|selection| {
-        if selection == COMBAT_REFLEXES_FEAT_SELECTION {
+        if selection == CATCH_OFF_GUARD_FEAT_SELECTION {
+            Some("Catch Off-Guard")
+        } else if selection == COMBAT_REFLEXES_FEAT_SELECTION {
             Some("Combat Reflexes")
         } else if selection == DEFLECT_ARROWS_FEAT_SELECTION {
             Some("Deflect Arrows")
+        } else if selection == "feat:dodge" {
+            Some("Dodge")
         } else if selection == IMPROVED_GRAPPLE_FEAT_SELECTION {
             Some("Improved Grapple")
-        } else if selection == IMPROVED_TRIP_FEAT_SELECTION {
-            Some("Improved Trip")
-        } else if selection == STUNNING_FIST_FEAT_SELECTION {
-            Some("Stunning Fist")
+        } else if selection == SCORPION_STYLE_FEAT_SELECTION {
+            Some("Scorpion Style")
+        } else if selection == THROW_ANYTHING_FEAT_SELECTION {
+            Some("Throw Anything")
         } else {
             None
         }
@@ -7174,28 +7546,173 @@ fn explain_monk_level1_chassis(
                 "Monk level {MONK_BONUS_FEAT_GRANT_LEVEL} bonus feat choice recognized: the \
                  canonical deterministic selection ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}) \
                  names {feat_name}, drawn from the PF1 Core Rulebook restricted Monk bonus feat \
-                 list (Combat Reflexes, Deflect Arrows, Improved Grapple, Improved Trip, \
-                 Stunning Fist), as chosen input on the compute seam. This is a recognition \
+                 list (Catch Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved \
+                 Grapple, Scorpion Style, Throw Anything — verified identically on both \
+                 primary sources; the 6th/10th-level list additions, including Improved \
+                 Trip, stay unrecognized on this bounded seam), as chosen input on the \
+                 compute seam. This is a recognition \
                  record of the choice slot only, so it carries no fabricated mechanical value \
                  (+0): {feat_name}'s own mechanics are not grounded here, and no \
-                 attack-resolution, grapple-check, trip-check, or DC/save engine exists in this \
-                 codebase. Improved Unarmed Strike is not part of this restricted choice set \
-                 because the PF1 Core Rulebook grants it to every monk automatically at level \
-                 {MONK_BONUS_FEAT_GRANT_LEVEL}, separate from this chosen bonus feat, and this \
-                 codebase does not ground that automatic grant either"
+                 attack-resolution, grapple-check, or DC/save engine exists in this \
+                 codebase. Improved Unarmed Strike and Stunning Fist are not part of this \
+                 restricted choice set \
+                 because the PF1 Core Rulebook grants each to every monk automatically at level \
+                 {MONK_BONUS_FEAT_GRANT_LEVEL} (\"the monk gains Stunning Fist as a bonus \
+                 feat, even if he does not meet the prerequisites\"), separate from this \
+                 chosen bonus feat, and this \
+                 codebase does not ground those automatic grants either"
             )
         } else {
             format!(
                 "Monk level {MONK_BONUS_FEAT_GRANT_LEVEL} bonus feat choice slot is present \
                  ({MONK_BONUS_FEAT_CHOICE_ID} -> {selection}), but only the PF1 Core Rulebook \
-                 restricted Monk bonus feat list (Combat Reflexes, Deflect Arrows, Improved \
-                 Grapple, Improved Trip, Stunning Fist) is recognized on this bounded seam; no \
+                 restricted Monk bonus feat list (Catch Off-Guard, Combat Reflexes, Deflect \
+                 Arrows, Dodge, Improved Grapple, Scorpion Style, Throw Anything) is \
+                 recognized on this bounded seam — a feat:stunning_fist selection in \
+                 particular is not a list member because Stunning Fist is the automatic \
+                 1st-level monk grant, never a choice; no \
                  restricted-list feat identity is grounded and no mechanical value is fabricated \
                  (+0)"
             )
         };
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.bonus_feat_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    // SD13-E5: the SECOND bonus feat, the level-2 repeat grant, recognized
+    // as its own numbered choice slot (the repeat-grant proving slice —
+    // mirroring choice:ranger_favored_enemy_2 / favored_terrain_2 /
+    // combat_style_bonus_feat_2). Same corrected seven-feat list, same
+    // automatic-grant exclusions, same present-but-unrecognized branch.
+    if level >= MONK_SECOND_BONUS_FEAT_GRANT_LEVEL
+        && let Some(second_selection) =
+            choice_selection(input, MONK_SECOND_BONUS_FEAT_CHOICE_ID)
+    {
+        let recognized_second_name = if second_selection == CATCH_OFF_GUARD_FEAT_SELECTION {
+            Some("Catch Off-Guard")
+        } else if second_selection == COMBAT_REFLEXES_FEAT_SELECTION {
+            Some("Combat Reflexes")
+        } else if second_selection == DEFLECT_ARROWS_FEAT_SELECTION {
+            Some("Deflect Arrows")
+        } else if second_selection == "feat:dodge" {
+            Some("Dodge")
+        } else if second_selection == IMPROVED_GRAPPLE_FEAT_SELECTION {
+            Some("Improved Grapple")
+        } else if second_selection == SCORPION_STYLE_FEAT_SELECTION {
+            Some("Scorpion Style")
+        } else if second_selection == THROW_ANYTHING_FEAT_SELECTION {
+            Some("Throw Anything")
+        } else {
+            None
+        };
+        let detail = if let Some(feat_name) = recognized_second_name {
+            format!(
+                "Monk level {MONK_SECOND_BONUS_FEAT_GRANT_LEVEL} SECOND bonus feat choice \
+                 recognized ({MONK_SECOND_BONUS_FEAT_CHOICE_ID} -> {second_selection}): the \
+                 PF1 Core Rulebook grants a repeat bonus feat at 2nd level (\"At 1st level, \
+                 2nd level, and every 4 levels thereafter, a monk may select a bonus \
+                 feat\"), drawn from the same corrected restricted list as slot 1 (Catch \
+                 Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple, \
+                 Scorpion Style, Throw Anything — the 6th/10th-level list additions are not \
+                 yet available at 2nd level). This character's second selection names \
+                 {feat_name}. This is a recognition record of the numbered choice slot only \
+                 (+0) — the repeat grant needs no list-growth mechanism, just its own slot \
+                 and level gate, mirroring the ranger second-favored-enemy idiom; \
+                 {feat_name}'s own mechanics are not grounded, and the 6th/10th-level repeat \
+                 grants stay unrecognized"
+            )
+        } else if second_selection == "feat:stunning_fist" {
+            format!(
+                "Monk level {MONK_SECOND_BONUS_FEAT_GRANT_LEVEL} SECOND bonus feat choice \
+                 slot is present ({MONK_SECOND_BONUS_FEAT_CHOICE_ID} -> {second_selection}), \
+                 but Stunning Fist is the automatic 1st-level monk grant (\"even if he does \
+                 not meet the prerequisites\"), never a restricted-list choice member; no \
+                 feat identity is grounded and no mechanical value is fabricated (+0)"
+            )
+        } else {
+            format!(
+                "Monk level {MONK_SECOND_BONUS_FEAT_GRANT_LEVEL} SECOND bonus feat choice \
+                 slot is present ({MONK_SECOND_BONUS_FEAT_CHOICE_ID} -> {second_selection}), \
+                 but only the corrected PF1 Core Rulebook 1st/2nd-level restricted list \
+                 (Catch Off-Guard, Combat Reflexes, Deflect Arrows, Dodge, Improved Grapple, \
+                 Scorpion Style, Throw Anything) is recognized on this bounded seam; no \
+                 restricted-list feat identity is grounded and no mechanical value is \
+                 fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.bonus_feat_2_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    // SD13-E5: the THIRD and FOURTH bonus feats (gates 6/10), the remaining
+    // numbered slots of the monk's level-10 bonus-feat family, each drawing
+    // from its own WIDENED list per the verified additions.
+    let later_bonus_feat_slots: [(u8, u8, &str, bool); 2] = [
+        (
+            3,
+            MONK_THIRD_BONUS_FEAT_GRANT_LEVEL,
+            MONK_THIRD_BONUS_FEAT_CHOICE_ID,
+            false,
+        ),
+        (
+            4,
+            MONK_FOURTH_BONUS_FEAT_GRANT_LEVEL,
+            MONK_FOURTH_BONUS_FEAT_CHOICE_ID,
+            true,
+        ),
+    ];
+    for (slot_number, grant_level, choice_id, includes_tenth) in later_bonus_feat_slots {
+        if level < grant_level {
+            continue;
+        }
+        let Some(selection) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        let recognized = MONK_BONUS_FEAT_BASE_LIST
+            .iter()
+            .chain(MONK_BONUS_FEAT_SIXTH_LEVEL_ADDITIONS.iter())
+            .chain(
+                MONK_BONUS_FEAT_TENTH_LEVEL_ADDITIONS
+                    .iter()
+                    .take(if includes_tenth { 4 } else { 0 }),
+            )
+            .find(|(sel, _)| *sel == selection)
+            .map(|(_, name)| *name);
+        let detail = if let Some(feat_name) = recognized {
+            format!(
+                "Monk bonus feat slot {slot_number} recognized ({choice_id} -> {selection}) \
+                 at the level-{grant_level} grant (\"At 1st level, 2nd level, and every 4 \
+                 levels thereafter, a monk may select a bonus feat\"). This character's \
+                 selection names {feat_name}, drawn from the slot's widened PF1 Core \
+                 Rulebook list: the base seven feats plus the verified 6th-level additions \
+                 (Gorgon's Fist, Improved Bull Rush, Improved Disarm, Improved Feint, \
+                 Improved Trip, Mobility){}. This is a +0 recognition record of the numbered \
+                 choice slot only; {feat_name}'s own mechanics are not grounded, and \
+                 Improved Unarmed Strike / Stunning Fist remain automatic grants, never \
+                 choice-set members",
+                if includes_tenth {
+                    " plus the verified 10th-level additions (Improved Critical, Medusa's \
+                     Wrath, Snatch Arrows, Spring Attack)"
+                } else {
+                    ""
+                }
+            )
+        } else {
+            format!(
+                "Monk bonus feat slot {slot_number} choice is present ({choice_id} -> \
+                 {selection}), but only the slot's widened PF1 Core Rulebook restricted \
+                 list is recognized on this bounded seam; no restricted-list feat identity \
+                 is grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.monk.bonus_feat_{slot_number}_choice"),
             value: 0,
             detail,
         });
@@ -7220,8 +7737,9 @@ fn explain_monk_level1_chassis(
     } else {
         format!(
             "Monk level {level} remains blocked on its level-1 bonus feat grant: the free bonus \
-             feat drawn from the restricted Monk feat list (Combat Reflexes, Deflect Arrows, \
-             Improved Grapple, Improved Trip, Stunning Fist) is not recognized as chosen input \
+             feat drawn from the restricted Monk feat list (Catch Off-Guard, Combat Reflexes, \
+             Deflect Arrows, Dodge, Improved Grapple, Scorpion Style, Throw Anything) is not \
+             recognized as chosen input \
              in this bounded martial chassis baseline — no feat-selection or feat-prerequisite \
              engine exists here — so no Monk bonus-feat support is claimed"
         )
@@ -7234,6 +7752,24 @@ fn explain_monk_level1_chassis(
 }
 
 const ROGUE_CLASS_ID: &str = "class:rogue";
+
+/// PF1 Core Rulebook level gate of the Rogue's first talent, verified
+/// identically on both primary sources: "Starting at 2nd level, a rogue
+/// gains one rogue talent. She gains an additional rogue talent for every 2
+/// levels of rogue attained after 2nd level. A rogue cannot select an
+/// individual talent more than once." Only the 2nd-level slot is recognized
+/// here; the 4th/6th/8th/10th additional talents stay named-but-unproven as
+/// future NUMBERED slots per the proven monk-second-bonus-feat idiom.
+const ROGUE_TALENT_GRANT_LEVEL: u8 = 2;
+const ROGUE_TALENT_CHOICE_ID: &str = "choice:rogue_talent";
+
+/// PF1 Core Rulebook level gate of the Rogue's SECOND talent — the first
+/// "additional rogue talent for every 2 levels of rogue attained after 2nd
+/// level" lands at rogue level 4. A numbered choice slot per the proven
+/// monk-second-bonus-feat repeat-grant idiom; the 6th/8th/10th additional
+/// talents stay named-but-unproven as further numbered slots.
+const ROGUE_SECOND_TALENT_GRANT_LEVEL: u8 = 4;
+const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // A further SD13-E5 slice widens the gate to level 9 — the first level-9 slice
 // in the tranche (verified independently against d20pfsrd and
 // legacy.aonprd.com): level 9 base attack bonus stays +6 (9 * 3 / 4, an
@@ -7717,6 +8253,95 @@ fn explain_rogue_level1_chassis(
                  attacker-level-comparison engine, and no sneak-attack-trigger engine exists \
                  anywhere in this codebase to apply it, so this grounds no actual flanking \
                  immunity or sneak-attack denial"
+            ),
+        });
+    }
+
+    // SD13-E5: the 2nd-level rogue talent choice slot, recognized via the
+    // open-ended (non-restricted-list) idiom of choice:ranger_favored_enemy /
+    // choice:ranger_favored_terrain / choice:paladin_mercy — deliberately NOT
+    // an encoding of the talent list, and deliberately NOT the talent tree's
+    // own effects (the new-subsystem-shaped burden stays unproven; no
+    // talent-effect engine exists in this codebase). The 4th/6th/8th/10th
+    // additional talents stay named-but-unproven as future numbered slots per
+    // the proven monk-second-bonus-feat repeat-grant idiom.
+    if level >= ROGUE_TALENT_GRANT_LEVEL
+        && let Some(talent_selection) = choice_selection(input, ROGUE_TALENT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.rogue.talent_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue talent selection ({ROGUE_TALENT_CHOICE_ID} -> {talent_selection}): \
+                 PF1 Core Rulebook, verified identically on both primary sources — \
+                 \"Starting at 2nd level, a rogue gains one rogue talent. She gains an \
+                 additional rogue talent for every 2 levels of rogue attained after 2nd \
+                 level. A rogue cannot select an individual talent more than once.\" The \
+                 level-{level} talent chosen for this character is {talent_selection}, \
+                 recognized as a bounded +0 record of the choice slot only (open-ended raw \
+                 string, no talent-list validation): the selected talent's own effect is \
+                 not computed — no talent-effect engine exists in this codebase — and the \
+                 4th/6th/8th/10th additional talents stay named-but-unproven as future \
+                 numbered slots"
+            ),
+        });
+    }
+
+    // SD13-E5: the SECOND talent, the level-4 repeat grant, recognized as
+    // its own numbered choice slot per the proven monk-second-bonus-feat
+    // idiom — same open-ended recognition, same non-fabrication posture.
+    if level >= ROGUE_SECOND_TALENT_GRANT_LEVEL
+        && let Some(second_talent) = choice_selection(input, ROGUE_SECOND_TALENT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.rogue.talent_2_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue SECOND talent selection ({ROGUE_SECOND_TALENT_CHOICE_ID} -> \
+                 {second_talent}): PF1 Core Rulebook, verified identically on both primary \
+                 sources — \"She gains an additional rogue talent for every 2 levels of \
+                 rogue attained after 2nd level. A rogue cannot select an individual talent \
+                 more than once.\" — the first additional talent lands at rogue level \
+                 {ROGUE_SECOND_TALENT_GRANT_LEVEL}. The level-{level} second talent chosen \
+                 for this character is {second_talent}, recognized as a bounded +0 record of \
+                 the numbered choice slot only (open-ended raw string, no talent-list \
+                 validation): the selected talent's own effect is not computed — no \
+                 talent-effect engine exists in this codebase — and the 6th/8th/10th \
+                 additional talents stay named-but-unproven as further numbered slots"
+            ),
+        });
+    }
+
+    // SD13-E5: talents 3-5, the remaining numbered slots of the rogue's
+    // level-10 talent family (gates 6/8/10 per the same verified rule
+    // text), each the same open-ended +0 recognition. With these the full
+    // five-slot count at the tranche ceiling is recognized; the talent
+    // tree's effects stay the named new-subsystem burden.
+    let additional_talent_slots: [(u8, u8, &str); 3] = [
+        (3, 6, "choice:rogue_talent_3"),
+        (4, 8, "choice:rogue_talent_4"),
+        (5, 10, "choice:rogue_talent_5"),
+    ];
+    for (slot_number, grant_level, choice_id) in additional_talent_slots {
+        if level < grant_level {
+            continue;
+        }
+        let Some(talent) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.rogue.talent_{slot_number}_choice"),
+            value: 0,
+            detail: format!(
+                "Rogue talent slot {slot_number} selection ({choice_id} -> {talent}): PF1 \
+                 Core Rulebook, verified identically on both primary sources — \"She gains \
+                 an additional rogue talent for every 2 levels of rogue attained after 2nd \
+                 level. A rogue cannot select an individual talent more than once.\" — \
+                 this slot's grant lands at rogue level {grant_level}. The level-{level} \
+                 selection for this slot is {talent}, recognized as a bounded +0 record of \
+                 the numbered choice slot only (open-ended raw string, no talent-list \
+                 validation): the selected talent's own effect is not computed — no \
+                 talent-effect engine exists in this codebase"
             ),
         });
     }
@@ -8317,21 +8942,59 @@ fn explain_sorcerer_level1_spell_baseline(
         });
     }
 
+    // SD13-E5: the TOTAL spells per day — the pure sum of the two records
+    // grounded above (base table count + Charisma bonus count) per
+    // ACCESSIBLE spell level. No new rules content: the base and bonus
+    // records each carry their own two-source verification; this record
+    // integrates them into the sorcerer's actual castable slot count per
+    // day. Counts only — no spell selection, no spontaneous-casting
+    // execution, no slot consumption or tracking, no save resolution.
+    for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = (index + 1) as i16;
+        let bonus_spells = if sorcerer_charisma_modifier < spell_level {
+            0
+        } else {
+            (sorcerer_charisma_modifier - spell_level) / 4 + 1
+        };
+        let total_spells = base_count + bonus_spells;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.sorcerer.spontaneous.total_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: total_spells,
+            detail: format!(
+                "Sorcerer total spells per day at sorcerer level {level}, spell level \
+                 {spell_level}: base table count {base_count} + Charisma bonus \
+                 {bonus_spells} = {total_spells} — the pure sum of the two separately \
+                 grounded records (each carrying its own two-source verification), giving \
+                 the actual castable slot count per day. This grounds the count only: no \
+                 spell selection (WHICH spells are known stays unproven), no \
+                 spontaneous-casting execution, no slot consumption or tracking, and no \
+                 spell save resolution"
+            ),
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
-    // explicitly. The which-spells-are-known selection and the base+bonus
-    // per-day TOTAL integration stay ungrounded; the access ladder, base
-    // per-day counts, base save DCs, base known counts, and bonus-slot counts
-    // are grounded separately as flat records.
+    // explicitly. The which-spells-are-known selection and the spontaneous
+    // casting execution stay ungrounded; the access ladder, base per-day
+    // counts, base save DCs, base known counts, bonus-slot counts, and the
+    // integrated totals are grounded as flat records.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
         message:
             "Sorcerer remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting, the selection of WHICH spells known are actually chosen, \
-             and the base+bonus spells-per-day TOTAL integration are out of scope for this \
+             spontaneous casting execution (slot consumption, tracking, and casting itself) \
+             and the selection of WHICH spells known are actually chosen \
+             are out of scope for this \
              bounded baseline (the spell-level access \
              ladder, the base spells-per-day table counts, the base spell-save-DC \
-             arithmetic, the base spells-known table counts, and the Charisma bonus \
-             spell slot counts are grounded separately as \
+             arithmetic, the base spells-known table counts, the Charisma bonus \
+             spell slot counts, and the integrated base+bonus totals are grounded \
+             separately as \
              flat records) and \
              no spell math is fabricated beyond them"
                 .to_owned(),
@@ -10523,20 +11186,144 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
+    // SD13-E5: the bonus spells per day from a high Charisma, one record
+    // per ACCESSIBLE spell level (1st+; cantrips never gain bonus spells),
+    // from PF1's shared Table: Ability Modifiers and Bonus Spells,
+    // mirroring the Sorcerer bonus slice — verified against both primary
+    // sources' ability-scores pages: for modifier m and spell level N, 0
+    // when m < N, otherwise (m - N)/4 + 1, gated by the grounded access
+    // ladder per the identical rule text on both sources. The bonus is
+    // never added to the base per-day counts here — no total is computed.
+    for spell_level in 1..=bard_spell_level_access {
+        let bonus_spells = if ability_modifiers.charisma < spell_level {
+            0
+        } else {
+            (ability_modifiers.charisma - spell_level) / 4 + 1
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.bard.spontaneous.bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: bonus_spells,
+            detail: format!(
+                "Bard bonus spells per day at bard level {level}, spell level \
+                 {spell_level}: {bonus_spells} from Charisma modifier {} (PF1 Core Rulebook \
+                 Table: Ability Modifiers and Bonus Spells, verified identically on both \
+                 primary sources; for modifier m and spell level N the table value is 0 \
+                 when m < N, otherwise (m - N)/4 + 1, and bonus spells apply only to spell \
+                 levels the character is of a high enough class level to cast — the \
+                 grounded access ladder). A computed 0 means the modifier grants no bonus \
+                 at this spell level; it is never added to the base per-day count here — no \
+                 total is computed, no spell selection, and no spell save DCs",
+                ability_modifiers.charisma
+            ),
+        });
+    }
+
+    // SD13-E5: the TOTAL spells per day — the pure sum of the two records
+    // grounded above (base table count + Charisma bonus count) per
+    // ACCESSIBLE spell level, mirroring the Sorcerer total slice. No new
+    // rules content: each input record carries its own two-source
+    // verification. Counts only — no spell selection, no
+    // spontaneous-casting execution, no slot consumption or tracking, no
+    // save resolution. Cantrips have no per-day column and no bonus, so no
+    // total exists for them.
+    for (index, base_count) in bard_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = (index + 1) as i16;
+        let bonus_spells = if ability_modifiers.charisma < spell_level {
+            0
+        } else {
+            (ability_modifiers.charisma - spell_level) / 4 + 1
+        };
+        let total_spells = base_count + bonus_spells;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.bard.spontaneous.total_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: total_spells,
+            detail: format!(
+                "Bard total spells per day at bard level {level}, spell level \
+                 {spell_level}: base table count {base_count} + Charisma bonus \
+                 {bonus_spells} = {total_spells} — the pure sum of the two separately \
+                 grounded records (each carrying its own two-source verification), giving \
+                 the actual castable slot count per day. This grounds the count only: no \
+                 spell selection (WHICH spells are known stays unproven), no \
+                 spontaneous-casting execution, no slot consumption or tracking, and no \
+                 spell save resolution"
+            ),
+        });
+    }
+
+    // SD13-E5: the three Versatile Performance choice slots (gates 2/6/10),
+    // the last row of the repeat-grant queue — numbered slots per the proven
+    // idiom, restricted-list recognitions over the nine verified Perform
+    // types. The skill-SUBSTITUTION engine (using the Perform bonus in
+    // place of the associated skills' bonuses) is exactly the choice-gated
+    // engine burden the performance blocker names; no skill total is
+    // modified and nothing is fabricated from these recognitions.
+    for (slot_number, grant_level, choice_id) in BARD_VERSATILE_PERFORMANCE_SLOTS {
+        if level < grant_level {
+            continue;
+        }
+        let Some(selection) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        let record_id = if slot_number == 1 {
+            "class_chassis.bard.versatile_performance_choice".to_owned()
+        } else {
+            format!("class_chassis.bard.versatile_performance_{slot_number}_choice")
+        };
+        let recognized = BARD_VERSATILE_PERFORMANCE_TYPES
+            .iter()
+            .find(|(sel, _, _)| *sel == selection);
+        let detail = if let Some((_, name, pair)) = recognized {
+            format!(
+                "Bard Versatile Performance slot {slot_number} selection ({choice_id} -> \
+                 {selection}) at the level-{grant_level} grant (PF1 Core Rulebook, verified \
+                 identically on both primary sources: \"At 2nd level, a bard can choose one \
+                 type of Perform skill... At 6th level, and every 4 levels thereafter, the \
+                 bard can select an additional type of Perform to substitute.\"). The \
+                 level-{level} selection names {name}, whose verified associated skills are \
+                 {pair}. This is a +0 recognition record of the numbered choice slot only: \
+                 the skill-substitution engine (using the Perform bonus in place of the \
+                 associated skills' bonuses) is the named engine burden and no skill total \
+                 is modified by this record"
+            )
+        } else {
+            format!(
+                "Bard Versatile Performance slot {slot_number} choice is present \
+                 ({choice_id} -> {selection}), but only the nine verified PF1 Core Rulebook \
+                 Perform types are recognized on this bounded seam; no Perform-type \
+                 identity is grounded, no skill pair is named, and no skill total is \
+                 modified (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: record_id,
+            value: 0,
+            detail,
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
-    // explicitly. The which-spells-are-known selection stays ungrounded; the
-    // access ladder, base per-day counts, base save DCs, and base known counts
-    // are grounded separately as flat records.
+    // explicitly. The which-spells-are-known selection and the spontaneous
+    // casting execution stay ungrounded; the access ladder, base per-day
+    // counts, base save DCs, base known counts, bonus-slot counts, and the
+    // integrated totals are grounded as flat records.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned(),
         message:
             "Bard remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting, the selection of WHICH spells known (from the Bard list) \
-             are actually chosen, the CHA-modified \
-             spells per day totals, and bonus spell slots from a high casting stat are out \
+             spontaneous casting execution (slot consumption, tracking, and casting itself) \
+             and the selection of WHICH spells known (from the Bard list) \
+             are actually chosen are out \
              of scope for this bounded baseline (the spell-level access ladder, the base \
-             spells-per-day table counts, the base spell-save-DC arithmetic, and the base \
-             spells-known table counts are \
+             spells per day table counts, the base spell-save-DC arithmetic, the base \
+             spells-known table counts, the Charisma bonus spell slot counts, and the \
+             integrated base+bonus totals are \
              grounded separately as flat records) and no spell math is fabricated beyond \
              them"
                 .to_owned(),
