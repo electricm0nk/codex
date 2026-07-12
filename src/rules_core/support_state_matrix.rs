@@ -547,7 +547,7 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_level6_progression.rs + tests/sd13_bard_level7_progression.rs + \
     tests/sd13_bard_level8_progression.rs + tests/sd13_bard_level9_progression.rs + \
     tests/sd13_bard_level10_progression.rs + tests/sd13_bard_spell_level_thresholds.rs + \
-    tests/sd13_bard_spells_per_day_counts.rs";
+    tests/sd13_bard_spells_per_day_counts.rs + tests/sd13_bard_spell_save_dcs.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1604,8 +1604,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     primary sources (\"1/—/—/—\" at 1 through \"5/4/3/1\" at 10; unlike \
                     the Paladin/Ranger tables there are NO \"0\" entries at levels 1-10) — \
                     inaccessible \"—\" spell levels get no record, and only the base \
-                    counts are grounded: Charisma bonus spells, spells KNOWN (a separate \
-                    table, deliberately untouched), and spell save DCs stay unproven). No \
+                    counts are grounded: Charisma bonus spells and spells KNOWN (a separate \
+                    table, deliberately untouched) stay unproven — AND a further SD13-E5 \
+                    slice grounds the base spell-save-DC arithmetic on top of the ladder \
+                    (class_chassis.bard.spontaneous.spell_save_dc.spell_level_1..4, one \
+                    record per ACCESSIBLE spell level, value 10 + spell level + Charisma \
+                    modifier per the rule text verified identically on both primary \
+                    sources; live arithmetic over the chosen ability score — a dedicated \
+                    test lowers the fixture Charisma and the DCs drop; a DIFFERENT formula \
+                    family from the grounded Fascinate DC, which is keyed to bard level, \
+                    not spell level; no saving-throw resolution, target, spell selection, \
+                    or feat DC modifier is computed; the spontaneous blocker's message now \
+                    defers only spells known, the CHA-modified per-day totals, and bonus \
+                    slots)). No \
                     performance-execution math and no spell math is fabricated and \
                     no Bard level 11+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
