@@ -216,6 +216,11 @@ fn ranger_level10_stays_claim_blocked_and_fabricates_no_spell_counts() {
                 && !e
                     .id
                     .starts_with("class_chassis.ranger.partial_caster.bonus_spells_per_day.")
+                // And the total_spells_per_day family (a further SD13-E5
+                // slice, tests/sd13_ranger_total_spells_per_day.rs).
+                && !e
+                    .id
+                    .starts_with("class_chassis.ranger.partial_caster.total_spells_per_day.")
         })
         .collect();
     assert_eq!(
