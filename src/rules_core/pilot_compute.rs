@@ -8080,6 +8080,57 @@ fn explain_sorcerer_level1_spell_baseline(
         ),
     });
 
+    // SD13-E5: the BASE spells-per-day counts, one record per ACCESSIBLE
+    // spell level, as a literal table lookup mirroring the
+    // Paladin/Ranger/Bard per-day slices and the Cleric domain-slot-count
+    // precedent — the PF1 spells-per-day table is a lookup table, not
+    // arithmetic, so no formula is invented for it. Verified against the
+    // raw table rows of both primary sources (identical on d20pfsrd and
+    // legacy.aonprd.com): level 1 "3/—/—/—/—", level 2 "4/—/—/—/—", level
+    // 3 "5/—/—/—/—", level 4 "6/3/—/—/—", level 5 "6/4/—/—/—", level 6
+    // "6/5/3/—/—", level 7 "6/6/4/—/—", level 8 "6/6/5/3/—", level 9
+    // "6/6/6/4/—", level 10 "6/6/6/5/3". Like the Bard and unlike the
+    // Paladin/Ranger, there are NO "0" entries at levels 1-10; every
+    // accessible column carries a positive base count. Inaccessible spell
+    // levels ("—" columns) get no record at all. Only the base counts are
+    // grounded: bonus spells per day from a high Charisma are never
+    // computed, and spells KNOWN (a separate table) stays untouched.
+    let sorcerer_base_spells_per_day: [Option<i16>; 5] = match level {
+        1 => [Some(3), None, None, None, None],
+        2 => [Some(4), None, None, None, None],
+        3 => [Some(5), None, None, None, None],
+        4 => [Some(6), Some(3), None, None, None],
+        5 => [Some(6), Some(4), None, None, None],
+        6 => [Some(6), Some(5), Some(3), None, None],
+        7 => [Some(6), Some(6), Some(4), None, None],
+        8 => [Some(6), Some(6), Some(5), Some(3), None],
+        9 => [Some(6), Some(6), Some(6), Some(4), None],
+        10 => [Some(6), Some(6), Some(6), Some(5), Some(3)],
+        _ => [None, None, None, None, None],
+    };
+    for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = index + 1;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.sorcerer.spontaneous.base_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: *base_count,
+            detail: format!(
+                "Sorcerer base spells per day at sorcerer level {level}, spell level \
+                 {spell_level}: {base_count}, read directly from the PF1 Core Rulebook \
+                 Sorcerer class table's spells-per-day row (verified against the raw table \
+                 rows of both primary sources; a literal table lookup, not a derived \
+                 formula; the Sorcerer table has no \"0\" entries at levels 1-10). This \
+                 grounds the base count only: bonus spells per day from a high Charisma are \
+                 never computed, spells KNOWN (a separate table) is not grounded, and no \
+                 spell save DCs are computed"
+            ),
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden explicitly.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.sorcerer.spontaneous.unsupported".to_owned(),
