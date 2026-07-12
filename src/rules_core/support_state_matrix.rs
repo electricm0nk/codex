@@ -702,7 +702,8 @@ const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs 
     tests/sd13_monk_level5_progression.rs + tests/sd13_monk_level6_progression.rs + \
     tests/sd13_monk_level7_progression.rs + tests/sd13_monk_level8_progression.rs + \
     tests/sd13_monk_level9_progression.rs + tests/sd13_monk_level10_progression.rs + \
-    tests/sd13_monk_second_bonus_feat.rs";
+    tests/sd13_monk_second_bonus_feat.rs + \
+    tests/sd13_monk_bonus_feats_three_and_four.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -2152,9 +2153,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     in the campaign (rogue 2nd talent, barbarian 2nd rage power, paladin \
                     level-6/9 mercies, bard versatile-performance repeats) can now follow \
                     this proven shape; absent the selection nothing is fabricated, below \
-                    the level-2 gate the selection is not recognized, and the level-6/10 \
-                    repeat grants stay named-but-unproven with their own 6th/10th list \
-                    additions to verify), (SD13-E5) Evasion, a 2nd-level Monk class feature \
+                    the level-2 gate the selection is not recognized — and a further \
+                    SD13-E5 slice grounds the level-6/10 repeat grants too \
+                    (class_chassis.monk.bonus_feat_3_choice / bonus_feat_4_choice, \
+                    choice:monk_bonus_feat_3/4, gates 6/10, each drawing from its own \
+                    WIDENED list verified identically on both primary sources: the 6th \
+                    level adds Gorgon's Fist / Improved Bull Rush / Improved Disarm / \
+                    Improved Feint / Improved Trip / Mobility, the 10th adds Improved \
+                    Critical / Medusa's Wrath / Snatch Arrows / Spring Attack; the proof \
+                    fixture's slot 3 selects Improved Trip — the very feat the \
+                    list-correction slice removed from slots 1/2, genuinely legal at 6th — \
+                    and the gate ladder is pinned one level below each gate), completing \
+                    the monk's full four-slot bonus-feat count at the tranche ceiling; \
+                    every selected feat's own mechanics stay unproven), (SD13-E5) Evasion, a 2nd-level Monk class feature \
                     verified independently against two primary PF1 sources (d20pfsrd and \
                     legacy.aonprd.com), grounded as a bounded identity/recognition record only \
                     (value 0, non-fabricated): no damage on a successful Reflex save against an \

@@ -1487,6 +1487,47 @@ const MONK_BONUS_FEAT_GRANT_LEVEL: u8 = 1;
 const MONK_SECOND_BONUS_FEAT_GRANT_LEVEL: u8 = 2;
 const MONK_SECOND_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat_2";
 
+/// PF1 Core Rulebook gates of the Monk's THIRD and FOURTH bonus feats ("every
+/// 4 levels thereafter" = 6th and 10th). Each slot draws from its own WIDENED
+/// list, verified identically on both primary sources: at 6th level
+/// "Gorgon's Fist, Improved Bull Rush, Improved Disarm, Improved Feint,
+/// Improved Trip, and Mobility" join the base seven; at 10th level "Improved
+/// Critical, Medusa's Wrath, Snatch Arrows, and Spring Attack" join. Note
+/// the deliberate symmetry with the list-correction slice: Improved Trip is
+/// NOT a base-list member but genuinely joins at 6th.
+const MONK_THIRD_BONUS_FEAT_GRANT_LEVEL: u8 = 6;
+const MONK_THIRD_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat_3";
+const MONK_FOURTH_BONUS_FEAT_GRANT_LEVEL: u8 = 10;
+const MONK_FOURTH_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat_4";
+
+/// The base seven-feat 1st/2nd-level list as (selection, display-name) pairs,
+/// shared by every monk bonus-feat slot's recognition.
+const MONK_BONUS_FEAT_BASE_LIST: [(&str, &str); 7] = [
+    ("feat:catch_off_guard", "Catch Off-Guard"),
+    ("feat:combat_reflexes", "Combat Reflexes"),
+    ("feat:deflect_arrows", "Deflect Arrows"),
+    ("feat:dodge", "Dodge"),
+    ("feat:improved_grapple", "Improved Grapple"),
+    ("feat:scorpion_style", "Scorpion Style"),
+    ("feat:throw_anything", "Throw Anything"),
+];
+/// The 6th-level list additions (slot 3 and later).
+const MONK_BONUS_FEAT_SIXTH_LEVEL_ADDITIONS: [(&str, &str); 6] = [
+    ("feat:gorgons_fist", "Gorgon's Fist"),
+    ("feat:improved_bull_rush", "Improved Bull Rush"),
+    ("feat:improved_disarm", "Improved Disarm"),
+    ("feat:improved_feint", "Improved Feint"),
+    ("feat:improved_trip", "Improved Trip"),
+    ("feat:mobility", "Mobility"),
+];
+/// The 10th-level list additions (slot 4).
+const MONK_BONUS_FEAT_TENTH_LEVEL_ADDITIONS: [(&str, &str); 4] = [
+    ("feat:improved_critical", "Improved Critical"),
+    ("feat:medusas_wrath", "Medusa's Wrath"),
+    ("feat:snatch_arrows", "Snatch Arrows"),
+    ("feat:spring_attack", "Spring Attack"),
+];
+
 // SD13-E5 Monk level-1 bonus feat choice-slot recognition. RULES CORRECTION
 // (SD13-E5): an earlier version of this seam recognized Improved Trip and
 // Stunning Fist as restricted-list members and claimed that was the PF1 Core
@@ -7455,6 +7496,74 @@ fn explain_monk_level1_chassis(
         };
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.bonus_feat_2_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    // SD13-E5: the THIRD and FOURTH bonus feats (gates 6/10), the remaining
+    // numbered slots of the monk's level-10 bonus-feat family, each drawing
+    // from its own WIDENED list per the verified additions.
+    let later_bonus_feat_slots: [(u8, u8, &str, bool); 2] = [
+        (
+            3,
+            MONK_THIRD_BONUS_FEAT_GRANT_LEVEL,
+            MONK_THIRD_BONUS_FEAT_CHOICE_ID,
+            false,
+        ),
+        (
+            4,
+            MONK_FOURTH_BONUS_FEAT_GRANT_LEVEL,
+            MONK_FOURTH_BONUS_FEAT_CHOICE_ID,
+            true,
+        ),
+    ];
+    for (slot_number, grant_level, choice_id, includes_tenth) in later_bonus_feat_slots {
+        if level < grant_level {
+            continue;
+        }
+        let Some(selection) = choice_selection(input, choice_id) else {
+            continue;
+        };
+        let recognized = MONK_BONUS_FEAT_BASE_LIST
+            .iter()
+            .chain(MONK_BONUS_FEAT_SIXTH_LEVEL_ADDITIONS.iter())
+            .chain(
+                MONK_BONUS_FEAT_TENTH_LEVEL_ADDITIONS
+                    .iter()
+                    .take(if includes_tenth { 4 } else { 0 }),
+            )
+            .find(|(sel, _)| *sel == selection)
+            .map(|(_, name)| *name);
+        let detail = if let Some(feat_name) = recognized {
+            format!(
+                "Monk bonus feat slot {slot_number} recognized ({choice_id} -> {selection}) \
+                 at the level-{grant_level} grant (\"At 1st level, 2nd level, and every 4 \
+                 levels thereafter, a monk may select a bonus feat\"). This character's \
+                 selection names {feat_name}, drawn from the slot's widened PF1 Core \
+                 Rulebook list: the base seven feats plus the verified 6th-level additions \
+                 (Gorgon's Fist, Improved Bull Rush, Improved Disarm, Improved Feint, \
+                 Improved Trip, Mobility){}. This is a +0 recognition record of the numbered \
+                 choice slot only; {feat_name}'s own mechanics are not grounded, and \
+                 Improved Unarmed Strike / Stunning Fist remain automatic grants, never \
+                 choice-set members",
+                if includes_tenth {
+                    " plus the verified 10th-level additions (Improved Critical, Medusa's \
+                     Wrath, Snatch Arrows, Spring Attack)"
+                } else {
+                    ""
+                }
+            )
+        } else {
+            format!(
+                "Monk bonus feat slot {slot_number} choice is present ({choice_id} -> \
+                 {selection}), but only the slot's widened PF1 Core Rulebook restricted \
+                 list is recognized on this bounded seam; no restricted-list feat identity \
+                 is grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_chassis.monk.bonus_feat_{slot_number}_choice"),
             value: 0,
             detail,
         });
