@@ -424,7 +424,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_level9_progression.rs + \
     tests/sd13_sorcerer_level10_progression.rs + \
     tests/sd13_sorcerer_spell_level_thresholds.rs + \
-    tests/sd13_sorcerer_spells_per_day_counts.rs";
+    tests/sd13_sorcerer_spells_per_day_counts.rs + \
+    tests/sd13_sorcerer_spell_save_dcs.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -2997,9 +2998,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     five accessible spell levels at the tranche ceiling, the deepest \
                     per-day surface in the tranche; like the Bard, NO \"0\" entries at \
                     levels 1-10) — inaccessible \"—\" spell levels get no record, and only \
-                    the base counts are grounded: Charisma bonus spells, spells KNOWN (a \
-                    separate table, deliberately untouched), and spell save DCs stay \
-                    unproven. No \
+                    the base counts are grounded: Charisma bonus spells and spells KNOWN (a \
+                    separate table, deliberately untouched) stay \
+                    unproven — AND a further SD13-E5 slice grounds the base spell-save-DC \
+                    arithmetic on top of the ladder \
+                    (class_chassis.sorcerer.spontaneous.spell_save_dc.spell_level_1..5, one \
+                    record per ACCESSIBLE spell level, value 10 + spell level + Charisma \
+                    modifier per the rule text verified identically on both primary \
+                    sources; live arithmetic over the chosen ability score, not a hardcoded \
+                    table — a dedicated test lowers the fixture Charisma and the DCs drop; \
+                    no saving-throw resolution, target, spell selection, or \
+                    bloodline-arcana/feat DC modifier is computed; the spontaneous \
+                    blocker's message now defers only spells known and Charisma bonus \
+                    slots). No \
                     spell math is fabricated and no Sorcerer level 11+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \

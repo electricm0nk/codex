@@ -176,6 +176,12 @@ fn sorcerer_level1_fabricates_no_spell_math() {
                 || explanation
                     .id
                     .starts_with("class_chassis.sorcerer.spontaneous.base_spells_per_day.")
+                // The spell_save_dc family (a further SD13-E5 slice,
+                // tests/sd13_sorcerer_spell_save_dcs.rs): base DC arithmetic
+                // records, allowed by prefix like the per-day family.
+                || explanation
+                    .id
+                    .starts_with("class_chassis.sorcerer.spontaneous.spell_save_dc.")
                 || !explanation.id.contains("spell"),
             "no fabricated spell explanation is allowed beyond the +0 recognition and the \
              access-ladder record: {explanation:?}"
