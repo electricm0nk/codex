@@ -4,46 +4,29 @@
     "schema_url": "https://docs.github.com/en/rest/rulesets",
     "mirrors_doctrine": "devops/tranche-branch-governance + devops/worktree-and-branch-hygiene (slice work pushes directly to tranche/2-7 per operator decision 2026-07-12; PR-required only at develop and higher). The branch shape is documented at programs/codex/requirements/tranche-2-7-pcgen-corpus-ingestion/README.md 'Branch shape (operator doctrine, 2026-07-12)'.",
     "branch": "tranche/2-7",
-    "baseline_sha": "15d073a91233f8361b1544f4c6afc12a92e6d5ea",
-    "applied_ruleset_id": 18831705,
-    "applied_via": "god-emporer run-31 2026-07-12 via classic ghp_ token from ~/.config/gh/.claude_gh_token; ruleset PUT-minimal (deletion, non_fast_forward, required_signatures). pull_request / required_status_checks / restrict_pushes rules deferred \u2014 see _meta.applied_additional_pending.",
-    "applied_payload_summary": "GitHub ruleset id=18831705 enforced on refs/heads/tranche/2-7; rules: deletion, non_fast_forward, required_signatures. Additional rules tracked in _meta.applied_additional_pending.",
-    "applied_additional_pending": [
-      "pull_request (no PR review gate per operator doctrine; included in source artifact for completeness)",
-      "required_status_checks (workflow .github/workflows/tranche-2-7-ci.yml not yet authored; per devops/tranche-branch-governance, owner=operator)",
-      "restrict_pushes (operator to fill push_actors github user ids)"
-    ],
-    "verification_url": "https://github.com/electricm0nk/codex/rules/18831705"
+    "baseline_sha": "15d073a91233f8361b1544f4c6afc12a92e6d5ea"
   },
   "name": "tranche-2-7-protection",
   "target": "branch",
   "enforcement": "active",
   "conditions": {
     "ref_name": {
-      "include": [
-        "refs/heads/tranche/2-7"
-      ],
+      "include": ["refs/heads/tranche/2-7"],
       "exclude": []
     }
   },
   "rules": [
     {
       "type": "deletion",
-      "parameters": {
-        "deletions": false
-      }
+      "parameters": { "deletions": false }
     },
     {
       "type": "non_fast_forward",
-      "parameters": {
-        "blocks_force_pushes": true
-      }
+      "parameters": { "blocks_force_pushes": true }
     },
     {
       "type": "required_signatures",
-      "parameters": {
-        "required_signatures": false
-      },
+      "parameters": { "required_signatures": false },
       "_note": "GPG signing not enabled by default. Enable separately if/when operator wants signed-tranche policy. Left false here to match the develop baseline and the tranche-3 precedent."
     },
     {
@@ -86,9 +69,7 @@
     },
     {
       "type": "block_creations",
-      "parameters": {
-        "block_creations": false
-      },
+      "parameters": { "block_creations": false },
       "_note": "Branch exists already; creation blocked is irrelevant until the branch is deleted/recreated."
     },
     {
