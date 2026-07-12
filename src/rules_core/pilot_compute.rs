@@ -10523,20 +10523,55 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
+    // SD13-E5: the bonus spells per day from a high Charisma, one record
+    // per ACCESSIBLE spell level (1st+; cantrips never gain bonus spells),
+    // from PF1's shared Table: Ability Modifiers and Bonus Spells,
+    // mirroring the Sorcerer bonus slice — verified against both primary
+    // sources' ability-scores pages: for modifier m and spell level N, 0
+    // when m < N, otherwise (m - N)/4 + 1, gated by the grounded access
+    // ladder per the identical rule text on both sources. The bonus is
+    // never added to the base per-day counts here — no total is computed.
+    for spell_level in 1..=bard_spell_level_access {
+        let bonus_spells = if ability_modifiers.charisma < spell_level {
+            0
+        } else {
+            (ability_modifiers.charisma - spell_level) / 4 + 1
+        };
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.bard.spontaneous.bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: bonus_spells,
+            detail: format!(
+                "Bard bonus spells per day at bard level {level}, spell level \
+                 {spell_level}: {bonus_spells} from Charisma modifier {} (PF1 Core Rulebook \
+                 Table: Ability Modifiers and Bonus Spells, verified identically on both \
+                 primary sources; for modifier m and spell level N the table value is 0 \
+                 when m < N, otherwise (m - N)/4 + 1, and bonus spells apply only to spell \
+                 levels the character is of a high enough class level to cast — the \
+                 grounded access ladder). A computed 0 means the modifier grants no bonus \
+                 at this spell level; it is never added to the base per-day count here — no \
+                 total is computed, no spell selection, and no spell save DCs",
+                ability_modifiers.charisma
+            ),
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
-    // explicitly. The which-spells-are-known selection stays ungrounded; the
-    // access ladder, base per-day counts, base save DCs, and base known counts
+    // explicitly. The which-spells-are-known selection and the base+bonus
+    // per-day TOTAL integration stay ungrounded; the access ladder, base
+    // per-day counts, base save DCs, base known counts, and bonus-slot counts
     // are grounded separately as flat records.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned(),
         message:
             "Bard remains blocked on its spontaneous known-spell / slot posture burden: \
              spontaneous casting, the selection of WHICH spells known (from the Bard list) \
-             are actually chosen, the CHA-modified \
-             spells per day totals, and bonus spell slots from a high casting stat are out \
+             are actually chosen, and the base+bonus \
+             spells per day TOTAL integration are out \
              of scope for this bounded baseline (the spell-level access ladder, the base \
-             spells-per-day table counts, the base spell-save-DC arithmetic, and the base \
-             spells-known table counts are \
+             spells-per-day table counts, the base spell-save-DC arithmetic, the base \
+             spells-known table counts, and the Charisma bonus spell slot counts are \
              grounded separately as flat records) and no spell math is fabricated beyond \
              them"
                 .to_owned(),
