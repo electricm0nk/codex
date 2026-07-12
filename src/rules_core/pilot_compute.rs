@@ -10290,18 +10290,50 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
+    // SD13-E5: the base spell-save-DC arithmetic, one record per ACCESSIBLE
+    // spell level, mirroring the Sorcerer DC slice. Verified against both
+    // primary sources, which state the rule identically: "The Difficulty
+    // Class for a saving throw against a bard's spell is 10 + the spell
+    // level + the bard's Charisma modifier." This is a DIFFERENT formula
+    // family from the grounded Fascinate DC (10 + 1/2 bard level + Charisma
+    // modifier — a performance DC keyed to bard level, not spell level);
+    // both coexist as separate records. This grounds only the base formula
+    // over values already on the seam: no saving-throw resolution, no
+    // target, no spell selection, and no feat DC modifiers are computed.
+    for spell_level in 1..=bard_spell_level_access {
+        let spell_save_dc = 10 + spell_level + ability_modifiers.charisma;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.bard.spontaneous.spell_save_dc.spell_level_{spell_level}"
+            ),
+            value: spell_save_dc,
+            detail: format!(
+                "Bard spell save DC at bard level {level}, spell level {spell_level}: 10 + \
+                 {spell_level} + Charisma modifier {} = {spell_save_dc} (PF1 Core Rulebook, \
+                 verified identically on both primary sources: \"The Difficulty Class for a \
+                 saving throw against a bard's spell is 10 + the spell level + the bard's \
+                 Charisma modifier\"). This grounds the base DC formula only: no \
+                 saving-throw resolution, no target, no spell selection, and no feat DC \
+                 modifiers are computed",
+                ability_modifiers.charisma
+            ),
+        });
+    }
+
     // Still blocked (2/2): name the spontaneous known-spell / slot posture burden
-    // explicitly. Bard spells known and spells per day are gated by Bard level and CHA
-    // modifier on the Bard spell list; this slice grounds no spells known, no spells per
-    // day, no spell DCs, and no bonus spells from a high casting stat.
+    // explicitly. Bard spells known stays ungrounded; the access ladder, base
+    // per-day table counts, and base spell-save-DC arithmetic are grounded
+    // separately as flat records.
     diagnostics.push(ComputationDiagnostic {
         id: "class_spell.bard.spontaneous_known_and_per_day.unsupported".to_owned(),
         message:
             "Bard remains blocked on its spontaneous known-spell / slot posture burden: \
-             spontaneous casting, spells known (from the Bard list), spells per day (from \
-             the Bard table plus CHA modifier), bonus spell slots from a high casting stat, \
-             and spell save DCs are out of scope for this level-1 spell baseline and no \
-             spell math is fabricated"
+             spontaneous casting, spells known (from the Bard list), the CHA-modified \
+             spells per day totals, and bonus spell slots from a high casting stat are out \
+             of scope for this bounded baseline (the spell-level access ladder, the base \
+             spells-per-day table counts, and the base spell-save-DC arithmetic are \
+             grounded separately as flat records) and no spell math is fabricated beyond \
+             them"
                 .to_owned(),
         claim_blocking: true,
     });

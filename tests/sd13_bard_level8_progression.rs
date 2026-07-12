@@ -310,6 +310,12 @@ fn bard_level8_gains_no_new_bard_namespaced_explanation_id() {
         "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_2",
         "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_3",
         "class_chassis.bard.spontaneous.base_spells_per_day.spell_level_4",
+        // The spell_save_dc family (a further SD13-E5 slice): base DC
+        // arithmetic records, not "Special"-column class features.
+        "class_chassis.bard.spontaneous.spell_save_dc.spell_level_1",
+        "class_chassis.bard.spontaneous.spell_save_dc.spell_level_2",
+        "class_chassis.bard.spontaneous.spell_save_dc.spell_level_3",
+        "class_chassis.bard.spontaneous.spell_save_dc.spell_level_4",
     ];
     assert!(
         computation
