@@ -6071,6 +6071,45 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             ),
         });
     }
+
+    // SD13-E5: the TOTAL spells per day — the pure sum of the two records
+    // grounded above (base table count + Wisdom bonus count) per ACCESSIBLE
+    // spell level, completing the integrated totals across all four
+    // partial/spontaneous casters. No new rules content: each input record
+    // carries its own two-source verification. The gate-level "0"-base
+    // entries land as arithmetic (level-4 total 1 from the bonus alone;
+    // level-7 2nd and level-10 3rd are honest ZERO totals at Wisdom +1 —
+    // accessible but currently uncastable). Counts only — no
+    // prepared-posture selection, no casting execution, no slot consumption
+    // or tracking, no save resolution.
+    for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = (index + 1) as i16;
+        let bonus_spells = if ability_modifiers.wisdom < spell_level {
+            0
+        } else {
+            (ability_modifiers.wisdom - spell_level) / 4 + 1
+        };
+        let total_spells = base_count + bonus_spells;
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_chassis.ranger.partial_caster.total_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: total_spells,
+            detail: format!(
+                "Ranger total spells per day at ranger level {level}, spell level \
+                 {spell_level}: base table count {base_count} + Wisdom bonus \
+                 {bonus_spells} = {total_spells} — the pure sum of the two separately \
+                 grounded records (each carrying its own two-source verification), giving \
+                 the actual castable slot count per day; a total of 0 is honest arithmetic \
+                 (accessible spell level, no castable slots at this Wisdom). This grounds \
+                 the count only: no prepared-posture selection, no casting execution, no \
+                 slot consumption or tracking, and no spell save resolution"
+            ),
+        });
+    }
 }
 
 /// The bounded Sorcerer milestone level this decomposition surface grounds, if any.
