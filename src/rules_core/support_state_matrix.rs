@@ -720,7 +720,8 @@ const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs 
     tests/sd13_monk_level7_progression.rs + tests/sd13_monk_level8_progression.rs + \
     tests/sd13_monk_level9_progression.rs + tests/sd13_monk_level10_progression.rs + \
     tests/sd13_monk_second_bonus_feat.rs + \
-    tests/sd13_monk_bonus_feats_three_and_four.rs";
+    tests/sd13_monk_bonus_feats_three_and_four.rs + \
+    tests/sd18_monk_level11_diamond_body.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -2239,7 +2240,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:monk",
                 dimension: "bounded Monk martial chassis progression: the deterministic Human \
                             Monk level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10 \
+                            level-9/level-10/level-11 \
                             martial chassis identity, with base-attack, base-save, AC Bonus, the \
                             unarmed strike damage die (genuinely rising to 1d10 at level 8, \
                             unchanged at levels 9-10), the \
@@ -2442,23 +2443,43 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     DR/attack-resolution engine that does not exist in this codebase, \
                     mirroring how the 4th-level magic and 7th-level cold-iron/silver ki-strike \
                     properties were never fabricated either, with a dedicated negative test \
-                    pinning that no ki-strike record or diagnostic is fabricated. One named burden remains unproven: the \
+                    pinning that no ki-strike record or diagnostic is fabricated. A further \
+                    SD18 slice (cycle-2026-07-13T2100) widens the level-range gate again \
+                    (supported_monk_level, 1..=11) and extends every one of the formulas above \
+                    to level 11 via the same formula, without re-derivation, verified \
+                    independently against the PF1 Core Rulebook Monk class table (d20pfsrd and \
+                    legacy.aonprd.com): level 11 base attack genuinely rises to +8 (11 * 3 / 4) \
+                    while all three good saves stay +7 (11 / 2 + 2, an integer-division \
+                    coincidence with level 10); the unarmed die stays 1d10 (the band spans \
+                    levels 8-11); the Flurry flat attack modifier genuinely rises to +9 (level \
+                    - 2) while the attack count stays 3 (the next count change lands at 15th); \
+                    the ki pool stays 8 (11 / 2 + Wisdom modifier 3, an integer-division \
+                    coincidence with level 10) and Slow Fall's reach stays 50 ft (the next \
+                    reach increase lands at 12th); the level-11 \"Special\" column reads \
+                    \"Diamond body\" ONLY (verified independently against both primary sources, \
+                    checked rather than assumed away) — a genuinely NEW named entry, grounded \
+                    by this slice as a bounded grant-only identity record only \
+                    (class_chassis.monk.diamond_body, value 0, non-fabricated: a flat immunity \
+                    to all poisons), mirroring exactly how Purity of Body was grounded at 5th \
+                    level — no poison-resolution engine exists in this codebase, so no immunity \
+                    application is fabricated from the record. One named burden remains \
+                    unproven: the \
                     recognized bonus feat's own \
                     mechanics (no \
                     attack-resolution, grapple-check, trip-check, or DC/save engine exists for \
                     any of the restricted-list feats). The level-2 and level-6 bonus feat grants \
                     (PF1 grants monks SEPARATE bonus feats at 2nd and 6th level, neither \
                     recognized by this widening), Wholeness of Body's own execution, the \
-                    level-11+ unarmed damage die progression, \
+                    level-12+ unarmed damage die progression, \
                     flurry with special monk weapons, wiring into integrated combat totals, any \
                     ki-power execution engine, High Jump's own Acrobatics/ki-point mechanics, and \
-                    Monk level 11+ all remain unproven, and no martial math beyond the grounded \
+                    Monk level 12+ all remain unproven, and no martial math beyond the grounded \
                     flat surfaces is fabricated",
-                next_required_uplift: "later SD13-E5/E6 slice grounding the one remaining named \
-                    Monk martial pillar burden (the recognized bonus feat's own mechanics — an \
-                    execution engine per feat, not a flat number), then the level-2/level-6 \
+                next_required_uplift: "later SD13-E5/E6/SD18 slice grounding the one remaining \
+                    named Monk martial pillar burden (the recognized bonus feat's own mechanics \
+                    — an execution engine per feat, not a flat number), then the level-2/level-6 \
                     bonus feat grant recognition, Wholeness of Body's own execution, and Monk \
-                    level 11+ progression",
+                    level 12+ progression",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
