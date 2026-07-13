@@ -1024,7 +1024,26 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// record (BARD_JACK_OF_ALL_TRADES_LEVEL), mirroring the Woodland Stride /
 /// Purity of Body idiom, while the repeat Versatile Performance grant stays
 /// named-but-unproven exactly like the 2nd/6th-level grants before it.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 10;
+///
+/// A still further SD18 slice widens the gate to level 11 (verified
+/// independently against d20pfsrd and legacy.aonprd.com, mirroring exactly
+/// how `MAX_SUPPORTED_BARBARIAN_LEVEL` was widened from 10 to 11): base
+/// attack (classlevel * 3 / 4) genuinely rises to +8, base saves stay
+/// Fortitude +3 / Reflex +7 / Will +7 (11/3 and 11/2+2, both
+/// integer-division coincidences unchanged from level 10), Bardic Knowledge
+/// stays 5 and the Fascinate DC/count stay 17/4 (all integer-division
+/// coincidences), the Bardic Performance rounds-per-day pool genuinely
+/// rises to 26 (4 + Charisma modifier + 2 per level after 1st), and the
+/// level-11 "Special" column reads "Inspire competence +4, inspire courage
+/// +3, lore master 2/day" only — three magnitude-rises on the
+/// already-grounded flat-constant pillars (Inspire Competence 2 +
+/// (level-3)/4, Inspire Courage's every-sixth-level-after-5th tier, and
+/// Lore Master's own every-sixth-level-after-5th take-20 usage-count tier),
+/// mirroring exactly how the Barbarian Greater Rage magnitude-rise was
+/// grounded. No new class feature (no new choice slot) is granted at 11th
+/// level, so no new engine is invented; Jack-of-All-Trades and the repeat
+/// Versatile Performance grant both carry over unchanged.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 11;
 /// PF1 Core Rulebook level gate at which Bard gains Jack-of-All-Trades (10th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Jack-of-all-trades, versatile performance" as
@@ -1057,32 +1076,57 @@ const BARD_INSPIRE_COMPETENCE_LEVEL: u8 = 3;
 /// competence +3" as the Bard 7th-level special feature entry, and both state
 /// the rule text "This bonus increases by +1 for every four levels the bard
 /// has attained beyond 3rd (+3 at 7th, +4 at 11th, +5 at 15th, and +6 at
-/// 19th)"). The next increase (to +4) lands at bard level 11, out of scope
-/// since only Bard levels 1-8 are supported.
+/// 19th)"). The next increase (to +4) lands at bard level 11 (grounded below
+/// by `BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL`).
 const BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL: u8 = 7;
 /// PF1 Core Rulebook Inspire Competence magnitude at the level it is first gained: a
 /// flat +2 competence bonus on skill checks with a particular skill. Verified
 /// against both primary sources.
 const BARD_INSPIRE_COMPETENCE_BONUS_FIRST_TIER: i16 = 2;
 /// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
-/// second-tier level gate (7th level and beyond, until the next tier at 11th
-/// level, out of scope here).
+/// second-tier level gate (7th level and beyond, until the third tier at
+/// 11th level).
 const BARD_INSPIRE_COMPETENCE_BONUS_SECOND_TIER: i16 = 3;
+/// PF1 Core Rulebook level at which the Inspire Competence flat magnitude
+/// increases again from +3 to +4 (11th level, verified independently
+/// against two primary sources: d20pfsrd and legacy.aonprd.com both list
+/// "Inspire competence +4, inspire courage +3, lore master 2/day" as the
+/// Bard 11th-level special feature entry). The next increase (to +5) lands
+/// at bard level 15, out of scope since only Bard levels 1-11 are
+/// supported.
+const BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL: u8 = 11;
+/// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
+/// third-tier level gate (11th level and beyond, until the next tier at
+/// 15th level, out of scope here).
+const BARD_INSPIRE_COMPETENCE_BONUS_THIRD_TIER: i16 = 4;
 /// PF1 Core Rulebook level at which the Inspire Courage flat magnitude first
 /// increases from +1 to +2 (5th level, verified independently against two
 /// primary sources: d20pfsrd and legacy.aonprd.com both list "Inspire courage
 /// +2, lore master 1/day" as the Bard 5th-level special feature entry, and
 /// both state the rule text "At 5th level, and every six bard levels
 /// thereafter, this bonus increases by +1"). The next increase (to +3) lands
-/// at bard level 11, out of scope since only Bard levels 1-5 are supported.
+/// at bard level 11 (grounded below by `BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL`).
 const BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL: u8 = 5;
 /// PF1 Core Rulebook Inspire Courage flat magnitude below the second-tier
 /// level gate.
 const BARD_INSPIRE_COURAGE_BONUS_FIRST_TIER: i16 = 1;
 /// PF1 Core Rulebook Inspire Courage flat magnitude at or above the
-/// second-tier level gate (5th level and beyond, until the next tier at 11th
-/// level, out of scope here).
+/// second-tier level gate (5th level and beyond, until the third tier at
+/// 11th level).
 const BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER: i16 = 2;
+/// PF1 Core Rulebook level at which the Inspire Courage flat magnitude
+/// increases again from +2 to +3 (11th level, verified independently
+/// against two primary sources: d20pfsrd and legacy.aonprd.com both list
+/// "Inspire competence +4, inspire courage +3, lore master 2/day" as the
+/// Bard 11th-level special feature entry — "every six bard levels
+/// thereafter" after the 5th-level tier lands exactly on 11th). The next
+/// increase (to +4) lands at bard level 17, out of scope since only Bard
+/// levels 1-11 are supported.
+const BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL: u8 = 11;
+/// PF1 Core Rulebook Inspire Courage flat magnitude at or above the
+/// third-tier level gate (11th level and beyond, until the next tier at
+/// 17th level, out of scope here).
+const BARD_INSPIRE_COURAGE_BONUS_THIRD_TIER: i16 = 3;
 /// PF1 Core Rulebook level gate at which Bard gains Lore Master (5th level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Inspire courage +2, lore master 1/day" as the
@@ -1094,9 +1138,23 @@ const BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER: i16 = 2;
 /// mirroring the Paladin Smite Evil / Wizard Force Missile uses-per-day
 /// idiom; neither mechanic is executed against any actual Knowledge check.
 const BARD_LORE_MASTER_LEVEL: u8 = 5;
-/// PF1 Core Rulebook Lore Master take-20 usage-count magnitude: a flat 1/day,
-/// non-level-scaled count (verified against both primary sources).
+/// PF1 Core Rulebook Lore Master take-20 usage-count magnitude at the level
+/// it is first gained: a flat 1/day count (verified against both primary
+/// sources).
 const BARD_LORE_MASTER_TAKE_20_USES_PER_DAY: i16 = 1;
+/// PF1 Core Rulebook level at which the Lore Master take-20 usage-count
+/// magnitude increases from 1/day to 2/day (11th level, verified
+/// independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Inspire competence +4, inspire courage +3,
+/// lore master 2/day" as the Bard 11th-level special feature entry — the
+/// same every-sixth-level-after-5th cadence as Inspire Courage). The next
+/// increase (to 3/day) lands at bard level 17, out of scope since only Bard
+/// levels 1-11 are supported.
+const BARD_LORE_MASTER_SECOND_TIER_LEVEL: u8 = 11;
+/// PF1 Core Rulebook Lore Master take-20 usage-count magnitude at or above
+/// the second-tier level gate (11th level and beyond, until the next tier
+/// at 17th level, out of scope here).
+const BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_SECOND_TIER: i16 = 2;
 
 // SD13-E5 Fascinate flat DC base. PF1 Core Rulebook Fascinate Will save DC is
 // 10 + 1/2 bard level + Charisma modifier; only the fixed base term is a named
@@ -10923,7 +10981,9 @@ fn explain_bard_level1_spell_baseline(
     // +1 through level 5" framing turns out to have been precise). Only the flat
     // magnitude is grounded; no performance-state engine exists to start the
     // performance or apply the bonus to any computed total.
-    let inspire_courage_bonus = if level >= BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL {
+    let inspire_courage_bonus = if level >= BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL {
+        BARD_INSPIRE_COURAGE_BONUS_THIRD_TIER
+    } else if level >= BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL {
         BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER
     } else {
         BARD_INSPIRE_COURAGE_BONUS_FIRST_TIER
@@ -10936,11 +10996,12 @@ fn explain_bard_level1_spell_baseline(
              Courage): a +{inspire_courage_bonus} competence bonus on attack rolls and weapon \
              damage rolls and a +{inspire_courage_bonus} morale bonus on saving throws against \
              charm and fear effects for affected allies. This magnitude increases from +1 to +2 \
-             exactly at bard level {BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL} (PF1 Core Rulebook: \
-             \"At 5th level, and every six bard levels thereafter, this bonus increases by \
-             +1\"), so it is +{inspire_courage_bonus} at level {level}; the next increase (to \
-             +3) is at bard level 11, out of scope for this bounded slice. This grounds only the \
-             flat magnitude of the fixture's chosen performance \
+             exactly at bard level {BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL} and again from +2 to \
+             +3 exactly at bard level {BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL} (PF1 Core \
+             Rulebook: \"At 5th level, and every six bard levels thereafter, this bonus \
+             increases by +1\"), so it is +{inspire_courage_bonus} at level {level}; the next \
+             increase (to +4) is at bard level 17, out of scope for this bounded slice. This \
+             grounds only the flat magnitude of the fixture's chosen performance \
              (choice:bard_bardic_music -> performance:inspire_courage); it is never applied to \
              any attack, damage, or save total because the performance-state engine \
              (start/maintain action economy, round tracking) is not implemented"
@@ -11062,7 +11123,9 @@ fn explain_bard_level1_spell_baseline(
             ),
         });
     } else {
-        let inspire_competence_bonus = if level >= BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL {
+        let inspire_competence_bonus = if level >= BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL {
+            BARD_INSPIRE_COMPETENCE_BONUS_THIRD_TIER
+        } else if level >= BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL {
             BARD_INSPIRE_COMPETENCE_BONUS_SECOND_TIER
         } else {
             BARD_INSPIRE_COMPETENCE_BONUS_FIRST_TIER
@@ -11074,14 +11137,15 @@ fn explain_bard_level1_spell_baseline(
                 "Bard Inspire Competence granted at bard level {level} (PF1 Core Rulebook, \
                  3rd-level Bard class feature): a flat +{inspire_competence_bonus} competence \
                  bonus on skill checks with a particular skill. This magnitude increases from \
-                 +2 to +3 exactly at bard level {BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL} (PF1 \
-                 Core Rulebook: \"This bonus increases by +1 for every four levels the bard has \
-                 attained beyond 3rd\"), so it is +{inspire_competence_bonus} at level {level}; \
-                 the next increase (to +4) is at bard level 11, out of scope for this bounded \
-                 slice. This is a standalone explanation record only; it is never applied to any \
-                 actual skill-check total because no skill-check-resolution engine exists \
-                 anywhere in this codebase, and no task-selection/action-economy engine decides \
-                 which skill or ally it targets"
+                 +2 to +3 exactly at bard level {BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL} and \
+                 again from +3 to +4 exactly at bard level \
+                 {BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL} (PF1 Core Rulebook: \"This bonus \
+                 increases by +1 for every four levels the bard has attained beyond 3rd\"), so \
+                 it is +{inspire_competence_bonus} at level {level}; the next increase (to +5) \
+                 is at bard level 15, out of scope for this bounded slice. This is a standalone \
+                 explanation record only; it is never applied to any actual skill-check total \
+                 because no skill-check-resolution engine exists anywhere in this codebase, and \
+                 no task-selection/action-economy engine decides which skill or ally it targets"
             ),
         });
     }
@@ -11116,21 +11180,32 @@ fn explain_bard_level1_spell_baseline(
             ),
         });
     } else {
+        let lore_master_uses_per_day = if level >= BARD_LORE_MASTER_SECOND_TIER_LEVEL {
+            BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_SECOND_TIER
+        } else {
+            BARD_LORE_MASTER_TAKE_20_USES_PER_DAY
+        };
         explanations.push(ComputationExplanation {
             id: "class_feature.bard.lore_master".to_owned(),
-            value: BARD_LORE_MASTER_TAKE_20_USES_PER_DAY,
+            value: lore_master_uses_per_day,
             detail: format!(
                 "Bard Lore Master granted at bard level {level} (PF1 Core Rulebook, 5th-level \
                  Bard class feature): \"the bard becomes a master of lore and can take 10 on any \
                  Knowledge skill check that he has ranks in... once per day, the bard can take \
                  20 on any Knowledge skill check as a standard action.\" This grounds only the \
-                 rule's own flat {BARD_LORE_MASTER_TAKE_20_USES_PER_DAY}/day usage-count \
-                 magnitude for the take-20 half of the feature (a bounded grant-only identity \
-                 record, mirroring the Paladin Smite Evil / Wizard Force Missile uses-per-day \
-                 idiom); the take-10 capability has no flat magnitude to ground (it is an \
-                 at-will resolution-mode toggle, not a countable resource), and neither the \
-                 take-10 nor the take-20 mechanic is actually executed against any Knowledge \
-                 check, since no skill-check-resolution engine exists anywhere in this codebase"
+                 rule's own flat {lore_master_uses_per_day}/day usage-count magnitude for the \
+                 take-20 half of the feature (a bounded grant-only identity record, mirroring \
+                 the Paladin Smite Evil / Wizard Force Missile uses-per-day idiom), which \
+                 genuinely rises from 1/day to 2/day exactly at bard level \
+                 {BARD_LORE_MASTER_SECOND_TIER_LEVEL} (PF1 Core Rulebook: \"Inspire competence \
+                 +4, inspire courage +3, lore master 2/day\" at the Bard 11th-level special \
+                 feature entry, the same every-sixth-level-after-5th cadence as Inspire \
+                 Courage); the next increase (to 3/day) is at bard level 17, out of scope for \
+                 this bounded slice. The take-10 capability has no flat magnitude to ground (it \
+                 is an at-will resolution-mode toggle, not a countable resource), and neither \
+                 the take-10 nor the take-20 mechanic is actually executed against any \
+                 Knowledge check, since no skill-check-resolution engine exists anywhere in \
+                 this codebase"
             ),
         });
     }

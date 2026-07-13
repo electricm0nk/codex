@@ -570,7 +570,8 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_spells_per_day_counts.rs + tests/sd13_bard_spell_save_dcs.rs + \
     tests/sd13_bard_spells_known_counts.rs + tests/sd13_bard_bonus_spells.rs + \
     tests/sd13_bard_total_spells_per_day.rs + \
-    tests/sd13_bard_versatile_performance_slots.rs";
+    tests/sd13_bard_versatile_performance_slots.rs + \
+    tests/sd18_bard_level11_inspire_widening.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1432,13 +1433,16 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10 \
+                            level-9/level-10/level-11 \
                             spell baseline, with base attack bonus, base save progression, Bardic \
                             Knowledge, the flat Bardic Performance surface (rounds per day, \
-                            inspire courage magnitude), the flat Fascinate DC / \
+                            inspire courage magnitude rising at level 5 and again at level 11), \
+                            the flat Fascinate DC / \
                             affected-creature-count formulas, (at level 2) the flat Well-Versed \
-                            magnitude, (at level 3, rising at level 7) the flat Inspire \
-                            Competence magnitude, and (at level 5) the flat Lore Master take-20 \
+                            magnitude, (at level 3, rising at level 7 and again at level 11) the \
+                            flat Inspire \
+                            Competence magnitude, and (at level 5, rising at level 11) the flat \
+                            Lore Master take-20 \
                             uses-per-day magnitude, all grounded for real at every supported \
                             level, and the bardic performance-execution burden (including \
                             Countersong, Distraction, Versatile Performance, and Suggestion) and \
@@ -1746,9 +1750,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     actual castable slot count per day; live end-to-end arithmetic; counts \
                     only, no spontaneous-casting execution, slot consumption, or tracking; \
                     the blocker now defers exactly that execution plus the which-spells \
-                    selection)). No \
+                    selection)) — AND a further SD18 slice widens the level-range gate again \
+                    (supported_bard_level, 1..=11), the second SD-18 §3.2 class-row widening \
+                    and the first on a spell-bearing class, and extends every one of the \
+                    formulas above to level 11 via the same formula, without re-derivation, \
+                    verified independently against the PF1 Core Rulebook Bard class table \
+                    (d20pfsrd and legacy.aonprd.com): level 11 base attack genuinely rises to \
+                    +8 (11 * 3 / 4) while base saves stay Fortitude +3 / Reflex +7 / Will +7 \
+                    (11/3 and 11/2+2, both integer-division coincidences unchanged from level \
+                    10); Bardic Knowledge stays 5 and the Fascinate DC/count stay 17/4 (all \
+                    integer-division coincidences); the Bardic Performance rounds-per-day pool \
+                    genuinely rises to 26 (4 + Charisma modifier + 2 per level after 1st); the \
+                    level-11 \"Special\" column reads \"Inspire competence +4, inspire courage \
+                    +3, lore master 2/day\" only (verified independently against both primary \
+                    sources, checked rather than assumed): Inspire Competence GENUINELY RISES \
+                    from +3 to +4 (2 + (11-3)/4), Inspire Courage GENUINELY RISES from +2 to +3 \
+                    (the every-sixth-level-after-5th cadence landing exactly on 11th), and Lore \
+                    Master's flat take-20 usage count GENUINELY RISES from 1/day to 2/day (the \
+                    same cadence) — three magnitude-rises on the already-grounded flat-constant \
+                    pillars, mirroring exactly how the Barbarian Greater Rage magnitude-rise \
+                    was grounded at its own 11th-level tier; no new class feature (no new \
+                    choice slot) is granted at 11th level, so no new engine is invented; \
+                    Jack-of-All-Trades and the repeat Versatile Performance grant both carry \
+                    over unchanged. No \
                     performance-execution math and no spell math is fabricated and \
-                    no Bard level 11+ is proven",
+                    no Bard level 12+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
                     Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
@@ -1758,7 +1784,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Dirge of Doom's fear/shaken-condition resolution, Inspire Greatness's \
                     bonus-Hit-Dice/temporary-hit-point mechanics, Lore Master's own \
                     take-10/take-20 skill-check-resolution execution), then the spontaneous \
-                    spell-slot burden, then level-11+ progression",
+                    spell-slot burden, then level-12+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",
