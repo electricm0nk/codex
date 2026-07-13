@@ -2007,7 +2007,23 @@ const DRUID_CLASS_ID: &str = "class:druid";
 // body III / plant shape II), so Wild Shape stays entirely
 // named-but-unproven, exactly as at level 4/6/8 — no explanation or
 // diagnostic record is fabricated for it this slice either.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 10;
+// A still further SD18 slice widens the gate to level 11 (verified
+// independently against d20pfsrd and legacy.aonprd.com): level 11 base
+// attack bonus genuinely rises to +8 (11 * 3 / 4; the table's own "+8/+3"
+// iterative notation is not modeled anywhere in this codebase, only the
+// flat base value); both good saves stay +7 (11 / 2 + 2, an
+// integer-division coincidence with level 10) and poor Reflex stays +3
+// (11 / 3, also a coincidence); Wild Empathy genuinely rises to 12
+// (11 + Charisma modifier); Nature Sense, Woodland Stride, Trackless Step,
+// Resist Nature's Lure, Venom Immunity, and the nature-bond choice
+// recognition all carry over unchanged. UNLIKE every prior widened level
+// (2, 3, 4, 6, 8, 9, 10), the PF1 Core Rulebook Druid class table's
+// level-11 "Special" column is genuinely blank (checked independently
+// against both primary sources rather than assumed away — the next Wild
+// Shape frequency rise, "Wild shape (5/day)", does not land until 12th
+// level), so this slice grounds no new pillar at level 11 either — only
+// the existing arithmetic pillars are widened.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 11;
 /// PF1 Core Rulebook level gate at which Druid gains Venom Immunity (9th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Venom immunity" as the Druid 9th-level

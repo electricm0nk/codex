@@ -251,12 +251,17 @@ fn druid_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(fortitude.value, 6, "Druid level 9 good Fortitude must stay 6");
 }
 
-// ----- Negative control: level 10 stays unrecognized by this slice -----
-
+// ----- Negative control: level 12 stays unrecognized by this slice -----
+//
+// Updated by the SD18 druid-level11-widening cycle: Druid level 11 is now
+// genuinely promoted (MAX_SUPPORTED_DRUID_LEVEL widened to 11 by
+// tests/sd18_druid_level11_widening.rs), so this row's own negative control
+// boundary moves to level 12, mirroring the identical fix already made for
+// Barbarian's, Bard's, and Cleric's own level-10 sibling tests.
 #[test]
-fn druid_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = DRUID_LEVEL10_FIXTURE.replace("class:druid:10", "class:druid:11");
-    let input = load(&level_11);
+fn druid_level_12_is_not_promoted_by_this_slice() {
+    let level_12 = DRUID_LEVEL10_FIXTURE.replace("class:druid:10", "class:druid:12");
+    let input = load(&level_12);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -265,7 +270,7 @@ fn druid_level_11_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.druid.")
                 || e.id.starts_with("class_feature.druid.")
                 || e.id == "class_chassis.spell_baseline.druid"),
-        "level-11 Druid must not gain any bounded druid explanation: {:?}",
+        "level-12 Druid must not gain any bounded druid explanation: {:?}",
         computation.explanations
     );
 }
