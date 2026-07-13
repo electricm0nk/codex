@@ -2671,13 +2671,20 @@ const DWARF_CHA_ADJUSTMENT: i16 = -2;
 /// and `dwarf_skills.lst:6`'s `Perception.MOD SITUATION:to notice unusual
 /// stonework`). Distinct from the separate Greed (Appraise) racial trait.
 const DWARF_STONECUNNING_PERCEPTION_BONUS: i16 = 2;
+/// PF1 Core Rulebook Dwarf Greed flat Appraise situational-bonus magnitude
+/// (verified against `dwarf_abilities_race.lst:23`'s
+/// `BONUS:SITUATION|Appraise=to assess nonmagical metals or gemstones|2|TYPE=Racial`
+/// and `dwarf_skills.lst:5`'s `Appraise.MOD SITUATION:to assess nonmagical
+/// metals or gemstones`). Distinct from the already-grounded Stonecunning
+/// (Perception) racial trait.
+const DWARF_GREED_APPRAISE_BONUS: i16 = 2;
 
 /// SD13-E2 Dwarf racial trait bundle explanation seam (mirroring the SD13-E6-F3a
 /// Human trait bundle pattern for the first non-Human core race), widened by the
-/// SD18 dwarf-stonecunning cycle.
+/// SD18 dwarf-stonecunning and dwarf-greed cycles.
 ///
-/// Surfaces five grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
-/// modifiers, size, speed, senses, Stonecunning) as explicit `ComputationExplanation`
+/// Surfaces six grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
+/// modifiers, size, speed, senses, Stonecunning, Greed) as explicit `ComputationExplanation`
 /// records so the Dwarf identity is legible on the runtime path rather than left
 /// behind the generic `race.semantics.unverified` diagnostic every other non-Human
 /// race still receives.
@@ -2691,11 +2698,12 @@ const DWARF_STONECUNNING_PERCEPTION_BONUS: i16 = 2;
 ///     (the chosen Constitution/Charisma scores are understood to already reflect
 ///     the fixed +2/-2 racial adjustment; no arithmetic is performed on this seam),
 ///     the size/senses records carry the grounded source value as identity only, and
-///     the Stonecunning record names only the flat +2 Perception situational-bonus
-///     magnitude (no Perception-check-total or stonework-detection engine exists),
+///     the Stonecunning and Greed records each name only their own flat +2
+///     situational-bonus magnitude (no Perception-check-total, Appraise-check-total,
+///     stonework-detection, or goods-valuation engine exists),
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Dwarf-specific `race.dwarf.bounded_semantics` note naming the still-unproven
-///     families explicitly (Greed (Appraise), Defensive Training, Hardy, Stability,
+///     families explicitly (Defensive Training, Hardy, Stability,
 ///     Hatred, weapon familiarity, and the explicit absence of any Dwarf racial
 ///     bonus feat),
 ///   - is bounded to race recognition only; it deliberately grounds no Dwarf
@@ -2803,19 +2811,47 @@ fn explain_dwarf_race_seam(
         ),
     });
 
-    // Bounded honesty: five named dimensions are now grounded (ability
-    // modifiers, size, speed, senses, Stonecunning). This replaces the
-    // generic race.semantics.unverified diagnostic for Dwarf specifically and
-    // stays non-claim-blocking so the deterministic pilot still reports
-    // computed evidence.
+    // ----- Greed (SD18 dwarf-greed cycle) -----
+    // Grounded flat +2 situational bonus on Appraise checks made to
+    // determine the price of nonmagical goods that contain precious metals
+    // or gemstones (core_essentials/races/dwarf/dwarf_abilities_race.lst:23
+    // BONUS:SITUATION|Appraise=to assess nonmagical metals or gemstones|2|TYPE=Racial;
+    // dwarf_skills.lst:5 Appraise.MOD SITUATION:to assess nonmagical metals
+    // or gemstones). Mirrors the already-grounded Stonecunning flat
+    // skill-bonus-magnitude idiom on this same seam: no
+    // Appraise-check-total or goods-valuation engine exists anywhere in
+    // this codebase, so this names only the flat situational-bonus
+    // magnitude, not a check-execution engine.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.greed".to_owned(),
+        value: DWARF_GREED_APPRAISE_BONUS,
+        detail: format!(
+            "Dwarf racial trait bundle — Greed: PF1 Core Dwarf grants a flat \
+             {DWARF_GREED_APPRAISE_BONUS:+} bonus on Appraise checks made to determine the \
+             price of nonmagical goods that contain precious metals or gemstones \
+             (dwarf_abilities_race.lst:23 BONUS:SITUATION|Appraise=to assess nonmagical \
+             metals or gemstones|{DWARF_GREED_APPRAISE_BONUS}|TYPE=Racial; \
+             dwarf_skills.lst:5 Appraise.MOD SITUATION:to assess nonmagical metals or \
+             gemstones). This is a bounded flat situational-bonus-magnitude recognition \
+             record naming the Greed identity on the deterministic pilot seam; no \
+             Appraise-check-total or goods-valuation engine exists anywhere in this \
+             codebase, so no check resolution is fabricated from this record"
+        ),
+    });
+
+    // Bounded honesty: six named dimensions are now grounded (ability
+    // modifiers, size, speed, senses, Stonecunning, Greed). This replaces
+    // the generic race.semantics.unverified diagnostic for Dwarf
+    // specifically and stays non-claim-blocking so the deterministic pilot
+    // still reports computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.dwarf.bounded_semantics".to_owned(),
         message: "Dwarf race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, senses, and Stonecunning (flat +2 Perception \
-                  situational bonus to notice unusual stonework) trait bundle; the remaining \
-                  PF1 Core Dwarf racial trait surface remains unverified: Greed (Appraise \
-                  situational bonus to assess nonmagical precious-metal/gemstone goods, a \
-                  distinct trait from Stonecunning), Defensive Training (dodge bonus to AC \
+                  modifiers, size, speed, senses, Stonecunning (flat +2 Perception \
+                  situational bonus to notice unusual stonework), and Greed (flat +2 \
+                  Appraise situational bonus to assess nonmagical precious-metal/gemstone \
+                  goods) trait bundle; the remaining PF1 Core Dwarf racial trait surface \
+                  remains unverified: Defensive Training (dodge bonus to AC \
                   against giants), Hardy (bonus on saves against poison, spells, and \
                   spell-like abilities), Stability (bonus to CMD against bull rush/trip), \
                   Hatred (bonus on attack rolls against orcs and goblinoids), and weapon \
