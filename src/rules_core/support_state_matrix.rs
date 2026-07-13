@@ -328,7 +328,14 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
 /// levels-1-10 fixture set without moving the row's grounding_ref, since the
 /// already-landed sd13_fighter_level9_level10_progression.rs test asserts this
 /// exact grounding_ref string.)
-const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs";
+// SD18 widening: extended to also cite the live SD18 level-11 Armor Training 3
+// widening proof, mirroring how `SD13_BARBARIAN_LEVEL1_TEST`,
+// `SD13_BARD_LEVEL1_TEST`, `SD13_CLERIC_LEVEL1_TEST`, and
+// `SD13_DRUID_LEVEL1_TEST` were each extended to also cite their own SD18
+// level-11 widening proof. Combined as one literal (paladin-row idiom) so
+// both substrings remain independently assertable.
+const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs + \
+    tests/sd18_fighter_level11_armor_training3.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
 /// the SD13-E3-F5 mandatory-milestone classification proof (which level-1
@@ -965,27 +972,41 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.fighter.levels_2_10",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
-                dimension: "class progression across levels 2-10: bounded milestone proof \
-                            for levels 2 through 10, with the Weapon Training damage-roll \
-                            half still unproven",
+                dimension: "class progression across levels 2-11: bounded milestone proof \
+                            for levels 2 through 11 (SD18 widens the prior levels 2-10 tranche \
+                            by one level), with the Weapon Training damage-roll half still \
+                            unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_FIGHTER_LEVEL9_LEVEL10_TEST,
-                blocker_or_lossiness_note: "SD13-E3/SD13-E5 prove Fighter levels 2 through 10: \
-                    base attack / base save progression (the classlevel, classlevel/2+2, \
-                    classlevel/3 formulas are level-generic), the level-2, level-4, level-6, \
-                    level-8, and level-10 bonus-feat progression seams (the level-10 canonical \
-                    Greater Weapon Focus selection's prerequisites are honestly met by the \
-                    canonical loadout), the level-3 Armor Training 1 seam, the level-5 Weapon \
-                    Training 1 attack-roll half, the level-7 Armor Training 2 seam (raises the \
-                    Climb/Swim selected-skill totals by +1 each on the deterministic Chain \
-                    Shirt), the level-9 Weapon Training 2 attack-roll half (rank = 1 + \
-                    (level - 5) / 4: the first-group Heavy Blades bonus rises to +2, folded \
-                    into the baseline melee attack bonus, and the canonical second group, Bows, \
-                    is surfaced at +1 as an explanation-only seam covering no equipped weapon) \
-                    over the deterministic Human loadout, and Bravery (+1 Will save vs fear at \
-                    level 2, +2 at level 6, +3 at level 10, rank = 1 + (level - 2) / 4) as a \
+                blocker_or_lossiness_note: "SD13-E3/SD13-E5 prove Fighter levels 2 through 10, \
+                    and SD18 (cycle-2026-07-13T1941, mirroring the Barbarian/Bard/Cleric/ \
+                    Druid level-11 widening pattern) widens to level 11: base attack / base save \
+                    progression (the classlevel, classlevel/2+2, classlevel/3 formulas are \
+                    level-generic; base attack bonus genuinely rises to 11 at level 11, while all \
+                    three base saves stay numerically unchanged from level 10 as integer-division \
+                    coincidences), the level-2, level-4, level-6, level-8, and level-10 bonus-feat \
+                    progression seams (the level-10 canonical Greater Weapon Focus selection's \
+                    prerequisites are honestly met by the canonical loadout; no new bonus feat \
+                    lands at level 11 — the cadence's next feat is level 12), the level-3 Armor \
+                    Training 1 seam, the level-5 Weapon Training 1 attack-roll half, the level-7 \
+                    Armor Training 2 seam (raises the Climb/Swim selected-skill totals by +1 each \
+                    on the deterministic Chain Shirt), the level-9 Weapon Training 2 attack-roll \
+                    half (rank = 1 + (level - 5) / 4: the first-group Heavy Blades bonus rises to \
+                    +2, folded into the baseline melee attack bonus, and the canonical second \
+                    group, Bows, is surfaced at +1 as an explanation-only seam covering no \
+                    equipped weapon; the rank stays 2 at level 11, an integer-division \
+                    coincidence with level 10) over the deterministic Human loadout, the \
+                    level-11 Armor Training 3 seam (rank genuinely rises to 3, raising the \
+                    maximum Dexterity bonus to +7 from +6; the armor-check-penalty reduction was \
+                    already capped at 0 by Armor Training 2, so no Climb/Swim total changes, and \
+                    the deterministic +2 Dexterity contribution stays below both the old and new \
+                    max-Dex caps, so no derived armor class changes either — a genuine, \
+                    non-fabricated magnitude widening whose effect on this specific fixture is \
+                    honestly reported as unchanged), and Bravery (+1 Will save vs fear at \
+                    level 2, +2 at level 6, +3 at level 10, rank = 1 + (level - 2) / 4, staying \
+                    +3 at level 11, an integer-division coincidence with level 10) as a \
                     flat, non-fabricated bonus magnitude record. The Weapon Training \
                     damage-roll half stays unproven — no damage total is computed anywhere in \
                     this codebase for any Fighter level, so this is not a new gap. Bravery's \
@@ -994,13 +1015,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the Bravery bonus is never folded into the unconditional Will save total. \
                     The generic PF1 ability-score-increase milestones need no separate seam: \
                     the chosen ability score is trusted at face value. Any general \
-                    feat-effect/prerequisite engine also remains out of proof",
-                next_required_uplift: "later SD13 slice grounding the remaining named Fighter \
-                    class-feature burden inside levels 2-10: the Weapon Training damage-roll \
-                    half (which first needs any damage total to exist on the compute surface), \
-                    or a fear-condition/save-resolution engine to apply the Bravery magnitude \
-                    to an actual Will save (a tranche-level subsystem decision, not a slice \
-                    decision)",
+                    feat-effect/prerequisite engine also remains out of proof. No Fighter \
+                    level 12+ is proven",
+                next_required_uplift: "later SD13/SD18 slice grounding the remaining named \
+                    Fighter class-feature burden inside levels 2-11: the Weapon Training \
+                    damage-roll half (which first needs any damage total to exist on the compute \
+                    surface), a fear-condition/save-resolution engine to apply the Bravery \
+                    magnitude to an actual Will save (a tranche-level subsystem decision, not a \
+                    slice decision), or level-12+ progression (the next bonus-feat cadence slot \
+                    and Weapon Training 3 at level 13)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",
