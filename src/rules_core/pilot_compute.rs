@@ -1811,7 +1811,7 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // Touch of Good's bonus genuinely rises to 5 (10 / 2) via the same
 // half-cleric-level formula; both domain-power uses-per-day pools stay
 // level-independent; no new pillar is grounded.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 10;
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 11;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -1851,6 +1851,7 @@ const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_3_AND_4: i16 = 2;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_5_AND_6: i16 = 3;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7: i16 = 4;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9: i16 = 5;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11: i16 = 6;
 /// The cleric level at which 2nd-level cleric spells (and so the second domain
 /// spell slot) first become available, verified against the raw PF1 Core Rulebook
 /// Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com): level 2 shows
@@ -1880,6 +1881,15 @@ const CLERIC_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 /// non-"—" 5th-level column ("1+1", the level-9 row reading
 /// "4/4+1/4+1/3+1/2+1/1+1").
 const CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
+/// The cleric level at which 6th-level cleric spells (and so the sixth domain
+/// spell slot) first become available, verified against the raw PF1 Core
+/// Rulebook Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com):
+/// level 10 shows a still-"—" 6th-level column, level 11 is the first to show
+/// a non-"—" 6th-level column ("1+1"). This is also the cleric level at which
+/// Channel Energy's die count rises again (the class table's level-11
+/// "Special" column reads "Channel energy 6d6"), via the same pre-existing
+/// `(level + 1) / 2` formula, not re-derived.
+const CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 11;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
 // identity. Druid is a prepared divine caster whose bounded burden splits across
@@ -9835,7 +9845,25 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// increases only at level 8) — so two pillars whose underlying formulas
 /// genuinely change (Channel Energy dice, domain spell slot count) are widened;
 /// no new pillar record is added at level 7 either, since no other class feature
-/// is named in the level-7 Special column. It only:
+/// is named in the level-7 Special column. An SD18 slice
+/// (`cycle-2026-07-13T2007`, mirroring `cycle-2026-07-13T1255`'s Barbarian
+/// level-11 widening and `cycle-2026-07-13T1830`'s Bard level-11 widening)
+/// widens the gate again to 1..=11 (`MAX_SUPPORTED_CLERIC_LEVEL = 11`,
+/// generalized from the SD13-E5 1..=10 ceiling): the class table's level-11
+/// "Special" column reads "Channel energy 6d6" (verified independently
+/// against d20pfsrd and legacy.aonprd.com) — Channel Energy's die count
+/// genuinely rises to 6d6 (`(11 + 1) / 2 = 6`, up from 5d6 at level 10) via
+/// the same pre-existing formula, not re-derived — and the domain spell slot
+/// count also genuinely rises, to 6 (a level-11 cleric casts 6th-level cleric
+/// spells for the first time, verified independently against both primary
+/// sources' raw spells-per-day table rows), while base attack bonus rises to
+/// +8 (`11 * 3 / 4 = 8`) and base Fortitude/Reflex/Will saves and Touch of
+/// Good's sacred bonus all stay numerically unchanged from level 10
+/// (integer-division coincidences, checked not assumed) — so two pillars
+/// whose underlying formulas genuinely change (Channel Energy dice, domain
+/// spell slot count) plus the base-attack-bonus arithmetic extension are
+/// widened; no new pillar record is added at level 11 either, since no other
+/// class feature is named in the level-11 Special column. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
@@ -10068,7 +10096,9 @@ fn explain_cleric_level1_spell_baseline(
     // primary sources' raw spells-per-day table rows), so the count genuinely
     // becomes 4 — one 1st-level, one 2nd-level, one 3rd-level, and one
     // 4th-level domain slot.
-    let domain_spell_slot_count = if level >= CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+    let domain_spell_slot_count = if level >= CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11
+    } else if level >= CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9
     } else if level >= CLERIC_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7
@@ -10102,7 +10132,15 @@ fn explain_cleric_level1_spell_baseline(
              cleric spells for the first time (verified against both primary sources' raw \
              spells-per-day table rows), so the flat count becomes \
              {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7} (one 1st-level, one 2nd-level, one \
-             3rd-level, and one 4th-level domain slot). At Cleric level {level} this is \
+             3rd-level, and one 4th-level domain slot); at levels \
+             {CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}-10 a cleric also casts 5th-level \
+             cleric spells for the first time, so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9}; at level \
+             {CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a cleric also casts 6th-level \
+             cleric spells for the first time (verified against both primary sources' raw \
+             spells-per-day table rows), so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11} (one each of 1st through 6th-level \
+             domain slots). At Cleric level {level} this is \
              {domain_spell_slot_count} domain spell slot(s). \
              This grounds only the flat slot count; it grounds no slot contents (which domain \
              spell may fill it), no domain spell lists, and no prepared-spell posture"

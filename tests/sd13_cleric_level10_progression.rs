@@ -246,12 +246,17 @@ fn cleric_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(fortitude.value, 6, "Cleric level 9 good Fortitude must stay 6");
 }
 
-// ----- Negative control: level 11 stays unrecognized by this slice -----
+// ----- Negative control: level 12 stays unrecognized by this slice -----
+// (widened from level 11 by the SD18 cycle-2026-07-13T2007 level-11
+// widening, which genuinely promotes level 11 — see
+// tests/sd18_cleric_level11_widening.rs — mirroring the exact same boundary
+// move cycle-2026-07-13T1255 made for Barbarian and cycle-2026-07-13T1830
+// made for Bard.)
 
 #[test]
-fn cleric_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = CLERIC_LEVEL10_FIXTURE.replace("class:cleric:10", "class:cleric:11");
-    let input = load(&level_11);
+fn cleric_level_12_is_not_promoted_by_this_slice() {
+    let level_12 = CLERIC_LEVEL10_FIXTURE.replace("class:cleric:10", "class:cleric:12");
+    let input = load(&level_12);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -259,7 +264,7 @@ fn cleric_level_11_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-11 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+        "level-12 Cleric must not gain any bounded cleric chassis explanation: {:?}",
         computation.explanations
     );
 }
