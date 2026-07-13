@@ -2802,28 +2802,29 @@ const GNOME_BASE_SPEED_FEET: i16 = 20;
 const GNOME_CON_ADJUSTMENT: i16 = 2;
 const GNOME_STR_ADJUSTMENT: i16 = -2;
 
-/// SD13-E2 Gnome racial trait bundle explanation seam (mirroring the Dwarf/Elf
-/// pattern for the third non-Human core race).
+/// SD13-E2/SD18 Gnome racial trait bundle explanation seam (mirroring the
+/// Dwarf/Elf pattern for the third non-Human core race).
 ///
-/// Surfaces four grounded PF1 Core Rulebook Gnome racial trait dimensions
-/// (ability modifiers, size, speed, senses) as explicit `ComputationExplanation`
-/// records so the Gnome identity is legible on the runtime path rather than left
-/// behind the generic `race.semantics.unverified` diagnostic every other
-/// non-Human race still receives.
+/// Surfaces five grounded PF1 Core Rulebook Gnome racial trait dimensions
+/// (ability modifiers, size, speed, senses, Keen Senses) as explicit
+/// `ComputationExplanation` records so the Gnome identity is legible on the
+/// runtime path rather than left behind the generic `race.semantics.unverified`
+/// diagnostic every other non-Human race still receives.
 ///
 /// This function:
 ///   - runs only when `race_id == race:gnome`; every other race is unaffected
 ///     (Human, Dwarf, and Elf keep their own seams; every other non-Human race
 ///     keeps the generic `race.semantics.unverified` diagnostic),
-///   - adds no new computed mechanical contribution: the ability-modifiers record
-///     is recognition-only (the chosen Constitution/Strength scores are
+///   - adds no new computed mechanical contribution beyond the flat Keen
+///     Senses skill-bonus magnitude: the ability-modifiers record is
+///     recognition-only (the chosen Constitution/Strength scores are
 ///     understood to already reflect the fixed +2/-2 racial adjustment; no
 ///     arithmetic is performed on this seam), and the size/senses records carry
 ///     the grounded source value as identity only,
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Gnome-specific `race.gnome.bounded_semantics` note naming the
 ///     still-unproven families explicitly (Defensive Training, Illusion
-///     Resistance, Hatred, Keen Senses, Gnome Magic, weapon familiarity, and the
+///     Resistance, Hatred, Gnome Magic, weapon familiarity, and the
 ///     explicit absence of any Gnome racial bonus feat),
 ///   - is bounded to race recognition only; it deliberately grounds no Gnome
 ///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
@@ -2890,19 +2891,33 @@ fn explain_gnome_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // ----- Keen Senses -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.keen_senses".to_owned(),
+        value: 2,
+        detail: "Gnome racial trait bundle — Keen Senses: PF1 Core Gnome grants a flat +2 \
+                  racial bonus on Perception skill checks \
+                  (core_essentials/races/gnome/gnome_abilities_race.lst Keen Senses entry — \
+                  BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
+                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
+                  only the flat racial-bonus magnitude on the deterministic pilot seam, not a \
+                  Perception-check-total engine."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the five named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Gnome specifically and
     // stays non-claim-blocking so the deterministic pilot still reports computed
     // evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.gnome.bounded_semantics".to_owned(),
         message: "Gnome race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core Gnome \
-                  racial trait surface remains unverified: Defensive Training (a dodge bonus to \
-                  AC against giants), Illusion Resistance (a bonus on saves against illusion \
-                  spells and effects), Hatred (a bonus on attack rolls against reptilian \
-                  humanoids and goblinoids), Keen Senses (a bonus on Perception checks), Gnome \
-                  Magic (spell-like abilities keyed to a high Charisma), and weapon familiarity \
+                  modifiers, size, speed, senses, and Keen Senses (Perception bonus) trait \
+                  bundle; the remaining PF1 Core Gnome racial trait surface remains unverified: \
+                  Defensive Training (a dodge bonus to AC against giants), Illusion Resistance \
+                  (a bonus on saves against illusion spells and effects), Hatred (a bonus on \
+                  attack rolls against reptilian humanoids and goblinoids), Gnome Magic \
+                  (spell-like abilities keyed to a high Charisma), and weapon familiarity \
                   (gnome hooked hammer). PF1 core Gnomes gain no racial bonus feat (unlike \
                   Human), so that family is explicitly not applicable rather than silently \
                   omitted."
