@@ -2759,17 +2759,34 @@ fn explain_elf_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // ----- Keen Senses -----
+    // Flat +2 racial bonus on Perception checks. Mirrors the Dwarf Stonecunning
+    // idiom (flat skill-bonus-magnitude recognition record, not a Perception
+    // check-total engine).
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.keen_senses".to_owned(),
+        value: 2,
+        detail: "Elf racial trait bundle — Keen Senses: PF1 Core Elf grants a flat +2 racial \
+                  bonus on Perception checks \
+                  (core_essentials/races/elf/elf_abilities_race.lst Keen Senses entry — \
+                  BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
+                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
+                  only the flat racial-bonus magnitude on the deterministic pilot seam, not a \
+                  Perception-check-total engine."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the five named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Elf specifically and
     // stays non-claim-blocking so the deterministic pilot still reports computed
     // evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.elf.bounded_semantics".to_owned(),
         message: "Elf race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core Elf \
-                  racial trait surface remains unverified: Elven Immunities (immunity to magic \
-                  sleep effects and a bonus on saves against enchantment spells and effects), \
-                  Keen Senses (a bonus on Perception checks), weapon familiarity (longbow, \
+                  modifiers, size, speed, senses, and Keen Senses (Perception bonus) trait \
+                  bundle; the remaining PF1 Core Elf racial trait surface remains unverified: \
+                  Elven Immunities (immunity to magic sleep effects and a bonus on saves \
+                  against enchantment spells and effects), weapon familiarity (longbow, \
                   composite longbow, longsword, rapier, shortbow, composite shortbow), and \
                   bonus language grants. PF1 core Elves gain no racial bonus feat (unlike \
                   Human), so that family is explicitly not applicable rather than silently \
