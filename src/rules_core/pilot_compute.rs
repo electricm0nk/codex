@@ -1336,7 +1336,30 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 5] = [
 /// three levels thereafter) as a tier on the existing flat-magnitude pillar,
 /// and the rage-power entry is the same open-ended choice-list feature left
 /// named-but-unproven at 2/4/6/8; Trap Sense stays +3 (next rise 12th).
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 10;
+///
+/// A still further SD18 slice widens the gate to level 11 (verified
+/// independently against d20pfsrd and legacy.aonprd.com): base-attack
+/// (classlevel = 11) genuinely rises to +11, and base-save stays Fortitude
+/// +7 / Reflex +3 / Will +3 (11/2+2 and 11/3, both integer-division
+/// coincidences unchanged from level 10); the rage rounds-per-day pool
+/// genuinely rises to 27 (4 + Con mod + 2 per level after 1st); the
+/// level-11 "Special" column reads "Greater rage" only — Greater Rage
+/// GENUINELY RISES the flat while-raging Strength and Constitution morale
+/// bonuses from +4 to +6 and the Will-save morale bonus from +2 to +3 (the
+/// Armor Class penalty stays -2), a magnitude-rise on the already-grounded
+/// rage-constant pillar mirroring exactly how Trap Sense's and Damage
+/// Reduction's own flat magnitudes were widened at their rise levels; level
+/// 11 is NOT a rage-power level (powers land at 2/4/6/8/10/12...), so no
+/// new rage-power-selection-slot-count engine is invented; Trap Sense stays
+/// +3 (next rise 12th) and Damage Reduction stays 2/— (next rise 13th).
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 11;
+
+/// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
+/// (11th level — "At 11th level, a barbarian's rage improves. She gains a
+/// +6 morale bonus to Strength and Constitution and a +3 morale bonus on
+/// Will saves ... the –2 penalty to AC remains", verified independently
+/// against d20pfsrd and legacy.aonprd.com).
+const BARBARIAN_GREATER_RAGE_LEVEL: u8 = 11;
 
 /// PF1 Core Rulebook level gate at which Barbarian gains Uncanny Dodge (2nd level,
 /// verified against two independent primary sources — d20pfsrd and legacy.aonprd.com
@@ -6814,47 +6837,58 @@ fn explain_barbarian_level1_chassis(
     // execution burden named by the claim-blocking diagnostic below. Each entry also
     // carries a terse label (4th field) so the claim-blocking diagnostic below can
     // cite the same four values without hand-retyping them as a separate literal.
-    let rage_constants: [(&str, i16, &str, &str); 4] = [
+    // At level 11+ (BARBARIAN_GREATER_RAGE_LEVEL), Rage becomes Greater Rage: the
+    // Strength/Constitution morale bonuses genuinely rise from +4 to +6 and the
+    // Will-save morale bonus genuinely rises from +2 to +3; the Armor Class penalty
+    // stays -2 either way (PF1 Core Rulebook Greater Rage: "the -2 penalty to AC
+    // remains"). This is a magnitude-rise on the same flat-constant pillar, not a
+    // new rage-state execution engine.
+    let is_greater_rage = level >= BARBARIAN_GREATER_RAGE_LEVEL;
+    let rage_source_feature = if is_greater_rage { "Greater Rage" } else { "Rage" };
+    let (strength_bonus, constitution_bonus, will_save_bonus) =
+        if is_greater_rage { (6, 6, 3) } else { (4, 4, 2) };
+    let rage_constants: [(&str, i16, String, &str); 4] = [
         (
             "class_chassis.barbarian.rage.strength_morale_bonus",
-            4,
-            "+4 morale bonus to Strength while raging",
-            "+4 morale Strength",
+            strength_bonus,
+            format!("+{strength_bonus} morale bonus to Strength while raging"),
+            "morale Strength",
         ),
         (
             "class_chassis.barbarian.rage.constitution_morale_bonus",
-            4,
-            "+4 morale bonus to Constitution while raging",
-            "+4 morale Constitution",
+            constitution_bonus,
+            format!("+{constitution_bonus} morale bonus to Constitution while raging"),
+            "morale Constitution",
         ),
         (
             "class_chassis.barbarian.rage.will_save_morale_bonus",
-            2,
-            "+2 morale bonus on Will saves while raging",
-            "+2 morale Will saves",
+            will_save_bonus,
+            format!("+{will_save_bonus} morale bonus on Will saves while raging"),
+            "morale Will saves",
         ),
         (
             "class_chassis.barbarian.rage.armor_class_penalty",
             -2,
-            "-2 penalty to Armor Class while raging",
-            "-2 AC",
+            "-2 penalty to Armor Class while raging".to_owned(),
+            "AC",
         ),
     ];
-    for (id, value, effect, _short_label) in rage_constants {
+    for (id, value, effect, _short_label) in &rage_constants {
         explanations.push(ComputationExplanation {
-            id: id.to_owned(),
-            value,
+            id: (*id).to_owned(),
+            value: *value,
             detail: format!(
-                "{class_name} Rage flat constant from the PF1 Core Rulebook Rage class feature: \
-                 {effect}. This slice grounds only the flat value; it is never applied to the \
-                 integrated ability modifiers, saves, or armor class — temporary application is \
-                 part of the unimplemented rage-state execution engine"
+                "{class_name} {rage_source_feature} flat constant from the PF1 Core Rulebook \
+                 {rage_source_feature} class feature: {effect}. This slice grounds only the \
+                 flat value; it is never applied to the integrated ability modifiers, saves, or \
+                 armor class — temporary application is part of the unimplemented rage-state \
+                 execution engine"
             ),
         });
     }
     let rage_constants_summary = rage_constants
         .iter()
-        .map(|(_, _, _, short_label)| *short_label)
+        .map(|(_, value, _, short_label)| format!("{value:+} {short_label}"))
         .collect::<Vec<_>>()
         .join(", ");
 

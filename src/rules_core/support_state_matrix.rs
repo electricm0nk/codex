@@ -465,7 +465,8 @@ const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_ba
     tests/sd13_barbarian_level8_progression.rs + \
     tests/sd13_barbarian_level9_progression.rs + \
     tests/sd13_barbarian_level10_progression.rs + \
-    tests/sd13_barbarian_rage_power_slots.rs";
+    tests/sd13_barbarian_rage_power_slots.rs + \
+    tests/sd18_barbarian_level11_greater_rage.rs";
 
 /// SD13-E2/SD18 dedicated proof surface for the bounded Gnome race-semantics
 /// recognition: direct computed recognition of five grounded PF1 Core Rulebook
@@ -1181,18 +1182,21 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:barbarian",
                 dimension: "bounded Barbarian chassis progression: the deterministic Human \
                     Barbarian level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                    level-9/level-10 \
+                    level-9/level-10/level-11 \
                     martial chassis identity, with base-attack, base-save, fast-movement, and \
-                    flat Rage pillar values grounded across all ten levels, Uncanny Dodge \
+                    flat Rage pillar values grounded across all eleven levels (Rage becoming \
+                    Greater Rage at level 11, a magnitude-rise on the same flat-constant \
+                    pillar), Uncanny Dodge \
                     grounded as a level-2 identity/recognition record, Trap Sense grounded as a \
                     level-3 flat-magnitude record (unchanged at levels 4-5, rising to +2 at \
-                    level 6, unchanged at levels 7-8, and rising to +3 at level 9), Improved \
+                    level 6, unchanged at levels 7-8, rising to +3 at level 9, and unchanged \
+                    at levels 10-11), Improved \
                     Uncanny Dodge grounded as a \
                     level-5 identity/recognition record, Damage Reduction grounded as a level-7 \
                     flat-magnitude record (unchanged at levels 8-9, genuinely rising to 2/— at \
-                    level 10), and the rage-state execution / \
+                    level 10, unchanged at level 11), and the rage-state execution / \
                     Rage Power choice-list / weapon-familiarity / flanking-resolution / \
-                    damage-reduction-application / level-10+ remainder still unproven",
+                    damage-reduction-application / level-12+ remainder still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1371,7 +1375,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     rage-power entry is the same genuinely open-ended choice-list feature \
                     already left named-but-unproven at levels 2/4/6/8, so no new pillar is \
                     grounded at level 10 either; Trap Sense stays +3 (10 / 3, its next rise \
-                    landing at 12th). \
+                    landing at 12th) — AND a further SD18 slice widens the level-range gate \
+                    again (supported_barbarian_level, 1..=11), reaching the SD-18 §3.2 tranche's \
+                    next milestone, and extends every one of the formulas above to level 11 via \
+                    the same formula, without re-derivation, verified independently against the \
+                    PF1 Core Rulebook Barbarian class table (d20pfsrd and legacy.aonprd.com): \
+                    level 11 base attack genuinely rises to +11 (full BAB) while good Fortitude \
+                    stays +7 (11 / 2 + 2) and poor Reflex/Will both stay +3 (11 / 3, \
+                    integer-division coincidences); the rage rounds-per-day pool genuinely \
+                    rises to 27 (4 + Constitution modifier + 2 per level after 1st); the \
+                    level-11 \"Special\" column reads \"Greater rage\" only (verified \
+                    independently against both primary sources, checked rather than assumed): \
+                    Rage GENUINELY BECOMES Greater Rage — the Strength and Constitution morale \
+                    bonuses rise from +4 to +6 and the Will-save morale bonus rises from +2 to \
+                    +3 (the Armor Class penalty stays -2) — a magnitude-rise on the \
+                    already-grounded flat rage-constant pillar, mirroring exactly how Trap \
+                    Sense's and Damage Reduction's own flat magnitudes were widened at their \
+                    rise levels; level 11 is NOT a rage-power level (powers land at \
+                    2/4/6/8/10/12...), so no new rage-power-selection-slot-count engine is \
+                    invented; Trap Sense stays +3 (11 / 3, next rise 12th) and Damage Reduction \
+                    stays 2/— (next rise 13th). \
                     None of the grounded records are wired into the integrated \
                     base_attack_bonus/base-saves/speed/ability/Armor-Class/incoming-damage \
                     totals, so the integrated pilot surface still reports a blocked posture. The \
@@ -1379,7 +1402,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     (activation/deactivation, rage-round consumption, fatigue after rage, \
                     temporary stat application). No weapon familiarity, Improved Uncanny Dodge flanking-resolution engine, \
                     Damage \
-                    Reduction application engine, or level-11+ martial progression is \
+                    Reduction application engine, or level-12+ martial progression is \
                     claimed. A further SD13-E5 slice grounds all FIVE rage power choice \
                     slots (class_chassis.barbarian.rage_power_choice and \
                     rage_power_2_choice through rage_power_5_choice, \
@@ -1394,12 +1417,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 next_required_uplift: "ground the Barbarian rage-state execution engine \
                     (activation/deactivation, rage-round consumption, post-rage fatigue, \
                     temporary application of the rage constants), the Rage Power choice-list \
-                    feature (now including the level-2, level-4, level-6, and level-8 grants), \
+                    feature (now including the level-2, level-4, level-6, level-8, and level-10 \
+                    grants), \
                     the Improved Uncanny Dodge flanking-resolution/attacker-level-comparison \
                     engine, the Damage Reduction application engine, and wire the grounded \
                     base-attack / base-save / fast-movement / Uncanny Dodge / Trap Sense / \
                     Improved Uncanny Dodge / Damage Reduction values into the integrated pilot \
-                    surface, later widening into weapon familiarity and level-9+ martial \
+                    surface, later widening into weapon familiarity and level-12+ martial \
                     progression",
             },
             SupportStateRow {
