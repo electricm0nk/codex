@@ -265,8 +265,40 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // effective-cleric dice rising at odd levels so the next rise lands at
 // 11th; 10th is NOT a repeat-Mercy-grant level, so the single grounded
 // level-3 selection carries over unchanged and no new named feature is left
-// unproven by this slice). Nothing here grounds level 11+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 10;
+// unproven by this slice. SD18 widens the gate again to level 11: base
+// attack bonus genuinely rises to 11 (full BAB) while all three base saves
+// stay numerically unchanged (11/2+2=7, 11/3=3, integer-division
+// coincidences); Smite Evil's uses/day stay 4/day (another integer-division
+// coincidence, the next rise lands at 13th) but its damage bonus genuinely
+// rises to 11; Lay on Hands stays numerically unchanged on both axes;
+// Channel Positive Energy's die count genuinely rises to 6 (ceil(11/2), the
+// effective-cleric dice rising at odd levels); the effective caster level
+// genuinely rises to 8 (11-3); the 3rd-level spell's base count and
+// integrated total both genuinely rise from the honest ZERO at level 10 to
+// 1 (the raw spells-per-day table row is "2/1/1/--" at level 11, verified
+// independently against d20pfsrd and legacy.aonprd.com); 11th is NOT a
+// repeat-Mercy-grant level, so the single grounded level-3 selection
+// carries over unchanged again; and the level-11 "Special" column reads
+// "Aura of justice" only (verified independently against both primary
+// sources) -- grounded as a new bounded grant-only identity record
+// (class_chassis.paladin.aura_of_justice), mirroring the Monk Diamond Body
+// grant-only idiom exactly: no ally-aura/positional engine and no
+// smite-evil-resource-sharing execution engine exists anywhere in this
+// codebase to apply the shared smite to. Nothing here grounds level 12+
+// Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 11;
+
+// Aura of Justice is an 11th-level paladin feature in the PF1 Core Rulebook
+// (verified independently against d20pfsrd and legacy.aonprd.com): "At 11th
+// level, a paladin can expend two uses of her smite evil ability to grant
+// the ability to smite evil to all allies within 10 feet, using her
+// bonuses, but through their own weapons." Below this level its honest
+// computed surface is its correct ABSENCE (value 0); at or above it, this
+// slice grounds a bounded GRANT-only identity record (mirroring the Monk
+// Diamond Body idiom exactly): no ally-aura/positional engine and no
+// smite-evil-resource-sharing execution engine exists anywhere in this
+// codebase to apply the shared smite to.
+const PALADIN_AURA_OF_JUSTICE_LEVEL: u8 = 11;
 
 // Lay on hands and divine grace are both 2nd-level paladin features in the PF1 Core
 // Rulebook. Below this level their honest computed surface is their correct
@@ -4811,6 +4843,38 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
+    // Aura of Justice: below the level-11 gate, this stays a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it (SD18 level-11
+    // widening), it transitions to a bounded GRANT-only identity record
+    // (mirroring the Monk Diamond Body idiom exactly). No ally-aura/positional
+    // engine and no smite-evil-resource-sharing execution engine exists
+    // anywhere in this codebase to apply the shared smite to.
+    if level < PALADIN_AURA_OF_JUSTICE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_justice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Justice at paladin level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Aura of Justice is an 11th-level paladin class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_justice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Justice granted at paladin level {level} (PF1 Core Rulebook, \
+                 11th-level paladin class feature): \"At 11th level, a paladin can expend two \
+                 uses of her smite evil ability to grant the ability to smite evil to all \
+                 allies within 10 feet, using her bonuses, but through their own weapons.\" \
+                 This is a bounded grant-only identity record only (value 0, non-fabricated): \
+                 no ally-aura/positional engine and no smite-evil-resource-sharing execution \
+                 engine exists anywhere in this codebase to apply the shared smite to."
+            ),
+        });
+    }
+
     // SD13-E5: ground the partial-caster IDENTITY itself as one more flat
     // level-gate record, distinct from the still-ungrounded spell burden
     // named below. PF1 Core Rulebook: effective caster level = max(paladin
@@ -4953,6 +5017,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         8 => [Some(1), Some(1), None],
         9 => [Some(2), Some(1), None],
         10 => [Some(2), Some(1), Some(0)],
+        11 => [Some(2), Some(1), Some(1)],
         _ => [None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {

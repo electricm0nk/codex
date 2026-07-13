@@ -374,7 +374,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_spell_save_dcs.rs + \
     tests/sd13_paladin_bonus_spells.rs + \
     tests/sd13_paladin_total_spells_per_day.rs + \
-    tests/sd13_paladin_mercies_two_and_three.rs";
+    tests/sd13_paladin_mercies_two_and_three.rs + \
+    tests/sd18_paladin_level11_aura_of_justice.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -2487,33 +2488,37 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Paladin level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
-                            level-8/level-9/level-10 \
+                            level-8/level-9/level-10/level-11 \
                             chassis baseline, with smite evil's uses-per-day / attack-bonus / \
                             damage-bonus formula grounded at every level (uses-per-day \
                             genuinely increasing to 2/day at level 4, staying 2/day through \
                             level 6, genuinely increasing to 3/day at level 7, staying \
                             3/day through level 9, and genuinely increasing to 4/day at \
-                            level 10), lay on \
-                            hands and divine grace grounded for real at levels 2-10 (correct PF1 \
+                            level 10 and staying 4/day at level 11 while the damage bonus \
+                            keeps rising every level), lay on \
+                            hands and divine grace grounded for real at levels 2-11 (correct PF1 \
                             CRB level-gate absence at level 1, lay on hands genuinely \
                             increasing again at level 6, staying numerically unchanged at \
                             level 7, genuinely increasing on both axes at level 8, staying \
-                            numerically unchanged at level 9, and genuinely increasing on \
-                            both axes again at level 10), mercy \
+                            numerically unchanged at level 9, genuinely increasing on \
+                            both axes again at level 10, and staying numerically unchanged at \
+                            level 11), mercy \
                             grounded as a correct PF1 CRB level-gate absence at \
-                            levels 1-2 and a granted choice-recognition record at levels 3-10, \
+                            levels 1-2 and a granted choice-recognition record at levels 3-11, \
                             channel positive energy grounded as a correct PF1 CRB level-gate \
-                            absence at levels 1-3 and a flat die-count magnitude at levels 4-10 \
+                            absence at levels 1-3 and a flat die-count magnitude at levels 4-11 \
                             (genuinely increasing from 2d6 to 3d6 at level 5, staying 3d6 at \
                             level 6, genuinely increasing to 4d6 at level 7, staying 4d6 \
-                            at level 8, genuinely increasing to 5d6 at level 9, and staying 5d6 \
-                            at level 10), the \
+                            at level 8, genuinely increasing to 5d6 at level 9, staying 5d6 \
+                            at level 10, and genuinely increasing to 6d6 at level 11), the \
                             partial-caster effective-caster-level gate grounded as a correct \
                             zero absence at levels 1-3, a genuine value of 1 at level 4, a \
                             genuine value of 2 at level 5, a genuine value of 3 at level 6, a \
                             genuine value of 4 at level 7, a genuine value of 5 at level \
-                            8, a genuine value of 6 at level 9, and a genuine value of 7 at \
-                            level 10, and the hybrid chassis pair plus \
+                            8, a genuine value of 6 at level 9, a genuine value of 7 at \
+                            level 10, and a genuine value of 8 at level 11, Aura of Justice \
+                            newly grounded at level 11 as a bounded grant-only identity record, \
+                            and the hybrid chassis pair plus \
                             the spells-known/spells-per-day/spell-DC spell burden still named \
                             and unproven",
                 support_state: SupportState::Partial,
@@ -2754,12 +2759,46 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     pair lands as arithmetic, total 1; live end-to-end — a dedicated test \
                     raises the fixture Charisma and the 3rd-level total turns 1; counts \
                     only, no casting execution, slot consumption, or tracking; the blocker \
-                    now defers exactly spell-source lineage and the prepared posture). The row is Partial, not \
+                    now defers exactly spell-source lineage and the prepared posture) — AND a \
+                    further SD18 slice widens the level-range gate again \
+                    (supported_paladin_level, 1..=11), extending every one of the formulas \
+                    above to level 11 via the same formula, without re-derivation, verified \
+                    independently against the PF1 Core Rulebook Paladin class table (d20pfsrd \
+                    and legacy.aonprd.com): level 11 base attack genuinely rises to +11 (full \
+                    BAB; the table's own \"+11/+6/+1\" iterative notation is not modeled \
+                    anywhere in this codebase, only the flat base value) while all three base \
+                    saves stay numerically unchanged (11/2+2=7, 11/3=3, integer-division \
+                    coincidences with level 10); Smite Evil's uses per day stay 4/day (another \
+                    integer-division coincidence, 1 + (11-1)/3 = 4, the next rise lands at \
+                    13th) while its damage bonus genuinely rises to 11 (= paladin level); Lay \
+                    on Hands stays numerically unchanged on both axes (uses 7, heal dice 5, \
+                    integer-division coincidences); 11th is NOT a repeat-Mercy-grant level \
+                    (the 3rd/6th/9th cadence), so the single grounded level-3 selection \
+                    carries over unchanged again; Channel Positive Energy's die count \
+                    genuinely rises to 6d6 (ceil(11/2), the effective-cleric dice rising at \
+                    odd levels); the effective caster level genuinely rises to 8 (11-3) while \
+                    the spell-level access ladder stays 3 (4th-level paladin spells begin at \
+                    13, outside this widening); the 3rd-level spell's base count and \
+                    integrated total both genuinely rise from the tranche's first honest ZERO \
+                    at level 10 to 1 (the raw spells-per-day table row is \"2/1/1/--\" at \
+                    level 11, verified independently against both primary sources — base 1 + \
+                    Charisma-bonus 0, modifier 2 stays below spell level 3); and the level-11 \
+                    \"Special\" column reads \"Aura of justice\" only (verified independently \
+                    against both primary sources, checked rather than assumed away) — a \
+                    genuinely NEW class feature, grounded as a bounded grant-only identity \
+                    record (class_chassis.paladin.aura_of_justice, value 0, non-fabricated), \
+                    mirroring the Monk Diamond Body idiom exactly: \"at 11th level, a paladin \
+                    can expend two uses of her smite evil ability to grant the ability to \
+                    smite evil to all allies within 10 feet, using her bonuses, but through \
+                    their own weapons\" — no ally-aura/positional engine and no \
+                    smite-evil-resource-sharing execution engine exists anywhere in this \
+                    codebase to apply the shared smite to. The row is Partial, not \
                     Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
-                    claim-blocking as accepted hybrid truth, no Paladin level 11+ is proven, \
+                    claim-blocking as accepted hybrid truth, no Paladin level 12+ is proven, \
                     Divine Bond stays named-but-unproven, the level-6 and level-9 repeat \
                     mercy selections \
-                    stay named-but-unproven, and the partial-caster spell burden itself \
+                    stay named-but-unproven, Aura of Justice's own smite-sharing resolution is \
+                    not computed, and the partial-caster spell burden itself \
                     remains named and unproven beyond the grounded caster-level gate arithmetic \
                     — no spell-source lineage, spells known or prepared posture, \
                     spells-per-day progression, bonus spell slots, or spell save DCs are \
@@ -2770,7 +2809,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell-source-lineage burdens now that the caster-level gate, the access \
                     ladder, the base per-day counts, the base spell-save DCs, the Charisma \
                     bonus-slot counts, and the integrated totals are all grounded, then \
-                    paladin level-11+ \
+                    paladin level-12+ \
                     progression",
             },
             SupportStateRow {
