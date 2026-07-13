@@ -3210,25 +3210,30 @@ const HALFLING_STR_ADJUSTMENT: i16 = -2;
 /// Dwarf/Elf/Gnome fixed-ability-pair pattern for the sixth and final
 /// non-Human core race).
 ///
-/// Surfaces four grounded PF1 Core Rulebook Halfling racial trait dimensions
-/// (ability modifiers, size, speed, senses) as explicit `ComputationExplanation`
-/// records so the Halfling identity is legible on the runtime path rather than
-/// left behind the generic `race.semantics.unverified` diagnostic.
+/// Surfaces five grounded PF1 Core Rulebook Halfling racial trait dimensions
+/// (ability modifiers, size, speed, senses, Keen Senses) as explicit
+/// `ComputationExplanation` records so the Halfling identity is legible on
+/// the runtime path rather than left behind the generic
+/// `race.semantics.unverified` diagnostic.
 ///
 /// This function:
 ///   - runs only when `race_id == race:halfling`; every other race is
 ///     unaffected (Human, Dwarf, Elf, Gnome, Half-Elf, and Half-Orc keep their
 ///     own seams),
-///   - adds no new computed mechanical contribution: the ability-modifiers
-///     record is recognition-only (the chosen Dexterity/Strength scores are
-///     understood to already reflect the fixed +2/-2 racial adjustment; no
-///     arithmetic is performed on this seam), and the size/senses records
-///     carry the grounded source value as identity only,
+///   - adds no new computed mechanical contribution beyond the flat Keen
+///     Senses skill-bonus magnitude: the ability-modifiers record is
+///     recognition-only (the chosen Dexterity/Strength scores are understood
+///     to already reflect the fixed +2/-2 racial adjustment; no arithmetic is
+///     performed on this seam), the size/senses records carry the grounded
+///     source value as identity only, and Keen Senses names only the flat +2
+///     Perception racial-bonus magnitude (mirroring the Dwarf Stonecunning /
+///     Elf/Gnome/Half-Elf Keen Senses / Half-Orc Intimidating idiom, not a
+///     Perception-check-total engine),
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Halfling-specific `race.halfling.bounded_semantics` note naming the
-///     still-unproven families explicitly (Fearless, Halfling Luck, Keen
-///     Senses, Sure-Footed, weapon familiarity, and the explicit absence of
-///     any Halfling racial bonus feat),
+///     still-unproven families explicitly (Fearless, Halfling Luck,
+///     Sure-Footed, weapon familiarity, and the explicit absence of any
+///     Halfling racial bonus feat),
 ///   - is bounded to race recognition only; it deliberately grounds no
 ///     Halfling class-chassis interaction, no other race, and no PF1
 ///     alternate ruleset.
@@ -3299,17 +3304,35 @@ fn explain_halfling_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // ----- Keen Senses (flat skill-bonus idiom, mirroring Dwarf Stonecunning /
+    // Elf/Gnome/Half-Elf Keen Senses / Half-Orc Intimidating) -----
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.keen_senses".to_owned(),
+        value: 2,
+        detail: "Halfling racial trait bundle — Keen Senses: PF1 Core Halfling grants a flat \
+                  +2 racial bonus on Perception skill checks \
+                  (core_essentials/races/halfling/halfling_abilities_race.lst Keen Senses entry \
+                  — BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
+                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
+                  only the flat racial-bonus magnitude on the deterministic pilot seam, \
+                  mirroring the Dwarf Stonecunning / Elf Keen Senses / Gnome Keen Senses / \
+                  Half-Elf Keen Senses / Half-Orc Intimidating skill-bonus idiom already \
+                  established on this seam; it is deliberately NOT a Perception-check-total \
+                  engine."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the five named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Halfling specifically
     // and stays non-claim-blocking so the deterministic pilot still reports
     // computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.halfling.bounded_semantics".to_owned(),
         message: "Halfling race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core \
-                  Halfling racial trait surface remains unverified: Fearless (a bonus on saves \
-                  against fear), Halfling Luck (a luck bonus on all saving throws), Keen Senses \
-                  (a bonus on Perception checks), Sure-Footed (a bonus on Acrobatics and Climb \
+                  modifiers, size, speed, senses, and Keen Senses (Perception bonus) trait \
+                  bundle; the remaining PF1 Core Halfling racial trait surface remains \
+                  unverified: Fearless (a bonus on saves against fear), Halfling Luck (a luck \
+                  bonus on all saving throws), Sure-Footed (a bonus on Acrobatics and Climb \
                   checks), and weapon familiarity (sling and thrown weapons). PF1 core \
                   Halflings gain no racial bonus feat (unlike Human), so that family is \
                   explicitly not applicable rather than silently omitted."
