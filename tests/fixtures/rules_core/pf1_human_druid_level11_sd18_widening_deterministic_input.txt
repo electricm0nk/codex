@@ -1,0 +1,43 @@
+# SD18 deterministic Human Druid level 11 progression fixture.
+# Widens the accepted SD13-E4/E5 deterministic PF1 Core Rulebook Human Druid
+# level-1..level-10 prepared divine spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_druid_level10_sd13_deterministic_input.txt)
+# to level 11 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-10 fixtures, and the
+# same canonical nature-bond selection (animal companion), adding only the
+# level bump this bounded slice needs.
+#
+# It deliberately avoids every later Druid burden surface: no animal
+# companion stat block/advancement/link-share-spells, no spellbook, no
+# spells prepared, no spell slots, no spell DCs, no bonus spells, and no
+# level-12+ progression. The PF1 CRB Druid class table's level-11 "Special"
+# column is genuinely blank (verified independently against both d20pfsrd
+# and legacy.aonprd.com — neither source lists any new class feature at
+# 11th level; the level-10 "Wild shape (4/day)" entry does not rise again
+# until 12th level, "Wild shape (5/day)"), so this fixture makes no new
+# class-feature claim at level 11 either way. Base attack bonus genuinely
+# rises to +8 (11 * 3 / 4, up from +7 at level 10); base saves stay
+# numerically unchanged from level 10 (both good saves 11/2+2=7, poor Reflex
+# 11/3=3, integer-division coincidences); Wild Empathy genuinely rises to 12
+# (11 + Charisma modifier 1); Nature Sense, Woodland Stride, Trackless Step,
+# Resist Nature's Lure, Venom Immunity, and the nature-bond choice
+# recognition all carry over unchanged — so no new pillar is grounded at
+# level 11, only the existing pillars are widened (mirroring exactly how
+# Barbarian's/Bard's/Cleric's own level-11 widenings were grounded).
+case_id=pf1-crb-human-druid-level11
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:druid:11
+ability=strength:10
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:12
+feat=feat:dodge
+choice=choice:druid_nature_bond:bond:animal_companion
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md
