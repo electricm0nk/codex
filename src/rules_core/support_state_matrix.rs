@@ -491,12 +491,13 @@ const SD18_HALF_ELF_KEEN_SENSES_TEST: &str =
 const SD18_HALF_ORC_INTIMIDATING_TEST: &str =
     "tests/sd13_half_orc_race_semantics_recognition.rs + tests/sd18_half_orc_intimidating.rs";
 
-/// SD13-E2 dedicated proof surface for the bounded Halfling race-semantics
-/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
-/// Halfling racial trait dimensions (ability modifiers, size, speed, senses)
-/// that stays explicitly honest about the remaining unproven Halfling family
-/// surface.
-const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs";
+/// SD13-E2/SD18 dedicated proof surface for the bounded Halfling race-semantics
+/// recognition: direct computed recognition of five grounded PF1 Core Rulebook
+/// Halfling racial trait dimensions (ability modifiers, size, speed, senses,
+/// Keen Senses) that stays explicitly honest about the remaining unproven
+/// Halfling family surface.
+const SD18_HALFLING_KEEN_SENSES_TEST: &str =
+    "tests/sd13_halfling_race_semantics_recognition.rs + tests/sd18_halfling_keen_senses.rs";
 
 /// SD13-E4-F7/SD13-E4/SD13-E5 dedicated proof surface for the bounded Human Bard
 /// level-1/level-2/level-3/level-4 spell baseline: direct computed recognition of
@@ -897,25 +898,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.halfling.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:halfling",
-                dimension: "bounded Halfling race semantics: four grounded PF1 Core Rulebook \
+                dimension: "bounded Halfling race semantics: five grounded PF1 Core Rulebook \
                             Halfling racial trait dimensions (ability modifiers, size, speed, \
-                            senses) recognized on the compute seam, with the remaining \
-                            Halfling family surface still unproven",
+                            senses, Keen Senses) recognized on the compute seam, with the \
+                            remaining Halfling family surface still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_HALFLING_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
-                    Halfling race-semantic families are recognized on the compute seam \
+                grounding_ref: SD18_HALFLING_KEEN_SENSES_TEST,
+                blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
+                    five Halfling race-semantic families are recognized on the compute seam \
                     (ability modifiers: +2 Dexterity / -2 Strength; size: Small; speed: 20 ft; \
-                    senses: no special senses), but the remaining families stay unproven: \
-                    Fearless, Halfling Luck, Keen Senses, Sure-Footed, and weapon familiarity. \
-                    PF1 core Halflings gain no racial bonus feat, so that family is not \
-                    applicable rather than unproven. No numeric mechanical contribution is \
-                    fabricated for any of the four recognized dimensions.",
-                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
-                    remaining Halfling families (Fearless, Halfling Luck, Keen Senses, \
-                    Sure-Footed, weapon familiarity) as a real computed contribution",
+                    senses: no special senses; Keen Senses: flat +2 Perception racial bonus), \
+                    but the remaining families stay unproven: Fearless, Halfling Luck, \
+                    Sure-Footed, and weapon familiarity. PF1 core Halflings gain no racial \
+                    bonus feat, so that family is not applicable rather than unproven. No \
+                    numeric mechanical contribution is fabricated for any of the four \
+                    non-Keen-Senses recognized dimensions.",
+                next_required_uplift: "later SD13-E2/SD18 slice grounding one or more of the \
+                    remaining Halfling families (Fearless, Halfling Luck, Sure-Footed, weapon \
+                    familiarity) as a real computed contribution",
             },
             // ----- Class rows (12) -----
             SupportStateRow {
