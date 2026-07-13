@@ -48,6 +48,7 @@ impl TestCorpus {
         Self { root }
     }
 
+    #[allow(dead_code)]
     fn write(&self, relative_path: &str, contents: &str) {
         let path = self.root.join(relative_path);
         if let Some(parent) = path.parent() {
@@ -56,6 +57,7 @@ impl TestCorpus {
         fs::write(path, contents).expect("write fixture file");
     }
 
+    #[allow(dead_code)]
     fn root(&self) -> &Path {
         &self.root
     }
@@ -71,6 +73,7 @@ impl Drop for TestCorpus {
     }
 }
 
+#[allow(dead_code)]
 fn rel(root: &Path, path: &Path) -> String {
     path.strip_prefix(root)
         .unwrap_or(path)
@@ -189,8 +192,8 @@ fn parses_every_martial_class_with_uniform_record_shape() {
             _ => unreachable!(),
         };
         assert_eq!(hd.value, expected, "HD for {name}");
-        assert_eq!(entry.tokens.iter().any(|t| t.key == "TYPE"), true);
-        assert_eq!(entry.tokens.iter().any(|t| t.key == "MAXLEVEL"), true);
+        assert!(entry.tokens.iter().any(|t| t.key == "TYPE"));
+        assert!(entry.tokens.iter().any(|t| t.key == "MAXLEVEL"));
     }
 }
 
