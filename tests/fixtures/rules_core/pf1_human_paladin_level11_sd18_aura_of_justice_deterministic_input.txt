@@ -1,0 +1,48 @@
+# SD18 deterministic Human Paladin level 11 widening fixture.
+# Widens the accepted SD13-E5 deterministic PF1 Core Rulebook Human Paladin
+# level-1..level-10 hybrid chassis baseline (tests/sd13_paladin_level10_progression.rs)
+# to level 11 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# Longsword / Chain Shirt / no-shield / Power Attack posture, and the
+# level-3..level-10 fixture's choice=choice:paladin_mercy selection
+# (mercy:shaken) unchanged -- 11th is NOT a repeat-Mercy-grant level (the
+# 3rd/6th/9th cadence), so this fixture adds no new mercy selection.
+#
+# The PF1 CRB Paladin class table's level-11 "Special" column reads "Aura of
+# justice" only (verified independently against both d20pfsrd and
+# legacy.aonprd.com) -- a paladin can expend two uses of her smite evil
+# ability to share the smite-evil ability with allies within 10 feet, using
+# her own bonuses. Grounded here as a new bounded grant-only identity record
+# (class_chassis.paladin.aura_of_justice, value 0, non-fabricated), mirroring
+# exactly how Diamond Body's own poison-immunity grant was grounded at Monk
+# 11th level: no ally-aura/positional engine and no smite-evil-resource-
+# sharing execution engine exists anywhere in this codebase to apply the
+# shared smite to.
+#
+# It deliberately avoids every later hybrid burden surface: no spell
+# selections, no spells known/prepared posture, no domains, no mercy EFFECT
+# resolution, no channel positive energy healing/damage-resolution execution,
+# no Divine Bond (weapon bond / mount bond) selection or execution, no
+# Aura of Justice's own smite-sharing resolution, and no level-12+
+# progression.
+case_id=pf1-crb-human-paladin-level11
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:paladin:11
+ability=strength:16
+ability=dexterity:12
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:10
+ability=charisma:14
+feat=feat:power_attack
+skill=skill:diplomacy:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+choice=choice:paladin_mercy:mercy:shaken
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

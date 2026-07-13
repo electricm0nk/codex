@@ -291,19 +291,22 @@ fn paladin_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(caster_level.value, 6, "Paladin level 9 effective caster level must stay 6");
 }
 
-// ----- Negative control: level 11 stays unrecognized by this slice -----
+// ----- Negative control: level 12 stays unrecognized by this slice -----
+// (level 11 was later widened into the supported tranche by SD18's
+// cycle-2026-07-13T2334 Aura of Justice slice; see
+// tests/sd18_paladin_level11_aura_of_justice.rs for its own boundary.)
 
 #[test]
-fn paladin_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = PALADIN_LEVEL10_FIXTURE.replace("class:paladin:10", "class:paladin:11");
-    let input = load(&level_11);
+fn paladin_level_12_is_not_promoted_by_this_slice() {
+    let level_12 = PALADIN_LEVEL10_FIXTURE.replace("class:paladin:10", "class:paladin:12");
+    let input = load(&level_12);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-11 Paladin must not gain any bounded paladin chassis explanation: {:?}",
+        "level-12 Paladin must not gain any bounded paladin chassis explanation: {:?}",
         computation.explanations
     );
 }
