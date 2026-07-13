@@ -3027,19 +3027,33 @@ fn explain_half_elf_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // ----- Keen Senses -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_elf.trait_bundle.keen_senses".to_owned(),
+        value: 2,
+        detail: "Half-Elf racial trait bundle — Keen Senses: PF1 Core Half-Elf grants a flat \
+                  +2 racial bonus on Perception skill checks \
+                  (core_essentials/races/half_elf/halfelf_abilities_race.lst Keen Senses entry \
+                  — BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
+                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
+                  only the flat racial-bonus magnitude on the deterministic pilot seam, not a \
+                  Perception-check-total engine."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the five named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Half-Elf specifically
     // and stays non-claim-blocking so the deterministic pilot still reports
     // computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.half_elf.bounded_semantics".to_owned(),
         message: "Half-Elf race semantics are grounded for the deterministic pilot's chosen \
-                  ability-bonus target, size, speed, and senses trait bundle; the remaining PF1 \
-                  Core Half-Elf racial trait surface remains unverified: Elven Immunities \
-                  (immunity to magic sleep effects and a bonus on saves against enchantment \
-                  spells and effects), Adaptability (a bonus Skill Focus feat in a chosen skill \
-                  at 1st level), Keen Senses (a bonus on Perception checks), and Multitalented \
-                  (counting both parent classes as favored classes)."
+                  ability-bonus target, size, speed, senses, and Keen Senses (Perception bonus) \
+                  trait bundle; the remaining PF1 Core Half-Elf racial trait surface remains \
+                  unverified: Elven Immunities (immunity to magic sleep effects and a bonus on \
+                  saves against enchantment spells and effects), Adaptability (a bonus Skill \
+                  Focus feat in a chosen skill at 1st level), and Multitalented (counting both \
+                  parent classes as favored classes)."
             .to_owned(),
         claim_blocking: false,
     });
