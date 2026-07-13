@@ -3593,14 +3593,36 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "interaction:human-bonus-feat-ability-bonus",
                 dimension: "named Human bonus-feat and ability-bonus interaction pressure \
                             on the deterministic pilot path",
+                // SD18-PRELOOP: bumped from Partial/Computed to
+                // Partial/Product-visible. The consumer-side composer
+                // (rules_core::composed_input) accepts a chosen-state
+                // CharacterInput plus a corpus-side SourcePackageContent
+                // and produces a ComposedCharacterInput that reaches
+                // pilot_compute::compute_pilot_base_chassis without
+                // panic; the test
+                // tests/sd18_preloop_consumer_compose.rs proves the
+                // end-to-end path against a synthetic Core Rulebook
+                // PCC, with the deterministic Human Fighter level 5
+                // chassis surface (BAB=5, STR=+3, DEX=+2). The
+                // interaction pressure between the human_bonus_feat
+                // -> feat:dodge and human_ability_bonus ->
+                // ability:strength selections is therefore not only
+                // computed by the engine but visible through the
+                // composed-input contract to the consumer.
                 support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: GE06_INPUT_CONTRACT_TEST,
-                blocker_or_lossiness_note: "only the named deterministic Human Fighter pilot \
+                // Updated to also name the SD18-PRELOOP bridge test as
+                // the Product-visible grounding reference.
+                blocker_or_lossiness_note: "the named deterministic Human Fighter pilot \
                     seam is grounded: the human_bonus_feat -> feat:dodge and \
-                    human_ability_bonus -> ability:strength selections now surfaced as explicit \
-                    compute explanations; the general interaction-row model is not",
+                    human_ability_bonus -> ability:strength selections now surface as explicit \
+                    compute explanations, and the consumer-side composer \
+                    (rules_core::composed_input) reaches pilot_compute through the \
+                    composed-input contract verified by tests/sd18_preloop_consumer_compose.rs; \
+                    the general interaction-row model is not yet generalized beyond the \
+                    named Human pilot pressure",
                 next_required_uplift: "generalize the named Human pilot pressure into the \
                     interaction-row model once a second computed interaction pressure exists \
                     (per the non-Human interaction row's warrant condition)",

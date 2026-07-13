@@ -525,7 +525,7 @@ fn human_interaction_row_names_both_pressures_and_stays_distinct_from_race() {
 }
 
 #[test]
-fn human_interaction_row_is_partial_and_computed() {
+fn human_interaction_row_is_partial_and_product_visible() {
     let matrix = matrix();
     let interaction = row(
         &matrix,
@@ -536,8 +536,30 @@ fn human_interaction_row_is_partial_and_computed() {
         interaction.subject_id,
         "interaction:human-bonus-feat-ability-bonus"
     );
+    // SD18-PRELOOP: bumped from Partial/Computed to
+    // Partial/Product-visible. The consumer-side composer
+    // (rules_core::composed_input) accepts a chosen-state
+    // CharacterInput plus a corpus-side SourcePackageContent
+    // and produces a ComposedCharacterInput that reaches
+    // pilot_compute::compute_pilot_base_chassis without panic;
+    // tests/sd18_preloop_consumer_compose.rs proves the
+    // end-to-end path against a synthetic Core Rulebook PCC.
     assert_eq!(interaction.support_state, SupportState::Partial);
-    assert_eq!(interaction.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(interaction.evidence_tier, EvidenceTier::ProductVisible);
+    assert!(
+        interaction
+            .blocker_or_lossiness_note
+            .contains("composed_input"),
+        "the row's blocker/lossiness note must name the composer that grounds it: {}",
+        interaction.blocker_or_lossiness_note
+    );
+    assert!(
+        interaction
+            .blocker_or_lossiness_note
+            .contains("sd18_preloop_consumer_compose"),
+        "the row's blocker/lossiness note must name the SD18-PRELOOP test that grounds it: {}",
+        interaction.blocker_or_lossiness_note
+    );
 }
 
 #[test]
