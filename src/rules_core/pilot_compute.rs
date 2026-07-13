@@ -1489,7 +1489,7 @@ const MONK_CLASS_ID: &str = "class:monk";
 // DR/attack-resolution engine that does not exist here, mirroring how the
 // 4th-level magic and 7th-level cold-iron/silver ki-strike properties were
 // never fabricated either.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 10;
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 11;
 // PF1 Core Rulebook level gate at which Monk gains Wholeness of Body (7th
 // level, verified independently against two primary sources: d20pfsrd and
 // legacy.aonprd.com both name Wholeness of Body as the Monk 7th-level
@@ -1609,6 +1609,15 @@ const MONK_SLOW_FALL_INCREASED_REACH_LEVEL: u8 = 6;
 /// it is a flat, non-level-scaled grant (disease immunity) matching the
 /// Barbarian/Rogue Uncanny Dodge / Monk Slow Fall grant-only idiom exactly.
 const MONK_PURITY_OF_BODY_LEVEL: u8 = 5;
+/// The PF1 Core Rulebook level at which Diamond Body is granted (SD18):
+/// "at 11th level, a monk gains immunity to all poisons," verified
+/// independently against both d20pfsrd and legacy.aonprd.com, both of which
+/// list "Diamond body" as the sole level-11 Monk class table "Special"
+/// column entry. Grounded as a bounded grant-only identity record, mirroring
+/// the Purity of Body (disease immunity) idiom exactly: no
+/// poison-resolution engine exists in this codebase to apply the immunity
+/// to.
+const MONK_DIAMOND_BODY_LEVEL: u8 = 11;
 /// The PF1 Core Rulebook level at which the level-1 monk bonus feat (and the
 /// automatic Improved Unarmed Strike grant) always occurs, independent of the
 /// character's current supported level. Kept distinct from the generic
@@ -7792,6 +7801,39 @@ fn explain_monk_level1_chassis(
                  level-5 class table's other \"Special\" column entry, is checked and confirmed \
                  not flat (it requires an Acrobatics-check-total engine and ki-point-spending \
                  action, neither of which exists here) and is deliberately not grounded"
+            ),
+        });
+    }
+
+    // Grounded (SD18): Diamond Body, an 11th-level Monk class feature verified
+    // independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Diamond body" as the sole Monk 11th-level
+    // "Special" column entry). Below the level-11 gate this is a correct PF1
+    // Core Rulebook level-gate absence (value 0); at or above it, it is a
+    // bounded grant-only identity record (value 0, non-fabricated) naming the
+    // rule text — mirroring the Purity of Body grant-only idiom exactly: no
+    // poison-resolution engine exists anywhere in this codebase to apply the
+    // immunity to.
+    if level < MONK_DIAMOND_BODY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.diamond_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Diamond Body at monk level {level}: correctly absent at level {level} by \
+                 PF1 Core Rulebook level gate; the at-grant rule is named but not computed. \
+                 Diamond Body is an 11th-level monk class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.diamond_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Diamond Body granted at monk level {level} (PF1 Core Rulebook, 11th-level \
+                 monk class feature): \"at 11th level, a monk gains immunity to all poisons.\" \
+                 This is a bounded grant-only identity record only (value 0, non-fabricated): no \
+                 poison-resolution engine exists anywhere in this codebase to apply the immunity \
+                 to."
             ),
         });
     }
