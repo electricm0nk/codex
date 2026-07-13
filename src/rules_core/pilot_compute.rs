@@ -3064,30 +3064,34 @@ const HALF_ORC_SIZE_CATEGORY: &str = "Medium";
 const HALF_ORC_BASE_SPEED_FEET: i16 = 30;
 const HALF_ORC_DARKVISION_FEET: i16 = 60;
 const HALF_ORC_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_orc_ability_bonus";
+const HALF_ORC_INTIMIDATING_BONUS: i16 = 2;
 
-/// SD13-E2 Half-Orc racial trait bundle explanation seam (mirroring the
+/// SD13-E2/SD18 Half-Orc racial trait bundle explanation seam (mirroring the
 /// Half-Elf choice-based ability-bonus pattern for the fifth non-Human core
 /// race, with Darkvision instead of low-light vision).
 ///
-/// Surfaces four grounded PF1 Core Rulebook Half-Orc racial trait dimensions
-/// (chosen ability-bonus target, size, speed, senses) as explicit
-/// `ComputationExplanation` records so the Half-Orc identity is legible on the
-/// runtime path rather than left behind the generic `race.semantics.unverified`
-/// diagnostic every other non-Human race still receives.
+/// Surfaces five grounded PF1 Core Rulebook Half-Orc racial trait dimensions
+/// (chosen ability-bonus target, size, speed, senses, Intimidating) as
+/// explicit `ComputationExplanation` records so the Half-Orc identity is
+/// legible on the runtime path rather than left behind the generic
+/// `race.semantics.unverified` diagnostic every other non-Human race still
+/// receives.
 ///
 /// This function:
 ///   - runs only when `race_id == race:half-orc`; every other race is
 ///     unaffected (Human, Dwarf, Elf, Gnome, and Half-Elf keep their own seams;
 ///     every other non-Human race keeps the generic `race.semantics.unverified`
 ///     diagnostic),
-///   - adds no new computed mechanical contribution: the ability-bonus-target
+///   - adds no new computed mechanical contribution beyond the flat
+///     Intimidating skill-bonus magnitude (SD18): the ability-bonus-target
 ///     record surfaces the already-computed modifier for the chosen ability as
-///     recognition, and the size/senses records carry the grounded source value
-///     as identity only,
+///     recognition, the size/senses records carry the grounded source value as
+///     identity only, and Intimidating names only the flat racial-bonus
+///     magnitude (mirroring the Dwarf Stonecunning / Elf/Gnome/Half-Elf Keen
+///     Senses idiom) — no Intimidate-check-total engine is introduced,
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Half-Orc-specific `race.half_orc.bounded_semantics` note naming the
-///     still-unproven families explicitly (Intimidating, Orc Ferocity, weapon
-///     familiarity),
+///     still-unproven families explicitly (Orc Ferocity, weapon familiarity),
 ///   - is bounded to race recognition only; it deliberately grounds no Half-Orc
 ///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
 fn explain_half_orc_race_seam(
@@ -3162,18 +3166,35 @@ fn explain_half_orc_race_seam(
         ),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
-    // the generic race.semantics.unverified diagnostic for Half-Orc specifically
+    // ----- intimidating (flat skill-bonus idiom, mirroring Dwarf Stonecunning /
+    // Elf/Gnome/Half-Elf Keen Senses) -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_orc.trait_bundle.intimidating".to_owned(),
+        value: HALF_ORC_INTIMIDATING_BONUS,
+        detail: format!(
+            "Half-Orc racial trait bundle — Intimidating: PF1 Core Half-Orc grants a flat \
+             {HALF_ORC_INTIMIDATING_BONUS:+} racial bonus on Intimidate skill checks \
+             (halforc_abilities_race.lst — Intimidating entry, \
+             BONUS:SKILL|Intimidate|{HALF_ORC_INTIMIDATING_BONUS}|TYPE=Racial). This is a \
+             bounded recognition record naming only the flat racial-bonus magnitude, mirroring \
+             the Dwarf Stonecunning / Elf Keen Senses / Gnome Keen Senses / Half-Elf Keen \
+             Senses skill-bonus idiom already established on this seam; it is deliberately NOT \
+             an Intimidate-check-total engine"
+        ),
+    });
+
+    // Bounded honesty: five dimensions are now grounded. This replaces the
+    // generic race.semantics.unverified diagnostic for Half-Orc specifically
     // and stays non-claim-blocking so the deterministic pilot still reports
     // computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.half_orc.bounded_semantics".to_owned(),
         message: "Half-Orc race semantics are grounded for the deterministic pilot's chosen \
-                  ability-bonus target, size, speed, and senses trait bundle; the remaining PF1 \
-                  Core Half-Orc racial trait surface remains unverified: Intimidating (a bonus \
-                  on Intimidate checks), Orc Ferocity (fighting on for one more round after \
-                  being brought below 0 hit points), and weapon familiarity (orc double axe, \
-                  falchion, and treating any weapon with 'orc' in its name as martial)."
+                  ability-bonus target, size, speed, senses, and Intimidating trait bundle; the \
+                  remaining PF1 Core Half-Orc racial trait surface remains unverified: Orc \
+                  Ferocity (fighting on for one more round after being brought below 0 hit \
+                  points), and weapon familiarity (orc double axe, falchion, and treating any \
+                  weapon with 'orc' in its name as martial)."
             .to_owned(),
         claim_blocking: false,
     });
