@@ -315,22 +315,27 @@ fn level_10_propagates_computed_receipt_and_view_model() {
     );
 }
 
-// ----- Negative control: level 11 stays blocked (beyond the bounded L2-10 row) -----
+// ----- Negative control: level 12 stays blocked (beyond the bounded L2-11 row) -----
+//
+// SD18 (tests/sd18_fighter_level11_armor_training3.rs) widened the bounded
+// tranche from level 10 to level 11 (Armor Training 3), so this negative
+// control now sits just above the current bound (level 12) rather than at
+// level 11.
 
 #[test]
-fn level_11_fighter_stays_claim_blocked() {
-    let level_11 = LEVEL_10_FIXTURE.replace("class:fighter:10", "class:fighter:11");
-    let input = load(&level_11);
+fn level_12_fighter_stays_claim_blocked() {
+    let level_12 = LEVEL_10_FIXTURE.replace("class:fighter:10", "class:fighter:12");
+    let input = load(&level_12);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-11 Fighter must stay claim-blocked beyond the bounded levels-2-10 row: {:?}",
+        "level-12 Fighter must stay claim-blocked beyond the bounded levels-2-11 row: {:?}",
         computation.diagnostics
     );
     assert!(
         !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "level-11 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-12 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 
