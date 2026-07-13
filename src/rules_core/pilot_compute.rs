@@ -2500,30 +2500,39 @@ const DWARF_BASE_SPEED_FEET: i16 = 20;
 const DWARF_DARKVISION_FEET: i16 = 60;
 const DWARF_CON_ADJUSTMENT: i16 = 2;
 const DWARF_CHA_ADJUSTMENT: i16 = -2;
+/// PF1 Core Rulebook Dwarf Stonecunning flat Perception situational-bonus
+/// magnitude (verified against `dwarf_abilities_race.lst:27`'s
+/// `BONUS:SITUATION|Perception=to notice unusual stonework|2|TYPE=Racial`
+/// and `dwarf_skills.lst:6`'s `Perception.MOD SITUATION:to notice unusual
+/// stonework`). Distinct from the separate Greed (Appraise) racial trait.
+const DWARF_STONECUNNING_PERCEPTION_BONUS: i16 = 2;
 
 /// SD13-E2 Dwarf racial trait bundle explanation seam (mirroring the SD13-E6-F3a
-/// Human trait bundle pattern for the first non-Human core race).
+/// Human trait bundle pattern for the first non-Human core race), widened by the
+/// SD18 dwarf-stonecunning cycle.
 ///
-/// Surfaces four grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
-/// modifiers, size, speed, senses) as explicit `ComputationExplanation` records so
-/// the Dwarf identity is legible on the runtime path rather than left behind the
-/// generic `race.semantics.unverified` diagnostic every other non-Human race still
-/// receives.
+/// Surfaces five grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
+/// modifiers, size, speed, senses, Stonecunning) as explicit `ComputationExplanation`
+/// records so the Dwarf identity is legible on the runtime path rather than left
+/// behind the generic `race.semantics.unverified` diagnostic every other non-Human
+/// race still receives.
 ///
 /// This function:
 ///   - runs only when `race_id == race:dwarf`; every other race is unaffected
 ///     (Human keeps its own seam; every other non-Human race keeps the generic
 ///     `race.semantics.unverified` diagnostic from `explain_human_race_seam`),
-///   - adds no new computed mechanical contribution: the ability-modifiers record
-///     is recognition-only (the chosen Constitution/Charisma scores are understood
-///     to already reflect the fixed +2/-2 racial adjustment; no arithmetic is
-///     performed on this seam), and the size/senses records carry the grounded
-///     source value as identity only,
+///   - adds no new computed mechanical contribution beyond a flat, ungrounded-total
+///     situational-bonus magnitude: the ability-modifiers record is recognition-only
+///     (the chosen Constitution/Charisma scores are understood to already reflect
+///     the fixed +2/-2 racial adjustment; no arithmetic is performed on this seam),
+///     the size/senses records carry the grounded source value as identity only, and
+///     the Stonecunning record names only the flat +2 Perception situational-bonus
+///     magnitude (no Perception-check-total or stonework-detection engine exists),
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Dwarf-specific `race.dwarf.bounded_semantics` note naming the still-unproven
-///     families explicitly (Stonecunning and other skill/derived-stat modifiers,
-///     Defensive Training, Hardy, Stability, Hatred, weapon familiarity, and the
-///     explicit absence of any Dwarf racial bonus feat),
+///     families explicitly (Greed (Appraise), Defensive Training, Hardy, Stability,
+///     Hatred, weapon familiarity, and the explicit absence of any Dwarf racial
+///     bonus feat),
 ///   - is bounded to race recognition only; it deliberately grounds no Dwarf
 ///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
 fn explain_dwarf_race_seam(
@@ -2599,22 +2608,55 @@ fn explain_dwarf_race_seam(
         ),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
-    // the generic race.semantics.unverified diagnostic for Dwarf specifically and
-    // stays non-claim-blocking so the deterministic pilot still reports computed
-    // evidence.
+    // ----- Stonecunning (SD18 dwarf-stonecunning cycle) -----
+    // Grounded flat +2 situational bonus on Perception checks to potentially
+    // notice unusual stonework, such as traps and hidden doors located in
+    // stone walls or floors (core_essentials/races/dwarf/dwarf_abilities_race.lst:27
+    // BONUS:SITUATION|Perception=to notice unusual stonework|2|TYPE=Racial;
+    // dwarf_skills.lst:6 Perception.MOD SITUATION:to notice unusual
+    // stonework). Mirrors the existing flat skill-bonus-magnitude idiom used
+    // elsewhere on this seam (e.g. Bard Inspire Competence, Ranger Track): no
+    // Perception-check-total or stonework-detection engine exists anywhere in
+    // this codebase, so this names only the flat situational-bonus magnitude,
+    // not a check-execution engine. Distinct from Greed (a separate +2
+    // Appraise racial trait for assessing nonmagical precious-metal/gemstone
+    // goods), which remains unground.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.stonecunning".to_owned(),
+        value: DWARF_STONECUNNING_PERCEPTION_BONUS,
+        detail: format!(
+            "Dwarf racial trait bundle — Stonecunning: PF1 Core Dwarf grants a flat \
+             {DWARF_STONECUNNING_PERCEPTION_BONUS:+} bonus on Perception checks to potentially \
+             notice unusual stonework, such as traps and hidden doors located in stone walls or \
+             floors (dwarf_abilities_race.lst:27 BONUS:SITUATION|Perception=to notice unusual \
+             stonework|{DWARF_STONECUNNING_PERCEPTION_BONUS}|TYPE=Racial; dwarf_skills.lst:6 \
+             Perception.MOD SITUATION:to notice unusual stonework). This is a bounded flat \
+             situational-bonus-magnitude recognition record naming the Stonecunning identity on \
+             the deterministic pilot seam; no Perception-check-total or stonework-detection \
+             engine exists anywhere in this codebase, so no check resolution is fabricated from \
+             this record"
+        ),
+    });
+
+    // Bounded honesty: five named dimensions are now grounded (ability
+    // modifiers, size, speed, senses, Stonecunning). This replaces the
+    // generic race.semantics.unverified diagnostic for Dwarf specifically and
+    // stays non-claim-blocking so the deterministic pilot still reports
+    // computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.dwarf.bounded_semantics".to_owned(),
         message: "Dwarf race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core \
-                  Dwarf racial trait surface remains unverified: skill or derived-stat \
-                  modifiers (Stonecunning Perception/Appraise bonuses), Defensive Training \
-                  (dodge bonus to AC against giants), Hardy (bonus on saves against poison, \
-                  spells, and spell-like abilities), Stability (bonus to CMD against bull \
-                  rush/trip), Hatred (bonus on attack rolls against orcs and goblinoids), and \
-                  weapon familiarity (battleaxe, heavy pick, warhammer, dwarven waraxe, \
-                  dwarven urgrosh). PF1 core Dwarves gain no racial bonus feat (unlike Human), \
-                  so that family is explicitly not applicable rather than silently omitted."
+                  modifiers, size, speed, senses, and Stonecunning (flat +2 Perception \
+                  situational bonus to notice unusual stonework) trait bundle; the remaining \
+                  PF1 Core Dwarf racial trait surface remains unverified: Greed (Appraise \
+                  situational bonus to assess nonmagical precious-metal/gemstone goods, a \
+                  distinct trait from Stonecunning), Defensive Training (dodge bonus to AC \
+                  against giants), Hardy (bonus on saves against poison, spells, and \
+                  spell-like abilities), Stability (bonus to CMD against bull rush/trip), \
+                  Hatred (bonus on attack rolls against orcs and goblinoids), and weapon \
+                  familiarity (battleaxe, heavy pick, warhammer, dwarven waraxe, dwarven \
+                  urgrosh). PF1 core Dwarves gain no racial bonus feat (unlike Human), so that \
+                  family is explicitly not applicable rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
     });
