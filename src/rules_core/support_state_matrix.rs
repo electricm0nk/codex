@@ -729,7 +729,7 @@ const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs 
 /// Dwarf racial trait dimensions (ability modifiers, size, speed, senses) that
 /// stays explicitly honest about the remaining unproven Dwarf family surface.
 const SD13_DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs + \
-    tests/sd18_dwarf_stonecunning.rs";
+    tests/sd18_dwarf_stonecunning.rs + tests/sd18_dwarf_greed.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Elf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -776,29 +776,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.dwarf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:dwarf",
-                dimension: "bounded Dwarf race semantics: five grounded PF1 Core Rulebook \
+                dimension: "bounded Dwarf race semantics: six grounded PF1 Core Rulebook \
                             Dwarf racial trait dimensions (ability modifiers, size, speed, \
-                            senses, Stonecunning) recognized on the compute seam, with the \
-                            remaining Dwarf family surface still unproven",
+                            senses, Stonecunning, Greed) recognized on the compute seam, with \
+                            the remaining Dwarf family surface still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_DWARF_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E2 plus the SD18 dwarf-stonecunning cycle \
-                    leave direct computed evidence that five Dwarf race-semantic families are \
-                    recognized on the compute seam (ability modifiers: +2 Constitution / -2 \
-                    Charisma; size: Medium; speed: 20 ft, never reduced by armor or \
-                    encumbrance; senses: Darkvision 60 ft; Stonecunning: flat +2 Perception \
-                    situational bonus to notice unusual stonework), but the remaining families \
-                    stay unproven: Greed (a distinct +2 Appraise situational bonus to assess \
-                    nonmagical precious-metal/gemstone goods), Defensive Training, Hardy, \
-                    Stability, Hatred, and weapon familiarity. PF1 core Dwarves gain no racial \
-                    bonus feat, so that family is not applicable rather than unproven. No \
-                    numeric mechanical contribution beyond the flat Stonecunning \
-                    situational-bonus magnitude is fabricated for any of the five recognized \
-                    dimensions.",
+                blocker_or_lossiness_note: "SD13-E2 plus the SD18 dwarf-stonecunning and \
+                    dwarf-greed cycles leave direct computed evidence that six Dwarf \
+                    race-semantic families are recognized on the compute seam (ability \
+                    modifiers: +2 Constitution / -2 Charisma; size: Medium; speed: 20 ft, \
+                    never reduced by armor or encumbrance; senses: Darkvision 60 ft; \
+                    Stonecunning: flat +2 Perception situational bonus to notice unusual \
+                    stonework; Greed: flat +2 Appraise situational bonus to assess nonmagical \
+                    precious-metal/gemstone goods), but the remaining families stay unproven: \
+                    Defensive Training, Hardy, Stability, Hatred, and weapon familiarity. PF1 \
+                    core Dwarves gain no racial bonus feat, so that family is not applicable \
+                    rather than unproven. No numeric mechanical contribution beyond the flat \
+                    Stonecunning/Greed situational-bonus magnitudes is fabricated for any of \
+                    the six recognized dimensions.",
                 next_required_uplift: "later SD18 slice grounding one or more of the remaining \
-                    Dwarf families (Greed, Defensive Training, Hardy, Stability, Hatred, \
+                    Dwarf families (Defensive Training, Hardy, Stability, Hatred, \
                     weapon familiarity) as a real computed contribution",
             },
             SupportStateRow {
