@@ -1453,7 +1453,36 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // against both sources — the Wizard's bonus feats land only at levels
 // 5/10/15/20), so no new pillar record is grounded at level 11 beyond
 // widening the specialist-bonus-slot pillar to its new value.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 11;
+//
+// A further SD18 slice widens the gate again to level 12
+// (`MAX_SUPPORTED_WIZARD_LEVEL = 12`): UNLIKE level 11 (where base attack
+// bonus and all three base saves stayed numerically unchanged from level
+// 10, integer-division coincidences), base attack bonus GENUINELY RISES to
+// +6 (`12/2 = 6`) and all three base saves GENUINELY RISE too (poor
+// Fortitude/Reflex `12/3 = 4`, good Will `12/2+2 = 8`) — verified rather
+// than assumed against both primary sources (d20pfsrd and the Archives of
+// Nethys aonprd.com mirror, which agree byte-for-byte), mirroring the
+// Sorcerer level-11-then-level-12 pattern exactly. The raw spells-per-day
+// table's level-12 row is "4/4/4/4/3/3/2" — the 6th-level column rises from
+// 1 to 2, but there is still no 7th-level column at all (7th-level wizard
+// spells do not become accessible until level 13), so the specialist
+// bonus-slot flat count (one bonus slot of each spell level she can cast)
+// STAYS at 6, a threshold stasis checked rather than assumed; Intense
+// Spells' bonus-damage magnitude GENUINELY RISES to 6 (`max(12/2, 1) = 6`,
+// up from 5 at level 11) via the pre-existing formula, not re-derived;
+// Force Missile's pool is level-independent and unchanged; the level-12
+// "Special" column is genuinely blank on both primary sources (the
+// Wizard's bonus feats land only at levels 5/10/15/20), so no new pillar
+// record is grounded at level 12 beyond the arithmetic pillars above. This
+// cycle independently re-verified (rather than assumed from the
+// immediately-preceding Sorcerer level-12 cycle's outcome) that Wizard's
+// own live `class_spell.wizard.prepared_spellbook.unsupported`
+// claim-blocker is pushed unconditionally alongside the level's other
+// explanations — it does not gate `supported_wizard_level` or this
+// constant, exactly mirroring every sibling class's own remaining-burden
+// diagnostics, so it marks incomplete coverage without blocking this
+// arithmetic widening.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 12;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
