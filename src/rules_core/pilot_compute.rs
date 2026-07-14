@@ -284,9 +284,27 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // (class_chassis.paladin.aura_of_justice), mirroring the Monk Diamond Body
 // grant-only idiom exactly: no ally-aura/positional engine and no
 // smite-evil-resource-sharing execution engine exists anywhere in this
-// codebase to apply the shared smite to. Nothing here grounds level 12+
-// Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 11;
+// codebase to apply the shared smite to. A further SD18 slice
+// (cycle-2026-07-15T0700) widens the gate again to level 12, verified
+// independently against d20pfsrd and legacy.aonprd.com: base attack bonus
+// genuinely rises to 12 (full BAB) and this time ALL THREE base saves
+// genuinely rise too (good Fortitude/Will 12/2+2=8, poor Reflex 12/3=4,
+// unlike level 11 where all three stayed numerically unchanged); Smite
+// Evil's uses/day stay 4/day (another integer-division coincidence, the
+// next rise lands at 13th) but its damage bonus genuinely rises to 12; Lay
+// on Hands genuinely rises on both axes (uses 8, heal dice 6); Channel
+// Positive Energy's die count stays 6 ((12+1)/2=6, an integer-division
+// coincidence with level 11); the effective caster level genuinely rises
+// to 9 (12-3); the 2nd-level spell's base count and integrated total both
+// genuinely rise (base 1->2, total 2->3, the raw spells-per-day table row
+// is "2/2/1/--" at level 12), while the 1st- and 3rd-level counts/totals
+// stay numerically unchanged; and the level-12 "Special" column reads
+// "Mercy" only (verified independently against both primary sources) --
+// 12th IS a repeat-Mercy-grant level (the 3rd/6th/9th/12th cadence),
+// grounded here as a FOURTH numbered mercy choice slot
+// (class_chassis.paladin.mercy_4_choice), mirroring the proven slot-2/
+// slot-3 idiom exactly. Nothing here grounds level 13+ Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 12;
 
 // Aura of Justice is an 11th-level paladin feature in the PF1 Core Rulebook
 // (verified independently against d20pfsrd and legacy.aonprd.com): "At 11th
@@ -383,6 +401,17 @@ const PALADIN_SECOND_MERCY_GRANT_LEVEL: u8 = 6;
 const PALADIN_SECOND_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_2";
 const PALADIN_THIRD_MERCY_GRANT_LEVEL: u8 = 9;
 const PALADIN_THIRD_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_3";
+
+/// PF1 Core Rulebook gate of the paladin's FOURTH mercy ("every three levels
+/// thereafter" from the level-3 mercy rule: 3, 6, 9, 12). The CRB 12th-level
+/// tier was verified for this SD18 slice: legacy.aonprd.com (Core Rulebook
+/// only) ADDS Blinded/Deafened/Paralyzed/Stunned; d20pfsrd's list is a
+/// superset whose CRB subset matches exactly -- its extra entries
+/// (Amputated, Ensorcelled, Petrified) are non-CRB expansions outside this
+/// seam's pf1.core_rulebook source package. Numbered slot per the proven
+/// repeat-grant idiom, mirroring slot 2/3 exactly.
+const PALADIN_FOURTH_MERCY_GRANT_LEVEL: u8 = 12;
+const PALADIN_FOURTH_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_4";
 
 // SD13-E5 Ranger Combat Style correction. Combat Style Feat is a 2nd-level ranger
 // feature in the PF1 Core Rulebook: the ranger selects a combat style (archery or
@@ -5533,9 +5562,10 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // in each detail. No mercy's effect is computed (no lay-on-hands
     // execution engine exists) and prerequisite chains (e.g. the frightened
     // mercy requiring the shaken mercy) are named, not validated.
-    let repeat_mercy_slots: [(u8, u8, &str); 2] = [
+    let repeat_mercy_slots: [(u8, u8, &str); 3] = [
         (2, PALADIN_SECOND_MERCY_GRANT_LEVEL, PALADIN_SECOND_MERCY_CHOICE_ID),
         (3, PALADIN_THIRD_MERCY_GRANT_LEVEL, PALADIN_THIRD_MERCY_CHOICE_ID),
+        (4, PALADIN_FOURTH_MERCY_GRANT_LEVEL, PALADIN_FOURTH_MERCY_CHOICE_ID),
     ];
     for (slot_number, grant_level, choice_id) in repeat_mercy_slots {
         if level < grant_level {
@@ -5548,12 +5578,17 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
             "the 6th-level CRB tier additions are Dazed, Diseased, and Staggered \
              (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset contains them, its \
              extra entries being non-CRB expansions outside this pf1.core_rulebook seam)"
-        } else {
+        } else if slot_number == 3 {
             "the 9th-level CRB tier additions are Cursed, Exhausted, Frightened, Nauseated, \
              and Poisoned (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset \
              contains them); the rule text chains prerequisites — Exhausted requires the \
              fatigue mercy, Frightened requires the shaken mercy, Nauseated requires the \
              sickened mercy — which this bounded recognition names but does not validate"
+        } else {
+            "the 12th-level CRB tier additions are Blinded, Deafened, Paralyzed, and Stunned \
+             (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset contains them, its \
+             extra entries — Amputated, Ensorcelled, Petrified — being non-CRB expansions \
+             outside this pf1.core_rulebook seam)"
         };
         explanations.push(ComputationExplanation {
             id: format!("class_chassis.paladin.mercy_{slot_number}_choice"),
@@ -5639,6 +5674,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         9 => [Some(2), Some(1), None],
         10 => [Some(2), Some(1), Some(0)],
         11 => [Some(2), Some(1), Some(1)],
+        12 => [Some(2), Some(2), Some(1)],
         _ => [None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
