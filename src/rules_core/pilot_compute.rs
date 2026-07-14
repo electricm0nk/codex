@@ -1477,12 +1477,13 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// recognition (no power-list validation — d20pfsrd merges non-CRB powers
 /// into its list, the same superset pattern as the mercy tiers, and the
 /// open-ended idiom sidesteps list encoding entirely).
-const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 5] = [
+const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 6] = [
     (1, 2, "choice:barbarian_rage_power"),
     (2, 4, "choice:barbarian_rage_power_2"),
     (3, 6, "choice:barbarian_rage_power_3"),
     (4, 8, "choice:barbarian_rage_power_4"),
     (5, 10, "choice:barbarian_rage_power_5"),
+    (6, 12, "choice:barbarian_rage_power_6"),
 ];
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
@@ -1531,7 +1532,26 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 5] = [
 /// 11 is NOT a rage-power level (powers land at 2/4/6/8/10/12...), so no
 /// new rage-power-selection-slot-count engine is invented; Trap Sense stays
 /// +3 (next rise 12th) and Damage Reduction stays 2/— (next rise 13th).
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 11;
+///
+/// A still further SD18 slice widens the gate to level 12 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement): base-attack (classlevel = 12)
+/// genuinely rises to +12, and base-save genuinely rises to Fortitude +8
+/// (12/2+2) / Reflex +4 / Will +4 (12/3, both genuinely risen from +3); the
+/// rage rounds-per-day pool genuinely rises to 29 (4 + Con mod + 2 per
+/// level after 1st); the level-12 "Special" column reads "Rage power, trap
+/// sense +4" — Trap Sense GENUINELY RISES to +4 (12/3), a magnitude-rise on
+/// the already-grounded Trap Sense flat-magnitude formula pillar, mirroring
+/// exactly how the level-6/level-9 Trap Sense rises and the level-10/
+/// level-11 Damage Reduction/Greater Rage rises were widened; the
+/// rage-power entry is the SAME open-ended choice-list feature already
+/// deliberately left named-but-unproven-in-effect at levels 2/4/6/8/10 — a
+/// sixth numbered slot (gate 12) is added to `BARBARIAN_RAGE_POWER_SLOTS`
+/// mirroring the proven repeat-grant idiom exactly, so no new
+/// rage-power-EFFECT engine is invented; the Greater Rage constants
+/// (+6/+6/+3/-2) and Damage Reduction (2/—, next rise 13th) both stay
+/// unchanged from level 11.
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 12;
 
 /// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
 /// (11th level — "At 11th level, a barbarian's rage improves. She gains a

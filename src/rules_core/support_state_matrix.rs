@@ -485,7 +485,8 @@ const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_ba
     tests/sd13_barbarian_level9_progression.rs + \
     tests/sd13_barbarian_level10_progression.rs + \
     tests/sd13_barbarian_rage_power_slots.rs + \
-    tests/sd18_barbarian_level11_greater_rage.rs";
+    tests/sd18_barbarian_level11_greater_rage.rs + \
+    tests/sd18_barbarian_level12_widening.rs";
 
 /// SD13-E2/SD18 dedicated proof surface for the bounded Gnome race-semantics
 /// recognition: direct computed recognition of eight grounded PF1 Core Rulebook
@@ -1265,21 +1266,23 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:barbarian",
                 dimension: "bounded Barbarian chassis progression: the deterministic Human \
                     Barbarian level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                    level-9/level-10/level-11 \
+                    level-9/level-10/level-11/level-12 \
                     martial chassis identity, with base-attack, base-save, fast-movement, and \
-                    flat Rage pillar values grounded across all eleven levels (Rage becoming \
+                    flat Rage pillar values grounded across all twelve levels (Rage becoming \
                     Greater Rage at level 11, a magnitude-rise on the same flat-constant \
                     pillar), Uncanny Dodge \
                     grounded as a level-2 identity/recognition record, Trap Sense grounded as a \
                     level-3 flat-magnitude record (unchanged at levels 4-5, rising to +2 at \
-                    level 6, unchanged at levels 7-8, rising to +3 at level 9, and unchanged \
-                    at levels 10-11), Improved \
+                    level 6, unchanged at levels 7-8, rising to +3 at level 9, unchanged \
+                    at levels 10-11, and rising to +4 at level 12), Improved \
                     Uncanny Dodge grounded as a \
                     level-5 identity/recognition record, Damage Reduction grounded as a level-7 \
                     flat-magnitude record (unchanged at levels 8-9, genuinely rising to 2/— at \
-                    level 10, unchanged at level 11), and the rage-state execution / \
-                    Rage Power choice-list / weapon-familiarity / flanking-resolution / \
-                    damage-reduction-application / level-12+ remainder still unproven",
+                    level 10, unchanged at levels 11-12), a sixth numbered Rage Power \
+                    choice-recognition slot grounded at the level-12 grant (mirroring the five \
+                    numbered slots already grounded at levels 2/4/6/8/10), and the rage-state \
+                    execution / Rage Power EFFECT / weapon-familiarity / flanking-resolution / \
+                    damage-reduction-application / level-13+ remainder still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1496,17 +1499,32 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     sidestepped by the open-ended idiom; the gate ladder is pinned one \
                     level below the 2/6/10 gates) — every selected power's EFFECT stays \
                     unproven behind the rage-state execution engine, which remains the \
-                    named claim-blocking burden",
+                    named claim-blocking burden. A still further SD18 slice widens the gate to \
+                    level 12 (verified independently against d20pfsrd and the Archives of \
+                    Nethys aonprd.com mirror, byte-for-byte agreement): base-attack \
+                    (classlevel = 12) genuinely rises to +12, base-save genuinely rises to \
+                    Fortitude +8 (12/2+2), Reflex +4, and Will +4 (12/3, both genuinely risen \
+                    from +3), and the rage rounds-per-day pool genuinely rises to 29 (4 + Con \
+                    mod + 2 per level after 1st); the level-12 \"Special\" column reads \"Rage \
+                    power, trap sense +4\" — Trap Sense GENUINELY RISES to +4 (12/3), a \
+                    magnitude-rise on the already-grounded Trap Sense flat-magnitude formula \
+                    pillar, and the rage-power entry is the SAME open-ended choice-list feature \
+                    already left named-but-unproven-in-effect at 2/4/6/8/10, grounded here as a \
+                    sixth numbered slot (class_chassis.barbarian.rage_power_6_choice, gate 12, \
+                    choice:barbarian_rage_power_6) mirroring the proven repeat-grant idiom \
+                    exactly — no rage-power-EFFECT engine is invented; the Greater Rage \
+                    constants (+6/+6/+3/-2) and Damage Reduction (2/—, next rise 13th) both \
+                    stay unchanged from level 11",
                 next_required_uplift: "ground the Barbarian rage-state execution engine \
                     (activation/deactivation, rage-round consumption, post-rage fatigue, \
                     temporary application of the rage constants), the Rage Power choice-list \
-                    feature (now including the level-2, level-4, level-6, level-8, and level-10 \
-                    grants), \
+                    feature (now including the level-2, level-4, level-6, level-8, level-10, \
+                    and level-12 grants), \
                     the Improved Uncanny Dodge flanking-resolution/attacker-level-comparison \
                     engine, the Damage Reduction application engine, and wire the grounded \
                     base-attack / base-save / fast-movement / Uncanny Dodge / Trap Sense / \
                     Improved Uncanny Dodge / Damage Reduction values into the integrated pilot \
-                    surface, later widening into weapon familiarity and level-12+ martial \
+                    surface, later widening into weapon familiarity and level-13+ martial \
                     progression",
             },
             SupportStateRow {
