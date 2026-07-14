@@ -1130,7 +1130,41 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// grounded. No new class feature (no new choice slot) is granted at 11th
 /// level, so no new engine is invented; Jack-of-All-Trades and the repeat
 /// Versatile Performance grant both carry over unchanged.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 11;
+///
+/// A still further SD18 slice widens the gate to level 12 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, mirroring exactly how `MAX_SUPPORTED_BARBARIAN_LEVEL` was
+/// widened from 11 to 12): base attack (classlevel * 3 / 4) genuinely
+/// rises to +9, base saves genuinely rise to Fortitude +4 (12/3) / Reflex
+/// +8 / Will +8 (both 12/2+2), Bardic Knowledge genuinely rises to 6
+/// (max(12/2, 1)), the Bardic Performance rounds-per-day pool genuinely
+/// rises to 28 (4 + Charisma modifier + 2 per level after 1st), and the
+/// Fascinate DC genuinely rises to 18 (10 + 12/2 + Charisma modifier)
+/// while the Fascinate affected-creature count stays 4 (1 + (12-1)/3, an
+/// integer-division coincidence with level 11). The level-12 "Special"
+/// column reads "Soothing performance" only — a wholly new 12th-level
+/// class feature, grounded ONLY as a bounded grant-only identity record
+/// (`BARD_SOOTHING_PERFORMANCE_LEVEL`), mirroring the Monk Diamond Body /
+/// Paladin Aura of Justice idiom exactly: no healing-application engine
+/// and no condition-removal engine exist anywhere in this codebase, so
+/// neither is fabricated. Inspire Courage, Inspire Competence, and Lore
+/// Master's flat magnitudes all stay unchanged at their level-11 third
+/// tier (their next tiers land at bard level 15 or 17, out of scope);
+/// Jack-of-All-Trades and the repeat Versatile Performance grant both
+/// carry over unchanged.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 12;
+/// PF1 Core Rulebook level gate at which Bard gains Soothing Performance
+/// (12th level, verified independently against two primary sources:
+/// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
+/// "Soothing performance" as the sole Bard 12th-level "Special" column
+/// entry). The rule text: "a bard of 12th level or higher can use his
+/// performance to help heal the wounds of his allies... this ability
+/// functions as mass cure serious wounds... this use of bardic
+/// performance also removes the fatigued, sickened, and shaken
+/// conditions." This is grounded ONLY as a bounded grant-only identity
+/// record (value 0, non-fabricated): no healing-application engine and no
+/// condition-removal engine exist anywhere in this codebase.
+const BARD_SOOTHING_PERFORMANCE_LEVEL: u8 = 12;
 /// PF1 Core Rulebook level gate at which Bard gains Jack-of-All-Trades (10th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Jack-of-all-trades, versatile performance" as
@@ -12066,6 +12100,44 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
+    // Grounded (SD18): Soothing Performance, a 12th-level Bard class feature
+    // verified independently against two primary PF1 sources (d20pfsrd and
+    // the Archives of Nethys aonprd.com mirror both list "Soothing
+    // performance" as the sole Bard 12th-level "Special" column entry).
+    // Below the level-12 gate this is a correct PF1 Core Rulebook
+    // level-gate absence (value 0); at or above it, it is a bounded
+    // grant-only identity record (value 0, non-fabricated) naming the rule
+    // text — mirroring the Monk Diamond Body / Paladin Aura of Justice
+    // grant-only idiom exactly: no healing-application engine and no
+    // condition-removal engine exist anywhere in this codebase to apply
+    // the effect to.
+    if level < BARD_SOOTHING_PERFORMANCE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.soothing_performance".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bard Soothing Performance at bard level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Soothing Performance is a 12th-level Bard class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.soothing_performance".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bard Soothing Performance granted at bard level {level} (PF1 Core Rulebook, \
+                 12th-level Bard class feature): \"a bard of 12th level or higher can use his \
+                 performance to help heal the wounds of his allies... this ability functions \
+                 as mass cure serious wounds... this use of bardic performance also removes \
+                 the fatigued, sickened, and shaken conditions.\" This is a bounded grant-only \
+                 identity record only (value 0, non-fabricated): no healing-application engine \
+                 and no condition-removal engine exists anywhere in this codebase to apply the \
+                 effect to."
+            ),
+        });
+    }
+
     // Still blocked (1/2): name the narrowed bardic performance-execution burden
     // explicitly, now separated from the grounded flat pillars (Bardic Knowledge,
     // the rounds-per-day budget, the Inspire Courage magnitude, and the Fascinate
@@ -12085,10 +12157,13 @@ fn explain_bard_level1_spell_baseline(
              affected-creature-count to any actual Will-save resolution or targeting), the two \
              remaining level-1 performances (countersong, distraction) are not grounded at all \
              — both require an opposed Perform-check-vs-effect substitution resolution rather \
-             than a flat number — and Versatile Performance (the Bard's other 2nd-level class \
+             than a flat number — Versatile Performance (the Bard's other 2nd-level class \
              feature) is not grounded either — it requires a choice-gated skill-substitution \
-             engine rather than a flat number — so no Bard bardic-performance execution \
-             support is claimed"
+             engine rather than a flat number — and Soothing Performance (the Bard's 12th-level \
+             class feature, granted only as a bounded identity record) is not executed either \
+             — it requires a healing-application engine and a condition-removal engine, \
+             neither of which exists in this codebase — so no Bard bardic-performance \
+             execution support is claimed"
         ),
         claim_blocking: true,
     });

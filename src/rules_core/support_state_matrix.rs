@@ -594,7 +594,8 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_spells_known_counts.rs + tests/sd13_bard_bonus_spells.rs + \
     tests/sd13_bard_total_spells_per_day.rs + \
     tests/sd13_bard_versatile_performance_slots.rs + \
-    tests/sd18_bard_level11_inspire_widening.rs";
+    tests/sd18_bard_level11_inspire_widening.rs + \
+    tests/sd18_bard_level12_widening.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1533,7 +1534,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10/level-11 \
+                            level-9/level-10/level-11/level-12 \
                             spell baseline, with base attack bonus, base save progression, Bardic \
                             Knowledge, the flat Bardic Performance surface (rounds per day, \
                             inspire courage magnitude rising at level 5 and again at level 11), \
@@ -1541,11 +1542,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             affected-creature-count formulas, (at level 2) the flat Well-Versed \
                             magnitude, (at level 3, rising at level 7 and again at level 11) the \
                             flat Inspire \
-                            Competence magnitude, and (at level 5, rising at level 11) the flat \
+                            Competence magnitude, (at level 5, rising at level 11) the flat \
                             Lore Master take-20 \
-                            uses-per-day magnitude, all grounded for real at every supported \
+                            uses-per-day magnitude, and (at level 12) a Soothing Performance \
+                            grant-only identity record, all grounded for real at every supported \
                             level, and the bardic performance-execution burden (including \
-                            Countersong, Distraction, Versatile Performance, and Suggestion) and \
+                            Countersong, Distraction, Versatile Performance, Suggestion, and \
+                            Soothing Performance's own healing/condition-removal execution) and \
                             the spontaneous known-spell / slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -1872,9 +1875,30 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     was grounded at its own 11th-level tier; no new class feature (no new \
                     choice slot) is granted at 11th level, so no new engine is invented; \
                     Jack-of-All-Trades and the repeat Versatile Performance grant both carry \
-                    over unchanged. No \
-                    performance-execution math and no spell math is fabricated and \
-                    no Bard level 12+ is proven",
+                    over unchanged) — AND a further SD18 slice widens the level-range gate again \
+                    (supported_bard_level, 1..=12), the loop's second §3.2 level-12 widening \
+                    (after Barbarian) and the first level-12 widening on a spell-bearing class, \
+                    verified independently against the PF1 Core Rulebook Bard class table \
+                    (d20pfsrd and the Archives of Nethys aonprd.com mirror): level 12 base \
+                    attack genuinely rises to +9 (12 * 3 / 4), base saves genuinely rise to \
+                    Fortitude +4 (12/3) / Reflex +8 / Will +8 (both 12/2+2), Bardic Knowledge \
+                    genuinely rises to 6 (max(12/2, 1)), the Bardic Performance rounds-per-day \
+                    pool genuinely rises to 28 (4 + Charisma modifier + 2 per level after 1st), \
+                    and the Fascinate DC genuinely rises to 18 (10 + 12/2 + Charisma modifier) \
+                    while the Fascinate affected-creature count stays 4 (1 + (12-1)/3, an \
+                    integer-division coincidence with level 11); the level-12 \"Special\" \
+                    column reads \"Soothing performance\" only (verified independently against \
+                    both primary sources, checked rather than assumed) — a wholly new 12th-level \
+                    Bard class feature, grounded ONLY as a bounded grant-only identity record \
+                    (value 0, non-fabricated), mirroring the Monk Diamond Body / Paladin Aura of \
+                    Justice idiom exactly: no healing-application engine and no \
+                    condition-removal engine exist anywhere in this codebase, so neither is \
+                    fabricated; Inspire Courage, Inspire Competence, and Lore Master's flat \
+                    magnitudes all stay unchanged at their level-11 third tier (their next tiers \
+                    land at bard level 15 or 17, out of scope), and Jack-of-All-Trades and the \
+                    repeat Versatile Performance grant both carry over unchanged. No \
+                    performance-execution math, no healing/condition-removal math, and no spell \
+                    math is fabricated and no Bard level 13+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
                     Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
@@ -1883,8 +1907,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     (both grants), Suggestion's fascinated-target-plus-spell-effect resolution, \
                     Dirge of Doom's fear/shaken-condition resolution, Inspire Greatness's \
                     bonus-Hit-Dice/temporary-hit-point mechanics, Lore Master's own \
-                    take-10/take-20 skill-check-resolution execution), then the spontaneous \
-                    spell-slot burden, then level-12+ progression",
+                    take-10/take-20 skill-check-resolution execution, and Soothing Performance's \
+                    own healing-application/condition-removal execution), then the spontaneous \
+                    spell-slot burden, then level-13+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",
