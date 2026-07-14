@@ -186,24 +186,25 @@ fn level_8_propagates_computed_receipt_and_view_model() {
 
 #[test]
 fn fighter_above_the_bounded_tranche_stays_claim_blocked() {
-    // The bounded tranche has since widened past level 8 (to level 11 — SD13-E5
+    // The bounded tranche has since widened past level 8 (to level 12 — SD13-E5
     // widened it to level 10 in tests/sd13_fighter_level9_level10_progression.rs,
     // and SD18 widened it further to level 11 in
-    // tests/sd18_fighter_level11_armor_training3.rs), so this negative control
-    // now sits just above the current bound (level 12) rather than at level 9
-    // or level 11.
-    let level_12 = LEVEL_8_FIXTURE.replace("class:fighter:8", "class:fighter:12");
-    let input = load(&level_12);
+    // tests/sd18_fighter_level11_armor_training3.rs and to level 12 in
+    // tests/sd18_fighter_level12_widening.rs), so this negative control now
+    // sits just above the current bound (level 13) rather than at level 9,
+    // level 11, or level 12.
+    let level_13 = LEVEL_8_FIXTURE.replace("class:fighter:8", "class:fighter:13");
+    let input = load(&level_13);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-12 Fighter must stay claim-blocked above the bounded tranche: {:?}",
+        "level-13 Fighter must stay claim-blocked above the bounded tranche: {:?}",
         computation.diagnostics
     );
     assert!(
         !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "level-12 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-13 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 
