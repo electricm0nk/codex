@@ -256,12 +256,18 @@ fn ranger_level9_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 11 stays unrecognized by this slice -----
-
+// ----- Negative control: level 12 stays unrecognized by this slice -----
+//
+// SD18 widening (cycle-2026-07-14T2300, tests/sd18_ranger_level11_quarry.rs):
+// Ranger level 11 is now genuinely recognized (base attack bonus rises and
+// Quarry is newly grounded), so this boundary control moves to level 12,
+// mirroring the exact same boundary move each of the Barbarian/Bard/Cleric/
+// Druid/Fighter/Monk/Paladin/Rogue/Sorcerer/Wizard level-11 widening cycles
+// made for their own sibling level-10 progression tests.
 #[test]
-fn ranger_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = RANGER_LEVEL10_FIXTURE.replace("class:ranger:10", "class:ranger:11");
-    let input = load(&level_11);
+fn ranger_level_12_is_not_promoted_by_this_slice() {
+    let level_12 = RANGER_LEVEL10_FIXTURE.replace("class:ranger:10", "class:ranger:12");
+    let input = load(&level_12);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -269,7 +275,7 @@ fn ranger_level_11_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")
                 || e.id.starts_with("class_feature.ranger.")),
-        "level-11 Ranger must not gain any bounded ranger explanation: {:?}",
+        "level-12 Ranger must not gain any bounded ranger explanation: {:?}",
         computation.explanations
     );
 }

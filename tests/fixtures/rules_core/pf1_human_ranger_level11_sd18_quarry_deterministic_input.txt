@@ -1,0 +1,59 @@
+# SD18 deterministic Human Ranger level 11 Quarry widening fixture.
+# Widens the accepted SD13-E5 deterministic PF1 Core Rulebook Human Ranger
+# level-1..level-10 hybrid chassis baseline
+# (tests/sd13_ranger_level10_progression.rs, the SD13 tranche's declared
+# ceiling) to Ranger level 11 as chosen input only. It names selections; it
+# does not contain derived, computed, or parity values. It is the level-10
+# baseline fixture with the class level bumped and exactly one additional
+# chosen selection, exercising the 11th-level "Special" column entry, Quarry
+# (verified independently against d20pfsrd and the Archives of Nethys
+# aonprd.com mirror: "At 11th level, a ranger can select one target within
+# line of sight as his quarry... the ranger receives a +2 insight bonus on
+# attack rolls made against his quarry, and he confirms all critical threats
+# against the quarry automatically"):
+#
+#   choice=choice:ranger_quarry_target:enemy:humanoid_orc
+#     -- the target designated as this ranger's quarry, mirroring the
+#        Favored Enemy/Favored Terrain open-ended choice-recognition idiom
+#        exactly (raw string interpolation, no restricted-list validation);
+#        PF1 restricts the quarry to a target corresponding to one of the
+#        ranger's own favored-enemy types, so this fixture names the same
+#        enemy identifier already chosen as the first favored enemy
+#        (enemy:humanoid_orc), though no favored-enemy-type matching is
+#        implemented anywhere in this codebase to enforce that restriction
+#
+# Everything else carries over from the level-10 baseline fixture unchanged.
+# No Survival-check-execution engine, no critical-confirmation-roll engine,
+# and no active-quarry cooldown state (the 24-hour reselection cooldown or
+# the 1-hour post-kill cooldown) exists in this codebase, so the fixture
+# makes no such claim; only the grant identity and the flat +2 attack-roll
+# magnitude are grounded.
+case_id=pf1-crb-human-ranger-level11-sd18-quarry
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:11
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_favored_enemy_2:enemy:undead
+choice=choice:ranger_favored_enemy_bonus_increase_target:enemy:first
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_combat_style_bonus_feat_2:feat:manyshot
+choice=choice:ranger_combat_style_bonus_feat_3:feat:shot_on_the_run
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_hunters_bond:form:bond
+choice=choice:ranger_quarry_target:enemy:humanoid_orc
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

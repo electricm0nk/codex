@@ -388,6 +388,10 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
 /// base-save progression test as one literal, mirroring
 /// [`SD13_PALADIN_ROW_GROUNDING_REF`]. Each `.contains()` consumer reads its
 /// respective substring from this combined grounding reference.
+// SD18 widening: extended to also cite the live SD18 level-11 Quarry
+// widening proof, mirroring how `SD13_ROGUE_LEVEL1_TEST` and the other
+// sibling class constants were each extended to also cite their own SD18
+// level-11 widening proof.
 const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs + \
     tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs + \
     tests/sd13_ranger_base_attack_and_saves.rs + \
@@ -407,7 +411,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_spells_per_day_counts.rs + \
     tests/sd13_ranger_spell_save_dcs.rs + \
     tests/sd13_ranger_bonus_spells.rs + \
-    tests/sd13_ranger_total_spells_per_day.rs";
+    tests/sd13_ranger_total_spells_per_day.rs + \
+    tests/sd18_ranger_level11_quarry.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -2870,7 +2875,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7/ \
-                            level-8/level-9/level-10 chassis baseline, with base attack bonus, base save \
+                            level-8/level-9/level-10/level-11 chassis baseline, with base attack bonus, base save \
                             progression, Track, the favored-enemy flat surface, the \
                             combat-style choice-and-bonus-feat recognition, (level 3) \
                             Endurance and the Favored Terrain choice-and-flat-magnitude \
@@ -2882,11 +2887,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             record), (level 8) Swift Tracker (a grant-only identity \
                             record), (level 8) the Favored Terrain rule's 8th-level \
                             interval (second favored-terrain selection plus the \
-                            bonus-increase target choice), and (level 10) the Favored Enemy \
+                            bonus-increase target choice), (level 10) the Favored Enemy \
                             rule's 10th-level interval (third enemy-type selection plus its \
                             own bonus-increase target choice, stacking with the 5th-level \
-                            increase when both name the same enemy) grounded for real and \
-                            the later spell burden still blocked",
+                            increase when both name the same enemy), and (level 11) Quarry \
+                            (a grant-only identity record for the take-10-while-tracking and \
+                            auto-confirm-critical-threats behaviors, an open-ended target-choice \
+                            recognition record, and the flat +2 insight attack-roll magnitude) \
+                            grounded for real and the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -3147,7 +3155,41 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     absent selections fabricate nothing (the baseline level-10 fixture \
                     computes exactly as before), the selections are correctly not recognized \
                     below the 10th-level gate, and the 15th/20th intervals stay out of \
-                    scope. The row is Partial, not \
+                    scope -- AND the SD18 cycle-2026-07-14T2300 slice \
+                    (tests/sd18_ranger_level11_quarry.rs) widens the level-range gate once \
+                    more to level 11, extending base save/Track to level 11 via the same \
+                    formulas (both stay numerically unchanged from level 10 -- 11/2+2 = 7, \
+                    11/3 = 3, max(11/2, 1) = 5 -- integer-division coincidences, re-verified \
+                    against d20pfsrd and the Archives of Nethys aonprd.com mirror rather than \
+                    assumed) while base attack genuinely rises to +11 (full BAB), and grounds \
+                    the class table's 11th-level \"Special\" column entry, \"Quarry\" \
+                    (verified independently against both primary sources -- no other new \
+                    class feature is gained at 11th level). Quarry was genuinely assessed \
+                    against the possibility that it requires new execution machinery (a \
+                    favored-quarry-selection mechanism, an attack-roll-bonus-application \
+                    engine, a critical-confirmation-auto-succeed engine) before any code was \
+                    written; it is instead grounded as a three-part bundle mirroring existing \
+                    precedent exactly: the take-10-while-tracking and \
+                    auto-confirm-critical-threats behaviors are a grant-only identity record \
+                    (class_feature.ranger.quarry, value 0), mirroring the Woodland \
+                    Stride/Swift Tracker idiom (no Survival-check-execution engine and no \
+                    critical-confirmation-roll engine exists anywhere in this codebase); the \
+                    quarry target is an open-ended +0 recognition record \
+                    (class_chassis.ranger.quarry_choice) mirroring the Favored Enemy/Favored \
+                    Terrain choice-recognition idiom exactly (no restricted-list validation, \
+                    no favored-enemy-type matching); and the rule's own flat +2 insight \
+                    attack-roll bonus is a standalone, non-applied magnitude \
+                    (class_chassis.ranger.quarry_attack_bonus) mirroring the Favored Enemy \
+                    attack/damage-bonus idiom exactly. No active-quarry state (the 24-hour \
+                    reselection cooldown, the 1-hour post-kill cooldown, or \"only one quarry \
+                    at a time\") is tracked. The same SD18 slice also widens the BASE \
+                    spells-per-day counts to level 11 \
+                    (class_chassis.ranger.partial_caster.base_spells_per_day.spell_level_3): \
+                    the 3rd-level column genuinely rises from 0 to 1 (\"2/1/1/-\", verified \
+                    independently on both primary sources), while the 1st/2nd-level columns \
+                    stay 2/1 unchanged and the access ladder stays at 3 (4th-level ranger \
+                    spells begin at level 13, outside this row's ceiling, checked rather than \
+                    assumed away). The row is Partial, not \
                     Supported: the favored-enemy conditional-application engine (target-type \
                     matching that would decide whether a specific check or attack is made \
                     against the favored enemy) is not implemented, neither recognized \
@@ -3221,12 +3263,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     prepared-posture/spell-source-lineage burdens now that the caster-level \
                     gate, the access ladder, the base per-day counts, and the base \
                     spell-save DCs are all grounded, then Ranger \
-                    level-11+ progression, a favored-enemy conditional-application engine, \
+                    level-12+ progression, a favored-enemy conditional-application engine, \
                     execution of either recognized combat-style bonus feat's own mechanics, \
                     Hunter's Bond ally-bonus application and the animal-companion stat \
                     block/advancement subsystem, a terrain-detection/movement-resolution engine \
                     for Woodland Stride's own effect, a tracking-penalty-application engine for \
-                    Swift Tracker's own effect, then SD13-E4 ranger spell burden",
+                    Swift Tracker's own effect, a target-selection/conditional-application \
+                    engine for Quarry's own +2 attack-bonus and auto-confirm-critical-threats \
+                    effects, then SD13-E4 ranger spell burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",
