@@ -3176,28 +3176,32 @@ const HALF_ELF_SIZE_CATEGORY: &str = "Medium";
 const HALF_ELF_BASE_SPEED_FEET: i16 = 30;
 const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
 
-/// SD13-E2 Half-Elf racial trait bundle explanation seam (mirroring the
+/// SD13-E2/SD18 Half-Elf racial trait bundle explanation seam (mirroring the
 /// Dwarf/Elf/Gnome recognition pattern for the fourth non-Human core race, but
 /// with a choice-based ability bonus like Human's rather than a fixed pair).
 ///
-/// Surfaces four grounded PF1 Core Rulebook Half-Elf racial trait dimensions
-/// (chosen ability-bonus target, size, speed, senses) as explicit
-/// `ComputationExplanation` records so the Half-Elf identity is legible on the
-/// runtime path rather than left behind the generic `race.semantics.unverified`
-/// diagnostic every other non-Human race still receives.
+/// Surfaces six grounded PF1 Core Rulebook Half-Elf racial trait dimensions
+/// (chosen ability-bonus target, size, speed, senses, Keen Senses, Elven
+/// Immunities) as explicit `ComputationExplanation` records so the Half-Elf
+/// identity is legible on the runtime path rather than left behind the
+/// generic `race.semantics.unverified` diagnostic every other non-Human race
+/// still receives.
 ///
 /// This function:
 ///   - runs only when `race_id == race:half-elf`; every other race is unaffected
 ///     (Human, Dwarf, Elf, and Gnome keep their own seams; every other non-Human
 ///     race keeps the generic `race.semantics.unverified` diagnostic),
-///   - adds no new computed mechanical contribution: the ability-bonus-target
-///     record surfaces the already-computed modifier for the chosen ability as
-///     recognition (mirroring `race.human.ability_bonus_target`'s shape), and
-///     the size/senses records carry the grounded source value as identity only,
+///   - adds no new computed mechanical contribution beyond the flat Keen
+///     Senses and Elven Immunities enchantment-save bonus magnitudes: the
+///     ability-bonus-target record surfaces the already-computed modifier for
+///     the chosen ability as recognition (mirroring
+///     `race.human.ability_bonus_target`'s shape), the size/senses records
+///     carry the grounded source value as identity only, and Elven
+///     Immunities' sleep immunity is a bounded grant-only identity record
+///     (no sleep-effect-resolution engine exists in this codebase),
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Half-Elf-specific `race.half_elf.bounded_semantics` note naming the
-///     still-unproven families explicitly (Elven Immunities, Adaptability, Keen
-///     Senses, Multitalented),
+///     still-unproven families explicitly (Adaptability, Multitalented),
 ///   - is bounded to race recognition only; it deliberately grounds no Half-Elf
 ///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
 fn explain_half_elf_race_seam(
@@ -3286,19 +3290,50 @@ fn explain_half_elf_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the five named dimensions are grounded. This replaces
+    // ----- Elven Immunities -----
+    // Bundles two distinct sub-effects, both grounded honestly, mirroring the
+    // already-landed Elf Elven Immunities idiom exactly:
+    //   - immunity to magic sleep effects: a flat, no-magnitude grant-only
+    //     identity record, mirroring the Monk Purity of Body / Diamond Body
+    //     disease/poison-immunity idiom — no sleep-effect-resolution engine
+    //     exists anywhere in this codebase to apply the immunity to;
+    //   - a +2 racial saving throw bonus against enchantment spells and
+    //     effects: a flat racial-bonus magnitude, mirroring the Keen Senses
+    //     flat-bonus idiom (applied to a save category instead of a skill),
+    //     not a saving-throw-total engine.
+    // The record's numeric value (2) names only the save-bonus magnitude;
+    // the sleep immunity is named in the detail text as a non-fabricated
+    // grant-only fact, contributing no additional numeric value.
+    explanations.push(ComputationExplanation {
+        id: "race.half_elf.trait_bundle.elven_immunities".to_owned(),
+        value: 2,
+        detail: "Half-Elf racial trait bundle — Elven Immunities: PF1 Core Half-Elf is immune \
+                  to magic sleep effects and gets a flat +2 racial saving throw bonus against \
+                  enchantment spells and effects \
+                  (core_essentials/races/half_elf/halfelf_abilities_race.lst Elven Immunities \
+                  entry — DESC:\"Half-elves are immune to magic sleep effects and get a +2 \
+                  racial saving throw bonus against enchantment spells and effects.\", \
+                  ABILITY:Special Ability|AUTOMATIC|Immunity to Sleep, \
+                  BONUS:VAR|SaveBonus_vs_Enchantments|2|TYPE=Racial). The sleep immunity is a \
+                  bounded grant-only identity record (non-fabricated): no sleep-effect- \
+                  resolution engine exists anywhere in this codebase to apply the immunity to. \
+                  The recognized numeric value (2) names only the flat enchantment \
+                  saving-throw-bonus magnitude, not a saving-throw-total engine."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the six named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Half-Elf specifically
     // and stays non-claim-blocking so the deterministic pilot still reports
     // computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.half_elf.bounded_semantics".to_owned(),
         message: "Half-Elf race semantics are grounded for the deterministic pilot's chosen \
-                  ability-bonus target, size, speed, senses, and Keen Senses (Perception bonus) \
-                  trait bundle; the remaining PF1 Core Half-Elf racial trait surface remains \
-                  unverified: Elven Immunities (immunity to magic sleep effects and a bonus on \
-                  saves against enchantment spells and effects), Adaptability (a bonus Skill \
-                  Focus feat in a chosen skill at 1st level), and Multitalented (counting both \
-                  parent classes as favored classes)."
+                  ability-bonus target, size, speed, senses, Keen Senses (Perception bonus), \
+                  and Elven Immunities (sleep immunity plus enchantment save bonus) trait \
+                  bundle; the remaining PF1 Core Half-Elf racial trait surface remains \
+                  unverified: Adaptability (a bonus Skill Focus feat in a chosen skill at 1st \
+                  level), and Multitalented (counting both parent classes as favored classes)."
             .to_owned(),
         claim_blocking: false,
     });
