@@ -1995,7 +1995,7 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // Touch of Good's bonus genuinely rises to 5 (10 / 2) via the same
 // half-cleric-level formula; both domain-power uses-per-day pools stay
 // level-independent; no new pillar is grounded.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 11;
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 12;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -10685,7 +10685,25 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// whose underlying formulas genuinely change (Channel Energy dice, domain
 /// spell slot count) plus the base-attack-bonus arithmetic extension are
 /// widened; no new pillar record is added at level 11 either, since no other
-/// class feature is named in the level-11 Special column. It only:
+/// class feature is named in the level-11 Special column. A further SD18
+/// slice (`cycle-2026-07-15T0200`, mirroring `cycle-2026-07-14T1814`'s
+/// Barbarian level-12 widening and `cycle-2026-07-14T2359`'s Bard level-12
+/// widening) widens the gate again to 1..=12 (`MAX_SUPPORTED_CLERIC_LEVEL =
+/// 12`): the class table's level-12 "Special" column is genuinely BLANK
+/// (verified independently against d20pfsrd and Archives of Nethys
+/// aonprd.com) — base attack bonus rises to +9 (`12 * 3 / 4 = 9`), base
+/// Fortitude/Will (good saves) rise to +8 (`12 / 2 + 2 = 8`), base Reflex
+/// (poor save) rises to +4 (`12 / 3 = 4`), and the Good domain's Touch of
+/// Good sacred bonus rises to 6 (`12 / 2 = 6`) via the same pre-existing
+/// formulas, not re-derived, while Channel Energy's die count stays 6d6
+/// (`(12 + 1) / 2 = 6`, the odd-level cadence's next rise landing at 13th)
+/// and the domain spell slot count stays 6 (a level-12 cleric still casts
+/// only up to 6th-level cleric spells; 7th-level cleric spells first appear
+/// at level 13) — so four pillars whose underlying formulas genuinely
+/// change (base attack, all three base saves via two distinct formulas,
+/// Touch of Good's bonus) are widened; no new pillar record is added at
+/// level 12 either, since no other class feature is named in the level-12
+/// Special column. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
