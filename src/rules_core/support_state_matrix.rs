@@ -490,7 +490,8 @@ const SD18_GNOME_KEEN_SENSES_TEST: &str = "tests/sd13_gnome_race_semantics_recog
 /// senses, Keen Senses) that stays explicitly honest about the remaining
 /// unproven Half-Elf family surface.
 const SD18_HALF_ELF_KEEN_SENSES_TEST: &str =
-    "tests/sd13_half_elf_race_semantics_recognition.rs + tests/sd18_half_elf_keen_senses.rs";
+    "tests/sd13_half_elf_race_semantics_recognition.rs + tests/sd18_half_elf_keen_senses.rs + \
+    tests/sd18_half_elf_elven_immunities.rs";
 
 /// SD13-E2/SD18 dedicated proof surface for the bounded Half-Orc race-semantics
 /// recognition: direct computed recognition of five grounded PF1 Core Rulebook
@@ -861,27 +862,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.half_elf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:half-elf",
-                dimension: "bounded Half-Elf race semantics: five grounded PF1 Core Rulebook \
+                dimension: "bounded Half-Elf race semantics: six grounded PF1 Core Rulebook \
                             Half-Elf racial trait dimensions (chosen ability-bonus target, \
-                            size, speed, senses, Keen Senses) recognized on the compute seam, \
-                            with the remaining Half-Elf family surface still unproven",
+                            size, speed, senses, Keen Senses, Elven Immunities) recognized on \
+                            the compute seam, with the remaining Half-Elf family surface still \
+                            unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD18_HALF_ELF_KEEN_SENSES_TEST,
                 blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
-                    five Half-Elf race-semantic families are recognized on the compute seam (a \
+                    six Half-Elf race-semantic families are recognized on the compute seam (a \
                     player-chosen +2 ability-bonus target, mirroring the Human ability-bonus \
                     mechanic's shape rather than a fixed pair; size: Medium; speed: 30 ft; \
                     senses: low-light vision; Keen Senses: a flat +2 racial bonus on Perception \
-                    checks), but the remaining families stay unproven: Elven Immunities (sleep \
-                    immunity, enchantment save bonus), Adaptability (a bonus Skill Focus feat), \
+                    checks; Elven Immunities: sleep-effect immunity plus a flat +2 racial \
+                    saving throw bonus against enchantment spells and effects), but the \
+                    remaining families stay unproven: Adaptability (a bonus Skill Focus feat), \
                     and Multitalented (dual favored classes). No numeric mechanical \
                     contribution is fabricated beyond the already-computed ability modifier for \
-                    the chosen target and the flat Keen Senses magnitude.",
+                    the chosen target and the flat Keen Senses / Elven Immunities magnitudes.",
                 next_required_uplift: "later SD13-E2/SD18 slice grounding one or more of the \
-                    remaining Half-Elf families (Elven Immunities, Adaptability, Multitalented) \
-                    as a real computed contribution",
+                    remaining Half-Elf families (Adaptability, Multitalented) as a real \
+                    computed contribution",
             },
             SupportStateRow {
                 row_id: "race.half_orc.bounded_semantics",
