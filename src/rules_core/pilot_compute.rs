@@ -913,7 +913,7 @@ const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
 // the 6th-level column staying inaccessible at level 11 (arrives at level
 // 12) on both tables.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 11;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 12;
 
 /// The sorcerer level at which 2nd-level sorcerer spells first become
 /// available, verified against the raw PF1 Core Rulebook Sorcerer
@@ -938,10 +938,16 @@ const SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 8;
 /// The sorcerer level at which 5th-level sorcerer spells first become
 /// available, verified against the raw table rows (both sources): level 9
 /// shows "6/6/6/4/—/…", level 10 shows "6/6/6/5/3/—/…" — the first non-"—"
-/// 5th-level column. The 6th-level column stays "—" through level 10
-/// (6th-level sorcerer spells begin at 12, outside the tranche ceiling), so
-/// no 6th-level threshold const is grounded.
+/// 5th-level column.
 const SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+/// The sorcerer level at which 6th-level sorcerer spells first become
+/// available, verified against the raw table rows of all three primary-
+/// source fetches this SD18 slice performed (d20pfsrd, aonprd.com, and
+/// legacy.aonprd.com, all identical): level 11 shows "6/6/6/6/4/—", level 12
+/// shows "6/6/6/6/5/3" — the first non-"—" 6th-level column. This is the
+/// sorcerer's two-level cadence continuing exactly (4/6/8/10/12), one spell
+/// level deeper than the tranche's prior ceiling.
+const SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 12;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -10033,7 +10039,9 @@ fn explain_sorcerer_level1_spell_baseline(
     // are never computed. Cantrips (0th level, "spells known" only) are
     // outside the spells-per-day ladder and are not counted.
     let sorcerer_spell_level_access: i16 =
-        if level >= SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        if level >= SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            6
+        } else if level >= SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             5
         } else if level >= SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             4
@@ -10051,17 +10059,17 @@ fn explain_sorcerer_level1_spell_baseline(
             "Sorcerer spell-level access at sorcerer level {level}: the highest sorcerer spell \
              level (1st+) with a non-\"—\" spells-per-day column in the PF1 Core Rulebook \
              Sorcerer class table is {sorcerer_spell_level_access} (verified against the raw \
-             table rows of both primary sources: 1st-level spells from level 1 — the ladder \
-             has no zero step — 2nd-level at \
+             table rows of all three primary-source fetches: 1st-level spells from level 1 — \
+             the ladder has no zero step — 2nd-level at \
              {SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
              {SORCERER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
              {SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 5th-level at \
-             {SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL} — the sorcerer's two-level \
-             cadence; the 6th-level column stays \"—\" through level 10). Cantrips are \
-             \"spells known\" only and sit outside the spells-per-day ladder, so they are \
-             not counted. This grounds the access ladder only: no spells-per-day counts, no \
-             spells-known posture, no bonus slots from a high Charisma, and no spell save DCs \
-             are computed"
+             {SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 6th-level at \
+             {SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL} — the sorcerer's two-level \
+             cadence continuing exactly). Cantrips are \"spells known\" only and sit outside \
+             the spells-per-day ladder, so they are not counted. This grounds the access \
+             ladder only: no spells-per-day counts, no spells-known posture, no bonus slots \
+             from a high Charisma, and no spell save DCs are computed"
         ),
     });
 
@@ -10071,33 +10079,35 @@ fn explain_sorcerer_level1_spell_baseline(
     // precedent — the PF1 spells-per-day table is a lookup table, not
     // arithmetic, so no formula is invented for it. Verified against the
     // raw table rows of both primary sources (identical on d20pfsrd and
-    // legacy.aonprd.com): level 1 "3/—/—/—/—", level 2 "4/—/—/—/—", level
-    // 3 "5/—/—/—/—", level 4 "6/3/—/—/—", level 5 "6/4/—/—/—", level 6
-    // "6/5/3/—/—", level 7 "6/6/4/—/—", level 8 "6/6/5/3/—", level 9
-    // "6/6/6/4/—", level 10 "6/6/6/5/3", level 11 "6/6/6/6/4" (SD18 widening,
-    // verified independently against d20pfsrd and the Archives of Nethys
-    // aonprd.com mirror: the 4th-level column rises from 5 to 6 and the
-    // 5th-level column rises from 3 to 4; the 6th-level column stays "—"
-    // through level 11 — it first arrives at level 12). Like the Bard and
+    // legacy.aonprd.com): level 1 "3/—/—/—/—/—", level 2 "4/—/—/—/—/—",
+    // level 3 "5/—/—/—/—/—", level 4 "6/3/—/—/—/—", level 5 "6/4/—/—/—/—",
+    // level 6 "6/5/3/—/—/—", level 7 "6/6/4/—/—/—", level 8
+    // "6/6/5/3/—/—", level 9 "6/6/6/4/—/—", level 10 "6/6/6/5/3/—",
+    // level 11 "6/6/6/6/4/—", level 12 "6/6/6/6/5/3" (SD18 widening,
+    // verified independently against all three primary-source fetches this
+    // slice performed — d20pfsrd, aonprd.com, and legacy.aonprd.com, all
+    // identical: the 5th-level column rises from 4 to 5 and a genuinely NEW
+    // 6th-level column appears (3) for the first time). Like the Bard and
     // unlike the
-    // Paladin/Ranger, there are NO "0" entries at levels 1-11; every
+    // Paladin/Ranger, there are NO "0" entries at levels 1-12; every
     // accessible column carries a positive base count. Inaccessible spell
     // levels ("—" columns) get no record at all. Only the base counts are
     // grounded: bonus spells per day from a high Charisma are never
     // computed, and spells KNOWN (a separate table) stays untouched.
-    let sorcerer_base_spells_per_day: [Option<i16>; 5] = match level {
-        1 => [Some(3), None, None, None, None],
-        2 => [Some(4), None, None, None, None],
-        3 => [Some(5), None, None, None, None],
-        4 => [Some(6), Some(3), None, None, None],
-        5 => [Some(6), Some(4), None, None, None],
-        6 => [Some(6), Some(5), Some(3), None, None],
-        7 => [Some(6), Some(6), Some(4), None, None],
-        8 => [Some(6), Some(6), Some(5), Some(3), None],
-        9 => [Some(6), Some(6), Some(6), Some(4), None],
-        10 => [Some(6), Some(6), Some(6), Some(5), Some(3)],
-        11 => [Some(6), Some(6), Some(6), Some(6), Some(4)],
-        _ => [None, None, None, None, None],
+    let sorcerer_base_spells_per_day: [Option<i16>; 6] = match level {
+        1 => [Some(3), None, None, None, None, None],
+        2 => [Some(4), None, None, None, None, None],
+        3 => [Some(5), None, None, None, None, None],
+        4 => [Some(6), Some(3), None, None, None, None],
+        5 => [Some(6), Some(4), None, None, None, None],
+        6 => [Some(6), Some(5), Some(3), None, None, None],
+        7 => [Some(6), Some(6), Some(4), None, None, None],
+        8 => [Some(6), Some(6), Some(5), Some(3), None, None],
+        9 => [Some(6), Some(6), Some(6), Some(4), None, None],
+        10 => [Some(6), Some(6), Some(6), Some(5), Some(3), None],
+        11 => [Some(6), Some(6), Some(6), Some(6), Some(4), None],
+        12 => [Some(6), Some(6), Some(6), Some(6), Some(5), Some(3)],
+        _ => [None, None, None, None, None, None],
     };
     for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
         let Some(base_count) = base_count else {
@@ -10155,35 +10165,39 @@ fn explain_sorcerer_level1_spell_baseline(
     // a non-"—" column in the Sorcerer Spells Known table, as a literal
     // table lookup mirroring the Bard known slice. Verified against the raw
     // table rows of both primary sources (identical on d20pfsrd and
-    // legacy.aonprd.com): level 1 "4/2/—/—/—/—", level 2 "5/2/—/—/—/—",
-    // level 3 "5/3/—/—/—/—", level 4 "6/3/1/—/—/—", level 5 "6/4/2/—/—/—",
-    // level 6 "7/4/2/1/—/—", level 7 "7/5/3/2/—/—", level 8 "8/5/3/2/1/—",
-    // level 9 "8/5/4/3/2/—", level 10 "9/5/4/3/2/1", level 11 "9/5/5/4/3/2"
-    // (0th through 5th spell level; the level-11 row is the SD18 widening,
-    // verified independently against d20pfsrd and the Archives of Nethys
-    // aonprd.com mirror: the 2nd/3rd/4th/5th-level columns each rise by one
-    // over level 10's row, while the 0th and 1st columns stay unchanged and
-    // no new 6th-level column appears — it first arrives at level 12). The
-    // known table INCLUDES the 0th level (cantrips are "spells
+    // legacy.aonprd.com): level 1 "4/2/—/—/—/—/—", level 2 "5/2/—/—/—/—/—",
+    // level 3 "5/3/—/—/—/—/—", level 4 "6/3/1/—/—/—/—", level 5
+    // "6/4/2/—/—/—/—", level 6 "7/4/2/1/—/—/—", level 7 "7/5/3/2/—/—/—",
+    // level 8 "8/5/3/2/1/—/—", level 9 "8/5/4/3/2/—/—", level 10
+    // "9/5/4/3/2/1/—", level 11 "9/5/5/4/3/2/—", level 12 "9/5/5/4/3/2/1"
+    // (0th through 6th spell level; the level-12 row is this SD18 slice's
+    // widening, verified independently against all three primary-source
+    // fetches this slice performed — d20pfsrd, aonprd.com, and
+    // legacy.aonprd.com, all identical: the 0th through 5th columns stay
+    // numerically unchanged from level 11's row, and a genuinely NEW
+    // 6th-level column appears (1) for the first time). The known table
+    // INCLUDES the 0th level (cantrips are "spells
     // known" only), and its new-spell-level cadence matches the grounded
     // per-day access ladder exactly (2nd at 4, 3rd at 6, 4th at 8, 5th at
-    // 10 — checked rather than assumed). Only the known COUNTS are
-    // grounded: the selection of WHICH spells are known is never computed,
-    // and the 3rd/5th/7th/9th/11th-level bloodline bonus spells are part of
-    // the still-unproven bloodline progression burden, not this table.
-    let sorcerer_spells_known: [Option<i16>; 6] = match level {
-        1 => [Some(4), Some(2), None, None, None, None],
-        2 => [Some(5), Some(2), None, None, None, None],
-        3 => [Some(5), Some(3), None, None, None, None],
-        4 => [Some(6), Some(3), Some(1), None, None, None],
-        5 => [Some(6), Some(4), Some(2), None, None, None],
-        6 => [Some(7), Some(4), Some(2), Some(1), None, None],
-        7 => [Some(7), Some(5), Some(3), Some(2), None, None],
-        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None],
-        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None],
-        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1)],
-        11 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2)],
-        _ => [None, None, None, None, None, None],
+    // 10, 6th at 12 — checked rather than assumed). Only the known COUNTS
+    // are grounded: the selection of WHICH spells are known is never
+    // computed, and the 3rd/5th/7th/9th/11th-level bloodline bonus spells
+    // are part of the still-unproven bloodline progression burden, not this
+    // table.
+    let sorcerer_spells_known: [Option<i16>; 7] = match level {
+        1 => [Some(4), Some(2), None, None, None, None, None],
+        2 => [Some(5), Some(2), None, None, None, None, None],
+        3 => [Some(5), Some(3), None, None, None, None, None],
+        4 => [Some(6), Some(3), Some(1), None, None, None, None],
+        5 => [Some(6), Some(4), Some(2), None, None, None, None],
+        6 => [Some(7), Some(4), Some(2), Some(1), None, None, None],
+        7 => [Some(7), Some(5), Some(3), Some(2), None, None, None],
+        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None, None],
+        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None, None],
+        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1), None],
+        11 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), None],
+        12 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), Some(1)],
+        _ => [None, None, None, None, None, None, None],
     };
     for (spell_level, known_count) in sorcerer_spells_known.iter().enumerate() {
         let Some(known_count) = known_count else {
