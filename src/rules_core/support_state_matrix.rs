@@ -720,7 +720,8 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs 
     tests/sd13_druid_level4_progression.rs + tests/sd13_druid_level5_progression.rs + \
     tests/sd13_druid_level6_progression.rs + tests/sd13_druid_level7_progression.rs + \
     tests/sd13_druid_level8_progression.rs + tests/sd13_druid_level9_progression.rs + \
-    tests/sd13_druid_level10_progression.rs + tests/sd18_druid_level11_widening.rs";
+    tests/sd13_druid_level10_progression.rs + tests/sd18_druid_level11_widening.rs + \
+    tests/sd18_druid_level12_widening.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -2148,7 +2149,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
                             level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10/level-11 \
+                            level-9/level-10/level-11/level-12 \
                             prepared divine \
                             spell baseline, with base attack bonus, base save progression, Wild \
                             Empathy, Nature Sense, the nature-bond choice recognition, (at level \
@@ -2339,18 +2340,37 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     genuinely blank (checked independently against both primary sources rather \
                     than assumed away — the next Wild Shape frequency rise, \"Wild shape (5/day)\", \
                     does not land until 12th level), so this slice grounds no new pillar at level \
-                    11 either — only the existing pillars are widened. The row is Partial, not Supported: the animal companion execution \
+                    11 either — only the existing pillars are widened. A further SD18 slice \
+                    (cycle-2026-07-15T0500, mirroring cycle-2026-07-14T1814's Barbarian level-12 \
+                    widening, cycle-2026-07-14T2359's Bard level-12 widening, and \
+                    cycle-2026-07-15T0200's Cleric level-12 widening) widens the gate again to \
+                    level 12 (verified independently against the PF1 Core Rulebook Druid class \
+                    table via d20pfsrd and Archives of Nethys aonprd.com's legacy mirror): base \
+                    attack bonus genuinely rises to +9 (12 * 3 / 4, up from +8 at level 11) and \
+                    all three base saves genuinely rise (both good saves to +8, 12 / 2 + 2; poor \
+                    Reflex to +4, 12 / 3); Wild Empathy genuinely rises to 13 (12 + Charisma \
+                    modifier); Nature Sense, Woodland Stride, Trackless Step, Resist Nature's \
+                    Lure, Venom Immunity, and the nature-bond choice recognition all carry over \
+                    unchanged. UNLIKE level 11, the class table's level-12 \"Special\" column is \
+                    NOT blank — it reads \"Wild shape (5/day)\" (verified independently against \
+                    both primary sources, checked rather than assumed away) — but per the \
+                    level-4/6/8/10 precedent that frequency rise is bundled with a non-separable \
+                    form-list expansion (Huge elemental or Huge plant creature) and a \
+                    functioning-level upgrade (elemental body IV / plant shape III), so Wild \
+                    Shape stays entirely named-but-unproven and this slice grounds no new pillar \
+                    at level 12 either — only the existing pillars are widened. The row is \
+                    Partial, not Supported: the animal companion execution \
                     burden (the companion's stat block, its advancement, and its link / share \
                     spells abilities) remains named and unproven, the Wild Shape execution burden \
-                    (new form, new stat block, duration tracking, frequency, and the level-6 \
-                    form-list expansion) remains named and unproven, and the prepared divine spell \
+                    (new form, new stat block, duration tracking, frequency, and the level-6/8/10/12 \
+                    form-list expansions) remains named and unproven, and the prepared divine spell \
                     posture burden (spells prepared from the full Druid list, spontaneous summon \
                     nature's ally conversion, spell slots per day, bonus spells from a high Wisdom, \
                     spell save DCs) is still entirely unproven. No spell math is fabricated and no \
-                    Druid level 12+ is proven",
+                    Druid level 13+ is proven",
                 next_required_uplift: "SD13-E5 Druid animal companion execution slice, the Wild \
                     Shape execution slice, or the prepared divine spell burden slice, then Druid \
-                    level 12+ progression (out of scope for this slice)",
+                    level 13+ progression (out of scope for this slice)",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",

@@ -2206,8 +2206,23 @@ const DRUID_CLASS_ID: &str = "class:druid";
 // against both primary sources rather than assumed away — the next Wild
 // Shape frequency rise, "Wild shape (5/day)", does not land until 12th
 // level), so this slice grounds no new pillar at level 11 either — only
-// the existing arithmetic pillars are widened.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 11;
+// the existing arithmetic pillars are widened. A further SD18 slice
+// (cycle-2026-07-15T0500, mirroring cycle-2026-07-14T1814's Barbarian
+// level-12 widening, cycle-2026-07-14T2359's Bard level-12 widening, and
+// cycle-2026-07-15T0200's Cleric level-12 widening) widens the gate again
+// to level 12 (verified independently against d20pfsrd and Archives of
+// Nethys aonprd.com's legacy mirror): level 12 base attack bonus genuinely
+// rises to +9 (12 * 3 / 4) and all three base saves genuinely rise (both
+// good saves to +8, 12 / 2 + 2; poor Reflex to +4, 12 / 3); Wild Empathy
+// genuinely rises to 13 (12 + Charisma modifier). UNLIKE level 11, the
+// class table's level-12 "Special" column is NOT blank — it reads "Wild
+// shape (5/day)" — but per the level-4/6/8/10 precedent that frequency
+// rise is bundled with a non-separable form-list expansion (Huge elemental
+// or Huge plant creature) and functioning-level upgrade (elemental body IV
+// / plant shape III), so Wild Shape stays entirely named-but-unproven and
+// this slice grounds no new pillar at level 12 either — only the existing
+// arithmetic pillars are widened.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 12;
 /// PF1 Core Rulebook level gate at which Druid gains Venom Immunity (9th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Venom immunity" as the Druid 9th-level
