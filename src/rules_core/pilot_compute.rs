@@ -2889,8 +2889,9 @@ const ELF_CON_ADJUSTMENT: i16 = -2;
 ///     the grounded source value as identity only,
 ///   - replaces the generic `race.semantics.unverified` diagnostic with an
 ///     Elf-specific `race.elf.bounded_semantics` note naming the still-unproven
-///     families explicitly (Elven Immunities, Keen Senses, weapon familiarity,
-///     bonus languages, and the explicit absence of any Elf racial bonus feat),
+///     families explicitly (weapon familiarity, bonus languages, and the
+///     explicit absence of any Elf racial bonus feat) now that Keen Senses
+///     and Elven Immunities are both grounded,
 ///   - is bounded to race recognition only; it deliberately grounds no Elf
 ///     class-chassis interaction, no other race, no alternate +2 Intelligence
 ///     ability variant, and no PF1 alternate ruleset.
@@ -2977,21 +2978,51 @@ fn explain_elf_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the five named dimensions are grounded. This replaces
+    // ----- Elven Immunities -----
+    // Bundles two distinct sub-effects, both grounded honestly:
+    //   - immunity to magic sleep effects: a flat, no-magnitude grant-only
+    //     identity record, mirroring the Monk Purity of Body / Diamond Body
+    //     disease/poison-immunity idiom exactly — no sleep-effect-resolution
+    //     engine exists anywhere in this codebase to apply the immunity to;
+    //   - a +2 racial saving throw bonus against enchantment spells and
+    //     effects: a flat racial-bonus magnitude, mirroring the Keen Senses /
+    //     Stonecunning / Greed flat-bonus idiom (applied to a save category
+    //     instead of a skill), not a saving-throw-total engine.
+    // The record's numeric value (2) names only the save-bonus magnitude;
+    // the sleep immunity is named in the detail text as a non-fabricated
+    // grant-only fact, contributing no additional numeric value.
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.elven_immunities".to_owned(),
+        value: 2,
+        detail: "Elf racial trait bundle — Elven Immunities: PF1 Core Elf is immune to magic \
+                  sleep effects and gets a flat +2 racial saving throw bonus against \
+                  enchantment spells and effects \
+                  (core_essentials/races/elf/elf_abilities_race.lst Elven Immunities entry — \
+                  DESC:\"Elves are immune to magic sleep effects and get a +2 racial saving \
+                  throw bonus against enchantment spells and effects.\", \
+                  ABILITY:Special Ability|AUTOMATIC|Immunity to Sleep, \
+                  BONUS:VAR|SaveBonus_vs_Enchantments|2|TYPE=Racial). The sleep immunity is a \
+                  bounded grant-only identity record (non-fabricated): no sleep-effect- \
+                  resolution engine exists anywhere in this codebase to apply the immunity to. \
+                  The recognized numeric value (2) names only the flat enchantment \
+                  saving-throw-bonus magnitude, not a saving-throw-total engine."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the six named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Elf specifically and
     // stays non-claim-blocking so the deterministic pilot still reports computed
     // evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.elf.bounded_semantics".to_owned(),
         message: "Elf race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, senses, and Keen Senses (Perception bonus) trait \
-                  bundle; the remaining PF1 Core Elf racial trait surface remains unverified: \
-                  Elven Immunities (immunity to magic sleep effects and a bonus on saves \
-                  against enchantment spells and effects), weapon familiarity (longbow, \
-                  composite longbow, longsword, rapier, shortbow, composite shortbow), and \
-                  bonus language grants. PF1 core Elves gain no racial bonus feat (unlike \
-                  Human), so that family is explicitly not applicable rather than silently \
-                  omitted."
+                  modifiers, size, speed, senses, Keen Senses (Perception bonus), and Elven \
+                  Immunities (sleep immunity plus enchantment save bonus) trait bundle; the \
+                  remaining PF1 Core Elf racial trait surface remains unverified: weapon \
+                  familiarity (longbow, composite longbow, longsword, rapier, shortbow, \
+                  composite shortbow), and bonus language grants. PF1 core Elves gain no \
+                  racial bonus feat (unlike Human), so that family is explicitly not \
+                  applicable rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
     });
