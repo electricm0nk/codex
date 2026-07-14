@@ -238,17 +238,18 @@ fn barbarian_level10_truth_is_unchanged_by_this_slice() {
 // ----- Negative control: level 13 stays unrecognized by this slice -----
 //
 // This boundary was originally level 12 (the SD18 ceiling at the time this
-// test was written); the SD18 barbarian-level12-widening cycle widened
-// `supported_barbarian_level` to `1..=12` (see
-// `tests/sd18_barbarian_level12_widening.rs`), so the correct negative
+// test was written); the SD18 barbarian-level12-widening and
+// barbarian-level13-widening cycles widened `supported_barbarian_level` to
+// `1..=13` (see `tests/sd18_barbarian_level12_widening.rs` and
+// `tests/sd18_barbarian_level13_widening.rs`), so the correct negative
 // control boundary for this file's own (level-11-era) baseline is now level
-// 13, mirroring exactly how each earlier per-level Barbarian cycle moved
+// 14, mirroring exactly how each earlier per-level Barbarian cycle moved
 // this same negative control's boundary up by one level.
 
 #[test]
-fn barbarian_level_13_is_not_promoted_by_this_slice() {
-    let level_13 = BARBARIAN_LEVEL11_FIXTURE.replace("class:barbarian:11", "class:barbarian:13");
-    let input = load(&level_13);
+fn barbarian_level_14_is_not_promoted_by_this_slice() {
+    let level_14 = BARBARIAN_LEVEL11_FIXTURE.replace("class:barbarian:11", "class:barbarian:14");
+    let input = load(&level_14);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -256,7 +257,7 @@ fn barbarian_level_13_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.barbarian.")
                 || e.id.starts_with("class_feature.barbarian.")),
-        "level-13 Barbarian must not gain any bounded barbarian explanation: {:?}",
+        "level-14 Barbarian must not gain any bounded barbarian explanation: {:?}",
         computation.explanations
     );
 }
