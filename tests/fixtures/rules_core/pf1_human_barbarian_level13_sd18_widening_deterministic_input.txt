@@ -1,0 +1,46 @@
+# SD18 deterministic Human Barbarian level 13 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Barbarian
+# level-1..level-12 martial chassis baseline
+# (tests/sd18_barbarian_level12_widening.rs) to level 13 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/skill/equipment posture from the level-1 through level-12
+# fixtures, adding only the level bump this bounded tranche needs. 13th
+# level is NOT a rage-power level (powers land at 2/4/6/8/10/12/14 per "she
+# gains another rage power for every two levels of barbarian attained after
+# 2nd level"), so no seventh numbered slot's choice line is added; the sixth
+# slot's line from the level-12 fixture carries over unchanged.
+#
+# It deliberately avoids every later Barbarian burden surface: no rage
+# execution (activation, round tracking, fatigue), no rage-power EFFECT
+# recognition or execution beyond the bounded numbered-slot idiom, no
+# damage-reduction application engine, and no level-14+ progression. The
+# PF1 Core Rulebook Barbarian class table's level-13 "Special" column reads
+# "Damage reduction 3/-" (verified independently against d20pfsrd and the
+# Archives of Nethys aonprd.com mirror): Damage Reduction is a tier-rise
+# on the already-grounded Damage Reduction flat-magnitude pillar (a third
+# named tier, mirroring the level-7/level-10 two-tier idiom exactly); Trap
+# Sense stays +4 (13 / 3, next rise 15th) and base saves stay unchanged from
+# level 12 (13 / 2 + 2 = 8, 13 / 3 = 4, both integer-division coincidences),
+# so no new pillar beyond the third Damage Reduction tier is grounded.
+case_id=pf1-crb-human-barbarian-level13
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:barbarian:13
+ability=strength:16
+ability=dexterity:14
+ability=constitution:16
+ability=intelligence:8
+ability=wisdom:10
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:barbarian_rage_power_6:power:superstition
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md

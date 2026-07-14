@@ -1666,7 +1666,21 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 6] = [
 /// rage-power-EFFECT engine is invented; the Greater Rage constants
 /// (+6/+6/+3/-2) and Damage Reduction (2/—, next rise 13th) both stay
 /// unchanged from level 11.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 12;
+///
+/// A still further SD18 slice widens the gate to level 13 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement): base-attack (classlevel = 13) genuinely
+/// rises to +13, while base-save stays Fortitude +8 (13/2+2), Reflex +4, and
+/// Will +4 (13/3, both integer-division coincidences unchanged from level
+/// 12); the rage rounds-per-day pool genuinely rises to 31 (4 + Con mod + 2
+/// per level after 1st); the level-13 "Special" column reads "Damage
+/// reduction 3/-" only — Damage Reduction GENUINELY RISES to 3/- via a THIRD
+/// tier constant (`BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL`), mirroring
+/// exactly how the level-7/level-10 two-tier idiom was established; Trap
+/// Sense stays +4 (13/3, next rise 15th) and level 13 is NOT a rage-power
+/// level (powers land at 2/4/6/8/10/12/14...), so no seventh
+/// rage-power-selection-slot-count engine is invented.
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 13;
 
 /// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
 /// (11th level — "At 11th level, a barbarian's rage improves. She gains a
@@ -1705,6 +1719,13 @@ const BARBARIAN_DAMAGE_REDUCTION_LEVEL: u8 = 7;
 /// thereafter, this damage reduction rises by 1 point", verified
 /// independently against d20pfsrd and legacy.aonprd.com).
 const BARBARIAN_DAMAGE_REDUCTION_TWO_LEVEL: u8 = 10;
+/// PF1 Core Rulebook level gate at which Barbarian Damage Reduction rises to
+/// 3/— (13th level — the same "every three barbarian levels thereafter"
+/// clause applied a second time from the 10th-level gate, verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror: both name "Damage reduction 3/-" as the Barbarian 13th-level
+/// "Special" class table entry).
+const BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL: u8 = 13;
 
 // SD13-E3/E5 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
@@ -8099,8 +8120,10 @@ fn explain_barbarian_level1_chassis(
     } else {
         let damage_reduction_value: i16 = if level < BARBARIAN_DAMAGE_REDUCTION_TWO_LEVEL {
             1
-        } else {
+        } else if level < BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL {
             2
+        } else {
+            3
         };
         explanations.push(ComputationExplanation {
             id: "class_feature.barbarian.damage_reduction".to_owned(),
