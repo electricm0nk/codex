@@ -3049,20 +3049,58 @@ fn explain_elf_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the six named dimensions are grounded. This replaces
-    // the generic race.semantics.unverified diagnostic for Elf specifically and
-    // stays non-claim-blocking so the deterministic pilot still reports computed
-    // evidence.
+    // ----- Elven Magic -----
+    // Bundles two distinct sub-effects, both grounded honestly, mirroring the
+    // Elven Immunities idiom exactly:
+    //   - a +2 racial bonus on caster level checks made to overcome spell
+    //     resistance: a flat, no-magnitude grant-only identity record (no
+    //     caster-level-check / spell-resistance-resolution engine exists
+    //     anywhere in this codebase to apply the bonus to);
+    //   - a +2 racial bonus on Spellcraft skill checks made to identify the
+    //     properties of magic items: a flat racial-bonus magnitude,
+    //     mirroring the Keen Senses / Stonecunning / Greed flat-bonus idiom
+    //     (applied to the Spellcraft skill), not a Spellcraft-check-total
+    //     engine.
+    // This trait was not previously named in the Elf row's unproven-family
+    // list (which named only weapon familiarity and bonus language grants);
+    // it is a genuine, distinct PF1 Core Elf racial trait present in the
+    // corpus that this slice newly recognizes.
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.elven_magic".to_owned(),
+        value: 2,
+        detail: "Elf racial trait bundle — Elven Magic: PF1 Core Elf gets a flat +2 racial \
+                  bonus on caster level checks made to overcome spell resistance, and a flat \
+                  +2 racial bonus on Spellcraft skill checks made to identify the properties \
+                  of magic items \
+                  (core_essentials/races/elf/elf_abilities_race.lst Elven Magic entry — \
+                  DESC:\"Elves receive a +2 racial bonus on caster level checks made to \
+                  overcome spell resistance. In addition, elves receive a +2 racial bonus on \
+                  Spellcraft skill checks made to identify the properties of magic items.\", \
+                  BONUS:SITUATION|Spellcraft=to identify magic item properties|2|TYPE=Racial). \
+                  The caster-level-check-vs-spell-resistance bonus is a bounded grant-only \
+                  identity record (non-fabricated): no caster-level-check or \
+                  spell-resistance-resolution engine exists anywhere in this codebase to apply \
+                  the bonus to. The recognized numeric value (2) names only the flat \
+                  Spellcraft-identify racial-bonus magnitude, not a Spellcraft-check-total \
+                  engine."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the seven named dimensions are grounded. This
+    // replaces the generic race.semantics.unverified diagnostic for Elf
+    // specifically and stays non-claim-blocking so the deterministic pilot
+    // still reports computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.elf.bounded_semantics".to_owned(),
         message: "Elf race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, senses, Keen Senses (Perception bonus), and Elven \
-                  Immunities (sleep immunity plus enchantment save bonus) trait bundle; the \
-                  remaining PF1 Core Elf racial trait surface remains unverified: weapon \
-                  familiarity (longbow, composite longbow, longsword, rapier, shortbow, \
-                  composite shortbow), and bonus language grants. PF1 core Elves gain no \
-                  racial bonus feat (unlike Human), so that family is explicitly not \
-                  applicable rather than silently omitted."
+                  modifiers, size, speed, senses, Keen Senses (Perception bonus), Elven \
+                  Immunities (sleep immunity plus enchantment save bonus), and Elven Magic \
+                  (caster level check vs. spell resistance bonus plus Spellcraft identify \
+                  bonus) trait bundle; the remaining PF1 Core Elf racial trait surface remains \
+                  unverified: weapon familiarity (longbow, composite longbow, longsword, \
+                  rapier, shortbow, composite shortbow), and bonus language grants. PF1 core \
+                  Elves gain no racial bonus feat (unlike Human), so that family is explicitly \
+                  not applicable rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
     });
