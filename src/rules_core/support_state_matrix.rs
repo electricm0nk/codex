@@ -421,7 +421,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_spell_save_dcs.rs + \
     tests/sd13_ranger_bonus_spells.rs + \
     tests/sd13_ranger_total_spells_per_day.rs + \
-    tests/sd18_ranger_level11_quarry.rs";
+    tests/sd18_ranger_level11_quarry.rs + \
+    tests/sd18_ranger_level12_widening.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -3063,7 +3064,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7/ \
-                            level-8/level-9/level-10/level-11 chassis baseline, with base attack bonus, base save \
+                            level-8/level-9/level-10/level-11/level-12 chassis baseline, with base attack bonus, base save \
                             progression, Track, the favored-enemy flat surface, the \
                             combat-style choice-and-bonus-feat recognition, (level 3) \
                             Endurance and the Favored Terrain choice-and-flat-magnitude \
@@ -3078,10 +3079,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             bonus-increase target choice), (level 10) the Favored Enemy \
                             rule's 10th-level interval (third enemy-type selection plus its \
                             own bonus-increase target choice, stacking with the 5th-level \
-                            increase when both name the same enemy), and (level 11) Quarry \
+                            increase when both name the same enemy), (level 11) Quarry \
                             (a grant-only identity record for the take-10-while-tracking and \
                             auto-confirm-critical-threats behaviors, an open-ended target-choice \
-                            recognition record, and the flat +2 insight attack-roll magnitude) \
+                            recognition record, and the flat +2 insight attack-roll magnitude), \
+                            and (level 12) Camouflage (a grant-only identity record) \
                             grounded for real and the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -3446,19 +3448,47 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Wisdom bonus-only access as arithmetic; live end-to-end — a dedicated \
                     test raises the fixture Wisdom and the totals fill to 3/2/1; counts \
                     only, no casting execution, slot consumption, or tracking; prepared \
-                    posture and lineage remain the named spell burden)",
+                    posture and lineage remain the named spell burden) — AND the SD18 \
+                    cycle-2026-07-15T0900 slice (tests/sd18_ranger_level12_widening.rs) widens \
+                    the level-range gate once more to level 12, extending base attack/base \
+                    save/Track to level 12 via the same formulas: base attack genuinely rises \
+                    to +12 (full BAB), and unlike level 11's integer-division coincidences, ALL \
+                    THREE base saves genuinely rise too (Fortitude/Reflex to +8, 12/2+2; Will \
+                    to +4, 12/3), and Track genuinely rises to 6 (max(12/2, 1)) — all verified \
+                    against d20pfsrd and the Archives of Nethys aonprd.com mirror rather than \
+                    assumed. The class table's 12th-level \"Special\" column reads only \
+                    \"Camouflage\" (verified independently against both primary sources — no \
+                    other new class feature is gained at 12th level): its rule text (\"A ranger \
+                    of 12th level or higher can use the Stealth skill to hide, even while being \
+                    observed, as long as she is within any sort of natural terrain that grants \
+                    at least partial concealment or partial cover\") carries no numeric \
+                    magnitude and no player choice, so it is grounded as a bounded grant-only \
+                    identity record (class_feature.ranger.camouflage, value 0), mirroring the \
+                    Woodland Stride/Swift Tracker idiom exactly — no terrain-classification \
+                    engine and no Stealth-check-execution engine exists anywhere in this \
+                    codebase. The same slice also widens the BASE spells-per-day counts to \
+                    level 12 (class_chassis.ranger.partial_caster.base_spells_per_day.\
+                    spell_level_2): the 2nd-level column genuinely rises from 1 to 2 \
+                    (\"2/2/1/-\", verified independently on both primary sources), while the \
+                    1st/3rd-level columns stay 2/1 unchanged and the access ladder stays at 3 \
+                    (4th-level ranger spells begin at level 13, outside this row's ceiling, \
+                    checked rather than assumed away). This slice also fixed two stale sibling \
+                    negative controls (allowlist/boundary-control failure mode) that asserted \
+                    level 12 as claim-blocked: tests/sd13_ranger_level10_progression.rs and \
+                    tests/sd18_ranger_level11_quarry.rs, both moved to a level-13 boundary.",
                 next_required_uplift: "ground the ranger Wisdom bonus-spells and \
                     prepared-posture/spell-source-lineage burdens now that the caster-level \
                     gate, the access ladder, the base per-day counts, and the base \
                     spell-save DCs are all grounded, then Ranger \
-                    level-12+ progression, a favored-enemy conditional-application engine, \
+                    level-13+ progression, a favored-enemy conditional-application engine, \
                     execution of either recognized combat-style bonus feat's own mechanics, \
                     Hunter's Bond ally-bonus application and the animal-companion stat \
                     block/advancement subsystem, a terrain-detection/movement-resolution engine \
                     for Woodland Stride's own effect, a tracking-penalty-application engine for \
                     Swift Tracker's own effect, a target-selection/conditional-application \
                     engine for Quarry's own +2 attack-bonus and auto-confirm-critical-threats \
-                    effects, then SD13-E4 ranger spell burden",
+                    effects, a Stealth-check-execution engine for Camouflage's own effect, then \
+                    SD13-E4 ranger spell burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",

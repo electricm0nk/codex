@@ -511,8 +511,25 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // attack-roll magnitude as a standalone, non-applied record (mirroring the
 // Favored Enemy attack/damage-bonus idiom exactly). No active-quarry state
 // (the 24-hour reselection cooldown, the 1-hour post-kill cooldown, or "only
-// one quarry at a time") is tracked. Nothing here grounds level 12+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 11;
+// one quarry at a time") is tracked. A still later SD18 slice widens the
+// gate once more to level 12, extending base attack/base save/Track to
+// level 12 via the same formulas (all three genuinely rise, unlike level
+// 11's integer-division coincidences) and grounds Camouflage, the class
+// table's 12th-level "Special" column entry (`RANGER_CAMOUFLAGE_LEVEL`), as
+// a grant-only identity record. Nothing here grounds level 13+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 12;
+
+/// PF1 Core Rulebook level gate at which Camouflage is granted (verified
+/// independently against two primary sources: both d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror list "Camouflage" as the sole
+/// Ranger 12th-level "Special" column entry). Camouflage is an automatic,
+/// no-choice grant with no numeric magnitude of its own: "A ranger of 12th
+/// level or higher can use the Stealth skill to hide, even while being
+/// observed, as long as she is within any sort of natural terrain that
+/// grants at least partial concealment or partial cover." Only the grant
+/// identity is grounded here; no terrain-detection engine and no
+/// Stealth-check-execution engine exists anywhere in this codebase.
+const RANGER_CAMOUFLAGE_LEVEL: u8 = 12;
 
 /// PF1 Core Rulebook level gate at which Woodland Stride is granted (verified
 /// independently against two primary sources: both d20pfsrd and
@@ -7178,6 +7195,52 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         });
     }
 
+    // Grounded (SD18 cycle-2026-07-15T0900): Camouflage, the 12th-level
+    // Ranger "Special" column entry, verified independently against two
+    // primary PF1 sources (d20pfsrd and the Archives of Nethys aonprd.com
+    // mirror both list "Camouflage" as the sole Ranger 12th-level special
+    // feature entry, with identical rule text): "A ranger of 12th level or
+    // higher can use the Stealth skill to hide, even while being observed,
+    // as long as she is within any sort of natural terrain that grants at
+    // least partial concealment or partial cover." Camouflage carries no
+    // numeric magnitude of its own and only modifies a
+    // hide-while-observed check resolution that does not exist anywhere in
+    // this codebase -- exactly like Woodland Stride and Swift Tracker, it
+    // is a genuinely flat/identity-shaped, no-choice, no-magnitude grant.
+    // Below the level-12 gate this is a correct level-gate absence (value
+    // 0); at or above it, it is a bounded grant-only identity record (value
+    // 0, non-fabricated): no terrain-classification engine and no
+    // Stealth-check-execution engine exists anywhere in this codebase to
+    // determine whether the ranger is actually within qualifying terrain
+    // while observed, so only the grant itself is recorded.
+    if level < RANGER_CAMOUFLAGE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.camouflage".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Camouflage at ranger level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant Stealth-while-observed \
+                 identity is named but not computed. Camouflage is a 12th-level ranger class \
+                 feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.camouflage".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Camouflage granted at ranger level {level} (PF1 Core Rulebook, \
+                 12th-level ranger class feature): the ranger can use the Stealth skill to \
+                 hide, even while being observed, as long as she is within any sort of \
+                 natural terrain that grants at least partial concealment or partial cover. \
+                 This is a bounded grant-only identity record (value 0, non-fabricated): no \
+                 terrain-classification engine and no Stealth-check-execution engine exists \
+                 anywhere in this codebase to determine whether the ranger is actually within \
+                 qualifying terrain while observed, so this only records the grant itself"
+            ),
+        });
+    }
+
     // SD13-E5: the Ranger partial-caster identity pair, mirroring the
     // Paladin's effective_caster_level + spell_level_access records
     // record-for-record (PF1 CRB Ranger Spells: "At 4th level and higher,
@@ -7247,7 +7310,10 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // 3rd-level column genuinely rises from 0 to 1, the 1st/2nd-level
     // columns stay 2/1 unchanged, and the 4th-level column stays "—" —
     // 4th-level ranger spells begin at level 13, outside this row's ceiling,
-    // checked rather than assumed away). A "0" is a genuine
+    // checked rather than assumed away), level 12 "2/2/1/—" (verified
+    // independently for the SD18 level-12 widening cycle: the 2nd-level
+    // column genuinely rises from 1 to 2, the 1st/3rd-level columns stay
+    // 2/1 unchanged, and the 4th-level column stays "—"). A "0" is a genuine
     // table entry (Wisdom-bonus-spells-only access), NOT an absence —
     // inaccessible spell levels ("—" columns) get no record at all. Only
     // the base counts are grounded: bonus spells per day from a high
@@ -7260,6 +7326,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         9 => [Some(2), Some(1), None],
         10 => [Some(2), Some(1), Some(0)],
         11 => [Some(2), Some(1), Some(1)],
+        12 => [Some(2), Some(2), Some(1)],
         _ => [None, None, None],
     };
     for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
