@@ -461,9 +461,29 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // third enemy-type selection PLUS the rule's own second +2
 // bonus-increase-target choice) is a real, newly-discovered multi-record
 // burden deliberately left named-but-unproven this slice, mirroring the
-// level-8 2nd-favored-terrain deferral precedent exactly. Nothing here
-// grounds level 11+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 10;
+// level-8 2nd-favored-terrain deferral precedent exactly.
+//
+// SD18 cycle-2026-07-14T2300 widens the gate once more to level 11,
+// extending base attack/base save/Track to level 11 via the same formulas
+// (all three stay numerically unchanged from level 10 -- 11/2+2 = 7,
+// 11/3 = 3, max(11/2, 1) = 5 -- integer-division coincidences, re-verified
+// against d20pfsrd and the Archives of Nethys aonprd.com mirror rather than
+// assumed) and grounds the class table's 11th-level "Special" column entry,
+// "Quarry" (verified independently against both primary sources -- no other
+// new class feature is gained at 11th level). Quarry is grounded as a
+// bundle mirroring precedent exactly: a grant-only identity record (value
+// 0, mirroring the Woodland Stride/Swift Tracker idiom) for the
+// take-10-while-tracking and auto-confirm-critical-threats behaviors, since
+// neither a Survival-check-execution engine nor a critical-confirmation-roll
+// engine exists anywhere in this codebase; an open-ended target-choice
+// recognition record (mirroring the Favored Enemy/Favored Terrain
+// choice-recognition idiom exactly, no restricted-list validation, no
+// favored-enemy-type matching); and the rule's own flat +2 insight
+// attack-roll magnitude as a standalone, non-applied record (mirroring the
+// Favored Enemy attack/damage-bonus idiom exactly). No active-quarry state
+// (the 24-hour reselection cooldown, the 1-hour post-kill cooldown, or "only
+// one quarry at a time") is tracked. Nothing here grounds level 12+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 11;
 
 /// PF1 Core Rulebook level gate at which Woodland Stride is granted (verified
 /// independently against two primary sources: both d20pfsrd and
@@ -496,6 +516,29 @@ const RANGER_SWIFT_TRACKER_LEVEL: u8 = 8;
 /// legacy.aonprd.com both list "Evasion" as the Ranger 9th-level "Special"
 /// column entry — the same rule text as Rogue's and Monk's own Evasion).
 const RANGER_EVASION_LEVEL: u8 = 9;
+
+/// PF1 Core Rulebook level gate at which Ranger gains Quarry (11th level,
+/// verified independently against two primary sources: d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror both list "Quarry" as the sole
+/// Ranger 11th-level "Special" column entry): "At 11th level, a ranger can
+/// select one target within line of sight as his quarry... While tracking
+/// his quarry, a ranger can take 10 on his Survival skill checks while
+/// moving at normal speed without penalty. In addition, the ranger receives
+/// a +2 insight bonus on attack rolls made against his quarry, and he
+/// confirms all critical threats against the quarry automatically... Once a
+/// ranger has selected a quarry, he cannot select a different quarry until
+/// 24 hours have passed or the current quarry is dead." Only the flat
+/// magnitude and the grant identity are grounded here; the reselection
+/// cooldown state and any check/roll-resolution engine are not.
+const RANGER_QUARRY_LEVEL: u8 = 11;
+
+/// The open-ended chosen-input identity naming which target the ranger has
+/// designated as his quarry (PF1 Core Rulebook: "must correspond to one of
+/// his favored enemy types"). Mirrors the Favored Enemy/Favored Terrain
+/// choice-recognition idiom exactly: raw string interpolation, no
+/// restricted-list validation, and no matching against the ranger's own
+/// recognized favored-enemy types.
+const RANGER_QUARRY_CHOICE_ID: &str = "choice:ranger_quarry_target";
 
 /// PF1 Core Rulebook level gate at which the Favored Enemy rule's 5th-level
 /// interval is granted (verified independently against two primary sources:
@@ -6855,6 +6898,96 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         });
     }
 
+    // Grounded (SD18 cycle-2026-07-14T2300): Quarry, the 11th-level Ranger
+    // "Special" column entry, verified independently against two primary PF1
+    // sources (d20pfsrd and the Archives of Nethys aonprd.com mirror both
+    // list "Quarry" as the sole Ranger 11th-level special feature entry,
+    // with identical rule text): "At 11th level, a ranger can select one
+    // target within line of sight as his quarry... While tracking his
+    // quarry, a ranger can take 10 on his Survival skill checks while
+    // moving at normal speed without penalty. In addition, the ranger
+    // receives a +2 insight bonus on attack rolls made against his quarry,
+    // and he confirms all critical threats against the quarry
+    // automatically. A ranger can select a new quarry as a standard
+    // action... Once a ranger has selected a quarry, he cannot select a
+    // different quarry until 24 hours have passed or the current quarry is
+    // dead, in which case he must wait 1 hour before selecting a new one."
+    //
+    // Quarry mirrors precedent exactly, as a three-part bundle: the
+    // take-10-while-tracking and auto-confirm-critical-threats behaviors are
+    // grant-only identity records (value 0, mirroring the Woodland
+    // Stride/Swift Tracker idiom), since neither a Survival-check-execution
+    // engine nor a critical-confirmation-roll engine exists anywhere in this
+    // codebase; the chosen quarry target (when present in chosen input) is
+    // an open-ended +0 recognition record (mirroring the Favored
+    // Enemy/Favored Terrain choice-recognition idiom exactly, no
+    // restricted-list validation, no matching against the ranger's own
+    // favored-enemy types); and the rule's own flat +2 insight attack-roll
+    // bonus is grounded as a standalone, non-applied magnitude (mirroring
+    // the Favored Enemy attack/damage-bonus idiom exactly). Below the
+    // level-11 gate this is a correct level-gate absence (value 0); no
+    // active-quarry state (the 24-hour reselection cooldown, the 1-hour
+    // post-kill cooldown, or "only one quarry at a time") is tracked
+    // anywhere in this codebase.
+    if level < RANGER_QUARRY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.quarry".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Quarry at ranger level {level}: correctly absent at level {level} by \
+                 PF1 Core Rulebook level gate; the at-grant target-selection identity, its flat \
+                 attack-bonus magnitude, and its check/roll-resolution overrides are named but \
+                 not computed. Quarry is an 11th-level ranger class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.quarry".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Quarry granted at ranger level {level} (PF1 Core Rulebook, 11th-level \
+                 ranger class feature): the ranger can designate one target within line of \
+                 sight as his quarry with a standard action, take 10 on Survival checks while \
+                 tracking it at normal speed, and automatically confirm all critical threats \
+                 made against it. This is a bounded grant-only identity record (value 0, \
+                 non-fabricated): no Survival-check-execution engine and no \
+                 critical-confirmation-roll engine exists anywhere in this codebase, so only \
+                 the grant itself is recorded; the 24-hour reselection cooldown, the 1-hour \
+                 post-kill cooldown, and the \"only one quarry at a time\" constraint are named \
+                 but not tracked as state"
+            ),
+        });
+
+        if let Some(quarry_target) = choice_selection(input, RANGER_QUARRY_CHOICE_ID) {
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.quarry_choice".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Ranger Quarry target selection ({RANGER_QUARRY_CHOICE_ID} -> \
+                     {quarry_target}): the level-{level} quarry target named for this character \
+                     is {quarry_target}. This is a bounded recognition record of the chosen \
+                     target identity only; PF1 Core Rulebook restricts the quarry to a target \
+                     corresponding to one of the ranger's own favored-enemy types, but no \
+                     favored-enemy-type matching is implemented, so no restriction is enforced \
+                     and no fabricated mechanical value is carried (+0)"
+                ),
+            });
+        }
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.quarry_attack_bonus".to_owned(),
+            value: 2,
+            detail: format!(
+                "Ranger Quarry attack-roll bonus (PF1 Core Rulebook, level {level}): a flat +2 \
+                 insight bonus on attack rolls made against the ranger's quarry. This grounds \
+                 only the flat +2 magnitude; no target-selection engine and no \
+                 conditional-application engine is implemented, so whether any specific attack \
+                 is actually made against the quarry is never resolved and no combat baseline \
+                 is modified by this record"
+            ),
+        });
+    }
+
     // SD13-E5: the Ranger partial-caster identity pair, mirroring the
     // Paladin's effective_caster_level + spell_level_access records
     // record-for-record (PF1 CRB Ranger Spells: "At 4th level and higher,
@@ -6919,7 +7052,12 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // primary sources (identical on d20pfsrd and legacy.aonprd.com, and
     // numerically identical to the Paladin's rows): level 4 "0/—/—/—",
     // level 5 "1/—/—/—", level 6 "1/—/—/—", level 7 "1/0/—/—", level 8
-    // "1/1/—/—", level 9 "2/1/—/—", level 10 "2/1/0/—". A "0" is a genuine
+    // "1/1/—/—", level 9 "2/1/—/—", level 10 "2/1/0/—", level 11 "2/1/1/—"
+    // (verified independently for the SD18 level-11 widening cycle: the
+    // 3rd-level column genuinely rises from 0 to 1, the 1st/2nd-level
+    // columns stay 2/1 unchanged, and the 4th-level column stays "—" —
+    // 4th-level ranger spells begin at level 13, outside this row's ceiling,
+    // checked rather than assumed away). A "0" is a genuine
     // table entry (Wisdom-bonus-spells-only access), NOT an absence —
     // inaccessible spell levels ("—" columns) get no record at all. Only
     // the base counts are grounded: bonus spells per day from a high
@@ -6931,6 +7069,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         8 => [Some(1), Some(1), None],
         9 => [Some(2), Some(1), None],
         10 => [Some(2), Some(1), Some(0)],
+        11 => [Some(2), Some(1), Some(1)],
         _ => [None, None, None],
     };
     for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
