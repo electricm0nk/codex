@@ -2678,16 +2678,24 @@ const DWARF_STONECUNNING_PERCEPTION_BONUS: i16 = 2;
 /// metals or gemstones`). Distinct from the already-grounded Stonecunning
 /// (Perception) racial trait.
 const DWARF_GREED_APPRAISE_BONUS: i16 = 2;
+/// PF1 Core Rulebook Dwarf Hardy flat racial saving-throw-bonus magnitude
+/// against poison, spells, and spell-like abilities (verified against
+/// `dwarf_abilities_race.lst:25`'s
+/// `BONUS:VAR|SaveBonus_vs_Poison|2|TYPE=Racial` and
+/// `BONUS:VAR|SaveBonus_vs_Spells|2|TYPE=Racial`). Both save categories
+/// share the same flat +2 magnitude, mirroring the already-grounded Elf
+/// Elven Immunities enchantment-save-bonus idiom.
+const DWARF_HARDY_SAVE_BONUS: i16 = 2;
 
 /// SD13-E2 Dwarf racial trait bundle explanation seam (mirroring the SD13-E6-F3a
 /// Human trait bundle pattern for the first non-Human core race), widened by the
-/// SD18 dwarf-stonecunning and dwarf-greed cycles.
+/// SD18 dwarf-stonecunning, dwarf-greed, and dwarf-hardy cycles.
 ///
-/// Surfaces six grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
-/// modifiers, size, speed, senses, Stonecunning, Greed) as explicit `ComputationExplanation`
-/// records so the Dwarf identity is legible on the runtime path rather than left
-/// behind the generic `race.semantics.unverified` diagnostic every other non-Human
-/// race still receives.
+/// Surfaces seven grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
+/// modifiers, size, speed, senses, Stonecunning, Greed, Hardy) as explicit
+/// `ComputationExplanation` records so the Dwarf identity is legible on the runtime
+/// path rather than left behind the generic `race.semantics.unverified` diagnostic
+/// every other non-Human race still receives.
 ///
 /// This function:
 ///   - runs only when `race_id == race:dwarf`; every other race is unaffected
@@ -2698,12 +2706,12 @@ const DWARF_GREED_APPRAISE_BONUS: i16 = 2;
 ///     (the chosen Constitution/Charisma scores are understood to already reflect
 ///     the fixed +2/-2 racial adjustment; no arithmetic is performed on this seam),
 ///     the size/senses records carry the grounded source value as identity only, and
-///     the Stonecunning and Greed records each name only their own flat +2
-///     situational-bonus magnitude (no Perception-check-total, Appraise-check-total,
-///     stonework-detection, or goods-valuation engine exists),
+///     the Stonecunning, Greed, and Hardy records each name only their own flat +2
+///     bonus magnitude (no Perception-check-total, Appraise-check-total,
+///     stonework-detection, goods-valuation, or saving-throw-total engine exists),
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Dwarf-specific `race.dwarf.bounded_semantics` note naming the still-unproven
-///     families explicitly (Defensive Training, Hardy, Stability,
+///     families explicitly (Defensive Training, Stability,
 ///     Hatred, weapon familiarity, and the explicit absence of any Dwarf racial
 ///     bonus feat),
 ///   - is bounded to race recognition only; it deliberately grounds no Dwarf
@@ -2839,25 +2847,57 @@ fn explain_dwarf_race_seam(
         ),
     });
 
-    // Bounded honesty: six named dimensions are now grounded (ability
-    // modifiers, size, speed, senses, Stonecunning, Greed). This replaces
-    // the generic race.semantics.unverified diagnostic for Dwarf
+    // ----- Hardy (SD18 dwarf-hardy cycle) -----
+    // Bundles two distinct save categories, both grounded honestly, mirroring
+    // the already-landed Elf Elven Immunities flat racial saving-throw-bonus
+    // idiom exactly (applied to a save category instead of a skill):
+    //   - a +2 racial saving throw bonus against poison
+    //     (dwarf_abilities_race.lst:25 BONUS:VAR|SaveBonus_vs_Poison|2|TYPE=Racial);
+    //   - a +2 racial saving throw bonus against spells and spell-like
+    //     abilities (dwarf_abilities_race.lst:25
+    //     BONUS:VAR|SaveBonus_vs_Spells|2|TYPE=Racial).
+    // Both share the same flat magnitude, so this names only the flat
+    // save-bonus magnitude, not a saving-throw-total engine: no
+    // saving-throw-resolution engine exists anywhere in this codebase, so no
+    // check resolution is fabricated from this record.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.hardy".to_owned(),
+        value: DWARF_HARDY_SAVE_BONUS,
+        detail: format!(
+            "Dwarf racial trait bundle — Hardy: PF1 Core Dwarf grants a flat \
+             {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against poison, and a \
+             flat {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against spells and \
+             spell-like abilities (dwarf_abilities_race.lst:25 \
+             BONUS:VAR|SaveBonus_vs_Poison|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial, \
+             BONUS:VAR|SaveBonus_vs_Spells|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial). This is a \
+             bounded flat saving-throw-bonus-magnitude recognition record naming the Hardy \
+             identity on the deterministic pilot seam, mirroring the already-grounded Elf \
+             Elven Immunities enchantment-save-bonus idiom; no saving-throw-total engine \
+             exists anywhere in this codebase, so no check resolution is fabricated from this \
+             record"
+        ),
+    });
+
+    // Bounded honesty: seven named dimensions are now grounded (ability
+    // modifiers, size, speed, senses, Stonecunning, Greed, Hardy). This
+    // replaces the generic race.semantics.unverified diagnostic for Dwarf
     // specifically and stays non-claim-blocking so the deterministic pilot
     // still reports computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.dwarf.bounded_semantics".to_owned(),
         message: "Dwarf race semantics are grounded for the deterministic pilot's ability \
                   modifiers, size, speed, senses, Stonecunning (flat +2 Perception \
-                  situational bonus to notice unusual stonework), and Greed (flat +2 \
+                  situational bonus to notice unusual stonework), Greed (flat +2 \
                   Appraise situational bonus to assess nonmagical precious-metal/gemstone \
-                  goods) trait bundle; the remaining PF1 Core Dwarf racial trait surface \
-                  remains unverified: Defensive Training (dodge bonus to AC \
-                  against giants), Hardy (bonus on saves against poison, spells, and \
-                  spell-like abilities), Stability (bonus to CMD against bull rush/trip), \
-                  Hatred (bonus on attack rolls against orcs and goblinoids), and weapon \
-                  familiarity (battleaxe, heavy pick, warhammer, dwarven waraxe, dwarven \
-                  urgrosh). PF1 core Dwarves gain no racial bonus feat (unlike Human), so that \
-                  family is explicitly not applicable rather than silently omitted."
+                  goods), and Hardy (flat +2 racial bonus on saving throws against poison, \
+                  spells, and spell-like abilities) trait bundle; the remaining PF1 Core \
+                  Dwarf racial trait surface remains unverified: Defensive Training (dodge \
+                  bonus to AC against giants), Stability (bonus to CMD against bull \
+                  rush/trip), Hatred (bonus on attack rolls against orcs and goblinoids), and \
+                  weapon familiarity (battleaxe, heavy pick, warhammer, dwarven waraxe, \
+                  dwarven urgrosh). PF1 core Dwarves gain no racial bonus feat (unlike \
+                  Human), so that family is explicitly not applicable rather than silently \
+                  omitted."
             .to_owned(),
         claim_blocking: false,
     });
