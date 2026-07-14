@@ -1663,8 +1663,37 @@ const MONK_CLASS_ID: &str = "class:monk";
 // (lawful)" — the ki-strike lawful DR-bypass property needs a
 // DR/attack-resolution engine that does not exist here, mirroring how the
 // 4th-level magic and 7th-level cold-iron/silver ki-strike properties were
-// never fabricated either.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 11;
+// never fabricated either. A further SD18 slice widens the gate to level 11
+// (verified independently against d20pfsrd and legacy.aonprd.com): level 11
+// base attack genuinely rises to +8 (11 * 3 / 4) while all three good saves
+// stay +7 (11 / 2 + 2, an integer-division coincidence with level 10); the
+// unarmed die stays 1d10 (band 8-11); the Flurry flat attack modifier
+// genuinely rises to +9 (level - 2) with the count staying 3; the ki pool
+// stays 8 (11 / 2 + Wisdom modifier, an integer-division coincidence) and
+// Slow Fall's reach stays 50 ft (the next rise lands at 12th); the level-11
+// "Special" column reads "Diamond body" only, grounded as a new bounded
+// grant-only poison-immunity identity record mirroring Purity of Body. A
+// further SD18 slice (cycle-2026-07-15T0600) widens the gate to level 12,
+// the loop's eighth §3.2 level-12 widening (verified independently against
+// d20pfsrd and the Archives of Nethys aonprd.com mirror): level 12 base
+// attack genuinely rises to +9 (12 * 3 / 4) and all three good saves
+// genuinely rise to +8 (12 / 2 + 2); the unarmed strike damage die
+// genuinely steps up from 1d10 to 2d6 (the 2d6 band spans levels 12-15),
+// grounded as two facets — the die-face facet (MONK_UNARMED_DAMAGE_DIE_
+// THIRD_STEP_UP_LEVEL) and a new die-count facet, since every level 1-11
+// band was a single die and this is the first level at which the count
+// itself rises; the Flurry flat attack modifier genuinely rises to +10
+// (level - 2) with the count staying 3; the ki pool genuinely rises to 9
+// (12 / 2 + Wisdom modifier); Slow Fall's reach genuinely rises to 60 ft
+// (MONK_SLOW_FALL_SIXTY_FOOT_REACH_LEVEL, named explicitly in the level-12
+// "Special" column); the level-12 "Special" column's other entry, Abundant
+// Step, is checked and confirmed NOT flat (it requires both a
+// ki-point-spending action-economy engine and a dimension-door-equivalent
+// teleportation-resolution engine, neither of which exists in this
+// codebase), so it is deliberately left named-but-unproven, mirroring the
+// Wholeness of Body / High Jump precedent exactly — no record is
+// fabricated for it.
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 12;
 // PF1 Core Rulebook level gate at which Monk gains Wholeness of Body (7th
 // level, verified independently against two primary sources: d20pfsrd and
 // legacy.aonprd.com both name Wholeness of Body as the Monk 7th-level
@@ -1723,6 +1752,16 @@ const MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL: u8 = 4;
 /// against the same two primary sources' Medium-monk unarmed damage
 /// progression table: the 1d10 band runs levels 8-11).
 const MONK_UNARMED_DAMAGE_DIE_SECOND_STEP_UP_LEVEL: u8 = 8;
+/// PF1 Core Rulebook level gate at which the Medium-monk unarmed strike damage
+/// die steps up again, from 1d10 to 2d6 (12th level, verified independently
+/// against the same two primary sources' Medium-monk unarmed damage
+/// progression table: the 2d6 band runs levels 12-15). Unlike the two prior
+/// step-ups, this is the first level at which the die COUNT itself rises
+/// (from a single die to two dice), not just the face size, so it is
+/// grounded as two facets — the die-face facet (still `unarmed_die_value`)
+/// and a new, standalone die-count facet — mirroring the Flurry of Blows
+/// attack-bonus/attack-count split.
+const MONK_UNARMED_DAMAGE_DIE_THIRD_STEP_UP_LEVEL: u8 = 12;
 /// PF1 Core Rulebook level gate at which Flurry of Blows grants a third
 /// attack (8th level, verified independently against two primary sources'
 /// verbatim Flurry of Blows rule text: "At 8th level, the monk can make two
@@ -1746,6 +1785,17 @@ const MONK_SLOW_FALL_FORTY_FOOT_REACH_LEVEL: u8 = 8;
 /// fall 50 ft." explicitly, verified independently against d20pfsrd and
 /// legacy.aonprd.com).
 const MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL: u8 = 10;
+/// PF1 Core Rulebook level gate at which Monk's Slow Fall reach rises to 60
+/// ft (12th level — the class table's level-12 "Special" column names
+/// "slow fall 60 ft." explicitly, verified independently against d20pfsrd
+/// and the Archives of Nethys aonprd.com mirror). The column's other entry,
+/// Abundant Step, is checked and confirmed NOT flat (it requires both a
+/// ki-point-spending action-economy engine and a
+/// dimension-door-equivalent teleportation-resolution engine, neither of
+/// which exists in this codebase), so it is deliberately left
+/// named-but-unproven, mirroring the Wholeness of Body / High Jump
+/// precedent exactly — no record is fabricated for it.
+const MONK_SLOW_FALL_SIXTY_FOOT_REACH_LEVEL: u8 = 12;
 /// PF1 Core Rulebook level gate at which Monk gains the ki pool and Slow Fall
 /// (4th level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Ki pool (magic), slow fall 20 ft." as the Monk
@@ -8217,19 +8267,25 @@ fn explain_monk_level1_chassis(
 
     // Grounded (4/6): unarmed strike damage die. PF1 Core Rulebook Monk class table:
     // a Medium monk deals 1d6 unarmed strike damage at levels 1-3, stepping up to
-    // 1d8 at levels 4-7 (verified independently against d20pfsrd and
-    // legacy.aonprd.com: the full Medium-monk progression is 1d6/1d8/1d10/2d6/2d8/2d10
-    // at levels 1-3/4-7/8-11/12-15/16-19/20). Mirroring the Rogue sneak-attack
-    // die-count record, only the die-size facet is grounded here — no damage roll,
-    // damage total, or attack-resolution engine is computed, and the level-8+ die
-    // progression (1d10 and beyond) is not grounded.
-    let (unarmed_die_value, unarmed_die_name) =
+    // 1d8 at levels 4-7, then 1d10 at levels 8-11, then 2d6 at levels 12-15
+    // (verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror: the full Medium-monk progression is
+    // 1d6/1d8/1d10/2d6/2d8/2d10 at levels 1-3/4-7/8-11/12-15/16-19/20). Levels
+    // 1-11 grounded only the die-size facet (a single die throughout); level 12
+    // is the first level at which the die COUNT itself rises (from one die to
+    // two), so a second, standalone die-count facet is grounded starting here,
+    // mirroring the Flurry of Blows attack-bonus/attack-count split — no damage
+    // roll, damage total, or attack-resolution engine is computed, and the
+    // level-16+ die progression (2d8 and beyond) is not grounded.
+    let (unarmed_die_value, unarmed_die_count, unarmed_die_name) =
         if level < MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL {
-            (6, "1d6")
+            (6, 1, "1d6")
         } else if level < MONK_UNARMED_DAMAGE_DIE_SECOND_STEP_UP_LEVEL {
-            (8, "1d8")
+            (8, 1, "1d8")
+        } else if level < MONK_UNARMED_DAMAGE_DIE_THIRD_STEP_UP_LEVEL {
+            (10, 1, "1d10")
         } else {
-            (10, "1d10")
+            (6, 2, "2d6")
         };
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.unarmed_strike_damage_die".to_owned(),
@@ -8237,16 +8293,46 @@ fn explain_monk_level1_chassis(
         detail: format!(
             "Monk level {level} unarmed strike from the PF1 Core Rulebook Monk class table: a \
              Medium monk deals 1d6 unarmed strike damage at levels 1-3, stepping up to 1d8 at \
-             levels 4-7, then to 1d10 at levels 8-11, so it is {unarmed_die_name} at level \
-             {level}. Only the die-size facet ({unarmed_die_value}, i.e. {unarmed_die_name}) is \
-             grounded here; no damage roll or damage total is computed and no attack-resolution \
-             engine exists. Two PF1 unarmed-strike rules are recorded as statements only: the \
-             monk may choose to deal lethal or nonlethal damage with no penalty on the attack \
-             roll, and monk unarmed strikes carry no off-hand penalty (a monk applies her full \
-             Strength bonus on damage rolls for all her unarmed strikes). The higher-level \
-             unarmed damage die progression beyond level 11 (2d6 and beyond) is not grounded"
+             levels 4-7, to 1d10 at levels 8-11, and to 2d6 at levels 12-15, so it is \
+             {unarmed_die_name} at level {level}. Only the die-face-size facet \
+             ({unarmed_die_value}, i.e. the d{unarmed_die_value} in {unarmed_die_name}) is \
+             grounded on this record (the die-count facet is grounded separately below); no \
+             damage roll or damage total is computed and no attack-resolution engine exists. Two \
+             PF1 unarmed-strike rules are recorded as statements only: the monk may choose to \
+             deal lethal or nonlethal damage with no penalty on the attack roll, and monk \
+             unarmed strikes carry no off-hand penalty (a monk applies her full Strength bonus \
+             on damage rolls for all her unarmed strikes). The higher-level unarmed damage die \
+             progression beyond level 15 (2d8 and beyond) is not grounded"
         ),
     });
+    // Grounded (SD18): the unarmed strike damage die's COUNT facet, standalone
+    // from the die-face-size facet above. Every level 1-11 band is implicitly a
+    // single die, never previously surfaced as its own record; level 12 is the
+    // first level at which the PF1 Core Rulebook Medium-monk unarmed damage
+    // progression rises the die count itself (to 2d6), verified independently
+    // against both primary sources' Medium-monk unarmed damage progression
+    // table. Mirroring the Improved Evasion idiom (no record at all below its
+    // introduction gate, rather than an explicit level-gate-absence record):
+    // this new facet is grounded starting only at its introduction level, since
+    // it names a genuinely new computational dimension (die count), not a PF1
+    // rule-text-named feature with its own "correctly absent below" wording.
+    // Mirrors the Flurry of Blows attack-bonus/attack-count split: only the
+    // count facet is grounded here, no damage roll or damage total is
+    // computed.
+    if level >= MONK_UNARMED_DAMAGE_DIE_THIRD_STEP_UP_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.unarmed_strike_damage_die_count".to_owned(),
+            value: unarmed_die_count,
+            detail: format!(
+                "Monk level {level} unarmed strike damage die count from the PF1 Core Rulebook \
+                 Monk class table: the die count genuinely rises to 2 at level 12 (the 2d6 band \
+                 spans levels 12-15), so the count is {unarmed_die_count} at level {level}. Only \
+                 this count facet is grounded; the die-face-size facet is grounded separately \
+                 above, and no damage roll, damage total, or attack-resolution engine is \
+                 computed"
+            ),
+        });
+    }
 
     // Grounded (5/6): Flurry of Blows flat attack surface, in two facets. PF1 Core
     // Rulebook: when making a flurry of blows as a full-attack action, the monk uses
@@ -8475,21 +8561,23 @@ fn explain_monk_level1_chassis(
             30
         } else if level < MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL {
             40
-        } else {
+        } else if level < MONK_SLOW_FALL_SIXTY_FOOT_REACH_LEVEL {
             50
+        } else {
+            60
         };
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.slow_fall".to_owned(),
             value: 0,
             detail: format!(
                 "Monk Slow Fall granted at monk level {level} (PF1 Core Rulebook, 4th-level monk \
-                 class feature whose own reach magnitude increases to 30 ft. at 6th level and \
-                 40 ft. at 8th level): \"a monk within arm's reach of a wall can use it to slow \
-                 his descent\" — she takes falling damage as if the fall were \
-                 {slow_fall_reach_feet} feet shorter than it actually is. This is a bounded \
-                 grant-only identity record only (value 0, non-fabricated): no \
-                 fall-damage-resolution engine exists anywhere in this codebase to apply the \
-                 {slow_fall_reach_feet}-foot reduction to"
+                 class feature whose own reach magnitude increases to 30 ft. at 6th level, 40 \
+                 ft. at 8th level, 50 ft. at 10th level, and 60 ft. at 12th level): \"a monk \
+                 within arm's reach of a wall can use it to slow his descent\" — she takes \
+                 falling damage as if the fall were {slow_fall_reach_feet} feet shorter than it \
+                 actually is. This is a bounded grant-only identity record only (value 0, \
+                 non-fabricated): no fall-damage-resolution engine exists anywhere in this \
+                 codebase to apply the {slow_fall_reach_feet}-foot reduction to"
             ),
         });
     }
