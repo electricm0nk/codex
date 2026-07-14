@@ -735,8 +735,8 @@ const SD13_DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
 /// Elf racial trait dimensions (ability modifiers, size, speed, senses) that
 /// stays explicitly honest about the remaining unproven Elf family surface.
-const SD13_ELF_LEVEL1_TEST: &str =
-    "tests/sd13_elf_race_semantics_recognition.rs + tests/sd18_elf_keen_senses.rs";
+const SD13_ELF_LEVEL1_TEST: &str = "tests/sd13_elf_race_semantics_recognition.rs + \
+    tests/sd18_elf_keen_senses.rs + tests/sd18_elf_elven_immunities.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
 ///
@@ -805,28 +805,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.elf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:elf",
-                dimension: "bounded Elf race semantics: five grounded PF1 Core Rulebook Elf \
+                dimension: "bounded Elf race semantics: six grounded PF1 Core Rulebook Elf \
                             racial trait dimensions (ability modifiers, size, speed, senses, \
-                            Keen Senses) recognized on the compute seam, with the remaining Elf \
-                            family surface still unproven",
+                            Keen Senses, Elven Immunities) recognized on the compute seam, \
+                            with the remaining Elf family surface still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_ELF_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E2 and SD18 leave direct computed evidence \
-                    that five Elf race-semantic families are recognized on the compute seam \
+                    that six Elf race-semantic families are recognized on the compute seam \
                     (ability modifiers: +2 Dexterity / -2 Constitution; size: Medium; speed: \
                     30 ft; senses: low-light vision; Keen Senses: flat +2 Perception racial \
-                    bonus), but the remaining families stay unproven: Elven Immunities (sleep \
-                    immunity, enchantment save bonus), weapon familiarity (longbow, composite \
-                    longbow, longsword, rapier, shortbow, composite shortbow), and bonus \
-                    language grants. PF1 core Elves gain no racial bonus feat, so that family \
-                    is not applicable rather than unproven. No numeric mechanical contribution \
-                    beyond the flat Keen Senses skill-bonus magnitude is fabricated for any of \
-                    the five recognized dimensions.",
+                    bonus; Elven Immunities: sleep-effect immunity plus a flat +2 enchantment \
+                    saving-throw racial bonus), but the remaining families stay unproven: \
+                    weapon familiarity (longbow, composite longbow, longsword, rapier, \
+                    shortbow, composite shortbow), and bonus language grants. PF1 core Elves \
+                    gain no racial bonus feat, so that family is not applicable rather than \
+                    unproven. No numeric mechanical contribution beyond the flat Keen Senses \
+                    skill-bonus magnitude and the flat Elven Immunities enchantment-save-bonus \
+                    magnitude is fabricated for any of the six recognized dimensions.",
                 next_required_uplift: "later SD18 slice grounding one or more of the \
-                    remaining Elf families (Elven Immunities, weapon familiarity, bonus \
-                    languages) as a real computed contribution",
+                    remaining Elf families (weapon familiarity, bonus languages) as a real \
+                    computed contribution",
             },
             SupportStateRow {
                 row_id: "race.gnome.bounded_semantics",
