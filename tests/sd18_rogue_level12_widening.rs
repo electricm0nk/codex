@@ -287,17 +287,21 @@ fn rogue_level11_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 13 stays claim-blocked (beyond the bounded L1-12 row) -----
+// ----- Negative control: level 14 stays claim-blocked (beyond the bounded L1-13 row) -----
+//
+// SD18 widening (cycle-2026-07-15T1100, tests/sd18_rogue_level13_widening.rs)
+// now genuinely recognizes level 13, so this boundary control moves to
+// level 14.
 
 #[test]
-fn rogue_level_13_stays_claim_blocked() {
-    let level_13 = ROGUE_LEVEL12_FIXTURE.replace("class:rogue:12", "class:rogue:13");
-    let input = load(&level_13);
+fn rogue_level_14_stays_claim_blocked() {
+    let level_14 = ROGUE_LEVEL12_FIXTURE.replace("class:rogue:12", "class:rogue:14");
+    let input = load(&level_14);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-13 Rogue must stay claim-blocked beyond the bounded levels-1-12 row: {:?}",
+        "level-14 Rogue must stay claim-blocked beyond the bounded levels-1-13 row: {:?}",
         computation.diagnostics
     );
     assert!(
@@ -305,7 +309,7 @@ fn rogue_level_13_stays_claim_blocked() {
             .explanations
             .iter()
             .any(|e| e.id == "class_chassis.rogue.base_attack_bonus"),
-        "level-13 Rogue must not fabricate a base-attack-bonus explanation"
+        "level-14 Rogue must not fabricate a base-attack-bonus explanation"
     );
 }
 
