@@ -265,12 +265,18 @@ fn monk_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(ki_pool.value, 8, "Monk level 10 ki pool must stay 8");
 }
 
-// ----- Negative control: level 12 stays unrecognized by this slice -----
+// ----- Negative control: level 12 IS now promoted (SD18 cycle-2026-07-15T0600) -----
+//
+// Formerly a "level 12 stays unrecognized" negative control; superseded when
+// `tests/sd18_monk_level12_widening.rs` genuinely widened
+// `MAX_SUPPORTED_MONK_LEVEL` to 12. Moved to the next unproven boundary,
+// level 13, mirroring the Barbarian/Bard/Cleric/Druid/Fighter level-12
+// widening precedent.
 
 #[test]
-fn monk_level_12_is_not_promoted_by_this_slice() {
-    let level_12 = MONK_LEVEL11_FIXTURE.replace("class:monk:11", "class:monk:12");
-    let input = load(&level_12);
+fn monk_level_13_is_not_promoted_by_this_slice() {
+    let level_13 = MONK_LEVEL11_FIXTURE.replace("class:monk:11", "class:monk:13");
+    let input = load(&level_13);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -278,7 +284,7 @@ fn monk_level_12_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.monk.")
                 || e.id.starts_with("class_feature.monk.")),
-        "level-12 Monk must not gain any bounded monk explanation: {:?}",
+        "level-13 Monk must not gain any bounded monk explanation: {:?}",
         computation.explanations
     );
 }
