@@ -2686,13 +2686,21 @@ const DWARF_GREED_APPRAISE_BONUS: i16 = 2;
 /// share the same flat +2 magnitude, mirroring the already-grounded Elf
 /// Elven Immunities enchantment-save-bonus idiom.
 const DWARF_HARDY_SAVE_BONUS: i16 = 2;
+/// PF1 Core Rulebook Dwarf Stability flat racial Combat Maneuver Defense
+/// bonus magnitude against bull rush and trip attempts made while the Dwarf
+/// is standing on the ground (verified against
+/// `dwarf_abilities_race.lst:26`'s
+/// `BONUS:VAR|CMD_BullRush,CMD_Trip|4|TYPE=Racial`). Both maneuver
+/// categories share the same flat +4 magnitude, mirroring the already-
+/// grounded Dwarf Hardy two-save-category flat-bonus idiom exactly.
+const DWARF_STABILITY_CMD_BONUS: i16 = 4;
 
 /// SD13-E2 Dwarf racial trait bundle explanation seam (mirroring the SD13-E6-F3a
 /// Human trait bundle pattern for the first non-Human core race), widened by the
-/// SD18 dwarf-stonecunning, dwarf-greed, and dwarf-hardy cycles.
+/// SD18 dwarf-stonecunning, dwarf-greed, dwarf-hardy, and dwarf-stability cycles.
 ///
-/// Surfaces seven grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
-/// modifiers, size, speed, senses, Stonecunning, Greed, Hardy) as explicit
+/// Surfaces eight grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
+/// modifiers, size, speed, senses, Stonecunning, Greed, Hardy, Stability) as explicit
 /// `ComputationExplanation` records so the Dwarf identity is legible on the runtime
 /// path rather than left behind the generic `race.semantics.unverified` diagnostic
 /// every other non-Human race still receives.
@@ -2878,22 +2886,56 @@ fn explain_dwarf_race_seam(
         ),
     });
 
-    // Bounded honesty: seven named dimensions are now grounded (ability
-    // modifiers, size, speed, senses, Stonecunning, Greed, Hardy). This
-    // replaces the generic race.semantics.unverified diagnostic for Dwarf
-    // specifically and stays non-claim-blocking so the deterministic pilot
-    // still reports computed evidence.
+    // ----- Stability (SD18 dwarf-stability cycle) -----
+    // Bundles two distinct combat-maneuver-defense categories, both grounded
+    // honestly, mirroring the already-landed Dwarf Hardy flat racial-bonus
+    // idiom exactly (a single flat magnitude applied to two named derived-
+    // stat targets instead of two save categories):
+    //   - a +4 racial bonus to Combat Maneuver Defense when resisting a bull
+    //     rush attempt while standing on the ground
+    //     (dwarf_abilities_race.lst:26 BONUS:VAR|CMD_BullRush|4|TYPE=Racial);
+    //   - a +4 racial bonus to Combat Maneuver Defense when resisting a trip
+    //     attempt while standing on the ground (dwarf_abilities_race.lst:26
+    //     BONUS:VAR|CMD_Trip|4|TYPE=Racial).
+    // Both share the same flat magnitude, so this names only the flat
+    // CMD-bonus magnitude, not a Combat-Maneuver-Defense-total engine: no
+    // such engine exists anywhere in this codebase, so no check resolution
+    // is fabricated from this record.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.stability".to_owned(),
+        value: DWARF_STABILITY_CMD_BONUS,
+        detail: format!(
+            "Dwarf racial trait bundle — Stability: PF1 Core Dwarf grants a flat \
+             {DWARF_STABILITY_CMD_BONUS:+} racial bonus to Combat Maneuver Defense when \
+             resisting a bull rush attempt, and a flat {DWARF_STABILITY_CMD_BONUS:+} racial \
+             bonus to Combat Maneuver Defense when resisting a trip attempt, in both cases \
+             while standing on the ground (dwarf_abilities_race.lst:26 \
+             BONUS:VAR|CMD_BullRush,CMD_Trip|{DWARF_STABILITY_CMD_BONUS}|TYPE=Racial). This \
+             is a bounded flat CMD-bonus-magnitude recognition record naming the Stability \
+             identity on the deterministic pilot seam, mirroring the already-grounded Dwarf \
+             Hardy two-save-category flat-bonus idiom; no Combat-Maneuver-Defense-total \
+             engine exists anywhere in this codebase, so no check resolution is fabricated \
+             from this record"
+        ),
+    });
+
+    // Bounded honesty: eight named dimensions are now grounded (ability
+    // modifiers, size, speed, senses, Stonecunning, Greed, Hardy, Stability).
+    // This replaces the generic race.semantics.unverified diagnostic for
+    // Dwarf specifically and stays non-claim-blocking so the deterministic
+    // pilot still reports computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.dwarf.bounded_semantics".to_owned(),
         message: "Dwarf race semantics are grounded for the deterministic pilot's ability \
                   modifiers, size, speed, senses, Stonecunning (flat +2 Perception \
                   situational bonus to notice unusual stonework), Greed (flat +2 \
                   Appraise situational bonus to assess nonmagical precious-metal/gemstone \
-                  goods), and Hardy (flat +2 racial bonus on saving throws against poison, \
-                  spells, and spell-like abilities) trait bundle; the remaining PF1 Core \
-                  Dwarf racial trait surface remains unverified: Defensive Training (dodge \
-                  bonus to AC against giants), Stability (bonus to CMD against bull \
-                  rush/trip), Hatred (bonus on attack rolls against orcs and goblinoids), and \
+                  goods), Hardy (flat +2 racial bonus on saving throws against poison, \
+                  spells, and spell-like abilities), and Stability (flat +4 racial bonus to \
+                  Combat Maneuver Defense against bull rush and trip attempts while standing \
+                  on the ground) trait bundle; the remaining PF1 Core Dwarf racial trait \
+                  surface remains unverified: Defensive Training (dodge bonus to AC against \
+                  giants), Hatred (bonus on attack rolls against orcs and goblinoids), and \
                   weapon familiarity (battleaxe, heavy pick, warhammer, dwarven waraxe, \
                   dwarven urgrosh). PF1 core Dwarves gain no racial bonus feat (unlike \
                   Human), so that family is explicitly not applicable rather than silently \
