@@ -332,12 +332,18 @@ fn ranger_level10_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 12 stays unrecognized by this cycle -----
-
+// ----- Negative control: level 13 stays unrecognized by this cycle -----
+//
+// SD18 widening (cycle-2026-07-15T0900, tests/sd18_ranger_level12_widening.rs):
+// Ranger level 12 is now genuinely recognized (base attack/saves/Track all
+// rise and Camouflage is newly grounded), so this boundary control moves to
+// level 13, mirroring the exact same boundary move each of the sibling
+// classes' own level-11-to-level-12 widening cycles made for their own
+// level-11 progression tests.
 #[test]
-fn ranger_level_12_is_not_promoted_by_this_slice() {
-    let level_12 = RANGER_LEVEL11_FIXTURE.replace("class:ranger:11", "class:ranger:12");
-    let input = load(&level_12);
+fn ranger_level_13_is_not_promoted_by_this_slice() {
+    let level_13 = RANGER_LEVEL11_FIXTURE.replace("class:ranger:11", "class:ranger:13");
+    let input = load(&level_13);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -345,7 +351,7 @@ fn ranger_level_12_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")
                 || e.id.starts_with("class_feature.ranger.")),
-        "level-12 Ranger must not gain any bounded ranger chassis explanation: {:?}",
+        "level-13 Ranger must not gain any bounded ranger chassis explanation: {:?}",
         computation.explanations
     );
 }
