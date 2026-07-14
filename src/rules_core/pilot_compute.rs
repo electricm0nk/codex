@@ -3579,6 +3579,7 @@ const HALFLING_BASE_SPEED_FEET: i16 = 20;
 const HALFLING_DEX_ADJUSTMENT: i16 = 2;
 const HALFLING_STR_ADJUSTMENT: i16 = -2;
 const HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS: i16 = 2;
+const HALFLING_LUCK_ALL_SAVES_BONUS: i16 = 1;
 
 /// SD13-E2 Halfling racial trait bundle explanation seam (mirroring the
 /// Dwarf/Elf/Gnome fixed-ability-pair pattern for the sixth and final
@@ -3743,7 +3744,36 @@ fn explain_halfling_race_seam(
         ),
     });
 
-    // Bounded honesty: only the seven named dimensions are grounded. This replaces
+    // ----- Halfling Luck (flat racial saving-throw-bonus idiom, mirroring
+    // Fearless above and the Dwarf Hardy flat racial saving-throw-bonus idiom
+    // already established on this seam, applied to a broader "all saving
+    // throws" scope rather than a single named save category) -----
+    // Grounded flat +1 racial bonus on all saving throws
+    // (core_essentials/races/halfling/halfling_abilities_race.lst Halfling
+    // Luck entry — BONUS:VAR|Halfling_HalflingLuck_SaveBonus|1|TYPE=Racial).
+    // This is deliberately NOT a saving-throw-total engine: the recognized
+    // value names only the flat racial-bonus magnitude on the deterministic
+    // pilot seam, mirroring the already-grounded Dwarf Hardy / Halfling
+    // Fearless flat racial saving-throw-bonus idiom on this same seam shape.
+    // Per the corpus DESC text, this bonus explicitly stacks with Fearless
+    // (a distinct, already-grounded fear-specific save bonus).
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.halfling_luck".to_owned(),
+        value: HALFLING_LUCK_ALL_SAVES_BONUS,
+        detail: format!(
+            "Halfling racial trait bundle — Halfling Luck: PF1 Core Halfling grants a flat \
+             {HALFLING_LUCK_ALL_SAVES_BONUS:+} racial bonus on all saving throws \
+             (halfling_abilities_race.lst Halfling Luck entry — \
+             BONUS:VAR|Halfling_HalflingLuck_SaveBonus|{HALFLING_LUCK_ALL_SAVES_BONUS}|TYPE=Racial). \
+             This is a bounded flat saving-throw-bonus-magnitude recognition record naming the \
+             Halfling Luck identity on the deterministic pilot seam, mirroring the \
+             already-grounded Dwarf Hardy / Halfling Fearless flat racial saving-throw-bonus \
+             idiom; no saving-throw-total or luck-effect-resolution engine exists anywhere in \
+             this codebase, so no check resolution is fabricated from this record"
+        ),
+    });
+
+    // Bounded honesty: only the eight named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Halfling specifically
     // and stays non-claim-blocking so the deterministic pilot still reports
     // computed evidence.
@@ -3751,11 +3781,11 @@ fn explain_halfling_race_seam(
         id: "race.halfling.bounded_semantics".to_owned(),
         message: "Halfling race semantics are grounded for the deterministic pilot's ability \
                   modifiers, size, speed, senses, Keen Senses (Perception bonus), \
-                  Sure-Footed (Acrobatics/Climb bonus), and Fearless (saving-throw-vs-fear \
-                  bonus) trait bundle; the remaining PF1 Core Halfling racial trait surface \
-                  remains unverified: Halfling Luck (a luck bonus on all saving throws), and \
-                  weapon familiarity (sling and thrown weapons). PF1 core Halflings gain no \
-                  racial bonus feat (unlike Human), so that family is explicitly not applicable \
+                  Sure-Footed (Acrobatics/Climb bonus), Fearless (saving-throw-vs-fear \
+                  bonus), and Halfling Luck (all-saving-throws bonus) trait bundle; the \
+                  remaining PF1 Core Halfling racial trait surface remains unverified: weapon \
+                  familiarity (sling and thrown weapons). PF1 core Halflings gain no racial \
+                  bonus feat (unlike Human), so that family is explicitly not applicable \
                   rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
