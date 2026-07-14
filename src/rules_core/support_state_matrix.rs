@@ -477,12 +477,12 @@ const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_ba
     tests/sd18_barbarian_level11_greater_rage.rs";
 
 /// SD13-E2/SD18 dedicated proof surface for the bounded Gnome race-semantics
-/// recognition: direct computed recognition of five grounded PF1 Core Rulebook
+/// recognition: direct computed recognition of six grounded PF1 Core Rulebook
 /// Gnome racial trait dimensions (ability modifiers, size, speed, senses, Keen
-/// Senses) that stays explicitly honest about the remaining unproven Gnome
-/// family surface.
-const SD18_GNOME_KEEN_SENSES_TEST: &str =
-    "tests/sd13_gnome_race_semantics_recognition.rs + tests/sd18_gnome_keen_senses.rs";
+/// Senses, Illusion Resistance) that stays explicitly honest about the
+/// remaining unproven Gnome family surface.
+const SD18_GNOME_KEEN_SENSES_TEST: &str = "tests/sd13_gnome_race_semantics_recognition.rs + \
+    tests/sd18_gnome_keen_senses.rs + tests/sd18_gnome_illusion_resistance.rs";
 
 /// SD13-E2/SD18 dedicated proof surface for the bounded Half-Elf race-semantics
 /// recognition: direct computed recognition of five grounded PF1 Core Rulebook
@@ -833,27 +833,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.gnome.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:gnome",
-                dimension: "bounded Gnome race semantics: five grounded PF1 Core Rulebook \
+                dimension: "bounded Gnome race semantics: six grounded PF1 Core Rulebook \
                             Gnome racial trait dimensions (ability modifiers, size, speed, \
-                            senses, Keen Senses) recognized on the compute seam, with the \
-                            remaining Gnome family surface still unproven",
+                            senses, Keen Senses, Illusion Resistance) recognized on the \
+                            compute seam, with the remaining Gnome family surface still \
+                            unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD18_GNOME_KEEN_SENSES_TEST,
                 blocker_or_lossiness_note: "SD13-E2 and SD18 leave direct computed evidence \
-                    that five Gnome race-semantic families are recognized on the compute seam \
+                    that six Gnome race-semantic families are recognized on the compute seam \
                     (ability modifiers: +2 Constitution / -2 Strength; size: Small; speed: \
                     20 ft; senses: low-light vision; Keen Senses: flat +2 Perception racial \
-                    bonus), but the remaining families stay unproven: Defensive Training, \
-                    Illusion Resistance, Hatred, Gnome Magic, and weapon familiarity. PF1 core \
-                    Gnomes gain no racial bonus feat, so that family is not applicable rather \
-                    than unproven. No numeric mechanical contribution beyond the flat Keen \
-                    Senses skill-bonus magnitude is fabricated for any of the five recognized \
-                    dimensions.",
+                    bonus; Illusion Resistance: flat +2 illusion-save racial bonus), but the \
+                    remaining families stay unproven: Defensive Training, Hatred, Gnome Magic, \
+                    and weapon familiarity. PF1 core Gnomes gain no racial bonus feat, so that \
+                    family is not applicable rather than unproven. No numeric mechanical \
+                    contribution beyond the flat Keen Senses skill-bonus magnitude and the \
+                    flat Illusion Resistance save-bonus magnitude is fabricated for any of the \
+                    six recognized dimensions.",
                 next_required_uplift: "later SD18 slice grounding one or more of the \
-                    remaining Gnome families (Defensive Training, Illusion Resistance, Hatred, \
-                    Gnome Magic, weapon familiarity) as a real computed contribution",
+                    remaining Gnome families (Defensive Training, Hatred, Gnome Magic, weapon \
+                    familiarity) as a real computed contribution",
             },
             SupportStateRow {
                 row_id: "race.half_elf.bounded_semantics",
