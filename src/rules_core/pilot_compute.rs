@@ -8608,7 +8608,21 @@ const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // at levels 2/4/6/8 (the advanced-talent unlock is a list expansion of that
 // feature, not a new pillar), so no new pillar is grounded at level 10
 // either.
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 10;
+// SD18 widening (cycle-2026-07-14T2000, tests/sd18_rogue_level11_sneak_attack.rs):
+// widens the gate to level 11, verified independently against d20pfsrd and
+// the Archives of Nethys aonprd.com mirror (both agree byte-for-byte): base
+// attack genuinely rises to +8 (11 * 3 / 4) while all three base saves stay
+// numerically unchanged (Fortitude/Will 11/3 = 3, Reflex 11/2+2 = 7,
+// integer-division coincidences with level 10); the level-11 "Special"
+// column reads only "Sneak attack +6d6" — the pre-existing sneak-attack
+// die-count formula ((level + 1) / 2) genuinely rises to 6 (i.e. 6d6), up
+// from 5 (5d6) at level 10, via the same formula, not a new record; Trap
+// Sense stays +3 (11/3, next rise at 12th) and Trapfinding stays 5
+// (max(11/2, 1), a coincidence); Evasion, Uncanny Dodge, and Improved
+// Uncanny Dodge all stay granted, not re-derived; level 11 is NOT a
+// rogue-talent level (talents land at 2/4/6/8/10/12), so no new talent
+// pillar is grounded or fabricated either.
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 11;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
