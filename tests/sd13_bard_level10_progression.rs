@@ -276,17 +276,18 @@ fn bard_level9_truth_is_unchanged_by_this_slice() {
 // ----- Negative control: level 12 stays unrecognized by this slice -----
 //
 // This boundary was originally level 11 (the tranche-2 ceiling at the time
-// this test was written); the SD18 bard-level11-inspire-widening cycle
-// widened `supported_bard_level` to `1..=11` (see
-// `tests/sd18_bard_level11_inspire_widening.rs`), so the correct negative
-// control boundary for this file's own (level-10-era) baseline is now
-// level 12, mirroring exactly how the Barbarian level-11 cycle moved its
-// own sibling negative control's boundary up by one level.
+// this test was written), then moved to level 12 by the SD18
+// bard-level11-inspire-widening cycle. The SD18 bard-level12-widening cycle
+// widened `supported_bard_level` again to `1..=12` (see
+// `tests/sd18_bard_level12_widening.rs`), so the correct negative control
+// boundary for this file's own (level-10-era) baseline is now level 13,
+// mirroring exactly how the Barbarian level-12 cycle moved its own sibling
+// negative control's boundary up by one level.
 
 #[test]
-fn bard_level_12_is_not_promoted_by_this_slice() {
-    let level_12 = BARD_LEVEL10_FIXTURE.replace("class:bard:10", "class:bard:12");
-    let input = load(&level_12);
+fn bard_level_13_is_not_promoted_by_this_slice() {
+    let level_13 = BARD_LEVEL10_FIXTURE.replace("class:bard:10", "class:bard:13");
+    let input = load(&level_13);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -295,7 +296,7 @@ fn bard_level_12_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard"),
-        "level-12 Bard must not gain any bounded bard explanation: {:?}",
+        "level-13 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
 }

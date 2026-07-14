@@ -246,7 +246,11 @@ fn bard_level4_does_not_fabricate_a_new_class_feature() {
     // record, not a "Special"-column class feature (the level-4 Special
     // column stays blank; the level-4 row's 2nd-level spells-per-day column
     // is where the value legitimately rises to 2), so listing it here keeps
-    // this test accurate without weakening the no-new-class-feature claim.
+    // this test accurate without weakening the no-new-class-feature claim. A
+    // still further SD18 slice (tests/sd18_bard_level12_widening.rs)
+    // introduced "class_feature.bard.soothing_performance", the same
+    // fires-at-every-level, correctly-absent-below-its-gate idiom as
+    // LORE_MASTER_ID, so it is listed here too.
     let known_bard_ids = [
         "class_chassis.spell_baseline.bard",
         "class_chassis.bard.base_attack_bonus",
@@ -261,6 +265,7 @@ fn bard_level4_does_not_fabricate_a_new_class_feature() {
         WELL_VERSED_ID,
         INSPIRE_COMPETENCE_ID,
         LORE_MASTER_ID,
+        "class_feature.bard.soothing_performance",
         "class_chassis.bard.spontaneous.spell_level_access",
         // The base_spells_per_day family (a further SD13-E5 slice): literal
         // spells-per-day table records, not "Special"-column class features.
