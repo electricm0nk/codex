@@ -2694,16 +2694,24 @@ const DWARF_HARDY_SAVE_BONUS: i16 = 2;
 /// categories share the same flat +4 magnitude, mirroring the already-
 /// grounded Dwarf Hardy two-save-category flat-bonus idiom exactly.
 const DWARF_STABILITY_CMD_BONUS: i16 = 4;
+/// PF1 Core Rulebook Dwarf Defensive Training flat racial dodge-bonus-to-AC
+/// magnitude against monsters of the giant subtype (verified against
+/// `dwarf_abilities_race.lst:22`'s
+/// `BONUS:VAR|RacialDefensiveTrainingBonus|4`). A single flat magnitude
+/// applied to a single named derived-stat target, mirroring the already-
+/// grounded Dwarf Stability flat-bonus idiom exactly.
+const DWARF_DEFENSIVE_TRAINING_DODGE_BONUS: i16 = 4;
 
 /// SD13-E2 Dwarf racial trait bundle explanation seam (mirroring the SD13-E6-F3a
 /// Human trait bundle pattern for the first non-Human core race), widened by the
-/// SD18 dwarf-stonecunning, dwarf-greed, dwarf-hardy, and dwarf-stability cycles.
+/// SD18 dwarf-stonecunning, dwarf-greed, dwarf-hardy, dwarf-stability, and
+/// dwarf-defensive-training cycles.
 ///
-/// Surfaces eight grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
-/// modifiers, size, speed, senses, Stonecunning, Greed, Hardy, Stability) as explicit
-/// `ComputationExplanation` records so the Dwarf identity is legible on the runtime
-/// path rather than left behind the generic `race.semantics.unverified` diagnostic
-/// every other non-Human race still receives.
+/// Surfaces nine grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
+/// modifiers, size, speed, senses, Stonecunning, Greed, Hardy, Stability,
+/// Defensive Training) as explicit `ComputationExplanation` records so the Dwarf
+/// identity is legible on the runtime path rather than left behind the generic
+/// `race.semantics.unverified` diagnostic every other non-Human race still receives.
 ///
 /// This function:
 ///   - runs only when `race_id == race:dwarf`; every other race is unaffected
@@ -2714,14 +2722,14 @@ const DWARF_STABILITY_CMD_BONUS: i16 = 4;
 ///     (the chosen Constitution/Charisma scores are understood to already reflect
 ///     the fixed +2/-2 racial adjustment; no arithmetic is performed on this seam),
 ///     the size/senses records carry the grounded source value as identity only, and
-///     the Stonecunning, Greed, and Hardy records each name only their own flat +2
-///     bonus magnitude (no Perception-check-total, Appraise-check-total,
-///     stonework-detection, goods-valuation, or saving-throw-total engine exists),
+///     the Stonecunning, Greed, Hardy, Stability, and Defensive Training records each
+///     name only their own flat bonus magnitude (no Perception-check-total,
+///     Appraise-check-total, stonework-detection, goods-valuation, saving-throw-total,
+///     Combat-Maneuver-Defense-total, or Armor-Class-total engine exists),
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Dwarf-specific `race.dwarf.bounded_semantics` note naming the still-unproven
-///     families explicitly (Defensive Training, Stability,
-///     Hatred, weapon familiarity, and the explicit absence of any Dwarf racial
-///     bonus feat),
+///     families explicitly (Hatred, weapon familiarity, and the explicit absence of
+///     any Dwarf racial bonus feat),
 ///   - is bounded to race recognition only; it deliberately grounds no Dwarf
 ///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
 fn explain_dwarf_race_seam(
@@ -2919,11 +2927,37 @@ fn explain_dwarf_race_seam(
         ),
     });
 
-    // Bounded honesty: eight named dimensions are now grounded (ability
-    // modifiers, size, speed, senses, Stonecunning, Greed, Hardy, Stability).
-    // This replaces the generic race.semantics.unverified diagnostic for
-    // Dwarf specifically and stays non-claim-blocking so the deterministic
-    // pilot still reports computed evidence.
+    // ----- Defensive Training (SD18 dwarf-defensive-training cycle) -----
+    // Grounded flat +4 dodge bonus to Armor Class against monsters of the
+    // giant subtype (core_essentials/races/dwarf/dwarf_abilities_race.lst:22
+    // BONUS:VAR|RacialDefensiveTrainingBonus|4). Mirrors the already-grounded
+    // Dwarf Stability flat-bonus idiom on this same seam (a single flat
+    // magnitude applied to a single named derived-stat target): no
+    // Armor-Class-total or giant-subtype-detection engine exists anywhere in
+    // this codebase, so this names only the flat dodge-bonus magnitude, not
+    // a check-execution engine.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.defensive_training".to_owned(),
+        value: DWARF_DEFENSIVE_TRAINING_DODGE_BONUS,
+        detail: format!(
+            "Dwarf racial trait bundle — Defensive Training: PF1 Core Dwarf grants a flat \
+             {DWARF_DEFENSIVE_TRAINING_DODGE_BONUS:+} dodge bonus to Armor Class against \
+             monsters of the giant subtype (dwarf_abilities_race.lst:22 \
+             BONUS:VAR|RacialDefensiveTrainingBonus|{DWARF_DEFENSIVE_TRAINING_DODGE_BONUS}). \
+             This is a bounded flat dodge-bonus-magnitude recognition record naming the \
+             Defensive Training identity on the deterministic pilot seam, mirroring the \
+             already-grounded Dwarf Stability flat-bonus idiom; no Armor-Class-total or \
+             giant-subtype-detection engine exists anywhere in this codebase, so no check \
+             resolution is fabricated from this record"
+        ),
+    });
+
+    // Bounded honesty: nine named dimensions are now grounded (ability
+    // modifiers, size, speed, senses, Stonecunning, Greed, Hardy, Stability,
+    // Defensive Training). This replaces the generic
+    // race.semantics.unverified diagnostic for Dwarf specifically and stays
+    // non-claim-blocking so the deterministic pilot still reports computed
+    // evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.dwarf.bounded_semantics".to_owned(),
         message: "Dwarf race semantics are grounded for the deterministic pilot's ability \
@@ -2931,15 +2965,15 @@ fn explain_dwarf_race_seam(
                   situational bonus to notice unusual stonework), Greed (flat +2 \
                   Appraise situational bonus to assess nonmagical precious-metal/gemstone \
                   goods), Hardy (flat +2 racial bonus on saving throws against poison, \
-                  spells, and spell-like abilities), and Stability (flat +4 racial bonus to \
+                  spells, and spell-like abilities), Stability (flat +4 racial bonus to \
                   Combat Maneuver Defense against bull rush and trip attempts while standing \
-                  on the ground) trait bundle; the remaining PF1 Core Dwarf racial trait \
-                  surface remains unverified: Defensive Training (dodge bonus to AC against \
-                  giants), Hatred (bonus on attack rolls against orcs and goblinoids), and \
-                  weapon familiarity (battleaxe, heavy pick, warhammer, dwarven waraxe, \
-                  dwarven urgrosh). PF1 core Dwarves gain no racial bonus feat (unlike \
-                  Human), so that family is explicitly not applicable rather than silently \
-                  omitted."
+                  on the ground), and Defensive Training (flat +4 dodge bonus to Armor Class \
+                  against monsters of the giant subtype) trait bundle; the remaining PF1 \
+                  Core Dwarf racial trait surface remains unverified: Hatred (bonus on \
+                  attack rolls against orcs and goblinoids), and weapon familiarity \
+                  (battleaxe, heavy pick, warhammer, dwarven waraxe, dwarven urgrosh). PF1 \
+                  core Dwarves gain no racial bonus feat (unlike Human), so that family is \
+                  explicitly not applicable rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
     });
