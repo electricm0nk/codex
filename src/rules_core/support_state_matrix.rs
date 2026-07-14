@@ -669,7 +669,8 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
     tests/sd13_wizard_level4_progression.rs + tests/sd13_wizard_level5_progression.rs + \
     tests/sd13_wizard_level6_progression.rs + tests/sd13_wizard_level7_progression.rs + \
     tests/sd13_wizard_level8_progression.rs + tests/sd13_wizard_level9_progression.rs + \
-    tests/sd13_wizard_level10_progression.rs + tests/sd18_wizard_level11_widening.rs";
+    tests/sd13_wizard_level10_progression.rs + tests/sd18_wizard_level11_widening.rs + \
+    tests/sd18_wizard_level12_widening.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -3899,18 +3900,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // magnitude genuinely rises to 4 (max(8/2, 1) = 4); the level-8
                 // "Special" column is genuinely blank, so no new pillar is added.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1/level-11 prepared arcane spell baseline, with base \
+                            Wizard level-1/level-12 prepared arcane spell baseline, with base \
                             attack bonus, base save progression, Scribe Scroll, the school \
                             specialization choice, the specialist-bonus-slot flat count (which \
                             becomes 2 at level 3, stays 2 at level 4, becomes 3 at level 5, stays \
                             3 at level 6, becomes 4 at level 7, stays 4 at level 8, becomes \
-                            5 at level 9, stays 5 at level 10, and becomes 6 at level 11), and the \
+                            5 at level 9, stays 5 at level 10, becomes 6 at level 11, and stays 6 \
+                            at level 12), and the \
                             Intense Spells / \
                             Force Missile school-power flat magnitudes (Intense Spells becomes 2 \
                             at level 4, stays 2 at level 5, becomes 3 at level 6, stays 3 at \
                             level 7, becomes 4 at level 8, stays 4 at level 9, becomes 5 at \
-                            level 10, and stays 5 at level 11) grounded for \
-                            real through level 11, \
+                            level 10, stays 5 at level 11, and becomes 6 at level 12) grounded for \
+                            real through level 12, \
                             and the school-power \
                             execution machinery, the opposed-school-cost burden, the level-5/ \
                             level-10 bonus-feat selection/execution, and the prepared spellbook / \
@@ -4135,7 +4137,35 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     \"Special\" column is genuinely blank (verified independently against both \
                     sources — the Wizard's bonus feats land only at levels 5/10/15/20), so no new \
                     pillar record is grounded at level 11 beyond widening the specialist-bonus- \
-                    slot pillar to its new value. The row is \
+                    slot pillar to its new value. AND a further SD18 slice widens the \
+                    level-range gate again (supported_wizard_level, 1..=12) and extends every one \
+                    of the formulas above to level 12 via the same formulas, without \
+                    re-derivation, verified independently against the PF1 Core Rulebook Wizard \
+                    class table (d20pfsrd and the Archives of Nethys aonprd.com mirror, which \
+                    agree byte-for-byte): UNLIKE level 11 (where base attack and all three base \
+                    saves stayed numerically identical to level 10), level 12 base attack \
+                    GENUINELY RISES to +6 (12/2 = 6) and all three base saves GENUINELY RISE too \
+                    (poor Fortitude/Reflex 12/3 = 4, good Will 12/2+2 = 8), mirroring the \
+                    Sorcerer level-11-then-level-12 pattern; the specialist bonus slot flat count \
+                    STAYS at 6, since the raw spells-per-day table's level-12 row is \
+                    \"4/4/4/4/3/3/2\" — the 6th-level column rises from 1 to 2 but there is still \
+                    no 7th-level column at all, 7th-level wizard spells not becoming accessible \
+                    until level 13, a threshold stasis checked rather than assumed; Intense \
+                    Spells' bonus-damage magnitude GENUINELY RISES to 6 (max(12/2, 1) = 6, up \
+                    from 5 at level 11); Force Missile's pool is level-independent and unchanged; \
+                    Scribe Scroll and the specialization choice stay recognized as already-held \
+                    grants; the level-12 \"Special\" column is genuinely blank on both primary \
+                    sources (the Wizard's bonus feats land only at levels 5/10/15/20), so no new \
+                    pillar record is grounded at level 12 beyond the arithmetic pillars above. \
+                    This cycle independently re-verified (rather than assumed from the \
+                    immediately-preceding Sorcerer level-12 cycle's outcome) that Wizard's own \
+                    live class_spell.wizard.prepared_spellbook.unsupported claim-blocker is \
+                    pushed unconditionally alongside the level's other explanations in \
+                    explain_wizard_level1_prepared_spell_baseline — it does not gate \
+                    supported_wizard_level or MAX_SUPPORTED_WIZARD_LEVEL, exactly mirroring \
+                    every sibling class's own remaining-burden diagnostics (e.g. Sorcerer's \
+                    class_spell.sorcerer.spontaneous.unsupported), so it marks incomplete \
+                    coverage without blocking this arithmetic widening. The row is \
                     Partial, not Supported: neither school power's \
                     execution machinery is implemented (no evocation spell-damage application for \
                     Intense Spells, no force-missile casting execution / 1d4 damage roll / \
@@ -4146,11 +4176,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     and the \
                     prepared spell posture burden (spellbook content, spells prepared per day, \
                     spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
-                    still entirely unproven. No spell math is fabricated and no Wizard level 12+ is \
+                    still entirely unproven. No spell math is fabricated and no Wizard level 13+ is \
                     proven",
                 next_required_uplift: "SD13-E5+ Wizard school-power execution and opposed-school \
                     preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-12+ progression (widening the now-grounded base \
+                    posture slice, then level-13+ progression (widening the now-grounded base \
                     attack/base save formulas)",
             },
             // ----- Interaction rows (2) -----
