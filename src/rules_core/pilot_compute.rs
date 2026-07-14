@@ -3229,17 +3229,32 @@ fn explain_gnome_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the six named dimensions are grounded. This replaces
+    // ----- Defensive Training -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.defensive_training".to_owned(),
+        value: 4,
+        detail: "Gnome racial trait bundle — Defensive Training: PF1 Core Gnome grants a flat \
+                  +4 dodge bonus to AC against monsters of the giant subtype \
+                  (core_essentials/races/gnome/gnome_abilities_race.lst Defensive Training \
+                  entry — BONUS:VAR|RacialDefensiveTrainingBonus|4). This is a bounded \
+                  recognition record naming only the flat racial-bonus magnitude on the \
+                  deterministic pilot seam, not an AC-total engine and not a \
+                  giant-subtype-detection engine (no \"is the target a giant\" resolution is \
+                  fabricated)."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the seven named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Gnome specifically and
     // stays non-claim-blocking so the deterministic pilot still reports computed
     // evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.gnome.bounded_semantics".to_owned(),
         message: "Gnome race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, senses, Keen Senses (Perception bonus), and Illusion \
-                  Resistance (illusion-save bonus) trait bundle; the remaining PF1 Core Gnome \
-                  racial trait surface remains unverified: Defensive Training (a dodge bonus to \
-                  AC against giants), Hatred (a bonus on attack rolls against reptilian \
+                  modifiers, size, speed, senses, Keen Senses (Perception bonus), Illusion \
+                  Resistance (illusion-save bonus), and Defensive Training (dodge bonus to AC \
+                  against giants) trait bundle; the remaining PF1 Core Gnome racial trait \
+                  surface remains unverified: Hatred (a bonus on attack rolls against reptilian \
                   humanoids and goblinoids), Gnome Magic (spell-like abilities keyed to a high \
                   Charisma), and weapon familiarity (gnome hooked hammer). PF1 core Gnomes gain \
                   no racial bonus feat (unlike Human), so that family is explicitly not \
