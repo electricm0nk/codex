@@ -238,12 +238,17 @@ fn sorcerer_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(will.value, 6, "Sorcerer level 9 good Will must stay 6");
 }
 
-// ----- Negative control: level 10 stays unrecognized by this slice -----
+// ----- Negative control: level 12 stays unrecognized by this slice -----
+//
+// SD18 widened Sorcerer support to level 11 (tests/sd18_sorcerer_level11_widening.rs),
+// so this boundary moved from 11 to 12, mirroring the exact same boundary move every
+// other Barbarian/Bard/Cleric/Druid/Fighter/Monk/Paladin/Rogue/Wizard level-11
+// widening cycle made to its own sibling level-10 progression test.
 
 #[test]
-fn sorcerer_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = SORCERER_LEVEL10_FIXTURE.replace("class:sorcerer:10", "class:sorcerer:11");
-    let input = load(&level_11);
+fn sorcerer_level_12_is_not_promoted_by_this_slice() {
+    let level_12 = SORCERER_LEVEL10_FIXTURE.replace("class:sorcerer:10", "class:sorcerer:12");
+    let input = load(&level_12);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -251,7 +256,7 @@ fn sorcerer_level_11_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.sorcerer.")
                 || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-11 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+        "level-12 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
         computation.explanations
     );
 }

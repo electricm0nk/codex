@@ -451,7 +451,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_spell_save_dcs.rs + \
     tests/sd13_sorcerer_spells_known_counts.rs + \
     tests/sd13_sorcerer_bonus_spells.rs + \
-    tests/sd13_sorcerer_total_spells_per_day.rs";
+    tests/sd13_sorcerer_total_spells_per_day.rs + \
+    tests/sd18_sorcerer_level11_widening.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -3233,7 +3234,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Sorcerer level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
-                            level-8/level-9/level-10 \
+                            level-8/level-9/level-10/level-11 \
                             spell baseline, with base attack bonus, base save progression, Eschew \
                             Materials, the canonical bloodline choice recognition, and the \
                             Arcane bloodline's class-skill choice (a player's choice of any one \
@@ -3492,11 +3493,37 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     arithmetic end-to-end — a dedicated test raises the fixture Charisma \
                     and the 4th-level total rises; counts only, no spontaneous-casting \
                     execution, slot consumption, or tracking; the blocker now defers \
-                    exactly that execution plus the which-spells selection). No \
-                    spell math is fabricated and no Sorcerer level 11+ is proven",
+                    exactly that execution plus the which-spells selection) — AND a further \
+                    SD18 slice widens the level-range gate again \
+                    (supported_sorcerer_level, 1..=11) and extends every one of the formulas \
+                    above to level 11 via the same formula, without re-derivation, verified \
+                    independently against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror: level 11 base attack bonus and all three base saves stay \
+                    numerically IDENTICAL to level 10 (11/2=5, 11/3=3, 11/3=3, 11/2+2=7, \
+                    integer-division coincidences); the bloodline choice and bloodline \
+                    class-skill choice recognitions are not level-gated, so both still fire \
+                    at level 11 for the same fixture selections; the level-11 \"Special\" \
+                    column reads only \"Bloodline spell\" (verified independently against \
+                    both primary sources, checked rather than assumed away) — the \
+                    sorcerer's fifth bloodline spell grant, bloodline-specific and not \
+                    flat/identity-shaped, so this slice grounds no new pillar for level 11 \
+                    either, mirroring exactly how the level-3/5/7/9 bloodline power/spell \
+                    entries were left unproven; the already-grounded base spells-per-day \
+                    table genuinely widens (6/6/6/5/3 -> 6/6/6/6/4, the 4th- and 5th-level \
+                    columns each rising by one) and the already-grounded base spells-known \
+                    table genuinely widens (9/5/4/3/2/1 -> 9/5/5/4/3/2, the 2nd/3rd/4th/\
+                    5th-level columns each rising by one), with the 6th-level column \
+                    staying inaccessible on both tables through level 11 (it first arrives \
+                    at level 12); the spell-save-DC and Charisma-bonus-spell formulas widen \
+                    automatically over the unchanged access ladder (still 5, unchanged from \
+                    level 10). The row is \
+                    Partial, not Supported: the Arcane Bond / bloodline progression burden \
+                    and the spontaneous which-spells-known / casting-execution burden remain \
+                    named and unproven, unchanged from level 10. No \
+                    spell math is fabricated and no Sorcerer level 12+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-11+ progression (widening the now-grounded base attack/base save \
+                    level-12+ progression (widening the now-grounded base attack/base save \
                     formulas)",
             },
             SupportStateRow {

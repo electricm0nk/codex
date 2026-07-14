@@ -811,8 +811,20 @@ const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
 // pillars to level 10 via the same formulas (base attack genuinely rises to
 // +5 and good Will genuinely rises to +7, while poor Fortitude/Reflex stay
 // +3, integer-division coincidences).
+//
+// A further SD18 slice widens the gate again to level 11 (verified
+// independently against d20pfsrd and the Archives of Nethys aonprd.com
+// mirror): level 11 base attack bonus and all three base saves stay
+// numerically IDENTICAL to level 10 (`11/2=5`, `11/3=3`, `11/3=3`,
+// `11/2+2=7`, integer-division coincidences), the level-11 "Special" column
+// reads only "Bloodline spell" (bloodline-specific, left unproven,
+// mirroring levels 3/5/7/9), and the already-grounded spells-per-day and
+// spells-known table lookups both genuinely widen at level 11 (per-day
+// `6/6/6/5/3` -> `6/6/6/6/4`; known `9/5/4/3/2/1` -> `9/5/5/4/3/2`), with
+// the 6th-level column staying inaccessible at level 11 (arrives at level
+// 12) on both tables.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 10;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 11;
 
 /// The sorcerer level at which 2nd-level sorcerer spells first become
 /// available, verified against the raw PF1 Core Rulebook Sorcerer
@@ -9604,8 +9616,13 @@ fn explain_sorcerer_level1_spell_baseline(
     // legacy.aonprd.com): level 1 "3/—/—/—/—", level 2 "4/—/—/—/—", level
     // 3 "5/—/—/—/—", level 4 "6/3/—/—/—", level 5 "6/4/—/—/—", level 6
     // "6/5/3/—/—", level 7 "6/6/4/—/—", level 8 "6/6/5/3/—", level 9
-    // "6/6/6/4/—", level 10 "6/6/6/5/3". Like the Bard and unlike the
-    // Paladin/Ranger, there are NO "0" entries at levels 1-10; every
+    // "6/6/6/4/—", level 10 "6/6/6/5/3", level 11 "6/6/6/6/4" (SD18 widening,
+    // verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror: the 4th-level column rises from 5 to 6 and the
+    // 5th-level column rises from 3 to 4; the 6th-level column stays "—"
+    // through level 11 — it first arrives at level 12). Like the Bard and
+    // unlike the
+    // Paladin/Ranger, there are NO "0" entries at levels 1-11; every
     // accessible column carries a positive base count. Inaccessible spell
     // levels ("—" columns) get no record at all. Only the base counts are
     // grounded: bonus spells per day from a high Charisma are never
@@ -9621,6 +9638,7 @@ fn explain_sorcerer_level1_spell_baseline(
         8 => [Some(6), Some(6), Some(5), Some(3), None],
         9 => [Some(6), Some(6), Some(6), Some(4), None],
         10 => [Some(6), Some(6), Some(6), Some(5), Some(3)],
+        11 => [Some(6), Some(6), Some(6), Some(6), Some(4)],
         _ => [None, None, None, None, None],
     };
     for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
@@ -9682,14 +9700,19 @@ fn explain_sorcerer_level1_spell_baseline(
     // legacy.aonprd.com): level 1 "4/2/—/—/—/—", level 2 "5/2/—/—/—/—",
     // level 3 "5/3/—/—/—/—", level 4 "6/3/1/—/—/—", level 5 "6/4/2/—/—/—",
     // level 6 "7/4/2/1/—/—", level 7 "7/5/3/2/—/—", level 8 "8/5/3/2/1/—",
-    // level 9 "8/5/4/3/2/—", level 10 "9/5/4/3/2/1" (0th through 5th spell
-    // level). The known table INCLUDES the 0th level (cantrips are "spells
+    // level 9 "8/5/4/3/2/—", level 10 "9/5/4/3/2/1", level 11 "9/5/5/4/3/2"
+    // (0th through 5th spell level; the level-11 row is the SD18 widening,
+    // verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror: the 2nd/3rd/4th/5th-level columns each rise by one
+    // over level 10's row, while the 0th and 1st columns stay unchanged and
+    // no new 6th-level column appears — it first arrives at level 12). The
+    // known table INCLUDES the 0th level (cantrips are "spells
     // known" only), and its new-spell-level cadence matches the grounded
     // per-day access ladder exactly (2nd at 4, 3rd at 6, 4th at 8, 5th at
     // 10 — checked rather than assumed). Only the known COUNTS are
     // grounded: the selection of WHICH spells are known is never computed,
-    // and the 3rd/5th/7th-level bloodline bonus spells are part of the
-    // still-unproven bloodline progression burden, not this table.
+    // and the 3rd/5th/7th/9th/11th-level bloodline bonus spells are part of
+    // the still-unproven bloodline progression burden, not this table.
     let sorcerer_spells_known: [Option<i16>; 6] = match level {
         1 => [Some(4), Some(2), None, None, None, None],
         2 => [Some(5), Some(2), None, None, None, None],
@@ -9701,6 +9724,7 @@ fn explain_sorcerer_level1_spell_baseline(
         8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None],
         9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None],
         10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1)],
+        11 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2)],
         _ => [None, None, None, None, None, None],
     };
     for (spell_level, known_count) in sorcerer_spells_known.iter().enumerate() {
