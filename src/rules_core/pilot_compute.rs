@@ -9121,7 +9121,26 @@ const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // column, since Trapfinding's own formula is independent of it); Evasion,
 // Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not
 // re-derived.
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 12;
+// SD18 widening (cycle-2026-07-15T1100, tests/sd18_rogue_level13_widening.rs):
+// widens the gate to level 13, the first §3.2 level-13 widening attempted
+// across any of the 11 core classes (all 11 landed level 12 as of
+// cycle-2026-07-14T2244), verified independently against d20pfsrd and the
+// Archives of Nethys aonprd.com mirror (both agree byte-for-byte): base
+// attack STAYS +9 (13 * 3 / 4, an integer-division coincidence with level
+// 12) and all three base saves also STAY unchanged (Fortitude/Will 13/3 =
+// 4, Reflex 13/2+2 = 8); the level-13 "Special" column reads only "Sneak
+// attack +7d6" — a tier-rise on the already-grounded sneak-attack die-count
+// formula ((level + 1) / 2), which genuinely rises to 7 (7d6), up from 6
+// (6d6) at level 12, via the same formula, not a new record; Trap Sense
+// stays +4 (13/3, next rise at level 15) and Trapfinding stays 6
+// (max(13/2, 1), unchanged from level 12); Evasion, Uncanny Dodge, and
+// Improved Uncanny Dodge all stay granted, not re-derived; level 13 is NOT
+// a rogue-talent level (talents land at 2/4/6/8/10/12/14...), so no seventh
+// talent choice-slot record is grounded or fabricated either. This is the
+// cleanest possible widening shape: the ONLY value that genuinely changes
+// is the sneak-attack die count, entirely through the pre-existing formula
+// — zero new record types, zero new named pillars, zero new choice slots.
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 13;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
