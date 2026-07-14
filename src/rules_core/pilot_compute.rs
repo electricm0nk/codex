@@ -9001,7 +9001,25 @@ const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // Uncanny Dodge all stay granted, not re-derived; level 11 is NOT a
 // rogue-talent level (talents land at 2/4/6/8/10/12), so no new talent
 // pillar is grounded or fabricated either.
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 11;
+// SD18 widening (cycle-2026-07-15T0800, tests/sd18_rogue_level12_widening.rs):
+// widens the gate to level 12, verified independently against d20pfsrd and
+// the Archives of Nethys aonprd.com mirror (both agree byte-for-byte): base
+// attack genuinely rises to +9 (12 * 3 / 4) and all three base saves
+// genuinely rise too (Fortitude/Will 12/3 = 4, Reflex 12/2+2 = 8, up from
+// 3/3/7 at level 11); the level-12 "Special" column reads "Rogue talent,
+// trap sense +4" — Trap Sense genuinely rises to +4 (12/3) via the
+// pre-existing formula, not a new record, and Rogue Talent is the SIXTH
+// numbered choice slot (talents land at 2/4/6/8/10/12), surfaced via the
+// same open-ended, non-validated raw-string idiom already proven at slots
+// 1-5 (see ROGUE_SIXTH_TALENT_GRANT_LEVEL / ROGUE_SIXTH_TALENT_CHOICE_ID
+// below); sneak attack stays 6d6 ((12 + 1) / 2, an integer-division
+// coincidence with level 11, next rise at level 13) but Trapfinding
+// genuinely rises to 6 (max(12/2, 1), up from 5 at level 11, via the
+// pre-existing formula — this rise is not named in the level-12 "Special"
+// column, since Trapfinding's own formula is independent of it); Evasion,
+// Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not
+// re-derived.
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 12;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
@@ -9522,10 +9540,16 @@ fn explain_rogue_level1_chassis(
     // text), each the same open-ended +0 recognition. With these the full
     // five-slot count at the tranche ceiling is recognized; the talent
     // tree's effects stay the named new-subsystem burden.
-    let additional_talent_slots: [(u8, u8, &str); 3] = [
+    // SD18 widening (cycle-2026-07-15T0800, tests/sd18_rogue_level12_widening.rs):
+    // slot 6, gated to rogue level 12 (the level-12 "Special" column's
+    // "Rogue talent" entry, verified independently against both primary
+    // sources), the same open-ended +0 recognition idiom — no talent-list
+    // validation, no talent-effect engine.
+    let additional_talent_slots: [(u8, u8, &str); 4] = [
         (3, 6, "choice:rogue_talent_3"),
         (4, 8, "choice:rogue_talent_4"),
         (5, 10, "choice:rogue_talent_5"),
+        (6, 12, "choice:rogue_talent_6"),
     ];
     for (slot_number, grant_level, choice_id) in additional_talent_slots {
         if level < grant_level {

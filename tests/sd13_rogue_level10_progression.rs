@@ -237,18 +237,21 @@ fn rogue_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(reflex.value, 6, "Rogue level 9 good Reflex must stay 6");
 }
 
-// ----- Negative control: level 12 stays unrecognized by this slice -----
+// ----- Negative control: level 13 stays unrecognized by this slice -----
 //
 // SD18 widening (cycle-2026-07-14T2000, tests/sd18_rogue_level11_sneak_attack.rs):
 // Rogue level 11 is now genuinely recognized (base attack bonus and sneak
-// attack die count both rise), so this boundary control moves to level 12,
+// attack die count both rise), so this boundary control moved to level 12,
 // mirroring the exact same boundary move each of the Barbarian/Bard/Cleric/
 // Druid/Fighter/Monk/Paladin/Wizard level-11 widening cycles made for their
-// own sibling level-10 progression tests.
+// own sibling level-10 progression tests. A further SD18 widening
+// (cycle-2026-07-15T0800, tests/sd18_rogue_level12_widening.rs) now
+// genuinely recognizes level 12 too, so this boundary control moves again,
+// to level 13.
 #[test]
-fn rogue_level_12_is_not_promoted_by_this_slice() {
-    let level_12 = ROGUE_LEVEL10_FIXTURE.replace("class:rogue:10", "class:rogue:12");
-    let input = load(&level_12);
+fn rogue_level_13_is_not_promoted_by_this_slice() {
+    let level_13 = ROGUE_LEVEL10_FIXTURE.replace("class:rogue:10", "class:rogue:13");
+    let input = load(&level_13);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -256,7 +259,7 @@ fn rogue_level_12_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.rogue.")
                 || e.id.starts_with("class_feature.rogue.")),
-        "level-12 Rogue must not gain any bounded rogue explanation: {:?}",
+        "level-13 Rogue must not gain any bounded rogue explanation: {:?}",
         computation.explanations
     );
 }
