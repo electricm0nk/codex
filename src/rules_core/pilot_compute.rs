@@ -1293,7 +1293,26 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // open-ended metamagic/item-creation/Spell-Mastery choice already left
 // named-but-unproven at 5th level, not a new type of class feature, so no
 // new pillar record is grounded at level 10.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 10;
+//
+// A further SD18 slice (the first §3.2 landing for Wizard beyond the SD13
+// tranche ceiling) widens the gate again to level 11
+// (`MAX_SUPPORTED_WIZARD_LEVEL = 11`): base attack and all three base saves
+// stay numerically IDENTICAL to level 10 (`11/2 = 5`, `11/3 = 3`,
+// `11/2+2 = 7`, integer-division coincidences, re-verified rather than
+// assumed); the specialist bonus slot flat count GENUINELY RISES to 6, since
+// the raw spells-per-day table's level-11 row is "4/4/4/4/3/2/1" — the first
+// non-"—" 6th-level column, up from the level-10 row "4/4/4/3/3/2" whose
+// 6th-level column is still "—" (verified independently against both
+// primary sources, d20pfsrd and the Archives of Nethys aonprd.com mirror,
+// checked rather than assumed) — so a level-11 specialist wizard casts
+// 6th-level spells for the first time; Intense Spells' bonus-damage
+// magnitude stays 5 (`max(11/2, 1) = 5`, another integer-division
+// coincidence); Force Missile's pool is level-independent and unchanged; the
+// level-11 "Special" column is genuinely blank (verified independently
+// against both sources — the Wizard's bonus feats land only at levels
+// 5/10/15/20), so no new pillar record is grounded at level 11 beyond
+// widening the specialist-bonus-slot pillar to its new value.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 11;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -1346,6 +1365,14 @@ const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_5: i16 = 3;
 const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7: i16 = 4;
 const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_9: i16 = 5;
 
+/// SD18 level-11 widening: a level-11 wizard casts 6th-level spells for the first
+/// time (verified independently against both primary sources' raw Wizard
+/// spells-per-day table rows: level 10 shows "4/4/4/3/3/2", level 11 shows
+/// "4/4/4/4/3/2/1" — the first non-"—" 6th-level column), so a specialist wizard now
+/// gains one bonus slot of EACH spell level she can cast, 1st through 6th, for a flat
+/// count of 6, up from 5 at levels 9-10.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_11: i16 = 6;
+
 /// PF1 Core Rulebook Wizard spells-per-day table: the wizard class level at which
 /// 2nd-level wizard spells first become available (verified independently against
 /// both primary sources: level 1-2 wizards cast only 1st-level spells; level 3 is
@@ -1370,6 +1397,13 @@ const WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 /// column, level 9 is the first to show a non-"—" 5th-level column ("1", the
 /// level-9 row reading "4/4/4/3/2/1").
 const WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
+/// The wizard level at which 6th-level wizard spells (and so the sixth
+/// Evocation-only specialist bonus slot) first become available, verified
+/// against the raw PF1 Core Rulebook Wizard spells-per-day table rows
+/// (d20pfsrd and the Archives of Nethys aonprd.com mirror): level 10 shows
+/// a still-"—" 6th-level column, level 11 is the first to show a non-"—"
+/// 6th-level column ("1", the level-11 row reading "4/4/4/4/3/2/1").
+const WIZARD_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 11;
 
 // SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
 // martial class; the bounded single-class level-1 identity is recognized as
@@ -9782,8 +9816,8 @@ fn explain_sorcerer_level1_spell_baseline(
 
 /// The bounded Wizard milestone level this decomposition surface grounds, if any.
 /// Returns the single Wizard level when the chosen input is exactly a single-class
-/// Wizard at one of the supported milestone levels (1 through 10). Returns `None` for
-/// no Wizard, a non-Wizard class, a multiclass mix, or any level-11+ Wizard this slice
+/// Wizard at one of the supported milestone levels (1 through 11). Returns `None` for
+/// no Wizard, a non-Wizard class, a multiclass mix, or any level-12+ Wizard this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -10177,7 +10211,9 @@ fn explain_wizard_level1_prepared_spell_baseline(
         // of EACH spell level she can cast — one 1st-level bonus slot plus one
         // 2nd-level bonus slot, a flat count of 2.
         let wizard_specialist_bonus_slot_count =
-            if level >= WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            if level >= WIZARD_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_11
+            } else if level >= WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_9
             } else if level >= WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7
@@ -10212,7 +10248,18 @@ fn explain_wizard_level1_prepared_spell_baseline(
                  spells for the first time (verified against both primary sources' raw \
                  spells-per-day table rows), so the flat count becomes \
                  {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7:+} (one 1st-level, one 2nd-level, one \
-                 3rd-level, and one 4th-level Evocation-only bonus slot). At level {level} this \
+                 3rd-level, and one 4th-level Evocation-only bonus slot); at level \
+                 {WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 5th-level \
+                 spells for the first time (verified against both primary sources' raw \
+                 spells-per-day table rows), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_9:+}; at level \
+                 {WIZARD_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 6th-level \
+                 spells for the first time (verified independently against both primary sources' \
+                 raw spells-per-day table rows: the level-10 row is \"4/4/4/3/3/2\" with a still-\
+                 \"—\" 6th-level column, the level-11 row is \"4/4/4/4/3/2/1\", the first non-\"—\" \
+                 6th-level column), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_11:+} (one bonus slot of each spell \
+                 level 1st through 6th). At level {level} this \
                  is {wizard_specialist_bonus_slot_count:+} flat count; there is no cantrip-level \
                  bonus slot. This grounds the flat count only: no slot contents, no spells \
                  prepared per day, no per-day slot totals, and no bonus slots from a high \
