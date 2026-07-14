@@ -338,9 +338,13 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
 // `SD13_BARD_LEVEL1_TEST`, `SD13_CLERIC_LEVEL1_TEST`, and
 // `SD13_DRUID_LEVEL1_TEST` were each extended to also cite their own SD18
 // level-11 widening proof. Combined as one literal (paladin-row idiom) so
-// both substrings remain independently assertable.
+// both substrings remain independently assertable. Further extended to also
+// cite the live SD18 level-12 bonus-feat widening proof, mirroring how the
+// Barbarian/Bard/Cleric/Druid rows were each extended to also cite their own
+// SD18 level-12 widening proof.
 const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs + \
-    tests/sd18_fighter_level11_armor_training3.rs";
+    tests/sd18_fighter_level11_armor_training3.rs + \
+    tests/sd18_fighter_level12_widening.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
 /// the SD13-E3-F5 mandatory-milestone classification proof (which level-1
@@ -1014,9 +1018,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.fighter.levels_2_10",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
-                dimension: "class progression across levels 2-11: bounded milestone proof \
-                            for levels 2 through 11 (SD18 widens the prior levels 2-10 tranche \
-                            by one level), with the Weapon Training damage-roll half still \
+                dimension: "class progression across levels 2-12: bounded milestone proof \
+                            for levels 2 through 12 (SD18 widens the prior levels 2-10 tranche \
+                            by two levels), with the Weapon Training damage-roll half still \
                             unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -1057,15 +1061,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the Bravery bonus is never folded into the unconditional Will save total. \
                     The generic PF1 ability-score-increase milestones need no separate seam: \
                     the chosen ability score is trusted at face value. Any general \
-                    feat-effect/prerequisite engine also remains out of proof. No Fighter \
-                    level 12+ is proven",
+                    feat-effect/prerequisite engine also remains out of proof. SD18 \
+                    (cycle-2026-07-14T2300, mirroring the Barbarian/Bard/Cleric/Druid \
+                    level-11-then-level-12 pattern) further widens to level 12: base attack \
+                    bonus genuinely rises to 12 and all three base saves genuinely rise \
+                    (Fortitude/Reflex/Will 8/4/4, up from 7/3/3 at level 11) via the same \
+                    level-generic formulas; the PF1 Core Rulebook Fighter class table's \
+                    level-12 Special column reads only \"Bonus feat\" (verified against d20pfsrd \
+                    and the Archives of Nethys aonprd.com mirror), so this widening surfaces the \
+                    sixth named bonus-feat progression seam (the canonical Weapon Specialization \
+                    selection's prerequisites — fighter level 4 and Weapon Focus with the chosen \
+                    weapon — are honestly met by the canonical loadout) and grounds no new named \
+                    pillar beyond that cadence slot; Armor Training stays at rank 3 and Weapon \
+                    Training stays at rank 2, both integer-division coincidences with level 11. \
+                    No Fighter level 13+ is proven",
                 next_required_uplift: "later SD13/SD18 slice grounding the remaining named \
-                    Fighter class-feature burden inside levels 2-11: the Weapon Training \
+                    Fighter class-feature burden inside levels 2-12: the Weapon Training \
                     damage-roll half (which first needs any damage total to exist on the compute \
                     surface), a fear-condition/save-resolution engine to apply the Bravery \
                     magnitude to an actual Will save (a tranche-level subsystem decision, not a \
-                    slice decision), or level-12+ progression (the next bonus-feat cadence slot \
-                    and Weapon Training 3 at level 13)",
+                    slice decision), or level-13+ progression (Weapon Training 3 at level 13)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",
