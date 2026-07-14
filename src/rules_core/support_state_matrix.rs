@@ -733,7 +733,7 @@ const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs 
 /// stays explicitly honest about the remaining unproven Dwarf family surface.
 const SD13_DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs + \
     tests/sd18_dwarf_stonecunning.rs + tests/sd18_dwarf_greed.rs + tests/sd18_dwarf_hardy.rs + \
-    tests/sd18_dwarf_stability.rs";
+    tests/sd18_dwarf_stability.rs + tests/sd18_dwarf_defensive_training.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Elf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
@@ -781,34 +781,38 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "race.dwarf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:dwarf",
-                dimension: "bounded Dwarf race semantics: eight grounded PF1 Core Rulebook \
+                dimension: "bounded Dwarf race semantics: nine grounded PF1 Core Rulebook \
                             Dwarf racial trait dimensions (ability modifiers, size, speed, \
-                            senses, Stonecunning, Greed, Hardy, Stability) recognized on the \
-                            compute seam, with the remaining Dwarf family surface still \
-                            unproven",
+                            senses, Stonecunning, Greed, Hardy, Stability, Defensive Training) \
+                            recognized on the compute seam, with the remaining Dwarf family \
+                            surface still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_DWARF_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E2 plus the SD18 dwarf-stonecunning, \
-                    dwarf-greed, dwarf-hardy, and dwarf-stability cycles leave direct computed \
-                    evidence that eight Dwarf race-semantic families are recognized on the \
-                    compute seam (ability modifiers: +2 Constitution / -2 Charisma; size: \
-                    Medium; speed: 20 ft, never reduced by armor or encumbrance; senses: \
-                    Darkvision 60 ft; Stonecunning: flat +2 Perception situational bonus to \
-                    notice unusual stonework; Greed: flat +2 Appraise situational bonus to \
-                    assess nonmagical precious-metal/gemstone goods; Hardy: flat +2 racial \
-                    bonus on saving throws against poison, spells, and spell-like abilities; \
-                    Stability: flat +4 racial bonus to Combat Maneuver Defense against bull \
-                    rush and trip attempts while standing on the ground), but the remaining \
-                    families stay unproven: Defensive Training, Hatred, and weapon \
-                    familiarity. PF1 core Dwarves gain no racial bonus feat, so that family is \
-                    not applicable rather than unproven. No numeric mechanical contribution \
-                    beyond the flat Stonecunning/Greed/Hardy/Stability bonus magnitudes is \
-                    fabricated for any of the eight recognized dimensions.",
+                    dwarf-greed, dwarf-hardy, dwarf-stability, and dwarf-defensive-training \
+                    cycles leave direct computed evidence that nine Dwarf race-semantic \
+                    families are recognized on the compute seam (ability modifiers: +2 \
+                    Constitution / -2 Charisma; size: Medium; speed: 20 ft, never reduced by \
+                    armor or encumbrance; senses: Darkvision 60 ft; Stonecunning: flat +2 \
+                    Perception situational bonus to notice unusual stonework; Greed: flat +2 \
+                    Appraise situational bonus to assess nonmagical precious-metal/gemstone \
+                    goods; Hardy: flat +2 racial bonus on saving throws against poison, \
+                    spells, and spell-like abilities; Stability: flat +4 racial bonus to \
+                    Combat Maneuver Defense against bull rush and trip attempts while standing \
+                    on the ground; Defensive Training: flat +4 dodge bonus to Armor Class \
+                    against monsters of the giant subtype), but the remaining families stay \
+                    unproven: Hatred and weapon familiarity. PF1 core Dwarves gain no racial \
+                    bonus feat, so that family is not applicable rather than unproven. No \
+                    numeric mechanical contribution beyond the flat \
+                    Stonecunning/Greed/Hardy/Stability/Defensive-Training bonus magnitudes is \
+                    fabricated for any of the nine recognized dimensions.",
                 next_required_uplift: "later SD18 slice grounding one or more of the remaining \
-                    Dwarf families (Defensive Training, Hatred, weapon familiarity) as a real \
-                    computed contribution",
+                    Dwarf families (Hatred, weapon familiarity) as a real computed \
+                    contribution — Hatred currently lacks a machine-readable BONUS: tag in the \
+                    LST corpus (only DESC/ASPECT prose), so it is not eligible until/unless \
+                    that is re-verified",
             },
             SupportStateRow {
                 row_id: "race.elf.bounded_semantics",
