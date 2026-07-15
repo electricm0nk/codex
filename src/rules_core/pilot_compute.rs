@@ -2706,7 +2706,7 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // Touch of Good's bonus genuinely rises to 5 (10 / 2) via the same
 // half-cleric-level formula; both domain-power uses-per-day pools stay
 // level-independent; no new pillar is grounded.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 15;
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 16;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -12470,7 +12470,26 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// (Channel Energy dice, domain spell slot count) are widened, plus the
 /// base-attack/base-save pillar; no new pillar record is added at level 15
 /// either, since the level-15 Special column names only the Channel Energy
-/// tier-rise, not a new class feature. It only:
+/// tier-rise, not a new class feature. An SD18 slice (`cycle-2026-07-15T5300`,
+/// mirroring `cycle-2026-07-15T4600`'s Barbarian, the Fighter, `fd3fbe9`'s
+/// Wizard, and `c265972`'s Rogue level-16 widenings — the loop's FIFTH §3.2
+/// level-16 landing, and the second full 9-level-caster class after Wizard
+/// to reach it) widens the gate again to 1..=16 (`MAX_SUPPORTED_CLERIC_LEVEL
+/// = 16`): the class table's level-16 "Special" column is genuinely BLANK
+/// (verified independently against two primary sources — d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror, byte-for-byte agreement) — a pure
+/// ceiling raise, exactly mirroring the Wizard level-16 cycle's own pure
+/// ceiling raise: base attack bonus genuinely rises to +12 (`16 * 3 / 4 =
+/// 12`), both good saves genuinely rise to +10 (`16 / 2 + 2 = 10`), and
+/// Touch of Good's bonus genuinely rises to 8 (`16 / 2 = 8`), all via the
+/// same pre-existing formulas, not re-derived, while poor Reflex stays +5
+/// (`16 / 3 = 5`), Channel Energy's die count stays 8d6 (`(16 + 1) / 2 = 8`,
+/// the odd-level cadence's next rise landing at 17th), and the domain spell
+/// slot count stays 8 (a level-16 cleric still casts only up to 8th-level
+/// cleric spells; 9th-level cleric spells are out of this bounded ceiling's
+/// scope) — all integer-division coincidences, checked not assumed — so no
+/// new pillar record is added at level 16 either, since no class feature is
+/// named in the level-16 Special column. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),

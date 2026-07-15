@@ -241,12 +241,14 @@ fn cleric_level10_truth_is_unchanged_by_this_slice() {
 // and tests/sd18_cleric_level15_widening.rs — so this negative control's
 // boundary moves from 12 to 16, mirroring the exact same boundary-move
 // idiom applied to tests/sd18_ranger_level12_widening.rs when
-// MAX_SUPPORTED_RANGER_LEVEL widened from 12 through 14.)
+// MAX_SUPPORTED_RANGER_LEVEL widened from 12 through 14; cycle-2026-07-15T5300
+// moves this boundary again, from 16 to 17, since level 16 is now itself
+// Cleric's supported/grounded row.)
 
 #[test]
-fn cleric_level_16_is_not_promoted_by_this_slice() {
-    let level_16 = CLERIC_LEVEL11_FIXTURE.replace("class:cleric:11", "class:cleric:16");
-    let input = load(&level_16);
+fn cleric_level_17_is_not_promoted_by_this_slice() {
+    let level_17 = CLERIC_LEVEL11_FIXTURE.replace("class:cleric:11", "class:cleric:17");
+    let input = load(&level_17);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -255,7 +257,7 @@ fn cleric_level_16_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id.starts_with("class_feature.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-16 Cleric must not gain any bounded cleric explanation: {:?}",
+        "level-17 Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );
 }

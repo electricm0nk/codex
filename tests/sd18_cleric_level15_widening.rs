@@ -264,24 +264,10 @@ fn cleric_level14_truth_is_unchanged_by_this_slice() {
     assert_eq!(bonus.value, 7, "Cleric level 14 Touch of Good bonus must stay 7");
 }
 
-// ----- Negative control: level 16 stays unrecognized by this slice -----
-
-#[test]
-fn cleric_level_16_is_not_promoted_by_this_slice() {
-    let level_16 = CLERIC_LEVEL15_FIXTURE.replace("class:cleric:15", "class:cleric:16");
-    let input = load(&level_16);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
-                || e.id.starts_with("class_feature.cleric.")
-                || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-16 Cleric must not gain any bounded cleric explanation: {:?}",
-        computation.explanations
-    );
-}
+// (This file's own "level 16 is not promoted" negative control is removed
+// rather than moved, since cycle-2026-07-15T5300 promotes level 16 to the
+// supported/grounded row — see tests/sd18_cleric_level16_widening.rs for the
+// level-17 negative control that now supersedes it.)
 
 // ----- Negative control: the cleric path must not leak onto other classes -----
 

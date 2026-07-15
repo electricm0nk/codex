@@ -253,17 +253,18 @@ fn cleric_level13_truth_is_unchanged_by_this_slice() {
     assert_eq!(bonus.value, 6, "Cleric level 13 Touch of Good bonus must stay 6");
 }
 
-// ----- Negative control: level 16 stays unrecognized by this slice -----
+// ----- Negative control: level 17 stays unrecognized by this slice -----
 // (Superseded boundary: cycle-2026-07-15T3100 widened MAX_SUPPORTED_CLERIC_LEVEL
-// from 14 to 15, so this file's own negative-control boundary moves from 15
-// to 16, mirroring the exact same boundary-move idiom applied to
+// from 14 to 15, then cycle-2026-07-15T5300 widened it from 15 to 16, so this
+// file's own negative-control boundary moves from 15 to 17, mirroring the
+// exact same boundary-move idiom applied to
 // tests/sd18_fighter_level14_widening.rs when MAX_SUPPORTED_FIGHTER_LEVEL
 // widened from 14 to 15.)
 
 #[test]
-fn cleric_level_16_is_not_promoted_by_this_slice() {
-    let level_16 = CLERIC_LEVEL14_FIXTURE.replace("class:cleric:14", "class:cleric:16");
-    let input = load(&level_16);
+fn cleric_level_17_is_not_promoted_by_this_slice() {
+    let level_17 = CLERIC_LEVEL14_FIXTURE.replace("class:cleric:14", "class:cleric:17");
+    let input = load(&level_17);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -272,7 +273,7 @@ fn cleric_level_16_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id.starts_with("class_feature.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-16 Cleric must not gain any bounded cleric explanation: {:?}",
+        "level-17 Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );
 }
