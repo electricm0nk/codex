@@ -272,11 +272,15 @@ fn druid_level9_truth_is_unchanged_by_this_slice() {
 // (MAX_SUPPORTED_DRUID_LEVEL widened to 14 by
 // tests/sd18_druid_level14_widening.rs), so this row's own negative control
 // boundary moves again to level 15, mirroring the same boundary move
-// cycle-2026-07-15T2300 made for Cleric.
+// cycle-2026-07-15T2300 made for Cleric. A still further SD18 slice (the
+// loop's FIFTH §3.2 level-15 landing) then genuinely promotes level 15 too
+// (MAX_SUPPORTED_DRUID_LEVEL widened to 15 by
+// tests/sd18_druid_level15_widening.rs), so this row's own negative control
+// boundary moves once more to level 16.
 #[test]
-fn druid_level_15_is_not_promoted_by_this_slice() {
-    let level_15 = DRUID_LEVEL10_FIXTURE.replace("class:druid:10", "class:druid:15");
-    let input = load(&level_15);
+fn druid_level_16_is_not_promoted_by_this_slice() {
+    let level_16 = DRUID_LEVEL10_FIXTURE.replace("class:druid:10", "class:druid:16");
+    let input = load(&level_16);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -285,7 +289,7 @@ fn druid_level_15_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.druid.")
                 || e.id.starts_with("class_feature.druid.")
                 || e.id == "class_chassis.spell_baseline.druid"),
-        "level-15 Druid must not gain any bounded druid explanation: {:?}",
+        "level-16 Druid must not gain any bounded druid explanation: {:?}",
         computation.explanations
     );
 }

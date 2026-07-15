@@ -1,0 +1,43 @@
+# SD18 deterministic Human Druid level 15 progression fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Druid
+# level-1..level-14 prepared divine spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_druid_level14_sd18_widening_deterministic_input.txt)
+# to level 15 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-14 fixtures, and the
+# same canonical nature-bond selection (animal companion), adding only the
+# level bump this bounded slice needs.
+#
+# It deliberately avoids every later Druid burden surface: no animal
+# companion stat block/advancement/link-share-spells, no Wild Shape
+# execution (form list, duration tracking), no spellbook, no spells
+# prepared, no spell slots, no spell DCs, and no level-16+ progression.
+# Base attack bonus genuinely rises to +11 (15 * 3 / 4 = 11); both good
+# saves (Fortitude, Will) STAY +9 (15 / 2 + 2 = 9, an integer-division
+# coincidence with level 14); poor Reflex genuinely rises to +5 (15 / 3 = 5),
+# all checked rather than assumed. Wild Empathy genuinely rises to 16
+# (15 + Charisma modifier 1). The PF1 CRB Druid class table's level-15
+# "Special" column reads "Timeless body" only (verified independently
+# against d20pfsrd, Archives of Nethys aonprd.com, and legacy.aonprd.com,
+# all three agreeing byte-for-byte; the next Wild Shape frequency increase,
+# "Wild shape (7/day)", does not land until 16th level, confirmed directly
+# rather than assumed). Timeless body is a genuinely flat/identity-shaped,
+# no-choice, no-magnitude grant (no longer takes ability score penalties for
+# old age and cannot be magically aged), mirroring exactly how Venom
+# Immunity (level 9) and A Thousand Faces (level 13) were grounded.
+case_id=pf1-crb-human-druid-level15
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:druid:15
+ability=strength:10
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:12
+feat=feat:dodge
+choice=choice:druid_nature_bond:bond:animal_companion
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

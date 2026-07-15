@@ -757,7 +757,7 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs 
     tests/sd13_druid_level8_progression.rs + tests/sd13_druid_level9_progression.rs + \
     tests/sd13_druid_level10_progression.rs + tests/sd18_druid_level11_widening.rs + \
     tests/sd18_druid_level12_widening.rs + tests/sd18_druid_level13_widening.rs + \
-    tests/sd18_druid_level14_widening.rs";
+    tests/sd18_druid_level14_widening.rs + tests/sd18_druid_level15_widening.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -2522,13 +2522,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
                             level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10/level-11/level-12/level-13/level-14 \
+                            level-9/level-10/level-11/level-12/level-13/level-14/level-15 \
                             prepared divine \
                             spell baseline, with base attack bonus, base save progression, Wild \
                             Empathy, Nature Sense, the nature-bond choice recognition, (at level \
                             2) Woodland Stride, (at level 3) Trackless Step, (at level 4) \
-                            Resist Nature's Lure, and (at level 13) A Thousand Faces grounded for \
-                            real at all fourteen supported levels, \
+                            Resist Nature's Lure, (at level 13) A Thousand Faces, and (at level \
+                            15) Timeless Body grounded for \
+                            real at all fifteen supported levels, \
                             and the animal-companion execution burden, the Wild Shape execution \
                             burden, and the prepared divine spell posture burden still blocked",
                 support_state: SupportState::Partial,
@@ -2778,13 +2779,30 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     non-separable functioning-level upgrade with no execution engine anywhere in \
                     this codebase, so Wild Shape stays entirely named-but-unproven and this \
                     slice grounds no new pillar at level 14 either — only the existing arithmetic \
-                    pillars are widened. The row stays Partial, not Supported: the \
-                    animal-companion execution burden, the Wild Shape execution burden, and the \
-                    prepared divine spell posture burden all remain named and unproven. No spell \
-                    math is fabricated and no Druid level 15+ is proven",
+                    pillars are widened. A still further SD18 slice (the loop's FIFTH §3.2 \
+                    level-15 landing after Barbarian, Rogue, Fighter, and Cleric) widens the gate \
+                    again to level 15 (verified independently against all three primary sources: \
+                    d20pfsrd, Archives of Nethys aonprd.com, and legacy.aonprd.com, which agree \
+                    byte-for-byte): base attack bonus genuinely rises to +11 (15 * 3 / 4) and \
+                    poor Reflex genuinely rises to +5 (15 / 3), while both good saves stay +9 \
+                    (15 / 2 + 2, an integer-division coincidence with level 14); Wild Empathy \
+                    genuinely rises to 16 (15 + Charisma modifier). UNLIKE every prior widened \
+                    level's Wild-Shape-shaped \"Special\" column entry (levels 4/6/8/10/12/14), \
+                    and unlike level 13's \"A thousand faces\", the level-15 \"Special\" column \
+                    reads \"Timeless body\" ONLY — checked directly rather than assumed to also \
+                    carry a Wild Shape frequency increase (the next one, \"Wild shape (7/day)\", \
+                    does not land until 16th level). Timeless Body is a genuinely \
+                    flat/identity-shaped, no-choice, no-magnitude, no-duration-tracking grant (a \
+                    druid no longer takes ability score penalties for old age and cannot be \
+                    magically aged), mirroring exactly how Venom Immunity and A Thousand Faces \
+                    were grounded: a bounded +0 identity/recognition record, with no \
+                    aging-penalty-resolution engine fabricated. The row stays Partial, not \
+                    Supported: the animal-companion execution burden, the Wild Shape execution \
+                    burden, and the prepared divine spell posture burden all remain named and \
+                    unproven. No spell math is fabricated and no Druid level 16+ is proven",
                 next_required_uplift: "SD13-E5 Druid animal companion execution slice, the Wild \
                     Shape execution slice, or the prepared divine spell burden slice, then Druid \
-                    level 15+ progression (out of scope for this slice)",
+                    level 16+ progression (out of scope for this slice)",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",
