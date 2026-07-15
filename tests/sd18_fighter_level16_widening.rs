@@ -232,28 +232,6 @@ fn fighter_level15_truth_is_unchanged_by_this_slice() {
     assert_eq!(computation.baseline_melee_attack_bonus, 22);
 }
 
-// ----- Negative control: level 17 stays claim-blocked (beyond the bounded L2-16 row) -----
-
-#[test]
-fn fighter_level_17_stays_claim_blocked() {
-    let level_17 = FIGHTER_LEVEL16_FIXTURE.replace("class:fighter:16", "class:fighter:17");
-    let input = load(&level_17);
-    let computation = compute_pilot_base_chassis(&input);
-
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-17 Fighter must stay claim-blocked beyond the bounded levels-2-16 row: {:?}",
-        computation.diagnostics
-    );
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id == "class_chassis.base_attack_bonus"),
-        "level-17 Fighter must not fabricate a base-attack-bonus explanation"
-    );
-}
-
 // ----- Negative control: multiclass Fighter is not promoted -----
 
 #[test]

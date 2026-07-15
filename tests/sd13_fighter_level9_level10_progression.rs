@@ -315,34 +315,35 @@ fn level_10_propagates_computed_receipt_and_view_model() {
     );
 }
 
-// ----- Negative control: level 16 stays blocked (beyond the bounded L2-15 row) -----
+// ----- Negative control: level 18 stays blocked (beyond the bounded L2-17 row) -----
 //
 // SD18 (tests/sd18_fighter_level11_armor_training3.rs,
 // tests/sd18_fighter_level12_widening.rs, tests/sd18_fighter_level13_widening.rs,
 // tests/sd18_fighter_level14_widening.rs, tests/sd18_fighter_level15_widening.rs,
-// tests/sd18_fighter_level16_widening.rs)
+// tests/sd18_fighter_level16_widening.rs, tests/sd18_fighter_level17_widening.rs)
 // widened the bounded tranche from level 10 to level 12 (Armor Training 3,
 // then a sixth bonus-feat cadence slot), then to level 13 (Weapon Training
 // 3), then to level 14 (a seventh bonus-feat cadence slot and the Bravery
-// magnitude rise), then to level 15 (Armor Training 4), and then to level 16
-// (an eighth bonus-feat cadence slot), so this negative control now sits
-// just above the current bound (level 17) rather than at level 12, level
-// 13, level 14, level 15, or level 16.
+// magnitude rise), then to level 15 (Armor Training 4), then to level 16
+// (an eighth bonus-feat cadence slot), and then to level 17 (Weapon Training
+// 4), so this negative control now sits just above the current bound
+// (level 18) rather than at level 12, level 13, level 14, level 15, level
+// 16, or level 17.
 
 #[test]
-fn level_17_fighter_stays_claim_blocked() {
-    let level_17 = LEVEL_10_FIXTURE.replace("class:fighter:10", "class:fighter:17");
-    let input = load(&level_17);
+fn level_18_fighter_stays_claim_blocked() {
+    let level_18 = LEVEL_10_FIXTURE.replace("class:fighter:10", "class:fighter:18");
+    let input = load(&level_18);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-17 Fighter must stay claim-blocked beyond the bounded levels-2-16 row: {:?}",
+        "level-18 Fighter must stay claim-blocked beyond the bounded levels-2-17 row: {:?}",
         computation.diagnostics
     );
     assert!(
         !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "level-17 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-18 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 
