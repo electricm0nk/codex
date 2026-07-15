@@ -241,18 +241,21 @@ fn rogue_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(trapfinding.value, 5, "Rogue level 10 Trapfinding must stay 5");
 }
 
-// ----- Negative control: level 14 stays unrecognized by this slice -----
+// ----- Negative control: level 15 stays unrecognized by this slice -----
 //
 // SD18 widening (cycle-2026-07-15T0800, tests/sd18_rogue_level12_widening.rs)
 // now genuinely recognizes level 12, so this boundary control moved to
 // level 13. A further SD18 widening (cycle-2026-07-15T1100,
 // tests/sd18_rogue_level13_widening.rs) now genuinely recognizes level 13
-// too, so this boundary control moves again, to level 14.
+// too, so this boundary control moved again, to level 14. A further SD18
+// widening (cycle-2026-07-15T2000, tests/sd18_rogue_level14_widening.rs) now
+// genuinely recognizes level 14 too, so this boundary control moves again,
+// to level 15.
 
 #[test]
-fn rogue_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = ROGUE_LEVEL11_FIXTURE.replace("class:rogue:11", "class:rogue:14");
-    let input = load(&level_14);
+fn rogue_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = ROGUE_LEVEL11_FIXTURE.replace("class:rogue:11", "class:rogue:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -260,7 +263,7 @@ fn rogue_level_14_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.rogue.")
                 || e.id.starts_with("class_feature.rogue.")),
-        "level-14 Rogue must not gain any bounded rogue explanation: {:?}",
+        "level-15 Rogue must not gain any bounded rogue explanation: {:?}",
         computation.explanations
     );
 }
