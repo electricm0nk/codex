@@ -1119,8 +1119,28 @@ const RANGER_COMBAT_STYLE_BONUS_FEAT_4_CHOICE_ID: &str =
 // `6/6/6/6/6/5/3` -> `6/6/6/6/6/6/4`; known `9/5/5/4/4/3/2/1` ->
 // `9/5/5/4/4/4/3/2`), with no genuinely new spell-level column opening (the
 // 8th-level column stays inaccessible through level 15) on either table.
+//
+// SD18 cycle-2026-07-15T5800 widens the gate again to level 16 (the loop's
+// SEVENTH §3.2 level-16 landing, after Barbarian, Fighter, Wizard, Rogue,
+// Cleric, and Paladin), verified independently against d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, both byte-for-byte identical: base
+// attack bonus genuinely rises to +8 (`16/2=8`, up from level 15's +7) and
+// good Will genuinely rises to +10 (`16/2+2=10`, up from level 15's +9),
+// while both poor saves stay numerically IDENTICAL to level 15 at +5
+// (`16/3=5`, an integer-division coincidence). The level-16 "Special"
+// column is genuinely BLANK on both primary sources — UNLIKE level 15's
+// "Bloodline power, bloodline spell" entry, this is a pure ceiling raise
+// with no bloodline-specific text left named-but-unproven. The
+// already-grounded spells-per-day and spells-known table lookups both
+// genuinely widen at level 16, each opening a genuinely NEW 8th-level
+// column for the first time (per-day `6/6/6/6/6/6/4` -> `6/6/6/6/6/6/5/3`;
+// known `9/5/5/4/4/4/3/2` -> `9/5/5/4/4/4/3/2/1`), so both arrays widen
+// from their prior 7/8-element shapes to 8/9-element shapes via a new
+// `SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 16` threshold
+// constant, mirroring the Wizard's own 8th-level-column-opening cycle. The
+// spell-level access ladder genuinely rises to 8 (up from 7 at level 15).
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 15;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 16;
 
 /// The sorcerer level at which 2nd-level sorcerer spells first become
 /// available, verified against the raw PF1 Core Rulebook Sorcerer
@@ -1166,6 +1186,16 @@ const SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 12;
 /// cadence continuing exactly (4/6/8/10/12/14), one spell level deeper than
 /// the tranche's prior ceiling.
 const SORCERER_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 14;
+/// The sorcerer level at which 8th-level sorcerer spells first become
+/// available, verified against the raw table rows of both primary-source
+/// fetches this SD18 slice performed (d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, byte-for-byte identical): level 15 shows
+/// "6/6/6/6/6/6/4/—", level 16 shows "6/6/6/6/6/6/5/3" — the first non-"—"
+/// 8th-level column. This is the sorcerer's two-level cadence continuing
+/// exactly (4/6/8/10/12/14/16), one spell level deeper than the tranche's
+/// prior ceiling, mirroring the Wizard's own
+/// `WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL` threshold idiom.
+const SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 16;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -11434,7 +11464,9 @@ fn explain_sorcerer_level1_spell_baseline(
     // are never computed. Cantrips (0th level, "spells known" only) are
     // outside the spells-per-day ladder and are not counted.
     let sorcerer_spell_level_access: i16 =
-        if level >= SORCERER_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        if level >= SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            8
+        } else if level >= SORCERER_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             7
         } else if level >= SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             6
@@ -11456,13 +11488,15 @@ fn explain_sorcerer_level1_spell_baseline(
             "Sorcerer spell-level access at sorcerer level {level}: the highest sorcerer spell \
              level (1st+) with a non-\"—\" spells-per-day column in the PF1 Core Rulebook \
              Sorcerer class table is {sorcerer_spell_level_access} (verified against the raw \
-             table rows of all three primary-source fetches: 1st-level spells from level 1 — \
+             table rows of the primary-source fetches: 1st-level spells from level 1 — \
              the ladder has no zero step — 2nd-level at \
              {SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
              {SORCERER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
              {SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 5th-level at \
              {SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 6th-level at \
-             {SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL} — the sorcerer's two-level \
+             {SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 7th-level at \
+             {SORCERER_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 8th-level at \
+             {SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL} — the sorcerer's two-level \
              cadence continuing exactly). Cantrips are \"spells known\" only and sit outside \
              the spells-per-day ladder, so they are not counted. This grounds the access \
              ladder only: no spells-per-day counts, no spells-known posture, no bonus slots \
@@ -11481,7 +11515,8 @@ fn explain_sorcerer_level1_spell_baseline(
     // level 6 "6/5/3/—/—/—", level 7 "6/6/4/—/—/—", level 8
     // "6/6/5/3/—/—", level 9 "6/6/6/4/—/—", level 10 "6/6/6/5/3/—",
     // level 11 "6/6/6/6/4/—", level 12 "6/6/6/6/5/3", level 13 "6/6/6/6/6/4",
-    // level 14 "6/6/6/6/6/5/3", level 15 "6/6/6/6/6/6/4"
+    // level 14 "6/6/6/6/6/5/3", level 15 "6/6/6/6/6/6/4", level 16
+    // "6/6/6/6/6/6/5/3"
     // (level 13 was an SD18 widening verified independently against all
     // three primary-source fetches that slice performed — d20pfsrd,
     // aonprd.com, and legacy.aonprd.com, all identical: the 5th-level column
@@ -11489,35 +11524,39 @@ fn explain_sorcerer_level1_spell_baseline(
     // genuinely new spell-level column at level 13. Level 14 widened the
     // 6th-level column from 4 to 5 AND opened a genuinely new 7th-level
     // column at 3 — the sorcerer's two-level cadence (4/6/8/10/12/14)
-    // continuing exactly. Level 15 is THIS SD18 slice's widening, verified
-    // independently against d20pfsrd and the Archives of Nethys aonprd.com
-    // mirror, both byte-for-byte identical: the 6th-level column rises from
-    // 5 to 6 AND the 7th-level column rises from 3 to 4, with no genuinely
-    // new spell-level column opening (the 8th-level column stays "—"
-    // through level 15). Like the Bard and
+    // continuing exactly. Level 15 widened the 6th-level column from 5 to 6
+    // AND the 7th-level column from 3 to 4, with no genuinely new
+    // spell-level column opening. Level 16 is THIS SD18 slice's widening,
+    // verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror, both byte-for-byte identical: the 7th-level column
+    // rises from 4 to 5 AND a genuinely new 8th-level column opens at 3 —
+    // the sorcerer's two-level cadence (4/6/8/10/12/14/16) continuing
+    // exactly, mirroring the Wizard's own 8th-level-column-opening cycle.
+    // Like the Bard and
     // unlike the
-    // Paladin/Ranger, there are NO "0" entries at levels 1-14; every
+    // Paladin/Ranger, there are NO "0" entries at levels 1-16; every
     // accessible column carries a positive base count. Inaccessible spell
     // levels ("—" columns) get no record at all. Only the base counts are
     // grounded: bonus spells per day from a high Charisma are never
     // computed, and spells KNOWN (a separate table) stays untouched.
-    let sorcerer_base_spells_per_day: [Option<i16>; 7] = match level {
-        1 => [Some(3), None, None, None, None, None, None],
-        2 => [Some(4), None, None, None, None, None, None],
-        3 => [Some(5), None, None, None, None, None, None],
-        4 => [Some(6), Some(3), None, None, None, None, None],
-        5 => [Some(6), Some(4), None, None, None, None, None],
-        6 => [Some(6), Some(5), Some(3), None, None, None, None],
-        7 => [Some(6), Some(6), Some(4), None, None, None, None],
-        8 => [Some(6), Some(6), Some(5), Some(3), None, None, None],
-        9 => [Some(6), Some(6), Some(6), Some(4), None, None, None],
-        10 => [Some(6), Some(6), Some(6), Some(5), Some(3), None, None],
-        11 => [Some(6), Some(6), Some(6), Some(6), Some(4), None, None],
-        12 => [Some(6), Some(6), Some(6), Some(6), Some(5), Some(3), None],
-        13 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(4), None],
-        14 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(3)],
-        15 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(4)],
-        _ => [None, None, None, None, None, None, None],
+    let sorcerer_base_spells_per_day: [Option<i16>; 8] = match level {
+        1 => [Some(3), None, None, None, None, None, None, None],
+        2 => [Some(4), None, None, None, None, None, None, None],
+        3 => [Some(5), None, None, None, None, None, None, None],
+        4 => [Some(6), Some(3), None, None, None, None, None, None],
+        5 => [Some(6), Some(4), None, None, None, None, None, None],
+        6 => [Some(6), Some(5), Some(3), None, None, None, None, None],
+        7 => [Some(6), Some(6), Some(4), None, None, None, None, None],
+        8 => [Some(6), Some(6), Some(5), Some(3), None, None, None, None],
+        9 => [Some(6), Some(6), Some(6), Some(4), None, None, None, None],
+        10 => [Some(6), Some(6), Some(6), Some(5), Some(3), None, None, None],
+        11 => [Some(6), Some(6), Some(6), Some(6), Some(4), None, None, None],
+        12 => [Some(6), Some(6), Some(6), Some(6), Some(5), Some(3), None, None],
+        13 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(4), None, None],
+        14 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(3), None],
+        15 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(4), None],
+        16 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(3)],
+        _ => [None, None, None, None, None, None, None, None],
     };
     for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
         let Some(base_count) = base_count else {
@@ -11581,47 +11620,51 @@ fn explain_sorcerer_level1_spell_baseline(
     // level 8 "8/5/3/2/1/—/—", level 9 "8/5/4/3/2/—/—", level 10
     // "9/5/4/3/2/1/—", level 11 "9/5/5/4/3/2/—", level 12 "9/5/5/4/3/2/1",
     // level 13 "9/5/5/4/4/3/2", level 14 "9/5/5/4/4/3/2/1",
-    // level 15 "9/5/5/4/4/4/3/2"
-    // (0th through 7th spell level; the level-13 row was an SD18 widening
+    // level 15 "9/5/5/4/4/4/3/2", level 16 "9/5/5/4/4/4/3/2/1"
+    // (0th through 8th spell level; the level-13 row was an SD18 widening
     // verified independently against all three primary-source fetches that
     // slice performed — d20pfsrd, aonprd.com, and legacy.aonprd.com, all
     // identical: the 0th through 3rd columns stayed numerically unchanged
     // from level 12's row, and the 4th, 5th, and 6th-level columns each
     // rose by one. Level 14 widened the 0th through 6th columns numerically
     // unchanged from level 13's row, AND opened a genuinely new 7th-level
-    // column at 1. Level 15 is THIS SD18 slice's widening, verified
+    // column at 1. Level 15 widened the 0th through 4th columns numerically
+    // unchanged from level 14's row, while the 5th, 6th, and 7th-level
+    // columns each rose by one — no genuinely new spell-level column
+    // opened. Level 16 is THIS SD18 slice's widening, verified
     // independently against d20pfsrd and the Archives of Nethys aonprd.com
-    // mirror, both byte-for-byte identical: the 0th through 4th columns stay
-    // numerically unchanged from level 14's row, while the 5th, 6th, and
-    // 7th-level columns each rise by one — no genuinely new spell-level
-    // column opens (the 8th-level column stays "—" through level 15).
+    // mirror, both byte-for-byte identical: the 0th through 7th columns stay
+    // numerically unchanged from level 15's row, while a genuinely new
+    // 8th-level column opens at 1 — mirroring the same-cycle opening of the
+    // 8th-level column on the spells-per-day table above.
     // The known table
     // INCLUDES the 0th level (cantrips are "spells
     // known" only), and its new-spell-level cadence matches the grounded
     // per-day access ladder exactly (2nd at 4, 3rd at 6, 4th at 8, 5th at
-    // 10, 6th at 12, 7th at 14 — checked rather than assumed). Only the
-    // known COUNTS
+    // 10, 6th at 12, 7th at 14, 8th at 16 — checked rather than assumed).
+    // Only the known COUNTS
     // are grounded: the selection of WHICH spells are known is never
-    // computed, and the 3rd/5th/7th/9th/11th/13th-level bloodline bonus
-    // spells are part of the still-unproven bloodline progression burden,
-    // not this table.
-    let sorcerer_spells_known: [Option<i16>; 8] = match level {
-        1 => [Some(4), Some(2), None, None, None, None, None, None],
-        2 => [Some(5), Some(2), None, None, None, None, None, None],
-        3 => [Some(5), Some(3), None, None, None, None, None, None],
-        4 => [Some(6), Some(3), Some(1), None, None, None, None, None],
-        5 => [Some(6), Some(4), Some(2), None, None, None, None, None],
-        6 => [Some(7), Some(4), Some(2), Some(1), None, None, None, None],
-        7 => [Some(7), Some(5), Some(3), Some(2), None, None, None, None],
-        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None, None, None],
-        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None, None, None],
-        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1), None, None],
-        11 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), None, None],
-        12 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), Some(1), None],
-        13 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), None],
-        14 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), Some(1)],
-        15 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2)],
-        _ => [None, None, None, None, None, None, None, None],
+    // computed, and the 3rd/5th/7th/9th/11th/13th/15th-level bloodline
+    // bonus spells are part of the still-unproven bloodline progression
+    // burden, not this table.
+    let sorcerer_spells_known: [Option<i16>; 9] = match level {
+        1 => [Some(4), Some(2), None, None, None, None, None, None, None],
+        2 => [Some(5), Some(2), None, None, None, None, None, None, None],
+        3 => [Some(5), Some(3), None, None, None, None, None, None, None],
+        4 => [Some(6), Some(3), Some(1), None, None, None, None, None, None],
+        5 => [Some(6), Some(4), Some(2), None, None, None, None, None, None],
+        6 => [Some(7), Some(4), Some(2), Some(1), None, None, None, None, None],
+        7 => [Some(7), Some(5), Some(3), Some(2), None, None, None, None, None],
+        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None, None, None, None],
+        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None, None, None, None],
+        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1), None, None, None],
+        11 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), None, None, None],
+        12 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), Some(1), None, None],
+        13 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), None, None],
+        14 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), Some(1), None],
+        15 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2), None],
+        16 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1)],
+        _ => [None, None, None, None, None, None, None, None, None],
     };
     for (spell_level, known_count) in sorcerer_spells_known.iter().enumerate() {
         let Some(known_count) = known_count else {
