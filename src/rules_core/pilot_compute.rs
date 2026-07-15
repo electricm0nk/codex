@@ -1896,7 +1896,34 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // named-but-unproven at levels 5 and 10, not a new type of class feature,
 // so no new pillar record is grounded at level 15 beyond widening the
 // specialist-bonus-slot pillar to its new value.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 15;
+//
+// A further SD18 slice widens the gate again to level 16 — the loop's
+// THIRD §3.2 level-16 landing, after Barbarian and Fighter, and the first
+// spell-bearing class to reach level 16 in the level-16 sweep: base
+// attack bonus GENUINELY RISES to +8 (`16/2 = 8`, up from +7) and good
+// Will GENUINELY RISES to +10 (`16/2+2 = 10`, up from +9), while poor
+// Fortitude/Reflex both STAY at +5 (`16/3 = 5`, an integer-division
+// coincidence with level 15) — verified independently against two primary
+// sources (d20pfsrd and the Archives of Nethys aonprd.com mirror, which
+// agree byte-for-byte, so no third source was required). The raw
+// spells-per-day table's level-16 row is "4/4/4/4/4/4/3/3/2" — up from the
+// level-15 row "4/4/4/4/4/4/3/2/1" (the 7th-level column rises from 2 to 3
+// and the 8th-level column rises from 1 to 2), but the 9th-level column
+// stays "—" (9th-level wizard spells do not become accessible until level
+// 17, verified rather than assumed), so the specialist bonus-slot flat
+// count STAYS at 8, unchanged from level 15 — the pre-existing
+// `>= WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL` branch already
+// covers level 16, so no new tier or threshold constant is needed at all.
+// Intense Spells' bonus-damage magnitude GENUINELY RISES to 8
+// (`max(16/2, 1) = 8`, up from 7) via the pre-existing formula, not
+// re-derived; Force Missile's pool is level-independent and unchanged; the
+// level-16 "Special" column is genuinely BLANK on both primary sources
+// (the Wizard's bonus feats land only at levels 5/10/15/20), so no new
+// pillar record is grounded at level 16 — only the already-grounded
+// arithmetic pillars widen, and this is a pure ceiling raise: every
+// consuming formula already reads `level` generically, so no new tier
+// constant or threshold constant is needed at all.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 16;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
