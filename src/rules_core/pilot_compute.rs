@@ -636,8 +636,17 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // bounded +0 identity/recognition record, mirroring Monk's own Improved
 // Evasion and Ranger's own base Evasion idiom exactly — plus the base
 // spells-per-day table's own level-16 row (3/3/2/1, the 1st-level column
-// genuinely rising from 2 to 3). Nothing here grounds level 17+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 16;
+// genuinely rising from 2 to 3). A still later SD18 slice
+// (cycle-2026-07-15T7000) widens the gate once more to level 17: base
+// attack bonus genuinely rises to 17 (full BAB), while both good saves
+// stay 10 (17/2+2) and poor Will stays 5 (17/3), both integer-division
+// coincidences with level 16; the level-17 "Special" column reads "Hide in
+// plain sight" (`RANGER_HIDE_IN_PLAIN_SIGHT_LEVEL`) — grounded as a
+// bounded +0 identity/recognition record, mirroring Camouflage's own
+// idiom exactly — plus the base spells-per-day table's own level-17 row
+// (4/3/2/1, the 1st-level column genuinely rising from 3 to 4). Nothing
+// here grounds level 18+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 17;
 
 /// PF1 Core Rulebook level gate at which Camouflage is granted (verified
 /// independently against two primary sources: both d20pfsrd and the
@@ -696,6 +705,20 @@ const RANGER_EVASION_LEVEL: u8 = 9;
 /// saving-throw-resolution or damage-resolution engine exists anywhere in
 /// this codebase, so no damage math is fabricated from the record.
 const RANGER_IMPROVED_EVASION_LEVEL: u8 = 16;
+
+/// PF1 Core Rulebook level gate at which Ranger gains Hide in Plain Sight
+/// (17th level, verified independently against three primary sources:
+/// d20pfsrd, the Archives of Nethys aonprd.com mirror, and
+/// legacy.aonprd.com all list "Hide in plain sight" as the sole Ranger
+/// 17th-level "Special" column entry, byte-for-byte agreement). Hide in
+/// Plain Sight carries no numeric magnitude of its own and only modifies a
+/// hide-while-observed check resolution that does not exist anywhere in
+/// this codebase -- exactly like Camouflage
+/// (`RANGER_CAMOUFLAGE_LEVEL`), it is a genuinely flat/identity-shaped,
+/// no-choice, no-magnitude grant: "While in any of his favored terrains, a
+/// ranger of 17th level or higher can use the Stealth skill even while
+/// being observed."
+const RANGER_HIDE_IN_PLAIN_SIGHT_LEVEL: u8 = 17;
 
 /// PF1 Core Rulebook level gate at which Ranger gains Quarry (11th level,
 /// verified independently against two primary sources: d20pfsrd and the
@@ -8458,6 +8481,51 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         });
     }
 
+    // Grounded (SD18 cycle-2026-07-15T7000): Hide in Plain Sight, the
+    // 17th-level Ranger "Special" column entry, verified independently
+    // against three primary PF1 sources (d20pfsrd, the Archives of Nethys
+    // aonprd.com mirror, and legacy.aonprd.com all list "Hide in plain
+    // sight" as the sole Ranger 17th-level special feature entry, with
+    // identical rule text): "While in any of his favored terrains, a
+    // ranger of 17th level or higher can use the Stealth skill even while
+    // being observed." Hide in Plain Sight carries no numeric magnitude of
+    // its own and only modifies a hide-while-observed check resolution
+    // that does not exist anywhere in this codebase -- exactly like
+    // Camouflage, it is a genuinely flat/identity-shaped, no-choice,
+    // no-magnitude grant. Below the level-17 gate this is a correct
+    // level-gate absence (value 0); at or above it, it is a bounded
+    // grant-only identity record (value 0, non-fabricated): no
+    // terrain-classification engine and no Stealth-check-execution engine
+    // exists anywhere in this codebase to determine whether the ranger is
+    // actually within a favored terrain while observed, so only the grant
+    // itself is recorded.
+    if level < RANGER_HIDE_IN_PLAIN_SIGHT_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.hide_in_plain_sight".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Hide in Plain Sight at ranger level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant Stealth-while-observed \
+                 identity is named but not computed. Hide in Plain Sight is a 17th-level ranger \
+                 class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.hide_in_plain_sight".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Hide in Plain Sight granted at ranger level {level} (PF1 Core \
+                 Rulebook, 17th-level ranger class feature): while in any of his favored \
+                 terrains, the ranger can use the Stealth skill even while being observed. \
+                 This is a bounded grant-only identity record (value 0, non-fabricated): no \
+                 terrain-classification engine and no Stealth-check-execution engine exists \
+                 anywhere in this codebase to determine whether the ranger is actually within a \
+                 favored terrain while observed, so this only records the grant itself"
+            ),
+        });
+    }
+
     // Grounded (SD18 cycle-2026-07-14T2300): Quarry, the 11th-level Ranger
     // "Special" column entry, verified independently against two primary PF1
     // sources (d20pfsrd and the Archives of Nethys aonprd.com mirror both
@@ -8686,7 +8754,12 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // primary sources, d20pfsrd and the Archives of Nethys aonprd.com
     // mirror, byte-for-byte agreement: the 2nd/3rd/4th-level columns stay
     // 3/2/1 unchanged, and the 1st-level column genuinely rises from 2 to
-    // 3). A "0" is a
+    // 3), and level 17 "4/3/2/1" (verified independently for the SD18
+    // level-17 widening cycle against three primary sources, d20pfsrd, the
+    // Archives of Nethys aonprd.com mirror, and legacy.aonprd.com, all
+    // byte-for-byte identical: the 2nd/3rd/4th-level columns stay 3/2/1
+    // unchanged, and the 1st-level column genuinely rises from 3 to 4). A
+    // "0" is a
     // genuine table entry (Wisdom-bonus-spells-only access), NOT an
     // absence — inaccessible spell levels ("—" columns) get no record at
     // all. Only the base counts are grounded: bonus spells per day from a
@@ -8704,6 +8777,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         14 => [Some(3), Some(2), Some(1), Some(1)],
         15 => [Some(3), Some(2), Some(2), Some(1)],
         16 => [Some(3), Some(3), Some(2), Some(1)],
+        17 => [Some(4), Some(3), Some(2), Some(1)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
