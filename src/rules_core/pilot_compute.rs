@@ -9896,7 +9896,27 @@ const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // column); Trap Sense stays +4 (14/3, next rise at level 15); Evasion,
 // Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not
 // re-derived.
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 14;
+// SD18 widening (cycle-2026-07-15T2900, tests/sd18_rogue_level15_widening.rs):
+// widens the gate to level 15, the loop's Rogue level-15 sweep landing,
+// verified independently against both primary sources (d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, which agree byte-for-byte): base
+// attack genuinely rises to +11 (15 * 3 / 4) and poor Fortitude/Will both
+// genuinely rise to +5 (15 / 3), while good Reflex STAYS +9 (15 / 2 + 2, an
+// integer-division coincidence with level 14); the level-15 "Special"
+// column reads only "Sneak attack +8d6, trap sense +5" — both entries are
+// tier-rises on already-grounded formula pillars, not new class features:
+// the sneak-attack die-count formula ((level + 1) / 2) genuinely rises to 8
+// (8d6), up from 7d6 at level 14, and the Trap Sense flat-magnitude formula
+// (level / 3) genuinely rises to +5, up from +4 at level 14; Trapfinding
+// stays 7 (max(15/2, 1), an integer-division coincidence with level 14);
+// level 15 is NOT a rogue-talent level (talents land at
+// 2/4/6/8/10/12/14/16...), so no eighth talent choice-slot record is
+// grounded or fabricated either; Evasion, Uncanny Dodge, and Improved
+// Uncanny Dodge all stay granted, not re-derived. This is the cleanest
+// possible widening shape, mirroring the Barbarian level-15 landing: zero
+// new record types, zero new named pillars, zero new choice slots — the
+// ONLY production-code change is this ceiling raise.
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 15;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
