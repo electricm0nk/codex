@@ -1,48 +1,43 @@
-//! SD18 Rogue level-13 widening grounding proof.
+//! SD18 Rogue level-14 widening grounding proof.
 //!
-//! Widens the accepted Human Rogue level-1..level-12 chassis
-//! (`tests/sd18_rogue_level12_widening.rs`, the loop's most recent Rogue
-//! ceiling) to Rogue level 13 -- the first §3.2 level-13 widening attempted
-//! across any of the 11 core classes (all 11 landed level 12 as of
-//! cycle-2026-07-14T2244; this cycle opens the level-13 frontier), mirroring
-//! the sibling-class level-range-gate idiom (`supported_rogue_level` is
-//! generalized from `1..=12` to `1..=13` via `MAX_SUPPORTED_ROGUE_LEVEL =
-//! 13`, exactly as every prior level-11/level-12 cycle widened its own
+//! Widens the accepted Human Rogue level-1..level-13 chassis
+//! (`tests/sd18_rogue_level13_widening.rs`, the loop's most recent Rogue
+//! ceiling) to Rogue level 14, the loop's Rogue level-14 sweep landing,
+//! mirroring the sibling-class level-range-gate idiom (`supported_rogue_level`
+//! is generalized from `1..=13` to `1..=14` via `MAX_SUPPORTED_ROGUE_LEVEL =
+//! 14`, exactly as every prior level-11/12/13 cycle widened its own
 //! `MAX_SUPPORTED_<CLASS>_LEVEL`). Both PF1 CRB primary sources (d20pfsrd and
 //! the Archives of Nethys aonprd.com mirror) were read directly before
 //! writing any code or test, and both agree byte-for-byte:
 //!
-//! - level 13 base attack bonus STAYS +9 (`13 * 3 / 4 = 9`, an
-//!   integer-division coincidence with level 12) and all three base saves
-//!   also STAY unchanged: Fortitude +4 (`13 / 3 = 4`), Reflex +8
-//!   (`13 / 2 + 2 = 8`), Will +4 (`13 / 3 = 4`) -- all four checked directly
-//!   against both primary sources, not assumed.
-//! - the PF1 Core Rulebook Rogue class table's level-13 "Special" column
-//!   reads only "Sneak attack +7d6" (both primary sources agree) -- a
-//!   tier-rise on the already-grounded sneak-attack die-count formula
-//!   (`(level + 1) / 2`), which genuinely rises to `7` (i.e. `7d6`) at level
-//!   13, up from `6` (`6d6`) at level 12, via the same formula, not a new
-//!   record.
-//! - Trap Sense STAYS +4 (`13 / 3 = 4`, unchanged from level 12, its next
-//!   rise lands at 15th) and Trapfinding STAYS 6 (`max(13 / 2, 1) = 6`,
-//!   unchanged from level 12, another integer-division coincidence);
-//!   Evasion, Uncanny Dodge, and Improved Uncanny Dodge all stay granted,
-//!   not re-derived.
-//! - level 13 is NOT a rogue-talent level (talents land at 2, 4, 6, 8, 10,
-//!   12, ...; the next slot is level 14), verified independently rather than
-//!   assumed, so no seventh talent choice-slot record is grounded or
-//!   fabricated at level 13 either.
+//! - level 14 base attack bonus genuinely RISES to +10 (`14 * 3 / 4 = 10`,
+//!   up from 9 at level 13); Fortitude STAYS +4 (`14 / 3 = 4`, an
+//!   integer-division coincidence with level 13); Reflex genuinely RISES to
+//!   +9 (`14 / 2 + 2 = 9`, up from 8 at level 13); Will STAYS +4
+//!   (`14 / 3 = 4`, an integer-division coincidence) -- all four checked
+//!   directly against both primary sources, not assumed.
+//! - the PF1 Core Rulebook Rogue class table's level-14 "Special" column
+//!   reads only "Rogue talent" (both primary sources agree byte-for-byte):
+//!   level 14 IS a rogue-talent cadence level (talents land at
+//!   2/4/6/8/10/12/14), so a SEVENTH numbered choice-recognition slot
+//!   (`choice:rogue_talent_7`) is added, mirroring the proven open-ended
+//!   raw-string idiom used at slots 1-6 exactly -- no talent-list
+//!   validation, no talent-effect engine.
+//! - the sneak-attack die-count formula (`(level + 1) / 2`) STAYS 7
+//!   (`15 / 2 = 7`, an integer-division coincidence with level 13, matching
+//!   the level-14 "Special" column naming no sneak-attack rise); Trap Sense
+//!   STAYS +4 (`14 / 3 = 4`, unchanged from level 13, next rise at level
+//!   15); Trapfinding genuinely RISES to 7 (`max(14/2, 1) = 7`, up from 6 at
+//!   level 13, via its own independent formula -- this rise is not named in
+//!   the level-14 "Special" column); Evasion, Uncanny Dodge, and Improved
+//!   Uncanny Dodge all stay granted, not re-derived.
 //!
-//! This is the cleanest possible widening shape: the ONLY value that
-//! genuinely changes at level 13 is the sneak-attack die count, and that
-//! rise runs entirely through the pre-existing `(level + 1) / 2` formula --
-//! zero new record types, zero new named pillars, zero new choice slots.
-//! It deliberately does not touch the rogue-talent tree (standard or
-//! advanced), any check-execution engine, or sneak-attack damage
-//! application (all stay named-but-unproven, unchanged from levels 1-12),
-//! and it does not ground Rogue level 14+. It also preserves the accepted
-//! Rogue level-1..level-12 truth (unchanged), the Fighter negative control,
-//! and the multiclass negative control.
+//! This slice deliberately does not touch the rogue-talent tree's own
+//! effects (standard or advanced), any check-execution engine, or
+//! sneak-attack damage application (all stay named-but-unproven, unchanged
+//! from levels 1-13), and it does not ground Rogue level 15+. It also
+//! preserves the accepted Rogue level-1..level-13 truth (unchanged), the
+//! Fighter negative control, and the multiclass negative control.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
@@ -52,12 +47,12 @@ use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
 };
 
-const ROGUE_LEVEL12_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_rogue_level12_sd18_widening_deterministic_input.txt"
-);
-
 const ROGUE_LEVEL13_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_rogue_level13_sd18_widening_deterministic_input.txt"
+);
+
+const ROGUE_LEVEL14_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_rogue_level14_sd18_widening_deterministic_input.txt"
 );
 
 const FIGHTER_FIXTURE: &str = include_str!(
@@ -97,107 +92,101 @@ fn explanation<'a>(
         })
 }
 
-// ----- Base attack bonus and base saves stay unchanged at level 13 -----
+// ----- Base attack bonus and Reflex genuinely rise at level 14; Fortitude/Will stay -----
 
 #[test]
-fn rogue_level13_base_attack_bonus_and_saves_stay_unchanged() {
-    let input = load(ROGUE_LEVEL13_FIXTURE);
+fn rogue_level14_base_attack_bonus_and_reflex_genuinely_rise() {
+    let input = load(ROGUE_LEVEL14_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let base_attack = explanation(&computation, "class_chassis.rogue.base_attack_bonus");
     assert_eq!(
-        base_attack.value, 9,
-        "Rogue level 13 3/4-BAB progression (13 * 3 / 4) must stay 9, an integer-division \
-         coincidence with level 12: {}",
+        base_attack.value, 10,
+        "Rogue level 14 3/4-BAB progression (14 * 3 / 4) must genuinely rise to 10, up from 9 \
+         at level 13: {}",
         base_attack.detail
     );
 
     let fortitude = explanation(&computation, "class_chassis.rogue.base_save.fortitude");
     assert_eq!(
         fortitude.value, 4,
-        "Rogue level 13 poor Fortitude (13/3) must stay 4, unchanged from level 12"
+        "Rogue level 14 poor Fortitude (14/3) must stay 4, unchanged from level 13"
     );
 
     let reflex = explanation(&computation, "class_chassis.rogue.base_save.reflex");
     assert_eq!(
-        reflex.value, 8,
-        "Rogue level 13 good Reflex (13/2+2) must stay 8, unchanged from level 12"
+        reflex.value, 9,
+        "Rogue level 14 good Reflex (14/2+2) must genuinely rise to 9, up from 8 at level 13"
     );
 
     let will = explanation(&computation, "class_chassis.rogue.base_save.will");
     assert_eq!(
         will.value, 4,
-        "Rogue level 13 poor Will (13/3) must stay 4, unchanged from level 12"
+        "Rogue level 14 poor Will (14/3) must stay 4, unchanged from level 13"
     );
 }
 
-// ----- Sneak attack genuinely rises to 7d6 (matches the level-13 Special column) -----
+// ----- Sneak attack stays 7d6 (matches the level-14 Special column naming only "Rogue talent") -----
 
 #[test]
-fn rogue_level13_sneak_attack_genuinely_rises() {
-    let input = load(ROGUE_LEVEL13_FIXTURE);
+fn rogue_level14_sneak_attack_stays_unchanged() {
+    let input = load(ROGUE_LEVEL14_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let sneak_attack = explanation(&computation, "class_chassis.rogue.sneak_attack");
     assert_eq!(
         sneak_attack.value, 7,
-        "Rogue level 13 sneak attack die count ((13 + 1) / 2) must genuinely rise to 7 (7d6), \
-         up from 6 at level 12, per the PF1 Core Rulebook Rogue class table's level-13 \
-         'Special' column ('Sneak attack +7d6'): {}",
+        "Rogue level 14 sneak attack die count ((14 + 1) / 2) must stay 7 (7d6), unchanged \
+         from level 13, an integer-division coincidence, per the PF1 Core Rulebook Rogue class \
+         table's level-14 'Special' column naming only 'Rogue talent': {}",
         sneak_attack.detail
     );
 }
 
-// ----- Trap Sense and Trapfinding stay unchanged at level 13 -----
+// ----- Trap Sense stays unchanged; Trapfinding genuinely rises at level 14 -----
 
 #[test]
-fn rogue_level13_trap_sense_and_trapfinding_stay_unchanged() {
-    let input = load(ROGUE_LEVEL13_FIXTURE);
+fn rogue_level14_trap_sense_stays_and_trapfinding_genuinely_rises() {
+    let input = load(ROGUE_LEVEL14_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let trap_sense = explanation(&computation, ROGUE_TRAP_SENSE_ID);
     assert_eq!(
         trap_sense.value, 4,
-        "Rogue level 13 Trap Sense (13 / 3) must stay +4, unchanged from level 12 -- the next \
+        "Rogue level 14 Trap Sense (14 / 3) must stay +4, unchanged from level 13 -- the next \
          rise lands at level 15: {}",
         trap_sense.detail
     );
 
     let trapfinding = explanation(&computation, "class_chassis.rogue.trapfinding");
     assert_eq!(
-        trapfinding.value, 6,
-        "Rogue level 13 Trapfinding (max(13/2, 1)) must stay 6, unchanged from level 12: {}",
+        trapfinding.value, 7,
+        "Rogue level 14 Trapfinding (max(14/2, 1)) must genuinely rise to 7, up from 6 at \
+         level 13: {}",
         trapfinding.detail
     );
 }
 
-// ----- No seventh talent choice slot at level 13 (not a talent level) -----
+// ----- The seventh talent choice slot appears at level 14 (a talent level) -----
 
 #[test]
-fn rogue_level13_does_not_surface_a_seventh_talent_slot() {
-    let input = load(ROGUE_LEVEL13_FIXTURE);
+fn rogue_level14_surfaces_the_seventh_talent_slot() {
+    let input = load(ROGUE_LEVEL14_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id == "class_chassis.rogue.talent_7_choice"),
-        "level 13 is not a rogue-talent level (talents land at 2/4/6/8/10/12/14/...), so no \
-         seventh talent choice slot may be fabricated: {:?}",
-        computation.explanations
-    );
+    let slot_7 = explanation(&computation, "class_chassis.rogue.talent_7_choice");
+    assert_eq!(slot_7.value, 0, "the seventh talent slot must be a +0 recognition record");
 
     // The sixth slot, selected at level 12, stays recognized (not re-derived).
     let slot_6 = explanation(&computation, "class_chassis.rogue.talent_6_choice");
     assert_eq!(slot_6.value, 0, "the sixth talent slot must stay a +0 recognition record");
 }
 
-// ----- Granted features stay granted at level 13 -----
+// ----- Granted features stay granted at level 14 -----
 
 #[test]
-fn rogue_level13_still_recognizes_the_granted_feature_records() {
-    let input = load(ROGUE_LEVEL13_FIXTURE);
+fn rogue_level14_still_recognizes_the_granted_feature_records() {
+    let input = load(ROGUE_LEVEL14_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     for id in [
@@ -208,34 +197,38 @@ fn rogue_level13_still_recognizes_the_granted_feature_records() {
         let record = explanation(&computation, id);
         assert_eq!(
             record.value, 0,
-            "'{id}' must stay a granted +0 identity record at level 13"
+            "'{id}' must stay a granted +0 identity record at level 14"
         );
     }
 }
 
-// ----- Negative control: the level-12 fixture is unaffected by this widening -----
+// ----- Negative control: the level-13 fixture is unaffected by this widening -----
 
 #[test]
-fn rogue_level12_truth_is_unchanged_by_this_slice() {
-    let input = load(ROGUE_LEVEL12_FIXTURE);
+fn rogue_level13_truth_is_unchanged_by_this_slice() {
+    let input = load(ROGUE_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let sneak_attack = explanation(&computation, "class_chassis.rogue.sneak_attack");
-    assert_eq!(sneak_attack.value, 6, "Rogue level 12 sneak attack must stay 6d6");
+    assert_eq!(sneak_attack.value, 7, "Rogue level 13 sneak attack must stay 7d6");
 
     let base_attack = explanation(&computation, "class_chassis.rogue.base_attack_bonus");
-    assert_eq!(base_attack.value, 9, "Rogue level 12 base attack bonus must stay 9");
+    assert_eq!(base_attack.value, 9, "Rogue level 13 base attack bonus must stay 9");
+
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id == "class_chassis.rogue.talent_7_choice"),
+        "the level-13 fixture must not surface the seventh talent slot"
+    );
 }
 
 // ----- Negative control: level 15 stays claim-blocked (beyond the bounded L1-14 row) -----
-//
-// SD18 widening (cycle-2026-07-15T2000, tests/sd18_rogue_level14_widening.rs)
-// now genuinely recognizes level 14, so this boundary control moves to
-// level 15.
 
 #[test]
 fn rogue_level_15_stays_claim_blocked() {
-    let level_15 = ROGUE_LEVEL13_FIXTURE.replace("class:rogue:13", "class:rogue:15");
+    let level_15 = ROGUE_LEVEL14_FIXTURE.replace("class:rogue:14", "class:rogue:15");
     let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
 
@@ -256,7 +249,7 @@ fn rogue_level_15_stays_claim_blocked() {
 // ----- Negative control: the rogue path must not leak onto other classes -----
 
 #[test]
-fn fighter_does_not_gain_rogue_level13_recognition() {
+fn fighter_does_not_gain_rogue_level14_recognition() {
     let fighter = load(FIGHTER_FIXTURE);
     let fighter_computation = compute_pilot_base_chassis(&fighter);
     assert!(
@@ -273,10 +266,10 @@ fn fighter_does_not_gain_rogue_level13_recognition() {
 // ----- Negative control: multiclass Rogue is not promoted -----
 
 #[test]
-fn multiclass_rogue_level13_is_not_promoted_by_this_slice() {
-    let multiclass = ROGUE_LEVEL13_FIXTURE.replace(
-        "class_level=class:rogue:13",
-        "class_level=class:rogue:13\nclass_level=class:fighter:1",
+fn multiclass_rogue_level14_is_not_promoted_by_this_slice() {
+    let multiclass = ROGUE_LEVEL14_FIXTURE.replace(
+        "class_level=class:rogue:14",
+        "class_level=class:rogue:14\nclass_level=class:fighter:1",
     );
     let input = load(&multiclass);
     let computation = compute_pilot_base_chassis(&input);
@@ -295,10 +288,10 @@ fn multiclass_rogue_level13_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the matrix note names the level-13 widening -----
+// ----- Control plane: the matrix note names the level-14 widening -----
 
 #[test]
-fn matrix_rogue_row_names_level_13_widening() {
+fn matrix_rogue_row_names_level_14_widening() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let rogue = matrix
         .row("class.rogue.bounded_progression")
@@ -308,13 +301,13 @@ fn matrix_rogue_row_names_level_13_widening() {
     assert_eq!(rogue.evidence_tier, EvidenceTier::Computed);
     assert_eq!(rogue.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
-        rogue.grounding_ref.contains("sd18_rogue_level13_widening"),
-        "rogue row must cite the live SD18 level-13 widening proof surface: {}",
+        rogue.grounding_ref.contains("sd18_rogue_level14_widening"),
+        "rogue row must cite the live SD18 level-14 widening proof surface: {}",
         rogue.grounding_ref
     );
     let note = rogue.blocker_or_lossiness_note;
     assert!(
-        note.contains("level 13") || note.contains("level-13"),
-        "rogue partial note must name the level-13 widening: {note}"
+        note.contains("level 14") || note.contains("level-14"),
+        "rogue partial note must name the level-14 widening: {note}"
     );
 }
