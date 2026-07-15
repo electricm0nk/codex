@@ -252,11 +252,11 @@ fn rogue_level9_truth_is_unchanged_by_this_slice() {
 // too, so this boundary control moved again, to level 14. A further SD18
 // widening (cycle-2026-07-15T2000, tests/sd18_rogue_level14_widening.rs) now
 // genuinely recognizes level 14 too, so this boundary control moves again,
-// to level 15.
+// to level 16, per SD18 cycle-2026-07-15T2900 (tests/sd18_rogue_level15_widening.rs).
 #[test]
-fn rogue_level_15_is_not_promoted_by_this_slice() {
-    let level_15 = ROGUE_LEVEL10_FIXTURE.replace("class:rogue:10", "class:rogue:15");
-    let input = load(&level_15);
+fn rogue_level_16_is_not_promoted_by_this_slice() {
+    let level_16 = ROGUE_LEVEL10_FIXTURE.replace("class:rogue:10", "class:rogue:16");
+    let input = load(&level_16);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -264,7 +264,7 @@ fn rogue_level_15_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.rogue.")
                 || e.id.starts_with("class_feature.rogue.")),
-        "level-15 Rogue must not gain any bounded rogue explanation: {:?}",
+        "level-16 Rogue must not gain any bounded rogue explanation: {:?}",
         computation.explanations
     );
 }
