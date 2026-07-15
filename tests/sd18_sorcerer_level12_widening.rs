@@ -337,16 +337,16 @@ fn sorcerer_level11_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 16 stays unrecognized by this cycle -----
+// ----- Negative control: level 17 stays unrecognized by this cycle -----
 //
-// SD18 (tests/sd18_sorcerer_level15_widening.rs) further widened the bounded
-// tranche from level 14 to level 15, so this negative control now sits just
-// above the current bound (level 16) rather than at level 15.
+// SD18 (tests/sd18_sorcerer_level16_widening.rs) further widened the bounded
+// tranche from level 15 to level 16, so this negative control now sits just
+// above the current bound (level 17) rather than at level 16.
 
 #[test]
-fn sorcerer_level_16_is_not_promoted_by_this_slice() {
-    let level_16 = SORCERER_LEVEL12_FIXTURE.replace("class:sorcerer:12", "class:sorcerer:16");
-    let input = load(&level_16);
+fn sorcerer_level_17_is_not_promoted_by_this_slice() {
+    let level_17 = SORCERER_LEVEL12_FIXTURE.replace("class:sorcerer:12", "class:sorcerer:17");
+    let input = load(&level_17);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -354,7 +354,7 @@ fn sorcerer_level_16_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.sorcerer.")
                 || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-16 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+        "level-17 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
         computation.explanations
     );
 }
