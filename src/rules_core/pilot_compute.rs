@@ -355,9 +355,27 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // already level-generic and yields 6 at level 16 with no code change.
 // 16th is NOT a repeat-Mercy-grant level, so no sixth mercy slot is
 // added. The base spells-per-day table's level-16 row is "3/3/2/1": only
-// the 2nd-level column genuinely rises (from 2 to 3). Nothing here
-// grounds level 17+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 16;
+// the 2nd-level column genuinely rises (from 2 to 3). SD18
+// cycle-2026-07-15T10700 widens this once more to level 17: base attack
+// genuinely rises to 17 (full BAB) while ALL THREE base saves stay
+// numerically unchanged from level 16 (good Fortitude/Will 17/2+2=10,
+// poor Reflex 17/3=5, integer-division coincidences). The level-17
+// "Special" column reads only "Aura of righteousness" (verified
+// independently against d20pfsrd and the Archives of Nethys aonprd.com
+// mirror, byte-for-byte agreement, so a third source was not required)
+// -- a genuinely NEW class feature, grounded as a THIRD bounded
+// grant-only identity record mirroring the Aura of Justice / Aura of
+// Faith idiom exactly: no damage-reduction-application engine and no
+// compulsion-immunity-check engine exists anywhere in this codebase to
+// apply "DR 5/evil and immunity to compulsion spells and spell-like
+// abilities" to. 17th is NOT a repeat-Mercy-grant level, so no sixth
+// mercy slot is added. Smite Evil's uses-per-day formula stays 6/day
+// (an integer-division coincidence with level 16; the next rise lands
+// at level 19) while its damage bonus genuinely rises to 17. The base
+// spells-per-day table's level-17 row is "4/3/2/1": only the 1st-level
+// column genuinely rises (from 3 to 4). Nothing here grounds level 18+
+// Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 17;
 
 // Aura of Faith is a 14th-level paladin feature in the PF1 Core Rulebook
 // (verified independently against d20pfsrd, the Archives of Nethys
@@ -385,6 +403,18 @@ const PALADIN_AURA_OF_FAITH_LEVEL: u8 = 14;
 // smite-evil-resource-sharing execution engine exists anywhere in this
 // codebase to apply the shared smite to.
 const PALADIN_AURA_OF_JUSTICE_LEVEL: u8 = 11;
+
+// Aura of Righteousness is a 17th-level paladin feature in the PF1 Core
+// Rulebook (verified independently against d20pfsrd and the Archives of
+// Nethys aonprd.com mirror, both agreeing byte-for-byte): "At 17th level,
+// a paladin gains DR 5/evil and immunity to compulsion spells and
+// spell-like abilities." Below this level its honest computed surface is
+// its correct ABSENCE (value 0); at or above it, this slice grounds a
+// bounded GRANT-only identity record (mirroring the Aura of Justice /
+// Aura of Faith idiom exactly): no damage-reduction-application engine
+// and no compulsion-immunity-check engine exists anywhere in this
+// codebase to apply this to.
+const PALADIN_AURA_OF_RIGHTEOUSNESS_LEVEL: u8 = 17;
 
 // Lay on hands and divine grace are both 2nd-level paladin features in the PF1 Core
 // Rulebook. Below this level their honest computed surface is their correct
@@ -6739,6 +6769,37 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
+    // Aura of Righteousness: below the level-17 gate, this stays a correct
+    // PF1 Core Rulebook level-gate absence (value 0); at or above it (SD18
+    // level-17 widening), it transitions to a bounded GRANT-only identity
+    // record (mirroring the Aura of Justice / Aura of Faith idiom exactly).
+    // No damage-reduction-application engine and no compulsion-immunity-
+    // check engine exists anywhere in this codebase to apply this to.
+    if level < PALADIN_AURA_OF_RIGHTEOUSNESS_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_righteousness".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Righteousness at paladin level {level}: correctly absent at \
+                 level {level} by PF1 Core Rulebook level gate; the at-grant rule is named but \
+                 not computed. Aura of Righteousness is a 17th-level paladin class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_righteousness".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Righteousness granted at paladin level {level} (PF1 Core \
+                 Rulebook, 17th-level paladin class feature): \"At 17th level, a paladin \
+                 gains DR 5/evil and immunity to compulsion spells and spell-like abilities.\" \
+                 This is a bounded grant-only identity record only (value 0, non-fabricated): \
+                 no damage-reduction-application engine and no compulsion-immunity-check \
+                 engine exists anywhere in this codebase to apply this to."
+            ),
+        });
+    }
+
     // SD13-E5: ground the partial-caster IDENTITY itself as one more flat
     // level-gate record, distinct from the still-ungrounded spell burden
     // named below. PF1 Core Rulebook: effective caster level = max(paladin
@@ -6922,6 +6983,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         14 => [Some(3), Some(2), Some(1), Some(1)],
         15 => [Some(3), Some(2), Some(2), Some(1)],
         16 => [Some(3), Some(3), Some(2), Some(1)],
+        17 => [Some(4), Some(3), Some(2), Some(1)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {

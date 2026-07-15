@@ -386,24 +386,30 @@ fn paladin_level11_truth_is_unchanged_by_this_slice() {
     assert_eq!(base_2.value, 1, "Paladin level 11 2nd-level spell base count must stay 1");
 }
 
-// ----- Negative control: level 15 stays unrecognized by this slice -----
+// ----- Negative control: level 18 stays unrecognized by this slice -----
 // (level 13 was later widened into the supported tranche by SD18's
-// cycle-2026-07-15T1800 widening slice, and level 14 by SD18's
-// cycle-2026-07-15T2500 widening slice; see
-// tests/sd18_paladin_level13_widening.rs and
-// tests/sd18_paladin_level14_widening.rs for their own boundaries.)
+// cycle-2026-07-15T1800 widening slice, level 14 by SD18's
+// cycle-2026-07-15T2500 widening slice, level 15 by SD18's
+// cycle-2026-07-15T4300 widening slice, level 16 by SD18's
+// cycle-2026-07-15T5400 widening slice, and level 17 by SD18's
+// cycle-2026-07-15T10700 widening slice; see
+// tests/sd18_paladin_level13_widening.rs,
+// tests/sd18_paladin_level14_widening.rs,
+// tests/sd18_paladin_level15_widening.rs,
+// tests/sd18_paladin_level16_widening.rs, and
+// tests/sd18_paladin_level17_widening.rs for their own boundaries.)
 
 #[test]
-fn paladin_level_17_is_not_promoted_by_this_slice() {
-    let level_17 = PALADIN_LEVEL12_FIXTURE.replace("class:paladin:12", "class:paladin:17");
-    let input = load(&level_17);
+fn paladin_level_18_is_not_promoted_by_this_slice() {
+    let level_18 = PALADIN_LEVEL12_FIXTURE.replace("class:paladin:12", "class:paladin:18");
+    let input = load(&level_18);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-17 Paladin must not gain any bounded paladin chassis explanation: {:?}",
+        "level-18 Paladin must not gain any bounded paladin chassis explanation: {:?}",
         computation.explanations
     );
 }

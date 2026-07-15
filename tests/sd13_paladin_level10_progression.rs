@@ -294,25 +294,31 @@ fn paladin_level9_truth_is_unchanged_by_this_slice() {
 // ----- Negative control: level 14 stays unrecognized by this slice -----
 // (level 11 was later widened into the supported tranche by SD18's
 // cycle-2026-07-13T2334 Aura of Justice slice, level 12 by SD18's
-// cycle-2026-07-15T0700 widening slice, and level 13 by SD18's
-// cycle-2026-07-15T1800 widening slice, and level 14 by SD18's
-// cycle-2026-07-15T2500 widening slice; see
+// cycle-2026-07-15T0700 widening slice, level 13 by SD18's
+// cycle-2026-07-15T1800 widening slice, level 14 by SD18's
+// cycle-2026-07-15T2500 widening slice, level 15 by SD18's
+// cycle-2026-07-15T4300 widening slice, level 16 by SD18's
+// cycle-2026-07-15T5400 widening slice, and level 17 by SD18's
+// cycle-2026-07-15T10700 widening slice; see
 // tests/sd18_paladin_level11_aura_of_justice.rs,
 // tests/sd18_paladin_level12_widening.rs,
-// tests/sd18_paladin_level13_widening.rs, and
-// tests/sd18_paladin_level14_widening.rs for their own boundaries.)
+// tests/sd18_paladin_level13_widening.rs,
+// tests/sd18_paladin_level14_widening.rs,
+// tests/sd18_paladin_level15_widening.rs,
+// tests/sd18_paladin_level16_widening.rs, and
+// tests/sd18_paladin_level17_widening.rs for their own boundaries.)
 
 #[test]
-fn paladin_level_17_is_not_promoted_by_this_slice() {
-    let level_17 = PALADIN_LEVEL10_FIXTURE.replace("class:paladin:10", "class:paladin:17");
-    let input = load(&level_17);
+fn paladin_level_18_is_not_promoted_by_this_slice() {
+    let level_18 = PALADIN_LEVEL10_FIXTURE.replace("class:paladin:10", "class:paladin:18");
+    let input = load(&level_18);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-17 Paladin must not gain any bounded paladin chassis explanation: {:?}",
+        "level-18 Paladin must not gain any bounded paladin chassis explanation: {:?}",
         computation.explanations
     );
 }
