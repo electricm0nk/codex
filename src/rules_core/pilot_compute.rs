@@ -1251,7 +1251,26 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// tier (their next tiers land at bard level 15 or 17, out of scope);
 /// Jack-of-All-Trades and the repeat Versatile Performance grant both
 /// carry over unchanged.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 12;
+///
+/// SD18 (cycle-2026-07-15T1700) widens the gate again to level 13, the
+/// loop's seventh §3.2 level-13 landing (after Rogue, Barbarian, Fighter,
+/// Ranger, Cleric, and Druid) and the first on a spontaneous
+/// (non-9-level) caster. All three primary sources (d20pfsrd, the
+/// Archives of Nethys aonprd.com mirror, and legacy.aonprd.com) agree
+/// byte-for-byte that the level-13 "Special" column is BLANK: base
+/// attack bonus and all three base saves stay numerically unchanged from
+/// level 12 (13*3/4=9, 13/3=4, 13/2+2=8, all integer-division
+/// coincidences), Bardic Knowledge stays 6 (max(13/2,1), also a
+/// coincidence), and the Fascinate DC stays 18 (10+13/2+CHA, since
+/// 13/2==12/2==6). The Bardic Performance rounds-per-day pool and the
+/// Fascinate affected-creature count both genuinely rise via their
+/// already-generic level-valued formulas. No new named class feature is
+/// granted, so this is a pure arithmetic-pillar widening: no new record
+/// is added, and the spontaneous spell-level-access ladder / base
+/// spells-per-day / spells-known table lookups stay at their
+/// pre-existing level-10 ceiling exactly as left by the level-11 and
+/// level-12 cycles (no 5th-level spell-access threshold is grounded).
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 13;
 /// PF1 Core Rulebook level gate at which Bard gains Soothing Performance
 /// (12th level, verified independently against two primary sources:
 /// d20pfsrd and the Archives of Nethys aonprd.com mirror both list

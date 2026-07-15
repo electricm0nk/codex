@@ -263,17 +263,18 @@ fn bard_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(rounds.value, 24, "Bard level 10 performance rounds must stay 24");
 }
 
-// ----- Negative control: level 13 stays unrecognized by this slice -----
-// (Bard level 12 was widened into scope by a later SD18 slice —
-// tests/sd18_bard_level12_widening.rs — so this negative control's boundary
-// moves from 12 to 13, mirroring the exact same boundary-move idiom applied
-// to tests/sd18_barbarian_level11_greater_rage.rs when
-// MAX_SUPPORTED_BARBARIAN_LEVEL widened from 11 to 12.)
+// ----- Negative control: level 14 stays unrecognized by this slice -----
+// (Bard level 12 and level 13 were widened into scope by later SD18 slices —
+// tests/sd18_bard_level12_widening.rs and tests/sd18_bard_level13_widening.rs
+// — so this negative control's boundary moves from 12 to 14, mirroring the
+// exact same boundary-move idiom applied to
+// tests/sd18_barbarian_level11_greater_rage.rs when
+// MAX_SUPPORTED_BARBARIAN_LEVEL widened past 11.)
 
 #[test]
-fn bard_level_13_is_not_promoted_by_this_slice() {
-    let level_13 = BARD_LEVEL11_FIXTURE.replace("class:bard:11", "class:bard:13");
-    let input = load(&level_13);
+fn bard_level_14_is_not_promoted_by_this_slice() {
+    let level_14 = BARD_LEVEL11_FIXTURE.replace("class:bard:11", "class:bard:14");
+    let input = load(&level_14);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -282,7 +283,7 @@ fn bard_level_13_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard"),
-        "level-13 Bard must not gain any bounded bard explanation: {:?}",
+        "level-14 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
 }
