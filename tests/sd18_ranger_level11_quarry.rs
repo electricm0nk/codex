@@ -350,9 +350,9 @@ fn ranger_level10_truth_is_unchanged_by_this_slice() {
 // genuinely recognizes Ranger level 15 too, so this boundary control moves
 // once more to level 16.
 #[test]
-fn ranger_level_16_is_not_promoted_by_this_slice() {
-    let level_16 = RANGER_LEVEL11_FIXTURE.replace("class:ranger:11", "class:ranger:16");
-    let input = load(&level_16);
+fn ranger_level_17_is_not_promoted_by_this_slice() {
+    let level_17 = RANGER_LEVEL11_FIXTURE.replace("class:ranger:11", "class:ranger:17");
+    let input = load(&level_17);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -360,7 +360,7 @@ fn ranger_level_16_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")
                 || e.id.starts_with("class_feature.ranger.")),
-        "level-16 Ranger must not gain any bounded ranger chassis explanation: {:?}",
+        "level-17 Ranger must not gain any bounded ranger chassis explanation: {:?}",
         computation.explanations
     );
 }
