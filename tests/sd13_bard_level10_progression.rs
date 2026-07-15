@@ -273,23 +273,23 @@ fn bard_level9_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 17 stays unrecognized by this slice -----
+// ----- Negative control: level 18 stays unrecognized by this slice -----
 //
 // This boundary was originally level 11 (the tranche-2 ceiling at the time
 // this test was written), then moved to level 12 by the SD18
 // bard-level11-inspire-widening cycle, then to level 13 by the SD18
 // bard-level12-widening cycle, then progressively further by every
-// subsequent SD18 bard level cycle. The SD18 bard-level16-widening cycle
-// widened `supported_bard_level` again to `1..=16` (see
-// `tests/sd18_bard_level16_widening.rs`), so the correct negative control
-// boundary for this file's own (level-10-era) baseline is now level 17,
+// subsequent SD18 bard level cycle. The SD18 bard-level17-widening cycle
+// widened `supported_bard_level` again to `1..=17` (see
+// `tests/sd18_bard_level17_widening.rs`), so the correct negative control
+// boundary for this file's own (level-10-era) baseline is now level 18,
 // mirroring exactly how every prior sibling class's own level-16 cycle moved
 // its own sibling negative control's boundary up by one level.
 
 #[test]
-fn bard_level_17_is_not_promoted_by_this_slice() {
-    let level_17 = BARD_LEVEL10_FIXTURE.replace("class:bard:10", "class:bard:17");
-    let input = load(&level_17);
+fn bard_level_18_is_not_promoted_by_this_slice() {
+    let level_18 = BARD_LEVEL10_FIXTURE.replace("class:bard:10", "class:bard:18");
+    let input = load(&level_18);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -298,7 +298,7 @@ fn bard_level_17_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard"),
-        "level-17 Bard must not gain any bounded bard explanation: {:?}",
+        "level-18 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
 }
