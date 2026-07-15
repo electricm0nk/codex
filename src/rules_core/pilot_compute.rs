@@ -2373,7 +2373,7 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // Touch of Good's bonus genuinely rises to 5 (10 / 2) via the same
 // half-cleric-level formula; both domain-power uses-per-day pools stay
 // level-independent; no new pillar is grounded.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 13;
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 14;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -11689,7 +11689,25 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// assumed) — so two pillars whose underlying formulas genuinely change
 /// (Channel Energy dice, domain spell slot count) are widened; no new
 /// pillar record is added at level 13 either, since no other class feature
-/// is named in the level-13 Special column. It only:
+/// is named in the level-13 Special column. An SD18 slice
+/// (`cycle-2026-07-15T2300`, mirroring `cycle-2026-07-15T1900`'s Barbarian,
+/// `cycle-2026-07-15T2000`'s Fighter and Rogue, and `cycle-2026-07-15T2100`'s
+/// Ranger level-14 widenings) widens the gate again to 1..=14
+/// (`MAX_SUPPORTED_CLERIC_LEVEL = 14`): the class table's level-14 "Special"
+/// column is genuinely BLANK (verified independently against d20pfsrd,
+/// Archives of Nethys aonprd.com, and legacy.aonprd.com, all three
+/// byte-for-byte identical) — base attack bonus genuinely rises to +10
+/// (`14 * 3 / 4 = 10`), both good saves genuinely rise to +9
+/// (`14 / 2 + 2 = 9`), and the Good domain's Touch of Good sacred bonus
+/// genuinely rises to 7 (`14 / 2 = 7`), all via the same pre-existing
+/// formulas, not re-derived, while poor Reflex stays +4 (`14 / 3 = 4`),
+/// Channel Energy's die count stays 7d6 (`(14 + 1) / 2 = 7`, the odd-level
+/// cadence's next rise landing at 15th), and the domain spell slot count
+/// stays 7 (a level-14 cleric still casts only up to 7th-level cleric
+/// spells; 8th-level cleric spells first appear at level 15) — all
+/// integer-division coincidences, checked not assumed — so no new pillar
+/// record is added at level 14 either, since no class feature is named in
+/// the level-14 Special column. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
