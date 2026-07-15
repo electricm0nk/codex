@@ -316,8 +316,36 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // (`PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`) for the first
 // time, mirroring the Ranger level-13 widening's identical table shape
 // (Paladin and Ranger share the same PF1 CRB spells-per-day table).
-// Nothing here grounds level 14+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 13;
+// SD18 cycle-2026-07-15T2500 widens this once more to level 14: base
+// attack genuinely rises to 14 and, unlike level 13, ALL THREE base saves
+// genuinely rise too (good Fortitude/Will 14/2+2=9, poor Reflex 14/3=4,
+// an integer-division coincidence with level 13); the level-14 "Special"
+// column reads only "Aura of faith" (verified independently against
+// d20pfsrd, the Archives of Nethys aonprd.com mirror, and
+// legacy.aonprd.com, all three agreeing byte-for-byte) -- a genuinely NEW
+// class feature, grounded as a bounded grant-only identity record
+// (class_chassis.paladin.aura_of_faith), mirroring the Aura of Justice /
+// Monk Diamond Body idiom exactly. 14th is NOT a repeat-Mercy-grant
+// level, so no fifth mercy slot is added. The base spells-per-day
+// table's level-14 row is "3/2/1/1": only the 4th-level column genuinely
+// rises (from 0 to 1), the first castable 4th-level paladin spell slot.
+// Nothing here grounds level 15+ Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 14;
+
+// Aura of Faith is a 14th-level paladin feature in the PF1 Core Rulebook
+// (verified independently against d20pfsrd, the Archives of Nethys
+// aonprd.com mirror, and legacy.aonprd.com, all three agreeing
+// byte-for-byte): "At 14th level, a paladin's weapons are treated as
+// good-aligned for the purposes of overcoming damage reduction.
+// Additionally, any attack made against an enemy within 10 feet of her is
+// treated as good-aligned for the purposes of overcoming damage
+// reduction." Below this level its honest computed surface is its
+// correct ABSENCE (value 0); at or above it, this slice grounds a
+// bounded GRANT-only identity record (mirroring the Aura of Justice /
+// Monk Diamond Body idiom exactly): no alignment-treatment execution
+// engine and no damage-reduction-overcoming resolution engine exists
+// anywhere in this codebase to apply this to.
+const PALADIN_AURA_OF_FAITH_LEVEL: u8 = 14;
 
 // Aura of Justice is an 11th-level paladin feature in the PF1 Core Rulebook
 // (verified independently against d20pfsrd and legacy.aonprd.com): "At 11th
@@ -5965,6 +5993,40 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
+    // Aura of Faith: below the level-14 gate, this stays a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it (SD18 level-14
+    // widening), it transitions to a bounded GRANT-only identity record
+    // (mirroring the Aura of Justice / Monk Diamond Body idiom exactly). No
+    // alignment-treatment execution engine and no damage-reduction-
+    // overcoming resolution engine exists anywhere in this codebase to
+    // apply this to.
+    if level < PALADIN_AURA_OF_FAITH_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_faith".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Faith at paladin level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Aura of Faith is a 14th-level paladin class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_faith".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Faith granted at paladin level {level} (PF1 Core Rulebook, \
+                 14th-level paladin class feature): \"At 14th level, a paladin's weapons are \
+                 treated as good-aligned for the purposes of overcoming damage reduction. \
+                 Additionally, any attack made against an enemy within 10 feet of her is \
+                 treated as good-aligned for the purposes of overcoming damage reduction.\" \
+                 This is a bounded grant-only identity record only (value 0, non-fabricated): \
+                 no alignment-treatment execution engine and no damage-reduction-overcoming \
+                 resolution engine exists anywhere in this codebase to apply this to."
+            ),
+        });
+    }
+
     // SD13-E5: ground the partial-caster IDENTITY itself as one more flat
     // level-gate record, distinct from the still-ungrounded spell burden
     // named below. PF1 Core Rulebook: effective caster level = max(paladin
@@ -6113,11 +6175,16 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // "0" at level 13 on the 4th-level column, rejected as a known
     // tool-extraction artifact since spells-per-day tables never decrease
     // with level, and the accepted 2/2/1/— -> 3/2/1/0 pairing matches the
-    // already-landed Ranger level-13 widening's identical table shape). A
-    // "0" is a genuine table entry (bonus-spells-only access), NOT an
-    // absence — inaccessible spell levels ("—" columns) get no record at
-    // all. Only the base counts are grounded: bonus spells per day from a
-    // high Charisma are never computed.
+    // already-landed Ranger level-13 widening's identical table shape), and
+    // (SD18 cycle-2026-07-15T2500) level 14 "3/2/1/1" — verified
+    // independently against d20pfsrd, the Archives of Nethys aonprd.com
+    // mirror, and legacy.aonprd.com, all three agreeing byte-for-byte with
+    // no self-contradictory fetches this time: only the 4th-level column
+    // genuinely rises (from 0 to 1), the first castable 4th-level paladin
+    // spell slot. A "0" is a genuine table entry (bonus-spells-only
+    // access), NOT an absence — inaccessible spell levels ("—" columns)
+    // get no record at all. Only the base counts are grounded: bonus
+    // spells per day from a high Charisma are never computed.
     let paladin_base_spells_per_day: [Option<i16>; 4] = match level {
         4 => [Some(0), None, None, None],
         5 | 6 => [Some(1), None, None, None],
@@ -6128,6 +6195,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         11 => [Some(2), Some(1), Some(1), None],
         12 => [Some(2), Some(2), Some(1), None],
         13 => [Some(3), Some(2), Some(1), Some(0)],
+        14 => [Some(3), Some(2), Some(1), Some(1)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {

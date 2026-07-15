@@ -386,22 +386,24 @@ fn paladin_level11_truth_is_unchanged_by_this_slice() {
     assert_eq!(base_2.value, 1, "Paladin level 11 2nd-level spell base count must stay 1");
 }
 
-// ----- Negative control: level 14 stays unrecognized by this slice -----
+// ----- Negative control: level 15 stays unrecognized by this slice -----
 // (level 13 was later widened into the supported tranche by SD18's
-// cycle-2026-07-15T1800 widening slice; see
-// tests/sd18_paladin_level13_widening.rs for its own boundary.)
+// cycle-2026-07-15T1800 widening slice, and level 14 by SD18's
+// cycle-2026-07-15T2500 widening slice; see
+// tests/sd18_paladin_level13_widening.rs and
+// tests/sd18_paladin_level14_widening.rs for their own boundaries.)
 
 #[test]
-fn paladin_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = PALADIN_LEVEL12_FIXTURE.replace("class:paladin:12", "class:paladin:14");
-    let input = load(&level_14);
+fn paladin_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = PALADIN_LEVEL12_FIXTURE.replace("class:paladin:12", "class:paladin:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-14 Paladin must not gain any bounded paladin chassis explanation: {:?}",
+        "level-15 Paladin must not gain any bounded paladin chassis explanation: {:?}",
         computation.explanations
     );
 }
