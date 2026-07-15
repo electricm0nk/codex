@@ -277,14 +277,16 @@ fn ranger_level9_truth_is_unchanged_by_this_slice() {
 // tests/sd18_ranger_level14_widening.rs) now genuinely recognizes Ranger
 // level 14 too (base attack and both good saves rise, the fourth
 // combat-style bonus feat and the base spells-per-day table's 4th-level
-// column are newly grounded), and again to level 15 (base attack rises,
+// column are newly grounded), again to level 15 (base attack rises,
 // poor Will rises, the fourth favored enemy and the base spells-per-day
-// table's 3rd-level column rise are newly grounded), so this boundary
-// control moves once more to level 16.
+// table's 3rd-level column rise are newly grounded), and again to level 16
+// (base attack and both good saves rise, Improved Evasion and the base
+// spells-per-day table's 1st-level column rise are newly grounded), so
+// this boundary control moves once more to level 17.
 #[test]
-fn ranger_level_16_is_not_promoted_by_this_slice() {
-    let level_16 = RANGER_LEVEL10_FIXTURE.replace("class:ranger:10", "class:ranger:16");
-    let input = load(&level_16);
+fn ranger_level_17_is_not_promoted_by_this_slice() {
+    let level_17 = RANGER_LEVEL10_FIXTURE.replace("class:ranger:10", "class:ranger:17");
+    let input = load(&level_17);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -292,7 +294,7 @@ fn ranger_level_16_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")
                 || e.id.starts_with("class_feature.ranger.")),
-        "level-16 Ranger must not gain any bounded ranger explanation: {:?}",
+        "level-17 Ranger must not gain any bounded ranger explanation: {:?}",
         computation.explanations
     );
 }

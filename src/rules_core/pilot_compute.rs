@@ -619,8 +619,25 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // Rulebook's own Combat Style feat lists (Archery, Two-Weapon Combat) do
 // not tabulate any named options beyond the 10th-level tier, verified
 // independently against three sources dedicated to the combat-style feat
-// lists themselves. Nothing here grounds level 15+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 15;
+// lists themselves. A still later SD18 slice (cycle-2026-07-15T4000) widens
+// the gate once more to level 15: base attack bonus genuinely rises to 15
+// (full BAB) while both good saves stay 9 (15/2+2, an integer-division
+// coincidence with level 14) and poor Will genuinely rises to 5 (15/3, up
+// from 4); the level-15 "Special" column reads "4th favored enemy" — the
+// Favored Enemy rule's own 15th-level interval, the exact structural mirror
+// of the already-grounded 10th-level interval — plus the base
+// spells-per-day table's own level-15 row (3/2/2/1, the 3rd-level column
+// genuinely rising from 1 to 2). A still later SD18 slice
+// (cycle-2026-07-15T6100) widens the gate once more to level 16: base
+// attack bonus genuinely rises to 16 (full BAB) and both good saves
+// genuinely rise to 10 (16/2+2), while poor Will stays 5 (16/3, an
+// integer-division coincidence); the level-16 "Special" column reads
+// "Improved evasion" (`RANGER_IMPROVED_EVASION_LEVEL`) — grounded as a
+// bounded +0 identity/recognition record, mirroring Monk's own Improved
+// Evasion and Ranger's own base Evasion idiom exactly — plus the base
+// spells-per-day table's own level-16 row (3/3/2/1, the 1st-level column
+// genuinely rising from 2 to 3). Nothing here grounds level 17+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 16;
 
 /// PF1 Core Rulebook level gate at which Camouflage is granted (verified
 /// independently against two primary sources: both d20pfsrd and the
@@ -665,6 +682,20 @@ const RANGER_SWIFT_TRACKER_LEVEL: u8 = 8;
 /// legacy.aonprd.com both list "Evasion" as the Ranger 9th-level "Special"
 /// column entry — the same rule text as Rogue's and Monk's own Evasion).
 const RANGER_EVASION_LEVEL: u8 = 9;
+
+/// PF1 Core Rulebook level gate at which Ranger gains Improved Evasion (16th
+/// level, verified independently against two primary sources: d20pfsrd and
+/// the Archives of Nethys aonprd.com mirror both list "Improved evasion" as
+/// the Ranger 16th-level "Special" column entry, byte-for-byte agreement).
+/// An upgrade of the 9th-level Evasion identity: the ranger still takes no
+/// damage on a successful Reflex save, and henceforth takes only HALF
+/// damage on a failed save. Grounded as a bounded +0 identity/recognition
+/// record only at/above the gate, mirroring exactly how Monk's own
+/// Improved Evasion (`MONK_IMPROVED_EVASION_LEVEL`) and Ranger's own base
+/// Evasion (`RANGER_EVASION_LEVEL`) were grounded — no
+/// saving-throw-resolution or damage-resolution engine exists anywhere in
+/// this codebase, so no damage math is fabricated from the record.
+const RANGER_IMPROVED_EVASION_LEVEL: u8 = 16;
 
 /// PF1 Core Rulebook level gate at which Ranger gains Quarry (11th level,
 /// verified independently against two primary sources: d20pfsrd and the
@@ -8396,6 +8427,37 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         });
     }
 
+    // Grounded (SD18 cycle-2026-07-15T6100): Improved Evasion, the 16th-level
+    // Ranger class feature verified independently against two primary PF1
+    // sources (d20pfsrd and the Archives of Nethys aonprd.com mirror both
+    // list "Improved evasion" as the Ranger 16th-level "Special" entry,
+    // byte-for-byte agreement). An upgrade of the 9th-level Evasion identity:
+    // the ranger still takes no damage on a successful Reflex save, and
+    // henceforth takes only HALF damage on a failed save. Grounded as a
+    // bounded +0 identity/recognition record only at/above the gate,
+    // mirroring exactly how Monk's own Improved Evasion and Ranger's own
+    // base Evasion were grounded — no saving-throw-resolution or
+    // damage-resolution engine exists in this codebase, so no damage math is
+    // fabricated from the record. Below the level-16 gate no record is
+    // pushed at all (the level-15 slice's own level-16 negative control
+    // pinned that absence).
+    if level >= RANGER_IMPROVED_EVASION_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.improved_evasion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Improved Evasion granted at ranger level {level} (PF1 Core Rulebook, \
+                 16th-level ranger class feature): the ranger's evasion improves — he still \
+                 takes no damage on a successful Reflex saving throw against attacks, and \
+                 henceforth takes only half damage on a failed save. This is a bounded \
+                 identity/recognition record only (value 0, non-fabricated): no \
+                 saving-throw-resolution engine and no damage-resolution engine exists anywhere \
+                 in this codebase to apply it, so this grounds no actual damage reduction on \
+                 any save outcome"
+            ),
+        });
+    }
+
     // Grounded (SD18 cycle-2026-07-14T2300): Quarry, the 11th-level Ranger
     // "Special" column entry, verified independently against two primary PF1
     // sources (d20pfsrd and the Archives of Nethys aonprd.com mirror both
@@ -8619,7 +8681,12 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // cycle against two primary sources, d20pfsrd and the Archives of
     // Nethys aonprd.com mirror, byte-for-byte agreement: the 1st/2nd/4th-
     // level columns stay 3/2/1 unchanged, and the 3rd-level column
-    // genuinely rises from 1 to 2). A "0" is a
+    // genuinely rises from 1 to 2), and level 16 "3/3/2/1" (verified
+    // independently for the SD18 level-16 widening cycle against two
+    // primary sources, d20pfsrd and the Archives of Nethys aonprd.com
+    // mirror, byte-for-byte agreement: the 2nd/3rd/4th-level columns stay
+    // 3/2/1 unchanged, and the 1st-level column genuinely rises from 2 to
+    // 3). A "0" is a
     // genuine table entry (Wisdom-bonus-spells-only access), NOT an
     // absence — inaccessible spell levels ("—" columns) get no record at
     // all. Only the base counts are grounded: bonus spells per day from a
@@ -8636,6 +8703,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         13 => [Some(3), Some(2), Some(1), Some(0)],
         14 => [Some(3), Some(2), Some(1), Some(1)],
         15 => [Some(3), Some(2), Some(2), Some(1)],
+        16 => [Some(3), Some(3), Some(2), Some(1)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
