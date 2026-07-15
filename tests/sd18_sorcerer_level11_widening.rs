@@ -308,17 +308,17 @@ fn sorcerer_level10_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 17 stays unrecognized by this cycle -----
+// ----- Negative control: level 18 stays unrecognized by this cycle -----
 //
-// SD18 widened Sorcerer support to level 16 (tests/sd18_sorcerer_level16_widening.rs),
-// so this boundary moved from 16 to 17, mirroring the exact same boundary move every
-// other Barbarian/Bard/Cleric/Druid/Fighter/Paladin/Rogue/Ranger level-15
+// SD18 widened Sorcerer support to level 17 (tests/sd18_sorcerer_level17_widening.rs),
+// so this boundary moved from 17 to 18, mirroring the exact same boundary move every
+// other Barbarian/Bard/Cleric/Druid/Fighter/Paladin/Rogue/Ranger level-16
 // widening cycle made to its own sibling level-11 widening test.
 
 #[test]
-fn sorcerer_level_17_is_not_promoted_by_this_slice() {
-    let level_17 = SORCERER_LEVEL11_FIXTURE.replace("class:sorcerer:11", "class:sorcerer:17");
-    let input = load(&level_17);
+fn sorcerer_level_18_is_not_promoted_by_this_slice() {
+    let level_18 = SORCERER_LEVEL11_FIXTURE.replace("class:sorcerer:11", "class:sorcerer:18");
+    let input = load(&level_18);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -326,7 +326,7 @@ fn sorcerer_level_17_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.sorcerer.")
                 || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-17 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+        "level-18 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
         computation.explanations
     );
 }
