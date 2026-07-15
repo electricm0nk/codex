@@ -343,8 +343,21 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // cited tier text names no new mercy condition, only the fifth pick from
 // the existing pool. The base spells-per-day table's level-15 row is
 // "3/2/2/1": only the 3rd-level column genuinely rises (from 1 to 2).
-// Nothing here grounds level 16+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 15;
+// SD18 cycle-2026-07-15T5400 widens this once more to level 16: base
+// attack genuinely rises to 16 (full BAB) and, unlike level 15, BOTH good
+// saves genuinely rise too (Fortitude/Will 16/2+2=10, up from 9), while
+// poor Reflex stays numerically unchanged at 5 (16/3, an
+// integer-division coincidence with level 15). The level-16 "Special"
+// column reads only "Smite evil 6/day" (verified independently against
+// d20pfsrd and the Archives of Nethys aonprd.com mirror, byte-for-byte
+// agreement, so a third source was not required) -- this is NOT a new
+// named feature: the pre-existing smite-evil-uses-per-day formula is
+// already level-generic and yields 6 at level 16 with no code change.
+// 16th is NOT a repeat-Mercy-grant level, so no sixth mercy slot is
+// added. The base spells-per-day table's level-16 row is "3/3/2/1": only
+// the 2nd-level column genuinely rises (from 2 to 3). Nothing here
+// grounds level 17+ Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 16;
 
 // Aura of Faith is a 14th-level paladin feature in the PF1 Core Rulebook
 // (verified independently against d20pfsrd, the Archives of Nethys
@@ -6638,6 +6651,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         13 => [Some(3), Some(2), Some(1), Some(0)],
         14 => [Some(3), Some(2), Some(1), Some(1)],
         15 => [Some(3), Some(2), Some(2), Some(1)],
+        16 => [Some(3), Some(3), Some(2), Some(1)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
