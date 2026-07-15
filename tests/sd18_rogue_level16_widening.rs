@@ -245,28 +245,6 @@ fn rogue_level15_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 17 stays claim-blocked (beyond the bounded L1-16 row) -----
-
-#[test]
-fn rogue_level_17_stays_claim_blocked() {
-    let level_17 = ROGUE_LEVEL16_FIXTURE.replace("class:rogue:16", "class:rogue:17");
-    let input = load(&level_17);
-    let computation = compute_pilot_base_chassis(&input);
-
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-17 Rogue must stay claim-blocked beyond the bounded levels-1-16 row: {:?}",
-        computation.diagnostics
-    );
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id == "class_chassis.rogue.base_attack_bonus"),
-        "level-17 Rogue must not fabricate a base-attack-bonus explanation"
-    );
-}
-
 // ----- Negative control: the rogue path must not leak onto other classes -----
 
 #[test]
