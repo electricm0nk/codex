@@ -2455,7 +2455,7 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // Touch of Good's bonus genuinely rises to 5 (10 / 2) via the same
 // half-cleric-level formula; both domain-power uses-per-day pools stay
 // level-independent; no new pillar is grounded.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 14;
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 15;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -2497,6 +2497,7 @@ const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7: i16 = 4;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9: i16 = 5;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11: i16 = 6;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_13: i16 = 7;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_15: i16 = 8;
 /// The cleric level at which 2nd-level cleric spells (and so the second domain
 /// spell slot) first become available, verified against the raw PF1 Core Rulebook
 /// Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com): level 2 shows
@@ -2545,6 +2546,22 @@ const CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 11;
 /// class table's level-13 "Special" column reads "Channel energy 7d6"), via
 /// the same pre-existing `(level + 1) / 2` formula, not re-derived.
 const CLERIC_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
+/// The cleric level at which 8th-level cleric spells (and so the eighth domain
+/// spell slot) first become available, verified against the raw PF1 Core
+/// Rulebook Cleric spells-per-day table rows: legacy.aonprd.com's full
+/// multi-row table extraction (levels 14-17 side by side) shows the 8th-level
+/// column as still "—" at level 14 and first non-"—" ("1+1") at level 15,
+/// internally consistent with the established every-other-odd-level cadence
+/// already grounded for the 2nd through 7th spell-level thresholds (3, 5, 7,
+/// 9, 11, 13). Two single-row summarized fetches (one from d20pfsrd, one from
+/// Archives of Nethys aonprd.com) disagreed with each other (claiming level
+/// 17 and level 16 respectively) in a way that broke that established
+/// cadence and were rejected as tool artifacts rather than treated as
+/// genuine source conflicts. This is also the cleric level at which Channel
+/// Energy's die count rises again (the class table's level-15 "Special"
+/// column reads "Channel energy 8d6"), via the same pre-existing
+/// `(level + 1) / 2` formula, not re-derived.
+const CLERIC_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 15;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
 // identity. Druid is a prepared divine caster whose bounded burden splits across
@@ -11925,7 +11942,30 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// spells; 8th-level cleric spells first appear at level 15) — all
 /// integer-division coincidences, checked not assumed — so no new pillar
 /// record is added at level 14 either, since no class feature is named in
-/// the level-14 Special column. It only:
+/// the level-14 Special column. An SD18 slice (`cycle-2026-07-15T3100`,
+/// mirroring `cycle-2026-07-15T2800`'s Barbarian, `cycle-2026-07-15T2900`'s
+/// Rogue, and `cycle-2026-07-15T3000`'s Fighter level-15 widenings, and the
+/// first §3.2 level-15 landing on a full 9-level-caster class) widens the
+/// gate again to 1..=15 (`MAX_SUPPORTED_CLERIC_LEVEL = 15`): the class
+/// table's level-15 "Special" column reads "Channel energy 8d6" (verified
+/// independently against two primary sources — d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror, byte-for-byte agreement) — Channel Energy's die
+/// count genuinely rises to 8d6 (`(15 + 1) / 2 = 8`, up from 7d6 at level
+/// 14) via the same pre-existing formula, not re-derived — and the domain
+/// spell slot count also genuinely rises, to 8 (a level-15 cleric casts
+/// 8th-level cleric spells for the first time, verified against
+/// legacy.aonprd.com's raw spells-per-day table rows after two single-row
+/// summarized fetches disagreed with each other and were rejected as tool
+/// artifacts, see `CLERIC_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`), while
+/// base attack bonus genuinely rises to +11 (`15 * 3 / 4 = 11`), base Reflex
+/// (poor save) genuinely rises to +5 (`15 / 3 = 5`), and both good saves
+/// stay +9 (`15 / 2 + 2 = 9`) and Touch of Good's bonus stays 7
+/// (`15 / 2 = 7`), integer-division coincidences with level 14, checked not
+/// assumed — so two pillars whose underlying formulas genuinely change
+/// (Channel Energy dice, domain spell slot count) are widened, plus the
+/// base-attack/base-save pillar; no new pillar record is added at level 15
+/// either, since the level-15 Special column names only the Channel Energy
+/// tier-rise, not a new class feature. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
@@ -12158,7 +12198,9 @@ fn explain_cleric_level1_spell_baseline(
     // primary sources' raw spells-per-day table rows), so the count genuinely
     // becomes 4 — one 1st-level, one 2nd-level, one 3rd-level, and one
     // 4th-level domain slot.
-    let domain_spell_slot_count = if level >= CLERIC_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+    let domain_spell_slot_count = if level >= CLERIC_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_15
+    } else if level >= CLERIC_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_13
     } else if level >= CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11
@@ -12210,6 +12252,10 @@ fn explain_cleric_level1_spell_baseline(
              d20pfsrd, Archives of Nethys aonprd.com, and legacy.aonprd.com, all three \
              byte-for-byte identical), so the flat count becomes \
              {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_13} (one each of 1st through 7th-level \
+             domain slots); at level {CLERIC_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a \
+             cleric also casts 8th-level cleric spells for the first time (verified against \
+             legacy.aonprd.com's raw spells-per-day table rows), so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_15} (one each of 1st through 8th-level \
              domain slots). At Cleric level {level} this is \
              {domain_spell_slot_count} domain spell slot(s). \
              This grounds only the flat slot count; it grounds no slot contents (which domain \
