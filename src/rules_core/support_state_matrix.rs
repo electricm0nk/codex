@@ -688,7 +688,8 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
     tests/sd13_wizard_level6_progression.rs + tests/sd13_wizard_level7_progression.rs + \
     tests/sd13_wizard_level8_progression.rs + tests/sd13_wizard_level9_progression.rs + \
     tests/sd13_wizard_level10_progression.rs + tests/sd18_wizard_level11_widening.rs + \
-    tests/sd18_wizard_level12_widening.rs + tests/sd18_wizard_level13_widening.rs";
+    tests/sd18_wizard_level12_widening.rs + tests/sd18_wizard_level13_widening.rs + \
+    tests/sd18_wizard_level14_widening.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -4386,21 +4387,34 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // spells first appear at level 9); Intense Spells' bonus-damage
                 // magnitude genuinely rises to 4 (max(8/2, 1) = 4); the level-8
                 // "Special" column is genuinely blank, so no new pillar is added.
+                // A further SD18 slice widens the gate to level 14 — the LAST of the
+                // 11 §3.2 classes to reach level 14 (Monk excluded, confirmed dead
+                // end at level 13): base attack bonus genuinely rises to +7 and good
+                // Will genuinely rises to +9 (poor Fortitude/Reflex stay +4, an
+                // integer-division coincidence with level 13); the specialist bonus
+                // slot flat count is checked rather than assumed and correctly STAYS
+                // at 7, since the raw spells-per-day table's level-14 row is
+                // "4/4/4/4/4/3/3/2" with the 8th-level column still "—" (8th-level
+                // spells first appear at level 15); Intense Spells' bonus-damage
+                // magnitude genuinely rises to 7 (max(14/2, 1) = 7); the level-14
+                // "Special" column is genuinely blank on all three primary sources
+                // checked (d20pfsrd, aonprd.com, legacy.aonprd.com), so no new
+                // pillar is added.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1/level-13 prepared arcane spell baseline, with base \
+                            Wizard level-1/level-14 prepared arcane spell baseline, with base \
                             attack bonus, base save progression, Scribe Scroll, the school \
                             specialization choice, the specialist-bonus-slot flat count (which \
                             becomes 2 at level 3, stays 2 at level 4, becomes 3 at level 5, stays \
                             3 at level 6, becomes 4 at level 7, stays 4 at level 8, becomes \
                             5 at level 9, stays 5 at level 10, becomes 6 at level 11, stays 6 \
-                            at level 12, and becomes 7 at level 13), and the \
+                            at level 12, becomes 7 at level 13, and stays 7 at level 14), and the \
                             Intense Spells / \
                             Force Missile school-power flat magnitudes (Intense Spells becomes 2 \
                             at level 4, stays 2 at level 5, becomes 3 at level 6, stays 3 at \
                             level 7, becomes 4 at level 8, stays 4 at level 9, becomes 5 at \
-                            level 10, stays 5 at level 11, becomes 6 at level 12, and stays 6 at \
-                            level 13) grounded for \
-                            real through level 13, \
+                            level 10, stays 5 at level 11, becomes 6 at level 12, stays 6 at \
+                            level 13, and becomes 7 at level 14) grounded for \
+                            real through level 14, \
                             and the school-power \
                             execution machinery, the opposed-school-cost burden, the level-5/ \
                             level-10 bonus-feat selection/execution, and the prepared spellbook / \
@@ -4676,7 +4690,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     pillar record is grounded at level 13 beyond widening the \
                     specialist-bonus-slot pillar to its new value. With this cycle, all 11 of 11 \
                     §3.2 core classes have now reached level 13 except Monk (a confirmed \
-                    permanent exception). The row is \
+                    permanent exception). AND a further SD18 slice (the LAST of the 11 §3.2 core \
+                    classes to reach level 14 — Monk excluded, confirmed dead end) widens the \
+                    level-range gate again (supported_wizard_level, 1..=14) and extends every one \
+                    of the formulas above to level 14 via the same formulas, without \
+                    re-derivation, verified independently against three primary sources \
+                    (d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                    legacy.aonprd.com, all byte-for-byte identical): level 14 base attack \
+                    GENUINELY RISES to +7 (14/2 = 7) and good Will GENUINELY RISES to +9 \
+                    (14/2+2 = 9), while poor Fortitude/Reflex STAY at +4 (14/3 = 4, an \
+                    integer-division coincidence with level 13); the specialist bonus slot flat \
+                    count is checked rather than assumed and correctly STAYS at 7, since the raw \
+                    spells-per-day table's level-14 row is \"4/4/4/4/4/3/3/2\" with the 8th-level \
+                    column still \"—\" (8th-level wizard spells do not become accessible until \
+                    level 15); Intense Spells' bonus-damage magnitude GENUINELY RISES to 7 \
+                    (max(14/2, 1) = 7); Force Missile's pool is level-independent and unchanged; \
+                    Scribe Scroll and the specialization choice stay recognized as already-held \
+                    grants; the level-14 \"Special\" column is genuinely blank on all three \
+                    primary sources (the Wizard's bonus feats land only at levels 5/10/15/20), so \
+                    no new pillar record is grounded at level 14 beyond widening the existing \
+                    arithmetic pillars — a pure ceiling raise needing no new tier constant. With \
+                    this cycle, all 11 of 11 §3.2 core classes have now reached level 14 except \
+                    Monk (a confirmed permanent exception). The row is \
                     Partial, not Supported: neither school power's \
                     execution machinery is implemented (no evocation spell-damage application for \
                     Intense Spells, no force-missile casting execution / 1d4 damage roll / \
@@ -4687,11 +4722,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     and the \
                     prepared spell posture burden (spellbook content, spells prepared per day, \
                     spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
-                    still entirely unproven. No spell math is fabricated and no Wizard level 14+ is \
+                    still entirely unproven. No spell math is fabricated and no Wizard level 15+ is \
                     proven",
                 next_required_uplift: "SD13-E5+ Wizard school-power execution and opposed-school \
                     preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-14+ progression (widening the now-grounded base \
+                    posture slice, then level-15+ progression (widening the now-grounded base \
                     attack/base save formulas)",
             },
             // ----- Interaction rows (2) -----

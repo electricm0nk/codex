@@ -235,20 +235,21 @@ fn wizard_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(bonus_damage.value, 4, "Wizard level 9 Intense Spells bonus damage must stay 4");
 }
 
-// ----- Negative control: level 14 stays unrecognized by this slice -----
-// (widened from level 10 to level 13 by the SD18 wizard-level11-widening,
-// wizard-level12-widening, and wizard-level13-widening cycles, which
-// genuinely promote levels 11, 12, and 13 — see
+// ----- Negative control: level 15 stays unrecognized by this slice -----
+// (widened from level 10 to level 14 by the SD18 wizard-level11-widening,
+// wizard-level12-widening, wizard-level13-widening, and wizard-level14-
+// widening cycles, which genuinely promote levels 11, 12, 13, and 14 — see
 // tests/sd18_wizard_level11_widening.rs, tests/sd18_wizard_level12_widening.rs,
-// and tests/sd18_wizard_level13_widening.rs — mirroring the exact same
-// boundary move the Barbarian/Bard/Cleric/Druid/Fighter/Paladin/Rogue/Ranger/
-// Sorcerer level-13 widening cycles each made for their own sibling
-// level-10 progression test.)
+// tests/sd18_wizard_level13_widening.rs, and tests/sd18_wizard_level14_widening.rs
+// — mirroring the exact same boundary move the
+// Barbarian/Bard/Cleric/Druid/Fighter/Paladin/Rogue/Ranger/Sorcerer
+// level-14 widening cycles each made for their own sibling level-10
+// progression test.)
 
 #[test]
-fn wizard_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = WIZARD_LEVEL10_FIXTURE.replace("class:wizard:10", "class:wizard:14");
-    let input = load(&level_14);
+fn wizard_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = WIZARD_LEVEL10_FIXTURE.replace("class:wizard:10", "class:wizard:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -256,7 +257,7 @@ fn wizard_level_14_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-14 Wizard must not gain any bounded wizard chassis explanation: {:?}",
+        "level-15 Wizard must not gain any bounded wizard chassis explanation: {:?}",
         computation.explanations
     );
 }
