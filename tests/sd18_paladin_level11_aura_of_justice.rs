@@ -387,15 +387,17 @@ fn paladin_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(base.value, 0, "Paladin level 10 3rd-level spell base count must stay 0");
 }
 
-// ----- Negative control: level 13 stays unrecognized by this slice -----
+// ----- Negative control: level 14 stays unrecognized by this slice -----
 // (level 12 was later widened into the supported tranche by SD18's
-// cycle-2026-07-15T0700 widening slice; see
-// tests/sd18_paladin_level12_widening.rs for its own boundary.)
+// cycle-2026-07-15T0700 widening slice, and level 13 by SD18's
+// cycle-2026-07-15T1800 widening slice; see
+// tests/sd18_paladin_level12_widening.rs and
+// tests/sd18_paladin_level13_widening.rs for their own boundaries.)
 
 #[test]
-fn paladin_level_13_is_not_promoted_by_this_slice() {
-    let level_13 = PALADIN_LEVEL11_FIXTURE.replace("class:paladin:11", "class:paladin:13");
-    let input = load(&level_13);
+fn paladin_level_14_is_not_promoted_by_this_slice() {
+    let level_14 = PALADIN_LEVEL11_FIXTURE.replace("class:paladin:11", "class:paladin:14");
+    let input = load(&level_14);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation

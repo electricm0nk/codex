@@ -303,8 +303,21 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // 12th IS a repeat-Mercy-grant level (the 3rd/6th/9th/12th cadence),
 // grounded here as a FOURTH numbered mercy choice slot
 // (class_chassis.paladin.mercy_4_choice), mirroring the proven slot-2/
-// slot-3 idiom exactly. Nothing here grounds level 13+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 12;
+// slot-3 idiom exactly. SD18 cycle-2026-07-15T1800 widens this once more
+// to level 13: base attack genuinely rises to 13 (all three base saves
+// stay numerically unchanged, integer-division coincidences); the
+// level-13 "Special" column reads only "Smite evil 5/day" (verified
+// independently against d20pfsrd and legacy.aonprd.com), which is NOT a
+// new named feature -- the pre-existing smite-evil-uses-per-day formula
+// is level-generic and already yields 5 at level 13 with no code change;
+// 13th is NOT a repeat-Mercy-grant level, so no fifth mercy slot is
+// added. The base spells-per-day table's level-13 row is "3/2/1/0",
+// genuinely opening a 4th spell-level column
+// (`PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`) for the first
+// time, mirroring the Ranger level-13 widening's identical table shape
+// (Paladin and Ranger share the same PF1 CRB spells-per-day table).
+// Nothing here grounds level 14+ Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 13;
 
 // Aura of Justice is an 11th-level paladin feature in the PF1 Core Rulebook
 // (verified independently against d20pfsrd and legacy.aonprd.com): "At 11th
@@ -374,10 +387,14 @@ const PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 /// The paladin level at which 3rd-level paladin spells first become available,
 /// verified against the raw table rows (both sources): level 9 shows
 /// "2/1/—/—", level 10 shows "2/1/0/—" — the first non-"—" 3rd-level column.
-/// The 4th-level column stays "—" through level 10 (4th-level paladin spells
-/// begin at 13, outside the tranche ceiling), so no 4th-level threshold const
-/// is grounded.
 const PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+/// The paladin level at which 4th-level paladin spells first become available,
+/// verified against the raw table rows (d20pfsrd and legacy.aonprd.com, both
+/// byte-for-byte identical): level 12 shows "2/2/1/—", level 13 shows
+/// "3/2/1/0" — the first non-"—" 4th-level column. Matches the Ranger
+/// `RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL` threshold exactly
+/// (Paladin and Ranger share the same PF1 CRB spells-per-day table shape).
+const PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
 
 /// SD13-E5 Paladin Mercy choice-slot id. The deterministic level-3 fixture names a
 /// chosen mercy (e.g. `mercy:shaken`); the compute seam recognizes whichever raw
@@ -5853,7 +5870,9 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // themselves ("0", "1", "2") are never computed, and the "0"-entry
     // bonus-spells-only nuance is surfaced in the record text.
     let paladin_spell_level_access: i16 =
-        if level >= PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        if level >= PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            4
+        } else if level >= PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             3
         } else if level >= PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             2
@@ -5872,11 +5891,12 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
              of both primary sources: 1st-level spells begin at paladin level \
              {PALADIN_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 2nd-level at \
              {PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
-             {PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}; the 4th-level column stays \
-             \"—\" through level 10). A gate-level \"0\" spells-per-day entry is access via \
-             Charisma bonus spells only, per the PF1 rule text. This grounds the access ladder \
-             only: no spell slot counts, no spells per day, no spells known or prepared \
-             posture, no bonus slots from a high Charisma, and no spell save DCs are computed"
+             {PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
+             {PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}). A gate-level \"0\" \
+             spells-per-day entry is access via Charisma bonus spells only, per the PF1 rule \
+             text. This grounds the access ladder only: no spell slot counts, no spells per \
+             day, no spells known or prepared posture, no bonus slots from a high Charisma, \
+             and no spell save DCs are computed"
         ),
     });
 
@@ -5887,20 +5907,30 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // against the raw table rows of both primary sources (identical on
     // d20pfsrd and legacy.aonprd.com): level 4 "0/—/—/—", level 5 "1/—/—/—",
     // level 6 "1/—/—/—", level 7 "1/0/—/—", level 8 "1/1/—/—", level 9
-    // "2/1/—/—", level 10 "2/1/0/—". A "0" is a genuine table entry
-    // (bonus-spells-only access), NOT an absence — inaccessible spell levels
-    // ("—" columns) get no record at all. Only the base counts are grounded:
-    // bonus spells per day from a high Charisma are never computed.
-    let paladin_base_spells_per_day: [Option<i16>; 3] = match level {
-        4 => [Some(0), None, None],
-        5 | 6 => [Some(1), None, None],
-        7 => [Some(1), Some(0), None],
-        8 => [Some(1), Some(1), None],
-        9 => [Some(2), Some(1), None],
-        10 => [Some(2), Some(1), Some(0)],
-        11 => [Some(2), Some(1), Some(1)],
-        12 => [Some(2), Some(2), Some(1)],
-        _ => [None, None, None],
+    // "2/1/—/—", level 10 "2/1/0/—", level 11 "2/1/1/—", level 12
+    // "2/2/1/—", and (SD18 cycle-2026-07-15T1800) level 13 "3/2/1/0" —
+    // verified independently against d20pfsrd and legacy.aonprd.com (a
+    // third and fourth fetch disagreed with each other and with this
+    // pairing, showing a nonsensical decrease from a "1" at level 12 to a
+    // "0" at level 13 on the 4th-level column, rejected as a known
+    // tool-extraction artifact since spells-per-day tables never decrease
+    // with level, and the accepted 2/2/1/— -> 3/2/1/0 pairing matches the
+    // already-landed Ranger level-13 widening's identical table shape). A
+    // "0" is a genuine table entry (bonus-spells-only access), NOT an
+    // absence — inaccessible spell levels ("—" columns) get no record at
+    // all. Only the base counts are grounded: bonus spells per day from a
+    // high Charisma are never computed.
+    let paladin_base_spells_per_day: [Option<i16>; 4] = match level {
+        4 => [Some(0), None, None, None],
+        5 | 6 => [Some(1), None, None, None],
+        7 => [Some(1), Some(0), None, None],
+        8 => [Some(1), Some(1), None, None],
+        9 => [Some(2), Some(1), None, None],
+        10 => [Some(2), Some(1), Some(0), None],
+        11 => [Some(2), Some(1), Some(1), None],
+        12 => [Some(2), Some(2), Some(1), None],
+        13 => [Some(3), Some(2), Some(1), Some(0)],
+        _ => [None, None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
         let Some(base_count) = base_count else {
