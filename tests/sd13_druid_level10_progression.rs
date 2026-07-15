@@ -251,7 +251,7 @@ fn druid_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(fortitude.value, 6, "Druid level 9 good Fortitude must stay 6");
 }
 
-// ----- Negative control: level 13 stays unrecognized by this slice -----
+// ----- Negative control: level 14 stays unrecognized by this slice -----
 //
 // Updated by the SD18 druid-level11-widening cycle: Druid level 11 is now
 // genuinely promoted (MAX_SUPPORTED_DRUID_LEVEL widened to 11 by
@@ -262,11 +262,16 @@ fn druid_level9_truth_is_unchanged_by_this_slice() {
 // promotes level 12 too (MAX_SUPPORTED_DRUID_LEVEL widened to 12 by
 // tests/sd18_druid_level12_widening.rs), so this row's own negative control
 // boundary moves again to level 13, mirroring the same boundary move
-// cycle-2026-07-15T0200 made for Cleric.
+// cycle-2026-07-15T0200 made for Cleric. The SD18 druid-level13-widening
+// cycle (cycle-2026-07-15T1600) then genuinely promotes level 13 too
+// (MAX_SUPPORTED_DRUID_LEVEL widened to 13 by
+// tests/sd18_druid_level13_widening.rs), so this row's own negative control
+// boundary moves again to level 14, mirroring the same boundary move
+// cycle-2026-07-15T1500 made for Cleric.
 #[test]
-fn druid_level_13_is_not_promoted_by_this_slice() {
-    let level_13 = DRUID_LEVEL10_FIXTURE.replace("class:druid:10", "class:druid:13");
-    let input = load(&level_13);
+fn druid_level_14_is_not_promoted_by_this_slice() {
+    let level_14 = DRUID_LEVEL10_FIXTURE.replace("class:druid:10", "class:druid:14");
+    let input = load(&level_14);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -275,7 +280,7 @@ fn druid_level_13_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.druid.")
                 || e.id.starts_with("class_feature.druid.")
                 || e.id == "class_chassis.spell_baseline.druid"),
-        "level-13 Druid must not gain any bounded druid explanation: {:?}",
+        "level-14 Druid must not gain any bounded druid explanation: {:?}",
         computation.explanations
     );
 }

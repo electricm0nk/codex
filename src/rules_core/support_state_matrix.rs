@@ -740,7 +740,7 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs 
     tests/sd13_druid_level6_progression.rs + tests/sd13_druid_level7_progression.rs + \
     tests/sd13_druid_level8_progression.rs + tests/sd13_druid_level9_progression.rs + \
     tests/sd13_druid_level10_progression.rs + tests/sd18_druid_level11_widening.rs + \
-    tests/sd18_druid_level12_widening.rs";
+    tests/sd18_druid_level12_widening.rs + tests/sd18_druid_level13_widening.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -2276,12 +2276,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
                             level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10/level-11/level-12 \
+                            level-9/level-10/level-11/level-12/level-13 \
                             prepared divine \
                             spell baseline, with base attack bonus, base save progression, Wild \
                             Empathy, Nature Sense, the nature-bond choice recognition, (at level \
-                            2) Woodland Stride, (at level 3) Trackless Step, and (at level 4) \
-                            Resist Nature's Lure grounded for real at all eleven supported levels, \
+                            2) Woodland Stride, (at level 3) Trackless Step, (at level 4) \
+                            Resist Nature's Lure, and (at level 13) A Thousand Faces grounded for \
+                            real at all thirteen supported levels, \
                             and the animal-companion execution burden, the Wild Shape execution \
                             burden, and the prepared divine spell posture burden still blocked",
                 support_state: SupportState::Partial,
@@ -2485,7 +2486,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     form-list expansion (Huge elemental or Huge plant creature) and a \
                     functioning-level upgrade (elemental body IV / plant shape III), so Wild \
                     Shape stays entirely named-but-unproven and this slice grounds no new pillar \
-                    at level 12 either — only the existing pillars are widened. The row is \
+                    at level 12 either — only the existing pillars are widened. A further SD18 \
+                    slice (cycle-2026-07-15T1600, mirroring cycle-2026-07-15T1500's Cleric \
+                    level-13 widening, the loop's fifth SD-18 class-row level-13 landing after \
+                    Rogue, Barbarian, Fighter, and Ranger) widens the gate again to level 13 \
+                    (verified independently against all three primary sources: d20pfsrd, \
+                    Archives of Nethys aonprd.com, and legacy.aonprd.com): base attack bonus \
+                    STAYS +9 (13 * 3 / 4) and all three base saves STAY +8/+4/+8 \
+                    (Fortitude/Reflex/Will), four integer-division coincidences with level 12; \
+                    Wild Empathy genuinely rises to 14 (13 + Charisma modifier). UNLIKE every \
+                    prior widened level's Wild-Shape-shaped \"Special\" column entry (levels \
+                    4/6/8/10/12), the level-13 \"Special\" column reads \"A thousand faces\" — a \
+                    DIFFERENT class feature, checked directly rather than assumed to be another \
+                    Wild Shape frequency increase. In PF1 (unlike the D&D 3.5 version of this \
+                    ability, which referenced the stronger `alter self` spell), A Thousand Faces \
+                    grants the druid the ability to change her own apparent appearance at will, \
+                    as if using `disguise self`, but only while in her normal (unshifted) form — \
+                    a genuinely flat/identity-shaped, no-choice, no-magnitude, \
+                    no-duration-tracking, at-will grant, mirroring exactly how Venom Immunity was \
+                    grounded at level 9: a bounded +0 identity/recognition record, with no \
+                    illusion-effect execution engine and no Disguise-check-resolution engine \
+                    fabricated. The spells-per-day table's 7th-level spell column also newly \
+                    opens at level 13 (matching the Cleric precedent exactly, since Druid shares \
+                    the identical \"high\" 9-level-caster progression shape), but Druid has no \
+                    currently-grounded spell-slot-count pillar (unlike Cleric's domain slot), so \
+                    there is no analogous pillar to widen. The row is \
                     Partial, not Supported: the animal companion execution \
                     burden (the companion's stat block, its advancement, and its link / share \
                     spells abilities) remains named and unproven, the Wild Shape execution burden \
@@ -2494,10 +2519,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     posture burden (spells prepared from the full Druid list, spontaneous summon \
                     nature's ally conversion, spell slots per day, bonus spells from a high Wisdom, \
                     spell save DCs) is still entirely unproven. No spell math is fabricated and no \
-                    Druid level 13+ is proven",
+                    Druid level 14+ is proven",
                 next_required_uplift: "SD13-E5 Druid animal companion execution slice, the Wild \
                     Shape execution slice, or the prepared divine spell burden slice, then Druid \
-                    level 13+ progression (out of scope for this slice)",
+                    level 14+ progression (out of scope for this slice)",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",
