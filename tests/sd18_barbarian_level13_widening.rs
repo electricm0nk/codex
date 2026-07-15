@@ -261,12 +261,12 @@ fn barbarian_level12_truth_is_unchanged_by_this_slice() {
     assert_eq!(rage_rounds.value, 29, "Barbarian level 12 rage rounds must stay 29");
 }
 
-// ----- Negative control: level 14 stays unrecognized by this slice -----
+// ----- Negative control: level 15 stays unrecognized by this slice -----
 
 #[test]
-fn barbarian_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = BARBARIAN_LEVEL13_FIXTURE.replace("class:barbarian:13", "class:barbarian:14");
-    let input = load(&level_14);
+fn barbarian_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = BARBARIAN_LEVEL13_FIXTURE.replace("class:barbarian:13", "class:barbarian:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -274,7 +274,7 @@ fn barbarian_level_14_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.barbarian.")
                 || e.id.starts_with("class_feature.barbarian.")),
-        "level-14 Barbarian must not gain any bounded barbarian explanation: {:?}",
+        "level-15 Barbarian must not gain any bounded barbarian explanation: {:?}",
         computation.explanations
     );
 }
