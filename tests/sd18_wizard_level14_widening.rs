@@ -268,12 +268,17 @@ fn wizard_level13_truth_is_unchanged_by_this_slice() {
     assert_eq!(intense.value, 6, "Wizard level 13 Intense Spells bonus damage must stay 6");
 }
 
-// ----- Negative control: level 16 stays unrecognized by this slice -----
+// ----- Negative control: level 17 stays unrecognized by this slice -----
+// (widened from level 16 to level 17 by the SD18 wizard-level16-widening
+// cycle, which genuinely promotes level 16 — see
+// tests/sd18_wizard_level16_widening.rs — mirroring the exact same
+// boundary move the Barbarian/Fighter level-16 widening cycles each made
+// for their own sibling negative controls.)
 
 #[test]
-fn wizard_level_16_is_not_promoted_by_this_slice() {
-    let level_16 = WIZARD_LEVEL14_FIXTURE.replace("class:wizard:14", "class:wizard:16");
-    let input = load(&level_16);
+fn wizard_level_17_is_not_promoted_by_this_slice() {
+    let level_17 = WIZARD_LEVEL14_FIXTURE.replace("class:wizard:14", "class:wizard:17");
+    let input = load(&level_17);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -282,7 +287,7 @@ fn wizard_level_16_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id.starts_with("class_feature.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-16 Wizard must not gain any bounded wizard explanation: {:?}",
+        "level-17 Wizard must not gain any bounded wizard explanation: {:?}",
         computation.explanations
     );
 }

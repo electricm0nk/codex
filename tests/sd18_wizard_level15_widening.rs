@@ -270,24 +270,12 @@ fn wizard_level14_truth_is_unchanged_by_this_slice() {
     assert_eq!(intense.value, 7, "Wizard level 14 Intense Spells bonus damage must stay 7");
 }
 
-// ----- Negative control: level 16 stays unrecognized by this slice -----
-
-#[test]
-fn wizard_level_16_is_not_promoted_by_this_slice() {
-    let level_16 = WIZARD_LEVEL15_FIXTURE.replace("class:wizard:15", "class:wizard:16");
-    let input = load(&level_16);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
-                || e.id.starts_with("class_feature.wizard.")
-                || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-16 Wizard must not gain any bounded wizard explanation: {:?}",
-        computation.explanations
-    );
-}
+// Note: this file's own "level 16 is not promoted" negative control was
+// removed by the SD18 wizard-level16-widening cycle (see
+// tests/sd18_wizard_level16_widening.rs), since level 16 is now itself the
+// supported/grounded row rather than the out-of-range boundary — mirroring
+// the exact same fix the Barbarian/Fighter level-16 widening cycles each
+// made for their own immediately-preceding level-15 sibling.
 
 // ----- Negative control: the wizard path must not leak onto other classes -----
 

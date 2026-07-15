@@ -215,21 +215,21 @@ fn wizard_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(intense.value, 5, "Wizard level 10 Intense Spells bonus damage must stay 5");
 }
 
-// ----- Negative control: level 16 stays unrecognized by this slice -----
-// (widened from level 12 to level 15 by the SD18 wizard-level12-widening,
-// wizard-level13-widening, wizard-level14-widening, and wizard-level15-
-// widening cycles, which genuinely promote levels 12, 13, 14, and 15 —
-// see tests/sd18_wizard_level12_widening.rs, tests/sd18_wizard_level13_widening.rs,
-// tests/sd18_wizard_level14_widening.rs, and tests/sd18_wizard_level15_widening.rs
-// — mirroring the exact same boundary move the
-// Barbarian/Bard/Cleric/Druid/Fighter/Paladin/Rogue/Ranger/Sorcerer
-// level-15 widening cycles each made for their own sibling
-// level-11 widening test.)
+// ----- Negative control: level 17 stays unrecognized by this slice -----
+// (widened from level 12 to level 16 by the SD18 wizard-level12-widening,
+// wizard-level13-widening, wizard-level14-widening, wizard-level15-
+// widening, and wizard-level16-widening cycles, which genuinely promote
+// levels 12, 13, 14, 15, and 16 — see
+// tests/sd18_wizard_level12_widening.rs, tests/sd18_wizard_level13_widening.rs,
+// tests/sd18_wizard_level14_widening.rs, tests/sd18_wizard_level15_widening.rs,
+// and tests/sd18_wizard_level16_widening.rs — mirroring the exact same
+// boundary move the Barbarian/Fighter level-16 widening cycles each made
+// for their own sibling level-11 widening test.)
 
 #[test]
-fn wizard_level_16_is_not_promoted_by_this_slice() {
-    let level_16 = WIZARD_LEVEL11_FIXTURE.replace("class:wizard:11", "class:wizard:16");
-    let input = load(&level_16);
+fn wizard_level_17_is_not_promoted_by_this_slice() {
+    let level_17 = WIZARD_LEVEL11_FIXTURE.replace("class:wizard:11", "class:wizard:17");
+    let input = load(&level_17);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -238,7 +238,7 @@ fn wizard_level_16_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id.starts_with("class_feature.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-16 Wizard must not gain any bounded wizard explanation: {:?}",
+        "level-17 Wizard must not gain any bounded wizard explanation: {:?}",
         computation.explanations
     );
 }
