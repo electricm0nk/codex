@@ -1956,7 +1956,25 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 7] = [
 /// codebase to decide when a save is against an enchantment effect or
 /// whether the barbarian is currently raging; Trap Sense stays +4 (14/3,
 /// next rise 15th) and Damage Reduction stays 3/- (next rise 16th).
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 14;
+///
+/// A still further SD18 slice — the loop's FIRST §3.2 level-15 landing,
+/// opening the level-15 sweep — widens the gate to level 15 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement): base-attack (classlevel = 15) genuinely
+/// rises to +15 (full BAB), and poor Reflex/Will both genuinely rise to +5
+/// (15/3), while good Fortitude stays +9 (15/2+2, an integer-division
+/// coincidence with level 14); the rage rounds-per-day pool genuinely rises
+/// to 35 (4 + Con mod + 2 per level after 1st); the level-15 "Special"
+/// column reads "Trap sense +5" only — Trap Sense GENUINELY RISES to +5
+/// (15/3) via the SAME pre-existing flat-magnitude formula pillar used at
+/// every prior tier (3rd/6th/9th/12th), so this slice needs no new tier
+/// constant, no new record type, and no new choice slot at all: the
+/// formula is already level-generic. Level 15 is NOT a rage-power level
+/// (powers land at 2/4/6/8/10/12/14/16/18/20...), so no eighth
+/// rage-power-selection-slot-count engine is invented; Damage Reduction
+/// stays 3/- (next rise 16th) and Indomitable Will's flat +4 magnitude
+/// carries over unchanged (already unconditional at level >= 14).
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 15;
 
 /// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
 /// (11th level — "At 11th level, a barbarian's rage improves. She gains a
