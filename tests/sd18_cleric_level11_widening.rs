@@ -235,17 +235,17 @@ fn cleric_level10_truth_is_unchanged_by_this_slice() {
 }
 
 // ----- Negative control: level 14 stays unrecognized by this slice -----
-// (Cleric levels 12 and 13 were widened into scope by later SD18 slices —
-// tests/sd18_cleric_level12_widening.rs and
-// tests/sd18_cleric_level13_widening.rs — so this negative control's
-// boundary moves from 12 to 14, mirroring the exact same boundary-move
+// (Cleric levels 12, 13, and 14 were widened into scope by later SD18 slices —
+// tests/sd18_cleric_level12_widening.rs, tests/sd18_cleric_level13_widening.rs,
+// and tests/sd18_cleric_level14_widening.rs — so this negative control's
+// boundary moves from 12 to 15, mirroring the exact same boundary-move
 // idiom applied to tests/sd18_ranger_level12_widening.rs when
-// MAX_SUPPORTED_RANGER_LEVEL widened from 12 to 13.)
+// MAX_SUPPORTED_RANGER_LEVEL widened from 12 through 14.)
 
 #[test]
-fn cleric_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = CLERIC_LEVEL11_FIXTURE.replace("class:cleric:11", "class:cleric:14");
-    let input = load(&level_14);
+fn cleric_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = CLERIC_LEVEL11_FIXTURE.replace("class:cleric:11", "class:cleric:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -254,7 +254,7 @@ fn cleric_level_14_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id.starts_with("class_feature.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-14 Cleric must not gain any bounded cleric explanation: {:?}",
+        "level-15 Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );
 }

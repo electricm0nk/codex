@@ -246,21 +246,22 @@ fn cleric_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(fortitude.value, 6, "Cleric level 9 good Fortitude must stay 6");
 }
 
-// ----- Negative control: level 14 stays unrecognized by this slice -----
+// ----- Negative control: level 15 stays unrecognized by this slice -----
 // (widened from level 11 by the SD18 cycle-2026-07-13T2007 level-11
-// widening, then moved to level 12, then level 13 by later cycles' own
-// boundary moves — see tests/sd18_cleric_level11_widening.rs and
-// tests/sd18_cleric_level12_widening.rs. The SD18 cycle-2026-07-15T1500
-// level-13 widening genuinely promotes level 13 — see
-// tests/sd18_cleric_level13_widening.rs — so the correct negative control
-// boundary for this file's own (level-10-era) baseline is now level 14,
-// mirroring the exact same boundary move cycle-2026-07-15T1400 made for
+// widening, then moved to level 12, then level 13, then level 14 by later
+// cycles' own boundary moves — see tests/sd18_cleric_level11_widening.rs,
+// tests/sd18_cleric_level12_widening.rs, and
+// tests/sd18_cleric_level13_widening.rs. The SD18 cycle-2026-07-15T2300
+// level-14 widening genuinely promotes level 14 — see
+// tests/sd18_cleric_level14_widening.rs — so the correct negative control
+// boundary for this file's own (level-10-era) baseline is now level 15,
+// mirroring the exact same boundary move cycle-2026-07-15T2100 made for
 // Ranger.)
 
 #[test]
-fn cleric_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = CLERIC_LEVEL10_FIXTURE.replace("class:cleric:10", "class:cleric:14");
-    let input = load(&level_14);
+fn cleric_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = CLERIC_LEVEL10_FIXTURE.replace("class:cleric:10", "class:cleric:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -268,7 +269,7 @@ fn cleric_level_14_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-14 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+        "level-15 Cleric must not gain any bounded cleric chassis explanation: {:?}",
         computation.explanations
     );
 }

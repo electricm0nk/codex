@@ -246,12 +246,17 @@ fn cleric_level12_truth_is_unchanged_by_this_slice() {
     assert_eq!(slot.value, 6, "Cleric level 12 domain spell slot count must stay 6");
 }
 
-// ----- Negative control: level 14 stays unrecognized by this slice -----
+// ----- Negative control: level 15 stays unrecognized by this slice -----
+// (Superseded boundary: cycle-2026-07-15T2300 widened MAX_SUPPORTED_CLERIC_LEVEL
+// from 13 to 14, so this file's own negative-control boundary moves from 14 to
+// 15, mirroring the exact same boundary-move idiom applied to
+// tests/sd18_ranger_level13_widening.rs when MAX_SUPPORTED_RANGER_LEVEL widened
+// from 13 to 14.)
 
 #[test]
-fn cleric_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = CLERIC_LEVEL13_FIXTURE.replace("class:cleric:13", "class:cleric:14");
-    let input = load(&level_14);
+fn cleric_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = CLERIC_LEVEL13_FIXTURE.replace("class:cleric:13", "class:cleric:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -260,7 +265,7 @@ fn cleric_level_14_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id.starts_with("class_feature.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-14 Cleric must not gain any bounded cleric explanation: {:?}",
+        "level-15 Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );
 }
