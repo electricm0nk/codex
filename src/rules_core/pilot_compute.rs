@@ -1599,7 +1599,35 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// by an earlier cycle's transcription. A pure ceiling raise: every
 /// formula below is already level-generic, so no new tier constant,
 /// record type, or choice slot is added.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 16;
+///
+/// Widened to level 17 by an SD18 slice (cycle-2026-07-15T7100, the loop's
+/// SECOND §3.2 level-17 landing, after Ranger): verified independently
+/// against TWO primary sources (d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, byte-for-byte identical: "+12/+7/+2 | +5 | +10 | +10
+/// | Inspire courage +4, lore master 3/day"), with neighboring levels 16
+/// ("—") and 18 ("Mass suggestion, versatile performance") re-fetched in
+/// the same pass to rule out misattribution. Base attack bonus (`17*3/4`),
+/// both good saves (`17/2+2`), poor Fortitude (`17/3`), Bardic Knowledge
+/// (`max(17/2,1)`), the Fascinate DC (`10+17/2+CHA`), and the Fascinate
+/// affected-creature count (`1+(17-1)/3`) are all numerically UNCHANGED
+/// from level 16 — every one an integer-division coincidence re-verified
+/// against the raw class table row rather than assumed — while the Bardic
+/// Performance rounds-per-day pool genuinely rises (`4+CHA+2*(17-1)`).
+/// Inspire Courage's flat magnitude GENUINELY RISES from +3 to +4 (a
+/// fourth tier on the already-generalized tiered if/else chain, the same
+/// arithmetic-widening idiom as Inspire Competence's own third/fourth
+/// tier additions) and Lore Master's flat take-20 usage-count magnitude
+/// GENUINELY RISES from 2/day to 3/day (a third tier on its own
+/// already-generalized tiered if/else chain), both the same
+/// every-six-bard-levels-after-5th cadence that produced their own
+/// level-11 third/second tier respectively. Inspire Competence stays at
+/// its level-15 fourth tier (next tier at level 19, out of scope);
+/// Inspire Heroics' flat magnitudes and base target count carry over
+/// unchanged (the "+1 creature per three bard levels beyond 15th" scaling
+/// lands at level 18, out of scope). Only two new tier constant pairs are
+/// added (on already-generalized tiered if/else chains); no new record
+/// type or choice slot is added, and no Bard level 18+ is proven.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 17;
 /// PF1 Core Rulebook level gate at which Bard gains Frightening Tune
 /// (14th level, verified independently against two primary sources:
 /// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
@@ -1716,14 +1744,26 @@ const BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER: i16 = 2;
 /// "Inspire competence +4, inspire courage +3, lore master 2/day" as the
 /// Bard 11th-level special feature entry — "every six bard levels
 /// thereafter" after the 5th-level tier lands exactly on 11th). The next
-/// increase (to +4) lands at bard level 17, out of scope since only Bard
-/// levels 1-15 are supported (confirmed directly against the level-15 rule
-/// text, which does not touch Inspire Courage's tier).
+/// increase (to +4) lands at bard level 17 (grounded below by
+/// `BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL`).
 const BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL: u8 = 11;
 /// PF1 Core Rulebook Inspire Courage flat magnitude at or above the
-/// third-tier level gate (11th level and beyond, until the next tier at
-/// 17th level, out of scope here).
+/// third-tier level gate (11th level and beyond, until the fourth tier at
+/// 17th level).
 const BARD_INSPIRE_COURAGE_BONUS_THIRD_TIER: i16 = 3;
+/// PF1 Core Rulebook level at which the Inspire Courage flat magnitude
+/// increases again from +3 to +4 (17th level, verified independently
+/// against two primary sources: d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, both byte-for-byte identical: "Inspire courage +4,
+/// lore master 3/day" as the Bard 17th-level special feature entry — the
+/// same "every six bard levels thereafter" cadence after the 11th-level
+/// tier lands exactly on 17th). The next increase (to +5) lands at bard
+/// level 23, out of scope since only Bard levels 1-17 are supported.
+const BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL: u8 = 17;
+/// PF1 Core Rulebook Inspire Courage flat magnitude at or above the
+/// fourth-tier level gate (17th level and beyond, until the next tier at
+/// 23rd level, out of scope here).
+const BARD_INSPIRE_COURAGE_BONUS_FOURTH_TIER: i16 = 4;
 /// PF1 Core Rulebook level gate at which Bard gains Lore Master (5th level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Inspire courage +2, lore master 1/day" as the
@@ -1745,14 +1785,26 @@ const BARD_LORE_MASTER_TAKE_20_USES_PER_DAY: i16 = 1;
 /// legacy.aonprd.com both list "Inspire competence +4, inspire courage +3,
 /// lore master 2/day" as the Bard 11th-level special feature entry — the
 /// same every-sixth-level-after-5th cadence as Inspire Courage). The next
-/// increase (to 3/day) lands at bard level 17, out of scope since only Bard
-/// levels 1-15 are supported (confirmed directly against the level-15 rule
-/// text, which does not touch Lore Master's tier).
+/// increase (to 3/day) lands at bard level 17 (grounded below by
+/// `BARD_LORE_MASTER_THIRD_TIER_LEVEL`).
 const BARD_LORE_MASTER_SECOND_TIER_LEVEL: u8 = 11;
 /// PF1 Core Rulebook Lore Master take-20 usage-count magnitude at or above
-/// the second-tier level gate (11th level and beyond, until the next tier
-/// at 17th level, out of scope here).
+/// the second-tier level gate (11th level and beyond, until the third tier
+/// at 17th level).
 const BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_SECOND_TIER: i16 = 2;
+/// PF1 Core Rulebook level at which the Lore Master take-20 usage-count
+/// magnitude increases again from 2/day to 3/day (17th level, verified
+/// independently against two primary sources: d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror, both byte-for-byte identical: "Inspire courage
+/// +4, lore master 3/day" as the Bard 17th-level special feature entry —
+/// the same every-sixth-level-after-5th cadence as Inspire Courage). The
+/// next increase lands beyond bard level 17, out of scope since only Bard
+/// levels 1-17 are supported.
+const BARD_LORE_MASTER_THIRD_TIER_LEVEL: u8 = 17;
+/// PF1 Core Rulebook Lore Master take-20 usage-count magnitude at or above
+/// the third-tier level gate (17th level and beyond, out of scope beyond
+/// here).
+const BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_THIRD_TIER: i16 = 3;
 /// PF1 Core Rulebook level gate at which Bard gains Inspire Heroics (15th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// the Archives of Nethys aonprd.com mirror both list "Inspire competence
@@ -13648,8 +13700,8 @@ fn explain_druid_level1_spell_baseline(
 /// The bounded Bard milestone level this decomposition surface grounds, if any.
 /// Returns the single Bard level when the chosen input is exactly a single-class
 /// Bard at one of the supported milestone levels (1 through `MAX_SUPPORTED_BARD_LEVEL`,
-/// currently 8). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
-/// any level-9+ Bard this slice deliberately does not recognize — each of which stays
+/// currently 17). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
+/// any level-18+ Bard this slice deliberately does not recognize — each of which stays
 /// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
@@ -13934,7 +13986,9 @@ fn explain_bard_level1_spell_baseline(
     // +1 through level 5" framing turns out to have been precise). Only the flat
     // magnitude is grounded; no performance-state engine exists to start the
     // performance or apply the bonus to any computed total.
-    let inspire_courage_bonus = if level >= BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL {
+    let inspire_courage_bonus = if level >= BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL {
+        BARD_INSPIRE_COURAGE_BONUS_FOURTH_TIER
+    } else if level >= BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL {
         BARD_INSPIRE_COURAGE_BONUS_THIRD_TIER
     } else if level >= BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL {
         BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER
@@ -13949,11 +14003,12 @@ fn explain_bard_level1_spell_baseline(
              Courage): a +{inspire_courage_bonus} competence bonus on attack rolls and weapon \
              damage rolls and a +{inspire_courage_bonus} morale bonus on saving throws against \
              charm and fear effects for affected allies. This magnitude increases from +1 to +2 \
-             exactly at bard level {BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL} and again from +2 to \
-             +3 exactly at bard level {BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL} (PF1 Core \
+             exactly at bard level {BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL}, again from +2 to +3 \
+             exactly at bard level {BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL}, and again from +3 to \
+             +4 exactly at bard level {BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL} (PF1 Core \
              Rulebook: \"At 5th level, and every six bard levels thereafter, this bonus \
              increases by +1\"), so it is +{inspire_courage_bonus} at level {level}; the next \
-             increase (to +4) is at bard level 17, out of scope for this bounded slice. This \
+             increase (to +5) is at bard level 23, out of scope for this bounded slice. This \
              grounds only the flat magnitude of the fixture's chosen performance \
              (choice:bard_bardic_music -> performance:inspire_courage); it is never applied to \
              any attack, damage, or save total because the performance-state engine \
@@ -14137,7 +14192,9 @@ fn explain_bard_level1_spell_baseline(
             ),
         });
     } else {
-        let lore_master_uses_per_day = if level >= BARD_LORE_MASTER_SECOND_TIER_LEVEL {
+        let lore_master_uses_per_day = if level >= BARD_LORE_MASTER_THIRD_TIER_LEVEL {
+            BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_THIRD_TIER
+        } else if level >= BARD_LORE_MASTER_SECOND_TIER_LEVEL {
             BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_SECOND_TIER
         } else {
             BARD_LORE_MASTER_TAKE_20_USES_PER_DAY
@@ -14157,12 +14214,14 @@ fn explain_bard_level1_spell_baseline(
                  {BARD_LORE_MASTER_SECOND_TIER_LEVEL} (PF1 Core Rulebook: \"Inspire competence \
                  +4, inspire courage +3, lore master 2/day\" at the Bard 11th-level special \
                  feature entry, the same every-sixth-level-after-5th cadence as Inspire \
-                 Courage); the next increase (to 3/day) is at bard level 17, out of scope for \
-                 this bounded slice. The take-10 capability has no flat magnitude to ground (it \
-                 is an at-will resolution-mode toggle, not a countable resource), and neither \
-                 the take-10 nor the take-20 mechanic is actually executed against any \
-                 Knowledge check, since no skill-check-resolution engine exists anywhere in \
-                 this codebase"
+                 Courage), and again from 2/day to 3/day exactly at bard level \
+                 {BARD_LORE_MASTER_THIRD_TIER_LEVEL} (PF1 Core Rulebook: \"Inspire courage +4, \
+                 lore master 3/day\" at the Bard 17th-level special feature entry, the same \
+                 cadence); the next increase lands beyond bard level 17, out of scope for this \
+                 bounded slice. The take-10 capability has no flat magnitude to ground (it is an \
+                 at-will resolution-mode toggle, not a countable resource), and neither the \
+                 take-10 nor the take-20 mechanic is actually executed against any Knowledge \
+                 check, since no skill-check-resolution engine exists anywhere in this codebase"
             ),
         });
     }
