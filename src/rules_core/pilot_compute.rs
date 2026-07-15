@@ -541,9 +541,18 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // structural mirror of the already-grounded Favored Enemy 10th-level
 // interval — plus the spell-level access ladder's genuinely new 4th-level
 // column (`RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`) and the base
-// spells-per-day table's own level-13 row. Nothing here grounds level 14+
-// Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 13;
+// spells-per-day table's own level-13 row. A still later SD18 slice
+// (cycle-2026-07-15T2100) widens the gate once more to level 14: base
+// attack bonus and both good saves genuinely rise, the base spells-per-day
+// table's 4th-level column genuinely rises from 0 to 1, and the level-14
+// "Special" column's FOURTH combat-style bonus feat
+// (`RANGER_COMBAT_STYLE_BONUS_FEAT_4_LEVEL`) is grounded as an open-ended
+// +0 recognition record, NOT a restricted-list match — the PF1 Core
+// Rulebook's own Combat Style feat lists (Archery, Two-Weapon Combat) do
+// not tabulate any named options beyond the 10th-level tier, verified
+// independently against three sources dedicated to the combat-style feat
+// lists themselves. Nothing here grounds level 15+ Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 14;
 
 /// PF1 Core Rulebook level gate at which Camouflage is granted (verified
 /// independently against two primary sources: both d20pfsrd and the
@@ -891,6 +900,25 @@ const MANYSHOT_FEAT_SELECTION: &str = "feat:manyshot";
 // PF1 Core Rulebook Two-Weapon Combat style, 6th-level bonus feat list.
 const IMPROVED_TWO_WEAPON_FIGHTING_FEAT_SELECTION: &str = "feat:improved_two_weapon_fighting";
 const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
+// SD18 cycle-2026-07-15T2100: the ranger's FOURTH combat-style bonus feat,
+// granted at 14th level (bonus feats land at 2nd, 6th, 10th, 14th, and 18th
+// ranger level per the Combat Style Feat class feature's own rule text).
+// Unlike the 2nd/6th/10th-level grants, the PF1 Core Rulebook's own Ranger
+// Combat Styles tables do not tabulate any NEW named feat options at the
+// 14th-level tier — verified independently against three sources dedicated
+// to the combat-style feat lists specifically (d20pfsrd's Ranger Combat
+// Styles page, the Archives of Nethys aonprd.com RangerCombatStyles page,
+// and a Paizo rules-forum thread addressing the same question directly):
+// all three agree the printed Core Rulebook list of named options stops
+// after the 10th-level tier; later sourcebooks (e.g. the Advanced Player's
+// Guide) are the ones that add named 14th/18th-level options, and those are
+// outside SD-18's Core-Rulebook-only scope. So this slot is recognized as
+// an OPEN-ENDED +0 identity record (mirroring the Favored Terrain/Quarry
+// choice-recognition idiom: raw string interpolation, no restricted-list
+// validation), not the closed-restricted-list idiom used for feats 1-3.
+const RANGER_COMBAT_STYLE_BONUS_FEAT_4_LEVEL: u8 = 14;
+const RANGER_COMBAT_STYLE_BONUS_FEAT_4_CHOICE_ID: &str =
+    "choice:ranger_combat_style_bonus_feat_4";
 
 // SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
 // caster; this slice recognizes only its bounded single-class level-1 identity as direct
@@ -6727,6 +6755,48 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                     detail: detail_3,
                 });
             }
+
+            // SD18 cycle-2026-07-15T2100 (level-14 widening): the ranger's FOURTH
+            // combat-style bonus feat. Unlike feats 1-3, this slot is NOT validated
+            // against a restricted feat-name list: the PF1 Core Rulebook's own
+            // Combat Style feat tables (Archery, Two-Weapon Combat) do not name any
+            // options beyond the 10th-level tier (verified independently against
+            // three sources dedicated to the combat-style feat lists specifically —
+            // d20pfsrd's Ranger Combat Styles page, the Archives of Nethys
+            // aonprd.com RangerCombatStyles page, and a Paizo rules-forum thread —
+            // all three agree the printed list stops after 10th level; later
+            // sourcebooks add 14th/18th-level options, out of SD-18's
+            // Core-Rulebook-only scope). So this mirrors the Favored
+            // Terrain/Quarry OPEN-ENDED recognition idiom instead: the raw chosen
+            // feat string is recorded as a +0 identity record with no
+            // restricted-list validation and no feat mechanics computed.
+            if let Some(style) = style_name
+                && level >= RANGER_COMBAT_STYLE_BONUS_FEAT_4_LEVEL
+                && let Some(feat_selection_4) =
+                    choice_selection(input, RANGER_COMBAT_STYLE_BONUS_FEAT_4_CHOICE_ID)
+            {
+                explanations.push(ComputationExplanation {
+                    id: "class_chassis.ranger.combat_style_bonus_feat_4_choice".to_owned(),
+                    value: 0,
+                    detail: format!(
+                        "Ranger {style} FOURTH combat style bonus feat at ranger level {level} \
+                         ({RANGER_COMBAT_STYLE_BONUS_FEAT_4_CHOICE_ID} -> {feat_selection_4}): \
+                         the ranger's combat style grants bonus feats at 2nd, 6th, 10th, 14th, \
+                         and 18th level (verified independently against d20pfsrd and the \
+                         Archives of Nethys aonprd.com mirror), but unlike the 2nd/6th/10th-level \
+                         grants, the PF1 Core Rulebook does not tabulate any named {style} feat \
+                         options at the 14th-level tier (verified independently against three \
+                         sources dedicated to the combat-style feat lists themselves; later \
+                         sourcebooks such as the Advanced Player's Guide are the ones that add \
+                         named 14th-level options, outside SD-18's Core-Rulebook-only scope). \
+                         This is therefore an OPEN-ENDED recognition record of the choice slot \
+                         only (mirroring the Favored Terrain/Quarry idiom, not the \
+                         closed-restricted-list idiom used for feats 1-3): no restricted-list \
+                         validation is attempted at this tier, and no mechanical value is \
+                         fabricated (+0)"
+                    ),
+                });
+            }
         }
     }
 
@@ -7791,11 +7861,14 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // cycle against all three primary sources: the 1st-level column
     // genuinely rises from 2 to 3, the 2nd/3rd-level columns stay 2/1
     // unchanged, and the 4th-level column newly opens at 0 — a genuine
-    // table entry, not an absence). A "0" is a genuine table entry
-    // (Wisdom-bonus-spells-only access), NOT an absence — inaccessible
-    // spell levels ("—" columns) get no record at all. Only the base
-    // counts are grounded: bonus spells per day from a high Wisdom are
-    // never computed.
+    // table entry, not an absence), and level 14 "3/2/1/1" (verified
+    // independently for the SD18 level-14 widening cycle against all three
+    // primary sources: the 1st/2nd/3rd-level columns stay 3/2/1 unchanged,
+    // and the 4th-level column genuinely rises from 0 to 1). A "0" is a
+    // genuine table entry (Wisdom-bonus-spells-only access), NOT an
+    // absence — inaccessible spell levels ("—" columns) get no record at
+    // all. Only the base counts are grounded: bonus spells per day from a
+    // high Wisdom are never computed.
     let ranger_base_spells_per_day: [Option<i16>; 4] = match level {
         4 => [Some(0), None, None, None],
         5 | 6 => [Some(1), None, None, None],
@@ -7806,6 +7879,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         11 => [Some(2), Some(1), Some(1), None],
         12 => [Some(2), Some(2), Some(1), None],
         13 => [Some(3), Some(2), Some(1), Some(0)],
+        14 => [Some(3), Some(2), Some(1), Some(1)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
