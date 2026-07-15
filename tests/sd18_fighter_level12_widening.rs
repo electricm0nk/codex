@@ -227,22 +227,23 @@ fn fighter_level11_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: level 15 stays claim-blocked (beyond the bounded L2-14 row) -----
 //
-// SD18 (tests/sd18_fighter_level13_widening.rs, tests/sd18_fighter_level14_widening.rs)
-// further widened the bounded tranche from level 12 to level 13 (Weapon
-// Training 3, a third weapon-group choice slot) and then to level 14 (a
-// seventh bonus-feat cadence slot and the Bravery magnitude rise), so this
-// negative control now sits just above the current bound (level 15) rather
-// than at level 13 or level 14.
+// SD18 (tests/sd18_fighter_level13_widening.rs, tests/sd18_fighter_level14_widening.rs,
+// tests/sd18_fighter_level15_widening.rs) further widened the bounded
+// tranche from level 12 to level 13 (Weapon Training 3, a third weapon-group
+// choice slot), then to level 14 (a seventh bonus-feat cadence slot and the
+// Bravery magnitude rise), and then to level 15 (Armor Training 4), so this
+// negative control now sits just above the current bound (level 16) rather
+// than at level 13, level 14, or level 15.
 
 #[test]
-fn fighter_level_15_stays_claim_blocked() {
-    let level_15 = FIGHTER_LEVEL12_FIXTURE.replace("class:fighter:12", "class:fighter:15");
-    let input = load(&level_15);
+fn fighter_level_16_stays_claim_blocked() {
+    let level_16 = FIGHTER_LEVEL12_FIXTURE.replace("class:fighter:12", "class:fighter:16");
+    let input = load(&level_16);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-15 Fighter must stay claim-blocked beyond the bounded levels-2-14 row: {:?}",
+        "level-16 Fighter must stay claim-blocked beyond the bounded levels-2-15 row: {:?}",
         computation.diagnostics
     );
     assert!(
@@ -250,7 +251,7 @@ fn fighter_level_15_stays_claim_blocked() {
             .explanations
             .iter()
             .any(|e| e.id == "class_chassis.base_attack_bonus"),
-        "level-15 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-16 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 
