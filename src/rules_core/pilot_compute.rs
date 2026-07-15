@@ -1089,8 +1089,25 @@ const RANGER_COMBAT_STYLE_BONUS_FEAT_4_CHOICE_ID: &str =
 // `6/6/6/5/3` -> `6/6/6/6/4`; known `9/5/4/3/2/1` -> `9/5/5/4/3/2`), with
 // the 6th-level column staying inaccessible at level 11 (arrives at level
 // 12) on both tables.
+//
+// SD18 cycle-2026-07-15T4400 widens the gate again to level 15 (the
+// loop's ninth §3.2 level-15 landing, after Barbarian, Rogue, Fighter,
+// Cleric, Druid, Ranger, Wizard, and Paladin), verified independently
+// against d20pfsrd and the Archives of Nethys aonprd.com mirror, both
+// byte-for-byte identical: base attack bonus (`15/2=7`) and good Will
+// (`15/2+2=9`) both stay numerically IDENTICAL to level 14, integer-division
+// coincidences, while both poor saves genuinely rise to +5 (`15/3=5`, up
+// from level 14's +4). The level-15 "Special" column reads "Bloodline
+// power, bloodline spell" — bloodline-specific, left named-but-unproven by
+// the pre-existing Arcane Bond / bloodline progression blocker, exactly
+// mirroring levels 3/5/7/9/11/13 — so no new pillar is grounded from it.
+// The already-grounded spells-per-day and spells-known table lookups both
+// genuinely widen at level 15 within their existing array shapes (per-day
+// `6/6/6/6/6/5/3` -> `6/6/6/6/6/6/4`; known `9/5/5/4/4/3/2/1` ->
+// `9/5/5/4/4/4/3/2`), with no genuinely new spell-level column opening (the
+// 8th-level column stays inaccessible through level 15) on either table.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 14;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 15;
 
 /// The sorcerer level at which 2nd-level sorcerer spells first become
 /// available, verified against the raw PF1 Core Rulebook Sorcerer
@@ -11252,19 +11269,20 @@ fn explain_sorcerer_level1_spell_baseline(
     // level 6 "6/5/3/—/—/—", level 7 "6/6/4/—/—/—", level 8
     // "6/6/5/3/—/—", level 9 "6/6/6/4/—/—", level 10 "6/6/6/5/3/—",
     // level 11 "6/6/6/6/4/—", level 12 "6/6/6/6/5/3", level 13 "6/6/6/6/6/4",
-    // level 14 "6/6/6/6/6/5/3"
+    // level 14 "6/6/6/6/6/5/3", level 15 "6/6/6/6/6/6/4"
     // (level 13 was an SD18 widening verified independently against all
     // three primary-source fetches that slice performed — d20pfsrd,
     // aonprd.com, and legacy.aonprd.com, all identical: the 5th-level column
     // rose from 5 to 6 and the 6th-level column rose from 3 to 4, with no
-    // genuinely new spell-level column at level 13. Level 14 is THIS SD18
-    // slice's widening, verified against two independent, mutually
-    // consistent primary-source fetches — d20pfsrd and legacy.aonprd.com —
-    // (a third fetch, aonprd.com, was internally inconsistent with the
-    // already-landed level-13 truth on this same table and was rejected as
-    // a tool artifact): the 6th-level column rises from 4 to 5 AND a
-    // genuinely new 7th-level column opens at 3 — the sorcerer's two-level
-    // cadence (4/6/8/10/12/14) continuing exactly). Like the Bard and
+    // genuinely new spell-level column at level 13. Level 14 widened the
+    // 6th-level column from 4 to 5 AND opened a genuinely new 7th-level
+    // column at 3 — the sorcerer's two-level cadence (4/6/8/10/12/14)
+    // continuing exactly. Level 15 is THIS SD18 slice's widening, verified
+    // independently against d20pfsrd and the Archives of Nethys aonprd.com
+    // mirror, both byte-for-byte identical: the 6th-level column rises from
+    // 5 to 6 AND the 7th-level column rises from 3 to 4, with no genuinely
+    // new spell-level column opening (the 8th-level column stays "—"
+    // through level 15). Like the Bard and
     // unlike the
     // Paladin/Ranger, there are NO "0" entries at levels 1-14; every
     // accessible column carries a positive base count. Inaccessible spell
@@ -11286,6 +11304,7 @@ fn explain_sorcerer_level1_spell_baseline(
         12 => [Some(6), Some(6), Some(6), Some(6), Some(5), Some(3), None],
         13 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(4), None],
         14 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(3)],
+        15 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(4)],
         _ => [None, None, None, None, None, None, None],
     };
     for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
@@ -11349,18 +11368,21 @@ fn explain_sorcerer_level1_spell_baseline(
     // "6/4/2/—/—/—/—", level 6 "7/4/2/1/—/—/—", level 7 "7/5/3/2/—/—/—",
     // level 8 "8/5/3/2/1/—/—", level 9 "8/5/4/3/2/—/—", level 10
     // "9/5/4/3/2/1/—", level 11 "9/5/5/4/3/2/—", level 12 "9/5/5/4/3/2/1",
-    // level 13 "9/5/5/4/4/3/2", level 14 "9/5/5/4/4/3/2/1"
+    // level 13 "9/5/5/4/4/3/2", level 14 "9/5/5/4/4/3/2/1",
+    // level 15 "9/5/5/4/4/4/3/2"
     // (0th through 7th spell level; the level-13 row was an SD18 widening
     // verified independently against all three primary-source fetches that
     // slice performed — d20pfsrd, aonprd.com, and legacy.aonprd.com, all
     // identical: the 0th through 3rd columns stayed numerically unchanged
     // from level 12's row, and the 4th, 5th, and 6th-level columns each
-    // rose by one. Level 14 is THIS SD18 slice's widening, verified
-    // against two independent, mutually consistent primary-source fetches
-    // — d20pfsrd and legacy.aonprd.com — (the aonprd.com fetch was rejected
-    // for the same internal-inconsistency reason noted on the spells-per-day
-    // table above): the 0th through 6th columns stay numerically unchanged
-    // from level 13's row, AND a genuinely new 7th-level column opens at 1).
+    // rose by one. Level 14 widened the 0th through 6th columns numerically
+    // unchanged from level 13's row, AND opened a genuinely new 7th-level
+    // column at 1. Level 15 is THIS SD18 slice's widening, verified
+    // independently against d20pfsrd and the Archives of Nethys aonprd.com
+    // mirror, both byte-for-byte identical: the 0th through 4th columns stay
+    // numerically unchanged from level 14's row, while the 5th, 6th, and
+    // 7th-level columns each rise by one — no genuinely new spell-level
+    // column opens (the 8th-level column stays "—" through level 15).
     // The known table
     // INCLUDES the 0th level (cantrips are "spells
     // known" only), and its new-spell-level cadence matches the grounded
@@ -11386,6 +11408,7 @@ fn explain_sorcerer_level1_spell_baseline(
         12 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), Some(1), None],
         13 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), None],
         14 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), Some(1)],
+        15 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2)],
         _ => [None, None, None, None, None, None, None, None],
     };
     for (spell_level, known_count) in sorcerer_spells_known.iter().enumerate() {

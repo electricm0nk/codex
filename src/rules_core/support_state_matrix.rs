@@ -486,7 +486,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd18_sorcerer_level11_widening.rs + \
     tests/sd18_sorcerer_level12_widening.rs + \
     tests/sd18_sorcerer_level13_widening.rs + \
-    tests/sd18_sorcerer_level14_widening.rs";
+    tests/sd18_sorcerer_level14_widening.rs + \
+    tests/sd18_sorcerer_level15_widening.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -4114,7 +4115,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Sorcerer level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
-                            level-8/level-9/level-10/level-11/level-12/level-13/level-14 \
+                            level-8/level-9/level-10/level-11/level-12/level-13/level-14/\
+                            level-15 \
                             spell baseline, with base attack bonus, base save progression, Eschew \
                             Materials, the canonical bloodline choice recognition, and the \
                             Arcane bloodline's class-skill choice (a player's choice of any one \
@@ -4479,10 +4481,44 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Partial, not Supported: the Arcane Bond / bloodline progression burden \
                     and the spontaneous which-spells-known / casting-execution burden remain \
                     named and unproven, unchanged from level 13. No \
-                    spell math is fabricated and no Sorcerer level 15+ is proven",
+                    spell math is fabricated and no Sorcerer level 15+ is proven — AND a \
+                    further SD18 slice (cycle-2026-07-15T4400, the loop's ninth §3.2 \
+                    level-15 landing, after Barbarian, Rogue, Fighter, Cleric, Druid, Ranger, \
+                    Wizard, and Paladin) widens the level-range gate again \
+                    (supported_sorcerer_level, 1..=15) and extends every one of the formulas \
+                    above to level 15 via the same formula, without re-derivation, verified \
+                    independently against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, both byte-for-byte identical: level 15 base attack bonus stays \
+                    numerically IDENTICAL to level 14 at +7 (15/2) and good Will stays \
+                    IDENTICAL at +9 (15/2+2), integer-division coincidences, while both poor \
+                    saves genuinely rise to +5 (15/3, up from level 14's +4); the bloodline \
+                    choice and bloodline class-skill choice recognitions are not level-gated, \
+                    so both still fire at level 15 for the same fixture selections; the PF1 \
+                    Core Rulebook Sorcerer class table's level-15 \"Special\" column reads \
+                    \"Bloodline power, bloodline spell\" (verified independently against both \
+                    primary sources, checked rather than assumed away) — a further bloodline \
+                    power and bloodline spell grant, exactly mirroring the level-3/5/7/9/11/13 \
+                    pattern this row has already left unproven six times — but both entries \
+                    stay bloodline-specific and not flat/identity-shaped, so this slice \
+                    grounds no new pillar from the Special column either, unchanged; the \
+                    already-grounded base spells-per-day table genuinely widens \
+                    (6/6/6/6/6/5/3 -> 6/6/6/6/6/6/4, the 6th-level column rising by one and the \
+                    7th-level column rising by one, with no genuinely new spell-level column — \
+                    the 8th-level column stays inaccessible through level 15) and the \
+                    already-grounded base spells-known table genuinely widens \
+                    (9/5/5/4/4/3/2/1 -> 9/5/5/4/4/4/3/2, the 5th/6th/7th-level columns each \
+                    rising by one while the 0th-4th columns stay numerically unchanged); the \
+                    spell-level access ladder stays at 7 (unchanged from level 14; the \
+                    8th-level threshold is not reached at level 15); the spell-save-DC and \
+                    Charisma-bonus-spell formulas widen automatically over the unchanged access \
+                    ladder, with no new code needed. The row stays Partial, not Supported: the \
+                    Arcane Bond / bloodline progression burden and the spontaneous \
+                    which-spells-known / casting-execution burden remain named and unproven, \
+                    unchanged from level 14. No spell math is fabricated and no Sorcerer level \
+                    16+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-15+ progression (widening the now-grounded base attack/base save \
+                    level-16+ progression (widening the now-grounded base attack/base save \
                     formulas)",
             },
             SupportStateRow {
