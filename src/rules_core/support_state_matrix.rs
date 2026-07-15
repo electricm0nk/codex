@@ -613,7 +613,8 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_total_spells_per_day.rs + \
     tests/sd13_bard_versatile_performance_slots.rs + \
     tests/sd18_bard_level11_inspire_widening.rs + \
-    tests/sd18_bard_level12_widening.rs";
+    tests/sd18_bard_level12_widening.rs + \
+    tests/sd18_bard_level13_widening.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1644,12 +1645,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10/level-11/level-12 \
+                            level-9/level-10/level-11/level-12/level-13 \
                             spell baseline, with base attack bonus, base save progression, Bardic \
                             Knowledge, the flat Bardic Performance surface (rounds per day, \
                             inspire courage magnitude rising at level 5 and again at level 11), \
                             the flat Fascinate DC / \
-                            affected-creature-count formulas, (at level 2) the flat Well-Versed \
+                            affected-creature-count formulas (creature count rising again at \
+                            level 13), (at level 2) the flat Well-Versed \
                             magnitude, (at level 3, rising at level 7 and again at level 11) the \
                             flat Inspire \
                             Competence magnitude, (at level 5, rising at level 11) the flat \
@@ -2008,7 +2010,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     land at bard level 15 or 17, out of scope), and Jack-of-All-Trades and the \
                     repeat Versatile Performance grant both carry over unchanged. No \
                     performance-execution math, no healing/condition-removal math, and no spell \
-                    math is fabricated and no Bard level 13+ is proven",
+                    math is fabricated. AN SD18 slice (cycle-2026-07-15T1700) widens the gate \
+                    again to level 13 — the loop's seventh §3.2 level-13 landing (after Rogue, \
+                    Barbarian, Fighter, Ranger, Cleric, and Druid) and the first on a \
+                    spontaneous (non-9-level) caster, verified independently against all three \
+                    primary sources (d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                    legacy.aonprd.com, byte-for-byte identical): the level-13 \"Special\" column \
+                    is BLANK, so this is a pure arithmetic-pillar widening — base attack bonus \
+                    and all three base saves stay numerically unchanged from level 12 \
+                    (13*3/4=9, 13/3=4, 13/2+2=8, integer-division coincidences), Bardic \
+                    Knowledge stays 6 (max(13/2,1), also a coincidence), and the Fascinate DC \
+                    stays 18 (10+13/2+CHA, since 13/2==12/2==6), while the Bardic Performance \
+                    rounds-per-day pool genuinely rises to 30 (4+CHA+2*(13-1)) and the Fascinate \
+                    affected-creature count genuinely rises to 5 (1+(13-1)/3); Inspire Courage, \
+                    Inspire Competence, Lore Master, Well-Versed, Jack-of-All-Trades, and \
+                    Soothing Performance all carry over unchanged. No new class feature is \
+                    granted at level 13, so no new record is added; the spontaneous \
+                    spell-level-access ladder and the base spells-per-day / spells-known table \
+                    lookups stay at their pre-existing level-10 ceiling exactly as left by the \
+                    level-11 and level-12 cycles (no 5th-level spell-access threshold is \
+                    grounded) — no spell math is fabricated and no Bard level 14+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
                     Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
@@ -2019,7 +2040,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     bonus-Hit-Dice/temporary-hit-point mechanics, Lore Master's own \
                     take-10/take-20 skill-check-resolution execution, and Soothing Performance's \
                     own healing-application/condition-removal execution), then the spontaneous \
-                    spell-slot burden, then level-13+ progression",
+                    spell-slot burden (including the un-grounded 5th-level spell-access \
+                    threshold), then level-14+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",

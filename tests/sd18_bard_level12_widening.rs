@@ -283,12 +283,16 @@ fn bard_level11_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 13 stays unrecognized by this slice -----
+// ----- Negative control: level 14 stays unrecognized by this slice -----
+// (Bard level 13 was widened into scope by a later SD18 slice —
+// tests/sd18_bard_level13_widening.rs — so this negative control's boundary
+// moves from 13 to 14, mirroring the exact same boundary-move idiom applied
+// to every prior sibling class's own level-13 widening cycle.)
 
 #[test]
-fn bard_level_13_is_not_promoted_by_this_slice() {
-    let level_13 = BARD_LEVEL12_FIXTURE.replace("class:bard:12", "class:bard:13");
-    let input = load(&level_13);
+fn bard_level_14_is_not_promoted_by_this_slice() {
+    let level_14 = BARD_LEVEL12_FIXTURE.replace("class:bard:12", "class:bard:14");
+    let input = load(&level_14);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -297,7 +301,7 @@ fn bard_level_13_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard"),
-        "level-13 Bard must not gain any bounded bard explanation: {:?}",
+        "level-14 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
 }
