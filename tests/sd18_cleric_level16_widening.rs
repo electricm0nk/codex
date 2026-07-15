@@ -278,25 +278,6 @@ fn cleric_level15_truth_is_unchanged_by_this_slice() {
     assert_eq!(bonus.value, 7, "Cleric level 15 Touch of Good bonus must stay 7");
 }
 
-// ----- Negative control: level 17 stays unrecognized by this slice -----
-
-#[test]
-fn cleric_level_17_is_not_promoted_by_this_slice() {
-    let level_17 = CLERIC_LEVEL16_FIXTURE.replace("class:cleric:16", "class:cleric:17");
-    let input = load(&level_17);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")
-                || e.id.starts_with("class_feature.cleric.")
-                || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-17 Cleric must not gain any bounded cleric explanation: {:?}",
-        computation.explanations
-    );
-}
-
 // ----- Negative control: the cleric path must not leak onto other classes -----
 
 #[test]
