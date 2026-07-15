@@ -750,7 +750,8 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs 
     tests/sd13_druid_level6_progression.rs + tests/sd13_druid_level7_progression.rs + \
     tests/sd13_druid_level8_progression.rs + tests/sd13_druid_level9_progression.rs + \
     tests/sd13_druid_level10_progression.rs + tests/sd18_druid_level11_widening.rs + \
-    tests/sd18_druid_level12_widening.rs + tests/sd18_druid_level13_widening.rs";
+    tests/sd18_druid_level12_widening.rs + tests/sd18_druid_level13_widening.rs + \
+    tests/sd18_druid_level14_widening.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -2422,13 +2423,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
                             level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10/level-11/level-12/level-13 \
+                            level-9/level-10/level-11/level-12/level-13/level-14 \
                             prepared divine \
                             spell baseline, with base attack bonus, base save progression, Wild \
                             Empathy, Nature Sense, the nature-bond choice recognition, (at level \
                             2) Woodland Stride, (at level 3) Trackless Step, (at level 4) \
                             Resist Nature's Lure, and (at level 13) A Thousand Faces grounded for \
-                            real at all thirteen supported levels, \
+                            real at all fourteen supported levels, \
                             and the animal-companion execution burden, the Wild Shape execution \
                             burden, and the prepared divine spell posture burden still blocked",
                 support_state: SupportState::Partial,
@@ -2664,11 +2665,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     form-list expansions) remains named and unproven, and the prepared divine spell \
                     posture burden (spells prepared from the full Druid list, spontaneous summon \
                     nature's ally conversion, spell slots per day, bonus spells from a high Wisdom, \
-                    spell save DCs) is still entirely unproven. No spell math is fabricated and no \
-                    Druid level 14+ is proven",
+                    spell save DCs) is still entirely unproven. A further SD18 slice \
+                    (cycle-2026-07-15T2400, mirroring cycle-2026-07-15T2300's Cleric level-14 \
+                    widening, the loop's sixth §3.2 level-14 landing after Barbarian, Fighter, \
+                    Rogue, Ranger, and Bard) widens the gate again to level 14 (verified \
+                    independently against both d20pfsrd and Archives of Nethys aonprd.com, which \
+                    agree byte-for-byte): base attack bonus genuinely rises to +10 (14 * 3 / 4) \
+                    and both good saves genuinely rise to +9 (14 / 2 + 2), while poor Reflex \
+                    stays +4 (14 / 3, an integer-division coincidence with level 13); Wild \
+                    Empathy genuinely rises to 15 (14 + Charisma modifier). The level-14 \
+                    \"Special\" column reads \"Wild shape (6/day)\" — per the \
+                    level-4/6/8/10/12 precedent that frequency increase is bundled with a \
+                    non-separable functioning-level upgrade with no execution engine anywhere in \
+                    this codebase, so Wild Shape stays entirely named-but-unproven and this \
+                    slice grounds no new pillar at level 14 either — only the existing arithmetic \
+                    pillars are widened. The row stays Partial, not Supported: the \
+                    animal-companion execution burden, the Wild Shape execution burden, and the \
+                    prepared divine spell posture burden all remain named and unproven. No spell \
+                    math is fabricated and no Druid level 15+ is proven",
                 next_required_uplift: "SD13-E5 Druid animal companion execution slice, the Wild \
                     Shape execution slice, or the prepared divine spell burden slice, then Druid \
-                    level 14+ progression (out of scope for this slice)",
+                    level 15+ progression (out of scope for this slice)",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",
