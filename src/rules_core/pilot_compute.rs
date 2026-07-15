@@ -1714,13 +1714,14 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// recognition (no power-list validation — d20pfsrd merges non-CRB powers
 /// into its list, the same superset pattern as the mercy tiers, and the
 /// open-ended idiom sidesteps list encoding entirely).
-const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 6] = [
+const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 7] = [
     (1, 2, "choice:barbarian_rage_power"),
     (2, 4, "choice:barbarian_rage_power_2"),
     (3, 6, "choice:barbarian_rage_power_3"),
     (4, 8, "choice:barbarian_rage_power_4"),
     (5, 10, "choice:barbarian_rage_power_5"),
     (6, 12, "choice:barbarian_rage_power_6"),
+    (7, 14, "choice:barbarian_rage_power_7"),
 ];
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
@@ -1802,7 +1803,31 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 6] = [
 /// Sense stays +4 (13/3, next rise 15th) and level 13 is NOT a rage-power
 /// level (powers land at 2/4/6/8/10/12/14...), so no seventh
 /// rage-power-selection-slot-count engine is invented.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 13;
+///
+/// A still further SD18 slice widens the gate to level 14 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement): base-attack (classlevel = 14) genuinely
+/// rises to +14, good Fortitude genuinely rises to +9 (14/2+2), while poor
+/// Reflex/Will both stay +4 (14/3, integer-division coincidences unchanged
+/// from level 13); the rage rounds-per-day pool genuinely rises to 33 (4 +
+/// Con mod + 2 per level after 1st); the level-14 "Special" column reads
+/// "Indomitable will, rage power" — level 14 IS a rage-power level (powers
+/// land at 2/4/6/8/10/12/14...), so a seventh numbered slot (gate 14) is
+/// added to `BARBARIAN_RAGE_POWER_SLOTS` mirroring the proven repeat-grant
+/// idiom exactly, no new rage-power-EFFECT engine invented; Indomitable
+/// Will is a genuinely NEW named class feature ("a barbarian gains a +4
+/// morale bonus on Will saves to resist enchantment spells and effects
+/// while raging"), grounded as a fifth flat while-raging magnitude
+/// (`BARBARIAN_INDOMITABLE_WILL_ENCHANTMENT_WILL_SAVE_BONUS`), mirroring
+/// exactly the shape of the four pre-existing flat rage constants (Strength/
+/// Constitution/Will-save morale bonuses, AC penalty): a bounded
+/// flat-magnitude record only, never applied to any actual Will-save total,
+/// since no saving-throw-resolution engine, no spell-school-classification
+/// engine, and no rage-state execution engine exists anywhere in this
+/// codebase to decide when a save is against an enchantment effect or
+/// whether the barbarian is currently raging; Trap Sense stays +4 (14/3,
+/// next rise 15th) and Damage Reduction stays 3/- (next rise 16th).
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 14;
 
 /// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
 /// (11th level — "At 11th level, a barbarian's rage improves. She gains a
@@ -1848,6 +1873,20 @@ const BARBARIAN_DAMAGE_REDUCTION_TWO_LEVEL: u8 = 10;
 /// mirror: both name "Damage reduction 3/-" as the Barbarian 13th-level
 /// "Special" class table entry).
 const BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL: u8 = 13;
+
+/// PF1 Core Rulebook level gate at which Barbarian gains Indomitable Will
+/// (14th level, verified independently against d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror, byte-for-byte agreement: both name "Indomitable
+/// will, rage power" as the Barbarian 14th-level "Special" class table
+/// entry, and both give the rule text "While she is raging, a barbarian
+/// gains a +4 morale bonus on Will saves to resist enchantment spells and
+/// effects").
+const BARBARIAN_INDOMITABLE_WILL_LEVEL: u8 = 14;
+/// The flat Indomitable Will Will-save morale bonus (+4), grounded as a
+/// value-only record mirroring the four pre-existing flat while-raging rage
+/// constants (Strength/Constitution/Will-save morale bonuses, AC penalty):
+/// never applied to any actual Will-save total.
+const BARBARIAN_INDOMITABLE_WILL_ENCHANTMENT_WILL_SAVE_BONUS: i16 = 4;
 
 // SD13-E3/E5 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
@@ -8484,6 +8523,50 @@ fn explain_barbarian_level1_chassis(
                  engine and no \
                  incoming-damage total exists anywhere in this codebase to apply it, so this \
                  grounds no actual damage reduction"
+            ),
+        });
+    }
+
+    // Grounded (SD18): Indomitable Will, a 14th-level Barbarian class feature
+    // (verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror, byte-for-byte agreement: both name "Indomitable will,
+    // rage power" as the Barbarian 14th-level "Special" class table entry, and
+    // both give the rule text "While she is raging, a barbarian gains a +4
+    // morale bonus on Will saves to resist enchantment spells and effects").
+    // Below the level-14 gate this is a correct PF1 Core Rulebook level-gate
+    // absence (value 0); at or above it, it is a bounded flat-magnitude record
+    // only (a flat value of 4, non-fabricated) naming the rule text —
+    // mirroring exactly how the four pre-existing flat while-raging rage
+    // constants were grounded: the magnitude is never applied to any actual
+    // Will-save total, since no saving-throw-resolution engine, no
+    // spell-school-classification engine (to decide whether an incoming save
+    // is against an enchantment effect), and no rage-state execution engine
+    // (to decide whether the barbarian is currently raging) exists anywhere
+    // in this codebase to apply it.
+    if level < BARBARIAN_INDOMITABLE_WILL_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.indomitable_will".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian Indomitable Will at barbarian level {level}: correctly absent at \
+                 level {level} by PF1 Core Rulebook level gate; the at-grant magnitude is named \
+                 but not computed. Indomitable Will is a 14th-level barbarian class feature."
+            ),
+        });
+    } else {
+        let indomitable_will_bonus = BARBARIAN_INDOMITABLE_WILL_ENCHANTMENT_WILL_SAVE_BONUS;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.indomitable_will".to_owned(),
+            value: indomitable_will_bonus,
+            detail: format!(
+                "Barbarian Indomitable Will granted at barbarian level {level} (PF1 Core \
+                 Rulebook, 14th-level barbarian class feature): while raging, a +{indomitable_will_bonus} \
+                 morale bonus on Will saves to resist enchantment spells and effects. This is a \
+                 bounded flat-magnitude record only (value {indomitable_will_bonus}, \
+                 non-fabricated): no saving-throw-resolution engine, no \
+                 spell-school-classification engine, and no rage-state execution engine exists \
+                 anywhere in this codebase to apply it, so this grounds no actual Will-save \
+                 bonus"
             ),
         });
     }

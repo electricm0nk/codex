@@ -230,7 +230,7 @@ fn barbarian_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(damage_reduction.value, 1, "Barbarian level 9 Damage Reduction must stay 1/—");
 }
 
-// ----- Negative control: level 14 stays unrecognized by this slice -----
+// ----- Negative control: level 15 stays unrecognized by this slice -----
 //
 // This boundary was originally level 11 (the tranche-2 ceiling at the time
 // this test was written); the SD18 barbarian-level11-greater-rage cycle
@@ -246,9 +246,9 @@ fn barbarian_level9_truth_is_unchanged_by_this_slice() {
 // moved this same negative control's boundary up by one level.
 
 #[test]
-fn barbarian_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = BARBARIAN_LEVEL10_FIXTURE.replace("class:barbarian:10", "class:barbarian:14");
-    let input = load(&level_14);
+fn barbarian_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = BARBARIAN_LEVEL10_FIXTURE.replace("class:barbarian:10", "class:barbarian:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -256,7 +256,7 @@ fn barbarian_level_14_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.barbarian.")
                 || e.id.starts_with("class_feature.barbarian.")),
-        "level-14 Barbarian must not gain any bounded barbarian explanation: {:?}",
+        "level-15 Barbarian must not gain any bounded barbarian explanation: {:?}",
         computation.explanations
     );
 }
