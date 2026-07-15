@@ -2637,8 +2637,23 @@ const DRUID_CLASS_ID: &str = "class:druid";
 // opens at level 13 (matching the Cleric precedent exactly, since Druid
 // shares the identical "high" 9-level-caster progression shape), but Druid
 // has no currently-grounded spell-slot-count pillar (unlike Cleric's
-// domain slot), so there is no analogous pillar to widen.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 13;
+// domain slot), so there is no analogous pillar to widen. A further SD18
+// slice (cycle-2026-07-15T2400, mirroring cycle-2026-07-15T2300's Cleric
+// level-14 widening, the loop's sixth §3.2 level-14 landing after
+// Barbarian, Fighter, Rogue, Ranger, and Bard) widens the gate again to
+// level 14 (verified independently against both d20pfsrd and Archives of
+// Nethys aonprd.com, which agree byte-for-byte): base attack bonus
+// GENUINELY RISES to +10 (14 * 3 / 4) and both good saves GENUINELY RISE
+// to +9 (14 / 2 + 2), while poor Reflex STAYS +4 (14 / 3, an
+// integer-division coincidence with level 13); Wild Empathy genuinely
+// rises to 15 (14 + Charisma modifier). The level-14 "Special" column
+// reads "Wild shape (6/day)" — per the level-4/6/8/10/12 precedent this
+// frequency increase is bundled with a non-separable functioning-level
+// upgrade with no execution engine anywhere in this codebase, so Wild
+// Shape stays entirely named-but-unproven and this slice grounds no new
+// pillar at level 14 either — only the existing arithmetic pillars are
+// widened.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 14;
 /// PF1 Core Rulebook level gate at which Druid gains Venom Immunity (9th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Venom immunity" as the Druid 9th-level
