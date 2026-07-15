@@ -2086,7 +2086,35 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // arithmetic pillars widen, and this is a pure ceiling raise: every
 // consuming formula already reads `level` generically, so no new tier
 // constant or threshold constant is needed at all.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 16;
+//
+// A further SD18 slice (the loop's FIFTH §3.2 level-17 landing, after
+// Ranger, Bard, Rogue, and Fighter, and the first spell-bearing class to
+// reach level 17 in the level-17 sweep) widens the gate again to level 17:
+// base attack bonus STAYS at +8 (`17/2 = 8`) and good Will STAYS at +10
+// (`17/2+2 = 10`), both integer-division coincidences with level 16, while
+// poor Fortitude/Reflex both STAY at +5 (`17/3 = 5`, also an
+// integer-division coincidence with level 16) — verified independently
+// against two primary sources (d20pfsrd and the Archives of Nethys
+// aonprd.com mirror, which agree byte-for-byte, so no third source was
+// required), fetching the full levels-15-through-18 block in one pass to
+// rule out level-misattribution. The raw spells-per-day table's level-17
+// row is "4/4/4/4/4/4/4/3/2/1" — up from the level-16 row
+// "4/4/4/4/4/4/3/3/2/—" (the 6th-level column rises from 3 to 4) AND a
+// genuinely NEW 9th-level column appears for the first time (value 1), so
+// a level-17 specialist wizard casts 9th-level spells for the first time,
+// and the specialist bonus-slot flat count GENUINELY RISES to 9, up from 8
+// at levels 15-16, via a new
+// `WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 17` threshold constant
+// gated exactly like the existing level-3/5/7/9/11/13/15 idiom. Intense
+// Spells' bonus-damage magnitude STAYS at 8 (`max(17/2, 1) = 8`, an
+// integer-division coincidence with level 16) via the pre-existing
+// formula, not re-derived; Force Missile's pool is level-independent and
+// unchanged; the level-17 "Special" column is genuinely BLANK on both
+// primary sources (the Wizard's bonus feats land only at levels
+// 5/10/15/20), so no new named-feature pillar record is grounded at level
+// 17 beyond the 9th-level-column-opening widening of the pre-existing
+// specialist-bonus-slot pillar.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 17;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -2163,6 +2191,15 @@ const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_13: i16 = 7;
 /// cast, 1st through 8th, for a flat count of 8, up from 7 at levels 13-14.
 const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_15: i16 = 8;
 
+/// SD18 level-17 widening: a level-17 wizard casts 9th-level spells for the
+/// first time (verified independently against both primary sources' raw
+/// Wizard spells-per-day table rows: level 16 shows "4/4/4/4/4/4/3/3/2",
+/// level 17 shows "4/4/4/4/4/4/4/3/2/1" — the first non-"—" 9th-level
+/// column), so a specialist wizard now gains one bonus slot of EACH spell
+/// level she can cast, 1st through 9th, for a flat count of 9, up from 8 at
+/// levels 15-16.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_17: i16 = 9;
+
 /// PF1 Core Rulebook Wizard spells-per-day table: the wizard class level at which
 /// 2nd-level wizard spells first become available (verified independently against
 /// both primary sources: level 1-2 wizards cast only 1st-level spells; level 3 is
@@ -2211,6 +2248,15 @@ const WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
 /// non-"—" 8th-level column ("1", the level-15 row reading
 /// "4/4/4/4/4/4/3/2/1").
 const WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 15;
+/// The wizard level at which 9th-level wizard spells (and so the ninth
+/// Evocation-only specialist bonus slot) first become available, verified
+/// against the raw PF1 Core Rulebook Wizard spells-per-day table rows
+/// (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree
+/// byte-for-byte): level 16 shows a still-"—" 9th-level column (the
+/// level-16 row reading "4/4/4/4/4/4/3/3/2"), level 17 is the first to show
+/// a non-"—" 9th-level column ("1", the level-17 row reading
+/// "4/4/4/4/4/4/4/3/2/1").
+const WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 17;
 
 // SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
 // martial class; the bounded single-class level-1 identity is recognized as
@@ -12456,7 +12502,9 @@ fn explain_wizard_level1_prepared_spell_baseline(
         // of EACH spell level she can cast — one 1st-level bonus slot plus one
         // 2nd-level bonus slot, a flat count of 2.
         let wizard_specialist_bonus_slot_count =
-            if level >= WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            if level >= WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_17
+            } else if level >= WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_15
             } else if level >= WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_13
@@ -12522,7 +12570,14 @@ fn explain_wizard_level1_prepared_spell_baseline(
                  still-\"—\" 8th-level column, the level-15 row is \"4/4/4/4/4/4/3/2/1\", the \
                  first non-\"—\" 8th-level column), so the flat count becomes \
                  {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_15:+} (one bonus slot of each spell \
-                 level 1st through 8th). At level {level} this \
+                 level 1st through 8th); at level \
+                 {WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 9th-level \
+                 spells for the first time (verified independently against both primary sources' \
+                 raw spells-per-day table rows: the level-16 row is \"4/4/4/4/4/4/3/3/2\" with a \
+                 still-\"—\" 9th-level column, the level-17 row is \"4/4/4/4/4/4/4/3/2/1\", the \
+                 first non-\"—\" 9th-level column), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_17:+} (one bonus slot of each spell \
+                 level 1st through 9th). At level {level} this \
                  is {wizard_specialist_bonus_slot_count:+} flat count; there is no cantrip-level \
                  bonus slot. This grounds the flat count only: no slot contents, no spells \
                  prepared per day, no per-day slot totals, and no bonus slots from a high \

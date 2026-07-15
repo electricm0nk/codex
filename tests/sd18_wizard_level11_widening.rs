@@ -227,9 +227,9 @@ fn wizard_level10_truth_is_unchanged_by_this_slice() {
 // for their own sibling level-11 widening test.)
 
 #[test]
-fn wizard_level_17_is_not_promoted_by_this_slice() {
-    let level_17 = WIZARD_LEVEL11_FIXTURE.replace("class:wizard:11", "class:wizard:17");
-    let input = load(&level_17);
+fn wizard_level_18_is_not_promoted_by_this_slice() {
+    let level_18 = WIZARD_LEVEL11_FIXTURE.replace("class:wizard:11", "class:wizard:18");
+    let input = load(&level_18);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -238,7 +238,7 @@ fn wizard_level_17_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id.starts_with("class_feature.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-17 Wizard must not gain any bounded wizard explanation: {:?}",
+        "level-18 Wizard must not gain any bounded wizard explanation: {:?}",
         computation.explanations
     );
 }
