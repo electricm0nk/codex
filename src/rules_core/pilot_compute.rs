@@ -2431,13 +2431,49 @@ const DRUID_CLASS_ID: &str = "class:druid";
 // or Huge plant creature) and functioning-level upgrade (elemental body IV
 // / plant shape III), so Wild Shape stays entirely named-but-unproven and
 // this slice grounds no new pillar at level 12 either — only the existing
-// arithmetic pillars are widened.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 12;
+// arithmetic pillars are widened. A still further SD18 slice
+// (cycle-2026-07-15T1600, mirroring cycle-2026-07-15T1500's Cleric
+// level-13 widening, the loop's fifth §3.2 level-13 landing after Rogue,
+// Barbarian, Fighter, and Ranger) widens the gate again to level 13. All
+// three primary sources (d20pfsrd, Archives of Nethys aonprd.com, and
+// legacy.aonprd.com) were read directly and agree: level 13 base attack
+// bonus STAYS +9 (13 * 3 / 4 = 9) and all three base saves STAY +8/+4/+8
+// (Fortitude/Reflex/Will: 13/2+2=8, 13/3=4) — four integer-division
+// coincidences with level 12, checked rather than assumed; Wild Empathy
+// genuinely rises to 14 (13 + Charisma modifier). UNLIKE every prior
+// widened level's Wild-Shape-shaped "Special" column entry (levels
+// 4/6/8/10/12), the level-13 "Special" column reads "A thousand faces" — a
+// DIFFERENT class feature, not a Wild Shape frequency increase. Checked
+// directly rather than assumed: in PF1 (unlike the D&D 3.5 version of this
+// ability, which referenced the stronger `alter self` spell), A Thousand
+// Faces grants the druid the ability to change her own apparent appearance
+// at will, as if using `disguise self`, but only while in her normal
+// (unshifted) form. This is a genuinely flat/identity-shaped, no-choice,
+// no-magnitude, no-duration-tracking, at-will grant — mirroring exactly
+// how Venom Immunity was grounded at level 9 — so it is grounded here as a
+// bounded +0 identity/recognition record: no illusion-effect execution
+// engine and no Disguise-check-resolution engine exists anywhere in this
+// codebase, so no actual appearance-change or Disguise-check outcome is
+// fabricated. The spells-per-day table's 7th-level spell column also newly
+// opens at level 13 (matching the Cleric precedent exactly, since Druid
+// shares the identical "high" 9-level-caster progression shape), but Druid
+// has no currently-grounded spell-slot-count pillar (unlike Cleric's
+// domain slot), so there is no analogous pillar to widen.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 13;
 /// PF1 Core Rulebook level gate at which Druid gains Venom Immunity (9th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Venom immunity" as the Druid 9th-level
 /// "Special" column entry).
 const DRUID_VENOM_IMMUNITY_LEVEL: u8 = 9;
+/// PF1 Core Rulebook level gate at which Druid gains A Thousand Faces (13th
+/// level, verified independently against three primary sources: d20pfsrd,
+/// Archives of Nethys aonprd.com, and legacy.aonprd.com all list "A
+/// thousand faces" as the Druid 13th-level "Special" column entry). In PF1
+/// (unlike the D&D 3.5 version of this ability, which referenced the
+/// stronger `alter self` spell), this grants the druid the ability to
+/// change her own apparent appearance at will, as if using `disguise
+/// self`, but only while in her normal (unshifted) form.
+const DRUID_A_THOUSAND_FACES_LEVEL: u8 = 13;
 /// PF1 Core Rulebook level gate at which Druid gains Resist Nature's Lure (4th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Resist nature's lure" as part of the Druid
@@ -12122,6 +12158,38 @@ fn explain_druid_level1_spell_baseline(
                  no poison-application or condition-resolution engine exists anywhere in this \
                  codebase to apply it, so this grounds no actual immunity effect on any \
                  poison outcome"
+            ),
+        });
+    }
+
+    // Grounded (SD18 level-13 slice): A Thousand Faces, the 13th-level Druid class
+    // feature verified independently against three primary PF1 sources (d20pfsrd,
+    // Archives of Nethys aonprd.com, and legacy.aonprd.com all list "A thousand
+    // faces" as the Druid 13th-level "Special" column entry). UNLIKE the class
+    // table's Wild-Shape-shaped entries at levels 4/6/8/10/12, this is a genuinely
+    // flat/identity-shaped, no-choice, no-magnitude, no-duration-tracking, at-will
+    // grant — in PF1 (unlike the D&D 3.5 version of this ability, which referenced
+    // the stronger `alter self` spell), the druid gains the ability to change her
+    // own apparent appearance at will, as if using `disguise self`, but only while
+    // in her normal (unshifted) form — mirroring exactly how Venom Immunity was
+    // grounded at level 9: a bounded +0 identity/recognition record at or above the
+    // gate: no illusion-effect execution engine and no Disguise-check-resolution
+    // engine exists anywhere in this codebase to apply it, so no actual
+    // appearance-change or Disguise-check outcome is fabricated. Below the
+    // level-13 gate no record is pushed at all (the level-13 slice's own level-12
+    // control pins that absence).
+    if level >= DRUID_A_THOUSAND_FACES_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.a_thousand_faces".to_owned(),
+            value: 0,
+            detail: format!(
+                "Druid A Thousand Faces granted at druid level {level} (PF1 Core Rulebook, \
+                 13th-level druid class feature): the druid gains the ability to change her \
+                 own apparent appearance at will, as if using disguise self, but only while in \
+                 her normal (unshifted) form. This is a bounded identity/recognition record \
+                 only (value 0, non-fabricated): no illusion-effect execution engine and no \
+                 Disguise-check-resolution engine exists anywhere in this codebase to apply it, \
+                 so this grounds no actual appearance-change or Disguise-check outcome"
             ),
         });
     }

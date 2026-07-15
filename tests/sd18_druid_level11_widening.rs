@@ -226,17 +226,17 @@ fn druid_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(base_attack.value, 7, "Druid level 10 base attack bonus must stay 7");
 }
 
-// ----- Negative control: level 13 stays unrecognized by this slice -----
-// (Druid level 12 was widened into scope by a later SD18 slice —
-// tests/sd18_druid_level12_widening.rs — so this negative control's
-// boundary moves from 12 to 13, mirroring the exact same boundary-move
-// idiom applied to tests/sd18_cleric_level11_widening.rs when
-// MAX_SUPPORTED_CLERIC_LEVEL widened from 11 to 12.)
+// ----- Negative control: level 14 stays unrecognized by this slice -----
+// (Druid level 12 and level 13 were widened into scope by later SD18
+// slices — tests/sd18_druid_level12_widening.rs and
+// tests/sd18_druid_level13_widening.rs — so this negative control's
+// boundary moves from 12 to 13 to 14, mirroring the exact same
+// boundary-move idiom applied to tests/sd18_cleric_level11_widening.rs.)
 
 #[test]
-fn druid_level_13_is_not_promoted_by_this_slice() {
-    let level_13 = DRUID_LEVEL11_FIXTURE.replace("class:druid:11", "class:druid:13");
-    let input = load(&level_13);
+fn druid_level_14_is_not_promoted_by_this_slice() {
+    let level_14 = DRUID_LEVEL11_FIXTURE.replace("class:druid:11", "class:druid:14");
+    let input = load(&level_14);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -245,7 +245,7 @@ fn druid_level_13_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.druid.")
                 || e.id.starts_with("class_feature.druid.")
                 || e.id == "class_chassis.spell_baseline.druid"),
-        "level-13 Druid must not gain any bounded druid explanation: {:?}",
+        "level-14 Druid must not gain any bounded druid explanation: {:?}",
         computation.explanations
     );
 }
