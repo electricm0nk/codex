@@ -2,12 +2,11 @@
 //!
 //! Widens the accepted SD18 deterministic Human Paladin level-1..level-14
 //! hybrid chassis (`tests/sd18_paladin_level14_widening.rs`, the loop's most
-//! recent Paladin ceiling) to Paladin level 15 -- the loop's TENTH §3.2
+//! recent Paladin ceiling) to Paladin level 15 -- the loop's EIGHTH §3.2
 //! class-row level-15 landing (after Barbarian, Rogue, Fighter, Cleric,
-//! Druid, Ranger, and Wizard's level-15 landings, and the loop's own eighth
-//! §3.2 level-15 landing counting from the start of that sweep, the fourth
+//! Druid, Ranger, and Wizard's level-15 landings), and the fourth
 //! hybrid/partial-caster class -- after Ranger and, at levels 13/14, itself
-//! -- to reach it) (`supported_paladin_level` is generalized from `1..=14`
+//! -- to reach it (`supported_paladin_level` is generalized from `1..=14`
 //! to `1..=15` via `MAX_SUPPORTED_PALADIN_LEVEL = 15`, exactly as prior
 //! cycles widened the sibling `MAX_SUPPORTED_*_LEVEL` constants). §3.1 race
 //! rows and §3.3 interaction rows are structurally exhausted/blocked (cited

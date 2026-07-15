@@ -3518,7 +3518,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     tests/sd18_paladin_level13_widening.rs, all moved to a level-15 boundary. \
                     The SD18 cycle-2026-07-15T4300 slice \
                     (tests/sd18_paladin_level15_widening.rs) widens the level-range gate once \
-                    more to level 15, the loop's TENTH §3.2 level-15 landing, and the fourth \
+                    more to level 15, the loop's EIGHTH §3.2 level-15 landing, and the fourth \
                     hybrid/partial-caster class (after Ranger and, at levels 13/14, itself) to \
                     reach it: base attack genuinely rises to +15 (full BAB) and poor Reflex \
                     genuinely rises to 5 (15/3, up from 4), while both good saves stay \
