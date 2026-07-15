@@ -2039,7 +2039,7 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// recognition (no power-list validation — d20pfsrd merges non-CRB powers
 /// into its list, the same superset pattern as the mercy tiers, and the
 /// open-ended idiom sidesteps list encoding entirely).
-const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 7] = [
+const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 8] = [
     (1, 2, "choice:barbarian_rage_power"),
     (2, 4, "choice:barbarian_rage_power_2"),
     (3, 6, "choice:barbarian_rage_power_3"),
@@ -2047,6 +2047,7 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 7] = [
     (5, 10, "choice:barbarian_rage_power_5"),
     (6, 12, "choice:barbarian_rage_power_6"),
     (7, 14, "choice:barbarian_rage_power_7"),
+    (8, 16, "choice:barbarian_rage_power_8"),
 ];
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
@@ -2170,7 +2171,27 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 7] = [
 /// rage-power-selection-slot-count engine is invented; Damage Reduction
 /// stays 3/- (next rise 16th) and Indomitable Will's flat +4 magnitude
 /// carries over unchanged (already unconditional at level >= 14).
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 15;
+///
+/// A still further SD18 slice — the loop's FIRST §3.2 level-16 landing,
+/// opening the level-16 sweep — widens the gate to level 16 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement): base-attack (classlevel = 16)
+/// genuinely rises to +16 (full BAB), and good Fortitude genuinely rises to
+/// +10 (16/2+2), while poor Reflex/Will both stay +5 (16/3, an
+/// integer-division coincidence with level 15); the rage rounds-per-day
+/// pool genuinely rises to 37 (4 + Con mod + 2 per level after 1st); the
+/// level-16 "Special" column reads "Damage reduction 4/-, rage power" —
+/// Damage Reduction GENUINELY RISES to 4/- via a FOURTH tier constant
+/// (`BARBARIAN_DAMAGE_REDUCTION_FOUR_LEVEL`), mirroring exactly how the
+/// level-10/level-13 two-tier-then-three-tier idiom was established (the
+/// same "10th level and every three barbarian levels thereafter" cadence:
+/// 10, 13, 16); level 16 IS a rage-power level (powers land at
+/// 2/4/6/8/10/12/14/16/18/20), so an EIGHTH numbered slot (gate 16) is
+/// added to `BARBARIAN_RAGE_POWER_SLOTS` mirroring the proven repeat-grant
+/// idiom exactly, no new rage-power-EFFECT engine invented; Trap Sense
+/// stays +5 (16/3, next rise 18th) and Indomitable Will's flat +4
+/// magnitude carries over unchanged.
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 16;
 
 /// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
 /// (11th level — "At 11th level, a barbarian's rage improves. She gains a
@@ -2216,6 +2237,13 @@ const BARBARIAN_DAMAGE_REDUCTION_TWO_LEVEL: u8 = 10;
 /// mirror: both name "Damage reduction 3/-" as the Barbarian 13th-level
 /// "Special" class table entry).
 const BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL: u8 = 13;
+/// PF1 Core Rulebook level gate at which Barbarian Damage Reduction rises to
+/// 4/— (16th level — the same "every three barbarian levels thereafter"
+/// clause applied a third time from the 10th-level gate, verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror: both name "Damage reduction 4/-, rage power" as the Barbarian
+/// 16th-level "Special" class table entry).
+const BARBARIAN_DAMAGE_REDUCTION_FOUR_LEVEL: u8 = 16;
 
 /// PF1 Core Rulebook level gate at which Barbarian gains Indomitable Will
 /// (14th level, verified independently against d20pfsrd and the Archives of
@@ -9226,8 +9254,10 @@ fn explain_barbarian_level1_chassis(
             1
         } else if level < BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL {
             2
-        } else {
+        } else if level < BARBARIAN_DAMAGE_REDUCTION_FOUR_LEVEL {
             3
+        } else {
+            4
         };
         explanations.push(ComputationExplanation {
             id: "class_feature.barbarian.damage_reduction".to_owned(),
