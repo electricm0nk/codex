@@ -389,22 +389,24 @@ fn paladin_level10_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: level 14 stays unrecognized by this slice -----
 // (level 12 was later widened into the supported tranche by SD18's
-// cycle-2026-07-15T0700 widening slice, and level 13 by SD18's
-// cycle-2026-07-15T1800 widening slice; see
-// tests/sd18_paladin_level12_widening.rs and
-// tests/sd18_paladin_level13_widening.rs for their own boundaries.)
+// cycle-2026-07-15T0700 widening slice, level 13 by SD18's
+// cycle-2026-07-15T1800 widening slice, and level 14 by SD18's
+// cycle-2026-07-15T2500 widening slice; see
+// tests/sd18_paladin_level12_widening.rs,
+// tests/sd18_paladin_level13_widening.rs, and
+// tests/sd18_paladin_level14_widening.rs for their own boundaries.)
 
 #[test]
-fn paladin_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = PALADIN_LEVEL11_FIXTURE.replace("class:paladin:11", "class:paladin:14");
-    let input = load(&level_14);
+fn paladin_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = PALADIN_LEVEL11_FIXTURE.replace("class:paladin:11", "class:paladin:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-13 Paladin must not gain any bounded paladin chassis explanation: {:?}",
+        "level-15 Paladin must not gain any bounded paladin chassis explanation: {:?}",
         computation.explanations
     );
 }
