@@ -1451,7 +1451,44 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// performance"), not a numeric-count formula, so no affected-creature
 /// count record is added for it. The repeat Versatile Performance grant
 /// (also at levels 2, 6, and 10) stays named-but-unproven unchanged.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 14;
+///
+/// SD18 (cycle-2026-07-15T4500) widens the gate again to level 15, the loop's
+/// TENTH §3.2 level-15 landing (after Barbarian, Rogue, Fighter, Cleric, Druid,
+/// Ranger, Wizard, Paladin, and Sorcerer) and the FINAL class needed to close
+/// the §3.2 level-15 sweep at 10 of 10 non-Monk classes. Both primary sources
+/// (d20pfsrd and the Archives of Nethys aonprd.com mirror) agree byte-for-byte:
+/// base attack bonus genuinely rises to +11 (15*3/4) and poor Fortitude
+/// genuinely rises to +5 (15/3), while both good saves (Reflex, Will) stay +9
+/// (15/2+2, an integer-division coincidence with level 14); Bardic Knowledge
+/// stays 7 (max(15/2,1), a coincidence); the Bardic Performance rounds-per-day
+/// pool genuinely rises to 34 (4+CHA+2*(15-1)); the Fascinate DC and
+/// affected-creature count both stay unchanged (19, 5 — both integer-division
+/// coincidences with level 14); Frightening Tune's DC (the same formula shape
+/// as the Fascinate DC) likewise stays 19 for the same reason. The level-15
+/// "Special" column reads "Inspire competence +5, inspire heroics"
+/// (resolving the level-13 cycle's own open question about whether the
+/// Inspire Courage/Lore Master tier thresholds land at level 15 or 17: they
+/// do NOT — both stay at their level-11 third tier, since their own next
+/// tier is at level 17, verified directly against the rule text "every six
+/// bard levels thereafter"). Inspire Competence's flat magnitude genuinely
+/// rises from +4 to +5 — a fourth tier on the already-generalized tiered
+/// if/else chain, the same arithmetic-widening idiom as the third-tier
+/// addition at level 11, needing no new grounding machinery. Inspire
+/// Heroics is a wholly new 15th-level class feature ("A bard of 15th level
+/// or higher can inspire tremendous heroism in himself or a single ally
+/// within 30 feet... Inspired creatures gain a +4 morale bonus on saving
+/// throws and a +4 dodge bonus to AC."); both magnitude numbers are flat
+/// and non-level-scaled at the level they are gained, so they are grounded
+/// as flat standalone magnitudes mirroring the Well-Versed idiom exactly,
+/// and the base target count (a single creature at 15th level, before the
+/// "+1 creature per three bard levels beyond 15th" scaling, which lands
+/// beyond this bounded slice's ceiling) is grounded as a flat count
+/// mirroring the Fascinate affected-creature-count idiom. No targeting,
+/// save resolution, AC application, or performance-state execution is
+/// grounded for Inspire Heroics — it remains named-but-unproven for
+/// execution, exactly like Frightening Tune and Soothing Performance
+/// before it.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 15;
 /// PF1 Core Rulebook level gate at which Bard gains Frightening Tune
 /// (14th level, verified independently against two primary sources:
 /// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
@@ -1526,13 +1563,27 @@ const BARD_INSPIRE_COMPETENCE_BONUS_SECOND_TIER: i16 = 3;
 /// against two primary sources: d20pfsrd and legacy.aonprd.com both list
 /// "Inspire competence +4, inspire courage +3, lore master 2/day" as the
 /// Bard 11th-level special feature entry). The next increase (to +5) lands
-/// at bard level 15, out of scope since only Bard levels 1-11 are
-/// supported.
+/// at bard level 15 (grounded below by
+/// `BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL`).
 const BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL: u8 = 11;
 /// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
-/// third-tier level gate (11th level and beyond, until the next tier at
-/// 15th level, out of scope here).
+/// third-tier level gate (11th level and beyond, until the fourth tier at
+/// 15th level).
 const BARD_INSPIRE_COMPETENCE_BONUS_THIRD_TIER: i16 = 4;
+/// PF1 Core Rulebook level at which the Inspire Competence flat magnitude
+/// increases again from +4 to +5 (15th level, verified independently
+/// against two primary sources: d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, both byte-for-byte identical: "Inspire competence
+/// +5, inspire heroics" is the Bard 15th-level special feature entry, and
+/// both state the rule text "This bonus increases by +1 for every four
+/// levels the bard has attained beyond 3rd"). The next increase (to +6)
+/// lands at bard level 19, out of scope since only Bard levels 1-15 are
+/// supported.
+const BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL: u8 = 15;
+/// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
+/// fourth-tier level gate (15th level and beyond, until the next tier at
+/// 19th level, out of scope here).
+const BARD_INSPIRE_COMPETENCE_BONUS_FOURTH_TIER: i16 = 5;
 /// PF1 Core Rulebook level at which the Inspire Courage flat magnitude first
 /// increases from +1 to +2 (5th level, verified independently against two
 /// primary sources: d20pfsrd and legacy.aonprd.com both list "Inspire courage
@@ -1555,7 +1606,8 @@ const BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER: i16 = 2;
 /// Bard 11th-level special feature entry — "every six bard levels
 /// thereafter" after the 5th-level tier lands exactly on 11th). The next
 /// increase (to +4) lands at bard level 17, out of scope since only Bard
-/// levels 1-11 are supported.
+/// levels 1-15 are supported (confirmed directly against the level-15 rule
+/// text, which does not touch Inspire Courage's tier).
 const BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL: u8 = 11;
 /// PF1 Core Rulebook Inspire Courage flat magnitude at or above the
 /// third-tier level gate (11th level and beyond, until the next tier at
@@ -1583,12 +1635,40 @@ const BARD_LORE_MASTER_TAKE_20_USES_PER_DAY: i16 = 1;
 /// lore master 2/day" as the Bard 11th-level special feature entry — the
 /// same every-sixth-level-after-5th cadence as Inspire Courage). The next
 /// increase (to 3/day) lands at bard level 17, out of scope since only Bard
-/// levels 1-11 are supported.
+/// levels 1-15 are supported (confirmed directly against the level-15 rule
+/// text, which does not touch Lore Master's tier).
 const BARD_LORE_MASTER_SECOND_TIER_LEVEL: u8 = 11;
 /// PF1 Core Rulebook Lore Master take-20 usage-count magnitude at or above
 /// the second-tier level gate (11th level and beyond, until the next tier
 /// at 17th level, out of scope here).
 const BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_SECOND_TIER: i16 = 2;
+/// PF1 Core Rulebook level gate at which Bard gains Inspire Heroics (15th
+/// level, verified independently against two primary sources: d20pfsrd and
+/// the Archives of Nethys aonprd.com mirror both list "Inspire competence
+/// +5, inspire heroics" as the Bard 15th-level "Special" column entry). The
+/// rule text: "A bard of 15th level or higher can inspire tremendous
+/// heroism in himself or a single ally within 30 feet... Inspired
+/// creatures gain a +4 morale bonus on saving throws and a +4 dodge bonus
+/// to AC." This grounds only the two flat, non-level-scaled magnitude
+/// numbers (the save bonus and the AC bonus) and the flat base target
+/// count, mirroring the Well-Versed flat-magnitude idiom and the Fascinate
+/// affected-creature-count idiom respectively; no targeting, save
+/// resolution, or AC application is computed because no such engine exists
+/// anywhere in this codebase.
+const BARD_INSPIRE_HEROICS_LEVEL: u8 = 15;
+/// PF1 Core Rulebook Inspire Heroics flat morale bonus on saving throws (a
+/// flat, non-level-scaled +4, verified against both primary sources).
+const BARD_INSPIRE_HEROICS_SAVE_BONUS: i16 = 4;
+/// PF1 Core Rulebook Inspire Heroics flat dodge bonus to AC (a flat,
+/// non-level-scaled +4, verified against both primary sources).
+const BARD_INSPIRE_HEROICS_AC_BONUS: i16 = 4;
+/// PF1 Core Rulebook Inspire Heroics base target count at the level it is
+/// first gained: "himself or a single ally" is a flat 1 target (verified
+/// against both primary sources). The rule's own later scaling ("For every
+/// three bard levels the character attains beyond 15th, he can inspire
+/// heroics in an additional creature") lands at bard level 18, beyond this
+/// bounded slice's ceiling, and is not grounded.
+const BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT: i16 = 1;
 
 // SD13-E5 Fascinate flat DC base. PF1 Core Rulebook Fascinate Will save DC is
 // 10 + 1/2 bard level + Charisma modifier; only the fixed base term is a named
@@ -13646,7 +13726,9 @@ fn explain_bard_level1_spell_baseline(
             ),
         });
     } else {
-        let inspire_competence_bonus = if level >= BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL {
+        let inspire_competence_bonus = if level >= BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL {
+            BARD_INSPIRE_COMPETENCE_BONUS_FOURTH_TIER
+        } else if level >= BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL {
             BARD_INSPIRE_COMPETENCE_BONUS_THIRD_TIER
         } else if level >= BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL {
             BARD_INSPIRE_COMPETENCE_BONUS_SECOND_TIER
@@ -13660,15 +13742,17 @@ fn explain_bard_level1_spell_baseline(
                 "Bard Inspire Competence granted at bard level {level} (PF1 Core Rulebook, \
                  3rd-level Bard class feature): a flat +{inspire_competence_bonus} competence \
                  bonus on skill checks with a particular skill. This magnitude increases from \
-                 +2 to +3 exactly at bard level {BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL} and \
+                 +2 to +3 exactly at bard level {BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL}, \
                  again from +3 to +4 exactly at bard level \
-                 {BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL} (PF1 Core Rulebook: \"This bonus \
-                 increases by +1 for every four levels the bard has attained beyond 3rd\"), so \
-                 it is +{inspire_competence_bonus} at level {level}; the next increase (to +5) \
-                 is at bard level 15, out of scope for this bounded slice. This is a standalone \
-                 explanation record only; it is never applied to any actual skill-check total \
-                 because no skill-check-resolution engine exists anywhere in this codebase, and \
-                 no task-selection/action-economy engine decides which skill or ally it targets"
+                 {BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL}, and again from +4 to +5 exactly at \
+                 bard level {BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL} (PF1 Core Rulebook: \
+                 \"This bonus increases by +1 for every four levels the bard has attained \
+                 beyond 3rd\"), so it is +{inspire_competence_bonus} at level {level}; the next \
+                 increase (to +6) is at bard level 19, out of scope for this bounded slice. \
+                 This is a standalone explanation record only; it is never applied to any \
+                 actual skill-check total because no skill-check-resolution engine exists \
+                 anywhere in this codebase, and no task-selection/action-economy engine decides \
+                 which skill or ally it targets"
             ),
         });
     }
@@ -13836,6 +13920,68 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
+    // Grounded (SD18): Inspire Heroics, a 15th-level Bard class feature
+    // verified independently against two primary PF1 sources (d20pfsrd and
+    // the Archives of Nethys aonprd.com mirror both list "Inspire competence
+    // +5, inspire heroics" as the Bard 15th-level "Special" column entry).
+    // The rule text: "A bard of 15th level or higher can inspire tremendous
+    // heroism in himself or a single ally within 30 feet... Inspired
+    // creatures gain a +4 morale bonus on saving throws and a +4 dodge bonus
+    // to AC." Below the level-15 gate no record is pushed at all (mirroring
+    // the Frightening Tune idiom exactly, since a "correctly absent"
+    // placeholder is unnecessary busywork across three separate ids); at or
+    // above it, it grounds only the two flat, non-level-scaled magnitude
+    // numbers (mirroring the Well-Versed flat-magnitude idiom) and the flat
+    // base target count of 1 (mirroring the Fascinate affected-creature-count
+    // idiom — the rule's own further scaling, "+1 creature per three bard
+    // levels beyond 15th," lands at bard level 18, beyond this bounded
+    // slice's ceiling, and is not grounded). No targeting, save resolution,
+    // or AC application is ever computed because no such engine exists
+    // anywhere in this codebase.
+    if level >= BARD_INSPIRE_HEROICS_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.inspire_heroics_save_bonus".to_owned(),
+            value: BARD_INSPIRE_HEROICS_SAVE_BONUS,
+            detail: format!(
+                "Bard Inspire Heroics granted at bard level {level} (PF1 Core Rulebook, \
+                 15th-level Bard class feature): a flat +{BARD_INSPIRE_HEROICS_SAVE_BONUS} \
+                 morale bonus on saving throws for the inspired creature(s). This magnitude is \
+                 non-level-scaled (fixed at +4 for the class feature's entire existence), \
+                 mirroring the Well-Versed idiom. This is a standalone explanation record only; \
+                 it is never applied to any actual saving-throw total because no \
+                 save-resolution engine exists anywhere in this codebase, and no \
+                 targeting/action-economy engine decides which creature(s) it affects"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.inspire_heroics_ac_bonus".to_owned(),
+            value: BARD_INSPIRE_HEROICS_AC_BONUS,
+            detail: format!(
+                "Bard Inspire Heroics granted at bard level {level} (PF1 Core Rulebook, \
+                 15th-level Bard class feature): a flat +{BARD_INSPIRE_HEROICS_AC_BONUS} dodge \
+                 bonus to AC for the inspired creature(s). This magnitude is non-level-scaled \
+                 (fixed at +4 for the class feature's entire existence), mirroring the \
+                 Well-Versed idiom. This is a standalone explanation record only; it is never \
+                 applied to any actual AC total because no AC-application engine exists \
+                 anywhere in this codebase"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.inspire_heroics_target_count".to_owned(),
+            value: BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT,
+            detail: format!(
+                "Bard Inspire Heroics base target count at bard level {level} (PF1 Core \
+                 Rulebook, 15th-level Bard class feature): \"himself or a single ally within 30 \
+                 feet\" is a flat {BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT} target, mirroring \
+                 the Fascinate affected-creature-count idiom. The rule's own further scaling \
+                 (\"for every three bard levels the character attains beyond 15th, he can \
+                 inspire heroics in an additional creature\") lands at bard level 18, beyond \
+                 this bounded slice's ceiling, and is not grounded. This grounds only the flat \
+                 count; no targeting or performance-state execution is computed"
+            ),
+        });
+    }
+
     // Still blocked (1/2): name the narrowed bardic performance-execution burden
     // explicitly, now separated from the grounded flat pillars (Bardic Knowledge,
     // the rounds-per-day budget, the Inspire Courage magnitude, and the Fascinate
@@ -13864,6 +14010,10 @@ fn explain_bard_level1_spell_baseline(
              14th-level class feature, granted only as a bounded flat Will-save DC magnitude) \
              is not executed either — it requires the same performance-state engine plus a \
              fear/frightened-condition-resolution engine, neither of which exists in this \
+             codebase — and Inspire Heroics (the Bard's 15th-level class feature, granted only \
+             as bounded flat save-bonus/AC-bonus/target-count magnitudes) is not executed \
+             either — it requires the same performance-state engine plus a \
+             targeting/save-application/AC-application engine, none of which exists in this \
              codebase — so no Bard bardic-performance execution support is claimed"
         ),
         claim_blocking: true,
