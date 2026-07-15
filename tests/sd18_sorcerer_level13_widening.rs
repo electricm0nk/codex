@@ -342,12 +342,16 @@ fn sorcerer_level12_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 14 stays unrecognized by this cycle -----
+// ----- Negative control: level 15 stays unrecognized by this cycle -----
+//
+// SD18 widened Sorcerer support to level 14 (tests/sd18_sorcerer_level14_widening.rs),
+// so this boundary moved from 14 to 15, mirroring the exact same boundary move made
+// to every other sorcerer sibling test file this cycle.
 
 #[test]
-fn sorcerer_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = SORCERER_LEVEL13_FIXTURE.replace("class:sorcerer:13", "class:sorcerer:14");
-    let input = load(&level_14);
+fn sorcerer_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = SORCERER_LEVEL13_FIXTURE.replace("class:sorcerer:13", "class:sorcerer:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -355,7 +359,7 @@ fn sorcerer_level_14_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.sorcerer.")
                 || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-14 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+        "level-15 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
         computation.explanations
     );
 }

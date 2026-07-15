@@ -481,7 +481,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_total_spells_per_day.rs + \
     tests/sd18_sorcerer_level11_widening.rs + \
     tests/sd18_sorcerer_level12_widening.rs + \
-    tests/sd18_sorcerer_level13_widening.rs";
+    tests/sd18_sorcerer_level13_widening.rs + \
+    tests/sd18_sorcerer_level14_widening.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -3926,7 +3927,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Sorcerer level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
-                            level-8/level-9/level-10/level-11/level-12/level-13 \
+                            level-8/level-9/level-10/level-11/level-12/level-13/level-14 \
                             spell baseline, with base attack bonus, base save progression, Eschew \
                             Materials, the canonical bloodline choice recognition, and the \
                             Arcane bloodline's class-skill choice (a player's choice of any one \
@@ -4259,14 +4260,42 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     stay numerically unchanged); the spell-level access ladder stays at 6 \
                     (unchanged from level 12; the 7th-level threshold is not reached until level \
                     14); the spell-save-DC and Charisma-bonus-spell formulas widen automatically \
-                    over the unchanged access ladder. The row is \
+                    over the unchanged access ladder — AND a further SD18 slice widens the \
+                    level-range gate again (supported_sorcerer_level, 1..=14) and extends every \
+                    one of the formulas above to level 14 via the same formula, without \
+                    re-derivation, verified independently against two mutually consistent \
+                    primary-source fetches this slice performed (d20pfsrd and \
+                    legacy.aonprd.com; a third fetch, aonprd.com, was internally inconsistent \
+                    with the already-landed level-13 truth on the spells-per-day table and was \
+                    rejected as a tool artifact, not treated as a genuine conflict): level 14 \
+                    base attack bonus genuinely rises to 7 (14/2) and the good Will save \
+                    genuinely rises to 9 (14/2+2), while both poor saves stay numerically \
+                    unchanged (Fortitude/Reflex 4, 14/3, an integer-division coincidence with \
+                    level 13); the bloodline choice and bloodline class-skill choice \
+                    recognitions are not level-gated, so both still fire at level 14 for the \
+                    same fixture selections; the PF1 Core Rulebook Sorcerer class table's \
+                    level-14 \"Special\" column is genuinely BLANK (verified independently, \
+                    checked rather than assumed away) — like levels 2, 4, 6, 8, 10, and 12, and \
+                    UNLIKE the level-3/5/7/11/13 bloodline power/feat/spell rows — so no new \
+                    pillar is grounded from the Special column; the already-grounded base \
+                    spells-per-day table genuinely widens (6/6/6/6/6/4 -> 6/6/6/6/6/5/3, the \
+                    6th-level column rising by one and a genuinely NEW 7th-level column \
+                    appearing for the first time) and the already-grounded base spells-known \
+                    table genuinely widens (9/5/5/4/4/3/2 -> 9/5/5/4/4/3/2/1, with a genuinely \
+                    NEW 7th-level column appearing for the first time while the 0th-6th columns \
+                    stay numerically unchanged); the spell-level access ladder genuinely rises \
+                    to 7 (7th-level spells first become accessible at level 14, the sorcerer's \
+                    two-level cadence continuing exactly: 4/6/8/10/12/14); the spell-save-DC and \
+                    Charisma-bonus-spell formulas widen automatically over the newly-risen \
+                    access ladder, with no new code needed since both loops already iterate \
+                    generically over the access-ladder value. The row is \
                     Partial, not Supported: the Arcane Bond / bloodline progression burden \
                     and the spontaneous which-spells-known / casting-execution burden remain \
-                    named and unproven, unchanged from level 12. No \
-                    spell math is fabricated and no Sorcerer level 14+ is proven",
+                    named and unproven, unchanged from level 13. No \
+                    spell math is fabricated and no Sorcerer level 15+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-14+ progression (widening the now-grounded base attack/base save \
+                    level-15+ progression (widening the now-grounded base attack/base save \
                     formulas)",
             },
             SupportStateRow {
