@@ -228,23 +228,25 @@ fn fighter_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(computation.baseline_melee_attack_bonus, 16);
 }
 
-// ----- Negative control: level 14 stays claim-blocked (beyond the bounded L2-13 row) -----
+// ----- Negative control: level 15 stays claim-blocked (beyond the bounded L2-14 row) -----
 //
-// SD18 (tests/sd18_fighter_level12_widening.rs, tests/sd18_fighter_level13_widening.rs)
-// further widened the bounded tranche from level 11 to level 12 (a sixth
-// bonus-feat cadence slot) and then to level 13 (Weapon Training 3), so this
-// negative control now sits just above the current bound (level 14) rather
-// than at level 12 or level 13.
+// SD18 (tests/sd18_fighter_level12_widening.rs, tests/sd18_fighter_level13_widening.rs,
+// tests/sd18_fighter_level14_widening.rs) further widened the bounded
+// tranche from level 11 to level 12 (a sixth bonus-feat cadence slot), then
+// to level 13 (Weapon Training 3), and then to level 14 (a seventh
+// bonus-feat cadence slot and the Bravery magnitude rise), so this negative
+// control now sits just above the current bound (level 15) rather than at
+// level 12, level 13, or level 14.
 
 #[test]
-fn fighter_level_14_stays_claim_blocked() {
-    let level_14 = FIGHTER_LEVEL11_FIXTURE.replace("class:fighter:11", "class:fighter:14");
-    let input = load(&level_14);
+fn fighter_level_15_stays_claim_blocked() {
+    let level_15 = FIGHTER_LEVEL11_FIXTURE.replace("class:fighter:11", "class:fighter:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-14 Fighter must stay claim-blocked beyond the bounded levels-2-13 row: {:?}",
+        "level-15 Fighter must stay claim-blocked beyond the bounded levels-2-14 row: {:?}",
         computation.diagnostics
     );
     assert!(
@@ -252,7 +254,7 @@ fn fighter_level_14_stays_claim_blocked() {
             .explanations
             .iter()
             .any(|e| e.id == "class_chassis.base_attack_bonus"),
-        "level-14 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-15 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 
