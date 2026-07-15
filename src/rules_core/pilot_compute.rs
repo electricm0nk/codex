@@ -2457,7 +2457,32 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 8] = [
 /// idiom exactly, no new rage-power-EFFECT engine invented; Trap Sense
 /// stays +5 (16/3, next rise 18th) and Indomitable Will's flat +4
 /// magnitude carries over unchanged.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 16;
+///
+/// A still further SD18 slice — the loop's EIGHTH §3.2 level-17 landing,
+/// after Ranger, Bard, Rogue, Fighter, Wizard, Cleric, and Paladin — widens
+/// the gate to level 17 (verified independently against d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror, byte-for-byte agreement across the
+/// full levels-15-through-19 block, so a third source was not required):
+/// base-attack (classlevel = 17) genuinely rises to +17 (full BAB), and
+/// good Fortitude stays +10 (17/2+2, an integer-division coincidence with
+/// level 16), while poor Reflex/Will both stay +5 (17/3, also an
+/// integer-division coincidence with level 16); the rage rounds-per-day
+/// pool genuinely rises to 39 (4 + Con mod + 2 per level after 1st); the
+/// level-17 "Special" column reads "Tireless rage" only — a genuinely NEW
+/// class feature ("Starting at 17th level, a barbarian no longer becomes
+/// fatigued at the end of her rage"), grounded here as a bounded
+/// grant-only identity record (value 0, non-fabricated) via a new
+/// `BARBARIAN_TIRELESS_RAGE_LEVEL` gate constant, mirroring the
+/// Indomitable Will / Paladin Aura-of-Justice/Aura-of-Faith/
+/// Aura-of-Righteousness idiom exactly: no rage-state execution engine
+/// exists anywhere in this codebase (confirmed by direct inspection), so
+/// there is no fatigue-application mechanism for Tireless Rage to interact
+/// with, and none is fabricated. 17 is NOT a rage-power level (powers land
+/// at 2/4/6/8/10/12/14/16/18/20), so no ninth numbered slot is added; Trap
+/// Sense stays +5 (17/3, next rise 18th), Damage Reduction stays 4/- (next
+/// rise 19th), and Indomitable Will's flat +4 magnitude carries over
+/// unchanged.
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 17;
 
 /// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
 /// (11th level — "At 11th level, a barbarian's rage improves. She gains a
@@ -2524,6 +2549,19 @@ const BARBARIAN_INDOMITABLE_WILL_LEVEL: u8 = 14;
 /// constants (Strength/Constitution/Will-save morale bonuses, AC penalty):
 /// never applied to any actual Will-save total.
 const BARBARIAN_INDOMITABLE_WILL_ENCHANTMENT_WILL_SAVE_BONUS: i16 = 4;
+
+/// PF1 Core Rulebook level gate at which Barbarian gains Tireless Rage
+/// (17th level, verified independently against d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror, byte-for-byte agreement across the full
+/// levels-15-through-19 block: both name "Tireless rage" as the Barbarian
+/// 17th-level "Special" class table entry, and both give the rule text
+/// "Starting at 17th level, a barbarian no longer becomes fatigued at the
+/// end of her rage"). This is a bounded grant-only identity record only
+/// (value 0, non-fabricated): no rage-state execution engine exists
+/// anywhere in this codebase to track when a rage ends or apply a fatigue
+/// condition, so there is no fatigue-application mechanism for this
+/// feature to interact with, and none is fabricated.
+const BARBARIAN_TIRELESS_RAGE_LEVEL: u8 = 17;
 
 // SD13-E3/E5 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
@@ -9815,6 +9853,48 @@ fn explain_barbarian_level1_chassis(
                  spell-school-classification engine, and no rage-state execution engine exists \
                  anywhere in this codebase to apply it, so this grounds no actual Will-save \
                  bonus"
+            ),
+        });
+    }
+
+    // Grounded (SD18): Tireless Rage, a 17th-level Barbarian class feature
+    // (verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror, byte-for-byte agreement across the full
+    // levels-15-through-19 block: both name "Tireless rage" as the Barbarian
+    // 17th-level "Special" class table entry, and both give the rule text
+    // "Starting at 17th level, a barbarian no longer becomes fatigued at the
+    // end of her rage"). Below the level-17 gate this is a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it, it transitions
+    // to a bounded GRANT-only identity record (value 0, non-fabricated)
+    // mirroring the Indomitable Will / Paladin Aura-of-Justice /
+    // Aura-of-Faith / Aura-of-Righteousness idiom exactly: no rage-state
+    // execution engine exists anywhere in this codebase to track rage
+    // activation, round-by-round consumption, or the moment a rage ends, so
+    // there is no fatigue-application mechanism for this feature to
+    // interact with, and none is fabricated.
+    if level < BARBARIAN_TIRELESS_RAGE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.barbarian.tireless_rage".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian Tireless Rage at barbarian level {level}: correctly absent at \
+                 level {level} by PF1 Core Rulebook level gate; the at-grant rule is named but \
+                 not computed. Tireless Rage is a 17th-level barbarian class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.barbarian.tireless_rage".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian Tireless Rage granted at barbarian level {level} (PF1 Core \
+                 Rulebook, 17th-level barbarian class feature): \"Starting at 17th level, a \
+                 barbarian no longer becomes fatigued at the end of her rage.\" This is a \
+                 bounded grant-only identity record only (value 0, non-fabricated): no \
+                 rage-state execution engine exists anywhere in this codebase to track rage \
+                 activation, round-by-round consumption, or the moment a rage ends, so there \
+                 is no fatigue-application mechanism for this feature to interact with, and \
+                 none is fabricated."
             ),
         });
     }
