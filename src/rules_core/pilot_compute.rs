@@ -1531,7 +1531,21 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// grounded for Inspire Heroics — it remains named-but-unproven for
 /// execution, exactly like Frightening Tune and Soothing Performance
 /// before it.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 15;
+///
+/// Widened to level 16 by an SD18 slice (the loop's EIGHTH §3.2 level-16
+/// landing): verified independently against THREE primary sources
+/// (d20pfsrd, the Archives of Nethys aonprd.com mirror, and
+/// legacy.aonprd.com's corerulebook mirror, all three byte-for-byte
+/// identical: "+12/+7/+2 | +5 | +10 | +10 | —"). The level-16 "Special"
+/// column is genuinely BLANK, resolving a prior cycle's carried-forward
+/// risk-map note that had claimed a source disagreement (aonprd.com
+/// allegedly reading "Versatile performance" at level 16) — that text in
+/// fact belongs to level 14's own already-grounded Special column
+/// ("Frightening tune, Versatile performance"), misattributed to level 16
+/// by an earlier cycle's transcription. A pure ceiling raise: every
+/// formula below is already level-generic, so no new tier constant,
+/// record type, or choice slot is added.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 16;
 /// PF1 Core Rulebook level gate at which Bard gains Frightening Tune
 /// (14th level, verified independently against two primary sources:
 /// d20pfsrd and the Archives of Nethys aonprd.com mirror both list

@@ -371,25 +371,6 @@ fn bard_level14_truth_is_unchanged_by_this_slice() {
     assert_eq!(dc.value, 19, "Bard level 14 Fascinate DC must stay 19");
 }
 
-// ----- Negative control: level 16 stays unrecognized by this slice -----
-
-#[test]
-fn bard_level_16_is_not_promoted_by_this_slice() {
-    let level_16 = BARD_LEVEL15_FIXTURE.replace("class:bard:15", "class:bard:16");
-    let input = load(&level_16);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id.starts_with("class_feature.bard.")
-                || e.id == "class_chassis.spell_baseline.bard"),
-        "level-16 Bard must not gain any bounded bard explanation: {:?}",
-        computation.explanations
-    );
-}
-
 // ----- Negative control: the bard path must not leak onto other classes -----
 
 #[test]
