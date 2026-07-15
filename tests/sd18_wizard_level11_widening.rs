@@ -215,18 +215,19 @@ fn wizard_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(intense.value, 5, "Wizard level 10 Intense Spells bonus damage must stay 5");
 }
 
-// ----- Negative control: level 13 stays unrecognized by this slice -----
-// (widened from level 12 to level 13 by the SD18 wizard-level12-widening
-// cycle, which genuinely promotes level 12 — see
-// tests/sd18_wizard_level12_widening.rs — mirroring the exact same boundary
-// move the Barbarian/Bard/Cleric/Druid/Fighter/Monk/Paladin/Rogue/Ranger/
-// Sorcerer level-12 widening cycles each made for their own sibling
-// level-11 widening test.)
+// ----- Negative control: level 14 stays unrecognized by this slice -----
+// (widened from level 12 to level 13 by the SD18 wizard-level12-widening and
+// wizard-level13-widening cycles, which genuinely promote levels 12 and 13
+// — see tests/sd18_wizard_level12_widening.rs and
+// tests/sd18_wizard_level13_widening.rs — mirroring the exact same boundary
+// move the Barbarian/Bard/Cleric/Druid/Fighter/Paladin/Rogue/Ranger/Sorcerer
+// level-13 widening cycles each made for their own sibling level-11
+// widening test.)
 
 #[test]
-fn wizard_level_13_is_not_promoted_by_this_slice() {
-    let level_13 = WIZARD_LEVEL11_FIXTURE.replace("class:wizard:11", "class:wizard:13");
-    let input = load(&level_13);
+fn wizard_level_14_is_not_promoted_by_this_slice() {
+    let level_14 = WIZARD_LEVEL11_FIXTURE.replace("class:wizard:11", "class:wizard:14");
+    let input = load(&level_14);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -235,7 +236,7 @@ fn wizard_level_13_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id.starts_with("class_feature.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-13 Wizard must not gain any bounded wizard explanation: {:?}",
+        "level-14 Wizard must not gain any bounded wizard explanation: {:?}",
         computation.explanations
     );
 }
