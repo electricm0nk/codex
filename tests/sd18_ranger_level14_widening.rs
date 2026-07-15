@@ -315,12 +315,18 @@ fn ranger_level13_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 15 stays unrecognized by this slice -----
+// ----- Negative control: level 16 stays unrecognized by this slice -----
+//
+// A later SD18 widening (cycle-2026-07-15T4000,
+// tests/sd18_ranger_level15_widening.rs) now genuinely recognizes Ranger
+// level 15 too (base attack rises, poor Will rises, the fourth favored
+// enemy and the base spells-per-day table's 3rd-level column are newly
+// grounded), so this boundary control moves from level 15 to level 16.
 
 #[test]
-fn ranger_level_15_is_not_promoted_by_this_slice() {
-    let level_15 = RANGER_LEVEL14_FIXTURE.replace("class:ranger:14", "class:ranger:15");
-    let input = load(&level_15);
+fn ranger_level_16_is_not_promoted_by_this_slice() {
+    let level_16 = RANGER_LEVEL14_FIXTURE.replace("class:ranger:14", "class:ranger:16");
+    let input = load(&level_16);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -328,7 +334,7 @@ fn ranger_level_15_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")
                 || e.id.starts_with("class_feature.ranger.")),
-        "level-15 Ranger must not gain any bounded ranger chassis explanation: {:?}",
+        "level-16 Ranger must not gain any bounded ranger chassis explanation: {:?}",
         computation.explanations
     );
 }

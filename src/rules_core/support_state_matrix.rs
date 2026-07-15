@@ -436,7 +436,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd18_ranger_level11_quarry.rs + \
     tests/sd18_ranger_level12_widening.rs + \
     tests/sd18_ranger_level13_widening.rs + \
-    tests/sd18_ranger_level14_widening.rs";
+    tests/sd18_ranger_level14_widening.rs + \
+    tests/sd18_ranger_level15_widening.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -4020,12 +4021,44 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     as claim-blocked: tests/sd13_ranger_level10_progression.rs, \
                     tests/sd18_ranger_level11_quarry.rs, \
                     tests/sd18_ranger_level12_widening.rs, and \
-                    tests/sd18_ranger_level13_widening.rs, all moved to a level-15 boundary.",
+                    tests/sd18_ranger_level13_widening.rs, all moved to a level-15 boundary. \
+                    The SD18 cycle-2026-07-15T4000 slice (tests/sd18_ranger_level15_widening.rs) \
+                    widens the level-range gate once more to level 15, extending base attack to \
+                    level 15 (full BAB) while both good saves stay 9 (15/2+2, integer-division \
+                    coincidences with level 14) and poor Will genuinely rises to 5 (15/3, up \
+                    from 4) — verified independently against two primary sources, d20pfsrd and \
+                    the Archives of Nethys aonprd.com mirror, byte-for-byte agreement. The class \
+                    table's 15th-level \"Special\" column reads only \"4th favored enemy\" — the \
+                    Favored Enemy rule's own 15th-level interval, the exact structural mirror of \
+                    the already-grounded 10th-level interval: this slice grounds a FOURTH \
+                    favored-enemy TYPE selection (choice:ranger_favored_enemy_4, mirroring the \
+                    third favored enemy's own open-ended choice-recognition idiom), a restricted \
+                    four-option choice recognizing WHICH one favored enemy is the 15th-level \
+                    interval's OWN bonus-increase target \
+                    (choice:ranger_favored_enemy_bonus_increase_target_3 -> enemy:first / \
+                    enemy:second / enemy:third / enemy:fourth, mirroring the 10th-level \
+                    interval's own restricted-set idiom widened by one option), and the \
+                    resulting +2 magnitude applied only to whichever favored enemy the target \
+                    choice actually names (the fourth favored enemy rises to +4: 2 base + 2 at \
+                    its own 15th-level interval, verified on a dedicated fixture). The same \
+                    slice also widens the base spells-per-day table to level 15 (\"3/2/2/1\", \
+                    verified independently against both primary sources): the 1st/2nd/4th-level \
+                    columns stay 3/2/1 unchanged, and the 3rd-level column genuinely rises from \
+                    1 to 2; the spell-level access ladder stays at 4 (ranger spells never reach \
+                    a 5th spell level at any level). Level 15 is NOT a Combat Style bonus-feat \
+                    level (feats land at 2/6/10/14/18), so no fifth combat-style slot appears. \
+                    This slice also fixed five stale sibling negative controls \
+                    (allowlist/boundary-control failure mode) that asserted level 15 as \
+                    claim-blocked: tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, \
+                    tests/sd18_ranger_level12_widening.rs, \
+                    tests/sd18_ranger_level13_widening.rs, and \
+                    tests/sd18_ranger_level14_widening.rs, all moved to a level-16 boundary.",
                 next_required_uplift: "ground the ranger Wisdom bonus-spells and \
                     prepared-posture/spell-source-lineage burdens now that the caster-level \
                     gate, the access ladder (now reaching 4th-level spells), the base per-day \
                     counts, and the base spell-save DCs are all grounded, then Ranger \
-                    level-15+ progression, a favored-terrain and favored-enemy \
+                    level-16+ progression, a favored-terrain and favored-enemy \
                     conditional-application engine, execution of any of the four recognized \
                     combat-style bonus feats' own mechanics, Hunter's Bond ally-bonus \
                     application and the animal-companion stat block/advancement subsystem, a \
