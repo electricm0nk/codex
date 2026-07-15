@@ -296,23 +296,10 @@ fn barbarian_level15_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 17 stays unrecognized by this slice -----
-
-#[test]
-fn barbarian_level_17_is_not_promoted_by_this_slice() {
-    let level_17 = BARBARIAN_LEVEL16_FIXTURE.replace("class:barbarian:16", "class:barbarian:17");
-    let input = load(&level_17);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.barbarian.")
-                || e.id.starts_with("class_feature.barbarian.")),
-        "level-17 Barbarian must not gain any bounded barbarian explanation: {:?}",
-        computation.explanations
-    );
-}
+// ----- Negative control: level 17 is now the supported row; its own test file
+// (tests/sd18_barbarian_level17_widening.rs) owns that boundary going forward, so
+// this file's own level-17 negative control is removed rather than moved, mirroring
+// the exact fix every prior level-N Barbarian cycle made for its own siblings. -----
 
 // ----- Negative control: the barbarian path must not leak onto other classes -----
 
