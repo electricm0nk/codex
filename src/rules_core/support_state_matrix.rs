@@ -711,7 +711,8 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
     tests/sd13_wizard_level10_progression.rs + tests/sd18_wizard_level11_widening.rs + \
     tests/sd18_wizard_level12_widening.rs + tests/sd18_wizard_level13_widening.rs + \
     tests/sd18_wizard_level14_widening.rs + tests/sd18_wizard_level15_widening.rs + \
-    tests/sd18_wizard_level16_widening.rs + tests/sd18_wizard_level17_widening.rs";
+    tests/sd18_wizard_level16_widening.rs + tests/sd18_wizard_level17_widening.rs + \
+    tests/sd18_wizard_level18_widening.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -5191,16 +5192,33 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // 16); the level-17 "Special" column is genuinely blank on both
                 // primary sources checked (d20pfsrd, aonprd.com), so no new
                 // named-feature pillar is added beyond the specialist-bonus-slot
-                // widening.
+                // widening. A further SD18 slice (the loop's FIRST §3.2 level-18
+                // landing, opening the level-18 sweep) widens the gate again to
+                // level 18: base attack bonus GENUINELY RISES to +9 (18/2 = 9,
+                // up from +8) and good Will GENUINELY RISES to +11 (18/2+2 = 11,
+                // up from +10), while poor Fortitude/Reflex both GENUINELY RISE
+                // to +6 (18/3 = 6, up from +5) — verified independently against
+                // two primary sources (d20pfsrd, aonprd.com), byte-for-byte
+                // agreement, fetching the full levels-16-through-19 block in one
+                // pass to rule out level-misattribution. The specialist bonus
+                // slot flat count is checked rather than assumed and correctly
+                // STAYS at 9, since the raw spells-per-day table's level-18 row
+                // "4/4/4/4/4/4/4/3/3/2" opens no spell-level column beyond the
+                // 9th (already the highest wizard spell level in PF1); Intense
+                // Spells' bonus-damage magnitude GENUINELY RISES to 9 (max(18/2,
+                // 1) = 9); the level-18 "Special" column is genuinely blank on
+                // both primary sources checked, so no new pillar is added — a
+                // pure arithmetic-pillar widening.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1/level-17 prepared arcane spell baseline, with base \
+                            Wizard level-1/level-18 prepared arcane spell baseline, with base \
                             attack bonus, base save progression, Scribe Scroll, the school \
                             specialization choice, the specialist-bonus-slot flat count (which \
                             becomes 2 at level 3, stays 2 at level 4, becomes 3 at level 5, stays \
                             3 at level 6, becomes 4 at level 7, stays 4 at level 8, becomes \
                             5 at level 9, stays 5 at level 10, becomes 6 at level 11, stays 6 \
                             at level 12, becomes 7 at level 13, stays 7 at level 14, becomes \
-                            8 at level 15, stays 8 at level 16, and becomes 9 at level 17), and \
+                            8 at level 15, stays 8 at level 16, becomes 9 at level 17, and stays \
+                            9 at level 18), and \
                             the \
                             Intense Spells / \
                             Force Missile school-power flat magnitudes (Intense Spells becomes 2 \
@@ -5208,8 +5226,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             level 7, becomes 4 at level 8, stays 4 at level 9, becomes 5 at \
                             level 10, stays 5 at level 11, becomes 6 at level 12, stays 6 at \
                             level 13, becomes 7 at level 14, stays 7 at level 15, becomes 8 \
-                            at level 16, and stays 8 at level 17) grounded for \
-                            real through level 17, \
+                            at level 16, stays 8 at level 17, and becomes 9 at level 18) grounded \
+                            for \
+                            real through level 18, \
                             and the school-power \
                             execution machinery, the opposed-school-cost burden, the level-5/ \
                             level-10/level-15 bonus-feat selection/execution, and the prepared \
@@ -5576,7 +5595,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     both primary sources (the Wizard's bonus feats land only at levels \
                     5/10/15/20), so no new named-feature pillar record is grounded at level 17 \
                     beyond the 9th-level-column-opening widening of the specialist-bonus-slot \
-                    pillar. The row is \
+                    pillar. A further SD18 slice (the loop's FIRST §3.2 level-18 landing, opening \
+                    the level-18 sweep) widens the level-range gate again (supported_wizard_level, \
+                    1..=18) and extends every one of the formulas above to level 18 via the same \
+                    formulas, without re-derivation, verified independently against two primary \
+                    sources (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree \
+                    byte-for-byte, fetching the full levels-16-through-19 block in one pass to \
+                    rule out level-misattribution, so no third source was required): level 18 base \
+                    attack GENUINELY RISES to +9 (18/2 = 9, up from +8) and good Will GENUINELY \
+                    RISES to +11 (18/2+2 = 11, up from +10), while poor Fortitude/Reflex both \
+                    GENUINELY RISE to +6 (18/3 = 6, up from +5); the specialist bonus slot flat \
+                    count is checked rather than assumed and correctly STAYS at 9, since the raw \
+                    spells-per-day table's level-18 row \"4/4/4/4/4/4/4/3/3/2\" opens no \
+                    spell-level column beyond the 9th (already the highest wizard spell level in \
+                    PF1, unlike the level-17 widening's genuine 9th-column opening); Intense \
+                    Spells' bonus-damage magnitude GENUINELY RISES to 9 (max(18/2, 1) = 9); Force \
+                    Missile's pool is level-independent and unchanged; Scribe Scroll and the \
+                    specialization choice stay recognized as already-held grants; the level-18 \
+                    \"Special\" column is genuinely blank on both primary sources (the Wizard's \
+                    bonus feats land only at levels 5/10/15/20), so no new named-feature pillar \
+                    record is grounded at level 18 — a pure arithmetic-pillar widening. The row is \
                     Partial, not Supported: neither school power's \
                     execution machinery is implemented (no evocation spell-damage application for \
                     Intense Spells, no force-missile casting execution / 1d4 damage roll / \
@@ -5587,11 +5625,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     and unproven, and the \
                     prepared spell posture burden (spellbook content, spells prepared per day, \
                     spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
-                    still entirely unproven. No spell math is fabricated and no Wizard level 18+ is \
+                    still entirely unproven. No spell math is fabricated and no Wizard level 19+ is \
                     proven",
                 next_required_uplift: "SD13-E5+ Wizard school-power execution and opposed-school \
                     preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-18+ progression (widening the now-grounded base \
+                    posture slice, then level-19+ progression (widening the now-grounded base \
                     attack/base save formulas)",
             },
             // ----- Interaction rows (2) -----

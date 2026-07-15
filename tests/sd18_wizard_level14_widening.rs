@@ -276,8 +276,8 @@ fn wizard_level13_truth_is_unchanged_by_this_slice() {
 // for their own sibling negative controls.)
 
 #[test]
-fn wizard_level_18_is_not_promoted_by_this_slice() {
-    let level_18 = WIZARD_LEVEL14_FIXTURE.replace("class:wizard:14", "class:wizard:18");
+fn wizard_level_19_is_not_promoted_by_this_slice() {
+    let level_18 = WIZARD_LEVEL14_FIXTURE.replace("class:wizard:14", "class:wizard:19");
     let input = load(&level_18);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
@@ -287,7 +287,7 @@ fn wizard_level_18_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id.starts_with("class_feature.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-18 Wizard must not gain any bounded wizard explanation: {:?}",
+        "level-19 Wizard must not gain any bounded wizard explanation: {:?}",
         computation.explanations
     );
 }
