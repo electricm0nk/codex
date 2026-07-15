@@ -290,9 +290,9 @@ fn bard_level11_truth_is_unchanged_by_this_slice() {
 // to every prior sibling class's own level-13 widening cycle.)
 
 #[test]
-fn bard_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = BARD_LEVEL12_FIXTURE.replace("class:bard:12", "class:bard:14");
-    let input = load(&level_14);
+fn bard_level_15_is_not_promoted_by_this_slice() {
+    let level_15 = BARD_LEVEL12_FIXTURE.replace("class:bard:12", "class:bard:15");
+    let input = load(&level_15);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -301,7 +301,7 @@ fn bard_level_14_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard"),
-        "level-14 Bard must not gain any bounded bard explanation: {:?}",
+        "level-15 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
 }

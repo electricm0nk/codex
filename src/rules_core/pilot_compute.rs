@@ -1315,7 +1315,44 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// spells-per-day / spells-known table lookups stay at their
 /// pre-existing level-10 ceiling exactly as left by the level-11 and
 /// level-12 cycles (no 5th-level spell-access threshold is grounded).
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 13;
+///
+/// SD18 (cycle-2026-07-15T2200) widens the gate again to level 14, the
+/// loop's FIFTH §3.2 level-14 landing (after Barbarian, Fighter, Rogue,
+/// and Ranger). Both primary sources (d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror) agree byte-for-byte: base attack bonus genuinely
+/// rises to +10 (14*3/4) and both good saves genuinely rise to +9
+/// (14/2+2, Reflex and Will) while poor Fortitude stays +4 (14/3, an
+/// integer-division coincidence with level 13); Bardic Knowledge
+/// genuinely rises to 7 (max(14/2,1)); the Bardic Performance
+/// rounds-per-day pool genuinely rises to 32 (4+CHA+2*(14-1)); the
+/// Fascinate DC genuinely rises to 19 (10+14/2+CHA) while the Fascinate
+/// affected-creature count stays 5 (1+(14-1)/3, an integer-division
+/// coincidence with level 13). The level-14 "Special" column reads
+/// "Frightening tune, Versatile performance": Frightening Tune is a
+/// wholly new 14th-level class feature whose rule text gives the exact
+/// same Will-save DC formula shape as the already-grounded Fascinate DC
+/// (10 + 1/2 bard level + Charisma modifier), so it is grounded ONLY as a
+/// flat standalone DC magnitude (`BARD_FRIGHTENING_TUNE_LEVEL`), mirroring
+/// the Fascinate DC idiom; unlike Fascinate, its affected scope is
+/// range-based ("each enemy within 30 feet who can hear the
+/// performance"), not a numeric-count formula, so no affected-creature
+/// count record is added for it. The repeat Versatile Performance grant
+/// (also at levels 2, 6, and 10) stays named-but-unproven unchanged.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 14;
+/// PF1 Core Rulebook level gate at which Bard gains Frightening Tune
+/// (14th level, verified independently against two primary sources:
+/// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
+/// "Frightening tune, Versatile performance" as the Bard 14th-level
+/// "Special" column entry). The rule text: "Each enemy within range
+/// receives a Will save (DC 10 + 1/2 the bard's level + the bard's Cha
+/// modifier) to negate the effect" — the exact same DC formula shape as
+/// the already-grounded Fascinate DC, so this grounds ONLY that flat DC
+/// magnitude (mirroring the Fascinate DC idiom exactly); the
+/// range-based affected-creature scope, the fear/frightened-condition
+/// resolution, and the audible-performance-execution prerequisite are
+/// not computed because no targeting/range or condition-resolution
+/// engine exists anywhere in this codebase.
+const BARD_FRIGHTENING_TUNE_LEVEL: u8 = 14;
 /// PF1 Core Rulebook level gate at which Bard gains Soothing Performance
 /// (12th level, verified independently against two primary sources:
 /// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
@@ -13145,6 +13182,41 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
+    // Grounded (SD18): Frightening Tune, a 14th-level Bard class feature
+    // verified independently against two primary PF1 sources (d20pfsrd and
+    // the Archives of Nethys aonprd.com mirror both list "Frightening tune,
+    // Versatile performance" as the Bard 14th-level "Special" column entry).
+    // The rule text gives a Will-save DC (10 + 1/2 the bard's level + the
+    // bard's Cha modifier) — the exact same formula shape as the
+    // already-grounded Fascinate DC, so only that flat DC magnitude is
+    // grounded here, mirroring the Fascinate DC idiom exactly. Below the
+    // level-14 gate no record is pushed at all. Unlike Fascinate, this
+    // feature's affected scope ("each enemy within 30 feet who can hear the
+    // performance") is range-based, not a numeric-count formula, so no
+    // affected-creature-count record is added for it, and no fear/frightened
+    // condition is ever applied because no condition-resolution engine
+    // exists anywhere in this codebase.
+    if level >= BARD_FRIGHTENING_TUNE_LEVEL {
+        let frightening_tune_dc = FASCINATE_DC_BASE + (level_value / 2) + ability_modifiers.charisma;
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.bard.frightening_tune_dc".to_owned(),
+            value: frightening_tune_dc,
+            detail: format!(
+                "Bard Frightening Tune Will save DC at bard level {level} (PF1 Core Rulebook, \
+                 14th-level Bard class feature): DC = 10 + 1/2 bard level + Charisma modifier, \
+                 the same formula shape as the Fascinate DC. At bard level {level} and Charisma \
+                 modifier {} this is {FASCINATE_DC_BASE} + ({level} / 2) + {} = \
+                 {frightening_tune_dc}. This grounds only the flat DC magnitude; no \
+                 range/line-of-sight/audible-performance-requirement checking, no \
+                 affected-creature-count (the rule text is range-based, not a numeric-count \
+                 formula), no Will-save resolution, and no application of a frightened \
+                 condition to any target is computed because neither the performance-state \
+                 engine nor a condition-resolution engine is implemented",
+                ability_modifiers.charisma, ability_modifiers.charisma
+            ),
+        });
+    }
+
     // Still blocked (1/2): name the narrowed bardic performance-execution burden
     // explicitly, now separated from the grounded flat pillars (Bardic Knowledge,
     // the rounds-per-day budget, the Inspire Courage magnitude, and the Fascinate
@@ -13169,8 +13241,11 @@ fn explain_bard_level1_spell_baseline(
              engine rather than a flat number — and Soothing Performance (the Bard's 12th-level \
              class feature, granted only as a bounded identity record) is not executed either \
              — it requires a healing-application engine and a condition-removal engine, \
-             neither of which exists in this codebase — so no Bard bardic-performance \
-             execution support is claimed"
+             neither of which exists in this codebase — and Frightening Tune (the Bard's \
+             14th-level class feature, granted only as a bounded flat Will-save DC magnitude) \
+             is not executed either — it requires the same performance-state engine plus a \
+             fear/frightened-condition-resolution engine, neither of which exists in this \
+             codebase — so no Bard bardic-performance execution support is claimed"
         ),
         claim_blocking: true,
     });

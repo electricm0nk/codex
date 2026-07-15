@@ -621,7 +621,8 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_versatile_performance_slots.rs + \
     tests/sd18_bard_level11_inspire_widening.rs + \
     tests/sd18_bard_level12_widening.rs + \
-    tests/sd18_bard_level13_widening.rs";
+    tests/sd18_bard_level13_widening.rs + \
+    tests/sd18_bard_level14_widening.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -1720,23 +1721,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10/level-11/level-12/level-13 \
-                            spell baseline, with base attack bonus, base save progression, Bardic \
-                            Knowledge, the flat Bardic Performance surface (rounds per day, \
+                            level-9/level-10/level-11/level-12/level-13/level-14 \
+                            spell baseline, with base attack bonus (rising again at level 14), \
+                            base save progression (both good saves rising again at level 14), \
+                            Bardic Knowledge (rising again at level 14), the flat Bardic \
+                            Performance surface (rounds per day rising again at level 14, \
                             inspire courage magnitude rising at level 5 and again at level 11), \
-                            the flat Fascinate DC / \
+                            the flat Fascinate DC (rising again at level 14) / \
                             affected-creature-count formulas (creature count rising again at \
                             level 13), (at level 2) the flat Well-Versed \
                             magnitude, (at level 3, rising at level 7 and again at level 11) the \
                             flat Inspire \
                             Competence magnitude, (at level 5, rising at level 11) the flat \
                             Lore Master take-20 \
-                            uses-per-day magnitude, and (at level 12) a Soothing Performance \
-                            grant-only identity record, all grounded for real at every supported \
-                            level, and the bardic performance-execution burden (including \
-                            Countersong, Distraction, Versatile Performance, Suggestion, and \
-                            Soothing Performance's own healing/condition-removal execution) and \
-                            the spontaneous known-spell / slot posture burden still blocked",
+                            uses-per-day magnitude, (at level 12) a Soothing Performance \
+                            grant-only identity record, and (at level 14) a Frightening Tune \
+                            flat Will-save DC magnitude, all grounded for real at every \
+                            supported level, and the bardic performance-execution burden \
+                            (including Countersong, Distraction, Versatile Performance, \
+                            Suggestion, Soothing Performance's own healing/condition-removal \
+                            execution, and Frightening Tune's own fear/frightened-condition \
+                            execution) and the spontaneous known-spell / slot posture burden \
+                            still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -2104,19 +2110,46 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell-level-access ladder and the base spells-per-day / spells-known table \
                     lookups stay at their pre-existing level-10 ceiling exactly as left by the \
                     level-11 and level-12 cycles (no 5th-level spell-access threshold is \
-                    grounded) — no spell math is fabricated and no Bard level 14+ is proven",
+                    grounded) — no spell math is fabricated and no Bard level 14+ is proven. AN \
+                    SD18 slice (cycle-2026-07-15T2200) widens the gate again to level 14 — the \
+                    loop's FIFTH §3.2 level-14 landing (after Barbarian, Fighter, Rogue, and \
+                    Ranger), verified independently against both primary sources (d20pfsrd and \
+                    the Archives of Nethys aonprd.com mirror, byte-for-byte identical): base \
+                    attack bonus genuinely rises to +10 (14*3/4), both good saves genuinely rise \
+                    to +9 (14/2+2, Reflex and Will) while poor Fortitude stays +4 (14/3, an \
+                    integer-division coincidence with level 13), Bardic Knowledge genuinely \
+                    rises to 7 (max(14/2,1)), the Bardic Performance rounds-per-day pool \
+                    genuinely rises to 32 (4+CHA+2*(14-1)), and the Fascinate DC genuinely rises \
+                    to 19 (10+14/2+CHA) while the Fascinate affected-creature count stays 5 \
+                    (1+(14-1)/3, an integer-division coincidence with level 13); the level-14 \
+                    \"Special\" column reads \"Frightening tune, Versatile performance\" \
+                    (verified independently against both primary sources, checked rather than \
+                    assumed) — Frightening Tune is a wholly new 14th-level Bard class feature \
+                    whose rule text gives a Will-save DC (10 + 1/2 bard level + Charisma \
+                    modifier) with the exact same formula shape as the already-grounded \
+                    Fascinate DC, so it is grounded ONLY as a flat standalone DC magnitude, \
+                    mirroring the Fascinate DC idiom; unlike Fascinate its affected scope is \
+                    range-based (\"each enemy within 30 feet who can hear the performance\"), \
+                    not a numeric-count formula, so no affected-creature-count record is added \
+                    for it, and no frightened-condition application is computed because no \
+                    condition-resolution engine exists in this codebase; the repeat Versatile \
+                    Performance grant (also at levels 2, 6, and 10) stays named-but-unproven \
+                    unchanged, and Inspire Courage, Inspire Competence, Lore Master, Well-Versed, \
+                    Jack-of-All-Trades, and Soothing Performance all carry over unchanged. No \
+                    new execution engine is invented and no Bard level 15+ is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
                     Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
                     magnitudes, Countersong / Distraction opposed Perform-check-vs-effect \
                     grounding, Versatile Performance's choice-gated skill-substitution engine \
-                    (both grants), Suggestion's fascinated-target-plus-spell-effect resolution, \
+                    (all grants), Suggestion's fascinated-target-plus-spell-effect resolution, \
                     Dirge of Doom's fear/shaken-condition resolution, Inspire Greatness's \
                     bonus-Hit-Dice/temporary-hit-point mechanics, Lore Master's own \
-                    take-10/take-20 skill-check-resolution execution, and Soothing Performance's \
-                    own healing-application/condition-removal execution), then the spontaneous \
+                    take-10/take-20 skill-check-resolution execution, Soothing Performance's own \
+                    healing-application/condition-removal execution, and Frightening Tune's own \
+                    fear/frightened-condition-resolution execution), then the spontaneous \
                     spell-slot burden (including the un-grounded 5th-level spell-access \
-                    threshold), then level-14+ progression",
+                    threshold), then level-15+ progression",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",
