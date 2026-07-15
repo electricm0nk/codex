@@ -2166,7 +2166,32 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // 5/10/15/20), so no new named-feature pillar record is grounded at level
 // 17 beyond the 9th-level-column-opening widening of the pre-existing
 // specialist-bonus-slot pillar.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 17;
+//
+// A further SD18 slice (the loop's FIRST §3.2 level-18 landing, opening the
+// level-18 sweep) widens the gate again to level 18: base attack bonus
+// GENUINELY RISES to +9 (`18/2 = 9`, up from +8 at level 17) and good Will
+// GENUINELY RISES to +11 (`18/2+2 = 11`, up from +10 at level 17), while
+// poor Fortitude/Reflex both GENUINELY RISE to +6 (`18/3 = 6`, up from +5
+// at level 17) — verified independently against two primary sources
+// (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree
+// byte-for-byte, so no third source was required), fetching the full
+// levels-16-through-19 block in one pass to rule out level-misattribution.
+// The raw spells-per-day table's level-18 row is "4/4/4/4/4/4/4/3/3/2" —
+// up from the level-17 row "4/4/4/4/4/4/4/3/2/1" (the 8th-level column
+// rises from 2 to 3 and the 9th-level column rises from 1 to 2), but NO
+// genuinely new spell-level column opens (9th is already the highest
+// wizard spell level in PF1), so the specialist bonus-slot flat count
+// STAYS at 9 (checked rather than assumed) — no new threshold constant is
+// needed. Intense Spells' bonus-damage magnitude GENUINELY RISES to 9
+// (`max(18/2, 1) = 9`, up from 8 at level 17) via the pre-existing
+// formula, not re-derived; Force Missile's pool is level-independent and
+// unchanged; the level-18 "Special" column is genuinely BLANK on both
+// primary sources (the Wizard's bonus feats land only at levels
+// 5/10/15/20), so no new named-feature pillar record is grounded at level
+// 18 — a pure arithmetic-pillar widening on the already-grounded base
+// attack / base save / Intense Spells formulas, with the specialist
+// bonus-slot pillar staying flat.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 18;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
