@@ -353,7 +353,8 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
 const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs + \
     tests/sd18_fighter_level11_armor_training3.rs + \
     tests/sd18_fighter_level12_widening.rs + \
-    tests/sd18_fighter_level13_widening.rs";
+    tests/sd18_fighter_level13_widening.rs + \
+    tests/sd18_fighter_level14_widening.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
 /// the SD13-E3-F5 mandatory-milestone classification proof (which level-1
@@ -1037,9 +1038,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.fighter.levels_2_10",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
-                dimension: "class progression across levels 2-13: bounded milestone proof \
-                            for levels 2 through 13 (SD18 widens the prior levels 2-10 tranche \
-                            by three levels), with the Weapon Training damage-roll half still \
+                dimension: "class progression across levels 2-14: bounded milestone proof \
+                            for levels 2 through 14 (SD18 widens the prior levels 2-10 tranche \
+                            by four levels), with the Weapon Training damage-roll half still \
                             unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -1105,14 +1106,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     +2 to +3, and this widening surfaces a THIRD chosen weapon group \
                     (canonically Polearms) as a new explanation-only seam covering no equipped \
                     weapon, mirroring the second-group (Bows) idiom exactly; no new bonus feat \
-                    lands at level 13 (the cadence's next feat is level 14). No Fighter level \
-                    14+ is proven",
+                    lands at level 13 (the cadence's next feat is level 14). SD18 \
+                    (cycle-2026-07-15T2000, entering the level-14 sweep opened by Barbarian) \
+                    further widens to level 14: base attack bonus genuinely rises to 14 and good \
+                    Fortitude genuinely rises to 9 (14/2+2), while poor Reflex and poor Will both \
+                    stay at 4 (14/3), integer-division coincidences; the PF1 Core Rulebook \
+                    Fighter class table's level-14 Special column reads \"Bonus feat, bravery \
+                    +4\" (verified against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, byte-for-byte agreement): Bravery's already-generic formula \
+                    (1 + (level-2)/4) genuinely rises to +4 with no code change, and this \
+                    widening surfaces a SEVENTH named bonus-feat progression seam (the canonical \
+                    Greater Weapon Specialization selection's prerequisites — fighter level 12, \
+                    Weapon Focus and Weapon Specialization with the chosen weapon — are honestly \
+                    met by the canonical loadout); Weapon Training and Armor Training both stay \
+                    at rank 3, integer-division coincidences with level 13 (their next rises are \
+                    levels 17 and 15 respectively). No Fighter level 15+ is proven",
                 next_required_uplift: "later SD13/SD18 slice grounding the remaining named \
-                    Fighter class-feature burden inside levels 2-13: the Weapon Training \
+                    Fighter class-feature burden inside levels 2-14: the Weapon Training \
                     damage-roll half (which first needs any damage total to exist on the compute \
                     surface), a fear-condition/save-resolution engine to apply the Bravery \
                     magnitude to an actual Will save (a tranche-level subsystem decision, not a \
-                    slice decision), or level-14+ progression (the next bonus-feat cadence slot)",
+                    slice decision), or level-15+ progression (the next Armor Training rank \
+                    rise)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",
