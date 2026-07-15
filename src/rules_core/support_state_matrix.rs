@@ -442,7 +442,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd18_ranger_level13_widening.rs + \
     tests/sd18_ranger_level14_widening.rs + \
     tests/sd18_ranger_level15_widening.rs + \
-    tests/sd18_ranger_level16_improved_evasion.rs";
+    tests/sd18_ranger_level16_improved_evasion.rs + \
+    tests/sd18_ranger_level17_hide_in_plain_sight.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -3782,7 +3783,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7/ \
                             level-8/level-9/level-10/level-11/level-12/level-13/level-14/ \
-                            level-15/level-16 \
+                            level-15/level-16/level-17 \
                             chassis baseline, with base attack bonus, base save \
                             progression, Track, the favored-enemy flat surface, the \
                             combat-style choice-and-bonus-feat recognition, (level 3) \
@@ -3814,12 +3815,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             Enemy rule's own 15th-level interval (fourth enemy-type selection \
                             plus its own bonus-increase target choice, stacking with the \
                             10th-level increase when both name the same enemy) plus the base \
-                            spells-per-day table's own level-15 row, and (level 16) Improved \
+                            spells-per-day table's own level-15 row, (level 16) Improved \
                             Evasion (an upgrade of the 9th-level Evasion identity, grounded as a \
                             bounded +0 identity/recognition record only, mirroring Monk's own \
                             Improved Evasion idiom exactly) plus the base spells-per-day table's \
-                            own level-16 row, all grounded for real, and the later spell burden \
-                            still blocked",
+                            own level-16 row, and (level 17) Hide in Plain Sight (a grant-only \
+                            identity record, mirroring Camouflage's own idiom exactly) plus the \
+                            base spells-per-day table's own level-17 row, all grounded for real, \
+                            and the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -4344,12 +4347,44 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     tests/sd18_ranger_level14_widening.rs, all moved to a level-17 boundary; \
                     tests/sd18_ranger_level15_widening.rs's own level-16 negative-control test \
                     was removed rather than moved, since level 16 is now itself the \
-                    supported/grounded row.",
+                    supported/grounded row. The SD18 cycle-2026-07-15T7000 slice \
+                    (tests/sd18_ranger_level17_hide_in_plain_sight.rs) widens the level-range \
+                    gate once more to level 17, extending base attack to level 17 (full BAB) \
+                    while both good saves and poor Will all stay unchanged (17/2+2 = 10 and \
+                    17/3 = 5, both integer-division coincidences with level 16) — verified \
+                    independently against THREE primary sources, d20pfsrd, the Archives of \
+                    Nethys aonprd.com mirror, and legacy.aonprd.com, all byte-for-byte \
+                    identical. The class table's 17th-level \"Special\" column reads only \
+                    \"Hide in plain sight\": \"While in any of his favored terrains, a ranger \
+                    of 17th level or higher can use the Stealth skill even while being \
+                    observed.\" This is the exact structural mirror of Camouflage (the \
+                    already-grounded 12th-level \"Special\" column entry): this slice grounds \
+                    Hide in Plain Sight (RANGER_HIDE_IN_PLAIN_SIGHT_LEVEL) the same way, a \
+                    bounded +0 identity/recognition record naming the rule text honestly — no \
+                    terrain-classification engine and no Stealth-check-execution engine exists \
+                    anywhere in this codebase, so no hide-while-observed resolution is \
+                    fabricated from it. The same slice also widens the base spells-per-day \
+                    table to level 17 (\"4/3/2/1\", verified independently against all three \
+                    primary sources): the 2nd/3rd/4th-level columns stay 3/2/1 unchanged, and \
+                    the 1st-level column genuinely rises from 3 to 4; the spell-level access \
+                    ladder stays at 4 (ranger spells never reach a 5th spell level at any \
+                    level). Level 17 is NOT a Combat Style bonus-feat level (feats land at \
+                    2/6/10/14/18) and NOT a Favored Enemy/Favored Terrain interval (next \
+                    intervals land at 18/19), so no other new record appears. This slice also \
+                    fixed five stale sibling negative controls (allowlist/boundary-control \
+                    failure mode) that asserted level 17 as claim-blocked: \
+                    tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, tests/sd18_ranger_level12_widening.rs, \
+                    tests/sd18_ranger_level13_widening.rs, and \
+                    tests/sd18_ranger_level14_widening.rs, all moved to a level-18 boundary; \
+                    tests/sd18_ranger_level16_improved_evasion.rs's own level-17 \
+                    negative-control test was removed rather than moved, since level 17 is now \
+                    itself the supported/grounded row.",
                 next_required_uplift: "ground the ranger Wisdom bonus-spells and \
                     prepared-posture/spell-source-lineage burdens now that the caster-level \
                     gate, the access ladder (now reaching 4th-level spells), the base per-day \
                     counts, and the base spell-save DCs are all grounded, then Ranger \
-                    level-17+ progression, a favored-terrain and favored-enemy \
+                    level-18+ progression, a favored-terrain and favored-enemy \
                     conditional-application engine, execution of any of the four recognized \
                     combat-style bonus feats' own mechanics, Hunter's Bond ally-bonus \
                     application and the animal-companion stat block/advancement subsystem, a \
@@ -4357,9 +4392,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     effect, a tracking-penalty-application engine for Swift Tracker's own \
                     effect, a target-selection/conditional-application engine for Quarry's own \
                     +2 attack-bonus and auto-confirm-critical-threats effects, a \
-                    Stealth-check-execution engine for Camouflage's own effect, a \
-                    saving-throw-resolution/damage-resolution engine for Evasion's and Improved \
-                    Evasion's own effects, then SD13-E4 ranger spell burden",
+                    Stealth-check-execution engine for Camouflage's and Hide in Plain Sight's \
+                    own effects, a saving-throw-resolution/damage-resolution engine for \
+                    Evasion's and Improved Evasion's own effects, then SD13-E4 ranger spell \
+                    burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",

@@ -333,24 +333,6 @@ fn ranger_level15_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 17 stays unrecognized by this slice -----
-
-#[test]
-fn ranger_level_17_is_not_promoted_by_this_slice() {
-    let level_17 = RANGER_LEVEL16_FIXTURE.replace("class:ranger:16", "class:ranger:17");
-    let input = load(&level_17);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger.")),
-        "level-17 Ranger must not gain any bounded ranger chassis explanation: {:?}",
-        computation.explanations
-    );
-}
-
 // ----- Negative control: the ranger path must not leak onto other classes -----
 
 #[test]
