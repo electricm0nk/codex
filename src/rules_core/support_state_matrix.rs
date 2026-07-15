@@ -401,7 +401,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd18_paladin_level11_aura_of_justice.rs + \
     tests/sd18_paladin_level12_widening.rs + \
     tests/sd18_paladin_level13_widening.rs + \
-    tests/sd18_paladin_level14_widening.rs";
+    tests/sd18_paladin_level14_widening.rs + \
+    tests/sd18_paladin_level15_widening.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -3087,17 +3088,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Paladin level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
-                            level-8/level-9/level-10/level-11/level-12/level-13/level-14 \
+                            level-8/level-9/level-10/level-11/level-12/level-13/level-14/\
+                            level-15 \
                             chassis baseline, with smite evil's uses-per-day / attack-bonus / \
                             damage-bonus formula grounded at every level (uses-per-day \
                             genuinely increasing to 2/day at level 4, staying 2/day through \
                             level 6, genuinely increasing to 3/day at level 7, staying \
                             3/day through level 9, genuinely increasing to 4/day at \
                             level 10 and staying 4/day at levels 11-12, genuinely \
-                            increasing to 5/day at level 13, and staying 5/day at level 14, \
+                            increasing to 5/day at level 13, and staying 5/day at levels \
+                            14-15, \
                             while the damage bonus \
                             keeps rising every level), lay on \
-                            hands and divine grace grounded for real at levels 2-14 (correct PF1 \
+                            hands and divine grace grounded for real at levels 2-15 (correct PF1 \
                             CRB level-gate absence at level 1, lay on hands genuinely \
                             increasing again at level 6, staying numerically unchanged at \
                             level 7, genuinely increasing on both axes at level 8, staying \
@@ -3105,21 +3108,21 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             both axes again at level 10, staying numerically unchanged at \
                             level 11, genuinely increasing on both axes again at level 12, \
                             genuinely increasing on both axes again at level 13, and staying \
-                            numerically unchanged at level 14), \
+                            numerically unchanged at levels 14-15), \
                             mercy \
                             grounded as a correct PF1 CRB level-gate absence at \
-                            levels 1-2 and a granted choice-recognition record at levels 3-14 \
+                            levels 1-2 and a granted choice-recognition record at levels 3-15 \
                             (a fourth numbered mercy slot newly grounded at level 12, staying \
                             unchanged at levels 13-14 since neither is a repeat-Mercy-grant \
-                            level), \
+                            level, and a FIFTH numbered mercy slot newly grounded at level 15), \
                             channel positive energy grounded as a correct PF1 CRB level-gate \
-                            absence at levels 1-3 and a flat die-count magnitude at levels 4-14 \
+                            absence at levels 1-3 and a flat die-count magnitude at levels 4-15 \
                             (genuinely increasing from 2d6 to 3d6 at level 5, staying 3d6 at \
                             level 6, genuinely increasing to 4d6 at level 7, staying 4d6 \
                             at level 8, genuinely increasing to 5d6 at level 9, staying 5d6 \
                             at level 10, genuinely increasing to 6d6 at level 11, staying \
                             6d6 at level 12, genuinely increasing to 7d6 at level 13, and \
-                            staying 7d6 at level 14), the \
+                            staying 7d6 at levels 14-15), the \
                             partial-caster effective-caster-level gate grounded as a correct \
                             zero absence at levels 1-3, a genuine value of 1 at level 4, a \
                             genuine value of 2 at level 5, a genuine value of 3 at level 6, a \
@@ -3127,16 +3130,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             8, a genuine value of 6 at level 9, a genuine value of 7 at \
                             level 10, a genuine value of 8 at level 11, a genuine value of \
                             9 at level 12, a genuine value of 10 at level 13, and a genuine \
-                            value of 11 at level 14, Aura of \
+                            value of 11 at levels 14-15, Aura of \
                             Justice \
-                            newly grounded at level 11 and staying granted at levels 12-14 as a \
+                            newly grounded at level 11 and staying granted at levels 12-15 as a \
                             bounded grant-only identity record, (level 13) the \
                             spell-level access ladder's genuinely new 4th-level column and the \
-                            base spells-per-day table's own level-13 row grounded for real, and \
+                            base spells-per-day table's own level-13 row grounded for real, \
                             (level 14) Aura of Faith newly grounded as a second bounded \
                             grant-only identity record and the base spells-per-day table's own \
                             level-14 row (only the 4th-level column genuinely rising, from 0 \
-                            to 1) grounded for real, \
+                            to 1) grounded for real, and (level 15) the fifth numbered mercy \
+                            slot newly grounded and the base spells-per-day table's own \
+                            level-15 row (only the 3rd-level column genuinely rising, from 1 \
+                            to 2) grounded for real, \
                             and the hybrid chassis pair plus \
                             the spells-known/spells-per-day/spell-DC spell burden still named \
                             and unproven",
@@ -3510,9 +3516,42 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     tests/sd18_paladin_level11_aura_of_justice.rs, \
                     tests/sd18_paladin_level12_widening.rs, and \
                     tests/sd18_paladin_level13_widening.rs, all moved to a level-15 boundary. \
+                    The SD18 cycle-2026-07-15T4300 slice \
+                    (tests/sd18_paladin_level15_widening.rs) widens the level-range gate once \
+                    more to level 15, the loop's TENTH §3.2 level-15 landing, and the fourth \
+                    hybrid/partial-caster class (after Ranger and, at levels 13/14, itself) to \
+                    reach it: base attack genuinely rises to +15 (full BAB) and poor Reflex \
+                    genuinely rises to 5 (15/3, up from 4), while both good saves stay \
+                    numerically unchanged at 9 (15/2+2, an integer-division coincidence with \
+                    level 14, re-verified rather than assumed). The level-15 \"Special\" \
+                    column reads only \"Mercy\" (verified independently against d20pfsrd and \
+                    the Archives of Nethys aonprd.com mirror, byte-for-byte agreement, so a \
+                    third source was not required) — 15th IS a repeat-Mercy-grant level (the \
+                    3rd/6th/9th/12th/15th cadence), grounded here as a FIFTH numbered mercy \
+                    choice slot (class_chassis.paladin.mercy_5_choice, choice:paladin_mercy_5, \
+                    gate 15, an open-ended +0 recognition mirroring slots 1-4); unlike the \
+                    6th/9th/12th-level repeat grants, both primary sources agree the CRB's \
+                    named mercy-list tiers stop growing after the 12th-level tier, so the \
+                    fifth slot's cited tier text names no new mercy condition — only a fifth \
+                    pick from the already-existing 3rd/6th/9th/12th-tier pool — and no mercy's \
+                    effect on lay on hands is computed. The same slice widens the BASE \
+                    spells-per-day table to level 15 (\"3/2/2/1\", verified independently \
+                    against both sources with no disagreement): the 1st/2nd/4th-level columns \
+                    stay 3/2/1 numerically unchanged, and the 3rd-level column genuinely rises \
+                    from 1 to 2. The spell-level access ladder stays 4 (already widened at \
+                    level 13, unchanged here), and the base spell-save-DC and \
+                    Charisma-bonus-spells families both continue to extend to the 4th spell \
+                    level automatically (live arithmetic, no new formula invented). This slice \
+                    also fixed four stale sibling negative controls (allowlist/boundary-control \
+                    failure mode) that asserted level 15 as claim-blocked: \
+                    tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, \
+                    tests/sd18_paladin_level13_widening.rs, and \
+                    tests/sd18_paladin_level14_widening.rs, all moved to a level-16 boundary. \
                     The row stays Partial, not Supported: \
                     the F6 hybrid chassis pair (class-feature and spell) stays claim-blocking \
-                    as accepted hybrid truth, no Paladin level 15+ is proven, Divine Bond stays \
+                    as accepted hybrid truth, no Paladin level 16+ is proven, Divine Bond stays \
                     named-but-unproven, Aura of Justice's and Aura of Faith's own resolution \
                     engines are not computed, and the partial-caster spell burden itself \
                     remains named and unproven beyond the grounded caster-level gate arithmetic \
@@ -3525,7 +3564,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell-source-lineage burdens now that the caster-level gate, the access \
                     ladder, the base per-day counts, the base spell-save DCs, the Charisma \
                     bonus-slot counts, and the integrated totals are all grounded, then \
-                    paladin level-15+ \
+                    paladin level-16+ \
                     progression",
             },
             SupportStateRow {
