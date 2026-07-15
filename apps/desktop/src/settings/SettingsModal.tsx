@@ -6,10 +6,11 @@ import { useEffect, type ReactNode } from 'react';
  * added by extending `SETTINGS_TABS` and the `panels` map the caller passes.
  */
 
-export type SettingsTab = 'appearance' | 'developer';
+export type SettingsTab = 'appearance' | 'google-drive' | 'developer';
 
 export const SETTINGS_TABS: ReadonlyArray<{ id: SettingsTab; label: string }> = [
   { id: 'appearance', label: 'Appearance' },
+  { id: 'google-drive', label: 'Google Drive' },
   { id: 'developer', label: 'Developer' },
 ];
 

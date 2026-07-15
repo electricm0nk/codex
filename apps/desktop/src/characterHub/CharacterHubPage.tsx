@@ -6,11 +6,32 @@ import { CreateCharacterForm } from './CreateCharacterForm';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
 import { LoadCharacterScreen } from './LoadCharacterScreen';
 import { CharacterSheet } from './CharacterSheet';
+import { StubScreen } from './StubScreen';
+import { isGoogleDriveConfigured } from '../settings/googleDrive';
+import { CampaignManagerScreen } from '../campaign/CampaignManagerScreen';
+import { CreateCampaignScreen } from '../campaign/CreateCampaignScreen';
+import { EditCampaignScreen } from '../campaign/EditCampaignScreen';
+import { CampaignSheet } from '../campaign/CampaignSheet';
+
+type Mode =
+  | 'landing'
+  | 'load'
+  | 'create'
+  | 'sheet'
+  | 'dm-toolkit'
+  | 'campaign-list'
+  | 'campaign-create'
+  | 'campaign-edit'
+  | 'campaign-sheet';
 
 export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' | 'enhancement') => void }) {
-  const [mode, setMode] = useState<'landing' | 'load' | 'create' | 'sheet'>('landing');
+  const [mode, setMode] = useState<Mode>('landing');
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
   const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
+  // Where the ✕ on the character sheet should return to — Load Character
+  // normally, but the campaign screen when opened from a party member there.
+  const [sheetReturnMode, setSheetReturnMode] = useState<Mode>('load');
+  const [activeCampaignId, setActiveCampaignId] = useState<string | null>(null);
   const [surface, setSurface] = useState<CharacterHubListSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,13 +57,79 @@ export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' |
         onCreate={() => setMode('create')}
         onLoad={() => setMode('load')}
         onLoadMostRecent={() => setMode('load')}
+        onCampaignManager={() => setMode('campaign-list')}
+        campaignManagerEnabled={isGoogleDriveConfigured()}
+        onDmToolkit={() => setMode('dm-toolkit')}
         hasCharacters={hasCharacters}
       />
     );
   }
 
+  if (mode === 'dm-toolkit') {
+    return (
+      <StubScreen
+        title="DM Toolkit"
+        description="Encounter building, initiative tracking, and other GM-side tools. Not built yet."
+        onBack={() => setMode('landing')}
+      />
+    );
+  }
+
+  if (mode === 'campaign-list') {
+    return (
+      <CampaignManagerScreen
+        onCancel={() => setMode('landing')}
+        onCreate={() => setMode('campaign-create')}
+        onEdit={(campaignId) => {
+          setActiveCampaignId(campaignId);
+          setMode('campaign-edit');
+        }}
+        onLoad={(campaignId) => {
+          setActiveCampaignId(campaignId);
+          setMode('campaign-sheet');
+        }}
+      />
+    );
+  }
+
+  if (mode === 'campaign-create') {
+    return (
+      <CreateCampaignScreen
+        onCancel={() => setMode('campaign-list')}
+        onCreated={(campaignId) => {
+          setActiveCampaignId(campaignId);
+          setMode('campaign-edit');
+        }}
+      />
+    );
+  }
+
+  if (mode === 'campaign-edit' && activeCampaignId) {
+    return (
+      <EditCampaignScreen
+        campaignId={activeCampaignId}
+        onCancel={() => setMode('campaign-list')}
+        onSaved={() => setMode('campaign-list')}
+      />
+    );
+  }
+
+  if (mode === 'campaign-sheet' && activeCampaignId) {
+    return (
+      <CampaignSheet
+        campaignId={activeCampaignId}
+        onClose={() => setMode('campaign-list')}
+        onOpenCharacterSheet={(row, detail) => {
+          setSheet({ row, detail });
+          setSheetReturnMode('campaign-sheet');
+          setMode('sheet');
+        }}
+      />
+    );
+  }
+
   if (mode === 'sheet' && sheet) {
-    return <CharacterSheet row={sheet.row} detail={sheet.detail} onClose={() => setMode('load')} onOpenTool={props.onOpenTool} />;
+    return <CharacterSheet row={sheet.row} detail={sheet.detail} onClose={() => setMode(sheetReturnMode)} onOpenTool={props.onOpenTool} />;
   }
 
   if (mode === 'load') {
@@ -53,6 +140,7 @@ export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' |
         onCancel={() => setMode('landing')}
         onOpenSheet={(row, detail) => {
           setSheet({ row, detail });
+          setSheetReturnMode('load');
           setMode('sheet');
         }}
       />
