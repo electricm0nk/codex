@@ -1,75 +1,61 @@
-//! SD18 Wizard level-12 widening grounding proof.
+//! SD18 Wizard level-13 widening grounding proof.
 //!
-//! Widens the accepted deterministic Human Wizard level-1..level-11 prepared
-//! arcane spell-bearing chassis (`tests/sd18_wizard_level11_widening.rs`) to
-//! Wizard level 12, mirroring the sibling-class level-range-gate idiom
-//! (`supported_wizard_level` is generalized from `1..=11` to `1..=12` via
-//! `MAX_SUPPORTED_WIZARD_LEVEL = 12`, exactly as prior cycles widened
-//! `MAX_SUPPORTED_BARBARIAN_LEVEL`, `MAX_SUPPORTED_BARD_LEVEL`,
+//! Widens the accepted deterministic Human Wizard level-1..level-12 prepared
+//! arcane spell-bearing chassis (`tests/sd18_wizard_level12_widening.rs`) to
+//! Wizard level 13, mirroring the sibling-class level-range-gate idiom
+//! (`supported_wizard_level` is generalized from `1..=12` to `1..=13` via
+//! `MAX_SUPPORTED_WIZARD_LEVEL = 13`, exactly as prior cycles widened
+//! `MAX_SUPPORTED_ROGUE_LEVEL`, `MAX_SUPPORTED_BARBARIAN_LEVEL`,
+//! `MAX_SUPPORTED_FIGHTER_LEVEL`, `MAX_SUPPORTED_RANGER_LEVEL`,
 //! `MAX_SUPPORTED_CLERIC_LEVEL`, `MAX_SUPPORTED_DRUID_LEVEL`,
-//! `MAX_SUPPORTED_FIGHTER_LEVEL`, `MAX_SUPPORTED_MONK_LEVEL`,
-//! `MAX_SUPPORTED_PALADIN_LEVEL`, `MAX_SUPPORTED_ROGUE_LEVEL`,
-//! `MAX_SUPPORTED_RANGER_LEVEL`, and `MAX_SUPPORTED_SORCERER_LEVEL`, all from
-//! 11 to 12). §3.1 race rows and §3.3 interaction rows stay fully exhausted /
-//! structurally blocked (cited from the progress doc, not re-derived); §3.4/
-//! §3.5 stay structurally blocked for the same documented reason.
-//!
-//! This cycle independently re-verified (not assumed from the prior
-//! Sorcerer level-12 cycle's outcome) whether Wizard's own live claim-blocker
-//! (`class_spell.wizard.prepared_spellbook.unsupported`, named in the §3.4
-//! investigation) structurally gates any further Wizard progression. Reading
-//! `explain_wizard_level1_prepared_spell_baseline` directly in
-//! `pilot_compute.rs` confirms it does not: the diagnostic is pushed
-//! unconditionally alongside the level's other explanations (it is not part
-//! of any control-flow guard on `supported_wizard_level` or
-//! `MAX_SUPPORTED_WIZARD_LEVEL`), exactly mirroring the pattern of every
-//! sibling class's own remaining-burden diagnostics (e.g. Sorcerer's
-//! `class_spell.sorcerer.spontaneous.unsupported`, Cleric's prepared-spell
-//! burden note). It marks incomplete coverage; it does not block arithmetic
-//! widening.
+//! `MAX_SUPPORTED_BARD_LEVEL`, `MAX_SUPPORTED_PALADIN_LEVEL`, and
+//! `MAX_SUPPORTED_SORCERER_LEVEL`, all from 12 to 13 — the tenth §3.2
+//! level-13 landing, after Rogue, Barbarian, Fighter, Ranger, Cleric, Druid,
+//! Bard, Paladin, and Sorcerer, and the FOURTH spell-bearing class (after
+//! Ranger, Bard, and Sorcerer) to reach it, and the LAST of the 11 §3.2
+//! classes to reach level 13 (Monk excluded — confirmed dead end at level 13,
+//! Diamond Soul needs spell resistance). §3.1 race rows and §3.3 interaction
+//! rows stay fully exhausted / structurally blocked (cited from the progress
+//! doc, not re-derived); §3.4/§3.5 stay structurally blocked for the same
+//! documented reason.
 //!
 //! Both PF1 CRB primary sources (d20pfsrd and the Archives of Nethys
 //! aonprd.com mirror) were read directly before writing any code or test,
 //! and both agree byte-for-byte:
 //!
-//! - level 12 base attack bonus genuinely rises to +6 (`12 / 2 = 6`, up from
-//!   +5 at level 11) and all three base saves genuinely rise too: +4
-//!   Fortitude (poor, `12 / 3 = 4`), +4 Reflex (poor, `12 / 3 = 4`), and +8
-//!   Will (good, `12 / 2 + 2 = 8`) — unlike level 11, where all four values
-//!   stayed numerically identical to level 10 (integer-division
-//!   coincidences), all four genuinely rise at level 12, via the same
-//!   formulas already grounded at levels 1-11, not re-derived.
-//! - the PF1 Core Rulebook Wizard class table's level-12 "Special" column is
+//! - level 13 base attack bonus and all three base saves STAY numerically
+//!   unchanged from level 12 (`13/2 = 6`, `13/3 = 4`, `13/3 = 4`,
+//!   `13/2+2 = 8`) — integer-division coincidences, re-verified rather than
+//!   assumed, not a sign any formula stopped scaling.
+//! - the PF1 Core Rulebook Wizard class table's level-13 "Special" column is
 //!   genuinely BLANK on both primary sources (the Wizard's bonus feats land
 //!   only at levels 5/10/15/20), so no new pillar is grounded from the
-//!   Special column, mirroring the Sorcerer level-12 cycle's own clean
-//!   landing.
-//! - the raw Wizard spells-per-day table's level-12 row is "4/4/4/4/3/3/2",
-//!   with the 6th-level column rising from 1 to 2 but no 7th-level column
-//!   appearing at all — 7th-level wizard spells do not become accessible
-//!   until level 13, verified rather than assumed, so the specialist
-//!   bonus-slot flat count (one bonus slot of each spell level she can cast)
-//!   STAYS at 6, an integer-division/threshold-stasis coincidence, not a
-//!   sign the pillar stopped scaling.
-//! - Intense Spells' bonus-damage magnitude GENUINELY RISES to 6
-//!   (`max(12/2, 1) = 6`, up from 5 at level 11), via the pre-existing
-//!   half-wizard-level-minimum-1 formula, not re-derived; Force Missile's
-//!   uses-per-day pool stays the level-independent 3 + Intelligence modifier
-//!   (6); Scribe Scroll and the school specialization choice recognitions
-//!   are not level-gated and still fire.
+//!   Special column.
+//! - the raw Wizard spells-per-day table's level-13 row is "4/4/4/4/4/3/2/1",
+//!   the first non-"—" 7th-level column, up from the level-12 row
+//!   "4/4/4/4/3/3/2" whose 7th-level column does not exist at all — so a
+//!   level-13 specialist wizard casts 7th-level spells for the first time,
+//!   and the specialist bonus-slot flat count (one bonus slot of each spell
+//!   level she can cast) GENUINELY RISES to 7, from 6 at level 12.
+//! - Intense Spells' bonus-damage magnitude STAYS at 6 (`max(13/2, 1) = 6`,
+//!   another integer-division coincidence); Force Missile's uses-per-day
+//!   pool stays the level-independent 3 + Intelligence modifier (6); Scribe
+//!   Scroll and the school specialization choice recognitions are not
+//!   level-gated and still fire.
 //!
 //! It deliberately does not touch the school-power execution burden
 //! (Intense Spells' damage application, Force Missile's casting execution),
 //! the opposed-school preparation-cost burden, the still-unproven 5th/10th-
 //! level "Bonus feat" selection/execution, or the prepared spellbook /
 //! spells-prepared / spell-slot posture burden (all stay named-but-unproven,
-//! unchanged from levels 1-11), and it does not ground Wizard level 13+. It
-//! also preserves the accepted Wizard level-1..level-11 truth (unchanged),
+//! unchanged from levels 1-12), and it does not ground Wizard level 14+. It
+//! also preserves the accepted Wizard level-1..level-12 truth (unchanged),
 //! the Fighter negative control, and the multiclass negative control. Per
 //! the brief's lesson about stale negative controls, this cycle also moves
-//! the sibling "level 12 is not promoted" negative controls in
-//! `tests/sd13_wizard_level10_progression.rs` and
-//! `tests/sd18_wizard_level11_widening.rs` to a "level 13 is not promoted"
+//! the sibling "level 13 is not promoted" negative controls in
+//! `tests/sd13_wizard_level10_progression.rs`,
+//! `tests/sd18_wizard_level11_widening.rs`, and
+//! `tests/sd18_wizard_level12_widening.rs` to a "level 14 is not promoted"
 //! boundary in the same commit.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
@@ -80,12 +66,12 @@ use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
 };
 
-const WIZARD_LEVEL11_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_wizard_level11_sd18_widening_deterministic_input.txt"
-);
-
 const WIZARD_LEVEL12_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_wizard_level12_sd18_widening_deterministic_input.txt"
+);
+
+const WIZARD_LEVEL13_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_wizard_level13_sd18_widening_deterministic_input.txt"
 );
 
 const FIGHTER_FIXTURE: &str = include_str!(
@@ -120,77 +106,77 @@ fn explanation<'a>(
         })
 }
 
-// ----- Base attack bonus at level 12 genuinely rises -----
+// ----- Base attack bonus at level 13 stays unchanged (integer-division coincidence) -----
 
 #[test]
-fn wizard_level12_base_attack_bonus_is_grounded_and_rises() {
-    let input = load(WIZARD_LEVEL12_FIXTURE);
+fn wizard_level13_base_attack_bonus_is_grounded_and_stays_unchanged() {
+    let input = load(WIZARD_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let base_attack = explanation(&computation, "class_chassis.wizard.base_attack_bonus");
     assert_eq!(
         base_attack.value, 6,
-        "Wizard level 12 1/2-BAB progression (12 / 2) must equal 6 — genuinely risen from 5 at \
-         level 11: {}",
+        "Wizard level 13 1/2-BAB progression (13 / 2) must equal 6 — numerically unchanged from \
+         level 12, an integer-division coincidence: {}",
         base_attack.detail
     );
 }
 
-// ----- Base saves at level 12 genuinely rise (all three) -----
+// ----- Base saves at level 13 stay unchanged (all three, integer-division coincidences) -----
 
 #[test]
-fn wizard_level12_base_saves_are_grounded_and_rise() {
-    let input = load(WIZARD_LEVEL12_FIXTURE);
+fn wizard_level13_base_saves_are_grounded_and_stay_unchanged() {
+    let input = load(WIZARD_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let fortitude = explanation(&computation, "class_chassis.wizard.base_save.fortitude");
     assert_eq!(
         fortitude.value, 4,
-        "Wizard level 12 poor Fortitude (12/3) must equal 4 — genuinely risen from 3 at level 11"
+        "Wizard level 13 poor Fortitude (13/3) must stay 4 — numerically unchanged from level 12"
     );
 
     let reflex = explanation(&computation, "class_chassis.wizard.base_save.reflex");
     assert_eq!(
         reflex.value, 4,
-        "Wizard level 12 poor Reflex (12/3) must equal 4 — genuinely risen from 3 at level 11"
+        "Wizard level 13 poor Reflex (13/3) must stay 4 — numerically unchanged from level 12"
     );
 
     let will = explanation(&computation, "class_chassis.wizard.base_save.will");
     assert_eq!(
         will.value, 8,
-        "Wizard level 12 good Will (12/2+2) must equal 8 — genuinely risen from 7 at level 11"
+        "Wizard level 13 good Will (13/2+2) must stay 8 — numerically unchanged from level 12"
     );
 }
 
-// ----- The specialist bonus slot count stays at 6 (threshold stasis, not a regression) -----
+// ----- The specialist bonus slot count genuinely rises to 7 (7th-level spells open) -----
 
 #[test]
-fn wizard_level12_specialist_bonus_slot_stays_at_six() {
-    let input = load(WIZARD_LEVEL12_FIXTURE);
+fn wizard_level13_specialist_bonus_slot_genuinely_rises_to_seven() {
+    let input = load(WIZARD_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let slot = explanation(&computation, "class_chassis.wizard.specialist_bonus_slot");
     assert_eq!(
-        slot.value, 6,
-        "Wizard level 12 specialist bonus slot count must stay 6 — 7th-level wizard spells do \
-         not become accessible until level 13, verified rather than assumed against the raw \
-         spells-per-day table row \"4/4/4/4/3/3/2\": {}",
+        slot.value, 7,
+        "Wizard level 13 specialist bonus slot count must genuinely rise to 7 — 7th-level \
+         wizard spells become accessible for the first time at level 13, verified against the \
+         raw spells-per-day table row \"4/4/4/4/4/3/2/1\": {}",
         slot.detail
     );
 }
 
-// ----- Intense Spells' bonus damage genuinely rises at level 12 -----
+// ----- Intense Spells' bonus damage stays unchanged at level 13 -----
 
 #[test]
-fn wizard_level12_intense_spells_bonus_damage_genuinely_rises() {
-    let input = load(WIZARD_LEVEL12_FIXTURE);
+fn wizard_level13_intense_spells_bonus_damage_stays_unchanged() {
+    let input = load(WIZARD_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let intense = explanation(&computation, "class_chassis.wizard.intense_bonus_damage");
     assert_eq!(
         intense.value, 6,
-        "Intense Spells' bonus-damage magnitude (max(12/2, 1)) must genuinely rise to 6 at \
-         level 12, up from 5 at level 11: {}",
+        "Intense Spells' bonus-damage magnitude (max(13/2, 1)) must stay 6 at level 13, \
+         unchanged from level 12, an integer-division coincidence: {}",
         intense.detail
     );
 }
@@ -198,8 +184,8 @@ fn wizard_level12_intense_spells_bonus_damage_genuinely_rises() {
 // ----- Force Missile, Scribe Scroll, and the specialization choice carry over unchanged -----
 
 #[test]
-fn wizard_level12_grants_carry_over_unchanged() {
-    let input = load(WIZARD_LEVEL12_FIXTURE);
+fn wizard_level13_grants_carry_over_unchanged() {
+    let input = load(WIZARD_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let force_missile = explanation(
@@ -208,7 +194,7 @@ fn wizard_level12_grants_carry_over_unchanged() {
     );
     assert_eq!(
         force_missile.value, 6,
-        "Force Missile's uses per day (3 + Intelligence modifier 3) must stay 6 at level 12"
+        "Force Missile's uses per day (3 + Intelligence modifier 3) must stay 6 at level 13"
     );
 
     let scribe_scroll = explanation(&computation, "class_chassis.wizard.scribe_scroll");
@@ -224,8 +210,8 @@ fn wizard_level12_grants_carry_over_unchanged() {
 // ----- The spell-bearing baseline recognition and both burden diagnostics persist -----
 
 #[test]
-fn wizard_level12_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_burdens() {
-    let input = load(WIZARD_LEVEL12_FIXTURE);
+fn wizard_level13_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_burdens() {
+    let input = load(WIZARD_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
@@ -233,14 +219,14 @@ fn wizard_level12_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_b
             .explanations
             .iter()
             .any(|e| e.id == "class_chassis.spell_baseline.wizard"),
-        "level-12 Wizard must still recognize the spell-bearing baseline identity: {:?}",
+        "level-13 Wizard must still recognize the spell-bearing baseline identity: {:?}",
         computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.id
             == "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported"
             && d.claim_blocking),
-        "level-12 Wizard must still claim-block on the school-power execution and \
+        "level-13 Wizard must still claim-block on the school-power execution and \
          opposed-school preparation-cost burden: {:?}",
         computation.diagnostics
     );
@@ -250,39 +236,33 @@ fn wizard_level12_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_b
             .iter()
             .any(|d| d.id == "class_spell.wizard.prepared_spellbook.unsupported"
                 && d.claim_blocking),
-        "level-12 Wizard must still claim-block on the prepared spellbook posture burden: {:?}",
+        "level-13 Wizard must still claim-block on the prepared spellbook posture burden: {:?}",
         computation.diagnostics
     );
 }
 
-// ----- Negative control: level 11 truth is unchanged by this widening -----
+// ----- Negative control: level 12 truth is unchanged by this widening -----
 
 #[test]
-fn wizard_level11_truth_is_unchanged_by_this_slice() {
-    let input = load(WIZARD_LEVEL11_FIXTURE);
+fn wizard_level12_truth_is_unchanged_by_this_slice() {
+    let input = load(WIZARD_LEVEL12_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let base_attack = explanation(&computation, "class_chassis.wizard.base_attack_bonus");
-    assert_eq!(base_attack.value, 5, "Wizard level 11 base attack bonus must stay 5");
+    assert_eq!(base_attack.value, 6, "Wizard level 12 base attack bonus must stay 6");
 
     let slot = explanation(&computation, "class_chassis.wizard.specialist_bonus_slot");
-    assert_eq!(slot.value, 6, "Wizard level 11 specialist bonus slot count must stay 6");
+    assert_eq!(slot.value, 6, "Wizard level 12 specialist bonus slot count must stay 6");
 
     let intense = explanation(&computation, "class_chassis.wizard.intense_bonus_damage");
-    assert_eq!(intense.value, 5, "Wizard level 11 Intense Spells bonus damage must stay 5");
+    assert_eq!(intense.value, 6, "Wizard level 12 Intense Spells bonus damage must stay 6");
 }
 
 // ----- Negative control: level 14 stays unrecognized by this slice -----
-// (widened from level 13 to level 14 by the SD18 wizard-level13-widening
-// cycle, which genuinely promotes level 13 — see
-// tests/sd18_wizard_level13_widening.rs — mirroring the exact same boundary
-// move the Barbarian/Bard/Cleric/Druid/Fighter/Paladin/Rogue/Ranger/Sorcerer
-// level-13 widening cycles each made for their own sibling level-12
-// widening test.)
 
 #[test]
 fn wizard_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = WIZARD_LEVEL12_FIXTURE.replace("class:wizard:12", "class:wizard:14");
+    let level_14 = WIZARD_LEVEL13_FIXTURE.replace("class:wizard:13", "class:wizard:14");
     let input = load(&level_14);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
@@ -300,7 +280,7 @@ fn wizard_level_14_is_not_promoted_by_this_slice() {
 // ----- Negative control: the wizard path must not leak onto other classes -----
 
 #[test]
-fn fighter_does_not_gain_wizard_level12_recognition() {
+fn fighter_does_not_gain_wizard_level13_recognition() {
     let fighter = load(FIGHTER_FIXTURE);
     let fighter_computation = compute_pilot_base_chassis(&fighter);
     assert!(
@@ -317,10 +297,10 @@ fn fighter_does_not_gain_wizard_level12_recognition() {
 // ----- Negative control: multiclass Wizard is not promoted -----
 
 #[test]
-fn multiclass_wizard_level12_is_not_promoted_by_this_slice() {
-    let multiclass = WIZARD_LEVEL12_FIXTURE.replace(
-        "class_level=class:wizard:12",
-        "class_level=class:wizard:12\nclass_level=class:fighter:1",
+fn multiclass_wizard_level13_is_not_promoted_by_this_slice() {
+    let multiclass = WIZARD_LEVEL13_FIXTURE.replace(
+        "class_level=class:wizard:13",
+        "class_level=class:wizard:13\nclass_level=class:fighter:1",
     );
     let input = load(&multiclass);
     let computation = compute_pilot_base_chassis(&input);
@@ -339,10 +319,10 @@ fn multiclass_wizard_level12_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the matrix note names the level-12 widening -----
+// ----- Control plane: the matrix note names the level-13 widening -----
 
 #[test]
-fn matrix_wizard_row_names_level_12_widening() {
+fn matrix_wizard_row_names_level_13_widening() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
@@ -352,13 +332,13 @@ fn matrix_wizard_row_names_level_12_widening() {
     assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
     assert_eq!(wizard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
-        wizard.grounding_ref.contains("sd18_wizard_level12_widening"),
-        "wizard row must cite the live SD18 level-12 widening proof surface: {}",
+        wizard.grounding_ref.contains("sd18_wizard_level13_widening"),
+        "wizard row must cite the live SD18 level-13 widening proof surface: {}",
         wizard.grounding_ref
     );
     let note = wizard.blocker_or_lossiness_note;
     assert!(
-        note.contains("level 12") || note.contains("level-12"),
-        "wizard partial note must name the level-12 widening: {note}"
+        note.contains("level 13") || note.contains("level-13"),
+        "wizard partial note must name the level-13 widening: {note}"
     );
 }

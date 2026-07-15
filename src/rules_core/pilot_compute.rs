@@ -1565,7 +1565,30 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // constant, exactly mirroring every sibling class's own remaining-burden
 // diagnostics, so it marks incomplete coverage without blocking this
 // arithmetic widening.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 12;
+//
+// A further SD18 slice widens the gate again to level 13 — the LAST §3.2
+// level-13 landing among the 11 core classes (Monk excluded, confirmed dead
+// end: Diamond Soul needs spell resistance, not grounded in this codebase):
+// base attack bonus and all three base saves STAY numerically unchanged from
+// level 12 (`13/2 = 6`, `13/3 = 4`, `13/2+2 = 8`), integer-division
+// coincidences verified against both primary sources (d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, which agree byte-for-byte) rather
+// than assumed. The raw spells-per-day table's level-13 row is
+// "4/4/4/4/4/3/2/1" — the first non-"—" 7th-level column, up from the
+// level-12 row "4/4/4/4/3/3/2" whose 7th-level column does not exist at all
+// — so a level-13 specialist wizard casts 7th-level spells for the first
+// time, and the specialist bonus-slot flat count (one bonus slot of each
+// spell level she can cast) GENUINELY RISES to 7, from 6 at level 12, via a
+// new tier constant (`WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_13`) gated on a
+// new threshold constant (`WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`),
+// mirroring the existing level-3/5/7/9/11 idiom exactly; Intense Spells'
+// bonus-damage magnitude STAYS at 6 (`max(13/2, 1) = 6`, another
+// integer-division coincidence); Force Missile's pool is level-independent
+// and unchanged; the level-13 "Special" column is genuinely BLANK on both
+// primary sources (the Wizard's bonus feats land only at levels 5/10/15/20),
+// so no new pillar record is grounded at level 13 beyond widening the
+// specialist-bonus-slot pillar to its new value.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 13;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -1626,6 +1649,14 @@ const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_9: i16 = 5;
 /// count of 6, up from 5 at levels 9-10.
 const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_11: i16 = 6;
 
+/// SD18 level-13 widening: a level-13 wizard casts 7th-level spells for the
+/// first time (verified independently against both primary sources' raw
+/// Wizard spells-per-day table rows: level 12 shows "4/4/4/4/3/3/2", level 13
+/// shows "4/4/4/4/4/3/2/1" — the first non-"—" 7th-level column), so a
+/// specialist wizard now gains one bonus slot of EACH spell level she can
+/// cast, 1st through 7th, for a flat count of 7, up from 6 at levels 11-12.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_13: i16 = 7;
+
 /// PF1 Core Rulebook Wizard spells-per-day table: the wizard class level at which
 /// 2nd-level wizard spells first become available (verified independently against
 /// both primary sources: level 1-2 wizards cast only 1st-level spells; level 3 is
@@ -1657,6 +1688,14 @@ const WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
 /// a still-"—" 6th-level column, level 11 is the first to show a non-"—"
 /// 6th-level column ("1", the level-11 row reading "4/4/4/4/3/2/1").
 const WIZARD_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 11;
+/// The wizard level at which 7th-level wizard spells (and so the seventh
+/// Evocation-only specialist bonus slot) first become available, verified
+/// against the raw PF1 Core Rulebook Wizard spells-per-day table rows
+/// (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree
+/// byte-for-byte): level 12 shows a still-"—" 7th-level column, level 13 is
+/// the first to show a non-"—" 7th-level column ("1", the level-13 row
+/// reading "4/4/4/4/4/3/2/1").
+const WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
 
 // SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
 // martial class; the bounded single-class level-1 identity is recognized as
@@ -11103,7 +11142,9 @@ fn explain_wizard_level1_prepared_spell_baseline(
         // of EACH spell level she can cast — one 1st-level bonus slot plus one
         // 2nd-level bonus slot, a flat count of 2.
         let wizard_specialist_bonus_slot_count =
-            if level >= WIZARD_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            if level >= WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_13
+            } else if level >= WIZARD_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_11
             } else if level >= WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_9
@@ -11151,7 +11192,14 @@ fn explain_wizard_level1_prepared_spell_baseline(
                  \"—\" 6th-level column, the level-11 row is \"4/4/4/4/3/2/1\", the first non-\"—\" \
                  6th-level column), so the flat count becomes \
                  {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_11:+} (one bonus slot of each spell \
-                 level 1st through 6th). At level {level} this \
+                 level 1st through 6th); at level \
+                 {WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 7th-level \
+                 spells for the first time (verified independently against both primary sources' \
+                 raw spells-per-day table rows: the level-12 row is \"4/4/4/4/3/3/2\" with a \
+                 still-\"—\" 7th-level column, the level-13 row is \"4/4/4/4/4/3/2/1\", the first \
+                 non-\"—\" 7th-level column), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_13:+} (one bonus slot of each spell \
+                 level 1st through 7th). At level {level} this \
                  is {wizard_specialist_bonus_slot_count:+} flat count; there is no cantrip-level \
                  bonus slot. This grounds the flat count only: no slot contents, no spells \
                  prepared per day, no per-day slot totals, and no bonus slots from a high \
