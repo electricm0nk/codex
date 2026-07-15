@@ -329,8 +329,22 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // level, so no fifth mercy slot is added. The base spells-per-day
 // table's level-14 row is "3/2/1/1": only the 4th-level column genuinely
 // rises (from 0 to 1), the first castable 4th-level paladin spell slot.
-// Nothing here grounds level 15+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 14;
+// SD18 cycle-2026-07-15T4300 widens this once more to level 15: base
+// attack genuinely rises to 15 (full BAB) and poor Reflex genuinely rises
+// to 5 (15/3, up from 4), while both good saves stay numerically unchanged
+// at 9 (15/2+2, an integer-division coincidence with level 14). The
+// level-15 "Special" column reads only "Mercy" (verified independently
+// against d20pfsrd and the Archives of Nethys aonprd.com mirror,
+// byte-for-byte agreement) -- 15th IS a repeat-Mercy-grant level (the
+// 3rd/6th/9th/12th/15th cadence), grounded here as a FIFTH numbered mercy
+// choice slot, mirroring the proven slot-2/3/4 idiom exactly; unlike the
+// 6th/9th/12th-level repeat grants, both sources agree the CRB's named
+// mercy-list tiers stop growing after 12th level, so the fifth slot's
+// cited tier text names no new mercy condition, only the fifth pick from
+// the existing pool. The base spells-per-day table's level-15 row is
+// "3/2/2/1": only the 3rd-level column genuinely rises (from 1 to 2).
+// Nothing here grounds level 16+ Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 15;
 
 // Aura of Faith is a 14th-level paladin feature in the PF1 Core Rulebook
 // (verified independently against d20pfsrd, the Archives of Nethys
@@ -457,6 +471,19 @@ const PALADIN_THIRD_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_3";
 /// repeat-grant idiom, mirroring slot 2/3 exactly.
 const PALADIN_FOURTH_MERCY_GRANT_LEVEL: u8 = 12;
 const PALADIN_FOURTH_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_4";
+
+/// PF1 Core Rulebook gate of the paladin's FIFTH mercy ("every three levels
+/// thereafter" from the level-3 mercy rule: 3, 6, 9, 12, 15). Verified
+/// independently for this SD18 slice against d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror (byte-for-byte agreement): UNLIKE the
+/// 6th/9th/12th-level repeat grants, no new named mercy-list tier is added
+/// at 15th level -- both sources agree the CRB's named mercy conditions
+/// stop growing after the 12th-level tier, so the 15th-level grant is
+/// simply a fifth pick from the already-existing 3rd/6th/9th/12th-tier
+/// pool. Numbered slot per the proven repeat-grant idiom, mirroring slot
+/// 2/3/4 exactly.
+const PALADIN_FIFTH_MERCY_GRANT_LEVEL: u8 = 15;
+const PALADIN_FIFTH_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_5";
 
 // SD13-E5 Ranger Combat Style correction. Combat Style Feat is a 2nd-level ranger
 // feature in the PF1 Core Rulebook: the ranger selects a combat style (archery or
@@ -6278,10 +6305,11 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // in each detail. No mercy's effect is computed (no lay-on-hands
     // execution engine exists) and prerequisite chains (e.g. the frightened
     // mercy requiring the shaken mercy) are named, not validated.
-    let repeat_mercy_slots: [(u8, u8, &str); 3] = [
+    let repeat_mercy_slots: [(u8, u8, &str); 4] = [
         (2, PALADIN_SECOND_MERCY_GRANT_LEVEL, PALADIN_SECOND_MERCY_CHOICE_ID),
         (3, PALADIN_THIRD_MERCY_GRANT_LEVEL, PALADIN_THIRD_MERCY_CHOICE_ID),
         (4, PALADIN_FOURTH_MERCY_GRANT_LEVEL, PALADIN_FOURTH_MERCY_CHOICE_ID),
+        (5, PALADIN_FIFTH_MERCY_GRANT_LEVEL, PALADIN_FIFTH_MERCY_CHOICE_ID),
     ];
     for (slot_number, grant_level, choice_id) in repeat_mercy_slots {
         if level < grant_level {
@@ -6300,11 +6328,16 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
              contains them); the rule text chains prerequisites — Exhausted requires the \
              fatigue mercy, Frightened requires the shaken mercy, Nauseated requires the \
              sickened mercy — which this bounded recognition names but does not validate"
-        } else {
+        } else if slot_number == 4 {
             "the 12th-level CRB tier additions are Blinded, Deafened, Paralyzed, and Stunned \
              (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset contains them, its \
              extra entries — Amputated, Ensorcelled, Petrified — being non-CRB expansions \
              outside this pf1.core_rulebook seam)"
+        } else {
+            "unlike the 6th/9th/12th-level repeat grants, the 15th-level grant adds NO new \
+             named mercy-list tier (verified independently against d20pfsrd and the Archives \
+             of Nethys aonprd.com mirror, byte-for-byte agreement): the paladin simply selects \
+             a fifth mercy from the already-existing 3rd/6th/9th/12th-tier pool"
         };
         explanations.push(ComputationExplanation {
             id: format!("class_chassis.paladin.mercy_{slot_number}_choice"),
@@ -6395,10 +6428,16 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // mirror, and legacy.aonprd.com, all three agreeing byte-for-byte with
     // no self-contradictory fetches this time: only the 4th-level column
     // genuinely rises (from 0 to 1), the first castable 4th-level paladin
-    // spell slot. A "0" is a genuine table entry (bonus-spells-only
-    // access), NOT an absence — inaccessible spell levels ("—" columns)
-    // get no record at all. Only the base counts are grounded: bonus
-    // spells per day from a high Charisma are never computed.
+    // spell slot; and (SD18 cycle-2026-07-15T4300) level 15 "3/2/2/1" —
+    // verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror, byte-for-byte agreement with no disagreement or
+    // self-contradiction, so a third source was not required: only the
+    // 3rd-level column genuinely rises (from 1 to 2), while the 1st/2nd/
+    // 4th-level columns stay 3/2/1 numerically unchanged. A "0" is a
+    // genuine table entry (bonus-spells-only access), NOT an absence —
+    // inaccessible spell levels ("—" columns) get no record at all. Only
+    // the base counts are grounded: bonus spells per day from a high
+    // Charisma are never computed.
     let paladin_base_spells_per_day: [Option<i16>; 4] = match level {
         4 => [Some(0), None, None, None],
         5 | 6 => [Some(1), None, None, None],
@@ -6410,6 +6449,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         12 => [Some(2), Some(2), Some(1), None],
         13 => [Some(3), Some(2), Some(1), Some(0)],
         14 => [Some(3), Some(2), Some(1), Some(1)],
+        15 => [Some(3), Some(2), Some(2), Some(1)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
