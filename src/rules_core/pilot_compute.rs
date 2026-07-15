@@ -2194,7 +2194,7 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // Touch of Good's bonus genuinely rises to 5 (10 / 2) via the same
 // half-cleric-level formula; both domain-power uses-per-day pools stay
 // level-independent; no new pillar is grounded.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 12;
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 13;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -2235,6 +2235,7 @@ const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_5_AND_6: i16 = 3;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7: i16 = 4;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9: i16 = 5;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11: i16 = 6;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_13: i16 = 7;
 /// The cleric level at which 2nd-level cleric spells (and so the second domain
 /// spell slot) first become available, verified against the raw PF1 Core Rulebook
 /// Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com): level 2 shows
@@ -2273,6 +2274,16 @@ const CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
 /// "Special" column reads "Channel energy 6d6"), via the same pre-existing
 /// `(level + 1) / 2` formula, not re-derived.
 const CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 11;
+/// The cleric level at which 7th-level cleric spells (and so the seventh domain
+/// spell slot) first become available, verified against the raw PF1 Core
+/// Rulebook Cleric spells-per-day table rows across three independent sources
+/// (d20pfsrd, Archives of Nethys aonprd.com, and legacy.aonprd.com, all three
+/// byte-for-byte identical): level 12 shows a still-"—" 7th-level column,
+/// level 13 is the first to show a non-"—" 7th-level column ("1+1"). This is
+/// also the cleric level at which Channel Energy's die count rises again (the
+/// class table's level-13 "Special" column reads "Channel energy 7d6"), via
+/// the same pre-existing `(level + 1) / 2` formula, not re-derived.
+const CLERIC_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
 // identity. Druid is a prepared divine caster whose bounded burden splits across
@@ -11262,7 +11273,26 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// change (base attack, all three base saves via two distinct formulas,
 /// Touch of Good's bonus) are widened; no new pillar record is added at
 /// level 12 either, since no other class feature is named in the level-12
-/// Special column. It only:
+/// Special column. An SD18 slice (`cycle-2026-07-15T1500`, mirroring
+/// `cycle-2026-07-15T1100`'s Rogue, `cycle-2026-07-15T1200`'s Barbarian,
+/// `cycle-2026-07-15T1300`'s Fighter, and `cycle-2026-07-15T1400`'s Ranger
+/// level-13 widenings) widens the gate again to 1..=13
+/// (`MAX_SUPPORTED_CLERIC_LEVEL = 13`): the class table's level-13 "Special"
+/// column reads "Channel energy 7d6" (verified independently against three
+/// primary sources — d20pfsrd, Archives of Nethys aonprd.com, and
+/// legacy.aonprd.com, all three byte-for-byte identical) — Channel Energy's
+/// die count genuinely rises to 7d6 (`(13 + 1) / 2 = 7`, up from 6d6 at
+/// level 12) via the same pre-existing formula, not re-derived — and the
+/// domain spell slot count also genuinely rises, to 7 (a level-13 cleric
+/// casts 7th-level cleric spells for the first time, verified independently
+/// against all three primary sources' raw spells-per-day table rows), while
+/// base attack bonus stays +9 (`13 * 3 / 4 = 9`), base Fortitude/Reflex/Will
+/// saves all stay numerically unchanged from level 12, and Touch of Good's
+/// bonus stays 6 (`13 / 2 = 6`) (integer-division coincidences, checked not
+/// assumed) — so two pillars whose underlying formulas genuinely change
+/// (Channel Energy dice, domain spell slot count) are widened; no new
+/// pillar record is added at level 13 either, since no other class feature
+/// is named in the level-13 Special column. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
@@ -11495,7 +11525,9 @@ fn explain_cleric_level1_spell_baseline(
     // primary sources' raw spells-per-day table rows), so the count genuinely
     // becomes 4 — one 1st-level, one 2nd-level, one 3rd-level, and one
     // 4th-level domain slot.
-    let domain_spell_slot_count = if level >= CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+    let domain_spell_slot_count = if level >= CLERIC_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_13
+    } else if level >= CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11
     } else if level >= CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9
@@ -11539,6 +11571,12 @@ fn explain_cleric_level1_spell_baseline(
              cleric spells for the first time (verified against both primary sources' raw \
              spells-per-day table rows), so the flat count becomes \
              {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11} (one each of 1st through 6th-level \
+             domain slots); at level {CLERIC_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a \
+             cleric also casts 7th-level cleric spells for the first time (verified \
+             independently against three primary sources' raw spells-per-day table rows: \
+             d20pfsrd, Archives of Nethys aonprd.com, and legacy.aonprd.com, all three \
+             byte-for-byte identical), so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_13} (one each of 1st through 7th-level \
              domain slots). At Cleric level {level} this is \
              {domain_spell_slot_count} domain spell slot(s). \
              This grounds only the flat slot count; it grounds no slot contents (which domain \

@@ -1,44 +1,50 @@
-//! SD18 Cleric level-12 widening grounding proof.
+//! SD18 Cleric level-13 widening grounding proof.
 //!
-//! Widens the accepted Cleric level-1..level-11 prepared divine spell-bearing
-//! baseline (`tests/sd18_cleric_level11_widening.rs`, the loop's most recent
-//! Cleric ceiling) to Cleric level 12 — mirroring the sibling-class
+//! Widens the accepted Cleric level-1..level-12 prepared divine spell-bearing
+//! baseline (`tests/sd18_cleric_level12_widening.rs`, the loop's most recent
+//! Cleric ceiling) to Cleric level 13 — mirroring the sibling-class
 //! level-range-gate idiom (`supported_cleric_level` is generalized from
-//! `1..=11` to `1..=12` via `MAX_SUPPORTED_CLERIC_LEVEL = 12`, exactly as
-//! `cycle-2026-07-14T1814` widened `MAX_SUPPORTED_BARBARIAN_LEVEL` and
-//! `cycle-2026-07-14T2359` widened `MAX_SUPPORTED_BARD_LEVEL`, both from 11
-//! to 12). Both PF1 CRB primary sources (d20pfsrd and Archives of Nethys
-//! aonprd.com Cleric class table and spells-per-day table) were read
-//! directly before writing any code or test:
+//! `1..=12` to `1..=13` via `MAX_SUPPORTED_CLERIC_LEVEL = 13`, exactly as
+//! `cycle-2026-07-15T1100` widened `MAX_SUPPORTED_ROGUE_LEVEL`,
+//! `cycle-2026-07-15T1200` widened `MAX_SUPPORTED_BARBARIAN_LEVEL`,
+//! `cycle-2026-07-15T1300` widened `MAX_SUPPORTED_FIGHTER_LEVEL`, and
+//! `cycle-2026-07-15T1400` widened `MAX_SUPPORTED_RANGER_LEVEL`, all from 12
+//! to 13). All three primary sources (d20pfsrd, Archives of Nethys
+//! aonprd.com, and legacy.aonprd.com Cleric class table and spells-per-day
+//! table) were read directly before writing any code or test, byte-for-byte
+//! agreement across all three:
 //!
-//! - level 12 base attack bonus is +9 (`12 * 3 / 4 = 9`, genuinely risen
-//!   from +8 at level 11) and base saves are +8 Fortitude and +8 Will (both
-//!   good, `12 / 2 + 2 = 8`, genuinely risen from +7) and +4 Reflex (poor,
-//!   `12 / 3 = 4`, genuinely risen from +3) — confirmed by the same formulas
-//!   already grounded at levels 1-11, not re-derived.
-//! - the PF1 Core Rulebook Cleric class table's level-12 "Special" column is
-//!   genuinely BLANK (verified independently against both primary sources,
-//!   checked rather than assumed away) — Channel Energy's die-count rises
-//!   land only at odd cleric levels, so no new class feature is gained at
-//!   12th and this slice grounds no new pillar record.
-//! - Channel Energy's die count STAYS 6d6 (`(12 + 1) / 2 = 6`, its next rise
-//!   landing at 13th) and its uses-per-day pool stays the level-independent
-//!   3 + Charisma modifier (5).
-//! - the domain spell slot count STAYS 6 (a level-12 cleric still casts only
-//!   up to 6th-level cleric spells; 7th-level cleric spells first appear at
-//!   13th, checked rather than assumed).
-//! - Touch of Good's bonus GENUINELY RISES to 6 (`12 / 2`, up from 5 at
-//!   level 11, via the same half-cleric-level formula); its uses-per-day
-//!   pool and Rebuke Death's uses-per-day pool both stay the
-//!   level-independent 3 + Wisdom modifier (6); the domain choice
-//!   recognitions (Good, Healing) are not level-gated and still fire.
+//! - level 13 base attack bonus STAYS +9 (`13 * 3 / 4 = 9`, an
+//!   integer-division coincidence with level 12) and base saves STAY +8
+//!   Fortitude and +8 Will (both good, `13 / 2 + 2 = 8`) and +4 Reflex
+//!   (poor, `13 / 3 = 4`) — all four coincidences, checked rather than
+//!   assumed.
+//! - the PF1 Core Rulebook Cleric class table's level-13 "Special" column
+//!   reads "Channel energy 7d6" (verified independently against all three
+//!   primary sources) — Channel Energy's die count GENUINELY RISES to 7d6
+//!   (`(13 + 1) / 2 = 7`, up from 6d6 at level 12) via the same
+//!   pre-existing formula, not re-derived; its uses-per-day pool stays the
+//!   level-independent 3 + Charisma modifier (5).
+//! - level 13 is exactly when a cleric first casts 7th-level cleric spells
+//!   (verified independently against all three primary sources' raw
+//!   spells-per-day table rows, which all show the 7th-level spell column
+//!   newly opening at level 13 with a 1+1 slot), so the flat domain spell
+//!   slot count GENUINELY RISES to 7 (one each of 1st-through-7th-level
+//!   domain slots), via the same pre-existing table-lookup idiom already
+//!   used at levels 3/5/7/9/11 — no new formula invented, no new record
+//!   type.
+//! - Touch of Good's bonus STAYS 6 (`13 / 2 = 6`, an integer-division
+//!   coincidence with level 12); its uses-per-day pool and Rebuke Death's
+//!   uses-per-day pool both stay the level-independent 3 + Wisdom modifier
+//!   (6); the domain choice recognitions (Good, Healing) are not
+//!   level-gated and still fire.
 //!
 //! It deliberately does not touch the domain-power execution burden (Touch
 //! of Good's touch-attack resolution, Rebuke Death's heal amount and
 //! hit-point-state gating) or the prepared divine spell posture burden (both
-//! stay named-but-unproven, unchanged from levels 1-11), and it does not
-//! ground Cleric level 13+. It also preserves the accepted Cleric
-//! level-1..level-11 truth (unchanged), the Fighter negative control, and
+//! stay named-but-unproven, unchanged from levels 1-12), and it does not
+//! ground Cleric level 14+. It also preserves the accepted Cleric
+//! level-1..level-12 truth (unchanged), the Fighter negative control, and
 //! the multiclass negative control.
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
@@ -49,12 +55,12 @@ use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
 };
 
-const CLERIC_LEVEL11_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_cleric_level11_sd18_widening_deterministic_input.txt"
-);
-
 const CLERIC_LEVEL12_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_cleric_level12_sd18_widening_deterministic_input.txt"
+);
+
+const CLERIC_LEVEL13_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_cleric_level13_sd18_widening_deterministic_input.txt"
 );
 
 const FIGHTER_FIXTURE: &str = include_str!(
@@ -89,52 +95,52 @@ fn explanation<'a>(
         })
 }
 
-// ----- Base attack bonus and saves genuinely rise at level 12 -----
+// ----- Base attack bonus and saves stay unchanged at level 13 -----
 
 #[test]
-fn cleric_level12_base_attack_and_saves_genuinely_rise() {
-    let input = load(CLERIC_LEVEL12_FIXTURE);
+fn cleric_level13_base_attack_and_saves_stay_at_level12_values() {
+    let input = load(CLERIC_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let base_attack = explanation(&computation, "class_chassis.cleric.base_attack_bonus");
     assert_eq!(
         base_attack.value, 9,
-        "Cleric level 12 3/4-BAB progression (12 * 3 / 4) must equal 9, genuinely risen from \
-         8 at level 11: {}",
+        "Cleric level 13 3/4-BAB progression (13 * 3 / 4) must stay 9, an integer-division \
+         coincidence with level 12: {}",
         base_attack.detail
     );
 
     let fortitude = explanation(&computation, "class_chassis.cleric.base_save.fortitude");
     assert_eq!(
         fortitude.value, 8,
-        "Cleric level 12 good Fortitude (12/2+2) must genuinely rise to 8, up from 7 at level 11"
+        "Cleric level 13 good Fortitude (13/2+2) must stay 8, unchanged from level 12"
     );
 
     let reflex = explanation(&computation, "class_chassis.cleric.base_save.reflex");
     assert_eq!(
         reflex.value, 4,
-        "Cleric level 12 poor Reflex (12/3) must genuinely rise to 4, up from 3 at level 11"
+        "Cleric level 13 poor Reflex (13/3) must stay 4, unchanged from level 12"
     );
 
     let will = explanation(&computation, "class_chassis.cleric.base_save.will");
     assert_eq!(
         will.value, 8,
-        "Cleric level 12 good Will (12/2+2) must genuinely rise to 8, up from 7 at level 11"
+        "Cleric level 13 good Will (13/2+2) must stay 8, unchanged from level 12"
     );
 }
 
-// ----- Channel Energy stays 6d6 at level 12 -----
+// ----- Channel Energy genuinely rises to 7d6 at level 13 -----
 
 #[test]
-fn cleric_level12_channel_energy_stays_at_level11_values() {
-    let input = load(CLERIC_LEVEL12_FIXTURE);
+fn cleric_level13_channel_energy_genuinely_rises() {
+    let input = load(CLERIC_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let dice = explanation(&computation, "class_chassis.cleric.channel_energy_dice");
     assert_eq!(
-        dice.value, 6,
-        "Cleric level 12 Channel Energy die count ((12 + 1) / 2) must stay 6 — the odd-level \
-         cadence puts the next rise at 13th: {}",
+        dice.value, 7,
+        "Cleric level 13 Channel Energy die count ((13 + 1) / 2) must genuinely rise to 7, up \
+         from 6 at level 12: {}",
         dice.detail
     );
 
@@ -144,31 +150,31 @@ fn cleric_level12_channel_energy_stays_at_level11_values() {
     );
     assert_eq!(
         uses.value, 5,
-        "Cleric level 12 Channel Energy uses per day (3 + Charisma modifier 2) must stay 5"
+        "Cleric level 13 Channel Energy uses per day (3 + Charisma modifier 2) must stay 5"
     );
 }
 
-// ----- Domain spell slot count stays 6 at level 12 -----
+// ----- Domain spell slot count genuinely rises to 7 at level 13 -----
 
 #[test]
-fn cleric_level12_domain_spell_slot_count_stays_six() {
-    let input = load(CLERIC_LEVEL12_FIXTURE);
+fn cleric_level13_domain_spell_slot_count_genuinely_rises() {
+    let input = load(CLERIC_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let slot = explanation(&computation, "class_chassis.cleric.domain_spell_slot");
     assert_eq!(
-        slot.value, 6,
-        "Cleric level 12 domain spell slot count must stay 6 — 7th-level cleric spells first \
-         appear at 13th per both primary sources' spells-per-day tables: {}",
+        slot.value, 7,
+        "Cleric level 13 domain spell slot count must genuinely rise to 7 — 7th-level cleric \
+         spells first appear at 13th per all three primary sources' spells-per-day tables: {}",
         slot.detail
     );
 }
 
-// ----- Touch of Good genuinely rises to 6; other domain facets carry over -----
+// ----- Touch of Good stays 6; other domain facets carry over -----
 
 #[test]
-fn cleric_level12_touch_of_good_rises_and_other_facets_carry_over() {
-    let input = load(CLERIC_LEVEL12_FIXTURE);
+fn cleric_level13_touch_of_good_stays_and_other_facets_carry_over() {
+    let input = load(CLERIC_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let bonus = explanation(
@@ -177,8 +183,7 @@ fn cleric_level12_touch_of_good_rises_and_other_facets_carry_over() {
     );
     assert_eq!(
         bonus.value, 6,
-        "Touch of Good's bonus (12 / 2) must genuinely rise to 6 at level 12, up from 5 at \
-         level 11: {}",
+        "Touch of Good's bonus (13 / 2) must stay 6 at level 13, unchanged from level 12: {}",
         bonus.detail
     );
 
@@ -186,23 +191,23 @@ fn cleric_level12_touch_of_good_rises_and_other_facets_carry_over() {
         &computation,
         "class_chassis.cleric.domain_power_good_touch_of_good_uses_per_day",
     );
-    assert_eq!(tog_uses.value, 6, "Touch of Good's uses per day must stay 6 at level 12");
+    assert_eq!(tog_uses.value, 6, "Touch of Good's uses per day must stay 6 at level 13");
 
     let rebuke_uses = explanation(
         &computation,
         "class_chassis.cleric.domain_power_healing_rebuke_death_uses_per_day",
     );
-    assert_eq!(rebuke_uses.value, 6, "Rebuke Death's uses per day must stay 6 at level 12");
+    assert_eq!(rebuke_uses.value, 6, "Rebuke Death's uses per day must stay 6 at level 13");
 
     let domain_choice = explanation(&computation, "class_chassis.cleric.domain_choice");
     assert_eq!(domain_choice.value, 0, "the domain choice seam must still carry no mechanical value");
 }
 
-// ----- The domain-powers and prepared-divine-spell burdens still claim-block at level 12 -----
+// ----- The domain-powers and prepared-divine-spell burdens still claim-block at level 13 -----
 
 #[test]
-fn cleric_level12_still_claim_blocks_domain_powers_and_prepared_spell_burdens() {
-    let input = load(CLERIC_LEVEL12_FIXTURE);
+fn cleric_level13_still_claim_blocks_domain_powers_and_prepared_spell_burdens() {
+    let input = load(CLERIC_LEVEL13_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
@@ -210,7 +215,7 @@ fn cleric_level12_still_claim_blocks_domain_powers_and_prepared_spell_burdens() 
             .diagnostics
             .iter()
             .any(|d| d.id == "class_feature.cleric.domain_powers.unsupported" && d.claim_blocking),
-        "level-12 Cleric must still claim-block on the domain powers burden: {:?}",
+        "level-13 Cleric must still claim-block on the domain powers burden: {:?}",
         computation.diagnostics
     );
 
@@ -219,41 +224,33 @@ fn cleric_level12_still_claim_blocks_domain_powers_and_prepared_spell_burdens() 
             .diagnostics
             .iter()
             .any(|d| d.id == "class_spell.cleric.prepared_divine.unsupported" && d.claim_blocking),
-        "level-12 Cleric must still claim-block on the prepared divine spell posture burden: {:?}",
+        "level-13 Cleric must still claim-block on the prepared divine spell posture burden: {:?}",
         computation.diagnostics
     );
 }
 
-// ----- Negative control: the level-11 fixture is unaffected by this widening -----
+// ----- Negative control: the level-12 fixture is unaffected by this widening -----
 
 #[test]
-fn cleric_level11_truth_is_unchanged_by_this_slice() {
-    let input = load(CLERIC_LEVEL11_FIXTURE);
+fn cleric_level12_truth_is_unchanged_by_this_slice() {
+    let input = load(CLERIC_LEVEL12_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let base_attack = explanation(&computation, "class_chassis.cleric.base_attack_bonus");
-    assert_eq!(base_attack.value, 8, "Cleric level 11 base attack bonus must stay 8");
+    assert_eq!(base_attack.value, 9, "Cleric level 12 base attack bonus must stay 9");
 
     let dice = explanation(&computation, "class_chassis.cleric.channel_energy_dice");
-    assert_eq!(dice.value, 6, "Cleric level 11 Channel Energy die count must stay 6");
+    assert_eq!(dice.value, 6, "Cleric level 12 Channel Energy die count must stay 6");
 
-    let bonus = explanation(
-        &computation,
-        "class_chassis.cleric.domain_power_good_touch_of_good_bonus",
-    );
-    assert_eq!(bonus.value, 5, "Cleric level 11 Touch of Good bonus must stay 5");
+    let slot = explanation(&computation, "class_chassis.cleric.domain_spell_slot");
+    assert_eq!(slot.value, 6, "Cleric level 12 domain spell slot count must stay 6");
 }
 
 // ----- Negative control: level 14 stays unrecognized by this slice -----
-// (Superseded boundary: cycle-2026-07-15T1500 widened MAX_SUPPORTED_CLERIC_LEVEL
-// from 12 to 13, so this file's own negative-control boundary moves from 13 to
-// 14, mirroring the exact same boundary-move idiom applied to
-// tests/sd18_ranger_level12_widening.rs when MAX_SUPPORTED_RANGER_LEVEL widened
-// from 12 to 13.)
 
 #[test]
 fn cleric_level_14_is_not_promoted_by_this_slice() {
-    let level_14 = CLERIC_LEVEL12_FIXTURE.replace("class:cleric:12", "class:cleric:14");
+    let level_14 = CLERIC_LEVEL13_FIXTURE.replace("class:cleric:13", "class:cleric:14");
     let input = load(&level_14);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
@@ -271,7 +268,7 @@ fn cleric_level_14_is_not_promoted_by_this_slice() {
 // ----- Negative control: the cleric path must not leak onto other classes -----
 
 #[test]
-fn fighter_does_not_gain_cleric_level12_recognition() {
+fn fighter_does_not_gain_cleric_level13_recognition() {
     let fighter = load(FIGHTER_FIXTURE);
     let fighter_computation = compute_pilot_base_chassis(&fighter);
     assert!(
@@ -288,10 +285,10 @@ fn fighter_does_not_gain_cleric_level12_recognition() {
 // ----- Negative control: multiclass Cleric is not promoted -----
 
 #[test]
-fn multiclass_cleric_level12_is_not_promoted_by_this_slice() {
-    let multiclass = CLERIC_LEVEL12_FIXTURE.replace(
-        "class_level=class:cleric:12",
-        "class_level=class:cleric:12\nclass_level=class:fighter:1",
+fn multiclass_cleric_level13_is_not_promoted_by_this_slice() {
+    let multiclass = CLERIC_LEVEL13_FIXTURE.replace(
+        "class_level=class:cleric:13",
+        "class_level=class:cleric:13\nclass_level=class:fighter:1",
     );
     let input = load(&multiclass);
     let computation = compute_pilot_base_chassis(&input);
@@ -310,10 +307,10 @@ fn multiclass_cleric_level12_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the matrix note names the level-12 widening -----
+// ----- Control plane: the matrix note names the level-13 widening -----
 
 #[test]
-fn matrix_cleric_row_names_level_12_widening() {
+fn matrix_cleric_row_names_level_13_widening() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let cleric = matrix
         .row("class.cleric.progression_and_spell_burden")
@@ -323,13 +320,13 @@ fn matrix_cleric_row_names_level_12_widening() {
     assert_eq!(cleric.evidence_tier, EvidenceTier::Computed);
     assert_eq!(cleric.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
-        cleric.grounding_ref.contains("sd18_cleric_level12_widening"),
-        "cleric row must cite the live SD18 level-12 widening proof surface: {}",
+        cleric.grounding_ref.contains("sd18_cleric_level13_widening"),
+        "cleric row must cite the live SD18 level-13 widening proof surface: {}",
         cleric.grounding_ref
     );
     let note = cleric.blocker_or_lossiness_note;
     assert!(
-        note.contains("level 12") || note.contains("level-12"),
-        "cleric partial note must name the level-12 widening: {note}"
+        note.contains("level 13") || note.contains("level-13"),
+        "cleric partial note must name the level-13 widening: {note}"
     );
 }

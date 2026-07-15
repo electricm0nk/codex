@@ -696,7 +696,7 @@ const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.r
     tests/sd13_cleric_level6_progression.rs + tests/sd13_cleric_level7_progression.rs + \
     tests/sd13_cleric_level8_progression.rs + tests/sd13_cleric_level9_progression.rs + \
     tests/sd13_cleric_level10_progression.rs + tests/sd18_cleric_level11_widening.rs + \
-    tests/sd18_cleric_level12_widening.rs";
+    tests/sd18_cleric_level12_widening.rs + tests/sd18_cleric_level13_widening.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Druid level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -2027,21 +2027,24 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:cleric",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Cleric \
                             level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/level-9/\
-                            level-10/level-11/level-12 prepared \
+                            level-10/level-11/level-12/level-13 prepared \
                             divine spell baseline, with base attack bonus, base save progression, \
                             Channel Energy (die count increasing to 2d6 at level 3, unchanged at level \
                             4, increasing to 3d6 at level 5, unchanged at level 6, increasing to 4d6 at \
                             level 7, unchanged at level 8, increasing to 5d6 at level 9, unchanged at \
-                            level 10, increasing to 6d6 at level 11, unchanged at level 12), the domain \
+                            level 10, increasing to 6d6 at level 11, unchanged at level 12, increasing \
+                            to 7d6 at level 13), the domain \
                             choice seam, the flat \
                             domain spell slot count (increasing to 2 at level 3, unchanged at level 4, \
                             increasing to 3 at level 5, unchanged at level 6, increasing to 4 at level \
                             7, unchanged at level 8, increasing to 5 at level 9, unchanged at level 10, \
-                            increasing to 6 at level 11, unchanged at level 12), Touch of Good (Good \
+                            increasing to 6 at level 11, unchanged at level 12, increasing to 7 at \
+                            level 13), Touch of Good (Good \
                             domain, in full, sacred bonus \
                             increasing to 2 at level 4, unchanged at level 5, increasing to 3 at level \
                             6, unchanged at level 7, increasing to 4 at level 8, increasing to 5 at \
-                            level 9-10, unchanged at level 11, increasing to 6 at level 12), and \
+                            level 9-10, unchanged at level 11, increasing to 6 at level 12, unchanged \
+                            at level 13), and \
                             Rebuke Death's \
                             uses per day (Healing domain, partial) grounded for real at every supported \
                             level and the Rebuke Death heal amount and the prepared divine spell \
@@ -2235,6 +2238,22 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell slot count stays 6 (a level-12 cleric still casts only up to 6th-level \
                     cleric spells; 7th-level cleric spells first appear at level 13), so no new \
                     pillar is grounded at level 12 either — only the existing pillars are widened. \
+                    A further SD18 slice (cycle-2026-07-15T1500, mirroring cycle-2026-07-15T1100's \
+                    Rogue, cycle-2026-07-15T1200's Barbarian, cycle-2026-07-15T1300's Fighter, and \
+                    cycle-2026-07-15T1400's Ranger level-13 widenings) widens the gate again to \
+                    level 13 (verified independently against the PF1 Core Rulebook Cleric class \
+                    table and spells-per-day table across three primary sources — d20pfsrd, Archives \
+                    of Nethys aonprd.com, and legacy.aonprd.com, all three byte-for-byte identical): \
+                    the level-13 \"Special\" column reads \"Channel energy 7d6\" — Channel Energy's \
+                    die count genuinely rises to 7d6 ((13 + 1) / 2, up from 6d6 at level 12) via the \
+                    same pre-existing formula, not re-derived — and the domain spell slot count also \
+                    genuinely rises, to 7 (a level-13 cleric casts 7th-level cleric spells for the \
+                    first time, verified against all three primary sources' raw spells-per-day table \
+                    rows), while base attack bonus stays +9 (13 * 3 / 4), both good saves stay +8 \
+                    (13 / 2 + 2), poor Reflex stays +4 (13 / 3), and Touch of Good's bonus stays 6 \
+                    (13 / 2), all integer-division coincidences with level 12, so no new pillar is \
+                    grounded at level 13 either — only the existing Channel Energy and domain spell \
+                    slot count pillars are widened. \
                     The row is Partial, not Supported: Rebuke Death's heal amount (1d4 points of \
                     damage plus 1 for every two cleric levels, usable only on a creature below 0 hit \
                     points) is not a flat number and remains named and unproven, the domain \
@@ -2242,14 +2261,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     and unproven, the prepared divine spell posture burden (spells prepared from the \
                     full Cleric list, spontaneous cure/inflict conversion, spell slots per day, bonus \
                     spells from a high Wisdom, spell save DCs) is still entirely unproven, and no \
-                    Cleric level 13+ is proven. No touch-attack resolution, healing-application \
+                    Cleric level 14+ is proven. No touch-attack resolution, healing-application \
                     engine, hit-point-state gating check, or per-use consumption tracking is \
                     fabricated",
                 next_required_uplift: "SD13-E5+ Cleric domain power grounding: the Rebuke Death \
                     heal-amount piece (requires a dice-roll execution engine and a hit-point-state \
                     gating check, a new-subsystem-shaped burden deliberately not attempted this \
                     slice) and domain spell-list contents, then the prepared divine spell posture \
-                    burden, then Cleric level 13+ progression",
+                    burden, then Cleric level 14+ progression",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",
