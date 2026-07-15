@@ -229,27 +229,14 @@ fn fighter_level14_truth_is_unchanged_by_this_slice() {
     assert_eq!(computation.baseline_melee_attack_bonus, 21);
 }
 
-// ----- Negative control: level 16 stays claim-blocked (beyond the bounded L2-15 row) -----
-
-#[test]
-fn fighter_level_16_stays_claim_blocked() {
-    let level_16 = FIGHTER_LEVEL15_FIXTURE.replace("class:fighter:15", "class:fighter:16");
-    let input = load(&level_16);
-    let computation = compute_pilot_base_chassis(&input);
-
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-16 Fighter must stay claim-blocked beyond the bounded levels-2-15 row: {:?}",
-        computation.diagnostics
-    );
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id == "class_chassis.base_attack_bonus"),
-        "level-16 Fighter must not fabricate a base-attack-bonus explanation"
-    );
-}
+// ----- Negative control: level 16 is now supported (SD18, tests/sd18_fighter_level16_widening.rs) -----
+//
+// SD18 (tests/sd18_fighter_level16_widening.rs) widened the bounded tranche
+// from level 15 to level 16 (an eighth bonus-feat cadence slot), so this
+// slice's own level-16 boundary is superseded; the negative-control
+// boundary for "beyond the bounded row" now lives in
+// tests/sd18_fighter_level16_widening.rs at level 17. This slice keeps only
+// the level-14/level-15 truth checks above unchanged.
 
 // ----- Negative control: multiclass Fighter is not promoted -----
 

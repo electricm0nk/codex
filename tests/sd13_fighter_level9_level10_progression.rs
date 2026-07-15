@@ -319,28 +319,30 @@ fn level_10_propagates_computed_receipt_and_view_model() {
 //
 // SD18 (tests/sd18_fighter_level11_armor_training3.rs,
 // tests/sd18_fighter_level12_widening.rs, tests/sd18_fighter_level13_widening.rs,
-// tests/sd18_fighter_level14_widening.rs, tests/sd18_fighter_level15_widening.rs)
+// tests/sd18_fighter_level14_widening.rs, tests/sd18_fighter_level15_widening.rs,
+// tests/sd18_fighter_level16_widening.rs)
 // widened the bounded tranche from level 10 to level 12 (Armor Training 3,
 // then a sixth bonus-feat cadence slot), then to level 13 (Weapon Training
 // 3), then to level 14 (a seventh bonus-feat cadence slot and the Bravery
-// magnitude rise), and then to level 15 (Armor Training 4), so this negative
-// control now sits just above the current bound (level 16) rather than at
-// level 12, level 13, level 14, or level 15.
+// magnitude rise), then to level 15 (Armor Training 4), and then to level 16
+// (an eighth bonus-feat cadence slot), so this negative control now sits
+// just above the current bound (level 17) rather than at level 12, level
+// 13, level 14, level 15, or level 16.
 
 #[test]
-fn level_16_fighter_stays_claim_blocked() {
-    let level_16 = LEVEL_10_FIXTURE.replace("class:fighter:10", "class:fighter:16");
-    let input = load(&level_16);
+fn level_17_fighter_stays_claim_blocked() {
+    let level_17 = LEVEL_10_FIXTURE.replace("class:fighter:10", "class:fighter:17");
+    let input = load(&level_17);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-16 Fighter must stay claim-blocked beyond the bounded levels-2-15 row: {:?}",
+        "level-17 Fighter must stay claim-blocked beyond the bounded levels-2-16 row: {:?}",
         computation.diagnostics
     );
     assert!(
         !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "level-16 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-17 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 

@@ -358,7 +358,8 @@ const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level1
     tests/sd18_fighter_level12_widening.rs + \
     tests/sd18_fighter_level13_widening.rs + \
     tests/sd18_fighter_level14_widening.rs + \
-    tests/sd18_fighter_level15_widening.rs";
+    tests/sd18_fighter_level15_widening.rs + \
+    tests/sd18_fighter_level16_widening.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
 /// the SD13-E3-F5 mandatory-milestone classification proof (which level-1
@@ -1055,9 +1056,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.fighter.levels_2_10",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
-                dimension: "class progression across levels 2-15: bounded milestone proof \
-                            for levels 2 through 15 (SD18 widens the prior levels 2-10 tranche \
-                            by five levels), with the Weapon Training damage-roll half still \
+                dimension: "class progression across levels 2-16: bounded milestone proof \
+                            for levels 2 through 16 (SD18 widens the prior levels 2-10 tranche \
+                            by six levels), with the Weapon Training damage-roll half still \
                             unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -1154,13 +1155,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     armor class changes either); level 15 is neither a Fighter bonus-feat cadence \
                     level nor a Weapon Training rank-rise level, so Weapon Training stays at rank \
                     3 and Bravery stays +4, both integer-division coincidences with level 14, and \
-                    no eighth bonus-feat seam is added. No Fighter level 16+ is proven",
+                    no eighth bonus-feat seam is added. SD18 (cycle-2026-07-15T4700, continuing \
+                    the §3.2 level-16 sweep opened by Barbarian) further widens to level 16: \
+                    base attack bonus genuinely rises to 16 (full BAB) and good Fortitude \
+                    genuinely rises to 10 (16/2+2), while poor Reflex and poor Will both stay 5 \
+                    (16/3), an integer-division coincidence with level 15; the PF1 Core Rulebook \
+                    Fighter class table's level-16 Special column reads \"Bonus feat\" only \
+                    (verified against d20pfsrd and the Archives of Nethys aonprd.com mirror, \
+                    byte-for-byte agreement): this widening surfaces an EIGHTH named bonus-feat \
+                    progression seam (the canonical Critical Focus selection's prerequisite — \
+                    base attack bonus +9 — is honestly met by the canonical loadout's level-16 \
+                    base attack bonus of +16); Weapon Training stays at rank 3, an \
+                    integer-division coincidence with level 15 (the next rise is level 17), and \
+                    Armor Training stays at rank 4 (the PF1 Core Rulebook names no fifth Armor \
+                    Training rank). No Fighter level 17+ is proven",
                 next_required_uplift: "later SD13/SD18 slice grounding the remaining named \
-                    Fighter class-feature burden inside levels 2-15: the Weapon Training \
+                    Fighter class-feature burden inside levels 2-16: the Weapon Training \
                     damage-roll half (which first needs any damage total to exist on the compute \
                     surface), a fear-condition/save-resolution engine to apply the Bravery \
                     magnitude to an actual Will save (a tranche-level subsystem decision, not a \
-                    slice decision), or level-16+ progression (the next Weapon Training rank \
+                    slice decision), or level-17+ progression (the next Weapon Training rank \
                     rise, at level 17)",
             },
             SupportStateRow {
