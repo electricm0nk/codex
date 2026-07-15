@@ -227,7 +227,7 @@ fn rogue_level12_truth_is_unchanged_by_this_slice() {
     assert_eq!(base_attack.value, 9, "Rogue level 12 base attack bonus must stay 9");
 }
 
-// ----- Negative control: level 17 stays claim-blocked (beyond the bounded L1-13 row) -----
+// ----- Negative control: level 18 stays claim-blocked (beyond the bounded L1-13 row) -----
 //
 // SD18 widening (cycle-2026-07-15T2000, tests/sd18_rogue_level14_widening.rs)
 // now genuinely recognizes level 14, so this boundary control moved to
@@ -235,18 +235,20 @@ fn rogue_level12_truth_is_unchanged_by_this_slice() {
 // tests/sd18_rogue_level15_widening.rs) now genuinely recognizes level 15
 // too, so this boundary control moved again, to level 16. A further SD18
 // widening (cycle-2026-07-15T5200, tests/sd18_rogue_level16_widening.rs) now
-// genuinely recognizes level 16 too, so this boundary control moves again,
-// to level 17.
+// genuinely recognizes level 16 too, so this boundary control moved again,
+// to level 17. A further SD18 widening (cycle-2026-07-15T8100,
+// tests/sd18_rogue_level17_widening.rs) now genuinely recognizes level 17
+// too, so this boundary control moves again, to level 18.
 
 #[test]
-fn rogue_level_17_stays_claim_blocked() {
-    let level_17 = ROGUE_LEVEL13_FIXTURE.replace("class:rogue:13", "class:rogue:17");
-    let input = load(&level_17);
+fn rogue_level_18_stays_claim_blocked() {
+    let level_18 = ROGUE_LEVEL13_FIXTURE.replace("class:rogue:13", "class:rogue:18");
+    let input = load(&level_18);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-17 Rogue must stay claim-blocked beyond the bounded levels-1-16 row: {:?}",
+        "level-18 Rogue must stay claim-blocked beyond the bounded levels-1-17 row: {:?}",
         computation.diagnostics
     );
     assert!(
@@ -254,7 +256,7 @@ fn rogue_level_17_stays_claim_blocked() {
             .explanations
             .iter()
             .any(|e| e.id == "class_chassis.rogue.base_attack_bonus"),
-        "level-17 Rogue must not fabricate a base-attack-bonus explanation"
+        "level-18 Rogue must not fabricate a base-attack-bonus explanation"
     );
 }
 

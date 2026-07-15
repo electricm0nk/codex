@@ -10713,7 +10713,26 @@ const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // column); Trap Sense stays +5 (16/3, next rise at level 18); Evasion,
 // Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not
 // re-derived.
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 16;
+// SD18 widening (cycle-2026-07-15T8100, tests/sd18_rogue_level17_widening.rs):
+// widens the gate to level 17, the loop's THIRD §3.2 level-17 sweep landing
+// (after Ranger and Bard), verified independently against both primary
+// sources (d20pfsrd and the Archives of Nethys aonprd.com mirror, which
+// agree byte-for-byte, fetched across the full levels-14-18 block to guard
+// against level-misattribution): base attack stays +12 (17 * 3 / 4) and all
+// three base saves stay unchanged (Fortitude/Will 17/3=5, Reflex 17/2+2=10),
+// all integer-division coincidences with level 16; the level-17 "Special"
+// column reads only "Sneak attack +9d6" — level 17 is NOT a rogue-talent
+// cadence level (talents land at 2/4/6/8/10/12/14/16, next at 18), so no
+// ninth talent slot is grounded; the sneak-attack die-count formula
+// ((level + 1) / 2) genuinely rises to 9d6, up from 8d6 at level 16, via
+// the same pre-existing formula, not a new record; Trap Sense stays +5
+// (17/3, next rise at level 18) and Trapfinding stays 8 (max(17/2, 1), an
+// integer-division coincidence with level 16), neither named in the
+// level-17 "Special" column; Evasion, Uncanny Dodge, and Improved Uncanny
+// Dodge all stay granted, not re-derived. This needs ZERO new tier
+// constants and ZERO new choice slots — the ONLY production-code change is
+// this ceiling raise.
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 17;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
