@@ -2751,8 +2751,26 @@ const DRUID_CLASS_ID: &str = "class:druid";
 // upgrade with no execution engine anywhere in this codebase, so Wild
 // Shape stays entirely named-but-unproven and this slice grounds no new
 // pillar at level 14 either — only the existing arithmetic pillars are
-// widened.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 14;
+// widened. A still further SD18 slice (the loop's FIFTH §3.2 level-15
+// landing after Barbarian, Rogue, Fighter, and Cleric) widens the gate
+// again to level 15 (verified independently against all three primary
+// sources: d20pfsrd, Archives of Nethys aonprd.com, and legacy.aonprd.com,
+// which agree byte-for-byte): base attack bonus GENUINELY RISES to +11
+// (15 * 3 / 4) and poor Reflex GENUINELY RISES to +5 (15 / 3), while both
+// good saves STAY +9 (15 / 2 + 2, an integer-division coincidence with
+// level 14); Wild Empathy genuinely rises to 16 (15 + Charisma modifier).
+// UNLIKE every prior widened level's Wild-Shape-shaped "Special" column
+// entry (levels 4/6/8/10/12/14), and unlike level 13's "A thousand faces",
+// the level-15 "Special" column reads "Timeless body" ONLY — checked
+// directly rather than assumed to also carry a Wild Shape frequency
+// increase (the next one, "Wild shape (7/day)", does not land until 16th
+// level). Timeless Body is a genuinely flat/identity-shaped, no-choice,
+// no-magnitude, no-duration-tracking grant (a druid no longer takes
+// ability score penalties for old age and cannot be magically aged),
+// mirroring exactly how Venom Immunity (level 9) and A Thousand Faces
+// (level 13) were grounded: a bounded +0 identity/recognition record, with
+// no aging-penalty-resolution engine fabricated.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 15;
 /// PF1 Core Rulebook level gate at which Druid gains Venom Immunity (9th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Venom immunity" as the Druid 9th-level
@@ -2767,6 +2785,15 @@ const DRUID_VENOM_IMMUNITY_LEVEL: u8 = 9;
 /// change her own apparent appearance at will, as if using `disguise
 /// self`, but only while in her normal (unshifted) form.
 const DRUID_A_THOUSAND_FACES_LEVEL: u8 = 13;
+/// PF1 Core Rulebook level gate at which Druid gains Timeless Body (15th
+/// level, verified independently against three primary sources: d20pfsrd,
+/// Archives of Nethys aonprd.com, and legacy.aonprd.com all list "Timeless
+/// body" — and ONLY that entry, with no accompanying Wild Shape frequency
+/// increase — as the Druid 15th-level "Special" column entry). A druid no
+/// longer takes ability score penalties for old age and cannot be
+/// magically aged (existing penalties remain in place; bonuses still
+/// accrue).
+const DRUID_TIMELESS_BODY_LEVEL: u8 = 15;
 /// PF1 Core Rulebook level gate at which Druid gains Resist Nature's Lure (4th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Resist nature's lure" as part of the Druid
@@ -12833,6 +12860,36 @@ fn explain_druid_level1_spell_baseline(
                  only (value 0, non-fabricated): no illusion-effect execution engine and no \
                  Disguise-check-resolution engine exists anywhere in this codebase to apply it, \
                  so this grounds no actual appearance-change or Disguise-check outcome"
+            ),
+        });
+    }
+
+    // Grounded (SD18 level-15 slice): Timeless Body, the 15th-level Druid class
+    // feature verified independently against three primary PF1 sources (d20pfsrd,
+    // Archives of Nethys aonprd.com, and legacy.aonprd.com all list "Timeless body"
+    // — and ONLY that entry, with no accompanying Wild Shape frequency increase —
+    // as the Druid 15th-level "Special" column entry). A genuinely flat/
+    // identity-shaped, no-choice, no-magnitude, no-duration-tracking grant — a
+    // druid no longer takes ability score penalties for old age and cannot be
+    // magically aged (existing penalties remain in place; bonuses still accrue) —
+    // mirroring exactly how Venom Immunity was grounded at level 9 and A Thousand
+    // Faces at level 13: a bounded +0 identity/recognition record at or above the
+    // gate: no aging-penalty-resolution engine exists anywhere in this codebase to
+    // apply it, so this grounds no actual ability-score-penalty or magical-aging
+    // outcome. Below the level-15 gate no record is pushed at all (the level-15
+    // slice's own level-14 control pins that absence).
+    if level >= DRUID_TIMELESS_BODY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.timeless_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Druid Timeless Body granted at druid level {level} (PF1 Core Rulebook, \
+                 15th-level druid class feature): the druid no longer takes ability score \
+                 penalties for old age and cannot be magically aged (existing penalties remain \
+                 in place; bonuses still accrue). This is a bounded identity/recognition record \
+                 only (value 0, non-fabricated): no aging-penalty-resolution engine exists \
+                 anywhere in this codebase to apply it, so this grounds no actual \
+                 ability-score-penalty or magical-aging outcome"
             ),
         });
     }
