@@ -427,7 +427,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_bonus_spells.rs + \
     tests/sd13_ranger_total_spells_per_day.rs + \
     tests/sd18_ranger_level11_quarry.rs + \
-    tests/sd18_ranger_level12_widening.rs";
+    tests/sd18_ranger_level12_widening.rs + \
+    tests/sd18_ranger_level13_widening.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -3124,7 +3125,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7/ \
-                            level-8/level-9/level-10/level-11/level-12 chassis baseline, with base attack bonus, base save \
+                            level-8/level-9/level-10/level-11/level-12/level-13 chassis \
+                            baseline, with base attack bonus, base save \
                             progression, Track, the favored-enemy flat surface, the \
                             combat-style choice-and-bonus-feat recognition, (level 3) \
                             Endurance and the Favored Terrain choice-and-flat-magnitude \
@@ -3143,8 +3145,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             (a grant-only identity record for the take-10-while-tracking and \
                             auto-confirm-critical-threats behaviors, an open-ended target-choice \
                             recognition record, and the flat +2 insight attack-roll magnitude), \
-                            and (level 12) Camouflage (a grant-only identity record) \
-                            grounded for real and the later spell burden still blocked",
+                            (level 12) Camouflage (a grant-only identity record), and (level \
+                            13) the Favored Terrain rule's own 13th-level interval (third \
+                            terrain-type selection plus its own bonus-increase target choice, \
+                            stacking with the 8th-level increase when both name the same \
+                            terrain) plus the spell-level access ladder's genuinely new \
+                            4th-level column and the base spells-per-day table's own level-13 \
+                            row grounded for real and the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -3535,20 +3542,56 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     checked rather than assumed away). This slice also fixed two stale sibling \
                     negative controls (allowlist/boundary-control failure mode) that asserted \
                     level 12 as claim-blocked: tests/sd13_ranger_level10_progression.rs and \
-                    tests/sd18_ranger_level11_quarry.rs, both moved to a level-13 boundary.",
+                    tests/sd18_ranger_level11_quarry.rs, both moved to a level-13 boundary. \
+                    The SD18 cycle-2026-07-15T1400 slice (tests/sd18_ranger_level13_widening.rs) \
+                    widens the level-range gate once more to level 13, extending base attack to \
+                    level 13 (base saves stay numerically unchanged from level 12, integer- \
+                    division coincidences re-verified rather than assumed: Fortitude/Reflex \
+                    13/2+2=8, Will 13/3=4). The class table's 13th-level \"Special\" column \
+                    reads only \"3rd favored terrain\" (verified independently against three \
+                    primary sources — d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                    legacy.aonprd.com, all byte-for-byte identical) — the Favored Terrain \
+                    rule's own 13th-level interval (8th level + 5), the exact structural mirror \
+                    of the already-grounded Favored Enemy 10th-level interval: this slice \
+                    grounds a THIRD favored-terrain TYPE selection \
+                    (choice:ranger_favored_terrain_3, mirroring the second favored terrain's \
+                    own open-ended choice-recognition idiom, plus the same flat +2 base \
+                    magnitude formula), a restricted three-option choice recognizing WHICH one \
+                    favored terrain is the 13th-level interval's OWN bonus-increase target \
+                    (choice:ranger_favored_terrain_bonus_increase_target_2 -> terrain:first / \
+                    terrain:second / terrain:third, mirroring the Favored Enemy 10th-level \
+                    interval's own restricted-set idiom), and the resulting +2 magnitude \
+                    STACKING with the already-grounded 8th-level interval's own increase when \
+                    both target the same terrain (the first favored terrain rises to +6: 2 \
+                    base + 2 at 8th + 2 at 13th, verified on a dedicated fixture). The SAME \
+                    slice also widens the base spells-per-day table to level 13 \
+                    (\"3/2/1/0\", verified independently against all three primary sources): \
+                    the 1st-level column genuinely rises from 2 to 3, the 2nd/3rd-level \
+                    columns stay 2/1 unchanged, and the 4th-level column NEWLY OPENS at 0 (a \
+                    genuine table entry, not an absence) — 4th-level ranger spells begin at \
+                    ranger level 13 exactly, checked rather than assumed away. The \
+                    spell-level access ladder correspondingly widens from 3 to 4 for the first \
+                    time, and the already-grounded base spell-save-DC and Wisdom-bonus-spells \
+                    families both extend to the new 4th spell level automatically (live \
+                    arithmetic over the widened access ladder, no new formula invented). This \
+                    slice also fixed two stale sibling negative controls (allowlist/ \
+                    boundary-control failure mode) that asserted level 13 as claim-blocked: \
+                    tests/sd13_ranger_level10_progression.rs and \
+                    tests/sd18_ranger_level12_widening.rs, both moved to a level-14 boundary.",
                 next_required_uplift: "ground the ranger Wisdom bonus-spells and \
                     prepared-posture/spell-source-lineage burdens now that the caster-level \
-                    gate, the access ladder, the base per-day counts, and the base \
-                    spell-save DCs are all grounded, then Ranger \
-                    level-13+ progression, a favored-enemy conditional-application engine, \
-                    execution of either recognized combat-style bonus feat's own mechanics, \
-                    Hunter's Bond ally-bonus application and the animal-companion stat \
-                    block/advancement subsystem, a terrain-detection/movement-resolution engine \
-                    for Woodland Stride's own effect, a tracking-penalty-application engine for \
-                    Swift Tracker's own effect, a target-selection/conditional-application \
-                    engine for Quarry's own +2 attack-bonus and auto-confirm-critical-threats \
-                    effects, a Stealth-check-execution engine for Camouflage's own effect, then \
-                    SD13-E4 ranger spell burden",
+                    gate, the access ladder (now reaching 4th-level spells), the base per-day \
+                    counts, and the base spell-save DCs are all grounded, then Ranger \
+                    level-14+ progression, a favored-terrain and favored-enemy \
+                    conditional-application engine, execution of either recognized \
+                    combat-style bonus feat's own mechanics, Hunter's Bond ally-bonus \
+                    application and the animal-companion stat block/advancement subsystem, a \
+                    terrain-detection/movement-resolution engine for Woodland Stride's own \
+                    effect, a tracking-penalty-application engine for Swift Tracker's own \
+                    effect, a target-selection/conditional-application engine for Quarry's own \
+                    +2 attack-bonus and auto-confirm-critical-threats effects, a \
+                    Stealth-check-execution engine for Camouflage's own effect, then SD13-E4 \
+                    ranger spell burden",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",
