@@ -432,7 +432,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_total_spells_per_day.rs + \
     tests/sd18_ranger_level11_quarry.rs + \
     tests/sd18_ranger_level12_widening.rs + \
-    tests/sd18_ranger_level13_widening.rs";
+    tests/sd18_ranger_level13_widening.rs + \
+    tests/sd18_ranger_level14_widening.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -3303,8 +3304,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7/ \
-                            level-8/level-9/level-10/level-11/level-12/level-13 chassis \
-                            baseline, with base attack bonus, base save \
+                            level-8/level-9/level-10/level-11/level-12/level-13/level-14 \
+                            chassis baseline, with base attack bonus, base save \
                             progression, Track, the favored-enemy flat surface, the \
                             combat-style choice-and-bonus-feat recognition, (level 3) \
                             Endurance and the Favored Terrain choice-and-flat-magnitude \
@@ -3329,7 +3330,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             stacking with the 8th-level increase when both name the same \
                             terrain) plus the spell-level access ladder's genuinely new \
                             4th-level column and the base spells-per-day table's own level-13 \
-                            row grounded for real and the later spell burden still blocked",
+                            row, and (level 14) the FOURTH combat-style bonus feat (an \
+                            open-ended, non-restricted-list identity record) plus the base \
+                            spells-per-day table's own level-14 row, all grounded for real, and \
+                            the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -3755,14 +3759,46 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     slice also fixed two stale sibling negative controls (allowlist/ \
                     boundary-control failure mode) that asserted level 13 as claim-blocked: \
                     tests/sd13_ranger_level10_progression.rs and \
-                    tests/sd18_ranger_level12_widening.rs, both moved to a level-14 boundary.",
+                    tests/sd18_ranger_level12_widening.rs, both moved to a level-14 boundary. \
+                    The SD18 cycle-2026-07-15T2100 slice (tests/sd18_ranger_level14_widening.rs) \
+                    widens the level-range gate once more to level 14, extending base attack to \
+                    level 14 (full BAB) and both good saves genuinely rise (Fortitude/Reflex \
+                    14/2+2=9, up from 8), while poor Will stays 4 (14/3, an integer-division \
+                    coincidence). The class table's 14th-level \"Special\" column reads only \
+                    \"Combat style feat\" (verified independently against three primary \
+                    sources — d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                    legacy.aonprd.com, all byte-for-byte identical): the ranger's FOURTH \
+                    combat-style bonus feat. Unlike the 2nd/6th/10th-level grants, the PF1 Core \
+                    Rulebook's own Combat Style feat tables (Archery, Two-Weapon Combat) do not \
+                    tabulate any named options beyond the 10th-level tier (verified \
+                    independently against three sources dedicated to the combat-style feat \
+                    lists themselves — d20pfsrd's Ranger Combat Styles page, the Archives of \
+                    Nethys aonprd.com RangerCombatStyles page, and a Paizo rules-forum thread — \
+                    all three agree the printed list stops after 10th level; later sourcebooks \
+                    such as the Advanced Player's Guide add named 14th/18th-level options, \
+                    outside SD-18's Core-Rulebook-only scope), so this slice grounds the fourth \
+                    bonus-feat slot as an OPEN-ENDED +0 recognition record (mirroring the \
+                    Favored Terrain/Quarry choice-recognition idiom: raw string interpolation, \
+                    no restricted-list validation), NOT the closed-restricted-list idiom used \
+                    for feats 1-3 — an honest choice given the corpus does not contain a \
+                    CRB-sourced restricted list at this tier. The same slice also widens the \
+                    base spells-per-day table to level 14 (\"3/2/1/1\", verified independently \
+                    against all three primary sources): the 1st/2nd/3rd-level columns stay \
+                    3/2/1 unchanged, and the 4th-level column genuinely rises from 0 to 1; the \
+                    spell-level access ladder stays at 4 (ranger spells never reach a 5th spell \
+                    level at any level). This slice also fixed four stale sibling negative \
+                    controls (allowlist/boundary-control failure mode) that asserted level 14 \
+                    as claim-blocked: tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, \
+                    tests/sd18_ranger_level12_widening.rs, and \
+                    tests/sd18_ranger_level13_widening.rs, all moved to a level-15 boundary.",
                 next_required_uplift: "ground the ranger Wisdom bonus-spells and \
                     prepared-posture/spell-source-lineage burdens now that the caster-level \
                     gate, the access ladder (now reaching 4th-level spells), the base per-day \
                     counts, and the base spell-save DCs are all grounded, then Ranger \
-                    level-14+ progression, a favored-terrain and favored-enemy \
-                    conditional-application engine, execution of either recognized \
-                    combat-style bonus feat's own mechanics, Hunter's Bond ally-bonus \
+                    level-15+ progression, a favored-terrain and favored-enemy \
+                    conditional-application engine, execution of any of the four recognized \
+                    combat-style bonus feats' own mechanics, Hunter's Bond ally-bonus \
                     application and the animal-companion stat block/advancement subsystem, a \
                     terrain-detection/movement-resolution engine for Woodland Stride's own \
                     effect, a tracking-penalty-application engine for Swift Tracker's own \
