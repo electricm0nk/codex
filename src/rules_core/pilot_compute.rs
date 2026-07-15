@@ -516,8 +516,17 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // level 12 via the same formulas (all three genuinely rise, unlike level
 // 11's integer-division coincidences) and grounds Camouflage, the class
 // table's 12th-level "Special" column entry (`RANGER_CAMOUFLAGE_LEVEL`), as
-// a grant-only identity record. Nothing here grounds level 13+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 12;
+// a grant-only identity record. A still later SD18 slice widens the gate
+// once more to level 13, extending base attack to level 13 (base saves stay
+// numerically unchanged from level 12, an integer-division coincidence) and
+// grounds the class table's 13th-level "Special" column entry, "3rd favored
+// terrain" (`RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL`) — the exact
+// structural mirror of the already-grounded Favored Enemy 10th-level
+// interval — plus the spell-level access ladder's genuinely new 4th-level
+// column (`RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`) and the base
+// spells-per-day table's own level-13 row. Nothing here grounds level 14+
+// Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 13;
 
 /// PF1 Core Rulebook level gate at which Camouflage is granted (verified
 /// independently against two primary sources: both d20pfsrd and the
@@ -672,8 +681,10 @@ const RANGER_ENDURANCE_LEVEL: u8 = 3;
 /// chosen terrain, and the +2 is never wired into any actual Initiative total or
 /// skill-check total. The 8th-level additional-terrain and bonus-increase
 /// interval is grounded by a later SD13-E5 slice (see
-/// `RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL`); the 13th/18th intervals
-/// stay out of scope.
+/// `RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL`), and the 13th-level
+/// interval is grounded by a still later SD18 slice (see
+/// `RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL`); the 18th interval stays
+/// out of scope.
 const RANGER_FAVORED_TERRAIN_LEVEL: u8 = 3;
 
 /// SD13-E5 Ranger Favored Terrain choice-slot id. The deterministic fixture names
@@ -691,8 +702,10 @@ const RANGER_FAVORED_TERRAIN_CHOICE_ID: &str = "choice:ranger_favored_terrain";
 /// addition, at each such interval, the skill bonus and initiative bonus in
 /// any one favored terrain (including the one just selected, if so desired),
 /// increases by +2." — the exact structural mirror of the Favored Enemy
-/// 5th-level interval already grounded on this seam). Only the 8th-level
-/// interval is grounded here; the 13th/18th intervals stay out of scope.
+/// 5th-level interval already grounded on this seam). The 8th-level and
+/// 13th-level intervals are both grounded (see
+/// `RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL`); the 18th-level interval
+/// stays out of scope.
 const RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL: u8 = 8;
 
 /// SD13-E5 Ranger SECOND Favored Terrain choice-slot id, mirroring
@@ -710,6 +723,34 @@ const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID: &str =
     "choice:ranger_favored_terrain_bonus_increase_target";
 const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION: &str = "terrain:first";
 const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION: &str = "terrain:second";
+
+/// PF1 Core Rulebook level gate at which Ranger gains a THIRD additional
+/// favored terrain (verified independently against three primary sources —
+/// d20pfsrd, the Archives of Nethys aonprd.com mirror, and legacy.aonprd.com
+/// all agree byte-for-byte): "At 8th level and every five levels thereafter,
+/// the ranger may select an additional favored terrain. In addition, at each
+/// such interval, the skill bonus and initiative bonus in any one favored
+/// terrain (including the one just selected, if so desired), increases by
+/// +2." The 13th-level interval (8 + 5) is the exact structural mirror of
+/// the already-grounded Favored Enemy 10th-level interval
+/// (`RANGER_FAVORED_ENEMY_THIRD_INTERVAL_LEVEL`). The 18th-level interval
+/// stays out of scope.
+const RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL: u8 = 13;
+
+/// SD18 Ranger THIRD Favored Terrain choice-slot id, mirroring
+/// `choice:ranger_favored_enemy_3`'s open-ended (non-restricted-list)
+/// recognition idiom exactly -- no enum validation against Table: Ranger
+/// Favored Terrains is performed here.
+const RANGER_FAVORED_TERRAIN_THIRD_CHOICE_ID: &str = "choice:ranger_favored_terrain_3";
+
+/// SD18 Ranger 13th-level-interval bonus-increase TARGET choice-slot id,
+/// mirroring `choice:ranger_favored_enemy_bonus_increase_target_2`'s
+/// restricted idiom, widened to the three-terrain set (`terrain:first` /
+/// `terrain:second` / `terrain:third`); any other selection is surfaced
+/// without grounding a target identity and no boost is fabricated from it.
+const RANGER_FAVORED_TERRAIN_SECOND_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_terrain_bonus_increase_target_2";
+const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_THIRD_SELECTION: &str = "terrain:third";
 
 /// The ranger level at which 1st-level ranger spells first become available,
 /// verified against the raw PF1 Core Rulebook Ranger spells-per-day table rows
@@ -731,10 +772,16 @@ const RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 /// The ranger level at which 3rd-level ranger spells first become available,
 /// verified against the raw table rows (both sources): level 9 shows
 /// "2/1/—/—", level 10 shows "2/1/0/—" — the first non-"—" 3rd-level column.
-/// The 4th-level column stays "—" through level 10 (4th-level ranger spells
-/// begin at 13, outside the tranche ceiling), so no 4th-level threshold const
-/// is grounded.
 const RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+/// The ranger level at which 4th-level ranger spells first become available,
+/// verified independently against three primary sources (d20pfsrd, the
+/// Archives of Nethys aonprd.com mirror, and legacy.aonprd.com, all
+/// byte-for-byte identical): level 12 shows "2/2/1/—", level 13 shows
+/// "3/2/1/0" — the first non-"—" 4th-level column. The SAME level-13 row
+/// also genuinely raises the 1st-level column from 2 to 3 (a literal table
+/// lookup value, not a formula), while the 2nd/3rd-level columns stay
+/// numerically unchanged (2/1).
+const RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
 
 /// PF1 Core Rulebook level gate at which Ranger gains Hunter's Bond (4th level,
 /// verified independently against two primary sources: d20pfsrd and
@@ -6097,8 +6144,9 @@ fn supported_ranger_level(input: &CharacterInput) -> Option<u8> {
 ///
 /// This deliberately does not compute a supported class-feature surface. It
 /// grounds no favored-enemy conditional application, no combat-style feat
-/// grant, no animal companion, no favored-terrain breadth (the level-8th/13th/
-/// 18th additional-terrain and bonus-increase progression), no Hunter's Bond
+/// grant, no animal companion, no favored-terrain breadth beyond the
+/// grounded 8th/13th-level intervals (the level-18th additional-terrain and
+/// bonus-increase progression stays out of scope), no Hunter's Bond
 /// ally-bonus application or animal-companion stat block, and no spell posture.
 /// It only emits the grounded Track / Favored Enemy / combat-style / Endurance /
 /// Favored Terrain / Hunter's Bond level-gate values that prove the F6 surface
@@ -6914,7 +6962,76 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         let second_favored_terrain_targeted = favored_terrain_bonus_increase_target
             == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION);
 
-        let favored_terrain_bonus: i16 = if first_favored_terrain_targeted { 4 } else { 2 };
+        // SD18 ranger level 13: recognize the 13th-level interval's own
+        // bonus-increase TARGET choice, only meaningful once the ranger has
+        // reached the Favored Terrain rule's 13th-level interval. Each
+        // interval grants its own +2 increase to any ONE favored terrain --
+        // a genuine, free player choice, so an increase targeting the same
+        // terrain at both grounded intervals STACKS (2 base + 2 + 2). Absent
+        // an explicit target selection in chosen input, nothing is
+        // fabricated. Mirrors the already-grounded Favored Enemy 10th-level
+        // interval's own bonus-increase-target idiom exactly.
+        let favored_terrain_second_bonus_increase_target =
+            if level >= RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL {
+                choice_selection(input, RANGER_FAVORED_TERRAIN_SECOND_BONUS_INCREASE_CHOICE_ID)
+            } else {
+                None
+            };
+
+        if let Some(target) = favored_terrain_second_bonus_increase_target {
+            let target_name = if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION {
+                Some("the first favored terrain")
+            } else if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION {
+                Some("the second favored terrain")
+            } else if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_THIRD_SELECTION {
+                Some("the third favored terrain")
+            } else {
+                None
+            };
+            let detail = if let Some(name) = target_name {
+                format!(
+                    "Ranger Favored Terrain 13th-level-interval bonus-increase target selection \
+                     at ranger level {level} \
+                     ({RANGER_FAVORED_TERRAIN_SECOND_BONUS_INCREASE_CHOICE_ID} -> {target}): \
+                     names {name} as the one favored terrain whose skill and initiative bonus \
+                     increases by +2 at this 13th-level interval, per the PF1 Core Rulebook rule \
+                     that the bonus in any ONE favored terrain -- including a newly selected \
+                     one, if so desired -- increases by +2 at each such interval (8th, 13th, and \
+                     18th ranger level); an increase targeting the same terrain at both grounded \
+                     intervals stacks. This is a recognition record of the choice slot only \
+                     (+0); the increased magnitude itself is grounded separately on whichever \
+                     favored terrain was actually named"
+                )
+            } else {
+                format!(
+                    "Ranger Favored Terrain 13th-level-interval bonus-increase target selection \
+                     at ranger level {level} is present \
+                     ({RANGER_FAVORED_TERRAIN_SECOND_BONUS_INCREASE_CHOICE_ID} -> {target}), but \
+                     only the PF1 Core Rulebook restricted set (the first, second, or third \
+                     favored terrain) is recognized on this bounded seam; no target identity is \
+                     grounded and no mechanical value is fabricated (+0)"
+                )
+            };
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_bonus_increase_2_choice".to_owned(),
+                value: 0,
+                detail,
+            });
+        }
+
+        let first_favored_terrain_targeted_at_second_interval =
+            favored_terrain_second_bonus_increase_target
+                == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION);
+        let second_favored_terrain_targeted_at_second_interval =
+            favored_terrain_second_bonus_increase_target
+                == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION);
+        let third_favored_terrain_targeted_at_second_interval =
+            favored_terrain_second_bonus_increase_target
+                == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_THIRD_SELECTION);
+
+        let favored_terrain_bonus: i16 = 2
+            + if first_favored_terrain_targeted { 2 } else { 0 }
+            + if first_favored_terrain_targeted_at_second_interval { 2 } else { 0 };
         explanations.push(ComputationExplanation {
             id: "class_feature.ranger.favored_terrain".to_owned(),
             value: favored_terrain_bonus,
@@ -6936,8 +7053,8 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         // selection, the rule's 8th-level interval grant. Mirrors the second
         // Favored Enemy's own choice-recognition idiom exactly (open-ended,
         // raw string interpolation, no restricted-list validation) and its
-        // own flat magnitude formula (base +2, or +4 if this interval's
-        // bonus-increase target names the second favored terrain).
+        // own flat magnitude formula (base +2, plus +2 per grounded interval
+        // whose bonus-increase target names the second favored terrain).
         if level >= RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL
             && let Some(second_favored_terrain) =
                 choice_selection(input, RANGER_FAVORED_TERRAIN_SECOND_CHOICE_ID)
@@ -6958,8 +7075,9 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                 ),
             });
 
-            let second_favored_terrain_bonus: i16 =
-                if second_favored_terrain_targeted { 4 } else { 2 };
+            let second_favored_terrain_bonus: i16 = 2
+                + if second_favored_terrain_targeted { 2 } else { 0 }
+                + if second_favored_terrain_targeted_at_second_interval { 2 } else { 0 };
             explanations.push(ComputationExplanation {
                 id: "class_feature.ranger.favored_terrain_2".to_owned(),
                 value: second_favored_terrain_bonus,
@@ -6968,6 +7086,50 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                      interval): a flat +{second_favored_terrain_bonus} bonus on Initiative \
                      checks and Knowledge (geography), Perception, Stealth, and Survival \
                      checks made when the ranger is in this second chosen favored terrain. \
+                     This is a bounded flat-magnitude record only, non-fabricated: no \
+                     terrain-detection engine decides whether the character is actually in \
+                     the chosen terrain anywhere in this codebase, so no Initiative total or \
+                     skill-check total is modified by this record"
+                ),
+            });
+        }
+
+        // SD18 ranger level 13: recognize the THIRD favored-terrain
+        // selection, the rule's 13th-level interval grant. Mirrors the
+        // third favored enemy's own choice-recognition idiom exactly
+        // (open-ended, raw string interpolation, no restricted-list
+        // validation) and its own flat magnitude formula (base +2, or +4 if
+        // the 13th-level interval's bonus-increase target names it).
+        if level >= RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL
+            && let Some(third_favored_terrain) =
+                choice_selection(input, RANGER_FAVORED_TERRAIN_THIRD_CHOICE_ID)
+        {
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_3_choice".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Ranger 3rd Favored Terrain selection \
+                     ({RANGER_FAVORED_TERRAIN_THIRD_CHOICE_ID} -> {third_favored_terrain}): at \
+                     ranger level {level}, PF1 Core Rulebook Favored Terrain grants \"an \
+                     additional favored terrain\" at the 13th-level interval. The \
+                     level-{level} THIRD favored-terrain type chosen for this character is \
+                     {third_favored_terrain}. This is a bounded recognition record of the \
+                     chosen terrain type only; the flat bonus magnitude is grounded \
+                     separately, and no terrain-detection or conditional-application engine \
+                     is implemented, so it carries no fabricated mechanical value (+0)"
+                ),
+            });
+
+            let third_favored_terrain_bonus: i16 =
+                2 + if third_favored_terrain_targeted_at_second_interval { 2 } else { 0 };
+            explanations.push(ComputationExplanation {
+                id: "class_feature.ranger.favored_terrain_3".to_owned(),
+                value: third_favored_terrain_bonus,
+                detail: format!(
+                    "Ranger 3rd Favored Terrain bonus (PF1 Core Rulebook, 13th-level \
+                     interval): a flat +{third_favored_terrain_bonus} bonus on Initiative \
+                     checks and Knowledge (geography), Perception, Stealth, and Survival \
+                     checks made when the ranger is in this third chosen favored terrain. \
                      This is a bounded flat-magnitude record only, non-fabricated: no \
                      terrain-detection engine decides whether the character is actually in \
                      the chosen terrain anywhere in this codebase, so no Initiative total or \
@@ -7364,7 +7526,9 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     });
 
     let ranger_spell_level_access: i16 =
-        if level >= RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        if level >= RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            4
+        } else if level >= RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             3
         } else if level >= RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             2
@@ -7380,15 +7544,15 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             "Ranger spell-level access at ranger level {level}: the highest ranger spell level \
              with a non-\"—\" spells-per-day column in the PF1 Core Rulebook Ranger class \
              table is {ranger_spell_level_access} (verified against the raw table rows of \
-             both primary sources: 1st-level spells begin at ranger level \
+             all three primary sources: 1st-level spells begin at ranger level \
              {RANGER_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 2nd-level at \
              {RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
-             {RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}; the 4th-level column stays \
-             \"—\" through level 10). A gate-level \"0\" spells-per-day entry is access \
-             via Wisdom bonus spells only, per the PF1 rule text — Wisdom, not the Paladin's \
-             Charisma. This grounds the access ladder only: no spells-per-day counts, no \
-             spells known or prepared posture, no bonus slots from a high Wisdom, and no \
-             spell save DCs are computed"
+             {RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
+             {RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}). A gate-level \"0\" \
+             spells-per-day entry is access via Wisdom bonus spells only, per the PF1 rule \
+             text — Wisdom, not the Paladin's Charisma. This grounds the access ladder only: \
+             no spells-per-day counts, no spells known or prepared posture, no bonus slots \
+             from a high Wisdom, and no spell save DCs are computed"
         ),
     });
 
@@ -7408,21 +7572,27 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // checked rather than assumed away), level 12 "2/2/1/—" (verified
     // independently for the SD18 level-12 widening cycle: the 2nd-level
     // column genuinely rises from 1 to 2, the 1st/3rd-level columns stay
-    // 2/1 unchanged, and the 4th-level column stays "—"). A "0" is a genuine
-    // table entry (Wisdom-bonus-spells-only access), NOT an absence —
-    // inaccessible spell levels ("—" columns) get no record at all. Only
-    // the base counts are grounded: bonus spells per day from a high
-    // Wisdom are never computed.
-    let ranger_base_spells_per_day: [Option<i16>; 3] = match level {
-        4 => [Some(0), None, None],
-        5 | 6 => [Some(1), None, None],
-        7 => [Some(1), Some(0), None],
-        8 => [Some(1), Some(1), None],
-        9 => [Some(2), Some(1), None],
-        10 => [Some(2), Some(1), Some(0)],
-        11 => [Some(2), Some(1), Some(1)],
-        12 => [Some(2), Some(2), Some(1)],
-        _ => [None, None, None],
+    // 2/1 unchanged, and the 4th-level column stays "—"), and level 13
+    // "3/2/1/0" (verified independently for the SD18 level-13 widening
+    // cycle against all three primary sources: the 1st-level column
+    // genuinely rises from 2 to 3, the 2nd/3rd-level columns stay 2/1
+    // unchanged, and the 4th-level column newly opens at 0 — a genuine
+    // table entry, not an absence). A "0" is a genuine table entry
+    // (Wisdom-bonus-spells-only access), NOT an absence — inaccessible
+    // spell levels ("—" columns) get no record at all. Only the base
+    // counts are grounded: bonus spells per day from a high Wisdom are
+    // never computed.
+    let ranger_base_spells_per_day: [Option<i16>; 4] = match level {
+        4 => [Some(0), None, None, None],
+        5 | 6 => [Some(1), None, None, None],
+        7 => [Some(1), Some(0), None, None],
+        8 => [Some(1), Some(1), None, None],
+        9 => [Some(2), Some(1), None, None],
+        10 => [Some(2), Some(1), Some(0), None],
+        11 => [Some(2), Some(1), Some(1), None],
+        12 => [Some(2), Some(2), Some(1), None],
+        13 => [Some(3), Some(2), Some(1), Some(0)],
+        _ => [None, None, None, None],
     };
     for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
         let Some(base_count) = base_count else {
