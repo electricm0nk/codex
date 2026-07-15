@@ -361,7 +361,8 @@ const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level1
     tests/sd18_fighter_level13_widening.rs + \
     tests/sd18_fighter_level14_widening.rs + \
     tests/sd18_fighter_level15_widening.rs + \
-    tests/sd18_fighter_level16_widening.rs";
+    tests/sd18_fighter_level16_widening.rs + \
+    tests/sd18_fighter_level17_widening.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
 /// the SD13-E3-F5 mandatory-milestone classification proof (which level-1
@@ -1066,9 +1067,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.fighter.levels_2_10",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
-                dimension: "class progression across levels 2-16: bounded milestone proof \
-                            for levels 2 through 16 (SD18 widens the prior levels 2-10 tranche \
-                            by six levels), with the Weapon Training damage-roll half still \
+                dimension: "class progression across levels 2-17: bounded milestone proof \
+                            for levels 2 through 17 (SD18 widens the prior levels 2-10 tranche \
+                            by seven levels), with the Weapon Training damage-roll half still \
                             unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -1178,14 +1179,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     base attack bonus of +16); Weapon Training stays at rank 3, an \
                     integer-division coincidence with level 15 (the next rise is level 17), and \
                     Armor Training stays at rank 4 (the PF1 Core Rulebook names no fifth Armor \
-                    Training rank). No Fighter level 17+ is proven",
+                    Training rank). SD18 (cycle-2026-07-15T8300, the fourth class to reach level \
+                    17 in the §3.2 level-17 sweep, after Ranger/Bard/Rogue) further widens to \
+                    level 17: base attack bonus genuinely rises to 17 (full BAB), while good \
+                    Fortitude and both poor Reflex/Will all stay numerically unchanged from \
+                    level 16 (17/2+2=10, 17/3=5), integer-division coincidences; the PF1 Core \
+                    Rulebook Fighter class table's level-17 Special column reads \"Weapon \
+                    training 4\" only (verified independently against www.aonprd.com/ \
+                    ClassDisplay.aspx?ItemName=Fighter and legacy.aonprd.com/coreRuleBook/ \
+                    classes/fighter.html, byte-for-byte agreement, including neighboring levels \
+                    16 and 18 to rule out misattribution): Weapon Training's already-level-generic \
+                    rank formula genuinely rises to rank 4, raising the first-group Heavy Blades \
+                    attack-roll bonus (folded into the baseline melee attack bonus) from +3 to \
+                    +4, and this widening surfaces a FOURTH chosen weapon group (canonically \
+                    Hammers) as a new explanation-only seam covering no equipped weapon, \
+                    mirroring the second-group (Bows) and third-group (Polearms) idiom exactly; \
+                    no new bonus feat lands at level 17 (the cadence's next feat is level 18); \
+                    Bravery stays +4, an integer-division coincidence with level 16 (the next \
+                    rise is level 18). No Fighter level 18+ is proven",
                 next_required_uplift: "later SD13/SD18 slice grounding the remaining named \
-                    Fighter class-feature burden inside levels 2-16: the Weapon Training \
+                    Fighter class-feature burden inside levels 2-17: the Weapon Training \
                     damage-roll half (which first needs any damage total to exist on the compute \
                     surface), a fear-condition/save-resolution engine to apply the Bravery \
                     magnitude to an actual Will save (a tranche-level subsystem decision, not a \
-                    slice decision), or level-17+ progression (the next Weapon Training rank \
-                    rise, at level 17)",
+                    slice decision), or level-18+ progression (the next bonus-feat cadence slot \
+                    and Bravery magnitude rise, both at level 18)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",

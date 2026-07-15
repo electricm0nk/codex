@@ -3316,7 +3316,7 @@ const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
 // Bounded SD13-E3/SD13-E5 Fighter milestone widening. The accepted level-1 pilot
-// is now joined by levels 2 through 16 (SD18: level 11 widens the Armor
+// is now joined by levels 2 through 17 (SD18: level 11 widens the Armor
 // Training pillar to rank 3, see FIGHTER_ARMOR_TRAINING_3_LEVEL below; level
 // 12 widens the bonus-feat cadence with a sixth named slot, see
 // FIGHTER_LEVEL_12_BONUS_FEAT_CHOICE_ID below; level 13 widens Weapon
@@ -3332,14 +3332,18 @@ const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 // FIGHTER_LEVEL_16_BONUS_FEAT_CHOICE_ID below -- level 16 is neither a
 // weapon-training rank-rise level nor an armor-training rank-rise level
 // (the PF1 Core Rulebook names no fifth Armor Training rank), so neither
-// pillar widens there).
-// Nothing here grounds level 17+ Fighter burden, the weapon-training
+// pillar widens there; level 17 (SD18 widening) widens Weapon Training to
+// rank 4 and its fourth chosen weapon group, see
+// FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID below -- level 17 is neither a
+// bonus-feat cadence level (1, 2, 4, 6, 8, 10, 12, 14, 16, ...) nor an
+// armor-training rank-rise level, so neither of those pillars widens there).
+// Nothing here grounds level 18+ Fighter burden, the weapon-training
 // damage-roll half, the Bravery Will-vs-fear bonus resolution, or any
 // non-Fighter positive support. The generic PF1 ability-score-increase
 // milestones (levels 4 and 8) need no separate seam: the chosen ability
 // score is trusted at face value, like every other ability adjustment in
 // this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 16;
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 17;
 
 // Fighter level-1 hit points. PF1 maximizes the hit die at 1st character level:
 // the Fighter's d10 hit die grants 10 hit points at level 1, plus the
@@ -3422,16 +3426,17 @@ const CRITICAL_FOCUS_FEAT_SELECTION: &str = "feat:critical_focus";
 
 // Fighter Weapon Training, gained at level 5 with a new rank every four levels
 // (rank = 1 + (level - 5) / 4): Weapon Training 1 at level 5, Weapon Training 2
-// at level 9, Weapon Training 3 at level 13 (SD18 widening). Each rank grants
-// the first chosen weapon group +rank to attack and damage rolls; each
-// later-chosen group sits one point lower. This slice grounds only the
-// attack-roll half of the first group (folded into the baseline melee attack
-// bonus for the deterministic Longsword, which falls under the canonical
-// Heavy Blades group) and surfaces the second group (canonically Bows, chosen
-// at level 9) and the third group (canonically Polearms, chosen at level 13)
-// as explanation-only records; the damage-roll half is never computed for any
-// Fighter level in this codebase, so it stays explicitly unproven rather than
-// silently omitted.
+// at level 9, Weapon Training 3 at level 13, Weapon Training 4 at level 17
+// (SD18 widening). Each rank grants the first chosen weapon group +rank to
+// attack and damage rolls; each later-chosen group sits one point lower. This
+// slice grounds only the attack-roll half of the first group (folded into the
+// baseline melee attack bonus for the deterministic Longsword, which falls
+// under the canonical Heavy Blades group) and surfaces the second group
+// (canonically Bows, chosen at level 9), the third group (canonically
+// Polearms, chosen at level 13), and the fourth group (canonically Hammers,
+// chosen at level 17) as explanation-only records; the damage-roll half is
+// never computed for any Fighter level in this codebase, so it stays
+// explicitly unproven rather than silently omitted.
 const FIGHTER_WEAPON_TRAINING_1_LEVEL: u8 = 5;
 const FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE: u8 = 4;
 const FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID: &str = "choice:fighter_weapon_training_group";
@@ -3440,6 +3445,8 @@ const FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID: &str = "choice:fighter_weapon_t
 const BOWS_GROUP_SELECTION: &str = "group:bows";
 const FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID: &str = "choice:fighter_weapon_training_group_3";
 const POLEARMS_GROUP_SELECTION: &str = "group:polearms";
+const FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID: &str = "choice:fighter_weapon_training_group_4";
+const HAMMERS_GROUP_SELECTION: &str = "group:hammers";
 
 // Fighter armor training 1, gained at level 3. It reduces the worn armor's
 // armor-check penalty by 1 (to a minimum of 0) and raises its maximum Dexterity
@@ -5668,7 +5675,9 @@ fn explain_fighter_class_features(
     let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
     if weapon_training_bonus > 0 {
         let rank = fighter_weapon_training_rank(level);
-        let rank_level = if rank >= 3 {
+        let rank_level = if rank >= 4 {
+            FIGHTER_WEAPON_TRAINING_1_LEVEL + 3 * FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE
+        } else if rank >= 3 {
             FIGHTER_WEAPON_TRAINING_1_LEVEL + 2 * FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE
         } else if rank >= 2 {
             FIGHTER_WEAPON_TRAINING_1_LEVEL + FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE
@@ -5739,6 +5748,34 @@ fn explain_fighter_class_features(
                      +{third_group_bonus} to attack and damage rolls with weapons of that \
                      group. No polearm is part of the deterministic Longsword loadout, so this \
                      seam is explanation-only: the +{third_group_bonus} is not folded into any \
+                     computed total, and the baseline melee attack bonus uses only the \
+                     first-group (Heavy Blades) rank"
+                ),
+            });
+        }
+
+        // Weapon Training 4 (level 17, SD18 widening) also grants a fourth
+        // chosen weapon group a bonus three points lower than the first
+        // group's. The canonical fourth group (Hammers) covers no equipped
+        // weapon on the deterministic Longsword loadout, so this is an
+        // explanation-only record: its +1 is never folded into the Longsword
+        // baseline melee attack bonus, which uses the first-group rank.
+        // Mirrors the second-group and third-group idiom exactly.
+        if rank >= 4
+            && choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID)
+                == Some(HAMMERS_GROUP_SELECTION)
+        {
+            let fourth_group_bonus = rank - 3;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.fighter.weapon_training_group_4".to_owned(),
+                value: fourth_group_bonus,
+                detail: format!(
+                    "Fighter level {rank_level} Weapon Training {rank} also grants a fourth \
+                     chosen weapon group \
+                     ({FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID} -> {HAMMERS_GROUP_SELECTION}) \
+                     +{fourth_group_bonus} to attack and damage rolls with weapons of that \
+                     group. No hammer is part of the deterministic Longsword loadout, so this \
+                     seam is explanation-only: the +{fourth_group_bonus} is not folded into any \
                      computed total, and the baseline melee attack bonus uses only the \
                      first-group (Heavy Blades) rank"
                 ),
@@ -5893,7 +5930,7 @@ fn explain_fighter_favored_class_bonus_choice(
 /// validates the level-5 and level-9 weapon-training-group choices, since each is
 /// structurally identical to a bonus-feat slot (a named choice-set that must match
 /// one canonical selection).
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 14] = [
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 15] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -5946,6 +5983,10 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 14] = [
     (
         FIGHTER_LEVEL_16_BONUS_FEAT_CHOICE_ID,
         CRITICAL_FOCUS_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID,
+        HAMMERS_GROUP_SELECTION,
     ),
 ];
 
