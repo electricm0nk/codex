@@ -181,6 +181,7 @@ export function LandingScreen(props: {
   onLoadMostRecent: () => void;
   onBrowseEquipment: () => void;
   onBrowseSpells: () => void;
+  onBrowseClasses: () => void;
   hasCharacters: boolean;
 }) {
   const active = RULE_SETS.find((rs) => rs.id === props.selectedRuleSet) ?? RULE_SETS[0];
@@ -249,6 +250,20 @@ export function LandingScreen(props: {
           }}
         >
           Browse Spell Catalog
+        </button>
+        <button
+          type="button"
+          onClick={props.onBrowseClasses}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Browse Class Progression
         </button>
       </div>
     </section>
