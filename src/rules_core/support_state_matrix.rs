@@ -368,7 +368,8 @@ const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level1
     tests/sd18_fighter_level16_widening.rs + \
     tests/sd18_fighter_level17_widening.rs + \
     tests/sd18_fighter_level18_widening.rs + \
-    tests/sd18_fighter_level19_widening.rs";
+    tests/sd18_fighter_level19_widening.rs + \
+    tests/sd18_fighter_level20_widening.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
 /// the SD13-E3-F5 mandatory-milestone classification proof (which level-1
@@ -1091,10 +1092,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.fighter.levels_2_10",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
-                dimension: "class progression across levels 2-19: bounded milestone proof \
-                            for levels 2 through 19 (SD18 widens the prior levels 2-10 tranche \
-                            by nine levels), with the Weapon Training damage-roll half and the \
-                            Armor Mastery damage-reduction application still unproven",
+                dimension: "class progression across levels 2-20: bounded milestone proof \
+                            for levels 2 through 20, the FINAL level within PF1's 1-20 \
+                            character-level cap (SD18 widens the prior levels 2-10 tranche by \
+                            ten levels), with the Weapon Training damage-roll half, the Armor \
+                            Mastery damage-reduction application, and the Weapon Mastery \
+                            critical-confirmation/damage-multiplier/disarm-immunity \
+                            application still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1260,18 +1264,50 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     mirroring exactly the already-proven Barbarian Damage Reduction idiom: no \
                     damage-resolution engine and no incoming-damage total exists anywhere in \
                     this codebase to apply it, and no worn-armor-or-shield condition check is \
-                    computed, so this grounds no actual damage reduction. No Fighter level 20 is \
-                    proven",
+                    computed, so this grounds no actual damage reduction. SD18 (this cycle, the \
+                    loop's FIFTH §3.2 level-20 landing, after Cleric, Wizard, Barbarian, and \
+                    Bard) further widens to level 20, the FINAL level within PF1's 1-20 \
+                    character-level cap: base attack bonus genuinely rises to 20 (full BAB) and \
+                    good Fortitude genuinely rises to 12 (20/2+2), while poor Reflex and poor \
+                    Will both stay at 6 (20/3), an integer-division coincidence with level 19 \
+                    (verified independently against d20pfsrd.com/classes/core-classes/fighter/ \
+                    and aonprd.com/ClassDisplay.aspx?ItemName=Fighter, byte-for-byte agreement, \
+                    fetching the full class table in one pass to rule out misattribution): the \
+                    level-20 Special column reads \"Bonus feat, Weapon mastery\". Level 20 IS a \
+                    Fighter bonus-feat cadence level (1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20), so \
+                    this widening surfaces a TENTH named bonus-feat progression seam (the \
+                    canonical Critical Mastery selection's prerequisites — two other critical \
+                    feats — are honestly met by the canonical loadout's Improved Critical, \
+                    Critical Focus, and Staggering Critical). Weapon Mastery itself IS a \
+                    genuinely new named capstone class feature (\"a fighter chooses one weapon... \
+                    Any attacks made with that weapon automatically confirm all critical threats \
+                    and have their damage multiplier increased by 1... In addition, he cannot be \
+                    disarmed while wielding a weapon of this type\"), grounded as a bounded \
+                    grant-only identity/magnitude record only \
+                    (class_feature.fighter.weapon_mastery, critical-multiplier-increase value 1 \
+                    at or above level 20), mirroring exactly the already-proven Fighter Armor \
+                    Mastery idiom: no critical-hit-confirmation engine, no \
+                    damage-multiplier-application engine, and no disarm-resolution engine exists \
+                    anywhere in this codebase to apply it, so this grounds no actual \
+                    automatic-critical-confirmation, no actual damage-multiplier change, and no \
+                    actual disarm immunity. Weapon Training and Armor Training both stay at rank \
+                    4, integer-division coincidences with level 19 (the PF1 Core Rulebook names \
+                    no fifth rank for either pillar), and Bravery stays +5, an integer-division \
+                    coincidence with level 19 (the next rise, level 22, is beyond the PF1 level \
+                    cap). This closes Fighter's per-level arithmetic-widening frontier: level 20 \
+                    is the final level within PF1's 1-20 cap",
                 next_required_uplift: "later SD13/SD18 slice grounding the remaining named \
-                    Fighter class-feature burden inside levels 2-19: the Weapon Training \
+                    Fighter class-feature burden inside levels 2-20: the Weapon Training \
                     damage-roll half (which first needs any damage total to exist on the compute \
                     surface), a fear-condition/save-resolution engine to apply the Bravery \
                     magnitude to an actual Will save (a tranche-level subsystem decision, not a \
-                    slice decision), the Armor Mastery damage-reduction application (which first \
-                    needs any incoming-damage total and a worn-armor-or-shield condition check on \
-                    the compute surface), or level-20 progression (Bonus feat, Weapon mastery — \
-                    the capstone — per the PF1 Core Rulebook Special column, not yet verified or \
-                    scoped)",
+                    slice decision), the Armor Mastery damage-reduction application and the \
+                    Weapon Mastery critical-confirmation/damage-multiplier/disarm-immunity \
+                    application (both of which first need any incoming-damage total, a \
+                    worn-armor-or-shield condition check, and a critical-hit-resolution engine \
+                    on the compute surface — tranche-level subsystem decisions, not slice \
+                    decisions). Fighter's per-level arithmetic-widening frontier is now closed \
+                    (level 20 is the final level within PF1's 1-20 cap)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",

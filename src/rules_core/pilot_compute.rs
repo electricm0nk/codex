@@ -4181,14 +4181,27 @@ const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 // feature, Armor Mastery (DR 5/-- while wearing armor or using a shield),
 // see FIGHTER_ARMOR_MASTERY_LEVEL below, grounded as a bounded
 // flat-magnitude record only, mirroring the already-proven Barbarian
-// Damage Reduction idiom). Nothing here grounds level 20+ Fighter burden,
-// the weapon-training damage-roll half, the Bravery Will-vs-fear bonus
-// resolution, the Armor Mastery damage-reduction application, or any
-// non-Fighter positive support. The generic PF1 ability-score-increase
-// milestones (levels 4 and 8) need no separate seam: the chosen ability
-// score is trusted at face value, like every other ability adjustment in
-// this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 19;
+// Damage Reduction idiom); level 20 (SD18 widening, the FINAL level within
+// PF1's 1-20 character-level cap) IS a bonus-feat cadence level (1, 2, 4,
+// 6, 8, 10, 12, 14, 16, 18, 20), so this widens the bonus-feat cadence
+// with a TENTH named slot, see FIGHTER_LEVEL_20_BONUS_FEAT_CHOICE_ID
+// below, and the PF1 Core Rulebook level-20 Special column names a
+// genuinely new capstone class feature, Weapon Mastery (automatic
+// critical-threat confirmation and a +1 critical-multiplier increase for
+// one chosen weapon, plus immunity to being disarmed of that weapon), see
+// FIGHTER_WEAPON_MASTERY_LEVEL below, grounded as a bounded grant-only
+// identity/magnitude record only, mirroring exactly the Armor Mastery
+// idiom -- level 20 is neither a weapon-training rank-rise level nor an
+// armor-training rank-rise level, so neither of those pillars widens
+// there. Nothing here grounds the weapon-training damage-roll half, the
+// Bravery Will-vs-fear bonus resolution, the Armor Mastery
+// damage-reduction application, the Weapon Mastery critical-confirmation/
+// damage-multiplier/disarm-immunity application, or any non-Fighter
+// positive support. The generic PF1 ability-score-increase milestones
+// (levels 4 and 8) need no separate seam: the chosen ability score is
+// trusted at face value, like every other ability adjustment in this
+// codebase.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 20;
 
 // Fighter level-1 hit points. PF1 maximizes the hit die at 1st character level:
 // the Fighter's d10 hit die grants 10 hit points at level 1, plus the
@@ -4281,6 +4294,19 @@ const CRITICAL_FOCUS_FEAT_SELECTION: &str = "feat:critical_focus";
 const FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_18";
 const STAGGERING_CRITICAL_FEAT_SELECTION: &str = "feat:staggering_critical";
 
+// Fighter level-20 bonus-feat progression seam (SD18 widening, the FINAL
+// bonus-feat cadence level within PF1's 1-20 character-level cap). Fighter
+// gains an additional bonus feat at level 20 (the cadence continues 1, 2,
+// 4, 6, 8, 10, 12, 14, 16, 18, 20); this slice surfaces the named
+// selection as an explicit seam only and grounds no general feat-effect
+// or prerequisite engine, mirroring the level-2 through level-18 seams.
+// The canonical Critical Mastery selection's prerequisites (two other
+// critical feats) are honestly met by the canonical loadout: Improved
+// Critical, Critical Focus, and Staggering Critical are all
+// already-selected Fighter bonus feats.
+const FIGHTER_LEVEL_20_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_20";
+const CRITICAL_MASTERY_FEAT_SELECTION: &str = "feat:critical_mastery";
+
 // Fighter Weapon Training, gained at level 5 with a new rank every four levels
 // (rank = 1 + (level - 5) / 4): Weapon Training 1 at level 5, Weapon Training 2
 // at level 9, Weapon Training 3 at level 13, Weapon Training 4 at level 17
@@ -4366,6 +4392,25 @@ const ARMOR_TRAINING_4_MAX_DEX_INCREASE: i16 = 4;
 // actual damage reduction.
 const FIGHTER_ARMOR_MASTERY_LEVEL: u8 = 19;
 const ARMOR_MASTERY_DAMAGE_REDUCTION: i16 = 5;
+
+// Fighter Weapon Mastery, gained at level 20 (SD18 widening, the Fighter
+// capstone -- the FINAL level within PF1's 1-20 character-level cap).
+// Verified independently against d20pfsrd.com/classes/core-classes/fighter/
+// and aonprd.com/ClassDisplay.aspx?ItemName=Fighter (byte-for-byte
+// agreement): "At 20th level, a fighter chooses one weapon, such as the
+// longsword, greataxe, or longbow. Any attacks made with that weapon
+// automatically confirm all critical threats and have their damage
+// multiplier increased by 1 (x2 becomes x3, for example). In addition, he
+// cannot be disarmed while wielding a weapon of this type." This is a
+// genuinely new named class feature. Grounded as a bounded grant-only
+// identity/magnitude record only, mirroring exactly how the Fighter's own
+// Armor Mastery class feature was grounded: no critical-hit-confirmation
+// engine, no damage-multiplier-application engine, and no
+// disarm-resolution engine exists anywhere in this codebase to apply it,
+// so this grounds no actual automatic-critical-confirmation, no actual
+// damage-multiplier change, and no actual disarm immunity.
+const FIGHTER_WEAPON_MASTERY_LEVEL: u8 = 20;
+const WEAPON_MASTERY_CRITICAL_MULTIPLIER_INCREASE: i16 = 1;
 
 // Fighter Bravery, gained at level 2 with an additional +1 every four Fighter
 // levels thereafter (level 6, level 10, ...): +1 Will save vs fear at level 2,
@@ -6491,6 +6536,25 @@ fn explain_fighter_class_features(
         });
     }
 
+    if level >= 20
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_20_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_20_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 20 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_20_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. The canonical Critical Mastery selection's \
+                     prerequisites (two other critical feats) are honestly met by the canonical \
+                     loadout: Improved Critical, Critical Focus, and Staggering Critical are all \
+                     already-selected fighter bonus feats. This slice grounds the bonus-feat \
+                     slot, not a general feat-effect or prerequisite engine, so it contributes no \
+                     computed mechanical value (+0)"
+            ),
+        });
+    }
+
     let armor_training = fighter_armor_training(level);
     if armor_training.rank == 4 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
@@ -6700,6 +6764,39 @@ fn explain_fighter_class_features(
             ),
         });
     }
+
+    // Weapon Mastery (level 20, SD18 widening, the Fighter capstone): a
+    // bounded grant-only identity/magnitude record only, mirroring exactly
+    // how the Fighter's own Armor Mastery class feature was grounded
+    // (class_feature.fighter.armor_mastery). No critical-hit-confirmation
+    // engine, no damage-multiplier-application engine, and no
+    // disarm-resolution engine exists anywhere in this codebase to apply
+    // it, so this grounds no actual automatic-critical-confirmation, no
+    // actual damage-multiplier change, and no actual disarm immunity.
+    if level >= FIGHTER_WEAPON_MASTERY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.weapon_mastery".to_owned(),
+            value: WEAPON_MASTERY_CRITICAL_MULTIPLIER_INCREASE,
+            detail: format!(
+                "Fighter level {FIGHTER_WEAPON_MASTERY_LEVEL} Weapon Mastery \
+                 (cr_abilities_class.lst Fighter; verified against \
+                 d20pfsrd.com/classes/core-classes/fighter/ and \
+                 aonprd.com/ClassDisplay.aspx?ItemName=Fighter, byte-for-byte agreement: \"a \
+                 fighter chooses one weapon, such as the longsword, greataxe, or longbow. Any \
+                 attacks made with that weapon automatically confirm all critical threats and \
+                 have their damage multiplier increased by {WEAPON_MASTERY_CRITICAL_MULTIPLIER_INCREASE} \
+                 (x2 becomes x3, for example). In addition, he cannot be disarmed while wielding \
+                 a weapon of this type\"): a bounded grant-only identity/magnitude record only \
+                 (critical-multiplier-increase value {WEAPON_MASTERY_CRITICAL_MULTIPLIER_INCREASE}, \
+                 non-fabricated), mirroring exactly how the Fighter's own Armor Mastery class \
+                 feature was grounded -- no critical-hit-confirmation engine, no \
+                 damage-multiplier-application engine, and no disarm-resolution engine exists \
+                 anywhere in this codebase to apply it, so this grounds no actual \
+                 automatic-critical-confirmation, no actual damage-multiplier change, and no \
+                 actual disarm immunity"
+            ),
+        });
+    }
 }
 
 /// Ground the Fighter level-1 hit-point milestone as a standalone explanation
@@ -6848,7 +6945,7 @@ fn explain_fighter_favored_class_bonus_choice(
 /// validates the level-5 and level-9 weapon-training-group choices, since each is
 /// structurally identical to a bonus-feat slot (a named choice-set that must match
 /// one canonical selection).
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 16] = [
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 17] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -6909,6 +7006,10 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 16] = [
     (
         FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID,
         STAGGERING_CRITICAL_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_20_BONUS_FEAT_CHOICE_ID,
+        CRITICAL_MASTERY_FEAT_SELECTION,
     ),
 ];
 
