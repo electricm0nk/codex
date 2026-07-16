@@ -151,20 +151,21 @@ fn unsupported_chassis_blocks_total_saves() {
 #[test]
 fn wrong_fighter_level_blocks_total_saves() {
     // Total saves are grounded only across the bounded Fighter milestone levels
-    // 1-17 (SD13-E5 widened levels 9-10, Weapon Training 2 and the level-10 bonus
+    // 1-18 (SD13-E5 widened levels 9-10, Weapon Training 2 and the level-10 bonus
     // feat; SD18 widened level 11, Armor Training 3, level 12, a sixth
     // bonus-feat cadence slot, level 13, Weapon Training 3, level 14, a
     // seventh bonus-feat cadence slot and the Bravery magnitude rise, level
-    // 15, Armor Training 4, level 16, an eighth bonus-feat cadence slot, and
-    // level 17, Weapon Training 4 and a fourth weapon-group choice slot,
-    // into the supported tranche). A Fighter above that bounded tranche
-    // (level 18+, beyond the SD-13/SD-18 level-17 progression matrix) must
-    // be claim-blocked rather than silently computed, just like a
-    // non-Fighter class.
+    // 15, Armor Training 4, level 16, an eighth bonus-feat cadence slot,
+    // level 17, Weapon Training 4 and a fourth weapon-group choice slot, and
+    // level 18, a ninth bonus-feat cadence slot and a further Bravery
+    // magnitude rise, into the supported tranche). A Fighter above that
+    // bounded tranche (level 19+, beyond the SD-13/SD-18 level-18
+    // progression matrix) must be claim-blocked rather than silently
+    // computed, just like a non-Fighter class.
     let mutated = DETERMINISTIC_FIXTURE
-        .replace("class_level=class:fighter:1", "class_level=class:fighter:18");
+        .replace("class_level=class:fighter:1", "class_level=class:fighter:19");
     assert!(
-        mutated.contains("class_level=class:fighter:18"),
+        mutated.contains("class_level=class:fighter:19"),
         "test setup should have mutated the Fighter level"
     );
     let input = load(&mutated);
