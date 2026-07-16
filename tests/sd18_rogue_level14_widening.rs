@@ -238,17 +238,20 @@ fn rogue_level13_truth_is_unchanged_by_this_slice() {
 // too, so this boundary control moved again, to level 19. A further SD18
 // widening (cycle-2026-07-16T3600, tests/sd18_rogue_level19_widening.rs)
 // now genuinely recognizes level 19 too, so this boundary control moves
-// again, to level 20.
+// again, to level 20. A further SD18 widening (cycle-2026-07-16T1431,
+// tests/sd18_rogue_level20_widening.rs) now genuinely recognizes level 20
+// too, so this boundary control moves again, to level 21 (PF1 has no 21st
+// character level; this is a pure implementation-gate check).
 
 #[test]
-fn rogue_level_20_stays_claim_blocked() {
-    let level_20 = ROGUE_LEVEL14_FIXTURE.replace("class:rogue:14", "class:rogue:20");
-    let input = load(&level_20);
+fn rogue_level_21_stays_claim_blocked() {
+    let level_21 = ROGUE_LEVEL14_FIXTURE.replace("class:rogue:14", "class:rogue:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-20 Rogue must stay claim-blocked beyond the bounded levels-1-19 row: {:?}",
+        "level-21 Rogue must stay claim-blocked beyond the bounded levels-1-20 row: {:?}",
         computation.diagnostics
     );
     assert!(
@@ -256,7 +259,7 @@ fn rogue_level_20_stays_claim_blocked() {
             .explanations
             .iter()
             .any(|e| e.id == "class_chassis.rogue.base_attack_bonus"),
-        "level-20 Rogue must not fabricate a base-attack-bonus explanation"
+        "level-21 Rogue must not fabricate a base-attack-bonus explanation"
     );
 }
 
