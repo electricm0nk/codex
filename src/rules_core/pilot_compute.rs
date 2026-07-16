@@ -389,9 +389,16 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // stays 6/day (an integer-division coincidence with level 17; the next
 // rise lands at level 19) while its damage bonus genuinely rises to 18.
 // The base spells-per-day table's level-18 row is "4/3/2/2": only the
-// 4th-level column genuinely rises (from 1 to 2). Nothing here grounds
-// level 19+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 19;
+// 4th-level column genuinely rises (from 1 to 2). The base spells-per-day
+// table's level-19 row is "4/3/3/2": only the 3rd-level column genuinely
+// rises (from 2 to 3). The base spells-per-day table's level-20 row is
+// "4/4/3/3" (verified independently against raw HTML fetches of d20pfsrd
+// and the Archives of Nethys aonprd.com mirror, byte-for-byte agreement):
+// the 2nd-level AND 4th-level columns BOTH genuinely rise simultaneously
+// (2nd from 3 to 4, 4th from 2 to 3) -- the first level in this row's own
+// widening history where two columns rise at once. Nothing here grounds
+// level 21+ Paladin (PF1's 1-20 character-level cap).
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 20;
 
 // Aura of Faith is a 14th-level paladin feature in the PF1 Core Rulebook
 // (verified independently against d20pfsrd, the Archives of Nethys
@@ -431,6 +438,27 @@ const PALADIN_AURA_OF_JUSTICE_LEVEL: u8 = 11;
 // and no compulsion-immunity-check engine exists anywhere in this
 // codebase to apply this to.
 const PALADIN_AURA_OF_RIGHTEOUSNESS_LEVEL: u8 = 17;
+
+// Holy Champion is the 20th-level paladin capstone in the PF1 Core Rulebook
+// (verified independently against a raw HTML fetch of d20pfsrd.com's own
+// class table and description, and a raw HTML fetch of the Archives of
+// Nethys aonprd.com mirror's ClassDisplay.aspx, both agreeing byte-for-byte,
+// bypassing AI-summarization to guard against a tool-extraction artifact):
+// "At 20th level, a paladin becomes a conduit for the power of her god. Her
+// DR increases to 10/evil. Whenever she uses smite evil and successfully
+// strikes an evil outsider, the outsider is also subject to a banishment,
+// using her paladin level as the caster level... After the banishment
+// effect and the damage from the attack is resolved, the smite immediately
+// ends. In addition, whenever she channels positive energy or uses lay on
+// hands to heal a creature, she heals the maximum possible amount." Below
+// this level its honest computed surface is its correct ABSENCE (value 0);
+// at or above it, this slice grounds a bounded GRANT-only identity record
+// (mirroring the Aura of Justice / Aura of Faith / Aura of Righteousness
+// idiom exactly): no damage-reduction-application engine, no
+// banishment-spell-effect-resolution engine, and no healing-maximization
+// execution engine exists anywhere in this codebase to apply any of this
+// to.
+const PALADIN_HOLY_CHAMPION_LEVEL: u8 = 20;
 
 // Lay on hands and divine grace are both 2nd-level paladin features in the PF1 Core
 // Rulebook. Below this level their honest computed surface is their correct
@@ -7714,6 +7742,45 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
+    // Holy Champion: below the level-20 gate, this stays a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it (SD18 level-20
+    // widening, the class capstone), it transitions to a bounded GRANT-only
+    // identity record (mirroring the Aura of Justice / Aura of Faith / Aura
+    // of Righteousness idiom exactly). No damage-reduction-application
+    // engine, no banishment-spell-effect-resolution engine, and no
+    // healing-maximization execution engine exists anywhere in this
+    // codebase to apply this to.
+    if level < PALADIN_HOLY_CHAMPION_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.holy_champion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Holy Champion at paladin level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Holy Champion is the 20th-level paladin capstone."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.holy_champion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Holy Champion granted at paladin level {level} (PF1 Core Rulebook, \
+                 20th-level paladin capstone): \"At 20th level, a paladin becomes a conduit for \
+                 the power of her god. Her DR increases to 10/evil. Whenever she uses smite evil \
+                 and successfully strikes an evil outsider, the outsider is also subject to a \
+                 banishment, using her paladin level as the caster level... After the \
+                 banishment effect and the damage from the attack is resolved, the smite \
+                 immediately ends. In addition, whenever she channels positive energy or uses \
+                 lay on hands to heal a creature, she heals the maximum possible amount.\" This \
+                 is a bounded grant-only identity record only (value 0, non-fabricated): no \
+                 damage-reduction-application engine, no banishment-spell-effect-resolution \
+                 engine, and no healing-maximization execution engine exists anywhere in this \
+                 codebase to apply any of this to."
+            ),
+        });
+    }
+
     // SD13-E5: ground the partial-caster IDENTITY itself as one more flat
     // level-gate record, distinct from the still-ungrounded spell burden
     // named below. PF1 Core Rulebook: effective caster level = max(paladin
@@ -7892,7 +7959,19 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // byte-for-byte agreement with no disagreement or self-contradiction,
     // so a third source was not required: only the 3rd-level column
     // genuinely rises (from 2 to 3), while the 1st/2nd/4th-level columns
-    // stay 4/3/2 numerically unchanged. A "0" is a
+    // stay 4/3/2 numerically unchanged; and (SD18 cycle-2026-07-16T1500)
+    // level 20 "4/4/3/3" — verified independently against a raw `curl`
+    // fetch of d20pfsrd.com's own class table HTML and a raw `curl` fetch
+    // of the Archives of Nethys aonprd.com mirror's ClassDisplay.aspx HTML,
+    // both bypassing AI-summarization, byte-for-byte agreement with no
+    // disagreement: the 1st/3rd-level columns stay 4/3 numerically
+    // unchanged, while the 2nd-level AND 4th-level columns BOTH genuinely
+    // rise simultaneously (2nd from 3 to 4, 4th from 2 to 3) — the first
+    // level in this row's own widening history where two columns rise at
+    // once, a deliberate deviation from the single-column-rise pattern seen
+    // at every level from 13 through 19, so both raw HTML fetches were
+    // double-checked directly to guard against a tool-extraction artifact.
+    // A "0" is a
     // genuine table entry (bonus-spells-only access), NOT an absence —
     // inaccessible spell levels ("—" columns) get no record at all. Only
     // the base counts are grounded: bonus spells per day from a high
@@ -7913,6 +7992,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         17 => [Some(4), Some(3), Some(2), Some(1)],
         18 => [Some(4), Some(3), Some(2), Some(2)],
         19 => [Some(4), Some(3), Some(3), Some(2)],
+        20 => [Some(4), Some(4), Some(3), Some(3)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
