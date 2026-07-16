@@ -259,22 +259,24 @@ fn fighter_level16_truth_is_unchanged_by_this_slice() {
     assert_eq!(computation.baseline_melee_attack_bonus, 23);
 }
 
-// ----- Negative control: level 19 stays claim-blocked (beyond the bounded L2-18 row) -----
+// ----- Negative control: level 20 stays claim-blocked (beyond the bounded L2-19 row) -----
 //
-// SD18 (tests/sd18_fighter_level18_widening.rs) further widened the bounded
-// tranche from level 17 to level 18 (a ninth bonus-feat cadence slot and a
-// further Bravery magnitude rise), so this negative control now sits just
-// above the current bound (level 19) rather than at level 18.
+// SD18 (tests/sd18_fighter_level18_widening.rs, tests/sd18_fighter_level19_widening.rs)
+// further widened the bounded tranche from level 17 to level 18 (a ninth
+// bonus-feat cadence slot and a further Bravery magnitude rise), and then
+// to level 19 (the Armor Mastery flat-magnitude damage reduction record),
+// so this negative control now sits just above the current bound (level
+// 20) rather than at level 18 or level 19.
 
 #[test]
-fn fighter_level_19_stays_claim_blocked() {
-    let level_19 = FIGHTER_LEVEL17_FIXTURE.replace("class:fighter:17", "class:fighter:19");
-    let input = load(&level_19);
+fn fighter_level_20_stays_claim_blocked() {
+    let level_20 = FIGHTER_LEVEL17_FIXTURE.replace("class:fighter:17", "class:fighter:20");
+    let input = load(&level_20);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-19 Fighter must stay claim-blocked beyond the bounded levels-2-18 row: {:?}",
+        "level-20 Fighter must stay claim-blocked beyond the bounded levels-2-19 row: {:?}",
         computation.diagnostics
     );
     assert!(
@@ -282,7 +284,7 @@ fn fighter_level_19_stays_claim_blocked() {
             .explanations
             .iter()
             .any(|e| e.id == "class_chassis.base_attack_bonus"),
-        "level-19 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-20 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 

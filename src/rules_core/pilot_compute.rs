@@ -3868,13 +3868,22 @@ const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 // slot, see FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID below, and raises
 // Bravery's already-generic magnitude formula to +5 -- level 18 is neither
 // a weapon-training rank-rise level nor an armor-training rank-rise level,
-// so neither pillar widens there). Nothing here grounds level 19+ Fighter
-// burden, the weapon-training damage-roll half, the Bravery Will-vs-fear
-// bonus resolution, or any non-Fighter positive support. The generic PF1
-// ability-score-increase milestones (levels 4 and 8) need no separate seam:
-// the chosen ability score is trusted at face value, like every other
-// ability adjustment in this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 18;
+// so neither pillar widens there; level 19 (SD18 widening) is neither a
+// bonus-feat cadence level (1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 -- 19 is
+// absent), a weapon-training rank-rise level, nor an armor-training
+// rank-rise level, so none of those three pillars widen there, but the PF1
+// Core Rulebook level-19 Special column names a genuinely new class
+// feature, Armor Mastery (DR 5/-- while wearing armor or using a shield),
+// see FIGHTER_ARMOR_MASTERY_LEVEL below, grounded as a bounded
+// flat-magnitude record only, mirroring the already-proven Barbarian
+// Damage Reduction idiom). Nothing here grounds level 20+ Fighter burden,
+// the weapon-training damage-roll half, the Bravery Will-vs-fear bonus
+// resolution, the Armor Mastery damage-reduction application, or any
+// non-Fighter positive support. The generic PF1 ability-score-increase
+// milestones (levels 4 and 8) need no separate seam: the chosen ability
+// score is trusted at face value, like every other ability adjustment in
+// this codebase.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 19;
 
 // Fighter level-1 hit points. PF1 maximizes the hit die at 1st character level:
 // the Fighter's d10 hit die grants 10 hit points at level 1, plus the
@@ -4036,6 +4045,22 @@ const ARMOR_TRAINING_3_MAX_DEX_INCREASE: i16 = 3;
 const FIGHTER_ARMOR_TRAINING_4_LEVEL: u8 = 15;
 const ARMOR_TRAINING_4_ARMOR_CHECK_REDUCTION: i16 = 4;
 const ARMOR_TRAINING_4_MAX_DEX_INCREASE: i16 = 4;
+
+// Fighter Armor Mastery, gained at level 19 (SD18 widening). Verified
+// independently against d20pfsrd.com/classes/core-classes/fighter/ and
+// aonprd.com/ClassDisplay.aspx?ItemName=Fighter (byte-for-byte agreement):
+// "At 19th level, a fighter gains DR 5/-- whenever he is wearing armor or
+// using a shield." This is a genuinely new named class feature (NOT another
+// Armor Training rank -- the PF1 Core Rulebook names no fifth Armor
+// Training rank, and Armor Mastery is a distinct feature from the Armor
+// Training pillar). Grounded as a bounded flat-magnitude record only,
+// mirroring exactly how the Barbarian's own Damage Reduction class feature
+// was grounded: no damage-resolution engine and no incoming-damage total
+// exists anywhere in this codebase to apply it, and no
+// worn-armor-or-shield condition check is computed, so this grounds no
+// actual damage reduction.
+const FIGHTER_ARMOR_MASTERY_LEVEL: u8 = 19;
+const ARMOR_MASTERY_DAMAGE_REDUCTION: i16 = 5;
 
 // Fighter Bravery, gained at level 2 with an additional +1 every four Fighter
 // levels thereafter (level 6, level 10, ...): +1 Will save vs fear at level 2,
@@ -6343,6 +6368,32 @@ fn explain_fighter_class_features(
                 ),
             });
         }
+    }
+
+    // Armor Mastery (level 19, SD18 widening): a bounded flat-magnitude
+    // record only, mirroring exactly how the Barbarian's own Damage
+    // Reduction class feature was grounded (class_feature.barbarian.
+    // damage_reduction). No damage-resolution engine and no incoming-damage
+    // total exists anywhere in this codebase to apply it, and no
+    // worn-armor-or-shield condition check is computed, so this grounds no
+    // actual damage reduction.
+    if level >= FIGHTER_ARMOR_MASTERY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.armor_mastery".to_owned(),
+            value: ARMOR_MASTERY_DAMAGE_REDUCTION,
+            detail: format!(
+                "Fighter level {FIGHTER_ARMOR_MASTERY_LEVEL} Armor Mastery (cr_abilities_class.lst \
+                 Fighter; verified against d20pfsrd.com/classes/core-classes/fighter/ and \
+                 aonprd.com/ClassDisplay.aspx?ItemName=Fighter, byte-for-byte agreement: \"a \
+                 fighter gains DR {ARMOR_MASTERY_DAMAGE_REDUCTION}/-- whenever he is wearing \
+                 armor or using a shield\"): a bounded flat-magnitude record only (value \
+                 {ARMOR_MASTERY_DAMAGE_REDUCTION}, non-fabricated), mirroring exactly how the \
+                 Barbarian's own Damage Reduction class feature was grounded -- no \
+                 damage-resolution engine and no incoming-damage total exists anywhere in this \
+                 codebase to apply it, and no worn-armor-or-shield condition check is computed, \
+                 so this grounds no actual damage reduction"
+            ),
+        });
     }
 }
 

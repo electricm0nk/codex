@@ -355,7 +355,9 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
 // SD18 level-12 widening proof. Further extended to also cite the live SD18
 // level-13 Weapon Training 3 widening proof, mirroring how the Rogue and
 // Barbarian rows were each extended to also cite their own SD18 level-13
-// widening proof.
+// widening proof. Further extended to also cite the live SD18 level-19 Armor
+// Mastery widening proof, mirroring how the Barbarian and Cleric rows were
+// each extended to also cite their own SD18 level-19 widening proof.
 const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs + \
     tests/sd18_fighter_level11_armor_training3.rs + \
     tests/sd18_fighter_level12_widening.rs + \
@@ -364,7 +366,8 @@ const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level1
     tests/sd18_fighter_level15_widening.rs + \
     tests/sd18_fighter_level16_widening.rs + \
     tests/sd18_fighter_level17_widening.rs + \
-    tests/sd18_fighter_level18_widening.rs";
+    tests/sd18_fighter_level18_widening.rs + \
+    tests/sd18_fighter_level19_widening.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
 /// the SD13-E3-F5 mandatory-milestone classification proof (which level-1
@@ -1080,10 +1083,10 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.fighter.levels_2_10",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
-                dimension: "class progression across levels 2-18: bounded milestone proof \
-                            for levels 2 through 18 (SD18 widens the prior levels 2-10 tranche \
-                            by eight levels), with the Weapon Training damage-roll half still \
-                            unproven",
+                dimension: "class progression across levels 2-19: bounded milestone proof \
+                            for levels 2 through 19 (SD18 widens the prior levels 2-10 tranche \
+                            by nine levels), with the Weapon Training damage-roll half and the \
+                            Armor Mastery damage-reduction application still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -1226,15 +1229,41 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     and the level-18 base attack bonus is +18); Weapon Training and Armor \
                     Training both stay at rank 4, integer-division coincidences with level 17 \
                     (the PF1 Core Rulebook names no fifth rank for either pillar in this range). \
-                    No Fighter level 19+ is proven",
+                    SD18 (cycle-2026-07-16T0100, the third class to reach level 19 in the §3.2 \
+                    level-19 sweep, after Barbarian and Cleric) further widens to level 19: base \
+                    attack bonus genuinely rises to 19 (full BAB) while all three base saves stay \
+                    numerically unchanged from level 18 (good Fortitude 19/2+2=11, poor \
+                    Reflex/Will both 19/3=6), integer-division coincidences; the PF1 Core \
+                    Rulebook Fighter class table's level-19 Special column reads \"Armor \
+                    mastery\" only (verified independently against \
+                    d20pfsrd.com/classes/core-classes/fighter/ and \
+                    aonprd.com/ClassDisplay.aspx?ItemName=Fighter, byte-for-byte agreement, \
+                    fetching the full levels-16-through-20 block in one pass to rule out \
+                    misattribution): level 19 is NOT a Fighter bonus-feat cadence level (1, 2, 4, \
+                    6, 8, 10, 12, 14, 16, 18, 20 — 19 is absent), NOT a Weapon Training rank-rise \
+                    level (ranks rise at 5, 9, 13, 17), and NOT an Armor Training rank-rise level \
+                    (ranks rise at 3, 7, 11, 15; the PF1 Core Rulebook names no fifth rank), so \
+                    none of those three pillars widen and Bravery stays +5, an integer-division \
+                    coincidence with level 18 (the next rise, level 22, is beyond the PF1 level \
+                    cap). Armor Mastery itself IS a genuinely new named class feature (\"a \
+                    fighter gains DR 5/— whenever he is wearing armor or using a shield\"), \
+                    grounded as a bounded flat-magnitude record only \
+                    (class_feature.fighter.armor_mastery, value 5 at or above level 19), \
+                    mirroring exactly the already-proven Barbarian Damage Reduction idiom: no \
+                    damage-resolution engine and no incoming-damage total exists anywhere in \
+                    this codebase to apply it, and no worn-armor-or-shield condition check is \
+                    computed, so this grounds no actual damage reduction. No Fighter level 20 is \
+                    proven",
                 next_required_uplift: "later SD13/SD18 slice grounding the remaining named \
-                    Fighter class-feature burden inside levels 2-18: the Weapon Training \
+                    Fighter class-feature burden inside levels 2-19: the Weapon Training \
                     damage-roll half (which first needs any damage total to exist on the compute \
                     surface), a fear-condition/save-resolution engine to apply the Bravery \
                     magnitude to an actual Will save (a tranche-level subsystem decision, not a \
-                    slice decision), or level-19+ progression (Armor Mastery at level 19, per \
-                    the PF1 Core Rulebook Special column, which is a DR-and-armor-check-penalty \
-                    named feature not yet verified or scoped)",
+                    slice decision), the Armor Mastery damage-reduction application (which first \
+                    needs any incoming-damage total and a worn-armor-or-shield condition check on \
+                    the compute surface), or level-20 progression (Bonus feat, Weapon mastery — \
+                    the capstone — per the PF1 Core Rulebook Special column, not yet verified or \
+                    scoped)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",
