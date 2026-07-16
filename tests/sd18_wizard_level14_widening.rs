@@ -268,18 +268,19 @@ fn wizard_level13_truth_is_unchanged_by_this_slice() {
     assert_eq!(intense.value, 6, "Wizard level 13 Intense Spells bonus damage must stay 6");
 }
 
-// ----- Negative control: level 20 stays unrecognized by this slice -----
-// (widened from level 16 all the way to level 19 by the SD18
-// wizard-level16-widening through wizard-level19-widening cycles, which
-// genuinely promote levels 16-19 — see tests/sd18_wizard_level16_widening.rs
-// through tests/sd18_wizard_level19_widening.rs — mirroring the exact same
-// boundary move the Barbarian/Fighter/Sorcerer level-19 widening cycles each
-// made for their own sibling negative controls.)
+// ----- Negative control: level 21 stays unrecognized by this slice -----
+// (widened from level 16 all the way to level 20 by the SD18
+// wizard-level16-widening through wizard-level20-widening cycles, which
+// genuinely promote levels 16-20 — see tests/sd18_wizard_level16_widening.rs
+// through tests/sd18_wizard_level20_widening.rs — mirroring the exact same
+// boundary move the Cleric level-20 widening cycle made for its own sibling
+// negative controls. PF1 has no 21st character level; this is a pure
+// implementation-gate check only.)
 
 #[test]
-fn wizard_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = WIZARD_LEVEL14_FIXTURE.replace("class:wizard:14", "class:wizard:20");
-    let input = load(&level_20);
+fn wizard_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = WIZARD_LEVEL14_FIXTURE.replace("class:wizard:14", "class:wizard:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -288,7 +289,7 @@ fn wizard_level_20_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id.starts_with("class_feature.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-20 Wizard must not gain any bounded wizard explanation: {:?}",
+        "level-21 Wizard must not gain any bounded wizard explanation: {:?}",
         computation.explanations
     );
 }
