@@ -887,11 +887,17 @@ const SD19_ILLUSION_SCHOOL_TEST: &str = "tests/sd19_school_illusion.rs";
 /// .school_coverage[Necromancy]` through `compute_pilot_with_corpus`.
 const SD19_NECROMANCY_SCHOOL_TEST: &str = "tests/sd19_school_necromancy.rs";
 
+/// SD-19 §2.4 Transmutation school-reachability proof: every real-corpus
+/// Transmutation spell in `cr_spells.lst` (152 records) resolves via
+/// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
+/// .school_coverage[Transmutation]` through `compute_pilot_with_corpus`.
+const SD19_TRANSMUTATION_SCHOOL_TEST: &str = "tests/sd19_school_transmutation.rs";
+
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice,
 /// widened by SD-19 §2.4/§2.5 per-cycle school/equipment rows.
 ///
-/// Returns exactly 28 rows: 7 race, 12 class, 2 interaction, and (as of this
-/// cycle) 7 school. The race/class/interaction content is fixed and grounded
+/// Returns exactly 29 rows: 7 race, 12 class, 2 interaction, and (as of this
+/// cycle) 8 school. The race/class/interaction content is fixed and grounded
 /// from SD-13; SD-19 cycles append one school or equipment row per landed
 /// cycle, never rewriting an existing row's identity.
 pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
@@ -6902,6 +6908,35 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 grounding_ref: SD19_NECROMANCY_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 62 real-corpus Necromancy spells resolve via \
                     spell_id_resolve and appear in school_coverage[Necromancy].spells when \
+                    selected, and the row's table_cell grounds through the foundation slice's \
+                    bootstrap table cell, but the seam computes no spell slot math, no \
+                    spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
+                    §1.3, permanently out of scope for this seam); evidence_tier stays Computed \
+                    until the operator surfaces this reachability in a live UI, per the loop \
+                    instruction's own definition of Supported/Product-visible (operator-driven, \
+                    not loop-driven)",
+                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
+                    Product-visible; the remaining structural gaps (spell slot math, spellbook \
+                    posture, spell save DCs) are a future SD-N's scope per decisions.md §1.3, \
+                    not a further per-cycle widening of this row",
+            },
+            SupportStateRow {
+                row_id: "school.transmutation.spell_reachability",
+                subject_type: MatrixSubjectType::School(
+                    crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId::Transmutation,
+                ),
+                subject_id: "school:transmutation",
+                dimension: "PF1 Transmutation strict-school spell reachability: every real-corpus \
+                    Transmutation spell (152 records in cr_spells.lst) is resolvable via \
+                    spell_id_resolve when selected on CharacterInput.spells_selected, and \
+                    present in CorpusPilotReceipt.corpus_derived.school_coverage[Transmutation] \
+                    after a call to compute_pilot_with_corpus",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_TRANSMUTATION_SCHOOL_TEST,
+                blocker_or_lossiness_note: "all 152 real-corpus Transmutation spells resolve via \
+                    spell_id_resolve and appear in school_coverage[Transmutation].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
                     bootstrap table cell, but the seam computes no spell slot math, no \
                     spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
