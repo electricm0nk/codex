@@ -3581,14 +3581,18 @@ const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 // rank 4 and its fourth chosen weapon group, see
 // FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID below -- level 17 is neither a
 // bonus-feat cadence level (1, 2, 4, 6, 8, 10, 12, 14, 16, ...) nor an
-// armor-training rank-rise level, so neither of those pillars widens there).
-// Nothing here grounds level 18+ Fighter burden, the weapon-training
-// damage-roll half, the Bravery Will-vs-fear bonus resolution, or any
-// non-Fighter positive support. The generic PF1 ability-score-increase
-// milestones (levels 4 and 8) need no separate seam: the chosen ability
-// score is trusted at face value, like every other ability adjustment in
-// this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 17;
+// armor-training rank-rise level, so neither of those pillars widens there;
+// level 18 (SD18 widening) widens the bonus-feat cadence with a ninth named
+// slot, see FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID below, and raises
+// Bravery's already-generic magnitude formula to +5 -- level 18 is neither
+// a weapon-training rank-rise level nor an armor-training rank-rise level,
+// so neither pillar widens there). Nothing here grounds level 19+ Fighter
+// burden, the weapon-training damage-roll half, the Bravery Will-vs-fear
+// bonus resolution, or any non-Fighter positive support. The generic PF1
+// ability-score-increase milestones (levels 4 and 8) need no separate seam:
+// the chosen ability score is trusted at face value, like every other
+// ability adjustment in this codebase.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 18;
 
 // Fighter level-1 hit points. PF1 maximizes the hit die at 1st character level:
 // the Fighter's d10 hit die grants 10 hit points at level 1, plus the
@@ -3668,6 +3672,18 @@ const GREATER_WEAPON_SPECIALIZATION_FEAT_SELECTION: &str = "feat:greater_weapon_
 // canonical loadout: the level-16 Fighter's own base attack bonus is +16.
 const FIGHTER_LEVEL_16_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_16";
 const CRITICAL_FOCUS_FEAT_SELECTION: &str = "feat:critical_focus";
+
+// Fighter level-18 bonus-feat progression seam (SD18 widening). Fighter gains
+// an additional bonus feat at level 18 (the cadence continues 1, 2, 4, 6, 8,
+// 10, 12, 14, 16, 18); this slice surfaces the named selection as an
+// explicit seam only and grounds no general feat-effect or prerequisite
+// engine, mirroring the level-2 through level-16 seams. The canonical
+// Staggering Critical selection's prerequisites (Critical Focus and base
+// attack bonus +13) are honestly met by the canonical loadout: Critical
+// Focus is the level-16 fighter bonus feat and the level-18 Fighter's own
+// base attack bonus is +18.
+const FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_18";
+const STAGGERING_CRITICAL_FEAT_SELECTION: &str = "feat:staggering_critical";
 
 // Fighter Weapon Training, gained at level 5 with a new rank every four levels
 // (rank = 1 + (level - 5) / 4): Weapon Training 1 at level 5, Weapon Training 2
@@ -5844,6 +5860,25 @@ fn explain_fighter_class_features(
         });
     }
 
+    if level >= 18
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_18_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 18 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. The canonical Staggering Critical \
+                     selection's prerequisites (Critical Focus and base attack bonus +13) are \
+                     honestly met by the canonical loadout: Critical Focus is the level-16 \
+                     fighter bonus feat and the level-18 base attack bonus is +18. This slice \
+                     grounds the bonus-feat slot, not a general feat-effect or prerequisite \
+                     engine, so it contributes no computed mechanical value (+0)"
+            ),
+        });
+    }
+
     let armor_training = fighter_armor_training(level);
     if armor_training.rank == 4 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
@@ -6175,7 +6210,7 @@ fn explain_fighter_favored_class_bonus_choice(
 /// validates the level-5 and level-9 weapon-training-group choices, since each is
 /// structurally identical to a bonus-feat slot (a named choice-set that must match
 /// one canonical selection).
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 15] = [
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 16] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -6232,6 +6267,10 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 15] = [
     (
         FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID,
         HAMMERS_GROUP_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID,
+        STAGGERING_CRITICAL_FEAT_SELECTION,
     ),
 ];
 

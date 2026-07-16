@@ -362,7 +362,8 @@ const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level1
     tests/sd18_fighter_level14_widening.rs + \
     tests/sd18_fighter_level15_widening.rs + \
     tests/sd18_fighter_level16_widening.rs + \
-    tests/sd18_fighter_level17_widening.rs";
+    tests/sd18_fighter_level17_widening.rs + \
+    tests/sd18_fighter_level18_widening.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
 /// the SD13-E3-F5 mandatory-milestone classification proof (which level-1
@@ -1073,9 +1074,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 row_id: "class.fighter.levels_2_10",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
-                dimension: "class progression across levels 2-17: bounded milestone proof \
-                            for levels 2 through 17 (SD18 widens the prior levels 2-10 tranche \
-                            by seven levels), with the Weapon Training damage-roll half still \
+                dimension: "class progression across levels 2-18: bounded milestone proof \
+                            for levels 2 through 18 (SD18 widens the prior levels 2-10 tranche \
+                            by eight levels), with the Weapon Training damage-roll half still \
                             unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -1202,14 +1203,32 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     mirroring the second-group (Bows) and third-group (Polearms) idiom exactly; \
                     no new bonus feat lands at level 17 (the cadence's next feat is level 18); \
                     Bravery stays +4, an integer-division coincidence with level 16 (the next \
-                    rise is level 18). No Fighter level 18+ is proven",
+                    rise is level 18). SD18 (this cycle, the fourth class to reach level 18 in \
+                    the §3.2 level-18 sweep, after Wizard, Cleric, and Paladin) further widens \
+                    to level 18: base attack bonus genuinely rises to 18 (full BAB) and all \
+                    three base saves genuinely rise (good Fortitude to 11, poor Reflex and poor \
+                    Will both to 6, via the already-level-generic formulas); the PF1 Core \
+                    Rulebook Fighter class table's level-18 Special column reads \"Bonus feat, \
+                    bravery +5\" (verified against d20pfsrd.com/classes/core-classes/fighter/ \
+                    and aonprd.com/ClassDisplay.aspx?ItemName=Fighter, byte-for-byte agreement, \
+                    including neighboring levels 16, 17, and 19 to rule out misattribution): \
+                    Bravery's already-generic formula (1 + (level-2)/4) genuinely rises to +5 \
+                    with no formula change, and this widening surfaces a NINTH named bonus-feat \
+                    progression seam (the canonical Staggering Critical selection's \
+                    prerequisites — Critical Focus and base attack bonus +13 — are honestly met \
+                    by the canonical loadout: Critical Focus is the level-16 fighter bonus feat \
+                    and the level-18 base attack bonus is +18); Weapon Training and Armor \
+                    Training both stay at rank 4, integer-division coincidences with level 17 \
+                    (the PF1 Core Rulebook names no fifth rank for either pillar in this range). \
+                    No Fighter level 19+ is proven",
                 next_required_uplift: "later SD13/SD18 slice grounding the remaining named \
-                    Fighter class-feature burden inside levels 2-17: the Weapon Training \
+                    Fighter class-feature burden inside levels 2-18: the Weapon Training \
                     damage-roll half (which first needs any damage total to exist on the compute \
                     surface), a fear-condition/save-resolution engine to apply the Bravery \
                     magnitude to an actual Will save (a tranche-level subsystem decision, not a \
-                    slice decision), or level-18+ progression (the next bonus-feat cadence slot \
-                    and Bravery magnitude rise, both at level 18)",
+                    slice decision), or level-19+ progression (Armor Mastery at level 19, per \
+                    the PF1 Core Rulebook Special column, which is a DR-and-armor-check-penalty \
+                    named feature not yet verified or scoped)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",

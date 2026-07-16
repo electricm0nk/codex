@@ -259,17 +259,22 @@ fn fighter_level16_truth_is_unchanged_by_this_slice() {
     assert_eq!(computation.baseline_melee_attack_bonus, 23);
 }
 
-// ----- Negative control: level 18 stays claim-blocked (beyond the bounded L2-17 row) -----
+// ----- Negative control: level 19 stays claim-blocked (beyond the bounded L2-18 row) -----
+//
+// SD18 (tests/sd18_fighter_level18_widening.rs) further widened the bounded
+// tranche from level 17 to level 18 (a ninth bonus-feat cadence slot and a
+// further Bravery magnitude rise), so this negative control now sits just
+// above the current bound (level 19) rather than at level 18.
 
 #[test]
-fn fighter_level_18_stays_claim_blocked() {
-    let level_18 = FIGHTER_LEVEL17_FIXTURE.replace("class:fighter:17", "class:fighter:18");
-    let input = load(&level_18);
+fn fighter_level_19_stays_claim_blocked() {
+    let level_19 = FIGHTER_LEVEL17_FIXTURE.replace("class:fighter:17", "class:fighter:19");
+    let input = load(&level_19);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-18 Fighter must stay claim-blocked beyond the bounded levels-2-17 row: {:?}",
+        "level-19 Fighter must stay claim-blocked beyond the bounded levels-2-18 row: {:?}",
         computation.diagnostics
     );
     assert!(
@@ -277,7 +282,7 @@ fn fighter_level_18_stays_claim_blocked() {
             .explanations
             .iter()
             .any(|e| e.id == "class_chassis.base_attack_bonus"),
-        "level-18 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-19 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 
