@@ -257,14 +257,16 @@ fn cleric_level9_truth_is_unchanged_by_this_slice() {
 // tests/sd18_cleric_level15_widening.rs — so the correct negative control
 // boundary for this file's own (level-10-era) baseline moved to level 17 by
 // cycle-2026-07-15T5300, mirroring the exact same boundary move
-// cycle-2026-07-15T3000 made for Fighter; cycle-2026-07-15T9600 moves this
-// boundary again, from 17 to 18, since level 17 is now itself Cleric's
-// supported/grounded row.)
+// cycle-2026-07-15T3000 made for Fighter; cycle-2026-07-15T9600 moved this
+// boundary again, from 17 to 18, since level 17 was then itself Cleric's
+// supported/grounded row; cycle-2026-07-15T14300 moves this boundary again,
+// from 18 to 19, since level 18 is now itself Cleric's supported/grounded
+// row.)
 
 #[test]
-fn cleric_level_18_is_not_promoted_by_this_slice() {
-    let level_18 = CLERIC_LEVEL10_FIXTURE.replace("class:cleric:10", "class:cleric:18");
-    let input = load(&level_18);
+fn cleric_level_19_is_not_promoted_by_this_slice() {
+    let level_19 = CLERIC_LEVEL10_FIXTURE.replace("class:cleric:10", "class:cleric:19");
+    let input = load(&level_19);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -272,7 +274,7 @@ fn cleric_level_18_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-18 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+        "level-19 Cleric must not gain any bounded cleric chassis explanation: {:?}",
         computation.explanations
     );
 }
