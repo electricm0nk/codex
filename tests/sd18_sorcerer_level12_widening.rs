@@ -337,16 +337,17 @@ fn sorcerer_level11_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 20 stays unrecognized by this cycle -----
+// ----- Negative control: level 21 stays unrecognized by this cycle -----
 //
-// SD18 (tests/sd18_sorcerer_level18_widening.rs) further widened the bounded
-// tranche from level 17 to level 18, so this negative control now sits just
-// above the current bound (level 20) rather than at level 19.
+// SD18 (tests/sd18_sorcerer_level20_widening.rs) widened the bounded tranche
+// to level 20, PF1's level cap, so this negative control now sits just above
+// the current bound (level 21, which does not exist in PF1) rather than at
+// level 20.
 
 #[test]
-fn sorcerer_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = SORCERER_LEVEL12_FIXTURE.replace("class:sorcerer:12", "class:sorcerer:20");
-    let input = load(&level_20);
+fn sorcerer_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = SORCERER_LEVEL12_FIXTURE.replace("class:sorcerer:12", "class:sorcerer:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -354,7 +355,7 @@ fn sorcerer_level_20_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.sorcerer.")
                 || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-20 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+        "level-21 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
         computation.explanations
     );
 }

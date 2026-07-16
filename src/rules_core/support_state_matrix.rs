@@ -513,7 +513,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd18_sorcerer_level16_widening.rs + \
     tests/sd18_sorcerer_level17_widening.rs + \
     tests/sd18_sorcerer_level18_widening.rs + \
-    tests/sd18_sorcerer_level19_widening.rs";
+    tests/sd18_sorcerer_level19_widening.rs + \
+    tests/sd18_sorcerer_level20_widening.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -5330,7 +5331,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Sorcerer level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
                             level-8/level-9/level-10/level-11/level-12/level-13/level-14/\
-                            level-15/level-16/level-17/level-18/level-19 \
+                            level-15/level-16/level-17/level-18/level-19/level-20 \
                             spell baseline, with base attack bonus, base save progression, Eschew \
                             Materials, the canonical bloodline choice recognition, and the \
                             Arcane bloodline's class-skill choice (a player's choice of any one \
@@ -5874,16 +5875,45 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     unchanged access ladder, with no new code needed. The row stays Partial, not \
                     Supported: the Arcane Bond / bloodline progression burden and the \
                     spontaneous which-spells-known / casting-execution burden remain named and \
-                    unproven, unchanged from level 18. No spell math is fabricated and no \
-                    Sorcerer level 20 is proven",
+                    unproven, unchanged from level 18 — AND a further SD18 slice \
+                    (cycle-2026-07-16T1503, the loop's NINTH and LAST §3.2 level-20 landing, \
+                    after Cleric, Wizard, Barbarian, Bard, Fighter, Paladin, Ranger, and Rogue, \
+                    closing the level-20 sweep at 9 of 9 eligible classes) widens the \
+                    level-range gate again (supported_sorcerer_level, 1..=20), the FINAL level \
+                    within PF1's 1-20 character-level cap, verified independently against TWO \
+                    primary sources (a raw non-AI-summarized parse of d20pfsrd.com's own HTML \
+                    table and the Archives of Nethys aonprd.com mirror, both byte-for-byte \
+                    identical): base attack bonus genuinely rises to +10 (20/2, up from level \
+                    19's +9, confirmed genuine by the raw table's own `+10/+5` cell) and good \
+                    Will genuinely rises to +12 (20/2+2, up from level 19's +11), while both \
+                    poor saves stay put at +6 (20/3, an integer-division coincidence with level \
+                    19); the level-20 \"Special\" column reads \"Bloodline power\" — \
+                    bloodline-specific (the sorcerer's second bloodline, gaining that \
+                    bloodline's arcana and 1st/3rd/9th-level powers), left named-but-unproven by \
+                    the pre-existing Arcane Bond / bloodline progression blocker, exactly \
+                    mirroring levels 3/5/7/9/11/13/15/17/19 — so no new pillar is grounded from \
+                    it; the already-grounded base spells-per-day table genuinely widens \
+                    (6/6/6/6/6/6/6/6/4 -> 6/6/6/6/6/6/6/6/6, the 9th-level column rising from 4 \
+                    to 6, with no genuinely new spell-level column opening) and the \
+                    already-grounded base spells-known table genuinely widens \
+                    (9/5/5/4/4/4/3/3/3/2 -> 9/5/5/4/4/4/3/3/3/3, the 0th-8th columns staying \
+                    numerically unchanged while the 9th-level column rises from 2 to 3); the \
+                    spell-level access ladder STAYS at 9 (unchanged from level 19; the ladder \
+                    was already fully populated through 9th-level spells at level 18, so no new \
+                    threshold constant is needed); the spell-save-DC and Charisma-bonus-spell \
+                    formulas widen automatically over the unchanged access ladder, with no new \
+                    code needed. Sorcerer level 20 is now the final level within PF1's 1-20 \
+                    character-level cap for this class row, so the per-level arithmetic-widening \
+                    frontier for this row is now fully exhausted. The row stays Partial, not \
+                    Supported: the Arcane Bond / bloodline progression burden and the \
+                    spontaneous which-spells-known / casting-execution burden remain named and \
+                    unproven, unchanged from level 19. No spell math is fabricated",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
-                    bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-20 progression (widening the now-grounded base attack/base save \
-                    formulas; note the Sorcerer spell-level access ladder is now fully populated \
-                    through 9th-level spells, so no further spell-level threshold constants are \
-                    expected — only the base-attack/base-save/per-day/known table VALUES widen at \
-                    level 20, PF1's level cap, likely the final arithmetic-widening opportunity \
-                    for this class)",
+                    bloodline's level-1 power execution), then the spontaneous spell burden \
+                    (which-spells-known selection and spontaneous-casting execution); the \
+                    per-level arithmetic-widening frontier is now fully exhausted at level 20, \
+                    PF1's level cap, so no further per-level widening cycle remains for this \
+                    class",
             },
             SupportStateRow {
                 row_id: "class.wizard.progression_and_spell_burden",
