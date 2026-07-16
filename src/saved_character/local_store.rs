@@ -11,7 +11,7 @@ use std::fs;
 use std::path::Path;
 
 use crate::rules_core::character_input::{
-    ActiveState, CharacterInput, load_character_input_fixture,
+    AcquisitionMode, ActiveState, CharacterInput, load_character_input_fixture,
 };
 
 use super::{
@@ -223,6 +223,10 @@ fn validate_character_input(input: &CharacterInput) -> Result<(), SavedCharacter
     for eq in &input.chosen.equipment_selections {
         single_line("equipment selection item_id", &eq.item_id)?;
     }
+    for spell in &input.chosen.spells_selected {
+        single_line("spell selection spell_id", &spell.spell_id)?;
+        single_line("spell selection source_class_id", &spell.source_class_id)?;
+    }
     for choice in &input.chosen.selected_choices {
         single_line("selected choice choice_set_id", &choice.choice_set_id)?;
         single_line("selected choice selection_id", &choice.selection_id)?;
@@ -330,6 +334,18 @@ fn render_character_input(input: &CharacterInput) -> String {
             ActiveState::Absent => "absent",
         };
         let _ = writeln!(out, "equipment={}:{}", eq.item_id, state);
+    }
+    for spell in &input.chosen.spells_selected {
+        let mode = match spell.acquisition_mode {
+            AcquisitionMode::Known => "known",
+            AcquisitionMode::Prepared => "prepared",
+            AcquisitionMode::Granted => "granted",
+        };
+        let _ = writeln!(
+            out,
+            "spell={}:{}:{mode}",
+            spell.spell_id, spell.source_class_id
+        );
     }
     for choice in &input.chosen.selected_choices {
         let _ = writeln!(

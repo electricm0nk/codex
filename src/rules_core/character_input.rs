@@ -366,20 +366,32 @@ fn active_state_from_token(state: &str) -> Option<ActiveState> {
 }
 
 fn apply_spell_selection(value: &str, parsed: &mut ParsedFixture) {
-    let parts: Vec<&str> = value.split(':').collect();
-
-    if parts.len() != 3 {
-        parsed.diagnostics.push(diagnostic(
+    // source_class_id conventionally contains its own colon (e.g.
+    // "class:demo", mirroring "race:human"/"item:longsword" elsewhere in
+    // this fixture grammar), so this can't be a flat 3-way split. Parse
+    // from the edges instead: acquisition_mode is the last segment,
+    // spell_id is the first segment, and everything between is
+    // source_class_id verbatim.
+    let malformed = || {
+        diagnostic(
             "spells_selected",
             format!(
-                "invalid character input spell selection '{value}' must have exactly 3 \
+                "invalid character input spell selection '{value}' must have at least 3 \
                  colon-separated parts (spell_id:source_class_id:acquisition_mode)"
             ),
-        ));
-        return;
-    }
+        )
+    };
 
-    let Some(acquisition_mode) = acquisition_mode_from_token(parts[2]) else {
+    let Some((rest, mode_token)) = value.rsplit_once(':') else {
+        parsed.diagnostics.push(malformed());
+        return;
+    };
+    let Some((spell_id, source_class_id)) = rest.split_once(':') else {
+        parsed.diagnostics.push(malformed());
+        return;
+    };
+
+    let Some(acquisition_mode) = acquisition_mode_from_token(mode_token) else {
         parsed.diagnostics.push(diagnostic(
             "spells_selected",
             format!(
@@ -391,8 +403,8 @@ fn apply_spell_selection(value: &str, parsed: &mut ParsedFixture) {
     };
 
     parsed.spells_selected.push(SpellSelection {
-        spell_id: parts[0].to_owned(),
-        source_class_id: parts[1].to_owned(),
+        spell_id: spell_id.to_owned(),
+        source_class_id: source_class_id.to_owned(),
         acquisition_mode,
     });
 }
