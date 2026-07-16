@@ -7033,44 +7033,45 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::ArmsArmor,
                 ),
                 subject_id: "category:arms_armor",
-                dimension: "PF1 core-rulebook arms_armor equipment reachability: a \
-                    representative sample of real-corpus cr_equip_arms_armor.lst records \
-                    (Longsword, Banded Mail, Armor Spikes) is resolvable via \
-                    equipment_id_resolve when selected on \
-                    CharacterInput.equipment_selections, and present in \
+                dimension: "PF1 core-rulebook arms_armor equipment reachability: every \
+                    one of the 310 real-corpus cr_equip_arms_armor.lst records (full \
+                    coverage, not a sample) is resolvable via equipment_id_resolve when \
+                    selected on CharacterInput.equipment_selections, present in \
                     CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
-                    compute_pilot_with_corpus",
+                    compute_pilot_with_corpus, and carries a non-None TableCellRef",
                 support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_ARMS_ARMOR_EQUIPMENT_TEST,
-                blocker_or_lossiness_note: "the sample (Longsword, Banded Mail, Armor \
-                    Spikes) resolves via equipment_id_resolve and appears in \
-                    equipped_items with its equipment_record_name/equipment_record_key \
-                    populated; only Longsword grounds through the foundation slice's \
-                    bootstrap table cell today (the other two sample items' table_cell \
-                    stays None until a future cycle widens \
-                    rules_tables::crb::equipment_tables), and derived_stats \
+                blocker_or_lossiness_note: "all 310 real-corpus arms_armor records \
+                    resolve via equipment_id_resolve, appear in equipped_items, and \
+                    ground through the CRB table store (rules_tables::crb::\
+                    equipment_data::arms_armor, generated from this same real corpus \
+                    file per the operator's 2026-07-16 amended loop instruction — \
+                    supersedes the prior 3-item representative-sample criterion). \
+                    Required two fixes first: the SD-17 parser-merge defect \
+                    (equipment.rs's open_record, fixed 22eeed9) and the equipment \
+                    resolver's exact-name-match gap (KEY-less records distinguished only \
+                    by parenthesized content, e.g. Improvised Weapon (1d2) vs (1d3), \
+                    fixed alongside this cycle). derived_stats \
                     (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
-                    the seam's bounded-baseline equipment-effect computation is a \
-                    documented non-goal of the capability slice (scope-draft.md §1.1), not \
-                    this cycle's job. Evidence_tier is promoted to Product-visible because \
-                    Longsword and Chain Shirt (the latter's fixture added for this UI slice) \
-                    are surfaced live in the desktop app's Character Sheet Gear tab \
-                    (apps/desktop/src/characterHub/CharacterSheet.tsx's GearTab, wired through \
-                    compute_pilot_with_corpus via the create_character/load_saved_character \
-                    Tauri commands and a bundled corpus-fixture set in \
-                    apps/desktop/src-tauri/src/sd19_corpus.rs, 2026-07-16) — but support_state \
-                    stays Partial, not Supported: Banded Mail and Armor Spikes remain grounded \
-                    only by the automated test above, not yet UI-visible, and this row's \
-                    definition of \"every named sample\" is not yet fully satisfied",
-                next_required_uplift: "widen the UI-visible sample to Banded Mail and Armor \
-                    Spikes (or narrow this row's named sample to match what the UI shows) to \
-                    reach full Supported/Product-visible; separately, widening the sample toward exhaustive \
-                    cr_equip_arms_armor.lst coverage, extending the table store's bootstrap \
-                    entry beyond Longsword, and populating derived_stats from corpus \
-                    BONUS:/ACCHECK:/MAXDEX: tokens are future cycles' or a future SD-N's \
-                    scope, not a further widening of this row from inside this cycle",
+                    bounded-baseline equipment-effect computation is a documented \
+                    non-goal of the capability slice (scope-draft.md §1.1). \
+                    Evidence_tier is Computed, not Product-visible: per the amended loop \
+                    instruction's own §5 (\"UI-surfacing gate is downstream... \
+                    full-coverage Partial/Computed is the loop's exit condition\"), full \
+                    reachability+grounding does not by itself promote to Product-visible \
+                    — the desktop app's Character Sheet Gear tab surfaces only 2 of \
+                    these 310 items (Longsword, Chain Shirt) live, not the full category, \
+                    so this row's \"every named sample is grounded\" bar under the \
+                    Supported/Product-visible definition is not met at full-category \
+                    scope (superseding the narrower 2-item promotion recorded in an \
+                    earlier commit under the old sample-scoped criterion)",
+                next_required_uplift: "operator UI surfacing of the full 310-item \
+                    category (not just the 2-item demo sample) to reach \
+                    Supported/Product-visible; populating derived_stats from corpus \
+                    BONUS:/ACCHECK:/MAXDEX: tokens is a future cycle's or a future SD-N's \
+                    scope",
             },
             SupportStateRow {
                 row_id: "equipment.general.equipment_reachability",
@@ -7078,36 +7079,34 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::General,
                 ),
                 subject_id: "category:general",
-                dimension: "PF1 core-rulebook general equipment reachability: a \
-                    representative sample of real-corpus cr_equip_general.lst records \
-                    (Backpack, Torch, Waterskin) is resolvable via \
-                    equipment_id_resolve when selected on \
-                    CharacterInput.equipment_selections, and present in \
+                dimension: "PF1 core-rulebook general equipment reachability: every one \
+                    of the 453 real-corpus cr_equip_general.lst records (full coverage, \
+                    not a sample) is resolvable via equipment_id_resolve when selected on \
+                    CharacterInput.equipment_selections, present in \
                     CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
-                    compute_pilot_with_corpus",
+                    compute_pilot_with_corpus, and carries a non-None TableCellRef",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_GENERAL_EQUIPMENT_TEST,
-                blocker_or_lossiness_note: "the sample (Backpack, Torch, Waterskin) \
-                    resolves via equipment_id_resolve and appears in equipped_items with \
-                    its equipment_record_name/equipment_record_key populated; only \
-                    Backpack grounds through the foundation slice's bootstrap table cell \
-                    today (the other two sample items' table_cell stays None until a \
-                    future cycle widens rules_tables::crb::equipment_tables), and \
-                    derived_stats (armor_bonus/attack_bonus/max_dex/spell_failure) stay \
-                    unpopulated — the seam's bounded-baseline equipment-effect computation \
-                    is a documented non-goal of the capability slice (scope-draft.md \
-                    §1.1), not this cycle's job; evidence_tier stays Computed until the \
-                    operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible \
-                    (operator-driven, not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; widening the sample toward exhaustive \
-                    cr_equip_general.lst coverage, extending the table store's bootstrap \
-                    entry beyond Backpack, and populating derived_stats from corpus \
-                    BONUS:/ACCHECK:/MAXDEX: tokens are future cycles' or a future SD-N's \
-                    scope, not a further widening of this row from inside this cycle",
+                blocker_or_lossiness_note: "all 453 real-corpus general records resolve \
+                    via equipment_id_resolve, appear in equipped_items, and ground \
+                    through the CRB table store (rules_tables::crb::equipment_data::\
+                    general, generated from this same real corpus file per the \
+                    operator's 2026-07-16 amended loop instruction — supersedes the \
+                    prior 3-item representative-sample criterion). derived_stats \
+                    (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
+                    bounded-baseline equipment-effect computation is a documented \
+                    non-goal of the capability slice (scope-draft.md §1.1). Evidence_tier \
+                    stays Computed, not Product-visible: per the amended loop \
+                    instruction's own §5, full reachability+grounding is the loop's exit \
+                    condition, not a Product-visible promotion — that requires operator \
+                    UI surfacing of the full category, which has not been done for \
+                    general",
+                next_required_uplift: "operator UI surfacing of the full 453-item \
+                    category to reach Supported/Product-visible; populating \
+                    derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens is a future \
+                    cycle's or a future SD-N's scope",
             },
             SupportStateRow {
                 row_id: "equipment.magic_items.equipment_reachability",
@@ -7115,49 +7114,40 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::MagicItems,
                 ),
                 subject_id: "category:magic_items",
-                dimension: "PF1 core-rulebook magic_items equipment reachability: a \
-                    representative sample of real-corpus cr_equip_magic_items.lst records \
-                    (Amulet of Natural Armor +1, Belt of Giant Strength +2, Ring of \
-                    Protection +1) is resolvable via equipment_id_resolve when selected on \
-                    CharacterInput.equipment_selections, and present in \
+                dimension: "PF1 core-rulebook magic_items equipment reachability: every \
+                    one of the 1556 real-corpus cr_equip_magic_items.lst records (full \
+                    coverage, not a sample) is resolvable via equipment_id_resolve when \
+                    selected on CharacterInput.equipment_selections, present in \
                     CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
-                    compute_pilot_with_corpus",
+                    compute_pilot_with_corpus, and carries a non-None TableCellRef",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_MAGIC_ITEMS_EQUIPMENT_TEST,
-                blocker_or_lossiness_note: "the sample (Amulet of Natural Armor +1, Belt \
-                    of Giant Strength +2, Ring of Protection +1) resolves via \
-                    equipment_id_resolve and appears in equipped_items with its \
-                    equipment_record_name/equipment_record_key populated; none of the \
-                    sample items grounds through the foundation slice's bootstrap table \
-                    cell today (EQUIPMENT_TABLES' single magic_items entry is keyed \
-                    'Potion of Aid', deliberately not in this sample — see below), and \
-                    derived_stats (armor_bonus/attack_bonus/max_dex/spell_failure) stay \
-                    unpopulated — the seam's bounded-baseline equipment-effect computation \
-                    is a documented non-goal of the capability slice (scope-draft.md \
-                    §1.1), not this cycle's job. Category-wide parser limitation \
-                    discovered this cycle (not fixed; routed to Open Blockers for SD-17's \
-                    lane): a large share of cr_equip_magic_items.lst (scrolls, wands, \
-                    potions) use PCGen's '.COPY=' naming, and equipment.rs's by-name \
-                    record merge (intended for cr_equip_general.lst's genuine \
-                    same-name continuation rows) collapses every distinct '.COPY=' item \
-                    sharing a base word into one merged record, so only the \
-                    alphabetically-first item under each merged name resolves; this \
-                    cycle's sample was deliberately drawn from non-'.COPY=' records \
-                    (amulets/belts/rings) to route around the defect rather than exercise \
-                    it. evidence_tier stays Computed until the operator surfaces this \
-                    reachability in a live UI, per the loop instruction's own definition \
-                    of Supported/Product-visible (operator-driven, not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; a future SD-17-lane fix to equipment.rs's '.COPY='-\
-                    record merge (so each distinct item resolves, not just the \
-                    alphabetically-first per merged name) is required before \
-                    cr_equip_magic_items.lst's scrolls/wands/potions can be widened past \
-                    this cycle's non-'.COPY=' sample; extending the table store's \
-                    bootstrap entry and populating derived_stats are future cycles' or a \
-                    future SD-N's scope, not a further widening of this row from inside \
-                    this cycle",
+                blocker_or_lossiness_note: "all 1556 real-corpus magic_items records \
+                    resolve via equipment_id_resolve, appear in equipped_items, and \
+                    ground through the CRB table store (rules_tables::crb::\
+                    equipment_data::magic_items, generated from this same real corpus \
+                    file per the operator's 2026-07-16 amended loop instruction — \
+                    supersedes the prior 3-item representative-sample criterion). This \
+                    category's prior cycle discovered the SD-17 '.COPY=' parser-merge \
+                    defect that made full coverage structurally impossible \
+                    (scrolls/wands/potions predominantly use '.COPY=' naming); that fix \
+                    (22eeed9) plus the equipment resolver's exact-name-match fix (added \
+                    alongside this cycle) unblocked this cycle's full sweep, including \
+                    every '.COPY=' variant. derived_stats \
+                    (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
+                    bounded-baseline equipment-effect computation is a documented \
+                    non-goal of the capability slice (scope-draft.md §1.1). Evidence_tier \
+                    stays Computed, not Product-visible: per the amended loop \
+                    instruction's own §5, full reachability+grounding is the loop's exit \
+                    condition, not a Product-visible promotion — that requires operator \
+                    UI surfacing of the full category, which has not been done for \
+                    magic_items",
+                next_required_uplift: "operator UI surfacing of the full 1556-item \
+                    category to reach Supported/Product-visible; populating \
+                    derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens is a future \
+                    cycle's or a future SD-N's scope",
             },
             SupportStateRow {
                 row_id: "equipment.equipmods.equipment_reachability",
@@ -7165,47 +7155,47 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::Equipmods,
                 ),
                 subject_id: "category:equipmods",
-                dimension: "PF1 core-rulebook equipmods equipment reachability: a \
-                    representative sample of real-corpus cr_equipmods.lst records \
-                    (Masterwork (Weapon), Brace, Disarm) is resolvable via \
-                    equipment_id_resolve when selected on \
-                    CharacterInput.equipment_selections, and present in \
+                dimension: "PF1 core-rulebook equipmods equipment reachability: every \
+                    one of the 344 independently-addressable real-corpus \
+                    cr_equipmods.lst records (full coverage of every selectable item, \
+                    not a sample) is resolvable via equipment_id_resolve when selected on \
+                    CharacterInput.equipment_selections, present in \
                     CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
-                    compute_pilot_with_corpus",
+                    compute_pilot_with_corpus, and carries a non-None TableCellRef",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_EQUIPMODS_EQUIPMENT_TEST,
-                blocker_or_lossiness_note: "the sample (Masterwork (Weapon), Brace, \
-                    Disarm) resolves via equipment_id_resolve and appears in \
-                    equipped_items with its equipment_record_name/equipment_record_key \
-                    populated; none of the sample items grounds through the foundation \
-                    slice's bootstrap table cell today (EQUIPMENT_TABLES' single \
-                    equipmods entry is keyed 'Material ~ Cloth', deliberately not in this \
-                    sample), and derived_stats (armor_bonus/attack_bonus/max_dex/\
-                    spell_failure) stay unpopulated — the seam's bounded-baseline \
-                    equipment-effect computation is a documented non-goal of the \
-                    capability slice (scope-draft.md §1.1), not this cycle's job. This \
-                    cycle checked cr_equipmods.lst for the same by-name merge collision \
-                    discovered in the magic_items cycle (not limited to '.COPY=' rows \
-                    here — e.g. the plain names 'Material ~ Cloth' and \"Artisan's Tools \
-                    (Cloth)\" both merge under name 'Cloth') and confirmed this sample's \
-                    three names are each unique across the file, avoiding the collision \
-                    rather than exercising it. evidence_tier stays Computed until the \
-                    operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible \
-                    (operator-driven, not loop-driven). Landing this row closes the full \
-                    §2.5 equipment-category sweep (4/4) and all 15 SD-19 acceptance \
-                    criteria's per-cycle-eligible work.",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; a future SD-17-lane fix to equipment.rs's by-name \
-                    record-merge behavior (so distinct same-named records don't collapse \
-                    into one, and so a specific requested KEY: token is matched rather \
-                    than only the first token found) is required before \
-                    cr_equipmods.lst's remaining records can be widened past this \
-                    cycle's sample; extending the table store's bootstrap entry and \
-                    populating derived_stats are future cycles' or a future SD-N's \
-                    scope, not a further widening of this row from inside this cycle",
+                blocker_or_lossiness_note: "344 of cr_equipmods.lst's 658 raw records \
+                    are independently addressable and all 344 resolve via \
+                    equipment_id_resolve, appear in equipped_items, and ground through \
+                    the CRB table store (rules_tables::crb::equipment_data::equipmods, \
+                    which transcribes all 658 raw records verbatim — nothing dropped \
+                    from the table store itself). The remaining 314 raw records are \
+                    PCGen-internal hidden legacy alias rows (no KEY: token of their own, \
+                    explicitly marked VISIBLE:NO, e.g. 'Material ~ Steel.COPY=STEEL' \
+                    whose fallback name-identity collides with the real 'Material ~ \
+                    Steel' modifier's own KEY) — confirmed for all 314 with zero \
+                    exceptions this cycle; these are not independently selectable \
+                    equipment a character can choose, so 344/344 is full coverage of \
+                    every real item, not a partial result. This category's prior cycle \
+                    discovered the plain-duplicate-name merge-collapse defect (two \
+                    unrelated 'Cloth' rows); that fix (22eeed9) plus the equipment \
+                    resolver's exact-name-match fix (added alongside this cycle) \
+                    unblocked this cycle's full sweep. derived_stats \
+                    (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
+                    bounded-baseline equipment-effect computation is a documented \
+                    non-goal of the capability slice (scope-draft.md §1.1). Evidence_tier \
+                    stays Computed, not Product-visible: per the amended loop \
+                    instruction's own §5, full reachability+grounding is the loop's exit \
+                    condition, not a Product-visible promotion — that requires operator \
+                    UI surfacing of the full category, which has not been done for \
+                    equipmods. Landing this row closes the full §2.5 equipment-category \
+                    sweep (4/4) at full coverage.",
+                next_required_uplift: "operator UI surfacing of the full 344-item \
+                    addressable set to reach Supported/Product-visible; populating \
+                    derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens is a future \
+                    cycle's or a future SD-N's scope",
             },
         ],
     }

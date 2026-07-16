@@ -1,24 +1,24 @@
-//! SD-19 §2.5 equipment card: general.
+//! SD-19 §2.5 equipment card: general — full coverage.
 //!
-//! Proves a representative sample of real-corpus `cr_equip_general.lst`
-//! records — Backpack (`KEY:Backpack`, line 107), Torch (`KEY:Torch`,
-//! line 180), and Waterskin (`KEY:Waterskin`, line 183) — each
-//! independently confirmed present via `grep -n "KEY:<token>"
-//! cr_equip_general.lst` before this test was written, per the loop
-//! instruction's Step 4 corpus-existence check — is (a) resolvable via
-//! `equipment_id_resolve`, and (b) present in
+//! Per the operator's amended loop instruction (2026-07-16, "i want to
+//! make sure that we brought in ALL spells, ALL armor, ALL weapons, ALL
+//! equipment, not just samples"), this proves **every** real-corpus
+//! `cr_equip_general.lst` record — not a representative sample — is
+//! (a) resolvable via `equipment_id_resolve`, (b) present in
 //! `CorpusPilotReceipt.corpus_derived.equipped_items` after a call to
-//! `compute_pilot_with_corpus`.
+//! `compute_pilot_with_corpus`, and (c) carries a non-`None` `TableCellRef`
+//! grounding it to the CRB table store's now-complete
+//! `equipment_data::general::GENERAL_TABLE`.
 //!
-//! Unlike the §2.4 spell-school cycles (which land every spell in the
-//! school), §2.5 cycles land a representative sample per
-//! `scope-draft.md` §2.5 / the loop instruction's Step 2 ("landing a
-//! representative sample of items per round").
+//! Supersedes the prior representative-sample cycle (`eaaa6b7`). Required
+//! the SD-17 parser-merge fix (`22eeed9`) and the equipment resolver's
+//! exact-name-match fix (added alongside this cycle — KEY-less records
+//! distinguished only by parenthesized content, e.g. container-size
+//! variants, were colliding under the lossy normalized-name fallback).
 //!
 //! Reads the real PCGen corpus directly (the per-cycle `CORPUS_ROOT`
 //! pattern from `decisions.md` §6.6), skipping with a documented
-//! `eprintln!` when `CORPUS_ROOT` is unset, matching the §2.4/arms_armor
-//! cycles' skip semantics.
+//! `eprintln!` when `CORPUS_ROOT` is unset.
 
 use std::path::PathBuf;
 
@@ -28,7 +28,7 @@ use codex::rules_core::character_input::{
     AbilityScores, ActiveState, CharacterClassLevel, CharacterInput, ChosenCharacterState,
     EquipmentSelection,
 };
-use codex::rules_core::equipment_resolver::equipment_id_resolve;
+use codex::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory;
 use codex::rules_core::rules_tables::RuleSetId;
@@ -36,13 +36,6 @@ use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 use codex::rules_core::support_state_matrix::{
     EvidenceTier, MatrixSubjectType, SupportState, seeded_sd13_e1_f1_current_truth,
 };
-
-/// The cycle's chosen representative sample: `(item_id, corpus KEY: token)`.
-const REPRESENTATIVE_SAMPLE: &[(&str, &str)] = &[
-    ("item:backpack", "Backpack"),
-    ("item:torch", "Torch"),
-    ("item:waterskin", "Waterskin"),
-];
 
 fn corpus_root() -> Option<PathBuf> {
     match std::env::var("CORPUS_ROOT") {
@@ -87,42 +80,7 @@ fn base_input() -> CharacterInput {
 }
 
 #[test]
-fn representative_sample_key_tokens_match_real_corpus() {
-    let Some(root) = corpus_root() else {
-        eprintln!(
-            "CORPUS_ROOT not set or not a directory; skipping (set \
-             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
-        );
-        return;
-    };
-    let cr_equip_general = cr_equip_general_path(&root);
-    if !cr_equip_general.is_file() {
-        eprintln!(
-            "canonical cr_equip_general.lst not present at {}; skipping",
-            cr_equip_general.display()
-        );
-        return;
-    }
-
-    let parsed =
-        parse_equipment_file(&cr_equip_general).expect("cr_equip_general.lst must parse");
-
-    for (_, key_token) in REPRESENTATIVE_SAMPLE {
-        assert!(
-            parsed.entries.iter().any(|record| {
-                record
-                    .tokens
-                    .iter()
-                    .any(|token| token.key == "KEY" && token.value == *key_token)
-            }),
-            "corpus-existence check: expected KEY:{key_token} among \
-             cr_equip_general.lst records"
-        );
-    }
-}
-
-#[test]
-fn every_sample_item_resolves_and_reaches_equipped_items() {
+fn every_real_corpus_item_resolves_reaches_equipped_items_and_grounds_through_table_cell() {
     let Some(root) = corpus_root() else {
         eprintln!(
             "CORPUS_ROOT not set or not a directory; skipping (set \
@@ -145,6 +103,13 @@ fn every_sample_item_resolves_and_reaches_equipped_items() {
         !parsed.entries.is_empty(),
         "corpus-existence check must find general records"
     );
+    assert_eq!(
+        parsed.entries.len(),
+        453,
+        "expected 453 distinct general records post-merge-fix; if this \
+         changes the corpus or the parser changed — regenerate \
+         equipment_data::general"
+    );
 
     let source_ref = SourceRef {
         lst_file: cr_equip_general.display().to_string(),
@@ -155,22 +120,20 @@ fn every_sample_item_resolves_and_reaches_equipped_items() {
         corpus.push(convert_equipment_record(record));
     }
 
-    // (a) every sample item resolves via equipment_id_resolve.
-    for (item_id, key_token) in REPRESENTATIVE_SAMPLE {
-        let resolved = equipment_id_resolve(item_id, RuleSetId::Crb, &corpus);
-        assert!(
-            resolved.is_some(),
-            "expected equipment_id_resolve to resolve sample item '{item_id}' (KEY:{key_token})"
-        );
-    }
-
-    // (b) every sample item is present in corpus_derived.equipped_items
-    // after a call to compute_pilot_with_corpus, with its
-    // equipment_record_name / equipment_record_key populated.
     let mut input = base_input();
-    for (item_id, _) in REPRESENTATIVE_SAMPLE {
+    for record in &parsed.entries {
+        let identity = equipment_key_token(record).unwrap_or(&record.name);
+        let resolved = equipment_id_resolve(identity, RuleSetId::Crb, &corpus);
+        let (resolved_record, table_cell) = resolved.unwrap_or_else(|| {
+            panic!("expected equipment_id_resolve to resolve '{identity}'")
+        });
+        assert_eq!(&resolved_record.name, &record.name);
+        assert!(
+            table_cell.is_some(),
+            "expected '{identity}' to ground through the full CRB table store"
+        );
         input.chosen.equipment_selections.push(EquipmentSelection {
-            item_id: item_id.to_string(),
+            item_id: identity.to_string(),
             equipped_or_active: true,
             active_state: ActiveState::EquippedActive,
         });
@@ -179,45 +142,23 @@ fn every_sample_item_resolves_and_reaches_equipped_items() {
     let receipt = compute_pilot_with_corpus(&input, &corpus);
     assert_eq!(
         receipt.corpus_derived.equipped_items.len(),
-        REPRESENTATIVE_SAMPLE.len(),
-        "expected every sample item to resolve into its own equipped_items entry"
+        parsed.entries.len(),
+        "expected every one of the {} general records to resolve into its own \
+         equipped_items entry",
+        parsed.entries.len()
     );
-
-    for (item_id, key_token) in REPRESENTATIVE_SAMPLE {
-        let entry = receipt
-            .corpus_derived
-            .equipped_items
-            .iter()
-            .find(|item| &item.item_id == item_id)
-            .unwrap_or_else(|| panic!("expected an equipped_items entry for '{item_id}'"));
-        assert_eq!(&entry.equipment_record_key, key_token);
+    for item in &receipt.corpus_derived.equipped_items {
         assert!(
-            !entry.equipment_record_name.is_empty(),
-            "expected a non-empty equipment_record_name for '{item_id}'"
+            item.table_cell.is_some(),
+            "expected equipped_items entry for '{}' to carry a table_cell",
+            item.item_id
         );
-        if *item_id == "item:backpack" {
-            // The foundation slice's single general bootstrap table
-            // entry is keyed "Backpack" (rules_tables::crb::
-            // equipment_tables::EQUIPMENT_TABLES); only this sample item
-            // grounds through a table cell today.
-            assert!(
-                entry.table_cell.is_some(),
-                "expected 'item:backpack' to resolve through the foundation slice's \
-                 bootstrap table cell"
-            );
-        } else {
-            assert!(
-                entry.table_cell.is_none(),
-                "general sample items beyond the foundation slice's single bootstrap \
-                 entry (Backpack) are not yet in the table store; table_cell stays None \
-                 until a future cycle widens rules_tables::crb::equipment_tables"
-            );
-        }
+        assert!(!item.equipment_record_name.is_empty());
     }
 }
 
 #[test]
-fn general_matrix_row_reflects_the_grounded_reachability_proof() {
+fn general_matrix_row_reflects_full_coverage() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let row = matrix
         .rows
@@ -233,7 +174,9 @@ fn general_matrix_row_reflects_the_grounded_reachability_proof() {
         row.grounding_ref
     );
     assert!(
-        !row.blocker_or_lossiness_note.is_empty(),
-        "expected a non-empty blocker_or_lossiness_note on a Partial row"
+        row.blocker_or_lossiness_note.contains("453")
+            || row.blocker_or_lossiness_note.to_lowercase().contains("every"),
+        "expected the row's note to describe full coverage, got: {}",
+        row.blocker_or_lossiness_note
     );
 }
