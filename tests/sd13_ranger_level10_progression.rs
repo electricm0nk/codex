@@ -285,12 +285,16 @@ fn ranger_level9_truth_is_unchanged_by_this_slice() {
 // again to level 17 (cycle-2026-07-15T7000,
 // tests/sd18_ranger_level17_hide_in_plain_sight.rs: base attack rises,
 // Hide in Plain Sight and the base spells-per-day table's 1st-level
-// column rise are newly grounded), so this boundary control moves once
-// more to level 18.
+// column rise are newly grounded), and again to level 18
+// (cycle-2026-07-16T0244, tests/sd18_ranger_level18_widening.rs: base
+// attack and all three base saves rise, the fourth favored terrain, the
+// fifth combat style bonus feat, and the base spells-per-day table's
+// 4th-level column rise are newly grounded), so this boundary control
+// moves once more to level 19.
 #[test]
-fn ranger_level_18_is_not_promoted_by_this_slice() {
-    let level_18 = RANGER_LEVEL10_FIXTURE.replace("class:ranger:10", "class:ranger:18");
-    let input = load(&level_18);
+fn ranger_level_19_is_not_promoted_by_this_slice() {
+    let level_19 = RANGER_LEVEL10_FIXTURE.replace("class:ranger:10", "class:ranger:19");
+    let input = load(&level_19);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -298,7 +302,7 @@ fn ranger_level_18_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")
                 || e.id.starts_with("class_feature.ranger.")),
-        "level-18 Ranger must not gain any bounded ranger explanation: {:?}",
+        "level-19 Ranger must not gain any bounded ranger explanation: {:?}",
         computation.explanations
     );
 }
