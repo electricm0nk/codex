@@ -246,7 +246,7 @@ fn cleric_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(fortitude.value, 6, "Cleric level 9 good Fortitude must stay 6");
 }
 
-// ----- Negative control: level 20 stays unrecognized by this slice -----
+// ----- Negative control: level 21 stays unrecognized by this slice -----
 // (widened from level 11 by the SD18 cycle-2026-07-13T2007 level-11
 // widening, then moved to level 12, then level 13, then level 14, then level
 // 15 by later cycles' own boundary moves — see
@@ -261,13 +261,17 @@ fn cleric_level9_truth_is_unchanged_by_this_slice() {
 // boundary again, from 17 to 18, since level 17 was then itself Cleric's
 // supported/grounded row; cycle-2026-07-15T14300 moved this boundary again,
 // from 18 to 19, since level 18 was then itself Cleric's supported/grounded
-// row; cycle-2026-07-16T1100 moves this boundary again, from 19 to 20, since
-// level 19 is now itself Cleric's supported/grounded row.)
+// row; cycle-2026-07-16T1100 moved this boundary again, from 19 to 20, since
+// level 19 was then itself Cleric's supported/grounded row;
+// cycle-2026-07-16T0844 moves this boundary again, from 20 to 21, since
+// level 20 is now itself Cleric's supported/grounded row — and the final
+// level within PF1's 1-20 character-level cap, so this boundary check is now
+// a pure implementation-gate check with no further real level to move to.)
 
 #[test]
-fn cleric_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = CLERIC_LEVEL10_FIXTURE.replace("class:cleric:10", "class:cleric:20");
-    let input = load(&level_20);
+fn cleric_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = CLERIC_LEVEL10_FIXTURE.replace("class:cleric:10", "class:cleric:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -275,7 +279,7 @@ fn cleric_level_20_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-20 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+        "level-21 Cleric must not gain any bounded cleric chassis explanation: {:?}",
         computation.explanations
     );
 }

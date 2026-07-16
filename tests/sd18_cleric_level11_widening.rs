@@ -247,13 +247,17 @@ fn cleric_level10_truth_is_unchanged_by_this_slice() {
 // again, from 17 to 18, since level 17 was then itself Cleric's
 // supported/grounded row; cycle-2026-07-15T14300 moved this boundary again,
 // from 18 to 19, since level 18 was then itself Cleric's supported/grounded
-// row; cycle-2026-07-16T1100 moves this boundary again, from 19 to 20, since
-// level 19 is now itself Cleric's supported/grounded row.)
+// row; cycle-2026-07-16T1100 moved this boundary again, from 19 to 20, since
+// level 19 was then itself Cleric's supported/grounded row;
+// cycle-2026-07-16T0844 moves this boundary again, from 20 to 21, since
+// level 20 is now itself Cleric's supported/grounded row — and the final
+// level within PF1's 1-20 character-level cap, so this boundary check is now
+// a pure implementation-gate check with no further real level to move to.)
 
 #[test]
-fn cleric_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = CLERIC_LEVEL11_FIXTURE.replace("class:cleric:11", "class:cleric:20");
-    let input = load(&level_20);
+fn cleric_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = CLERIC_LEVEL11_FIXTURE.replace("class:cleric:11", "class:cleric:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -262,7 +266,7 @@ fn cleric_level_20_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id.starts_with("class_feature.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-20 Cleric must not gain any bounded cleric explanation: {:?}",
+        "level-21 Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );
 }
