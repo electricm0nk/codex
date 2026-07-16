@@ -195,23 +195,24 @@ fn fighter_above_the_bounded_tranche_stays_claim_blocked() {
     // tests/sd18_fighter_level14_widening.rs, to level 15 in
     // tests/sd18_fighter_level15_widening.rs, to level 16 in
     // tests/sd18_fighter_level16_widening.rs, to level 17 in
-    // tests/sd18_fighter_level17_widening.rs, and to level 18 in
-    // tests/sd18_fighter_level18_widening.rs), so this negative control now
-    // sits just above the current bound (level 19) rather than at level 9,
+    // tests/sd18_fighter_level17_widening.rs, to level 18 in
+    // tests/sd18_fighter_level18_widening.rs, and to level 19 in
+    // tests/sd18_fighter_level19_widening.rs), so this negative control now
+    // sits just above the current bound (level 20) rather than at level 9,
     // level 11, level 12, level 13, level 14, level 15, level 16, level 17,
-    // or level 18.
-    let level_19 = LEVEL_8_FIXTURE.replace("class:fighter:8", "class:fighter:19");
-    let input = load(&level_19);
+    // level 18, or level 19.
+    let level_20 = LEVEL_8_FIXTURE.replace("class:fighter:8", "class:fighter:20");
+    let input = load(&level_20);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-19 Fighter must stay claim-blocked above the bounded tranche: {:?}",
+        "level-20 Fighter must stay claim-blocked above the bounded tranche: {:?}",
         computation.diagnostics
     );
     assert!(
         !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "level-19 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-20 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 

@@ -315,37 +315,38 @@ fn level_10_propagates_computed_receipt_and_view_model() {
     );
 }
 
-// ----- Negative control: level 19 stays blocked (beyond the bounded L2-18 row) -----
+// ----- Negative control: level 20 stays blocked (beyond the bounded L2-19 row) -----
 //
 // SD18 (tests/sd18_fighter_level11_armor_training3.rs,
 // tests/sd18_fighter_level12_widening.rs, tests/sd18_fighter_level13_widening.rs,
 // tests/sd18_fighter_level14_widening.rs, tests/sd18_fighter_level15_widening.rs,
 // tests/sd18_fighter_level16_widening.rs, tests/sd18_fighter_level17_widening.rs,
-// tests/sd18_fighter_level18_widening.rs) widened the bounded tranche from
-// level 10 to level 12 (Armor Training 3, then a sixth bonus-feat cadence
-// slot), then to level 13 (Weapon Training 3), then to level 14 (a seventh
-// bonus-feat cadence slot and the Bravery magnitude rise), then to level 15
-// (Armor Training 4), then to level 16 (an eighth bonus-feat cadence slot),
-// then to level 17 (Weapon Training 4), and then to level 18 (a ninth
-// bonus-feat cadence slot and a further Bravery magnitude rise), so this
-// negative control now sits just above the current bound (level 19) rather
-// than at level 12, level 13, level 14, level 15, level 16, level 17, or
-// level 18.
+// tests/sd18_fighter_level18_widening.rs, tests/sd18_fighter_level19_widening.rs)
+// widened the bounded tranche from level 10 to level 12 (Armor Training 3,
+// then a sixth bonus-feat cadence slot), then to level 13 (Weapon Training
+// 3), then to level 14 (a seventh bonus-feat cadence slot and the Bravery
+// magnitude rise), then to level 15 (Armor Training 4), then to level 16
+// (an eighth bonus-feat cadence slot), then to level 17 (Weapon Training
+// 4), then to level 18 (a ninth bonus-feat cadence slot and a further
+// Bravery magnitude rise), and then to level 19 (the Armor Mastery
+// flat-magnitude damage reduction record), so this negative control now
+// sits just above the current bound (level 20) rather than at level 12,
+// level 13, level 14, level 15, level 16, level 17, level 18, or level 19.
 
 #[test]
-fn level_19_fighter_stays_claim_blocked() {
-    let level_19 = LEVEL_10_FIXTURE.replace("class:fighter:10", "class:fighter:19");
-    let input = load(&level_19);
+fn level_20_fighter_stays_claim_blocked() {
+    let level_20 = LEVEL_10_FIXTURE.replace("class:fighter:10", "class:fighter:20");
+    let input = load(&level_20);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-19 Fighter must stay claim-blocked beyond the bounded levels-2-18 row: {:?}",
+        "level-20 Fighter must stay claim-blocked beyond the bounded levels-2-19 row: {:?}",
         computation.diagnostics
     );
     assert!(
         !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "level-19 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-20 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 
