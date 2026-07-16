@@ -906,11 +906,18 @@ const SD19_UNIVERSAL_SCHOOL_TEST: &str = "tests/sd19_school_universal.rs";
 /// `compute_pilot_with_corpus`.
 const SD19_ARMS_ARMOR_EQUIPMENT_TEST: &str = "tests/sd19_equipment_arms_armor.rs";
 
+/// SD-19 §2.5 general equipment-reachability proof: a representative
+/// sample of real-corpus `cr_equip_general.lst` records (Backpack, Torch,
+/// Waterskin) resolves via `equipment_id_resolve` and reaches
+/// `CorpusPilotReceipt.corpus_derived.equipped_items` through
+/// `compute_pilot_with_corpus`.
+const SD19_GENERAL_EQUIPMENT_TEST: &str = "tests/sd19_equipment_general.rs";
+
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice,
 /// widened by SD-19 §2.4/§2.5 per-cycle school/equipment rows.
 ///
-/// Returns exactly 31 rows: 7 race, 12 class, 2 interaction, 9 school, and
-/// (as of this cycle) 1 equipment. The race/class/interaction content is
+/// Returns exactly 32 rows: 7 race, 12 class, 2 interaction, 9 school, and
+/// (as of this cycle) 2 equipment. The race/class/interaction content is
 /// fixed and grounded from SD-13; SD-19 cycles append one school or
 /// equipment row per landed cycle, never rewriting an existing row's
 /// identity.
@@ -7029,6 +7036,43 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Product-visible; widening the sample toward exhaustive \
                     cr_equip_arms_armor.lst coverage, extending the table store's bootstrap \
                     entry beyond Longsword, and populating derived_stats from corpus \
+                    BONUS:/ACCHECK:/MAXDEX: tokens are future cycles' or a future SD-N's \
+                    scope, not a further widening of this row from inside this cycle",
+            },
+            SupportStateRow {
+                row_id: "equipment.general.equipment_reachability",
+                subject_type: MatrixSubjectType::Equipment(
+                    crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::General,
+                ),
+                subject_id: "category:general",
+                dimension: "PF1 core-rulebook general equipment reachability: a \
+                    representative sample of real-corpus cr_equip_general.lst records \
+                    (Backpack, Torch, Waterskin) is resolvable via \
+                    equipment_id_resolve when selected on \
+                    CharacterInput.equipment_selections, and present in \
+                    CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
+                    compute_pilot_with_corpus",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_GENERAL_EQUIPMENT_TEST,
+                blocker_or_lossiness_note: "the sample (Backpack, Torch, Waterskin) \
+                    resolves via equipment_id_resolve and appears in equipped_items with \
+                    its equipment_record_name/equipment_record_key populated; only \
+                    Backpack grounds through the foundation slice's bootstrap table cell \
+                    today (the other two sample items' table_cell stays None until a \
+                    future cycle widens rules_tables::crb::equipment_tables), and \
+                    derived_stats (armor_bonus/attack_bonus/max_dex/spell_failure) stay \
+                    unpopulated — the seam's bounded-baseline equipment-effect computation \
+                    is a documented non-goal of the capability slice (scope-draft.md \
+                    §1.1), not this cycle's job; evidence_tier stays Computed until the \
+                    operator surfaces this reachability in a live UI, per the loop \
+                    instruction's own definition of Supported/Product-visible \
+                    (operator-driven, not loop-driven)",
+                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
+                    Product-visible; widening the sample toward exhaustive \
+                    cr_equip_general.lst coverage, extending the table store's bootstrap \
+                    entry beyond Backpack, and populating derived_stats from corpus \
                     BONUS:/ACCHECK:/MAXDEX: tokens are future cycles' or a future SD-N's \
                     scope, not a further widening of this row from inside this cycle",
             },
