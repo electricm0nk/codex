@@ -284,13 +284,16 @@ fn ranger_level11_truth_is_unchanged_by_this_slice() {
 // (cycle-2026-07-16T0244, tests/sd18_ranger_level18_widening.rs) now
 // genuinely recognizes Ranger level 18 too, and a still further SD18
 // widening (cycle-2026-07-16T3200, tests/sd18_ranger_level19_widening.rs)
-// now genuinely recognizes Ranger level 19 too, so this boundary control
-// moves once more to level 20.
+// now genuinely recognizes Ranger level 19 too, and a still further SD18
+// widening (cycle-2026-07-16T1600, tests/sd18_ranger_level20_widening.rs)
+// now genuinely recognizes Ranger level 20 too, so this boundary control
+// moves once more to level 21 (a pure implementation-gate check, since PF1
+// has no 21st character level).
 
 #[test]
-fn ranger_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = RANGER_LEVEL12_FIXTURE.replace("class:ranger:12", "class:ranger:20");
-    let input = load(&level_20);
+fn ranger_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = RANGER_LEVEL12_FIXTURE.replace("class:ranger:12", "class:ranger:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -298,7 +301,7 @@ fn ranger_level_20_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")
                 || e.id.starts_with("class_feature.ranger.")),
-        "level-20 Ranger must not gain any bounded ranger chassis explanation: {:?}",
+        "level-21 Ranger must not gain any bounded ranger chassis explanation: {:?}",
         computation.explanations
     );
 }

@@ -764,8 +764,24 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // genuinely rises from +2 to +4 on the same id, mirroring the Bard
 // Inspire Competence tiered-magnitude idiom — plus the base
 // spells-per-day table's own level-19 row (4/3/3/2, the 3rd-level column
-// genuinely rising from 2 to 3). Nothing here grounds level 20 Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 19;
+// genuinely rising from 2 to 3). A still later SD18 slice
+// (cycle-2026-07-16T1600) widens the gate once more to level 20, the
+// FINAL level within PF1's 1-20 character-level cap: base attack bonus
+// genuinely rises to 20 (full BAB) and both good saves genuinely rise to
+// 12 (20/2+2), while poor Will stays 6 (20/3, an integer-division
+// coincidence with level 19); the level-20 "Special" column reads "5th
+// favored enemy, master hunter" (verified independently against d20pfsrd
+// and the Archives of Nethys aonprd.com mirror, both byte-for-byte
+// identical) — the Favored Enemy rule's own FINAL 20th-level interval
+// (`RANGER_FAVORED_ENEMY_FIFTH_INTERVAL_LEVEL`), the exact structural
+// mirror of the 15th-level interval, plus Master Hunter
+// (`RANGER_MASTER_HUNTER_LEVEL`), a brand-new capstone with no player
+// choice involved, grounded as a bounded grant-only identity record
+// mirroring the Paladin Holy Champion idiom — plus the base
+// spells-per-day table's own level-20 row (4/4/3/3, the 2nd- and
+// 4th-level columns both genuinely rising at once). This closes Ranger's
+// own per-level arithmetic-widening frontier.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 20;
 
 /// PF1 Core Rulebook level gate at which Camouflage is granted (verified
 /// independently against two primary sources: both d20pfsrd and the
@@ -971,6 +987,47 @@ const RANGER_FAVORED_ENEMY_FOURTH_CHOICE_ID: &str = "choice:ranger_favored_enemy
 const RANGER_FAVORED_ENEMY_THIRD_BONUS_INCREASE_CHOICE_ID: &str =
     "choice:ranger_favored_enemy_bonus_increase_target_3";
 const RANGER_FAVORED_ENEMY_BONUS_INCREASE_FOURTH_SELECTION: &str = "enemy:fourth";
+
+/// PF1 Core Rulebook level gate of the Favored Enemy rule's FIFTH and FINAL
+/// interval (verified independently against two primary sources: d20pfsrd
+/// and the Archives of Nethys aonprd.com mirror, both agreeing byte-for-byte
+/// on the class table's level-20 "Special" column entry, "5th favored
+/// enemy, master hunter", and on the rule's own text: "At 5th level and
+/// every five levels thereafter (10th, 15th, and 20th level), the ranger
+/// may select an additional favored enemy. In addition, at each such
+/// interval, the bonus against any one favored enemy... increases by +2."
+/// — this is the last interval within PF1's 1-20 character-level cap).
+const RANGER_FAVORED_ENEMY_FIFTH_INTERVAL_LEVEL: u8 = 20;
+
+/// SD18 Ranger FIFTH Favored Enemy choice-slot id, mirroring
+/// `choice:ranger_favored_enemy_4`'s open-ended (non-restricted-list)
+/// recognition idiom exactly.
+const RANGER_FAVORED_ENEMY_FIFTH_CHOICE_ID: &str = "choice:ranger_favored_enemy_5";
+
+/// SD18 Ranger 20th-level-interval bonus-increase TARGET choice-slot id,
+/// mirroring `choice:ranger_favored_enemy_bonus_increase_target_3`'s
+/// restricted idiom, widened to the five-enemy set (`enemy:first` /
+/// `enemy:second` / `enemy:third` / `enemy:fourth` / `enemy:fifth`); any
+/// other selection is surfaced without grounding a target identity and no
+/// boost is fabricated from it.
+const RANGER_FAVORED_ENEMY_FOURTH_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_enemy_bonus_increase_target_4";
+const RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIFTH_SELECTION: &str = "enemy:fifth";
+
+/// PF1 Core Rulebook level gate at which Ranger becomes a Master Hunter
+/// (verified independently against two primary sources: d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror, both byte-for-byte identical: "A
+/// ranger of 20th level becomes a master hunter. He can always move at
+/// full speed while using Survival to follow tracks without penalty. He
+/// can, as a standard action, make a single attack against a favored enemy
+/// at his full attack bonus. If the attack hits, the target takes damage
+/// normally and must make a Fortitude save or die..."). This is the
+/// Ranger's 20th-level capstone, mirroring the Paladin Holy Champion
+/// capstone idiom exactly (a bounded grant-only identity record; no
+/// action-economy engine, no attack-resolution engine, and no
+/// saving-throw-resolution engine exists anywhere in this codebase to
+/// apply any of this to).
+const RANGER_MASTER_HUNTER_LEVEL: u8 = 20;
 
 /// PF1 Core Rulebook level gate at which Ranger gains Endurance (3rd level,
 /// verified independently against two primary sources: d20pfsrd and
@@ -8988,10 +9045,83 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         favored_enemy_third_bonus_increase_target
             == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FOURTH_SELECTION);
 
+    // SD18 ranger level 20: recognize the FOURTH (and final) interval's own
+    // bonus-increase TARGET choice, only meaningful once the ranger has
+    // reached the Favored Enemy rule's FINAL 20th-level interval. Each
+    // interval grants its own +2 increase to any ONE favored enemy — a
+    // genuine, free player choice, so an increase targeting the same enemy
+    // at all four grounded intervals STACKS (2 base + 2 + 2 + 2 + 2). Absent
+    // an explicit target selection in chosen input, nothing is fabricated.
+    let favored_enemy_fourth_bonus_increase_target =
+        if level >= RANGER_FAVORED_ENEMY_FIFTH_INTERVAL_LEVEL {
+            choice_selection(input, RANGER_FAVORED_ENEMY_FOURTH_BONUS_INCREASE_CHOICE_ID)
+        } else {
+            None
+        };
+
+    if let Some(target) = favored_enemy_fourth_bonus_increase_target {
+        let target_name = if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION {
+            Some("the first favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION {
+            Some("the second favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION {
+            Some("the third favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FOURTH_SELECTION {
+            Some("the fourth favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIFTH_SELECTION {
+            Some("the fifth favored enemy")
+        } else {
+            None
+        };
+        let detail = if let Some(name) = target_name {
+            format!(
+                "Ranger Favored Enemy 20th-level-interval bonus-increase target selection at \
+                 ranger level {level} \
+                 ({RANGER_FAVORED_ENEMY_FOURTH_BONUS_INCREASE_CHOICE_ID} -> {target}): names \
+                 {name} as the one favored enemy whose bonus increases by +2 at this FINAL \
+                 20th-level interval, per the PF1 Core Rulebook rule that the bonus against \
+                 any ONE favored enemy -- including a newly selected one, if so desired -- \
+                 increases by +2 at each such interval (5th, 10th, 15th, and 20th ranger \
+                 level, the last one within PF1's 1-20 level cap); an increase targeting the \
+                 same enemy at multiple grounded intervals stacks. This is a recognition \
+                 record of the choice slot only (+0); the increased magnitude itself is \
+                 grounded separately on whichever favored enemy was actually named"
+            )
+        } else {
+            format!(
+                "Ranger Favored Enemy 20th-level-interval bonus-increase target selection at \
+                 ranger level {level} is present \
+                 ({RANGER_FAVORED_ENEMY_FOURTH_BONUS_INCREASE_CHOICE_ID} -> {target}), but \
+                 only the PF1 Core Rulebook restricted set (the first, second, third, fourth, \
+                 or fifth favored enemy) is recognized on this bounded seam; no target identity \
+                 is grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_bonus_increase_4_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    let first_favored_enemy_targeted_at_fourth_interval =
+        favored_enemy_fourth_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION);
+    let second_favored_enemy_targeted_at_fourth_interval =
+        favored_enemy_fourth_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION);
+    let third_favored_enemy_targeted_at_fourth_interval =
+        favored_enemy_fourth_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION);
+    let fourth_favored_enemy_targeted_at_fourth_interval =
+        favored_enemy_fourth_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FOURTH_SELECTION);
+
     let favored_enemy_bonus: i16 = 2
         + if first_favored_enemy_targeted { 2 } else { 0 }
         + if first_favored_enemy_targeted_at_second_interval { 2 } else { 0 }
-        + if first_favored_enemy_targeted_at_third_interval { 2 } else { 0 };
+        + if first_favored_enemy_targeted_at_third_interval { 2 } else { 0 }
+        + if first_favored_enemy_targeted_at_fourth_interval { 2 } else { 0 };
     explanations.push(ComputationExplanation {
         id: "class_chassis.ranger.favored_enemy_skill_bonus".to_owned(),
         value: favored_enemy_bonus,
@@ -9050,7 +9180,8 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         let second_favored_enemy_bonus: i16 = 2
             + if second_favored_enemy_targeted { 2 } else { 0 }
             + if second_favored_enemy_targeted_at_second_interval { 2 } else { 0 }
-            + if second_favored_enemy_targeted_at_third_interval { 2 } else { 0 };
+            + if second_favored_enemy_targeted_at_third_interval { 2 } else { 0 }
+            + if second_favored_enemy_targeted_at_fourth_interval { 2 } else { 0 };
         explanations.push(ComputationExplanation {
             id: "class_chassis.ranger.favored_enemy_2_skill_bonus".to_owned(),
             value: second_favored_enemy_bonus,
@@ -9108,7 +9239,8 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
 
         let third_favored_enemy_bonus: i16 = 2
             + if third_favored_enemy_targeted_at_second_interval { 2 } else { 0 }
-            + if third_favored_enemy_targeted_at_third_interval { 2 } else { 0 };
+            + if third_favored_enemy_targeted_at_third_interval { 2 } else { 0 }
+            + if third_favored_enemy_targeted_at_fourth_interval { 2 } else { 0 };
         explanations.push(ComputationExplanation {
             id: "class_chassis.ranger.favored_enemy_3_skill_bonus".to_owned(),
             value: third_favored_enemy_bonus,
@@ -9166,8 +9298,9 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             ),
         });
 
-        let fourth_favored_enemy_bonus: i16 =
-            if fourth_favored_enemy_targeted_at_third_interval { 4 } else { 2 };
+        let fourth_favored_enemy_bonus: i16 = 2
+            + if fourth_favored_enemy_targeted_at_third_interval { 2 } else { 0 }
+            + if fourth_favored_enemy_targeted_at_fourth_interval { 2 } else { 0 };
         explanations.push(ComputationExplanation {
             id: "class_chassis.ranger.favored_enemy_4_skill_bonus".to_owned(),
             value: fourth_favored_enemy_bonus,
@@ -9193,6 +9326,108 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  conditional-application engine is implemented, so whether any specific attack \
                  is actually made against this favored enemy is never resolved and no combat \
                  baseline is modified by this record"
+            ),
+        });
+    }
+
+    // SD18 ranger level 20: recognize the FIFTH (and final) favored-enemy
+    // selection, the rule's 20th-level interval grant. Mirrors the fourth
+    // favored enemy's own choice-recognition idiom exactly (open-ended, raw
+    // string interpolation, no restricted-list validation) and its own flat
+    // magnitude formula (base +2, or +4 if the 20th-level interval's
+    // bonus-increase target names the fifth favored enemy -- the ONLY
+    // interval that can target it, since it did not exist before this
+    // level).
+    if level >= RANGER_FAVORED_ENEMY_FIFTH_INTERVAL_LEVEL
+        && let Some(fifth_favored_enemy) =
+            choice_selection(input, RANGER_FAVORED_ENEMY_FIFTH_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_5_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger 5th Favored Enemy selection \
+                 ({RANGER_FAVORED_ENEMY_FIFTH_CHOICE_ID} -> {fifth_favored_enemy}): at \
+                 ranger level {level}, PF1 Core Rulebook Favored Enemy grants \"an additional \
+                 favored enemy\" at the FINAL 20th-level interval. The level-{level} FIFTH \
+                 favored-enemy type chosen for this character is {fifth_favored_enemy}. This \
+                 is a bounded recognition record of the chosen enemy type only; the flat \
+                 bonus magnitude is grounded separately, and no target-type matching or \
+                 conditional-application engine is implemented, so it carries no fabricated \
+                 mechanical value (+0)"
+            ),
+        });
+
+        let fifth_favored_enemy_targeted_at_fourth_interval =
+            favored_enemy_fourth_bonus_increase_target
+                == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIFTH_SELECTION);
+        let fifth_favored_enemy_bonus: i16 =
+            if fifth_favored_enemy_targeted_at_fourth_interval { 4 } else { 2 };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_5_skill_bonus".to_owned(),
+            value: fifth_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 5th Favored Enemy skill bonus (PF1 Core Rulebook, level {level}): \
+                 +{fifth_favored_enemy_bonus} on Bluff, Knowledge, Perception, Sense Motive, \
+                 and Survival checks against the fifth favored enemy. This grounds only the \
+                 flat +{fifth_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific skill \
+                 check is actually made against this favored enemy is never resolved and no \
+                 skill total is modified by this record"
+            ),
+        });
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_5_attack_damage_bonus".to_owned(),
+            value: fifth_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 5th Favored Enemy weapon attack/damage bonus (PF1 Core Rulebook, \
+                 level {level}): +{fifth_favored_enemy_bonus} on weapon attack rolls AND \
+                 weapon damage rolls against the fifth favored enemy. This grounds only the \
+                 flat +{fifth_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific attack \
+                 is actually made against this favored enemy is never resolved and no combat \
+                 baseline is modified by this record"
+            ),
+        });
+    }
+
+    // Master Hunter: below the level-20 gate, this stays a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it (SD18 level-20
+    // widening, the class capstone), it transitions to a bounded GRANT-only
+    // identity record (mirroring the Paladin Holy Champion idiom exactly).
+    // No action-economy engine, no attack-resolution engine, and no
+    // saving-throw-resolution engine exists anywhere in this codebase to
+    // apply this to.
+    if level < RANGER_MASTER_HUNTER_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.master_hunter".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Master Hunter at ranger level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Master Hunter is the 20th-level ranger capstone."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.master_hunter".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Master Hunter granted at ranger level {level} (PF1 Core Rulebook, \
+                 20th-level ranger capstone): \"A ranger of 20th level becomes a master \
+                 hunter. He can always move at full speed while using Survival to follow \
+                 tracks without penalty. He can, as a standard action, make a single attack \
+                 against a favored enemy at his full attack bonus. If the attack hits, the \
+                 target takes damage normally and must make a Fortitude save or die. The DC \
+                 of this save is equal to 10 + 1/2 the ranger's level + the ranger's Wisdom \
+                 modifier. A ranger can choose instead to deal an amount of nonlethal damage \
+                 equal to the creature's current hit points... A ranger can use this ability \
+                 once per day against each favored enemy type he possesses, but not against \
+                 the same creature more than once in a 24-hour period.\" This is a bounded \
+                 grant-only identity record only (value 0, non-fabricated): no action-economy \
+                 engine, no attack-resolution engine, and no saving-throw-resolution engine \
+                 exists anywhere in this codebase to apply any of this to."
             ),
         });
     }
@@ -10237,7 +10472,12 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // against two primary sources, d20pfsrd and the Archives of Nethys
     // aonprd.com mirror, byte-for-byte agreement: the 1st/2nd/4th-level
     // columns stay 4/3/2 unchanged, and the 3rd-level column genuinely
-    // rises from 2 to 3). A
+    // rises from 2 to 3), and level 20 "4/4/3/3" (verified independently
+    // for the SD18 level-20 widening cycle against two primary sources,
+    // d20pfsrd and the Archives of Nethys aonprd.com mirror, byte-for-byte
+    // agreement: the 1st/3rd-level columns stay 4/3 unchanged, and the
+    // 2nd/4th-level columns both genuinely rise at once, 3 to 4 and 2 to
+    // 3). A
     // "0" is a
     // genuine table entry (Wisdom-bonus-spells-only access), NOT an
     // absence — inaccessible spell levels ("—" columns) get no record at
@@ -10259,6 +10499,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         17 => [Some(4), Some(3), Some(2), Some(1)],
         18 => [Some(4), Some(3), Some(2), Some(2)],
         19 => [Some(4), Some(3), Some(3), Some(2)],
+        20 => [Some(4), Some(4), Some(3), Some(3)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
