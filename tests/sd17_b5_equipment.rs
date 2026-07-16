@@ -391,26 +391,33 @@ fn parses_equipmods_fixture_from_disk_with_kind_inferred_from_path() {
             .any(|e| e.name == "Masterwork" && e.header_line_number == 17)
     );
 
-    // Corpus-typical EquipMod rows must appear at their known line numbers.
+    // Corpus-typical Cloth row is a genuinely distinct modifier (different
+    // KEY than the directive-prefix rows above) and must appear at its own
+    // line number.
     assert!(
         result
             .entries
             .iter()
             .any(|e| e.name == "Cloth" && e.header_line_number == 20)
     );
-    assert!(
-        result
-            .entries
-            .iter()
-            .any(|e| e.name == "Steel" && e.header_line_number == 21)
-    );
 
-    // Both `Material ~ Steel` rows (directive-prefix + corpus-typical) must
-    // carry BONUS: chains. The corpus-typical Cloth and Steel rows also
-    // carry BONUS: tokens (visible in the fixture source).
-    // Both `Material ~ Steel` rows (directive-prefix + corpus-typical) must
-    // carry BONUS: chains. The corpus-typical Cloth row carries a BONUS:
-    // token; the corpus-typical Steel row does not.
+    // The corpus-typical "Steel" row (line 21) carries the IDENTICAL
+    // `KEY:Material ~ Steel` token as the directive-prefix "Material ~
+    // Steel" row (line 16) — per KEY-based merge semantics (the same rule
+    // that merges the arms_armor fixture's "Padded Armor" case above), these
+    // are the same logical record and merge into one entry, header at line
+    // 16, carrying both rows' tokens.
+    let merged_steel = result
+        .entries
+        .iter()
+        .find(|e| e.name == "Material ~ Steel")
+        .expect("merged Material ~ Steel record must exist");
+    assert_eq!(merged_steel.header_line_number, 16);
+    assert!(merged_steel.tokens.iter().any(|t| t.key == "ITYPE"));
+    assert!(merged_steel.tokens.iter().any(|t| t.key == "PREMULT"));
+
+    // Both `Material ~ Steel` and `Cloth` carry BONUS: chains (visible in
+    // the fixture source).
     for entry in &result.entries {
         if entry.name == "Material ~ Steel" || entry.name == "Cloth" {
             assert!(
@@ -541,4 +548,135 @@ fn real_corpus_cr_equipmods_parses_with_kind_inferred_from_path() {
             "expected material '{material}' in cr_equipmods.lst parse"
         );
     }
+}
+
+// --- Merge-by-name defect: distinct .COPY= variants and distinct rows that ---
+// --- coincidentally share a display name must not collapse into one entry ---
+//
+// Discovered by an SD-19 loop cycle (2026-07-16, magic_items and equipmods
+// category cycles): `open_record`'s "merge by (kind, name)" rule was intended
+// for the case where the SAME logical item is restated once via the
+// directive-prefix form and once via the corpus-typical form (see
+// `parses_a_fixture_from_disk_with_line_numbers_preserved`'s merged
+// "Padded Armor" case above — both rows there carry the identical
+// `KEY:Padded Armor (Base)` token). But the real corpus's `.COPY=` naming
+// convention (`<BaseTemplate>.COPY=<DistinctItemName>`, e.g.
+// `Staff.COPY=Staff of Abjuration`, `Staff.COPY=Staff of Charming`, ...)
+// produces many rows whose `extract_record_name` output collides on the
+// shared base-template prefix ("Staff") while each row's own `KEY:` token is
+// genuinely distinct — and a similar coincidental-name collision exists
+// outside `.COPY=` too (`cr_equipmods.lst`'s two unrelated "Cloth" rows:
+// `KEY:Material ~ Cloth` and `KEY:Artisan's Tools (Cloth)`). The old
+// name-only merge collapsed all of these into one `EquipmentRecord`,
+// silently discarding every `KEY:` token but the first.
+
+#[test]
+fn distinct_copy_variants_sharing_a_base_template_name_do_not_merge() {
+    let text = "\
+Staff\tKEY:Staff of Abjuration\tTYPE:Magic.Staff\tCOST:11000
+Staff\tKEY:Staff of Charming\tTYPE:Magic.Staff\tCOST:16400
+";
+    let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
+    assert_eq!(
+        result.entries.len(),
+        2,
+        "two distinct .COPY=-style items sharing the base-template name \
+         'Staff' must produce two records, not one merged record; got {:?}",
+        result.entries.iter().map(|e| &e.name).collect::<Vec<_>>()
+    );
+    assert!(result.entries.iter().any(|e| e
+        .tokens
+        .iter()
+        .any(|t| t.key == "KEY" && t.value == "Staff of Abjuration")));
+    assert!(result.entries.iter().any(|e| e
+        .tokens
+        .iter()
+        .any(|t| t.key == "KEY" && t.value == "Staff of Charming")));
+}
+
+#[test]
+fn distinct_rows_that_coincidentally_share_a_plain_name_do_not_merge() {
+    let text = "\
+Cloth\tKEY:Material ~ Cloth\tTYPE:BaseMaterial.Mundane
+Cloth\tKEY:Artisan's Tools (Cloth)\tTYPE:Goods.Tools.Artisan
+";
+    let result = parse_equipment_entries("cr_equipmods.lst", text);
+    assert_eq!(
+        result.entries.len(),
+        2,
+        "two distinct equipment-modifier rows that coincidentally share the \
+         plain name 'Cloth' must produce two records, not one merged record; \
+         got {:?}",
+        result.entries.iter().map(|e| &e.name).collect::<Vec<_>>()
+    );
+    assert!(result.entries.iter().any(|e| e
+        .tokens
+        .iter()
+        .any(|t| t.key == "KEY" && t.value == "Material ~ Cloth")));
+    assert!(result.entries.iter().any(|e| e
+        .tokens
+        .iter()
+        .any(|t| t.key == "KEY" && t.value == "Artisan's Tools (Cloth)")));
+}
+
+#[test]
+fn real_corpus_distinct_wands_resolve_independently_not_shadowed_by_base_template() {
+    // Regression test for the exact defect an SD-19 loop cycle discovered
+    // (2026-07-16, magic_items category): every `Wand.COPY=Wand of <X>` row
+    // in the real corpus used to collapse into one merged "Wand" record,
+    // so only the alphabetically/positionally-first wand's KEY: token
+    // survived and every other wand became unresolvable.
+    let corpus_root = std::env::var("PCGEN_CORPUS_ROOT")
+        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
+    let path = std::path::PathBuf::from(corpus_root)
+        .join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst");
+    if !path.is_file() {
+        eprintln!("skipping: real cr_equip_magic_items.lst not at {}", path.display());
+        return;
+    }
+    let result = parse_equipment_file(&path).expect("real corpus file parses");
+
+    let wand_keys: Vec<&str> = result
+        .entries
+        .iter()
+        .filter(|e| e.name == "Wand")
+        .filter_map(|e| e.tokens.iter().find(|t| t.key == "KEY"))
+        .map(|t| t.value.as_str())
+        .collect();
+
+    assert!(
+        wand_keys.contains(&"Wand of Magic Missile"),
+        "expected 'Wand of Magic Missile' to resolve as its own record, got wand KEYs: {wand_keys:?}"
+    );
+    assert!(
+        wand_keys.contains(&"Wand of Cure Light Wounds"),
+        "expected 'Wand of Cure Light Wounds' to resolve as its own record, got wand KEYs: {wand_keys:?}"
+    );
+    assert!(
+        wand_keys.len() > 1,
+        "expected multiple distinct Wand.COPY= records to survive as separate entries, got {}",
+        wand_keys.len()
+    );
+}
+
+#[test]
+fn rows_with_identical_key_still_merge_across_representation_styles() {
+    // Same scenario as parses_a_fixture_from_disk_with_line_numbers_preserved's
+    // merged Padded Armor case, as a minimal in-memory reproduction: the
+    // KEY-based merge fix must not regress the legitimate same-item,
+    // same-KEY, restated-across-forms merge.
+    let text = "\
+EQUIP:Padded Armor\tKEY:Padded Armor (Base)\tTYPE:Armor
+Padded Armor\tKEY:Padded Armor (Base)\tACCHECK:0\tMAXDEX:8
+";
+    let result = parse_equipment_entries("cr_equip_arms_armor.lst", text);
+    assert_eq!(
+        result.entries.len(),
+        1,
+        "two rows sharing the identical KEY: token must still merge into one record"
+    );
+    let merged = &result.entries[0];
+    assert!(merged.tokens.iter().any(|t| t.key == "TYPE"));
+    assert!(merged.tokens.iter().any(|t| t.key == "ACCHECK"));
+    assert!(merged.tokens.iter().any(|t| t.key == "MAXDEX"));
 }
