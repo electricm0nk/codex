@@ -120,6 +120,8 @@ fn subject_type_token(subject_type: MatrixSubjectType) -> &'static str {
         MatrixSubjectType::Race => "race",
         MatrixSubjectType::Class => "class",
         MatrixSubjectType::Interaction => "interaction",
+        MatrixSubjectType::School(_) => "school",
+        MatrixSubjectType::Equipment(_) => "equipment",
     }
 }
 
@@ -350,7 +352,7 @@ mod tests {
     fn subject_and_state_tokens_use_lowercase_canonical_forms() {
         let snapshot = snapshot();
         let allowed_states = ["supported", "partial", "lossy", "blocked", "unverified"];
-        let allowed_subjects = ["race", "class", "interaction"];
+        let allowed_subjects = ["race", "class", "interaction", "school", "equipment"];
         for r in &snapshot.rows {
             assert!(
                 allowed_states.contains(&r.support_state.as_str()),

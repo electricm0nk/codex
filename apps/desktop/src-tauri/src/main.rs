@@ -4,6 +4,7 @@ mod character_hub;
 mod ge08_workbench;
 mod sd13_support_state_matrix;
 mod sd16_browser_handoff;
+mod sd19_corpus;
 mod update;
 
 use serde::Serialize;

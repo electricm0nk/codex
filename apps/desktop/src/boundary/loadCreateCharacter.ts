@@ -60,8 +60,39 @@ export interface DiagnosticDto {
   claimBlocking: boolean;
 }
 
+/** One PF1 strict spell school's corpus-derived reachability, e.g. "Abjuration". */
+export interface SchoolCoverageDto {
+  school: string;
+  spells: string[];
+  /** Whether the resolved spell(s) also ground through the foundation-slice table cell. */
+  grounded: boolean;
+}
+
+export interface ResolvedEquipmentDto {
+  itemId: string;
+  equipmentRecordName: string;
+  equipmentRecordKey: string;
+  /** Whether this item also grounds through the foundation-slice table cell. */
+  grounded: boolean;
+}
+
+/**
+ * Corpus-derived spell/equipment reachability from `compute_pilot_with_corpus`,
+ * resolved against a small bundled corpus-fixture set (see
+ * `src-tauri/src/sd19_corpus.rs`) — not the full PCGen corpus.
+ */
+export interface CorpusDerivedDto {
+  schoolCoverage: SchoolCoverageDto[];
+  equippedItems: ResolvedEquipmentDto[];
+}
+
 export type CreateCharacterOutcome =
-  | { kind: 'Saved'; summary: CharacterSummaryDto; snapshot: PilotSnapshotDto }
+  | {
+      kind: 'Saved';
+      summary: CharacterSummaryDto;
+      snapshot: PilotSnapshotDto;
+      corpusDerived: CorpusDerivedDto;
+    }
   | { kind: 'Blocked'; diagnostics: DiagnosticDto[] };
 
 export async function loadCreateCharacter(

@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
 import type { CharacterSummaryDto } from './loadListSavedCharacters';
-import type { DiagnosticDto, PilotSnapshotDto } from './loadCreateCharacter';
+import type { CorpusDerivedDto, DiagnosticDto, PilotSnapshotDto } from './loadCreateCharacter';
 
 /**
  * Read-only desktop boundary over a single saved character's detail.
@@ -20,6 +20,7 @@ export interface LoadSavedCharacterResponse {
   summary: CharacterSummaryDto;
   snapshot: PilotSnapshotDto | null;
   diagnostics: DiagnosticDto[];
+  corpusDerived: CorpusDerivedDto;
 }
 
 export async function loadSavedCharacterDetail(
