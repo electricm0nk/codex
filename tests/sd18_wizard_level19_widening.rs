@@ -277,25 +277,6 @@ fn wizard_level18_truth_is_unchanged_by_this_slice() {
     assert_eq!(intense.value, 9, "Wizard level 18 Intense Spells bonus damage must stay 9");
 }
 
-// ----- Negative control: level 20 stays unrecognized by this slice -----
-
-#[test]
-fn wizard_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = WIZARD_LEVEL19_FIXTURE.replace("class:wizard:19", "class:wizard:20");
-    let input = load(&level_20);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
-                || e.id.starts_with("class_feature.wizard.")
-                || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-20 Wizard must not gain any bounded wizard explanation: {:?}",
-        computation.explanations
-    );
-}
-
 // ----- Negative control: the wizard path must not leak onto other classes -----
 
 #[test]

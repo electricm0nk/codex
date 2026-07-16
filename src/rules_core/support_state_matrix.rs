@@ -727,7 +727,8 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
     tests/sd18_wizard_level12_widening.rs + tests/sd18_wizard_level13_widening.rs + \
     tests/sd18_wizard_level14_widening.rs + tests/sd18_wizard_level15_widening.rs + \
     tests/sd18_wizard_level16_widening.rs + tests/sd18_wizard_level17_widening.rs + \
-    tests/sd18_wizard_level18_widening.rs + tests/sd18_wizard_level19_widening.rs";
+    tests/sd18_wizard_level18_widening.rs + tests/sd18_wizard_level19_widening.rs + \
+    tests/sd18_wizard_level20_widening.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -5784,15 +5785,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // both primary sources checked, so no new pillar is added — a
                 // pure arithmetic-pillar widening.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1/level-19 prepared arcane spell baseline, with base \
+                            Wizard level-1/level-20 prepared arcane spell baseline, with base \
                             attack bonus, base save progression, Scribe Scroll, the school \
                             specialization choice, the specialist-bonus-slot flat count (which \
                             becomes 2 at level 3, stays 2 at level 4, becomes 3 at level 5, stays \
                             3 at level 6, becomes 4 at level 7, stays 4 at level 8, becomes \
                             5 at level 9, stays 5 at level 10, becomes 6 at level 11, stays 6 \
                             at level 12, becomes 7 at level 13, stays 7 at level 14, becomes \
-                            8 at level 15, stays 8 at level 16, becomes 9 at level 17, stays \
-                            9 at level 18, and stays 9 at level 19), and \
+                            8 at level 15, stays 8 at level 16, becomes 9 at level 17, and stays \
+                            9 at levels 18-20), and \
                             the \
                             Intense Spells / \
                             Force Missile school-power flat magnitudes (Intense Spells becomes 2 \
@@ -5800,10 +5801,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             level 7, becomes 4 at level 8, stays 4 at level 9, becomes 5 at \
                             level 10, stays 5 at level 11, becomes 6 at level 12, stays 6 at \
                             level 13, becomes 7 at level 14, stays 7 at level 15, becomes 8 \
-                            at level 16, stays 8 at level 17, becomes 9 at level 18, and stays 9 \
-                            at level 19) grounded \
+                            at level 16, stays 8 at level 17, becomes 9 at level 18, stays 9 \
+                            at level 19, and becomes 10 at level 20) grounded \
                             for \
-                            real through level 19, \
+                            real through level 20 (the final level within PF1's 1-20 \
+                            character-level cap for this class row), \
                             and the school-power \
                             execution machinery, the opposed-school-cost burden, the level-5/ \
                             level-10/level-15/level-20 bonus-feat selection/execution, and the \
@@ -6209,7 +6211,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     \"Special\" column is genuinely blank on both primary sources (the Wizard's \
                     bonus feats land only at levels 5/10/15/20, confirmed directly — 19 is NOT a \
                     bonus-feat level), so no new named-feature pillar record is grounded at level \
-                    19 — a pure arithmetic-pillar widening. The row is \
+                    19 — a pure arithmetic-pillar widening. \
+                    A further SD18 slice (cycle-2026-07-16T1000, the loop's SECOND §3.2 level-20 \
+                    landing, after Cleric) widens the gate again to level 20 — the final \
+                    remaining level within PF1's 1-20 character-level cap for this class row \
+                    (verified independently against two primary sources — d20pfsrd and the \
+                    Archives of Nethys aonprd.com mirror, byte-for-byte agreement on the full \
+                    levels-15-through-20 block, so a third source was not required): base attack \
+                    bonus genuinely rises to +10 (20/2), good Will genuinely rises to +12 \
+                    (20/2+2), and Intense Spells' bonus-damage magnitude genuinely rises to 10 \
+                    (max(20/2, 1)), all via the same pre-existing formulas, not re-derived, while \
+                    poor Fortitude/Reflex stay +6 (20/3), and the specialist bonus-slot flat \
+                    count stays 9 (the raw spells-per-day table's level-20 row \
+                    \"4/4/4/4/4/4/4/4/4/4\" opens no spell-level column beyond the 9th, already \
+                    the highest wizard spell level in PF1). The level-20 \"Special\" column reads \
+                    \"Bonus feat\" on both primary sources — the SAME genuinely open-ended \
+                    metamagic/item-creation/Spell-Mastery choice already left named-but-unproven \
+                    at levels 5, 10, and 15 (the class table's own \"Bonus Feats\" ability text is \
+                    identical wording across both sources and names no new mechanic at 20th \
+                    level), so it stays deliberately named-but-unproven and no new pillar record \
+                    is grounded at level 20 either — only the base-attack, base-save, and Intense \
+                    Spells pillars are widened. A separate, non-Core-Rulebook \"Well-Prepared\" \
+                    alternate capstone appears on both sources but is explicitly sourced to \
+                    Pathfinder Player Companion: Chronicle of Legends (an optional splatbook \
+                    replacement ability) — out of SD18's Core Rulebook scope, not modeled here. \
+                    The row is \
                     Partial, not Supported: neither school power's \
                     execution machinery is implemented (no evocation spell-damage application for \
                     Intense Spells, no force-missile casting execution / 1d4 damage roll / \
@@ -6220,12 +6246,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     remains named and unproven, and the \
                     prepared spell posture burden (spellbook content, spells prepared per day, \
                     spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
-                    still entirely unproven. No spell math is fabricated and no Wizard level 20+ is \
-                    proven",
+                    still entirely unproven. Wizard level 20 is now the final level within PF1's \
+                    1-20 character-level cap for this class row, so the per-level \
+                    arithmetic-widening frontier for this row is now fully exhausted — only the \
+                    school-power-execution, opposed-school-cost, bonus-feat-selection, and \
+                    prepared-spell-posture burdens remain, and none is a per-level widening. No \
+                    spell math is fabricated",
                 next_required_uplift: "SD13-E5+ Wizard school-power execution and opposed-school \
-                    preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-20 progression (widening the now-grounded base \
-                    attack/base save formulas) — the final PF1 CRB level-cap widening for Wizard",
+                    preparation-cost grounding slice, then the level-5/level-10/level-15/ \
+                    level-20 bonus-feat selection/execution (a new-subsystem-shaped burden \
+                    deliberately not attempted this slice), then the prepared spellbook / \
+                    spell-slot posture burden. Wizard's per-level arithmetic-widening frontier is \
+                    now fully exhausted (level 20 is the final level within PF1's 1-20 \
+                    character-level cap); no further level exists to widen into for this class \
+                    row",
             },
             // ----- Interaction rows (2) -----
             SupportStateRow {

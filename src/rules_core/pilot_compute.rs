@@ -2570,7 +2570,41 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // arithmetic-pillar widening on the already-grounded base attack / base
 // save / Intense Spells formulas, with the specialist bonus-slot pillar
 // staying flat.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 19;
+//
+// A further SD18 slice (cycle-2026-07-16T1000, the loop's SECOND §3.2
+// level-20 landing, after Cleric) widens the gate again to level 20 — the
+// final remaining level within PF1's 1-20 character-level cap for this
+// class row: base attack bonus GENUINELY RISES to +10 (`20/2 = 10`, up
+// from +9) and good Will GENUINELY RISES to +12 (`20/2+2 = 12`, up from
+// +11), while poor Fortitude/Reflex both STAY at +6 (`20/3 = 6`, an
+// integer-division coincidence with level 19) — verified independently
+// against two primary sources (d20pfsrd and the Archives of Nethys
+// aonprd.com mirror, byte-for-byte agreement on the full
+// levels-15-through-20 block, so a third source was not required). The raw
+// spells-per-day table's level-20 row is "4/4/4/4/4/4/4/4/4/4" — up from
+// the level-19 row "4/4/4/4/4/4/4/4/3/3" (the 8th- and 9th-level columns
+// both rise to 4), but NO genuinely new spell-level column opens (9th is
+// already the highest wizard spell level in PF1, first opened at level
+// 17), so the specialist bonus-slot flat count STAYS at 9 (checked rather
+// than assumed) — no new threshold constant is needed. Intense Spells'
+// bonus-damage magnitude GENUINELY RISES to 10 (`max(20/2, 1) = 10`, up
+// from 9) via the pre-existing formula, not re-derived; Force Missile's
+// pool is level-independent and unchanged; the level-20 "Special" column
+// reads "Bonus feat" on both primary sources — the SAME genuinely
+// open-ended metamagic/item-creation/Spell-Mastery choice already left
+// named-but-unproven at levels 5, 10, and 15 (the class table's own
+// "Bonus Feats" ability text, "At 5th, 10th, 15th, and 20th level, a
+// wizard gains a bonus feat," is identical wording on both sources and
+// names no new mechanic at 20th level), so it stays deliberately
+// named-but-unproven and no new pillar record is grounded at level 20
+// either — only the base-attack, base-save, and Intense Spells pillars are
+// widened. A separate, non-Core-Rulebook "Well-Prepared" alternate
+// capstone appears on both sources but is explicitly sourced to
+// Pathfinder Player Companion: Chronicle of Legends (an optional splatbook
+// replacement ability) — out of SD18's Core Rulebook scope, not modeled
+// here. This is the final level within PF1's 1-20 character-level cap for
+// this class row.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 20;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
