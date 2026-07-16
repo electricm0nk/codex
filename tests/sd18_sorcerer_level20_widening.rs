@@ -1,78 +1,76 @@
-//! SD18 Sorcerer level-19 widening grounding proof.
+//! SD18 Sorcerer level-20 widening grounding proof.
 //!
-//! Widens the accepted deterministic Human Sorcerer level-1..level-18 spell-
-//! bearing chassis (`tests/sd18_sorcerer_level18_widening.rs`) to Sorcerer
-//! level 19, mirroring the sibling-class level-range-gate idiom
-//! (`supported_sorcerer_level` is generalized from `1..=18` to `1..=19` via
-//! `MAX_SUPPORTED_SORCERER_LEVEL = 19`, exactly as this sweep already
-//! widened `MAX_SUPPORTED_BARBARIAN_LEVEL`, `MAX_SUPPORTED_CLERIC_LEVEL`,
-//! `MAX_SUPPORTED_FIGHTER_LEVEL`, `MAX_SUPPORTED_BARD_LEVEL`,
-//! `MAX_SUPPORTED_PALADIN_LEVEL`, `MAX_SUPPORTED_RANGER_LEVEL`, and
-//! `MAX_SUPPORTED_ROGUE_LEVEL` from 18 to 19 already this level-19 sweep —
-//! Sorcerer is the loop's EIGHTH §3.2 level-19 landing).
+//! Widens the accepted deterministic Human Sorcerer level-1..level-19 spell-
+//! bearing chassis (`tests/sd18_sorcerer_level19_widening.rs`) to Sorcerer
+//! level 20, the FINAL level within PF1's 1-20 character-level cap,
+//! mirroring the sibling-class level-range-gate idiom
+//! (`supported_sorcerer_level` is generalized from `1..=19` to `1..=20` via
+//! `MAX_SUPPORTED_SORCERER_LEVEL = 20`, exactly as this sweep already
+//! widened `MAX_SUPPORTED_BARBARIAN_LEVEL`, `MAX_SUPPORTED_BARD_LEVEL`,
+//! `MAX_SUPPORTED_CLERIC_LEVEL`, `MAX_SUPPORTED_FIGHTER_LEVEL`,
+//! `MAX_SUPPORTED_PALADIN_LEVEL`, `MAX_SUPPORTED_RANGER_LEVEL`,
+//! `MAX_SUPPORTED_ROGUE_LEVEL`, and `MAX_SUPPORTED_WIZARD_LEVEL` from 19 to
+//! 20 already this level-20 sweep — Sorcerer is the loop's NINTH and LAST
+//! §3.2 level-20 landing, closing the level-20 sweep at 9 of 9 eligible
+//! classes (Druid capped at 15, Monk capped at 12, both documented
+//! structural exceptions outside this sweep)).
 //! §3.1 race rows and §3.3 interaction rows stay fully exhausted /
 //! structurally blocked (cited from the progress doc, not re-derived).
 //!
 //! Verified independently against TWO primary sources — a raw,
 //! non-AI-summarized parse of d20pfsrd.com's own HTML table (obtained via
-//! `curl` and stripped of markup with a small Python script) and the
-//! Archives of Nethys `aonprd.com/ClassDisplay.aspx?ItemName=Sorcerer`
-//! mirror (also parsed the same way) — both agreeing byte-for-byte on the
-//! full levels-15-through-20 class-table block (including the separate
-//! Spells Known table), fetched in one pass to rule out
-//! level-misattribution; a third source was not required since no
-//! disagreement was found:
+//! `curl` and stripped of markup) and the Archives of Nethys
+//! `aonprd.com/ClassDisplay.aspx?ItemName=Sorcerer` mirror (also parsed the
+//! same way) — both agreeing byte-for-byte on the full level-20 class-table
+//! row (including the separate Spells Known table); a third source was not
+//! required since no disagreement was found:
 //!
-//! - level 19 base attack bonus STAYS at +9 (`19 / 2 = 9`, an
-//!   integer-division coincidence with level 18's +9 — checked directly
-//!   rather than assumed, and confirmed genuine by the raw table's own
-//!   `+9/+4` cell, which matches level 18's `+9/+4` cell exactly). Both
-//!   base saves STAY at +6 (`19 / 3 = 6`) and good Will STAYS at +11
-//!   (`19 / 2 + 2 = 11`), all integer-division coincidences with level 18,
-//!   not a sign any formula stopped scaling.
-//! - the PF1 Core Rulebook Sorcerer class table's level-19 "Special" column
-//!   reads "Bloodline feat, bloodline spell" (bloodline-specific — the
-//!   sorcerer's fourth bloodline feat grant, at 7th and every six levels
-//!   thereafter, and its own bloodline spell grant) — left
-//!   named-but-unproven by the pre-existing Arcane Bond / bloodline
-//!   progression blocker, exactly mirroring levels 3/5/7/9/11/13/15/17 — so
-//!   no new pillar record is grounded from it.
-//! - the Spells per Day table's level-19 row is `6/6/6/6/6/6/6/6/4` (1st
-//!   through 9th), genuinely risen from level 18's `6/6/6/6/6/6/6/5/3` at
-//!   the 8th spell level (5 -> 6) AND the 9th spell level (3 -> 4), with no
-//!   genuinely new spell-level column opening (the 9th-level column already
-//!   opened at level 18).
-//! - the Spells Known table's level-19 row is `9/5/5/4/4/4/3/3/3/2` (0th
-//!   through 9th), with the 0th through 7th columns numerically UNCHANGED
-//!   from level 18's `9/5/5/4/4/4/3/3/2/1`, while the 8th-level column rises
-//!   from 2 to 3 AND the 9th-level column rises from 1 to 2, with no
-//!   genuinely new spell-level column opening.
-//! - the spell-level access ladder STAYS at 9 (unchanged from level 18; no
+//! - level 20 base attack bonus GENUINELY RISES to +10 (`20 / 2 = 10`, up
+//!   from level 19's +9 — confirmed genuine by the raw table's own
+//!   `+10/+5` cell, up from level 19's `+9/+4` cell). Both base saves STAY
+//!   at +6 (`20 / 3 = 6`, an integer-division coincidence with level 19)
+//!   and good Will GENUINELY RISES to +12 (`20 / 2 + 2 = 12`, up from
+//!   level 19's +11).
+//! - the PF1 Core Rulebook Sorcerer class table's level-20 "Special" column
+//!   reads "Bloodline power" (bloodline-specific — the sorcerer's SECOND
+//!   bloodline, gaining that bloodline's arcana and 1st/3rd/9th-level
+//!   powers) — left named-but-unproven by the pre-existing Arcane Bond /
+//!   bloodline progression blocker, exactly mirroring levels
+//!   3/5/7/9/11/13/15/17/19 — so no new pillar record is grounded from it.
+//! - the Spells per Day table's level-20 row is `6/6/6/6/6/6/6/6/6` (1st
+//!   through 9th), genuinely risen from level 19's `6/6/6/6/6/6/6/6/4` only
+//!   at the 9th spell level (4 -> 6), with no genuinely new spell-level
+//!   column opening (the 9th-level column already opened at level 18).
+//! - the Spells Known table's level-20 row is `9/5/5/4/4/4/3/3/3/3` (0th
+//!   through 9th), with the 0th through 8th columns numerically UNCHANGED
+//!   from level 19's `9/5/5/4/4/4/3/3/3/2`, while the 9th-level column
+//!   rises from 2 to 3, with no genuinely new spell-level column opening.
+//! - the spell-level access ladder STAYS at 9 (unchanged from level 19; no
 //!   new threshold constant is needed — the ladder was fully populated
 //!   through 9th-level spells at level 18).
 //! - the spell-save-DC and Charisma-bonus-spell formulas widen automatically
 //!   over the unchanged access ladder, with no new code needed (both loops
 //!   already iterate generically over `1..=sorcerer_spell_level_access`).
 //! - the bloodline choice and bloodline class-skill choice recognitions are
-//!   not level-gated, so both still fire at level 19 for the same fixture
+//!   not level-gated, so both still fire at level 20 for the same fixture
 //!   selections.
 //!
 //! It deliberately does not touch Arcane Bond, bloodline arcana, the
-//! bloodline feat selection, the bloodline bonus spell selection, or the
+//! bloodline power selection, the bloodline bonus spell selection, or the
 //! spontaneous which-spells-known selection / casting-execution burden (all
-//! stay named-but-unproven, unchanged from levels 1-18), and it does not
-//! ground Sorcerer level 20. It also preserves the accepted Sorcerer
-//! level-1..level-18 truth (unchanged), the Fighter negative control, and
-//! the multiclass negative control. Per the sweep's established lesson
-//! about stale negative controls, this cycle also moves the sibling "level
-//! 19 is not promoted" negative controls in
+//! stay named-but-unproven, unchanged from levels 1-19). It also preserves
+//! the accepted Sorcerer level-1..level-19 truth (unchanged), the Fighter
+//! negative control, and the multiclass negative control. Per the sweep's
+//! established lesson about stale negative controls, this cycle also moves
+//! the sibling "level 20 is not promoted" negative controls in
 //! `tests/sd13_sorcerer_level10_progression.rs`,
 //! `tests/sd18_sorcerer_level11_widening.rs`,
 //! `tests/sd18_sorcerer_level12_widening.rs`,
 //! `tests/sd18_sorcerer_level13_widening.rs`, and
-//! `tests/sd18_sorcerer_level14_widening.rs` — to a "level 20 is not
-//! promoted" boundary; `tests/sd18_sorcerer_level18_widening.rs`'s own
-//! level-19 negative control is removed rather than moved, since level 19
+//! `tests/sd18_sorcerer_level14_widening.rs` — to a "level 21 is not
+//! promoted" boundary (a pure implementation-gate check, since PF1 has no
+//! 21st character level); `tests/sd18_sorcerer_level19_widening.rs`'s own
+//! level-20 negative control is removed rather than moved, since level 20
 //! is now itself the supported/grounded row, mirroring the exact fix every
 //! prior level-N cycle made for its own siblings.
 
@@ -84,12 +82,12 @@ use codex::rules_core::support_state_matrix::{
     EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
 };
 
-const SORCERER_LEVEL18_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_sorcerer_level18_sd18_widening_deterministic_input.txt"
-);
-
 const SORCERER_LEVEL19_FIXTURE: &str = include_str!(
     "fixtures/rules_core/pf1_human_sorcerer_level19_sd18_widening_deterministic_input.txt"
+);
+
+const SORCERER_LEVEL20_FIXTURE: &str = include_str!(
+    "fixtures/rules_core/pf1_human_sorcerer_level20_sd18_widening_deterministic_input.txt"
 );
 
 const FIGHTER_FIXTURE: &str = include_str!(
@@ -139,57 +137,55 @@ fn values_with_prefix(
         .collect()
 }
 
-// ----- Base attack bonus at level 19 stays put (integer-division coincidence) -----
+// ----- Base attack bonus at level 20 genuinely rises -----
 
 #[test]
-fn sorcerer_level19_base_attack_bonus_is_grounded() {
-    let input = load(SORCERER_LEVEL19_FIXTURE);
+fn sorcerer_level20_base_attack_bonus_is_grounded() {
+    let input = load(SORCERER_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let base_attack = explanation(&computation, "class_chassis.sorcerer.base_attack_bonus");
     assert_eq!(
-        base_attack.value, 9,
-        "Sorcerer level 19 1/2-BAB progression (19 / 2) must equal 9 — an integer-division \
-         coincidence with level 18's +9, confirmed genuine by the raw table's own `+9/+4` cell: \
-         {}",
+        base_attack.value, 10,
+        "Sorcerer level 20 1/2-BAB progression (20 / 2) must equal 10 — genuinely up from level \
+         19's +9, confirmed genuine by the raw table's own `+10/+5` cell: {}",
         base_attack.detail
     );
 }
 
-// ----- Base saves at level 19: all three stay put (integer-division coincidences) -----
+// ----- Base saves at level 20: poor saves stay put, good Will genuinely rises -----
 
 #[test]
-fn sorcerer_level19_base_saves_are_grounded() {
-    let input = load(SORCERER_LEVEL19_FIXTURE);
+fn sorcerer_level20_base_saves_are_grounded() {
+    let input = load(SORCERER_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let fortitude = explanation(&computation, "class_chassis.sorcerer.base_save.fortitude");
     assert_eq!(
         fortitude.value, 6,
-        "Sorcerer level 19 poor Fortitude (19/3) must equal 6 — an integer-division coincidence \
-         with level 18's +6"
+        "Sorcerer level 20 poor Fortitude (20/3) must equal 6 — an integer-division coincidence \
+         with level 19's +6"
     );
 
     let reflex = explanation(&computation, "class_chassis.sorcerer.base_save.reflex");
     assert_eq!(
         reflex.value, 6,
-        "Sorcerer level 19 poor Reflex (19/3) must equal 6 — an integer-division coincidence \
-         with level 18's +6"
+        "Sorcerer level 20 poor Reflex (20/3) must equal 6 — an integer-division coincidence \
+         with level 19's +6"
     );
 
     let will = explanation(&computation, "class_chassis.sorcerer.base_save.will");
     assert_eq!(
-        will.value, 11,
-        "Sorcerer level 19 good Will (19/2+2) must equal 11 — an integer-division coincidence \
-         with level 18's +11"
+        will.value, 12,
+        "Sorcerer level 20 good Will (20/2+2) must equal 12 — genuinely up from level 19's +11"
     );
 }
 
-// ----- Base spells per day widen at level 19 within the already-opened 9-column shape -----
+// ----- Base spells per day widen at level 20 within the already-opened 9-column shape -----
 
 #[test]
-fn sorcerer_level19_base_spells_per_day_match_the_raw_table_row() {
-    let input = load(SORCERER_LEVEL19_FIXTURE);
+fn sorcerer_level20_base_spells_per_day_match_the_raw_table_row() {
+    let input = load(SORCERER_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert_eq!(
@@ -203,19 +199,19 @@ fn sorcerer_level19_base_spells_per_day_match_the_raw_table_row() {
             (format!("{PER_DAY_PREFIX}spell_level_6"), 6),
             (format!("{PER_DAY_PREFIX}spell_level_7"), 6),
             (format!("{PER_DAY_PREFIX}spell_level_8"), 6),
-            (format!("{PER_DAY_PREFIX}spell_level_9"), 4),
+            (format!("{PER_DAY_PREFIX}spell_level_9"), 6),
         ],
-        "level 19 (`6/6/6/6/6/6/6/6/4`): the 8th-level column rises from 5 to 6 AND the \
-         9th-level column rises from 3 to 4, with no genuinely new spell-level column opening, \
-         verified independently across two primary sources"
+        "level 20 (`6/6/6/6/6/6/6/6/6`): the 9th-level column rises from 4 to 6, with no \
+         genuinely new spell-level column opening, verified independently across two primary \
+         sources"
     );
 }
 
-// ----- Spells known widen at level 19 within the already-opened 10-column shape -----
+// ----- Spells known widen at level 20 within the already-opened 10-column shape -----
 
 #[test]
-fn sorcerer_level19_spells_known_match_the_raw_table_row() {
-    let input = load(SORCERER_LEVEL19_FIXTURE);
+fn sorcerer_level20_spells_known_match_the_raw_table_row() {
+    let input = load(SORCERER_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert_eq!(
@@ -230,20 +226,19 @@ fn sorcerer_level19_spells_known_match_the_raw_table_row() {
             (format!("{KNOWN_PREFIX}spell_level_6"), 3),
             (format!("{KNOWN_PREFIX}spell_level_7"), 3),
             (format!("{KNOWN_PREFIX}spell_level_8"), 3),
-            (format!("{KNOWN_PREFIX}spell_level_9"), 2),
+            (format!("{KNOWN_PREFIX}spell_level_9"), 3),
         ],
-        "level 19 (`9/5/5/4/4/4/3/3/3/2`): the 0th through 7th columns stay numerically \
-         unchanged from level 18's `9/5/5/4/4/4/3/3/2/1`, while the 8th-level column rises from \
-         2 to 3 AND the 9th-level column rises from 1 to 2, verified independently across two \
-         primary sources"
+        "level 20 (`9/5/5/4/4/4/3/3/3/3`): the 0th through 8th columns stay numerically \
+         unchanged from level 19's `9/5/5/4/4/4/3/3/3/2`, while the 9th-level column rises from \
+         2 to 3, verified independently across two primary sources"
     );
 }
 
 // ----- Spell-level access ladder stays at 9 (no new threshold constant needed) -----
 
 #[test]
-fn sorcerer_level19_spell_level_access_stays_at_nine() {
-    let input = load(SORCERER_LEVEL19_FIXTURE);
+fn sorcerer_level20_spell_level_access_stays_at_nine() {
+    let input = load(SORCERER_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let access = explanation(
@@ -252,9 +247,9 @@ fn sorcerer_level19_spell_level_access_stays_at_nine() {
     );
     assert_eq!(
         access.value, 9,
-        "Sorcerer level 19 spell-level access must STAY at 9th-level spells — unchanged from \
-         level 18, since the access ladder was already fully populated through 9th-level spells: \
-         {}",
+        "Sorcerer level 20 spell-level access must STAY at 9th-level spells — unchanged from \
+         level 19, since the access ladder was already fully populated through 9th-level \
+         spells: {}",
         access.detail
     );
 }
@@ -262,8 +257,8 @@ fn sorcerer_level19_spell_level_access_stays_at_nine() {
 // ----- Bonus spells and spell-save DCs extend to the 9th spell level with no new code -----
 
 #[test]
-fn sorcerer_level19_bonus_spells_and_save_dcs_extend_to_ninth_level() {
-    let input = load(SORCERER_LEVEL19_FIXTURE);
+fn sorcerer_level20_bonus_spells_and_save_dcs_extend_to_ninth_level() {
+    let input = load(SORCERER_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let dc9 = explanation(
@@ -274,7 +269,7 @@ fn sorcerer_level19_bonus_spells_and_save_dcs_extend_to_ninth_level() {
     // 10 + 9 + 3 = 22.
     assert_eq!(
         dc9.value, 22,
-        "Sorcerer level 19 9th-level spell save DC must be 10 + 9 + Charisma modifier: {}",
+        "Sorcerer level 20 9th-level spell save DC must be 10 + 9 + Charisma modifier: {}",
         dc9.detail
     );
 
@@ -285,7 +280,7 @@ fn sorcerer_level19_bonus_spells_and_save_dcs_extend_to_ninth_level() {
     // Charisma modifier +3 < spell level 9, so bonus spells at 9th level is 0.
     assert_eq!(
         bonus9.value, 0,
-        "Sorcerer level 19 9th-level bonus spells from a +3 Charisma modifier must be 0 (below \
+        "Sorcerer level 20 9th-level bonus spells from a +3 Charisma modifier must be 0 (below \
          the spell level threshold): {}",
         bonus9.detail
     );
@@ -295,18 +290,18 @@ fn sorcerer_level19_bonus_spells_and_save_dcs_extend_to_ninth_level() {
         "class_chassis.sorcerer.spontaneous.total_spells_per_day.spell_level_9",
     );
     assert_eq!(
-        total9.value, 4,
-        "Sorcerer level 19 9th-level total spells per day must equal the base count (4) plus \
+        total9.value, 6,
+        "Sorcerer level 20 9th-level total spells per day must equal the base count (6) plus \
          the zero bonus: {}",
         total9.detail
     );
 }
 
-// ----- Bloodline choice recognition still fires at level 19 -----
+// ----- Bloodline choice recognition still fires at level 20 -----
 
 #[test]
-fn sorcerer_level19_still_recognizes_the_bloodline_choice() {
-    let input = load(SORCERER_LEVEL19_FIXTURE);
+fn sorcerer_level20_still_recognizes_the_bloodline_choice() {
+    let input = load(SORCERER_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let choice = explanation(&computation, "class_chassis.sorcerer.bloodline_choice");
@@ -316,7 +311,7 @@ fn sorcerer_level19_still_recognizes_the_bloodline_choice() {
     );
     assert!(
         choice.detail.contains("Arcane"),
-        "bloodline choice recognition must still name the Arcane bloodline at level 19: {}",
+        "bloodline choice recognition must still name the Arcane bloodline at level 20: {}",
         choice.detail
     );
 }
@@ -324,8 +319,8 @@ fn sorcerer_level19_still_recognizes_the_bloodline_choice() {
 // ----- The spell-bearing baseline recognition and both burden diagnostics persist -----
 
 #[test]
-fn sorcerer_level19_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_burdens() {
-    let input = load(SORCERER_LEVEL19_FIXTURE);
+fn sorcerer_level20_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_burdens() {
+    let input = load(SORCERER_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
@@ -333,14 +328,14 @@ fn sorcerer_level19_still_recognizes_the_spell_bearing_baseline_and_claim_blocks
             .explanations
             .iter()
             .any(|e| e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-19 Sorcerer must still recognize the spell-bearing baseline identity: {:?}",
+        "level-20 Sorcerer must still recognize the spell-bearing baseline identity: {:?}",
         computation.explanations
     );
     assert!(
         computation.diagnostics.iter().any(|d| d.id
             == "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
             && d.claim_blocking),
-        "level-19 Sorcerer must still claim-block on the Arcane Bond / bloodline progression \
+        "level-20 Sorcerer must still claim-block on the Arcane Bond / bloodline progression \
          burden: {:?}",
         computation.diagnostics
     );
@@ -349,17 +344,17 @@ fn sorcerer_level19_still_recognizes_the_spell_bearing_baseline_and_claim_blocks
             .diagnostics
             .iter()
             .any(|d| d.id == "class_spell.sorcerer.spontaneous.unsupported" && d.claim_blocking),
-        "level-19 Sorcerer must still claim-block on the spontaneous which-spells-known / \
+        "level-20 Sorcerer must still claim-block on the spontaneous which-spells-known / \
          casting-execution burden: {:?}",
         computation.diagnostics
     );
 }
 
-// ----- No new bloodline-feat/bloodline-power/bloodline-spell record is fabricated at level 19 -----
+// ----- No new bloodline-feat/bloodline-power/bloodline-spell record is fabricated at level 20 -----
 
 #[test]
-fn sorcerer_level19_does_not_fabricate_any_bloodline_entry() {
-    let input = load(SORCERER_LEVEL19_FIXTURE);
+fn sorcerer_level20_does_not_fabricate_any_bloodline_entry() {
+    let input = load(SORCERER_LEVEL20_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
@@ -369,22 +364,22 @@ fn sorcerer_level19_does_not_fabricate_any_bloodline_entry() {
             .any(|e| e.id.to_lowercase().contains("bloodline_feat")
                 || e.id.to_lowercase().contains("bloodline_power")
                 || e.id.to_lowercase().contains("bloodline_spell")),
-        "level-19 Sorcerer must not fabricate a bloodline-feat/bloodline-power/bloodline-spell \
-         record — the level-19 \"Bloodline feat, bloodline spell\" Special column stays named \
-         by the pre-existing Arcane Bond / bloodline progression blocker only: {:?}",
+        "level-20 Sorcerer must not fabricate a bloodline-feat/bloodline-power/bloodline-spell \
+         record — the level-20 \"Bloodline power\" Special column stays named by the \
+         pre-existing Arcane Bond / bloodline progression blocker only: {:?}",
         computation.explanations
     );
 }
 
-// ----- Negative control: level 18 truth is unchanged by this widening -----
+// ----- Negative control: level 19 truth is unchanged by this widening -----
 
 #[test]
-fn sorcerer_level18_truth_is_unchanged_by_this_slice() {
-    let input = load(SORCERER_LEVEL18_FIXTURE);
+fn sorcerer_level19_truth_is_unchanged_by_this_slice() {
+    let input = load(SORCERER_LEVEL19_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
     let base_attack = explanation(&computation, "class_chassis.sorcerer.base_attack_bonus");
-    assert_eq!(base_attack.value, 9, "Sorcerer level 18 base attack bonus must stay 9");
+    assert_eq!(base_attack.value, 9, "Sorcerer level 19 base attack bonus must stay 9");
 
     assert_eq!(
         values_with_prefix(&computation, PER_DAY_PREFIX),
@@ -396,18 +391,37 @@ fn sorcerer_level18_truth_is_unchanged_by_this_slice() {
             (format!("{PER_DAY_PREFIX}spell_level_5"), 6),
             (format!("{PER_DAY_PREFIX}spell_level_6"), 6),
             (format!("{PER_DAY_PREFIX}spell_level_7"), 6),
-            (format!("{PER_DAY_PREFIX}spell_level_8"), 5),
-            (format!("{PER_DAY_PREFIX}spell_level_9"), 3),
+            (format!("{PER_DAY_PREFIX}spell_level_8"), 6),
+            (format!("{PER_DAY_PREFIX}spell_level_9"), 4),
         ],
-        "Sorcerer level 18 base spells per day must stay `6/6/6/6/6/6/6/5/3`, unchanged by this \
+        "Sorcerer level 19 base spells per day must stay `6/6/6/6/6/6/6/6/4`, unchanged by this \
          slice"
+    );
+}
+
+// ----- Negative control: level 21 stays unrecognized (PF1 has no 21st level) -----
+
+#[test]
+fn sorcerer_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = SORCERER_LEVEL20_FIXTURE.replace("class:sorcerer:20", "class:sorcerer:21");
+    let input = load(&level_21);
+    let computation = compute_pilot_base_chassis(&input);
+    assert!(
+        !computation
+            .explanations
+            .iter()
+            .any(|e| e.id.starts_with("class_chassis.sorcerer.")
+                || e.id == "class_chassis.spell_baseline.sorcerer"),
+        "level-21 Sorcerer must not gain any bounded sorcerer chassis explanation (PF1 has no \
+         21st character level): {:?}",
+        computation.explanations
     );
 }
 
 // ----- Negative control: the sorcerer path must not leak onto other classes -----
 
 #[test]
-fn fighter_does_not_gain_sorcerer_level19_recognition() {
+fn fighter_does_not_gain_sorcerer_level20_recognition() {
     let fighter = load(FIGHTER_FIXTURE);
     let fighter_computation = compute_pilot_base_chassis(&fighter);
     assert!(
@@ -424,10 +438,10 @@ fn fighter_does_not_gain_sorcerer_level19_recognition() {
 // ----- Negative control: multiclass Sorcerer is not promoted -----
 
 #[test]
-fn multiclass_sorcerer_level19_is_not_promoted_by_this_slice() {
-    let multiclass = SORCERER_LEVEL19_FIXTURE.replace(
-        "class_level=class:sorcerer:19",
-        "class_level=class:sorcerer:19\nclass_level=class:fighter:1",
+fn multiclass_sorcerer_level20_is_not_promoted_by_this_slice() {
+    let multiclass = SORCERER_LEVEL20_FIXTURE.replace(
+        "class_level=class:sorcerer:20",
+        "class_level=class:sorcerer:20\nclass_level=class:fighter:1",
     );
     let input = load(&multiclass);
     let computation = compute_pilot_base_chassis(&input);
@@ -446,10 +460,10 @@ fn multiclass_sorcerer_level19_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the matrix note names the level-19 widening -----
+// ----- Control plane: the matrix note names the level-20 widening -----
 
 #[test]
-fn matrix_sorcerer_row_names_level_19_widening() {
+fn matrix_sorcerer_row_names_level_20_widening() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let sorcerer = matrix
         .row("class.sorcerer.progression_and_spell_burden")
@@ -464,13 +478,13 @@ fn matrix_sorcerer_row_names_level_19_widening() {
     assert!(
         sorcerer
             .grounding_ref
-            .contains("sd18_sorcerer_level19_widening"),
-        "sorcerer row must cite the live SD18 level-19 proof surface: {}",
+            .contains("sd18_sorcerer_level20_widening"),
+        "sorcerer row must cite the live SD18 level-20 proof surface: {}",
         sorcerer.grounding_ref
     );
     let note = sorcerer.blocker_or_lossiness_note;
     assert!(
-        note.contains("level 19") || note.contains("level-19"),
-        "sorcerer partial note must name the level-19 widening: {note}"
+        note.contains("level 20") || note.contains("level-20"),
+        "sorcerer partial note must name the level-20 widening: {note}"
     );
 }

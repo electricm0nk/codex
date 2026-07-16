@@ -1554,7 +1554,7 @@ const RANGER_COMBAT_STYLE_BONUS_FEAT_5_CHOICE_ID: &str =
 // casting-execution burden remain named and unproven, unchanged from level
 // 18. No spell math is fabricated and no Sorcerer level 20 is proven.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 19;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 20;
 
 /// The sorcerer level at which 2nd-level sorcerer spells first become
 /// available, verified against the raw PF1 Core Rulebook Sorcerer
@@ -13635,7 +13635,12 @@ fn explain_sorcerer_level1_spell_baseline(
     // mirror, byte-for-byte identical): the 8th-level column rises from 5 to
     // 6 AND the 9th-level column rises from 3 to 4, with no genuinely new
     // spell-level column opening (the 9th-level column already opened at
-    // level 18).
+    // level 18). Level 20 is THIS SD18 slice's widening
+    // (cycle-2026-07-16T1503), the FINAL level within PF1's 1-20
+    // character-level cap, verified independently against two primary
+    // sources (raw d20pfsrd parse and the Archives of Nethys aonprd.com
+    // mirror, byte-for-byte identical): the 9th-level column rises from 4 to
+    // 6, with no genuinely new spell-level column opening.
     // Like the Bard and
     // unlike the
     // Paladin/Ranger, there are NO "0" entries at levels 1-18; every
@@ -13663,6 +13668,7 @@ fn explain_sorcerer_level1_spell_baseline(
         17 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(4), None],
         18 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(3)],
         19 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(4)],
+        20 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6)],
         _ => [None, None, None, None, None, None, None, None, None],
     };
     for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
@@ -13767,7 +13773,14 @@ fn explain_sorcerer_level1_spell_baseline(
     // mirror, byte-for-byte identical): the 0th through 7th columns stay
     // numerically unchanged from level 18's row, while the 8th-level column
     // rises from 2 to 3 AND the 9th-level column rises from 1 to 2, with no
-    // genuinely new spell-level column opening.
+    // genuinely new spell-level column opening. Level 20 is THIS SD18
+    // slice's widening (cycle-2026-07-16T1503), the FINAL level within
+    // PF1's 1-20 character-level cap, verified independently against two
+    // primary sources (raw d20pfsrd parse and the Archives of Nethys
+    // aonprd.com mirror, byte-for-byte identical): the 0th through 8th
+    // columns stay numerically unchanged from level 19's row, while the
+    // 9th-level column rises from 2 to 3, with no genuinely new spell-level
+    // column opening.
     // The known table
     // INCLUDES the 0th level (cantrips are "spells
     // known" only), and its new-spell-level cadence matches the grounded
@@ -13808,6 +13821,10 @@ fn explain_sorcerer_level1_spell_baseline(
         19 => [
             Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
             Some(2),
+        ],
+        20 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
+            Some(3),
         ],
         _ => [None, None, None, None, None, None, None, None, None, None],
     };
