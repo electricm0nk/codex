@@ -273,23 +273,26 @@ fn bard_level9_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 20 stays unrecognized by this slice -----
+// ----- Negative control: level 21 stays unrecognized by this slice -----
 //
 // This boundary was originally level 11 (the tranche-2 ceiling at the time
 // this test was written), then moved to level 12 by the SD18
 // bard-level11-inspire-widening cycle, then to level 13 by the SD18
 // bard-level12-widening cycle, then progressively further by every
-// subsequent SD18 bard level cycle. The SD18 bard-level19-widening cycle
-// widened `supported_bard_level` again to `1..=19` (see
-// `tests/sd18_bard_level19_widening.rs`), so the correct negative control
-// boundary for this file's own (level-10-era) baseline is now level 20,
-// mirroring exactly how every prior sibling class's own level cycle moved
-// its own sibling negative control's boundary up by one level.
+// subsequent SD18 bard level cycle. The SD18 bard-level20-widening cycle
+// widened `supported_bard_level` again to `1..=20` (see
+// `tests/sd18_bard_level20_widening.rs`) — the final remaining level within
+// PF1's 1-20 character-level cap for this class row — so the correct
+// negative control boundary for this file's own (level-10-era) baseline is
+// now level 21 (a pure implementation-gate check, since PF1 has no 21st
+// character level), mirroring exactly how every prior sibling class's own
+// level cycle moved its own sibling negative control's boundary up by one
+// level.
 
 #[test]
-fn bard_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = BARD_LEVEL10_FIXTURE.replace("class:bard:10", "class:bard:20");
-    let input = load(&level_20);
+fn bard_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = BARD_LEVEL10_FIXTURE.replace("class:bard:10", "class:bard:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -298,7 +301,7 @@ fn bard_level_20_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard"),
-        "level-18 Bard must not gain any bounded bard explanation: {:?}",
+        "level-21 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
 }

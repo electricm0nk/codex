@@ -2007,8 +2007,53 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// unchanged (the next target-count rise lands at level 21, out of
 /// scope). This needed ZERO new record types and ZERO new choice slots —
 /// only one new tier constant pair on an already-generalized tiered
-/// if/else chain, and no Bard level 20 is proven.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 19;
+/// if/else chain, and no Bard level 20 is proven. A further SD18 slice
+/// (alphabetically the first of the six remaining §3.2 level-20
+/// candidates after Cleric, Wizard, and Barbarian) widens the gate again
+/// to 1..=20 (`MAX_SUPPORTED_BARD_LEVEL = 20`) — the final remaining
+/// level within PF1's 1-20 character-level cap for this class row.
+/// Verified independently against two primary sources (a raw HTML parse
+/// of d20pfsrd.com's own class table, bypassing AI-summarization, and
+/// the Archives of Nethys aonprd.com mirror via `ClassDisplay.aspx`,
+/// both covering the full levels-17-through-20 block, byte-for-byte
+/// agreement, so a third source was not required): the level-20 row
+/// reads "+15/+10/+5 | +6 | +12 | +12 | Deadly performance |
+/// 5/5/5/5/5/5" (spells per day) and "6/6/6/6/6/5/5" (spells known).
+/// Base attack bonus genuinely rises to +15 (`20 * 3 / 4 = 15`); poor
+/// Fortitude stays put at +6 (`20 / 3 = 6`, an integer-division
+/// coincidence with level 19) while both good saves (Reflex, Will)
+/// genuinely rise to +12 (`20 / 2 + 2 = 12`, up from +11); Bardic
+/// Knowledge genuinely rises to 10 (`max(20 / 2, 1) = 10`, up from 9);
+/// the Bardic Performance rounds-per-day pool genuinely rises to 44
+/// (`4 + CHA + 2 * (20 - 1)`, up from 42); the Fascinate DC genuinely
+/// rises to 22 (`10 + 20 / 2 + CHA`, up from 21) while the Fascinate
+/// affected-creature count stays put at 7 (`1 + (20 - 1) / 3 = 7`, an
+/// integer-division coincidence with level 19); Frightening Tune's DC
+/// (the same formula shape) likewise genuinely rises to 22. Inspire
+/// Courage stays at its level-17 fourth tier (next tier at level 23,
+/// out of scope); Inspire Competence stays at its level-19 fifth tier
+/// (no further tier is defined within PF1's Core Rulebook); Lore Master
+/// stays at its level-17 third tier (no further tier defined); Inspire
+/// Heroics' flat save-bonus/AC-bonus magnitudes and base target count
+/// (set at level 18) all carry over unchanged (the next target-count
+/// rise lands at level 21, out of scope); Soothing Performance carries
+/// over unchanged as a bounded grant-only identity record. The
+/// level-20 "Special" column's sole entry, Deadly Performance (the
+/// class capstone — PF1 Core Rulebook: "A bard of 20th level or higher
+/// can use his performance to cause one enemy to die from joy or
+/// sorrow... The target receives a Will save (DC 10 + 1/2 the bard's
+/// level + the bard's Cha modifier) to negate the effect... If a
+/// creature's saving throw fails, it dies"), is a genuinely NEW class
+/// feature whose named Will-save DC is the EXACT SAME formula shape as
+/// the already-grounded Fascinate DC and Frightening Tune DC, so only
+/// that flat DC magnitude is grounded here (`BARD_DEADLY_PERFORMANCE_LEVEL`),
+/// mirroring the Frightening Tune idiom exactly; no
+/// death-effect-resolution engine, no audible/visual-performance-
+/// requirement checking, and no range/targeting engine exists anywhere
+/// in this codebase, so none of that is fabricated. This needed ZERO
+/// new record types beyond the one new DC magnitude and ZERO new choice
+/// slots.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 20;
 /// PF1 Core Rulebook level gate at which Bard gains Frightening Tune
 /// (14th level, verified independently against two primary sources:
 /// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
@@ -2023,6 +2068,20 @@ const MAX_SUPPORTED_BARD_LEVEL: u8 = 19;
 /// not computed because no targeting/range or condition-resolution
 /// engine exists anywhere in this codebase.
 const BARD_FRIGHTENING_TUNE_LEVEL: u8 = 14;
+/// PF1 Core Rulebook level gate at which Bard gains Deadly Performance,
+/// the class capstone (20th level, verified independently against two
+/// primary sources: d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror both list "Deadly performance" as the sole Bard 20th-level
+/// "Special" column entry). The rule text: "The target receives a Will
+/// save (DC 10 + 1/2 the bard's level + the bard's Cha modifier) to
+/// negate the effect" — the exact same DC formula shape as the
+/// already-grounded Fascinate DC and Frightening Tune DC, so this
+/// grounds ONLY that flat DC magnitude (mirroring the Frightening Tune
+/// idiom exactly); the audible/visual-performance-requirement checking,
+/// the Will-save resolution, and the death-effect application itself
+/// are not computed because no targeting/range, save-resolution, or
+/// death-effect-resolution engine exists anywhere in this codebase.
+const BARD_DEADLY_PERFORMANCE_LEVEL: u8 = 20;
 /// PF1 Core Rulebook level gate at which Bard gains Soothing Performance
 /// (12th level, verified independently against two primary sources:
 /// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
@@ -15735,6 +15794,39 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
+    // Grounded (SD18): Deadly Performance, the Bard's 20th-level class
+    // capstone, verified independently against two primary PF1 sources
+    // (d20pfsrd and the Archives of Nethys aonprd.com mirror both list
+    // "Deadly performance" as the sole Bard 20th-level "Special" column
+    // entry). The rule text gives a Will-save DC (10 + 1/2 the bard's
+    // level + the bard's Cha modifier) — the exact same formula shape as
+    // the already-grounded Fascinate DC and Frightening Tune DC, so only
+    // that flat DC magnitude is grounded here, mirroring the Frightening
+    // Tune idiom exactly. Below the level-20 gate no record is pushed at
+    // all. No audible/visual-performance-requirement checking, no
+    // Will-save resolution, and no death-effect application is ever
+    // computed because no targeting/range, save-resolution, or
+    // death-effect-resolution engine exists anywhere in this codebase.
+    if level >= BARD_DEADLY_PERFORMANCE_LEVEL {
+        let deadly_performance_dc = FASCINATE_DC_BASE + (level_value / 2) + ability_modifiers.charisma;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.deadly_performance_dc".to_owned(),
+            value: deadly_performance_dc,
+            detail: format!(
+                "Bard Deadly Performance Will save DC at bard level {level} (PF1 Core Rulebook, \
+                 20th-level Bard class capstone): DC = 10 + 1/2 bard level + Charisma modifier, \
+                 the same formula shape as the Fascinate DC and Frightening Tune DC. At bard \
+                 level {level} and Charisma modifier {} this is {FASCINATE_DC_BASE} + \
+                 ({level} / 2) + {} = {deadly_performance_dc}. This grounds only the flat DC \
+                 magnitude; no range/line-of-sight/audible-and-visual-performance-requirement \
+                 checking, no Will-save resolution, and no death-effect application to any \
+                 target is computed because neither the performance-state engine nor a \
+                 death-effect-resolution engine is implemented",
+                ability_modifiers.charisma, ability_modifiers.charisma
+            ),
+        });
+    }
+
     // Grounded (SD18): Inspire Heroics, a 15th-level Bard class feature
     // verified independently against two primary PF1 sources (d20pfsrd and
     // the Archives of Nethys aonprd.com mirror both list "Inspire competence
@@ -15839,7 +15931,11 @@ fn explain_bard_level1_spell_baseline(
              as bounded flat save-bonus/AC-bonus/target-count magnitudes) is not executed \
              either — it requires the same performance-state engine plus a \
              targeting/save-application/AC-application engine, none of which exists in this \
-             codebase — so no Bard bardic-performance execution support is claimed"
+             codebase — and Deadly Performance (the Bard's 20th-level class capstone, granted \
+             only as a bounded flat Will-save DC magnitude) is not executed either — it \
+             requires the same performance-state engine plus a death-effect-resolution engine, \
+             neither of which exists in this codebase — so no Bard bardic-performance \
+             execution support is claimed"
         ),
         claim_blocking: true,
     });

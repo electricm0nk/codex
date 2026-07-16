@@ -263,19 +263,21 @@ fn bard_level10_truth_is_unchanged_by_this_slice() {
     assert_eq!(rounds.value, 24, "Bard level 10 performance rounds must stay 24");
 }
 
-// ----- Negative control: level 20 stays unrecognized by this slice -----
+// ----- Negative control: level 21 stays unrecognized by this slice -----
 // (Bard levels 12 through 17 were widened into scope by later SD18 slices —
 // up through tests/sd18_bard_level17_widening.rs — so this negative
 // control's boundary moves from 12 to 18, mirroring the exact same
 // boundary-move idiom applied to every prior sibling class's own level
 // widening cycle, then moved again from 18 to 19 by the SD18
 // bard-level18-widening cycle, then to 20 by the SD18
-// bard-level19-widening cycle.)
+// bard-level19-widening cycle, then to 21 (a pure implementation-gate
+// check, since PF1 has no 21st character level) by the SD18
+// bard-level20-widening cycle.)
 
 #[test]
-fn bard_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = BARD_LEVEL11_FIXTURE.replace("class:bard:11", "class:bard:20");
-    let input = load(&level_20);
+fn bard_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = BARD_LEVEL11_FIXTURE.replace("class:bard:11", "class:bard:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -284,7 +286,7 @@ fn bard_level_20_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard"),
-        "level-18 Bard must not gain any bounded bard explanation: {:?}",
+        "level-21 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
 }

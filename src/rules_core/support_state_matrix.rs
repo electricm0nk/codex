@@ -661,7 +661,8 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd18_bard_level15_widening.rs + \
     tests/sd18_bard_level16_widening.rs + \
     tests/sd18_bard_level17_widening.rs + \
-    tests/sd18_bard_level18_widening.rs + tests/sd18_bard_level19_widening.rs";
+    tests/sd18_bard_level18_widening.rs + tests/sd18_bard_level19_widening.rs + \
+    tests/sd18_bard_level20_widening.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -2178,16 +2179,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
                             level-9/level-10/level-11/level-12/level-13/level-14/level-15/level-16/\
-                            level-17/level-18/level-19 \
+                            level-17/level-18/level-19/level-20 \
                             spell baseline, with base attack bonus (rising again at level 16, \
-                            again at level 18, and again at level 19), \
-                            base save progression (good Reflex/Will rising again at level 16 and \
-                            again at level 18, poor Fortitude rising again at level 18), \
-                            Bardic Knowledge (rising through level 18), the flat Bardic \
-                            Performance surface (rounds per day rising through level 19, \
+                            again at level 18, again at level 19, and again at level 20), \
+                            base save progression (good Reflex/Will rising again at level 16, \
+                            again at level 18, and again at level 20, poor Fortitude rising again \
+                            at level 18), \
+                            Bardic Knowledge (rising through level 18, and again at level 20), \
+                            the flat Bardic \
+                            Performance surface (rounds per day rising through level 20, \
                             inspire courage magnitude rising at level 5, again at level 11, and \
                             again at level 17), \
-                            the flat Fascinate DC (rising through level 18) / \
+                            the flat Fascinate DC (rising through level 18, and again at level \
+                            20) / \
                             affected-creature-count formulas (creature count rising through \
                             level 16, and again at level 19), (at level 2) the flat Well-Versed \
                             magnitude, (at level 3, rising at level 7, again at level 11, again at \
@@ -2197,16 +2201,21 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             Lore Master take-20 \
                             uses-per-day magnitude, (at level 12) a Soothing Performance \
                             grant-only identity record, (at level 14) a Frightening Tune \
-                            flat Will-save DC magnitude, and (at level 15, target count rising \
+                            flat Will-save DC magnitude (rising again at level 20), (at level 15, \
+                            target count rising \
                             again at level 18) an Inspire Heroics \
-                            flat save-bonus/AC-bonus/target-count magnitude bundle, all grounded \
+                            flat save-bonus/AC-bonus/target-count magnitude bundle, and (at level \
+                            20) a Deadly Performance flat Will-save DC magnitude (the class \
+                            capstone, the same DC formula shape as Fascinate/Frightening Tune), \
+                            all grounded \
                             for real at every \
                             supported level, and the bardic performance-execution burden \
                             (including Countersong, Distraction, Versatile Performance, \
                             Suggestion, Mass Suggestion, Soothing Performance's own \
                             healing/condition-removal execution, Frightening Tune's own \
-                            fear/frightened-condition execution, and Inspire Heroics' own \
-                            targeting/save/AC-application execution) and the spontaneous \
+                            fear/frightened-condition execution, Inspire Heroics' own \
+                            targeting/save/AC-application execution, and Deadly Performance's own \
+                            death-effect-resolution execution) and the spontaneous \
                             known-spell / slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -2770,7 +2779,46 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     scope); Soothing Performance carries over unchanged as a bounded grant-only \
                     identity record. This needed ZERO new record types and ZERO new choice \
                     slots — only one new tier constant pair on an already-generalized tiered \
-                    if/else chain — and no Bard level 20 is proven",
+                    if/else chain — and no Bard level 20 is proven. \
+                    A further SD18 slice (the loop's FOURTH §3.2 level-20 landing, after Cleric, \
+                    Wizard, and Barbarian) widens the gate again to level 20 — the final \
+                    remaining level within PF1's 1-20 character-level cap for this class row \
+                    (verified independently against two primary sources — a raw HTML parse of \
+                    d20pfsrd.com's own class table, bypassing AI-summarization, and the Archives \
+                    of Nethys aonprd.com mirror via ClassDisplay.aspx, both covering the full \
+                    levels-17-through-20 block, byte-for-byte agreement, so a third source was \
+                    not required): the level-20 row reads \"+15/+10/+5 | +6 | +12 | +12 | Deadly \
+                    performance\". Base attack bonus genuinely rises to +15 (20*3/4); poor \
+                    Fortitude stays put at +6 (20/3, an integer-division coincidence with level \
+                    19) while both good saves genuinely rise to +12 (20/2+2, up from +11); \
+                    Bardic Knowledge genuinely rises to 10 (max(20/2,1), up from 9); the Bardic \
+                    Performance rounds-per-day pool genuinely rises (4+CHA+2*(20-1), up from 42); \
+                    the Fascinate DC genuinely rises to 22 (10+20/2+CHA, up from 21) while the \
+                    Fascinate affected-creature count stays put at 7 (1+(20-1)/3, an \
+                    integer-division coincidence with level 19); Frightening Tune's DC (the same \
+                    formula shape) likewise genuinely rises to 22. Inspire Courage stays at its \
+                    level-17 fourth tier (next tier at level 23, out of scope); Inspire \
+                    Competence stays at its level-19 fifth tier (no further tier is defined \
+                    within PF1's Core Rulebook); Lore Master stays at its level-17 third tier (no \
+                    further tier defined); Inspire Heroics' flat save-bonus/AC-bonus magnitudes \
+                    and base target count (set at level 18) all carry over unchanged (the next \
+                    target-count rise lands at level 21, out of scope); Soothing Performance \
+                    carries over unchanged as a bounded grant-only identity record. The \
+                    level-20 \"Special\" column's sole entry, Deadly Performance (the class \
+                    capstone — PF1 Core Rulebook: \"A bard of 20th level or higher can use his \
+                    performance to cause one enemy to die from joy or sorrow... The target \
+                    receives a Will save (DC 10 + 1/2 the bard's level + the bard's Cha \
+                    modifier) to negate the effect... If a creature's saving throw fails, it \
+                    dies\"), is a genuinely NEW class feature whose named Will-save DC is the \
+                    EXACT SAME formula shape as the already-grounded Fascinate DC and Frightening \
+                    Tune DC, so only that flat DC magnitude is grounded here (mirroring the \
+                    Frightening Tune idiom exactly) — it genuinely grounds at 22. No \
+                    death-effect-resolution engine, no audible/visual-performance-requirement \
+                    checking, and no range/targeting engine exists anywhere in this codebase, so \
+                    none of that is fabricated. This needed ZERO new record types beyond the one \
+                    new Deadly Performance DC magnitude and ZERO new choice slots, closing this \
+                    row's own per-level arithmetic-widening frontier at level 20, the final \
+                    level within PF1's 1-20 character-level cap",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
                     Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
@@ -2781,11 +2829,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Inspire Greatness's bonus-Hit-Dice/temporary-hit-point mechanics, Lore \
                     Master's own take-10/take-20 skill-check-resolution execution, Soothing \
                     Performance's own healing-application/condition-removal execution, \
-                    Frightening Tune's own fear/frightened-condition-resolution execution, and \
-                    Inspire Heroics' own targeting/save-application/AC-application execution), \
-                    then the spontaneous spell-slot burden (including the un-grounded 5th-level \
-                    spell-access threshold), then Bard level 20 progression (the final remaining \
-                    level within PF1's 1-20 level cap for this class row)",
+                    Frightening Tune's own fear/frightened-condition-resolution execution, \
+                    Inspire Heroics' own targeting/save-application/AC-application execution, and \
+                    Deadly Performance's own death-effect-resolution execution), then the \
+                    spontaneous spell-slot burden (including the un-grounded 5th-level \
+                    spell-access threshold). This row's own per-level arithmetic-widening \
+                    frontier is now CLOSED at level 20, the final level within PF1's 1-20 \
+                    character-level cap for this class row",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",
