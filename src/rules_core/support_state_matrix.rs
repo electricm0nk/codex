@@ -727,7 +727,7 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
     tests/sd18_wizard_level12_widening.rs + tests/sd18_wizard_level13_widening.rs + \
     tests/sd18_wizard_level14_widening.rs + tests/sd18_wizard_level15_widening.rs + \
     tests/sd18_wizard_level16_widening.rs + tests/sd18_wizard_level17_widening.rs + \
-    tests/sd18_wizard_level18_widening.rs";
+    tests/sd18_wizard_level18_widening.rs + tests/sd18_wizard_level19_widening.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -5755,15 +5755,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // both primary sources checked, so no new pillar is added — a
                 // pure arithmetic-pillar widening.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1/level-18 prepared arcane spell baseline, with base \
+                            Wizard level-1/level-19 prepared arcane spell baseline, with base \
                             attack bonus, base save progression, Scribe Scroll, the school \
                             specialization choice, the specialist-bonus-slot flat count (which \
                             becomes 2 at level 3, stays 2 at level 4, becomes 3 at level 5, stays \
                             3 at level 6, becomes 4 at level 7, stays 4 at level 8, becomes \
                             5 at level 9, stays 5 at level 10, becomes 6 at level 11, stays 6 \
                             at level 12, becomes 7 at level 13, stays 7 at level 14, becomes \
-                            8 at level 15, stays 8 at level 16, becomes 9 at level 17, and stays \
-                            9 at level 18), and \
+                            8 at level 15, stays 8 at level 16, becomes 9 at level 17, stays \
+                            9 at level 18, and stays 9 at level 19), and \
                             the \
                             Intense Spells / \
                             Force Missile school-power flat magnitudes (Intense Spells becomes 2 \
@@ -5771,13 +5771,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             level 7, becomes 4 at level 8, stays 4 at level 9, becomes 5 at \
                             level 10, stays 5 at level 11, becomes 6 at level 12, stays 6 at \
                             level 13, becomes 7 at level 14, stays 7 at level 15, becomes 8 \
-                            at level 16, stays 8 at level 17, and becomes 9 at level 18) grounded \
+                            at level 16, stays 8 at level 17, becomes 9 at level 18, and stays 9 \
+                            at level 19) grounded \
                             for \
-                            real through level 18, \
+                            real through level 19, \
                             and the school-power \
                             execution machinery, the opposed-school-cost burden, the level-5/ \
-                            level-10/level-15 bonus-feat selection/execution, and the prepared \
-                            spellbook / spell-slot posture burden still blocked",
+                            level-10/level-15/level-20 bonus-feat selection/execution, and the \
+                            prepared spellbook / spell-slot posture burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -6159,23 +6160,43 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     specialization choice stay recognized as already-held grants; the level-18 \
                     \"Special\" column is genuinely blank on both primary sources (the Wizard's \
                     bonus feats land only at levels 5/10/15/20), so no new named-feature pillar \
-                    record is grounded at level 18 — a pure arithmetic-pillar widening. The row is \
+                    record is grounded at level 18 — a pure arithmetic-pillar widening. A further \
+                    SD18 slice (the loop's NINTH §3.2 level-19 landing, after Barbarian, Cleric, \
+                    Fighter, Bard, Paladin, Ranger, Rogue, and Sorcerer, and the LAST of the 9 \
+                    eligible classes, fully closing the level-19 sweep) widens the gate again to \
+                    level 19, verified independently against two primary sources (d20pfsrd and \
+                    the Archives of Nethys aonprd.com mirror, which agree byte-for-byte, fetching \
+                    the full levels-16-through-20 block in one pass to rule out \
+                    level-misattribution, so no third source was required): level 19 base attack \
+                    STAYS at +9 (19/2 = 9, an integer-division coincidence with level 18) and good \
+                    Will STAYS at +11 (19/2+2 = 11), while poor Fortitude/Reflex both STAY at +6 \
+                    (19/3 = 6); the specialist bonus slot flat count is checked rather than \
+                    assumed and correctly STAYS at 9, since the raw spells-per-day table's \
+                    level-19 row \"4/4/4/4/4/4/4/4/3/3\" opens no spell-level column beyond the \
+                    9th (already the highest wizard spell level in PF1, first opened at level 17); \
+                    Intense Spells' bonus-damage magnitude STAYS at 9 (max(19/2, 1) = 9); Force \
+                    Missile's pool is level-independent and unchanged; Scribe Scroll and the \
+                    specialization choice stay recognized as already-held grants; the level-19 \
+                    \"Special\" column is genuinely blank on both primary sources (the Wizard's \
+                    bonus feats land only at levels 5/10/15/20, confirmed directly — 19 is NOT a \
+                    bonus-feat level), so no new named-feature pillar record is grounded at level \
+                    19 — a pure arithmetic-pillar widening. The row is \
                     Partial, not Supported: neither school power's \
                     execution machinery is implemented (no evocation spell-damage application for \
                     Intense Spells, no force-missile casting execution / 1d4 damage roll / \
                     automatic-hit targeting for Force Missile), the opposed-school preparation \
                     cost (each opposed-school spell occupies two prepared slots) remains named \
-                    and unproven, the level-5/level-10/level-15 bonus feat's own selection/ \
-                    execution (a general feat-selection/feat-prerequisite engine) remains named \
-                    and unproven, and the \
+                    and unproven, the level-5/level-10/level-15/level-20 bonus feat's own \
+                    selection/execution (a general feat-selection/feat-prerequisite engine) \
+                    remains named and unproven, and the \
                     prepared spell posture burden (spellbook content, spells prepared per day, \
                     spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
-                    still entirely unproven. No spell math is fabricated and no Wizard level 19+ is \
+                    still entirely unproven. No spell math is fabricated and no Wizard level 20+ is \
                     proven",
                 next_required_uplift: "SD13-E5+ Wizard school-power execution and opposed-school \
                     preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-19+ progression (widening the now-grounded base \
-                    attack/base save formulas)",
+                    posture slice, then level-20 progression (widening the now-grounded base \
+                    attack/base save formulas) — the final PF1 CRB level-cap widening for Wizard",
             },
             // ----- Interaction rows (2) -----
             SupportStateRow {

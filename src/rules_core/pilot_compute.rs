@@ -2543,7 +2543,34 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // 18 — a pure arithmetic-pillar widening on the already-grounded base
 // attack / base save / Intense Spells formulas, with the specialist
 // bonus-slot pillar staying flat.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 18;
+//
+// A further SD18 slice (the loop's NINTH §3.2 level-19 landing, after
+// Barbarian, Cleric, Fighter, Bard, Paladin, Ranger, Rogue, and Sorcerer,
+// and the LAST of the 9 eligible classes, fully closing the level-19 sweep)
+// widens the gate again to level 19: base attack bonus STAYS at +9
+// (18/2 = 9 vs 19/2 = 9, an integer-division coincidence with level 18) and
+// good Will STAYS at +11 (19/2+2 = 11), while poor Fortitude/Reflex both
+// STAY at +6 (19/3 = 6) — verified independently against two primary
+// sources (d20pfsrd and the Archives of Nethys aonprd.com mirror, which
+// agree byte-for-byte, so no third source was required), fetching the full
+// levels-16-through-20 block in one pass to rule out level-misattribution.
+// The raw spells-per-day table's level-19 row is "4/4/4/4/4/4/4/4/3/3" — up
+// from the level-18 row "4/4/4/4/4/4/4/3/3/2" (the 7th-level column rises
+// from 3 to 4 and the 9th-level column rises from 2 to 3), but NO genuinely
+// new spell-level column opens (9th is already the highest wizard spell
+// level in PF1, first opened at level 17), so the specialist bonus-slot
+// flat count STAYS at 9 (checked rather than assumed) — no new threshold
+// constant is needed. Intense Spells' bonus-damage magnitude STAYS at 9
+// (max(19/2, 1) = 9) via the pre-existing formula, not re-derived; Force
+// Missile's pool is level-independent and unchanged; the level-19
+// "Special" column is genuinely BLANK on both primary sources (the
+// Wizard's bonus feats land only at levels 5/10/15/20, confirmed directly
+// rather than assumed — 19 is NOT a bonus-feat level), so no new
+// named-feature pillar record is grounded at level 19 — a pure
+// arithmetic-pillar widening on the already-grounded base attack / base
+// save / Intense Spells formulas, with the specialist bonus-slot pillar
+// staying flat.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 19;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes

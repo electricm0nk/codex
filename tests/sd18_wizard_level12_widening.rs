@@ -272,19 +272,18 @@ fn wizard_level11_truth_is_unchanged_by_this_slice() {
     assert_eq!(intense.value, 5, "Wizard level 11 Intense Spells bonus damage must stay 5");
 }
 
-// ----- Negative control: level 17 stays unrecognized by this slice -----
-// (widened from level 14 to level 16 by the SD18 wizard-level14-widening,
-// wizard-level15-widening, and wizard-level16-widening cycles, which
-// genuinely promote levels 14, 15, and 16 — see
-// tests/sd18_wizard_level14_widening.rs, tests/sd18_wizard_level15_widening.rs,
-// and tests/sd18_wizard_level16_widening.rs — mirroring the exact same
-// boundary move the Barbarian/Fighter level-16 widening cycles each made
-// for their own sibling level-12 widening test.)
+// ----- Negative control: level 20 stays unrecognized by this slice -----
+// (widened from level 14 all the way to level 19 by the SD18
+// wizard-level14-widening through wizard-level19-widening cycles, which
+// genuinely promote levels 14-19 — see tests/sd18_wizard_level14_widening.rs
+// through tests/sd18_wizard_level19_widening.rs — mirroring the exact same
+// boundary move the Barbarian/Fighter/Sorcerer level-19 widening cycles each
+// made for their own sibling level-12 widening test.)
 
 #[test]
-fn wizard_level_19_is_not_promoted_by_this_slice() {
-    let level_18 = WIZARD_LEVEL12_FIXTURE.replace("class:wizard:12", "class:wizard:19");
-    let input = load(&level_18);
+fn wizard_level_20_is_not_promoted_by_this_slice() {
+    let level_20 = WIZARD_LEVEL12_FIXTURE.replace("class:wizard:12", "class:wizard:20");
+    let input = load(&level_20);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -293,7 +292,7 @@ fn wizard_level_19_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id.starts_with("class_feature.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-19 Wizard must not gain any bounded wizard explanation: {:?}",
+        "level-20 Wizard must not gain any bounded wizard explanation: {:?}",
         computation.explanations
     );
 }
