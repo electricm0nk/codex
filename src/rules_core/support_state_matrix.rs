@@ -417,7 +417,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd18_paladin_level16_widening.rs + \
     tests/sd18_paladin_level17_widening.rs + \
     tests/sd18_paladin_level18_widening.rs + \
-    tests/sd18_paladin_level19_widening.rs";
+    tests/sd18_paladin_level19_widening.rs + \
+    tests/sd18_paladin_level20_widening.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -3838,7 +3839,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Paladin level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
                             level-8/level-9/level-10/level-11/level-12/level-13/level-14/\
-                            level-15/level-16/level-17/level-18/level-19 \
+                            level-15/level-16/level-17/level-18/level-19/level-20 \
                             chassis baseline, with smite evil's uses-per-day / attack-bonus / \
                             damage-bonus formula grounded at every level (uses-per-day \
                             genuinely increasing to 2/day at level 4, staying 2/day through \
@@ -3929,7 +3930,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             (level 19 is not one of the 3rd/6th/9th/12th/15th/18th \
                             repeat-Mercy-grant levels), and the base spells-per-day table's own \
                             level-19 row (only the 3rd-level column genuinely rising, from 2 to \
-                            3) grounded for real, \
+                            3) grounded for real, and (level 20) base attack bonus genuinely \
+                            rising to 20 (full BAB) and both good saves genuinely rising to 12 \
+                            (20/2+2) while poor Reflex stays 6 (20/3, an integer-division \
+                            coincidence with level 19), Smite Evil's uses-per-day formula \
+                            staying at its 7/day ceiling (an integer-division coincidence with \
+                            level 19) while its damage bonus genuinely rises to 20, Holy \
+                            Champion (the class capstone) newly grounded as a FOURTH bounded \
+                            grant-only identity record, no new mercy slot (level 20 is not a \
+                            repeat-Mercy-grant level), and the base spells-per-day table's own \
+                            level-20 row (the 2nd-level AND 4th-level columns both genuinely \
+                            rising simultaneously, the first level in this row's own widening \
+                            history where two columns rise at once) grounded for real -- closing \
+                            this row's own per-level arithmetic-widening frontier at level 20, \
+                            the final level within PF1's 1-20 character-level cap, \
                             and the hybrid chassis pair plus \
                             the spells-known/spells-per-day/spell-DC spell burden still named \
                             and unproven",
@@ -4479,11 +4493,68 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     tests/sd18_paladin_level18_widening.rs's own level-19 negative control was \
                     removed rather than moved, since level 19 is now itself the \
                     supported/grounded row. \
+                    The SD18 cycle-2026-07-16T1500 slice \
+                    (tests/sd18_paladin_level20_widening.rs) widens the level-range gate once \
+                    more to level 20 -- the loop's SIXTH §3.2 level-20 landing (after Cleric, \
+                    Wizard, Barbarian, Bard, and Fighter), and alphabetically the first eligible \
+                    of the four remaining level-20 candidates (Paladin, Ranger, Rogue, Sorcerer) \
+                    named in the prior (Fighter) cycle's own recommendation: base attack \
+                    genuinely rises to +20 (full BAB) and both good saves genuinely rise to 12 \
+                    (20/2+2, up from 11) while poor Reflex stays 6 (20/3, an integer-division \
+                    coincidence with level 19, re-verified rather than assumed). The level-20 \
+                    \"Special\" column reads only \"Holy champion\" (verified independently \
+                    against a raw `curl` fetch of d20pfsrd.com's own class table HTML and a raw \
+                    `curl` fetch of the Archives of Nethys aonprd.com mirror's \
+                    ClassDisplay.aspx HTML, both bypassing AI-summarization, byte-for-byte \
+                    agreement) -- the class capstone, a genuinely NEW class feature, grounded as \
+                    a FOURTH bounded grant-only identity record (value 0, non-fabricated) \
+                    mirroring the Aura of Justice / Aura of Faith / Aura of Righteousness idiom \
+                    exactly: \"a paladin becomes a conduit for the power of her god. Her DR \
+                    increases to 10/evil. Whenever she uses smite evil and successfully strikes \
+                    an evil outsider, the outsider is also subject to a banishment... After the \
+                    banishment effect and the damage from the attack is resolved, the smite \
+                    immediately ends. In addition, whenever she channels positive energy or uses \
+                    lay on hands to heal a creature, she heals the maximum possible amount.\" No \
+                    damage-reduction-application engine, no banishment-spell-effect-resolution \
+                    engine, and no healing-maximization execution engine exists anywhere in this \
+                    codebase to apply any of this to. Smite Evil's uses-per-day formula \
+                    (already level-generic) stays at its 7/day ceiling (an integer-division \
+                    coincidence with level 19, matching the PF1 CRB's own stated maximum), while \
+                    its damage bonus genuinely rises to 20. 20th is NOT a repeat-Mercy-grant \
+                    level (the 3rd/6th/9th/12th/15th/18th cadence, next landing at 21st, out of \
+                    scope), so no seventh mercy slot is introduced; the sixth mercy slot \
+                    (granted at level 18) carries over unchanged. The same slice widens the \
+                    BASE spells-per-day table to level 20 (\"4/4/3/3\", verified independently \
+                    against both sources' raw HTML with no disagreement): the 1st/3rd-level \
+                    columns stay 4/3 numerically unchanged, while the 2nd-level AND 4th-level \
+                    columns BOTH genuinely rise simultaneously (2nd from 3 to 4, 4th from 2 to \
+                    3) -- the first level in this row's own widening history where two columns \
+                    rise at once, a deliberate deviation from the single-column-rise pattern \
+                    seen at every level from 13 through 19, so both raw HTML fetches were \
+                    double-checked directly (not AI-summarized) to guard against a \
+                    tool-extraction artifact; no disagreement was found. The spell-level access \
+                    ladder stays 4 (already widened at level 13, unchanged here), and the base \
+                    spell-save-DC and Charisma-bonus-spells families both continue to extend to \
+                    the 4th spell level automatically (live arithmetic, no new formula \
+                    invented). This slice also fixed five stale sibling negative controls \
+                    (allowlist/boundary-control failure mode) that asserted level 20 as \
+                    claim-blocked: tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, \
+                    tests/sd18_paladin_level13_widening.rs, and \
+                    tests/sd18_paladin_level14_widening.rs, all moved to a level-21 boundary (a \
+                    pure implementation-gate check, since PF1 has no 21st character level); \
+                    tests/sd18_paladin_level19_widening.rs's own level-20 negative control was \
+                    removed rather than moved, since level 20 is now itself the \
+                    supported/grounded row. This closes Paladin's own per-level \
+                    arithmetic-widening frontier -- level 20 is the final level within PF1's \
+                    1-20 character-level cap. \
                     The row stays Partial, not Supported: \
                     the F6 hybrid chassis pair (class-feature and spell) stays claim-blocking \
-                    as accepted hybrid truth, no Paladin level 20 is proven, Divine Bond stays \
-                    named-but-unproven, Aura of Justice's, Aura of Faith's, and Aura of \
-                    Righteousness's own resolution engines are not computed, and the \
+                    as accepted hybrid truth, Divine Bond stays \
+                    named-but-unproven, Aura of Justice's, Aura of Faith's, Aura of \
+                    Righteousness's, and Holy Champion's own resolution engines are not \
+                    computed, and the \
                     partial-caster spell burden itself \
                     remains named and unproven beyond the grounded caster-level gate arithmetic \
                     — no spell-source lineage, spells known or prepared posture, \
@@ -4491,12 +4562,18 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     grounded. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid \
                     chassis recognition explanation all remain in place (each gated to the \
                     bounded hybrid baseline level, so they still fire only at level 1)",
-                next_required_uplift: "ground the paladin prepared-posture and \
+                next_required_uplift: "SD13-E5+ Paladin class-feature-execution engine slice \
+                    (Divine Bond weapon-enhancement/mount-advancement resolution, Aura of \
+                    Justice's smite-sharing resolution, Aura of Faith's and Aura of \
+                    Righteousness's own damage-reduction-overcoming/damage-reduction/compulsion- \
+                    immunity resolution, Holy Champion's own damage-reduction/banishment/ \
+                    healing-maximization resolution, and mercy EFFECT resolution), then ground \
+                    the paladin prepared-posture and \
                     spell-source-lineage burdens now that the caster-level gate, the access \
                     ladder, the base per-day counts, the base spell-save DCs, the Charisma \
-                    bonus-slot counts, and the integrated totals are all grounded, then \
-                    paladin level-20 \
-                    progression (the final PF1 1-20 level cap ceiling)",
+                    bonus-slot counts, and the integrated totals are all grounded. This row's \
+                    own per-level arithmetic-widening frontier is now CLOSED at level 20, the \
+                    final level within PF1's 1-20 character-level cap for this class row",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
