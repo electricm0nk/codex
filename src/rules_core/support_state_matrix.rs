@@ -508,7 +508,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd18_sorcerer_level15_widening.rs + \
     tests/sd18_sorcerer_level16_widening.rs + \
     tests/sd18_sorcerer_level17_widening.rs + \
-    tests/sd18_sorcerer_level18_widening.rs";
+    tests/sd18_sorcerer_level18_widening.rs + \
+    tests/sd18_sorcerer_level19_widening.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -5049,7 +5050,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Sorcerer level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
                             level-8/level-9/level-10/level-11/level-12/level-13/level-14/\
-                            level-15/level-16/level-17 \
+                            level-15/level-16/level-17/level-18/level-19 \
                             spell baseline, with base attack bonus, base save progression, Eschew \
                             Materials, the canonical bloodline choice recognition, and the \
                             Arcane bloodline's class-skill choice (a player's choice of any one \
@@ -5559,14 +5560,50 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     not Supported: the Arcane Bond / bloodline progression burden and the \
                     spontaneous which-spells-known / casting-execution burden remain named and \
                     unproven, unchanged from level 17. No spell math is fabricated and no \
-                    Sorcerer level 19+ is proven",
+                    Sorcerer level 19+ is proven — AND a further SD18 slice \
+                    (cycle-2026-07-16T4900, the loop's EIGHTH §3.2 level-19 landing, after \
+                    Barbarian, Cleric, Fighter, Bard, Paladin, Ranger, and Rogue) widens the \
+                    level-range gate again (supported_sorcerer_level, 1..=19) and extends every \
+                    one of the formulas above to level 19 via the same formula, without \
+                    re-derivation, verified independently against TWO primary sources (a raw \
+                    non-AI-summarized parse of d20pfsrd.com's own HTML table and the Archives of \
+                    Nethys aonprd.com mirror, both byte-for-byte identical, fetching the full \
+                    levels-15-through-20 class-table block in one pass to rule out \
+                    level-misattribution; no disagreement was found, so a third source was not \
+                    required): level 19 base attack bonus STAYS at +9 (19/2, an \
+                    integer-division coincidence with level 18's +9, confirmed genuine by the \
+                    raw table's own `+9/+4` cell matching level 18's `+9/+4` cell exactly) and \
+                    both poor saves STAY at +6 (19/3) and good Will STAYS at +11 (19/2+2), all \
+                    integer-division coincidences with level 18, not a sign any formula stopped \
+                    scaling; the bloodline choice and bloodline class-skill choice recognitions \
+                    are not level-gated, so both still fire at level 19 for the same fixture \
+                    selections; the PF1 Core Rulebook Sorcerer class table's level-19 \"Special\" \
+                    column reads \"Bloodline feat, bloodline spell\" — bloodline-specific, left \
+                    named-but-unproven by the pre-existing Arcane Bond / bloodline progression \
+                    blocker, exactly mirroring levels 3/5/7/9/11/13/15/17 — so no new pillar is \
+                    grounded from it; the already-grounded base spells-per-day table genuinely \
+                    widens (6/6/6/6/6/6/6/5/3 -> 6/6/6/6/6/6/6/6/4, the 8th-level column rising \
+                    by one AND the 9th-level column rising by one, with no genuinely new \
+                    spell-level column opening) and the already-grounded base spells-known table \
+                    genuinely widens (9/5/5/4/4/4/3/3/2/1 -> 9/5/5/4/4/4/3/3/3/2, the 0th-7th \
+                    columns staying numerically unchanged while the 8th-level column rises by \
+                    one AND the 9th-level column rises by one); the spell-level access ladder \
+                    STAYS at 9 (unchanged from level 18; the ladder was already fully populated \
+                    through 9th-level spells, so no new threshold constant is needed); the \
+                    spell-save-DC and Charisma-bonus-spell formulas widen automatically over the \
+                    unchanged access ladder, with no new code needed. The row stays Partial, not \
+                    Supported: the Arcane Bond / bloodline progression burden and the \
+                    spontaneous which-spells-known / casting-execution burden remain named and \
+                    unproven, unchanged from level 18. No spell math is fabricated and no \
+                    Sorcerer level 20 is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-19+ progression (widening the now-grounded base attack/base save \
+                    level-20 progression (widening the now-grounded base attack/base save \
                     formulas; note the Sorcerer spell-level access ladder is now fully populated \
                     through 9th-level spells, so no further spell-level threshold constants are \
                     expected — only the base-attack/base-save/per-day/known table VALUES widen at \
-                    levels 19-20)",
+                    level 20, PF1's level cap, likely the final arithmetic-widening opportunity \
+                    for this class)",
             },
             SupportStateRow {
                 row_id: "class.wizard.progression_and_spell_burden",
