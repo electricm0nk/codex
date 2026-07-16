@@ -222,7 +222,11 @@ fn slice_does_not_change_any_non_elf_row() {
         assert!(
             matches!(
                 other.subject_type,
-                MatrixSubjectType::Race | MatrixSubjectType::Class | MatrixSubjectType::Interaction
+                MatrixSubjectType::Race
+                    | MatrixSubjectType::Class
+                    | MatrixSubjectType::Interaction
+                    | MatrixSubjectType::School(_)
+                    | MatrixSubjectType::Equipment(_)
             ),
             "row '{}' has unexpected subject type {:?}",
             other.row_id,

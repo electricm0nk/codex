@@ -13,7 +13,12 @@ use codex::rules_core::support_state_matrix::{
 
 /// The exact, ordered set of seeded row ids. The seed must expose these and no
 /// others, with Fighter level 1 and Fighter levels 2-10 kept as separate rows.
-const EXPECTED_ROW_IDS: [&str; 21] = [
+///
+/// SD-19 widening: `school.abjuration.spell_reachability` is the first
+/// loop-routed §2.4 row landed on top of the fixed SD-13 21-row baseline;
+/// later SD-19 cycles append one school/equipment row each, growing this
+/// list, never rewriting an existing SD-13 row's identity.
+const EXPECTED_ROW_IDS: [&str; 22] = [
     "race.human.pilot_semantics",
     "race.dwarf.bounded_semantics",
     "race.elf.bounded_semantics",
@@ -35,6 +40,7 @@ const EXPECTED_ROW_IDS: [&str; 21] = [
     "class.wizard.progression_and_spell_burden",
     "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
     "interaction.non_human_any_class.progression_pressure",
+    "school.abjuration.spell_reachability",
 ];
 
 fn matrix() -> SupportStateMatrix {
@@ -48,12 +54,12 @@ fn row<'a>(matrix: &'a SupportStateMatrix, row_id: &str) -> &'a SupportStateRow 
 }
 
 #[test]
-fn seed_contains_exactly_twenty_one_rows() {
+fn seed_contains_exactly_twenty_two_rows() {
     let matrix = matrix();
     assert_eq!(
         matrix.rows.len(),
-        21,
-        "seed must contain exactly 21 rows, got {}",
+        22,
+        "seed must contain exactly 22 rows, got {}",
         matrix.rows.len()
     );
 }
@@ -629,12 +635,14 @@ fn only_pilot_grounded_rows_rise_above_observed() {
         "class.druid.progression_and_spell_burden",
         "class.monk.bounded_progression",
         "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
+        "school.abjuration.spell_reachability",
     ];
 
     assert_eq!(
         above_observed.len(),
         expected_above_observed.len(),
-        "only the pilot-grounded, hybrid-baseline, Barbarian martial-baseline, and spell-baseline rows may rise above Observed, got {above_observed:?}"
+        "only the pilot-grounded, hybrid-baseline, Barbarian martial-baseline, spell-baseline, \
+         and SD-19 loop-routed school/equipment rows may rise above Observed, got {above_observed:?}"
     );
     for id in expected_above_observed {
         assert!(
@@ -758,9 +766,9 @@ fn stale_generic_uplift_pointers_are_reconciled() {
 // ---------------------------------------------------------------------------
 
 /// The rows anchored to a live, re-runnable proof surface. These are exactly the
-/// pilot-grounded, hybrid-baseline, Barbarian martial-baseline, and spell-baseline
-/// rows that rise above `Observed` evidence.
-const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 20] = [
+/// pilot-grounded, hybrid-baseline, Barbarian martial-baseline, spell-baseline,
+/// and SD-19 loop-routed school/equipment rows that rise above `Observed` evidence.
+const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 21] = [
     "race.human.pilot_semantics",
     "race.dwarf.bounded_semantics",
     "race.elf.bounded_semantics",
@@ -781,6 +789,7 @@ const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 20] = [
     "class.druid.progression_and_spell_burden",
     "class.monk.bounded_progression",
     "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
+    "school.abjuration.spell_reachability",
 ];
 
 #[test]
