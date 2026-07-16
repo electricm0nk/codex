@@ -338,23 +338,10 @@ fn ranger_level16_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 18 stays unrecognized by this slice -----
-
-#[test]
-fn ranger_level_18_is_not_promoted_by_this_slice() {
-    let level_18 = RANGER_LEVEL17_FIXTURE.replace("class:ranger:17", "class:ranger:18");
-    let input = load(&level_18);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger.")),
-        "level-18 Ranger must not gain any bounded ranger chassis explanation: {:?}",
-        computation.explanations
-    );
-}
+// ----- Negative control removed: level 18 is now the supported/grounded row -----
+// (formerly `ranger_level_18_is_not_promoted_by_this_slice`; retired by the SD18
+// cycle-2026-07-16T0244 slice, which promotes level 18 for real —
+// see tests/sd18_ranger_level18_widening.rs)
 
 // ----- Negative control: the ranger path must not leak onto other classes -----
 
