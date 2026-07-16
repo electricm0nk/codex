@@ -7,6 +7,7 @@ mod sd16_browser_handoff;
 mod sd19_class_catalog;
 mod sd19_corpus;
 mod sd19_equipment_catalog;
+mod sd19_race_catalog;
 mod sd19_spell_catalog;
 mod update;
 
@@ -16,6 +17,7 @@ use character_hub::{create_character, list_saved_characters, load_saved_characte
 use sd13_support_state_matrix::{load_sd13_support_state_matrix_snapshot, Sd13SupportStateMatrixSnapshot};
 use sd19_class_catalog::list_class_catalog;
 use sd19_equipment_catalog::list_equipment_catalog;
+use sd19_race_catalog::list_race_catalog;
 use sd19_spell_catalog::list_spell_catalog;
 use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
@@ -86,7 +88,8 @@ fn main() {
             load_saved_character,
             list_equipment_catalog,
             list_spell_catalog,
-            list_class_catalog
+            list_class_catalog,
+            list_race_catalog
         ])
         .run(tauri::generate_context!())
         .expect("error while running codex");

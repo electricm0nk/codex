@@ -182,6 +182,7 @@ export function LandingScreen(props: {
   onBrowseEquipment: () => void;
   onBrowseSpells: () => void;
   onBrowseClasses: () => void;
+  onBrowseRaces: () => void;
   hasCharacters: boolean;
 }) {
   const active = RULE_SETS.find((rs) => rs.id === props.selectedRuleSet) ?? RULE_SETS[0];
@@ -264,6 +265,20 @@ export function LandingScreen(props: {
           }}
         >
           Browse Class Progression
+        </button>
+        <button
+          type="button"
+          onClick={props.onBrowseRaces}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Browse Race Traits
         </button>
       </div>
     </section>

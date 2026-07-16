@@ -9,9 +9,10 @@ import { CharacterSheet } from './CharacterSheet';
 import { EquipmentCatalogScreen } from '../equipmentCatalog/EquipmentCatalogScreen';
 import { SpellCatalogScreen } from '../spellCatalog/SpellCatalogScreen';
 import { ClassCatalogScreen } from '../classCatalog/ClassCatalogScreen';
+import { RaceCatalogScreen } from '../raceCatalog/RaceCatalogScreen';
 
 export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' | 'enhancement') => void }) {
-  const [mode, setMode] = useState<'landing' | 'load' | 'create' | 'sheet' | 'equipmentCatalog' | 'spellCatalog' | 'classCatalog'>('landing');
+  const [mode, setMode] = useState<'landing' | 'load' | 'create' | 'sheet' | 'equipmentCatalog' | 'spellCatalog' | 'classCatalog' | 'raceCatalog'>('landing');
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
   const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
   const [surface, setSurface] = useState<CharacterHubListSurface | null>(null);
@@ -42,6 +43,7 @@ export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' |
         onBrowseEquipment={() => setMode('equipmentCatalog')}
         onBrowseSpells={() => setMode('spellCatalog')}
         onBrowseClasses={() => setMode('classCatalog')}
+        onBrowseRaces={() => setMode('raceCatalog')}
         hasCharacters={hasCharacters}
       />
     );
@@ -57,6 +59,10 @@ export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' |
 
   if (mode === 'classCatalog') {
     return <ClassCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'raceCatalog') {
+    return <RaceCatalogScreen onClose={() => setMode('landing')} />;
   }
 
   if (mode === 'sheet' && sheet) {
