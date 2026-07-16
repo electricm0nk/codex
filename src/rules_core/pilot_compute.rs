@@ -1849,7 +1849,64 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// lands at level 18, out of scope). Only two new tier constant pairs are
 /// added (on already-generalized tiered if/else chains); no new record
 /// type or choice slot is added, and no Bard level 18+ is proven.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 17;
+///
+/// SD18 (cycle-2026-07-16T0900) widens the gate again to level 18 — the
+/// loop's NINTH §3.2 level-18 landing (after Wizard, Cleric, Paladin,
+/// Fighter, Barbarian, Rogue, Ranger, and Sorcerer) and the CLOSE of the
+/// §3.2 level-18 sweep at 9 of 9 eligible classes (Druid capped at 15,
+/// Monk capped at 12, both documented structural exceptions) — verified
+/// independently against TWO primary sources fetched fresh this cycle: a
+/// raw HTML parse of d20pfsrd.com's own class table (bypassing
+/// AI-summarization, following the lesson from the Sorcerer level-18
+/// cycle) and the Archives of Nethys aonprd.com mirror via
+/// `ClassDisplay.aspx`, both byte-for-byte identical on the level-18 row
+/// ("+13/+8/+3 | +6 | +11 | +11 | Mass suggestion, versatile
+/// performance"), with neighboring levels 16 ("—"), 17 ("Inspire courage
+/// +4, lore master 3/day"), and 19 ("Inspire competence +6") re-fetched in
+/// the same pass to rule out misattribution. Base attack bonus (`18*3/4`),
+/// both good saves (`18/2+2`), and poor Fortitude (`18/3`) all GENUINELY
+/// RISE from level 17; Bardic Knowledge (`max(18/2,1)`) GENUINELY RISES;
+/// the Bardic Performance rounds-per-day pool GENUINELY RISES
+/// (`4+CHA+2*(18-1)`); the Fascinate DC (`10+18/2+CHA`) GENUINELY RISES
+/// while the Fascinate affected-creature count (`1+(18-1)/3`) STAYS
+/// unchanged, an integer-division coincidence; Frightening Tune's DC (the
+/// same formula shape) likewise GENUINELY RISES. Inspire Courage, Inspire
+/// Competence, and Lore Master all stay at their level-17/level-15 tiers
+/// (no further tier is defined within this bounded slice's ceiling, or
+/// lands at level 19, out of scope). Inspire Heroics' flat save-bonus
+/// (+4) and AC-bonus (+4) magnitudes stay unchanged, but its base target
+/// count GENUINELY RISES from 1 to 2 — the PF1 Core Rulebook's own text
+/// ("for every three bard levels the character attains beyond 15th, he
+/// can inspire heroics in one additional creature") places this exactly
+/// at bard level 18, a genuine arithmetic-pillar widening on an
+/// already-generalized tiered if/else chain, the same idiom as Inspire
+/// Courage's/Inspire Competence's/Lore Master's own tier additions.
+///
+/// The level-18 "Special" column's two named entries were checked and
+/// confirmed to require the SAME already-declined machinery as their own
+/// precedents, so NEITHER is grounded as a new record. "Mass suggestion"
+/// (PF1 Core Rulebook: "This ability functions just like suggestion, but
+/// allows a bard of 18th level or higher to make a suggestion
+/// simultaneously to any number of creatures that he has already
+/// fascinated") is a strict widening of the 6th-level Suggestion
+/// spell-like ability, which was already deliberately left
+/// named-but-unproven at level 6 (it requires a fascinated-target
+/// prerequisite and the "suggestion" spell's own effect-resolution
+/// engine, neither of which exists in this codebase) — Mass Suggestion
+/// inherits the identical blocker and adds a multi-target dimension on
+/// top of it, so it stays named-but-unproven, with no record fabricated
+/// for it, exactly mirroring the level-6 Suggestion precedent (this is
+/// NOT a new spell-like-ability-casting engine declined for the first
+/// time; it is the SAME already-declined engine, re-confirmed).
+/// "Versatile performance" is a REPEAT of the Bard's own 2nd-level grant
+/// (also seen at levels 6, 10, and 14): already deliberately left
+/// named-but-unproven at level 2 (requires a choice-gated
+/// skill-substitution engine that does not exist in this codebase), so
+/// this cycle adds no new record for its level-18 reappearance either.
+/// Only one new tier constant pair is added (on an already-generalized
+/// tiered if/else chain, Inspire Heroics' target count); no new record
+/// type or choice slot is added, and no Bard level 19+ is proven.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 18;
 /// PF1 Core Rulebook level gate at which Bard gains Frightening Tune
 /// (14th level, verified independently against two primary sources:
 /// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
@@ -2049,11 +2106,20 @@ const BARD_INSPIRE_HEROICS_SAVE_BONUS: i16 = 4;
 const BARD_INSPIRE_HEROICS_AC_BONUS: i16 = 4;
 /// PF1 Core Rulebook Inspire Heroics base target count at the level it is
 /// first gained: "himself or a single ally" is a flat 1 target (verified
-/// against both primary sources). The rule's own later scaling ("For every
-/// three bard levels the character attains beyond 15th, he can inspire
-/// heroics in an additional creature") lands at bard level 18, beyond this
-/// bounded slice's ceiling, and is not grounded.
+/// against both primary sources).
 const BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT: i16 = 1;
+/// SD18 (cycle-2026-07-16T0900) PF1 Core Rulebook level gate at which
+/// Inspire Heroics' target count first rises: "For every three bard levels
+/// the character attains beyond 15th, he can inspire heroics in an
+/// additional creature" lands exactly at bard level 18 (15 + 3), verified
+/// against the rule text directly rather than assumed, mirroring the
+/// already-generalized tiered if/else chain idiom used for Inspire
+/// Courage / Inspire Competence / Lore Master's own tier constants.
+const BARD_INSPIRE_HEROICS_TARGET_COUNT_SECOND_TIER_LEVEL: u8 = 18;
+/// PF1 Core Rulebook Inspire Heroics target count at its second tier (bard
+/// level 18+): the base 1 target plus the rule's own "+1 creature per three
+/// bard levels beyond 15th" scaling, i.e. 2 at level 18.
+const BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT_SECOND_TIER: i16 = 2;
 
 // SD13-E5 Fascinate flat DC base. PF1 Core Rulebook Fascinate Will save DC is
 // 10 + 1/2 bard level + Charisma modifier; only the fixed base term is a named
@@ -14559,8 +14625,8 @@ fn explain_druid_level1_spell_baseline(
 /// The bounded Bard milestone level this decomposition surface grounds, if any.
 /// Returns the single Bard level when the chosen input is exactly a single-class
 /// Bard at one of the supported milestone levels (1 through `MAX_SUPPORTED_BARD_LEVEL`,
-/// currently 17). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
-/// any level-18+ Bard this slice deliberately does not recognize — each of which stays
+/// currently 18). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
+/// any level-19+ Bard this slice deliberately does not recognize — each of which stays
 /// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
@@ -15234,18 +15300,28 @@ fn explain_bard_level1_spell_baseline(
                  anywhere in this codebase"
             ),
         });
+        let inspire_heroics_target_count =
+            if level >= BARD_INSPIRE_HEROICS_TARGET_COUNT_SECOND_TIER_LEVEL {
+                BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT_SECOND_TIER
+            } else {
+                BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT
+            };
         explanations.push(ComputationExplanation {
             id: "class_feature.bard.inspire_heroics_target_count".to_owned(),
-            value: BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT,
+            value: inspire_heroics_target_count,
             detail: format!(
-                "Bard Inspire Heroics base target count at bard level {level} (PF1 Core \
-                 Rulebook, 15th-level Bard class feature): \"himself or a single ally within 30 \
-                 feet\" is a flat {BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT} target, mirroring \
-                 the Fascinate affected-creature-count idiom. The rule's own further scaling \
-                 (\"for every three bard levels the character attains beyond 15th, he can \
-                 inspire heroics in an additional creature\") lands at bard level 18, beyond \
-                 this bounded slice's ceiling, and is not grounded. This grounds only the flat \
-                 count; no targeting or performance-state execution is computed"
+                "Bard Inspire Heroics target count at bard level {level} (PF1 Core Rulebook, \
+                 15th-level Bard class feature): \"himself or a single ally within 30 feet\" is \
+                 a flat {BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT} target starting at level \
+                 {BARD_INSPIRE_HEROICS_LEVEL}, mirroring the Fascinate affected-creature-count \
+                 idiom. The rule's own further scaling (\"for every three bard levels the \
+                 character attains beyond 15th, he can inspire heroics in an additional \
+                 creature\") genuinely rises the count to \
+                 {BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT_SECOND_TIER} starting exactly at bard \
+                 level {BARD_INSPIRE_HEROICS_TARGET_COUNT_SECOND_TIER_LEVEL} (a second tier on \
+                 an already-generalized tiered if/else chain, the same idiom as Inspire \
+                 Courage/Inspire Competence/Lore Master's own tier additions). This grounds \
+                 only the flat count; no targeting or performance-state execution is computed"
             ),
         });
     }

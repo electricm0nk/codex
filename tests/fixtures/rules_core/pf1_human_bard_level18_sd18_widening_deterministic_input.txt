@@ -1,0 +1,79 @@
+# SD18 deterministic Human Bard level 18 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Bard
+# level-1..level-17 spontaneous arcane spell-bearing baseline
+# (tests/sd18_bard_level17_widening.rs) to level 18 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/performance posture from the level-1 through level-17
+# fixtures, adding only the level bump this bounded tranche needs. The PF1
+# Core Rulebook Bard class table's level-18 "Special" column reads "Mass
+# suggestion, versatile performance" — verified independently against two
+# primary sources (a raw HTML parse of d20pfsrd.com's own class table,
+# bypassing AI-summarization, and the Archives of Nethys aonprd.com mirror
+# via ClassDisplay.aspx, both byte-for-byte identical: "+13/+8/+3 | +6 |
+# +11 | +11 | Mass suggestion, Versatile performance"), with neighboring
+# levels 16 ("—", blank), 17 ("Inspire courage +4, lore master 3/day"), and
+# 19 ("Inspire competence +6") fetched too to rule out misattribution. Base
+# attack bonus genuinely rises to 13 (18*3/4), both good saves (Reflex,
+# Will) genuinely rise to 11 (18/2+2), poor Fortitude genuinely rises to 6
+# (18/3), Bardic Knowledge genuinely rises to 9 (max(18/2,1)), the
+# Fascinate DC genuinely rises to 21 (10+18/2+CHA), the Fascinate
+# affected-creature count stays 6 (1+(18-1)/3, an integer-division
+# coincidence with level 17), and Frightening Tune's DC (the same formula
+# shape) likewise genuinely rises to 21. Inspire Courage stays +4 (next
+# tier out of scope), Inspire Competence stays +5 (next tier at level 19,
+# out of scope), and Lore Master stays 3/day (next tier out of scope).
+# Inspire Heroics' flat save-bonus (+4) and AC-bonus (+4) magnitudes stay
+# unchanged, but its base target count genuinely rises from 1 to 2 — the
+# PF1 Core Rulebook's own "for every three bard levels the character
+# attains beyond 15th, he can inspire heroics in one additional creature"
+# scaling lands exactly at bard level 18, verified against the rule text
+# directly rather than assumed, mirroring the Fascinate
+# affected-creature-count idiom's own tiered-threshold shape.
+#
+# Neither level-18 Special-column entry is grounded as a new record. "Mass
+# suggestion" is verified against its own PF1 rule text ("This ability
+# functions just like suggestion, but allows a bard of 18th level or
+# higher to make a suggestion simultaneously to any number of creatures
+# that he has already fascinated") to be a strict widening of the
+# already-declined 6th-level Suggestion spell-like ability (itself left
+# named-but-unproven at level 6 because it requires a fascinated-target
+# prerequisite and the "suggestion" spell's own effect-resolution engine,
+# neither of which exists in this codebase) — Mass Suggestion inherits the
+# identical blocker and adds a multi-target dimension on top of it, so it
+# is deliberately left named-but-unproven, with no record fabricated for
+# it, exactly mirroring the level-6 Suggestion precedent. "Versatile
+# performance" is a REPEAT of the Bard's own 2nd-level grant (also seen at
+# levels 6, 10, and 14): it was already deliberately left named-but-unproven
+# at level 2 (requires a choice-gated skill-substitution engine that does
+# not exist in this codebase), so this cycle adds no new record for its
+# level-18 reappearance either.
+#
+# It deliberately avoids every later Bard burden surface: no
+# performance-state engine (start/maintain action economy, round
+# tracking/consumption), no Countersong or Distraction, no Versatile
+# Performance execution, no Suggestion or Mass Suggestion execution, no
+# Dirge of Doom execution, no Inspire Greatness execution, no
+# untrained-skill-use execution for Jack-of-All-Trades, no Lore Master
+# take-10/take-20 execution against any actual Knowledge check, no
+# Soothing Performance healing/condition-removal execution, no Frightening
+# Tune fear-resolution execution, no Inspire Heroics
+# targeting/save/AC-application execution, and no spontaneous known-spell /
+# slot posture burden.
+case_id=pf1-crb-human-bard-level18
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:bard:18
+ability=strength:10
+ability=dexterity:14
+ability=constitution:12
+ability=intelligence:13
+ability=wisdom:8
+ability=charisma:15
+feat=feat:dodge
+choice=choice:bard_bardic_knowledge:flag:enabled
+choice=choice:bard_bardic_music:performance:inspire_courage
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md
