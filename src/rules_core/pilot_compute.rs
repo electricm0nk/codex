@@ -3364,8 +3364,27 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // level 18 with zero code change, mirroring exactly how the Wizard
 // level-18 cycle's specialist-bonus-slot top arm already covered level 18)
 // — so no new pillar record is added at level 18 either, since no class
-// feature is named in the level-18 Special column.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 18;
+// feature is named in the level-18 Special column. A further SD18 slice
+// (`cycle-2026-07-16T1100`, the loop's SECOND §3.2 level-19 landing, after
+// Barbarian) widens the gate again to 1..=19 (`MAX_SUPPORTED_CLERIC_LEVEL =
+// 19`): the class table's level-19 "Special" column reads "Channel energy
+// 10d6" (verified independently against two primary sources — a raw curl
+// fetch of d20pfsrd and the Archives of Nethys aonprd.com mirror, both
+// covering the full levels-16-through-20 block, byte-for-byte agreement, so
+// a third source was not required) — Channel Energy's die count genuinely
+// rises to 10d6 (`(19 + 1) / 2 = 10`, up from 9d6 at level 18) via the same
+// pre-existing formula, not re-derived, naming only a tier-rise on the
+// already-grounded Channel Energy dice pillar, not a new class feature,
+// exactly mirroring the level-17 cycle's own "Channel energy 9d6" finding —
+// so no new pillar record is added at level 19 either. Base attack bonus
+// genuinely rises to +14 (`19 * 3 / 4 = 14`), while both good saves stay put
+// at +11 (`19 / 2 + 2 = 11`) and poor Reflex stays put at +6 (`19 / 3 = 6`),
+// integer-division coincidences with level 18, checked not assumed. The
+// domain spell slot count stays 9 (still only 9th-level cleric spells, the
+// PF1 ceiling) and Touch of Good's bonus stays 9 (`19 / 2 = 9`, also an
+// integer-division coincidence with level 18) — all via the same
+// pre-existing formulas, not re-derived.
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 19;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
