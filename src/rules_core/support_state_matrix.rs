@@ -501,7 +501,8 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd18_sorcerer_level14_widening.rs + \
     tests/sd18_sorcerer_level15_widening.rs + \
     tests/sd18_sorcerer_level16_widening.rs + \
-    tests/sd18_sorcerer_level17_widening.rs";
+    tests/sd18_sorcerer_level17_widening.rs + \
+    tests/sd18_sorcerer_level18_widening.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -5243,11 +5244,64 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     not Supported: the Arcane Bond / bloodline progression burden and the \
                     spontaneous which-spells-known / casting-execution burden remain named and \
                     unproven, unchanged from level 16. No spell math is fabricated and no \
-                    Sorcerer level 18+ is proven",
+                    Sorcerer level 18+ is proven — AND a further SD18 slice \
+                    (cycle-2026-07-16T0400, the loop's EIGHTH §3.2 level-18 landing, after \
+                    Wizard, Cleric, Paladin, Fighter, Barbarian, Rogue, and Ranger) widens the \
+                    level-range gate again (supported_sorcerer_level, 1..=18) and extends every \
+                    one of the formulas above to level 18 via the same formula, without \
+                    re-derivation. This cycle's primary task was DEFINITIVELY RESOLVING a \
+                    multi-cycle-carried-forward flag: prior cycles repeatedly noted that a raw \
+                    Sorcerer spells-per-day fetch looked internally inconsistent at level 18 (an \
+                    apparent \"premature\" 9th-level spell column), suspected as a tool artifact \
+                    against a commonly-repeated folk-rule that sorcerers gain 9th-level spells \
+                    only at 20th level. This cycle re-fetched Sorcerer's full levels 14-20 block \
+                    fresh from THREE independent primary sources — a raw, non-AI-summarized parse \
+                    of d20pfsrd.com's own HTML table (bypassing any tabular-summarization \
+                    ambiguity entirely), the Archives of Nethys aonprd.com mirror, and the \
+                    legacy.aonprd.com CRB mirror — all of which agree byte-for-byte: the \
+                    Sorcerer's spells-per-day table opens a genuinely NEW spell-level column \
+                    every two class levels starting at 4th (2nd at 4, 3rd at 6, 4th at 8, 5th at \
+                    10, 6th at 12, 7th at 14, 8th at 16, 9th at 18 — exactly matching this row's \
+                    own already-grounded and already-verified thresholds), with 1st-level spells \
+                    available from level 1. The 9th-level column therefore genuinely, correctly \
+                    opens at class level 18 — one level EARLIER than Wizard/Cleric's own \
+                    already-grounded ninth-level threshold of 17, which is exactly consistent \
+                    with every other already-proven Sorcerer threshold in this row being one \
+                    level later than Wizard's own equivalent threshold. The previously-flagged \
+                    \"premature 9th-level column\" was therefore the CORRECT reading all along; \
+                    the folk-rule assuming a 20th-level-only 9th-spell-level threshold for \
+                    Sorcerer never held for this class and was never independently re-verified \
+                    against a primary source in any prior cycle, only carried forward by \
+                    analogy. level 18 base attack bonus genuinely rises to +9 (18/2, up from \
+                    level 17's +8) and both poor saves genuinely rise to +6 (18/3, up from level \
+                    17's +5) and good Will genuinely rises to +11 (18/2+2, up from level 17's \
+                    +10); the bloodline choice and bloodline class-skill choice recognitions are \
+                    not level-gated, so both still fire at level 18 for the same fixture \
+                    selections; the PF1 Core Rulebook Sorcerer class table's level-18 \"Special\" \
+                    column is genuinely BLANK on all three sources — UNLIKE level 17's \
+                    \"Bloodline spell\" entry — so no new pillar is grounded from the Special \
+                    column; the already-grounded base spells-per-day table genuinely widens \
+                    (6/6/6/6/6/6/6/4 -> 6/6/6/6/6/6/6/5/3, the 8th-level column rising by one AND \
+                    a genuinely NEW 9th-level column opening at 3) and the already-grounded base \
+                    spells-known table genuinely widens (9/5/5/4/4/4/3/3/2 -> \
+                    9/5/5/4/4/4/3/3/2/1, the 0th-8th columns staying numerically unchanged while \
+                    a genuinely NEW 9th-level column opens at 1); the spell-level access ladder \
+                    genuinely rises to 9 (up from 8 at level 17) via a new \
+                    SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 18 threshold constant, \
+                    mirroring the Wizard's and Cleric's own 9th-level-column-opening cycles; the \
+                    spell-save-DC and Charisma-bonus-spell formulas widen automatically over the \
+                    newly-risen access ladder, with no new code needed. The row stays Partial, \
+                    not Supported: the Arcane Bond / bloodline progression burden and the \
+                    spontaneous which-spells-known / casting-execution burden remain named and \
+                    unproven, unchanged from level 17. No spell math is fabricated and no \
+                    Sorcerer level 19+ is proven",
                 next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
                     bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-18+ progression (widening the now-grounded base attack/base save \
-                    formulas)",
+                    level-19+ progression (widening the now-grounded base attack/base save \
+                    formulas; note the Sorcerer spell-level access ladder is now fully populated \
+                    through 9th-level spells, so no further spell-level threshold constants are \
+                    expected — only the base-attack/base-save/per-day/known table VALUES widen at \
+                    levels 19-20)",
             },
             SupportStateRow {
                 row_id: "class.wizard.progression_and_spell_burden",
