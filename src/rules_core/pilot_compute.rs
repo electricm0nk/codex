@@ -1434,8 +1434,42 @@ const RANGER_COMBAT_STYLE_BONUS_FEAT_5_CHOICE_ID: &str =
 // spontaneous which-spells-known / casting-execution burden remain named and
 // unproven, unchanged from level 17. No spell math is fabricated and no
 // Sorcerer level 19+ is proven.
+// SD18 cycle-2026-07-16T4900 widens the gate again to level 19 (the loop's
+// EIGHTH §3.2 level-19 landing, after Barbarian, Cleric, Fighter, Bard,
+// Paladin, Ranger, and Rogue), verified independently against TWO primary
+// sources (a raw non-AI-summarized parse of d20pfsrd.com's own HTML table
+// and the Archives of Nethys aonprd.com mirror, both byte-for-byte
+// identical, fetching the full levels-15-through-20 class-table block in
+// one pass to rule out level-misattribution; no disagreement was found, so
+// a third source was not required): level 19 base attack bonus STAYS at +9
+// (19/2, an integer-division coincidence with level 18's +9, confirmed
+// genuine by the raw table's own `+9/+4` cell matching level 18's `+9/+4`
+// cell exactly) and both poor saves STAY at +6 (19/3) and good Will STAYS
+// at +11 (19/2+2), all integer-division coincidences with level 18, not a
+// sign any formula stopped scaling; the bloodline choice and bloodline
+// class-skill choice recognitions are not level-gated, so both still fire
+// at level 19 for the same fixture selections; the PF1 Core Rulebook
+// Sorcerer class table's level-19 "Special" column reads "Bloodline feat,
+// bloodline spell" — bloodline-specific, left named-but-unproven by the
+// pre-existing Arcane Bond / bloodline progression blocker, exactly
+// mirroring levels 3/5/7/9/11/13/15/17 — so no new pillar is grounded from
+// it; the already-grounded base spells-per-day table genuinely widens
+// (6/6/6/6/6/6/6/5/3 -> 6/6/6/6/6/6/6/6/4, the 8th-level column rising by
+// one AND the 9th-level column rising by one, with no genuinely new
+// spell-level column opening) and the already-grounded base spells-known
+// table genuinely widens (9/5/5/4/4/4/3/3/2/1 -> 9/5/5/4/4/4/3/3/3/2, the
+// 0th-7th columns staying numerically unchanged while the 8th-level column
+// rises by one AND the 9th-level column rises by one); the spell-level
+// access ladder STAYS at 9 (unchanged from level 18; the ladder was already
+// fully populated through 9th-level spells, so no new threshold constant is
+// needed); the spell-save-DC and Charisma-bonus-spell formulas widen
+// automatically over the unchanged access ladder, with no new code needed.
+// The row stays Partial, not Supported: the Arcane Bond / bloodline
+// progression burden and the spontaneous which-spells-known /
+// casting-execution burden remain named and unproven, unchanged from level
+// 18. No spell math is fabricated and no Sorcerer level 20 is proven.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 18;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 19;
 
 /// The sorcerer level at which 2nd-level sorcerer spells first become
 /// available, verified against the raw PF1 Core Rulebook Sorcerer
@@ -12898,7 +12932,13 @@ fn explain_sorcerer_level1_spell_baseline(
     // flag carried forward across multiple prior cycles that suspected this
     // 9th-level column was a tool artifact; it is not (see the
     // SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL doc comment for the
-    // full resolution).
+    // full resolution). Level 19 is THIS SD18 slice's widening
+    // (cycle-2026-07-16T4900), verified independently against two primary
+    // sources (raw d20pfsrd parse and the Archives of Nethys aonprd.com
+    // mirror, byte-for-byte identical): the 8th-level column rises from 5 to
+    // 6 AND the 9th-level column rises from 3 to 4, with no genuinely new
+    // spell-level column opening (the 9th-level column already opened at
+    // level 18).
     // Like the Bard and
     // unlike the
     // Paladin/Ranger, there are NO "0" entries at levels 1-18; every
@@ -12925,6 +12965,7 @@ fn explain_sorcerer_level1_spell_baseline(
         16 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(3), None],
         17 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(4), None],
         18 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(3)],
+        19 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(4)],
         _ => [None, None, None, None, None, None, None, None, None],
     };
     for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
@@ -13023,7 +13064,13 @@ fn explain_sorcerer_level1_spell_baseline(
     // definitively resolves the multi-cycle-carried-forward "premature
     // 9th-level column" flag (see the
     // SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL doc comment for the
-    // full resolution).
+    // full resolution). Level 19 is THIS SD18 slice's widening
+    // (cycle-2026-07-16T4900), verified independently against two primary
+    // sources (raw d20pfsrd parse and the Archives of Nethys aonprd.com
+    // mirror, byte-for-byte identical): the 0th through 7th columns stay
+    // numerically unchanged from level 18's row, while the 8th-level column
+    // rises from 2 to 3 AND the 9th-level column rises from 1 to 2, with no
+    // genuinely new spell-level column opening.
     // The known table
     // INCLUDES the 0th level (cantrips are "spells
     // known" only), and its new-spell-level cadence matches the grounded
@@ -13060,6 +13107,10 @@ fn explain_sorcerer_level1_spell_baseline(
         18 => [
             Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2),
             Some(1),
+        ],
+        19 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
+            Some(2),
         ],
         _ => [None, None, None, None, None, None, None, None, None, None],
     };
