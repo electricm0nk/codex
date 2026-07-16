@@ -6799,23 +6799,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell_id_resolve when selected on CharacterInput.spells_selected, and \
                     present in CorpusPilotReceipt.corpus_derived.school_coverage[Conjuration] \
                     after a call to compute_pilot_with_corpus",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_CONJURATION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 116 real-corpus Conjuration spells resolve via \
                     spell_id_resolve and appear in school_coverage[Conjuration].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
-                    bootstrap table cell, but the seam computes no spell slot math, no \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
                     spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
-                    §1.3, permanently out of scope for this seam); evidence_tier stays Computed \
-                    until the operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible (operator-driven, \
-                    not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; the remaining structural gaps (spell slot math, spellbook \
-                    posture, spell save DCs) are a future SD-N's scope per decisions.md §1.3, \
-                    not a further per-cycle widening of this row",
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 116 \
+                    Conjuration spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
             },
             SupportStateRow {
                 row_id: "school.divination.spell_reachability",
@@ -6828,23 +6833,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell_id_resolve when selected on CharacterInput.spells_selected, and \
                     present in CorpusPilotReceipt.corpus_derived.school_coverage[Divination] \
                     after a call to compute_pilot_with_corpus",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_DIVINATION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 50 real-corpus Divination spells resolve via \
                     spell_id_resolve and appear in school_coverage[Divination].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
-                    bootstrap table cell, but the seam computes no spell slot math, no \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
                     spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
-                    §1.3, permanently out of scope for this seam); evidence_tier stays Computed \
-                    until the operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible (operator-driven, \
-                    not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; the remaining structural gaps (spell slot math, spellbook \
-                    posture, spell save DCs) are a future SD-N's scope per decisions.md §1.3, \
-                    not a further per-cycle widening of this row",
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 50 \
+                    Divination spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
             },
             SupportStateRow {
                 row_id: "school.enchantment.spell_reachability",
@@ -6857,23 +6867,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell_id_resolve when selected on CharacterInput.spells_selected, and \
                     present in CorpusPilotReceipt.corpus_derived.school_coverage[Enchantment] \
                     after a call to compute_pilot_with_corpus",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_ENCHANTMENT_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 60 real-corpus Enchantment spells resolve via \
                     spell_id_resolve and appear in school_coverage[Enchantment].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
-                    bootstrap table cell, but the seam computes no spell slot math, no \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
                     spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
-                    §1.3, permanently out of scope for this seam); evidence_tier stays Computed \
-                    until the operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible (operator-driven, \
-                    not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; the remaining structural gaps (spell slot math, spellbook \
-                    posture, spell save DCs) are a future SD-N's scope per decisions.md §1.3, \
-                    not a further per-cycle widening of this row",
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 60 \
+                    Enchantment spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
             },
             SupportStateRow {
                 row_id: "school.evocation.spell_reachability",
@@ -6886,23 +6901,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell_id_resolve when selected on CharacterInput.spells_selected, and \
                     present in CorpusPilotReceipt.corpus_derived.school_coverage[Evocation] \
                     after a call to compute_pilot_with_corpus",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_EVOCATION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 87 real-corpus Evocation spells resolve via \
                     spell_id_resolve and appear in school_coverage[Evocation].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
-                    bootstrap table cell, but the seam computes no spell slot math, no \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
                     spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
-                    §1.3, permanently out of scope for this seam); evidence_tier stays Computed \
-                    until the operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible (operator-driven, \
-                    not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; the remaining structural gaps (spell slot math, spellbook \
-                    posture, spell save DCs) are a future SD-N's scope per decisions.md §1.3, \
-                    not a further per-cycle widening of this row",
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 87 \
+                    Evocation spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
             },
             SupportStateRow {
                 row_id: "school.illusion.spell_reachability",
@@ -6949,23 +6969,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell_id_resolve when selected on CharacterInput.spells_selected, and \
                     present in CorpusPilotReceipt.corpus_derived.school_coverage[Necromancy] \
                     after a call to compute_pilot_with_corpus",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_NECROMANCY_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 62 real-corpus Necromancy spells resolve via \
                     spell_id_resolve and appear in school_coverage[Necromancy].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
-                    bootstrap table cell, but the seam computes no spell slot math, no \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
                     spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
-                    §1.3, permanently out of scope for this seam); evidence_tier stays Computed \
-                    until the operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible (operator-driven, \
-                    not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; the remaining structural gaps (spell slot math, spellbook \
-                    posture, spell save DCs) are a future SD-N's scope per decisions.md §1.3, \
-                    not a further per-cycle widening of this row",
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 62 \
+                    Necromancy spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
             },
             SupportStateRow {
                 row_id: "school.transmutation.spell_reachability",
@@ -6978,23 +7003,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell_id_resolve when selected on CharacterInput.spells_selected, and \
                     present in CorpusPilotReceipt.corpus_derived.school_coverage[Transmutation] \
                     after a call to compute_pilot_with_corpus",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_TRANSMUTATION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 152 real-corpus Transmutation spells resolve via \
                     spell_id_resolve and appear in school_coverage[Transmutation].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
-                    bootstrap table cell, but the seam computes no spell slot math, no \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
                     spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
-                    §1.3, permanently out of scope for this seam); evidence_tier stays Computed \
-                    until the operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible (operator-driven, \
-                    not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; the remaining structural gaps (spell slot math, spellbook \
-                    posture, spell save DCs) are a future SD-N's scope per decisions.md §1.3, \
-                    not a further per-cycle widening of this row",
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 152 \
+                    Transmutation spells are now surfaced live in the desktop app's Spell \
+                    Catalog browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, \
+                    wired through the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
             },
             SupportStateRow {
                 row_id: "school.universal.spell_reachability",
@@ -7007,25 +7037,30 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell_id_resolve when selected on CharacterInput.spells_selected, and \
                     present in CorpusPilotReceipt.corpus_derived.school_coverage[Universal] \
                     after a call to compute_pilot_with_corpus",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_UNIVERSAL_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 5 real-corpus Universal spells resolve via \
                     spell_id_resolve and appear in school_coverage[Universal].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
-                    bootstrap table cell, but the seam computes no spell slot math, no \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
                     spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
-                    §1.3, permanently out of scope for this seam); evidence_tier stays Computed \
-                    until the operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible (operator-driven, \
-                    not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; the remaining structural gaps (spell slot math, spellbook \
-                    posture, spell save DCs) are a future SD-N's scope per decisions.md §1.3, \
-                    not a further per-cycle widening of this row; §2.4 spell schools is now \
-                    9/9 landed — the next frontier is §2.5 equipment categories (arms_armor, \
-                    general, magic_items, equipmods)",
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 5 \
+                    Universal spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row. §2.4 spell schools is now 9/9 landed at Supported/ProductVisible \
+                    -- the next frontier per '## Full-matrix closure' is the Class Progression \
+                    Browser (12 class.* rows), then the Race Trait Browser (7 race.* rows)",
             },
             SupportStateRow {
                 row_id: "equipment.arms_armor.equipment_reachability",

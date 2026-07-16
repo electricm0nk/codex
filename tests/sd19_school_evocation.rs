@@ -197,8 +197,8 @@ fn evocation_matrix_row_reflects_the_grounded_reachability_proof() {
         .find(|r| r.subject_type == MatrixSubjectType::School(Pf1SchoolId::Evocation))
         .expect("expected a School(Evocation) row in the seeded matrix");
 
-    assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(row.support_state, SupportState::Supported);
+    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         row.grounding_ref.contains("sd19_school_evocation"),
         "expected the row's grounding_ref to cite this cycle's proof test, got: {}",

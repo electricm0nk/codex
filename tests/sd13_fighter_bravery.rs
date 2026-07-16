@@ -259,6 +259,13 @@ fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
             .any(|r| (r.support_state == SupportState::Supported
                 && r.row_id != "school.abjuration.spell_reachability"
                 && r.row_id != "school.illusion.spell_reachability"
+                && r.row_id != "school.conjuration.spell_reachability"
+                && r.row_id != "school.divination.spell_reachability"
+                && r.row_id != "school.enchantment.spell_reachability"
+                && r.row_id != "school.evocation.spell_reachability"
+                && r.row_id != "school.necromancy.spell_reachability"
+                && r.row_id != "school.transmutation.spell_reachability"
+                && r.row_id != "school.universal.spell_reachability"
                 && r.row_id != "equipment.arms_armor.equipment_reachability"
                 && r.row_id != "equipment.general.equipment_reachability"
                 && r.row_id != "equipment.magic_items.equipment_reachability"
