@@ -2374,13 +2374,15 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// PF1 Core Rulebook rage power slots, verified identically on both primary
 /// sources: "Starting at 2nd level, a barbarian gains a rage power. She
 /// gains another rage power for every two levels of barbarian attained
-/// after 2nd level." — gates 2/4/6/8/10 within the tranche ceiling. "Unless
-/// otherwise noted, a barbarian cannot select an individual power more than
-/// once." Numbered slots per the proven repeat-grant idiom; open-ended
-/// recognition (no power-list validation — d20pfsrd merges non-CRB powers
-/// into its list, the same superset pattern as the mercy tiers, and the
-/// open-ended idiom sidesteps list encoding entirely).
-const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 8] = [
+/// after 2nd level." — gates 2/4/6/8/10/12/14/16/18 within the tranche
+/// ceiling (the SD18 level-18 widening added the ninth slot at gate 18;
+/// the tenth slot at gate 20 stays out of scope). "Unless otherwise noted,
+/// a barbarian cannot select an individual power more than once." Numbered
+/// slots per the proven repeat-grant idiom; open-ended recognition (no
+/// power-list validation — d20pfsrd merges non-CRB powers into its list,
+/// the same superset pattern as the mercy tiers, and the open-ended idiom
+/// sidesteps list encoding entirely).
+const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 9] = [
     (1, 2, "choice:barbarian_rage_power"),
     (2, 4, "choice:barbarian_rage_power_2"),
     (3, 6, "choice:barbarian_rage_power_3"),
@@ -2389,6 +2391,7 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 8] = [
     (6, 12, "choice:barbarian_rage_power_6"),
     (7, 14, "choice:barbarian_rage_power_7"),
     (8, 16, "choice:barbarian_rage_power_8"),
+    (9, 18, "choice:barbarian_rage_power_9"),
 ];
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
@@ -2557,7 +2560,29 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 8] = [
 /// Sense stays +5 (17/3, next rise 18th), Damage Reduction stays 4/- (next
 /// rise 19th), and Indomitable Will's flat +4 magnitude carries over
 /// unchanged.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 17;
+///
+/// A still further SD18 slice — the loop's FIFTH §3.2 level-18 landing,
+/// after Wizard, Cleric, Paladin, and Fighter — widens the gate to level 18
+/// (verified independently against d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, byte-for-byte agreement across the full
+/// levels-15-through-20 block, so a third source was not required):
+/// base-attack (classlevel = 18) genuinely rises to +18 (full BAB), and
+/// good Fortitude genuinely rises to +11 (18/2+2), while poor Reflex/Will
+/// both genuinely rise to +6 (18/3); the rage rounds-per-day pool
+/// genuinely rises to 41 (4 + Con mod + 2 per level after 1st); the
+/// level-18 "Special" column reads "Rage power, trap sense +6": 18 IS a
+/// rage-power level (powers land at 2/4/6/8/10/12/14/16/18/20), so a NINTH
+/// numbered slot (`BARBARIAN_RAGE_POWER_SLOTS`, gate 18,
+/// `choice:barbarian_rage_power_9`) is added mirroring the proven
+/// repeat-grant idiom exactly, no rage-power-EFFECT engine invented; Trap
+/// Sense genuinely rises to +6 (18/3, the same pre-existing formula, up
+/// from +5 at level 17); Damage Reduction stays 4/- (next rise 19th);
+/// Indomitable Will's flat +4 magnitude and Tireless Rage both carry over
+/// unchanged. This needed ZERO new record types and ZERO formula changes
+/// on base attack, base saves, rage rounds, or Trap Sense (all were
+/// already level-generic formulas) — only a ninth numbered rage-power slot
+/// appended to `BARBARIAN_RAGE_POWER_SLOTS`.
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 18;
 
 /// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
 /// (11th level — "At 11th level, a barbarian's rage improves. She gains a

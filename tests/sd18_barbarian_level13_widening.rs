@@ -264,9 +264,9 @@ fn barbarian_level12_truth_is_unchanged_by_this_slice() {
 // ----- Negative control: level 16 stays unrecognized by this slice -----
 
 #[test]
-fn barbarian_level_18_is_not_promoted_by_this_slice() {
-    let level_18 = BARBARIAN_LEVEL13_FIXTURE.replace("class:barbarian:13", "class:barbarian:18");
-    let input = load(&level_18);
+fn barbarian_level_19_is_not_promoted_by_this_slice() {
+    let level_19 = BARBARIAN_LEVEL13_FIXTURE.replace("class:barbarian:13", "class:barbarian:19");
+    let input = load(&level_19);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -274,7 +274,7 @@ fn barbarian_level_18_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.barbarian.")
                 || e.id.starts_with("class_feature.barbarian.")),
-        "level-18 Barbarian must not gain any bounded barbarian explanation: {:?}",
+        "level-19 Barbarian must not gain any bounded barbarian explanation: {:?}",
         computation.explanations
     );
 }
