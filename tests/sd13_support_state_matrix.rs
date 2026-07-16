@@ -615,7 +615,11 @@ fn seed_contains_no_unexpectedly_supported_rows() {
     assert!(
         !matrix.rows.iter().any(|r| r.support_state == SupportState::Supported
             && r.row_id != "school.abjuration.spell_reachability"
-            && r.row_id != "school.illusion.spell_reachability"),
+            && r.row_id != "school.illusion.spell_reachability"
+            && r.row_id != "equipment.arms_armor.equipment_reachability"
+            && r.row_id != "equipment.general.equipment_reachability"
+            && r.row_id != "equipment.magic_items.equipment_reachability"
+            && r.row_id != "equipment.equipmods.equipment_reachability"),
         "no row may be silently promoted to Supported outside the two named, \
          intentionally-promoted SD-19 rows"
     );

@@ -406,7 +406,11 @@ fn matrix_preserves_fighter_and_rogue_accepted_truth() {
             // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
             .any(|r| (r.support_state == SupportState::Supported
                 && r.row_id != "school.abjuration.spell_reachability"
-                && r.row_id != "school.illusion.spell_reachability")
+                && r.row_id != "school.illusion.spell_reachability"
+                && r.row_id != "equipment.arms_armor.equipment_reachability"
+                && r.row_id != "equipment.general.equipment_reachability"
+                && r.row_id != "equipment.magic_items.equipment_reachability"
+                && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the hybrid slice must not promote any row to Supported or Lossy"
     );

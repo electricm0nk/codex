@@ -7039,39 +7039,34 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     selected on CharacterInput.equipment_selections, present in \
                     CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
                     compute_pilot_with_corpus, and carries a non-None TableCellRef",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_ARMS_ARMOR_EQUIPMENT_TEST,
                 blocker_or_lossiness_note: "all 310 real-corpus arms_armor records \
                     resolve via equipment_id_resolve, appear in equipped_items, and \
                     ground through the CRB table store (rules_tables::crb::\
                     equipment_data::arms_armor, generated from this same real corpus \
-                    file per the operator's 2026-07-16 amended loop instruction — \
-                    supersedes the prior 3-item representative-sample criterion). \
-                    Required two fixes first: the SD-17 parser-merge defect \
+                    file). Required two fixes first: the SD-17 parser-merge defect \
                     (equipment.rs's open_record, fixed 22eeed9) and the equipment \
                     resolver's exact-name-match gap (KEY-less records distinguished only \
                     by parenthesized content, e.g. Improvised Weapon (1d2) vs (1d3), \
-                    fixed alongside this cycle). derived_stats \
+                    fixed alongside the full-coverage cycle). derived_stats \
                     (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
                     bounded-baseline equipment-effect computation is a documented \
-                    non-goal of the capability slice (scope-draft.md §1.1). \
-                    Evidence_tier is Computed, not Product-visible: per the amended loop \
-                    instruction's own §5 (\"UI-surfacing gate is downstream... \
-                    full-coverage Partial/Computed is the loop's exit condition\"), full \
-                    reachability+grounding does not by itself promote to Product-visible \
-                    — the desktop app's Character Sheet Gear tab surfaces only 2 of \
-                    these 310 items (Longsword, Chain Shirt) live, not the full category, \
-                    so this row's \"every named sample is grounded\" bar under the \
-                    Supported/Product-visible definition is not met at full-category \
-                    scope (superseding the narrower 2-item promotion recorded in an \
-                    earlier commit under the old sample-scoped criterion)",
-                next_required_uplift: "operator UI surfacing of the full 310-item \
-                    category (not just the 2-item demo sample) to reach \
-                    Supported/Product-visible; populating derived_stats from corpus \
-                    BONUS:/ACCHECK:/MAXDEX: tokens is a future cycle's or a future SD-N's \
-                    scope",
+                    non-goal of the capability slice (scope-draft.md §1.1), and is not a \
+                    gap in this row's own reachability claim. All 310 items are now \
+                    surfaced live in the desktop app's Equipment Catalog browser \
+                    (apps/desktop/src/equipmentCatalog/EquipmentCatalogScreen.tsx, wired \
+                    through the list_equipment_catalog Tauri command over the full \
+                    rules_tables::crb::equipment_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by category and searchable \
+                    by name — satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named item grounded AND the \
+                    operator's UI surfaces it) at full-category scope",
+                next_required_uplift: "none for reachability or UI-surfacing; \
+                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    is a future cycle's or a future SD-N's scope",
             },
             SupportStateRow {
                 row_id: "equipment.general.equipment_reachability",
@@ -7085,28 +7080,28 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     CharacterInput.equipment_selections, present in \
                     CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
                     compute_pilot_with_corpus, and carries a non-None TableCellRef",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_GENERAL_EQUIPMENT_TEST,
                 blocker_or_lossiness_note: "all 453 real-corpus general records resolve \
                     via equipment_id_resolve, appear in equipped_items, and ground \
                     through the CRB table store (rules_tables::crb::equipment_data::\
-                    general, generated from this same real corpus file per the \
-                    operator's 2026-07-16 amended loop instruction — supersedes the \
-                    prior 3-item representative-sample criterion). derived_stats \
+                    general, generated from this same real corpus file). derived_stats \
                     (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
                     bounded-baseline equipment-effect computation is a documented \
-                    non-goal of the capability slice (scope-draft.md §1.1). Evidence_tier \
-                    stays Computed, not Product-visible: per the amended loop \
-                    instruction's own §5, full reachability+grounding is the loop's exit \
-                    condition, not a Product-visible promotion — that requires operator \
-                    UI surfacing of the full category, which has not been done for \
-                    general",
-                next_required_uplift: "operator UI surfacing of the full 453-item \
-                    category to reach Supported/Product-visible; populating \
-                    derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens is a future \
-                    cycle's or a future SD-N's scope",
+                    non-goal of the capability slice (scope-draft.md §1.1), and is not a \
+                    gap in this row's own reachability claim. All 453 items are now \
+                    surfaced live in the desktop app's Equipment Catalog browser \
+                    (apps/desktop/src/equipmentCatalog/EquipmentCatalogScreen.tsx, wired \
+                    through the list_equipment_catalog Tauri command over the full \
+                    rules_tables::crb::equipment_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by category and searchable \
+                    by name — satisfying the loop instruction's own definition of \
+                    Supported/Product-visible at full-category scope",
+                next_required_uplift: "none for reachability or UI-surfacing; \
+                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    is a future cycle's or a future SD-N's scope",
             },
             SupportStateRow {
                 row_id: "equipment.magic_items.equipment_reachability",
@@ -7120,34 +7115,33 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     selected on CharacterInput.equipment_selections, present in \
                     CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
                     compute_pilot_with_corpus, and carries a non-None TableCellRef",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_MAGIC_ITEMS_EQUIPMENT_TEST,
                 blocker_or_lossiness_note: "all 1556 real-corpus magic_items records \
                     resolve via equipment_id_resolve, appear in equipped_items, and \
                     ground through the CRB table store (rules_tables::crb::\
                     equipment_data::magic_items, generated from this same real corpus \
-                    file per the operator's 2026-07-16 amended loop instruction — \
-                    supersedes the prior 3-item representative-sample criterion). This \
-                    category's prior cycle discovered the SD-17 '.COPY=' parser-merge \
-                    defect that made full coverage structurally impossible \
+                    file). This category's prior cycle discovered the SD-17 '.COPY=' \
+                    parser-merge defect that made full coverage structurally impossible \
                     (scrolls/wands/potions predominantly use '.COPY=' naming); that fix \
-                    (22eeed9) plus the equipment resolver's exact-name-match fix (added \
-                    alongside this cycle) unblocked this cycle's full sweep, including \
-                    every '.COPY=' variant. derived_stats \
-                    (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
-                    bounded-baseline equipment-effect computation is a documented \
-                    non-goal of the capability slice (scope-draft.md §1.1). Evidence_tier \
-                    stays Computed, not Product-visible: per the amended loop \
-                    instruction's own §5, full reachability+grounding is the loop's exit \
-                    condition, not a Product-visible promotion — that requires operator \
-                    UI surfacing of the full category, which has not been done for \
-                    magic_items",
-                next_required_uplift: "operator UI surfacing of the full 1556-item \
-                    category to reach Supported/Product-visible; populating \
-                    derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens is a future \
-                    cycle's or a future SD-N's scope",
+                    (22eeed9) plus the equipment resolver's exact-name-match fix unblocked \
+                    the full-coverage cycle's sweep, including every '.COPY=' variant. \
+                    derived_stats (armor_bonus/attack_bonus/max_dex/spell_failure) stay \
+                    unpopulated — bounded-baseline equipment-effect computation is a \
+                    documented non-goal of the capability slice (scope-draft.md §1.1), \
+                    and is not a gap in this row's own reachability claim. All 1556 items \
+                    are now surfaced live in the desktop app's Equipment Catalog browser \
+                    (apps/desktop/src/equipmentCatalog/EquipmentCatalogScreen.tsx, wired \
+                    through the list_equipment_catalog Tauri command over the full \
+                    rules_tables::crb::equipment_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by category and searchable \
+                    by name — satisfying the loop instruction's own definition of \
+                    Supported/Product-visible at full-category scope",
+                next_required_uplift: "none for reachability or UI-surfacing; \
+                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    is a future cycle's or a future SD-N's scope",
             },
             SupportStateRow {
                 row_id: "equipment.equipmods.equipment_reachability",
@@ -7162,8 +7156,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     CharacterInput.equipment_selections, present in \
                     CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
                     compute_pilot_with_corpus, and carries a non-None TableCellRef",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_EQUIPMODS_EQUIPMENT_TEST,
                 blocker_or_lossiness_note: "344 of cr_equipmods.lst's 658 raw records \
@@ -7176,26 +7170,30 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     explicitly marked VISIBLE:NO, e.g. 'Material ~ Steel.COPY=STEEL' \
                     whose fallback name-identity collides with the real 'Material ~ \
                     Steel' modifier's own KEY) — confirmed for all 314 with zero \
-                    exceptions this cycle; these are not independently selectable \
-                    equipment a character can choose, so 344/344 is full coverage of \
-                    every real item, not a partial result. This category's prior cycle \
-                    discovered the plain-duplicate-name merge-collapse defect (two \
-                    unrelated 'Cloth' rows); that fix (22eeed9) plus the equipment \
-                    resolver's exact-name-match fix (added alongside this cycle) \
-                    unblocked this cycle's full sweep. derived_stats \
-                    (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
-                    bounded-baseline equipment-effect computation is a documented \
-                    non-goal of the capability slice (scope-draft.md §1.1). Evidence_tier \
-                    stays Computed, not Product-visible: per the amended loop \
-                    instruction's own §5, full reachability+grounding is the loop's exit \
-                    condition, not a Product-visible promotion — that requires operator \
-                    UI surfacing of the full category, which has not been done for \
-                    equipmods. Landing this row closes the full §2.5 equipment-category \
-                    sweep (4/4) at full coverage.",
-                next_required_uplift: "operator UI surfacing of the full 344-item \
-                    addressable set to reach Supported/Product-visible; populating \
-                    derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens is a future \
-                    cycle's or a future SD-N's scope",
+                    exceptions; these are not independently selectable equipment a \
+                    character can choose, so 344/344 is full coverage of every real \
+                    item, not a partial result. This category's prior cycle discovered \
+                    the plain-duplicate-name merge-collapse defect (two unrelated \
+                    'Cloth' rows); that fix (22eeed9) plus the equipment resolver's \
+                    exact-name-match fix unblocked the full-coverage cycle's sweep. \
+                    derived_stats (armor_bonus/attack_bonus/max_dex/spell_failure) stay \
+                    unpopulated — bounded-baseline equipment-effect computation is a \
+                    documented non-goal of the capability slice (scope-draft.md §1.1), \
+                    and is not a gap in this row's own reachability claim. All 658 raw \
+                    records (all 344 addressable items, plus the 314 hidden aliases for \
+                    transparency) are now surfaced live in the desktop app's Equipment \
+                    Catalog browser (apps/desktop/src/equipmentCatalog/\
+                    EquipmentCatalogScreen.tsx, wired through the list_equipment_catalog \
+                    Tauri command over the full rules_tables::crb::equipment_tables() \
+                    store, 2026-07-16), reachable from the hub landing screen, \
+                    filterable by category and searchable by name — satisfying the loop \
+                    instruction's own definition of Supported/Product-visible at \
+                    full-category scope. Landing this row closes the full §2.5 \
+                    equipment-category sweep (4/4) at full coverage and full \
+                    UI-surfacing.",
+                next_required_uplift: "none for reachability or UI-surfacing; \
+                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    is a future cycle's or a future SD-N's scope",
             },
         ],
     }

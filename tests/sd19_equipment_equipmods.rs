@@ -232,8 +232,8 @@ fn equipmods_matrix_row_reflects_full_coverage() {
         .find(|r| r.subject_type == MatrixSubjectType::Equipment(EquipmentCategory::Equipmods))
         .expect("expected an Equipment(Equipmods) row in the seeded matrix");
 
-    assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(row.support_state, SupportState::Supported);
+    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         row.grounding_ref.contains("sd19_equipment_equipmods"),
         "expected the row's grounding_ref to cite this cycle's proof test, got: {}",

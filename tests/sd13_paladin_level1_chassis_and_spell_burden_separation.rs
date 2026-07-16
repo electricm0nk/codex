@@ -658,7 +658,11 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
     assert!(
         !matrix.rows.iter().any(|r| r.support_state == SupportState::Supported
             && r.row_id != "school.abjuration.spell_reachability"
-            && r.row_id != "school.illusion.spell_reachability"),
+            && r.row_id != "school.illusion.spell_reachability"
+            && r.row_id != "equipment.arms_armor.equipment_reachability"
+            && r.row_id != "equipment.general.equipment_reachability"
+            && r.row_id != "equipment.magic_items.equipment_reachability"
+            && r.row_id != "equipment.equipmods.equipment_reachability"),
         "the paladin-decomposition slice must not promote any row to Supported"
     );
 }

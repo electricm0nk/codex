@@ -174,14 +174,13 @@ fn arms_armor_matrix_row_reflects_full_coverage() {
         .expect("expected an Equipment(ArmsArmor) row in the seeded matrix");
 
     // Full reachability + full table-cell grounding achieved this cycle,
-    // but this remains Partial/Computed, not Supported/Product-visible:
-    // per the amended loop instruction's own §5 ("UI-surfacing gate is
-    // downstream... Full-coverage Partial/Computed is the loop's exit
-    // condition"), promoting to Supported/Product-visible requires the
-    // operator's UI to surface the *full* category, not the 2-item demo
-    // sample the desktop app currently shows.
-    assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    // and now promoted to Supported/Product-visible: the desktop app's
+    // Equipment Catalog browser (apps/desktop/src/equipmentCatalog/
+    // EquipmentCatalogScreen.tsx) surfaces the *full* category via the
+    // list_equipment_catalog Tauri command, satisfying the loop
+    // instruction's own definition of Supported/Product-visible.
+    assert_eq!(row.support_state, SupportState::Supported);
+    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         row.grounding_ref.contains("sd19_equipment_arms_armor"),
         "expected the row's grounding_ref to cite this cycle's proof test, got: {}",
