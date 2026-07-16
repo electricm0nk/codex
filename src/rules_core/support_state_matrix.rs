@@ -537,7 +537,8 @@ const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_ba
     tests/sd18_barbarian_level15_widening.rs + \
     tests/sd18_barbarian_level16_widening.rs + \
     tests/sd18_barbarian_level17_widening.rs + \
-    tests/sd18_barbarian_level18_widening.rs";
+    tests/sd18_barbarian_level18_widening.rs + \
+    tests/sd18_barbarian_level19_widening.rs";
 
 /// SD13-E2/SD18 dedicated proof surface for the bounded Gnome race-semantics
 /// recognition: direct computed recognition of eight grounded PF1 Core Rulebook
@@ -1627,7 +1628,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded Barbarian chassis progression: the deterministic Human \
                     Barbarian level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
                     level-9/level-10/level-11/level-12/level-13/level-14/level-15/level-16/\
-                    level-17/level-18 \
+                    level-17/level-18/level-19 \
                     martial chassis identity, with base-attack, base-save, fast-movement, and \
                     flat Rage pillar values grounded across all eighteen levels (Rage becoming \
                     Greater Rage at level 11, a magnitude-rise on the same flat-constant \
@@ -1645,8 +1646,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     flat-magnitude record (unchanged at levels 8-9, genuinely rising to 2/— at \
                     level 10, unchanged at levels 11-12, genuinely rising to 3/— at level \
                     13 via a third named tier constant, unchanged at levels 14-15, genuinely \
-                    rising to 4/— at level 16 via a fourth named tier constant, and unchanged \
-                    at levels 17-18), a \
+                    rising to 4/— at level 16 via a fourth named tier constant, unchanged \
+                    at levels 17-18, and genuinely rising to 5/— at level 19 via a fifth named \
+                    tier constant), a \
                     sixth \
                     numbered Rage Power choice-recognition slot grounded at the level-12 grant \
                     (mirroring the five numbered slots already grounded at levels 2/4/6/8/10), \
@@ -1661,16 +1663,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     levels 2/4/6/8/10/12/14/16), \
                     Indomitable Will newly grounded as a level-14 flat \
                     while-raging Will-save magnitude record (a fifth flat rage-surface \
-                    constant, mirroring the four pre-existing ones, unchanged at levels 15-18), \
+                    constant, mirroring the four pre-existing ones, unchanged at levels 15-19), \
                     and Tireless Rage newly grounded at level 17 as a bounded grant-only \
                     identity record (mirroring the Indomitable Will / Paladin \
                     Aura-of-Justice/Aura-of-Faith/Aura-of-Righteousness idiom exactly; no \
                     rage-state execution engine exists in this codebase to apply the removed \
-                    fatigue condition to; carried over unchanged at level 18), \
+                    fatigue condition to; carried over unchanged through level 19; level 19 is \
+                    NOT a rage-power level, so no tenth numbered slot is added there), \
                     and \
                     the rage-state \
                     execution / Rage Power EFFECT / weapon-familiarity / flanking-resolution / \
-                    damage-reduction-application / saving-throw-resolution / level-19+ \
+                    damage-reduction-application / saving-throw-resolution / level-20 \
                     remainder still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -2030,7 +2033,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     needed ZERO new record types and ZERO formula changes on base attack, base \
                     saves, rage rounds, or Trap Sense (all were already level-generic \
                     formulas) — only a ninth numbered rage-power slot appended to \
-                    BARBARIAN_RAGE_POWER_SLOTS.",
+                    BARBARIAN_RAGE_POWER_SLOTS. A still further SD18 slice (cycle-2026-07-16T1000, \
+                    tests/sd18_barbarian_level19_widening.rs) — the loop's FIRST §3.2 level-19 \
+                    landing, opening the level-19 sweep — widens the gate to level 19 (verified \
+                    independently against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, byte-for-byte agreement across the full levels-15-through-20 block, \
+                    so a third source was not required): base-attack (classlevel = 19) genuinely \
+                    rises to +19 (full BAB), while good Fortitude stays +11 (19/2+2, an \
+                    integer-division coincidence with level 18) and poor Reflex/Will both stay \
+                    +6 (19/3, also an integer-division coincidence with level 18); the rage \
+                    rounds-per-day pool genuinely rises to 43 (4 + Con mod + 2 per level after \
+                    1st); the level-19 \"Special\" column reads \"Damage reduction 5/-\" only — \
+                    Damage Reduction GENUINELY RISES to 5/- via a FIFTH tier constant, mirroring \
+                    exactly how the level-10/level-13/level-16 three-prior-tier idiom was \
+                    established; level 19 is NOT a rage-power level (powers land at \
+                    2/4/6/8/10/12/14/16/18/20), so no tenth numbered slot is added; Trap Sense \
+                    stays +6 (19/3, its next rise would be 21st, outside the PF1 1-20 level \
+                    range) and Indomitable Will's flat +4 magnitude and Tireless Rage both carry \
+                    over unchanged. This needed ZERO new record types and ZERO new choice slots \
+                    — only a new damage-reduction tier constant and one new arm on the existing \
+                    flat-magnitude formula.",
                 next_required_uplift: "ground the Barbarian rage-state execution engine \
                     (activation/deactivation, rage-round consumption, post-rage fatigue, \
                     temporary application of the rage constants — note: Tireless Rage at level \
@@ -2045,7 +2067,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     / fast-movement / Uncanny Dodge / Trap Sense / Improved Uncanny Dodge / \
                     Damage Reduction / Indomitable Will / Tireless Rage values into the \
                     integrated pilot surface, later widening into weapon familiarity and \
-                    level-18+ martial progression",
+                    the level-20 martial progression ceiling",
             },
             SupportStateRow {
                 row_id: "class.bard.progression_and_spell_burden",

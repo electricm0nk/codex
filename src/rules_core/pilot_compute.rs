@@ -2790,7 +2790,30 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 9] = [
 /// on base attack, base saves, rage rounds, or Trap Sense (all were
 /// already level-generic formulas) — only a ninth numbered rage-power slot
 /// appended to `BARBARIAN_RAGE_POWER_SLOTS`.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 18;
+///
+/// A still further SD18 slice — the loop's FIRST §3.2 level-19 landing,
+/// opening the level-19 sweep — widens the gate to level 19 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement across the full levels-15-through-20
+/// block, so a third source was not required): base-attack (classlevel = 19)
+/// genuinely rises to +19 (full BAB), while good Fortitude stays +11
+/// (19/2+2, an integer-division coincidence with level 18) and poor
+/// Reflex/Will both stay +6 (19/3, also an integer-division coincidence with
+/// level 18); the rage rounds-per-day pool genuinely rises to 43 (4 + Con
+/// mod + 2 per level after 1st); the level-19 "Special" column reads
+/// "Damage reduction 5/-" only — Damage Reduction GENUINELY RISES to 5/-
+/// via a FIFTH tier constant (`BARBARIAN_DAMAGE_REDUCTION_FIVE_LEVEL`),
+/// mirroring exactly how the level-10/level-13/level-16 three-prior-tier
+/// idiom was established (the same "10th level and every three barbarian
+/// levels thereafter" cadence: 10, 13, 16, 19); level 19 is NOT a
+/// rage-power level (powers land at 2/4/6/8/10/12/14/16/18/20), so no tenth
+/// numbered slot is added; Trap Sense stays +6 (19/3, its next rise would
+/// be 21st, outside the PF1 1-20 level range) and Indomitable Will's flat
+/// +4 magnitude and Tireless Rage both carry over unchanged. This needed
+/// ZERO new record types and ZERO new choice slots — only a new
+/// damage-reduction tier constant and one new arm on the existing
+/// flat-magnitude formula, mirroring the level-13/level-16 idiom exactly.
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 19;
 
 /// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
 /// (11th level — "At 11th level, a barbarian's rage improves. She gains a
@@ -2843,6 +2866,13 @@ const BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL: u8 = 13;
 /// mirror: both name "Damage reduction 4/-, rage power" as the Barbarian
 /// 16th-level "Special" class table entry).
 const BARBARIAN_DAMAGE_REDUCTION_FOUR_LEVEL: u8 = 16;
+/// PF1 Core Rulebook level gate at which Barbarian Damage Reduction rises to
+/// 5/— (19th level — the same "every three barbarian levels thereafter"
+/// clause applied a fourth time from the 10th-level gate, verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror: both name "Damage reduction 5/-" as the Barbarian 19th-level
+/// "Special" class table entry).
+const BARBARIAN_DAMAGE_REDUCTION_FIVE_LEVEL: u8 = 19;
 
 /// PF1 Core Rulebook level gate at which Barbarian gains Indomitable Will
 /// (14th level, verified independently against d20pfsrd and the Archives of
@@ -10339,8 +10369,10 @@ fn explain_barbarian_level1_chassis(
             2
         } else if level < BARBARIAN_DAMAGE_REDUCTION_FOUR_LEVEL {
             3
-        } else {
+        } else if level < BARBARIAN_DAMAGE_REDUCTION_FIVE_LEVEL {
             4
+        } else {
+            5
         };
         explanations.push(ComputationExplanation {
             id: "class_feature.barbarian.damage_reduction".to_owned(),
