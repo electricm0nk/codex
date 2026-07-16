@@ -408,7 +408,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd18_paladin_level14_widening.rs + \
     tests/sd18_paladin_level15_widening.rs + \
     tests/sd18_paladin_level16_widening.rs + \
-    tests/sd18_paladin_level17_widening.rs";
+    tests/sd18_paladin_level17_widening.rs + \
+    tests/sd18_paladin_level18_widening.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -3417,7 +3418,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Paladin level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
                             level-8/level-9/level-10/level-11/level-12/level-13/level-14/\
-                            level-15/level-16/level-17 \
+                            level-15/level-16/level-17/level-18 \
                             chassis baseline, with smite evil's uses-per-day / attack-bonus / \
                             damage-bonus formula grounded at every level (uses-per-day \
                             genuinely increasing to 2/day at level 4, staying 2/day through \
@@ -3426,7 +3427,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             level 10 and staying 4/day at levels 11-12, genuinely \
                             increasing to 5/day at level 13, staying 5/day at levels \
                             14-15, genuinely increasing to 6/day at level 16, and staying \
-                            6/day at level 17 (an integer-division coincidence, the next rise \
+                            6/day at levels 17-18 (integer-division coincidences, the next rise \
                             lands at level 19), \
                             while the damage bonus \
                             keeps rising every level), lay on \
@@ -3441,12 +3442,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             numerically unchanged at levels 14-16), \
                             mercy \
                             grounded as a correct PF1 CRB level-gate absence at \
-                            levels 1-2 and a granted choice-recognition record at levels 3-17 \
+                            levels 1-2 and a granted choice-recognition record at levels 3-18 \
                             (a fourth numbered mercy slot newly grounded at level 12, staying \
                             unchanged at levels 13-14 since neither is a repeat-Mercy-grant \
-                            level, a FIFTH numbered mercy slot newly grounded at level 15, and \
+                            level, a FIFTH numbered mercy slot newly grounded at level 15, \
                             staying unchanged at levels 16-17 since neither is a repeat-Mercy- \
-                            grant level), \
+                            grant level, and a SIXTH numbered mercy slot newly grounded at \
+                            level 18), \
                             channel positive energy grounded as a correct PF1 CRB level-gate \
                             absence at levels 1-3 and a flat die-count magnitude at levels 4-16 \
                             (genuinely increasing from 2d6 to 3d6 at level 5, staying 3d6 at \
@@ -3488,6 +3490,15 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             Righteousness newly grounded as a THIRD bounded grant-only \
                             identity record, and the base spells-per-day table's own level-17 \
                             row (only the 1st-level column genuinely rising, from 3 to 4) \
+                            grounded for real, and (level 18) base attack bonus genuinely \
+                            rising to 18 and both good saves genuinely rising to 11 (18/2+2) \
+                            while poor Reflex genuinely rises to 6 (18/3), Smite Evil's \
+                            uses-per-day formula staying 6/day (an integer-division \
+                            coincidence with level 17) while its damage bonus genuinely rises \
+                            to 18, the SIXTH numbered mercy slot newly grounded (a repeat grant \
+                            adding no new named mercy-list tier, mirroring the level-15 fifth \
+                            slot exactly), and the base spells-per-day table's own level-18 \
+                            row (only the 4th-level column genuinely rising, from 1 to 2) \
                             grounded for real, \
                             and the hybrid chassis pair plus \
                             the spells-known/spells-per-day/spell-DC spell burden still named \
@@ -3969,9 +3980,45 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     tests/sd18_paladin_level16_widening.rs's own level-17 negative control was \
                     removed rather than moved, since level 17 is now itself the \
                     supported/grounded row. \
+                    The SD18 cycle-2026-07-15T15000 slice \
+                    (tests/sd18_paladin_level18_widening.rs) widens the level-range gate once \
+                    more to level 18, the loop's THIRD §3.2 level-18 landing (after Wizard and \
+                    Cleric), and the third hybrid/partial-caster class-row widening to reach it: \
+                    base attack genuinely rises to +18 (full BAB) and BOTH good saves genuinely \
+                    rise to +11 (Fortitude/Will 18/2+2=11, up from 10) while poor Reflex \
+                    genuinely rises to +6 (18/3=6, up from 5). The level-18 \"Special\" column \
+                    reads only \"Mercy\" (verified independently against d20pfsrd and the \
+                    Archives of Nethys aonprd.com mirror, byte-for-byte agreement, so a third \
+                    source was not required) — 18th IS a repeat-Mercy-grant level (the \
+                    3rd/6th/9th/12th/15th/18th cadence), grounded here as a SIXTH numbered \
+                    mercy choice slot (class_chassis.paladin.mercy_6_choice, value 0, \
+                    non-fabricated), mirroring the proven slot-2/3/4/5 idiom exactly; like the \
+                    15th-level repeat grant, both sources agree the CRB's named mercy-list \
+                    tiers stop growing after 12th level, so the sixth slot's cited tier text \
+                    names no new mercy condition, only the sixth pick from the existing pool. \
+                    Smite Evil's uses-per-day formula (already level-generic) stays 6/day, an \
+                    integer-division coincidence with level 17 (the next rise lands at level \
+                    19), while its damage bonus genuinely rises to 18. The same slice widens \
+                    the BASE spells-per-day table to level 18 (\"4/3/2/2\", verified \
+                    independently against both sources with no disagreement): the \
+                    1st/2nd/3rd-level columns stay 4/3/2 numerically unchanged, and the \
+                    4th-level column genuinely rises from 1 to 2. The spell-level access ladder \
+                    stays 4 (already widened at level 13, unchanged here), and the base \
+                    spell-save-DC and Charisma-bonus-spells families both continue to extend to \
+                    the 4th spell level automatically (live arithmetic, no new formula \
+                    invented). This slice also fixed five stale sibling negative controls \
+                    (allowlist/boundary-control failure mode) that asserted level 18 as \
+                    claim-blocked: tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, \
+                    tests/sd18_paladin_level13_widening.rs, and \
+                    tests/sd18_paladin_level14_widening.rs, all moved to a level-19 boundary; \
+                    tests/sd18_paladin_level17_widening.rs's own level-18 negative control was \
+                    removed rather than moved, since level 18 is now itself the \
+                    supported/grounded row. \
                     The row stays Partial, not Supported: \
                     the F6 hybrid chassis pair (class-feature and spell) stays claim-blocking \
-                    as accepted hybrid truth, no Paladin level 18+ is proven, Divine Bond stays \
+                    as accepted hybrid truth, no Paladin level 19+ is proven, Divine Bond stays \
                     named-but-unproven, Aura of Justice's, Aura of Faith's, and Aura of \
                     Righteousness's own resolution engines are not computed, and the \
                     partial-caster spell burden itself \
@@ -3985,7 +4032,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell-source-lineage burdens now that the caster-level gate, the access \
                     ladder, the base per-day counts, the base spell-save DCs, the Charisma \
                     bonus-slot counts, and the integrated totals are all grounded, then \
-                    paladin level-18+ \
+                    paladin level-19+ \
                     progression",
             },
             SupportStateRow {
