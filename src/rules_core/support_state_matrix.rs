@@ -545,7 +545,8 @@ const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_ba
     tests/sd18_barbarian_level16_widening.rs + \
     tests/sd18_barbarian_level17_widening.rs + \
     tests/sd18_barbarian_level18_widening.rs + \
-    tests/sd18_barbarian_level19_widening.rs";
+    tests/sd18_barbarian_level19_widening.rs + \
+    tests/sd18_barbarian_level20_widening.rs";
 
 /// SD13-E2/SD18 dedicated proof surface for the bounded Gnome race-semantics
 /// recognition: direct computed recognition of eight grounded PF1 Core Rulebook
@@ -1693,11 +1694,11 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded Barbarian chassis progression: the deterministic Human \
                     Barbarian level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
                     level-9/level-10/level-11/level-12/level-13/level-14/level-15/level-16/\
-                    level-17/level-18/level-19 \
+                    level-17/level-18/level-19/level-20 \
                     martial chassis identity, with base-attack, base-save, fast-movement, and \
-                    flat Rage pillar values grounded across all eighteen levels (Rage becoming \
-                    Greater Rage at level 11, a magnitude-rise on the same flat-constant \
-                    pillar), Uncanny Dodge \
+                    flat Rage pillar values grounded across all twenty levels (Rage becoming \
+                    Greater Rage at level 11 and Mighty Rage at level 20, each a magnitude-rise \
+                    on the same flat-constant pillar), Uncanny Dodge \
                     grounded as a level-2 identity/recognition record, Trap Sense grounded as a \
                     level-3 flat-magnitude record (unchanged at levels 4-5, rising to +2 at \
                     level 6, unchanged at levels 7-8, rising to +3 at level 9, unchanged \
@@ -1722,23 +1723,29 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     there; level 14 IS; level 15 is NOT, so no eighth slot appears there \
                     either), an EIGHTH numbered Rage Power choice-recognition slot grounded \
                     at the level-16 grant (level 16 IS a rage-power level; level 17 is NOT, so \
-                    no ninth slot appears there), and a NINTH numbered Rage Power \
+                    no ninth slot appears there), a NINTH numbered Rage Power \
                     choice-recognition slot grounded at the level-18 grant (level 18 IS a \
                     rage-power level, mirroring the eight numbered slots already grounded at \
-                    levels 2/4/6/8/10/12/14/16), \
+                    levels 2/4/6/8/10/12/14/16), and a TENTH and FINAL numbered Rage Power \
+                    choice-recognition slot grounded at the level-20 grant (level 20 IS a \
+                    rage-power level, the last one within PF1's 1-20 character-level cap), \
                     Indomitable Will newly grounded as a level-14 flat \
                     while-raging Will-save magnitude record (a fifth flat rage-surface \
-                    constant, mirroring the four pre-existing ones, unchanged at levels 15-19), \
-                    and Tireless Rage newly grounded at level 17 as a bounded grant-only \
+                    constant, mirroring the four pre-existing ones, unchanged at levels 15-20), \
+                    Tireless Rage newly grounded at level 17 as a bounded grant-only \
                     identity record (mirroring the Indomitable Will / Paladin \
                     Aura-of-Justice/Aura-of-Faith/Aura-of-Righteousness idiom exactly; no \
                     rage-state execution engine exists in this codebase to apply the removed \
-                    fatigue condition to; carried over unchanged through level 19; level 19 is \
-                    NOT a rage-power level, so no tenth numbered slot is added there), \
-                    and \
+                    fatigue condition to; carried over unchanged through level 20), \
+                    and Rage's own flat magnitude constants genuinely rising a SECOND time at \
+                    level 20 (Mighty Rage: Strength/Constitution morale bonus +6 -> +8, \
+                    Will-save morale bonus +3 -> +4, mirroring the Greater Rage magnitude-rise \
+                    idiom exactly) — this closes the Barbarian per-level arithmetic-widening \
+                    frontier at level 20, the final level within PF1's 1-20 character-level \
+                    cap; \
                     the rage-state \
                     execution / Rage Power EFFECT / weapon-familiarity / flanking-resolution / \
-                    damage-reduction-application / saving-throw-resolution / level-20 \
+                    damage-reduction-application / saving-throw-resolution \
                     remainder still unproven",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
@@ -2117,7 +2124,37 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     range) and Indomitable Will's flat +4 magnitude and Tireless Rage both carry \
                     over unchanged. This needed ZERO new record types and ZERO new choice slots \
                     — only a new damage-reduction tier constant and one new arm on the existing \
-                    flat-magnitude formula.",
+                    flat-magnitude formula. A still further SD18 slice \
+                    (tests/sd18_barbarian_level20_widening.rs) widens the gate to level 20 — the \
+                    FINAL level within PF1's 1-20 character-level cap (verified independently \
+                    against d20pfsrd and the Archives of Nethys aonprd.com mirror, byte-for-byte \
+                    agreement: level 20 reads \"+20/+15/+10/+5 | +12 | +6 | +6 | Mighty rage, \
+                    Rage power\"): base-attack (classlevel = 20) genuinely rises to +20 (full \
+                    BAB) and good Fortitude genuinely rises to +12 (20/2+2, up from +11), while \
+                    poor Reflex/Will both stay +6 (20/3, an integer-division coincidence with \
+                    level 19); the rage rounds-per-day pool genuinely rises to 45 (4 + \
+                    Constitution modifier + 2 x (level-1)). The level-20 \"Special\" column's \
+                    Mighty Rage entry is a genuine THIRD tier on the SAME flat rage-surface \
+                    constants already grounded at level 1 (Rage) and widened at level 11 \
+                    (Greater Rage): the Strength/Constitution morale bonus rises from +6 to +8 \
+                    and the Will-save morale bonus rises from +3 to +4 via a new \
+                    BARBARIAN_MIGHTY_RAGE_LEVEL gate constant, mirroring the Greater Rage \
+                    precedent exactly — no new record type, just a third arm on the existing \
+                    tiered formula. Level 20 IS a rage-power level (powers land at \
+                    2/4/6/8/10/12/14/16/18/20), so a TENTH and FINAL numbered slot \
+                    (choice:barbarian_rage_power_10) is appended to BARBARIAN_RAGE_POWER_SLOTS, \
+                    mirroring the proven repeat-grant idiom exactly; Damage Reduction stays 5/- \
+                    (next rise would be 22nd, outside the PF1 1-20 range) and Trap Sense stays \
+                    +6 (next rise would be 21st, also outside range); Indomitable Will's flat \
+                    +4 magnitude and Tireless Rage both carry over unchanged. This needed ZERO \
+                    new record types and ZERO new choice-slot mechanisms — only a new \
+                    rage-magnitude tier constant and a tenth numbered rage-power slot. This \
+                    closes the Barbarian per-level arithmetic-widening frontier: level 20 is the \
+                    final level within PF1's 1-20 character-level cap, so no further per-level \
+                    widening cycle remains for this row; the row stays Partial (not Supported) \
+                    because the rage-state execution, Rage Power EFFECT, weapon-familiarity, \
+                    flanking-resolution, damage-reduction-application, and \
+                    saving-throw-resolution burdens remain named-but-unproven.",
                 next_required_uplift: "ground the Barbarian rage-state execution engine \
                     (activation/deactivation, rage-round consumption, post-rage fatigue, \
                     temporary application of the rage constants — note: Tireless Rage at level \
