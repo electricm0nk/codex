@@ -921,11 +921,19 @@ const SD19_GENERAL_EQUIPMENT_TEST: &str = "tests/sd19_equipment_general.rs";
 /// `compute_pilot_with_corpus`.
 const SD19_MAGIC_ITEMS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_magic_items.rs";
 
+/// SD-19 §2.5 equipmods equipment-reachability proof: a representative
+/// sample of real-corpus `cr_equipmods.lst` records (Masterwork (Weapon),
+/// Brace, Disarm) resolves via `equipment_id_resolve` and reaches
+/// `CorpusPilotReceipt.corpus_derived.equipped_items` through
+/// `compute_pilot_with_corpus`. This is the last §2.5 category, closing
+/// the full §2.5 sweep.
+const SD19_EQUIPMODS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_equipmods.rs";
+
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice,
 /// widened by SD-19 §2.4/§2.5 per-cycle school/equipment rows.
 ///
-/// Returns exactly 33 rows: 7 race, 12 class, 2 interaction, 9 school, and
-/// (as of this cycle) 3 equipment. The race/class/interaction content is
+/// Returns exactly 34 rows: 7 race, 12 class, 2 interaction, 9 school, and
+/// (as of this cycle) 4 equipment. The race/class/interaction content is
 /// fixed and grounded from SD-13; SD-19 cycles append one school or
 /// equipment row per landed cycle, never rewriting an existing row's
 /// identity.
@@ -7133,6 +7141,54 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     bootstrap entry and populating derived_stats are future cycles' or a \
                     future SD-N's scope, not a further widening of this row from inside \
                     this cycle",
+            },
+            SupportStateRow {
+                row_id: "equipment.equipmods.equipment_reachability",
+                subject_type: MatrixSubjectType::Equipment(
+                    crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::Equipmods,
+                ),
+                subject_id: "category:equipmods",
+                dimension: "PF1 core-rulebook equipmods equipment reachability: a \
+                    representative sample of real-corpus cr_equipmods.lst records \
+                    (Masterwork (Weapon), Brace, Disarm) is resolvable via \
+                    equipment_id_resolve when selected on \
+                    CharacterInput.equipment_selections, and present in \
+                    CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
+                    compute_pilot_with_corpus",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_EQUIPMODS_EQUIPMENT_TEST,
+                blocker_or_lossiness_note: "the sample (Masterwork (Weapon), Brace, \
+                    Disarm) resolves via equipment_id_resolve and appears in \
+                    equipped_items with its equipment_record_name/equipment_record_key \
+                    populated; none of the sample items grounds through the foundation \
+                    slice's bootstrap table cell today (EQUIPMENT_TABLES' single \
+                    equipmods entry is keyed 'Material ~ Cloth', deliberately not in this \
+                    sample), and derived_stats (armor_bonus/attack_bonus/max_dex/\
+                    spell_failure) stay unpopulated — the seam's bounded-baseline \
+                    equipment-effect computation is a documented non-goal of the \
+                    capability slice (scope-draft.md §1.1), not this cycle's job. This \
+                    cycle checked cr_equipmods.lst for the same by-name merge collision \
+                    discovered in the magic_items cycle (not limited to '.COPY=' rows \
+                    here — e.g. the plain names 'Material ~ Cloth' and \"Artisan's Tools \
+                    (Cloth)\" both merge under name 'Cloth') and confirmed this sample's \
+                    three names are each unique across the file, avoiding the collision \
+                    rather than exercising it. evidence_tier stays Computed until the \
+                    operator surfaces this reachability in a live UI, per the loop \
+                    instruction's own definition of Supported/Product-visible \
+                    (operator-driven, not loop-driven). Landing this row closes the full \
+                    §2.5 equipment-category sweep (4/4) and all 15 SD-19 acceptance \
+                    criteria's per-cycle-eligible work.",
+                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
+                    Product-visible; a future SD-17-lane fix to equipment.rs's by-name \
+                    record-merge behavior (so distinct same-named records don't collapse \
+                    into one, and so a specific requested KEY: token is matched rather \
+                    than only the first token found) is required before \
+                    cr_equipmods.lst's remaining records can be widened past this \
+                    cycle's sample; extending the table store's bootstrap entry and \
+                    populating derived_stats are future cycles' or a future SD-N's \
+                    scope, not a further widening of this row from inside this cycle",
             },
         ],
     }
