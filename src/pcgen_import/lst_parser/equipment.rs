@@ -439,10 +439,14 @@ impl EquipmentParseState {
             return;
         }
 
-        self.open_record(kind, name, line_number, raw_line);
+        let tokens = collect_tokens_from_rest(line_number, raw_line, rest);
+        let key_token = tokens
+            .iter()
+            .find(|token| token.key == "KEY")
+            .map(|token| token.value.clone());
+        self.open_record(kind, name, key_token, line_number, raw_line);
         // Attach the tags from this same line to the new record.
         let entry_index = self.active_entry.expect("record just opened");
-        let tokens = collect_tokens_from_rest(line_number, raw_line, rest);
         let entry = &mut self.result.entries[entry_index];
         for token in tokens {
             if token.key == "BONUS" {
@@ -476,9 +480,13 @@ impl EquipmentParseState {
             return;
         }
 
-        self.open_record(kind, name, line_number, raw_line);
-        let entry_index = self.active_entry.expect("record just opened");
         let tokens = collect_tokens_from_columns(line_number, raw_line);
+        let key_token = tokens
+            .iter()
+            .find(|token| token.key == "KEY")
+            .map(|token| token.value.clone());
+        self.open_record(kind, name, key_token, line_number, raw_line);
+        let entry_index = self.active_entry.expect("record just opened");
         let entry = &mut self.result.entries[entry_index];
         for token in tokens {
             if token.key == "BONUS" {
@@ -536,18 +544,40 @@ impl EquipmentParseState {
         &mut self,
         kind: EquipmentRecordKind,
         name: String,
+        key_token: Option<String>,
         line_number: usize,
         raw_line: &str,
     ) {
-        // PCGen LST files occasionally re-state an equipment name across
-        // multiple lines (the `cr_equip_general.lst` file does this for
-        // each slot category). Merge by name within the same source.
-        let entry_index = if let Some(index) = self
-            .result
-            .entries
-            .iter()
-            .position(|entry| entry.kind == kind && entry.name == name)
-        {
+        // PCGen LST files occasionally re-state the SAME logical item across
+        // multiple lines in different representation styles (e.g. once via
+        // the directive-prefix form, once via the corpus-typical form) —
+        // merge those into one record. But the corpus's `.COPY=` naming
+        // convention (`<BaseTemplate>.COPY=<DistinctItemName>`, e.g.
+        // `Staff.COPY=Staff of Abjuration`, `Staff.COPY=Staff of Charming`)
+        // and coincidental plain-name reuse (two unrelated equipment-modifier
+        // rows both named "Cloth") both produce DISTINCT rows whose
+        // `extract_record_name` output collides even though they are not the
+        // same item. The real distinguishing signal is each row's own `KEY:`
+        // token: merge only when both rows carry an explicit KEY that
+        // matches, or when neither row carries one (name-only fallback, for
+        // the KEY-less case this rule originally targeted). A row with an
+        // explicit KEY never merges into a row without one — an explicit KEY
+        // is a deliberate disambiguation signal.
+        let entry_index = if let Some(index) = self.result.entries.iter().position(|entry| {
+            if entry.kind != kind {
+                return false;
+            }
+            let existing_key = entry
+                .tokens
+                .iter()
+                .find(|token| token.key == "KEY")
+                .map(|token| token.value.as_str());
+            match (key_token.as_deref(), existing_key) {
+                (Some(new_key), Some(old_key)) => new_key == old_key,
+                (None, None) => entry.name == name,
+                _ => false,
+            }
+        }) {
             index
         } else {
             self.result.entries.push(EquipmentRecord {
