@@ -11163,7 +11163,32 @@ const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // Dodge all stay granted, not re-derived. This needs ZERO new tier
 // constants and ZERO new choice slots — the ONLY production-code change is
 // this ceiling raise.
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 17;
+// SD18 widening (cycle-2026-07-16T0212, tests/sd18_rogue_level18_widening.rs):
+// widens the gate to level 18, the loop's SIXTH §3.2 level-18 sweep landing
+// (after Wizard, Cleric, Paladin, Fighter, and Barbarian), verified
+// independently against both primary sources (d20pfsrd and the Archives of
+// Nethys aonprd.com mirror, which agree byte-for-byte, fetched across the
+// full levels-16-19 block to guard against level-misattribution): base
+// attack genuinely rises to +13 (18 * 3 / 4) and all three base saves
+// genuinely rise too (Fortitude/Will 18/3=6, Reflex 18/2+2=11, up from
+// 12/5/5/10 at level 17); the level-18 "Special" column reads "Rogue
+// talent, trap sense +6" — level 18 IS a rogue-talent cadence level
+// (talents land at 2/4/6/8/10/12/14/16/18), so a NINTH numbered
+// choice-recognition slot (choice:rogue_talent_9) is added, mirroring the
+// proven open-ended raw-string idiom used at slots 1-8 exactly; and the
+// pre-existing Trap Sense flat-magnitude formula (level / 3) genuinely
+// rises to +6, up from +5 at level 17, via the same formula, not a new
+// record; the sneak-attack die-count formula ((level + 1) / 2) stays at 9
+// (9d6, an integer-division coincidence with level 17, next rise at level
+// 19), not named in the level-18 "Special" column; Trapfinding genuinely
+// rises to 9 (max(18/2, 1), up from 8 at level 17, via its own independent
+// pre-existing formula), also not named in the level-18 "Special" column;
+// Evasion, Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not
+// re-derived. This needs ZERO new tier constants for base-attack/save/
+// trap-sense/trapfinding/sneak-attack (all already level-generic
+// formulas) — the ONLY production-code changes are this ceiling raise and
+// a ninth numbered talent slot appended to the existing tuple-array idiom.
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 18;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
@@ -11699,13 +11724,19 @@ fn explain_rogue_level1_chassis(
     // "Rogue talent" entry, verified independently against both primary
     // sources), the same open-ended +0 recognition idiom — no talent-list
     // validation, no talent-effect engine.
-    let additional_talent_slots: [(u8, u8, &str); 6] = [
+    // SD18 widening (cycle-2026-07-16T0212, tests/sd18_rogue_level18_widening.rs):
+    // slot 9, gated to rogue level 18 (the level-18 "Special" column's
+    // "Rogue talent, trap sense +6" entry, verified independently against
+    // both primary sources), the same open-ended +0 recognition idiom — no
+    // talent-list validation, no talent-effect engine.
+    let additional_talent_slots: [(u8, u8, &str); 7] = [
         (3, 6, "choice:rogue_talent_3"),
         (4, 8, "choice:rogue_talent_4"),
         (5, 10, "choice:rogue_talent_5"),
         (6, 12, "choice:rogue_talent_6"),
         (7, 14, "choice:rogue_talent_7"),
         (8, 16, "choice:rogue_talent_8"),
+        (9, 18, "choice:rogue_talent_9"),
     ];
     for (slot_number, grant_level, choice_id) in additional_talent_slots {
         if level < grant_level {
