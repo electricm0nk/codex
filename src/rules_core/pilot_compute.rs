@@ -1905,8 +1905,40 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// this cycle adds no new record for its level-18 reappearance either.
 /// Only one new tier constant pair is added (on an already-generalized
 /// tiered if/else chain, Inspire Heroics' target count); no new record
-/// type or choice slot is added, and no Bard level 19+ is proven.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 18;
+/// type or choice slot is added, and no Bard level 19+ is proven. A
+/// further SD18 slice (`cycle-2026-07-16T1400`, the loop's FOURTH §3.2
+/// level-19 landing, after Barbarian, Cleric, and Fighter) widens the gate
+/// again to 1..=19 (`MAX_SUPPORTED_BARD_LEVEL = 19`): the class table's
+/// level-19 "Special" column reads "Inspire competence +6" (verified
+/// independently against two primary sources — a raw HTML parse of
+/// d20pfsrd.com's own class table and the Archives of Nethys aonprd.com
+/// mirror via `ClassDisplay.aspx`, both covering the full
+/// levels-17-through-20 block, byte-for-byte agreement, so a third source
+/// was not required) — Inspire Competence's flat magnitude genuinely rises
+/// to +6 via a FIFTH tier constant
+/// (`BARD_INSPIRE_COMPETENCE_FIFTH_TIER_LEVEL = 19`), mirroring exactly
+/// the already-generalized tiered if/else chain idiom used for its own
+/// second/third/fourth tiers and for Inspire Courage's/Lore Master's own
+/// tier additions; this is the ONLY named feature at level 19, so no other
+/// new pillar is grounded from the Special column. Base attack bonus
+/// genuinely rises to +14 (`19 * 3 / 4 = 14`); poor Fortitude stays put at
+/// +6 (`19 / 3 = 6`) and both good saves stay put at +11 (`19 / 2 + 2 =
+/// 11`), integer-division coincidences with level 18, checked not assumed;
+/// Bardic Knowledge stays put at 9 (`max(19 / 2, 1) = 9`, also a
+/// coincidence); the Bardic Performance rounds-per-day pool genuinely
+/// rises (`4 + CHA + 2 * (19 - 1)`); the Fascinate DC stays put at
+/// `10 + 19 / 2 + CHA` (a coincidence with level 18) while the Fascinate
+/// affected-creature count genuinely rises to `1 + (19 - 1) / 3`;
+/// Frightening Tune's DC (the same formula shape) likewise stays put.
+/// Inspire Courage stays at its level-17 fourth tier (next tier at level
+/// 23, out of scope); Lore Master stays at its level-17 third tier (no
+/// further tier defined); Inspire Heroics' flat save-bonus/AC-bonus
+/// magnitudes and base target count (set at level 18) all carry over
+/// unchanged (the next target-count rise lands at level 21, out of
+/// scope). This needed ZERO new record types and ZERO new choice slots —
+/// only one new tier constant pair on an already-generalized tiered
+/// if/else chain, and no Bard level 20 is proven.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 19;
 /// PF1 Core Rulebook level gate at which Bard gains Frightening Tune
 /// (14th level, verified independently against two primary sources:
 /// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
@@ -1995,13 +2027,27 @@ const BARD_INSPIRE_COMPETENCE_BONUS_THIRD_TIER: i16 = 4;
 /// +5, inspire heroics" is the Bard 15th-level special feature entry, and
 /// both state the rule text "This bonus increases by +1 for every four
 /// levels the bard has attained beyond 3rd"). The next increase (to +6)
-/// lands at bard level 19, out of scope since only Bard levels 1-15 are
-/// supported.
+/// lands at bard level 19 (grounded below by
+/// `BARD_INSPIRE_COMPETENCE_FIFTH_TIER_LEVEL`).
 const BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL: u8 = 15;
 /// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
-/// fourth-tier level gate (15th level and beyond, until the next tier at
-/// 19th level, out of scope here).
+/// fourth-tier level gate (15th level and beyond, until the fifth tier at
+/// 19th level).
 const BARD_INSPIRE_COMPETENCE_BONUS_FOURTH_TIER: i16 = 5;
+/// PF1 Core Rulebook level at which the Inspire Competence flat magnitude
+/// increases again from +5 to +6 (19th level, verified independently
+/// against two primary sources: d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, both byte-for-byte identical: "Inspire competence
+/// +6" is the Bard 19th-level "Special" column entry — the sole entry at
+/// that level — and both state the rule text "This bonus increases by +1
+/// for every four levels the bard has attained beyond 3rd"). The next
+/// increase (to +7) lands at bard level 23, out of scope since only Bard
+/// levels 1-19 are supported.
+const BARD_INSPIRE_COMPETENCE_FIFTH_TIER_LEVEL: u8 = 19;
+/// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
+/// fifth-tier level gate (19th level and beyond, until the next tier at
+/// 23rd level, out of scope here).
+const BARD_INSPIRE_COMPETENCE_BONUS_FIFTH_TIER: i16 = 6;
 /// PF1 Core Rulebook level at which the Inspire Courage flat magnitude first
 /// increases from +1 to +2 (5th level, verified independently against two
 /// primary sources: d20pfsrd and legacy.aonprd.com both list "Inspire courage
@@ -14727,8 +14773,8 @@ fn explain_druid_level1_spell_baseline(
 /// The bounded Bard milestone level this decomposition surface grounds, if any.
 /// Returns the single Bard level when the chosen input is exactly a single-class
 /// Bard at one of the supported milestone levels (1 through `MAX_SUPPORTED_BARD_LEVEL`,
-/// currently 18). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
-/// any level-19+ Bard this slice deliberately does not recognize — each of which stays
+/// currently 19). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
+/// any level-20 Bard this slice deliberately does not recognize — each of which stays
 /// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
@@ -15158,7 +15204,9 @@ fn explain_bard_level1_spell_baseline(
             ),
         });
     } else {
-        let inspire_competence_bonus = if level >= BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL {
+        let inspire_competence_bonus = if level >= BARD_INSPIRE_COMPETENCE_FIFTH_TIER_LEVEL {
+            BARD_INSPIRE_COMPETENCE_BONUS_FIFTH_TIER
+        } else if level >= BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL {
             BARD_INSPIRE_COMPETENCE_BONUS_FOURTH_TIER
         } else if level >= BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL {
             BARD_INSPIRE_COMPETENCE_BONUS_THIRD_TIER
@@ -15176,12 +15224,13 @@ fn explain_bard_level1_spell_baseline(
                  bonus on skill checks with a particular skill. This magnitude increases from \
                  +2 to +3 exactly at bard level {BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL}, \
                  again from +3 to +4 exactly at bard level \
-                 {BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL}, and again from +4 to +5 exactly at \
-                 bard level {BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL} (PF1 Core Rulebook: \
-                 \"This bonus increases by +1 for every four levels the bard has attained \
-                 beyond 3rd\"), so it is +{inspire_competence_bonus} at level {level}; the next \
-                 increase (to +6) is at bard level 19, out of scope for this bounded slice. \
-                 This is a standalone explanation record only; it is never applied to any \
+                 {BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL}, again from +4 to +5 exactly at \
+                 bard level {BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL}, and again from +5 to \
+                 +6 exactly at bard level {BARD_INSPIRE_COMPETENCE_FIFTH_TIER_LEVEL} (PF1 Core \
+                 Rulebook: \"This bonus increases by +1 for every four levels the bard has \
+                 attained beyond 3rd\"), so it is +{inspire_competence_bonus} at level {level}; \
+                 the next increase (to +7) is at bard level 23, out of scope for this bounded \
+                 slice. This is a standalone explanation record only; it is never applied to any \
                  actual skill-check total because no skill-check-resolution engine exists \
                  anywhere in this codebase, and no task-selection/action-economy engine decides \
                  which skill or ally it targets"

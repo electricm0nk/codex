@@ -420,12 +420,17 @@ fn bard_level17_truth_is_unchanged_by_this_slice() {
     assert_eq!(rounds.value, 38, "Bard level 17 Bardic Performance rounds must stay 38");
 }
 
-// ----- Negative control: level 19 stays unrecognized by this slice -----
+// ----- Negative control: level 20 stays unrecognized by this slice -----
+//
+// SD18 (tests/sd18_bard_level19_widening.rs) further widened the bounded
+// tranche from level 18 to level 19 (Inspire Competence's fifth tier, +6),
+// so this negative control now sits just above the current bound (level
+// 20) rather than at level 19.
 
 #[test]
-fn bard_level_19_is_not_promoted_by_this_slice() {
-    let level_19 = BARD_LEVEL18_FIXTURE.replace("class:bard:18", "class:bard:19");
-    let input = load(&level_19);
+fn bard_level_20_is_not_promoted_by_this_slice() {
+    let level_20 = BARD_LEVEL18_FIXTURE.replace("class:bard:18", "class:bard:20");
+    let input = load(&level_20);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -434,7 +439,7 @@ fn bard_level_19_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.bard.")
                 || e.id.starts_with("class_feature.bard.")
                 || e.id == "class_chassis.spell_baseline.bard"),
-        "level-19 Bard must not gain any bounded bard explanation: {:?}",
+        "level-20 Bard must not gain any bounded bard explanation: {:?}",
         computation.explanations
     );
 }
