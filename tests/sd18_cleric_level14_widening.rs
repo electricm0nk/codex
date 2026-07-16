@@ -253,20 +253,22 @@ fn cleric_level13_truth_is_unchanged_by_this_slice() {
     assert_eq!(bonus.value, 6, "Cleric level 13 Touch of Good bonus must stay 6");
 }
 
-// ----- Negative control: level 20 stays unrecognized by this slice -----
+// ----- Negative control: level 21 stays unrecognized by this slice -----
 // (Superseded boundary: cycle-2026-07-15T3100 widened MAX_SUPPORTED_CLERIC_LEVEL
 // from 14 to 15, then cycle-2026-07-15T5300 widened it from 15 to 16, then
 // cycle-2026-07-15T9600 widened it from 16 to 17, then cycle-2026-07-15T14300
 // widened it from 17 to 18, then cycle-2026-07-16T1100 widened it from 18 to
-// 19, so this file's own negative-control boundary
-// moves from 19 to 20, mirroring the exact same boundary-move idiom applied
-// to tests/sd18_fighter_level14_widening.rs when MAX_SUPPORTED_FIGHTER_LEVEL
-// widened from 14 to 15.)
+// 19, then cycle-2026-07-16T0844 widened it from 19 to 20 (the final level
+// within PF1's 1-20 character-level cap), so this file's own
+// negative-control boundary moves from 20 to 21, a pure implementation-gate
+// check since PF1 has no 21st character level, mirroring the exact same
+// boundary-move idiom applied to tests/sd18_fighter_level14_widening.rs when
+// MAX_SUPPORTED_FIGHTER_LEVEL widened from 14 to 15.)
 
 #[test]
-fn cleric_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = CLERIC_LEVEL14_FIXTURE.replace("class:cleric:14", "class:cleric:20");
-    let input = load(&level_20);
+fn cleric_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = CLERIC_LEVEL14_FIXTURE.replace("class:cleric:14", "class:cleric:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -275,7 +277,7 @@ fn cleric_level_20_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id.starts_with("class_feature.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-20 Cleric must not gain any bounded cleric explanation: {:?}",
+        "level-21 Cleric must not gain any bounded cleric explanation: {:?}",
         computation.explanations
     );
 }

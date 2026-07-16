@@ -3526,8 +3526,35 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // domain spell slot count stays 9 (still only 9th-level cleric spells, the
 // PF1 ceiling) and Touch of Good's bonus stays 9 (`19 / 2 = 9`, also an
 // integer-division coincidence with level 18) — all via the same
-// pre-existing formulas, not re-derived.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 19;
+// pre-existing formulas, not re-derived. An SD18 slice
+// (`cycle-2026-07-16T0844`, the loop's FIRST §3.2 level-20 landing,
+// opening the level-20 sweep — the final remaining level within PF1's
+// 1-20 character-level cap) widens the gate again to 1..=20
+// (`MAX_SUPPORTED_CLERIC_LEVEL = 20`): the class table's level-20
+// "Special" column is genuinely BLANK (verified independently against
+// two primary sources — d20pfsrd and the Archives of Nethys aonprd.com
+// mirror, byte-for-byte agreement on the full levels-16-through-20
+// block, so a third source was not required) — Cleric has no named
+// capstone class feature at 20th level at all, unlike Barbarian's Mighty
+// Rage, Fighter's Weapon Mastery, Rogue's Master Strike, Paladin's Holy
+// Champion, or Ranger's Master Hunter — a pure ceiling raise, exactly
+// mirroring the level-16 and level-18 cycles' own pure ceiling raises:
+// base attack bonus genuinely rises to +15 (`20 * 3 / 4 = 15`), both
+// good saves genuinely rise to +12 (`20 / 2 + 2 = 12`), and Touch of
+// Good's bonus genuinely rises to 10 (`20 / 2 = 10`), all via the same
+// pre-existing formulas, not re-derived, while poor Reflex stays +6
+// (`20 / 3 = 6`), Channel Energy's die count stays 10d6
+// (`(20 + 1) / 2 = 10`, the odd-level cadence's last rise having landed
+// at level 19; PF1 character levels do not go past 20, so no further
+// rise is possible), and the domain spell slot count stays 9 (a
+// level-20 cleric still casts only up to 9th-level cleric spells, the
+// highest cleric spell level in PF1 — the pre-existing top
+// domain-spell-slot-count arm already covers level 20 with zero code
+// change) — so no new pillar is grounded at level 20 either, only the
+// base-attack, base-save, and Touch of Good pillars are widened. This is
+// the final level within PF1's 1-20 character-level cap for this class
+// row.
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 20;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
