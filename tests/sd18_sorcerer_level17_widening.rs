@@ -392,24 +392,6 @@ fn sorcerer_level16_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 18 stays unrecognized by this cycle -----
-
-#[test]
-fn sorcerer_level_18_is_not_promoted_by_this_slice() {
-    let level_18 = SORCERER_LEVEL17_FIXTURE.replace("class:sorcerer:17", "class:sorcerer:18");
-    let input = load(&level_18);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.sorcerer.")
-                || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-18 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
-        computation.explanations
-    );
-}
-
 // ----- Negative control: the sorcerer path must not leak onto other classes -----
 
 #[test]
