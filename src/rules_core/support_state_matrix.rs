@@ -656,7 +656,7 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd18_bard_level15_widening.rs + \
     tests/sd18_bard_level16_widening.rs + \
     tests/sd18_bard_level17_widening.rs + \
-    tests/sd18_bard_level18_widening.rs";
+    tests/sd18_bard_level18_widening.rs + tests/sd18_bard_level19_widening.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -2105,20 +2105,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
                             level-9/level-10/level-11/level-12/level-13/level-14/level-15/level-16/\
-                            level-17/level-18 \
-                            spell baseline, with base attack bonus (rising again at level 16 and \
-                            again at level 18), \
+                            level-17/level-18/level-19 \
+                            spell baseline, with base attack bonus (rising again at level 16, \
+                            again at level 18, and again at level 19), \
                             base save progression (good Reflex/Will rising again at level 16 and \
-                            again at level 18), \
+                            again at level 18, poor Fortitude rising again at level 18), \
                             Bardic Knowledge (rising through level 18), the flat Bardic \
-                            Performance surface (rounds per day rising through level 18, \
+                            Performance surface (rounds per day rising through level 19, \
                             inspire courage magnitude rising at level 5, again at level 11, and \
                             again at level 17), \
                             the flat Fascinate DC (rising through level 18) / \
                             affected-creature-count formulas (creature count rising through \
-                            level 16), (at level 2) the flat Well-Versed \
-                            magnitude, (at level 3, rising at level 7, again at level 11, and \
-                            again at level 15) the flat Inspire \
+                            level 16, and again at level 19), (at level 2) the flat Well-Versed \
+                            magnitude, (at level 3, rising at level 7, again at level 11, again at \
+                            level 15, and again at level 19) the flat Inspire \
                             Competence magnitude, (at level 5, rising at level 11, and again at \
                             level 17) the flat \
                             Lore Master take-20 \
@@ -2668,7 +2668,36 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     14): already deliberately left named-but-unproven at level 2, so this cycle \
                     adds no new record for its level-18 reappearance either. Only one new tier \
                     constant pair is added (Inspire Heroics' target count); no new record type \
-                    or choice slot is added, and no Bard level 19+ is proven",
+                    or choice slot is added, and no Bard level 19+ is proven. \
+                    A further SD18 slice (cycle-2026-07-16T1400, the loop's FOURTH §3.2 level-19 \
+                    landing, after Barbarian, Cleric, and Fighter) widens the gate again to level \
+                    19 (verified independently against two primary sources — a raw HTML parse of \
+                    d20pfsrd.com's own class table, bypassing AI-summarization, and the Archives \
+                    of Nethys aonprd.com mirror via ClassDisplay.aspx, both covering the full \
+                    levels-17-through-20 block, byte-for-byte agreement, so a third source was \
+                    not required): the level-19 \"Special\" column reads \"Inspire competence \
+                    +6\" — the sole entry at that level — and Inspire Competence's flat \
+                    magnitude genuinely rises to +6 via a FIFTH tier on the already-generalized \
+                    tiered if/else chain, exactly the tier the level-15 and level-17 cycles' own \
+                    doc comments already predicted (\"the next increase (to +6) lands at bard \
+                    level 19\"), mirroring the Inspire Courage / Lore Master tier-addition idiom \
+                    exactly — no new record type, no new choice slot, no new execution engine. \
+                    Base attack bonus genuinely rises to +14 (19*3/4); poor Fortitude stays put \
+                    at +6 (19/3) and both good saves stay put at +11 (19/2+2), integer-division \
+                    coincidences with level 18, checked not assumed; Bardic Knowledge stays put \
+                    at 9 (max(19/2,1), also a coincidence); the Bardic Performance rounds-per-day \
+                    pool genuinely rises (4+CHA+2*(19-1)); the Fascinate DC stays put \
+                    (10+19/2+CHA, a coincidence with level 18) while the Fascinate \
+                    affected-creature count genuinely rises (1+(19-1)/3); Frightening Tune's DC \
+                    (the same formula shape) likewise stays put. Inspire Courage stays at its \
+                    level-17 fourth tier (next tier at level 23, out of scope); Lore Master stays \
+                    at its level-17 third tier (no further tier defined); Inspire Heroics' flat \
+                    save-bonus/AC-bonus magnitudes and base target count (set at level 18) all \
+                    carry over unchanged (the next target-count rise lands at level 21, out of \
+                    scope); Soothing Performance carries over unchanged as a bounded grant-only \
+                    identity record. This needed ZERO new record types and ZERO new choice \
+                    slots — only one new tier constant pair on an already-generalized tiered \
+                    if/else chain — and no Bard level 20 is proven",
                 next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
                     (start/maintain action economy, round tracking, application of the grounded \
                     Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
@@ -2682,7 +2711,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Frightening Tune's own fear/frightened-condition-resolution execution, and \
                     Inspire Heroics' own targeting/save-application/AC-application execution), \
                     then the spontaneous spell-slot burden (including the un-grounded 5th-level \
-                    spell-access threshold), then level-19+ progression",
+                    spell-access threshold), then Bard level 20 progression (the final remaining \
+                    level within PF1's 1-20 level cap for this class row)",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",
