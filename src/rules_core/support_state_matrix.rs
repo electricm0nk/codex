@@ -333,7 +333,8 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
     tests/sd18_rogue_level14_widening.rs + \
     tests/sd18_rogue_level15_widening.rs + \
     tests/sd18_rogue_level16_widening.rs + \
-    tests/sd18_rogue_level17_widening.rs";
+    tests/sd18_rogue_level17_widening.rs + \
+    tests/sd18_rogue_level18_widening.rs";
 
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group
@@ -1238,16 +1239,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded Rogue chassis progression: the deterministic Human Rogue \
                             level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
                             level-9/level-10/level-11/level-12/level-13/level-14/level-15/\
-                            level-16/level-17 chassis identity, with all four named pillars \
-                            grounded across all seventeen levels (base-attack, base-save, \
+                            level-16/level-17/level-18 chassis identity, with all four named \
+                            pillars \
+                            grounded across all eighteen levels (base-attack, base-save, \
                             sneak-attack die count, and trapfinding), Evasion grounded as a \
                             level-2 \
                             identity/recognition record, Trap Sense grounded as a level-3 \
                             flat-magnitude record (genuinely rising to +2 at level 6, unchanged \
                             at levels 7-8, genuinely rising to +3 at level 9, unchanged at level \
                             11, genuinely rising to +4 at level 12, staying there at levels \
-                            13-14, genuinely rising to +5 at level 15, and staying there at \
-                            levels 16-17), Uncanny \
+                            13-14, genuinely rising to +5 at level 15, staying there at \
+                            levels 16-17, and genuinely rising to +6 at level 18), Uncanny \
                             Dodge grounded as a level-4 identity/recognition record, Improved \
                             Uncanny Dodge grounded as a level-8 identity/recognition record, the \
                             sneak-attack die count genuinely rising to 3d6 at level 5, staying \
@@ -1255,25 +1257,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             level 8, rising to 5d6 at level 9, staying there at level 10, \
                             genuinely rising to 6d6 at level 11, staying there at level 12, \
                             genuinely rising to 7d6 at level 13, staying there at level 14, \
-                            genuinely rising to 8d6 at level 15, staying there at level 16, and \
-                            genuinely rising to 9d6 at level 17, \
+                            genuinely rising to 8d6 at level 15, staying there at level 16, \
+                            genuinely rising to 9d6 at level 17, and staying there at level 18, \
                             Trapfinding genuinely rising \
                             to +4 at level 8 (unchanged at level 9), to +5 at level 10 \
                             (unchanged at level 11), to +6 at level 12 (staying there at \
                             level 13), genuinely rising to +7 at level 14, staying there at \
-                            level 15, genuinely rising to +8 at level 16, and staying there at \
-                            level 17, base attack bonus \
+                            level 15, genuinely rising to +8 at level 16, staying there at \
+                            level 17, and genuinely rising to +9 at level 18, base attack bonus \
                             genuinely rising to +8 at level 11 and to +9 at level 12 (staying \
                             there at level 13, genuinely rising to +10 at level 14, genuinely \
-                            rising to +11 at level 15, genuinely rising to +12 at level 16, and \
-                            staying there at level 17), \
+                            rising to +11 at level 15, genuinely rising to +12 at level 16, \
+                            staying there at level 17, and genuinely rising to +13 at level 18), \
                             the \
                             sixth numbered rogue-talent choice slot recognized at level 12 \
                             (level 13 is not a talent level, so no seventh slot appears there; \
                             the seventh numbered slot is recognized at level 14; level 15 is not \
                             a talent level either, so no eighth slot appears there; the eighth \
                             numbered slot is recognized at level 16; level 17 is not a talent \
-                            level either, so no ninth slot appears there), and the \
+                            level either, so no ninth slot appears there; the ninth numbered \
+                            slot is recognized at level 18), and the \
                             check-execution / rogue-talent-effect / integration remainder still \
                             unproven",
                 support_state: SupportState::Partial,
@@ -1576,11 +1579,43 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     17, the cleanest possible widening shape checked in the Rogue sweep so far. \
                     The row is Partial, not Supported: no rogue talent (the genuinely open-ended \
                     talent tree) is proven, no Rogue level 18+ is proven, and no mechanical math \
-                    is fabricated beyond these grounded pillars.",
+                    is fabricated beyond these grounded pillars. An SD18 slice \
+                    (cycle-2026-07-16T0212, tests/sd18_rogue_level18_widening.rs) widens the \
+                    level-range gate again (supported_rogue_level, 1..=18), the loop's SIXTH \
+                    §3.2 level-18 sweep landing (after Wizard, Cleric, Paladin, Fighter, and \
+                    Barbarian), verified independently against both primary sources (d20pfsrd \
+                    and the Archives of Nethys aonprd.com mirror, which agree byte-for-byte, \
+                    fetched across the full levels-16-19 block to guard against \
+                    level-misattribution): base attack genuinely rises to +13 (18 * 3 / 4) and \
+                    all three base saves genuinely rise too (Fortitude/Will 18/3=6, Reflex \
+                    18/2+2=11, up from 12/5/5/10 at level 17); the level-18 \"Special\" column \
+                    reads \"Rogue talent, trap sense +6\" — level 18 IS a rogue-talent cadence \
+                    level (talents land at 2/4/6/8/10/12/14/16/18), so a NINTH numbered choice \
+                    slot (class_chassis.rogue.talent_9_choice, choice:rogue_talent_9, gate 18) \
+                    is added, the same open-ended, non-validated raw-string +0 recognition \
+                    idiom already proven at slots 1-8: the selected talent's own effect stays \
+                    entirely unproven — no talent-effect engine exists in this codebase; and \
+                    the pre-existing Trap Sense flat-magnitude formula (level / 3) genuinely \
+                    rises to +6, up from +5 at level 17, via the same formula, not a new record; \
+                    sneak attack stays 9d6 ((18 + 1) / 2, an integer-division coincidence with \
+                    level 17, next rise at level 19), not named in the level-18 \"Special\" \
+                    column; Trapfinding genuinely rises to 9 (max(18/2, 1), up from 8 at level \
+                    17, via its own independent pre-existing formula), also not named in the \
+                    level-18 \"Special\" column; Evasion, Uncanny Dodge, and Improved Uncanny \
+                    Dodge all stay granted, not re-derived. This needs ZERO new tier constants \
+                    for base-attack/save/trap-sense/trapfinding/sneak-attack (all already \
+                    level-generic formulas) — the ONLY production-code changes are raising \
+                    MAX_SUPPORTED_ROGUE_LEVEL from 17 to 18 and appending a ninth numbered \
+                    talent slot to the existing tuple-array idiom, mirroring the Barbarian \
+                    level-18 rage-power-slot landing exactly (the ninth repeat of Rogue's own \
+                    talent-slot idiom specifically). The row is Partial, not Supported: no \
+                    rogue talent (the genuinely open-ended talent tree, including the ninth \
+                    slot's own effect) is proven, no Rogue level 19+ is proven, and no \
+                    mechanical math is fabricated beyond these grounded pillars.",
                 next_required_uplift: "later SD13/SD18 slice wiring the grounded Rogue pillar \
                     records into the integrated pilot surface (the generic chassis diagnostics \
                     still claim-block), then rogue talents (a general choice-list/effect \
-                    engine, a tranche-level subsystem decision) and level-18+ progression",
+                    engine, a tranche-level subsystem decision) and level-19+ progression",
             },
             SupportStateRow {
                 row_id: "class.barbarian.bounded_progression",
