@@ -913,11 +913,19 @@ const SD19_ARMS_ARMOR_EQUIPMENT_TEST: &str = "tests/sd19_equipment_arms_armor.rs
 /// `compute_pilot_with_corpus`.
 const SD19_GENERAL_EQUIPMENT_TEST: &str = "tests/sd19_equipment_general.rs";
 
+/// SD-19 §2.5 magic_items equipment-reachability proof: a representative
+/// sample of real-corpus `cr_equip_magic_items.lst` records (Amulet of
+/// Natural Armor +1, Belt of Giant Strength +2, Ring of Protection +1)
+/// resolves via `equipment_id_resolve` and reaches
+/// `CorpusPilotReceipt.corpus_derived.equipped_items` through
+/// `compute_pilot_with_corpus`.
+const SD19_MAGIC_ITEMS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_magic_items.rs";
+
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice,
 /// widened by SD-19 §2.4/§2.5 per-cycle school/equipment rows.
 ///
-/// Returns exactly 32 rows: 7 race, 12 class, 2 interaction, 9 school, and
-/// (as of this cycle) 2 equipment. The race/class/interaction content is
+/// Returns exactly 33 rows: 7 race, 12 class, 2 interaction, 9 school, and
+/// (as of this cycle) 3 equipment. The race/class/interaction content is
 /// fixed and grounded from SD-13; SD-19 cycles append one school or
 /// equipment row per landed cycle, never rewriting an existing row's
 /// identity.
@@ -7075,6 +7083,56 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     entry beyond Backpack, and populating derived_stats from corpus \
                     BONUS:/ACCHECK:/MAXDEX: tokens are future cycles' or a future SD-N's \
                     scope, not a further widening of this row from inside this cycle",
+            },
+            SupportStateRow {
+                row_id: "equipment.magic_items.equipment_reachability",
+                subject_type: MatrixSubjectType::Equipment(
+                    crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::MagicItems,
+                ),
+                subject_id: "category:magic_items",
+                dimension: "PF1 core-rulebook magic_items equipment reachability: a \
+                    representative sample of real-corpus cr_equip_magic_items.lst records \
+                    (Amulet of Natural Armor +1, Belt of Giant Strength +2, Ring of \
+                    Protection +1) is resolvable via equipment_id_resolve when selected on \
+                    CharacterInput.equipment_selections, and present in \
+                    CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
+                    compute_pilot_with_corpus",
+                support_state: SupportState::Partial,
+                evidence_tier: EvidenceTier::Computed,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_MAGIC_ITEMS_EQUIPMENT_TEST,
+                blocker_or_lossiness_note: "the sample (Amulet of Natural Armor +1, Belt \
+                    of Giant Strength +2, Ring of Protection +1) resolves via \
+                    equipment_id_resolve and appears in equipped_items with its \
+                    equipment_record_name/equipment_record_key populated; none of the \
+                    sample items grounds through the foundation slice's bootstrap table \
+                    cell today (EQUIPMENT_TABLES' single magic_items entry is keyed \
+                    'Potion of Aid', deliberately not in this sample — see below), and \
+                    derived_stats (armor_bonus/attack_bonus/max_dex/spell_failure) stay \
+                    unpopulated — the seam's bounded-baseline equipment-effect computation \
+                    is a documented non-goal of the capability slice (scope-draft.md \
+                    §1.1), not this cycle's job. Category-wide parser limitation \
+                    discovered this cycle (not fixed; routed to Open Blockers for SD-17's \
+                    lane): a large share of cr_equip_magic_items.lst (scrolls, wands, \
+                    potions) use PCGen's '.COPY=' naming, and equipment.rs's by-name \
+                    record merge (intended for cr_equip_general.lst's genuine \
+                    same-name continuation rows) collapses every distinct '.COPY=' item \
+                    sharing a base word into one merged record, so only the \
+                    alphabetically-first item under each merged name resolves; this \
+                    cycle's sample was deliberately drawn from non-'.COPY=' records \
+                    (amulets/belts/rings) to route around the defect rather than exercise \
+                    it. evidence_tier stays Computed until the operator surfaces this \
+                    reachability in a live UI, per the loop instruction's own definition \
+                    of Supported/Product-visible (operator-driven, not loop-driven)",
+                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
+                    Product-visible; a future SD-17-lane fix to equipment.rs's '.COPY='-\
+                    record merge (so each distinct item resolves, not just the \
+                    alphabetically-first per merged name) is required before \
+                    cr_equip_magic_items.lst's scrolls/wands/potions can be widened past \
+                    this cycle's non-'.COPY=' sample; extending the table store's \
+                    bootstrap entry and populating derived_stats are future cycles' or a \
+                    future SD-N's scope, not a further widening of this row from inside \
+                    this cycle",
             },
         ],
     }
