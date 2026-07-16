@@ -335,7 +335,8 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
     tests/sd18_rogue_level16_widening.rs + \
     tests/sd18_rogue_level17_widening.rs + \
     tests/sd18_rogue_level18_widening.rs + \
-    tests/sd18_rogue_level19_widening.rs";
+    tests/sd18_rogue_level19_widening.rs + \
+    tests/sd18_rogue_level20_widening.rs";
 
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group

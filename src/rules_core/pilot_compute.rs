@@ -12505,11 +12505,32 @@ const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // an integer-division coincidence with level 18) and Trapfinding stays 9
 // (max(19/2, 1), also a coincidence), neither named in the level-19
 // "Special" column; Evasion, Uncanny Dodge, and Improved Uncanny Dodge all
-// stay granted, not re-derived. This needs ZERO new tier constants and
-// ZERO new choice slots — the ONLY production-code change is this ceiling
-// raise, the cleanest possible widening shape checked in the Rogue sweep
-// so far (mirroring the level-17 cycle's own equally clean shape).
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 19;
+// stay granted, not re-derived.
+// SD18 widening (cycle-2026-07-16T1431, tests/sd18_rogue_level20_widening.rs):
+// widened again to level 20 (verified independently against both d20pfsrd
+// and the Archives of Nethys aonprd.com mirror, byte-for-byte agreement).
+// Level 20's "Special" column reads "Master strike, rogue talent" — base
+// attack bonus genuinely rises to +15 (20*3/4) and good Reflex genuinely
+// rises to +12 (20/2+2), while poor Fortitude/Will both stay +6 (20/3,
+// integer-division coincidences with level 19); sneak attack stays 10d6
+// ((20+1)/2, its own final PF1 CRB tier) and Trap Sense stays +6 (20/3,
+// its own final PF1 CRB tier), neither named in the level-20 "Special"
+// column; Trapfinding genuinely rises to 10 (max(20/2,1)), also not named.
+// 20 IS a rogue-talent cadence level (talents land at
+// 2/4/6/8/10/12/14/16/18/20), so a TENTH numbered talent slot is appended
+// to the existing tuple-array idiom; Master Strike, the rogue's 20th-level
+// capstone, is newly granted as a bounded grant-only identity record
+// (value 0, non-fabricated) mirroring exactly the already-proven Paladin
+// Holy Champion / Ranger Master Hunter capstone idiom — no
+// action-economy, attack-resolution, or saving-throw-resolution engine
+// exists anywhere in this codebase, so this grounds no actual mechanic.
+// This closes Rogue's own per-level arithmetic-widening frontier: level 20
+// is the final level within PF1's 1-20 character-level cap.
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 20;
+/// PF1 Core Rulebook level gate at which Rogue gains Master Strike (the
+/// 20th-level capstone, verified independently against d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror).
+const ROGUE_MASTER_STRIKE_LEVEL: u8 = 20;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
@@ -13050,7 +13071,13 @@ fn explain_rogue_level1_chassis(
     // "Rogue talent, trap sense +6" entry, verified independently against
     // both primary sources), the same open-ended +0 recognition idiom — no
     // talent-list validation, no talent-effect engine.
-    let additional_talent_slots: [(u8, u8, &str); 7] = [
+    // SD18 widening (cycle-2026-07-16T1431, tests/sd18_rogue_level20_widening.rs):
+    // slot 10, gated to rogue level 20 (the level-20 "Special" column's
+    // "Master strike, rogue talent" entry, verified independently against
+    // both primary sources), the same open-ended +0 recognition idiom — no
+    // talent-list validation, no talent-effect engine. This is the FINAL
+    // numbered talent slot within PF1's 1-20 character-level cap.
+    let additional_talent_slots: [(u8, u8, &str); 8] = [
         (3, 6, "choice:rogue_talent_3"),
         (4, 8, "choice:rogue_talent_4"),
         (5, 10, "choice:rogue_talent_5"),
@@ -13058,6 +13085,7 @@ fn explain_rogue_level1_chassis(
         (7, 14, "choice:rogue_talent_7"),
         (8, 16, "choice:rogue_talent_8"),
         (9, 18, "choice:rogue_talent_9"),
+        (10, 20, "choice:rogue_talent_10"),
     ];
     for (slot_number, grant_level, choice_id) in additional_talent_slots {
         if level < grant_level {
@@ -13079,6 +13107,47 @@ fn explain_rogue_level1_chassis(
                  the numbered choice slot only (open-ended raw string, no talent-list \
                  validation): the selected talent's own effect is not computed — no \
                  talent-effect engine exists in this codebase"
+            ),
+        });
+    }
+
+    // Master Strike: below the level-20 gate, this stays a correct PF1
+    // Core Rulebook level-gate absence (value 0); at or above it (SD18
+    // level-20 widening, the class capstone), it transitions to a bounded
+    // GRANT-only identity record (mirroring the Paladin Holy Champion /
+    // Ranger Master Hunter idiom exactly). No action-economy engine, no
+    // attack-resolution engine, and no saving-throw-resolution engine
+    // exists anywhere in this codebase to apply this to.
+    if level < ROGUE_MASTER_STRIKE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.master_strike".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Master Strike at rogue level {level}: correctly absent at level {level} \
+                 by PF1 Core Rulebook level gate; the at-grant rule is named but not computed. \
+                 Master Strike is the 20th-level rogue capstone."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.master_strike".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Master Strike granted at rogue level {level} (PF1 Core Rulebook, \
+                 20th-level rogue capstone): \"Upon reaching 20th level, a rogue becomes \
+                 incredibly deadly when dealing sneak attack damage. Each time the rogue deals \
+                 sneak attack damage, she can choose one of the following three effects: the \
+                 target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. \
+                 Regardless of the effect chosen, the target receives a Fortitude save to \
+                 negate the additional effect. The DC of this save is equal to 10 + 1/2 the \
+                 rogue's level + the rogue's Intelligence modifier. Once a creature has been \
+                 the target of a master strike, regardless of whether or not the save is made, \
+                 that creature is immune to that rogue's master strike for 24 hours.\" This is \
+                 a bounded grant-only identity record only (value 0, non-fabricated): no \
+                 action-economy engine, no attack-resolution engine, and no \
+                 saving-throw-resolution engine exists anywhere in this codebase to apply this \
+                 to, so this grounds no actual sleep, paralysis, or death effect and no save-DC \
+                 computation"
             ),
         });
     }
