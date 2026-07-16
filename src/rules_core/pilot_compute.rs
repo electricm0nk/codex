@@ -11826,7 +11826,28 @@ const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // trap-sense/trapfinding/sneak-attack (all already level-generic
 // formulas) — the ONLY production-code changes are this ceiling raise and
 // a ninth numbered talent slot appended to the existing tuple-array idiom.
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 18;
+// SD18 widening (cycle-2026-07-16T3600, tests/sd18_rogue_level19_widening.rs):
+// widens the gate to level 19, the loop's SEVENTH §3.2 level-19 sweep
+// landing (after Barbarian, Cleric, Fighter, Bard, Paladin, and Ranger),
+// verified independently against both primary sources (d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, which agree byte-for-byte, fetched
+// across the full levels-15-20 block to guard against
+// level-misattribution): base attack genuinely rises to +14 (19 * 3 / 4),
+// while all three base saves stay put (Fortitude/Will 19/3=6, Reflex
+// 19/2+2=11, integer-division coincidences with level 18); the level-19
+// "Special" column reads only "Sneak attack +10d6" — 19 is NOT a
+// rogue-talent cadence level (talents land at 2/4/6/8/10/12/14/16/18, next
+// at 20), so no tenth numbered talent slot is added; the sneak-attack
+// die-count formula ((level + 1) / 2) genuinely rises to 10 (10d6, up from
+// 9d6 at level 18, its own final PF1 CRB tier); Trap Sense stays +6 (19/3,
+// an integer-division coincidence with level 18) and Trapfinding stays 9
+// (max(19/2, 1), also a coincidence), neither named in the level-19
+// "Special" column; Evasion, Uncanny Dodge, and Improved Uncanny Dodge all
+// stay granted, not re-derived. This needs ZERO new tier constants and
+// ZERO new choice slots — the ONLY production-code change is this ceiling
+// raise, the cleanest possible widening shape checked in the Rogue sweep
+// so far (mirroring the level-17 cycle's own equally clean shape).
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 19;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
