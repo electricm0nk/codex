@@ -247,9 +247,9 @@ fn barbarian_level10_truth_is_unchanged_by_this_slice() {
 // this same negative control's boundary up by one level.
 
 #[test]
-fn barbarian_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = BARBARIAN_LEVEL11_FIXTURE.replace("class:barbarian:11", "class:barbarian:20");
-    let input = load(&level_20);
+fn barbarian_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = BARBARIAN_LEVEL11_FIXTURE.replace("class:barbarian:11", "class:barbarian:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -257,7 +257,7 @@ fn barbarian_level_20_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.barbarian.")
                 || e.id.starts_with("class_feature.barbarian.")),
-        "level-20 Barbarian must not gain any bounded barbarian explanation: {:?}",
+        "level-21 Barbarian must not gain any bounded barbarian explanation: {:?}",
         computation.explanations
     );
 }

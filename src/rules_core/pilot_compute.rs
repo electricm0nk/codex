@@ -2759,15 +2759,17 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// PF1 Core Rulebook rage power slots, verified identically on both primary
 /// sources: "Starting at 2nd level, a barbarian gains a rage power. She
 /// gains another rage power for every two levels of barbarian attained
-/// after 2nd level." — gates 2/4/6/8/10/12/14/16/18 within the tranche
+/// after 2nd level." — gates 2/4/6/8/10/12/14/16/18/20 within the tranche
 /// ceiling (the SD18 level-18 widening added the ninth slot at gate 18;
-/// the tenth slot at gate 20 stays out of scope). "Unless otherwise noted,
-/// a barbarian cannot select an individual power more than once." Numbered
+/// the SD18 level-20 widening added the tenth and FINAL slot at gate 20,
+/// the last rage-power grant within PF1's 1-20 character-level cap).
+/// "Unless otherwise noted, a barbarian cannot select an individual power
+/// more than once." Numbered
 /// slots per the proven repeat-grant idiom; open-ended recognition (no
 /// power-list validation — d20pfsrd merges non-CRB powers into its list,
 /// the same superset pattern as the mercy tiers, and the open-ended idiom
 /// sidesteps list encoding entirely).
-const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 9] = [
+const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 10] = [
     (1, 2, "choice:barbarian_rage_power"),
     (2, 4, "choice:barbarian_rage_power_2"),
     (3, 6, "choice:barbarian_rage_power_3"),
@@ -2777,6 +2779,7 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 9] = [
     (7, 14, "choice:barbarian_rage_power_7"),
     (8, 16, "choice:barbarian_rage_power_8"),
     (9, 18, "choice:barbarian_rage_power_9"),
+    (10, 20, "choice:barbarian_rage_power_10"),
 ];
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
@@ -2990,7 +2993,36 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 9] = [
 /// ZERO new record types and ZERO new choice slots — only a new
 /// damage-reduction tier constant and one new arm on the existing
 /// flat-magnitude formula, mirroring the level-13/level-16 idiom exactly.
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 19;
+///
+/// A still further SD18 slice — the loop's TENTH §3.2 level-20 landing
+/// candidate, widening the level-20 sweep — widens the gate to level 20,
+/// the FINAL level within PF1's 1-20 character-level cap (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement: level 20 reads "+20/+15/+10/+5 | +12 |
+/// +6 | +6 | Mighty rage, Rage power"): base-attack (classlevel = 20)
+/// genuinely rises to +20 (full BAB) and good Fortitude genuinely rises to
+/// +12 (20/2+2, up from +11), while poor Reflex/Will both stay +6 (20/3,
+/// an integer-division coincidence with level 19); the rage rounds-per-day
+/// pool genuinely rises to 45 (4 + Con mod + 2 per level after 1st). The
+/// level-20 "Special" column's Mighty Rage entry is a genuine THIRD tier
+/// on the SAME flat rage-surface constants already grounded at level 1 and
+/// widened at level 11 (Greater Rage): the Strength/Constitution morale
+/// bonus rises from +6 to +8 and the Will-save morale bonus rises from +3
+/// to +4 via a new `BARBARIAN_MIGHTY_RAGE_LEVEL` gate constant, mirroring
+/// the Greater Rage precedent exactly — no new record type, just a third
+/// arm on the existing tiered formula. Level 20 IS a rage-power level
+/// (powers land at 2/4/6/8/10/12/14/16/18/20), so a TENTH and FINAL
+/// numbered slot (`choice:barbarian_rage_power_10`) is appended to
+/// `BARBARIAN_RAGE_POWER_SLOTS`, mirroring the proven repeat-grant idiom
+/// exactly; Damage Reduction stays 5/- (next rise would be 22nd, outside
+/// the PF1 1-20 range) and Trap Sense stays +6 (next rise would be 21st,
+/// also outside range); Indomitable Will's flat +4 magnitude and Tireless
+/// Rage both carry over unchanged. This needed ZERO new record types and
+/// ZERO new choice-slot mechanisms — only a new rage-magnitude tier
+/// constant and a tenth numbered rage-power slot. This closes the
+/// Barbarian per-level arithmetic-widening frontier: level 20 is the
+/// final level within PF1's 1-20 character-level cap.
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 20;
 
 /// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
 /// (11th level — "At 11th level, a barbarian's rage improves. She gains a
@@ -2998,6 +3030,16 @@ const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 19;
 /// Will saves ... the –2 penalty to AC remains", verified independently
 /// against d20pfsrd and legacy.aonprd.com).
 const BARBARIAN_GREATER_RAGE_LEVEL: u8 = 11;
+
+/// PF1 Core Rulebook level gate at which Barbarian Greater Rage becomes
+/// Mighty Rage (20th level — "At 20th level, when a barbarian enters rage,
+/// the morale bonus to her Strength and Constitution increases to +8 and
+/// the morale bonus on her Will saves increases to +4", verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement). A third tier on the same flat
+/// rage-surface magnitude formula established at level 1 (Rage) and level
+/// 11 (Greater Rage).
+const BARBARIAN_MIGHTY_RAGE_LEVEL: u8 = 20;
 
 /// PF1 Core Rulebook level gate at which Barbarian gains Uncanny Dodge (2nd level,
 /// verified against two independent primary sources — d20pfsrd and legacy.aonprd.com
@@ -10512,12 +10554,29 @@ fn explain_barbarian_level1_chassis(
     // Strength/Constitution morale bonuses genuinely rise from +4 to +6 and the
     // Will-save morale bonus genuinely rises from +2 to +3; the Armor Class penalty
     // stays -2 either way (PF1 Core Rulebook Greater Rage: "the -2 penalty to AC
-    // remains"). This is a magnitude-rise on the same flat-constant pillar, not a
-    // new rage-state execution engine.
+    // remains"). At level 20+ (BARBARIAN_MIGHTY_RAGE_LEVEL), Greater Rage becomes
+    // Mighty Rage: the Strength/Constitution morale bonuses genuinely rise again
+    // to +8 and the Will-save morale bonus genuinely rises to +4 (PF1 Core
+    // Rulebook Mighty Rage: "the morale bonus to her Strength and Constitution
+    // increases to +8 and the morale bonus on her Will saves increases to +4").
+    // This is a third tier on the same flat-constant pillar, not a new
+    // rage-state execution engine.
+    let is_mighty_rage = level >= BARBARIAN_MIGHTY_RAGE_LEVEL;
     let is_greater_rage = level >= BARBARIAN_GREATER_RAGE_LEVEL;
-    let rage_source_feature = if is_greater_rage { "Greater Rage" } else { "Rage" };
-    let (strength_bonus, constitution_bonus, will_save_bonus) =
-        if is_greater_rage { (6, 6, 3) } else { (4, 4, 2) };
+    let rage_source_feature = if is_mighty_rage {
+        "Mighty Rage"
+    } else if is_greater_rage {
+        "Greater Rage"
+    } else {
+        "Rage"
+    };
+    let (strength_bonus, constitution_bonus, will_save_bonus) = if is_mighty_rage {
+        (8, 8, 4)
+    } else if is_greater_rage {
+        (6, 6, 3)
+    } else {
+        (4, 4, 2)
+    };
     let rage_constants: [(&str, i16, String, &str); 4] = [
         (
             "class_chassis.barbarian.rage.strength_morale_bonus",
