@@ -391,7 +391,7 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // The base spells-per-day table's level-18 row is "4/3/2/2": only the
 // 4th-level column genuinely rises (from 1 to 2). Nothing here grounds
 // level 19+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 18;
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 19;
 
 // Aura of Faith is a 14th-level paladin feature in the PF1 Core Rulebook
 // (verified independently against d20pfsrd, the Archives of Nethys
@@ -7525,7 +7525,14 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // aonprd.com mirror, byte-for-byte agreement with no disagreement or
     // self-contradiction, so a third source was not required: only the
     // 3rd-level column genuinely rises (from 1 to 2), while the 1st/2nd/
-    // 4th-level columns stay 3/2/1 numerically unchanged. A "0" is a
+    // 4th-level columns stay 3/2/1 numerically unchanged; and (SD18
+    // cycle-2026-07-16T2800) level 19 "4/3/3/2" — verified independently
+    // against d20pfsrd (a raw HTML parse of the class table, bypassing
+    // AI-summarization) and the Archives of Nethys aonprd.com mirror,
+    // byte-for-byte agreement with no disagreement or self-contradiction,
+    // so a third source was not required: only the 3rd-level column
+    // genuinely rises (from 2 to 3), while the 1st/2nd/4th-level columns
+    // stay 4/3/2 numerically unchanged. A "0" is a
     // genuine table entry (bonus-spells-only access), NOT an absence —
     // inaccessible spell levels ("—" columns) get no record at all. Only
     // the base counts are grounded: bonus spells per day from a high
@@ -7545,6 +7552,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         16 => [Some(3), Some(3), Some(2), Some(1)],
         17 => [Some(4), Some(3), Some(2), Some(1)],
         18 => [Some(4), Some(3), Some(2), Some(2)],
+        19 => [Some(4), Some(3), Some(3), Some(2)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {

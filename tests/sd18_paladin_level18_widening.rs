@@ -361,23 +361,6 @@ fn paladin_level17_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 19 stays unrecognized by this slice -----
-
-#[test]
-fn paladin_level_19_is_not_promoted_by_this_slice() {
-    let level_19 = PALADIN_LEVEL18_FIXTURE.replace("class:paladin:18", "class:paladin:19");
-    let input = load(&level_19);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-19 Paladin must not gain any bounded paladin chassis explanation: {:?}",
-        computation.explanations
-    );
-}
-
 // ----- Negative control: the paladin path must not leak onto other classes -----
 
 #[test]
