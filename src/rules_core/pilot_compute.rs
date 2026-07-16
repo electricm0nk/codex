@@ -3051,7 +3051,30 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // dice, domain spell slot count) are widened; no new pillar record is added
 // at level 17 either, since "Channel energy 9d6" names only a tier-rise on
 // the already-grounded Channel Energy dice pillar, not a new class feature.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 17;
+// A further SD18 slice (`cycle-2026-07-15T14300`, mirroring
+// `a3762ca`'s Wizard level-18 widening — the loop's SECOND §3.2 level-18
+// landing, and the first full 9-level-caster class after Wizard to reach it)
+// widens the gate again to 1..=18 (`MAX_SUPPORTED_CLERIC_LEVEL = 18`): the
+// class table's level-18 "Special" column is genuinely BLANK (verified
+// independently against two primary sources — d20pfsrd and the Archives of
+// Nethys aonprd.com mirror, byte-for-byte agreement on the full
+// levels-16-through-19 block, so a third source was not required) — a pure
+// ceiling raise, exactly mirroring the Wizard level-18 cycle's own pure
+// ceiling raise: base attack bonus genuinely rises to +13 (`18 * 3 / 4 =
+// 13`), both good saves genuinely rise to +11 (`18 / 2 + 2 = 11`), poor
+// Reflex genuinely rises to +6 (`18 / 3 = 6`), and Touch of Good's bonus
+// genuinely rises to 9 (`18 / 2 = 9`), all via the same pre-existing
+// formulas, not re-derived, while Channel Energy's die count stays 9d6
+// (`(18 + 1) / 2 = 9`, the odd-level cadence's next rise landing at 19th)
+// and the domain spell slot count stays 9 (a level-18 cleric still casts
+// only up to 9th-level cleric spells, the highest cleric spell level in
+// PF1 — the top `domain_spell_slot_count` arm, gated on
+// `level >= CLERIC_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`, already covers
+// level 18 with zero code change, mirroring exactly how the Wizard
+// level-18 cycle's specialist-bonus-slot top arm already covered level 18)
+// — so no new pillar record is added at level 18 either, since no class
+// feature is named in the level-18 Special column.
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 18;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
