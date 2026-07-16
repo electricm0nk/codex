@@ -180,6 +180,7 @@ export function LandingScreen(props: {
   onLoad: () => void;
   onLoadMostRecent: () => void;
   onBrowseEquipment: () => void;
+  onBrowseSpells: () => void;
   hasCharacters: boolean;
 }) {
   const active = RULE_SETS.find((rs) => rs.id === props.selectedRuleSet) ?? RULE_SETS[0];
@@ -220,21 +221,36 @@ export function LandingScreen(props: {
         Load Most Recent Character
       </button>
 
-      <button
-        type="button"
-        onClick={props.onBrowseEquipment}
-        style={{
-          alignSelf: 'center',
-          background: 'none',
-          border: 'none',
-          color: 'var(--color-text-muted)',
-          cursor: 'pointer',
-          fontSize: '0.85rem',
-          textDecoration: 'underline',
-        }}
-      >
-        Browse Equipment Catalog
-      </button>
+      <div style={{ alignSelf: 'center', display: 'flex', gap: '1.25rem' }}>
+        <button
+          type="button"
+          onClick={props.onBrowseEquipment}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Browse Equipment Catalog
+        </button>
+        <button
+          type="button"
+          onClick={props.onBrowseSpells}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Browse Spell Catalog
+        </button>
+      </div>
     </section>
   );
 }
