@@ -171,16 +171,18 @@ fn wrong_fighter_level_blocks_combat_totals() {
     // level 15, Armor Training 4, level 16, an eighth bonus-feat cadence
     // slot, level 17, Weapon Training 4 and a fourth weapon-group choice
     // slot, level 18, a ninth bonus-feat cadence slot and a further
-    // Bravery magnitude rise, and level 19, the Armor Mastery flat-magnitude
-    // damage reduction record, into the supported tranche). A Fighter above
-    // that bounded tranche (level 20+, beyond the SD-13/SD-18 level-19
-    // progression matrix) must be treated as an unsupported posture, not
-    // silently computed, even though every other loadout/feat/choice
+    // Bravery magnitude rise, level 19, the Armor Mastery flat-magnitude
+    // damage reduction record, and level 20, a tenth bonus-feat cadence slot
+    // and the Weapon Mastery grant-only capstone record -- the FINAL level
+    // within PF1's 1-20 character-level cap -- into the supported tranche).
+    // A Fighter above that bounded tranche (level 21+, which does not exist
+    // as a PF1 character level) must be treated as an unsupported posture,
+    // not silently computed, even though every other loadout/feat/choice
     // condition still holds.
     let mutated = DETERMINISTIC_FIXTURE
-        .replace("class_level=class:fighter:1", "class_level=class:fighter:20");
+        .replace("class_level=class:fighter:1", "class_level=class:fighter:21");
     assert!(
-        mutated.contains("class_level=class:fighter:20"),
+        mutated.contains("class_level=class:fighter:21"),
         "test setup should have mutated the Fighter level"
     );
     let input = load(&mutated);
