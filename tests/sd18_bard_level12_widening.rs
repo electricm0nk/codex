@@ -283,17 +283,17 @@ fn bard_level11_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 18 stays unrecognized by this slice -----
-// (Bard levels 13 through 17 were widened into scope by later SD18 slices —
-// up through tests/sd18_bard_level17_widening.rs — so this negative
-// control's boundary moves from 13 to 18, mirroring the exact same
-// boundary-move idiom applied to every prior sibling class's own level-16
+// ----- Negative control: level 19 stays unrecognized by this slice -----
+// (Bard levels 13 through 18 were widened into scope by later SD18 slices —
+// up through tests/sd18_bard_level18_widening.rs — so this negative
+// control's boundary moves from 13 to 19, mirroring the exact same
+// boundary-move idiom applied to every prior sibling class's own level
 // widening cycle.)
 
 #[test]
-fn bard_level_18_is_not_promoted_by_this_slice() {
-    let level_18 = BARD_LEVEL12_FIXTURE.replace("class:bard:12", "class:bard:18");
-    let input = load(&level_18);
+fn bard_level_19_is_not_promoted_by_this_slice() {
+    let level_19 = BARD_LEVEL12_FIXTURE.replace("class:bard:12", "class:bard:19");
+    let input = load(&level_19);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation

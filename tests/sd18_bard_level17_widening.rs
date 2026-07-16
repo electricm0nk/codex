@@ -346,25 +346,6 @@ fn bard_level16_truth_is_unchanged_by_this_slice() {
     assert_eq!(rounds.value, 36, "Bard level 16 Bardic Performance rounds must stay 36");
 }
 
-// ----- Negative control: level 18 stays unrecognized by this slice -----
-
-#[test]
-fn bard_level_18_is_not_promoted_by_this_slice() {
-    let level_18 = BARD_LEVEL17_FIXTURE.replace("class:bard:17", "class:bard:18");
-    let input = load(&level_18);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id.starts_with("class_feature.bard.")
-                || e.id == "class_chassis.spell_baseline.bard"),
-        "level-18 Bard must not gain any bounded bard explanation: {:?}",
-        computation.explanations
-    );
-}
-
 // ----- Negative control: the bard path must not leak onto other classes -----
 
 #[test]

@@ -309,18 +309,18 @@ fn bard_level13_truth_is_unchanged_by_this_slice() {
     assert_eq!(dc.value, 18, "Bard level 13 Fascinate DC must stay 18");
 }
 
-// ----- Negative control: level 18 stays unrecognized by this slice -----
-// (Bard levels 15 through 17 were widened into scope by later SD18 slices —
+// ----- Negative control: level 19 stays unrecognized by this slice -----
+// (Bard levels 15 through 18 were widened into scope by later SD18 slices —
 // tests/sd18_bard_level15_widening.rs, tests/sd18_bard_level16_widening.rs,
-// and tests/sd18_bard_level17_widening.rs — so this negative control's
-// boundary moves from 15 to 18, mirroring the exact same boundary-move
-// idiom applied to every prior sibling class's own level-16 widening
-// cycle.)
+// tests/sd18_bard_level17_widening.rs, and tests/sd18_bard_level18_widening.rs
+// — so this negative control's boundary moves from 15 to 19, mirroring the
+// exact same boundary-move idiom applied to every prior sibling class's own
+// level widening cycle.)
 
 #[test]
-fn bard_level_18_is_not_promoted_by_this_slice() {
-    let level_18 = BARD_LEVEL14_FIXTURE.replace("class:bard:14", "class:bard:18");
-    let input = load(&level_18);
+fn bard_level_19_is_not_promoted_by_this_slice() {
+    let level_19 = BARD_LEVEL14_FIXTURE.replace("class:bard:14", "class:bard:19");
+    let input = load(&level_19);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
