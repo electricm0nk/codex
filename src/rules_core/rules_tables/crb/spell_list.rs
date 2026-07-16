@@ -7,7 +7,7 @@
 //! per cycle, per `scope-draft.md` §2.4 ("prove the school's spells are
 //! reachable... landing all spells in the school in one round").
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum Pf1SchoolId {
     Abjuration,
     Conjuration,

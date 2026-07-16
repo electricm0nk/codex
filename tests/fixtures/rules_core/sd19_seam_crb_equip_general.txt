@@ -1,0 +1,2 @@
+# Fixture for §2.5 general, source: cr_equip files, KEY: Backpack
+Backpack				KEY:Backpack				SORTKEY:Backpack																	TYPE:Goods.Container.General.Resizable							CONTAINS:UNLIM|Any							COST:2	WT:2												SOURCEPAGE:p.158

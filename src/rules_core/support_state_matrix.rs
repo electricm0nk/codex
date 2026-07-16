@@ -167,13 +167,18 @@ pub enum EvidenceTier {
     ProductVisible,
 }
 
-/// The subject a matrix row classifies. Limited to `Race`, `Class`, and
-/// `Interaction` for this slice.
+/// The subject a matrix row classifies.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MatrixSubjectType {
     Race,
     Class,
     Interaction,
+    /// A PF1 strict spell school. NEW (SD-19) — see `decisions.md` §5:
+    /// closure requires a matrix row transition, and neither spell
+    /// schools nor equipment categories were modeled as rows before this.
+    School(crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId),
+    /// A core-rulebook equipment category. NEW (SD-19).
+    Equipment(crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory),
 }
 
 /// Bounded evidence-freshness posture for a single row (SD13-E7-F13).

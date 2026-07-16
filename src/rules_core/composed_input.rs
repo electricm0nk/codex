@@ -578,6 +578,7 @@ mod tests {
                     active_state: ActiveState::EquippedActive,
                 }],
                 selected_choices: Vec::new(),
+                spells_selected: Vec::new(),
             },
             selection_provenance: Vec::new(),
         }
