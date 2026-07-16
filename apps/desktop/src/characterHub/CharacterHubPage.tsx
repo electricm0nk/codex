@@ -6,9 +6,10 @@ import { CreateCharacterForm } from './CreateCharacterForm';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
 import { LoadCharacterScreen } from './LoadCharacterScreen';
 import { CharacterSheet } from './CharacterSheet';
+import { EquipmentCatalogScreen } from '../equipmentCatalog/EquipmentCatalogScreen';
 
 export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' | 'enhancement') => void }) {
-  const [mode, setMode] = useState<'landing' | 'load' | 'create' | 'sheet'>('landing');
+  const [mode, setMode] = useState<'landing' | 'load' | 'create' | 'sheet' | 'equipmentCatalog'>('landing');
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
   const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
   const [surface, setSurface] = useState<CharacterHubListSurface | null>(null);
@@ -36,9 +37,14 @@ export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' |
         onCreate={() => setMode('create')}
         onLoad={() => setMode('load')}
         onLoadMostRecent={() => setMode('load')}
+        onBrowseEquipment={() => setMode('equipmentCatalog')}
         hasCharacters={hasCharacters}
       />
     );
+  }
+
+  if (mode === 'equipmentCatalog') {
+    return <EquipmentCatalogScreen onClose={() => setMode('landing')} />;
   }
 
   if (mode === 'sheet' && sheet) {

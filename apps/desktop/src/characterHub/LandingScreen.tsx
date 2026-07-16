@@ -179,6 +179,7 @@ export function LandingScreen(props: {
   onCreate: () => void;
   onLoad: () => void;
   onLoadMostRecent: () => void;
+  onBrowseEquipment: () => void;
   hasCharacters: boolean;
 }) {
   const active = RULE_SETS.find((rs) => rs.id === props.selectedRuleSet) ?? RULE_SETS[0];
@@ -217,6 +218,22 @@ export function LandingScreen(props: {
         }}
       >
         Load Most Recent Character
+      </button>
+
+      <button
+        type="button"
+        onClick={props.onBrowseEquipment}
+        style={{
+          alignSelf: 'center',
+          background: 'none',
+          border: 'none',
+          color: 'var(--color-text-muted)',
+          cursor: 'pointer',
+          fontSize: '0.85rem',
+          textDecoration: 'underline',
+        }}
+      >
+        Browse Equipment Catalog
       </button>
     </section>
   );
