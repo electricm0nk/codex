@@ -8,7 +8,7 @@
 
 use codex::rules_core::rules_tables::crb::class_tables::{class_tables, ClassId};
 use codex::rules_core::rules_tables::crb::equipment_tables::{
-    EquipmentCategory, EQUIPMENT_TABLES,
+    equipment_tables, EquipmentCategory,
 };
 use codex::rules_core::rules_tables::crb::spell_list::{Pf1SchoolId, SPELL_LIST};
 use codex::rules_core::rules_tables::RuleSetId;
@@ -56,13 +56,13 @@ fn every_school_has_at_least_one_spell() {
 #[test]
 fn every_equipment_category_is_non_empty() {
     for category in EquipmentCategory::ALL {
-        let count = EQUIPMENT_TABLES
+        let count = equipment_tables()
             .iter()
             .filter(|e| e.category == *category)
             .count();
         assert!(
             count >= 1,
-            "equipment category {:?} has zero items in EQUIPMENT_TABLES",
+            "equipment category {:?} has zero items in equipment_tables()",
             category
         );
     }
