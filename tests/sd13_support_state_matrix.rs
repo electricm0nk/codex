@@ -24,10 +24,11 @@ use codex::rules_core::support_state_matrix::{
 /// `school.necromancy.spell_reachability` is the seventh;
 /// `school.transmutation.spell_reachability` is the eighth;
 /// `school.universal.spell_reachability` is the ninth, closing the full
-/// §2.4 spell-school sweep; later SD-19 cycles append one equipment row
-/// each (§2.5), growing this list, never rewriting an existing SD-13 row's
-/// identity.
-const EXPECTED_ROW_IDS: [&str; 30] = [
+/// §2.4 spell-school sweep; `equipment.arms_armor.equipment_reachability`
+/// is the first loop-routed §2.5 row; later SD-19 cycles append one
+/// equipment row each, growing this list, never rewriting an existing
+/// SD-13 row's identity.
+const EXPECTED_ROW_IDS: [&str; 31] = [
     "race.human.pilot_semantics",
     "race.dwarf.bounded_semantics",
     "race.elf.bounded_semantics",
@@ -58,6 +59,7 @@ const EXPECTED_ROW_IDS: [&str; 30] = [
     "school.necromancy.spell_reachability",
     "school.transmutation.spell_reachability",
     "school.universal.spell_reachability",
+    "equipment.arms_armor.equipment_reachability",
 ];
 
 fn matrix() -> SupportStateMatrix {
@@ -71,12 +73,12 @@ fn row<'a>(matrix: &'a SupportStateMatrix, row_id: &str) -> &'a SupportStateRow 
 }
 
 #[test]
-fn seed_contains_exactly_thirty_rows() {
+fn seed_contains_exactly_thirty_one_rows() {
     let matrix = matrix();
     assert_eq!(
         matrix.rows.len(),
-        30,
-        "seed must contain exactly 30 rows, got {}",
+        31,
+        "seed must contain exactly 31 rows, got {}",
         matrix.rows.len()
     );
 }
@@ -661,6 +663,7 @@ fn only_pilot_grounded_rows_rise_above_observed() {
         "school.necromancy.spell_reachability",
         "school.transmutation.spell_reachability",
         "school.universal.spell_reachability",
+        "equipment.arms_armor.equipment_reachability",
     ];
 
     assert_eq!(
@@ -793,7 +796,7 @@ fn stale_generic_uplift_pointers_are_reconciled() {
 /// The rows anchored to a live, re-runnable proof surface. These are exactly the
 /// pilot-grounded, hybrid-baseline, Barbarian martial-baseline, spell-baseline,
 /// and SD-19 loop-routed school/equipment rows that rise above `Observed` evidence.
-const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 29] = [
+const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 30] = [
     "race.human.pilot_semantics",
     "race.dwarf.bounded_semantics",
     "race.elf.bounded_semantics",
@@ -823,6 +826,7 @@ const EXPECTED_REFRESHABLE_FROM_LIVE_PROOF: [&str; 29] = [
     "school.necromancy.spell_reachability",
     "school.transmutation.spell_reachability",
     "school.universal.spell_reachability",
+    "equipment.arms_armor.equipment_reachability",
 ];
 
 #[test]
