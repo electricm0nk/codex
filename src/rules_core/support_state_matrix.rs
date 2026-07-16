@@ -414,7 +414,8 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd18_paladin_level15_widening.rs + \
     tests/sd18_paladin_level16_widening.rs + \
     tests/sd18_paladin_level17_widening.rs + \
-    tests/sd18_paladin_level18_widening.rs";
+    tests/sd18_paladin_level18_widening.rs + \
+    tests/sd18_paladin_level19_widening.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -3651,7 +3652,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Paladin level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
                             level-8/level-9/level-10/level-11/level-12/level-13/level-14/\
-                            level-15/level-16/level-17/level-18 \
+                            level-15/level-16/level-17/level-18/level-19 \
                             chassis baseline, with smite evil's uses-per-day / attack-bonus / \
                             damage-bonus formula grounded at every level (uses-per-day \
                             genuinely increasing to 2/day at level 4, staying 2/day through \
@@ -3659,9 +3660,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             3/day through level 9, genuinely increasing to 4/day at \
                             level 10 and staying 4/day at levels 11-12, genuinely \
                             increasing to 5/day at level 13, staying 5/day at levels \
-                            14-15, genuinely increasing to 6/day at level 16, and staying \
-                            6/day at levels 17-18 (integer-division coincidences, the next rise \
-                            lands at level 19), \
+                            14-15, genuinely increasing to 6/day at level 16, staying \
+                            6/day at levels 17-18 (integer-division coincidences), and \
+                            genuinely increasing to its 7/day ceiling at level 19, \
                             while the damage bonus \
                             keeps rising every level), lay on \
                             hands and divine grace grounded for real at levels 2-16 (correct PF1 \
@@ -3675,13 +3676,14 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             numerically unchanged at levels 14-16), \
                             mercy \
                             grounded as a correct PF1 CRB level-gate absence at \
-                            levels 1-2 and a granted choice-recognition record at levels 3-18 \
+                            levels 1-2 and a granted choice-recognition record at levels 3-19 \
                             (a fourth numbered mercy slot newly grounded at level 12, staying \
                             unchanged at levels 13-14 since neither is a repeat-Mercy-grant \
                             level, a FIFTH numbered mercy slot newly grounded at level 15, \
                             staying unchanged at levels 16-17 since neither is a repeat-Mercy- \
-                            grant level, and a SIXTH numbered mercy slot newly grounded at \
-                            level 18), \
+                            grant level, a SIXTH numbered mercy slot newly grounded at \
+                            level 18, staying unchanged at level 19 since it is not a \
+                            repeat-Mercy-grant level either), \
                             channel positive energy grounded as a correct PF1 CRB level-gate \
                             absence at levels 1-3 and a flat die-count magnitude at levels 4-16 \
                             (genuinely increasing from 2d6 to 3d6 at level 5, staying 3d6 at \
@@ -3732,7 +3734,16 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             adding no new named mercy-list tier, mirroring the level-15 fifth \
                             slot exactly), and the base spells-per-day table's own level-18 \
                             row (only the 4th-level column genuinely rising, from 1 to 2) \
-                            grounded for real, \
+                            grounded for real, and (level 19) base attack bonus genuinely \
+                            rising to 19 while all three base saves stay numerically unchanged \
+                            (integer-division coincidences with level 18), Smite Evil's \
+                            uses-per-day formula genuinely rising to its 7/day ceiling (an \
+                            already level-generic formula, the PF1 CRB's own stated maximum) \
+                            while its damage bonus genuinely rises to 19, no new mercy slot \
+                            (level 19 is not one of the 3rd/6th/9th/12th/15th/18th \
+                            repeat-Mercy-grant levels), and the base spells-per-day table's own \
+                            level-19 row (only the 3rd-level column genuinely rising, from 2 to \
+                            3) grounded for real, \
                             and the hybrid chassis pair plus \
                             the spells-known/spells-per-day/spell-DC spell burden still named \
                             and unproven",
@@ -4249,9 +4260,42 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     tests/sd18_paladin_level17_widening.rs's own level-18 negative control was \
                     removed rather than moved, since level 18 is now itself the \
                     supported/grounded row. \
+                    The SD18 cycle-2026-07-16T2800 slice \
+                    (tests/sd18_paladin_level19_widening.rs) widens the level-range gate once \
+                    more to level 19, the loop's FIFTH §3.2 level-19 landing (after Barbarian, \
+                    Cleric, Fighter, and Bard), and the fourth hybrid/partial-caster class-row \
+                    widening to reach it: base attack genuinely rises to +19 (full BAB) while \
+                    ALL THREE base saves stay numerically unchanged from level 18 (good \
+                    Fortitude/Will 19/2+2=11, poor Reflex 19/3=6, both integer-division \
+                    coincidences, re-verified rather than assumed). The level-19 \"Special\" \
+                    column reads only \"Smite evil 7/day\" (verified independently against \
+                    d20pfsrd and the Archives of Nethys aonprd.com mirror, byte-for-byte \
+                    agreement, so a third source was not required) — already the level-generic \
+                    Smite Evil uses-per-day formula's own stated ceiling (1 + (19-1)/3 = 7), so \
+                    no new record or choice slot is needed for it; its damage bonus (equal to \
+                    paladin level) genuinely rises to 19. 19th is NOT a repeat-Mercy-grant \
+                    level (the 3rd/6th/9th/12th/15th/18th cadence, next landing at 21st, out of \
+                    scope), so no seventh mercy slot is introduced; the sixth mercy slot \
+                    (granted at level 18) carries over unchanged. The same slice widens the \
+                    BASE spells-per-day table to level 19 (\"4/3/3/2\", verified independently \
+                    against both sources with no disagreement): the 1st/2nd/4th-level columns \
+                    stay 4/3/2 numerically unchanged, and the 3rd-level column genuinely rises \
+                    from 2 to 3. The spell-level access ladder stays 4 (already widened at level \
+                    13, unchanged here), and the base spell-save-DC and Charisma-bonus-spells \
+                    families both continue to extend to the 4th spell level automatically (live \
+                    arithmetic, no new formula invented). This slice also fixed five stale \
+                    sibling negative controls (allowlist/boundary-control failure mode) that \
+                    asserted level 19 as claim-blocked: tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, \
+                    tests/sd18_paladin_level13_widening.rs, and \
+                    tests/sd18_paladin_level14_widening.rs, all moved to a level-20 boundary; \
+                    tests/sd18_paladin_level18_widening.rs's own level-19 negative control was \
+                    removed rather than moved, since level 19 is now itself the \
+                    supported/grounded row. \
                     The row stays Partial, not Supported: \
                     the F6 hybrid chassis pair (class-feature and spell) stays claim-blocking \
-                    as accepted hybrid truth, no Paladin level 19+ is proven, Divine Bond stays \
+                    as accepted hybrid truth, no Paladin level 20 is proven, Divine Bond stays \
                     named-but-unproven, Aura of Justice's, Aura of Faith's, and Aura of \
                     Righteousness's own resolution engines are not computed, and the \
                     partial-caster spell burden itself \
@@ -4265,8 +4309,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell-source-lineage burdens now that the caster-level gate, the access \
                     ladder, the base per-day counts, the base spell-save DCs, the Charisma \
                     bonus-slot counts, and the integrated totals are all grounded, then \
-                    paladin level-19+ \
-                    progression",
+                    paladin level-20 \
+                    progression (the final PF1 1-20 level cap ceiling)",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
