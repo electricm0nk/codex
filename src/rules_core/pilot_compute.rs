@@ -373,9 +373,25 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // (an integer-division coincidence with level 16; the next rise lands
 // at level 19) while its damage bonus genuinely rises to 17. The base
 // spells-per-day table's level-17 row is "4/3/2/1": only the 1st-level
-// column genuinely rises (from 3 to 4). Nothing here grounds level 18+
-// Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 17;
+// column genuinely rises (from 3 to 4).
+// SD18 cycle-2026-07-15T15000 widens this once more to level 18: base
+// attack genuinely rises to 18 (full BAB) and BOTH good saves genuinely
+// rise to 11 (18/2+2), while poor Reflex genuinely rises to 6 (18/3).
+// The level-18 "Special" column reads only "Mercy" (verified
+// independently against d20pfsrd and the Archives of Nethys aonprd.com
+// mirror, byte-for-byte agreement) -- 18th IS a repeat-Mercy-grant level
+// (the 3rd/6th/9th/12th/15th/18th cadence), grounded here as a SIXTH
+// numbered mercy choice slot, mirroring the proven slot-2/3/4/5 idiom
+// exactly; like the 15th-level repeat grant, both sources agree the
+// CRB's named mercy-list tiers stop growing after 12th level, so the
+// sixth slot's cited tier text names no new mercy condition, only the
+// sixth pick from the existing pool. Smite Evil's uses-per-day formula
+// stays 6/day (an integer-division coincidence with level 17; the next
+// rise lands at level 19) while its damage bonus genuinely rises to 18.
+// The base spells-per-day table's level-18 row is "4/3/2/2": only the
+// 4th-level column genuinely rises (from 1 to 2). Nothing here grounds
+// level 19+ Paladin.
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 18;
 
 // Aura of Faith is a 14th-level paladin feature in the PF1 Core Rulebook
 // (verified independently against d20pfsrd, the Archives of Nethys
@@ -527,6 +543,18 @@ const PALADIN_FOURTH_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_4";
 /// 2/3/4 exactly.
 const PALADIN_FIFTH_MERCY_GRANT_LEVEL: u8 = 15;
 const PALADIN_FIFTH_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_5";
+
+/// PF1 Core Rulebook gate of the paladin's SIXTH mercy ("every three levels
+/// thereafter" from the level-3 mercy rule: 3, 6, 9, 12, 15, 18). Verified
+/// independently for this SD18 slice against d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror (byte-for-byte agreement): like the 15th-level
+/// grant, no new named mercy-list tier is added at 18th level -- both
+/// sources agree the CRB's named mercy conditions stop growing after the
+/// 12th-level tier, so the 18th-level grant is simply a sixth pick from the
+/// already-existing 3rd/6th/9th/12th-tier pool. Numbered slot per the
+/// proven repeat-grant idiom, mirroring slot 2/3/4/5 exactly.
+const PALADIN_SIXTH_MERCY_GRANT_LEVEL: u8 = 18;
+const PALADIN_SIXTH_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_6";
 
 // SD13-E5 Ranger Combat Style correction. Combat Style Feat is a 2nd-level ranger
 // feature in the PF1 Core Rulebook: the ranger selects a combat style (archery or
@@ -6945,11 +6973,12 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // in each detail. No mercy's effect is computed (no lay-on-hands
     // execution engine exists) and prerequisite chains (e.g. the frightened
     // mercy requiring the shaken mercy) are named, not validated.
-    let repeat_mercy_slots: [(u8, u8, &str); 4] = [
+    let repeat_mercy_slots: [(u8, u8, &str); 5] = [
         (2, PALADIN_SECOND_MERCY_GRANT_LEVEL, PALADIN_SECOND_MERCY_CHOICE_ID),
         (3, PALADIN_THIRD_MERCY_GRANT_LEVEL, PALADIN_THIRD_MERCY_CHOICE_ID),
         (4, PALADIN_FOURTH_MERCY_GRANT_LEVEL, PALADIN_FOURTH_MERCY_CHOICE_ID),
         (5, PALADIN_FIFTH_MERCY_GRANT_LEVEL, PALADIN_FIFTH_MERCY_CHOICE_ID),
+        (6, PALADIN_SIXTH_MERCY_GRANT_LEVEL, PALADIN_SIXTH_MERCY_CHOICE_ID),
     ];
     for (slot_number, grant_level, choice_id) in repeat_mercy_slots {
         if level < grant_level {
@@ -6973,11 +7002,16 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
              (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset contains them, its \
              extra entries — Amputated, Ensorcelled, Petrified — being non-CRB expansions \
              outside this pf1.core_rulebook seam)"
-        } else {
+        } else if slot_number == 5 {
             "unlike the 6th/9th/12th-level repeat grants, the 15th-level grant adds NO new \
              named mercy-list tier (verified independently against d20pfsrd and the Archives \
              of Nethys aonprd.com mirror, byte-for-byte agreement): the paladin simply selects \
              a fifth mercy from the already-existing 3rd/6th/9th/12th-tier pool"
+        } else {
+            "like the 15th-level grant, the 18th-level grant adds NO new named mercy-list tier \
+             (verified independently against d20pfsrd and the Archives of Nethys aonprd.com \
+             mirror, byte-for-byte agreement): the paladin simply selects a sixth mercy from the \
+             already-existing 3rd/6th/9th/12th-tier pool"
         };
         explanations.push(ComputationExplanation {
             id: format!("class_chassis.paladin.mercy_{slot_number}_choice"),
@@ -7092,6 +7126,7 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         15 => [Some(3), Some(2), Some(2), Some(1)],
         16 => [Some(3), Some(3), Some(2), Some(1)],
         17 => [Some(4), Some(3), Some(2), Some(1)],
+        18 => [Some(4), Some(3), Some(2), Some(2)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {

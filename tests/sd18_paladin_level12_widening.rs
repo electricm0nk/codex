@@ -400,8 +400,8 @@ fn paladin_level11_truth_is_unchanged_by_this_slice() {
 // tests/sd18_paladin_level17_widening.rs for their own boundaries.)
 
 #[test]
-fn paladin_level_18_is_not_promoted_by_this_slice() {
-    let level_18 = PALADIN_LEVEL12_FIXTURE.replace("class:paladin:12", "class:paladin:18");
+fn paladin_level_19_is_not_promoted_by_this_slice() {
+    let level_18 = PALADIN_LEVEL12_FIXTURE.replace("class:paladin:12", "class:paladin:19");
     let input = load(&level_18);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
@@ -409,7 +409,7 @@ fn paladin_level_18_is_not_promoted_by_this_slice() {
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-18 Paladin must not gain any bounded paladin chassis explanation: {:?}",
+        "level-19 Paladin must not gain any bounded paladin chassis explanation: {:?}",
         computation.explanations
     );
 }
