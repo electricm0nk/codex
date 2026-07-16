@@ -292,12 +292,17 @@ fn ranger_level9_truth_is_unchanged_by_this_slice() {
 // 4th-level column rise are newly grounded), and again to level 19
 // (cycle-2026-07-16T3200, tests/sd18_ranger_level19_widening.rs: base
 // attack rises, Improved Quarry and the base spells-per-day table's
-// 3rd-level column rise are newly grounded), so this boundary control
-// moves once more to level 20.
+// 3rd-level column rise are newly grounded), and again to level 20
+// (cycle-2026-07-16T1600, tests/sd18_ranger_level20_widening.rs: base
+// attack and both good saves rise, the fifth favored enemy, Master
+// Hunter, and the base spells-per-day table's 2nd/4th-level columns rise
+// are newly grounded), so this boundary control moves once more to level
+// 21 (a pure implementation-gate check, since PF1 has no 21st character
+// level).
 #[test]
-fn ranger_level_20_is_not_promoted_by_this_slice() {
-    let level_20 = RANGER_LEVEL10_FIXTURE.replace("class:ranger:10", "class:ranger:20");
-    let input = load(&level_20);
+fn ranger_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = RANGER_LEVEL10_FIXTURE.replace("class:ranger:10", "class:ranger:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -305,7 +310,7 @@ fn ranger_level_20_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")
                 || e.id.starts_with("class_feature.ranger.")),
-        "level-20 Ranger must not gain any bounded ranger explanation: {:?}",
+        "level-21 Ranger must not gain any bounded ranger explanation: {:?}",
         computation.explanations
     );
 }

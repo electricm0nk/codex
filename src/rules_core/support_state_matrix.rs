@@ -458,7 +458,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd18_ranger_level16_improved_evasion.rs + \
     tests/sd18_ranger_level17_hide_in_plain_sight.rs + \
     tests/sd18_ranger_level18_widening.rs + \
-    tests/sd18_ranger_level19_widening.rs";
+    tests/sd18_ranger_level19_widening.rs + \
+    tests/sd18_ranger_level20_widening.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -4582,7 +4583,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7/ \
                             level-8/level-9/level-10/level-11/level-12/level-13/level-14/ \
-                            level-15/level-16/level-17/level-18/level-19 \
+                            level-15/level-16/level-17/level-18/level-19/level-20 \
                             chassis baseline, with base attack bonus, base save \
                             progression, Track, the favored-enemy flat surface, the \
                             combat-style choice-and-bonus-feat recognition, (level 3) \
@@ -4632,8 +4633,17 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             identity/recognition record only, mirroring Ranger's own Improved \
                             Evasion idiom exactly, plus a genuine +2-to-+4 rise on the \
                             already-existing Quarry insight attack-roll bonus explanation) plus \
-                            the base spells-per-day table's own level-19 row, all grounded for \
-                            real, and the later spell burden still blocked",
+                            the base spells-per-day table's own level-19 row, and (level 20) \
+                            the Favored Enemy rule's own 20th-level (final) interval (fifth \
+                            enemy-type selection plus its own bonus-increase target choice, \
+                            widened to the five-enemy set) plus Master Hunter (a brand-new \
+                            20th-level capstone, grounded as a bounded grant-only identity \
+                            record, mirroring the Paladin Holy Champion capstone idiom exactly) \
+                            plus the base spells-per-day table's own level-20 row, all grounded \
+                            for real, and the later spell burden still blocked. This row's own \
+                            per-level arithmetic-widening frontier is now CLOSED at level 20, \
+                            the final level within PF1's 1-20 character-level cap for this \
+                            class row",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -5254,12 +5264,51 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     tests/sd18_ranger_level14_widening.rs, all moved to a level-20 boundary; \
                     tests/sd18_ranger_level18_widening.rs's own level-19 negative-control test \
                     was removed rather than moved, since level 19 is now itself the \
-                    supported/grounded row.",
+                    supported/grounded row. The SD18 cycle-2026-07-16T1600 slice \
+                    (tests/sd18_ranger_level20_widening.rs) widens the level-range gate once \
+                    more to level 20, extending base attack to level 20 (full BAB) while both \
+                    good saves (Fortitude, Reflex) genuinely rise to 12 (20/2+2) and poor Will \
+                    stays 6 (20/3, an integer-division coincidence with level 19) — verified \
+                    independently against two primary sources, d20pfsrd and the Archives of \
+                    Nethys aonprd.com mirror, byte-for-byte agreement. The class table's \
+                    20th-level \"Special\" column reads \"5th favored enemy, master hunter\". \
+                    This slice grounds the Favored Enemy rule's own 20th-level (final) \
+                    interval (RANGER_FAVORED_ENEMY_FIFTH_INTERVAL_LEVEL, the exact structural \
+                    mirror of the already-grounded 15th-level interval): a fifth \
+                    favored-enemy-type selection plus its own bonus-increase target choice, \
+                    widened to the five-enemy set, stacking with the 5th/10th/15th-level \
+                    increases when all four name the same enemy (2 base + 2 + 2 + 2 + 2 = \
+                    +10 at the ceiling). It also grounds Master Hunter as a bounded \
+                    grant-only identity record (value 0, mirroring the Paladin Holy Champion \
+                    capstone idiom exactly, including the level-gate absence/grant if/else \
+                    shape) — no action-economy engine, no attack-resolution engine, and no \
+                    saving-throw-resolution engine exists anywhere in this codebase, so the \
+                    standard-action full-attack-bonus attack and its Fortitude-save-or-die \
+                    effect are never applied to any actual roll. The same slice also widens \
+                    the base spells-per-day table to level 20 (\"4/4/3/3\", verified \
+                    independently against both primary sources): the 1st/3rd-level columns \
+                    stay 4/3 unchanged, and the 2nd/4th-level columns both genuinely rise (3 \
+                    to 4, 2 to 3); the spell-level access ladder stays at 4. Level 20 is NOT a \
+                    Favored Terrain interval (next would land at 23rd, out of scope) and NOT a \
+                    Combat Style Feat level (feats land at 2/6/10/14/18, the last already \
+                    grounded), so no other new record appears. This slice also fixed five \
+                    stale sibling negative controls (allowlist/boundary-control failure mode) \
+                    that asserted level 20 as claim-blocked: tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, tests/sd18_ranger_level12_widening.rs, \
+                    tests/sd18_ranger_level13_widening.rs, and \
+                    tests/sd18_ranger_level14_widening.rs, all moved to a level-21 boundary (a \
+                    pure implementation-gate check, since PF1 has no 21st character level); \
+                    tests/sd18_ranger_level19_widening.rs's own level-20 negative-control test \
+                    was removed rather than moved, since level 20 is now itself the \
+                    supported/grounded row. This row's own per-level arithmetic-widening \
+                    frontier is now CLOSED at level 20, the final level within PF1's 1-20 \
+                    character-level cap for this class row.",
                 next_required_uplift: "ground the ranger Wisdom bonus-spells and \
                     prepared-posture/spell-source-lineage burdens now that the caster-level \
                     gate, the access ladder (now reaching 4th-level spells), the base per-day \
-                    counts, and the base spell-save DCs are all grounded, then Ranger \
-                    level-20 progression (the final PF1 1-20 level cap ceiling), a \
+                    counts, and the base spell-save DCs are all grounded; this row's own \
+                    per-level arithmetic-widening frontier is CLOSED at level 20, the final \
+                    PF1 1-20 level cap ceiling, so remaining widening work is a \
                     favored-terrain and favored-enemy conditional-application engine, \
                     execution of any of the five recognized combat-style bonus feats' own \
                     mechanics, Hunter's Bond ally-bonus application and the animal-companion \
