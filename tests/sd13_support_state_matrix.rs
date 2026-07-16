@@ -605,14 +605,19 @@ fn non_human_interaction_row_is_unverified_and_observed() {
 }
 
 #[test]
-fn seed_contains_no_supported_rows() {
+fn seed_contains_no_unexpectedly_supported_rows() {
+    // school.abjuration/illusion.spell_reachability are the first two rows
+    // ever legitimately promoted to Supported, by SD-19's operator-driven
+    // UI-surfacing work (2026-07-16, see support_state_matrix.rs's own
+    // grounding text on those two rows) -- excluded here, not an
+    // unintended promotion.
     let matrix = matrix();
     assert!(
-        !matrix
-            .rows
-            .iter()
-            .any(|r| r.support_state == SupportState::Supported),
-        "the initial seed must not silently promote any row to Supported"
+        !matrix.rows.iter().any(|r| r.support_state == SupportState::Supported
+            && r.row_id != "school.abjuration.spell_reachability"
+            && r.row_id != "school.illusion.spell_reachability"),
+        "no row may be silently promoted to Supported outside the two named, \
+         intentionally-promoted SD-19 rows"
     );
 }
 

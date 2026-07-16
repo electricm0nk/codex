@@ -226,7 +226,11 @@ fn arms_armor_matrix_row_reflects_the_grounded_reachability_proof() {
         .expect("expected an Equipment(ArmsArmor) row in the seeded matrix");
 
     assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    // Promoted from Computed to ProductVisible by SD-19's operator-driven
+    // UI-surfacing work (2026-07-16): Longsword and Chain Shirt are surfaced
+    // live in the desktop app's Character Sheet Gear tab. support_state stays
+    // Partial since Banded Mail/Armor Spikes remain UI-invisible.
+    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         row.grounding_ref.contains("sd19_equipment_arms_armor"),
         "expected the row's grounding_ref to cite this cycle's proof test, got: {}",

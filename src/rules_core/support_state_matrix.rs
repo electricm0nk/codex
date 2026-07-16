@@ -6765,22 +6765,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell_id_resolve when selected on CharacterInput.spells_selected, and \
                     present in CorpusPilotReceipt.corpus_derived.school_coverage[Abjuration] \
                     after a call to compute_pilot_with_corpus",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_ABJURATION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 73 real-corpus Abjuration spells resolve via \
                     spell_id_resolve and appear in school_coverage[Abjuration].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
-                    bootstrap Alarm cell, but the seam computes no spell slot math, no \
+                    bootstrap Alarm cell; the seam still computes no spell slot math, no \
                     spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
-                    §1.3, permanently out of scope for this seam); evidence_tier stays Computed \
-                    until the operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible (operator-driven, \
-                    not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; the remaining structural gaps (spell slot math, spellbook \
-                    posture, spell save DCs) are a future SD-N's scope per decisions.md §1.3, \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. Surfaced live \
+                    in the desktop app's Character Sheet Spells tab \
+                    (apps/desktop/src/characterHub/CharacterSheet.tsx's SpellsTab, wired through \
+                    compute_pilot_with_corpus via the create_character/load_saved_character \
+                    Tauri commands and a bundled corpus-fixture set in \
+                    apps/desktop/src-tauri/src/sd19_corpus.rs), satisfying the loop \
+                    instruction's own definition of Supported/Product-visible \
+                    (operator-driven UI surfacing, 2026-07-16)",
+                next_required_uplift: "none for reachability; the remaining structural gaps \
+                    (spell slot math, spellbook posture, spell save DCs) are a future SD-N's \
+                    scope per decisions.md §1.3, \
                     not a further per-cycle widening of this row",
             },
             SupportStateRow {
@@ -6910,22 +6915,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     spell_id_resolve when selected on CharacterInput.spells_selected, and \
                     present in CorpusPilotReceipt.corpus_derived.school_coverage[Illusion] \
                     after a call to compute_pilot_with_corpus",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_ILLUSION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 47 real-corpus Illusion spells resolve via \
                     spell_id_resolve and appear in school_coverage[Illusion].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
-                    bootstrap table cell, but the seam computes no spell slot math, no \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
                     spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
-                    §1.3, permanently out of scope for this seam); evidence_tier stays Computed \
-                    until the operator surfaces this reachability in a live UI, per the loop \
-                    instruction's own definition of Supported/Product-visible (operator-driven, \
-                    not loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; the remaining structural gaps (spell slot math, spellbook \
-                    posture, spell save DCs) are a future SD-N's scope per decisions.md §1.3, \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. Surfaced live \
+                    in the desktop app's Character Sheet Spells tab \
+                    (apps/desktop/src/characterHub/CharacterSheet.tsx's SpellsTab, wired through \
+                    compute_pilot_with_corpus via the create_character/load_saved_character \
+                    Tauri commands and a bundled corpus-fixture set in \
+                    apps/desktop/src-tauri/src/sd19_corpus.rs), satisfying the loop \
+                    instruction's own definition of Supported/Product-visible \
+                    (operator-driven UI surfacing, 2026-07-16)",
+                next_required_uplift: "none for reachability; the remaining structural gaps \
+                    (spell slot math, spellbook posture, spell save DCs) are a future SD-N's \
+                    scope per decisions.md §1.3, \
                     not a further per-cycle widening of this row",
             },
             SupportStateRow {
@@ -7031,7 +7041,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
                     compute_pilot_with_corpus",
                 support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD19_ARMS_ARMOR_EQUIPMENT_TEST,
                 blocker_or_lossiness_note: "the sample (Longsword, Banded Mail, Armor \
@@ -7044,12 +7054,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
                     the seam's bounded-baseline equipment-effect computation is a \
                     documented non-goal of the capability slice (scope-draft.md §1.1), not \
-                    this cycle's job; evidence_tier stays Computed until the operator \
-                    surfaces this reachability in a live UI, per the loop instruction's own \
-                    definition of Supported/Product-visible (operator-driven, not \
-                    loop-driven)",
-                next_required_uplift: "operator UI surfacing to promote evidence_tier to \
-                    Product-visible; widening the sample toward exhaustive \
+                    this cycle's job. Evidence_tier is promoted to Product-visible because \
+                    Longsword and Chain Shirt (the latter's fixture added for this UI slice) \
+                    are surfaced live in the desktop app's Character Sheet Gear tab \
+                    (apps/desktop/src/characterHub/CharacterSheet.tsx's GearTab, wired through \
+                    compute_pilot_with_corpus via the create_character/load_saved_character \
+                    Tauri commands and a bundled corpus-fixture set in \
+                    apps/desktop/src-tauri/src/sd19_corpus.rs, 2026-07-16) — but support_state \
+                    stays Partial, not Supported: Banded Mail and Armor Spikes remain grounded \
+                    only by the automated test above, not yet UI-visible, and this row's \
+                    definition of \"every named sample\" is not yet fully satisfied",
+                next_required_uplift: "widen the UI-visible sample to Banded Mail and Armor \
+                    Spikes (or narrow this row's named sample to match what the UI shows) to \
+                    reach full Supported/Product-visible; separately, widening the sample toward exhaustive \
                     cr_equip_arms_armor.lst coverage, extending the table store's bootstrap \
                     entry beyond Longsword, and populating derived_stats from corpus \
                     BONUS:/ACCHECK:/MAXDEX: tokens are future cycles' or a future SD-N's \

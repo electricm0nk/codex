@@ -651,12 +651,14 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
     assert_eq!(monk.support_state, SupportState::Partial);
     assert_eq!(monk.evidence_tier, EvidenceTier::Computed);
 
-    // No row is silently promoted to Supported by this slice.
+    // No row is silently promoted to Supported by this slice. (school.abjuration/
+    // illusion.spell_reachability were later promoted to Supported/Product-visible
+    // by SD-19's operator-driven UI-surfacing work, 2026-07-16 -- excluded here,
+    // not an unintended promotion by this slice.)
     assert!(
-        !matrix
-            .rows
-            .iter()
-            .any(|r| r.support_state == SupportState::Supported),
+        !matrix.rows.iter().any(|r| r.support_state == SupportState::Supported
+            && r.row_id != "school.abjuration.spell_reachability"
+            && r.row_id != "school.illusion.spell_reachability"),
         "the paladin-decomposition slice must not promote any row to Supported"
     );
 }

@@ -307,7 +307,12 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         !matrix
             .rows
             .iter()
-            .any(|r| r.support_state == SupportState::Supported
+            // school.abjuration/illusion.spell_reachability were later promoted to
+            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
+            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
+            .any(|r| (r.support_state == SupportState::Supported
+                && r.row_id != "school.abjuration.spell_reachability"
+                && r.row_id != "school.illusion.spell_reachability")
                 || r.support_state == SupportState::Lossy),
         "the half-orc slice must not promote any row to Supported or Lossy"
     );

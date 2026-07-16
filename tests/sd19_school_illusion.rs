@@ -197,8 +197,11 @@ fn illusion_matrix_row_reflects_the_grounded_reachability_proof() {
         .find(|r| r.subject_type == MatrixSubjectType::School(Pf1SchoolId::Illusion))
         .expect("expected a School(Illusion) row in the seeded matrix");
 
-    assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    // Promoted to Supported/Product-visible by SD-19's operator-driven
+    // UI-surfacing work (2026-07-16): surfaced live in the desktop app's
+    // Character Sheet Spells tab.
+    assert_eq!(row.support_state, SupportState::Supported);
+    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         row.grounding_ref.contains("sd19_school_illusion"),
         "expected the row's grounding_ref to cite this cycle's proof test, got: {}",
