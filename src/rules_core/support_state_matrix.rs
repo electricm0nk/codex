@@ -454,7 +454,8 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd18_ranger_level15_widening.rs + \
     tests/sd18_ranger_level16_improved_evasion.rs + \
     tests/sd18_ranger_level17_hide_in_plain_sight.rs + \
-    tests/sd18_ranger_level18_widening.rs";
+    tests/sd18_ranger_level18_widening.rs + \
+    tests/sd18_ranger_level19_widening.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -4319,7 +4320,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7/ \
                             level-8/level-9/level-10/level-11/level-12/level-13/level-14/ \
-                            level-15/level-16/level-17/level-18 \
+                            level-15/level-16/level-17/level-18/level-19 \
                             chassis baseline, with base attack bonus, base save \
                             progression, Track, the favored-enemy flat surface, the \
                             combat-style choice-and-bonus-feat recognition, (level 3) \
@@ -4364,8 +4365,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             terrain) plus the FIFTH combat-style bonus feat (an open-ended, \
                             non-restricted-list identity record, mirroring the fourth bonus \
                             feat's own idiom exactly) plus the base spells-per-day table's own \
-                            level-18 row, all grounded for real, and the later spell burden \
-                            still blocked",
+                            level-18 row, and (level 19) Improved Quarry (an upgrade of the \
+                            11th-level Quarry identity, grounded as a bounded +0 \
+                            identity/recognition record only, mirroring Ranger's own Improved \
+                            Evasion idiom exactly, plus a genuine +2-to-+4 rise on the \
+                            already-existing Quarry insight attack-roll bonus explanation) plus \
+                            the base spells-per-day table's own level-19 row, all grounded for \
+                            real, and the later spell burden still blocked",
                 support_state: SupportState::Partial,
                 evidence_tier: EvidenceTier::Computed,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
@@ -4953,19 +4959,53 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     tests/sd18_ranger_level14_widening.rs, all moved to a level-19 boundary; \
                     tests/sd18_ranger_level17_hide_in_plain_sight.rs's own level-18 \
                     negative-control test was removed rather than moved, since level 18 is now \
-                    itself the supported/grounded row.",
+                    itself the supported/grounded row. The SD18 cycle-2026-07-16T3200 slice \
+                    (tests/sd18_ranger_level19_widening.rs) widens the level-range gate once \
+                    more to level 19, extending base attack to level 19 (full BAB) while both \
+                    good saves stay 11 (19/2+2) and poor Will stays 6 (19/3), both \
+                    integer-division coincidences with level 18 — verified independently \
+                    against two primary sources, d20pfsrd and the Archives of Nethys \
+                    aonprd.com mirror, byte-for-byte agreement. The class table's 19th-level \
+                    \"Special\" column reads \"Improved quarry\": an UPGRADE of the \
+                    already-grounded 11th-level Quarry identity, the exact structural mirror \
+                    of Improved Evasion's own upgrade of Evasion. This slice grounds a new \
+                    bounded grant-only identity record naming the free-action reselection \
+                    (up from a standard action), take-20-while-tracking (up from take 10), and \
+                    reduced 10-minute reselection cooldown (down from 24 hours/1 hour) \
+                    upgrades, pushed only at/above the level-19 gate with no separate absence \
+                    record below it, mirroring Evasion/Improved Evasion's own no-else-branch \
+                    shape. It also grounds a genuine rise on the already-existing Quarry \
+                    insight attack-roll bonus explanation, from +2 to +4, mirroring the Bard \
+                    Inspire Competence tiered-magnitude idiom (same explanation id, larger \
+                    value at the higher tier). The same slice also widens the base \
+                    spells-per-day table to level 19 (\"4/3/3/2\", verified independently \
+                    against both primary sources): the 1st/2nd/4th-level columns stay 4/3/2 \
+                    unchanged, and the 3rd-level column genuinely rises from 2 to 3; the \
+                    spell-level access ladder stays at 4. Level 19 is NOT a Favored Enemy \
+                    interval (next lands at 20th), NOT a Favored Terrain interval (next lands \
+                    at 23rd, out of scope), and NOT a Combat Style Feat level (feats land at \
+                    2/6/10/14/18), so no other new record appears. This slice also fixed five \
+                    stale sibling negative controls (allowlist/boundary-control failure mode) \
+                    that asserted level 19 as claim-blocked: tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, tests/sd18_ranger_level12_widening.rs, \
+                    tests/sd18_ranger_level13_widening.rs, and \
+                    tests/sd18_ranger_level14_widening.rs, all moved to a level-20 boundary; \
+                    tests/sd18_ranger_level18_widening.rs's own level-19 negative-control test \
+                    was removed rather than moved, since level 19 is now itself the \
+                    supported/grounded row.",
                 next_required_uplift: "ground the ranger Wisdom bonus-spells and \
                     prepared-posture/spell-source-lineage burdens now that the caster-level \
                     gate, the access ladder (now reaching 4th-level spells), the base per-day \
                     counts, and the base spell-save DCs are all grounded, then Ranger \
-                    level-19+ progression, a favored-terrain and favored-enemy \
-                    conditional-application engine, execution of any of the five recognized \
-                    combat-style bonus feats' own mechanics, Hunter's Bond ally-bonus \
-                    application and the animal-companion stat block/advancement subsystem, a \
-                    terrain-detection/movement-resolution engine for Woodland Stride's own \
-                    effect, a tracking-penalty-application engine for Swift Tracker's own \
-                    effect, a target-selection/conditional-application engine for Quarry's own \
-                    +2 attack-bonus and auto-confirm-critical-threats effects, a \
+                    level-20 progression (the final PF1 1-20 level cap ceiling), a \
+                    favored-terrain and favored-enemy conditional-application engine, \
+                    execution of any of the five recognized combat-style bonus feats' own \
+                    mechanics, Hunter's Bond ally-bonus application and the animal-companion \
+                    stat block/advancement subsystem, a terrain-detection/movement-resolution \
+                    engine for Woodland Stride's own effect, a tracking-penalty-application \
+                    engine for Swift Tracker's own effect, a target-selection/ \
+                    conditional-application engine for Quarry's/Improved Quarry's own \
+                    attack-bonus and auto-confirm-critical-threats effects, a \
                     Stealth-check-execution engine for Camouflage's and Hide in Plain Sight's \
                     own effects, a saving-throw-resolution/damage-resolution engine for \
                     Evasion's and Improved Evasion's own effects, then SD13-E4 ranger spell \

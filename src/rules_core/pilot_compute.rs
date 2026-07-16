@@ -720,8 +720,24 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // any named options beyond the 10th-level tier) — plus the base
 // spells-per-day table's own level-18 row (4/3/2/2, the 4th-level column
 // genuinely rising from 1 to 2, numerically identical to the already-
-// landed Paladin level-18 row). Nothing here grounds level 19+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 18;
+// landed Paladin level-18 row). A still later SD18 slice
+// (cycle-2026-07-16T3200) widens the gate once more to level 19: base
+// attack bonus genuinely rises to 19 (full BAB), while both good saves
+// stay 11 (19/2+2) and poor Will stays 6 (19/3), both integer-division
+// coincidences with level 18; the level-19 "Special" column reads
+// "Improved quarry" (verified independently against d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, both byte-for-byte identical) —
+// an UPGRADE of the already-grounded 11th-level Quarry identity
+// (`RANGER_QUARRY_LEVEL`), the exact structural mirror of Improved
+// Evasion's own upgrade of Evasion: a new bounded grant-only identity
+// record (`RANGER_IMPROVED_QUARRY_LEVEL`) names the free-action
+// reselection, take-20-while-tracking, and reduced 10-minute cooldown
+// upgrades, while the already-existing `quarry_attack_bonus` explanation
+// genuinely rises from +2 to +4 on the same id, mirroring the Bard
+// Inspire Competence tiered-magnitude idiom — plus the base
+// spells-per-day table's own level-19 row (4/3/3/2, the 3rd-level column
+// genuinely rising from 2 to 3). Nothing here grounds level 20 Ranger.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 19;
 
 /// PF1 Core Rulebook level gate at which Camouflage is granted (verified
 /// independently against two primary sources: both d20pfsrd and the
@@ -817,6 +833,26 @@ const RANGER_QUARRY_LEVEL: u8 = 11;
 /// restricted-list validation, and no matching against the ranger's own
 /// recognized favored-enemy types.
 const RANGER_QUARRY_CHOICE_ID: &str = "choice:ranger_quarry_target";
+
+/// PF1 Core Rulebook level gate at which Quarry improves (19th level,
+/// verified independently against two primary sources: d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror both list "Improved quarry" as
+/// the sole Ranger 19th-level "Special" column entry, with identical rule
+/// text): "At 19th level, the ranger's ability to hunt his quarry
+/// improves. He can now select a quarry as a free action, and can now
+/// take 20 while using Survival to track his quarry, while moving at
+/// normal speed without penalty. His insight bonus to attack his quarry
+/// increases to +4. If his quarry is killed or dismissed, he can select
+/// a new one after 10 minutes have passed." This is the exact structural
+/// mirror of Improved Evasion's own upgrade of Evasion: the free-action
+/// reselection, take-20-while-tracking, and reduced-cooldown behaviors
+/// are grounded as a bounded grant-only identity record (mirroring the
+/// Improved Evasion idiom exactly, pushed only at/above this gate with
+/// no separate absence record below it); the insight attack-roll bonus
+/// increase is grounded by widening the already-existing
+/// `quarry_attack_bonus` magnitude on the same explanation id, mirroring
+/// the Bard Inspire Competence tiered-magnitude idiom.
+const RANGER_IMPROVED_QUARRY_LEVEL: u8 = 19;
 
 /// PF1 Core Rulebook level gate at which the Favored Enemy rule's 5th-level
 /// interval is granted (verified independently against two primary sources:
@@ -9569,18 +9605,79 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             });
         }
 
+        // Grounded (SD18 cycle-2026-07-16T3200): the Quarry insight attack-roll
+        // bonus genuinely rises from +2 to +4 at the 19th-level Improved Quarry
+        // gate (RANGER_IMPROVED_QUARRY_LEVEL), verified independently against
+        // two primary PF1 sources (both byte-for-byte identical: "His insight
+        // bonus to attack his quarry increases to +4"). Reuses the
+        // already-existing explanation id, mirroring the Bard Inspire
+        // Competence tiered-magnitude idiom (same id, larger value at the
+        // higher tier) rather than minting a new id for the same magnitude
+        // family.
+        let quarry_attack_bonus = if level >= RANGER_IMPROVED_QUARRY_LEVEL {
+            4
+        } else {
+            2
+        };
+        let quarry_tier_note = if level >= RANGER_IMPROVED_QUARRY_LEVEL {
+            "a flat +2 base insight bonus, raised to +4 by Improved Quarry at 19th ranger level"
+        } else {
+            "a flat +2 insight bonus (rises to +4 at 19th ranger level via Improved Quarry, out \
+             of scope below that gate)"
+        };
         explanations.push(ComputationExplanation {
             id: "class_chassis.ranger.quarry_attack_bonus".to_owned(),
-            value: 2,
+            value: quarry_attack_bonus,
             detail: format!(
-                "Ranger Quarry attack-roll bonus (PF1 Core Rulebook, level {level}): a flat +2 \
-                 insight bonus on attack rolls made against the ranger's quarry. This grounds \
-                 only the flat +2 magnitude; no target-selection engine and no \
+                "Ranger Quarry attack-roll bonus (PF1 Core Rulebook, level {level}): {quarry_tier_note} \
+                 on attack rolls made against the ranger's quarry. This grounds only the flat \
+                 {quarry_attack_bonus} magnitude; no target-selection engine and no \
                  conditional-application engine is implemented, so whether any specific attack \
                  is actually made against the quarry is never resolved and no combat baseline \
                  is modified by this record"
             ),
         });
+
+        // Grounded (SD18 cycle-2026-07-16T3200): Improved Quarry, the
+        // 19th-level Ranger "Special" column entry, verified independently
+        // against two primary PF1 sources (d20pfsrd and the Archives of
+        // Nethys aonprd.com mirror both list "Improved quarry" as the sole
+        // Ranger 19th-level special feature entry, with identical rule
+        // text): "At 19th level, the ranger's ability to hunt his quarry
+        // improves. He can now select a quarry as a free action, and can
+        // now take 20 while using Survival to track his quarry, while
+        // moving at normal speed without penalty... If his quarry is
+        // killed or dismissed, he can select a new one after 10 minutes
+        // have passed." Grounded as a bounded +0 identity/recognition
+        // record only at/above the gate, mirroring exactly how Ranger's own
+        // Improved Evasion upgrade of Evasion was grounded (no separate
+        // absence record below the gate) — no action-economy engine and no
+        // Survival-check-execution engine exists in this codebase, so
+        // neither the free-action reselection nor the take-20 tracking
+        // behavior is ever applied to any actual roll or action
+        // resolution. The insight attack-roll bonus increase (+2 to +4) is
+        // grounded separately above, on the already-existing
+        // `quarry_attack_bonus` explanation id.
+        if level >= RANGER_IMPROVED_QUARRY_LEVEL {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.ranger.improved_quarry".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Ranger Improved Quarry granted at ranger level {level} (PF1 Core \
+                     Rulebook, 19th-level ranger class feature): the ranger's ability to hunt \
+                     his quarry improves — he can now select a quarry as a free action \
+                     (up from a standard action) and can now take 20 while using Survival to \
+                     track his quarry while moving at normal speed without penalty (up from \
+                     take 10); if his quarry is killed or dismissed, he can select a new one \
+                     after 10 minutes have passed (down from the base Quarry cooldown of 24 \
+                     hours, or 1 hour after the quarry is confirmed dead). This is a bounded \
+                     identity/recognition record only (value 0, non-fabricated): no \
+                     action-economy engine and no Survival-check-execution engine exists \
+                     anywhere in this codebase to apply it, so this grounds no actual \
+                     free-action resolution, take-20 resolution, or cooldown-state tracking"
+                ),
+            });
+        }
     }
 
     // Grounded (SD18 cycle-2026-07-15T0900): Camouflage, the 12th-level
@@ -9731,7 +9828,12 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // Archives of Nethys aonprd.com mirror, byte-for-byte agreement: the
     // 1st/2nd/3rd-level columns stay 4/3/2 unchanged, and the 4th-level
     // column genuinely rises from 1 to 2 -- numerically identical to the
-    // already-landed Paladin level-18 row). A
+    // already-landed Paladin level-18 row), and level 19 "4/3/3/2"
+    // (verified independently for the SD18 level-19 widening cycle
+    // against two primary sources, d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror, byte-for-byte agreement: the 1st/2nd/4th-level
+    // columns stay 4/3/2 unchanged, and the 3rd-level column genuinely
+    // rises from 2 to 3). A
     // "0" is a
     // genuine table entry (Wisdom-bonus-spells-only access), NOT an
     // absence — inaccessible spell levels ("—" columns) get no record at
@@ -9752,6 +9854,7 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         16 => [Some(3), Some(3), Some(2), Some(1)],
         17 => [Some(4), Some(3), Some(2), Some(1)],
         18 => [Some(4), Some(3), Some(2), Some(2)],
+        19 => [Some(4), Some(3), Some(3), Some(2)],
         _ => [None, None, None, None],
     };
     for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
