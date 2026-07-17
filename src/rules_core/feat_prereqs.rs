@@ -1,17 +1,20 @@
 //! SD-20 feat prerequisite engine — Epic 3 (`scope-draft.md` §1.3,
 //! `technical-design.md` §2.2).
 //!
-//! Third Epic-3 cycle, third work-unit per `scope-draft.md` §1.3's cycle
-//! order (general feats, then combat, now `ItemCreation`). The first cycle
-//! (`b830769`) landed `FeatCategory::General` after an earlier blocked
-//! cycle (`cycle-2026-07-17T1920`) found the SD-19 table store had no feat
-//! catalog at all — resolved at `04c3d08`, which landed
-//! `rules_tables::crb::feats` (`feat_tables()`, 185 real CRB feat records
-//! across four categories — General 50, Combat 110, ItemCreation 8,
+//! Fourth and FINAL Epic-3 cycle, fourth work-unit per `scope-draft.md`
+//! §1.3's cycle order (general feats, then combat, then `ItemCreation`, now
+//! `Metamagic`). The first cycle (`b830769`) landed `FeatCategory::General`
+//! after an earlier blocked cycle (`cycle-2026-07-17T1920`) found the SD-19
+//! table store had no feat catalog at all — resolved at `04c3d08`, which
+//! landed `rules_tables::crb::feats` (`feat_tables()`, 185 real CRB feat
+//! records across four categories — General 50, Combat 110, ItemCreation 8,
 //! Metamagic 17). The second cycle (`c15983d`) landed `FeatCategory::Combat`.
-//! This cycle lands the third category, `FeatCategory::ItemCreation` — see
-//! `feat_prereqs/item_creation.rs`, which mirrors `feat_prereqs/general.rs`
-//! and `feat_prereqs/combat.rs` exactly.
+//! The third cycle (`ce4a251`) landed `FeatCategory::ItemCreation`. This
+//! cycle lands the fourth and final category, `FeatCategory::Metamagic` —
+//! see `feat_prereqs/metamagic.rs`, which mirrors `feat_prereqs/general.rs`,
+//! `feat_prereqs/combat.rs`, and `feat_prereqs/item_creation.rs` exactly.
+//! **This closes Epic 3**: every feat category in the landed CRB feat
+//! catalog now has a landed per-category evaluation module.
 //!
 //! Reads the feat catalog directly (`rules_tables::crb::feats::feat_tables()`)
 //! per `technical-design.md` §2.0's table-store access convention (no
@@ -48,6 +51,7 @@
 pub mod combat;
 pub mod general;
 pub mod item_creation;
+pub mod metamagic;
 
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::feats::FeatCategory;
@@ -101,14 +105,12 @@ pub struct FeatEffects {
 
 /// Dispatches by category to the per-category evaluation function, the
 /// same dispatch shape `spellbook::compute_spellbook_coverage` and
-/// `equipment_effects::compute_equipment_effects` already use. Only
-/// `FeatCategory::General`, `FeatCategory::Combat`, and
-/// `FeatCategory::ItemCreation` have a landed per-category module as of
-/// this cycle; `FeatCategory::Metamagic` honestly reports "not yet
-/// supported by this engine" rather than fabricating an eligibility
-/// verdict — a future cycle's `feat_prereqs/metamagic.rs` file extends
-/// this match without changing this dispatch's shape (mirrors
-/// `spellbook.rs`'s own note on unlanded schools).
+/// `equipment_effects::compute_equipment_effects` already use. As of this
+/// cycle all four `FeatCategory` variants — `General`, `Combat`,
+/// `ItemCreation`, and `Metamagic` — have a landed per-category module,
+/// closing Epic 3 (`scope-draft.md` §1.3): every feat category in
+/// `rules_tables::crb::feats::feat_tables()` now has a landed evaluation
+/// path.
 pub fn evaluate_feat_prerequisites(feat: &FeatKey) -> PrerequisiteEvaluation {
     match feat.category {
         FeatCategory::General => {
@@ -147,17 +149,18 @@ pub fn evaluate_feat_prerequisites(feat: &FeatKey) -> PrerequisiteEvaluation {
                 warnings: Vec::new(),
             }
         }
-        FeatCategory::Metamagic => PrerequisiteEvaluation {
-            is_eligible: false,
-            failing_prerequisites: vec![FailedPrerequisite {
-                reason: format!(
-                    "feat category {:?} is not yet supported by the feat prerequisite engine \
-                     (only General, Combat, and ItemCreation feats are landed as of this cycle)",
-                    feat.category
-                ),
-            }],
-            warnings: Vec::new(),
-        },
+        FeatCategory::Metamagic => {
+            let result = metamagic::evaluate_metamagic_feat_prerequisites(&feat.feat_id);
+            PrerequisiteEvaluation {
+                is_eligible: result.is_eligible,
+                failing_prerequisites: result
+                    .failing_prerequisites
+                    .into_iter()
+                    .map(|reason| FailedPrerequisite { reason })
+                    .collect(),
+                warnings: Vec::new(),
+            }
+        }
     }
 }
 
@@ -201,10 +204,17 @@ pub fn compute_feat_effects(feat: &FeatKey) -> FeatEffects {
                 },
             }
         }
-        FeatCategory::Metamagic => FeatEffects {
-            feat_id: feat.feat_id.clone(),
-            description: None,
-            table_cell: None,
+        FeatCategory::Metamagic => match metamagic::resolve_metamagic_feat_effect(&feat.feat_id) {
+            Some(effect) => FeatEffects {
+                feat_id: effect.feat_id,
+                description: Some(effect.description),
+                table_cell: Some(effect.table_cell),
+            },
+            None => FeatEffects {
+                feat_id: feat.feat_id.clone(),
+                description: None,
+                table_cell: None,
+            },
         },
     }
 }
