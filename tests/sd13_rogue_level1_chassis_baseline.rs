@@ -450,8 +450,8 @@ fn matrix_rogue_row_is_partial_computed_with_all_four_pillars_grounded() {
         .row("class.rogue.bounded_progression")
         .expect("rogue bounded_progression row must exist");
 
-    assert_eq!(rogue.support_state, SupportState::Partial);
-    assert_eq!(rogue.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(rogue.support_state, SupportState::Supported); // promoted by SD-19 Class Progression Catalog browser
+    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         rogue.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -572,6 +572,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the rogue slice must not promote any row to Supported or Lossy"

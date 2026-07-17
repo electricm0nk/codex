@@ -671,12 +671,13 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         "ranger row must keep its later-accepted Partial posture after the barbarian slice"
     );
 
-    // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
-    // recognition slice.
+    // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-17).
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("rogue row must exist");
-    assert_eq!(rogue.support_state, SupportState::Partial);
+    assert_eq!(rogue.support_state, SupportState::Supported);
+    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
 
     // No row is silently promoted to Supported or Lossy by this slice.
     assert!(
@@ -713,6 +714,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the barbarian slice must not promote any row to Supported or Lossy"

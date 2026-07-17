@@ -769,17 +769,18 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // This row stays Partial/Computed.
+    // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-17).
     {
         let row = matrix
             .row("class.rogue.bounded_progression")
             .expect("row class.rogue.bounded_progression must exist");
         assert_eq!(
             row.support_state,
-            SupportState::Partial,
-            "rogue row must stay Partial after the ranger-decomposition slice"
+            SupportState::Supported,
+            "rogue row must stay Supported after the ranger-decomposition slice"
         );
-        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+        assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     }
 
     // Fighter, Monk, Druid, Barbarian, and Cleric rows were later promoted to
@@ -852,6 +853,7 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
                 && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the ranger-decomposition slice must not promote any row to Supported or Lossy"

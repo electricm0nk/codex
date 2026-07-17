@@ -289,18 +289,20 @@ fn matrix_level_1_and_levels_2_10_remain_distinct_rows() {
 }
 
 #[test]
-fn matrix_keeps_rogue_partial_after_its_own_recognition_slice() {
-    // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
-    // recognition slice; this Fighter-L1-widening snapshot preserves that.
+fn matrix_keeps_rogue_supported_after_fighter_l1_widening() {
+    // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-17); this
+    // Fighter-L1-widening snapshot preserves that.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("Rogue row must exist");
     assert_eq!(
         rogue.support_state,
-        SupportState::Partial,
-        "Rogue must remain Partial after the Fighter L1 widening"
+        SupportState::Supported,
+        "Rogue must remain Supported after the Fighter L1 widening"
     );
+    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
 }
 
 #[test]

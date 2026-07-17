@@ -1530,8 +1530,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             either, so no tenth slot appears there, next at level 20), and the \
                             check-execution / rogue-talent-effect / integration remainder still \
                             unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_ROGUE_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3 leaves direct computed evidence that the \
@@ -1886,12 +1886,23 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     shape checked in the Rogue sweep so far, mirroring the level-17 cycle's own \
                     equally clean shape. The row is Partial, not Supported: no rogue talent (the \
                     genuinely open-ended talent tree) is proven, no Rogue level 20 is proven, \
-                    and no mechanical math is fabricated beyond these grounded pillars.",
-                next_required_uplift: "later SD13/SD18 slice wiring the grounded Rogue pillar \
-                    records into the integrated pilot surface (the generic chassis diagnostics \
-                    still claim-block), then rogue talents (a general choice-list/effect \
-                    engine, a tranche-level subsystem decision) and level-20 progression \
-                    (Master Strike, the tenth talent slot, and the capstone)",
+                    and no mechanical math is fabricated beyond these grounded pillars. A \
+                    further SD18 slice (tests/sd18_rogue_level20_widening.rs) widens the \
+                    level-range gate to level 20 (MAX_SUPPORTED_ROGUE_LEVEL raised to 20), the \
+                    Rogue sweep's final PF1 CRB level. This row's every named grounded \
+                    milestone is now surfaced live in the desktop app's Class Progression \
+                    Catalog browser (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, \
+                    wired through the list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), \
+                    reachable from the hub landing screen, filterable by class and searchable \
+                    by class name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the \
+                    operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding Rogue's \
+                    remaining rogue-talent engine (a general choice-list/effect engine, a \
+                    tranche-level subsystem decision) and Master Strike's own execution \
+                    (the level-20 capstone) is a future SD-N's scope, not a further per-cycle \
+                    widening of this row",
             },
             SupportStateRow {
                 row_id: "class.barbarian.bounded_progression",

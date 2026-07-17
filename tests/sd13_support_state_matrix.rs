@@ -247,13 +247,15 @@ fn rogue_row_is_partial_and_computed_with_blocker_note() {
     // The SD13-E3 Rogue chassis recognition slice promoted the row from
     // Blocked to Partial; the SD13-E5 slice grounds the fourth and final
     // named pillar (trapfinding), leaving the row Partial with the
-    // check-execution / rogue-talent / integration remainder named.
+    // check-execution / rogue-talent / integration remainder named. Later
+    // promoted to Supported/ProductVisible by SD-19's Class Progression
+    // Catalog browser UI-surfacing work (2026-07-17).
     let matrix = matrix();
     let rogue = row(&matrix, "class.rogue.bounded_progression");
     assert_eq!(rogue.subject_type, MatrixSubjectType::Class);
     assert_eq!(rogue.subject_id, "class:rogue");
-    assert_eq!(rogue.support_state, SupportState::Partial);
-    assert_eq!(rogue.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(rogue.support_state, SupportState::Supported);
+    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         !rogue.blocker_or_lossiness_note.is_empty(),
         "partial Rogue row must carry a non-empty blocker note"
@@ -647,6 +649,7 @@ fn seed_contains_no_unexpectedly_supported_rows() {
                 && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "no row may be silently promoted to Supported outside the two named, \
          intentionally-promoted SD-19 rows"

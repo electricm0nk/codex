@@ -581,12 +581,13 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     }
 
-    // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
-    // recognition slice.
+    // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-17).
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("rogue row must exist");
-    assert_eq!(rogue.support_state, SupportState::Partial);
+    assert_eq!(rogue.support_state, SupportState::Supported);
+    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
 
     // Sorcerer was later promoted to Partial/Computed by its own SD13-E4
     // decomposition slice (Eschew Materials grounded for real).
@@ -673,6 +674,7 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
                 && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "the paladin-decomposition slice must not promote any row to Supported"
     );

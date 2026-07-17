@@ -597,12 +597,13 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         "ranger row must keep its later-accepted Partial posture after the monk slice"
     );
 
-    // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
-    // recognition slice.
+    // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-17).
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("rogue row must exist");
-    assert_eq!(rogue.support_state, SupportState::Partial);
+    assert_eq!(rogue.support_state, SupportState::Supported);
+    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
 
     // Sorcerer and Bard were later promoted to Partial/Computed by their own
     // SD13-E4 decomposition slices (Eschew Materials, Bardic Knowledge).
@@ -664,6 +665,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "no row may be silently promoted to Supported or Lossy outside the \

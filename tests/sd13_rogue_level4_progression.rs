@@ -392,8 +392,8 @@ fn matrix_rogue_row_names_level_4_widening_and_uncanny_dodge() {
         .row("class.rogue.bounded_progression")
         .expect("rogue bounded_progression row must exist");
 
-    assert_eq!(rogue.support_state, SupportState::Partial);
-    assert_eq!(rogue.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(rogue.support_state, SupportState::Supported); // promoted by SD-19 Class Progression Catalog browser
+    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         rogue.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
