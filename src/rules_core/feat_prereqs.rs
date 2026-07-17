@@ -1,16 +1,17 @@
 //! SD-20 feat prerequisite engine — Epic 3 (`scope-draft.md` §1.3,
 //! `technical-design.md` §2.2).
 //!
-//! Second Epic-3 cycle, second work-unit per `scope-draft.md` §1.3's cycle
-//! order ("one feat category per cycle... general feats" first, `Combat`
-//! next). The first cycle (`b830769`) landed `FeatCategory::General` after
-//! an earlier blocked cycle (`cycle-2026-07-17T1920`) found the SD-19
-//! table store had no feat catalog at all — resolved at `04c3d08`, which
-//! landed `rules_tables::crb::feats` (`feat_tables()`, 185 real CRB feat
-//! records across four categories — General 50, Combat 110, ItemCreation
-//! 8, Metamagic 17). This cycle lands the second category,
-//! `FeatCategory::Combat` — see `feat_prereqs/combat.rs`, which mirrors
-//! `feat_prereqs/general.rs` exactly.
+//! Third Epic-3 cycle, third work-unit per `scope-draft.md` §1.3's cycle
+//! order (general feats, then combat, now `ItemCreation`). The first cycle
+//! (`b830769`) landed `FeatCategory::General` after an earlier blocked
+//! cycle (`cycle-2026-07-17T1920`) found the SD-19 table store had no feat
+//! catalog at all — resolved at `04c3d08`, which landed
+//! `rules_tables::crb::feats` (`feat_tables()`, 185 real CRB feat records
+//! across four categories — General 50, Combat 110, ItemCreation 8,
+//! Metamagic 17). The second cycle (`c15983d`) landed `FeatCategory::Combat`.
+//! This cycle lands the third category, `FeatCategory::ItemCreation` — see
+//! `feat_prereqs/item_creation.rs`, which mirrors `feat_prereqs/general.rs`
+//! and `feat_prereqs/combat.rs` exactly.
 //!
 //! Reads the feat catalog directly (`rules_tables::crb::feats::feat_tables()`)
 //! per `technical-design.md` §2.0's table-store access convention (no
@@ -46,6 +47,7 @@
 
 pub mod combat;
 pub mod general;
+pub mod item_creation;
 
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::feats::FeatCategory;
@@ -100,12 +102,13 @@ pub struct FeatEffects {
 /// Dispatches by category to the per-category evaluation function, the
 /// same dispatch shape `spellbook::compute_spellbook_coverage` and
 /// `equipment_effects::compute_equipment_effects` already use. Only
-/// `FeatCategory::General` and `FeatCategory::Combat` have a landed
-/// per-category module as of this cycle; every other category honestly
-/// reports "not yet supported by this engine" rather than fabricating an
-/// eligibility verdict — a future cycle's `feat_prereqs/<category>.rs`
-/// file extends this match without changing this dispatch's shape
-/// (mirrors `spellbook.rs`'s own note on unlanded schools).
+/// `FeatCategory::General`, `FeatCategory::Combat`, and
+/// `FeatCategory::ItemCreation` have a landed per-category module as of
+/// this cycle; `FeatCategory::Metamagic` honestly reports "not yet
+/// supported by this engine" rather than fabricating an eligibility
+/// verdict — a future cycle's `feat_prereqs/metamagic.rs` file extends
+/// this match without changing this dispatch's shape (mirrors
+/// `spellbook.rs`'s own note on unlanded schools).
 pub fn evaluate_feat_prerequisites(feat: &FeatKey) -> PrerequisiteEvaluation {
     match feat.category {
         FeatCategory::General => {
@@ -132,12 +135,24 @@ pub fn evaluate_feat_prerequisites(feat: &FeatKey) -> PrerequisiteEvaluation {
                 warnings: Vec::new(),
             }
         }
-        FeatCategory::ItemCreation | FeatCategory::Metamagic => PrerequisiteEvaluation {
+        FeatCategory::ItemCreation => {
+            let result = item_creation::evaluate_item_creation_feat_prerequisites(&feat.feat_id);
+            PrerequisiteEvaluation {
+                is_eligible: result.is_eligible,
+                failing_prerequisites: result
+                    .failing_prerequisites
+                    .into_iter()
+                    .map(|reason| FailedPrerequisite { reason })
+                    .collect(),
+                warnings: Vec::new(),
+            }
+        }
+        FeatCategory::Metamagic => PrerequisiteEvaluation {
             is_eligible: false,
             failing_prerequisites: vec![FailedPrerequisite {
                 reason: format!(
                     "feat category {:?} is not yet supported by the feat prerequisite engine \
-                     (only General and Combat feats are landed as of this cycle)",
+                     (only General, Combat, and ItemCreation feats are landed as of this cycle)",
                     feat.category
                 ),
             }],
@@ -172,7 +187,21 @@ pub fn compute_feat_effects(feat: &FeatKey) -> FeatEffects {
                 table_cell: None,
             },
         },
-        FeatCategory::ItemCreation | FeatCategory::Metamagic => FeatEffects {
+        FeatCategory::ItemCreation => {
+            match item_creation::resolve_item_creation_feat_effect(&feat.feat_id) {
+                Some(effect) => FeatEffects {
+                    feat_id: effect.feat_id,
+                    description: Some(effect.description),
+                    table_cell: Some(effect.table_cell),
+                },
+                None => FeatEffects {
+                    feat_id: feat.feat_id.clone(),
+                    description: None,
+                    table_cell: None,
+                },
+            }
+        }
+        FeatCategory::Metamagic => FeatEffects {
             feat_id: feat.feat_id.clone(),
             description: None,
             table_cell: None,
