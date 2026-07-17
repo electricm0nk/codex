@@ -12,4 +12,5 @@ pub mod pilot_view_model;
 pub mod rules_tables;
 pub mod source_content;
 pub mod spell_resolver;
+pub mod spellbook;
 pub mod support_state_matrix;
