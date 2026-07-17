@@ -89,6 +89,19 @@
 //! (`core_rulebook/cr_equip_arms_armor.lst`: `KEY:Longsword (Base)`
 //! carries `CRITRANGE:2` -> threatens 19-20, `KEY:Rapier (Base)` carries
 //! `CRITRANGE:3` -> threatens 18-20).
+//!
+//! This cycle lands the sixth and FINAL work-unit,
+//! `resolve_critical_multiplier`: a weapon's critical-hit damage
+//! multiplier, read directly off its own `CRITMULT:` corpus token via the
+//! identical `equipment_id_resolve` path the other token-reading
+//! work-units use, parsing the corpus's `x<N>` value into the numeric
+//! multiplier. Verified directly against the live corpus
+//! (`core_rulebook/cr_equip_arms_armor.lst`: `KEY:Longsword (Base)`
+//! carries `CRITMULT:x2`, `KEY:Longspear (Base)` carries `CRITMULT:x3`,
+//! `KEY:Scythe (Base)` carries `CRITMULT:x4`). **This closes Epic 6** —
+//! all six damage-class criteria (base-dice, STR-modifier,
+//! weapon-enhancement, feat-effect, critical-threat-range,
+//! critical-multiplier) are now landed.
 
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::equipment_effects::EquipmentEffects;
@@ -426,6 +439,63 @@ fn critical_threat_range_token(record: &EquipmentRecord) -> Option<(u8, u8)> {
         .and_then(|token| token.value.parse::<u8>().ok())
         .filter(|width| (1..=20).contains(width))
         .map(|width| (20 - width + 1, 20))
+}
+
+/// One resolved weapon's critical-hit damage multiplier, with its corpus
+/// provenance. This is the critical-multiplier slice of the eventual
+/// `DamageRoll` (`technical-design.md` §2.5) — the sixth and final Epic 6
+/// work-unit. `critical_multiplier` is the factor a confirmed critical
+/// hit's damage is multiplied by, e.g. `2` for a longsword, `4` for a
+/// scythe.
+#[derive(Debug, Clone, PartialEq)]
+pub struct DamageRollCriticalMultiplier {
+    pub weapon_item_id: String,
+    pub weapon_record_key: String,
+    pub critical_multiplier: u8,
+    pub table_cell: Option<TableCellRef>,
+}
+
+/// The damage-total engine's sixth and final work-unit (SD-20 §1.6):
+/// critical-multiplier. Resolves a weapon selection's `item_id` against
+/// the corpus (same resolver path every prior work-unit uses) and reads
+/// its real `CRITMULT:` token, parsing the corpus's `x<N>` value (e.g.
+/// `x2`, `x3`, `x4`) into the numeric multiplier the eventual
+/// `DamageRoll.critical_multiplier` field carries. Per PF1 (CRB p.187,
+/// "Critical Hits"): on a confirmed critical hit, the weapon's damage is
+/// multiplied by this factor rather than a uniform x2 across every
+/// weapon — a longsword's `CRITMULT:x2` doubles damage, a scythe's
+/// `CRITMULT:x4` quadruples it.
+///
+/// Returns `None` when the item does not resolve against the corpus at
+/// all, or resolves but carries no `CRITMULT:` token (e.g. armor, or any
+/// other non-weapon item) — both are honest absence, not a fabricated
+/// multiplier.
+pub fn resolve_critical_multiplier(
+    weapon_item_id: &str,
+    corpus: &SourcePackageContent,
+) -> Option<DamageRollCriticalMultiplier> {
+    let (record, table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
+    let critical_multiplier = critical_multiplier_token(record)?;
+    let weapon_record_key = equipment_key_token(record)
+        .unwrap_or(&record.name)
+        .to_string();
+
+    Some(DamageRollCriticalMultiplier {
+        weapon_item_id: weapon_item_id.to_string(),
+        weapon_record_key,
+        critical_multiplier,
+        table_cell,
+    })
+}
+
+fn critical_multiplier_token(record: &EquipmentRecord) -> Option<u8> {
+    record
+        .tokens
+        .iter()
+        .find(|token| token.key == "CRITMULT")
+        .and_then(|token| token.value.strip_prefix('x'))
+        .and_then(|digits| digits.parse::<u8>().ok())
+        .filter(|multiplier| *multiplier >= 2)
 }
 
 /// One resolved feat's constant-valued damage contribution, with its
@@ -854,6 +924,48 @@ Adamantine\tKEY:Material ~ Adamantine ~ Weapon\tTYPE:BaseMaterial.MasterworkQual
     #[test]
     fn unrecognized_feat_key_yields_none_not_fabricated() {
         assert!(resolve_feat_damage_effect("Not A Real Feat In The Catalog").is_none());
+    }
+
+    /// Real verbatim tokens copied from `KEY:Longsword (Base)` in
+    /// `core_rulebook/cr_equip_arms_armor.lst` — `CRITMULT:x2`.
+    #[test]
+    fn longsword_critmult_x2_yields_multiplier_2() {
+        let text = "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n";
+        let corpus = corpus_from(text);
+
+        let resolved = resolve_critical_multiplier("Longsword (Base)", &corpus)
+            .expect("Longsword (Base) must resolve");
+        assert_eq!(resolved.critical_multiplier, 2);
+    }
+
+    /// Real verbatim tokens copied from `KEY:Scythe (Base)` in
+    /// `core_rulebook/cr_equip_arms_armor.lst` — `CRITMULT:x4`.
+    #[test]
+    fn scythe_critmult_x4_yields_multiplier_4() {
+        let text = "Scythe\tKEY:Scythe (Base)\tTYPE:Weapon.Melee.Martial\tCOST:18\tWT:10\tCRITMULT:x4\tCRITRANGE:1\tDAMAGE:2d4\n";
+        let corpus = corpus_from(text);
+
+        let resolved = resolve_critical_multiplier("Scythe (Base)", &corpus)
+            .expect("Scythe (Base) must resolve");
+        assert_eq!(resolved.critical_multiplier, 4);
+    }
+
+    #[test]
+    fn armor_record_has_no_critical_multiplier() {
+        let text = "Leather Armor\tKEY:Leather Armor (Base)\tTYPE:Armor.Light\tCOST:10\tWT:15\tACCHECK:0\tMAXDEX:6\tSPELLFAILURE:10\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\n";
+        let corpus = corpus_from(text);
+
+        assert!(resolve_critical_multiplier("Leather Armor (Base)", &corpus).is_none());
+    }
+
+    #[test]
+    fn critical_multiplier_unresolvable_item_yields_none_not_fabricated() {
+        let text = "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n";
+        let corpus = corpus_from(text);
+
+        assert!(
+            resolve_critical_multiplier("item:does-not-exist-in-this-corpus", &corpus).is_none()
+        );
     }
 
     #[test]
