@@ -18,8 +18,9 @@
 //! illusion, necromancy, transmutation, universal). Abjuration
 //! (`spellbook::abjuration`), Conjuration (`spellbook::conjuration`),
 //! Divination (`spellbook::divination`), Enchantment
-//! (`spellbook::enchantment`), Evocation (`spellbook::evocation`), and
-//! Illusion (`spellbook::illusion`) are landed as of this cycle;
+//! (`spellbook::enchantment`), Evocation (`spellbook::evocation`),
+//! Illusion (`spellbook::illusion`), and Necromancy
+//! (`spellbook::necromancy`) are landed as of this cycle;
 //! `compute_spellbook_coverage` dispatches by school and produces a real
 //! `SpellEffect` only for the schools whose per-school contribution
 //! module has landed. Unlanded schools' selections still resolve
@@ -50,6 +51,7 @@ pub mod divination;
 pub mod enchantment;
 pub mod evocation;
 pub mod illusion;
+pub mod necromancy;
 
 use std::collections::BTreeMap;
 
@@ -250,6 +252,16 @@ pub fn compute_spellbook_coverage(
                 table_cell: effect.table_cell,
             }),
             Pf1SchoolId::Illusion => illusion::resolve_illusion_spell_effect(
+                &selection.spell_id,
+            )
+            .map(|effect| SpellEffect {
+                spell_id: effect.spell_id,
+                school,
+                level: effect.level,
+                effect_text: effect.effect_text,
+                table_cell: effect.table_cell,
+            }),
+            Pf1SchoolId::Necromancy => necromancy::resolve_necromancy_spell_effect(
                 &selection.spell_id,
             )
             .map(|effect| SpellEffect {
