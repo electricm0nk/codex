@@ -1,6 +1,6 @@
 ---
 title: SD-20 — Boundary Contract (Epic 1)
-status: in progress (cycle 3 of Epic 1 landed 2026-07-17; CharacterInput permutations, PilotReceipt types, and the printed-sheet cell map landed, boundary-contract parity fixture still open)
+status: closed (cycle 4 of Epic 1 landed 2026-07-17; CharacterInput permutations, PilotReceipt types, the printed-sheet cell map, and the boundary-contract parity fixture all landed — Epic 1 fully closed)
 mirrors: /home/ubuntu/workspace/programs/codex/requirements/SD-20-rules-engine-completeness/technical-design.md §1
 ---
 
@@ -19,12 +19,11 @@ Up grant (epic 7), and no integration closure (epic 8) may introduce a new
 extending this contract and adding the parity test fixture at
 `tests/fixtures/wire/sd20/<criterion>.json`.
 
-This artifact lands progressively across Epic 1's cycles (per the loop
-instruction's Step 2: `CharacterInput` types first, then `PilotReceipt`
-types, then the printed-sheet cell map, then the first parity fixture for
-the boundary contract itself). Sections below are filled in as their
-owning cycle lands; unfilled sections say so explicitly rather than being
-silently absent.
+This artifact landed progressively across Epic 1's four cycles (per the
+loop instruction's Step 2: `CharacterInput` types first, then
+`PilotReceipt` types, then the printed-sheet cell map, then the first
+parity fixture for the boundary contract itself). All four sections below
+are now landed; Epic 1 is closed as of cycle 4.
 
 ## 1. Inputs — what the engine accepts
 
@@ -136,6 +135,46 @@ for every cell with the value matching the receipt's own field; a
 wizard-only posture — `class_chassis.unsupported` claim-blocking — renders
 `Blocked` for all nine chassis-dependent cells while the six
 ability-modifier cells still render their real `Number` values).
+
+## 4. Parity fixture — the boundary contract's own wire-fixture
+
+Landed (cycle 4). The first wire-fixture parity JSON per
+`technical-design.md` §1.2's format
+(`{ "name", "input", "expected_output", "expected_diagnostics" }`) lands
+at `tests/fixtures/wire/sd20/boundary_contract_parity.json`. It names a
+brand-new, no-selections `human`/`class:fighter` level-1 character and
+exercises the *whole* boundary-contract round trip in one fixture:
+`classify_character_input` (expects `BrandNew`) into the existing
+corpus-aware compute seam (`compute_pilot_with_corpus`, empty corpus)
+into `to_pilot_receipt` into `printed_sheet_cell_map` — all fifteen cells
+from §3 above, plus the chassis's `ability_modifiers` / `base_attack_bonus`
+/ `base_saves` / `baseline_melee_attack_bonus` / `baseline_armor_class` /
+`total_saves` / `selected_skill_modifiers`, the (empty, for this input)
+`corpus_derived` section, and the two `claim_blocking: true` diagnostics
+this exact input produces (`combat.baseline_unsupported`,
+`skill.selected_modifier.unsupported` — the deterministic Longsword/Chain
+Shirt/Dodge/selected-skill posture this input does not opt into; see
+`pilot_compute.rs`'s own diagnostics for why those two, and not
+`class_chassis.unsupported`, fire for a *supported* Fighter chassis).
+
+`tests/sd20_contract_boundary_parity.rs` reads the fixture from disk (this
+crate has no `serde`/`serde_json` dependency — `Cargo.toml`'s
+`[dependencies]` table is empty, and adding one is out of Epic 1's
+file-touch partition — so the test carries a small self-contained,
+`std`-only JSON reader scoped to this one test file), builds the engine's
+real `CharacterInput` from the fixture's `input` section, computes the
+real `PilotReceipt` and cell map, and asserts exact parity against the
+fixture's `expected_permutation` / `expected_output` /
+`expected_diagnostics`. This is the pattern the GUI's own render tests
+would follow against the same on-disk file per `technical-design.md`
+§1.2 ("The GUI's render tests read the same files and assert each cell
+renders exactly the corresponding value").
+
+This closes Epic 1: all four work-units (`CharacterInput` types,
+`PilotReceipt` types, printed-sheet cell map, and this parity fixture)
+are landed. Per the loop instruction's dependency graph, Epics 2
+(spellbook), 3 (feat prereqs), 4 (skill ranks), and 5 (equipment effects)
+are eligible as parallel streams starting the next cycle.
 
 ## Cross-reference
 
