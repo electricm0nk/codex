@@ -6,12 +6,16 @@
 //! (`CharacterInput.chosen.skill_allocations` — the existing, already-wired
 //! type; see below), whether that skill is a class skill for the
 //! character's class(es), and computes each allocated skill's total
-//! modifier. Later Epic-4 cycles add cross-class-penalty handling,
-//! untrained-use handling, and max-rank-cap handling on top of this
-//! module (`SkillTotals.cross_class_penalty_applied` and `.untrained_use`
-//! are present at the type level, per `technical-design.md` §2.3, but
-//! stay at their bounded defaults — `false` / empty — until those later
-//! work-units land; this cycle does not claim to enforce them).
+//! modifier. Later Epic-4 cycles add untrained-use handling and
+//! max-rank-cap handling on top of this module (`SkillTotals.untrained_use`
+//! is present at the type level, per `technical-design.md` §2.3, but stays
+//! at its bounded default — empty — until those later work-units land;
+//! this cycle does not claim to enforce them).
+//!
+//! Second work-unit (this cycle): **cross-class-penalty handling**. See
+//! the "PF1 cross-class rule" section below for the exact rule (confirmed
+//! against the SRD, not guessed) and what this cycle does and does not
+//! cover.
 //!
 //! ## Deviation from `technical-design.md` §2.3's illustrative seam
 //!
@@ -77,6 +81,14 @@
 //! is future Epic-4 cycle territory, gated on either a genuine SD-19
 //! table-store extension or the operator authorizing one.
 //!
+//! This cycle widens the bounded ability-key mapping by exactly one
+//! skill, `skill:diplomacy` (Charisma-keyed), to make the cross-class path
+//! exercisable at all against the grounded Fighter posture: Diplomacy is
+//! confirmed *not* a member of Fighter's class-skill list (see the
+//! "PF1 cross-class rule" section below for the citation), so it is a
+//! genuine, cited cross-class example for a Fighter build — not an
+//! invented one.
+//!
 //! ## PF1 core rule reused as-is
 //!
 //! A skill that is a class skill for the character and has at least 1
@@ -85,6 +97,38 @@
 //! data — the same status this codebase already grants the ability-score
 //! modifier formula (`floor(score / 2) - 5`, computed with no corpus
 //! citation anywhere in `pilot_compute.rs`).
+//!
+//! ## PF1 cross-class rule (confirmed, not guessed)
+//!
+//! Pathfinder 1st Edition removed D&D 3.5's "cross-class skills cost 2
+//! skill points per rank" rule (confirmed via a Paizo rules-forum thread
+//! discussing precisely this point of common confusion, and independently
+//! via the Roll20 PF1 compendium's "Acquiring Skills" page: a skill point
+//! always buys exactly 1 rank, regardless of class-skill status). The two
+//! real mechanical differences a cross-class skill has in PF1 are:
+//!
+//! 1. It never gets the class skill's flat +3 trained bonus (already
+//!    landed in the class-skill-handling cycle — the existing
+//!    `class_skill_bonus` computation already yields `0` for any skill
+//!    not in `class_skills`, so no change was needed there).
+//! 2. Its maximum investable rank is *half* a class skill's cap, rounded
+//!    up: `ceil((character level + 1) / 2)`, versus a class skill's
+//!    `character level + 3`, per `scope-draft.md` §1.4's explicit formula.
+//!    This module enforces only the cross-class half-cap this cycle — the
+//!    class-skill cap (`character level + 3`) and *diagnostic* surfacing
+//!    of cap violations for either category are explicitly the later
+//!    "max-rank-cap handling" work-unit (see the loop instruction's Step
+//!    2 per-epic order). This cycle silently reports the true, legal
+//!    effective rank total for a cross-class skill — never the raw
+//!    over-allocated number, and never a diagnostic (that's out of this
+//!    cycle's scope).
+//!
+//! `SkillId` "skill:diplomacy"'s cross-class status for Fighter is cited
+//! from `cr_abilities_class.lst:2835` ("Fighter Core Class Skills ...
+//! CSKILL:Climb|TYPE=Craft|Handle Animal|Intimidate|Knowledge
+//! (Dungeoneering)|Knowledge (Engineering)|TYPE=Profession|Ride|Survival|
+//! Swim" — no Diplomacy) and its Charisma key from `cr_skills.lst:35`
+//! (`Diplomacy ... KEYSTAT:CHA`).
 
 use std::collections::BTreeMap;
 
@@ -126,9 +170,13 @@ pub struct SkillTotals {
     /// recognizes), independent of whether ranks were actually
     /// allocated to each member. Sorted for determinism.
     pub class_skills: Vec<SkillId>,
-    /// Not yet enforced by this cycle (a later Epic-4 work-unit per the
-    /// loop instruction's Step 2: "cross-class-penalty handling").
-    /// Always `false` until that work-unit lands.
+    /// `true` when at least one of the character's allocated skills was a
+    /// recognized cross-class skill (not in `class_skills`), meaning PF1's
+    /// cross-class half-cap (`ceil((character level + 1) / 2)`, see the
+    /// module doc comment's "PF1 cross-class rule" section) was applied to
+    /// that skill's effective `ranks` in `totals`. `false` when no
+    /// allocated skill fell into that bounded, recognized cross-class
+    /// universe.
     pub cross_class_penalty_applied: bool,
     /// Not yet populated by this cycle (a later Epic-4 work-unit per the
     /// loop instruction's Step 2: "untrained-use handling"). Always
@@ -157,8 +205,36 @@ fn skill_key_ability_modifier(skill_id: &str, ability_modifiers: &AbilityModifie
     match skill_id {
         "skill:climb" | "skill:swim" => Some(ability_modifiers.strength),
         "skill:intimidate" => Some(ability_modifiers.charisma),
+        // Cross-class-only for the grounded Fighter posture (Diplomacy is
+        // not in Fighter's class-skill list; see the module doc comment's
+        // "PF1 cross-class rule" section for the citation). Charisma-keyed
+        // per `cr_skills.lst:35`.
+        "skill:diplomacy" => Some(ability_modifiers.charisma),
         _ => None,
     }
+}
+
+/// The character's total level across every class (PF1's "character
+/// level" for skill-rank-cap purposes — the sum, not any single class's
+/// level).
+fn character_level(input: &CharacterInput) -> u16 {
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .map(|class_level| class_level.level as u16)
+        .sum()
+}
+
+/// PF1's cross-class maximum rank cap: half a class skill's cap, rounded
+/// up — `ceil((character level + 1) / 2)`, per `scope-draft.md` §1.4's
+/// explicit formula. See the module doc comment's "PF1 cross-class rule"
+/// section for what this is and is not (no diagnostic surfacing here;
+/// that's the later max-rank-cap-handling work-unit).
+fn cross_class_max_ranks(character_level: u16) -> u8 {
+    // ceil((character_level + 1) / 2) == (character_level + 2) / 2 under
+    // integer (floor) division.
+    ((character_level + 2) / 2) as u8
 }
 
 /// The character's class-skill set: the union, across every class the
@@ -186,14 +262,30 @@ fn class_skill_set(input: &CharacterInput) -> Vec<SkillId> {
 
 /// Computes per-skill rank totals for every skill the character both
 /// allocated ranks to and that this module's bounded, cited posture
-/// recognizes. See the module doc comment for what's deliberately not
-/// yet handled (cross-class penalty, untrained use, max-rank cap,
-/// non-Fighter class-skill postures).
+/// recognizes. Applies PF1's cross-class half-cap (see the module doc
+/// comment's "PF1 cross-class rule" section). See the module doc comment
+/// for what's deliberately not yet handled (untrained use, the
+/// class-skill max-rank cap, cap-violation diagnostics for either
+/// category, non-Fighter class-skill postures).
 pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
     let chassis = compute_pilot_base_chassis(input);
     let class_skills = class_skill_set(input);
+    let cross_class_cap = cross_class_max_ranks(character_level(input));
+    // The cross-class half-cap is only knowable for a skill when the
+    // character has at least one class with a *grounded* class-skill
+    // posture (Fighter, this cycle) — only then do we have real PF1
+    // evidence that a given skill is cross-class rather than simply
+    // unknown. A build with no grounded class-skill posture at all (e.g.
+    // an ungrounded "wizard" class id) gets no cross-class treatment,
+    // same bounded-caution philosophy `class_skill_set` already follows.
+    let has_grounded_class_skill_posture = input
+        .chosen
+        .class_levels
+        .iter()
+        .any(|class_level| class_level.class_id == FIGHTER_CLASS_ID);
 
     let mut totals = BTreeMap::new();
+    let mut cross_class_penalty_applied = false;
     for allocation in &input.chosen.skill_allocations {
         let Some(ability_mod) =
             skill_key_ability_modifier(&allocation.skill_id, &chassis.ability_modifiers)
@@ -206,14 +298,28 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         let is_class_skill = class_skills
             .iter()
             .any(|skill_id| skill_id == &allocation.skill_id);
-        let class_skill_bonus = if is_class_skill && allocation.ranks >= 1 {
-            TRAINED_CLASS_SKILL_BONUS
+
+        // Cross-class skills never carry the trained bonus (PF1 rule,
+        // already true before this cycle for any non-class-skill) and, for
+        // a build whose class-skill posture is actually grounded, are
+        // additionally capped at PF1's cross-class half-cap — the ranks
+        // actually usable by this character, not the raw allocation. See
+        // the module doc comment's "PF1 cross-class rule" section.
+        let (ranks, class_skill_bonus) = if is_class_skill {
+            let bonus = if allocation.ranks >= 1 {
+                TRAINED_CLASS_SKILL_BONUS
+            } else {
+                0
+            };
+            (allocation.ranks, bonus)
+        } else if has_grounded_class_skill_posture {
+            cross_class_penalty_applied = true;
+            (allocation.ranks.min(cross_class_cap), 0)
         } else {
-            0
+            (allocation.ranks, 0)
         };
 
         let ability_modifier = ability_mod as i8;
-        let ranks = allocation.ranks;
         let misc_modifier = 0;
         let total_modifier = ranks as i8 + ability_modifier + class_skill_bonus + misc_modifier;
 
@@ -232,7 +338,7 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
     SkillTotals {
         totals,
         class_skills,
-        cross_class_penalty_applied: false,
+        cross_class_penalty_applied,
         untrained_use: BTreeMap::new(),
     }
 }
