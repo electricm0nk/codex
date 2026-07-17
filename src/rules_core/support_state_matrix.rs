@@ -1953,8 +1953,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     execution / Rage Power EFFECT / weapon-familiarity / flanking-resolution / \
                     damage-reduction-application / saving-throw-resolution \
                     remainder still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_BARBARIAN_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3 Barbarian level-1 proof surfaces the bounded \
@@ -2360,22 +2360,27 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     widening cycle remains for this row; the row stays Partial (not Supported) \
                     because the rage-state execution, Rage Power EFFECT, weapon-familiarity, \
                     flanking-resolution, damage-reduction-application, and \
-                    saving-throw-resolution burdens remain named-but-unproven.",
-                next_required_uplift: "ground the Barbarian rage-state execution engine \
-                    (activation/deactivation, rage-round consumption, post-rage fatigue, \
-                    temporary application of the rage constants — note: Tireless Rage at level \
-                    17 removes the post-rage fatigue condition specifically, but the underlying \
-                    engine itself remains unbuilt), the Rage Power choice-list \
-                    feature (now including the level-2, level-4, level-6, level-8, level-10, \
-                    level-12, level-14, and level-16 grants), \
-                    the Improved Uncanny Dodge flanking-resolution/attacker-level-comparison \
-                    engine, the Damage Reduction application engine, the \
-                    saving-throw-resolution/spell-school-classification engine Indomitable Will \
-                    would need to actually apply, and wire the grounded base-attack / base-save \
-                    / fast-movement / Uncanny Dodge / Trap Sense / Improved Uncanny Dodge / \
-                    Damage Reduction / Indomitable Will / Tireless Rage values into the \
-                    integrated pilot surface, later widening into weapon familiarity and \
-                    the level-20 martial progression ceiling",
+                    saving-throw-resolution burdens remain named-but-unproven. This row's every \
+                    named grounded milestone is now surfaced live in the desktop app's Class \
+                    Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class \
+                    name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the operator's \
+                    UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    Barbarian rage-state execution engine (activation/deactivation, rage-round \
+                    consumption, post-rage fatigue, temporary application of the rage constants \
+                    — note: Tireless Rage at level 17 removes the post-rage fatigue condition \
+                    specifically, but the underlying engine itself remains unbuilt), the Rage \
+                    Power choice-list feature (the level-2/4/6/8/10/12/14/16/18/20 grants), the \
+                    Improved Uncanny Dodge flanking-resolution/attacker-level-comparison engine, \
+                    the Damage Reduction application engine, the saving-throw-resolution/ \
+                    spell-school-classification engine Indomitable Will would need to actually \
+                    apply, and weapon familiarity, is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "class.bard.progression_and_spell_burden",

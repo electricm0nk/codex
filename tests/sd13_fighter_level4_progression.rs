@@ -278,6 +278,7 @@ fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
                 && r.row_id != "class.fighter.levels_2_10"
                 && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the level-4 slice must not promote any row to Supported or Lossy"

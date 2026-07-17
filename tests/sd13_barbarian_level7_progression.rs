@@ -533,8 +533,10 @@ fn matrix_barbarian_row_names_level_7_widening() {
         .row("class.barbarian.bounded_progression")
         .expect("barbarian bounded_progression row must exist");
 
-    assert_eq!(barbarian.support_state, SupportState::Partial);
-    assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(barbarian.support_state, SupportState::Supported);
+    assert_eq!(barbarian.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         barbarian.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

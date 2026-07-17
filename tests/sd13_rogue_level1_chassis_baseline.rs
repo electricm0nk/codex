@@ -499,12 +499,13 @@ fn matrix_rogue_row_is_partial_computed_with_all_four_pillars_grounded() {
 fn matrix_preserves_accepted_truth_and_unchanged_rows() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
-    // Fighter and Monk rows were later promoted to Supported/ProductVisible by
-    // SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-16).
+    // Fighter, Monk, and Barbarian rows were later promoted to Supported/ProductVisible
+    // by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-16).
     for id in [
         "class.fighter.level_1_pilot",
         "class.fighter.levels_2_10",
         "class.monk.bounded_progression",
+        "class.barbarian.bounded_progression",
     ] {
         let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
@@ -513,15 +514,6 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
             "row {id} must be Supported after the SD-19 class-row promotion"
         );
     }
-
-    let barbarian = matrix
-        .row("class.barbarian.bounded_progression")
-        .expect("barbarian row must exist");
-    assert_eq!(
-        barbarian.support_state,
-        SupportState::Partial,
-        "barbarian row must keep its accepted Partial posture after the rogue slice"
-    );
 
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as
@@ -577,6 +569,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "class.fighter.levels_2_10"
                 && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the rogue slice must not promote any row to Supported or Lossy"

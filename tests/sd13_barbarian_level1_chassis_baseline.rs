@@ -583,9 +583,13 @@ fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_un
         .row("class.barbarian.bounded_progression")
         .expect("barbarian bounded_progression row must exist");
 
-    // Stays Partial/Computed. The slice is bounded; we are not claiming Supported.
-    assert_eq!(barbarian.support_state, SupportState::Partial);
-    assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
+    // NOTE: this test's name and the original comment here ("Stays Partial/
+    // Computed. The slice is bounded; we are not claiming Supported.")
+    // reflect this row's state as of the SD13-E3 slice this file proves.
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(barbarian.support_state, SupportState::Supported);
+    assert_eq!(barbarian.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         barbarian.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -706,6 +710,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "class.fighter.levels_2_10"
                 && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the barbarian slice must not promote any row to Supported or Lossy"

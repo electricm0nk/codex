@@ -771,29 +771,28 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // These rows stay Partial/Computed.
-    for id in [
-        "class.rogue.bounded_progression",
-        "class.barbarian.bounded_progression",
-    ] {
+    // This row stays Partial/Computed.
+    {
         let row = matrix
-            .row(id)
-            .unwrap_or_else(|| panic!("row {id} must exist"));
+            .row("class.rogue.bounded_progression")
+            .expect("row class.rogue.bounded_progression must exist");
         assert_eq!(
             row.support_state,
             SupportState::Partial,
-            "row {id} must stay Partial after the ranger-decomposition slice"
+            "rogue row must stay Partial after the ranger-decomposition slice"
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // Fighter, Monk, and Druid rows were later promoted to Supported/ProductVisible
-    // by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-16).
+    // Fighter, Monk, Druid, and Barbarian rows were later promoted to
+    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-16).
     for id in [
         "class.fighter.level_1_pilot",
         "class.fighter.levels_2_10",
         "class.monk.bounded_progression",
         "class.druid.progression_and_spell_burden",
+        "class.barbarian.bounded_progression",
     ] {
         let row = matrix
             .row(id)
@@ -850,6 +849,7 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
                 && r.row_id != "class.fighter.levels_2_10"
                 && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the ranger-decomposition slice must not promote any row to Supported or Lossy"
