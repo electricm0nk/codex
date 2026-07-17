@@ -612,16 +612,18 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
     // Wizard carried its accepted post-merge-receipt posture (Blocked/Computed) at
     // the time this test was first written, but a later SD13-E4 Wizard
     // decomposition slice grounds Scribe Scroll for real, promoting the row to
-    // Partial/Computed. This test now pins that current truth.
+    // Partial/Computed, and SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-17) promotes it again to Supported/ProductVisible.
+    // This test now pins that current truth.
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard row must exist");
     assert_eq!(
         wizard.support_state,
-        SupportState::Partial,
-        "wizard row must keep its later-accepted Partial posture after the paladin-decomposition slice"
+        SupportState::Supported,
+        "wizard row must keep its later-accepted Supported posture after the paladin-decomposition slice"
     );
-    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(wizard.evidence_tier, EvidenceTier::ProductVisible);
 
     // Monk, Druid, Barbarian, and Cleric were later promoted to
     // Supported/ProductVisible by SD-19's Class Progression Catalog browser
@@ -670,6 +672,7 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
             && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "class.cleric.progression_and_spell_burden"
+                && r.row_id != "class.wizard.progression_and_spell_burden"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "the paladin-decomposition slice must not promote any row to Supported"
     );

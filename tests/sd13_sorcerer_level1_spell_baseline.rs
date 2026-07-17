@@ -666,9 +666,11 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_blocked_state() {
     // with both named burdens. The Sorcerer slice does not regress that state. Wizard
     // was Unverified/Observed at the time this test was first written, but the later
     // SD13-E4-R3 slice executed the Wizard row's own merge-receipt obligation,
-    // promoting it to Blocked/Computed, and a further SD13-E4 Wizard decomposition
-    // slice grounded Scribe Scroll for real, promoting it again to Partial/Computed;
-    // this negative control now pins that current truth.
+    // promoting it to Blocked/Computed, a further SD13-E4 Wizard decomposition
+    // slice grounded Scribe Scroll for real, promoting it again to Partial/Computed,
+    // and SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-17)
+    // promoted it again to Supported/ProductVisible; this negative control now pins
+    // that current truth.
     let matrix = seeded_sd13_e1_f1_current_truth();
 
     let wizard = matrix
@@ -676,13 +678,13 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_blocked_state() {
         .expect("wizard row must exist");
     assert_eq!(
         wizard.support_state,
-        SupportState::Partial,
-        "wizard row must be Partial after the Scribe Scroll grounding slice"
+        SupportState::Supported,
+        "wizard row must be Supported after the Class Progression Catalog browser UI-surfacing work"
     );
     assert_eq!(
         wizard.evidence_tier,
-        EvidenceTier::Computed,
-        "wizard row must be Computed after the SD13-E4-R3 promotion"
+        EvidenceTier::ProductVisible,
+        "wizard row must be ProductVisible after the Class Progression Catalog browser UI-surfacing work"
     );
 
     // Bard must not regress; it was later promoted to Partial/Computed by its own
@@ -773,6 +775,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "class.cleric.progression_and_spell_burden"
+                && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Sorcerer slice must not promote any row to Supported or Lossy"

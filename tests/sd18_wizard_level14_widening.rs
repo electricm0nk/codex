@@ -345,8 +345,8 @@ fn matrix_wizard_row_names_level_14_widening() {
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard progression_and_spell_burden row must exist");
 
-    assert_eq!(wizard.support_state, SupportState::Partial);
-    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(wizard.support_state, SupportState::Supported); // Later promoted to Supported/ProductVisible by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-17).
+    assert_eq!(wizard.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(wizard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
         wizard.grounding_ref.contains("sd18_wizard_level14_widening"),

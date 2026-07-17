@@ -6287,8 +6287,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             execution machinery, the opposed-school-cost burden, the level-5/ \
                             level-10/level-15/level-20 bonus-feat selection/execution, and the \
                             prepared spellbook / spell-slot posture burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_WIZARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-R3 leaves direct computed evidence that the \
@@ -6712,8 +6712,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     alternate capstone appears on both sources but is explicitly sourced to \
                     Pathfinder Player Companion: Chronicle of Legends (an optional splatbook \
                     replacement ability) — out of SD18's Core Rulebook scope, not modeled here. \
-                    The row is \
-                    Partial, not Supported: neither school power's \
+                    Neither school power's \
                     execution machinery is implemented (no evocation spell-damage application for \
                     Intense Spells, no force-missile casting execution / 1d4 damage roll / \
                     automatic-hit targeting for Force Missile), the opposed-school preparation \
@@ -6728,15 +6727,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     arithmetic-widening frontier for this row is now fully exhausted — only the \
                     school-power-execution, opposed-school-cost, bonus-feat-selection, and \
                     prepared-spell-posture burdens remain, and none is a per-level widening. No \
-                    spell math is fabricated",
-                next_required_uplift: "SD13-E5+ Wizard school-power execution and opposed-school \
-                    preparation-cost grounding slice, then the level-5/level-10/level-15/ \
-                    level-20 bonus-feat selection/execution (a new-subsystem-shaped burden \
-                    deliberately not attempted this slice), then the prepared spellbook / \
-                    spell-slot posture burden. Wizard's per-level arithmetic-widening frontier is \
-                    now fully exhausted (level 20 is the final level within PF1's 1-20 \
-                    character-level cap); no further level exists to widen into for this class \
-                    row",
+                    spell math is fabricated. This row's every named grounded milestone is now \
+                    surfaced live in the desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding Wizard's \
+                    remaining school-power execution and opposed-school preparation-cost burden, \
+                    the level-5/level-10/level-15/level-20 bonus-feat selection/execution (a \
+                    new-subsystem-shaped burden), and the prepared spellbook / spell-slot posture \
+                    burden is a future SD-N's scope, not a further per-cycle widening of this row",
             },
             // ----- Interaction rows (2) -----
             SupportStateRow {

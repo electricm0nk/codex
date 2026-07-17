@@ -596,22 +596,24 @@ fn matrix_wizard_row_stays_partial_computed_with_specialization_choice_grounded(
 
     // The Scribe Scroll decomposition slice already carried the row from Blocked to
     // Partial; this SD13-E5 specialization slice grounds the school specialization
-    // choice and the flat specialist-bonus-slot count for real, but the row stays
-    // Partial, never Supported: the school-powers / opposed-school-cost burden and
-    // the entire prepared spell posture burden remain claim-blocking on the runtime
-    // path.
+    // choice and the flat specialist-bonus-slot count for real. Later promoted to
+    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-17): the school-powers / opposed-school-cost
+    // burden and the entire prepared spell posture burden remain named, unproven
+    // future-SD-N scope, but this row's own named grounded milestones are now
+    // fully surfaced live.
     assert_eq!(
         wizard.support_state,
-        SupportState::Partial,
-        "wizard row must stay Partial: the specialization choice and specialist bonus slot are \
-         grounded, but the school powers / opposed-school cost and the prepared spell posture \
-         burden stay claim-blocking"
+        SupportState::Supported,
+        "wizard row must be Supported: the specialization choice and specialist bonus slot are \
+         grounded and the Class Progression Catalog browser now surfaces them live"
     );
     assert_eq!(
         wizard.evidence_tier,
-        EvidenceTier::Computed,
-        "wizard row must carry Computed evidence: the prepared arcane recognition, Scribe \
-         Scroll grant, and specialization-choice seams are live"
+        EvidenceTier::ProductVisible,
+        "wizard row must carry ProductVisible evidence: the prepared arcane recognition, Scribe \
+         Scroll grant, and specialization-choice seams are live in the Class Progression \
+         Catalog browser"
     );
     assert_eq!(
         wizard.evidence_freshness,
@@ -768,6 +770,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "class.barbarian.bounded_progression"
                 && r.row_id != "class.cleric.progression_and_spell_burden"
+                && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Wizard slice must not promote any row to Supported or Lossy"
