@@ -8,25 +8,25 @@
 //! equipment category per cycle
 //! (`scope-draft.md` §1.5 work-unit order: `arms_armor`, then `general`,
 //! `magic_items`, `equipmods`). `arms_armor` landed first — see
-//! `equipment_effects/arms_armor.rs`. This cycle lands `general` — see
+//! `equipment_effects/arms_armor.rs`. `general` landed second — see
 //! `equipment_effects/general.rs`; unlike `arms_armor`'s AC/max-dex/
 //! spell-failure stats, the `general` category's real load-bearing field
 //! is a per-item skill-check circumstance bonus
 //! (`ResolvedEquipmentEffect::skill_bonus`), so `general` does not
 //! populate `EquipmentStatEffect` at all (that type stays scoped to the
-//! armor/shield fields `arms_armor` defined it for). This cycle lands
-//! `magic_items` — see `equipment_effects/magic_items.rs`; like
-//! `general`, its real load-bearing field (a per-item ability-score
-//! enhancement bonus, `ResolvedEquipmentEffect::ability_bonus`) does not
-//! fit `EquipmentStatEffect` either, so it follows the same
+//! armor/shield fields `arms_armor` defined it for). `magic_items` landed
+//! third — see `equipment_effects/magic_items.rs`; like `general`, its
+//! real load-bearing field (a per-item ability-score enhancement bonus,
+//! `ResolvedEquipmentEffect::ability_bonus`) does not fit
+//! `EquipmentStatEffect` either, so it follows the same
 //! shared-struct-extension pattern `general` established (a new
 //! `ResolvedEquipmentEffect` field, not a new `EquipmentStatEffect`
-//! field). The remaining category (`equipmods`) resolved items pass
-//! through this module with no stat contribution
-//! (`EquipmentStatEffect::default()`, `skill_bonus: None`,
-//! `ability_bonus: None`) until its own cycle lands a sibling
-//! `equipment_effects/equipmods.rs` file; that is an honest absence, not
-//! a fabricated zero.
+//! field). This cycle lands `equipmods` — see
+//! `equipment_effects/equipmods.rs`, **closing Epic 5** (all four CRB
+//! equipment categories done); its real load-bearing field is a per-item
+//! weapon to-hit/damage enhancement bonus
+//! (`ResolvedEquipmentEffect::weapon_enhancement_bonus`), following the
+//! same shared-struct-extension pattern.
 //!
 //! Adapts `technical-design.md` §2.4's illustrative
 //! `compute_equipment_effects(equipped: &[EquipmentSelection], rules_tables:
@@ -43,11 +43,13 @@
 //! corpus text.
 
 pub mod arms_armor;
+pub mod equipmods;
 pub mod general;
 pub mod magic_items;
 
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::character_input::EquipmentSelection;
+use crate::rules_core::equipment_effects::equipmods::WeaponEnhancementBonus;
 use crate::rules_core::equipment_effects::general::SkillCheckBonus;
 use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
@@ -87,6 +89,11 @@ pub struct ResolvedEquipmentEffect {
     /// other category, and for a `magic_items` record that carries no
     /// `BONUS:STAT|...` token.
     pub ability_bonus: Option<AbilityScoreBonus>,
+    /// The `equipmods` category's per-item weapon to-hit/damage
+    /// enhancement bonus (see `equipment_effects/equipmods.rs`). `None`
+    /// for every other category, and for an `equipmods` record that
+    /// carries no matching `BONUS:WEAPON|...|TYPE=Enhancement` token.
+    pub weapon_enhancement_bonus: Option<WeaponEnhancementBonus>,
     pub table_cell: Option<TableCellRef>,
 }
 
@@ -152,6 +159,10 @@ pub fn compute_equipment_effects(
             EquipmentCategory::MagicItems => magic_items::compute_magic_items_effect(record),
             EquipmentCategory::ArmsArmor | EquipmentCategory::General | EquipmentCategory::Equipmods => None,
         };
+        let weapon_enhancement_bonus = match category {
+            EquipmentCategory::Equipmods => equipmods::compute_equipmods_effect(record),
+            EquipmentCategory::ArmsArmor | EquipmentCategory::General | EquipmentCategory::MagicItems => None,
+        };
 
         if let Some(bonus) = effect.armor_class_bonus {
             armor_class_delta += bonus;
@@ -173,6 +184,7 @@ pub fn compute_equipment_effects(
             spell_failure: effect.spell_failure,
             skill_bonus,
             ability_bonus,
+            weapon_enhancement_bonus,
             table_cell,
         });
     }
@@ -188,14 +200,13 @@ pub fn compute_equipment_effects(
 fn resolve_category_effect(category: EquipmentCategory, record: &EquipmentRecord) -> EquipmentStatEffect {
     match category {
         EquipmentCategory::ArmsArmor => arms_armor::compute_arms_armor_effect(record),
-        // `General`'s real per-item field is `skill_bonus`, and
-        // `MagicItems`'s real per-item field is `ability_bonus` (both
-        // computed in the loop in `compute_equipment_effects` above), not
-        // an `EquipmentStatEffect` field — neither category's records
-        // carry AC/max-dex/spell-failure tokens. `Equipmods` lands in a
-        // future Epic-5 cycle per scope-draft.md §1.5's work-unit order;
-        // until then its items resolve with no stat contribution (honest
-        // absence, see module doc comment).
+        // `General`'s real per-item field is `skill_bonus`,
+        // `MagicItems`'s real per-item field is `ability_bonus`, and
+        // `Equipmods`'s real per-item field is `weapon_enhancement_bonus`
+        // (all three computed in the loop in `compute_equipment_effects`
+        // above), not an `EquipmentStatEffect` field — none of these
+        // three categories' records carry AC/max-dex/spell-failure
+        // tokens.
         EquipmentCategory::General | EquipmentCategory::MagicItems | EquipmentCategory::Equipmods => {
             EquipmentStatEffect::default()
         }
