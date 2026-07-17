@@ -20,10 +20,10 @@
 //! without first extending this contract; this cycle adds no field, only
 //! a read-only classification over the fields that already exist.
 //!
-//! `PilotReceipt` types land in this cycle (cycle 2). The printed-sheet
-//! cell map is a later Epic-1 work-unit (not this cycle) — see the loop
-//! instruction's Step 2 and this bundle's progress doc for the current
-//! frontier.
+//! `PilotReceipt` types landed in cycle 2. The printed-sheet cell map
+//! (`PrintedSheetCell` / `PrintedSheetCellValue` / `printed_sheet_cell_map`)
+//! lands in this cycle (cycle 3) — see the loop instruction's Step 2 and
+//! this bundle's progress doc for the current frontier.
 
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute::{ComputationDiagnostic, PilotBaseChassisComputation};
@@ -119,4 +119,148 @@ pub fn to_pilot_receipt(receipt: &CorpusPilotReceipt) -> PilotReceipt {
         chassis: receipt.base.clone(),
         corpus_derived: receipt.corpus_derived.clone(),
     }
+}
+
+/// The diagnostic id that, when `claim_blocking: true`, means the chassis
+/// as a whole has no supported single-class posture
+/// (`compute_pilot_base_chassis`'s `class_chassis.unsupported`). The
+/// chassis-dependent `PilotReceipt` fields it zeroes (base attack bonus,
+/// total saves, the deterministic baseline melee attack bonus / armor
+/// class, and the selected skill modifiers) are not real data in that
+/// case — the cell map must render `PrintedSheetCellValue::Blocked` for
+/// the cells sourced from them rather than show the zero as if it were a
+/// computed number.
+const CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID: &str = "class_chassis.unsupported";
+
+/// A single row of the printed PF1 character sheet
+/// (`technical-design.md` §1.1 "Cells"): a stable cell id and the value
+/// resolved from exactly one named `PilotReceipt` field. The GUI cannot
+/// invent a value; it renders what this map gives it.
+#[derive(Debug, Clone, PartialEq)]
+pub struct PrintedSheetCell {
+    /// Stable cell id (e.g. `sheet.base_attack_bonus`).
+    pub cell_id: String,
+    /// The exact `PilotReceipt` field path this cell renders, for
+    /// auditability (e.g. `chassis.base_attack_bonus`).
+    pub source_field: String,
+    pub value: PrintedSheetCellValue,
+}
+
+/// A printed-sheet cell's rendered value. `Blocked` is the "blocked — see
+/// diagnostics" rendering `technical-design.md` §1.1 requires when the
+/// cell's source field is claim-blocked — never a fabricated number.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PrintedSheetCellValue {
+    Number(i16),
+    Blocked,
+}
+
+/// Build the printed-sheet cell map (`technical-design.md` §1.1 "Cells")
+/// from a `PilotReceipt`. Each cell points at exactly one `PilotReceipt`
+/// field; cells sourced from a chassis field that
+/// `class_chassis.unsupported` (claim-blocking) has zeroed render
+/// `PrintedSheetCellValue::Blocked` instead of that zero. Ability
+/// modifiers are computed directly from ability scores independent of
+/// chassis support, so they are never blocked by
+/// `class_chassis.unsupported` alone.
+pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
+    let chassis_unsupported = receipt.diagnostics.iter().any(|diagnostic| {
+        diagnostic.id == CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID && diagnostic.claim_blocking
+    });
+
+    let chassis_dependent_cell = |cell_id: &str, source_field: &str, value: i16| PrintedSheetCell {
+        cell_id: cell_id.to_owned(),
+        source_field: source_field.to_owned(),
+        value: if chassis_unsupported {
+            PrintedSheetCellValue::Blocked
+        } else {
+            PrintedSheetCellValue::Number(value)
+        },
+    };
+
+    let independent_cell = |cell_id: &str, source_field: &str, value: i16| PrintedSheetCell {
+        cell_id: cell_id.to_owned(),
+        source_field: source_field.to_owned(),
+        value: PrintedSheetCellValue::Number(value),
+    };
+
+    let chassis = &receipt.chassis;
+
+    vec![
+        chassis_dependent_cell(
+            "sheet.base_attack_bonus",
+            "chassis.base_attack_bonus",
+            chassis.base_attack_bonus,
+        ),
+        chassis_dependent_cell(
+            "sheet.save.fortitude",
+            "chassis.total_saves.fortitude",
+            chassis.total_saves.fortitude,
+        ),
+        chassis_dependent_cell(
+            "sheet.save.reflex",
+            "chassis.total_saves.reflex",
+            chassis.total_saves.reflex,
+        ),
+        chassis_dependent_cell(
+            "sheet.save.will",
+            "chassis.total_saves.will",
+            chassis.total_saves.will,
+        ),
+        chassis_dependent_cell(
+            "sheet.armor_class",
+            "chassis.baseline_armor_class",
+            chassis.baseline_armor_class,
+        ),
+        chassis_dependent_cell(
+            "sheet.melee_attack_bonus",
+            "chassis.baseline_melee_attack_bonus",
+            chassis.baseline_melee_attack_bonus,
+        ),
+        chassis_dependent_cell(
+            "sheet.skill.climb",
+            "chassis.selected_skill_modifiers.climb",
+            chassis.selected_skill_modifiers.climb,
+        ),
+        chassis_dependent_cell(
+            "sheet.skill.intimidate",
+            "chassis.selected_skill_modifiers.intimidate",
+            chassis.selected_skill_modifiers.intimidate,
+        ),
+        chassis_dependent_cell(
+            "sheet.skill.swim",
+            "chassis.selected_skill_modifiers.swim",
+            chassis.selected_skill_modifiers.swim,
+        ),
+        independent_cell(
+            "sheet.ability_modifier.strength",
+            "chassis.ability_modifiers.strength",
+            chassis.ability_modifiers.strength,
+        ),
+        independent_cell(
+            "sheet.ability_modifier.dexterity",
+            "chassis.ability_modifiers.dexterity",
+            chassis.ability_modifiers.dexterity,
+        ),
+        independent_cell(
+            "sheet.ability_modifier.constitution",
+            "chassis.ability_modifiers.constitution",
+            chassis.ability_modifiers.constitution,
+        ),
+        independent_cell(
+            "sheet.ability_modifier.intelligence",
+            "chassis.ability_modifiers.intelligence",
+            chassis.ability_modifiers.intelligence,
+        ),
+        independent_cell(
+            "sheet.ability_modifier.wisdom",
+            "chassis.ability_modifiers.wisdom",
+            chassis.ability_modifiers.wisdom,
+        ),
+        independent_cell(
+            "sheet.ability_modifier.charisma",
+            "chassis.ability_modifiers.charisma",
+            chassis.ability_modifiers.charisma,
+        ),
+    ]
 }

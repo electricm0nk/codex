@@ -1,6 +1,6 @@
 ---
 title: SD-20 — Boundary Contract (Epic 1)
-status: in progress (cycle 2 of Epic 1 landed 2026-07-17; CharacterInput permutations + PilotReceipt types landed, printed-sheet cell map and boundary-contract parity fixture still open)
+status: in progress (cycle 3 of Epic 1 landed 2026-07-17; CharacterInput permutations, PilotReceipt types, and the printed-sheet cell map landed, boundary-contract parity fixture still open)
 mirrors: /home/ubuntu/workspace/programs/codex/requirements/SD-20-rules-engine-completeness/technical-design.md §1
 ---
 
@@ -97,11 +97,45 @@ posture).
 
 ## 3. Cells — what the GUI prints (printed-sheet cell map)
 
-Not yet landed. A future Epic-1 cycle lands this section: a row-by-row
-map of the printed PF1 character sheet, each cell pointing at exactly
-one `PilotReceipt` field (once §2 lands). Per `technical-design.md` §1.1,
-a cell whose source field is claim-blocked renders "blocked — see
-diagnostics" rather than a fabricated value.
+Landed (cycle 3). `src/rules_core/contract.rs` adds:
+
+- `PrintedSheetCell` — a struct with `cell_id` (stable id, e.g.
+  `sheet.base_attack_bonus`), `source_field` (the exact `PilotReceipt`
+  field path this cell renders, e.g. `chassis.base_attack_bonus`, for
+  auditability), and `value: PrintedSheetCellValue`.
+- `PrintedSheetCellValue` — an enum: `Number(i16)` for a real computed
+  value, or `Blocked` — the "blocked — see diagnostics" rendering per
+  `technical-design.md` §1.1 — for a cell whose source field is
+  claim-blocked. The GUI cannot invent a value; it renders exactly what
+  this map gives it.
+- `printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell>`
+  — builds the row-by-row map from a `PilotReceipt`. Fifteen cells land
+  in this cycle: base attack bonus, the three total saves, the
+  deterministic baseline armor class and melee attack bonus, the three
+  selected skill modifiers (Climb, Intimidate, Swim), and the six ability
+  modifiers. The nine chassis-dependent cells (BAB, saves, baseline AC,
+  baseline melee attack bonus, selected skill modifiers) render `Blocked`
+  when the chassis computation's `class_chassis.unsupported` diagnostic
+  is `claim_blocking: true` — those `PilotBaseChassisComputation` fields
+  are zeroed (not real data) in that case, so showing the zero as a
+  number would be a fabricated value. The six ability-modifier cells are
+  computed directly from ability scores independent of chassis support,
+  so they are never blocked by `class_chassis.unsupported` alone —
+  blanket-blocking every cell whenever any one diagnostic fires would
+  itself violate the "no fabricated/imprecise output" requirement in the
+  opposite direction (under-reporting real, independently-computed data).
+
+This cycle does not widen the cell set beyond the fifteen chassis-derived
+cells above — corpus-derived cells (spell coverage, equipment) are a
+future Epic-1 or per-epic cycle's concern once those epics' own outputs
+are named in this contract.
+
+RED/GREEN test: `tests/sd20_contract_cell_map.rs` (2 cases: a genuinely
+supported single-class `class:fighter` level-1 posture renders `Number`
+for every cell with the value matching the receipt's own field; a
+wizard-only posture — `class_chassis.unsupported` claim-blocking — renders
+`Blocked` for all nine chassis-dependent cells while the six
+ability-modifier cells still render their real `Number` values).
 
 ## Cross-reference
 
