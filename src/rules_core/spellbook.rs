@@ -16,13 +16,14 @@
 //! Landed one school per cycle (`scope-draft.md` §1.2 Step 2 order:
 //! abjuration, then conjuration, divination, enchantment, evocation,
 //! illusion, necromancy, transmutation, universal). Abjuration
-//! (`spellbook::abjuration`) and Conjuration (`spellbook::conjuration`)
-//! are landed as of this cycle; `compute_spellbook_coverage` dispatches by
-//! school and produces a real `SpellEffect` only for the schools whose
-//! per-school contribution module has landed. Unlanded schools'
-//! selections still resolve (existence + school are checked) but
-//! contribute no effect yet — a future cycle's per-school file adds that
-//! school's contribution without touching this dispatch's shape.
+//! (`spellbook::abjuration`), Conjuration (`spellbook::conjuration`), and
+//! Divination (`spellbook::divination`) are landed as of this cycle;
+//! `compute_spellbook_coverage` dispatches by school and produces a real
+//! `SpellEffect` only for the schools whose per-school contribution
+//! module has landed. Unlanded schools' selections still resolve
+//! (existence + school are checked) but contribute no effect yet — a
+//! future cycle's per-school file adds that school's contribution
+//! without touching this dispatch's shape.
 //!
 //! Reads spell level and effect text from the canonical CRB spell-list
 //! table store (`rules_tables::crb::spell_list::SPELL_LIST`, SD-19's
@@ -43,6 +44,7 @@
 
 pub mod abjuration;
 pub mod conjuration;
+pub mod divination;
 
 use std::collections::BTreeMap;
 
@@ -189,7 +191,8 @@ pub fn compute_spellbook_coverage(
         };
 
         // Per-school contribution functions land one per cycle (Step 2).
-        // Abjuration and Conjuration are wired as of this cycle.
+        // Abjuration, Conjuration, and Divination are wired as of this
+        // cycle.
         let landed_effect = match school {
             Pf1SchoolId::Abjuration => abjuration::resolve_abjuration_spell_effect(
                 &selection.spell_id,
@@ -202,6 +205,16 @@ pub fn compute_spellbook_coverage(
                 table_cell: effect.table_cell,
             }),
             Pf1SchoolId::Conjuration => conjuration::resolve_conjuration_spell_effect(
+                &selection.spell_id,
+            )
+            .map(|effect| SpellEffect {
+                spell_id: effect.spell_id,
+                school,
+                level: effect.level,
+                effect_text: effect.effect_text,
+                table_cell: effect.table_cell,
+            }),
+            Pf1SchoolId::Divination => divination::resolve_divination_spell_effect(
                 &selection.spell_id,
             )
             .map(|effect| SpellEffect {
