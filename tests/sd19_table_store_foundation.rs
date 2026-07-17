@@ -45,6 +45,42 @@ fn every_class_table_has_entries_for_every_supported_level() {
     }
 }
 
+/// Regression test for the Cleric/Druid `good_saves.fortitude` data bug:
+/// `CLASS_META` previously carried `fortitude: false` for both classes,
+/// contradicting the PF1 Core Rulebook (both are good-Fort/poor-Reflex/
+/// good-Will) and `pilot_compute.rs`'s already-grounded
+/// `explain_cleric_level1_spell_baseline` / `explain_druid_level1_spell_baseline`
+/// chassis explanations. `save_bonus(level, good)` is `level / 2 + 2` for a
+/// good save and `level / 3` for a poor save (see `class_tables.rs`), so a
+/// good-save Fortitude progression is verifiable directly from `fort_save`
+/// without re-deriving the formula.
+#[test]
+fn cleric_and_druid_fort_save_is_a_good_save_progression() {
+    let all_rows = class_tables();
+
+    for (class_id, levels) in [
+        (ClassId::Cleric, &[1u8, 20u8][..]),
+        (ClassId::Druid, &[1u8, 15u8][..]),
+    ] {
+        for &level in levels {
+            let row = all_rows
+                .iter()
+                .find(|row| row.class_id == class_id && row.level == level)
+                .unwrap_or_else(|| panic!("missing {:?} level {} row", class_id, level));
+            let expected_good_save = i16::from(level) / 2 + 2;
+            assert_eq!(
+                row.fort_save, expected_good_save,
+                "{:?} level {} fort_save should be the good-save progression \
+                 (level/2+2 = {}), not the poor-save progression (level/3 = {})",
+                class_id,
+                level,
+                expected_good_save,
+                i16::from(level) / 3
+            );
+        }
+    }
+}
+
 #[test]
 fn every_school_has_at_least_one_spell() {
     for school in Pf1SchoolId::ALL {
