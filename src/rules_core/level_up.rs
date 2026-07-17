@@ -46,18 +46,20 @@ pub mod barbarian;
 pub mod bard;
 pub mod cleric;
 pub mod druid;
+pub mod fighter;
 pub mod paladin;
 
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 
 /// The core classes this cycle's dispatch recognizes so far (barbarian,
-/// bard, cleric, druid, paladin). Widens by one per future cycle
-/// (fighter, monk, ranger, ..., wizard), per Step 2's stated order.
+/// bard, cleric, druid, fighter, paladin). Widens by one per future cycle
+/// (monk, ranger, ..., wizard), per Step 2's stated order.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const BARD_CLASS_ID: &str = "class:bard";
 const CLERIC_CLASS_ID: &str = "class:cleric";
 const DRUID_CLASS_ID: &str = "class:druid";
+const FIGHTER_CLASS_ID: &str = "class:fighter";
 const PALADIN_CLASS_ID: &str = "class:paladin";
 
 /// `technical-design.md` §2.6's `LevelUpPlan`, adapted per §2.0 (no
@@ -177,6 +179,9 @@ pub fn compute_level_up_grants(
         }
         [class_level] if class_level.class_id == DRUID_CLASS_ID => {
             druid::compute_druid_level_up_grants(character, from_level, to_level)
+        }
+        [class_level] if class_level.class_id == FIGHTER_CLASS_ID => {
+            fighter::compute_fighter_level_up_grants(character, from_level, to_level)
         }
         [class_level] if class_level.class_id == PALADIN_CLASS_ID => {
             paladin::compute_paladin_level_up_grants(character, from_level, to_level)

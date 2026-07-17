@@ -226,9 +226,17 @@ fn cleric_level_19_to_20_crosses_the_character_level_cap_with_no_fabricated_name
 
 #[test]
 fn non_cleric_class_returns_an_honestly_empty_plan() {
+    // Uses `class:wizard` (matching Barbarian's and Bard's own negative
+    // controls), not `class:fighter` — Epic 7's fifth cycle
+    // (cycle-2026-07-18, `fighter.rs`) landed a real Fighter dispatch arm,
+    // so `class:fighter` no longer produces an honestly-empty plan and
+    // would no longer prove this test's own claim. `class:wizard` stays
+    // open at the time of this fix (Epic 7's per-class order is
+    // barbarian, bard, cleric, druid, fighter, monk, paladin, ranger,
+    // rogue, sorcerer, wizard — wizard is last).
     let mut character = human_cleric_input(1);
     character.chosen.class_levels = vec![CharacterClassLevel {
-        class_id: "class:fighter".to_string(),
+        class_id: "class:wizard".to_string(),
         level: 1,
     }];
     let plan = compute_level_up_grants(&character, 1, 2);
