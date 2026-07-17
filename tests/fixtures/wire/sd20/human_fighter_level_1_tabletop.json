@@ -1,0 +1,110 @@
+{
+  "name": "human_fighter_level_1_tabletop",
+  "input": {
+    "case_id": "sd20_tabletop_readiness_human_fighter_level_1",
+    "source_package_id": "sd20_tabletop_readiness_human_fighter_level_1",
+    "race_id": "race:human",
+    "class_levels": [
+      { "class_id": "class:fighter", "level": 1 }
+    ],
+    "ability_scores": {
+      "strength": 16,
+      "dexterity": 14,
+      "constitution": 14,
+      "intelligence": 10,
+      "wisdom": 12,
+      "charisma": 8
+    },
+    "selected_feats": [
+      "feat:dodge",
+      "feat:weapon_focus",
+      "feat:power_attack",
+      "Dodge",
+      "Weapon Focus",
+      "Power Attack"
+    ],
+    "skill_allocations": [
+      { "skill_id": "skill:climb", "ranks": 1 },
+      { "skill_id": "skill:intimidate", "ranks": 1 },
+      { "skill_id": "skill:swim", "ranks": 1 }
+    ],
+    "equipment_selections": [
+      { "item_id": "item:longsword", "active_state": "equipped_active" },
+      { "item_id": "item:chain_shirt", "active_state": "equipped_active" },
+      { "item_id": "item:shield", "active_state": "absent" },
+      { "item_id": "power_attack", "active_state": "selected_inactive" },
+      { "item_id": "Special Quality ~ Masterwork ~ Weapon", "active_state": "equipped_active" }
+    ],
+    "selected_choices": [
+      { "choice_set_id": "choice:level_1_character_feat", "selection_id": "feat:power_attack" },
+      { "choice_set_id": "choice:human_bonus_feat", "selection_id": "feat:dodge" },
+      { "choice_set_id": "choice:fighter_bonus_feat", "selection_id": "feat:weapon_focus:weapon:longsword" },
+      { "choice_set_id": "choice:favored_class_bonus", "selection_id": "bonus:hp" },
+      { "choice_set_id": "choice:fighter_bonus_feat_2", "selection_id": "feat:toughness" }
+    ],
+    "spells_selected": []
+  },
+  "expected_permutation": "MidBuild",
+  "expected_output": {
+    "chassis": {
+      "ability_modifiers": {
+        "strength": 3,
+        "dexterity": 2,
+        "constitution": 2,
+        "intelligence": 0,
+        "wisdom": 1,
+        "charisma": -1
+      },
+      "base_attack_bonus": 1,
+      "base_saves": { "fortitude": 2, "reflex": 0, "will": 0 },
+      "baseline_melee_attack_bonus": 5,
+      "baseline_armor_class": 17,
+      "total_saves": { "fortitude": 4, "reflex": 2, "will": 1 },
+      "selected_skill_modifiers": { "climb": 5, "intimidate": 3, "swim": 5 }
+    },
+    "corpus_derived": {
+      "school_coverage": {},
+      "equipped_items": [
+        {
+          "item_id": "item:longsword",
+          "equipment_record_name": "Longsword",
+          "equipment_record_key": "Longsword (Base)",
+          "derived_stats": { "armor_bonus": null, "attack_bonus": null, "max_dex": null, "spell_failure": null },
+          "table_cell": { "rule_set": "Crb", "table": "equipment_tables", "row_key": "Longsword (Base)", "column_key": "" }
+        },
+        {
+          "item_id": "item:chain_shirt",
+          "equipment_record_name": "Chain Shirt",
+          "equipment_record_key": "Chain Shirt (Base)",
+          "derived_stats": { "armor_bonus": null, "attack_bonus": null, "max_dex": null, "spell_failure": null },
+          "table_cell": { "rule_set": "Crb", "table": "equipment_tables", "row_key": "Chain Shirt (Base)", "column_key": "" }
+        },
+        {
+          "item_id": "Special Quality ~ Masterwork ~ Weapon",
+          "equipment_record_name": "Masterwork (Weapon)",
+          "equipment_record_key": "Special Quality ~ Masterwork ~ Weapon",
+          "derived_stats": { "armor_bonus": null, "attack_bonus": null, "max_dex": null, "spell_failure": null },
+          "table_cell": { "rule_set": "Crb", "table": "equipment_tables", "row_key": "Special Quality ~ Masterwork ~ Weapon", "column_key": "" }
+        }
+      ]
+    },
+    "cells": [
+      { "cell_id": "sheet.base_attack_bonus", "source_field": "chassis.base_attack_bonus", "value": { "kind": "Number", "value": 1 } },
+      { "cell_id": "sheet.save.fortitude", "source_field": "chassis.total_saves.fortitude", "value": { "kind": "Number", "value": 4 } },
+      { "cell_id": "sheet.save.reflex", "source_field": "chassis.total_saves.reflex", "value": { "kind": "Number", "value": 2 } },
+      { "cell_id": "sheet.save.will", "source_field": "chassis.total_saves.will", "value": { "kind": "Number", "value": 1 } },
+      { "cell_id": "sheet.armor_class", "source_field": "chassis.baseline_armor_class", "value": { "kind": "Number", "value": 17 } },
+      { "cell_id": "sheet.melee_attack_bonus", "source_field": "chassis.baseline_melee_attack_bonus", "value": { "kind": "Number", "value": 5 } },
+      { "cell_id": "sheet.skill.climb", "source_field": "chassis.selected_skill_modifiers.climb", "value": { "kind": "Number", "value": 5 } },
+      { "cell_id": "sheet.skill.intimidate", "source_field": "chassis.selected_skill_modifiers.intimidate", "value": { "kind": "Number", "value": 3 } },
+      { "cell_id": "sheet.skill.swim", "source_field": "chassis.selected_skill_modifiers.swim", "value": { "kind": "Number", "value": 5 } },
+      { "cell_id": "sheet.ability_modifier.strength", "source_field": "chassis.ability_modifiers.strength", "value": { "kind": "Number", "value": 3 } },
+      { "cell_id": "sheet.ability_modifier.dexterity", "source_field": "chassis.ability_modifiers.dexterity", "value": { "kind": "Number", "value": 2 } },
+      { "cell_id": "sheet.ability_modifier.constitution", "source_field": "chassis.ability_modifiers.constitution", "value": { "kind": "Number", "value": 2 } },
+      { "cell_id": "sheet.ability_modifier.intelligence", "source_field": "chassis.ability_modifiers.intelligence", "value": { "kind": "Number", "value": 0 } },
+      { "cell_id": "sheet.ability_modifier.wisdom", "source_field": "chassis.ability_modifiers.wisdom", "value": { "kind": "Number", "value": 1 } },
+      { "cell_id": "sheet.ability_modifier.charisma", "source_field": "chassis.ability_modifiers.charisma", "value": { "kind": "Number", "value": -1 } }
+    ]
+  },
+  "expected_diagnostics": []
+}
