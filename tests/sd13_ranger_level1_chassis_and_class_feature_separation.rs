@@ -776,7 +776,6 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
     for id in [
         "class.rogue.bounded_progression",
         "class.barbarian.bounded_progression",
-        "class.monk.bounded_progression",
     ] {
         let row = matrix
             .row(id)
@@ -789,9 +788,13 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // Fighter rows were later promoted to Supported/ProductVisible by SD-19's
-    // Class Progression Catalog browser UI-surfacing work (2026-07-16).
-    for id in ["class.fighter.level_1_pilot", "class.fighter.levels_2_10"] {
+    // Fighter and Monk rows were later promoted to Supported/ProductVisible by
+    // SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-16).
+    for id in [
+        "class.fighter.level_1_pilot",
+        "class.fighter.levels_2_10",
+        "class.monk.bounded_progression",
+    ] {
         let row = matrix
             .row(id)
             .unwrap_or_else(|| panic!("row {id} must exist"));
@@ -845,6 +848,7 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
                 && r.row_id != "race.halfling.bounded_semantics"
                 && r.row_id != "class.fighter.level_1_pilot"
                 && r.row_id != "class.fighter.levels_2_10"
+                && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the ranger-decomposition slice must not promote any row to Supported or Lossy"

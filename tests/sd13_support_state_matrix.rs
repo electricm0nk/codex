@@ -642,6 +642,7 @@ fn seed_contains_no_unexpectedly_supported_rows() {
             && r.row_id != "race.halfling.bounded_semantics"
             && r.row_id != "class.fighter.level_1_pilot"
             && r.row_id != "class.fighter.levels_2_10"
+            && r.row_id != "class.monk.bounded_progression"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "no row may be silently promoted to Supported outside the two named, \
          intentionally-promoted SD-19 rows"

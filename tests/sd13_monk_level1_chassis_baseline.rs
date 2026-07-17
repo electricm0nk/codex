@@ -503,7 +503,9 @@ fn multiclass_monk_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Control plane: the matrix reclassifies the monk row to Partial/Computed -----
+// ----- Control plane: the matrix reclassifies the monk row -----
+// Originally Partial/Computed; later promoted to Supported/ProductVisible by
+// SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-16).
 
 #[test]
 fn matrix_monk_row_is_partial_computed_and_names_remaining_burdens() {
@@ -512,8 +514,8 @@ fn matrix_monk_row_is_partial_computed_and_names_remaining_burdens() {
         .row("class.monk.bounded_progression")
         .expect("monk bounded_progression row must exist");
 
-    assert_eq!(monk.support_state, SupportState::Partial);
-    assert_eq!(monk.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(monk.support_state, SupportState::Supported);
+    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         monk.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -661,8 +663,10 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "race.halfling.bounded_semantics"
                 && r.row_id != "class.fighter.level_1_pilot"
                 && r.row_id != "class.fighter.levels_2_10"
+                && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
-        "the monk slice must not promote any row to Supported or Lossy"
+        "no row may be silently promoted to Supported or Lossy outside the \
+         intentionally-promoted SD-19 rows"
     );
 }

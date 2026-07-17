@@ -376,8 +376,10 @@ fn matrix_monk_row_names_level_12_widening() {
         .row("class.monk.bounded_progression")
         .expect("monk bounded_progression row must exist");
 
-    assert_eq!(monk.support_state, SupportState::Partial);
-    assert_eq!(monk.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(monk.support_state, SupportState::Supported);
+    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(monk.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
         monk.grounding_ref.contains("sd18_monk_level12_widening"),

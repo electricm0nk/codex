@@ -701,6 +701,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "race.halfling.bounded_semantics"
                 && r.row_id != "class.fighter.level_1_pilot"
                 && r.row_id != "class.fighter.levels_2_10"
+                && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Druid slice must not promote any row to Supported or Lossy"

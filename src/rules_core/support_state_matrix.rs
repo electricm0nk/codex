@@ -3759,8 +3759,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             Step (the level-12 class table's new named feature) checked and \
                             confirmed not flat, and the \
                             recognized bonus feat's own mechanics still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_MONK_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3/E5 leaves direct computed evidence that the \
@@ -3992,13 +3992,22 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     flurry with special monk weapons, wiring into integrated combat totals, any \
                     ki-power execution engine, High Jump's own Acrobatics/ki-point mechanics, and \
                     Monk level 13+ all remain unproven, and no martial math beyond the grounded \
-                    flat surfaces is fabricated",
-                next_required_uplift: "later SD13-E5/E6/SD18 slice grounding the one remaining \
-                    named Monk martial pillar burden (the recognized bonus feat's own mechanics \
-                    — an execution engine per feat, not a flat number), then the level-2/level-6 \
-                    bonus feat grant recognition, Wholeness of Body's and Abundant Step's own \
-                    execution, and Monk \
-                    level 13+ progression",
+                    flat surfaces is fabricated. This row's every named grounded milestone is \
+                    now surfaced live in the desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class \
+                    name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the operator's \
+                    UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the one \
+                    remaining named Monk martial pillar burden (the recognized bonus feat's own \
+                    mechanics — an execution engine per feat, not a flat number), the \
+                    level-2/level-6 bonus feat grant recognition, Wholeness of Body's and \
+                    Abundant Step's own execution, and Monk level 13+ progression as real \
+                    computed contributions is a future SD-N's scope, not a further per-cycle \
+                    widening of this row",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",

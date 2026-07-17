@@ -645,12 +645,13 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
     );
     assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
 
-    // Monk was later promoted to Partial/Computed by its own follow-up SD13-E3 slice.
+    // Monk was later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
     let monk = matrix
         .row("class.monk.bounded_progression")
         .expect("monk row must exist");
-    assert_eq!(monk.support_state, SupportState::Partial);
-    assert_eq!(monk.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(monk.support_state, SupportState::Supported);
+    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
 
     // No row is silently promoted to Supported by this slice. (school.abjuration/
     // illusion.spell_reachability were later promoted to Supported/Product-visible
@@ -679,6 +680,7 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
             && r.row_id != "race.halfling.bounded_semantics"
             && r.row_id != "class.fighter.level_1_pilot"
             && r.row_id != "class.fighter.levels_2_10"
+            && r.row_id != "class.monk.bounded_progression"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "the paladin-decomposition slice must not promote any row to Supported"
     );
