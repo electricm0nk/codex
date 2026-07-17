@@ -2438,8 +2438,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             targeting/save/AC-application execution, and Deadly Performance's own \
                             death-effect-resolution execution) and the spontaneous \
                             known-spell / slot posture burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_BARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
@@ -3039,24 +3039,34 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     none of that is fabricated. This needed ZERO new record types beyond the one \
                     new Deadly Performance DC magnitude and ZERO new choice slots, closing this \
                     row's own per-level arithmetic-widening frontier at level 20, the final \
-                    level within PF1's 1-20 character-level cap",
-                next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
-                    (start/maintain action economy, round tracking, application of the grounded \
-                    Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
-                    magnitudes, Countersong / Distraction opposed Perform-check-vs-effect \
-                    grounding, Versatile Performance's choice-gated skill-substitution engine \
-                    (all grants), Suggestion's and Mass Suggestion's fascinated-target-plus-\
-                    spell-effect resolution, Dirge of Doom's fear/shaken-condition resolution, \
-                    Inspire Greatness's bonus-Hit-Dice/temporary-hit-point mechanics, Lore \
-                    Master's own take-10/take-20 skill-check-resolution execution, Soothing \
-                    Performance's own healing-application/condition-removal execution, \
-                    Frightening Tune's own fear/frightened-condition-resolution execution, \
-                    Inspire Heroics' own targeting/save-application/AC-application execution, and \
-                    Deadly Performance's own death-effect-resolution execution), then the \
-                    spontaneous spell-slot burden (including the un-grounded 5th-level \
-                    spell-access threshold). This row's own per-level arithmetic-widening \
-                    frontier is now CLOSED at level 20, the final level within PF1's 1-20 \
-                    character-level cap for this class row",
+                    level within PF1's 1-20 character-level cap. SD19 Full-matrix-closure cycle \
+                    2026-07-16 promotes this row to Supported/Product-visible: the already-live \
+                    Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, \
+                    list_class_catalog Tauri command, live-verified at browser-build cycle \
+                    9313e30) is the operator-reachable UI surface for this row's full grounded \
+                    Bard level-1-20 progression data, satisfying condition 1 of the \
+                    Supported/Product-visible bar; condition 2 (every named grounded milestone) \
+                    was already satisfied by the compute grounding recorded above",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    Bard performance-execution engine (start/maintain action economy, round \
+                    tracking, application of the grounded Inspire Courage / Fascinate / \
+                    Well-Versed / Inspire Competence / Lore Master magnitudes, Countersong / \
+                    Distraction opposed Perform-check-vs-effect grounding, Versatile \
+                    Performance's choice-gated skill-substitution engine (all grants), \
+                    Suggestion's and Mass Suggestion's fascinated-target-plus-spell-effect \
+                    resolution, Dirge of Doom's fear/shaken-condition resolution, Inspire \
+                    Greatness's bonus-Hit-Dice/temporary-hit-point mechanics, Lore Master's own \
+                    take-10/take-20 skill-check-resolution execution, Soothing Performance's own \
+                    healing-application/condition-removal execution, Frightening Tune's own \
+                    fear/frightened-condition-resolution execution, Inspire Heroics' own \
+                    targeting/save-application/AC-application execution, and Deadly \
+                    Performance's own death-effect-resolution execution), then the spontaneous \
+                    spell-slot burden (including the un-grounded 5th-level spell-access \
+                    threshold), is a future SD-N's scope, not a further per-cycle widening of \
+                    this row. This row's own per-level arithmetic-widening frontier is now \
+                    CLOSED at level 20, the final level within PF1's 1-20 character-level cap \
+                    for this class row",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",

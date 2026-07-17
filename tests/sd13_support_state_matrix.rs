@@ -651,6 +651,7 @@ fn seed_contains_no_unexpectedly_supported_rows() {
                 && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "no row may be silently promoted to Supported outside the two named, \
          intentionally-promoted SD-19 rows"

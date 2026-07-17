@@ -753,7 +753,9 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
 
     // Bard was later promoted to Partial/Computed by its own SD13-E4
-    // decomposition slice (Bardic Knowledge grounded for real).
+    // decomposition slice (Bardic Knowledge grounded for real), then to
+    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-16).
     {
         let id = "class.bard.progression_and_spell_burden";
         let row = matrix
@@ -761,10 +763,10 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
             .unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
             row.support_state,
-            SupportState::Partial,
-            "row {id} must be Partial after its own SD13-E4 decomposition slice"
+            SupportState::Supported,
+            "row {id} must be Supported after the SD-19 class-row promotion"
         );
-        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+        assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     }
 
     // Sorcerer was later promoted to Partial/Computed by its own SD13-E4
@@ -869,6 +871,7 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
                 && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the ranger-decomposition slice must not promote any row to Supported or Lossy"

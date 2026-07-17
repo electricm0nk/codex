@@ -654,24 +654,24 @@ fn matrix_wizard_row_stays_partial_computed_with_specialization_choice_grounded(
 }
 
 #[test]
-fn matrix_preserves_bard_blocked_computed_truth() {
-    // Bard landed its own SD13-E4-F7 spell-baseline slice and was later promoted
+fn matrix_preserves_bard_supported_product_visible_truth() {
+    // Bard landed its own SD13-E4-F7 spell-baseline slice, was later promoted
     // to Partial/Computed by a further SD13-E4 decomposition slice (Bardic
-    // Knowledge grounded for real); the Wizard slice must preserve that posture,
-    // not re-promote or silently demote it.
+    // Knowledge grounded for real), then to Supported/ProductVisible by SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-16).
     let matrix = seeded_sd13_e1_f1_current_truth();
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
     assert_eq!(
         bard.support_state,
-        SupportState::Partial,
-        "bard row must keep its later-accepted Partial posture after the Wizard slice"
+        SupportState::Supported,
+        "bard row must be Supported after the SD-19 class-row promotion"
     );
     assert_eq!(
         bard.evidence_tier,
-        EvidenceTier::Computed,
-        "bard row must keep its accepted Computed evidence tier after the Wizard slice"
+        EvidenceTier::ProductVisible,
+        "bard row must be ProductVisible after the SD-19 class-row promotion"
     );
     assert_eq!(
         bard.evidence_freshness,
@@ -775,6 +775,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Wizard slice must not promote any row to Supported or Lossy"

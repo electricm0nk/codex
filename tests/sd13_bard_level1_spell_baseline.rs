@@ -632,11 +632,14 @@ fn matrix_bard_row_is_partial_computed_and_names_remaining_burdens() {
 
     // The SD13-E4 Bard decomposition slice grounded Bardic Knowledge (Blocked to
     // Partial), and the SD13-E5 Bardic Performance grounding slice grounds the flat
-    // performance surface (rounds per day, inspire courage magnitude). The row stays
-    // Partial, not Supported: the performance-execution engine, the other level-1
-    // performances, and the entire spontaneous spell burden remain unproven.
-    assert_eq!(bard.support_state, SupportState::Partial);
-    assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
+    // performance surface (rounds per day, inspire courage magnitude). SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-16) promoted the
+    // row again to Supported/ProductVisible: every named grounded milestone above is
+    // now surfaced live in the desktop app; the performance-execution engine and the
+    // entire spontaneous spell burden remain named, honest gaps, not further
+    // per-cycle widening targets.
+    assert_eq!(bard.support_state, SupportState::Supported);
+    assert_eq!(bard.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         bard.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -779,6 +782,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy_after_bard_slice() {
                 && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Bard slice must not promote any row to Supported or Lossy"

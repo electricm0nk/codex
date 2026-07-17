@@ -600,17 +600,17 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
     assert_eq!(sorcerer.evidence_tier, EvidenceTier::ProductVisible);
 
     // Bard was later promoted to Partial/Computed by its own SD13-E4 decomposition
-    // slice (Bardic Knowledge grounded for real); this slice preserves it
-    // without re-promoting it further.
+    // slice (Bardic Knowledge grounded for real), then to Supported/ProductVisible
+    // by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-16).
     let bard = matrix
         .row("class.bard.progression_and_spell_burden")
         .expect("bard row must exist");
     assert_eq!(
         bard.support_state,
-        SupportState::Partial,
-        "bard row must keep its later-accepted Partial posture after the paladin-decomposition slice"
+        SupportState::Supported,
+        "bard row must be Supported after the SD-19 class-row promotion"
     );
-    assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(bard.evidence_tier, EvidenceTier::ProductVisible);
 
     // Wizard carried its accepted post-merge-receipt posture (Blocked/Computed) at
     // the time this test was first written, but a later SD13-E4 Wizard
@@ -678,6 +678,7 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
                 && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "the paladin-decomposition slice must not promote any row to Supported"
     );

@@ -477,8 +477,8 @@ fn matrix_bard_row_names_level_7_widening() {
         .row("class.bard.progression_and_spell_burden")
         .expect("bard progression_and_spell_burden row must exist");
 
-    assert_eq!(bard.support_state, SupportState::Partial);
-    assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(bard.support_state, SupportState::Supported);
+    assert_eq!(bard.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(bard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
         bard.grounding_ref.contains("sd13_bard_level7_progression"),
