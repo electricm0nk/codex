@@ -7,6 +7,7 @@ pub mod damage_total;
 pub mod equipment_effects;
 pub mod equipment_resolver;
 pub mod feat_prereqs;
+pub mod level_up;
 pub mod pilot_compute;
 pub mod pilot_compute_corpus;
 pub mod pilot_failure;
