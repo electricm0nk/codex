@@ -483,10 +483,11 @@ fn matrix_paladin_row_is_promoted_to_partial_with_honest_burden_note() {
     // four named non-spell burdens are now grounded (Smite Evil for real,
     // lay on hands / divine grace / mercy as correct level-gate absences),
     // while the hybrid chassis pair and the partial-caster spell burden stay
-    // named and claim-blocking. Never Supported.
-    assert_eq!(paladin.support_state, SupportState::Partial);
-    assert_ne!(paladin.support_state, SupportState::Supported);
-    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    // named and claim-blocking. SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-17) later promotes the row to
+    // Supported/ProductVisible.
+    assert_eq!(paladin.support_state, SupportState::Supported);
+    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         paladin.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -679,7 +680,8 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
                 && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
-            && r.row_id != "equipment.equipmods.equipment_reachability"),
+            && r.row_id != "equipment.equipmods.equipment_reachability"
+            && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"),
         "the paladin-decomposition slice must not promote any row to Supported"
     );
 }

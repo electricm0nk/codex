@@ -650,14 +650,15 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
 
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as
-    // correct level-1 absences).
+    // correct level-1 absences), then to Supported/ProductVisible by SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-17).
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin row must exist");
     assert_eq!(
         paladin.support_state,
-        SupportState::Partial,
-        "paladin row must keep its later-accepted Partial posture after the barbarian slice"
+        SupportState::Supported,
+        "paladin row must be Supported after the SD-19 class-row promotion"
     );
 
     // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
@@ -717,6 +718,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
+                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the barbarian slice must not promote any row to Supported or Lossy"

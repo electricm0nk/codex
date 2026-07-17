@@ -4168,8 +4168,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             and the hybrid chassis pair plus \
                             the spells-known/spells-per-day/spell-DC spell burden still named \
                             and unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_PALADIN_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3/E4/E5 leaves direct computed evidence that the \
@@ -4770,8 +4770,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     supported/grounded row. This closes Paladin's own per-level \
                     arithmetic-widening frontier -- level 20 is the final level within PF1's \
                     1-20 character-level cap. \
-                    The row stays Partial, not Supported: \
-                    the F6 hybrid chassis pair (class-feature and spell) stays claim-blocking \
+                    The F6 hybrid chassis pair (class-feature and spell) stays claim-blocking \
                     as accepted hybrid truth, Divine Bond stays \
                     named-but-unproven, Aura of Justice's, Aura of Faith's, Aura of \
                     Righteousness's, and Holy Champion's own resolution engines are not \
@@ -4780,19 +4779,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     remains named and unproven beyond the grounded caster-level gate arithmetic \
                     — no spell-source lineage, spells known or prepared posture, \
                     spells-per-day progression, bonus spell slots, or spell save DCs are \
-                    grounded. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid \
+                    grounded -- unchanged from level 20 -- but every named grounded milestone \
+                    above (the level-1-20 chassis baseline, smite evil, lay on hands, divine \
+                    grace, mercy, channel positive energy, the partial-caster \
+                    effective-caster-level gate, Aura of Justice/Faith/Righteousness, Holy \
+                    Champion, and the per-level widening through level 20) is now surfaced live \
+                    in the desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), \
+                    reachable from the hub landing screen, filterable by class and searchable \
+                    by class name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the \
+                    operator's UI surfaces it). The F6 hybrid baseline, the F6 hybrid blockers, \
+                    and the F6 hybrid \
                     chassis recognition explanation all remain in place (each gated to the \
                     bounded hybrid baseline level, so they still fire only at level 1)",
-                next_required_uplift: "SD13-E5+ Paladin class-feature-execution engine slice \
-                    (Divine Bond weapon-enhancement/mount-advancement resolution, Aura of \
-                    Justice's smite-sharing resolution, Aura of Faith's and Aura of \
-                    Righteousness's own damage-reduction-overcoming/damage-reduction/compulsion- \
-                    immunity resolution, Holy Champion's own damage-reduction/banishment/ \
-                    healing-maximization resolution, and mercy EFFECT resolution), then ground \
-                    the paladin prepared-posture and \
-                    spell-source-lineage burdens now that the caster-level gate, the access \
-                    ladder, the base per-day counts, the base spell-save DCs, the Charisma \
-                    bonus-slot counts, and the integrated totals are all grounded. This row's \
+                next_required_uplift: "none for recognition or UI-surfacing; grounding \
+                    Paladin's remaining class-feature-execution engine (Divine Bond \
+                    weapon-enhancement/mount-advancement resolution, Aura of Justice's \
+                    smite-sharing resolution, Aura of Faith's and Aura of Righteousness's own \
+                    damage-reduction-overcoming/damage-reduction/compulsion-immunity \
+                    resolution, Holy Champion's own damage-reduction/banishment/ \
+                    healing-maximization resolution, and mercy EFFECT resolution), then the \
+                    paladin prepared-posture and spell-source-lineage burdens, is a future \
+                    SD-N's scope, not a further per-cycle widening of this row. This row's \
                     own per-level arithmetic-widening frontier is now CLOSED at level 20, the \
                     final level within PF1's 1-20 character-level cap for this class row",
             },

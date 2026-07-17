@@ -374,8 +374,7 @@ fn matrix_paladin_row_names_level_4_widening_and_channel_positive_energy() {
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin row must exist");
 
-    assert_eq!(paladin.support_state, SupportState::Partial);
-    assert_ne!(paladin.support_state, SupportState::Supported);
+    assert_eq!(paladin.support_state, SupportState::Supported);
     assert!(
         paladin.grounding_ref.contains("sd13_paladin_level4_progression"),
         "paladin row must cite the live SD13-E5 level-4 progression proof surface: {}",

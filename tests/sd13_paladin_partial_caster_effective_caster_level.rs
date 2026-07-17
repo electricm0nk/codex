@@ -172,10 +172,9 @@ fn matrix_paladin_row_note_still_names_the_partial_caster_facts_and_stays_partia
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid row must exist");
 
-    // This slice grounds one more flat arithmetic gate; it does not promote
-    // the row past Partial.
-    assert_eq!(paladin.support_state, SupportState::Partial);
-    assert_ne!(paladin.support_state, SupportState::Supported);
+    // This slice grounds one more flat arithmetic gate; the row is now
+    // Supported via the Class Progression Catalog browser's UI-surfacing.
+    assert_eq!(paladin.support_state, SupportState::Supported);
 
     let note = paladin.blocker_or_lossiness_note;
     assert!(

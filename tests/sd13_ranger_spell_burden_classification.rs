@@ -374,17 +374,19 @@ fn matrix_ranger_row_is_not_misattributed_to_paladin_or_supported() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as
-    // correct level-1 absences) — a Paladin-owned move, not a Ranger side
-    // effect; the misattribution guard below still holds.
+    // correct level-1 absences), then to Supported/ProductVisible by SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-17) —
+    // both Paladin-owned moves, not a Ranger side effect; the
+    // misattribution guard below still holds.
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid row must still exist");
     assert_eq!(
         paladin.support_state,
-        SupportState::Partial,
-        "paladin row must carry its own-slice Partial posture, never a Ranger-driven move"
+        SupportState::Supported,
+        "paladin row must carry its own-slice Supported posture, never a Ranger-driven move"
     );
-    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
 
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")

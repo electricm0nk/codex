@@ -713,20 +713,21 @@ fn matrix_wizard_row_reflects_current_truth_and_preserves_bard_supported_state()
 }
 
 #[test]
-fn matrix_preserves_paladin_hybrid_blocked_computed_truth() {
+fn matrix_preserves_paladin_hybrid_supported_product_visible_truth() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as
-    // correct level-1 absences).
+    // correct level-1 absences), then to Supported/ProductVisible by SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-17).
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin row must exist");
     assert_eq!(
         paladin.support_state,
-        SupportState::Partial,
-        "paladin hybrid row must keep its later-accepted Partial posture after the Sorcerer slice"
+        SupportState::Supported,
+        "paladin hybrid row must be Supported after the SD-19 class-row promotion"
     );
-    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
 
     // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
     // decomposition slice (Track grounded for real).
@@ -781,6 +782,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
+                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Sorcerer slice must not promote any row to Supported or Lossy"

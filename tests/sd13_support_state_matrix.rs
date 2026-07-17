@@ -356,17 +356,17 @@ fn paladin_hybrid_row_is_partial_and_computed_with_named_burdens() {
     // placeholder to a blocked computed posture; the SD13-E4 slice grounded
     // Smite Evil for real, and the SD13-E5 level-gate slice grounds lay on
     // hands / divine grace / mercy as correct PF1 CRB level-gate absences and
-    // promotes the row from Blocked to Partial. The hybrid chassis pair and
-    // the partial-caster spell burden stay named and unproven — never
-    // Supported.
+    // promotes the row from Blocked to Partial. SD-19's Class Progression
+    // Catalog browser UI-surfacing work (2026-07-17) later promotes the row
+    // to Supported/ProductVisible; the hybrid chassis pair and the
+    // partial-caster spell burden stay named and unproven.
     let matrix = matrix();
     let hybrid = row(&matrix, "class.paladin.hybrid_chassis_and_spell_burden");
     assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
     assert_eq!(hybrid.subject_id, "class:paladin");
-    assert_eq!(hybrid.support_state, SupportState::Partial);
+    assert_eq!(hybrid.support_state, SupportState::Supported);
     assert_ne!(hybrid.support_state, SupportState::Blocked);
-    assert_ne!(hybrid.support_state, SupportState::Supported);
-    assert_eq!(hybrid.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(hybrid.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         hybrid
             .grounding_ref
@@ -652,6 +652,7 @@ fn seed_contains_no_unexpectedly_supported_rows() {
                 && r.row_id != "class.rogue.bounded_progression"
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
+                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "no row may be silently promoted to Supported outside the two named, \
          intentionally-promoted SD-19 rows"
