@@ -2,6 +2,7 @@
 
 pub mod character_input;
 pub mod composed_input;
+pub mod contract;
 pub mod equipment_resolver;
 pub mod pilot_compute;
 pub mod pilot_compute_corpus;
