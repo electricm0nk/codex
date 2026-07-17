@@ -51,13 +51,14 @@ pub mod monk;
 pub mod paladin;
 pub mod ranger;
 pub mod rogue;
+pub mod sorcerer;
 
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 
 /// The core classes this cycle's dispatch recognizes so far (barbarian,
-/// bard, cleric, druid, fighter, monk, paladin, ranger, rogue). Widens by
-/// one per future cycle (sorcerer, wizard), per Step 2's stated order.
+/// bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer).
+/// Widens by one more future cycle (wizard), per Step 2's stated order.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const BARD_CLASS_ID: &str = "class:bard";
 const CLERIC_CLASS_ID: &str = "class:cleric";
@@ -67,6 +68,7 @@ const MONK_CLASS_ID: &str = "class:monk";
 const PALADIN_CLASS_ID: &str = "class:paladin";
 const RANGER_CLASS_ID: &str = "class:ranger";
 const ROGUE_CLASS_ID: &str = "class:rogue";
+const SORCERER_CLASS_ID: &str = "class:sorcerer";
 
 /// `technical-design.md` §2.6's `LevelUpPlan`, adapted per §2.0 (no
 /// `rules_tables: &RulesTables` parameter on the seam that produces it)
@@ -200,6 +202,9 @@ pub fn compute_level_up_grants(
         }
         [class_level] if class_level.class_id == ROGUE_CLASS_ID => {
             rogue::compute_rogue_level_up_grants(character, from_level, to_level)
+        }
+        [class_level] if class_level.class_id == SORCERER_CLASS_ID => {
+            sorcerer::compute_sorcerer_level_up_grants(character, from_level, to_level)
         }
         _ => LevelUpPlan::default(),
     }
