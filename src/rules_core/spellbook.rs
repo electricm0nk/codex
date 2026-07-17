@@ -18,8 +18,8 @@
 //! illusion, necromancy, transmutation, universal). Abjuration
 //! (`spellbook::abjuration`), Conjuration (`spellbook::conjuration`),
 //! Divination (`spellbook::divination`), Enchantment
-//! (`spellbook::enchantment`), and Evocation (`spellbook::evocation`) are
-//! landed as of this cycle;
+//! (`spellbook::enchantment`), Evocation (`spellbook::evocation`), and
+//! Illusion (`spellbook::illusion`) are landed as of this cycle;
 //! `compute_spellbook_coverage` dispatches by school and produces a real
 //! `SpellEffect` only for the schools whose per-school contribution
 //! module has landed. Unlanded schools' selections still resolve
@@ -49,6 +49,7 @@ pub mod conjuration;
 pub mod divination;
 pub mod enchantment;
 pub mod evocation;
+pub mod illusion;
 
 use std::collections::BTreeMap;
 
@@ -195,8 +196,8 @@ pub fn compute_spellbook_coverage(
         };
 
         // Per-school contribution functions land one per cycle (Step 2).
-        // Abjuration, Conjuration, Divination, Enchantment, and Evocation
-        // are wired as of this cycle.
+        // Abjuration, Conjuration, Divination, Enchantment, Evocation, and
+        // Illusion are wired as of this cycle.
         let landed_effect = match school {
             Pf1SchoolId::Abjuration => abjuration::resolve_abjuration_spell_effect(
                 &selection.spell_id,
@@ -239,6 +240,16 @@ pub fn compute_spellbook_coverage(
                 table_cell: effect.table_cell,
             }),
             Pf1SchoolId::Evocation => evocation::resolve_evocation_spell_effect(
+                &selection.spell_id,
+            )
+            .map(|effect| SpellEffect {
+                spell_id: effect.spell_id,
+                school,
+                level: effect.level,
+                effect_text: effect.effect_text,
+                table_cell: effect.table_cell,
+            }),
+            Pf1SchoolId::Illusion => illusion::resolve_illusion_spell_effect(
                 &selection.spell_id,
             )
             .map(|effect| SpellEffect {
