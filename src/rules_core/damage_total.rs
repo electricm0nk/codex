@@ -64,6 +64,18 @@
 //! authority for this token family. See `resolve_weapon_enhancement_modifier`'s
 //! own doc comment for the bounded no-attachment-model scope this
 //! composition works within.
+//!
+//! This cycle lands the fifth work-unit, `resolve_critical_threat_range`
+//! (the fourth work-unit, feat-effect modifier, is a separate concurrent
+//! cycle's territory and is not touched here): a weapon's
+//! critical-threat-range, read directly off its own `CRITRANGE:` corpus
+//! token via the identical `equipment_id_resolve` path the first two
+//! work-units use — the same "read tokens straight off the resolved
+//! record" pattern `equipment_effects/arms_armor.rs` already established.
+//! Verified directly against the live corpus
+//! (`core_rulebook/cr_equip_arms_armor.lst`: `KEY:Longsword (Base)`
+//! carries `CRITRANGE:2` -> threatens 19-20, `KEY:Rapier (Base)` carries
+//! `CRITRANGE:3` -> threatens 18-20).
 
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::equipment_effects::EquipmentEffects;
@@ -344,6 +356,64 @@ pub fn resolve_weapon_enhancement_modifier(
     })
 }
 
+/// One resolved weapon's critical-threat-range, with its corpus
+/// provenance. This is the critical-threat-range slice of the eventual
+/// `DamageRoll` (`technical-design.md` §2.5) — `critical_multiplier` is
+/// the final work-unit's field, not fabricated here. `critical_threat_range`
+/// is the inclusive `(low, high)` natural-roll bounds within which the
+/// weapon threatens a critical hit, e.g. `(19, 20)` for a longsword.
+#[derive(Debug, Clone, PartialEq)]
+pub struct DamageRollCriticalThreatRange {
+    pub weapon_item_id: String,
+    pub weapon_record_key: String,
+    pub critical_threat_range: (u8, u8),
+    pub table_cell: Option<TableCellRef>,
+}
+
+/// The damage-total engine's fifth work-unit (SD-20 §1.6):
+/// critical-threat-range. Resolves a weapon selection's `item_id` against
+/// the corpus (same resolver path `resolve_base_damage_dice` and
+/// `resolve_str_damage_modifier` use) and reads its real `CRITRANGE:`
+/// token, converting the corpus's raw threat-*width* value (the count of
+/// consecutive top natural-roll numbers that threaten) into the inclusive
+/// `(low, high)` bounds the eventual `DamageRoll.critical_threat_range`
+/// field carries. Per PF1 (CRB p.187, "Critical Hits"): a natural 20
+/// always threatens regardless of the weapon's own range, so a width of
+/// `1` yields `(20, 20)`; a longsword's width of `2` yields `(19, 20)`; a
+/// rapier's width of `3` yields `(18, 20)`.
+///
+/// Returns `None` when the item does not resolve against the corpus at
+/// all, or resolves but carries no `CRITRANGE:` token (e.g. armor, or any
+/// other non-weapon item) — both are honest absence, not a fabricated
+/// threat range.
+pub fn resolve_critical_threat_range(
+    weapon_item_id: &str,
+    corpus: &SourcePackageContent,
+) -> Option<DamageRollCriticalThreatRange> {
+    let (record, table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
+    let critical_threat_range = critical_threat_range_token(record)?;
+    let weapon_record_key = equipment_key_token(record)
+        .unwrap_or(&record.name)
+        .to_string();
+
+    Some(DamageRollCriticalThreatRange {
+        weapon_item_id: weapon_item_id.to_string(),
+        weapon_record_key,
+        critical_threat_range,
+        table_cell,
+    })
+}
+
+fn critical_threat_range_token(record: &EquipmentRecord) -> Option<(u8, u8)> {
+    record
+        .tokens
+        .iter()
+        .find(|token| token.key == "CRITRANGE")
+        .and_then(|token| token.value.parse::<u8>().ok())
+        .filter(|width| (1..=20).contains(width))
+        .map(|width| (20 - width + 1, 20))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -577,5 +647,48 @@ Adamantine\tKEY:Material ~ Adamantine ~ Weapon\tTYPE:BaseMaterial.MasterworkQual
             &effects
         )
         .is_none());
+    }
+
+    /// Real verbatim tokens copied from `KEY:Longsword (Base)` in
+    /// `core_rulebook/cr_equip_arms_armor.lst` — `CRITRANGE:2`.
+    #[test]
+    fn longsword_critrange_2_threatens_19_to_20() {
+        let text = "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n";
+        let corpus = corpus_from(text);
+
+        let resolved = resolve_critical_threat_range("Longsword (Base)", &corpus)
+            .expect("Longsword (Base) must resolve");
+        assert_eq!(resolved.critical_threat_range, (19, 20));
+    }
+
+    /// Real verbatim tokens copied from `KEY:Rapier (Base)` in
+    /// `core_rulebook/cr_equip_arms_armor.lst` — `CRITRANGE:3`.
+    #[test]
+    fn rapier_critrange_3_threatens_18_to_20() {
+        let text = "Rapier\tKEY:Rapier (Base)\tTYPE:Weapon.Melee.Martial\tCOST:20\tWT:2\tCRITMULT:x2\tCRITRANGE:3\tDAMAGE:1d6\n";
+        let corpus = corpus_from(text);
+
+        let resolved = resolve_critical_threat_range("Rapier (Base)", &corpus)
+            .expect("Rapier (Base) must resolve");
+        assert_eq!(resolved.critical_threat_range, (18, 20));
+    }
+
+    #[test]
+    fn armor_record_has_no_critical_threat_range() {
+        let text = "Leather Armor\tKEY:Leather Armor (Base)\tTYPE:Armor.Light\tCOST:10\tWT:15\tACCHECK:0\tMAXDEX:6\tSPELLFAILURE:10\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\n";
+        let corpus = corpus_from(text);
+
+        assert!(resolve_critical_threat_range("Leather Armor (Base)", &corpus).is_none());
+    }
+
+    #[test]
+    fn critical_threat_range_unresolvable_item_yields_none_not_fabricated() {
+        let text = "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n";
+        let corpus = corpus_from(text);
+
+        assert!(
+            resolve_critical_threat_range("item:does-not-exist-in-this-corpus", &corpus)
+                .is_none()
+        );
     }
 }
