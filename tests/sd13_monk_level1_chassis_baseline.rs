@@ -555,7 +555,7 @@ fn matrix_monk_row_is_partial_computed_and_names_remaining_burdens() {
 fn matrix_preserves_accepted_truth_and_unchanged_rows() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
-    // Fighter, Druid, and Barbarian rows were later promoted to
+    // Fighter, Druid, Barbarian, and Cleric rows were later promoted to
     // Supported/ProductVisible by SD-19's Class Progression Catalog browser
     // UI-surfacing work (2026-07-16).
     for id in [
@@ -563,6 +563,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         "class.fighter.levels_2_10",
         "class.druid.progression_and_spell_burden",
         "class.barbarian.bounded_progression",
+        "class.cleric.progression_and_spell_burden",
     ] {
         let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
@@ -603,13 +604,11 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         .expect("rogue row must exist");
     assert_eq!(rogue.support_state, SupportState::Partial);
 
-    // Sorcerer, Bard, and Cleric were later promoted to Partial/Computed by
-    // their own SD13-E4 decomposition slices (Eschew Materials, Bardic Knowledge,
-    // Channel Energy).
+    // Sorcerer and Bard were later promoted to Partial/Computed by their own
+    // SD13-E4 decomposition slices (Eschew Materials, Bardic Knowledge).
     for id in [
         "class.sorcerer.progression_and_spell_burden",
         "class.bard.progression_and_spell_burden",
-        "class.cleric.progression_and_spell_burden",
     ] {
         let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
@@ -662,6 +661,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "no row may be silently promoted to Supported or Lossy outside the \

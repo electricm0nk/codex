@@ -752,12 +752,10 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
     );
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
 
-    // Bard, Cleric, and Sorcerer were later promoted to Partial/Computed by
-    // their own SD13-E4 decomposition slices (Bardic Knowledge, Channel Energy,
-    // Eschew Materials).
+    // Bard and Sorcerer were later promoted to Partial/Computed by their own
+    // SD13-E4 decomposition slices (Bardic Knowledge, Eschew Materials).
     for id in [
         "class.bard.progression_and_spell_burden",
-        "class.cleric.progression_and_spell_burden",
         "class.sorcerer.progression_and_spell_burden",
     ] {
         let row = matrix
@@ -784,7 +782,7 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // Fighter, Monk, Druid, and Barbarian rows were later promoted to
+    // Fighter, Monk, Druid, Barbarian, and Cleric rows were later promoted to
     // Supported/ProductVisible by SD-19's Class Progression Catalog browser
     // UI-surfacing work (2026-07-16).
     for id in [
@@ -793,6 +791,7 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
         "class.monk.bounded_progression",
         "class.druid.progression_and_spell_burden",
         "class.barbarian.bounded_progression",
+        "class.cleric.progression_and_spell_burden",
     ] {
         let row = matrix
             .row(id)
@@ -850,6 +849,7 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
                 && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the ranger-decomposition slice must not promote any row to Supported or Lossy"

@@ -627,13 +627,11 @@ fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_trut
     );
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
 
-    // Sorcerer, Bard, and Cleric were later promoted to Partial/Computed by their
-    // own SD13-E4 decomposition slices (Eschew Materials, Bardic Knowledge,
-    // Channel Energy).
+    // Sorcerer and Bard were later promoted to Partial/Computed by their own
+    // SD13-E4 decomposition slices (Eschew Materials, Bardic Knowledge).
     for row_id in [
         "class.sorcerer.progression_and_spell_burden",
         "class.bard.progression_and_spell_burden",
-        "class.cleric.progression_and_spell_burden",
     ] {
         let row = matrix
             .row(row_id)
@@ -645,6 +643,18 @@ fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_trut
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
+
+    // Cleric was later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    let cleric = matrix
+        .row("class.cleric.progression_and_spell_burden")
+        .expect("cleric row must exist");
+    assert_eq!(
+        cleric.support_state,
+        SupportState::Supported,
+        "cleric row must be Supported after the SD-19 class-row promotion"
+    );
+    assert_eq!(cleric.evidence_tier, EvidenceTier::ProductVisible);
 
     // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
     // decomposition slice (Track grounded for real).
@@ -706,6 +716,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Druid slice must not promote any row to Supported or Lossy"

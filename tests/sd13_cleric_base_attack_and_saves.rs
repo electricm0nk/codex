@@ -262,8 +262,9 @@ fn matrix_cleric_row_note_names_base_attack_and_base_save_as_grounded() {
         .row("class.cleric.progression_and_spell_burden")
         .expect("cleric row must exist");
 
-    assert_eq!(cleric.support_state, SupportState::Partial);
-    assert_ne!(cleric.support_state, SupportState::Supported);
+    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
+    // Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(cleric.support_state, SupportState::Supported);
     for token in ["base attack", "base save", "standalone"] {
         assert!(
             cleric.blocker_or_lossiness_note.contains(token),

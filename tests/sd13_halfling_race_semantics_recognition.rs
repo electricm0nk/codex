@@ -338,6 +338,7 @@ fn matrix_all_six_non_human_race_rows_now_carry_runtime_evidence() {
                 && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the halfling slice must not promote any row to Supported or Lossy"

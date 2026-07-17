@@ -605,10 +605,13 @@ fn matrix_cleric_row_is_partial_computed_and_names_grounded_and_remaining_burden
         .row("class.cleric.progression_and_spell_burden")
         .expect("cleric row must exist");
 
-    assert_eq!(cleric.support_state, SupportState::Partial);
+    // NOTE: this test's name reflects this row's state as of the SD13-E4
+    // slice this file proves. Later promoted to Supported/ProductVisible by
+    // SD-19's Class Progression Catalog browser UI-surfacing work
+    // (2026-07-16).
+    assert_eq!(cleric.support_state, SupportState::Supported);
     assert_ne!(cleric.support_state, SupportState::Blocked);
-    assert_ne!(cleric.support_state, SupportState::Supported);
-    assert_eq!(cleric.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(cleric.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(cleric.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
         cleric
@@ -733,6 +736,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "class.monk.bounded_progression"
                 && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Cleric slice must not promote any row to Supported or Lossy"

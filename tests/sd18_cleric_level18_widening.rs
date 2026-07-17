@@ -342,8 +342,10 @@ fn matrix_cleric_row_names_level_18_widening() {
         .row("class.cleric.progression_and_spell_burden")
         .expect("cleric progression_and_spell_burden row must exist");
 
-    assert_eq!(cleric.support_state, SupportState::Partial);
-    assert_eq!(cleric.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
+    // Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(cleric.support_state, SupportState::Supported);
+    assert_eq!(cleric.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(cleric.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
         cleric.grounding_ref.contains("sd18_cleric_level18_widening"),

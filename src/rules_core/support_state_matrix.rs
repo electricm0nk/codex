@@ -3086,8 +3086,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             uses per day (Healing domain, partial) grounded for real at every supported \
                             level and the Rebuke Death heal amount and the prepared divine spell \
                             posture burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_CLERIC_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
@@ -3420,7 +3420,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     top domain-spell-slot-count arm already covers level 20 with zero code change), \
                     so no new pillar is grounded at level 20 either — only the base-attack, \
                     base-save, and Touch of Good pillars are widened. \
-                    The row is Partial, not Supported: Rebuke Death's heal amount (1d4 points of \
+                    Rebuke Death's heal amount (1d4 points of \
                     damage plus 1 for every two cleric levels, usable only on a creature below 0 hit \
                     points) is not a flat number and remains named and unproven, the domain \
                     spell-list contents that could fill the grounded domain spell slots remain named \
@@ -3432,14 +3432,21 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     fully exhausted — only the domain-power-execution and prepared-spell-posture \
                     burdens remain, and neither is a per-level widening. No touch-attack resolution, \
                     healing-application engine, hit-point-state gating check, or per-use consumption \
-                    tracking is fabricated",
-                next_required_uplift: "SD13-E5+ Cleric domain power grounding: the Rebuke Death \
-                    heal-amount piece (requires a dice-roll execution engine and a hit-point-state \
-                    gating check, a new-subsystem-shaped burden deliberately not attempted this \
-                    slice) and domain spell-list contents, then the prepared divine spell posture \
-                    burden. Cleric's per-level arithmetic-widening frontier is now fully exhausted \
-                    (level 20 is the final level within PF1's 1-20 character-level cap); no further \
-                    level exists to widen into for this class row",
+                    tracking is fabricated. This row's every named grounded milestone is now \
+                    surfaced live in the desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding Cleric's \
+                    remaining domain power (the Rebuke Death heal-amount piece, requiring a \
+                    dice-roll execution engine and a hit-point-state gating check), the domain \
+                    spell-list contents, and the prepared divine spell posture burden (spells \
+                    prepared from the full Cleric list, spontaneous cure/inflict conversion, spell \
+                    slots per day, bonus spells from a high Wisdom, spell save DCs) is a future \
+                    SD-N's scope, not a further per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",
