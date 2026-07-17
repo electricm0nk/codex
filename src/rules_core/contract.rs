@@ -20,11 +20,14 @@
 //! without first extending this contract; this cycle adds no field, only
 //! a read-only classification over the fields that already exist.
 //!
-//! `PilotReceipt` types and the printed-sheet cell map are later Epic-1
-//! work-units (not this cycle) — see the loop instruction's Step 2 and
-//! this bundle's progress doc for the current frontier.
+//! `PilotReceipt` types land in this cycle (cycle 2). The printed-sheet
+//! cell map is a later Epic-1 work-unit (not this cycle) — see the loop
+//! instruction's Step 2 and this bundle's progress doc for the current
+//! frontier.
 
 use crate::rules_core::character_input::CharacterInput;
+use crate::rules_core::pilot_compute::{ComputationDiagnostic, PilotBaseChassisComputation};
+use crate::rules_core::pilot_compute_corpus::{CorpusDerivedSection, CorpusPilotReceipt};
 
 /// The three canonical `CharacterInput` permutations the boundary
 /// contract documents in its "Inputs" section
@@ -71,5 +74,49 @@ pub fn classify_character_input(input: &CharacterInput) -> CharacterInputPermuta
         CharacterInputPermutation::BrandNew
     } else {
         CharacterInputPermutation::MidBuild
+    }
+}
+
+/// The boundary contract's `PilotReceipt` shape (`technical-design.md`
+/// §1.1 "Outputs"): per-derived-stat fields, per-source-record fields
+/// with provenance, and diagnostic fields with `claim_blocking`
+/// preserved.
+///
+/// This does not duplicate the existing `PilotBaseChassisComputation` /
+/// `CorpusPilotReceipt` shapes from scratch — `pilot_compute_corpus.rs`'s
+/// own doc comment already notes "the real chassis function returns
+/// `PilotBaseChassisComputation`... `PilotReceipt` in the doctrine doc's
+/// illustrative code does not exist in this repo". Instead this composes
+/// with the existing shapes: `chassis` is the unchanged per-derived-stat
+/// surface (`PilotBaseChassisComputation`), `corpus_derived` is the
+/// unchanged per-source-record-with-provenance surface
+/// (`CorpusDerivedSection`, carrying `TableCellRef`s), and `diagnostics`
+/// hoists the chassis's diagnostics (`claim_blocking` preserved
+/// bit-for-bit) to the receipt's top level per the contract's
+/// "Diagnostic fields" clause.
+#[derive(Debug, Clone, PartialEq)]
+pub struct PilotReceipt {
+    /// Per-derived-stat fields (BAB, saves, HP, AC, attack bonus, ability
+    /// mods, selected skill modifiers) — the unchanged chassis
+    /// computation.
+    pub chassis: PilotBaseChassisComputation,
+    /// Per-source-record fields with `TableCellRef` provenance
+    /// (spell-school coverage, resolved equipment) — the unchanged
+    /// corpus-derived section.
+    pub corpus_derived: CorpusDerivedSection,
+    /// Diagnostic fields; `claim_blocking: true` diagnostics are
+    /// preserved unchanged from the chassis computation.
+    pub diagnostics: Vec<ComputationDiagnostic>,
+}
+
+/// Build the boundary contract's `PilotReceipt` from the corpus-aware
+/// compute seam's existing output (`compute_pilot_with_corpus` in
+/// `pilot_compute_corpus.rs`). See `PilotReceipt`'s doc comment for why
+/// this wraps rather than duplicates the existing shapes.
+pub fn to_pilot_receipt(receipt: &CorpusPilotReceipt) -> PilotReceipt {
+    PilotReceipt {
+        diagnostics: receipt.base.diagnostics.clone(),
+        chassis: receipt.base.clone(),
+        corpus_derived: receipt.corpus_derived.clone(),
     }
 }

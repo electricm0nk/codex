@@ -1,6 +1,6 @@
 ---
 title: SD-20 — Boundary Contract (Epic 1)
-status: in progress (cycle 1 of Epic 1 landed 2026-07-16; CharacterInput permutations only)
+status: in progress (cycle 2 of Epic 1 landed 2026-07-17; CharacterInput permutations + PilotReceipt types landed, printed-sheet cell map and boundary-contract parity fixture still open)
 mirrors: /home/ubuntu/workspace/programs/codex/requirements/SD-20-rules-engine-completeness/technical-design.md §1
 ---
 
@@ -61,16 +61,39 @@ per permutation-boundary condition described above).
 
 ## 2. Outputs — what the engine returns (`PilotReceipt`)
 
-Not yet landed. A future Epic-1 cycle lands this section alongside the
-`PilotReceipt` type in `src/rules_core/contract.rs`, per
-`technical-design.md` §1.1 "Outputs": per-derived-stat fields,
-per-source-record fields with `TableCellRef` provenance, and diagnostic
-fields (`claim_blocking: true` diagnostics preserved). Note the existing
-compute surfaces already in this repo — `PilotBaseChassisComputation`
-(`src/rules_core/pilot_compute.rs`) and `CorpusPilotReceipt`
-(`src/rules_core/pilot_compute_corpus.rs`) — are the load-bearing
-precedents this cycle's `PilotReceipt` composes with or wraps, not
-shapes it duplicates from scratch.
+Landed (cycle 2). `src/rules_core/contract.rs` adds:
+
+- `PilotReceipt` — a struct with three fields, per
+  `technical-design.md` §1.1 "Outputs":
+  - `chassis: PilotBaseChassisComputation` — per-derived-stat fields
+    (BAB, saves, HP, AC, attack bonus, ability mods, selected skill
+    modifiers). The unchanged chassis computation from
+    `src/rules_core/pilot_compute.rs`; no re-derivation.
+  - `corpus_derived: CorpusDerivedSection` — per-source-record fields
+    with `TableCellRef` provenance (spell-school coverage, resolved
+    equipment). The unchanged corpus-derived section from
+    `src/rules_core/pilot_compute_corpus.rs`'s `CorpusPilotReceipt`.
+  - `diagnostics: Vec<ComputationDiagnostic>` — diagnostic fields,
+    hoisted from the chassis computation's own `diagnostics` field to
+    the receipt's top level unchanged. `claim_blocking: true`
+    diagnostics (e.g. `class_chassis.unsupported`) remain
+    `claim_blocking: true`.
+- `to_pilot_receipt(receipt: &CorpusPilotReceipt) -> PilotReceipt` — the
+  builder function. Wraps the existing corpus-aware compute seam's
+  output (`compute_pilot_with_corpus` in `pilot_compute_corpus.rs`);
+  this cycle does not introduce a new, parallel receipt-computation
+  path. As with the "Inputs" section's `CharacterInputPermutation`, the
+  precedent shapes already in this repo —
+  `PilotBaseChassisComputation` (`src/rules_core/pilot_compute.rs`) and
+  `CorpusPilotReceipt` (`src/rules_core/pilot_compute_corpus.rs`) — are
+  what `PilotReceipt` composes with, not shapes it duplicates from
+  scratch.
+
+RED/GREEN test: `tests/sd20_contract_pilot_receipt.rs` (3 cases: chassis
+section matches `compute_pilot_base_chassis` called directly,
+corpus-derived section matches the seam's own section unmodified,
+diagnostics preserve `claim_blocking: true` for an unsupported chassis
+posture).
 
 ## 3. Cells — what the GUI prints (printed-sheet cell map)
 
