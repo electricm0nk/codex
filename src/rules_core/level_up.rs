@@ -49,14 +49,15 @@ pub mod druid;
 pub mod fighter;
 pub mod monk;
 pub mod paladin;
+pub mod ranger;
 pub mod rogue;
 
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 
 /// The core classes this cycle's dispatch recognizes so far (barbarian,
-/// bard, cleric, druid, fighter, monk, paladin, rogue). Widens by one per
-/// future cycle (ranger, sorcerer, wizard), per Step 2's stated order.
+/// bard, cleric, druid, fighter, monk, paladin, ranger, rogue). Widens by
+/// one per future cycle (sorcerer, wizard), per Step 2's stated order.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const BARD_CLASS_ID: &str = "class:bard";
 const CLERIC_CLASS_ID: &str = "class:cleric";
@@ -64,6 +65,7 @@ const DRUID_CLASS_ID: &str = "class:druid";
 const FIGHTER_CLASS_ID: &str = "class:fighter";
 const MONK_CLASS_ID: &str = "class:monk";
 const PALADIN_CLASS_ID: &str = "class:paladin";
+const RANGER_CLASS_ID: &str = "class:ranger";
 const ROGUE_CLASS_ID: &str = "class:rogue";
 
 /// `technical-design.md` §2.6's `LevelUpPlan`, adapted per §2.0 (no
@@ -163,9 +165,9 @@ pub struct Prerequisite {
 /// future cycle's scope — this cycle bounds to single-class inputs,
 /// mirroring `pilot_compute.rs`'s own `supported_barbarian_level` /
 /// `supported_bard_level` / `supported_druid_level` single-class gate).
-/// Unrecognized classes (every core class except Barbarian, Bard, and
-/// Druid, as of this cycle) return an honestly-empty `LevelUpPlan`
-/// rather than a fabricated one.
+/// Unrecognized classes (every core class except Barbarian, Bard, Cleric,
+/// Druid, Fighter, Monk, Paladin, Ranger, and Rogue, as of this cycle)
+/// return an honestly-empty `LevelUpPlan` rather than a fabricated one.
 pub fn compute_level_up_grants(
     character: &CharacterInput,
     from_level: u8,
@@ -192,6 +194,9 @@ pub fn compute_level_up_grants(
         }
         [class_level] if class_level.class_id == PALADIN_CLASS_ID => {
             paladin::compute_paladin_level_up_grants(character, from_level, to_level)
+        }
+        [class_level] if class_level.class_id == RANGER_CLASS_ID => {
+            ranger::compute_ranger_level_up_grants(character, from_level, to_level)
         }
         [class_level] if class_level.class_id == ROGUE_CLASS_ID => {
             rogue::compute_rogue_level_up_grants(character, from_level, to_level)
