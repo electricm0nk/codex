@@ -20,14 +20,12 @@
 //! Divination (`spellbook::divination`), Enchantment
 //! (`spellbook::enchantment`), Evocation (`spellbook::evocation`),
 //! Illusion (`spellbook::illusion`), Necromancy
-//! (`spellbook::necromancy`), and Transmutation
-//! (`spellbook::transmutation`) are landed as of this cycle;
+//! (`spellbook::necromancy`), Transmutation
+//! (`spellbook::transmutation`), and Universal (`spellbook::universal`)
+//! are landed as of this cycle — **all nine PF1 spell schools are now
+//! landed, closing Epic 2** (`scope-draft.md` §1.2).
 //! `compute_spellbook_coverage` dispatches by school and produces a real
-//! `SpellEffect` only for the schools whose per-school contribution
-//! module has landed. Unlanded schools' selections still resolve
-//! (existence + school are checked) but contribute no effect yet — a
-//! future cycle's per-school file adds that school's contribution
-//! without touching this dispatch's shape.
+//! `SpellEffect` for every school.
 //!
 //! Reads spell level and effect text from the canonical CRB spell-list
 //! table store (`rules_tables::crb::spell_list::SPELL_LIST`, SD-19's
@@ -54,6 +52,7 @@ pub mod evocation;
 pub mod illusion;
 pub mod necromancy;
 pub mod transmutation;
+pub mod universal;
 
 use std::collections::BTreeMap;
 
@@ -200,9 +199,8 @@ pub fn compute_spellbook_coverage(
         };
 
         // Per-school contribution functions land one per cycle (Step 2).
-        // Abjuration, Conjuration, Divination, Enchantment, Evocation,
-        // Illusion, Necromancy, and Transmutation are wired as of this
-        // cycle.
+        // All nine PF1 schools are wired as of this cycle -- Epic 2 is
+        // closed.
         let landed_effect = match school {
             Pf1SchoolId::Abjuration => abjuration::resolve_abjuration_spell_effect(
                 &selection.spell_id,
@@ -284,7 +282,16 @@ pub fn compute_spellbook_coverage(
                 effect_text: effect.effect_text,
                 table_cell: effect.table_cell,
             }),
-            _ => None,
+            Pf1SchoolId::Universal => universal::resolve_universal_spell_effect(
+                &selection.spell_id,
+            )
+            .map(|effect| SpellEffect {
+                spell_id: effect.spell_id,
+                school,
+                level: effect.level,
+                effect_text: effect.effect_text,
+                table_cell: effect.table_cell,
+            }),
         };
         let Some(spell_effect) = landed_effect else {
             continue;
