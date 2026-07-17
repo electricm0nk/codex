@@ -276,7 +276,7 @@ fn fighter_level_19_to_20_crosses_the_capstone_threshold_with_weapon_mastery() {
 fn non_fighter_class_returns_an_honestly_empty_plan() {
     let mut character = human_fighter_input(1);
     character.chosen.class_levels = vec![CharacterClassLevel {
-        class_id: "class:wizard".to_string(),
+        class_id: "class:oracle".to_string(),
         level: 1,
     }];
     character.chosen.selected_choices = Vec::new();

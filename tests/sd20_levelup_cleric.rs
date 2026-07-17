@@ -226,17 +226,22 @@ fn cleric_level_19_to_20_crosses_the_character_level_cap_with_no_fabricated_name
 
 #[test]
 fn non_cleric_class_returns_an_honestly_empty_plan() {
-    // Uses `class:wizard` (matching Barbarian's and Bard's own negative
-    // controls), not `class:fighter` — Epic 7's fifth cycle
+    // Uses `class:oracle` — a genuinely unlanded PF1 class (not one of
+    // Epic 7's 11 core classes). Originally used `class:wizard`
+    // (matching Barbarian's and Bard's own negative controls at the
+    // time), not `class:fighter` — Epic 7's fifth cycle
     // (cycle-2026-07-18, `fighter.rs`) landed a real Fighter dispatch arm,
-    // so `class:fighter` no longer produces an honestly-empty plan and
-    // would no longer prove this test's own claim. `class:wizard` stays
-    // open at the time of this fix (Epic 7's per-class order is
-    // barbarian, bard, cleric, druid, fighter, monk, paladin, ranger,
-    // rogue, sorcerer, wizard — wizard is last).
+    // so `class:fighter` no longer produced an honestly-empty plan and
+    // would no longer prove this test's own claim. Epic 7's eleventh and
+    // final cycle (`wizard.rs`) landed a real Wizard dispatch arm too, so
+    // `class:wizard` was fixed forward to `class:oracle` in that same
+    // commit (Epic 7's per-class order was barbarian, bard, cleric,
+    // druid, fighter, monk, paladin, ranger, rogue, sorcerer, wizard —
+    // all 11 are now landed, so no core class id can serve as an
+    // "unlanded" negative control anymore).
     let mut character = human_cleric_input(1);
     character.chosen.class_levels = vec![CharacterClassLevel {
-        class_id: "class:wizard".to_string(),
+        class_id: "class:oracle".to_string(),
         level: 1,
     }];
     let plan = compute_level_up_grants(&character, 1, 2);

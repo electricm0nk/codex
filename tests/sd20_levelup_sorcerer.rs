@@ -255,12 +255,17 @@ fn sorcerer_level_19_to_20_crosses_the_character_level_cap_with_no_fabricated_na
 
 #[test]
 fn non_sorcerer_class_returns_an_honestly_empty_plan() {
-    // Uses `class:wizard` (matching every prior Epic 7 sibling's own
-    // negative control) -- wizard is last in Epic 7's per-class order, so
-    // it stays open at the time of this cycle.
+    // Uses `class:oracle` — a genuinely unlanded PF1 class (not one of
+    // Epic 7's 11 core classes). Originally used `class:wizard`
+    // (matching every prior Epic 7 sibling's own negative control at the
+    // time, since wizard was last in Epic 7's per-class order and still
+    // open). Epic 7's eleventh and final cycle (`wizard.rs`) landed a
+    // real Wizard dispatch arm, so `class:wizard` was fixed forward to
+    // `class:oracle` in that same commit — no core class id can serve as
+    // an "unlanded" negative control anymore now that all 11 are landed.
     let mut character = human_sorcerer_input(1);
     character.chosen.class_levels = vec![CharacterClassLevel {
-        class_id: "class:wizard".to_string(),
+        class_id: "class:oracle".to_string(),
         level: 1,
     }];
     let plan = compute_level_up_grants(&character, 1, 2);

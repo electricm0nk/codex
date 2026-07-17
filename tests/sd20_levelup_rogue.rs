@@ -221,7 +221,7 @@ fn rogue_level_19_to_20_crosses_the_capstone_threshold_and_grants_master_strike(
 fn non_rogue_class_returns_an_honestly_empty_plan() {
     let mut character = human_rogue_input(1);
     character.chosen.class_levels = vec![CharacterClassLevel {
-        class_id: "class:wizard".to_string(),
+        class_id: "class:oracle".to_string(),
         level: 1,
     }];
     let plan = compute_level_up_grants(&character, 1, 2);

@@ -292,7 +292,7 @@ fn monk_level_12_to_13_honestly_produces_no_grants_beyond_the_grounded_ceiling()
 fn non_monk_class_returns_an_honestly_empty_plan() {
     let mut character = human_monk_input(1);
     character.chosen.class_levels = vec![CharacterClassLevel {
-        class_id: "class:wizard".to_string(),
+        class_id: "class:oracle".to_string(),
         level: 1,
     }];
     let plan = compute_level_up_grants(&character, 1, 2);

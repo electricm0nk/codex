@@ -1,14 +1,17 @@
 //! SD-20 Level Up grant model — Epic 7 (`scope-draft.md` §1.7,
-//! `technical-design.md` §2.6).
+//! `technical-design.md` §2.6). **Epic 7 is now CLOSED**: all 11 core
+//! classes (barbarian, bard, cleric, druid, fighter, monk, paladin,
+//! ranger, rogue, sorcerer, wizard) have a landed `LevelUpPlan`, one per
+//! cycle, per Step 2's stated per-class order.
 //!
-//! Integrates after Epics 2-6 close (per the loop instruction's
+//! Integrated after Epics 2-6 closed (per the loop instruction's
 //! dependency graph: "Epic 7 (Level Up grants) integrates after epics
-//! 2-6 close" — Epics 1-6 all closed by `062919d`). This is Epic 7's
-//! first cycle: the parent module (`compute_level_up_grants`, the
-//! `LevelUpPlan` shape and its sub-types) plus the first per-class file
-//! (`src/rules_core/level_up/barbarian.rs`), per Step 2's stated
-//! per-class order (barbarian, then bard, ..., then wizard — 11 core
-//! classes total, one per cycle).
+//! 2-6 close" — Epics 1-6 all closed by `062919d`). The parent module
+//! (`compute_level_up_grants`, the `LevelUpPlan` shape and its
+//! sub-types) landed on Epic 7's first cycle
+//! (`src/rules_core/level_up/barbarian.rs`); every subsequent cycle
+//! added one more per-class file, ending with
+//! `src/rules_core/level_up/wizard.rs` (this cycle).
 //!
 //! Adapts `technical-design.md` §2.6's illustrative
 //! `compute_level_up_grants(character, from_level, to_level) ->
@@ -52,13 +55,15 @@ pub mod paladin;
 pub mod ranger;
 pub mod rogue;
 pub mod sorcerer;
+pub mod wizard;
 
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 
-/// The core classes this cycle's dispatch recognizes so far (barbarian,
-/// bard, cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer).
-/// Widens by one more future cycle (wizard), per Step 2's stated order.
+/// The core classes this dispatch recognizes — all 11 (barbarian, bard,
+/// cleric, druid, fighter, monk, paladin, ranger, rogue, sorcerer,
+/// wizard). Epic 7 closed with Wizard's landing (this cycle) — every
+/// core class in Step 2's stated order now has a real dispatch arm.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const BARD_CLASS_ID: &str = "class:bard";
 const CLERIC_CLASS_ID: &str = "class:cleric";
@@ -69,6 +74,7 @@ const PALADIN_CLASS_ID: &str = "class:paladin";
 const RANGER_CLASS_ID: &str = "class:ranger";
 const ROGUE_CLASS_ID: &str = "class:rogue";
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
+const WIZARD_CLASS_ID: &str = "class:wizard";
 
 /// `technical-design.md` §2.6's `LevelUpPlan`, adapted per §2.0 (no
 /// `rules_tables: &RulesTables` parameter on the seam that produces it)
@@ -167,9 +173,12 @@ pub struct Prerequisite {
 /// future cycle's scope — this cycle bounds to single-class inputs,
 /// mirroring `pilot_compute.rs`'s own `supported_barbarian_level` /
 /// `supported_bard_level` / `supported_druid_level` single-class gate).
-/// Unrecognized classes (every core class except Barbarian, Bard, Cleric,
-/// Druid, Fighter, Monk, Paladin, Ranger, and Rogue, as of this cycle)
-/// return an honestly-empty `LevelUpPlan` rather than a fabricated one.
+/// Every one of the 11 PF1 Core Rulebook core classes is now recognized
+/// (Epic 7 closed with this cycle's Wizard landing). Any class id
+/// outside that set of 11 (e.g. a non-core base/hybrid class, or a
+/// typo'd id) returns an honestly-empty `LevelUpPlan` rather than a
+/// fabricated one — this is a genuine, permanent boundary, not a
+/// placeholder for a future cycle.
 pub fn compute_level_up_grants(
     character: &CharacterInput,
     from_level: u8,
@@ -205,6 +214,9 @@ pub fn compute_level_up_grants(
         }
         [class_level] if class_level.class_id == SORCERER_CLASS_ID => {
             sorcerer::compute_sorcerer_level_up_grants(character, from_level, to_level)
+        }
+        [class_level] if class_level.class_id == WIZARD_CLASS_ID => {
+            wizard::compute_wizard_level_up_grants(character, from_level, to_level)
         }
         _ => LevelUpPlan::default(),
     }
