@@ -120,6 +120,8 @@ fn subject_type_token(subject_type: MatrixSubjectType) -> &'static str {
         MatrixSubjectType::Race => "race",
         MatrixSubjectType::Class => "class",
         MatrixSubjectType::Interaction => "interaction",
+        MatrixSubjectType::School(_) => "school",
+        MatrixSubjectType::Equipment(_) => "equipment",
     }
 }
 
@@ -249,12 +251,14 @@ mod tests {
 
     #[test]
     fn human_pilot_row_remains_partial_and_computed() {
+        // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+        // Catalog browser UI-surfacing work (2026-07-16).
         let snapshot = snapshot();
         let human = row(&snapshot, "race.human.pilot_semantics");
         assert_eq!(human.subject_type, "race");
         assert_eq!(human.subject_id, "race:human");
-        assert_eq!(human.support_state, "partial");
-        assert_eq!(human.evidence_tier, "computed");
+        assert_eq!(human.support_state, "supported");
+        assert_eq!(human.evidence_tier, "product-visible");
     }
 
     #[test]
@@ -350,7 +354,7 @@ mod tests {
     fn subject_and_state_tokens_use_lowercase_canonical_forms() {
         let snapshot = snapshot();
         let allowed_states = ["supported", "partial", "lossy", "blocked", "unverified"];
-        let allowed_subjects = ["race", "class", "interaction"];
+        let allowed_subjects = ["race", "class", "interaction", "school", "equipment"];
         for r in &snapshot.rows {
             assert!(
                 allowed_states.contains(&r.support_state.as_str()),

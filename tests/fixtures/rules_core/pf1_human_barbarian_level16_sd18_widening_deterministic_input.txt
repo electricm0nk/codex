@@ -1,0 +1,59 @@
+# SD18 deterministic Human Barbarian level 16 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Barbarian
+# level-1..level-15 martial chassis baseline
+# (tests/sd18_barbarian_level15_widening.rs) to level 16 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/skill/equipment posture from the level-1 through level-15
+# fixtures, adding only the level bump this bounded tranche needs. 16th
+# level IS a rage-power level (powers land at 2/4/6/8/10/12/14/16/18/20 per
+# "she gains another rage power for every two levels of barbarian attained
+# after 2nd level"), so an EIGHTH numbered slot's choice line is added
+# (choice:barbarian_rage_power_8, a real PF1 Core Rulebook rage power,
+# Roused Anger); the sixth and seventh slots' lines from the level-15
+# fixture carry over unchanged.
+#
+# It deliberately avoids every later Barbarian burden surface: no rage
+# execution (activation, round tracking, fatigue), no rage-power EFFECT
+# recognition or execution beyond the bounded numbered-slot idiom, no
+# damage-reduction application engine, no saving-throw-resolution engine for
+# Indomitable Will, and no level-17+ progression. The PF1 Core Rulebook
+# Barbarian class table's level-16 "Special" column reads "Damage reduction
+# 4/-, rage power" (verified independently against d20pfsrd and the
+# Archives of Nethys aonprd.com mirror, byte-for-byte agreement): Damage
+# Reduction is a magnitude-rise on the already-grounded flat Damage
+# Reduction formula pillar via a FOURTH named tier constant, genuinely
+# rising from 3/- to 4/- (the same "at 10th level and every three barbarian
+# levels thereafter" cadence: 10, 13, 16), not a new class feature; the
+# rage-power entry is the SAME open-ended choice-list feature already left
+# named-but-unproven-in-effect at levels 2/4/6/8/10/12/14, grounded here as
+# an eighth numbered slot; base attack genuinely rises to +16 (full BAB) and
+# good Fortitude genuinely rises to +10 (16 / 2 + 2), while poor Reflex and
+# poor Will both stay +5 (16 / 3, integer-division coincidences with level
+# 15); the rage rounds-per-day pool genuinely rises to 37 (4 + Constitution
+# modifier 3 + 2 x (16 - 1)); Trap Sense stays +5 (16 / 3, next rise 18th);
+# Indomitable Will's flat +4 magnitude carries over unchanged; the Greater
+# Rage constants (+6/+6/+3/-2) stay unchanged from level 11.
+case_id=pf1-crb-human-barbarian-level16
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:barbarian:16
+ability=strength:16
+ability=dexterity:14
+ability=constitution:16
+ability=intelligence:8
+ability=wisdom:10
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:barbarian_rage_power_6:power:superstition
+choice=choice:barbarian_rage_power_7:power:guarded_stance
+choice=choice:barbarian_rage_power_8:power:roused_anger
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md

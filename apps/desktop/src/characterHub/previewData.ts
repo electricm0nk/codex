@@ -55,5 +55,25 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
       selectedSkillModifiers: { climb: 6, intimidate: 3, swim: 6 },
     },
     diagnostics: [],
+    corpusDerived: {
+      schoolCoverage: [
+        { school: 'Abjuration', spells: ['Alarm'], grounded: true },
+        { school: 'Illusion', spells: ['Blur'], grounded: true },
+      ],
+      equippedItems: [
+        {
+          itemId: 'item:longsword',
+          equipmentRecordName: 'Longsword',
+          equipmentRecordKey: 'Longsword (Base)',
+          grounded: true,
+        },
+        {
+          itemId: 'item:chain_shirt',
+          equipmentRecordName: 'Chain Shirt',
+          equipmentRecordKey: 'Chain Shirt (Base)',
+          grounded: false,
+        },
+      ],
+    },
   };
 }

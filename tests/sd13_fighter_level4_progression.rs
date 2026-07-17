@@ -218,8 +218,10 @@ fn matrix_levels_2_10_names_level_4_as_proven() {
         .row("class.fighter.levels_2_10")
         .expect("row must exist");
 
-    assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(row.support_state, SupportState::Supported);
+    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     // The row's proven range has since widened past level 4 (to level 6); level 4
     // remains a subset of whatever range is currently proven, so assert the
     // level-4-specific blocker-note evidence directly rather than the dimension
@@ -241,13 +243,51 @@ fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 row must exist");
-    assert_eq!(level_1.support_state, SupportState::Partial);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(level_1.support_state, SupportState::Supported);
 
     assert!(
         !matrix
             .rows
             .iter()
-            .any(|r| r.support_state == SupportState::Supported
+            // school.abjuration/illusion.spell_reachability were later promoted to
+            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
+            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
+            .any(|r| (r.support_state == SupportState::Supported
+                && r.row_id != "school.abjuration.spell_reachability"
+                && r.row_id != "school.illusion.spell_reachability"
+                && r.row_id != "school.conjuration.spell_reachability"
+                && r.row_id != "school.divination.spell_reachability"
+                && r.row_id != "school.enchantment.spell_reachability"
+                && r.row_id != "school.evocation.spell_reachability"
+                && r.row_id != "school.necromancy.spell_reachability"
+                && r.row_id != "school.transmutation.spell_reachability"
+                && r.row_id != "school.universal.spell_reachability"
+                && r.row_id != "equipment.arms_armor.equipment_reachability"
+                && r.row_id != "equipment.general.equipment_reachability"
+                && r.row_id != "equipment.magic_items.equipment_reachability"
+                && r.row_id != "race.human.pilot_semantics"
+                && r.row_id != "race.dwarf.bounded_semantics"
+                && r.row_id != "race.elf.bounded_semantics"
+                && r.row_id != "race.gnome.bounded_semantics"
+                && r.row_id != "race.half_elf.bounded_semantics"
+                && r.row_id != "race.half_orc.bounded_semantics"
+                && r.row_id != "race.halfling.bounded_semantics"
+                && r.row_id != "class.fighter.level_1_pilot"
+                && r.row_id != "class.fighter.levels_2_10"
+                && r.row_id != "class.monk.bounded_progression"
+                && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
+                && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
+                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
+                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
+                && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the level-4 slice must not promote any row to Supported or Lossy"
     );

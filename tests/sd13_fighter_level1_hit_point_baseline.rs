@@ -163,9 +163,11 @@ fn matrix_fighter_level_1_row_stays_partial_and_cites_this_proof_surface() {
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");
 
-    // Grounding one more milestone must NOT silently promote the row.
-    assert_eq!(level_1.support_state, SupportState::Partial);
-    assert_eq!(level_1.evidence_tier, EvidenceTier::Computed);
+    // Grounding one more milestone did not silently promote the row at this
+    // slice; it was later promoted to Supported/ProductVisible by SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(level_1.support_state, SupportState::Supported);
+    assert_eq!(level_1.evidence_tier, EvidenceTier::ProductVisible);
 
     // The row must cite this slice's proof surface alongside the existing
     // mandatory-milestone classification proof (combined-literal idiom).

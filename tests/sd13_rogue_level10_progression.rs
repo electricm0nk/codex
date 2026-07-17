@@ -237,12 +237,38 @@ fn rogue_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(reflex.value, 6, "Rogue level 9 good Reflex must stay 6");
 }
 
-// ----- Negative control: level 11 stays unrecognized by this slice -----
-
+// ----- Negative control: level 15 stays unrecognized by this slice -----
+//
+// SD18 widening (cycle-2026-07-14T2000, tests/sd18_rogue_level11_sneak_attack.rs):
+// Rogue level 11 is now genuinely recognized (base attack bonus and sneak
+// attack die count both rise), so this boundary control moved to level 12,
+// mirroring the exact same boundary move each of the Barbarian/Bard/Cleric/
+// Druid/Fighter/Monk/Paladin/Wizard level-11 widening cycles made for their
+// own sibling level-10 progression tests. A further SD18 widening
+// (cycle-2026-07-15T0800, tests/sd18_rogue_level12_widening.rs) now
+// genuinely recognizes level 12 too, so this boundary control moved again,
+// to level 13. A further SD18 widening (cycle-2026-07-15T1100,
+// tests/sd18_rogue_level13_widening.rs) now genuinely recognizes level 13
+// too, so this boundary control moved again, to level 14. A further SD18
+// widening (cycle-2026-07-15T2000, tests/sd18_rogue_level14_widening.rs) now
+// genuinely recognizes level 14 too, so this boundary control moved again,
+// to level 16, per SD18 cycle-2026-07-15T2900 (tests/sd18_rogue_level15_widening.rs).
+// A further SD18 widening (cycle-2026-07-15T5200,
+// tests/sd18_rogue_level16_widening.rs) now genuinely recognizes level 16
+// too, so this boundary control moved again, to level 17. A further SD18
+// widening (cycle-2026-07-15T8100, tests/sd18_rogue_level17_widening.rs) now
+// genuinely recognizes level 17 too, so this boundary control moved again,
+// to level 18. A further SD18 widening (cycle-2026-07-16T0212,
+// tests/sd18_rogue_level18_widening.rs) now genuinely recognizes level 18
+// too, so this boundary control moved again, to level 19. A further SD18
+// widening (cycle-2026-07-16T3600, tests/sd18_rogue_level19_widening.rs)
+// now genuinely recognizes level 20 too, so this boundary control moves
+// again, to level 21 (PF1 has no 21st character level; this is a pure
+// implementation-gate check).
 #[test]
-fn rogue_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = ROGUE_LEVEL10_FIXTURE.replace("class:rogue:10", "class:rogue:11");
-    let input = load(&level_11);
+fn rogue_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = ROGUE_LEVEL10_FIXTURE.replace("class:rogue:10", "class:rogue:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -250,7 +276,7 @@ fn rogue_level_11_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.rogue.")
                 || e.id.starts_with("class_feature.rogue.")),
-        "level-11 Rogue must not gain any bounded rogue explanation: {:?}",
+        "level-21 Rogue must not gain any bounded rogue explanation: {:?}",
         computation.explanations
     );
 }
@@ -306,8 +332,8 @@ fn matrix_rogue_row_names_level_10_widening() {
         .row("class.rogue.bounded_progression")
         .expect("rogue bounded_progression row must exist");
 
-    assert_eq!(rogue.support_state, SupportState::Partial);
-    assert_eq!(rogue.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(rogue.support_state, SupportState::Supported); // promoted by SD-19 Class Progression Catalog browser
+    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         rogue.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

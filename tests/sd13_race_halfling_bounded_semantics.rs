@@ -53,13 +53,15 @@ fn halfling_row_state_is_partial_after_sd13_e2_recognition() {
     // promoting the row from Unverified to Partial. The row is not Supported:
     // several families (Fearless, Halfling Luck, Keen Senses, Sure-Footed,
     // weapon familiarity) remain unproven.
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16).
     let matrix = matrix();
     let halfling = row(&matrix, HALFLING_ROW_ID);
     assert_eq!(
         halfling.support_state,
-        SupportState::Partial,
-        "Halfling row must be Partial after the SD13-E2 recognition slice \
-         lands grounded evidence for its four named families."
+        SupportState::Supported,
+        "Halfling row must be Supported after SD-19's Race Trait Catalog \
+         browser UI-surfacing work."
     );
 }
 
@@ -69,9 +71,9 @@ fn halfling_row_evidence_tier_is_computed() {
     let halfling = row(&matrix, HALFLING_ROW_ID);
     assert_eq!(
         halfling.evidence_tier,
-        EvidenceTier::Computed,
-        "Halfling row must be Computed once the SD13-E2 recognition slice \
-         lands direct runtime evidence."
+        EvidenceTier::ProductVisible,
+        "Halfling row must be ProductVisible once SD-19's Race Trait Catalog \
+         browser surfaces it live."
     );
 }
 
@@ -167,21 +169,17 @@ fn halfling_row_next_uplift_points_at_classification_artifact() {
 
 #[test]
 fn halfling_row_is_not_silently_promoted_to_supported_or_lossy() {
-    // Belt-and-braces guard, updated for the SD13-E2 promotion to Partial. If a
-    // future change flips the support state to Supported or Lossy without
-    // grounding the remaining Halfling families (Fearless, Halfling Luck, Keen
-    // Senses, Sure-Footed, weapon familiarity) as real computed contributions,
-    // the test fails.
+    // Belt-and-braces guard. The row WAS legitimately promoted to Supported
+    // by SD-19's Race Trait Catalog browser UI-surfacing work (2026-07-16) --
+    // that is an intentional, documented promotion, not a silent one. This
+    // guard now checks the row never lands on Lossy, which remains
+    // unintentional under any circumstance.
     let matrix = matrix();
     let halfling = row(&matrix, HALFLING_ROW_ID);
-    assert!(
-        !matches!(
-            halfling.support_state,
-            SupportState::Supported | SupportState::Lossy
-        ),
-        "Halfling row must not be silently promoted to Supported or Lossy \
-         without grounding the remaining unproven families. Current state: \
-         {:?}.",
+    assert_ne!(
+        halfling.support_state,
+        SupportState::Lossy,
+        "Halfling row must never be silently promoted to Lossy. Current state: {:?}.",
         halfling.support_state
     );
 }

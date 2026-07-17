@@ -253,8 +253,10 @@ fn matrix_halfling_row_is_partial_computed_and_names_four_recognized_families() 
         .row("race.halfling.bounded_semantics")
         .expect("halfling row must exist");
 
-    assert_eq!(halfling.support_state, SupportState::Partial);
-    assert_eq!(halfling.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(halfling.support_state, SupportState::Supported);
+    assert_eq!(halfling.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         halfling.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -294,19 +296,57 @@ fn matrix_all_six_non_human_race_rows_now_carry_runtime_evidence() {
         "race.halfling.bounded_semantics",
     ] {
         let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
+        // All seven race rows were later promoted to Supported/ProductVisible
+        // by SD-19's Race Trait Catalog browser UI-surfacing work (2026-07-16).
         assert_eq!(
             row.support_state,
-            SupportState::Partial,
-            "row {id} must be Partial after the halfling slice"
+            SupportState::Supported,
+            "row {id} must be Supported after SD-19's Race Trait Catalog browser work"
         );
-        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+        assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     }
 
     assert!(
         !matrix
             .rows
             .iter()
-            .any(|r| r.support_state == SupportState::Supported
+            // school.abjuration/illusion.spell_reachability were later promoted to
+            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
+            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
+            .any(|r| (r.support_state == SupportState::Supported
+                && r.row_id != "school.abjuration.spell_reachability"
+                && r.row_id != "school.illusion.spell_reachability"
+                && r.row_id != "school.conjuration.spell_reachability"
+                && r.row_id != "school.divination.spell_reachability"
+                && r.row_id != "school.enchantment.spell_reachability"
+                && r.row_id != "school.evocation.spell_reachability"
+                && r.row_id != "school.necromancy.spell_reachability"
+                && r.row_id != "school.transmutation.spell_reachability"
+                && r.row_id != "school.universal.spell_reachability"
+                && r.row_id != "equipment.arms_armor.equipment_reachability"
+                && r.row_id != "equipment.general.equipment_reachability"
+                && r.row_id != "equipment.magic_items.equipment_reachability"
+                && r.row_id != "race.human.pilot_semantics"
+                && r.row_id != "race.dwarf.bounded_semantics"
+                && r.row_id != "race.elf.bounded_semantics"
+                && r.row_id != "race.gnome.bounded_semantics"
+                && r.row_id != "race.half_elf.bounded_semantics"
+                && r.row_id != "race.half_orc.bounded_semantics"
+                && r.row_id != "race.halfling.bounded_semantics"
+                && r.row_id != "class.fighter.level_1_pilot"
+                && r.row_id != "class.fighter.levels_2_10"
+                && r.row_id != "class.monk.bounded_progression"
+                && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
+                && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
+                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
+                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
+                && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the halfling slice must not promote any row to Supported or Lossy"
     );

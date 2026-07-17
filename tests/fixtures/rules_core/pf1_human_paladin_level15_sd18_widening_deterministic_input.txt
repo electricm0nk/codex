@@ -1,0 +1,59 @@
+# SD18 deterministic Human Paladin level 15 widening fixture.
+# Widens the accepted SD18 level-14 fixture
+# (tests/sd18_paladin_level14_widening.rs) to level 15 as chosen input
+# only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic Longsword / Chain
+# Shirt / no-shield / Power Attack posture, and the level-3..level-14
+# fixture's mercy selections unchanged (choice:paladin_mercy ->
+# mercy:shaken, choice:paladin_mercy_4 -> mercy:blinded), adding a FIFTH
+# mercy selection (choice:paladin_mercy_5 -> mercy:deafened) for the new
+# 15th-level repeat mercy grant.
+#
+# The PF1 CRB Paladin class table's level-15 "Special" column reads
+# "Mercy" ONLY (verified independently against d20pfsrd and the
+# Archives of Nethys aonprd.com mirror, both agreeing byte-for-byte) --
+# 15th IS a repeat-Mercy-grant level (the 3rd/6th/9th/12th/15th
+# cadence), grounded here as a FIFTH numbered mercy choice slot mirroring
+# the proven slot-2/3/4 idiom exactly: an open-ended +0 recognition of
+# whichever raw mercy string is chosen, with the verified 15th-level CRB
+# mercy-list state cited (no NEW tier of named mercy conditions is added
+# at 15th level -- both primary sources agree the CRB mercy list's named
+# tiers stop growing after 12th level, so the paladin simply selects a
+# fifth mercy from the already-existing 3rd/6th/9th/12th-tier pool). No
+# mercy's effect on lay on hands is computed.
+#
+# The base spells-per-day table's level-15 row is "3/2/2/1" (verified
+# independently against d20pfsrd and the Archives of Nethys aonprd.com
+# mirror): the 1st/2nd/4th-level columns stay 3/2/1 unchanged, and the
+# 3rd-level column genuinely rises from 1 to 2.
+#
+# It deliberately avoids every later hybrid burden surface: no spell
+# selections, no spells known/prepared posture, no domains, no mercy
+# EFFECT resolution, no channel positive energy healing/damage-resolution
+# execution, no Divine Bond (weapon bond / mount bond) selection or
+# execution, no Aura of Justice's own smite-sharing resolution, no Aura
+# of Faith's own good-alignment-weapon-treatment resolution, and no
+# level-16+ progression.
+case_id=pf1-crb-human-paladin-level15
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:paladin:15
+ability=strength:16
+ability=dexterity:12
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:10
+ability=charisma:14
+feat=feat:power_attack
+skill=skill:diplomacy:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+choice=choice:paladin_mercy:mercy:shaken
+choice=choice:paladin_mercy_4:mercy:blinded
+choice=choice:paladin_mercy_5:mercy:deafened
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

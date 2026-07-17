@@ -31,7 +31,8 @@
       "dmg"
     ],
     "resources": [
-      "resources/ge08/guard-stance-package/"
+      "resources/ge08/guard-stance-package/",
+      "resources/sd19_corpus_fixtures/"
     ],
     "icon": [
       "icons/icon.png",

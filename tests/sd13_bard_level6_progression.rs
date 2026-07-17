@@ -311,6 +311,7 @@ fn bard_level6_gains_no_new_bard_namespaced_explanation_id() {
         WELL_VERSED_ID,
         INSPIRE_COMPETENCE_ID,
         LORE_MASTER_ID,
+        "class_feature.bard.soothing_performance",
         // Added by the further SD13-E5 access-ladder slice
         // (tests/sd13_bard_spell_level_thresholds.rs): a
         // spells-per-day-table access record that fires at every supported
@@ -484,8 +485,8 @@ fn matrix_bard_row_names_level_6_widening() {
         .row("class.bard.progression_and_spell_burden")
         .expect("bard progression_and_spell_burden row must exist");
 
-    assert_eq!(bard.support_state, SupportState::Partial);
-    assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(bard.support_state, SupportState::Supported);
+    assert_eq!(bard.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(bard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
         bard.grounding_ref.contains("sd13_bard_level6_progression"),

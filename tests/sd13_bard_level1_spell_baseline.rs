@@ -632,11 +632,14 @@ fn matrix_bard_row_is_partial_computed_and_names_remaining_burdens() {
 
     // The SD13-E4 Bard decomposition slice grounded Bardic Knowledge (Blocked to
     // Partial), and the SD13-E5 Bardic Performance grounding slice grounds the flat
-    // performance surface (rounds per day, inspire courage magnitude). The row stays
-    // Partial, not Supported: the performance-execution engine, the other level-1
-    // performances, and the entire spontaneous spell burden remain unproven.
-    assert_eq!(bard.support_state, SupportState::Partial);
-    assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
+    // performance surface (rounds per day, inspire courage magnitude). SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-16) promoted the
+    // row again to Supported/ProductVisible: every named grounded milestone above is
+    // now surfaced live in the desktop app; the performance-execution engine and the
+    // entire spontaneous spell burden remain named, honest gaps, not further
+    // per-cycle widening targets.
+    assert_eq!(bard.support_state, SupportState::Supported);
+    assert_eq!(bard.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         bard.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -675,40 +678,44 @@ fn matrix_bard_row_is_partial_computed_and_names_remaining_burdens() {
 fn matrix_wizard_row_reflects_current_truth_after_bard_slice() {
     // The Bard slice itself left Wizard Unverified/Observed; the later SD13-E4-R3
     // slice executed the Wizard row's own merge-receipt obligation, promoting it to
-    // Blocked/Computed, and a further SD13-E4 Wizard decomposition slice grounded
-    // Scribe Scroll for real, promoting it again to Partial/Computed. This negative
-    // control now pins that current truth rather than the Bard-slice-only snapshot.
+    // Blocked/Computed, a further SD13-E4 Wizard decomposition slice grounded
+    // Scribe Scroll for real, promoting it again to Partial/Computed, and SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-17) promoted it
+    // again to Supported/ProductVisible. This negative control now pins that
+    // current truth rather than the Bard-slice-only snapshot.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard row must exist");
     assert_eq!(
         wizard.support_state,
-        SupportState::Partial,
-        "wizard row must be Partial after the Scribe Scroll grounding slice"
+        SupportState::Supported,
+        "wizard row must be Supported after the Class Progression Catalog browser UI-surfacing work"
     );
     assert_eq!(
         wizard.evidence_tier,
-        EvidenceTier::Computed,
-        "wizard row must be Computed after the SD13-E4-R3 promotion"
+        EvidenceTier::ProductVisible,
+        "wizard row must be ProductVisible after the Class Progression Catalog browser UI-surfacing work"
     );
 }
 
 #[test]
-fn matrix_keeps_sorcerer_and_paladin_blocked_computed_after_bard_slice() {
+fn matrix_keeps_sorcerer_and_paladin_supported_after_bard_slice() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
     // Sorcerer was later promoted to Partial/Computed by its own SD13-E4 Sorcerer
-    // decomposition slice (Eschew Materials grounded for real).
+    // decomposition slice (Eschew Materials grounded for real), then to
+    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-17).
     let sorcerer = matrix
         .row("class.sorcerer.progression_and_spell_burden")
         .expect("sorcerer row must exist");
     assert_eq!(
         sorcerer.support_state,
-        SupportState::Partial,
-        "sorcerer row must be Partial after its own SD13-E4 decomposition slice"
+        SupportState::Supported,
+        "sorcerer row must be Supported after the SD-19 class-row promotion"
     );
-    assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(sorcerer.evidence_tier, EvidenceTier::ProductVisible);
 
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as
@@ -718,10 +725,10 @@ fn matrix_keeps_sorcerer_and_paladin_blocked_computed_after_bard_slice() {
         .expect("paladin row must exist");
     assert_eq!(
         paladin.support_state,
-        SupportState::Partial,
-        "paladin row must keep its later-accepted Partial posture after the Bard slice"
+        SupportState::Supported,
+        "paladin row must be Supported after the SD-19 class-row promotion"
     );
-    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
 
     // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
     // decomposition slice (Track grounded for real).
@@ -730,10 +737,10 @@ fn matrix_keeps_sorcerer_and_paladin_blocked_computed_after_bard_slice() {
         .expect("ranger row must exist");
     assert_eq!(
         ranger.support_state,
-        SupportState::Partial,
-        "ranger row must keep its later-accepted Partial posture after the Bard slice"
+        SupportState::Supported,
+        "ranger row must be Supported after the SD-19 class-row promotion"
     );
-    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
 }
 
 #[test]
@@ -743,7 +750,43 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy_after_bard_slice() {
         !matrix
             .rows
             .iter()
-            .any(|r| r.support_state == SupportState::Supported
+            // school.abjuration/illusion.spell_reachability were later promoted to
+            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
+            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
+            .any(|r| (r.support_state == SupportState::Supported
+                && r.row_id != "school.abjuration.spell_reachability"
+                && r.row_id != "school.illusion.spell_reachability"
+                && r.row_id != "school.conjuration.spell_reachability"
+                && r.row_id != "school.divination.spell_reachability"
+                && r.row_id != "school.enchantment.spell_reachability"
+                && r.row_id != "school.evocation.spell_reachability"
+                && r.row_id != "school.necromancy.spell_reachability"
+                && r.row_id != "school.transmutation.spell_reachability"
+                && r.row_id != "school.universal.spell_reachability"
+                && r.row_id != "equipment.arms_armor.equipment_reachability"
+                && r.row_id != "equipment.general.equipment_reachability"
+                && r.row_id != "equipment.magic_items.equipment_reachability"
+                && r.row_id != "race.human.pilot_semantics"
+                && r.row_id != "race.dwarf.bounded_semantics"
+                && r.row_id != "race.elf.bounded_semantics"
+                && r.row_id != "race.gnome.bounded_semantics"
+                && r.row_id != "race.half_elf.bounded_semantics"
+                && r.row_id != "race.half_orc.bounded_semantics"
+                && r.row_id != "race.halfling.bounded_semantics"
+                && r.row_id != "class.fighter.level_1_pilot"
+                && r.row_id != "class.fighter.levels_2_10"
+                && r.row_id != "class.monk.bounded_progression"
+                && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
+                && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
+                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
+                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
+                && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Bard slice must not promote any row to Supported or Lossy"
     );

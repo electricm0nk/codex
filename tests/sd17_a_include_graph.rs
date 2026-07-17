@@ -240,7 +240,7 @@ fn resolves_core_rulebook_minimal_fixture_to_flat_lst_list_and_parser_diagnostic
 
     let resolution = resolve_pcc_includes_from(
         corpus.root(),
-        &corpus.path("pathfinder/paizo/roleplaying_game/core_rulebook/core_rulebook.pcc"),
+        corpus.path("pathfinder/paizo/roleplaying_game/core_rulebook/core_rulebook.pcc"),
     )
     .expect("fixture resolves");
 

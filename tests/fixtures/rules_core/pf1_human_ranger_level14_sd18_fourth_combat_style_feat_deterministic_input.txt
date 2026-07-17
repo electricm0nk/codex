@@ -1,0 +1,67 @@
+# SD18 deterministic Human Ranger level 14 fourth-combat-style-bonus-feat
+# widening fixture.
+# Widens the accepted SD18 deterministic Human Ranger level-1..level-13
+# hybrid chassis (tests/sd18_ranger_level13_widening.rs, the loop's most
+# recent Ranger ceiling) to Ranger level 14 as chosen input only. It names
+# selections; it does not contain derived, computed, or parity values. It is
+# the level-13 fixture with the class level bumped and one additional chosen
+# selection, exercising the 14th-level "Combat style feat" grant (verified
+# independently against d20pfsrd, the Archives of Nethys aonprd.com mirror,
+# and legacy.aonprd.com, all byte-for-byte identical):
+#
+#   choice=choice:ranger_combat_style_bonus_feat_4:feat:improved_precise_shot
+#     -- the FOURTH combat-style bonus feat, granted at 14th ranger level.
+#        Unlike the 2nd/6th/10th-level grants, the PF1 Core Rulebook's own
+#        Ranger Combat Styles tables (Archery and Two-Weapon Combat) do not
+#        tabulate any NEW named feat options at the 14th-level tier (verified
+#        independently against three primary sources: d20pfsrd's dedicated
+#        Ranger Combat Styles page, the Archives of Nethys aonprd.com
+#        RangerCombatStyles page, and a Paizo rules-forum thread on the same
+#        question -- all three agree the printed Core Rulebook list stops
+#        naming new options after 10th level; only later sourcebooks such as
+#        the Advanced Player's Guide add named 14th/18th-level options, which
+#        are out of SD-18's Core-Rulebook-only scope). This fixture therefore
+#        names a feat already legal at an earlier tier (Improved Precise
+#        Shot, from the 6th-level Archery list) purely as a raw chosen-input
+#        string exercising the OPEN-ENDED recognition idiom (mirroring the
+#        Favored Terrain/Quarry choice-recognition idiom, not the
+#        closed-restricted-list idiom used for feats 1-3): the seam records
+#        only that a fourth combat-style bonus feat slot was chosen, with no
+#        restricted-list validation attempted at this tier and no mechanical
+#        value fabricated.
+#
+# Everything else carries over from the level-13 fixture unchanged.
+case_id=pf1-crb-human-ranger-level14-sd18-fourth-combat-style-feat
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:14
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_favored_enemy_2:enemy:undead
+choice=choice:ranger_favored_enemy_bonus_increase_target:enemy:first
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_combat_style_bonus_feat_2:feat:manyshot
+choice=choice:ranger_combat_style_bonus_feat_3:feat:shot_on_the_run
+choice=choice:ranger_combat_style_bonus_feat_4:feat:improved_precise_shot
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_favored_terrain_2:terrain:mountain
+choice=choice:ranger_favored_terrain_bonus_increase_target:terrain:first
+choice=choice:ranger_favored_terrain_3:terrain:swamp
+choice=choice:ranger_favored_terrain_bonus_increase_target_2:terrain:first
+choice=choice:ranger_hunters_bond:form:bond
+choice=choice:ranger_quarry_target:enemy:humanoid_orc
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

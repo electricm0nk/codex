@@ -186,21 +186,36 @@ fn level_8_propagates_computed_receipt_and_view_model() {
 
 #[test]
 fn fighter_above_the_bounded_tranche_stays_claim_blocked() {
-    // The bounded tranche has since widened past level 8 (to level 10 —
-    // tests/sd13_fighter_level9_level10_progression.rs), so this negative control
-    // now sits just above the current bound (level 11) rather than at level 9.
-    let level_11 = LEVEL_8_FIXTURE.replace("class:fighter:8", "class:fighter:11");
-    let input = load(&level_11);
+    // The bounded tranche has since widened past level 8 (to level 15 — SD13-E5
+    // widened it to level 10 in tests/sd13_fighter_level9_level10_progression.rs,
+    // and SD18 widened it further to level 11 in
+    // tests/sd18_fighter_level11_armor_training3.rs, to level 12 in
+    // tests/sd18_fighter_level12_widening.rs, to level 13 in
+    // tests/sd18_fighter_level13_widening.rs, to level 14 in
+    // tests/sd18_fighter_level14_widening.rs, to level 15 in
+    // tests/sd18_fighter_level15_widening.rs, to level 16 in
+    // tests/sd18_fighter_level16_widening.rs, to level 17 in
+    // tests/sd18_fighter_level17_widening.rs, to level 18 in
+    // tests/sd18_fighter_level18_widening.rs, to level 19 in
+    // tests/sd18_fighter_level19_widening.rs, and to level 20 (the FINAL
+    // level within PF1's 1-20 character-level cap) in
+    // tests/sd18_fighter_level20_widening.rs), so this negative control now
+    // sits just above the current bound (level 21, which does not exist as
+    // a PF1 character level) rather than at level 9, level 11, level 12,
+    // level 13, level 14, level 15, level 16, level 17, level 18, level 19,
+    // or level 20.
+    let level_21 = LEVEL_8_FIXTURE.replace("class:fighter:8", "class:fighter:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-11 Fighter must stay claim-blocked above the bounded tranche: {:?}",
+        "level-21 Fighter must stay claim-blocked above the bounded tranche: {:?}",
         computation.diagnostics
     );
     assert!(
         !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "level-11 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-21 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 
@@ -240,8 +255,10 @@ fn matrix_levels_2_10_names_level_8_as_proven() {
         .row("class.fighter.levels_2_10")
         .expect("row must exist");
 
-    assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(row.support_state, SupportState::Supported);
+    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         row.blocker_or_lossiness_note.contains("level-8")
             || row.blocker_or_lossiness_note.contains("L8")
@@ -258,13 +275,51 @@ fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 row must exist");
-    assert_eq!(level_1.support_state, SupportState::Partial);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(level_1.support_state, SupportState::Supported);
 
     assert!(
         !matrix
             .rows
             .iter()
-            .any(|r| r.support_state == SupportState::Supported
+            // school.abjuration/illusion.spell_reachability were later promoted to
+            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
+            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
+            .any(|r| (r.support_state == SupportState::Supported
+                && r.row_id != "school.abjuration.spell_reachability"
+                && r.row_id != "school.illusion.spell_reachability"
+                && r.row_id != "school.conjuration.spell_reachability"
+                && r.row_id != "school.divination.spell_reachability"
+                && r.row_id != "school.enchantment.spell_reachability"
+                && r.row_id != "school.evocation.spell_reachability"
+                && r.row_id != "school.necromancy.spell_reachability"
+                && r.row_id != "school.transmutation.spell_reachability"
+                && r.row_id != "school.universal.spell_reachability"
+                && r.row_id != "equipment.arms_armor.equipment_reachability"
+                && r.row_id != "equipment.general.equipment_reachability"
+                && r.row_id != "equipment.magic_items.equipment_reachability"
+                && r.row_id != "race.human.pilot_semantics"
+                && r.row_id != "race.dwarf.bounded_semantics"
+                && r.row_id != "race.elf.bounded_semantics"
+                && r.row_id != "race.gnome.bounded_semantics"
+                && r.row_id != "race.half_elf.bounded_semantics"
+                && r.row_id != "race.half_orc.bounded_semantics"
+                && r.row_id != "race.halfling.bounded_semantics"
+                && r.row_id != "class.fighter.level_1_pilot"
+                && r.row_id != "class.fighter.levels_2_10"
+                && r.row_id != "class.monk.bounded_progression"
+                && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
+                && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
+                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
+                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
+                && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the level-8 slice must not promote any row to Supported or Lossy"
     );

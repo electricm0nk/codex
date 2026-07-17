@@ -537,8 +537,8 @@ fn split_trailing_modifiers(input: &str) -> (String, Vec<String>) {
 
     let core = input[..boundary].trim_end().to_string();
     let mut trailing = Vec::new();
-    let tail = input[boundary..].trim_start_matches(|c: char| c == '\t' || c == ' ');
-    for token in tail.split(|c: char| c == '\t' || c == ' ') {
+    let tail = input[boundary..].trim_start_matches(['\t', ' ']);
+    for token in tail.split(['\t', ' ']) {
         let t = token.trim();
         if !t.is_empty() {
             trailing.push(t.to_string());

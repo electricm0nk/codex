@@ -22,6 +22,38 @@ pub struct ChosenCharacterState {
     pub skill_allocations: Vec<SkillAllocation>,
     pub equipment_selections: Vec<EquipmentSelection>,
     pub selected_choices: Vec<SelectedChoice>,
+    /// Spells this character knows, has prepared, or has been granted.
+    /// NEW (SD-19). Defaults to empty via fixtures that omit `spell=`
+    /// lines — every pre-SD-19 fixture and construction site keeps
+    /// compiling and passing unmodified.
+    pub spells_selected: Vec<SpellSelection>,
+}
+
+/// One spell a class knows, has prepared, or has been granted. SD-19.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SpellSelection {
+    /// The corpus identity of this spell (spell `name`, since the PF1
+    /// spell corpus carries no separate `KEY:` token — see
+    /// `rules_tables::crb::spell_list`'s doc comment).
+    pub spell_id: String,
+    /// The class that provides this spell. Mirrors `CharacterClassLevel.class_id`
+    /// (a plain string, not a typed enum) for consistency with the rest of
+    /// this module's identity fields.
+    pub source_class_id: String,
+    pub acquisition_mode: AcquisitionMode,
+}
+
+/// How a selected spell was acquired. Not yet consumed by the corpus-aware
+/// seam (slot math is out of scope for SD-19); present at the type level so
+/// a future slice can consume it without another `CharacterInput` change.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum AcquisitionMode {
+    /// Spontaneous caster knows the spell; no preparation needed.
+    Known,
+    /// Prepared caster has prepared this specific spell in a slot today.
+    Prepared,
+    /// Granted by a class feature, domain, or other non-standard source.
+    Granted,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -118,6 +150,7 @@ struct ParsedFixture {
     skill_allocations: Vec<SkillAllocation>,
     equipment_selections: Vec<EquipmentSelection>,
     selected_choices: Vec<SelectedChoice>,
+    spells_selected: Vec<SpellSelection>,
     selection_provenance: Vec<SelectionProvenance>,
     diagnostics: Vec<CharacterInputDiagnostic>,
 }
@@ -168,6 +201,7 @@ pub fn load_character_input_fixture(input: &str) -> CharacterInputLoadResult {
                     skill_allocations: parsed.skill_allocations,
                     equipment_selections: parsed.equipment_selections,
                     selected_choices: parsed.selected_choices,
+                    spells_selected: parsed.spells_selected,
                 },
                 selection_provenance: parsed.selection_provenance,
             }),
@@ -192,6 +226,7 @@ fn apply_fixture_field(key: &str, value: &str, parsed: &mut ParsedFixture) {
         "skill" => apply_skill_allocation(value, parsed),
         "equipment" => apply_equipment_selection(value, parsed),
         "choice" => apply_selected_choice(value, parsed),
+        "spell" => apply_spell_selection(value, parsed),
         "provenance" => parsed.selection_provenance.push(SelectionProvenance {
             source_ref: value.to_owned(),
         }),
@@ -326,6 +361,59 @@ fn active_state_from_token(state: &str) -> Option<ActiveState> {
         }
         "selected_inactive" => Some(ActiveState::SelectedInactive),
         "absent" => Some(ActiveState::Absent),
+        _ => None,
+    }
+}
+
+fn apply_spell_selection(value: &str, parsed: &mut ParsedFixture) {
+    // source_class_id conventionally contains its own colon (e.g.
+    // "class:demo", mirroring "race:human"/"item:longsword" elsewhere in
+    // this fixture grammar), so this can't be a flat 3-way split. Parse
+    // from the edges instead: acquisition_mode is the last segment,
+    // spell_id is the first segment, and everything between is
+    // source_class_id verbatim.
+    let malformed = || {
+        diagnostic(
+            "spells_selected",
+            format!(
+                "invalid character input spell selection '{value}' must have at least 3 \
+                 colon-separated parts (spell_id:source_class_id:acquisition_mode)"
+            ),
+        )
+    };
+
+    let Some((rest, mode_token)) = value.rsplit_once(':') else {
+        parsed.diagnostics.push(malformed());
+        return;
+    };
+    let Some((spell_id, source_class_id)) = rest.split_once(':') else {
+        parsed.diagnostics.push(malformed());
+        return;
+    };
+
+    let Some(acquisition_mode) = acquisition_mode_from_token(mode_token) else {
+        parsed.diagnostics.push(diagnostic(
+            "spells_selected",
+            format!(
+                "invalid character input spell selection '{value}' has an unsupported \
+                 acquisition mode"
+            ),
+        ));
+        return;
+    };
+
+    parsed.spells_selected.push(SpellSelection {
+        spell_id: spell_id.to_owned(),
+        source_class_id: source_class_id.to_owned(),
+        acquisition_mode,
+    });
+}
+
+fn acquisition_mode_from_token(token: &str) -> Option<AcquisitionMode> {
+    match token {
+        "known" => Some(AcquisitionMode::Known),
+        "prepared" => Some(AcquisitionMode::Prepared),
+        "granted" => Some(AcquisitionMode::Granted),
         _ => None,
     }
 }

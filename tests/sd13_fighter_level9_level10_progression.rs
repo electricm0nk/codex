@@ -315,22 +315,43 @@ fn level_10_propagates_computed_receipt_and_view_model() {
     );
 }
 
-// ----- Negative control: level 11 stays blocked (beyond the bounded L2-10 row) -----
+// ----- Negative control: level 21 stays blocked (PF1 has no 21st character level) -----
+//
+// SD18 (tests/sd18_fighter_level11_armor_training3.rs,
+// tests/sd18_fighter_level12_widening.rs, tests/sd18_fighter_level13_widening.rs,
+// tests/sd18_fighter_level14_widening.rs, tests/sd18_fighter_level15_widening.rs,
+// tests/sd18_fighter_level16_widening.rs, tests/sd18_fighter_level17_widening.rs,
+// tests/sd18_fighter_level18_widening.rs, tests/sd18_fighter_level19_widening.rs,
+// tests/sd18_fighter_level20_widening.rs)
+// widened the bounded tranche from level 10 to level 12 (Armor Training 3,
+// then a sixth bonus-feat cadence slot), then to level 13 (Weapon Training
+// 3), then to level 14 (a seventh bonus-feat cadence slot and the Bravery
+// magnitude rise), then to level 15 (Armor Training 4), then to level 16
+// (an eighth bonus-feat cadence slot), then to level 17 (Weapon Training
+// 4), then to level 18 (a ninth bonus-feat cadence slot and a further
+// Bravery magnitude rise), then to level 19 (the Armor Mastery
+// flat-magnitude damage reduction record), and then to level 20 (a tenth
+// bonus-feat cadence slot and the Weapon Mastery grant-only capstone
+// record) -- the FINAL level within PF1's 1-20 character-level cap -- so
+// this negative control now sits just above the current bound (level 21,
+// which does not exist as a PF1 character level) rather than at level 12,
+// level 13, level 14, level 15, level 16, level 17, level 18, level 19, or
+// level 20.
 
 #[test]
-fn level_11_fighter_stays_claim_blocked() {
-    let level_11 = LEVEL_10_FIXTURE.replace("class:fighter:10", "class:fighter:11");
-    let input = load(&level_11);
+fn level_21_fighter_stays_claim_blocked() {
+    let level_21 = LEVEL_10_FIXTURE.replace("class:fighter:10", "class:fighter:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "level-11 Fighter must stay claim-blocked beyond the bounded levels-2-10 row: {:?}",
+        "level-21 Fighter must stay claim-blocked beyond the bounded levels-2-20 row: {:?}",
         computation.diagnostics
     );
     assert!(
         !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "level-11 Fighter must not fabricate a base-attack-bonus explanation"
+        "level-21 Fighter must not fabricate a base-attack-bonus explanation"
     );
 }
 
@@ -372,8 +393,10 @@ fn matrix_levels_2_10_names_levels_9_and_10_as_proven_and_the_honest_remaining_b
         .row("class.fighter.levels_2_10")
         .expect("row must exist");
 
-    assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(row.support_state, SupportState::Supported);
+    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         row.grounding_ref
             .contains("sd13_fighter_level9_level10_progression"),
@@ -419,13 +442,51 @@ fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 row must exist");
-    assert_eq!(level_1.support_state, SupportState::Partial);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(level_1.support_state, SupportState::Supported);
 
     assert!(
         !matrix
             .rows
             .iter()
-            .any(|r| r.support_state == SupportState::Supported
+            // school.abjuration/illusion.spell_reachability were later promoted to
+            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
+            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
+            .any(|r| (r.support_state == SupportState::Supported
+                && r.row_id != "school.abjuration.spell_reachability"
+                && r.row_id != "school.illusion.spell_reachability"
+                && r.row_id != "school.conjuration.spell_reachability"
+                && r.row_id != "school.divination.spell_reachability"
+                && r.row_id != "school.enchantment.spell_reachability"
+                && r.row_id != "school.evocation.spell_reachability"
+                && r.row_id != "school.necromancy.spell_reachability"
+                && r.row_id != "school.transmutation.spell_reachability"
+                && r.row_id != "school.universal.spell_reachability"
+                && r.row_id != "equipment.arms_armor.equipment_reachability"
+                && r.row_id != "equipment.general.equipment_reachability"
+                && r.row_id != "equipment.magic_items.equipment_reachability"
+                && r.row_id != "race.human.pilot_semantics"
+                && r.row_id != "race.dwarf.bounded_semantics"
+                && r.row_id != "race.elf.bounded_semantics"
+                && r.row_id != "race.gnome.bounded_semantics"
+                && r.row_id != "race.half_elf.bounded_semantics"
+                && r.row_id != "race.half_orc.bounded_semantics"
+                && r.row_id != "race.halfling.bounded_semantics"
+                && r.row_id != "class.fighter.level_1_pilot"
+                && r.row_id != "class.fighter.levels_2_10"
+                && r.row_id != "class.monk.bounded_progression"
+                && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
+                && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
+                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
+                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
+                && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the level-9/level-10 slice must not promote any row to Supported or Lossy"
     );

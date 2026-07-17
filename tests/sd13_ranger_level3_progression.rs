@@ -318,8 +318,8 @@ fn matrix_ranger_row_names_level_3_widening_and_endurance() {
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger row must exist");
 
-    assert_eq!(ranger.support_state, SupportState::Partial);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(ranger.support_state, SupportState::Supported);
+    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         ranger.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

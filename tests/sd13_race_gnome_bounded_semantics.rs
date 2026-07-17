@@ -129,8 +129,10 @@ fn matrix_gnome_row_is_partial_computed_after_sd13_e2_recognition() {
         codex::rules_core::support_state_matrix::MatrixSubjectType::Race
     );
     assert_eq!(gnome.subject_id, "race:gnome");
-    assert_eq!(gnome.support_state, SupportState::Partial);
-    assert_eq!(gnome.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(gnome.support_state, SupportState::Supported);
+    assert_eq!(gnome.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         gnome.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

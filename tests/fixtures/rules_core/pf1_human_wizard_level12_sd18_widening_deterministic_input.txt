@@ -1,0 +1,52 @@
+# SD18 deterministic Human Wizard level 12 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Wizard
+# level-1..level-11 prepared arcane spell-bearing baseline
+# (tests/sd18_wizard_level11_widening.rs) to Wizard level 12 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic ability/feat posture from
+# the level-1..level-11 fixtures, and the same canonical school
+# specialization selections (Evocation chosen, Necromancy/Transmutation
+# opposed), adding only the level bump this cycle needs.
+#
+# It deliberately avoids every later Wizard burden surface: no evocation
+# spell-damage application, no force-missile casting execution, no
+# opposed-school preparation cost, no spellbook, no spells prepared, no spell
+# slots, no spell DCs, no bonus-feat selection/execution for the
+# still-unproven 5th/10th-level "Bonus feat" grants, and no level-13+
+# progression. Both PF1 CRB primary sources (d20pfsrd and the Archives of
+# Nethys aonprd.com mirror) were read directly before writing this fixture:
+# the level-12 base attack bonus GENUINELY RISES to +6 (`12/2 = 6`, up from
+# +5 at level 11) and all three base saves GENUINELY RISE too (+4 Fortitude,
+# poor, `12/3 = 4`; +4 Reflex, poor, `12/3 = 4`; +8 Will, good, `12/2+2 = 8`)
+# — unlike level 11, where all four values stayed numerically identical to
+# level 10. The raw Wizard spells-per-day table's level-12 row is
+# "4/4/4/4/3/3/2", with the 6th-level column rising from 1 to 2 but the
+# specialist bonus-slot flat count (one bonus slot of each spell level she
+# can cast) staying at 6, since 7th-level wizard spells do not become
+# accessible until level 13 (there is no 7th-level column at all in the
+# level-12 row) — a threshold stasis checked rather than assumed. Intense
+# Spells' bonus-damage magnitude GENUINELY RISES to 6 (`max(12/2, 1) = 6`,
+# up from 5 at level 11); Force Missile's uses-per-day pool stays
+# level-independent and unchanged; Scribe Scroll stays recognized as an
+# already-held grant. The level-12 "Special" column is genuinely BLANK on
+# both primary sources (the Wizard's bonus feats land only at levels
+# 5/10/15/20), so no new pillar is added at level 12 — only the
+# already-grounded arithmetic pillars widen.
+case_id=pf1-crb-human-wizard-level12-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:12
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:evocation
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

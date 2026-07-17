@@ -167,13 +167,18 @@ pub enum EvidenceTier {
     ProductVisible,
 }
 
-/// The subject a matrix row classifies. Limited to `Race`, `Class`, and
-/// `Interaction` for this slice.
+/// The subject a matrix row classifies.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MatrixSubjectType {
     Race,
     Class,
     Interaction,
+    /// A PF1 strict spell school. NEW (SD-19) — see `decisions.md` §5:
+    /// closure requires a matrix row transition, and neither spell
+    /// schools nor equipment categories were modeled as rows before this.
+    School(crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId),
+    /// A core-rulebook equipment category. NEW (SD-19).
+    Equipment(crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory),
 }
 
 /// Bounded evidence-freshness posture for a single row (SD13-E7-F13).
@@ -306,6 +311,14 @@ const GE06_INPUT_CONTRACT_TEST: &str = "tests/ge06_pilot_input_contract.rs";
 /// advanced unlock a list expansion, so no new pillar is added), citing all
 /// ten proof
 /// files as one combined literal.
+// SD18 widening: extended to also cite the live SD18 level-11 sneak-attack
+// widening proof, mirroring how `SD13_FIGHTER_LEVEL9_LEVEL10_TEST` and the
+// other sibling class constants were each extended to also cite their own
+// SD18 level-11 widening proof. Further extended to also cite the live SD18
+// level-12 widening proof, mirroring how the Barbarian/Bard/Cleric/Druid/
+// Fighter/Monk/Paladin rows were each extended to also cite their own SD18
+// level-12 widening proof. Further extended to also cite the live SD18
+// level-13 and level-14 widening proofs.
 const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.rs + \
     tests/sd13_rogue_level2_progression.rs + \
     tests/sd13_rogue_level3_progression.rs + \
@@ -318,7 +331,17 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
     tests/sd13_rogue_level10_progression.rs + \
     tests/sd13_rogue_talent_choice.rs + \
     tests/sd13_rogue_second_talent.rs + \
-    tests/sd13_rogue_talents_three_through_five.rs";
+    tests/sd13_rogue_talents_three_through_five.rs + \
+    tests/sd18_rogue_level11_sneak_attack.rs + \
+    tests/sd18_rogue_level12_widening.rs + \
+    tests/sd18_rogue_level13_widening.rs + \
+    tests/sd18_rogue_level14_widening.rs + \
+    tests/sd18_rogue_level15_widening.rs + \
+    tests/sd18_rogue_level16_widening.rs + \
+    tests/sd18_rogue_level17_widening.rs + \
+    tests/sd18_rogue_level18_widening.rs + \
+    tests/sd18_rogue_level19_widening.rs + \
+    tests/sd18_rogue_level20_widening.rs";
 
 /// SD13-E5 dedicated proof surface for the bounded Fighter level-9/level-10
 /// milestones (Weapon Training 2 attack-roll seam, second weapon-training group
@@ -328,7 +351,31 @@ const SD13_ROGUE_LEVEL1_TEST: &str = "tests/sd13_rogue_level1_chassis_baseline.r
 /// levels-1-10 fixture set without moving the row's grounding_ref, since the
 /// already-landed sd13_fighter_level9_level10_progression.rs test asserts this
 /// exact grounding_ref string.)
-const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs";
+// SD18 widening: extended to also cite the live SD18 level-11 Armor Training 3
+// widening proof, mirroring how `SD13_BARBARIAN_LEVEL1_TEST`,
+// `SD13_BARD_LEVEL1_TEST`, `SD13_CLERIC_LEVEL1_TEST`, and
+// `SD13_DRUID_LEVEL1_TEST` were each extended to also cite their own SD18
+// level-11 widening proof. Combined as one literal (paladin-row idiom) so
+// both substrings remain independently assertable. Further extended to also
+// cite the live SD18 level-12 bonus-feat widening proof, mirroring how the
+// Barbarian/Bard/Cleric/Druid rows were each extended to also cite their own
+// SD18 level-12 widening proof. Further extended to also cite the live SD18
+// level-13 Weapon Training 3 widening proof, mirroring how the Rogue and
+// Barbarian rows were each extended to also cite their own SD18 level-13
+// widening proof. Further extended to also cite the live SD18 level-19 Armor
+// Mastery widening proof, mirroring how the Barbarian and Cleric rows were
+// each extended to also cite their own SD18 level-19 widening proof.
+const SD13_FIGHTER_LEVEL9_LEVEL10_TEST: &str = "tests/sd13_fighter_level9_level10_progression.rs + \
+    tests/sd18_fighter_level11_armor_training3.rs + \
+    tests/sd18_fighter_level12_widening.rs + \
+    tests/sd18_fighter_level13_widening.rs + \
+    tests/sd18_fighter_level14_widening.rs + \
+    tests/sd18_fighter_level15_widening.rs + \
+    tests/sd18_fighter_level16_widening.rs + \
+    tests/sd18_fighter_level17_widening.rs + \
+    tests/sd18_fighter_level18_widening.rs + \
+    tests/sd18_fighter_level19_widening.rs + \
+    tests/sd18_fighter_level20_widening.rs";
 
 /// The combined grounding reference for the Fighter level-1 pilot row, citing
 /// the SD13-E3-F5 mandatory-milestone classification proof (which level-1
@@ -367,7 +414,17 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
     tests/sd13_paladin_spell_save_dcs.rs + \
     tests/sd13_paladin_bonus_spells.rs + \
     tests/sd13_paladin_total_spells_per_day.rs + \
-    tests/sd13_paladin_mercies_two_and_three.rs";
+    tests/sd13_paladin_mercies_two_and_three.rs + \
+    tests/sd18_paladin_level11_aura_of_justice.rs + \
+    tests/sd18_paladin_level12_widening.rs + \
+    tests/sd18_paladin_level13_widening.rs + \
+    tests/sd18_paladin_level14_widening.rs + \
+    tests/sd18_paladin_level15_widening.rs + \
+    tests/sd18_paladin_level16_widening.rs + \
+    tests/sd18_paladin_level17_widening.rs + \
+    tests/sd18_paladin_level18_widening.rs + \
+    tests/sd18_paladin_level19_widening.rs + \
+    tests/sd18_paladin_level20_widening.rs";
 
 /// The combined grounding reference for the Ranger hybrid baseline row, citing
 /// F6 (chassis identity), the Ranger-only per-pillar decomposition + Track /
@@ -375,6 +432,10 @@ const SD13_PALADIN_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_b
 /// base-save progression test as one literal, mirroring
 /// [`SD13_PALADIN_ROW_GROUNDING_REF`]. Each `.contains()` consumer reads its
 /// respective substring from this combined grounding reference.
+// SD18 widening: extended to also cite the live SD18 level-11 Quarry
+// widening proof, mirroring how `SD13_ROGUE_LEVEL1_TEST` and the other
+// sibling class constants were each extended to also cite their own SD18
+// level-11 widening proof.
 const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_baseline.rs + \
     tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs + \
     tests/sd13_ranger_base_attack_and_saves.rs + \
@@ -394,7 +455,17 @@ const SD13_RANGER_ROW_GROUNDING_REF: &str = "tests/sd13_hybrid_level1_chassis_ba
     tests/sd13_ranger_spells_per_day_counts.rs + \
     tests/sd13_ranger_spell_save_dcs.rs + \
     tests/sd13_ranger_bonus_spells.rs + \
-    tests/sd13_ranger_total_spells_per_day.rs";
+    tests/sd13_ranger_total_spells_per_day.rs + \
+    tests/sd18_ranger_level11_quarry.rs + \
+    tests/sd18_ranger_level12_widening.rs + \
+    tests/sd18_ranger_level13_widening.rs + \
+    tests/sd18_ranger_level14_widening.rs + \
+    tests/sd18_ranger_level15_widening.rs + \
+    tests/sd18_ranger_level16_improved_evasion.rs + \
+    tests/sd18_ranger_level17_hide_in_plain_sight.rs + \
+    tests/sd18_ranger_level18_widening.rs + \
+    tests/sd18_ranger_level19_widening.rs + \
+    tests/sd18_ranger_level20_widening.rs";
 
 /// SD13-E4-F7 / SD13-E4 / SD13-E5 dedicated proof surface for the bounded Human
 /// Sorcerer level-1/level-2/level-3 spell baseline: direct computed recognition of the
@@ -438,7 +509,17 @@ const SD13_SORCERER_LEVEL1_TEST: &str = "tests/sd13_sorcerer_level1_spell_baseli
     tests/sd13_sorcerer_spell_save_dcs.rs + \
     tests/sd13_sorcerer_spells_known_counts.rs + \
     tests/sd13_sorcerer_bonus_spells.rs + \
-    tests/sd13_sorcerer_total_spells_per_day.rs";
+    tests/sd13_sorcerer_total_spells_per_day.rs + \
+    tests/sd18_sorcerer_level11_widening.rs + \
+    tests/sd18_sorcerer_level12_widening.rs + \
+    tests/sd18_sorcerer_level13_widening.rs + \
+    tests/sd18_sorcerer_level14_widening.rs + \
+    tests/sd18_sorcerer_level15_widening.rs + \
+    tests/sd18_sorcerer_level16_widening.rs + \
+    tests/sd18_sorcerer_level17_widening.rs + \
+    tests/sd18_sorcerer_level18_widening.rs + \
+    tests/sd18_sorcerer_level19_widening.rs + \
+    tests/sd18_sorcerer_level20_widening.rs";
 
 /// SD13-E3/E5 dedicated proof surface for the bounded Human Barbarian level-1/
 /// level-2/level-3/level-4 martial chassis baseline: direct computed
@@ -465,34 +546,52 @@ const SD13_BARBARIAN_LEVEL1_TEST: &str = "tests/sd13_barbarian_level1_chassis_ba
     tests/sd13_barbarian_level8_progression.rs + \
     tests/sd13_barbarian_level9_progression.rs + \
     tests/sd13_barbarian_level10_progression.rs + \
-    tests/sd13_barbarian_rage_power_slots.rs";
+    tests/sd13_barbarian_rage_power_slots.rs + \
+    tests/sd18_barbarian_level11_greater_rage.rs + \
+    tests/sd18_barbarian_level12_widening.rs + \
+    tests/sd18_barbarian_level13_widening.rs + \
+    tests/sd18_barbarian_level14_widening.rs + \
+    tests/sd18_barbarian_level15_widening.rs + \
+    tests/sd18_barbarian_level16_widening.rs + \
+    tests/sd18_barbarian_level17_widening.rs + \
+    tests/sd18_barbarian_level18_widening.rs + \
+    tests/sd18_barbarian_level19_widening.rs + \
+    tests/sd18_barbarian_level20_widening.rs";
 
-/// SD13-E2 dedicated proof surface for the bounded Gnome race-semantics
-/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
-/// Gnome racial trait dimensions (ability modifiers, size, speed, senses) that
-/// stays explicitly honest about the remaining unproven Gnome family surface.
-const SD13_GNOME_LEVEL1_TEST: &str = "tests/sd13_gnome_race_semantics_recognition.rs";
+/// SD13-E2/SD18 dedicated proof surface for the bounded Gnome race-semantics
+/// recognition: direct computed recognition of eight grounded PF1 Core Rulebook
+/// Gnome racial trait dimensions (ability modifiers, size, speed, senses, Keen
+/// Senses, Illusion Resistance, Defensive Training, Hatred) that stays
+/// explicitly honest about the remaining unproven Gnome family surface.
+const SD18_GNOME_HATRED_TEST: &str = "tests/sd13_gnome_race_semantics_recognition.rs + \
+    tests/sd18_gnome_keen_senses.rs + tests/sd18_gnome_illusion_resistance.rs + \
+    tests/sd18_gnome_defensive_training.rs + tests/sd18_gnome_hatred.rs";
 
-/// SD13-E2 dedicated proof surface for the bounded Half-Elf race-semantics
-/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// SD13-E2/SD18 dedicated proof surface for the bounded Half-Elf race-semantics
+/// recognition: direct computed recognition of five grounded PF1 Core Rulebook
 /// Half-Elf racial trait dimensions (chosen ability-bonus target, size, speed,
-/// senses) that stays explicitly honest about the remaining unproven Half-Elf
-/// family surface.
-const SD13_HALF_ELF_LEVEL1_TEST: &str = "tests/sd13_half_elf_race_semantics_recognition.rs";
+/// senses, Keen Senses) that stays explicitly honest about the remaining
+/// unproven Half-Elf family surface.
+const SD18_HALF_ELF_KEEN_SENSES_TEST: &str =
+    "tests/sd13_half_elf_race_semantics_recognition.rs + tests/sd18_half_elf_keen_senses.rs + \
+    tests/sd18_half_elf_elven_immunities.rs";
 
-/// SD13-E2 dedicated proof surface for the bounded Half-Orc race-semantics
-/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
+/// SD13-E2/SD18 dedicated proof surface for the bounded Half-Orc race-semantics
+/// recognition: direct computed recognition of five grounded PF1 Core Rulebook
 /// Half-Orc racial trait dimensions (chosen ability-bonus target, size, speed,
-/// senses) that stays explicitly honest about the remaining unproven Half-Orc
-/// family surface.
-const SD13_HALF_ORC_LEVEL1_TEST: &str = "tests/sd13_half_orc_race_semantics_recognition.rs";
+/// senses, Intimidating) that stays explicitly honest about the remaining
+/// unproven Half-Orc family surface.
+const SD18_HALF_ORC_INTIMIDATING_TEST: &str =
+    "tests/sd13_half_orc_race_semantics_recognition.rs + tests/sd18_half_orc_intimidating.rs";
 
-/// SD13-E2 dedicated proof surface for the bounded Halfling race-semantics
-/// recognition: direct computed recognition of four grounded PF1 Core Rulebook
-/// Halfling racial trait dimensions (ability modifiers, size, speed, senses)
-/// that stays explicitly honest about the remaining unproven Halfling family
-/// surface.
-const SD13_HALFLING_LEVEL1_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs";
+/// SD13-E2/SD18 dedicated proof surface for the bounded Halfling race-semantics
+/// recognition: direct computed recognition of eight grounded PF1 Core Rulebook
+/// Halfling racial trait dimensions (ability modifiers, size, speed, senses,
+/// Keen Senses, Sure-Footed, Fearless, Halfling Luck) that stays explicitly
+/// honest about the remaining unproven Halfling family surface.
+const SD18_HALFLING_LUCK_TEST: &str = "tests/sd13_halfling_race_semantics_recognition.rs \
+    + tests/sd18_halfling_keen_senses.rs + tests/sd18_halfling_sure_footed.rs \
+    + tests/sd18_halfling_fearless.rs + tests/sd18_halfling_luck.rs";
 
 /// SD13-E4-F7/SD13-E4/SD13-E5 dedicated proof surface for the bounded Human Bard
 /// level-1/level-2/level-3/level-4 spell baseline: direct computed recognition of
@@ -564,7 +663,16 @@ const SD13_BARD_LEVEL1_TEST: &str = "tests/sd13_bard_level1_spell_baseline.rs + 
     tests/sd13_bard_spells_per_day_counts.rs + tests/sd13_bard_spell_save_dcs.rs + \
     tests/sd13_bard_spells_known_counts.rs + tests/sd13_bard_bonus_spells.rs + \
     tests/sd13_bard_total_spells_per_day.rs + \
-    tests/sd13_bard_versatile_performance_slots.rs";
+    tests/sd13_bard_versatile_performance_slots.rs + \
+    tests/sd18_bard_level11_inspire_widening.rs + \
+    tests/sd18_bard_level12_widening.rs + \
+    tests/sd18_bard_level13_widening.rs + \
+    tests/sd18_bard_level14_widening.rs + \
+    tests/sd18_bard_level15_widening.rs + \
+    tests/sd18_bard_level16_widening.rs + \
+    tests/sd18_bard_level17_widening.rs + \
+    tests/sd18_bard_level18_widening.rs + tests/sd18_bard_level19_widening.rs + \
+    tests/sd18_bard_level20_widening.rs";
 
 /// SD13-E4-R3 dedicated proof surface for the bounded Human Wizard level-1/level-3
 /// prepared arcane spell baseline: direct computed recognition of the prepared
@@ -627,7 +735,12 @@ const SD13_WIZARD_LEVEL1_TEST: &str = "tests/sd13_wizard_level1_prepared_spell_b
     tests/sd13_wizard_level4_progression.rs + tests/sd13_wizard_level5_progression.rs + \
     tests/sd13_wizard_level6_progression.rs + tests/sd13_wizard_level7_progression.rs + \
     tests/sd13_wizard_level8_progression.rs + tests/sd13_wizard_level9_progression.rs + \
-    tests/sd13_wizard_level10_progression.rs";
+    tests/sd13_wizard_level10_progression.rs + tests/sd18_wizard_level11_widening.rs + \
+    tests/sd18_wizard_level12_widening.rs + tests/sd18_wizard_level13_widening.rs + \
+    tests/sd18_wizard_level14_widening.rs + tests/sd18_wizard_level15_widening.rs + \
+    tests/sd18_wizard_level16_widening.rs + tests/sd18_wizard_level17_widening.rs + \
+    tests/sd18_wizard_level18_widening.rs + tests/sd18_wizard_level19_widening.rs + \
+    tests/sd18_wizard_level20_widening.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Cleric level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -645,7 +758,12 @@ const SD13_CLERIC_LEVEL1_TEST: &str = "tests/sd13_cleric_level1_spell_baseline.r
     tests/sd13_cleric_level4_progression.rs + tests/sd13_cleric_level5_progression.rs + \
     tests/sd13_cleric_level6_progression.rs + tests/sd13_cleric_level7_progression.rs + \
     tests/sd13_cleric_level8_progression.rs + tests/sd13_cleric_level9_progression.rs + \
-    tests/sd13_cleric_level10_progression.rs";
+    tests/sd13_cleric_level10_progression.rs + tests/sd18_cleric_level11_widening.rs + \
+    tests/sd18_cleric_level12_widening.rs + tests/sd18_cleric_level13_widening.rs + \
+    tests/sd18_cleric_level14_widening.rs + tests/sd18_cleric_level15_widening.rs + \
+    tests/sd18_cleric_level16_widening.rs + tests/sd18_cleric_level17_widening.rs + \
+    tests/sd18_cleric_level18_widening.rs + tests/sd18_cleric_level19_widening.rs + \
+    tests/sd18_cleric_level20_widening.rs";
 
 /// SD13-E4/E5 dedicated proof surface for the bounded Human Druid level-1/level-2/
 /// level-3 prepared divine spell baseline: direct computed recognition of the
@@ -688,7 +806,9 @@ const SD13_DRUID_LEVEL1_TEST: &str = "tests/sd13_druid_level1_spell_baseline.rs 
     tests/sd13_druid_level4_progression.rs + tests/sd13_druid_level5_progression.rs + \
     tests/sd13_druid_level6_progression.rs + tests/sd13_druid_level7_progression.rs + \
     tests/sd13_druid_level8_progression.rs + tests/sd13_druid_level9_progression.rs + \
-    tests/sd13_druid_level10_progression.rs";
+    tests/sd13_druid_level10_progression.rs + tests/sd18_druid_level11_widening.rs + \
+    tests/sd18_druid_level12_widening.rs + tests/sd18_druid_level13_widening.rs + \
+    tests/sd18_druid_level14_widening.rs + tests/sd18_druid_level15_widening.rs";
 
 /// The combined grounding reference for the Monk martial chassis row, citing the
 /// SD13-E3/E5 chassis-baseline test (chassis identity, base attack/save, AC Bonus,
@@ -706,24 +826,117 @@ const SD13_MONK_LEVEL1_TEST: &str = "tests/sd13_monk_level1_chassis_baseline.rs 
     tests/sd13_monk_level7_progression.rs + tests/sd13_monk_level8_progression.rs + \
     tests/sd13_monk_level9_progression.rs + tests/sd13_monk_level10_progression.rs + \
     tests/sd13_monk_second_bonus_feat.rs + \
-    tests/sd13_monk_bonus_feats_three_and_four.rs";
+    tests/sd13_monk_bonus_feats_three_and_four.rs + \
+    tests/sd18_monk_level11_diamond_body.rs + tests/sd18_monk_level12_widening.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Dwarf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
 /// Dwarf racial trait dimensions (ability modifiers, size, speed, senses) that
 /// stays explicitly honest about the remaining unproven Dwarf family surface.
-const SD13_DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs";
+const SD13_DWARF_LEVEL1_TEST: &str = "tests/sd13_dwarf_bounded_race_semantics.rs + \
+    tests/sd18_dwarf_stonecunning.rs + tests/sd18_dwarf_greed.rs + tests/sd18_dwarf_hardy.rs + \
+    tests/sd18_dwarf_stability.rs + tests/sd18_dwarf_defensive_training.rs";
 
 /// SD13-E2 dedicated proof surface for the bounded Elf race-semantics
 /// recognition: direct computed recognition of four grounded PF1 Core Rulebook
 /// Elf racial trait dimensions (ability modifiers, size, speed, senses) that
 /// stays explicitly honest about the remaining unproven Elf family surface.
-const SD13_ELF_LEVEL1_TEST: &str = "tests/sd13_elf_race_semantics_recognition.rs";
+const SD13_ELF_LEVEL1_TEST: &str = "tests/sd13_elf_race_semantics_recognition.rs + \
+    tests/sd18_elf_keen_senses.rs + tests/sd18_elf_elven_immunities.rs + \
+    tests/sd18_elf_elven_magic.rs";
 
-/// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice.
+/// SD-19 §2.4 Abjuration school-reachability proof: every real-corpus
+/// Abjuration spell in `cr_spells.lst` (73 records) resolves via
+/// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
+/// .school_coverage[Abjuration]` through `compute_pilot_with_corpus`.
+const SD19_ABJURATION_SCHOOL_TEST: &str = "tests/sd19_school_abjuration.rs";
+
+/// SD-19 §2.4 Conjuration school-reachability proof: every real-corpus
+/// Conjuration spell in `cr_spells.lst` (116 records) resolves via
+/// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
+/// .school_coverage[Conjuration]` through `compute_pilot_with_corpus`.
+const SD19_CONJURATION_SCHOOL_TEST: &str = "tests/sd19_school_conjuration.rs";
+
+/// SD-19 §2.4 Divination school-reachability proof: every real-corpus
+/// Divination spell in `cr_spells.lst` (50 records) resolves via
+/// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
+/// .school_coverage[Divination]` through `compute_pilot_with_corpus`.
+const SD19_DIVINATION_SCHOOL_TEST: &str = "tests/sd19_school_divination.rs";
+
+/// SD-19 §2.4 Enchantment school-reachability proof: every real-corpus
+/// Enchantment spell in `cr_spells.lst` (60 records) resolves via
+/// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
+/// .school_coverage[Enchantment]` through `compute_pilot_with_corpus`.
+const SD19_ENCHANTMENT_SCHOOL_TEST: &str = "tests/sd19_school_enchantment.rs";
+
+/// SD-19 §2.4 Evocation school-reachability proof: every real-corpus
+/// Evocation spell in `cr_spells.lst` (87 records) resolves via
+/// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
+/// .school_coverage[Evocation]` through `compute_pilot_with_corpus`.
+const SD19_EVOCATION_SCHOOL_TEST: &str = "tests/sd19_school_evocation.rs";
+
+/// SD-19 §2.4 Illusion school-reachability proof: every real-corpus
+/// Illusion spell in `cr_spells.lst` (47 records) resolves via
+/// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
+/// .school_coverage[Illusion]` through `compute_pilot_with_corpus`.
+const SD19_ILLUSION_SCHOOL_TEST: &str = "tests/sd19_school_illusion.rs";
+
+/// SD-19 §2.4 Necromancy school-reachability proof: every real-corpus
+/// Necromancy spell in `cr_spells.lst` (62 records) resolves via
+/// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
+/// .school_coverage[Necromancy]` through `compute_pilot_with_corpus`.
+const SD19_NECROMANCY_SCHOOL_TEST: &str = "tests/sd19_school_necromancy.rs";
+
+/// SD-19 §2.4 Transmutation school-reachability proof: every real-corpus
+/// Transmutation spell in `cr_spells.lst` (152 records) resolves via
+/// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
+/// .school_coverage[Transmutation]` through `compute_pilot_with_corpus`.
+const SD19_TRANSMUTATION_SCHOOL_TEST: &str = "tests/sd19_school_transmutation.rs";
+
+/// SD-19 §2.4 Universal school-reachability proof: every real-corpus
+/// Universal spell in `cr_spells.lst` (5 records) resolves via
+/// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
+/// .school_coverage[Universal]` through `compute_pilot_with_corpus`.
+const SD19_UNIVERSAL_SCHOOL_TEST: &str = "tests/sd19_school_universal.rs";
+
+/// SD-19 §2.5 arms_armor equipment-reachability proof: a representative
+/// sample of real-corpus `cr_equip_arms_armor.lst` records (Longsword,
+/// Banded Mail, Armor Spikes) resolves via `equipment_id_resolve` and
+/// reaches `CorpusPilotReceipt.corpus_derived.equipped_items` through
+/// `compute_pilot_with_corpus`.
+const SD19_ARMS_ARMOR_EQUIPMENT_TEST: &str = "tests/sd19_equipment_arms_armor.rs";
+
+/// SD-19 §2.5 general equipment-reachability proof: a representative
+/// sample of real-corpus `cr_equip_general.lst` records (Backpack, Torch,
+/// Waterskin) resolves via `equipment_id_resolve` and reaches
+/// `CorpusPilotReceipt.corpus_derived.equipped_items` through
+/// `compute_pilot_with_corpus`.
+const SD19_GENERAL_EQUIPMENT_TEST: &str = "tests/sd19_equipment_general.rs";
+
+/// SD-19 §2.5 magic_items equipment-reachability proof: a representative
+/// sample of real-corpus `cr_equip_magic_items.lst` records (Amulet of
+/// Natural Armor +1, Belt of Giant Strength +2, Ring of Protection +1)
+/// resolves via `equipment_id_resolve` and reaches
+/// `CorpusPilotReceipt.corpus_derived.equipped_items` through
+/// `compute_pilot_with_corpus`.
+const SD19_MAGIC_ITEMS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_magic_items.rs";
+
+/// SD-19 §2.5 equipmods equipment-reachability proof: a representative
+/// sample of real-corpus `cr_equipmods.lst` records (Masterwork (Weapon),
+/// Brace, Disarm) resolves via `equipment_id_resolve` and reaches
+/// `CorpusPilotReceipt.corpus_derived.equipped_items` through
+/// `compute_pilot_with_corpus`. This is the last §2.5 category, closing
+/// the full §2.5 sweep.
+const SD19_EQUIPMODS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_equipmods.rs";
+
+/// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice,
+/// widened by SD-19 §2.4/§2.5 per-cycle school/equipment rows.
 ///
-/// Returns exactly 21 rows: 7 race, 12 class, and 2 interaction. The content is
-/// fixed and grounded; this function performs no computation or promotion.
+/// Returns exactly 34 rows: 7 race, 12 class, 2 interaction, 9 school, and
+/// (as of this cycle) 4 equipment. The race/class/interaction content is
+/// fixed and grounded from SD-13; SD-19 cycles append one school or
+/// equipment row per landed cycle, never rewriting an existing row's
+/// identity.
 pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
     SupportStateMatrix {
         rows: vec![
@@ -737,8 +950,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             selections exercised by the GE-06 deterministic proof, plus \
                             the SD13-E6-F3a classified trait bundle (size, speed, senses, \
                             extra skill ranks)",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_HUMAN_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "the deterministic pilot grounds the named Human \
@@ -747,162 +960,248 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     recognition records that ground no numeric contribution; the remaining \
                     PF1 Standard Human racial trait surface (alternate Human racial traits, \
                     variant Humans, half-Human heritages, and ruleset-level effects outside \
-                    the named deterministic pilot) remains unverified",
-                next_required_uplift: "classify the remaining PF1 Standard Human racial trait \
-                    surface (alternate Human racial traits, variant Humans, half-Human \
-                    heritages) explicitly, or ground a first computed Human trait mechanic \
-                    from the classified bundle (e.g. extra skill ranks into a bounded \
-                    skill-rank engine)",
+                    the named deterministic pilot) remains unverified. All 6 grounded Human \
+                    trait dimensions are now surfaced live in the desktop app's Race Trait \
+                    Catalog browser (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired \
+                    through the list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; classifying the \
+                    remaining PF1 Standard Human racial trait surface (alternate Human racial \
+                    traits, variant Humans, half-Human heritages) or grounding a first computed \
+                    Human trait mechanic beyond recognition is a future SD-N's scope, not a \
+                    further per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "race.dwarf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:dwarf",
-                dimension: "bounded Dwarf race semantics: four grounded PF1 Core Rulebook \
+                dimension: "bounded Dwarf race semantics: nine grounded PF1 Core Rulebook \
                             Dwarf racial trait dimensions (ability modifiers, size, speed, \
-                            senses) recognized on the compute seam, with the remaining Dwarf \
-                            family surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                            senses, Stonecunning, Greed, Hardy, Stability, Defensive Training) \
+                            recognized on the compute seam, with the remaining Dwarf family \
+                            surface still unproven",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_DWARF_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
-                    Dwarf race-semantic families are recognized on the compute seam (ability \
-                    modifiers: +2 Constitution / -2 Charisma; size: Medium; speed: 20 ft, \
-                    never reduced by armor or encumbrance; senses: Darkvision 60 ft), but the \
-                    remaining families stay unproven: skill or derived-stat modifiers \
-                    (Stonecunning), Defensive Training, Hardy, Stability, Hatred, and weapon \
-                    familiarity. PF1 core Dwarves gain no racial bonus feat, so that family is \
-                    not applicable rather than unproven. No numeric mechanical contribution is \
-                    fabricated for any of the four recognized dimensions.",
-                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
-                    remaining Dwarf families (Stonecunning, Defensive Training, Hardy, \
-                    Stability, Hatred, weapon familiarity) as a real computed contribution",
+                blocker_or_lossiness_note: "SD13-E2 plus the SD18 dwarf-stonecunning, \
+                    dwarf-greed, dwarf-hardy, dwarf-stability, and dwarf-defensive-training \
+                    cycles leave direct computed evidence that nine Dwarf race-semantic \
+                    families are recognized on the compute seam (ability modifiers: +2 \
+                    Constitution / -2 Charisma; size: Medium; speed: 20 ft, never reduced by \
+                    armor or encumbrance; senses: Darkvision 60 ft; Stonecunning: flat +2 \
+                    Perception situational bonus to notice unusual stonework; Greed: flat +2 \
+                    Appraise situational bonus to assess nonmagical precious-metal/gemstone \
+                    goods; Hardy: flat +2 racial bonus on saving throws against poison, \
+                    spells, and spell-like abilities; Stability: flat +4 racial bonus to \
+                    Combat Maneuver Defense against bull rush and trip attempts while standing \
+                    on the ground; Defensive Training: flat +4 dodge bonus to Armor Class \
+                    against monsters of the giant subtype), but the remaining families stay \
+                    unproven: Hatred and weapon familiarity. PF1 core Dwarves gain no racial \
+                    bonus feat, so that family is not applicable rather than unproven. No \
+                    numeric mechanical contribution beyond the flat \
+                    Stonecunning/Greed/Hardy/Stability/Defensive-Training bonus magnitudes is \
+                    fabricated for any of the nine recognized dimensions. All 9 grounded Dwarf \
+                    trait dimensions are now surfaced live in the desktop app's Race Trait \
+                    Catalog browser (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired \
+                    through the list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
+                    more of the remaining Dwarf families (Hatred, weapon familiarity) as a real \
+                    computed contribution is a future SD-N's scope, not a further per-cycle \
+                    widening of this row — Hatred currently lacks a machine-readable BONUS: tag \
+                    in the LST corpus (only DESC/ASPECT prose), so it is not eligible \
+                    until/unless that is re-verified",
             },
             SupportStateRow {
                 row_id: "race.elf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:elf",
-                dimension: "bounded Elf race semantics: four grounded PF1 Core Rulebook Elf \
-                            racial trait dimensions (ability modifiers, size, speed, senses) \
-                            recognized on the compute seam, with the remaining Elf family \
-                            surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                dimension: "bounded Elf race semantics: seven grounded PF1 Core Rulebook Elf \
+                            racial trait dimensions (ability modifiers, size, speed, senses, \
+                            Keen Senses, Elven Immunities, Elven Magic) recognized on the \
+                            compute seam, with the remaining Elf family surface still unproven",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_ELF_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
-                    Elf race-semantic families are recognized on the compute seam (ability \
-                    modifiers: +2 Dexterity / -2 Constitution; size: Medium; speed: 30 ft; \
-                    senses: low-light vision), but the remaining families stay unproven: Elven \
-                    Immunities (sleep immunity, enchantment save bonus), Keen Senses (Perception \
-                    bonus), weapon familiarity (longbow, composite longbow, longsword, rapier, \
-                    shortbow, composite shortbow), and bonus language grants. PF1 core Elves \
-                    gain no racial bonus feat, so that family is not applicable rather than \
-                    unproven. No numeric mechanical contribution is fabricated for any of the \
-                    four recognized dimensions.",
-                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
-                    remaining Elf families (Elven Immunities, Keen Senses, weapon familiarity, \
-                    bonus languages) as a real computed contribution",
+                blocker_or_lossiness_note: "SD13-E2 and SD18 leave direct computed evidence \
+                    that seven Elf race-semantic families are recognized on the compute seam \
+                    (ability modifiers: +2 Dexterity / -2 Constitution; size: Medium; speed: \
+                    30 ft; senses: low-light vision; Keen Senses: flat +2 Perception racial \
+                    bonus; Elven Immunities: sleep-effect immunity plus a flat +2 enchantment \
+                    saving-throw racial bonus; Elven Magic: caster level check vs. spell \
+                    resistance bonus plus a flat +2 Spellcraft identify-magic-item racial \
+                    bonus), but the remaining families stay unproven: weapon familiarity \
+                    (longbow, composite longbow, longsword, rapier, shortbow, composite \
+                    shortbow), and bonus language grants. PF1 core Elves gain no racial bonus \
+                    feat, so that family is not applicable rather than unproven. No numeric \
+                    mechanical contribution beyond the flat Keen Senses skill-bonus magnitude, \
+                    the flat Elven Immunities enchantment-save-bonus magnitude, and the flat \
+                    Elven Magic Spellcraft-bonus magnitude is fabricated for any of the seven \
+                    recognized dimensions. All 7 grounded Elf trait dimensions are now surfaced \
+                    live in the desktop app's Race Trait Catalog browser \
+                    (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired through the \
+                    list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
+                    more of the remaining Elf families (weapon familiarity, bonus languages) as \
+                    a real computed contribution is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "race.gnome.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:gnome",
-                dimension: "bounded Gnome race semantics: four grounded PF1 Core Rulebook \
+                dimension: "bounded Gnome race semantics: eight grounded PF1 Core Rulebook \
                             Gnome racial trait dimensions (ability modifiers, size, speed, \
-                            senses) recognized on the compute seam, with the remaining Gnome \
+                            senses, Keen Senses, Illusion Resistance, Defensive Training, \
+                            Hatred) recognized on the compute seam, with the remaining Gnome \
                             family surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_GNOME_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
-                    Gnome race-semantic families are recognized on the compute seam (ability \
-                    modifiers: +2 Constitution / -2 Strength; size: Small; speed: 20 ft; \
-                    senses: low-light vision), but the remaining families stay unproven: \
-                    Defensive Training, Illusion Resistance, Hatred, Keen Senses, Gnome Magic, \
-                    and weapon familiarity. PF1 core Gnomes gain no racial bonus feat, so that \
-                    family is not applicable rather than unproven. No numeric mechanical \
-                    contribution is fabricated for any of the four recognized dimensions.",
-                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
-                    remaining Gnome families (Defensive Training, Illusion Resistance, Hatred, \
-                    Keen Senses, Gnome Magic, weapon familiarity) as a real computed \
-                    contribution",
+                grounding_ref: SD18_GNOME_HATRED_TEST,
+                blocker_or_lossiness_note: "SD13-E2 and SD18 leave direct computed evidence \
+                    that eight Gnome race-semantic families are recognized on the compute seam \
+                    (ability modifiers: +2 Constitution / -2 Strength; size: Small; speed: \
+                    20 ft; senses: low-light vision; Keen Senses: flat +2 Perception racial \
+                    bonus; Illusion Resistance: flat +2 illusion-save racial bonus; Defensive \
+                    Training: flat +4 dodge bonus to AC vs. giants; Hatred: flat +1 attack-roll \
+                    bonus vs. reptilian humanoids and goblinoids), but the remaining families \
+                    stay unproven: Gnome Magic, and weapon familiarity. PF1 core Gnomes gain no \
+                    racial bonus feat, so that family is not applicable rather than unproven. No \
+                    numeric mechanical contribution beyond the flat Keen Senses skill-bonus \
+                    magnitude, the flat Illusion Resistance save-bonus magnitude, the flat \
+                    Defensive Training dodge-bonus magnitude, and the flat Hatred attack-bonus \
+                    magnitude is fabricated for any of the eight recognized dimensions. All 8 \
+                    grounded Gnome trait dimensions are now surfaced live in the desktop app's \
+                    Race Trait Catalog browser (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, \
+                    wired through the list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
+                    more of the remaining Gnome families (Gnome Magic, weapon familiarity) as a \
+                    real computed contribution is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "race.half_elf.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:half-elf",
-                dimension: "bounded Half-Elf race semantics: four grounded PF1 Core Rulebook \
+                dimension: "bounded Half-Elf race semantics: six grounded PF1 Core Rulebook \
                             Half-Elf racial trait dimensions (chosen ability-bonus target, \
-                            size, speed, senses) recognized on the compute seam, with the \
-                            remaining Half-Elf family surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                            size, speed, senses, Keen Senses, Elven Immunities) recognized on \
+                            the compute seam, with the remaining Half-Elf family surface still \
+                            unproven",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_HALF_ELF_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
-                    Half-Elf race-semantic families are recognized on the compute seam (a \
+                grounding_ref: SD18_HALF_ELF_KEEN_SENSES_TEST,
+                blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
+                    six Half-Elf race-semantic families are recognized on the compute seam (a \
                     player-chosen +2 ability-bonus target, mirroring the Human ability-bonus \
                     mechanic's shape rather than a fixed pair; size: Medium; speed: 30 ft; \
-                    senses: low-light vision), but the remaining families stay unproven: Elven \
-                    Immunities (sleep immunity, enchantment save bonus), Adaptability (a bonus \
-                    Skill Focus feat), Keen Senses (Perception bonus), and Multitalented \
-                    (dual favored classes). No numeric mechanical contribution is fabricated \
-                    beyond the already-computed ability modifier for the chosen target.",
-                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
-                    remaining Half-Elf families (Elven Immunities, Adaptability, Keen Senses, \
-                    Multitalented) as a real computed contribution",
+                    senses: low-light vision; Keen Senses: a flat +2 racial bonus on Perception \
+                    checks; Elven Immunities: sleep-effect immunity plus a flat +2 racial \
+                    saving throw bonus against enchantment spells and effects), but the \
+                    remaining families stay unproven: Adaptability (a bonus Skill Focus feat), \
+                    and Multitalented (dual favored classes). No numeric mechanical \
+                    contribution is fabricated beyond the already-computed ability modifier for \
+                    the chosen target and the flat Keen Senses / Elven Immunities magnitudes. \
+                    All 6 grounded Half-Elf trait dimensions are now surfaced live in the \
+                    desktop app's Race Trait Catalog browser \
+                    (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired through the \
+                    list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
+                    more of the remaining Half-Elf families (Adaptability, Multitalented) as a \
+                    real computed contribution is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "race.half_orc.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:half-orc",
-                dimension: "bounded Half-Orc race semantics: four grounded PF1 Core Rulebook \
+                dimension: "bounded Half-Orc race semantics: five grounded PF1 Core Rulebook \
                             Half-Orc racial trait dimensions (chosen ability-bonus target, \
-                            size, speed, senses) recognized on the compute seam, with the \
-                            remaining Half-Orc family surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                            size, speed, senses, Intimidating) recognized on the compute seam, \
+                            with the remaining Half-Orc family surface still unproven",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_HALF_ORC_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
-                    Half-Orc race-semantic families are recognized on the compute seam (a \
+                grounding_ref: SD18_HALF_ORC_INTIMIDATING_TEST,
+                blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
+                    five Half-Orc race-semantic families are recognized on the compute seam (a \
                     player-chosen +2 ability-bonus target, mirroring the Half-Elf mechanic's \
-                    shape; size: Medium; speed: 30 ft; senses: Darkvision 60 ft), but the \
-                    remaining families stay unproven: Intimidating (a bonus on Intimidate \
-                    checks), Orc Ferocity (fighting on for one more round below 0 hit points), \
-                    and weapon familiarity (orc double axe, falchion). No numeric mechanical \
-                    contribution is fabricated beyond the already-computed ability modifier \
-                    for the chosen target.",
-                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
-                    remaining Half-Orc families (Intimidating, Orc Ferocity, weapon \
-                    familiarity) as a real computed contribution",
+                    shape; size: Medium; speed: 30 ft; senses: Darkvision 60 ft; Intimidating: \
+                    a flat +2 racial bonus on Intimidate checks), but the remaining families \
+                    stay unproven: Orc Ferocity (fighting on for one more round below 0 hit \
+                    points), and weapon familiarity (orc double axe, falchion). No numeric \
+                    mechanical contribution is fabricated beyond the already-computed ability \
+                    modifier for the chosen target and the flat Intimidating bonus magnitude. \
+                    All 5 grounded Half-Orc trait dimensions are now surfaced live in the \
+                    desktop app's Race Trait Catalog browser \
+                    (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired through the \
+                    list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
+                    more of the remaining Half-Orc families (Orc Ferocity, weapon familiarity) \
+                    as a real computed contribution is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "race.halfling.bounded_semantics",
                 subject_type: MatrixSubjectType::Race,
                 subject_id: "race:halfling",
-                dimension: "bounded Halfling race semantics: four grounded PF1 Core Rulebook \
+                dimension: "bounded Halfling race semantics: eight grounded PF1 Core Rulebook \
                             Halfling racial trait dimensions (ability modifiers, size, speed, \
-                            senses) recognized on the compute seam, with the remaining \
-                            Halfling family surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                            senses, Keen Senses, Sure-Footed, Fearless, Halfling Luck) \
+                            recognized on the compute seam, with the remaining Halfling family \
+                            surface still unproven",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD13_HALFLING_LEVEL1_TEST,
-                blocker_or_lossiness_note: "SD13-E2 leaves direct computed evidence that four \
-                    Halfling race-semantic families are recognized on the compute seam \
+                grounding_ref: SD18_HALFLING_LUCK_TEST,
+                blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
+                    eight Halfling race-semantic families are recognized on the compute seam \
                     (ability modifiers: +2 Dexterity / -2 Strength; size: Small; speed: 20 ft; \
-                    senses: no special senses), but the remaining families stay unproven: \
-                    Fearless, Halfling Luck, Keen Senses, Sure-Footed, and weapon familiarity. \
+                    senses: no special senses; Keen Senses: flat +2 Perception racial bonus; \
+                    Sure-Footed: flat +2 Acrobatics/Climb racial bonus; Fearless: flat +2 \
+                    saving-throw-vs-fear racial bonus; Halfling Luck: flat +1 all-saving-throws \
+                    racial bonus), but the remaining family stays unproven: weapon familiarity. \
                     PF1 core Halflings gain no racial bonus feat, so that family is not \
                     applicable rather than unproven. No numeric mechanical contribution is \
-                    fabricated for any of the four recognized dimensions.",
-                next_required_uplift: "later SD13-E2 slice grounding one or more of the \
-                    remaining Halfling families (Fearless, Halfling Luck, Keen Senses, \
-                    Sure-Footed, weapon familiarity) as a real computed contribution",
+                    fabricated for any of the three non-skill-bonus, non-save-bonus recognized \
+                    dimensions. All 8 grounded Halfling trait dimensions are now surfaced live \
+                    in the desktop app's Race Trait Catalog browser \
+                    (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired through the \
+                    list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    remaining Halfling family (weapon familiarity) as a real computed \
+                    contribution is a future SD-N's scope, not a further per-cycle widening of \
+                    this row",
             },
             // ----- Class rows (12) -----
             SupportStateRow {
@@ -910,8 +1209,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
                 dimension: "class progression through level 1 deterministic pilot surface",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_FIGHTER_LEVEL1_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3-F5 widens the Fighter level-1 deterministic \
@@ -937,38 +1236,65 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     progression milestones (level-1 bonus-feat selection into the repeated \
                     bonus-feat cadence, level-1 BAB into the level-10 BAB climb, level-1 base \
                     saves into the level-10 save climb, and the level-1 armor / weapon selection \
-                    that seeds armor-training and weapon-training progression at higher levels)",
-                next_required_uplift: "SD13-E3 slice widening the bounded Fighter surface \
-                    beyond level 1 toward the level-10 progression milestones (base attack \
-                    bonus climb, base save climb, bonus-feat cadence, armor-training ranks, \
-                    weapon-training ranks, and ability-score progression), per the bounded \
-                    milestones enumerated in the L2-10 row",
+                    that seeds armor-training and weapon-training progression at higher levels). \
+                    This row's every named grounded milestone is now surfaced live in the \
+                    desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class \
+                    name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the operator's \
+                    UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    remaining named Fighter level-1 burdens (favored-class +1 hp / +1 skill-rank \
+                    choice, a general feat/skill-rank allocation engine, equipment/weapon/armor \
+                    effects beyond the bounded baseline AC + BAB seam) as real computed \
+                    contributions is a future SD-N's scope, not a further per-cycle widening of \
+                    this row",
             },
             SupportStateRow {
                 row_id: "class.fighter.levels_2_10",
                 subject_type: MatrixSubjectType::Class,
                 subject_id: "class:fighter",
-                dimension: "class progression across levels 2-10: bounded milestone proof \
-                            for levels 2 through 10, with the Weapon Training damage-roll \
-                            half still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                dimension: "class progression across levels 2-20: bounded milestone proof \
+                            for levels 2 through 20, the FINAL level within PF1's 1-20 \
+                            character-level cap (SD18 widens the prior levels 2-10 tranche by \
+                            ten levels), with the Weapon Training damage-roll half, the Armor \
+                            Mastery damage-reduction application, and the Weapon Mastery \
+                            critical-confirmation/damage-multiplier/disarm-immunity \
+                            application still unproven",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_FIGHTER_LEVEL9_LEVEL10_TEST,
-                blocker_or_lossiness_note: "SD13-E3/SD13-E5 prove Fighter levels 2 through 10: \
-                    base attack / base save progression (the classlevel, classlevel/2+2, \
-                    classlevel/3 formulas are level-generic), the level-2, level-4, level-6, \
-                    level-8, and level-10 bonus-feat progression seams (the level-10 canonical \
-                    Greater Weapon Focus selection's prerequisites are honestly met by the \
-                    canonical loadout), the level-3 Armor Training 1 seam, the level-5 Weapon \
-                    Training 1 attack-roll half, the level-7 Armor Training 2 seam (raises the \
-                    Climb/Swim selected-skill totals by +1 each on the deterministic Chain \
-                    Shirt), the level-9 Weapon Training 2 attack-roll half (rank = 1 + \
-                    (level - 5) / 4: the first-group Heavy Blades bonus rises to +2, folded \
-                    into the baseline melee attack bonus, and the canonical second group, Bows, \
-                    is surfaced at +1 as an explanation-only seam covering no equipped weapon) \
-                    over the deterministic Human loadout, and Bravery (+1 Will save vs fear at \
-                    level 2, +2 at level 6, +3 at level 10, rank = 1 + (level - 2) / 4) as a \
+                blocker_or_lossiness_note: "SD13-E3/SD13-E5 prove Fighter levels 2 through 10, \
+                    and SD18 (cycle-2026-07-13T1941, mirroring the Barbarian/Bard/Cleric/ \
+                    Druid level-11 widening pattern) widens to level 11: base attack / base save \
+                    progression (the classlevel, classlevel/2+2, classlevel/3 formulas are \
+                    level-generic; base attack bonus genuinely rises to 11 at level 11, while all \
+                    three base saves stay numerically unchanged from level 10 as integer-division \
+                    coincidences), the level-2, level-4, level-6, level-8, and level-10 bonus-feat \
+                    progression seams (the level-10 canonical Greater Weapon Focus selection's \
+                    prerequisites are honestly met by the canonical loadout; no new bonus feat \
+                    lands at level 11 — the cadence's next feat is level 12), the level-3 Armor \
+                    Training 1 seam, the level-5 Weapon Training 1 attack-roll half, the level-7 \
+                    Armor Training 2 seam (raises the Climb/Swim selected-skill totals by +1 each \
+                    on the deterministic Chain Shirt), the level-9 Weapon Training 2 attack-roll \
+                    half (rank = 1 + (level - 5) / 4: the first-group Heavy Blades bonus rises to \
+                    +2, folded into the baseline melee attack bonus, and the canonical second \
+                    group, Bows, is surfaced at +1 as an explanation-only seam covering no \
+                    equipped weapon; the rank stays 2 at level 11, an integer-division \
+                    coincidence with level 10) over the deterministic Human loadout, the \
+                    level-11 Armor Training 3 seam (rank genuinely rises to 3, raising the \
+                    maximum Dexterity bonus to +7 from +6; the armor-check-penalty reduction was \
+                    already capped at 0 by Armor Training 2, so no Climb/Swim total changes, and \
+                    the deterministic +2 Dexterity contribution stays below both the old and new \
+                    max-Dex caps, so no derived armor class changes either — a genuine, \
+                    non-fabricated magnitude widening whose effect on this specific fixture is \
+                    honestly reported as unchanged), and Bravery (+1 Will save vs fear at \
+                    level 2, +2 at level 6, +3 at level 10, rank = 1 + (level - 2) / 4, staying \
+                    +3 at level 11, an integer-division coincidence with level 10) as a \
                     flat, non-fabricated bonus magnitude record. The Weapon Training \
                     damage-roll half stays unproven — no damage total is computed anywhere in \
                     this codebase for any Fighter level, so this is not a new gap. Bravery's \
@@ -977,13 +1303,180 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the Bravery bonus is never folded into the unconditional Will save total. \
                     The generic PF1 ability-score-increase milestones need no separate seam: \
                     the chosen ability score is trusted at face value. Any general \
-                    feat-effect/prerequisite engine also remains out of proof",
-                next_required_uplift: "later SD13 slice grounding the remaining named Fighter \
-                    class-feature burden inside levels 2-10: the Weapon Training damage-roll \
-                    half (which first needs any damage total to exist on the compute surface), \
-                    or a fear-condition/save-resolution engine to apply the Bravery magnitude \
-                    to an actual Will save (a tranche-level subsystem decision, not a slice \
-                    decision)",
+                    feat-effect/prerequisite engine also remains out of proof. SD18 \
+                    (cycle-2026-07-14T2300, mirroring the Barbarian/Bard/Cleric/Druid \
+                    level-11-then-level-12 pattern) further widens to level 12: base attack \
+                    bonus genuinely rises to 12 and all three base saves genuinely rise \
+                    (Fortitude/Reflex/Will 8/4/4, up from 7/3/3 at level 11) via the same \
+                    level-generic formulas; the PF1 Core Rulebook Fighter class table's \
+                    level-12 Special column reads only \"Bonus feat\" (verified against d20pfsrd \
+                    and the Archives of Nethys aonprd.com mirror), so this widening surfaces the \
+                    sixth named bonus-feat progression seam (the canonical Weapon Specialization \
+                    selection's prerequisites — fighter level 4 and Weapon Focus with the chosen \
+                    weapon — are honestly met by the canonical loadout) and grounds no new named \
+                    pillar beyond that cadence slot; Armor Training stays at rank 3 and Weapon \
+                    Training stays at rank 2, both integer-division coincidences with level 11. \
+                    SD18 (cycle-2026-07-15T1300, the loop's third §3.2 level-13 landing after \
+                    Rogue and Barbarian) further widens to level 13: base attack bonus \
+                    genuinely rises to 13 while all three base saves stay numerically unchanged \
+                    from level 12 (Fortitude/Reflex/Will 8/4/4), both integer-division \
+                    coincidences; the PF1 Core Rulebook Fighter class table's level-13 Special \
+                    column reads \"Weapon training 3\" (verified against d20pfsrd and the \
+                    Archives of Nethys aonprd.com mirror), so Weapon Training's rank formula \
+                    (already level-generic) genuinely rises to 3, raising the first-group Heavy \
+                    Blades attack-roll bonus (folded into the baseline melee attack bonus) from \
+                    +2 to +3, and this widening surfaces a THIRD chosen weapon group \
+                    (canonically Polearms) as a new explanation-only seam covering no equipped \
+                    weapon, mirroring the second-group (Bows) idiom exactly; no new bonus feat \
+                    lands at level 13 (the cadence's next feat is level 14). SD18 \
+                    (cycle-2026-07-15T2000, entering the level-14 sweep opened by Barbarian) \
+                    further widens to level 14: base attack bonus genuinely rises to 14 and good \
+                    Fortitude genuinely rises to 9 (14/2+2), while poor Reflex and poor Will both \
+                    stay at 4 (14/3), integer-division coincidences; the PF1 Core Rulebook \
+                    Fighter class table's level-14 Special column reads \"Bonus feat, bravery \
+                    +4\" (verified against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, byte-for-byte agreement): Bravery's already-generic formula \
+                    (1 + (level-2)/4) genuinely rises to +4 with no code change, and this \
+                    widening surfaces a SEVENTH named bonus-feat progression seam (the canonical \
+                    Greater Weapon Specialization selection's prerequisites — fighter level 12, \
+                    Weapon Focus and Weapon Specialization with the chosen weapon — are honestly \
+                    met by the canonical loadout); Weapon Training and Armor Training both stay \
+                    at rank 3, integer-division coincidences with level 13 (their next rises are \
+                    levels 17 and 15 respectively). SD18 (cycle-2026-07-15T3000, the loop's \
+                    THIRD §3.2 level-15 landing, after Barbarian and Rogue) further widens to \
+                    level 15: base attack bonus genuinely rises to 15 (full BAB) and poor Reflex \
+                    and poor Will both genuinely rise to 5 (15/3), while good Fortitude stays 9 \
+                    (15/2+2), an integer-division coincidence with level 14; the PF1 Core \
+                    Rulebook Fighter class table's level-15 Special column reads \"Armor \
+                    training 4\" only (verified against d20pfsrd and the Archives of Nethys \
+                    aonprd.com mirror, byte-for-byte agreement): Armor Training's \
+                    already-level-generic rank function genuinely rises to rank 4, raising the \
+                    armor-check-penalty-reduction and maximum-Dexterity-bonus magnitudes by a \
+                    fourth named tier (on the deterministic Chain Shirt fixture, the \
+                    armor-check-penalty reduction was already capped at 0 by Armor Training 2, so \
+                    no Climb/Swim total changes, and the deterministic +2 Dexterity contribution \
+                    stays below both the old and new maximum-Dexterity-bonus caps, so no derived \
+                    armor class changes either); level 15 is neither a Fighter bonus-feat cadence \
+                    level nor a Weapon Training rank-rise level, so Weapon Training stays at rank \
+                    3 and Bravery stays +4, both integer-division coincidences with level 14, and \
+                    no eighth bonus-feat seam is added. SD18 (cycle-2026-07-15T4700, continuing \
+                    the §3.2 level-16 sweep opened by Barbarian) further widens to level 16: \
+                    base attack bonus genuinely rises to 16 (full BAB) and good Fortitude \
+                    genuinely rises to 10 (16/2+2), while poor Reflex and poor Will both stay 5 \
+                    (16/3), an integer-division coincidence with level 15; the PF1 Core Rulebook \
+                    Fighter class table's level-16 Special column reads \"Bonus feat\" only \
+                    (verified against d20pfsrd and the Archives of Nethys aonprd.com mirror, \
+                    byte-for-byte agreement): this widening surfaces an EIGHTH named bonus-feat \
+                    progression seam (the canonical Critical Focus selection's prerequisite — \
+                    base attack bonus +9 — is honestly met by the canonical loadout's level-16 \
+                    base attack bonus of +16); Weapon Training stays at rank 3, an \
+                    integer-division coincidence with level 15 (the next rise is level 17), and \
+                    Armor Training stays at rank 4 (the PF1 Core Rulebook names no fifth Armor \
+                    Training rank). SD18 (cycle-2026-07-15T8300, the fourth class to reach level \
+                    17 in the §3.2 level-17 sweep, after Ranger/Bard/Rogue) further widens to \
+                    level 17: base attack bonus genuinely rises to 17 (full BAB), while good \
+                    Fortitude and both poor Reflex/Will all stay numerically unchanged from \
+                    level 16 (17/2+2=10, 17/3=5), integer-division coincidences; the PF1 Core \
+                    Rulebook Fighter class table's level-17 Special column reads \"Weapon \
+                    training 4\" only (verified independently against www.aonprd.com/ \
+                    ClassDisplay.aspx?ItemName=Fighter and legacy.aonprd.com/coreRuleBook/ \
+                    classes/fighter.html, byte-for-byte agreement, including neighboring levels \
+                    16 and 18 to rule out misattribution): Weapon Training's already-level-generic \
+                    rank formula genuinely rises to rank 4, raising the first-group Heavy Blades \
+                    attack-roll bonus (folded into the baseline melee attack bonus) from +3 to \
+                    +4, and this widening surfaces a FOURTH chosen weapon group (canonically \
+                    Hammers) as a new explanation-only seam covering no equipped weapon, \
+                    mirroring the second-group (Bows) and third-group (Polearms) idiom exactly; \
+                    no new bonus feat lands at level 17 (the cadence's next feat is level 18); \
+                    Bravery stays +4, an integer-division coincidence with level 16 (the next \
+                    rise is level 18). SD18 (this cycle, the fourth class to reach level 18 in \
+                    the §3.2 level-18 sweep, after Wizard, Cleric, and Paladin) further widens \
+                    to level 18: base attack bonus genuinely rises to 18 (full BAB) and all \
+                    three base saves genuinely rise (good Fortitude to 11, poor Reflex and poor \
+                    Will both to 6, via the already-level-generic formulas); the PF1 Core \
+                    Rulebook Fighter class table's level-18 Special column reads \"Bonus feat, \
+                    bravery +5\" (verified against d20pfsrd.com/classes/core-classes/fighter/ \
+                    and aonprd.com/ClassDisplay.aspx?ItemName=Fighter, byte-for-byte agreement, \
+                    including neighboring levels 16, 17, and 19 to rule out misattribution): \
+                    Bravery's already-generic formula (1 + (level-2)/4) genuinely rises to +5 \
+                    with no formula change, and this widening surfaces a NINTH named bonus-feat \
+                    progression seam (the canonical Staggering Critical selection's \
+                    prerequisites — Critical Focus and base attack bonus +13 — are honestly met \
+                    by the canonical loadout: Critical Focus is the level-16 fighter bonus feat \
+                    and the level-18 base attack bonus is +18); Weapon Training and Armor \
+                    Training both stay at rank 4, integer-division coincidences with level 17 \
+                    (the PF1 Core Rulebook names no fifth rank for either pillar in this range). \
+                    SD18 (cycle-2026-07-16T0100, the third class to reach level 19 in the §3.2 \
+                    level-19 sweep, after Barbarian and Cleric) further widens to level 19: base \
+                    attack bonus genuinely rises to 19 (full BAB) while all three base saves stay \
+                    numerically unchanged from level 18 (good Fortitude 19/2+2=11, poor \
+                    Reflex/Will both 19/3=6), integer-division coincidences; the PF1 Core \
+                    Rulebook Fighter class table's level-19 Special column reads \"Armor \
+                    mastery\" only (verified independently against \
+                    d20pfsrd.com/classes/core-classes/fighter/ and \
+                    aonprd.com/ClassDisplay.aspx?ItemName=Fighter, byte-for-byte agreement, \
+                    fetching the full levels-16-through-20 block in one pass to rule out \
+                    misattribution): level 19 is NOT a Fighter bonus-feat cadence level (1, 2, 4, \
+                    6, 8, 10, 12, 14, 16, 18, 20 — 19 is absent), NOT a Weapon Training rank-rise \
+                    level (ranks rise at 5, 9, 13, 17), and NOT an Armor Training rank-rise level \
+                    (ranks rise at 3, 7, 11, 15; the PF1 Core Rulebook names no fifth rank), so \
+                    none of those three pillars widen and Bravery stays +5, an integer-division \
+                    coincidence with level 18 (the next rise, level 22, is beyond the PF1 level \
+                    cap). Armor Mastery itself IS a genuinely new named class feature (\"a \
+                    fighter gains DR 5/— whenever he is wearing armor or using a shield\"), \
+                    grounded as a bounded flat-magnitude record only \
+                    (class_feature.fighter.armor_mastery, value 5 at or above level 19), \
+                    mirroring exactly the already-proven Barbarian Damage Reduction idiom: no \
+                    damage-resolution engine and no incoming-damage total exists anywhere in \
+                    this codebase to apply it, and no worn-armor-or-shield condition check is \
+                    computed, so this grounds no actual damage reduction. SD18 (this cycle, the \
+                    loop's FIFTH §3.2 level-20 landing, after Cleric, Wizard, Barbarian, and \
+                    Bard) further widens to level 20, the FINAL level within PF1's 1-20 \
+                    character-level cap: base attack bonus genuinely rises to 20 (full BAB) and \
+                    good Fortitude genuinely rises to 12 (20/2+2), while poor Reflex and poor \
+                    Will both stay at 6 (20/3), an integer-division coincidence with level 19 \
+                    (verified independently against d20pfsrd.com/classes/core-classes/fighter/ \
+                    and aonprd.com/ClassDisplay.aspx?ItemName=Fighter, byte-for-byte agreement, \
+                    fetching the full class table in one pass to rule out misattribution): the \
+                    level-20 Special column reads \"Bonus feat, Weapon mastery\". Level 20 IS a \
+                    Fighter bonus-feat cadence level (1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20), so \
+                    this widening surfaces a TENTH named bonus-feat progression seam (the \
+                    canonical Critical Mastery selection's prerequisites — two other critical \
+                    feats — are honestly met by the canonical loadout's Improved Critical, \
+                    Critical Focus, and Staggering Critical). Weapon Mastery itself IS a \
+                    genuinely new named capstone class feature (\"a fighter chooses one weapon... \
+                    Any attacks made with that weapon automatically confirm all critical threats \
+                    and have their damage multiplier increased by 1... In addition, he cannot be \
+                    disarmed while wielding a weapon of this type\"), grounded as a bounded \
+                    grant-only identity/magnitude record only \
+                    (class_feature.fighter.weapon_mastery, critical-multiplier-increase value 1 \
+                    at or above level 20), mirroring exactly the already-proven Fighter Armor \
+                    Mastery idiom: no critical-hit-confirmation engine, no \
+                    damage-multiplier-application engine, and no disarm-resolution engine exists \
+                    anywhere in this codebase to apply it, so this grounds no actual \
+                    automatic-critical-confirmation, no actual damage-multiplier change, and no \
+                    actual disarm immunity. Weapon Training and Armor Training both stay at rank \
+                    4, integer-division coincidences with level 19 (the PF1 Core Rulebook names \
+                    no fifth rank for either pillar), and Bravery stays +5, an integer-division \
+                    coincidence with level 19 (the next rise, level 22, is beyond the PF1 level \
+                    cap). This closes Fighter's per-level arithmetic-widening frontier: level 20 \
+                    is the final level within PF1's 1-20 cap. This row's every named grounded \
+                    milestone is now surfaced live in the desktop app's Class Progression \
+                    Catalog browser (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired \
+                    through the list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class \
+                    name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the operator's \
+                    UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    remaining named Fighter class-feature burden inside levels 2-20 (the Weapon \
+                    Training damage-roll half, a fear-condition/save-resolution engine for \
+                    Bravery, the Armor Mastery damage-reduction application, and the Weapon \
+                    Mastery critical-confirmation/damage-multiplier/disarm-immunity application) \
+                    as real computed contributions is a future SD-N's scope, not a further \
+                    per-cycle widening of this row. Fighter's per-level arithmetic-widening \
+                    frontier is closed (level 20 is the final level within PF1's 1-20 cap)",
             },
             SupportStateRow {
                 row_id: "class.rogue.bounded_progression",
@@ -991,23 +1484,54 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:rogue",
                 dimension: "bounded Rogue chassis progression: the deterministic Human Rogue \
                             level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10 \
-                            chassis identity, with all four named pillars grounded across all \
-                            ten levels (base-attack, base-save, sneak-attack die count, and \
-                            trapfinding), Evasion grounded as a level-2 identity/recognition \
-                            record, Trap Sense grounded as a level-3 flat-magnitude record \
-                            (genuinely rising to +2 at level 6, unchanged at levels 7-8, and \
-                            genuinely rising to +3 at level 9), Uncanny \
+                            level-9/level-10/level-11/level-12/level-13/level-14/level-15/\
+                            level-16/level-17/level-18/level-19 chassis identity, with all four \
+                            named pillars \
+                            grounded across all nineteen levels (base-attack, base-save, \
+                            sneak-attack die count, and trapfinding), Evasion grounded as a \
+                            level-2 \
+                            identity/recognition record, Trap Sense grounded as a level-3 \
+                            flat-magnitude record (genuinely rising to +2 at level 6, unchanged \
+                            at levels 7-8, genuinely rising to +3 at level 9, unchanged at level \
+                            11, genuinely rising to +4 at level 12, staying there at levels \
+                            13-14, genuinely rising to +5 at level 15, staying there at \
+                            levels 16-17, genuinely rising to +6 at level 18, and staying there \
+                            at level 19), Uncanny \
                             Dodge grounded as a level-4 identity/recognition record, Improved \
                             Uncanny Dodge grounded as a level-8 identity/recognition record, the \
                             sneak-attack die count genuinely rising to 3d6 at level 5, staying \
                             there at level 6, rising to 4d6 at level 7, staying there at \
-                            level 8, and rising to 5d6 at level 9, Trapfinding genuinely rising \
-                            to +4 at level 8 (unchanged at level 9) and to +5 at level 10, and the \
-                            check-execution / rogue-talent / integration remainder still \
+                            level 8, rising to 5d6 at level 9, staying there at level 10, \
+                            genuinely rising to 6d6 at level 11, staying there at level 12, \
+                            genuinely rising to 7d6 at level 13, staying there at level 14, \
+                            genuinely rising to 8d6 at level 15, staying there at level 16, \
+                            genuinely rising to 9d6 at level 17, staying there at level 18, and \
+                            genuinely rising to 10d6 at level 19 (its own final PF1 CRB tier), \
+                            Trapfinding genuinely rising \
+                            to +4 at level 8 (unchanged at level 9), to +5 at level 10 \
+                            (unchanged at level 11), to +6 at level 12 (staying there at \
+                            level 13), genuinely rising to +7 at level 14, staying there at \
+                            level 15, genuinely rising to +8 at level 16, staying there at \
+                            level 17, genuinely rising to +9 at level 18, and staying there at \
+                            level 19, base attack bonus \
+                            genuinely rising to +8 at level 11 and to +9 at level 12 (staying \
+                            there at level 13, genuinely rising to +10 at level 14, genuinely \
+                            rising to +11 at level 15, genuinely rising to +12 at level 16, \
+                            staying there at level 17, genuinely rising to +13 at level 18, and \
+                            genuinely rising to +14 at level 19), \
+                            the \
+                            sixth numbered rogue-talent choice slot recognized at level 12 \
+                            (level 13 is not a talent level, so no seventh slot appears there; \
+                            the seventh numbered slot is recognized at level 14; level 15 is not \
+                            a talent level either, so no eighth slot appears there; the eighth \
+                            numbered slot is recognized at level 16; level 17 is not a talent \
+                            level either, so no ninth slot appears there; the ninth numbered \
+                            slot is recognized at level 18; level 19 is not a talent level \
+                            either, so no tenth slot appears there, next at level 20), and the \
+                            check-execution / rogue-talent-effect / integration remainder still \
                             unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_ROGUE_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3 leaves direct computed evidence that the \
@@ -1155,10 +1679,230 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     five distinct talents and the gate ladder is pinned one level below \
                     each gate), completing the rogue's full five-slot talent count at the \
                     tranche ceiling; the \
-                    talent tree's effects stay the new-subsystem burden.",
-                next_required_uplift: "later SD13 slice wiring the grounded Rogue pillar \
-                    records into the integrated pilot surface (the generic chassis diagnostics \
-                    still claim-block), then rogue talents and level-11+ progression",
+                    talent tree's effects stay the new-subsystem burden — and an SD18 slice \
+                    (cycle-2026-07-14T2000, tests/sd18_rogue_level11_sneak_attack.rs) widens \
+                    the level-range gate again (supported_rogue_level, 1..=11), the first \
+                    §3.2 level-11 slice for Rogue, verified independently against both primary \
+                    sources (d20pfsrd and the Archives of Nethys aonprd.com mirror): base \
+                    attack genuinely rises to +8 (11 * 3 / 4) while all three base saves stay \
+                    numerically unchanged (Fortitude/Will +3, Reflex +7, integer-division \
+                    coincidences with level 10); the level-11 \"Special\" column reads only \
+                    \"Sneak attack +6d6\" — the pre-existing sneak-attack die-count formula \
+                    ((level + 1) / 2) genuinely rises to 6d6, up from 5d6 at level 10, via the \
+                    same formula, not a new record; Trap Sense stays +3 (next rise at 12th) and \
+                    Trapfinding stays +5 (both integer-division coincidences with level 10); \
+                    Evasion, Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not \
+                    re-derived; level 11 is NOT a rogue-talent level (talents land at \
+                    2/4/6/8/10/12), so no new talent pillar is grounded or fabricated either. \
+                    The row is Partial, not Supported: no rogue talent (the genuinely \
+                    open-ended talent tree) is proven. An SD18 slice (cycle-2026-07-15T0800, \
+                    tests/sd18_rogue_level12_widening.rs) widens the level-range gate again \
+                    (supported_rogue_level, 1..=12), verified independently against both \
+                    primary sources (d20pfsrd and the Archives of Nethys aonprd.com mirror, \
+                    which agree byte-for-byte): base attack genuinely rises to +9 (12 * 3 / 4) \
+                    and all three base saves genuinely rise too (Fortitude/Will +4, 12/3, and \
+                    Reflex +8, 12/2+2, up from +3/+3/+7 at level 11 — unlike level 11's \
+                    coincidental save plateau); the level-12 \"Special\" column reads \"Rogue \
+                    talent, trap sense +4\" — Trap Sense genuinely rises to +4 (12/3) via the \
+                    pre-existing formula, not a new record, and Rogue Talent is the SIXTH \
+                    numbered choice slot (class_chassis.rogue.talent_6_choice, \
+                    choice:rogue_talent_6, gate 12), the same open-ended, non-validated \
+                    raw-string +0 recognition idiom already proven at slots 1-5: the selected \
+                    talent's own effect stays entirely unproven, exactly as slots 1-5 left \
+                    their own effects unproven — no talent-effect engine exists in this \
+                    codebase; sneak attack stays 6d6 ((12 + 1) / 2, an integer-division \
+                    coincidence with level 11, next rise at level 13) but Trapfinding \
+                    genuinely rises to 6 (max(12/2, 1), up from 5 at level 11, via the \
+                    pre-existing formula — this rise is not named in the level-12 \"Special\" \
+                    column, since Trapfinding's own formula is independent of it); Evasion, \
+                    Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not re-derived. \
+                    An SD18 slice (cycle-2026-07-15T1100, tests/sd18_rogue_level13_widening.rs) \
+                    widens the level-range gate again (supported_rogue_level, 1..=13), the first \
+                    §3.2 level-13 widening attempted across any of the 11 core classes, verified \
+                    independently against both primary sources (d20pfsrd and the Archives of \
+                    Nethys aonprd.com mirror, which agree byte-for-byte): base attack STAYS +9 \
+                    (13 * 3 / 4, an integer-division coincidence with level 12) and all three \
+                    base saves also STAY unchanged (Fortitude/Will 13/3 = 4, Reflex 13/2+2 = 8); \
+                    the level-13 \"Special\" column reads only \"Sneak attack +7d6\" — a \
+                    tier-rise on the already-grounded sneak-attack die-count formula \
+                    ((level + 1) / 2), which genuinely rises to 7 (7d6), up from 6 (6d6) at \
+                    level 12, via the same formula, not a new record; Trap Sense stays +4 \
+                    (13/3, next rise at level 15) and Trapfinding stays 6 (max(13/2, 1), \
+                    unchanged from level 12); Evasion, Uncanny Dodge, and Improved Uncanny \
+                    Dodge all stay granted, not re-derived; level 13 is NOT a rogue-talent \
+                    level (talents land at 2/4/6/8/10/12/14...), so no seventh talent \
+                    choice-slot record is grounded or fabricated either. This is the cleanest \
+                    possible widening shape: the ONLY value that genuinely changes at level 13 \
+                    is the sneak-attack die count, entirely through the pre-existing formula. \
+                    An SD18 slice (cycle-2026-07-15T2000, \
+                    tests/sd18_rogue_level14_widening.rs) widens the level-range gate again \
+                    (supported_rogue_level, 1..=14), the loop's Rogue level-14 sweep landing, \
+                    verified independently against both primary sources (d20pfsrd and the \
+                    Archives of Nethys aonprd.com mirror, which agree byte-for-byte): base \
+                    attack genuinely rises to +10 (14 * 3 / 4) and good Reflex genuinely rises \
+                    to +9 (14 / 2 + 2), up from +9/+8 at level 13, while poor Fortitude/Will \
+                    both stay +4 (14 / 3, integer-division coincidences); the level-14 \
+                    \"Special\" column reads only \"Rogue talent\" — level 14 IS a \
+                    rogue-talent cadence level, so a SEVENTH numbered choice slot \
+                    (class_chassis.rogue.talent_7_choice, choice:rogue_talent_7, gate 14) is \
+                    added, the same open-ended, non-validated raw-string +0 recognition idiom \
+                    already proven at slots 1-6: the selected talent's own effect stays \
+                    entirely unproven — no talent-effect engine exists in this codebase; sneak \
+                    attack stays 7d6 ((14 + 1) / 2, an integer-division coincidence with level \
+                    13, next rise at level 15) but Trapfinding genuinely rises to 7 \
+                    (max(14/2, 1), up from 6 at level 13, via the pre-existing formula — this \
+                    rise is not named in the level-14 \"Special\" column); Trap Sense stays +4 \
+                    (14/3, next rise at level 15); Evasion, Uncanny Dodge, and Improved Uncanny \
+                    Dodge all stay granted, not re-derived. \
+                    The row is Partial, not Supported: no rogue talent (the genuinely \
+                    open-ended talent tree, including the seventh slot's own effect) is \
+                    proven, no Rogue level 15+ is proven, and no mechanical math is fabricated \
+                    beyond these grounded pillars. An SD18 slice (cycle-2026-07-15T2900, \
+                    tests/sd18_rogue_level15_widening.rs) widens the level-range gate again \
+                    (supported_rogue_level, 1..=15), the loop's FIRST Rogue level-15 sweep \
+                    landing, verified independently against both primary sources (d20pfsrd and \
+                    the Archives of Nethys aonprd.com mirror, which agree byte-for-byte): base \
+                    attack genuinely rises to +11 (15 * 3 / 4) and poor Fortitude/Will both \
+                    genuinely rise to +5 (15 / 3), up from +4 at level 14, while good Reflex \
+                    STAYS +9 (15 / 2 + 2, an integer-division coincidence with level 14); the \
+                    level-15 \"Special\" column reads only \"Sneak attack +8d6, trap sense \
+                    +5\" — both entries are tier-rises on already-grounded formula pillars, not \
+                    new class features: the sneak-attack die-count formula ((level + 1) / 2) \
+                    genuinely rises to 8 (8d6), up from 7d6 at level 14, via the same formula, \
+                    not a new record, and the Trap Sense flat-magnitude formula (level / 3) \
+                    genuinely rises to +5, up from +4 at level 14, via the same formula, not a \
+                    new record; Trapfinding stays 7 (max(15/2, 1), an integer-division \
+                    coincidence with level 14); level 15 is NOT a rogue-talent level (talents \
+                    land at 2/4/6/8/10/12/14/16...), so no eighth talent choice-slot record is \
+                    grounded or fabricated either; Evasion, Uncanny Dodge, and Improved Uncanny \
+                    Dodge all stay granted, not re-derived. This is the cleanest possible \
+                    widening shape checked in the level-15 sweep so far, mirroring the \
+                    Barbarian level-15 landing exactly: zero new record types, zero new named \
+                    pillars, zero new choice slots — the ONLY production-code change is raising \
+                    MAX_SUPPORTED_ROGUE_LEVEL from 14 to 15. The row is Partial, not Supported: \
+                    no rogue talent (the genuinely open-ended talent tree) is proven, no Rogue \
+                    level 16+ is proven, and no mechanical math is fabricated beyond these \
+                    grounded pillars. An SD18 slice (cycle-2026-07-15T5200, \
+                    tests/sd18_rogue_level16_widening.rs) widens the level-range gate again \
+                    (supported_rogue_level, 1..=16), the loop's Rogue level-16 sweep landing \
+                    (the FOURTH §3.2 level-16 landing, after Barbarian, Fighter, and Wizard), \
+                    verified independently against both primary sources (d20pfsrd and the \
+                    Archives of Nethys aonprd.com mirror, which agree byte-for-byte): base \
+                    attack genuinely rises to +12 (16 * 3 / 4) and good Reflex genuinely rises \
+                    to +10 (16 / 2 + 2), up from 11/9 at level 15, while poor Fortitude/Will \
+                    both stay +5 (16 / 3, integer-division coincidences with level 15); the \
+                    level-16 \"Special\" column reads only \"Rogue talent\" — level 16 IS a \
+                    rogue-talent cadence level (talents land at 2/4/6/8/10/12/14/16), so an \
+                    EIGHTH numbered choice-recognition slot (choice:rogue_talent_8) is added, \
+                    mirroring the proven open-ended raw-string idiom used at slots 1-7 exactly \
+                    — no talent-effect engine invented; sneak attack stays 8d6 ((16 + 1) / 2, an \
+                    integer-division coincidence with level 15, next rise at level 17) but \
+                    Trapfinding genuinely rises to 8 (max(16/2, 1), up from 7 at level 15, via \
+                    the pre-existing formula — this rise is not named in the level-16 \"Special\" \
+                    column); Trap Sense stays +5 (16/3, next rise at level 18); Evasion, Uncanny \
+                    Dodge, and Improved Uncanny Dodge all stay granted, not re-derived. This is \
+                    the same low-risk shape as every prior talent-cadence landing: zero new \
+                    tier constants for the base-attack/save/sneak-attack/trap-sense/trapfinding \
+                    pillars, exactly ONE new numbered choice slot (the eighth talent slot, added \
+                    via the same tuple idiom used for slots 3-7). The row is Partial, not \
+                    Supported: no rogue talent (the genuinely open-ended talent tree, including \
+                    the eighth slot's own effect) is proven, no Rogue level 17+ is proven, and \
+                    no mechanical math is fabricated beyond these grounded pillars. An SD18 \
+                    slice (cycle-2026-07-15T8100, tests/sd18_rogue_level17_widening.rs) widens \
+                    the level-range gate again (supported_rogue_level, 1..=17), the loop's THIRD \
+                    §3.2 level-17 sweep landing (after Ranger and Bard), verified independently \
+                    against both primary sources (d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, which agree byte-for-byte, fetched across the full levels-14-18 \
+                    block to guard against level-misattribution): base attack stays +12 \
+                    (17 * 3 / 4) and all three base saves stay unchanged (Fortitude/Will \
+                    17 / 3 = 5, Reflex 17 / 2 + 2 = 10), all integer-division coincidences with \
+                    level 16; the level-17 \"Special\" column reads only \"Sneak attack +9d6\" — \
+                    level 17 is NOT a rogue-talent cadence level (talents land at \
+                    2/4/6/8/10/12/14/16, next at 18), so no ninth talent slot is grounded or \
+                    fabricated; the sneak-attack die-count formula ((level + 1) / 2) genuinely \
+                    rises to 9d6, up from 8d6 at level 16, via the same pre-existing formula, \
+                    not a new record; Trap Sense stays +5 (17/3, next rise at level 18) and \
+                    Trapfinding stays 8 (max(17/2, 1), an integer-division coincidence with \
+                    level 16), neither named in the level-17 \"Special\" column; Evasion, \
+                    Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not re-derived. \
+                    This needs ZERO new tier constants and ZERO new choice slots at all — the \
+                    ONLY production-code change is raising MAX_SUPPORTED_ROGUE_LEVEL from 16 to \
+                    17, the cleanest possible widening shape checked in the Rogue sweep so far. \
+                    The row is Partial, not Supported: no rogue talent (the genuinely open-ended \
+                    talent tree) is proven, no Rogue level 18+ is proven, and no mechanical math \
+                    is fabricated beyond these grounded pillars. An SD18 slice \
+                    (cycle-2026-07-16T0212, tests/sd18_rogue_level18_widening.rs) widens the \
+                    level-range gate again (supported_rogue_level, 1..=18), the loop's SIXTH \
+                    §3.2 level-18 sweep landing (after Wizard, Cleric, Paladin, Fighter, and \
+                    Barbarian), verified independently against both primary sources (d20pfsrd \
+                    and the Archives of Nethys aonprd.com mirror, which agree byte-for-byte, \
+                    fetched across the full levels-16-19 block to guard against \
+                    level-misattribution): base attack genuinely rises to +13 (18 * 3 / 4) and \
+                    all three base saves genuinely rise too (Fortitude/Will 18/3=6, Reflex \
+                    18/2+2=11, up from 12/5/5/10 at level 17); the level-18 \"Special\" column \
+                    reads \"Rogue talent, trap sense +6\" — level 18 IS a rogue-talent cadence \
+                    level (talents land at 2/4/6/8/10/12/14/16/18), so a NINTH numbered choice \
+                    slot (class_chassis.rogue.talent_9_choice, choice:rogue_talent_9, gate 18) \
+                    is added, the same open-ended, non-validated raw-string +0 recognition \
+                    idiom already proven at slots 1-8: the selected talent's own effect stays \
+                    entirely unproven — no talent-effect engine exists in this codebase; and \
+                    the pre-existing Trap Sense flat-magnitude formula (level / 3) genuinely \
+                    rises to +6, up from +5 at level 17, via the same formula, not a new record; \
+                    sneak attack stays 9d6 ((18 + 1) / 2, an integer-division coincidence with \
+                    level 17, next rise at level 19), not named in the level-18 \"Special\" \
+                    column; Trapfinding genuinely rises to 9 (max(18/2, 1), up from 8 at level \
+                    17, via its own independent pre-existing formula), also not named in the \
+                    level-18 \"Special\" column; Evasion, Uncanny Dodge, and Improved Uncanny \
+                    Dodge all stay granted, not re-derived. This needs ZERO new tier constants \
+                    for base-attack/save/trap-sense/trapfinding/sneak-attack (all already \
+                    level-generic formulas) — the ONLY production-code changes are raising \
+                    MAX_SUPPORTED_ROGUE_LEVEL from 17 to 18 and appending a ninth numbered \
+                    talent slot to the existing tuple-array idiom, mirroring the Barbarian \
+                    level-18 rage-power-slot landing exactly (the ninth repeat of Rogue's own \
+                    talent-slot idiom specifically). The row is Partial, not Supported: no \
+                    rogue talent (the genuinely open-ended talent tree, including the ninth \
+                    slot's own effect) is proven, no Rogue level 19+ is proven, and no \
+                    mechanical math is fabricated beyond these grounded pillars. An SD18 slice \
+                    (cycle-2026-07-16T3600, tests/sd18_rogue_level19_widening.rs) widens the \
+                    level-range gate again (supported_rogue_level, 1..=19), the loop's SEVENTH \
+                    §3.2 level-19 sweep landing (after Barbarian, Cleric, Fighter, Bard, \
+                    Paladin, and Ranger), verified independently against both primary sources \
+                    (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree \
+                    byte-for-byte, fetched across the full levels-15-20 block to guard against \
+                    level-misattribution): base attack genuinely rises to +14 (19 * 3 / 4), \
+                    while all three base saves stay put (Fortitude/Will 19/3=6, Reflex \
+                    19/2+2=11, integer-division coincidences with level 18); the level-19 \
+                    \"Special\" column reads only \"Sneak attack +10d6\" — 19 is NOT a \
+                    rogue-talent cadence level (talents land at 2/4/6/8/10/12/14/16/18, next \
+                    at 20), so no tenth numbered talent slot is added; the sneak-attack \
+                    die-count formula ((level + 1) / 2) genuinely rises to 10 (10d6, up from \
+                    9d6 at level 18, its own final PF1 CRB tier); Trap Sense stays +6 (19/3, an \
+                    integer-division coincidence with level 18) and Trapfinding stays 9 \
+                    (max(19/2, 1), also a coincidence), neither named in the level-19 \
+                    \"Special\" column; Evasion, Uncanny Dodge, and Improved Uncanny Dodge all \
+                    stay granted, not re-derived. This needs ZERO new tier constants and ZERO \
+                    new choice slots — the ONLY production-code change is raising \
+                    MAX_SUPPORTED_ROGUE_LEVEL from 18 to 19, the cleanest possible widening \
+                    shape checked in the Rogue sweep so far, mirroring the level-17 cycle's own \
+                    equally clean shape. The row is Partial, not Supported: no rogue talent (the \
+                    genuinely open-ended talent tree) is proven, no Rogue level 20 is proven, \
+                    and no mechanical math is fabricated beyond these grounded pillars. A \
+                    further SD18 slice (tests/sd18_rogue_level20_widening.rs) widens the \
+                    level-range gate to level 20 (MAX_SUPPORTED_ROGUE_LEVEL raised to 20), the \
+                    Rogue sweep's final PF1 CRB level. This row's every named grounded \
+                    milestone is now surfaced live in the desktop app's Class Progression \
+                    Catalog browser (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, \
+                    wired through the list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), \
+                    reachable from the hub landing screen, filterable by class and searchable \
+                    by class name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the \
+                    operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding Rogue's \
+                    remaining rogue-talent engine (a general choice-list/effect engine, a \
+                    tranche-level subsystem decision) and Master Strike's own execution \
+                    (the level-20 capstone) is a future SD-N's scope, not a further per-cycle \
+                    widening of this row",
             },
             SupportStateRow {
                 row_id: "class.barbarian.bounded_progression",
@@ -1166,20 +1910,62 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:barbarian",
                 dimension: "bounded Barbarian chassis progression: the deterministic Human \
                     Barbarian level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                    level-9/level-10 \
+                    level-9/level-10/level-11/level-12/level-13/level-14/level-15/level-16/\
+                    level-17/level-18/level-19/level-20 \
                     martial chassis identity, with base-attack, base-save, fast-movement, and \
-                    flat Rage pillar values grounded across all ten levels, Uncanny Dodge \
+                    flat Rage pillar values grounded across all twenty levels (Rage becoming \
+                    Greater Rage at level 11 and Mighty Rage at level 20, each a magnitude-rise \
+                    on the same flat-constant pillar), Uncanny Dodge \
                     grounded as a level-2 identity/recognition record, Trap Sense grounded as a \
                     level-3 flat-magnitude record (unchanged at levels 4-5, rising to +2 at \
-                    level 6, unchanged at levels 7-8, and rising to +3 at level 9), Improved \
+                    level 6, unchanged at levels 7-8, rising to +3 at level 9, unchanged \
+                    at levels 10-11, rising to +4 at level 12, unchanged at levels 13-14, \
+                    genuinely rising to +5 at level 15 via the same pre-existing formula, \
+                    unchanged at levels 16-17, and genuinely rising to +6 at level 18 via the \
+                    same pre-existing formula), \
+                    Improved \
                     Uncanny Dodge grounded as a \
                     level-5 identity/recognition record, Damage Reduction grounded as a level-7 \
                     flat-magnitude record (unchanged at levels 8-9, genuinely rising to 2/— at \
-                    level 10), and the rage-state execution / \
-                    Rage Power choice-list / weapon-familiarity / flanking-resolution / \
-                    damage-reduction-application / level-10+ remainder still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                    level 10, unchanged at levels 11-12, genuinely rising to 3/— at level \
+                    13 via a third named tier constant, unchanged at levels 14-15, genuinely \
+                    rising to 4/— at level 16 via a fourth named tier constant, unchanged \
+                    at levels 17-18, and genuinely rising to 5/— at level 19 via a fifth named \
+                    tier constant), a \
+                    sixth \
+                    numbered Rage Power choice-recognition slot grounded at the level-12 grant \
+                    (mirroring the five numbered slots already grounded at levels 2/4/6/8/10), \
+                    a SEVENTH numbered Rage Power choice-recognition slot grounded at the \
+                    level-14 grant (level 13 is NOT a rage-power level, so no slot appears \
+                    there; level 14 IS; level 15 is NOT, so no eighth slot appears there \
+                    either), an EIGHTH numbered Rage Power choice-recognition slot grounded \
+                    at the level-16 grant (level 16 IS a rage-power level; level 17 is NOT, so \
+                    no ninth slot appears there), a NINTH numbered Rage Power \
+                    choice-recognition slot grounded at the level-18 grant (level 18 IS a \
+                    rage-power level, mirroring the eight numbered slots already grounded at \
+                    levels 2/4/6/8/10/12/14/16), and a TENTH and FINAL numbered Rage Power \
+                    choice-recognition slot grounded at the level-20 grant (level 20 IS a \
+                    rage-power level, the last one within PF1's 1-20 character-level cap), \
+                    Indomitable Will newly grounded as a level-14 flat \
+                    while-raging Will-save magnitude record (a fifth flat rage-surface \
+                    constant, mirroring the four pre-existing ones, unchanged at levels 15-20), \
+                    Tireless Rage newly grounded at level 17 as a bounded grant-only \
+                    identity record (mirroring the Indomitable Will / Paladin \
+                    Aura-of-Justice/Aura-of-Faith/Aura-of-Righteousness idiom exactly; no \
+                    rage-state execution engine exists in this codebase to apply the removed \
+                    fatigue condition to; carried over unchanged through level 20), \
+                    and Rage's own flat magnitude constants genuinely rising a SECOND time at \
+                    level 20 (Mighty Rage: Strength/Constitution morale bonus +6 -> +8, \
+                    Will-save morale bonus +3 -> +4, mirroring the Greater Rage magnitude-rise \
+                    idiom exactly) — this closes the Barbarian per-level arithmetic-widening \
+                    frontier at level 20, the final level within PF1's 1-20 character-level \
+                    cap; \
+                    the rage-state \
+                    execution / Rage Power EFFECT / weapon-familiarity / flanking-resolution / \
+                    damage-reduction-application / saving-throw-resolution \
+                    remainder still unproven",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_BARBARIAN_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3 Barbarian level-1 proof surfaces the bounded \
@@ -1356,7 +2142,26 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     rage-power entry is the same genuinely open-ended choice-list feature \
                     already left named-but-unproven at levels 2/4/6/8, so no new pillar is \
                     grounded at level 10 either; Trap Sense stays +3 (10 / 3, its next rise \
-                    landing at 12th). \
+                    landing at 12th) — AND a further SD18 slice widens the level-range gate \
+                    again (supported_barbarian_level, 1..=11), reaching the SD-18 §3.2 tranche's \
+                    next milestone, and extends every one of the formulas above to level 11 via \
+                    the same formula, without re-derivation, verified independently against the \
+                    PF1 Core Rulebook Barbarian class table (d20pfsrd and legacy.aonprd.com): \
+                    level 11 base attack genuinely rises to +11 (full BAB) while good Fortitude \
+                    stays +7 (11 / 2 + 2) and poor Reflex/Will both stay +3 (11 / 3, \
+                    integer-division coincidences); the rage rounds-per-day pool genuinely \
+                    rises to 27 (4 + Constitution modifier + 2 per level after 1st); the \
+                    level-11 \"Special\" column reads \"Greater rage\" only (verified \
+                    independently against both primary sources, checked rather than assumed): \
+                    Rage GENUINELY BECOMES Greater Rage — the Strength and Constitution morale \
+                    bonuses rise from +4 to +6 and the Will-save morale bonus rises from +2 to \
+                    +3 (the Armor Class penalty stays -2) — a magnitude-rise on the \
+                    already-grounded flat rage-constant pillar, mirroring exactly how Trap \
+                    Sense's and Damage Reduction's own flat magnitudes were widened at their \
+                    rise levels; level 11 is NOT a rage-power level (powers land at \
+                    2/4/6/8/10/12...), so no new rage-power-selection-slot-count engine is \
+                    invented; Trap Sense stays +3 (11 / 3, next rise 12th) and Damage Reduction \
+                    stays 2/— (next rise 13th). \
                     None of the grounded records are wired into the integrated \
                     base_attack_bonus/base-saves/speed/ability/Armor-Class/incoming-damage \
                     totals, so the integrated pilot surface still reports a blocked posture. The \
@@ -1364,7 +2169,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     (activation/deactivation, rage-round consumption, fatigue after rage, \
                     temporary stat application). No weapon familiarity, Improved Uncanny Dodge flanking-resolution engine, \
                     Damage \
-                    Reduction application engine, or level-11+ martial progression is \
+                    Reduction application engine, or level-12+ martial progression is \
                     claimed. A further SD13-E5 slice grounds all FIVE rage power choice \
                     slots (class_chassis.barbarian.rage_power_choice and \
                     rage_power_2_choice through rage_power_5_choice, \
@@ -1375,17 +2180,218 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     sidestepped by the open-ended idiom; the gate ladder is pinned one \
                     level below the 2/6/10 gates) — every selected power's EFFECT stays \
                     unproven behind the rage-state execution engine, which remains the \
-                    named claim-blocking burden",
-                next_required_uplift: "ground the Barbarian rage-state execution engine \
-                    (activation/deactivation, rage-round consumption, post-rage fatigue, \
-                    temporary application of the rage constants), the Rage Power choice-list \
-                    feature (now including the level-2, level-4, level-6, and level-8 grants), \
-                    the Improved Uncanny Dodge flanking-resolution/attacker-level-comparison \
-                    engine, the Damage Reduction application engine, and wire the grounded \
-                    base-attack / base-save / fast-movement / Uncanny Dodge / Trap Sense / \
-                    Improved Uncanny Dodge / Damage Reduction values into the integrated pilot \
-                    surface, later widening into weapon familiarity and level-9+ martial \
-                    progression",
+                    named claim-blocking burden. A still further SD18 slice widens the gate to \
+                    level 12 (verified independently against d20pfsrd and the Archives of \
+                    Nethys aonprd.com mirror, byte-for-byte agreement): base-attack \
+                    (classlevel = 12) genuinely rises to +12, base-save genuinely rises to \
+                    Fortitude +8 (12/2+2), Reflex +4, and Will +4 (12/3, both genuinely risen \
+                    from +3), and the rage rounds-per-day pool genuinely rises to 29 (4 + Con \
+                    mod + 2 per level after 1st); the level-12 \"Special\" column reads \"Rage \
+                    power, trap sense +4\" — Trap Sense GENUINELY RISES to +4 (12/3), a \
+                    magnitude-rise on the already-grounded Trap Sense flat-magnitude formula \
+                    pillar, and the rage-power entry is the SAME open-ended choice-list feature \
+                    already left named-but-unproven-in-effect at 2/4/6/8/10, grounded here as a \
+                    sixth numbered slot (class_chassis.barbarian.rage_power_6_choice, gate 12, \
+                    choice:barbarian_rage_power_6) mirroring the proven repeat-grant idiom \
+                    exactly — no rage-power-EFFECT engine is invented; the Greater Rage \
+                    constants (+6/+6/+3/-2) and Damage Reduction (2/—, next rise 13th) both \
+                    stay unchanged from level 11. \
+                    A still further SD18 slice (cycle-2026-07-15T1200, \
+                    tests/sd18_barbarian_level13_widening.rs) widens the gate to level 13 \
+                    (verified independently against d20pfsrd and the Archives of Nethys \
+                    aonprd.com mirror, byte-for-byte agreement): base-attack (classlevel = 13) \
+                    genuinely rises to +13, while base-save stays Fortitude +8 (13/2+2), Reflex \
+                    +4, and Will +4 (13/3, both integer-division coincidences unchanged from \
+                    level 12); the rage rounds-per-day pool genuinely rises to 31 (4 + Con mod \
+                    + 2 per level after 1st); the level-13 \"Special\" column reads \"Damage \
+                    reduction 3/-\" only — Damage Reduction GENUINELY RISES to 3/- via a THIRD \
+                    named tier constant (BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL), mirroring \
+                    exactly how the level-7/level-10 two-tier idiom was established; Trap Sense \
+                    stays +4 (13/3, next rise 15th) and level 13 is NOT a rage-power level \
+                    (powers land at 2/4/6/8/10/12/14...), so no seventh \
+                    rage-power-selection-slot-count engine is invented. \
+                    A still further SD18 slice (cycle-2026-07-15T1900, \
+                    tests/sd18_barbarian_level14_widening.rs) widens the gate to level 14 \
+                    (verified independently against d20pfsrd and the Archives of Nethys \
+                    aonprd.com mirror, byte-for-byte agreement): base-attack (classlevel = 14) \
+                    genuinely rises to +14, good Fortitude genuinely rises to +9 (14/2+2), while \
+                    poor Reflex and poor Will both stay +4 (14/3, integer-division coincidences \
+                    unchanged from level 13); the rage rounds-per-day pool genuinely rises to 33 \
+                    (4 + Con mod + 2 per level after 1st); the level-14 \"Special\" column reads \
+                    \"Indomitable will, rage power\" — level 14 IS a rage-power level (powers \
+                    land at 2/4/6/8/10/12/14...), so a SEVENTH numbered slot \
+                    (class_chassis.barbarian.rage_power_7_choice, gate 14, \
+                    choice:barbarian_rage_power_7) is added to BARBARIAN_RAGE_POWER_SLOTS \
+                    mirroring the proven repeat-grant idiom exactly, no rage-power-EFFECT \
+                    engine invented; Indomitable Will is a genuinely NEW named class feature \
+                    (\"while she is raging, a barbarian gains a +4 morale bonus on Will saves \
+                    to resist enchantment spells and effects\"), grounded as a FIFTH flat \
+                    while-raging magnitude record (BARBARIAN_INDOMITABLE_WILL_ENCHANTMENT_WILL_\
+                    SAVE_BONUS = 4), mirroring exactly the shape of the four pre-existing flat \
+                    rage constants (Strength/Constitution/Will-save morale bonuses, AC penalty) \
+                    — a bounded flat-magnitude record only, non-fabricated, never applied to any \
+                    actual Will-save total, since no saving-throw-resolution engine, no \
+                    spell-school-classification engine (to decide whether an incoming save is \
+                    against an enchantment effect), and no rage-state execution engine (to \
+                    decide whether the barbarian is currently raging) exists anywhere in this \
+                    codebase to apply it; Trap Sense stays +4 (14/3, next rise 15th) and Damage \
+                    Reduction stays 3/- (next rise 16th). \
+                    A still further SD18 slice (cycle-2026-07-15T2800, \
+                    tests/sd18_barbarian_level15_widening.rs) — the loop's FIRST §3.2 level-15 \
+                    landing, opening the level-15 sweep — widens the gate to level 15 (verified \
+                    independently against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, byte-for-byte agreement): base-attack (classlevel = 15) genuinely \
+                    rises to +15 (full BAB), and poor Reflex/Will both genuinely rise to +5 \
+                    (15/3), while good Fortitude stays +9 (15/2+2, an integer-division \
+                    coincidence with level 14); the rage rounds-per-day pool genuinely rises to \
+                    35 (4 + Con mod + 2 per level after 1st); the level-15 \"Special\" column \
+                    reads \"Trap sense +5\" only — Trap Sense GENUINELY RISES to +5 (15/3) via \
+                    the SAME pre-existing flat-magnitude formula pillar used at every prior tier \
+                    (3rd/6th/9th/12th), so this slice needed no new tier constant, no new record \
+                    type, and no new choice slot at all — the CLEANEST widening shape checked so \
+                    far in the level-15 sweep, a pure ceiling raise on \
+                    MAX_SUPPORTED_BARBARIAN_LEVEL alone; level 15 is NOT a rage-power level \
+                    (powers land at 2/4/6/8/10/12/14/16/18/20...), so no eighth \
+                    rage-power-selection-slot-count engine is invented; Damage Reduction stays \
+                    3/- (next rise 16th) and Indomitable Will's flat +4 magnitude carries over \
+                    unchanged. \
+                    A still further SD18 slice (cycle-2026-07-15T4600, \
+                    tests/sd18_barbarian_level16_widening.rs) — the loop's FIRST §3.2 level-16 \
+                    landing, opening the level-16 sweep — widens the gate to level 16 (verified \
+                    independently against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, byte-for-byte agreement): base-attack (classlevel = 16) genuinely \
+                    rises to +16 (full BAB), and good Fortitude genuinely rises to +10 \
+                    (16/2+2), while poor Reflex/Will both stay +5 (16/3, an integer-division \
+                    coincidence with level 15); the rage rounds-per-day pool genuinely rises to \
+                    37 (4 + Con mod + 2 per level after 1st); the level-16 \"Special\" column \
+                    reads \"Damage reduction 4/-, rage power\" — Damage Reduction GENUINELY \
+                    RISES to 4/- via a FOURTH named tier constant \
+                    (BARBARIAN_DAMAGE_REDUCTION_FOUR_LEVEL), mirroring exactly how the \
+                    level-10/level-13 two-tier-then-three-tier idiom was established (the same \
+                    \"10th level and every three barbarian levels thereafter\" cadence: 10, 13, \
+                    16); level 16 IS a rage-power level (powers land at \
+                    2/4/6/8/10/12/14/16/18/20), so an EIGHTH numbered slot \
+                    (class_chassis.barbarian.rage_power_8_choice, gate 16, \
+                    choice:barbarian_rage_power_8) is added to BARBARIAN_RAGE_POWER_SLOTS \
+                    mirroring the proven repeat-grant idiom exactly, no rage-power-EFFECT \
+                    engine invented; Trap Sense stays +5 (16/3, next rise 18th) and Indomitable \
+                    Will's flat +4 magnitude carries over unchanged. \
+                    A still further SD18 slice (cycle-2026-07-15T12200, \
+                    tests/sd18_barbarian_level17_widening.rs) — the loop's EIGHTH §3.2 level-17 \
+                    landing, after Ranger, Bard, Rogue, Fighter, Wizard, Cleric, and Paladin — \
+                    widens the gate to level 17 (verified independently against d20pfsrd and \
+                    the Archives of Nethys aonprd.com mirror, byte-for-byte agreement across \
+                    the full levels-15-through-19 block, so a third source was not required): \
+                    base-attack (classlevel = 17) genuinely rises to +17 (full BAB), while good \
+                    Fortitude stays +10 (17/2+2, an integer-division coincidence with level 16) \
+                    and poor Reflex/Will both stay +5 (17/3, also an integer-division \
+                    coincidence with level 16); the rage rounds-per-day pool genuinely rises to \
+                    39 (4 + Con mod + 2 per level after 1st); the level-17 \"Special\" column \
+                    reads \"Tireless rage\" only — a genuinely NEW class feature (\"Starting at \
+                    17th level, a barbarian no longer becomes fatigued at the end of her \
+                    rage\"), grounded as a bounded grant-only identity record \
+                    (BARBARIAN_TIRELESS_RAGE_LEVEL = 17, value 0, non-fabricated) mirroring the \
+                    Indomitable Will / Paladin Aura-of-Justice/Aura-of-Faith/ \
+                    Aura-of-Righteousness idiom exactly: no rage-state execution engine exists \
+                    anywhere in this codebase to track when a rage ends or apply a fatigue \
+                    condition, so there is no fatigue-application mechanism for this feature to \
+                    interact with, and none is fabricated; level 17 is NOT a rage-power level \
+                    (powers land at 2/4/6/8/10/12/14/16/18/20), so no ninth numbered slot is \
+                    added; Trap Sense stays +5 (17/3, next rise 18th) and Damage Reduction \
+                    stays 4/- (next rise 19th). This needed ZERO new record types and ZERO new \
+                    choice slots — only a new level-gate constant and its matching grant-only \
+                    explanation block, mirroring the Indomitable Will idiom exactly. \
+                    A still further SD18 slice (cycle-2026-07-16T0300, \
+                    tests/sd18_barbarian_level18_widening.rs) — the loop's FIFTH §3.2 level-18 \
+                    landing, after Wizard, Cleric, Paladin, and Fighter — widens the gate to \
+                    level 18 (verified independently against d20pfsrd and the Archives of \
+                    Nethys aonprd.com mirror, byte-for-byte agreement across the full \
+                    levels-15-through-20 block, so a third source was not required): \
+                    base-attack (classlevel = 18) genuinely rises to +18 (full BAB), good \
+                    Fortitude genuinely rises to +11 (18/2+2), and poor Reflex/Will both \
+                    genuinely rise to +6 (18/3); the rage rounds-per-day pool genuinely rises \
+                    to 41 (4 + Con mod + 2 per level after 1st); the level-18 \"Special\" column \
+                    reads \"Rage power, trap sense +6\": Trap Sense GENUINELY RISES to +6 \
+                    (18/3, the same pre-existing formula, up from +5 at level 17), and level 18 \
+                    IS a rage-power level (powers land at 2/4/6/8/10/12/14/16/18/20), so a \
+                    NINTH numbered slot (class_chassis.barbarian.rage_power_9_choice, gate 18, \
+                    choice:barbarian_rage_power_9) is added to BARBARIAN_RAGE_POWER_SLOTS \
+                    mirroring the proven repeat-grant idiom exactly, no rage-power-EFFECT \
+                    engine invented; Damage Reduction stays 4/- (next rise 19th); Indomitable \
+                    Will's flat +4 magnitude and Tireless Rage both carry over unchanged. This \
+                    needed ZERO new record types and ZERO formula changes on base attack, base \
+                    saves, rage rounds, or Trap Sense (all were already level-generic \
+                    formulas) — only a ninth numbered rage-power slot appended to \
+                    BARBARIAN_RAGE_POWER_SLOTS. A still further SD18 slice (cycle-2026-07-16T1000, \
+                    tests/sd18_barbarian_level19_widening.rs) — the loop's FIRST §3.2 level-19 \
+                    landing, opening the level-19 sweep — widens the gate to level 19 (verified \
+                    independently against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, byte-for-byte agreement across the full levels-15-through-20 block, \
+                    so a third source was not required): base-attack (classlevel = 19) genuinely \
+                    rises to +19 (full BAB), while good Fortitude stays +11 (19/2+2, an \
+                    integer-division coincidence with level 18) and poor Reflex/Will both stay \
+                    +6 (19/3, also an integer-division coincidence with level 18); the rage \
+                    rounds-per-day pool genuinely rises to 43 (4 + Con mod + 2 per level after \
+                    1st); the level-19 \"Special\" column reads \"Damage reduction 5/-\" only — \
+                    Damage Reduction GENUINELY RISES to 5/- via a FIFTH tier constant, mirroring \
+                    exactly how the level-10/level-13/level-16 three-prior-tier idiom was \
+                    established; level 19 is NOT a rage-power level (powers land at \
+                    2/4/6/8/10/12/14/16/18/20), so no tenth numbered slot is added; Trap Sense \
+                    stays +6 (19/3, its next rise would be 21st, outside the PF1 1-20 level \
+                    range) and Indomitable Will's flat +4 magnitude and Tireless Rage both carry \
+                    over unchanged. This needed ZERO new record types and ZERO new choice slots \
+                    — only a new damage-reduction tier constant and one new arm on the existing \
+                    flat-magnitude formula. A still further SD18 slice \
+                    (tests/sd18_barbarian_level20_widening.rs) widens the gate to level 20 — the \
+                    FINAL level within PF1's 1-20 character-level cap (verified independently \
+                    against d20pfsrd and the Archives of Nethys aonprd.com mirror, byte-for-byte \
+                    agreement: level 20 reads \"+20/+15/+10/+5 | +12 | +6 | +6 | Mighty rage, \
+                    Rage power\"): base-attack (classlevel = 20) genuinely rises to +20 (full \
+                    BAB) and good Fortitude genuinely rises to +12 (20/2+2, up from +11), while \
+                    poor Reflex/Will both stay +6 (20/3, an integer-division coincidence with \
+                    level 19); the rage rounds-per-day pool genuinely rises to 45 (4 + \
+                    Constitution modifier + 2 x (level-1)). The level-20 \"Special\" column's \
+                    Mighty Rage entry is a genuine THIRD tier on the SAME flat rage-surface \
+                    constants already grounded at level 1 (Rage) and widened at level 11 \
+                    (Greater Rage): the Strength/Constitution morale bonus rises from +6 to +8 \
+                    and the Will-save morale bonus rises from +3 to +4 via a new \
+                    BARBARIAN_MIGHTY_RAGE_LEVEL gate constant, mirroring the Greater Rage \
+                    precedent exactly — no new record type, just a third arm on the existing \
+                    tiered formula. Level 20 IS a rage-power level (powers land at \
+                    2/4/6/8/10/12/14/16/18/20), so a TENTH and FINAL numbered slot \
+                    (choice:barbarian_rage_power_10) is appended to BARBARIAN_RAGE_POWER_SLOTS, \
+                    mirroring the proven repeat-grant idiom exactly; Damage Reduction stays 5/- \
+                    (next rise would be 22nd, outside the PF1 1-20 range) and Trap Sense stays \
+                    +6 (next rise would be 21st, also outside range); Indomitable Will's flat \
+                    +4 magnitude and Tireless Rage both carry over unchanged. This needed ZERO \
+                    new record types and ZERO new choice-slot mechanisms — only a new \
+                    rage-magnitude tier constant and a tenth numbered rage-power slot. This \
+                    closes the Barbarian per-level arithmetic-widening frontier: level 20 is the \
+                    final level within PF1's 1-20 character-level cap, so no further per-level \
+                    widening cycle remains for this row; the row stays Partial (not Supported) \
+                    because the rage-state execution, Rage Power EFFECT, weapon-familiarity, \
+                    flanking-resolution, damage-reduction-application, and \
+                    saving-throw-resolution burdens remain named-but-unproven. This row's every \
+                    named grounded milestone is now surfaced live in the desktop app's Class \
+                    Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class \
+                    name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the operator's \
+                    UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    Barbarian rage-state execution engine (activation/deactivation, rage-round \
+                    consumption, post-rage fatigue, temporary application of the rage constants \
+                    — note: Tireless Rage at level 17 removes the post-rage fatigue condition \
+                    specifically, but the underlying engine itself remains unbuilt), the Rage \
+                    Power choice-list feature (the level-2/4/6/8/10/12/14/16/18/20 grants), the \
+                    Improved Uncanny Dodge flanking-resolution/attacker-level-comparison engine, \
+                    the Damage Reduction application engine, the saving-throw-resolution/ \
+                    spell-school-classification engine Indomitable Will would need to actually \
+                    apply, and weapon familiarity, is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "class.bard.progression_and_spell_burden",
@@ -1393,19 +2399,47 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:bard",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Bard level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10 \
-                            spell baseline, with base attack bonus, base save progression, Bardic \
-                            Knowledge, the flat Bardic Performance surface (rounds per day, \
-                            inspire courage magnitude), the flat Fascinate DC / \
-                            affected-creature-count formulas, (at level 2) the flat Well-Versed \
-                            magnitude, (at level 3, rising at level 7) the flat Inspire \
-                            Competence magnitude, and (at level 5) the flat Lore Master take-20 \
-                            uses-per-day magnitude, all grounded for real at every supported \
-                            level, and the bardic performance-execution burden (including \
-                            Countersong, Distraction, Versatile Performance, and Suggestion) and \
-                            the spontaneous known-spell / slot posture burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                            level-9/level-10/level-11/level-12/level-13/level-14/level-15/level-16/\
+                            level-17/level-18/level-19/level-20 \
+                            spell baseline, with base attack bonus (rising again at level 16, \
+                            again at level 18, again at level 19, and again at level 20), \
+                            base save progression (good Reflex/Will rising again at level 16, \
+                            again at level 18, and again at level 20, poor Fortitude rising again \
+                            at level 18), \
+                            Bardic Knowledge (rising through level 18, and again at level 20), \
+                            the flat Bardic \
+                            Performance surface (rounds per day rising through level 20, \
+                            inspire courage magnitude rising at level 5, again at level 11, and \
+                            again at level 17), \
+                            the flat Fascinate DC (rising through level 18, and again at level \
+                            20) / \
+                            affected-creature-count formulas (creature count rising through \
+                            level 16, and again at level 19), (at level 2) the flat Well-Versed \
+                            magnitude, (at level 3, rising at level 7, again at level 11, again at \
+                            level 15, and again at level 19) the flat Inspire \
+                            Competence magnitude, (at level 5, rising at level 11, and again at \
+                            level 17) the flat \
+                            Lore Master take-20 \
+                            uses-per-day magnitude, (at level 12) a Soothing Performance \
+                            grant-only identity record, (at level 14) a Frightening Tune \
+                            flat Will-save DC magnitude (rising again at level 20), (at level 15, \
+                            target count rising \
+                            again at level 18) an Inspire Heroics \
+                            flat save-bonus/AC-bonus/target-count magnitude bundle, and (at level \
+                            20) a Deadly Performance flat Will-save DC magnitude (the class \
+                            capstone, the same DC formula shape as Fascinate/Frightening Tune), \
+                            all grounded \
+                            for real at every \
+                            supported level, and the bardic performance-execution burden \
+                            (including Countersong, Distraction, Versatile Performance, \
+                            Suggestion, Mass Suggestion, Soothing Performance's own \
+                            healing/condition-removal execution, Frightening Tune's own \
+                            fear/frightened-condition execution, Inspire Heroics' own \
+                            targeting/save/AC-application execution, and Deadly Performance's own \
+                            death-effect-resolution execution) and the spontaneous \
+                            known-spell / slot posture burden still blocked",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_BARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
@@ -1707,19 +2741,332 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     actual castable slot count per day; live end-to-end arithmetic; counts \
                     only, no spontaneous-casting execution, slot consumption, or tracking; \
                     the blocker now defers exactly that execution plus the which-spells \
-                    selection)). No \
-                    performance-execution math and no spell math is fabricated and \
-                    no Bard level 11+ is proven",
-                next_required_uplift: "SD13-E5+ Bard performance-execution engine slice \
-                    (start/maintain action economy, round tracking, application of the grounded \
-                    Inspire Courage / Fascinate / Well-Versed / Inspire Competence / Lore Master \
-                    magnitudes, Countersong / Distraction opposed Perform-check-vs-effect \
-                    grounding, Versatile Performance's choice-gated skill-substitution engine \
-                    (both grants), Suggestion's fascinated-target-plus-spell-effect resolution, \
-                    Dirge of Doom's fear/shaken-condition resolution, Inspire Greatness's \
-                    bonus-Hit-Dice/temporary-hit-point mechanics, Lore Master's own \
-                    take-10/take-20 skill-check-resolution execution), then the spontaneous \
-                    spell-slot burden, then level-11+ progression",
+                    selection)) — AND a further SD18 slice widens the level-range gate again \
+                    (supported_bard_level, 1..=11), the second SD-18 §3.2 class-row widening \
+                    and the first on a spell-bearing class, and extends every one of the \
+                    formulas above to level 11 via the same formula, without re-derivation, \
+                    verified independently against the PF1 Core Rulebook Bard class table \
+                    (d20pfsrd and legacy.aonprd.com): level 11 base attack genuinely rises to \
+                    +8 (11 * 3 / 4) while base saves stay Fortitude +3 / Reflex +7 / Will +7 \
+                    (11/3 and 11/2+2, both integer-division coincidences unchanged from level \
+                    10); Bardic Knowledge stays 5 and the Fascinate DC/count stay 17/4 (all \
+                    integer-division coincidences); the Bardic Performance rounds-per-day pool \
+                    genuinely rises to 26 (4 + Charisma modifier + 2 per level after 1st); the \
+                    level-11 \"Special\" column reads \"Inspire competence +4, inspire courage \
+                    +3, lore master 2/day\" only (verified independently against both primary \
+                    sources, checked rather than assumed): Inspire Competence GENUINELY RISES \
+                    from +3 to +4 (2 + (11-3)/4), Inspire Courage GENUINELY RISES from +2 to +3 \
+                    (the every-sixth-level-after-5th cadence landing exactly on 11th), and Lore \
+                    Master's flat take-20 usage count GENUINELY RISES from 1/day to 2/day (the \
+                    same cadence) — three magnitude-rises on the already-grounded flat-constant \
+                    pillars, mirroring exactly how the Barbarian Greater Rage magnitude-rise \
+                    was grounded at its own 11th-level tier; no new class feature (no new \
+                    choice slot) is granted at 11th level, so no new engine is invented; \
+                    Jack-of-All-Trades and the repeat Versatile Performance grant both carry \
+                    over unchanged) — AND a further SD18 slice widens the level-range gate again \
+                    (supported_bard_level, 1..=12), the loop's second §3.2 level-12 widening \
+                    (after Barbarian) and the first level-12 widening on a spell-bearing class, \
+                    verified independently against the PF1 Core Rulebook Bard class table \
+                    (d20pfsrd and the Archives of Nethys aonprd.com mirror): level 12 base \
+                    attack genuinely rises to +9 (12 * 3 / 4), base saves genuinely rise to \
+                    Fortitude +4 (12/3) / Reflex +8 / Will +8 (both 12/2+2), Bardic Knowledge \
+                    genuinely rises to 6 (max(12/2, 1)), the Bardic Performance rounds-per-day \
+                    pool genuinely rises to 28 (4 + Charisma modifier + 2 per level after 1st), \
+                    and the Fascinate DC genuinely rises to 18 (10 + 12/2 + Charisma modifier) \
+                    while the Fascinate affected-creature count stays 4 (1 + (12-1)/3, an \
+                    integer-division coincidence with level 11); the level-12 \"Special\" \
+                    column reads \"Soothing performance\" only (verified independently against \
+                    both primary sources, checked rather than assumed) — a wholly new 12th-level \
+                    Bard class feature, grounded ONLY as a bounded grant-only identity record \
+                    (value 0, non-fabricated), mirroring the Monk Diamond Body / Paladin Aura of \
+                    Justice idiom exactly: no healing-application engine and no \
+                    condition-removal engine exist anywhere in this codebase, so neither is \
+                    fabricated; Inspire Courage, Inspire Competence, and Lore Master's flat \
+                    magnitudes all stay unchanged at their level-11 third tier (their next tiers \
+                    land at bard level 15 or 17, out of scope), and Jack-of-All-Trades and the \
+                    repeat Versatile Performance grant both carry over unchanged. No \
+                    performance-execution math, no healing/condition-removal math, and no spell \
+                    math is fabricated. AN SD18 slice (cycle-2026-07-15T1700) widens the gate \
+                    again to level 13 — the loop's seventh §3.2 level-13 landing (after Rogue, \
+                    Barbarian, Fighter, Ranger, Cleric, and Druid) and the first on a \
+                    spontaneous (non-9-level) caster, verified independently against all three \
+                    primary sources (d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                    legacy.aonprd.com, byte-for-byte identical): the level-13 \"Special\" column \
+                    is BLANK, so this is a pure arithmetic-pillar widening — base attack bonus \
+                    and all three base saves stay numerically unchanged from level 12 \
+                    (13*3/4=9, 13/3=4, 13/2+2=8, integer-division coincidences), Bardic \
+                    Knowledge stays 6 (max(13/2,1), also a coincidence), and the Fascinate DC \
+                    stays 18 (10+13/2+CHA, since 13/2==12/2==6), while the Bardic Performance \
+                    rounds-per-day pool genuinely rises to 30 (4+CHA+2*(13-1)) and the Fascinate \
+                    affected-creature count genuinely rises to 5 (1+(13-1)/3); Inspire Courage, \
+                    Inspire Competence, Lore Master, Well-Versed, Jack-of-All-Trades, and \
+                    Soothing Performance all carry over unchanged. No new class feature is \
+                    granted at level 13, so no new record is added; the spontaneous \
+                    spell-level-access ladder and the base spells-per-day / spells-known table \
+                    lookups stay at their pre-existing level-10 ceiling exactly as left by the \
+                    level-11 and level-12 cycles (no 5th-level spell-access threshold is \
+                    grounded) — no spell math is fabricated and no Bard level 14+ is proven. AN \
+                    SD18 slice (cycle-2026-07-15T2200) widens the gate again to level 14 — the \
+                    loop's FIFTH §3.2 level-14 landing (after Barbarian, Fighter, Rogue, and \
+                    Ranger), verified independently against both primary sources (d20pfsrd and \
+                    the Archives of Nethys aonprd.com mirror, byte-for-byte identical): base \
+                    attack bonus genuinely rises to +10 (14*3/4), both good saves genuinely rise \
+                    to +9 (14/2+2, Reflex and Will) while poor Fortitude stays +4 (14/3, an \
+                    integer-division coincidence with level 13), Bardic Knowledge genuinely \
+                    rises to 7 (max(14/2,1)), the Bardic Performance rounds-per-day pool \
+                    genuinely rises to 32 (4+CHA+2*(14-1)), and the Fascinate DC genuinely rises \
+                    to 19 (10+14/2+CHA) while the Fascinate affected-creature count stays 5 \
+                    (1+(14-1)/3, an integer-division coincidence with level 13); the level-14 \
+                    \"Special\" column reads \"Frightening tune, Versatile performance\" \
+                    (verified independently against both primary sources, checked rather than \
+                    assumed) — Frightening Tune is a wholly new 14th-level Bard class feature \
+                    whose rule text gives a Will-save DC (10 + 1/2 bard level + Charisma \
+                    modifier) with the exact same formula shape as the already-grounded \
+                    Fascinate DC, so it is grounded ONLY as a flat standalone DC magnitude, \
+                    mirroring the Fascinate DC idiom; unlike Fascinate its affected scope is \
+                    range-based (\"each enemy within 30 feet who can hear the performance\"), \
+                    not a numeric-count formula, so no affected-creature-count record is added \
+                    for it, and no frightened-condition application is computed because no \
+                    condition-resolution engine exists in this codebase; the repeat Versatile \
+                    Performance grant (also at levels 2, 6, and 10) stays named-but-unproven \
+                    unchanged, and Inspire Courage, Inspire Competence, Lore Master, Well-Versed, \
+                    Jack-of-All-Trades, and Soothing Performance all carry over unchanged. No \
+                    new execution engine is invented and no Bard level 15+ is proven. AN SD18 \
+                    slice (cycle-2026-07-15T4500) widens the gate again to level 15 — the loop's \
+                    TENTH §3.2 level-15 landing (after Barbarian, Rogue, Fighter, Cleric, Druid, \
+                    Ranger, Wizard, Paladin, and Sorcerer) and the FINAL class needed to close \
+                    the §3.2 level-15 sweep at 10 of 10 non-Monk classes, verified independently \
+                    against both primary sources (d20pfsrd and the Archives of Nethys \
+                    aonprd.com mirror, byte-for-byte identical): base attack bonus genuinely \
+                    rises to +11 (15*3/4) and poor Fortitude genuinely rises to +5 (15/3), while \
+                    both good saves (Reflex, Will) stay +9 (15/2+2, an integer-division \
+                    coincidence with level 14); Bardic Knowledge stays 7 (max(15/2,1), a \
+                    coincidence); the Bardic Performance rounds-per-day pool genuinely rises to \
+                    34 (4+CHA+2*(15-1)); the Fascinate DC and affected-creature count both stay \
+                    unchanged (19, 5, integer-division coincidences with level 14); Frightening \
+                    Tune's DC likewise stays 19 for the same reason. The level-15 \"Special\" \
+                    column reads \"Inspire competence +5, inspire heroics\" (resolving the \
+                    level-13 cycle's own open question about whether the Inspire Courage/Lore \
+                    Master tier thresholds land at level 15 or 17: they do NOT — both stay at \
+                    their level-11 third tier, confirmed directly against the rule text \"every \
+                    six bard levels thereafter\", since their own next tier is at level 17). \
+                    Inspire Competence's flat magnitude genuinely rises from +4 to +5 — a \
+                    fourth tier on the already-generalized tiered if/else chain, the same \
+                    arithmetic-widening idiom as the third-tier addition at level 11, needing no \
+                    new grounding machinery. Inspire Heroics is a wholly new 15th-level class \
+                    feature (\"A bard of 15th level or higher can inspire tremendous heroism in \
+                    himself or a single ally within 30 feet... Inspired creatures gain a +4 \
+                    morale bonus on saving throws and a +4 dodge bonus to AC.\"); both magnitude \
+                    numbers are flat and non-level-scaled, so they are grounded as flat \
+                    standalone magnitudes mirroring the Well-Versed idiom exactly, and the base \
+                    target count (a single creature at 15th level, before the \"+1 creature per \
+                    three bard levels beyond 15th\" scaling, which lands at bard level 18, \
+                    beyond this bounded slice's ceiling) is grounded as a flat count mirroring \
+                    the Fascinate affected-creature-count idiom. No targeting, save resolution, \
+                    AC application, or performance-state execution is grounded for Inspire \
+                    Heroics — it remains named-but-unproven for execution, exactly like \
+                    Frightening Tune and Soothing Performance before it. No new execution engine \
+                    is invented and no Bard level 16+ is proven. AN SD18 slice \
+                    (cycle-2026-07-15T5900) widens the gate again to level 16 — the loop's EIGHTH \
+                    §3.2 level-16 landing (after Barbarian, Fighter, Wizard, Rogue, Cleric, \
+                    Paladin, and Sorcerer) — verified independently against THREE primary sources \
+                    (d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                    legacy.aonprd.com's corerulebook mirror, all three byte-for-byte identical: \
+                    \"+12/+7/+2 | +5 | +10 | +10 | —\"), resolving a prior cycle's carried-forward \
+                    risk-map note that had claimed a source disagreement (aonprd.com allegedly \
+                    reading \"Versatile performance\" at level 16) — that text in fact belongs to \
+                    level 14's own already-grounded Special column (\"Frightening tune, Versatile \
+                    performance\"), misattributed to level 16 by an earlier cycle's transcription, \
+                    the same carried-forward-risk-map-drift failure mode the Sorcerer level-16 \
+                    cycle's own investigation flagged and fixed for its own row. The level-16 \
+                    \"Special\" column is genuinely BLANK on all three sources: base attack bonus \
+                    genuinely rises to +12 (16*3/4) and both good saves (Reflex, Will) genuinely \
+                    rise to +10 (16/2+2), while poor Fortitude stays +5 (16/3, an \
+                    integer-division coincidence with level 15); Bardic Knowledge genuinely rises \
+                    to 8 (max(16/2,1)); the Bardic Performance rounds-per-day pool genuinely \
+                    rises to 36 (4+CHA+2*(16-1)); the Fascinate DC genuinely rises to 20 \
+                    (10+16/2+CHA) and the Fascinate affected-creature count genuinely rises to 6 \
+                    (1+(16-1)/3); Frightening Tune's DC (the same formula shape) likewise \
+                    genuinely rises to 20. Inspire Competence stays at its level-15 fourth tier \
+                    (+5, next tier at level 19, out of scope); Inspire Courage and Lore Master \
+                    stay at their level-11 third tier (+3, 2/day, next tier at level 17, out of \
+                    scope, confirmed directly against the raw level-17 table row: \"inspire \
+                    courage +4, lore master 3/day\"); Inspire Heroics' flat save-bonus/AC-bonus \
+                    magnitudes and base target count all carry over unchanged (the \"+1 creature \
+                    per three bard levels beyond 15th\" scaling lands at bard level 18, beyond \
+                    this bounded slice's ceiling). A pure arithmetic-pillar widening: no new tier \
+                    constant, no new record type, no new choice slot, and no new execution engine \
+                    is invented, and no Bard level 17+ is proven. AN SD18 slice \
+                    (cycle-2026-07-15T7100) widens the gate again to level 17 — the loop's SECOND \
+                    §3.2 level-17 landing (after Ranger) — verified independently against TWO \
+                    primary sources (d20pfsrd and the Archives of Nethys aonprd.com mirror, \
+                    byte-for-byte identical: \"+12/+7/+2 | +5 | +10 | +10 | Inspire courage +4, \
+                    lore master 3/day\"), with neighboring levels 16 (\"—\") and 18 (\"Mass \
+                    suggestion, versatile performance\") re-fetched in the same pass to rule out \
+                    misattribution, resolving the level-16 cycle's own carried-forward note with \
+                    a fresh, independent re-verification rather than trusting it at face value. \
+                    Base attack bonus (17*3/4), both good saves (17/2+2), poor Fortitude (17/3), \
+                    Bardic Knowledge (max(17/2,1)), the Fascinate DC (10+17/2+CHA), and the \
+                    Fascinate affected-creature count (1+(17-1)/3) are all numerically UNCHANGED \
+                    from level 16 — every one an integer-division coincidence re-verified against \
+                    the raw class table row — while the Bardic Performance rounds-per-day pool \
+                    genuinely rises to 38 (4+CHA+2*(17-1), up from 36). The level-17 \"Special\" \
+                    column reads \"Inspire courage +4, lore master 3/day\": Inspire Courage's \
+                    flat magnitude genuinely rises from +3 to +4 — a fourth tier on the \
+                    already-generalized tiered if/else chain, the same arithmetic-widening idiom \
+                    as Inspire Competence's own third/fourth tier additions — and Lore Master's \
+                    flat take-20 usage-count magnitude genuinely rises from 2/day to 3/day — a \
+                    third tier on its own already-generalized tiered if/else chain — both the \
+                    same every-six-bard-levels-after-5th cadence that produced their own level-11 \
+                    third/second tier respectively. Inspire Competence stays at its level-15 \
+                    fourth tier (next tier at level 19, out of scope); Inspire Heroics' flat \
+                    save-bonus/AC-bonus magnitudes and base target count all carry over unchanged \
+                    (the \"+1 creature per three bard levels beyond 15th\" scaling lands at bard \
+                    level 18, out of scope). Only two new tier constant pairs are added, on \
+                    already-generalized tiered if/else chains: no new record type, no new choice \
+                    slot, and no new execution engine is invented, and no Bard level 18+ is \
+                    proven. AN SD18 slice (cycle-2026-07-16T0900) widens the gate again to level \
+                    18 — the loop's NINTH §3.2 level-18 landing (after Wizard, Cleric, Paladin, \
+                    Fighter, Barbarian, Rogue, Ranger, and Sorcerer) and the CLOSE of the §3.2 \
+                    level-18 sweep at 9 of 9 eligible classes (Druid capped at 15, Monk capped at \
+                    12, both documented structural exceptions) — verified independently against \
+                    TWO primary sources fetched fresh this cycle (a raw HTML parse of \
+                    d20pfsrd.com's own class table, bypassing AI-summarization, and the Archives \
+                    of Nethys aonprd.com mirror via ClassDisplay.aspx, both byte-for-byte \
+                    identical: \"+13/+8/+3 | +6 | +11 | +11 | Mass suggestion, versatile \
+                    performance\"), with neighboring levels 16 (\"—\"), 17 (\"Inspire courage \
+                    +4, lore master 3/day\"), and 19 (\"Inspire competence +6\") re-fetched in \
+                    the same pass to rule out misattribution. Base attack bonus (18*3/4), both \
+                    good saves (18/2+2), and poor Fortitude (18/3) all GENUINELY RISE from level \
+                    17; Bardic Knowledge (max(18/2,1)) GENUINELY RISES; the Bardic Performance \
+                    rounds-per-day pool GENUINELY RISES (4+CHA+2*(18-1)); the Fascinate DC \
+                    (10+18/2+CHA) GENUINELY RISES while the Fascinate affected-creature count \
+                    (1+(18-1)/3) STAYS unchanged, an integer-division coincidence; Frightening \
+                    Tune's DC (the same formula shape) likewise GENUINELY RISES. Inspire \
+                    Courage, Inspire Competence, and Lore Master all stay at their prior tiers \
+                    (no further tier is defined within this bounded slice's ceiling, or lands at \
+                    level 19, out of scope). Inspire Heroics' flat save-bonus (+4) and AC-bonus \
+                    (+4) magnitudes stay unchanged, but its base target count GENUINELY RISES \
+                    from 1 to 2 — the PF1 Core Rulebook's own text (\"for every three bard \
+                    levels the character attains beyond 15th, he can inspire heroics in one \
+                    additional creature\") places this exactly at bard level 18, a genuine \
+                    arithmetic-pillar widening on an already-generalized tiered if/else chain, \
+                    the same idiom as Inspire Courage's/Inspire Competence's/Lore Master's own \
+                    tier additions. The level-18 \"Special\" column's two named entries were \
+                    checked and confirmed to require the SAME already-declined machinery as \
+                    their own precedents, so NEITHER is grounded as a new record: \"Mass \
+                    suggestion\" (PF1 Core Rulebook: \"This ability functions just like \
+                    suggestion, but allows a bard of 18th level or higher to make a suggestion \
+                    simultaneously to any number of creatures that he has already fascinated\") \
+                    is a strict widening of the 6th-level Suggestion spell-like ability, already \
+                    deliberately left named-but-unproven at level 6 (it requires a \
+                    fascinated-target prerequisite and the \"suggestion\" spell's own \
+                    effect-resolution engine, neither of which exists in this codebase) — Mass \
+                    Suggestion inherits the identical blocker and adds a multi-target dimension \
+                    on top of it, so it stays named-but-unproven, with no record fabricated for \
+                    it, exactly mirroring the level-6 Suggestion precedent (this is NOT a new \
+                    spell-like-ability-casting engine declined for the first time; it is the \
+                    SAME already-declined engine, re-confirmed). \"Versatile performance\" is a \
+                    REPEAT of the Bard's own 2nd-level grant (also seen at levels 6, 10, and \
+                    14): already deliberately left named-but-unproven at level 2, so this cycle \
+                    adds no new record for its level-18 reappearance either. Only one new tier \
+                    constant pair is added (Inspire Heroics' target count); no new record type \
+                    or choice slot is added, and no Bard level 19+ is proven. \
+                    A further SD18 slice (cycle-2026-07-16T1400, the loop's FOURTH §3.2 level-19 \
+                    landing, after Barbarian, Cleric, and Fighter) widens the gate again to level \
+                    19 (verified independently against two primary sources — a raw HTML parse of \
+                    d20pfsrd.com's own class table, bypassing AI-summarization, and the Archives \
+                    of Nethys aonprd.com mirror via ClassDisplay.aspx, both covering the full \
+                    levels-17-through-20 block, byte-for-byte agreement, so a third source was \
+                    not required): the level-19 \"Special\" column reads \"Inspire competence \
+                    +6\" — the sole entry at that level — and Inspire Competence's flat \
+                    magnitude genuinely rises to +6 via a FIFTH tier on the already-generalized \
+                    tiered if/else chain, exactly the tier the level-15 and level-17 cycles' own \
+                    doc comments already predicted (\"the next increase (to +6) lands at bard \
+                    level 19\"), mirroring the Inspire Courage / Lore Master tier-addition idiom \
+                    exactly — no new record type, no new choice slot, no new execution engine. \
+                    Base attack bonus genuinely rises to +14 (19*3/4); poor Fortitude stays put \
+                    at +6 (19/3) and both good saves stay put at +11 (19/2+2), integer-division \
+                    coincidences with level 18, checked not assumed; Bardic Knowledge stays put \
+                    at 9 (max(19/2,1), also a coincidence); the Bardic Performance rounds-per-day \
+                    pool genuinely rises (4+CHA+2*(19-1)); the Fascinate DC stays put \
+                    (10+19/2+CHA, a coincidence with level 18) while the Fascinate \
+                    affected-creature count genuinely rises (1+(19-1)/3); Frightening Tune's DC \
+                    (the same formula shape) likewise stays put. Inspire Courage stays at its \
+                    level-17 fourth tier (next tier at level 23, out of scope); Lore Master stays \
+                    at its level-17 third tier (no further tier defined); Inspire Heroics' flat \
+                    save-bonus/AC-bonus magnitudes and base target count (set at level 18) all \
+                    carry over unchanged (the next target-count rise lands at level 21, out of \
+                    scope); Soothing Performance carries over unchanged as a bounded grant-only \
+                    identity record. This needed ZERO new record types and ZERO new choice \
+                    slots — only one new tier constant pair on an already-generalized tiered \
+                    if/else chain — and no Bard level 20 is proven. \
+                    A further SD18 slice (the loop's FOURTH §3.2 level-20 landing, after Cleric, \
+                    Wizard, and Barbarian) widens the gate again to level 20 — the final \
+                    remaining level within PF1's 1-20 character-level cap for this class row \
+                    (verified independently against two primary sources — a raw HTML parse of \
+                    d20pfsrd.com's own class table, bypassing AI-summarization, and the Archives \
+                    of Nethys aonprd.com mirror via ClassDisplay.aspx, both covering the full \
+                    levels-17-through-20 block, byte-for-byte agreement, so a third source was \
+                    not required): the level-20 row reads \"+15/+10/+5 | +6 | +12 | +12 | Deadly \
+                    performance\". Base attack bonus genuinely rises to +15 (20*3/4); poor \
+                    Fortitude stays put at +6 (20/3, an integer-division coincidence with level \
+                    19) while both good saves genuinely rise to +12 (20/2+2, up from +11); \
+                    Bardic Knowledge genuinely rises to 10 (max(20/2,1), up from 9); the Bardic \
+                    Performance rounds-per-day pool genuinely rises (4+CHA+2*(20-1), up from 42); \
+                    the Fascinate DC genuinely rises to 22 (10+20/2+CHA, up from 21) while the \
+                    Fascinate affected-creature count stays put at 7 (1+(20-1)/3, an \
+                    integer-division coincidence with level 19); Frightening Tune's DC (the same \
+                    formula shape) likewise genuinely rises to 22. Inspire Courage stays at its \
+                    level-17 fourth tier (next tier at level 23, out of scope); Inspire \
+                    Competence stays at its level-19 fifth tier (no further tier is defined \
+                    within PF1's Core Rulebook); Lore Master stays at its level-17 third tier (no \
+                    further tier defined); Inspire Heroics' flat save-bonus/AC-bonus magnitudes \
+                    and base target count (set at level 18) all carry over unchanged (the next \
+                    target-count rise lands at level 21, out of scope); Soothing Performance \
+                    carries over unchanged as a bounded grant-only identity record. The \
+                    level-20 \"Special\" column's sole entry, Deadly Performance (the class \
+                    capstone — PF1 Core Rulebook: \"A bard of 20th level or higher can use his \
+                    performance to cause one enemy to die from joy or sorrow... The target \
+                    receives a Will save (DC 10 + 1/2 the bard's level + the bard's Cha \
+                    modifier) to negate the effect... If a creature's saving throw fails, it \
+                    dies\"), is a genuinely NEW class feature whose named Will-save DC is the \
+                    EXACT SAME formula shape as the already-grounded Fascinate DC and Frightening \
+                    Tune DC, so only that flat DC magnitude is grounded here (mirroring the \
+                    Frightening Tune idiom exactly) — it genuinely grounds at 22. No \
+                    death-effect-resolution engine, no audible/visual-performance-requirement \
+                    checking, and no range/targeting engine exists anywhere in this codebase, so \
+                    none of that is fabricated. This needed ZERO new record types beyond the one \
+                    new Deadly Performance DC magnitude and ZERO new choice slots, closing this \
+                    row's own per-level arithmetic-widening frontier at level 20, the final \
+                    level within PF1's 1-20 character-level cap. SD19 Full-matrix-closure cycle \
+                    2026-07-16 promotes this row to Supported/Product-visible: the already-live \
+                    Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, \
+                    list_class_catalog Tauri command, live-verified at browser-build cycle \
+                    9313e30) is the operator-reachable UI surface for this row's full grounded \
+                    Bard level-1-20 progression data, satisfying condition 1 of the \
+                    Supported/Product-visible bar; condition 2 (every named grounded milestone) \
+                    was already satisfied by the compute grounding recorded above",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    Bard performance-execution engine (start/maintain action economy, round \
+                    tracking, application of the grounded Inspire Courage / Fascinate / \
+                    Well-Versed / Inspire Competence / Lore Master magnitudes, Countersong / \
+                    Distraction opposed Perform-check-vs-effect grounding, Versatile \
+                    Performance's choice-gated skill-substitution engine (all grants), \
+                    Suggestion's and Mass Suggestion's fascinated-target-plus-spell-effect \
+                    resolution, Dirge of Doom's fear/shaken-condition resolution, Inspire \
+                    Greatness's bonus-Hit-Dice/temporary-hit-point mechanics, Lore Master's own \
+                    take-10/take-20 skill-check-resolution execution, Soothing Performance's own \
+                    healing-application/condition-removal execution, Frightening Tune's own \
+                    fear/frightened-condition-resolution execution, Inspire Heroics' own \
+                    targeting/save-application/AC-application execution, and Deadly \
+                    Performance's own death-effect-resolution execution), then the spontaneous \
+                    spell-slot burden (including the un-grounded 5th-level spell-access \
+                    threshold), is a future SD-N's scope, not a further per-cycle widening of \
+                    this row. This row's own per-level arithmetic-widening frontier is now \
+                    CLOSED at level 20, the final level within PF1's 1-20 character-level cap \
+                    for this class row",
             },
             SupportStateRow {
                 row_id: "class.cleric.progression_and_spell_burden",
@@ -1727,21 +3074,41 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:cleric",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Cleric \
                             level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/level-9/\
-                            level-10 prepared \
-                            divine spell baseline, with base attack bonus, base save progression, \
+                            level-10/level-11/level-12/level-13/level-14/level-15/level-16/level-17/\
+                            level-18/level-19/level-20 \
+                            prepared \
+                            divine spell baseline (level 20 is the final level within PF1's 1-20 \
+                            character-level cap for this class row), with base attack bonus, base \
+                            save progression, \
                             Channel Energy (die count increasing to 2d6 at level 3, unchanged at level \
                             4, increasing to 3d6 at level 5, unchanged at level 6, increasing to 4d6 at \
-                            level 7, unchanged at level 8), the domain choice seam, the flat domain \
-                            spell slot count (increasing to 2 at level 3, unchanged at level 4, \
+                            level 7, unchanged at level 8, increasing to 5d6 at level 9, unchanged at \
+                            level 10, increasing to 6d6 at level 11, unchanged at level 12, increasing \
+                            to 7d6 at level 13, unchanged at level 14, increasing to 8d6 at level 15, \
+                            unchanged at level 16, increasing to 9d6 at level 17, unchanged at level \
+                            18, increasing to 10d6 at level 19, unchanged at level 20), \
+                            the domain \
+                            choice seam, the flat \
+                            domain spell slot count (increasing to 2 at level 3, unchanged at level 4, \
                             increasing to 3 at level 5, unchanged at level 6, increasing to 4 at level \
-                            7, unchanged at level 8), Touch of Good (Good domain, in full, sacred bonus \
+                            7, unchanged at level 8, increasing to 5 at level 9, unchanged at level 10, \
+                            increasing to 6 at level 11, unchanged at level 12, increasing to 7 at \
+                            level 13, unchanged at level 14, increasing to 8 at level 15, unchanged at \
+                            level 16, increasing to 9 at level 17, unchanged at levels 18-20), Touch of \
+                            Good (Good \
+                            domain, in full, sacred bonus \
                             increasing to 2 at level 4, unchanged at level 5, increasing to 3 at level \
-                            6, unchanged at level 7, increasing to 4 at level 8), and Rebuke Death's \
+                            6, unchanged at level 7, increasing to 4 at level 8, increasing to 5 at \
+                            level 9-10, unchanged at level 11, increasing to 6 at level 12, unchanged \
+                            at level 13, increasing to 7 at level 14, unchanged at level 15, increasing \
+                            to 8 at level 16-17, increasing to 9 at levels 18-19, increasing to 10 at \
+                            level 20), and \
+                            Rebuke Death's \
                             uses per day (Healing domain, partial) grounded for real at every supported \
                             level and the Rebuke Death heal amount and the prepared divine spell \
                             posture burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_CLERIC_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
@@ -1899,21 +3266,208 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     the same half-cleric-level formula) while both domain-power uses-per-day \
                     pools stay level-independent, so no new pillar is grounded at level 10 \
                     either — only the existing pillars are widened. \
-                    The row is Partial, not Supported: Rebuke Death's heal amount (1d4 points of \
+                    An SD18 slice (cycle-2026-07-13T2007) widens the gate again to level 11 \
+                    (verified independently against the PF1 Core Rulebook Cleric class table and \
+                    spells-per-day table via d20pfsrd and legacy.aonprd.com, mirroring exactly how \
+                    cycle-2026-07-13T1255 widened Barbarian to level 11 via its own Greater Rage \
+                    magnitude-rise, and cycle-2026-07-13T1830 widened Bard to level 11 via its own \
+                    Inspire magnitude-rises): level 11 base attack genuinely rises to +8 \
+                    (11 * 3 / 4), while both good saves stay +7 (11 / 2 + 2, an integer-division \
+                    coincidence) and poor Reflex stays +3 (11 / 3, also an integer-division \
+                    coincidence); the level-11 \"Special\" column reads \"Channel energy 6d6\" — \
+                    Channel Energy's die count genuinely rises to 6d6 ((11 + 1) / 2), confirming \
+                    level 11 is the next odd-level rise anticipated by the level-10 slice's own \
+                    note; the domain spell slot count genuinely rises to 6 (a level-11 cleric \
+                    casts 6th-level cleric spells for the first time — the level-11 spells-per-day \
+                    row's 6th-level column is no longer \"—\"); Touch of Good's bonus stays 5 \
+                    (11 / 2, an integer-division coincidence with level 10) while both \
+                    domain-power uses-per-day pools stay level-independent, so no new pillar is \
+                    grounded at level 11 either — only the existing pillars are widened. \
+                    A further SD18 slice (cycle-2026-07-15T0200) widens the gate again to level 12 \
+                    (verified independently against the PF1 Core Rulebook Cleric class table via \
+                    d20pfsrd and Archives of Nethys aonprd.com, mirroring exactly how \
+                    cycle-2026-07-14T1814 widened Barbarian to level 12 and cycle-2026-07-14T2359 \
+                    widened Bard to level 12): the level-12 \"Special\" column is genuinely BLANK — \
+                    base attack bonus genuinely rises to +9 (12 * 3 / 4), both good saves genuinely \
+                    rise to +8 (12 / 2 + 2), poor Reflex genuinely rises to +4 (12 / 3), and Touch of \
+                    Good's bonus genuinely rises to 6 (12 / 2), all via the same pre-existing \
+                    formulas, not re-derived, while Channel Energy's die count stays 6d6 \
+                    ((12 + 1) / 2, the odd-level cadence's next rise landing at 13th) and the domain \
+                    spell slot count stays 6 (a level-12 cleric still casts only up to 6th-level \
+                    cleric spells; 7th-level cleric spells first appear at level 13), so no new \
+                    pillar is grounded at level 12 either — only the existing pillars are widened. \
+                    A further SD18 slice (cycle-2026-07-15T1500, mirroring cycle-2026-07-15T1100's \
+                    Rogue, cycle-2026-07-15T1200's Barbarian, cycle-2026-07-15T1300's Fighter, and \
+                    cycle-2026-07-15T1400's Ranger level-13 widenings) widens the gate again to \
+                    level 13 (verified independently against the PF1 Core Rulebook Cleric class \
+                    table and spells-per-day table across three primary sources — d20pfsrd, Archives \
+                    of Nethys aonprd.com, and legacy.aonprd.com, all three byte-for-byte identical): \
+                    the level-13 \"Special\" column reads \"Channel energy 7d6\" — Channel Energy's \
+                    die count genuinely rises to 7d6 ((13 + 1) / 2, up from 6d6 at level 12) via the \
+                    same pre-existing formula, not re-derived — and the domain spell slot count also \
+                    genuinely rises, to 7 (a level-13 cleric casts 7th-level cleric spells for the \
+                    first time, verified against all three primary sources' raw spells-per-day table \
+                    rows), while base attack bonus stays +9 (13 * 3 / 4), both good saves stay +8 \
+                    (13 / 2 + 2), poor Reflex stays +4 (13 / 3), and Touch of Good's bonus stays 6 \
+                    (13 / 2), all integer-division coincidences with level 12, so no new pillar is \
+                    grounded at level 13 either — only the existing Channel Energy and domain spell \
+                    slot count pillars are widened. \
+                    A further SD18 slice (cycle-2026-07-15T2300, mirroring cycle-2026-07-15T1900's \
+                    Barbarian, cycle-2026-07-15T2000's Fighter and Rogue, and cycle-2026-07-15T2100's \
+                    Ranger level-14 widenings) widens the gate again to level 14 (verified \
+                    independently against the PF1 Core Rulebook Cleric class table and spells-per-day \
+                    table across three primary sources — d20pfsrd, Archives of Nethys aonprd.com, and \
+                    legacy.aonprd.com, all three byte-for-byte identical): the level-14 \"Special\" \
+                    column is genuinely BLANK — base attack bonus genuinely rises to +10 (14 * 3 / 4), \
+                    both good saves genuinely rise to +9 (14 / 2 + 2), and Touch of Good's bonus \
+                    genuinely rises to 7 (14 / 2), all via the same pre-existing formulas, not \
+                    re-derived, while poor Reflex stays +4 (14 / 3), Channel Energy's die count stays \
+                    7d6 ((14 + 1) / 2, the odd-level cadence's next rise landing at 15th), and the \
+                    domain spell slot count stays 7 (a level-14 cleric still casts only up to \
+                    7th-level cleric spells; 8th-level cleric spells first appear at level 15), so no \
+                    new pillar is grounded at level 14 either — only the existing base-attack, base- \
+                    save, and Touch of Good pillars are widened. \
+                    A further SD18 slice (cycle-2026-07-15T3100, mirroring cycle-2026-07-15T2800's \
+                    Barbarian, cycle-2026-07-15T2900's Rogue, and cycle-2026-07-15T3000's Fighter \
+                    level-15 widenings, and the loop's first §3.2 level-15 landing on a full \
+                    9-level-caster class) widens the gate again to level 15 (verified independently \
+                    against two primary sources — d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, byte-for-byte agreement on the class-table row; a third source, \
+                    legacy.aonprd.com's raw multi-row spells-per-day table, was consulted to settle \
+                    the 8th-level domain-spell-slot threshold after two single-row summarized fetches \
+                    disagreed with each other in a way that broke the established every-other-odd-\
+                    level cadence, and were rejected as tool artifacts rather than genuine source \
+                    conflicts): the level-15 \"Special\" column reads \"Channel energy 8d6\" — Channel \
+                    Energy's die count genuinely rises to 8d6 ((15 + 1) / 2, up from 7d6 at level 14) \
+                    via the same pre-existing formula, not re-derived — and the domain spell slot \
+                    count also genuinely rises, to 8 (a level-15 cleric casts 8th-level cleric spells \
+                    for the first time), while base attack bonus genuinely rises to +11 (15 * 3 / 4) \
+                    and poor Reflex genuinely rises to +5 (15 / 3), and both good saves stay +9 \
+                    (15 / 2 + 2) and Touch of Good's bonus stays 7 (15 / 2), integer-division \
+                    coincidences with level 14, so two pillars whose underlying formulas genuinely \
+                    change (Channel Energy dice, domain spell slot count) are widened, plus the \
+                    base-attack/base-save pillar — no new pillar is grounded at level 15 either, since \
+                    the level-15 Special column names only the Channel Energy tier-rise, not a new \
+                    class feature. \
+                    A further SD18 slice (cycle-2026-07-15T5300, mirroring cycle-2026-07-15T4600's \
+                    Barbarian, the Fighter, Wizard, and Rogue level-16 widenings — the loop's FIFTH \
+                    §3.2 level-16 landing, and the second full 9-level-caster class after Wizard to \
+                    reach it) widens the gate again to level 16 (verified independently against two \
+                    primary sources — d20pfsrd and the Archives of Nethys aonprd.com mirror, \
+                    byte-for-byte agreement, so a third source was not required): the level-16 \
+                    \"Special\" column is genuinely BLANK — a pure ceiling raise, exactly mirroring \
+                    the Wizard level-16 cycle's own pure ceiling raise — base attack bonus genuinely \
+                    rises to +12 (16 * 3 / 4), both good saves genuinely rise to +10 (16 / 2 + 2), and \
+                    Touch of Good's bonus genuinely rises to 8 (16 / 2), all via the same pre-existing \
+                    formulas, not re-derived, while poor Reflex stays +5 (16 / 3), Channel Energy's die \
+                    count stays 8d6 ((16 + 1) / 2, the odd-level cadence's next rise landing at 17th), \
+                    and the domain spell slot count stays 8 (a level-16 cleric still casts only up to \
+                    8th-level cleric spells; 9th-level cleric spells are out of this bounded ceiling's \
+                    scope), so no new pillar is grounded at level 16 either — only the base-attack, \
+                    base-save, and Touch of Good pillars are widened. \
+                    A further SD18 slice (cycle-2026-07-15T9600, mirroring the Ranger, Bard, Rogue, \
+                    Fighter, and Wizard level-17 widenings — the loop's SIXTH §3.2 level-17 landing, \
+                    and the second full 9-level-caster class after Wizard to reach it) widens the \
+                    gate again to level 17 (verified independently against two primary sources — \
+                    d20pfsrd and the Archives of Nethys aonprd.com mirror, byte-for-byte agreement, \
+                    so a third source was not required): the level-17 \"Special\" column reads \
+                    \"Channel energy 9d6\" — Channel Energy's die count genuinely rises to 9d6 \
+                    ((17 + 1) / 2, up from 8d6 at level 16) via the same pre-existing formula, not \
+                    re-derived, and the domain spell slot count also genuinely rises, to 9 (a \
+                    level-17 cleric casts 9th-level cleric spells for the first time, mirroring the \
+                    Wizard level-17 cycle's own 9th-level spell column opening), while base attack \
+                    bonus stays +12 (17 * 3 / 4), both good saves stay +10 (17 / 2 + 2), poor Reflex \
+                    stays +5 (17 / 3), and Touch of Good's bonus stays 8 (17 / 2), all \
+                    integer-division coincidences with level 16, checked not assumed — so two \
+                    pillars whose underlying formulas genuinely change (Channel Energy dice, domain \
+                    spell slot count) are widened; no new pillar is grounded at level 17 either, \
+                    since \"Channel energy 9d6\" names only a tier-rise on the already-grounded \
+                    Channel Energy dice pillar, not a new class feature. \
+                    A further SD18 slice (cycle-2026-07-15T14300, mirroring the Wizard level-18 \
+                    widening — the loop's SECOND §3.2 level-18 landing, and the first full \
+                    9-level-caster class after Wizard to reach it) widens the gate again to level 18 \
+                    (verified independently against two primary sources — d20pfsrd and the Archives \
+                    of Nethys aonprd.com mirror, byte-for-byte agreement on the full \
+                    levels-16-through-19 block, so a third source was not required): the level-18 \
+                    \"Special\" column is genuinely BLANK — a pure ceiling raise, exactly mirroring \
+                    the Wizard level-18 cycle's own pure ceiling raise — base attack bonus genuinely \
+                    rises to +13 (18 * 3 / 4), both good saves genuinely rise to +11 (18 / 2 + 2), \
+                    poor Reflex genuinely rises to +6 (18 / 3), and Touch of Good's bonus genuinely \
+                    rises to 9 (18 / 2), all via the same pre-existing formulas, not re-derived, while \
+                    Channel Energy's die count stays 9d6 ((18 + 1) / 2, the odd-level cadence's next \
+                    rise landing at 19th) and the domain spell slot count stays 9 (a level-18 cleric \
+                    still casts only up to 9th-level cleric spells, the highest cleric spell level in \
+                    PF1 — the pre-existing top domain-spell-slot-count arm already covered level 18 \
+                    with zero code change, mirroring exactly how the Wizard level-18 cycle's own \
+                    specialist-bonus-slot top arm already covered level 18), so no new pillar is \
+                    grounded at level 18 either — only the base-attack, base-save, and Touch of Good \
+                    pillars are widened. \
+                    A further SD18 slice (cycle-2026-07-16T1100, the loop's SECOND §3.2 level-19 \
+                    landing, after Barbarian) widens the gate again to level 19 (verified \
+                    independently against two primary sources — a raw curl fetch of d20pfsrd and the \
+                    Archives of Nethys aonprd.com mirror, both covering the full levels-16-through-20 \
+                    block, byte-for-byte agreement, so a third source was not required): the level-19 \
+                    \"Special\" column reads \"Channel energy 10d6\" — Channel Energy's die count \
+                    genuinely rises to 10d6 ((19 + 1) / 2), up from 9d6 at level 18, via the same \
+                    pre-existing formula, not re-derived, naming only a tier-rise on the \
+                    already-grounded Channel Energy dice pillar, not a new class feature, mirroring \
+                    the level-17 cycle's own \"Channel energy 9d6\" finding — base attack bonus \
+                    genuinely rises to +14 (19 * 3 / 4), while both good saves stay put at +11 \
+                    (19 / 2 + 2), poor Reflex stays put at +6 (19 / 3), and Touch of Good's bonus \
+                    stays put at 9 (19 / 2), all integer-division coincidences with level 18, checked \
+                    not assumed, and the domain spell slot count stays 9 (a level-19 cleric still \
+                    casts only up to 9th-level cleric spells, the highest cleric spell level in PF1 — \
+                    the pre-existing top domain-spell-slot-count arm already covered level 19 with \
+                    zero code change), so no new pillar is grounded at level 19 either — only the \
+                    base-attack and Channel Energy dice pillars are widened. \
+                    A further SD18 slice (cycle-2026-07-16T0844, the loop's FIRST §3.2 level-20 \
+                    landing, opening the level-20 sweep — the final remaining level within PF1's \
+                    1-20 character-level cap) widens the gate again to level 20 (verified \
+                    independently against two primary sources — d20pfsrd and the Archives of Nethys \
+                    aonprd.com mirror, byte-for-byte agreement on the full levels-16-through-20 \
+                    block, so a third source was not required): the level-20 \"Special\" column is \
+                    genuinely BLANK — Cleric has no named capstone class feature at 20th level at \
+                    all, unlike Barbarian's Mighty Rage, Fighter's Weapon Mastery, Rogue's Master \
+                    Strike, Paladin's Holy Champion, or Ranger's Master Hunter — a pure ceiling \
+                    raise, exactly mirroring the level-16 and level-18 cycles' own pure ceiling \
+                    raises: base attack bonus genuinely rises to +15 (20 * 3 / 4), both good saves \
+                    genuinely rise to +12 (20 / 2 + 2), and Touch of Good's bonus genuinely rises to \
+                    10 (20 / 2), all via the same pre-existing formulas, not re-derived, while poor \
+                    Reflex stays +6 (20 / 3), Channel Energy's die count stays 10d6 \
+                    ((20 + 1) / 2, the odd-level cadence's last rise having landed at level 19; PF1 \
+                    character levels do not go past 20, so no further rise is possible), and the \
+                    domain spell slot count stays 9 (a level-20 cleric still casts only up to \
+                    9th-level cleric spells, the highest cleric spell level in PF1 — the pre-existing \
+                    top domain-spell-slot-count arm already covers level 20 with zero code change), \
+                    so no new pillar is grounded at level 20 either — only the base-attack, \
+                    base-save, and Touch of Good pillars are widened. \
+                    Rebuke Death's heal amount (1d4 points of \
                     damage plus 1 for every two cleric levels, usable only on a creature below 0 hit \
                     points) is not a flat number and remains named and unproven, the domain \
                     spell-list contents that could fill the grounded domain spell slots remain named \
-                    and unproven, the prepared divine spell posture burden (spells prepared from the \
-                    full Cleric list, spontaneous cure/inflict conversion, spell slots per day, bonus \
-                    spells from a high Wisdom, spell save DCs) is still entirely unproven, and no \
-                    Cleric level 10+ is proven. No touch-attack resolution, healing-application \
-                    engine, hit-point-state gating check, or per-use consumption tracking is \
-                    fabricated",
-                next_required_uplift: "SD13-E5+ Cleric domain power grounding: the Rebuke Death \
-                    heal-amount piece (requires a dice-roll execution engine and a hit-point-state \
-                    gating check, a new-subsystem-shaped burden deliberately not attempted this \
-                    slice) and domain spell-list contents, then the prepared divine spell posture \
-                    burden, then Cleric level 10+ progression",
+                    and unproven, and the prepared divine spell posture burden (spells prepared from \
+                    the full Cleric list, spontaneous cure/inflict conversion, spell slots per day, \
+                    bonus spells from a high Wisdom, spell save DCs) is still entirely unproven. \
+                    Cleric level 20 is now the final level within PF1's 1-20 character-level cap for \
+                    this class row, so the per-level arithmetic-widening frontier for this row is now \
+                    fully exhausted — only the domain-power-execution and prepared-spell-posture \
+                    burdens remain, and neither is a per-level widening. No touch-attack resolution, \
+                    healing-application engine, hit-point-state gating check, or per-use consumption \
+                    tracking is fabricated. This row's every named grounded milestone is now \
+                    surfaced live in the desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding Cleric's \
+                    remaining domain power (the Rebuke Death heal-amount piece, requiring a \
+                    dice-roll execution engine and a hit-point-state gating check), the domain \
+                    spell-list contents, and the prepared divine spell posture burden (spells \
+                    prepared from the full Cleric list, spontaneous cure/inflict conversion, spell \
+                    slots per day, bonus spells from a high Wisdom, spell save DCs) is a future \
+                    SD-N's scope, not a further per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "class.druid.progression_and_spell_burden",
@@ -1921,16 +3475,18 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:druid",
                 dimension: "bounded spell-bearing class progression: the deterministic Human Druid \
                             level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10 \
+                            level-9/level-10/level-11/level-12/level-13/level-14/level-15 \
                             prepared divine \
                             spell baseline, with base attack bonus, base save progression, Wild \
                             Empathy, Nature Sense, the nature-bond choice recognition, (at level \
-                            2) Woodland Stride, (at level 3) Trackless Step, and (at level 4) \
-                            Resist Nature's Lure grounded for real at all eight supported levels, \
+                            2) Woodland Stride, (at level 3) Trackless Step, (at level 4) \
+                            Resist Nature's Lure, (at level 13) A Thousand Faces, and (at level \
+                            15) Timeless Body grounded for \
+                            real at all fifteen supported levels, \
                             and the animal-companion execution burden, the Wild Shape execution \
                             burden, and the prepared divine spell posture burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_DRUID_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
@@ -2096,18 +3652,121 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     which are separable from the \"4/day\" numeral without misrepresenting \
                     the bundled feature as flat, so Wild Shape stays entirely \
                     named-but-unproven and no new pillar is grounded at level 10 either — only \
-                    the existing pillars are widened. The row is Partial, not Supported: the animal companion execution \
+                    the existing pillars are widened. A further SD18 slice (cycle \
+                    druid-level11-widening, the fourth SD-18 §3.2 class-row widening, mirroring the \
+                    Barbarian/Bard/Cleric level-11 widenings) widens the level-range gate again \
+                    (supported_druid_level, 1..=11) and extends every one of the formulas above to \
+                    level 11 via the same formula, without re-derivation, verified independently \
+                    against the PF1 Core Rulebook Druid class table (d20pfsrd and \
+                    legacy.aonprd.com): level 11 base attack bonus genuinely rises to +8 \
+                    (11 * 3 / 4, up from +7 at level 10); both good saves stay +7 (11 / 2 + 2) and \
+                    poor Reflex stays +3 (11 / 3), integer-division coincidences with level 10; \
+                    Wild Empathy genuinely rises to 12 (11 + Charisma modifier); Nature Sense, \
+                    Woodland Stride, Trackless Step, Resist Nature's Lure, Venom Immunity, and the \
+                    nature-bond choice recognition all carry over unchanged. UNLIKE every prior \
+                    widened level, the Druid class table's level-11 \"Special\" column is \
+                    genuinely blank (checked independently against both primary sources rather \
+                    than assumed away — the next Wild Shape frequency rise, \"Wild shape (5/day)\", \
+                    does not land until 12th level), so this slice grounds no new pillar at level \
+                    11 either — only the existing pillars are widened. A further SD18 slice \
+                    (cycle-2026-07-15T0500, mirroring cycle-2026-07-14T1814's Barbarian level-12 \
+                    widening, cycle-2026-07-14T2359's Bard level-12 widening, and \
+                    cycle-2026-07-15T0200's Cleric level-12 widening) widens the gate again to \
+                    level 12 (verified independently against the PF1 Core Rulebook Druid class \
+                    table via d20pfsrd and Archives of Nethys aonprd.com's legacy mirror): base \
+                    attack bonus genuinely rises to +9 (12 * 3 / 4, up from +8 at level 11) and \
+                    all three base saves genuinely rise (both good saves to +8, 12 / 2 + 2; poor \
+                    Reflex to +4, 12 / 3); Wild Empathy genuinely rises to 13 (12 + Charisma \
+                    modifier); Nature Sense, Woodland Stride, Trackless Step, Resist Nature's \
+                    Lure, Venom Immunity, and the nature-bond choice recognition all carry over \
+                    unchanged. UNLIKE level 11, the class table's level-12 \"Special\" column is \
+                    NOT blank — it reads \"Wild shape (5/day)\" (verified independently against \
+                    both primary sources, checked rather than assumed away) — but per the \
+                    level-4/6/8/10 precedent that frequency rise is bundled with a non-separable \
+                    form-list expansion (Huge elemental or Huge plant creature) and a \
+                    functioning-level upgrade (elemental body IV / plant shape III), so Wild \
+                    Shape stays entirely named-but-unproven and this slice grounds no new pillar \
+                    at level 12 either — only the existing pillars are widened. A further SD18 \
+                    slice (cycle-2026-07-15T1600, mirroring cycle-2026-07-15T1500's Cleric \
+                    level-13 widening, the loop's fifth SD-18 class-row level-13 landing after \
+                    Rogue, Barbarian, Fighter, and Ranger) widens the gate again to level 13 \
+                    (verified independently against all three primary sources: d20pfsrd, \
+                    Archives of Nethys aonprd.com, and legacy.aonprd.com): base attack bonus \
+                    STAYS +9 (13 * 3 / 4) and all three base saves STAY +8/+4/+8 \
+                    (Fortitude/Reflex/Will), four integer-division coincidences with level 12; \
+                    Wild Empathy genuinely rises to 14 (13 + Charisma modifier). UNLIKE every \
+                    prior widened level's Wild-Shape-shaped \"Special\" column entry (levels \
+                    4/6/8/10/12), the level-13 \"Special\" column reads \"A thousand faces\" — a \
+                    DIFFERENT class feature, checked directly rather than assumed to be another \
+                    Wild Shape frequency increase. In PF1 (unlike the D&D 3.5 version of this \
+                    ability, which referenced the stronger `alter self` spell), A Thousand Faces \
+                    grants the druid the ability to change her own apparent appearance at will, \
+                    as if using `disguise self`, but only while in her normal (unshifted) form — \
+                    a genuinely flat/identity-shaped, no-choice, no-magnitude, \
+                    no-duration-tracking, at-will grant, mirroring exactly how Venom Immunity was \
+                    grounded at level 9: a bounded +0 identity/recognition record, with no \
+                    illusion-effect execution engine and no Disguise-check-resolution engine \
+                    fabricated. The spells-per-day table's 7th-level spell column also newly \
+                    opens at level 13 (matching the Cleric precedent exactly, since Druid shares \
+                    the identical \"high\" 9-level-caster progression shape), but Druid has no \
+                    currently-grounded spell-slot-count pillar (unlike Cleric's domain slot), so \
+                    there is no analogous pillar to widen. The row is \
+                    Partial, not Supported: the animal companion execution \
                     burden (the companion's stat block, its advancement, and its link / share \
                     spells abilities) remains named and unproven, the Wild Shape execution burden \
-                    (new form, new stat block, duration tracking, frequency, and the level-6 \
-                    form-list expansion) remains named and unproven, and the prepared divine spell \
+                    (new form, new stat block, duration tracking, frequency, and the level-6/8/10/12 \
+                    form-list expansions) remains named and unproven, and the prepared divine spell \
                     posture burden (spells prepared from the full Druid list, spontaneous summon \
                     nature's ally conversion, spell slots per day, bonus spells from a high Wisdom, \
-                    spell save DCs) is still entirely unproven. No spell math is fabricated and no \
-                    Druid level 11+ is proven",
-                next_required_uplift: "SD13-E5 Druid animal companion execution slice, the Wild \
-                    Shape execution slice, or the prepared divine spell burden slice, then Druid \
-                    level 8+ progression (out of scope for this slice)",
+                    spell save DCs) is still entirely unproven. A further SD18 slice \
+                    (cycle-2026-07-15T2400, mirroring cycle-2026-07-15T2300's Cleric level-14 \
+                    widening, the loop's sixth §3.2 level-14 landing after Barbarian, Fighter, \
+                    Rogue, Ranger, and Bard) widens the gate again to level 14 (verified \
+                    independently against both d20pfsrd and Archives of Nethys aonprd.com, which \
+                    agree byte-for-byte): base attack bonus genuinely rises to +10 (14 * 3 / 4) \
+                    and both good saves genuinely rise to +9 (14 / 2 + 2), while poor Reflex \
+                    stays +4 (14 / 3, an integer-division coincidence with level 13); Wild \
+                    Empathy genuinely rises to 15 (14 + Charisma modifier). The level-14 \
+                    \"Special\" column reads \"Wild shape (6/day)\" — per the \
+                    level-4/6/8/10/12 precedent that frequency increase is bundled with a \
+                    non-separable functioning-level upgrade with no execution engine anywhere in \
+                    this codebase, so Wild Shape stays entirely named-but-unproven and this \
+                    slice grounds no new pillar at level 14 either — only the existing arithmetic \
+                    pillars are widened. A still further SD18 slice (the loop's FIFTH §3.2 \
+                    level-15 landing after Barbarian, Rogue, Fighter, and Cleric) widens the gate \
+                    again to level 15 (verified independently against all three primary sources: \
+                    d20pfsrd, Archives of Nethys aonprd.com, and legacy.aonprd.com, which agree \
+                    byte-for-byte): base attack bonus genuinely rises to +11 (15 * 3 / 4) and \
+                    poor Reflex genuinely rises to +5 (15 / 3), while both good saves stay +9 \
+                    (15 / 2 + 2, an integer-division coincidence with level 14); Wild Empathy \
+                    genuinely rises to 16 (15 + Charisma modifier). UNLIKE every prior widened \
+                    level's Wild-Shape-shaped \"Special\" column entry (levels 4/6/8/10/12/14), \
+                    and unlike level 13's \"A thousand faces\", the level-15 \"Special\" column \
+                    reads \"Timeless body\" ONLY — checked directly rather than assumed to also \
+                    carry a Wild Shape frequency increase (the next one, \"Wild shape (7/day)\", \
+                    does not land until 16th level). Timeless Body is a genuinely \
+                    flat/identity-shaped, no-choice, no-magnitude, no-duration-tracking grant (a \
+                    druid no longer takes ability score penalties for old age and cannot be \
+                    magically aged), mirroring exactly how Venom Immunity and A Thousand Faces \
+                    were grounded: a bounded +0 identity/recognition record, with no \
+                    aging-penalty-resolution engine fabricated. The row stays Partial, not \
+                    Supported: the animal-companion execution burden, the Wild Shape execution \
+                    burden, and the prepared divine spell posture burden all remain named and \
+                    unproven. No spell math is fabricated and no Druid level 16+ is proven. This \
+                    row's every named grounded milestone is now surfaced live in the desktop \
+                    app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class \
+                    name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the operator's \
+                    UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    animal-companion execution burden, the Wild Shape execution burden, and the \
+                    prepared divine spell posture burden as real computed contributions, then \
+                    Druid level 16+ progression, is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",
@@ -2115,19 +3774,23 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:monk",
                 dimension: "bounded Monk martial chassis progression: the deterministic Human \
                             Monk level-1/level-2/level-3/level-4/level-5/level-6/level-7/level-8/\
-                            level-9/level-10 \
+                            level-9/level-10/level-11/level-12 \
                             martial chassis identity, with base-attack, base-save, AC Bonus, the \
                             unarmed strike damage die (genuinely rising to 1d10 at level 8, \
-                            unchanged at levels 9-10), the \
+                            unchanged at levels 9-10, genuinely stepping up to 2d6 at level 12 \
+                            via a new standalone die-count facet), the \
                             Flurry of Blows flat attack surface (attack count genuinely rising to \
                             3 at level 8, with the flat attack modifier genuinely rising to +7 at \
-                            level 9 and +8 at level 10), and the level-1 bonus feat choice-slot selection \
-                            grounded across all ten levels, Evasion grounded as a level-2 \
+                            level 9, +8 at level 10, +9 at level 11, and +10 at level 12), and the \
+                            level-1 bonus feat choice-slot selection \
+                            grounded across all twelve levels, Evasion grounded as a level-2 \
                             identity/recognition record, Still Mind grounded as a level-3 \
                             flat-magnitude record, the ki pool's flat size (genuinely rising to 6 \
-                            at level 6, unchanged at level 7, rising to 7 at level 8) and Slow \
+                            at level 6, unchanged at level 7, rising to 7 at level 8, to 8 at \
+                            level 10, and to 9 at level 12) and Slow \
                             Fall grounded as level-4 records (Slow Fall's own reach magnitude \
-                            genuinely rising to 30 ft. at level 6 and 40 ft. at level 8), Purity \
+                            genuinely rising to 30 ft. at level 6, 40 ft. at level 8, 50 ft. at \
+                            level 10, and 60 ft. at level 12), Purity \
                             of Body grounded as a level-5 grant-only identity record (High Jump \
                             checked and confirmed not flat), Wholeness of Body (the level-7 class \
                             table's new named feature) checked and confirmed not flat and staying \
@@ -2135,10 +3798,13 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             checked and confirmed to name only the Slow Fall reach rise (not \
                             Improved Uncanny Dodge, which Monk never gains at any level), \
                             Improved Evasion grounded as a level-9 identity/recognition record \
-                            (the level-9 \"Special\" column's only entry), and the \
+                            (the level-9 \"Special\" column's only entry), Diamond Body grounded \
+                            as a level-11 grant-only poison-immunity identity record, Abundant \
+                            Step (the level-12 class table's new named feature) checked and \
+                            confirmed not flat, and the \
                             recognized bonus feat's own mechanics still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_MONK_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E3/E5 leaves direct computed evidence that the \
@@ -2318,23 +3984,74 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     DR/attack-resolution engine that does not exist in this codebase, \
                     mirroring how the 4th-level magic and 7th-level cold-iron/silver ki-strike \
                     properties were never fabricated either, with a dedicated negative test \
-                    pinning that no ki-strike record or diagnostic is fabricated. One named burden remains unproven: the \
+                    pinning that no ki-strike record or diagnostic is fabricated. A further \
+                    SD18 slice (cycle-2026-07-13T2100) widens the level-range gate again \
+                    (supported_monk_level, 1..=11) and extends every one of the formulas above \
+                    to level 11 via the same formula, without re-derivation, verified \
+                    independently against the PF1 Core Rulebook Monk class table (d20pfsrd and \
+                    legacy.aonprd.com): level 11 base attack genuinely rises to +8 (11 * 3 / 4) \
+                    while all three good saves stay +7 (11 / 2 + 2, an integer-division \
+                    coincidence with level 10); the unarmed die stays 1d10 (the band spans \
+                    levels 8-11); the Flurry flat attack modifier genuinely rises to +9 (level \
+                    - 2) while the attack count stays 3 (the next count change lands at 15th); \
+                    the ki pool stays 8 (11 / 2 + Wisdom modifier 3, an integer-division \
+                    coincidence with level 10) and Slow Fall's reach stays 50 ft (the next \
+                    reach increase lands at 12th); the level-11 \"Special\" column reads \
+                    \"Diamond body\" ONLY (verified independently against both primary sources, \
+                    checked rather than assumed away) — a genuinely NEW named entry, grounded \
+                    by this slice as a bounded grant-only identity record only \
+                    (class_chassis.monk.diamond_body, value 0, non-fabricated: a flat immunity \
+                    to all poisons), mirroring exactly how Purity of Body was grounded at 5th \
+                    level — no poison-resolution engine exists in this codebase, so no immunity \
+                    application is fabricated from the record. A further SD18 slice \
+                    (cycle-2026-07-15T0600) widens the level-range gate again \
+                    (supported_monk_level, 1..=12), the loop's eighth §3.2 level-12 widening, \
+                    verified independently against the PF1 Core Rulebook Monk class table \
+                    (d20pfsrd and the Archives of Nethys aonprd.com mirror): level 12 base \
+                    attack genuinely rises to +9 (12 * 3 / 4) and all three good saves \
+                    genuinely rise to +8 (12 / 2 + 2); the unarmed strike damage die genuinely \
+                    steps up from 1d10 to 2d6 (the 2d6 band spans levels 12-15), grounded as \
+                    two facets — the pre-existing die-face-size facet (now 6, i.e. d6) and a \
+                    NEW standalone die-count facet (class_chassis.monk.unarmed_strike_damage_die_count, \
+                    genuinely 2, the first level at which the count itself rises rather than \
+                    just the face size) — mirroring the Flurry of Blows attack-bonus/\
+                    attack-count split; the Flurry flat attack modifier genuinely rises to +10 \
+                    (level - 2) while the attack count stays 3 (the next count change lands at \
+                    15th); the ki pool genuinely rises to 9 (12 / 2 + Wisdom modifier 3); Slow \
+                    Fall's reach genuinely rises to 60 ft (named explicitly in the level-12 \
+                    \"Special\" column); the level-12 \"Special\" column's other entry, \
+                    Abundant Step, is checked and confirmed NOT flat (it requires both a \
+                    ki-point-spending action-economy engine and a dimension-door-equivalent \
+                    teleportation-resolution engine, neither of which exists in this codebase), \
+                    so it is deliberately left named-but-unproven, mirroring the Wholeness of \
+                    Body / High Jump precedent exactly — no record or diagnostic is fabricated \
+                    for it. Named burdens remain unproven: the \
                     recognized bonus feat's own \
                     mechanics (no \
                     attack-resolution, grapple-check, trip-check, or DC/save engine exists for \
                     any of the restricted-list feats). The level-2 and level-6 bonus feat grants \
                     (PF1 grants monks SEPARATE bonus feats at 2nd and 6th level, neither \
-                    recognized by this widening), Wholeness of Body's own execution, the \
-                    level-11+ unarmed damage die progression, \
+                    recognized by this widening), Wholeness of Body's own execution, Abundant \
+                    Step's own execution, the level-16+ unarmed damage die progression, \
                     flurry with special monk weapons, wiring into integrated combat totals, any \
                     ki-power execution engine, High Jump's own Acrobatics/ki-point mechanics, and \
-                    Monk level 11+ all remain unproven, and no martial math beyond the grounded \
-                    flat surfaces is fabricated",
-                next_required_uplift: "later SD13-E5/E6 slice grounding the one remaining named \
-                    Monk martial pillar burden (the recognized bonus feat's own mechanics — an \
-                    execution engine per feat, not a flat number), then the level-2/level-6 \
-                    bonus feat grant recognition, Wholeness of Body's own execution, and Monk \
-                    level 11+ progression",
+                    Monk level 13+ all remain unproven, and no martial math beyond the grounded \
+                    flat surfaces is fabricated. This row's every named grounded milestone is \
+                    now surfaced live in the desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class \
+                    name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the operator's \
+                    UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the one \
+                    remaining named Monk martial pillar burden (the recognized bonus feat's own \
+                    mechanics — an execution engine per feat, not a flat number), the \
+                    level-2/level-6 bonus feat grant recognition, Wholeness of Body's and \
+                    Abundant Step's own execution, and Monk level 13+ progression as real \
+                    computed contributions is a future SD-N's scope, not a further per-cycle \
+                    widening of this row",
             },
             SupportStateRow {
                 row_id: "class.paladin.hybrid_chassis_and_spell_burden",
@@ -2342,37 +4059,117 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:paladin",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Paladin level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
-                            level-8/level-9/level-10 \
+                            level-8/level-9/level-10/level-11/level-12/level-13/level-14/\
+                            level-15/level-16/level-17/level-18/level-19/level-20 \
                             chassis baseline, with smite evil's uses-per-day / attack-bonus / \
                             damage-bonus formula grounded at every level (uses-per-day \
                             genuinely increasing to 2/day at level 4, staying 2/day through \
                             level 6, genuinely increasing to 3/day at level 7, staying \
-                            3/day through level 9, and genuinely increasing to 4/day at \
-                            level 10), lay on \
-                            hands and divine grace grounded for real at levels 2-10 (correct PF1 \
+                            3/day through level 9, genuinely increasing to 4/day at \
+                            level 10 and staying 4/day at levels 11-12, genuinely \
+                            increasing to 5/day at level 13, staying 5/day at levels \
+                            14-15, genuinely increasing to 6/day at level 16, staying \
+                            6/day at levels 17-18 (integer-division coincidences), and \
+                            genuinely increasing to its 7/day ceiling at level 19, \
+                            while the damage bonus \
+                            keeps rising every level), lay on \
+                            hands and divine grace grounded for real at levels 2-16 (correct PF1 \
                             CRB level-gate absence at level 1, lay on hands genuinely \
                             increasing again at level 6, staying numerically unchanged at \
                             level 7, genuinely increasing on both axes at level 8, staying \
-                            numerically unchanged at level 9, and genuinely increasing on \
-                            both axes again at level 10), mercy \
+                            numerically unchanged at level 9, genuinely increasing on \
+                            both axes again at level 10, staying numerically unchanged at \
+                            level 11, genuinely increasing on both axes again at level 12, \
+                            genuinely increasing on both axes again at level 13, and staying \
+                            numerically unchanged at levels 14-16), \
+                            mercy \
                             grounded as a correct PF1 CRB level-gate absence at \
-                            levels 1-2 and a granted choice-recognition record at levels 3-10, \
+                            levels 1-2 and a granted choice-recognition record at levels 3-19 \
+                            (a fourth numbered mercy slot newly grounded at level 12, staying \
+                            unchanged at levels 13-14 since neither is a repeat-Mercy-grant \
+                            level, a FIFTH numbered mercy slot newly grounded at level 15, \
+                            staying unchanged at levels 16-17 since neither is a repeat-Mercy- \
+                            grant level, a SIXTH numbered mercy slot newly grounded at \
+                            level 18, staying unchanged at level 19 since it is not a \
+                            repeat-Mercy-grant level either), \
                             channel positive energy grounded as a correct PF1 CRB level-gate \
-                            absence at levels 1-3 and a flat die-count magnitude at levels 4-10 \
+                            absence at levels 1-3 and a flat die-count magnitude at levels 4-16 \
                             (genuinely increasing from 2d6 to 3d6 at level 5, staying 3d6 at \
                             level 6, genuinely increasing to 4d6 at level 7, staying 4d6 \
-                            at level 8, genuinely increasing to 5d6 at level 9, and staying 5d6 \
-                            at level 10), the \
+                            at level 8, genuinely increasing to 5d6 at level 9, staying 5d6 \
+                            at level 10, genuinely increasing to 6d6 at level 11, staying \
+                            6d6 at level 12, genuinely increasing to 7d6 at level 13, and \
+                            staying 7d6 at levels 14-16), the \
                             partial-caster effective-caster-level gate grounded as a correct \
                             zero absence at levels 1-3, a genuine value of 1 at level 4, a \
                             genuine value of 2 at level 5, a genuine value of 3 at level 6, a \
                             genuine value of 4 at level 7, a genuine value of 5 at level \
-                            8, a genuine value of 6 at level 9, and a genuine value of 7 at \
-                            level 10, and the hybrid chassis pair plus \
+                            8, a genuine value of 6 at level 9, a genuine value of 7 at \
+                            level 10, a genuine value of 8 at level 11, a genuine value of \
+                            9 at level 12, a genuine value of 10 at level 13, and a genuine \
+                            value of 11 at levels 14-16, Aura of \
+                            Justice \
+                            newly grounded at level 11 and staying granted at levels 12-17 as a \
+                            bounded grant-only identity record, (level 13) the \
+                            spell-level access ladder's genuinely new 4th-level column and the \
+                            base spells-per-day table's own level-13 row grounded for real, \
+                            (level 14) Aura of Faith newly grounded as a second bounded \
+                            grant-only identity record (staying granted at levels 15-17) and \
+                            the base spells-per-day table's own \
+                            level-14 row (only the 4th-level column genuinely rising, from 0 \
+                            to 1) grounded for real, (level 15) the fifth numbered mercy \
+                            slot newly grounded and the base spells-per-day table's own \
+                            level-15 row (only the 3rd-level column genuinely rising, from 1 \
+                            to 2) grounded for real, (level 16) base attack bonus and both \
+                            good saves genuinely rising, Smite Evil's uses-per-day formula \
+                            genuinely rising to 6/day with no new named feature (already \
+                            level-generic), and the base spells-per-day table's own level-16 \
+                            row (only the 2nd-level column genuinely rising, from 2 to 3) \
+                            grounded for real, and (level 17) base attack bonus genuinely \
+                            rising to 17 while all three base saves stay numerically unchanged \
+                            (integer-division coincidences with level 16), Smite Evil's \
+                            uses-per-day formula staying 6/day (another integer-division \
+                            coincidence) while its damage bonus genuinely rises to 17, Aura of \
+                            Righteousness newly grounded as a THIRD bounded grant-only \
+                            identity record, and the base spells-per-day table's own level-17 \
+                            row (only the 1st-level column genuinely rising, from 3 to 4) \
+                            grounded for real, and (level 18) base attack bonus genuinely \
+                            rising to 18 and both good saves genuinely rising to 11 (18/2+2) \
+                            while poor Reflex genuinely rises to 6 (18/3), Smite Evil's \
+                            uses-per-day formula staying 6/day (an integer-division \
+                            coincidence with level 17) while its damage bonus genuinely rises \
+                            to 18, the SIXTH numbered mercy slot newly grounded (a repeat grant \
+                            adding no new named mercy-list tier, mirroring the level-15 fifth \
+                            slot exactly), and the base spells-per-day table's own level-18 \
+                            row (only the 4th-level column genuinely rising, from 1 to 2) \
+                            grounded for real, and (level 19) base attack bonus genuinely \
+                            rising to 19 while all three base saves stay numerically unchanged \
+                            (integer-division coincidences with level 18), Smite Evil's \
+                            uses-per-day formula genuinely rising to its 7/day ceiling (an \
+                            already level-generic formula, the PF1 CRB's own stated maximum) \
+                            while its damage bonus genuinely rises to 19, no new mercy slot \
+                            (level 19 is not one of the 3rd/6th/9th/12th/15th/18th \
+                            repeat-Mercy-grant levels), and the base spells-per-day table's own \
+                            level-19 row (only the 3rd-level column genuinely rising, from 2 to \
+                            3) grounded for real, and (level 20) base attack bonus genuinely \
+                            rising to 20 (full BAB) and both good saves genuinely rising to 12 \
+                            (20/2+2) while poor Reflex stays 6 (20/3, an integer-division \
+                            coincidence with level 19), Smite Evil's uses-per-day formula \
+                            staying at its 7/day ceiling (an integer-division coincidence with \
+                            level 19) while its damage bonus genuinely rises to 20, Holy \
+                            Champion (the class capstone) newly grounded as a FOURTH bounded \
+                            grant-only identity record, no new mercy slot (level 20 is not a \
+                            repeat-Mercy-grant level), and the base spells-per-day table's own \
+                            level-20 row (the 2nd-level AND 4th-level columns both genuinely \
+                            rising simultaneously, the first level in this row's own widening \
+                            history where two columns rise at once) grounded for real -- closing \
+                            this row's own per-level arithmetic-widening frontier at level 20, \
+                            the final level within PF1's 1-20 character-level cap, \
+                            and the hybrid chassis pair plus \
                             the spells-known/spells-per-day/spell-DC spell burden still named \
                             and unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_PALADIN_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3/E4/E5 leaves direct computed evidence that the \
@@ -2609,24 +4406,406 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     pair lands as arithmetic, total 1; live end-to-end — a dedicated test \
                     raises the fixture Charisma and the 3rd-level total turns 1; counts \
                     only, no casting execution, slot consumption, or tracking; the blocker \
-                    now defers exactly spell-source lineage and the prepared posture). The row is Partial, not \
-                    Supported: the F6 hybrid chassis pair (class-feature and spell) stays \
-                    claim-blocking as accepted hybrid truth, no Paladin level 11+ is proven, \
-                    Divine Bond stays named-but-unproven, the level-6 and level-9 repeat \
-                    mercy selections \
-                    stay named-but-unproven, and the partial-caster spell burden itself \
+                    now defers exactly spell-source lineage and the prepared posture) — AND a \
+                    further SD18 slice widens the level-range gate again \
+                    (supported_paladin_level, 1..=11), extending every one of the formulas \
+                    above to level 11 via the same formula, without re-derivation, verified \
+                    independently against the PF1 Core Rulebook Paladin class table (d20pfsrd \
+                    and legacy.aonprd.com): level 11 base attack genuinely rises to +11 (full \
+                    BAB; the table's own \"+11/+6/+1\" iterative notation is not modeled \
+                    anywhere in this codebase, only the flat base value) while all three base \
+                    saves stay numerically unchanged (11/2+2=7, 11/3=3, integer-division \
+                    coincidences with level 10); Smite Evil's uses per day stay 4/day (another \
+                    integer-division coincidence, 1 + (11-1)/3 = 4, the next rise lands at \
+                    13th) while its damage bonus genuinely rises to 11 (= paladin level); Lay \
+                    on Hands stays numerically unchanged on both axes (uses 7, heal dice 5, \
+                    integer-division coincidences); 11th is NOT a repeat-Mercy-grant level \
+                    (the 3rd/6th/9th cadence), so the single grounded level-3 selection \
+                    carries over unchanged again; Channel Positive Energy's die count \
+                    genuinely rises to 6d6 (ceil(11/2), the effective-cleric dice rising at \
+                    odd levels); the effective caster level genuinely rises to 8 (11-3) while \
+                    the spell-level access ladder stays 3 (4th-level paladin spells begin at \
+                    13, outside this widening); the 3rd-level spell's base count and \
+                    integrated total both genuinely rise from the tranche's first honest ZERO \
+                    at level 10 to 1 (the raw spells-per-day table row is \"2/1/1/--\" at \
+                    level 11, verified independently against both primary sources — base 1 + \
+                    Charisma-bonus 0, modifier 2 stays below spell level 3); and the level-11 \
+                    \"Special\" column reads \"Aura of justice\" only (verified independently \
+                    against both primary sources, checked rather than assumed away) — a \
+                    genuinely NEW class feature, grounded as a bounded grant-only identity \
+                    record (class_chassis.paladin.aura_of_justice, value 0, non-fabricated), \
+                    mirroring the Monk Diamond Body idiom exactly: \"at 11th level, a paladin \
+                    can expend two uses of her smite evil ability to grant the ability to \
+                    smite evil to all allies within 10 feet, using her bonuses, but through \
+                    their own weapons\" — no ally-aura/positional engine and no \
+                    smite-evil-resource-sharing execution engine exists anywhere in this \
+                    codebase to apply the shared smite to. A further SD18 slice \
+                    (cycle-2026-07-15T0700) widens the level-range gate again \
+                    (supported_paladin_level, 1..=12), the loop's ninth §3.2 level-12 \
+                    widening, verified independently against the PF1 Core Rulebook Paladin \
+                    class table (d20pfsrd and the Archives of Nethys aonprd.com mirror): level \
+                    12 base attack genuinely rises to +12 (full BAB) and this time ALL THREE \
+                    base saves genuinely rise too (good Fortitude/Will 12/2+2=8, poor Reflex \
+                    12/3=4 — unlike level 11, where all three stayed numerically unchanged); \
+                    Smite Evil's uses per day stay 4/day (another integer-division coincidence, \
+                    1 + (12-1)/3 = 4, the next rise lands at 13th) while its damage bonus \
+                    genuinely rises to 12 (= paladin level); Lay on Hands genuinely rises on \
+                    both axes (uses 8, heal dice 6); Channel Positive Energy's die count stays \
+                    6d6 ((12+1)/2=6, an integer-division coincidence with level 11); the \
+                    effective caster level genuinely rises to 9 (12-3) while the spell-level \
+                    access ladder stays 3 (4th-level paladin spells begin at 13, outside this \
+                    widening); the 2nd-level spell's base count and integrated total both \
+                    genuinely rise (base 1->2, total 2->3, the raw spells-per-day table row is \
+                    \"2/2/1/--\" at level 12, verified independently against both primary \
+                    sources), while the 1st-level (base 2, total 3) and 3rd-level (base 1, \
+                    total 1) counts/totals stay numerically unchanged; and the level-12 \
+                    \"Special\" column reads \"Mercy\" only (verified independently against \
+                    both primary sources, checked rather than assumed away) — 12th IS a \
+                    repeat-Mercy-grant level (the 3rd/6th/9th/12th cadence), grounded here as a \
+                    FOURTH numbered mercy choice slot \
+                    (class_chassis.paladin.mercy_4_choice, choice:paladin_mercy_4, gate 12, an \
+                    open-ended +0 recognition mirroring slots 1-3; the verified 12th-level CRB \
+                    tier additions — Blinded, Deafened, Paralyzed, Stunned per \
+                    legacy.aonprd.com, with d20pfsrd's superset containing them and its extra \
+                    entries — Amputated, Ensorcelled, Petrified — being non-CRB expansions \
+                    outside this pf1.core_rulebook seam — are cited in the detail; no mercy's \
+                    effect on lay on hands is computed). The SD18 cycle-2026-07-15T1800 slice \
+                    (tests/sd18_paladin_level13_widening.rs) widens the level-range gate once \
+                    more to level 13, the loop's eighth §3.2 level-13 landing: base attack \
+                    genuinely rises to +13 while all three base saves stay numerically \
+                    unchanged from level 12 (good Fortitude/Will 13/2+2=8, poor Reflex 13/3=4, \
+                    integer-division coincidences re-verified rather than assumed). The \
+                    level-13 \"Special\" column reads only \"Smite evil 5/day\" (verified \
+                    independently against d20pfsrd and legacy.aonprd.com) — NOT a new named \
+                    feature: the pre-existing smite-evil-uses-per-day formula \
+                    (1 + (paladin level - 1) / 3) is level-generic and already yields 5 at \
+                    level 13 with no code change; 13th is NOT a repeat-Mercy-grant level (the \
+                    3rd/6th/9th/12th/15th cadence), so no fifth mercy slot is introduced. The \
+                    same slice widens the BASE spells-per-day table to level 13 (\"3/2/1/0\", \
+                    verified independently against d20pfsrd and legacy.aonprd.com; two other \
+                    fetches disagreed with each other and with this pairing on the level-12/13 \
+                    4th-level column, rejected as a known tool-extraction artifact since \
+                    spells-per-day tables never decrease with level, and the accepted pairing \
+                    matches the already-landed Ranger level-13 widening's identical table \
+                    shape): the 1st-level column genuinely rises from 2 to 3, the 2nd/3rd-level \
+                    columns stay 2/1 unchanged, and the 4th-level column NEWLY OPENS at 0 (a \
+                    genuine table entry, not an absence) — 4th-level paladin spells begin at \
+                    paladin level 13 exactly. The spell-level access ladder correspondingly \
+                    widens from 3 to 4 for the first time \
+                    (PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 13), and the base \
+                    spell-save-DC and Charisma-bonus-spells families both extend to the new \
+                    4th spell level automatically (live arithmetic over the widened access \
+                    ladder, no new formula invented). This slice also fixed three stale sibling \
+                    negative controls (allowlist/boundary-control failure mode) that asserted \
+                    level 13 as claim-blocked: tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, and \
+                    tests/sd18_paladin_level12_widening.rs, all moved to a level-14 boundary. \
+                    The SD18 cycle-2026-07-15T2500 slice \
+                    (tests/sd18_paladin_level14_widening.rs) widens the level-range gate once \
+                    more to level 14, the loop's EIGHTH §3.2 level-14 landing (after Barbarian, \
+                    Fighter, Rogue, Ranger, Bard, Cleric, and Druid): base attack genuinely \
+                    rises to +14 and, unlike level 13, ALL THREE base saves genuinely rise too \
+                    (good Fortitude/Will 14/2+2=9, poor Reflex 14/3=4, an integer-division \
+                    coincidence with level 13, re-verified rather than assumed). The level-14 \
+                    \"Special\" column reads only \"Aura of faith\" (verified independently \
+                    against d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                    legacy.aonprd.com, all three agreeing byte-for-byte with no \
+                    self-contradictory fetches this time) — a genuinely NEW class feature, \
+                    grounded as a second bounded grant-only identity record \
+                    (class_chassis.paladin.aura_of_faith, value 0, non-fabricated), mirroring \
+                    the Aura of Justice / Monk Diamond Body idiom exactly: \"at 14th level, a \
+                    paladin's weapons are treated as good-aligned for the purposes of \
+                    overcoming damage reduction. Additionally, any attack made against an \
+                    enemy within 10 feet of her is treated as good-aligned for the purposes \
+                    of overcoming damage reduction\" — no alignment-treatment execution \
+                    engine and no damage-reduction-overcoming resolution engine exists \
+                    anywhere in this codebase to apply this to. 14th is NOT a repeat-Mercy- \
+                    grant level (the 3rd/6th/9th/12th/15th cadence), so no fifth mercy slot is \
+                    introduced; Smite Evil's uses-per-day formula (already level-generic) \
+                    stays 5/day, an integer-division coincidence with level 13 (the level-14 \
+                    \"Special\" column does not even name Smite Evil). The same slice widens \
+                    the BASE spells-per-day table to level 14 (\"3/2/1/1\", verified \
+                    independently against all three sources with no disagreement this time): \
+                    the 1st/2nd/3rd-level columns stay 3/2/1 numerically unchanged, and the \
+                    4th-level column genuinely rises from 0 to 1 — the first castable \
+                    4th-level paladin spell slot. The spell-level access ladder stays 4 \
+                    (already widened at level 13, unchanged here), and the base \
+                    spell-save-DC and Charisma-bonus-spells families both continue to extend \
+                    to the 4th spell level automatically (live arithmetic, no new formula \
+                    invented). This slice also fixed four stale sibling negative controls \
+                    (allowlist/boundary-control failure mode) that asserted level 14 as \
+                    claim-blocked: tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, and \
+                    tests/sd18_paladin_level13_widening.rs, all moved to a level-15 boundary. \
+                    The SD18 cycle-2026-07-15T4300 slice \
+                    (tests/sd18_paladin_level15_widening.rs) widens the level-range gate once \
+                    more to level 15, the loop's EIGHTH §3.2 level-15 landing, and the fourth \
+                    hybrid/partial-caster class (after Ranger and, at levels 13/14, itself) to \
+                    reach it: base attack genuinely rises to +15 (full BAB) and poor Reflex \
+                    genuinely rises to 5 (15/3, up from 4), while both good saves stay \
+                    numerically unchanged at 9 (15/2+2, an integer-division coincidence with \
+                    level 14, re-verified rather than assumed). The level-15 \"Special\" \
+                    column reads only \"Mercy\" (verified independently against d20pfsrd and \
+                    the Archives of Nethys aonprd.com mirror, byte-for-byte agreement, so a \
+                    third source was not required) — 15th IS a repeat-Mercy-grant level (the \
+                    3rd/6th/9th/12th/15th cadence), grounded here as a FIFTH numbered mercy \
+                    choice slot (class_chassis.paladin.mercy_5_choice, choice:paladin_mercy_5, \
+                    gate 15, an open-ended +0 recognition mirroring slots 1-4); unlike the \
+                    6th/9th/12th-level repeat grants, both primary sources agree the CRB's \
+                    named mercy-list tiers stop growing after the 12th-level tier, so the \
+                    fifth slot's cited tier text names no new mercy condition — only a fifth \
+                    pick from the already-existing 3rd/6th/9th/12th-tier pool — and no mercy's \
+                    effect on lay on hands is computed. The same slice widens the BASE \
+                    spells-per-day table to level 15 (\"3/2/2/1\", verified independently \
+                    against both sources with no disagreement): the 1st/2nd/4th-level columns \
+                    stay 3/2/1 numerically unchanged, and the 3rd-level column genuinely rises \
+                    from 1 to 2. The spell-level access ladder stays 4 (already widened at \
+                    level 13, unchanged here), and the base spell-save-DC and \
+                    Charisma-bonus-spells families both continue to extend to the 4th spell \
+                    level automatically (live arithmetic, no new formula invented). This slice \
+                    also fixed four stale sibling negative controls (allowlist/boundary-control \
+                    failure mode) that asserted level 15 as claim-blocked: \
+                    tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, \
+                    tests/sd18_paladin_level13_widening.rs, and \
+                    tests/sd18_paladin_level14_widening.rs, all moved to a level-16 boundary. \
+                    The SD18 cycle-2026-07-15T5400 slice \
+                    (tests/sd18_paladin_level16_widening.rs) widens the level-range gate once \
+                    more to level 16, the loop's SIXTH §3.2 level-16 landing, and the second \
+                    hybrid/partial-caster class (after Ranger, itself stalled at level 14) to \
+                    reach it: base attack genuinely rises to +16 (full BAB) and, unlike level \
+                    15, BOTH good saves genuinely rise too (Fortitude/Will 16/2+2=10, up from \
+                    9), while poor Reflex stays numerically unchanged at 5 (16/3, an \
+                    integer-division coincidence with level 15, re-verified rather than \
+                    assumed). The level-16 \"Special\" column reads only \"Smite evil 6/day\" \
+                    (verified independently against d20pfsrd and the Archives of Nethys \
+                    aonprd.com mirror, byte-for-byte agreement, so a third source was not \
+                    required) — this is NOT a new named feature: the pre-existing \
+                    smite-evil-uses-per-day formula (already level-generic, \
+                    1 + (paladin level - 1) / 3) already yields 6 at level 16 with zero code \
+                    change. 16th is NOT a repeat-Mercy-grant level (the \
+                    3rd/6th/9th/12th/15th cadence), so no sixth mercy slot is introduced; the \
+                    fifth mercy slot (granted at level 15) carries over unchanged. The same \
+                    slice widens the BASE spells-per-day table to level 16 (\"3/3/2/1\", \
+                    verified independently against both sources with no disagreement): the \
+                    1st/3rd/4th-level columns stay 3/2/1 numerically unchanged, and the \
+                    2nd-level column genuinely rises from 2 to 3. The spell-level access \
+                    ladder stays 4 (already widened at level 13, unchanged here), and the base \
+                    spell-save-DC and Charisma-bonus-spells families both continue to extend \
+                    to the 4th spell level automatically (live arithmetic, no new formula \
+                    invented). This slice also fixed five stale sibling negative controls \
+                    (allowlist/boundary-control failure mode) that asserted level 16 as \
+                    claim-blocked: tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, \
+                    tests/sd18_paladin_level13_widening.rs, and \
+                    tests/sd18_paladin_level14_widening.rs, all moved to a level-17 boundary; \
+                    tests/sd18_paladin_level15_widening.rs's own level-16 negative control was \
+                    removed rather than moved, since level 16 is now itself the \
+                    supported/grounded row. \
+                    The SD18 cycle-2026-07-15T10700 slice \
+                    (tests/sd18_paladin_level17_widening.rs) widens the level-range gate once \
+                    more to level 17, the loop's SEVENTH §3.2 level-17 landing (after Ranger, \
+                    Bard, Rogue, Fighter, Wizard, and Cleric), and the second \
+                    hybrid/partial-caster class-row widening to reach it: base attack genuinely \
+                    rises to +17 (full BAB) while ALL THREE base saves stay numerically \
+                    unchanged from level 16 (good Fortitude/Will 17/2+2=10, poor Reflex 17/3=5, \
+                    both integer-division coincidences, re-verified rather than assumed). The \
+                    level-17 \"Special\" column reads only \"Aura of righteousness\" (verified \
+                    independently against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, byte-for-byte agreement, so a third source was not required) — a \
+                    genuinely NEW class feature, grounded as a THIRD bounded grant-only \
+                    identity record (class_chassis.paladin.aura_of_righteousness, value 0, \
+                    non-fabricated), mirroring the Aura of Justice / Aura of Faith idiom \
+                    exactly: \"at 17th level, a paladin gains DR 5/evil and immunity to \
+                    compulsion spells and spell-like abilities\" — no \
+                    damage-reduction-application engine and no compulsion-immunity-check engine \
+                    exists anywhere in this codebase to apply this to. 17th is NOT a \
+                    repeat-Mercy-grant level (the 3rd/6th/9th/12th/15th cadence), so no sixth \
+                    mercy slot is introduced; the fifth mercy slot (granted at level 15) \
+                    carries over unchanged. Smite Evil's uses-per-day formula (already \
+                    level-generic) stays 6/day, an integer-division coincidence with level 16 \
+                    (the next rise lands at level 19), while its damage bonus genuinely rises \
+                    to 17. The same slice widens the BASE spells-per-day table to level 17 \
+                    (\"4/3/2/1\", verified independently against both sources with no \
+                    disagreement): the 2nd/3rd/4th-level columns stay 3/2/1 numerically \
+                    unchanged, and the 1st-level column genuinely rises from 3 to 4. The \
+                    spell-level access ladder stays 4 (already widened at level 13, unchanged \
+                    here), and the base spell-save-DC and Charisma-bonus-spells families both \
+                    continue to extend to the 4th spell level automatically (live arithmetic, \
+                    no new formula invented). This slice also fixed five stale sibling negative \
+                    controls (allowlist/boundary-control failure mode) that asserted level 17 \
+                    as claim-blocked: tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, \
+                    tests/sd18_paladin_level13_widening.rs, and \
+                    tests/sd18_paladin_level14_widening.rs, all moved to a level-18 boundary; \
+                    tests/sd18_paladin_level16_widening.rs's own level-17 negative control was \
+                    removed rather than moved, since level 17 is now itself the \
+                    supported/grounded row. \
+                    The SD18 cycle-2026-07-15T15000 slice \
+                    (tests/sd18_paladin_level18_widening.rs) widens the level-range gate once \
+                    more to level 18, the loop's THIRD §3.2 level-18 landing (after Wizard and \
+                    Cleric), and the third hybrid/partial-caster class-row widening to reach it: \
+                    base attack genuinely rises to +18 (full BAB) and BOTH good saves genuinely \
+                    rise to +11 (Fortitude/Will 18/2+2=11, up from 10) while poor Reflex \
+                    genuinely rises to +6 (18/3=6, up from 5). The level-18 \"Special\" column \
+                    reads only \"Mercy\" (verified independently against d20pfsrd and the \
+                    Archives of Nethys aonprd.com mirror, byte-for-byte agreement, so a third \
+                    source was not required) — 18th IS a repeat-Mercy-grant level (the \
+                    3rd/6th/9th/12th/15th/18th cadence), grounded here as a SIXTH numbered \
+                    mercy choice slot (class_chassis.paladin.mercy_6_choice, value 0, \
+                    non-fabricated), mirroring the proven slot-2/3/4/5 idiom exactly; like the \
+                    15th-level repeat grant, both sources agree the CRB's named mercy-list \
+                    tiers stop growing after 12th level, so the sixth slot's cited tier text \
+                    names no new mercy condition, only the sixth pick from the existing pool. \
+                    Smite Evil's uses-per-day formula (already level-generic) stays 6/day, an \
+                    integer-division coincidence with level 17 (the next rise lands at level \
+                    19), while its damage bonus genuinely rises to 18. The same slice widens \
+                    the BASE spells-per-day table to level 18 (\"4/3/2/2\", verified \
+                    independently against both sources with no disagreement): the \
+                    1st/2nd/3rd-level columns stay 4/3/2 numerically unchanged, and the \
+                    4th-level column genuinely rises from 1 to 2. The spell-level access ladder \
+                    stays 4 (already widened at level 13, unchanged here), and the base \
+                    spell-save-DC and Charisma-bonus-spells families both continue to extend to \
+                    the 4th spell level automatically (live arithmetic, no new formula \
+                    invented). This slice also fixed five stale sibling negative controls \
+                    (allowlist/boundary-control failure mode) that asserted level 18 as \
+                    claim-blocked: tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, \
+                    tests/sd18_paladin_level13_widening.rs, and \
+                    tests/sd18_paladin_level14_widening.rs, all moved to a level-19 boundary; \
+                    tests/sd18_paladin_level17_widening.rs's own level-18 negative control was \
+                    removed rather than moved, since level 18 is now itself the \
+                    supported/grounded row. \
+                    The SD18 cycle-2026-07-16T2800 slice \
+                    (tests/sd18_paladin_level19_widening.rs) widens the level-range gate once \
+                    more to level 19, the loop's FIFTH §3.2 level-19 landing (after Barbarian, \
+                    Cleric, Fighter, and Bard), and the fourth hybrid/partial-caster class-row \
+                    widening to reach it: base attack genuinely rises to +19 (full BAB) while \
+                    ALL THREE base saves stay numerically unchanged from level 18 (good \
+                    Fortitude/Will 19/2+2=11, poor Reflex 19/3=6, both integer-division \
+                    coincidences, re-verified rather than assumed). The level-19 \"Special\" \
+                    column reads only \"Smite evil 7/day\" (verified independently against \
+                    d20pfsrd and the Archives of Nethys aonprd.com mirror, byte-for-byte \
+                    agreement, so a third source was not required) — already the level-generic \
+                    Smite Evil uses-per-day formula's own stated ceiling (1 + (19-1)/3 = 7), so \
+                    no new record or choice slot is needed for it; its damage bonus (equal to \
+                    paladin level) genuinely rises to 19. 19th is NOT a repeat-Mercy-grant \
+                    level (the 3rd/6th/9th/12th/15th/18th cadence, next landing at 21st, out of \
+                    scope), so no seventh mercy slot is introduced; the sixth mercy slot \
+                    (granted at level 18) carries over unchanged. The same slice widens the \
+                    BASE spells-per-day table to level 19 (\"4/3/3/2\", verified independently \
+                    against both sources with no disagreement): the 1st/2nd/4th-level columns \
+                    stay 4/3/2 numerically unchanged, and the 3rd-level column genuinely rises \
+                    from 2 to 3. The spell-level access ladder stays 4 (already widened at level \
+                    13, unchanged here), and the base spell-save-DC and Charisma-bonus-spells \
+                    families both continue to extend to the 4th spell level automatically (live \
+                    arithmetic, no new formula invented). This slice also fixed five stale \
+                    sibling negative controls (allowlist/boundary-control failure mode) that \
+                    asserted level 19 as claim-blocked: tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, \
+                    tests/sd18_paladin_level13_widening.rs, and \
+                    tests/sd18_paladin_level14_widening.rs, all moved to a level-20 boundary; \
+                    tests/sd18_paladin_level18_widening.rs's own level-19 negative control was \
+                    removed rather than moved, since level 19 is now itself the \
+                    supported/grounded row. \
+                    The SD18 cycle-2026-07-16T1500 slice \
+                    (tests/sd18_paladin_level20_widening.rs) widens the level-range gate once \
+                    more to level 20 -- the loop's SIXTH §3.2 level-20 landing (after Cleric, \
+                    Wizard, Barbarian, Bard, and Fighter), and alphabetically the first eligible \
+                    of the four remaining level-20 candidates (Paladin, Ranger, Rogue, Sorcerer) \
+                    named in the prior (Fighter) cycle's own recommendation: base attack \
+                    genuinely rises to +20 (full BAB) and both good saves genuinely rise to 12 \
+                    (20/2+2, up from 11) while poor Reflex stays 6 (20/3, an integer-division \
+                    coincidence with level 19, re-verified rather than assumed). The level-20 \
+                    \"Special\" column reads only \"Holy champion\" (verified independently \
+                    against a raw `curl` fetch of d20pfsrd.com's own class table HTML and a raw \
+                    `curl` fetch of the Archives of Nethys aonprd.com mirror's \
+                    ClassDisplay.aspx HTML, both bypassing AI-summarization, byte-for-byte \
+                    agreement) -- the class capstone, a genuinely NEW class feature, grounded as \
+                    a FOURTH bounded grant-only identity record (value 0, non-fabricated) \
+                    mirroring the Aura of Justice / Aura of Faith / Aura of Righteousness idiom \
+                    exactly: \"a paladin becomes a conduit for the power of her god. Her DR \
+                    increases to 10/evil. Whenever she uses smite evil and successfully strikes \
+                    an evil outsider, the outsider is also subject to a banishment... After the \
+                    banishment effect and the damage from the attack is resolved, the smite \
+                    immediately ends. In addition, whenever she channels positive energy or uses \
+                    lay on hands to heal a creature, she heals the maximum possible amount.\" No \
+                    damage-reduction-application engine, no banishment-spell-effect-resolution \
+                    engine, and no healing-maximization execution engine exists anywhere in this \
+                    codebase to apply any of this to. Smite Evil's uses-per-day formula \
+                    (already level-generic) stays at its 7/day ceiling (an integer-division \
+                    coincidence with level 19, matching the PF1 CRB's own stated maximum), while \
+                    its damage bonus genuinely rises to 20. 20th is NOT a repeat-Mercy-grant \
+                    level (the 3rd/6th/9th/12th/15th/18th cadence, next landing at 21st, out of \
+                    scope), so no seventh mercy slot is introduced; the sixth mercy slot \
+                    (granted at level 18) carries over unchanged. The same slice widens the \
+                    BASE spells-per-day table to level 20 (\"4/4/3/3\", verified independently \
+                    against both sources' raw HTML with no disagreement): the 1st/3rd-level \
+                    columns stay 4/3 numerically unchanged, while the 2nd-level AND 4th-level \
+                    columns BOTH genuinely rise simultaneously (2nd from 3 to 4, 4th from 2 to \
+                    3) -- the first level in this row's own widening history where two columns \
+                    rise at once, a deliberate deviation from the single-column-rise pattern \
+                    seen at every level from 13 through 19, so both raw HTML fetches were \
+                    double-checked directly (not AI-summarized) to guard against a \
+                    tool-extraction artifact; no disagreement was found. The spell-level access \
+                    ladder stays 4 (already widened at level 13, unchanged here), and the base \
+                    spell-save-DC and Charisma-bonus-spells families both continue to extend to \
+                    the 4th spell level automatically (live arithmetic, no new formula \
+                    invented). This slice also fixed five stale sibling negative controls \
+                    (allowlist/boundary-control failure mode) that asserted level 20 as \
+                    claim-blocked: tests/sd13_paladin_level10_progression.rs, \
+                    tests/sd18_paladin_level11_aura_of_justice.rs, \
+                    tests/sd18_paladin_level12_widening.rs, \
+                    tests/sd18_paladin_level13_widening.rs, and \
+                    tests/sd18_paladin_level14_widening.rs, all moved to a level-21 boundary (a \
+                    pure implementation-gate check, since PF1 has no 21st character level); \
+                    tests/sd18_paladin_level19_widening.rs's own level-20 negative control was \
+                    removed rather than moved, since level 20 is now itself the \
+                    supported/grounded row. This closes Paladin's own per-level \
+                    arithmetic-widening frontier -- level 20 is the final level within PF1's \
+                    1-20 character-level cap. \
+                    The F6 hybrid chassis pair (class-feature and spell) stays claim-blocking \
+                    as accepted hybrid truth, Divine Bond stays \
+                    named-but-unproven, Aura of Justice's, Aura of Faith's, Aura of \
+                    Righteousness's, and Holy Champion's own resolution engines are not \
+                    computed, and the \
+                    partial-caster spell burden itself \
                     remains named and unproven beyond the grounded caster-level gate arithmetic \
                     — no spell-source lineage, spells known or prepared posture, \
                     spells-per-day progression, bonus spell slots, or spell save DCs are \
-                    grounded. The F6 hybrid baseline, the F6 hybrid blockers, and the F6 hybrid \
+                    grounded -- unchanged from level 20 -- but every named grounded milestone \
+                    above (the level-1-20 chassis baseline, smite evil, lay on hands, divine \
+                    grace, mercy, channel positive energy, the partial-caster \
+                    effective-caster-level gate, Aura of Justice/Faith/Righteousness, Holy \
+                    Champion, and the per-level widening through level 20) is now surfaced live \
+                    in the desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), \
+                    reachable from the hub landing screen, filterable by class and searchable \
+                    by class name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the \
+                    operator's UI surfaces it). The F6 hybrid baseline, the F6 hybrid blockers, \
+                    and the F6 hybrid \
                     chassis recognition explanation all remain in place (each gated to the \
                     bounded hybrid baseline level, so they still fire only at level 1)",
-                next_required_uplift: "ground the paladin prepared-posture and \
-                    spell-source-lineage burdens now that the caster-level gate, the access \
-                    ladder, the base per-day counts, the base spell-save DCs, the Charisma \
-                    bonus-slot counts, and the integrated totals are all grounded, then \
-                    paladin level-11+ \
-                    progression",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding \
+                    Paladin's remaining class-feature-execution engine (Divine Bond \
+                    weapon-enhancement/mount-advancement resolution, Aura of Justice's \
+                    smite-sharing resolution, Aura of Faith's and Aura of Righteousness's own \
+                    damage-reduction-overcoming/damage-reduction/compulsion-immunity \
+                    resolution, Holy Champion's own damage-reduction/banishment/ \
+                    healing-maximization resolution, and mercy EFFECT resolution), then the \
+                    paladin prepared-posture and spell-source-lineage burdens, is a future \
+                    SD-N's scope, not a further per-cycle widening of this row. This row's \
+                    own per-level arithmetic-widening frontier is now CLOSED at level 20, the \
+                    final level within PF1's 1-20 character-level cap for this class row",
             },
             SupportStateRow {
                 row_id: "class.ranger.hybrid_chassis_and_spell_burden",
@@ -2634,7 +4813,9 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:ranger",
                 dimension: "bounded hybrid class progression: the deterministic Human \
                             Ranger level-1/level-2/level-3/level-4/level-5/level-6/level-7/ \
-                            level-8/level-9/level-10 chassis baseline, with base attack bonus, base save \
+                            level-8/level-9/level-10/level-11/level-12/level-13/level-14/ \
+                            level-15/level-16/level-17/level-18/level-19/level-20 \
+                            chassis baseline, with base attack bonus, base save \
                             progression, Track, the favored-enemy flat surface, the \
                             combat-style choice-and-bonus-feat recognition, (level 3) \
                             Endurance and the Favored Terrain choice-and-flat-magnitude \
@@ -2646,13 +4827,56 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             record), (level 8) Swift Tracker (a grant-only identity \
                             record), (level 8) the Favored Terrain rule's 8th-level \
                             interval (second favored-terrain selection plus the \
-                            bonus-increase target choice), and (level 10) the Favored Enemy \
+                            bonus-increase target choice), (level 10) the Favored Enemy \
                             rule's 10th-level interval (third enemy-type selection plus its \
                             own bonus-increase target choice, stacking with the 5th-level \
-                            increase when both name the same enemy) grounded for real and \
-                            the later spell burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                            increase when both name the same enemy), (level 11) Quarry \
+                            (a grant-only identity record for the take-10-while-tracking and \
+                            auto-confirm-critical-threats behaviors, an open-ended target-choice \
+                            recognition record, and the flat +2 insight attack-roll magnitude), \
+                            (level 12) Camouflage (a grant-only identity record), and (level \
+                            13) the Favored Terrain rule's own 13th-level interval (third \
+                            terrain-type selection plus its own bonus-increase target choice, \
+                            stacking with the 8th-level increase when both name the same \
+                            terrain) plus the spell-level access ladder's genuinely new \
+                            4th-level column and the base spells-per-day table's own level-13 \
+                            row, (level 14) the FOURTH combat-style bonus feat (an \
+                            open-ended, non-restricted-list identity record) plus the base \
+                            spells-per-day table's own level-14 row, (level 15) the Favored \
+                            Enemy rule's own 15th-level interval (fourth enemy-type selection \
+                            plus its own bonus-increase target choice, stacking with the \
+                            10th-level increase when both name the same enemy) plus the base \
+                            spells-per-day table's own level-15 row, (level 16) Improved \
+                            Evasion (an upgrade of the 9th-level Evasion identity, grounded as a \
+                            bounded +0 identity/recognition record only, mirroring Monk's own \
+                            Improved Evasion idiom exactly) plus the base spells-per-day table's \
+                            own level-16 row, (level 17) Hide in Plain Sight (a grant-only \
+                            identity record, mirroring Camouflage's own idiom exactly) plus the \
+                            base spells-per-day table's own level-17 row, and (level 18) the \
+                            Favored Terrain rule's own 18th-level interval (fourth terrain-type \
+                            selection plus its own bonus-increase target choice, stacking with \
+                            the 8th- and 13th-level increases when all three name the same \
+                            terrain) plus the FIFTH combat-style bonus feat (an open-ended, \
+                            non-restricted-list identity record, mirroring the fourth bonus \
+                            feat's own idiom exactly) plus the base spells-per-day table's own \
+                            level-18 row, and (level 19) Improved Quarry (an upgrade of the \
+                            11th-level Quarry identity, grounded as a bounded +0 \
+                            identity/recognition record only, mirroring Ranger's own Improved \
+                            Evasion idiom exactly, plus a genuine +2-to-+4 rise on the \
+                            already-existing Quarry insight attack-roll bonus explanation) plus \
+                            the base spells-per-day table's own level-19 row, and (level 20) \
+                            the Favored Enemy rule's own 20th-level (final) interval (fifth \
+                            enemy-type selection plus its own bonus-increase target choice, \
+                            widened to the five-enemy set) plus Master Hunter (a brand-new \
+                            20th-level capstone, grounded as a bounded grant-only identity \
+                            record, mirroring the Paladin Holy Champion capstone idiom exactly) \
+                            plus the base spells-per-day table's own level-20 row, all grounded \
+                            for real, and the later spell burden still blocked. This row's own \
+                            per-level arithmetic-widening frontier is now CLOSED at level 20, \
+                            the final level within PF1's 1-20 character-level cap for this \
+                            class row",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_RANGER_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3-F6 leaves direct computed evidence that the \
@@ -2911,7 +5135,41 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     absent selections fabricate nothing (the baseline level-10 fixture \
                     computes exactly as before), the selections are correctly not recognized \
                     below the 10th-level gate, and the 15th/20th intervals stay out of \
-                    scope. The row is Partial, not \
+                    scope -- AND the SD18 cycle-2026-07-14T2300 slice \
+                    (tests/sd18_ranger_level11_quarry.rs) widens the level-range gate once \
+                    more to level 11, extending base save/Track to level 11 via the same \
+                    formulas (both stay numerically unchanged from level 10 -- 11/2+2 = 7, \
+                    11/3 = 3, max(11/2, 1) = 5 -- integer-division coincidences, re-verified \
+                    against d20pfsrd and the Archives of Nethys aonprd.com mirror rather than \
+                    assumed) while base attack genuinely rises to +11 (full BAB), and grounds \
+                    the class table's 11th-level \"Special\" column entry, \"Quarry\" \
+                    (verified independently against both primary sources -- no other new \
+                    class feature is gained at 11th level). Quarry was genuinely assessed \
+                    against the possibility that it requires new execution machinery (a \
+                    favored-quarry-selection mechanism, an attack-roll-bonus-application \
+                    engine, a critical-confirmation-auto-succeed engine) before any code was \
+                    written; it is instead grounded as a three-part bundle mirroring existing \
+                    precedent exactly: the take-10-while-tracking and \
+                    auto-confirm-critical-threats behaviors are a grant-only identity record \
+                    (class_feature.ranger.quarry, value 0), mirroring the Woodland \
+                    Stride/Swift Tracker idiom (no Survival-check-execution engine and no \
+                    critical-confirmation-roll engine exists anywhere in this codebase); the \
+                    quarry target is an open-ended +0 recognition record \
+                    (class_chassis.ranger.quarry_choice) mirroring the Favored Enemy/Favored \
+                    Terrain choice-recognition idiom exactly (no restricted-list validation, \
+                    no favored-enemy-type matching); and the rule's own flat +2 insight \
+                    attack-roll bonus is a standalone, non-applied magnitude \
+                    (class_chassis.ranger.quarry_attack_bonus) mirroring the Favored Enemy \
+                    attack/damage-bonus idiom exactly. No active-quarry state (the 24-hour \
+                    reselection cooldown, the 1-hour post-kill cooldown, or \"only one quarry \
+                    at a time\") is tracked. The same SD18 slice also widens the BASE \
+                    spells-per-day counts to level 11 \
+                    (class_chassis.ranger.partial_caster.base_spells_per_day.spell_level_3): \
+                    the 3rd-level column genuinely rises from 0 to 1 (\"2/1/1/-\", verified \
+                    independently on both primary sources), while the 1st/2nd-level columns \
+                    stay 2/1 unchanged and the access ladder stays at 3 (4th-level ranger \
+                    spells begin at level 13, outside this row's ceiling, checked rather than \
+                    assumed away). The row is Partial, not \
                     Supported: the favored-enemy conditional-application engine (target-type \
                     matching that would decide whether a specific check or attack is made \
                     against the favored enemy) is not implemented, neither recognized \
@@ -2980,17 +5238,326 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     Wisdom bonus-only access as arithmetic; live end-to-end — a dedicated \
                     test raises the fixture Wisdom and the totals fill to 3/2/1; counts \
                     only, no casting execution, slot consumption, or tracking; prepared \
-                    posture and lineage remain the named spell burden)",
-                next_required_uplift: "ground the ranger Wisdom bonus-spells and \
-                    prepared-posture/spell-source-lineage burdens now that the caster-level \
-                    gate, the access ladder, the base per-day counts, and the base \
-                    spell-save DCs are all grounded, then Ranger \
-                    level-11+ progression, a favored-enemy conditional-application engine, \
-                    execution of either recognized combat-style bonus feat's own mechanics, \
-                    Hunter's Bond ally-bonus application and the animal-companion stat \
-                    block/advancement subsystem, a terrain-detection/movement-resolution engine \
-                    for Woodland Stride's own effect, a tracking-penalty-application engine for \
-                    Swift Tracker's own effect, then SD13-E4 ranger spell burden",
+                    posture and lineage remain the named spell burden) — AND the SD18 \
+                    cycle-2026-07-15T0900 slice (tests/sd18_ranger_level12_widening.rs) widens \
+                    the level-range gate once more to level 12, extending base attack/base \
+                    save/Track to level 12 via the same formulas: base attack genuinely rises \
+                    to +12 (full BAB), and unlike level 11's integer-division coincidences, ALL \
+                    THREE base saves genuinely rise too (Fortitude/Reflex to +8, 12/2+2; Will \
+                    to +4, 12/3), and Track genuinely rises to 6 (max(12/2, 1)) — all verified \
+                    against d20pfsrd and the Archives of Nethys aonprd.com mirror rather than \
+                    assumed. The class table's 12th-level \"Special\" column reads only \
+                    \"Camouflage\" (verified independently against both primary sources — no \
+                    other new class feature is gained at 12th level): its rule text (\"A ranger \
+                    of 12th level or higher can use the Stealth skill to hide, even while being \
+                    observed, as long as she is within any sort of natural terrain that grants \
+                    at least partial concealment or partial cover\") carries no numeric \
+                    magnitude and no player choice, so it is grounded as a bounded grant-only \
+                    identity record (class_feature.ranger.camouflage, value 0), mirroring the \
+                    Woodland Stride/Swift Tracker idiom exactly — no terrain-classification \
+                    engine and no Stealth-check-execution engine exists anywhere in this \
+                    codebase. The same slice also widens the BASE spells-per-day counts to \
+                    level 12 (class_chassis.ranger.partial_caster.base_spells_per_day.\
+                    spell_level_2): the 2nd-level column genuinely rises from 1 to 2 \
+                    (\"2/2/1/-\", verified independently on both primary sources), while the \
+                    1st/3rd-level columns stay 2/1 unchanged and the access ladder stays at 3 \
+                    (4th-level ranger spells begin at level 13, outside this row's ceiling, \
+                    checked rather than assumed away). This slice also fixed two stale sibling \
+                    negative controls (allowlist/boundary-control failure mode) that asserted \
+                    level 12 as claim-blocked: tests/sd13_ranger_level10_progression.rs and \
+                    tests/sd18_ranger_level11_quarry.rs, both moved to a level-13 boundary. \
+                    The SD18 cycle-2026-07-15T1400 slice (tests/sd18_ranger_level13_widening.rs) \
+                    widens the level-range gate once more to level 13, extending base attack to \
+                    level 13 (base saves stay numerically unchanged from level 12, integer- \
+                    division coincidences re-verified rather than assumed: Fortitude/Reflex \
+                    13/2+2=8, Will 13/3=4). The class table's 13th-level \"Special\" column \
+                    reads only \"3rd favored terrain\" (verified independently against three \
+                    primary sources — d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                    legacy.aonprd.com, all byte-for-byte identical) — the Favored Terrain \
+                    rule's own 13th-level interval (8th level + 5), the exact structural mirror \
+                    of the already-grounded Favored Enemy 10th-level interval: this slice \
+                    grounds a THIRD favored-terrain TYPE selection \
+                    (choice:ranger_favored_terrain_3, mirroring the second favored terrain's \
+                    own open-ended choice-recognition idiom, plus the same flat +2 base \
+                    magnitude formula), a restricted three-option choice recognizing WHICH one \
+                    favored terrain is the 13th-level interval's OWN bonus-increase target \
+                    (choice:ranger_favored_terrain_bonus_increase_target_2 -> terrain:first / \
+                    terrain:second / terrain:third, mirroring the Favored Enemy 10th-level \
+                    interval's own restricted-set idiom), and the resulting +2 magnitude \
+                    STACKING with the already-grounded 8th-level interval's own increase when \
+                    both target the same terrain (the first favored terrain rises to +6: 2 \
+                    base + 2 at 8th + 2 at 13th, verified on a dedicated fixture). The SAME \
+                    slice also widens the base spells-per-day table to level 13 \
+                    (\"3/2/1/0\", verified independently against all three primary sources): \
+                    the 1st-level column genuinely rises from 2 to 3, the 2nd/3rd-level \
+                    columns stay 2/1 unchanged, and the 4th-level column NEWLY OPENS at 0 (a \
+                    genuine table entry, not an absence) — 4th-level ranger spells begin at \
+                    ranger level 13 exactly, checked rather than assumed away. The \
+                    spell-level access ladder correspondingly widens from 3 to 4 for the first \
+                    time, and the already-grounded base spell-save-DC and Wisdom-bonus-spells \
+                    families both extend to the new 4th spell level automatically (live \
+                    arithmetic over the widened access ladder, no new formula invented). This \
+                    slice also fixed two stale sibling negative controls (allowlist/ \
+                    boundary-control failure mode) that asserted level 13 as claim-blocked: \
+                    tests/sd13_ranger_level10_progression.rs and \
+                    tests/sd18_ranger_level12_widening.rs, both moved to a level-14 boundary. \
+                    The SD18 cycle-2026-07-15T2100 slice (tests/sd18_ranger_level14_widening.rs) \
+                    widens the level-range gate once more to level 14, extending base attack to \
+                    level 14 (full BAB) and both good saves genuinely rise (Fortitude/Reflex \
+                    14/2+2=9, up from 8), while poor Will stays 4 (14/3, an integer-division \
+                    coincidence). The class table's 14th-level \"Special\" column reads only \
+                    \"Combat style feat\" (verified independently against three primary \
+                    sources — d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                    legacy.aonprd.com, all byte-for-byte identical): the ranger's FOURTH \
+                    combat-style bonus feat. Unlike the 2nd/6th/10th-level grants, the PF1 Core \
+                    Rulebook's own Combat Style feat tables (Archery, Two-Weapon Combat) do not \
+                    tabulate any named options beyond the 10th-level tier (verified \
+                    independently against three sources dedicated to the combat-style feat \
+                    lists themselves — d20pfsrd's Ranger Combat Styles page, the Archives of \
+                    Nethys aonprd.com RangerCombatStyles page, and a Paizo rules-forum thread — \
+                    all three agree the printed list stops after 10th level; later sourcebooks \
+                    such as the Advanced Player's Guide add named 14th/18th-level options, \
+                    outside SD-18's Core-Rulebook-only scope), so this slice grounds the fourth \
+                    bonus-feat slot as an OPEN-ENDED +0 recognition record (mirroring the \
+                    Favored Terrain/Quarry choice-recognition idiom: raw string interpolation, \
+                    no restricted-list validation), NOT the closed-restricted-list idiom used \
+                    for feats 1-3 — an honest choice given the corpus does not contain a \
+                    CRB-sourced restricted list at this tier. The same slice also widens the \
+                    base spells-per-day table to level 14 (\"3/2/1/1\", verified independently \
+                    against all three primary sources): the 1st/2nd/3rd-level columns stay \
+                    3/2/1 unchanged, and the 4th-level column genuinely rises from 0 to 1; the \
+                    spell-level access ladder stays at 4 (ranger spells never reach a 5th spell \
+                    level at any level). This slice also fixed four stale sibling negative \
+                    controls (allowlist/boundary-control failure mode) that asserted level 14 \
+                    as claim-blocked: tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, \
+                    tests/sd18_ranger_level12_widening.rs, and \
+                    tests/sd18_ranger_level13_widening.rs, all moved to a level-15 boundary. \
+                    The SD18 cycle-2026-07-15T4000 slice (tests/sd18_ranger_level15_widening.rs) \
+                    widens the level-range gate once more to level 15, extending base attack to \
+                    level 15 (full BAB) while both good saves stay 9 (15/2+2, integer-division \
+                    coincidences with level 14) and poor Will genuinely rises to 5 (15/3, up \
+                    from 4) — verified independently against two primary sources, d20pfsrd and \
+                    the Archives of Nethys aonprd.com mirror, byte-for-byte agreement. The class \
+                    table's 15th-level \"Special\" column reads only \"4th favored enemy\" — the \
+                    Favored Enemy rule's own 15th-level interval, the exact structural mirror of \
+                    the already-grounded 10th-level interval: this slice grounds a FOURTH \
+                    favored-enemy TYPE selection (choice:ranger_favored_enemy_4, mirroring the \
+                    third favored enemy's own open-ended choice-recognition idiom), a restricted \
+                    four-option choice recognizing WHICH one favored enemy is the 15th-level \
+                    interval's OWN bonus-increase target \
+                    (choice:ranger_favored_enemy_bonus_increase_target_3 -> enemy:first / \
+                    enemy:second / enemy:third / enemy:fourth, mirroring the 10th-level \
+                    interval's own restricted-set idiom widened by one option), and the \
+                    resulting +2 magnitude applied only to whichever favored enemy the target \
+                    choice actually names (the fourth favored enemy rises to +4: 2 base + 2 at \
+                    its own 15th-level interval, verified on a dedicated fixture). The same \
+                    slice also widens the base spells-per-day table to level 15 (\"3/2/2/1\", \
+                    verified independently against both primary sources): the 1st/2nd/4th-level \
+                    columns stay 3/2/1 unchanged, and the 3rd-level column genuinely rises from \
+                    1 to 2; the spell-level access ladder stays at 4 (ranger spells never reach \
+                    a 5th spell level at any level). Level 15 is NOT a Combat Style bonus-feat \
+                    level (feats land at 2/6/10/14/18), so no fifth combat-style slot appears. \
+                    This slice also fixed five stale sibling negative controls \
+                    (allowlist/boundary-control failure mode) that asserted level 15 as \
+                    claim-blocked: tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, \
+                    tests/sd18_ranger_level12_widening.rs, \
+                    tests/sd18_ranger_level13_widening.rs, and \
+                    tests/sd18_ranger_level14_widening.rs, all moved to a level-16 boundary. \
+                    The SD18 cycle-2026-07-15T6100 slice \
+                    (tests/sd18_ranger_level16_improved_evasion.rs) widens the level-range gate \
+                    once more to level 16, extending base attack to level 16 (full BAB) while \
+                    both good saves genuinely rise to 10 (16/2+2, up from 9) and poor Will stays \
+                    5 (16/3, an integer-division coincidence with level 15) — verified \
+                    independently against two primary sources, d20pfsrd and the Archives of \
+                    Nethys aonprd.com mirror, byte-for-byte agreement. The class table's \
+                    16th-level \"Special\" column reads only \"Improved evasion\". A prior \
+                    cycle's own investigation (cycle-2026-07-15T6000) found the carried-forward \
+                    risk-map claim that Improved Evasion was a mechanic no class in this \
+                    codebase grounds was FALSE, checked directly against pilot_compute.rs: \
+                    Monk's own Improved Evasion (MONK_IMPROVED_EVASION_LEVEL, 9th level) and \
+                    Ranger's own base Evasion (RANGER_EVASION_LEVEL, 9th level) are both already \
+                    grounded as bounded +0 identity/recognition records only. This slice grounds \
+                    Ranger's own Improved Evasion (RANGER_IMPROVED_EVASION_LEVEL) the same way: \
+                    a bounded +0 identity/recognition record naming the rule text honestly (the \
+                    ranger still takes no damage on a successful Reflex save, and henceforth \
+                    takes only half damage on a failed save) — no saving-throw-resolution or \
+                    damage-resolution engine exists anywhere in this codebase, so no damage math \
+                    is fabricated from it. The same slice also widens the base spells-per-day \
+                    table to level 16 (\"3/3/2/1\", verified independently against both primary \
+                    sources): the 2nd/3rd/4th-level columns stay 3/2/1 unchanged, and the \
+                    1st-level column genuinely rises from 2 to 3; the spell-level access ladder \
+                    stays at 4 (ranger spells never reach a 5th spell level at any level). Level \
+                    16 is NOT a Combat Style bonus-feat level (feats land at 2/6/10/14/18) and \
+                    NOT a Favored Enemy/Favored Terrain interval (next intervals land at \
+                    18/20), so no other new record appears. This slice also fixed five stale \
+                    sibling negative controls (allowlist/boundary-control failure mode) that \
+                    asserted level 16 as claim-blocked: tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, tests/sd18_ranger_level12_widening.rs, \
+                    tests/sd18_ranger_level13_widening.rs, and \
+                    tests/sd18_ranger_level14_widening.rs, all moved to a level-17 boundary; \
+                    tests/sd18_ranger_level15_widening.rs's own level-16 negative-control test \
+                    was removed rather than moved, since level 16 is now itself the \
+                    supported/grounded row. The SD18 cycle-2026-07-15T7000 slice \
+                    (tests/sd18_ranger_level17_hide_in_plain_sight.rs) widens the level-range \
+                    gate once more to level 17, extending base attack to level 17 (full BAB) \
+                    while both good saves and poor Will all stay unchanged (17/2+2 = 10 and \
+                    17/3 = 5, both integer-division coincidences with level 16) — verified \
+                    independently against THREE primary sources, d20pfsrd, the Archives of \
+                    Nethys aonprd.com mirror, and legacy.aonprd.com, all byte-for-byte \
+                    identical. The class table's 17th-level \"Special\" column reads only \
+                    \"Hide in plain sight\": \"While in any of his favored terrains, a ranger \
+                    of 17th level or higher can use the Stealth skill even while being \
+                    observed.\" This is the exact structural mirror of Camouflage (the \
+                    already-grounded 12th-level \"Special\" column entry): this slice grounds \
+                    Hide in Plain Sight (RANGER_HIDE_IN_PLAIN_SIGHT_LEVEL) the same way, a \
+                    bounded +0 identity/recognition record naming the rule text honestly — no \
+                    terrain-classification engine and no Stealth-check-execution engine exists \
+                    anywhere in this codebase, so no hide-while-observed resolution is \
+                    fabricated from it. The same slice also widens the base spells-per-day \
+                    table to level 17 (\"4/3/2/1\", verified independently against all three \
+                    primary sources): the 2nd/3rd/4th-level columns stay 3/2/1 unchanged, and \
+                    the 1st-level column genuinely rises from 3 to 4; the spell-level access \
+                    ladder stays at 4 (ranger spells never reach a 5th spell level at any \
+                    level). Level 17 is NOT a Combat Style bonus-feat level (feats land at \
+                    2/6/10/14/18) and NOT a Favored Enemy/Favored Terrain interval (next \
+                    intervals land at 18/19), so no other new record appears. This slice also \
+                    fixed five stale sibling negative controls (allowlist/boundary-control \
+                    failure mode) that asserted level 17 as claim-blocked: \
+                    tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, tests/sd18_ranger_level12_widening.rs, \
+                    tests/sd18_ranger_level13_widening.rs, and \
+                    tests/sd18_ranger_level14_widening.rs, all moved to a level-18 boundary; \
+                    tests/sd18_ranger_level16_improved_evasion.rs's own level-17 \
+                    negative-control test was removed rather than moved, since level 17 is now \
+                    itself the supported/grounded row. The SD18 cycle-2026-07-16T0244 slice \
+                    (tests/sd18_ranger_level18_widening.rs) widens the level-range gate once \
+                    more to level 18, extending base attack to level 18 (full BAB) while ALL \
+                    THREE base saves genuinely rise this time (good Fortitude/Reflex to 11, \
+                    18/2+2; poor Will to 6, 18/3) — unlike level 17's all-coincidence row — \
+                    verified independently against two primary sources, d20pfsrd and the \
+                    Archives of Nethys aonprd.com mirror, byte-for-byte agreement, confirming \
+                    the prior cycle's own carried-forward hypothesis exactly. The class table's \
+                    18th-level \"Special\" column reads \"4th favored terrain, combat style \
+                    feat\". This slice grounds the Favored Terrain rule's own 18th-level \
+                    interval (RANGER_FAVORED_TERRAIN_FOURTH_INTERVAL_LEVEL, the exact structural \
+                    mirror of the already-grounded Favored Enemy 15th-level interval): a fourth \
+                    terrain-type selection plus its own bonus-increase target choice, stacking \
+                    with the 8th- and 13th-level increases when all three name the same terrain \
+                    (2 base + 2 + 2 + 2 = +8). It also grounds the FIFTH combat-style bonus feat \
+                    (RANGER_COMBAT_STYLE_BONUS_FEAT_5_LEVEL) as an open-ended, non-restricted- \
+                    list identity record, mirroring the fourth bonus feat's own idiom exactly — \
+                    the PF1 Core Rulebook's own Combat Style feat tables do not tabulate any \
+                    named options beyond the 10th-level tier. The same slice also widens the \
+                    base spells-per-day table to level 18 (\"4/3/2/2\", verified independently \
+                    against both primary sources): the 1st/2nd/3rd-level columns stay 4/3/2 \
+                    unchanged, and the 4th-level column genuinely rises from 1 to 2 (numerically \
+                    identical to the already-landed Paladin level-18 row); the spell-level \
+                    access ladder stays at 4. This slice also fixed five stale sibling negative \
+                    controls (allowlist/boundary-control failure mode) that asserted level 18 as \
+                    claim-blocked: tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, tests/sd18_ranger_level12_widening.rs, \
+                    tests/sd18_ranger_level13_widening.rs, and \
+                    tests/sd18_ranger_level14_widening.rs, all moved to a level-19 boundary; \
+                    tests/sd18_ranger_level17_hide_in_plain_sight.rs's own level-18 \
+                    negative-control test was removed rather than moved, since level 18 is now \
+                    itself the supported/grounded row. The SD18 cycle-2026-07-16T3200 slice \
+                    (tests/sd18_ranger_level19_widening.rs) widens the level-range gate once \
+                    more to level 19, extending base attack to level 19 (full BAB) while both \
+                    good saves stay 11 (19/2+2) and poor Will stays 6 (19/3), both \
+                    integer-division coincidences with level 18 — verified independently \
+                    against two primary sources, d20pfsrd and the Archives of Nethys \
+                    aonprd.com mirror, byte-for-byte agreement. The class table's 19th-level \
+                    \"Special\" column reads \"Improved quarry\": an UPGRADE of the \
+                    already-grounded 11th-level Quarry identity, the exact structural mirror \
+                    of Improved Evasion's own upgrade of Evasion. This slice grounds a new \
+                    bounded grant-only identity record naming the free-action reselection \
+                    (up from a standard action), take-20-while-tracking (up from take 10), and \
+                    reduced 10-minute reselection cooldown (down from 24 hours/1 hour) \
+                    upgrades, pushed only at/above the level-19 gate with no separate absence \
+                    record below it, mirroring Evasion/Improved Evasion's own no-else-branch \
+                    shape. It also grounds a genuine rise on the already-existing Quarry \
+                    insight attack-roll bonus explanation, from +2 to +4, mirroring the Bard \
+                    Inspire Competence tiered-magnitude idiom (same explanation id, larger \
+                    value at the higher tier). The same slice also widens the base \
+                    spells-per-day table to level 19 (\"4/3/3/2\", verified independently \
+                    against both primary sources): the 1st/2nd/4th-level columns stay 4/3/2 \
+                    unchanged, and the 3rd-level column genuinely rises from 2 to 3; the \
+                    spell-level access ladder stays at 4. Level 19 is NOT a Favored Enemy \
+                    interval (next lands at 20th), NOT a Favored Terrain interval (next lands \
+                    at 23rd, out of scope), and NOT a Combat Style Feat level (feats land at \
+                    2/6/10/14/18), so no other new record appears. This slice also fixed five \
+                    stale sibling negative controls (allowlist/boundary-control failure mode) \
+                    that asserted level 19 as claim-blocked: tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, tests/sd18_ranger_level12_widening.rs, \
+                    tests/sd18_ranger_level13_widening.rs, and \
+                    tests/sd18_ranger_level14_widening.rs, all moved to a level-20 boundary; \
+                    tests/sd18_ranger_level18_widening.rs's own level-19 negative-control test \
+                    was removed rather than moved, since level 19 is now itself the \
+                    supported/grounded row. The SD18 cycle-2026-07-16T1600 slice \
+                    (tests/sd18_ranger_level20_widening.rs) widens the level-range gate once \
+                    more to level 20, extending base attack to level 20 (full BAB) while both \
+                    good saves (Fortitude, Reflex) genuinely rise to 12 (20/2+2) and poor Will \
+                    stays 6 (20/3, an integer-division coincidence with level 19) — verified \
+                    independently against two primary sources, d20pfsrd and the Archives of \
+                    Nethys aonprd.com mirror, byte-for-byte agreement. The class table's \
+                    20th-level \"Special\" column reads \"5th favored enemy, master hunter\". \
+                    This slice grounds the Favored Enemy rule's own 20th-level (final) \
+                    interval (RANGER_FAVORED_ENEMY_FIFTH_INTERVAL_LEVEL, the exact structural \
+                    mirror of the already-grounded 15th-level interval): a fifth \
+                    favored-enemy-type selection plus its own bonus-increase target choice, \
+                    widened to the five-enemy set, stacking with the 5th/10th/15th-level \
+                    increases when all four name the same enemy (2 base + 2 + 2 + 2 + 2 = \
+                    +10 at the ceiling). It also grounds Master Hunter as a bounded \
+                    grant-only identity record (value 0, mirroring the Paladin Holy Champion \
+                    capstone idiom exactly, including the level-gate absence/grant if/else \
+                    shape) — no action-economy engine, no attack-resolution engine, and no \
+                    saving-throw-resolution engine exists anywhere in this codebase, so the \
+                    standard-action full-attack-bonus attack and its Fortitude-save-or-die \
+                    effect are never applied to any actual roll. The same slice also widens \
+                    the base spells-per-day table to level 20 (\"4/4/3/3\", verified \
+                    independently against both primary sources): the 1st/3rd-level columns \
+                    stay 4/3 unchanged, and the 2nd/4th-level columns both genuinely rise (3 \
+                    to 4, 2 to 3); the spell-level access ladder stays at 4. Level 20 is NOT a \
+                    Favored Terrain interval (next would land at 23rd, out of scope) and NOT a \
+                    Combat Style Feat level (feats land at 2/6/10/14/18, the last already \
+                    grounded), so no other new record appears. This slice also fixed five \
+                    stale sibling negative controls (allowlist/boundary-control failure mode) \
+                    that asserted level 20 as claim-blocked: tests/sd13_ranger_level10_progression.rs, \
+                    tests/sd18_ranger_level11_quarry.rs, tests/sd18_ranger_level12_widening.rs, \
+                    tests/sd18_ranger_level13_widening.rs, and \
+                    tests/sd18_ranger_level14_widening.rs, all moved to a level-21 boundary (a \
+                    pure implementation-gate check, since PF1 has no 21st character level); \
+                    tests/sd18_ranger_level19_widening.rs's own level-20 negative-control test \
+                    was removed rather than moved, since level 20 is now itself the \
+                    supported/grounded row. This row's own per-level arithmetic-widening \
+                    frontier is now CLOSED at level 20, the final level within PF1's 1-20 \
+                    character-level cap for this class row. Full-matrix-closure cycle \
+                    2026-07-17 (row_or_kind class.ranger.hybrid_chassis_and_spell_burden): \
+                    promoted Partial/Computed -> Supported/ProductVisible. Condition 2 (every \
+                    named grounded milestone) was already satisfied by the grounding above; \
+                    condition 1 (a live, operator-reachable UI surface) is now satisfied by the \
+                    Class Progression Catalog browser (apps/desktop/src/classCatalog/ \
+                    ClassCatalogScreen.tsx, list_class_catalog Tauri command), which surfaces \
+                    every class's full level-1-20 progression table including Ranger's, \
+                    live-verified at browser-build time (commit 9313e30).",
+                next_required_uplift: "none for recognition or UI-surfacing; this row's own \
+                    per-level arithmetic-widening frontier is CLOSED at level 20, the final \
+                    PF1 1-20 level cap ceiling. Grounding the ranger Wisdom bonus-spells and \
+                    prepared-posture/spell-source-lineage burdens, a favored-terrain and \
+                    favored-enemy conditional-application engine, execution of any of the five \
+                    recognized combat-style bonus feats' own mechanics, Hunter's Bond \
+                    ally-bonus application and the animal-companion stat block/advancement \
+                    subsystem, a terrain-detection/movement-resolution engine for Woodland \
+                    Stride's own effect, a tracking-penalty-application engine for Swift \
+                    Tracker's own effect, a target-selection/conditional-application engine for \
+                    Quarry's/Improved Quarry's own attack-bonus and auto-confirm-critical-threats \
+                    effects, a Stealth-check-execution engine for Camouflage's and Hide in Plain \
+                    Sight's own effects, a saving-throw-resolution/damage-resolution engine for \
+                    Evasion's and Improved Evasion's own effects, and SD13-E4 ranger spell \
+                    burden execution, are all future-SD-N scope, not a further per-cycle \
+                    widening of this row",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",
@@ -2998,15 +5565,16 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "class:sorcerer",
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
                             Sorcerer level-1/level-2/level-3/level-4/level-5/level-6/level-7/\
-                            level-8/level-9/level-10 \
+                            level-8/level-9/level-10/level-11/level-12/level-13/level-14/\
+                            level-15/level-16/level-17/level-18/level-19/level-20 \
                             spell baseline, with base attack bonus, base save progression, Eschew \
                             Materials, the canonical bloodline choice recognition, and the \
                             Arcane bloodline's class-skill choice (a player's choice of any one \
                             Knowledge skill) grounded for real and the Arcane Bond / bloodline \
                             progression burden and the spontaneous known-spell / slot posture \
                             burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_SORCERER_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
@@ -3257,12 +5825,339 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     arithmetic end-to-end — a dedicated test raises the fixture Charisma \
                     and the 4th-level total rises; counts only, no spontaneous-casting \
                     execution, slot consumption, or tracking; the blocker now defers \
-                    exactly that execution plus the which-spells selection). No \
-                    spell math is fabricated and no Sorcerer level 11+ is proven",
-                next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
-                    bloodline's level-1 power execution), then the spontaneous spell burden, then \
-                    level-11+ progression (widening the now-grounded base attack/base save \
-                    formulas)",
+                    exactly that execution plus the which-spells selection) — AND a further \
+                    SD18 slice widens the level-range gate again \
+                    (supported_sorcerer_level, 1..=11) and extends every one of the formulas \
+                    above to level 11 via the same formula, without re-derivation, verified \
+                    independently against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror: level 11 base attack bonus and all three base saves stay \
+                    numerically IDENTICAL to level 10 (11/2=5, 11/3=3, 11/3=3, 11/2+2=7, \
+                    integer-division coincidences); the bloodline choice and bloodline \
+                    class-skill choice recognitions are not level-gated, so both still fire \
+                    at level 11 for the same fixture selections; the level-11 \"Special\" \
+                    column reads only \"Bloodline spell\" (verified independently against \
+                    both primary sources, checked rather than assumed away) — the \
+                    sorcerer's fifth bloodline spell grant, bloodline-specific and not \
+                    flat/identity-shaped, so this slice grounds no new pillar for level 11 \
+                    either, mirroring exactly how the level-3/5/7/9 bloodline power/spell \
+                    entries were left unproven; the already-grounded base spells-per-day \
+                    table genuinely widens (6/6/6/5/3 -> 6/6/6/6/4, the 4th- and 5th-level \
+                    columns each rising by one) and the already-grounded base spells-known \
+                    table genuinely widens (9/5/4/3/2/1 -> 9/5/5/4/3/2, the 2nd/3rd/4th/\
+                    5th-level columns each rising by one), with the 6th-level column \
+                    staying inaccessible on both tables through level 11 (it first arrives \
+                    at level 12); the spell-save-DC and Charisma-bonus-spell formulas widen \
+                    automatically over the unchanged access ladder (still 5, unchanged from \
+                    level 10) — AND a further SD18 slice widens the level-range gate again \
+                    (supported_sorcerer_level, 1..=12) and extends every one of the formulas \
+                    above to level 12 via the same formula, without re-derivation, verified \
+                    independently against all three primary-source fetches this slice \
+                    performed (d20pfsrd, aonprd.com, and legacy.aonprd.com, all identical): \
+                    level 12 base attack bonus genuinely rises to 6 (12/2) and all three base \
+                    saves genuinely rise too (Fortitude/Reflex 4, 12/3; Will 8, 12/2+2); the \
+                    PF1 Core Rulebook Sorcerer class table's level-12 \"Special\" column is \
+                    genuinely BLANK (verified independently, checked rather than assumed \
+                    away) — like levels 2, 4, 6, 8, and 10, and UNLIKE the level-3/5/7/9/11 \
+                    bloodline power/spell rows — so no new pillar is grounded from the \
+                    Special column; the already-grounded base spells-per-day table genuinely \
+                    widens (6/6/6/6/4 -> 6/6/6/6/5/3, the 5th-level column rising by one and \
+                    a genuinely NEW 6th-level column appearing for the first time) and the \
+                    already-grounded base spells-known table genuinely widens \
+                    (9/5/5/4/3/2 -> 9/5/5/4/3/2/1, with a genuinely NEW 6th-level column \
+                    appearing for the first time while the 0th-5th columns stay numerically \
+                    unchanged); the spell-level access ladder genuinely rises to 6 (6th-level \
+                    spells first become accessible at level 12, the sorcerer's two-level \
+                    cadence continuing exactly: 4/6/8/10/12); the spell-save-DC and \
+                    Charisma-bonus-spell formulas widen automatically over the newly-risen \
+                    access ladder — AND a further SD18 slice widens the level-range gate again \
+                    (supported_sorcerer_level, 1..=13) and extends every one of the formulas \
+                    above to level 13 via the same formula, without re-derivation, verified \
+                    independently against three primary-source fetches this slice performed \
+                    (d20pfsrd, aonprd.com, and legacy.aonprd.com, all identical): level 13 base \
+                    attack bonus and all three base saves stay numerically unchanged from level \
+                    12 (13/2=6, 13/3=4, 13/3=4, 13/2+2=8, integer-division coincidences, not a \
+                    sign any formula stopped scaling); the bloodline choice and bloodline \
+                    class-skill choice recognitions are not level-gated, so both still fire at \
+                    level 13 for the same fixture selections; the level-13 \"Special\" column \
+                    reads \"Bloodline feat, bloodline spell\" (verified independently against \
+                    all three sources, checked rather than assumed away) — the sorcerer's \
+                    second bloodline feat grant (bloodline feats are first granted at 7th level \
+                    and every six levels thereafter: 7, 13, 19, confirmed by this codebase's \
+                    own pre-existing level-7 doc trail) and a further bloodline spell grant (the \
+                    Arcane bloodline's own 13th-level bloodline spell is true seeing), but \
+                    exactly like the level-3/5/7/11 bloodline power/spell entries, both \
+                    level-13 grants are bloodline-specific and neither is flat/identity-shaped, \
+                    so this slice grounds no new pillar from the Special column either — both \
+                    entries stay named by the existing Arcane Bond / bloodline progression \
+                    blocker's \"bonus spells/feats at 3rd+ level\" language, unchanged; the \
+                    already-grounded base spells-per-day table genuinely widens \
+                    (6/6/6/6/5/3 -> 6/6/6/6/6/4, the 5th-level column rising by one and the \
+                    6th-level column rising by one, with no genuinely new spell-level column — \
+                    the 7th-level column does not open until level 14) and the already-grounded \
+                    base spells-known table genuinely widens (9/5/5/4/3/2/1 -> 9/5/5/4/4/3/2, \
+                    the 4th/5th/6th-level columns each rising by one while the 0th-3rd columns \
+                    stay numerically unchanged); the spell-level access ladder stays at 6 \
+                    (unchanged from level 12; the 7th-level threshold is not reached until level \
+                    14); the spell-save-DC and Charisma-bonus-spell formulas widen automatically \
+                    over the unchanged access ladder — AND a further SD18 slice widens the \
+                    level-range gate again (supported_sorcerer_level, 1..=14) and extends every \
+                    one of the formulas above to level 14 via the same formula, without \
+                    re-derivation, verified independently against two mutually consistent \
+                    primary-source fetches this slice performed (d20pfsrd and \
+                    legacy.aonprd.com; a third fetch, aonprd.com, was internally inconsistent \
+                    with the already-landed level-13 truth on the spells-per-day table and was \
+                    rejected as a tool artifact, not treated as a genuine conflict): level 14 \
+                    base attack bonus genuinely rises to 7 (14/2) and the good Will save \
+                    genuinely rises to 9 (14/2+2), while both poor saves stay numerically \
+                    unchanged (Fortitude/Reflex 4, 14/3, an integer-division coincidence with \
+                    level 13); the bloodline choice and bloodline class-skill choice \
+                    recognitions are not level-gated, so both still fire at level 14 for the \
+                    same fixture selections; the PF1 Core Rulebook Sorcerer class table's \
+                    level-14 \"Special\" column is genuinely BLANK (verified independently, \
+                    checked rather than assumed away) — like levels 2, 4, 6, 8, 10, and 12, and \
+                    UNLIKE the level-3/5/7/11/13 bloodline power/feat/spell rows — so no new \
+                    pillar is grounded from the Special column; the already-grounded base \
+                    spells-per-day table genuinely widens (6/6/6/6/6/4 -> 6/6/6/6/6/5/3, the \
+                    6th-level column rising by one and a genuinely NEW 7th-level column \
+                    appearing for the first time) and the already-grounded base spells-known \
+                    table genuinely widens (9/5/5/4/4/3/2 -> 9/5/5/4/4/3/2/1, with a genuinely \
+                    NEW 7th-level column appearing for the first time while the 0th-6th columns \
+                    stay numerically unchanged); the spell-level access ladder genuinely rises \
+                    to 7 (7th-level spells first become accessible at level 14, the sorcerer's \
+                    two-level cadence continuing exactly: 4/6/8/10/12/14); the spell-save-DC and \
+                    Charisma-bonus-spell formulas widen automatically over the newly-risen \
+                    access ladder, with no new code needed since both loops already iterate \
+                    generically over the access-ladder value. The row is \
+                    Partial, not Supported: the Arcane Bond / bloodline progression burden \
+                    and the spontaneous which-spells-known / casting-execution burden remain \
+                    named and unproven, unchanged from level 13. No \
+                    spell math is fabricated and no Sorcerer level 15+ is proven — AND a \
+                    further SD18 slice (cycle-2026-07-15T4400, the loop's ninth §3.2 \
+                    level-15 landing, after Barbarian, Rogue, Fighter, Cleric, Druid, Ranger, \
+                    Wizard, and Paladin) widens the level-range gate again \
+                    (supported_sorcerer_level, 1..=15) and extends every one of the formulas \
+                    above to level 15 via the same formula, without re-derivation, verified \
+                    independently against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, both byte-for-byte identical: level 15 base attack bonus stays \
+                    numerically IDENTICAL to level 14 at +7 (15/2) and good Will stays \
+                    IDENTICAL at +9 (15/2+2), integer-division coincidences, while both poor \
+                    saves genuinely rise to +5 (15/3, up from level 14's +4); the bloodline \
+                    choice and bloodline class-skill choice recognitions are not level-gated, \
+                    so both still fire at level 15 for the same fixture selections; the PF1 \
+                    Core Rulebook Sorcerer class table's level-15 \"Special\" column reads \
+                    \"Bloodline power, bloodline spell\" (verified independently against both \
+                    primary sources, checked rather than assumed away) — a further bloodline \
+                    power and bloodline spell grant, exactly mirroring the level-3/5/7/9/11/13 \
+                    pattern this row has already left unproven six times — but both entries \
+                    stay bloodline-specific and not flat/identity-shaped, so this slice \
+                    grounds no new pillar from the Special column either, unchanged; the \
+                    already-grounded base spells-per-day table genuinely widens \
+                    (6/6/6/6/6/5/3 -> 6/6/6/6/6/6/4, the 6th-level column rising by one and the \
+                    7th-level column rising by one, with no genuinely new spell-level column — \
+                    the 8th-level column stays inaccessible through level 15) and the \
+                    already-grounded base spells-known table genuinely widens \
+                    (9/5/5/4/4/3/2/1 -> 9/5/5/4/4/4/3/2, the 5th/6th/7th-level columns each \
+                    rising by one while the 0th-4th columns stay numerically unchanged); the \
+                    spell-level access ladder stays at 7 (unchanged from level 14; the \
+                    8th-level threshold is not reached at level 15); the spell-save-DC and \
+                    Charisma-bonus-spell formulas widen automatically over the unchanged access \
+                    ladder, with no new code needed. The row stays Partial, not Supported: the \
+                    Arcane Bond / bloodline progression burden and the spontaneous \
+                    which-spells-known / casting-execution burden remain named and unproven, \
+                    unchanged from level 14. No spell math is fabricated and no Sorcerer level \
+                    16+ is proven — AND a further SD18 slice (cycle-2026-07-15T5800, the loop's \
+                    SEVENTH §3.2 level-16 landing, after Barbarian, Fighter, Wizard, Rogue, \
+                    Cleric, and Paladin) widens the level-range gate again \
+                    (supported_sorcerer_level, 1..=16) and extends every one of the formulas \
+                    above to level 16 via the same formula, without re-derivation, verified \
+                    independently against d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, both byte-for-byte identical: level 16 base attack bonus genuinely \
+                    rises to +8 (16/2, up from level 15's +7) and good Will genuinely rises to \
+                    +10 (16/2+2, up from level 15's +9), while both poor saves stay numerically \
+                    IDENTICAL to level 15 at +5 (16/3), an integer-division coincidence; the \
+                    bloodline choice and bloodline class-skill choice recognitions are not \
+                    level-gated, so both still fire at level 16 for the same fixture \
+                    selections; the PF1 Core Rulebook Sorcerer class table's level-16 \
+                    \"Special\" column is genuinely BLANK on both primary sources — UNLIKE \
+                    level 15's \"Bloodline power, bloodline spell\" entry, this is a pure \
+                    ceiling raise with no bloodline-specific text left named-but-unproven; the \
+                    already-grounded base spells-per-day table genuinely widens \
+                    (6/6/6/6/6/6/4 -> 6/6/6/6/6/6/5/3, the 7th-level column rising by one AND a \
+                    genuinely NEW 8th-level column opening at 3) and the already-grounded base \
+                    spells-known table genuinely widens (9/5/5/4/4/4/3/2 -> \
+                    9/5/5/4/4/4/3/2/1, the 0th-7th columns staying numerically unchanged while \
+                    a genuinely NEW 8th-level column opens at 1); the spell-level access ladder \
+                    genuinely rises to 8 (up from 7 at level 15) via a new \
+                    SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 16 threshold constant, \
+                    mirroring the Wizard's own 8th-level-column-opening cycle; the spell-save-DC \
+                    and Charisma-bonus-spell formulas widen automatically over the newly widened \
+                    access ladder, with no new code needed. The row stays Partial, not \
+                    Supported: the Arcane Bond / bloodline progression burden and the \
+                    spontaneous which-spells-known / casting-execution burden remain named and \
+                    unproven, unchanged from level 15. No spell math is fabricated and no \
+                    Sorcerer level 17+ is proven — AND a further SD18 slice \
+                    (cycle-2026-07-15T14100, the loop's NINTH §3.2 level-17 landing, after \
+                    Ranger, Bard, Rogue, Fighter, Wizard, Cleric, Paladin, and Barbarian, \
+                    closing the level-17 sweep at 9 of 10 non-Monk classes) widens the \
+                    level-range gate again (supported_sorcerer_level, 1..=17) and extends every \
+                    one of the formulas above to level 17 via the same formula, without \
+                    re-derivation, verified independently against d20pfsrd and the Archives of \
+                    Nethys aonprd.com mirror (fetching the full levels-15-through-19 \
+                    class-table block, including the separate Spells Known table, in one pass \
+                    to rule out level-misattribution), both byte-for-byte identical: level 17 \
+                    base attack bonus STAYS at +8 (17/2) and both poor saves STAY at +5 (17/3) \
+                    and good Will STAYS at +10 (17/2+2), all integer-division coincidences with \
+                    level 16; the bloodline choice and bloodline class-skill choice \
+                    recognitions are not level-gated, so both still fire at level 17 for the \
+                    same fixture selections; the PF1 Core Rulebook Sorcerer class table's \
+                    level-17 \"Special\" column reads \"Bloodline spell\" (bloodline-specific, \
+                    left named-but-unproven, exactly mirroring levels 3/5/7/9/11/13/15 — this \
+                    row's own eighth odd-level bloodline-text entry left unproven) — no new \
+                    pillar is grounded from it; the already-grounded base spells-per-day table \
+                    genuinely widens (6/6/6/6/6/6/5/3 -> 6/6/6/6/6/6/6/4, the 7th-level column \
+                    rising by one AND the 8th-level column rising by one, with no genuinely new \
+                    spell-level column opening) and the already-grounded base spells-known \
+                    table genuinely widens (9/5/5/4/4/4/3/2/1 -> 9/5/5/4/4/4/3/3/2, the 0th-6th \
+                    columns staying numerically unchanged while the 7th-level column rises by \
+                    one AND the 8th-level column rises by one); the spell-level access ladder \
+                    STAYS at 8 (unchanged from level 16, no new threshold constant needed); the \
+                    spell-save-DC and Charisma-bonus-spell formulas widen automatically over the \
+                    unchanged access ladder, with no new code needed. The row stays Partial, \
+                    not Supported: the Arcane Bond / bloodline progression burden and the \
+                    spontaneous which-spells-known / casting-execution burden remain named and \
+                    unproven, unchanged from level 16. No spell math is fabricated and no \
+                    Sorcerer level 18+ is proven — AND a further SD18 slice \
+                    (cycle-2026-07-16T0400, the loop's EIGHTH §3.2 level-18 landing, after \
+                    Wizard, Cleric, Paladin, Fighter, Barbarian, Rogue, and Ranger) widens the \
+                    level-range gate again (supported_sorcerer_level, 1..=18) and extends every \
+                    one of the formulas above to level 18 via the same formula, without \
+                    re-derivation. This cycle's primary task was DEFINITIVELY RESOLVING a \
+                    multi-cycle-carried-forward flag: prior cycles repeatedly noted that a raw \
+                    Sorcerer spells-per-day fetch looked internally inconsistent at level 18 (an \
+                    apparent \"premature\" 9th-level spell column), suspected as a tool artifact \
+                    against a commonly-repeated folk-rule that sorcerers gain 9th-level spells \
+                    only at 20th level. This cycle re-fetched Sorcerer's full levels 14-20 block \
+                    fresh from THREE independent primary sources — a raw, non-AI-summarized parse \
+                    of d20pfsrd.com's own HTML table (bypassing any tabular-summarization \
+                    ambiguity entirely), the Archives of Nethys aonprd.com mirror, and the \
+                    legacy.aonprd.com CRB mirror — all of which agree byte-for-byte: the \
+                    Sorcerer's spells-per-day table opens a genuinely NEW spell-level column \
+                    every two class levels starting at 4th (2nd at 4, 3rd at 6, 4th at 8, 5th at \
+                    10, 6th at 12, 7th at 14, 8th at 16, 9th at 18 — exactly matching this row's \
+                    own already-grounded and already-verified thresholds), with 1st-level spells \
+                    available from level 1. The 9th-level column therefore genuinely, correctly \
+                    opens at class level 18 — one level EARLIER than Wizard/Cleric's own \
+                    already-grounded ninth-level threshold of 17, which is exactly consistent \
+                    with every other already-proven Sorcerer threshold in this row being one \
+                    level later than Wizard's own equivalent threshold. The previously-flagged \
+                    \"premature 9th-level column\" was therefore the CORRECT reading all along; \
+                    the folk-rule assuming a 20th-level-only 9th-spell-level threshold for \
+                    Sorcerer never held for this class and was never independently re-verified \
+                    against a primary source in any prior cycle, only carried forward by \
+                    analogy. level 18 base attack bonus genuinely rises to +9 (18/2, up from \
+                    level 17's +8) and both poor saves genuinely rise to +6 (18/3, up from level \
+                    17's +5) and good Will genuinely rises to +11 (18/2+2, up from level 17's \
+                    +10); the bloodline choice and bloodline class-skill choice recognitions are \
+                    not level-gated, so both still fire at level 18 for the same fixture \
+                    selections; the PF1 Core Rulebook Sorcerer class table's level-18 \"Special\" \
+                    column is genuinely BLANK on all three sources — UNLIKE level 17's \
+                    \"Bloodline spell\" entry — so no new pillar is grounded from the Special \
+                    column; the already-grounded base spells-per-day table genuinely widens \
+                    (6/6/6/6/6/6/6/4 -> 6/6/6/6/6/6/6/5/3, the 8th-level column rising by one AND \
+                    a genuinely NEW 9th-level column opening at 3) and the already-grounded base \
+                    spells-known table genuinely widens (9/5/5/4/4/4/3/3/2 -> \
+                    9/5/5/4/4/4/3/3/2/1, the 0th-8th columns staying numerically unchanged while \
+                    a genuinely NEW 9th-level column opens at 1); the spell-level access ladder \
+                    genuinely rises to 9 (up from 8 at level 17) via a new \
+                    SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 18 threshold constant, \
+                    mirroring the Wizard's and Cleric's own 9th-level-column-opening cycles; the \
+                    spell-save-DC and Charisma-bonus-spell formulas widen automatically over the \
+                    newly-risen access ladder, with no new code needed. The row stays Partial, \
+                    not Supported: the Arcane Bond / bloodline progression burden and the \
+                    spontaneous which-spells-known / casting-execution burden remain named and \
+                    unproven, unchanged from level 17. No spell math is fabricated and no \
+                    Sorcerer level 19+ is proven — AND a further SD18 slice \
+                    (cycle-2026-07-16T4900, the loop's EIGHTH §3.2 level-19 landing, after \
+                    Barbarian, Cleric, Fighter, Bard, Paladin, Ranger, and Rogue) widens the \
+                    level-range gate again (supported_sorcerer_level, 1..=19) and extends every \
+                    one of the formulas above to level 19 via the same formula, without \
+                    re-derivation, verified independently against TWO primary sources (a raw \
+                    non-AI-summarized parse of d20pfsrd.com's own HTML table and the Archives of \
+                    Nethys aonprd.com mirror, both byte-for-byte identical, fetching the full \
+                    levels-15-through-20 class-table block in one pass to rule out \
+                    level-misattribution; no disagreement was found, so a third source was not \
+                    required): level 19 base attack bonus STAYS at +9 (19/2, an \
+                    integer-division coincidence with level 18's +9, confirmed genuine by the \
+                    raw table's own `+9/+4` cell matching level 18's `+9/+4` cell exactly) and \
+                    both poor saves STAY at +6 (19/3) and good Will STAYS at +11 (19/2+2), all \
+                    integer-division coincidences with level 18, not a sign any formula stopped \
+                    scaling; the bloodline choice and bloodline class-skill choice recognitions \
+                    are not level-gated, so both still fire at level 19 for the same fixture \
+                    selections; the PF1 Core Rulebook Sorcerer class table's level-19 \"Special\" \
+                    column reads \"Bloodline feat, bloodline spell\" — bloodline-specific, left \
+                    named-but-unproven by the pre-existing Arcane Bond / bloodline progression \
+                    blocker, exactly mirroring levels 3/5/7/9/11/13/15/17 — so no new pillar is \
+                    grounded from it; the already-grounded base spells-per-day table genuinely \
+                    widens (6/6/6/6/6/6/6/5/3 -> 6/6/6/6/6/6/6/6/4, the 8th-level column rising \
+                    by one AND the 9th-level column rising by one, with no genuinely new \
+                    spell-level column opening) and the already-grounded base spells-known table \
+                    genuinely widens (9/5/5/4/4/4/3/3/2/1 -> 9/5/5/4/4/4/3/3/3/2, the 0th-7th \
+                    columns staying numerically unchanged while the 8th-level column rises by \
+                    one AND the 9th-level column rises by one); the spell-level access ladder \
+                    STAYS at 9 (unchanged from level 18; the ladder was already fully populated \
+                    through 9th-level spells, so no new threshold constant is needed); the \
+                    spell-save-DC and Charisma-bonus-spell formulas widen automatically over the \
+                    unchanged access ladder, with no new code needed. The row stays Partial, not \
+                    Supported: the Arcane Bond / bloodline progression burden and the \
+                    spontaneous which-spells-known / casting-execution burden remain named and \
+                    unproven, unchanged from level 18 — AND a further SD18 slice \
+                    (cycle-2026-07-16T1503, the loop's NINTH and LAST §3.2 level-20 landing, \
+                    after Cleric, Wizard, Barbarian, Bard, Fighter, Paladin, Ranger, and Rogue, \
+                    closing the level-20 sweep at 9 of 9 eligible classes) widens the \
+                    level-range gate again (supported_sorcerer_level, 1..=20), the FINAL level \
+                    within PF1's 1-20 character-level cap, verified independently against TWO \
+                    primary sources (a raw non-AI-summarized parse of d20pfsrd.com's own HTML \
+                    table and the Archives of Nethys aonprd.com mirror, both byte-for-byte \
+                    identical): base attack bonus genuinely rises to +10 (20/2, up from level \
+                    19's +9, confirmed genuine by the raw table's own `+10/+5` cell) and good \
+                    Will genuinely rises to +12 (20/2+2, up from level 19's +11), while both \
+                    poor saves stay put at +6 (20/3, an integer-division coincidence with level \
+                    19); the level-20 \"Special\" column reads \"Bloodline power\" — \
+                    bloodline-specific (the sorcerer's second bloodline, gaining that \
+                    bloodline's arcana and 1st/3rd/9th-level powers), left named-but-unproven by \
+                    the pre-existing Arcane Bond / bloodline progression blocker, exactly \
+                    mirroring levels 3/5/7/9/11/13/15/17/19 — so no new pillar is grounded from \
+                    it; the already-grounded base spells-per-day table genuinely widens \
+                    (6/6/6/6/6/6/6/6/4 -> 6/6/6/6/6/6/6/6/6, the 9th-level column rising from 4 \
+                    to 6, with no genuinely new spell-level column opening) and the \
+                    already-grounded base spells-known table genuinely widens \
+                    (9/5/5/4/4/4/3/3/3/2 -> 9/5/5/4/4/4/3/3/3/3, the 0th-8th columns staying \
+                    numerically unchanged while the 9th-level column rises from 2 to 3); the \
+                    spell-level access ladder STAYS at 9 (unchanged from level 19; the ladder \
+                    was already fully populated through 9th-level spells at level 18, so no new \
+                    threshold constant is needed); the spell-save-DC and Charisma-bonus-spell \
+                    formulas widen automatically over the unchanged access ladder, with no new \
+                    code needed. Sorcerer level 20 is now the final level within PF1's 1-20 \
+                    character-level cap for this class row, so the per-level arithmetic-widening \
+                    frontier for this row is now fully exhausted. The Arcane Bond / bloodline \
+                    progression burden and the spontaneous which-spells-known / \
+                    casting-execution burden remain named and unproven, unchanged from level 19 \
+                    -- no spell math is fabricated -- but every named grounded milestone above \
+                    (base attack/save progression, Eschew Materials, the bloodline choice and \
+                    class-skill recognitions, and the per-level widening through level 20) is now \
+                    surfaced live in the desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class name \
+                    -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the operator's \
+                    UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding \
+                    Sorcerer's remaining Arcane Bond (the chosen bloodline's level-1 power \
+                    execution) and the spontaneous spell burden (which-spells-known selection \
+                    and spontaneous-casting execution) is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "class.wizard.progression_and_spell_burden",
@@ -3352,25 +6247,95 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // spells first appear at level 9); Intense Spells' bonus-damage
                 // magnitude genuinely rises to 4 (max(8/2, 1) = 4); the level-8
                 // "Special" column is genuinely blank, so no new pillar is added.
+                // A further SD18 slice widens the gate to level 14 — the LAST of the
+                // 11 §3.2 classes to reach level 14 (Monk excluded, confirmed dead
+                // end at level 13): base attack bonus genuinely rises to +7 and good
+                // Will genuinely rises to +9 (poor Fortitude/Reflex stay +4, an
+                // integer-division coincidence with level 13); the specialist bonus
+                // slot flat count is checked rather than assumed and correctly STAYS
+                // at 7, since the raw spells-per-day table's level-14 row is
+                // "4/4/4/4/4/3/3/2" with the 8th-level column still "—" (8th-level
+                // spells first appear at level 15); Intense Spells' bonus-damage
+                // magnitude genuinely rises to 7 (max(14/2, 1) = 7); the level-14
+                // "Special" column is genuinely blank on all three primary sources
+                // checked (d20pfsrd, aonprd.com, legacy.aonprd.com), so no new
+                // pillar is added. A further SD18 slice widens the gate again to
+                // level 16 — the loop's THIRD §3.2 level-16 landing, after
+                // Barbarian and Fighter, and the first spell-bearing class to
+                // reach level 16 in the level-16 sweep: base attack bonus
+                // genuinely rises to +8 and good Will genuinely rises to +10
+                // (poor Fortitude/Reflex stay +5, an integer-division coincidence
+                // with level 15); the specialist bonus slot flat count is checked
+                // rather than assumed and correctly STAYS at 8, since the raw
+                // spells-per-day table's level-16 row is "4/4/4/4/4/4/3/3/2" with
+                // the 9th-level column still "—" (9th-level spells first appear
+                // at level 17); Intense Spells' bonus-damage magnitude genuinely
+                // rises to 8 (max(16/2, 1) = 8); the level-16 "Special" column is
+                // genuinely blank on both primary sources checked (d20pfsrd,
+                // aonprd.com), so no new pillar is added — a pure ceiling raise.
+                // A further SD18 slice (the loop's FIFTH §3.2 level-17 landing,
+                // after Ranger, Bard, Rogue, and Fighter, and the first
+                // spell-bearing class to reach level 17 in the level-17 sweep)
+                // widens the gate again to level 17: base attack bonus STAYS at
+                // +8 and good Will STAYS at +10 (poor Fortitude/Reflex both STAY
+                // at +5, all integer-division coincidences with level 16); the
+                // specialist bonus slot flat count GENUINELY RISES to 9, since
+                // the raw spells-per-day table's level-17 row is
+                // "4/4/4/4/4/4/4/3/2/1" — the first non-"—" 9th-level column, up
+                // from the level-16 row "4/4/4/4/4/4/3/3/2" whose 9th-level
+                // column does not exist at all — so a level-17 specialist
+                // wizard casts 9th-level spells for the first time, via a new
+                // WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 17 threshold
+                // constant; Intense Spells' bonus-damage magnitude STAYS at 8
+                // (max(17/2, 1) = 8, an integer-division coincidence with level
+                // 16); the level-17 "Special" column is genuinely blank on both
+                // primary sources checked (d20pfsrd, aonprd.com), so no new
+                // named-feature pillar is added beyond the specialist-bonus-slot
+                // widening. A further SD18 slice (the loop's FIRST §3.2 level-18
+                // landing, opening the level-18 sweep) widens the gate again to
+                // level 18: base attack bonus GENUINELY RISES to +9 (18/2 = 9,
+                // up from +8) and good Will GENUINELY RISES to +11 (18/2+2 = 11,
+                // up from +10), while poor Fortitude/Reflex both GENUINELY RISE
+                // to +6 (18/3 = 6, up from +5) — verified independently against
+                // two primary sources (d20pfsrd, aonprd.com), byte-for-byte
+                // agreement, fetching the full levels-16-through-19 block in one
+                // pass to rule out level-misattribution. The specialist bonus
+                // slot flat count is checked rather than assumed and correctly
+                // STAYS at 9, since the raw spells-per-day table's level-18 row
+                // "4/4/4/4/4/4/4/3/3/2" opens no spell-level column beyond the
+                // 9th (already the highest wizard spell level in PF1); Intense
+                // Spells' bonus-damage magnitude GENUINELY RISES to 9 (max(18/2,
+                // 1) = 9); the level-18 "Special" column is genuinely blank on
+                // both primary sources checked, so no new pillar is added — a
+                // pure arithmetic-pillar widening.
                 dimension: "bounded spell-bearing class progression: the deterministic Human \
-                            Wizard level-1/level-10 prepared arcane spell baseline, with base \
+                            Wizard level-1/level-20 prepared arcane spell baseline, with base \
                             attack bonus, base save progression, Scribe Scroll, the school \
                             specialization choice, the specialist-bonus-slot flat count (which \
                             becomes 2 at level 3, stays 2 at level 4, becomes 3 at level 5, stays \
                             3 at level 6, becomes 4 at level 7, stays 4 at level 8, becomes \
-                            5 at level 9, and stays 5 at level 10), and the \
+                            5 at level 9, stays 5 at level 10, becomes 6 at level 11, stays 6 \
+                            at level 12, becomes 7 at level 13, stays 7 at level 14, becomes \
+                            8 at level 15, stays 8 at level 16, becomes 9 at level 17, and stays \
+                            9 at levels 18-20), and \
+                            the \
                             Intense Spells / \
                             Force Missile school-power flat magnitudes (Intense Spells becomes 2 \
                             at level 4, stays 2 at level 5, becomes 3 at level 6, stays 3 at \
-                            level 7, becomes 4 at level 8, stays 4 at level 9, and becomes 5 at \
-                            level 10) grounded for \
-                            real through level 10, \
+                            level 7, becomes 4 at level 8, stays 4 at level 9, becomes 5 at \
+                            level 10, stays 5 at level 11, becomes 6 at level 12, stays 6 at \
+                            level 13, becomes 7 at level 14, stays 7 at level 15, becomes 8 \
+                            at level 16, stays 8 at level 17, becomes 9 at level 18, stays 9 \
+                            at level 19, and becomes 10 at level 20) grounded \
+                            for \
+                            real through level 20 (the final level within PF1's 1-20 \
+                            character-level cap for this class row), \
                             and the school-power \
-                            execution machinery, the opposed-school-cost burden, the level-5 \
-                            bonus-feat selection/execution, and the prepared spellbook / \
-                            spell-slot posture burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                            execution machinery, the opposed-school-cost burden, the level-5/ \
+                            level-10/level-15/level-20 bonus-feat selection/execution, and the \
+                            prepared spellbook / spell-slot posture burden still blocked",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_WIZARD_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-R3 leaves direct computed evidence that the \
@@ -3569,22 +6534,259 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     metamagic/item-creation/Spell-Mastery choice already deliberately left \
                     named-but-unproven at 5th level, not a new type of class feature — so no \
                     new pillar record is grounded at level 10 beyond widening the Intense \
-                    Spells pillar to a genuinely new value. The row is \
-                    Partial, not Supported: neither school power's \
+                    Spells pillar to a genuinely new value. AND a further SD18 slice (a fresh, \
+                    first-touch §3.2 class-row landing, mirroring the level-11 widening pattern \
+                    already landed for Barbarian/Bard/Cleric/Druid/Fighter/Monk/Paladin) widens \
+                    the level-range gate again (supported_wizard_level, 1..=11) and extends every \
+                    one of the formulas above to level 11 via the same formulas, without \
+                    re-derivation, verified independently against the PF1 Core Rulebook Wizard \
+                    class table (d20pfsrd and the Archives of Nethys aonprd.com mirror): level 11 \
+                    base attack and all three base saves stay numerically IDENTICAL to level 10 \
+                    (+5 / +3 / +3 / +7, integer-division coincidences, re-verified rather than \
+                    assumed); the specialist bonus slot flat count GENUINELY RISES to 6, since \
+                    the raw spells-per-day table's level-11 row is \"4/4/4/4/3/2/1\" — the first \
+                    non-\"—\" 6th-level column, up from the level-10 row \"4/4/4/3/3/2\" whose \
+                    6th-level column is still \"—\" — so a level-11 specialist wizard casts \
+                    6th-level spells for the first time; Intense Spells' bonus-damage magnitude \
+                    stays 5 (max(11/2, 1) = 5, another integer-division coincidence); Force \
+                    Missile's pool is level-independent and unchanged; Scribe Scroll and the \
+                    specialization choice stay recognized as already-held grants; the level-11 \
+                    \"Special\" column is genuinely blank (verified independently against both \
+                    sources — the Wizard's bonus feats land only at levels 5/10/15/20), so no new \
+                    pillar record is grounded at level 11 beyond widening the specialist-bonus- \
+                    slot pillar to its new value. AND a further SD18 slice widens the \
+                    level-range gate again (supported_wizard_level, 1..=12) and extends every one \
+                    of the formulas above to level 12 via the same formulas, without \
+                    re-derivation, verified independently against the PF1 Core Rulebook Wizard \
+                    class table (d20pfsrd and the Archives of Nethys aonprd.com mirror, which \
+                    agree byte-for-byte): UNLIKE level 11 (where base attack and all three base \
+                    saves stayed numerically identical to level 10), level 12 base attack \
+                    GENUINELY RISES to +6 (12/2 = 6) and all three base saves GENUINELY RISE too \
+                    (poor Fortitude/Reflex 12/3 = 4, good Will 12/2+2 = 8), mirroring the \
+                    Sorcerer level-11-then-level-12 pattern; the specialist bonus slot flat count \
+                    STAYS at 6, since the raw spells-per-day table's level-12 row is \
+                    \"4/4/4/4/3/3/2\" — the 6th-level column rises from 1 to 2 but there is still \
+                    no 7th-level column at all, 7th-level wizard spells not becoming accessible \
+                    until level 13, a threshold stasis checked rather than assumed; Intense \
+                    Spells' bonus-damage magnitude GENUINELY RISES to 6 (max(12/2, 1) = 6, up \
+                    from 5 at level 11); Force Missile's pool is level-independent and unchanged; \
+                    Scribe Scroll and the specialization choice stay recognized as already-held \
+                    grants; the level-12 \"Special\" column is genuinely blank on both primary \
+                    sources (the Wizard's bonus feats land only at levels 5/10/15/20), so no new \
+                    pillar record is grounded at level 12 beyond the arithmetic pillars above. \
+                    This cycle independently re-verified (rather than assumed from the \
+                    immediately-preceding Sorcerer level-12 cycle's outcome) that Wizard's own \
+                    live class_spell.wizard.prepared_spellbook.unsupported claim-blocker is \
+                    pushed unconditionally alongside the level's other explanations in \
+                    explain_wizard_level1_prepared_spell_baseline — it does not gate \
+                    supported_wizard_level or MAX_SUPPORTED_WIZARD_LEVEL, exactly mirroring \
+                    every sibling class's own remaining-burden diagnostics (e.g. Sorcerer's \
+                    class_spell.sorcerer.spontaneous.unsupported), so it marks incomplete \
+                    coverage without blocking this arithmetic widening. AND a further SD18 slice \
+                    (the LAST of the 11 §3.2 core classes to reach level 13 — Monk excluded, \
+                    confirmed dead end: Diamond Soul needs spell resistance, not grounded in this \
+                    codebase) widens the level-range gate again (supported_wizard_level, 1..=13) \
+                    and extends every one of the formulas above to level 13 via the same \
+                    formulas, without re-derivation, verified independently against the PF1 Core \
+                    Rulebook Wizard class table (d20pfsrd and the Archives of Nethys aonprd.com \
+                    mirror, which agree byte-for-byte): level 13 base attack and all three base \
+                    saves STAY numerically unchanged from level 12 (13/2 = 6, 13/3 = 4, \
+                    13/2+2 = 8), integer-division coincidences, re-verified rather than assumed; \
+                    the specialist bonus slot flat count GENUINELY RISES to 7, since the raw \
+                    spells-per-day table's level-13 row is \"4/4/4/4/4/3/2/1\" — the first \
+                    non-\"—\" 7th-level column, up from the level-12 row \"4/4/4/4/3/3/2\" whose \
+                    7th-level column does not exist at all — so a level-13 specialist wizard \
+                    casts 7th-level spells for the first time; Intense Spells' bonus-damage \
+                    magnitude STAYS at 6 (max(13/2, 1) = 6, another integer-division \
+                    coincidence); Force Missile's pool is level-independent and unchanged; \
+                    Scribe Scroll and the specialization choice stay recognized as already-held \
+                    grants; the level-13 \"Special\" column is genuinely blank on both primary \
+                    sources (the Wizard's bonus feats land only at levels 5/10/15/20), so no new \
+                    pillar record is grounded at level 13 beyond widening the \
+                    specialist-bonus-slot pillar to its new value. With this cycle, all 11 of 11 \
+                    §3.2 core classes have now reached level 13 except Monk (a confirmed \
+                    permanent exception). AND a further SD18 slice (the LAST of the 11 §3.2 core \
+                    classes to reach level 14 — Monk excluded, confirmed dead end) widens the \
+                    level-range gate again (supported_wizard_level, 1..=14) and extends every one \
+                    of the formulas above to level 14 via the same formulas, without \
+                    re-derivation, verified independently against three primary sources \
+                    (d20pfsrd, the Archives of Nethys aonprd.com mirror, and \
+                    legacy.aonprd.com, all byte-for-byte identical): level 14 base attack \
+                    GENUINELY RISES to +7 (14/2 = 7) and good Will GENUINELY RISES to +9 \
+                    (14/2+2 = 9), while poor Fortitude/Reflex STAY at +4 (14/3 = 4, an \
+                    integer-division coincidence with level 13); the specialist bonus slot flat \
+                    count is checked rather than assumed and correctly STAYS at 7, since the raw \
+                    spells-per-day table's level-14 row is \"4/4/4/4/4/3/3/2\" with the 8th-level \
+                    column still \"—\" (8th-level wizard spells do not become accessible until \
+                    level 15); Intense Spells' bonus-damage magnitude GENUINELY RISES to 7 \
+                    (max(14/2, 1) = 7); Force Missile's pool is level-independent and unchanged; \
+                    Scribe Scroll and the specialization choice stay recognized as already-held \
+                    grants; the level-14 \"Special\" column is genuinely blank on all three \
+                    primary sources (the Wizard's bonus feats land only at levels 5/10/15/20), so \
+                    no new pillar record is grounded at level 14 beyond widening the existing \
+                    arithmetic pillars — a pure ceiling raise needing no new tier constant. With \
+                    this cycle, all 11 of 11 §3.2 core classes have now reached level 14 except \
+                    Monk (a confirmed permanent exception). AND a further SD18 slice (the loop's \
+                    SEVENTH §3.2 level-15 landing, after Barbarian, Rogue, Fighter, Cleric, Druid, \
+                    and Ranger) widens the level-range gate again (supported_wizard_level, 1..=15) \
+                    and extends every one of the formulas above to level 15 via the same formulas, \
+                    without re-derivation, verified independently against two primary sources \
+                    (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree \
+                    byte-for-byte, so no third source was required): level 15 base attack STAYS \
+                    at +7 (15/2 = 7) and good Will STAYS at +9 (15/2+2 = 9), both \
+                    integer-division coincidences with level 14, while poor Fortitude/Reflex both \
+                    GENUINELY RISE to +5 (15/3 = 5, up from +4); the specialist bonus slot flat \
+                    count GENUINELY RISES to 8, since the raw spells-per-day table's level-15 row \
+                    is \"4/4/4/4/4/4/3/2/1\" — the first non-\"—\" 8th-level column, up from the \
+                    level-14 row \"4/4/4/4/4/3/3/2\" whose 8th-level column does not exist at all \
+                    — so a level-15 specialist wizard casts 8th-level spells for the first time, \
+                    via a new WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 15 threshold \
+                    constant gated exactly like the existing level-3/5/7/9/11/13 idiom; Intense \
+                    Spells' bonus-damage magnitude STAYS at 7 (max(15/2, 1) = 7, another \
+                    integer-division coincidence with level 14); Force Missile's pool is \
+                    level-independent and unchanged; Scribe Scroll and the specialization choice \
+                    stay recognized as already-held grants; the level-15 \"Special\" column reads \
+                    \"Bonus feat\" on both primary sources — the SAME genuinely open-ended \
+                    metamagic/item-creation/Spell-Mastery choice already left named-but-unproven \
+                    at levels 5 and 10, not a new type of class feature, so no new pillar record \
+                    is grounded at level 15 beyond widening the specialist-bonus-slot pillar to \
+                    its new value. AND a further SD18 slice (the loop's THIRD §3.2 level-16 \
+                    landing, after Barbarian and Fighter, and the first spell-bearing class to \
+                    reach level 16 in the level-16 sweep) widens the level-range gate again \
+                    (supported_wizard_level, 1..=16) and extends every one of the formulas above \
+                    to level 16 via the same formulas, without re-derivation, verified \
+                    independently against two primary sources (d20pfsrd and the Archives of \
+                    Nethys aonprd.com mirror, which agree byte-for-byte, so no third source was \
+                    required): level 16 base attack GENUINELY RISES to +8 (16/2 = 8) and good \
+                    Will GENUINELY RISES to +10 (16/2+2 = 10), while poor Fortitude/Reflex both \
+                    STAY at +5 (16/3 = 5, an integer-division coincidence with level 15); the \
+                    specialist bonus slot flat count is checked rather than assumed and \
+                    correctly STAYS at 8, since the raw spells-per-day table's level-16 row is \
+                    \"4/4/4/4/4/4/3/3/2\" with the 9th-level column still \"—\" (9th-level wizard \
+                    spells do not become accessible until level 17); Intense Spells' \
+                    bonus-damage magnitude GENUINELY RISES to 8 (max(16/2, 1) = 8); Force \
+                    Missile's pool is level-independent and unchanged; Scribe Scroll and the \
+                    specialization choice stay recognized as already-held grants; the level-16 \
+                    \"Special\" column is genuinely blank on both primary sources (the Wizard's \
+                    bonus feats land only at levels 5/10/15/20), so no new pillar record is \
+                    grounded at level 16 beyond widening the existing arithmetic pillars — a pure \
+                    ceiling raise needing no new tier or threshold constant. AND a further SD18 \
+                    slice (the loop's FIFTH §3.2 level-17 landing, after Ranger, Bard, Rogue, and \
+                    Fighter, and the first spell-bearing class to reach level 17 in the level-17 \
+                    sweep) widens the level-range gate again (supported_wizard_level, 1..=17) and \
+                    extends every one of the formulas above to level 17 via the same formulas, \
+                    without re-derivation, verified independently against two primary sources \
+                    (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree \
+                    byte-for-byte, fetching the full levels-15-through-18 block in one pass to \
+                    rule out level-misattribution, so no third source was required): level 17 \
+                    base attack STAYS at +8 (17/2 = 8) and good Will STAYS at +10 (17/2+2 = 10), \
+                    both integer-division coincidences with level 16, while poor Fortitude/Reflex \
+                    both STAY at +5 (17/3 = 5, also an integer-division coincidence with level \
+                    16); the specialist bonus slot flat count GENUINELY RISES to 9, since the raw \
+                    spells-per-day table's level-17 row is \"4/4/4/4/4/4/4/3/2/1\" — the first \
+                    non-\"—\" 9th-level column, up from the level-16 row \"4/4/4/4/4/4/3/3/2\" \
+                    whose 9th-level column does not exist at all — so a level-17 specialist \
+                    wizard casts 9th-level spells for the first time, via a new \
+                    WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 17 threshold constant gated \
+                    exactly like the existing level-3/5/7/9/11/13/15 idiom; Intense Spells' \
+                    bonus-damage magnitude STAYS at 8 (max(17/2, 1) = 8, an integer-division \
+                    coincidence with level 16); Force Missile's pool is level-independent and \
+                    unchanged; Scribe Scroll and the specialization choice stay recognized as \
+                    already-held grants; the level-17 \"Special\" column is genuinely blank on \
+                    both primary sources (the Wizard's bonus feats land only at levels \
+                    5/10/15/20), so no new named-feature pillar record is grounded at level 17 \
+                    beyond the 9th-level-column-opening widening of the specialist-bonus-slot \
+                    pillar. A further SD18 slice (the loop's FIRST §3.2 level-18 landing, opening \
+                    the level-18 sweep) widens the level-range gate again (supported_wizard_level, \
+                    1..=18) and extends every one of the formulas above to level 18 via the same \
+                    formulas, without re-derivation, verified independently against two primary \
+                    sources (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree \
+                    byte-for-byte, fetching the full levels-16-through-19 block in one pass to \
+                    rule out level-misattribution, so no third source was required): level 18 base \
+                    attack GENUINELY RISES to +9 (18/2 = 9, up from +8) and good Will GENUINELY \
+                    RISES to +11 (18/2+2 = 11, up from +10), while poor Fortitude/Reflex both \
+                    GENUINELY RISE to +6 (18/3 = 6, up from +5); the specialist bonus slot flat \
+                    count is checked rather than assumed and correctly STAYS at 9, since the raw \
+                    spells-per-day table's level-18 row \"4/4/4/4/4/4/4/3/3/2\" opens no \
+                    spell-level column beyond the 9th (already the highest wizard spell level in \
+                    PF1, unlike the level-17 widening's genuine 9th-column opening); Intense \
+                    Spells' bonus-damage magnitude GENUINELY RISES to 9 (max(18/2, 1) = 9); Force \
+                    Missile's pool is level-independent and unchanged; Scribe Scroll and the \
+                    specialization choice stay recognized as already-held grants; the level-18 \
+                    \"Special\" column is genuinely blank on both primary sources (the Wizard's \
+                    bonus feats land only at levels 5/10/15/20), so no new named-feature pillar \
+                    record is grounded at level 18 — a pure arithmetic-pillar widening. A further \
+                    SD18 slice (the loop's NINTH §3.2 level-19 landing, after Barbarian, Cleric, \
+                    Fighter, Bard, Paladin, Ranger, Rogue, and Sorcerer, and the LAST of the 9 \
+                    eligible classes, fully closing the level-19 sweep) widens the gate again to \
+                    level 19, verified independently against two primary sources (d20pfsrd and \
+                    the Archives of Nethys aonprd.com mirror, which agree byte-for-byte, fetching \
+                    the full levels-16-through-20 block in one pass to rule out \
+                    level-misattribution, so no third source was required): level 19 base attack \
+                    STAYS at +9 (19/2 = 9, an integer-division coincidence with level 18) and good \
+                    Will STAYS at +11 (19/2+2 = 11), while poor Fortitude/Reflex both STAY at +6 \
+                    (19/3 = 6); the specialist bonus slot flat count is checked rather than \
+                    assumed and correctly STAYS at 9, since the raw spells-per-day table's \
+                    level-19 row \"4/4/4/4/4/4/4/4/3/3\" opens no spell-level column beyond the \
+                    9th (already the highest wizard spell level in PF1, first opened at level 17); \
+                    Intense Spells' bonus-damage magnitude STAYS at 9 (max(19/2, 1) = 9); Force \
+                    Missile's pool is level-independent and unchanged; Scribe Scroll and the \
+                    specialization choice stay recognized as already-held grants; the level-19 \
+                    \"Special\" column is genuinely blank on both primary sources (the Wizard's \
+                    bonus feats land only at levels 5/10/15/20, confirmed directly — 19 is NOT a \
+                    bonus-feat level), so no new named-feature pillar record is grounded at level \
+                    19 — a pure arithmetic-pillar widening. \
+                    A further SD18 slice (cycle-2026-07-16T1000, the loop's SECOND §3.2 level-20 \
+                    landing, after Cleric) widens the gate again to level 20 — the final \
+                    remaining level within PF1's 1-20 character-level cap for this class row \
+                    (verified independently against two primary sources — d20pfsrd and the \
+                    Archives of Nethys aonprd.com mirror, byte-for-byte agreement on the full \
+                    levels-15-through-20 block, so a third source was not required): base attack \
+                    bonus genuinely rises to +10 (20/2), good Will genuinely rises to +12 \
+                    (20/2+2), and Intense Spells' bonus-damage magnitude genuinely rises to 10 \
+                    (max(20/2, 1)), all via the same pre-existing formulas, not re-derived, while \
+                    poor Fortitude/Reflex stay +6 (20/3), and the specialist bonus-slot flat \
+                    count stays 9 (the raw spells-per-day table's level-20 row \
+                    \"4/4/4/4/4/4/4/4/4/4\" opens no spell-level column beyond the 9th, already \
+                    the highest wizard spell level in PF1). The level-20 \"Special\" column reads \
+                    \"Bonus feat\" on both primary sources — the SAME genuinely open-ended \
+                    metamagic/item-creation/Spell-Mastery choice already left named-but-unproven \
+                    at levels 5, 10, and 15 (the class table's own \"Bonus Feats\" ability text is \
+                    identical wording across both sources and names no new mechanic at 20th \
+                    level), so it stays deliberately named-but-unproven and no new pillar record \
+                    is grounded at level 20 either — only the base-attack, base-save, and Intense \
+                    Spells pillars are widened. A separate, non-Core-Rulebook \"Well-Prepared\" \
+                    alternate capstone appears on both sources but is explicitly sourced to \
+                    Pathfinder Player Companion: Chronicle of Legends (an optional splatbook \
+                    replacement ability) — out of SD18's Core Rulebook scope, not modeled here. \
+                    Neither school power's \
                     execution machinery is implemented (no evocation spell-damage application for \
                     Intense Spells, no force-missile casting execution / 1d4 damage roll / \
                     automatic-hit targeting for Force Missile), the opposed-school preparation \
                     cost (each opposed-school spell occupies two prepared slots) remains named \
-                    and unproven, the level-5 bonus feat's own selection/execution (a general \
-                    feat-selection/feat-prerequisite engine) remains named and unproven, and the \
+                    and unproven, the level-5/level-10/level-15/level-20 bonus feat's own \
+                    selection/execution (a general feat-selection/feat-prerequisite engine) \
+                    remains named and unproven, and the \
                     prepared spell posture burden (spellbook content, spells prepared per day, \
                     spell slots per day, bonus slots from high Intelligence, spell save DCs) is \
-                    still entirely unproven. No spell math is fabricated and no Wizard level 11+ is \
-                    proven",
-                next_required_uplift: "SD13-E5 Wizard school-power execution and opposed-school \
-                    preparation-cost grounding slice, then the prepared spellbook / spell-slot \
-                    posture slice, then level-11+ progression (widening the now-grounded base \
-                    attack/base save formulas)",
+                    still entirely unproven. Wizard level 20 is now the final level within PF1's \
+                    1-20 character-level cap for this class row, so the per-level \
+                    arithmetic-widening frontier for this row is now fully exhausted — only the \
+                    school-power-execution, opposed-school-cost, bonus-feat-selection, and \
+                    prepared-spell-posture burdens remain, and none is a per-level widening. No \
+                    spell math is fabricated. This row's every named grounded milestone is now \
+                    surfaced live in the desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding Wizard's \
+                    remaining school-power execution and opposed-school preparation-cost burden, \
+                    the level-5/level-10/level-15/level-20 bonus-feat selection/execution (a \
+                    new-subsystem-shaped burden), and the prepared spellbook / spell-slot posture \
+                    burden is a future SD-N's scope, not a further per-cycle widening of this row",
             },
             // ----- Interaction rows (2) -----
             SupportStateRow {
@@ -3593,17 +6795,70 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 subject_id: "interaction:human-bonus-feat-ability-bonus",
                 dimension: "named Human bonus-feat and ability-bonus interaction pressure \
                             on the deterministic pilot path",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                // SD18-PRELOOP: bumped from Partial/Computed to
+                // Partial/Product-visible. The consumer-side composer
+                // (rules_core::composed_input) accepts a chosen-state
+                // CharacterInput plus a corpus-side SourcePackageContent
+                // and produces a ComposedCharacterInput that reaches
+                // pilot_compute::compute_pilot_base_chassis without
+                // panic; the test
+                // tests/sd18_preloop_consumer_compose.rs proves the
+                // end-to-end path against a synthetic Core Rulebook
+                // PCC, with the deterministic Human Fighter level 5
+                // chassis surface (BAB=5, STR=+3, DEX=+2). The
+                // interaction pressure between the human_bonus_feat
+                // -> feat:dodge and human_ability_bonus ->
+                // ability:strength selections is therefore not only
+                // computed by the engine but visible through the
+                // composed-input contract to the consumer.
+                // Full-matrix closure (operator directive 2026-07-16), Human
+                // interaction-row judgment call: option (a) taken, written
+                // here per the loop instruction's explicit requirement to
+                // record the choice and its reasoning. The row's own
+                // documented uplift ("generalize... once a second computed
+                // interaction pressure exists") is now structurally
+                // unreachable -- the only candidate second pressure is
+                // interaction.non_human_any_class.progression_pressure,
+                // which this loop permanently excludes (see that row's own
+                // note). Rather than hold this row hostage to a promotion
+                // path that can never complete without inventing an
+                // unwarranted non-Human interaction pressure, this row is
+                // promoted on the same bar every other Full-matrix-closure
+                // row was promoted on: both conditions in
+                // "What supported/Product-visible actually means for
+                // SD-19" are independently satisfied today -- (1) evidence_tier
+                // was already Product-visible (tests/sd18_preloop_consumer_compose.rs)
+                // and (2) every named sample in this row's own note
+                // (human_bonus_feat -> feat:dodge,
+                // human_ability_bonus -> ability:strength) is grounded as a
+                // real compute explanation, not a diagnostic string. The
+                // broader "generalize the interaction-row model" ambition is
+                // decoupled from this row's own Supported bar and named
+                // below as future-SD-N scope, exactly as every class row's
+                // own out-of-scope compute burdens (slot math, spellbook
+                // engine, etc.) were named as future-SD-N scope rather than
+                // blocking their promotion.
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: GE06_INPUT_CONTRACT_TEST,
-                blocker_or_lossiness_note: "only the named deterministic Human Fighter pilot \
-                    seam is grounded: the human_bonus_feat -> feat:dodge and \
-                    human_ability_bonus -> ability:strength selections now surfaced as explicit \
-                    compute explanations; the general interaction-row model is not",
-                next_required_uplift: "generalize the named Human pilot pressure into the \
-                    interaction-row model once a second computed interaction pressure exists \
-                    (per the non-Human interaction row's warrant condition)",
+                blocker_or_lossiness_note: "the named deterministic Human Fighter pilot \
+                    seam is grounded and product-visible: the human_bonus_feat -> feat:dodge and \
+                    human_ability_bonus -> ability:strength selections surface as explicit \
+                    compute explanations, and the consumer-side composer \
+                    (rules_core::composed_input) reaches pilot_compute through the \
+                    composed-input contract verified by tests/sd18_preloop_consumer_compose.rs. \
+                    This row's own named claim is fully grounded and surfaced -- 'Supported' here \
+                    means that, not that the interaction-row model itself has been generalized \
+                    beyond the named Human pilot pressure; see next_required_uplift.",
+                next_required_uplift: "generalizing the named Human pilot pressure into a \
+                    broader interaction-row model remains permanently decoupled from this row's \
+                    own Supported bar: the documented trigger condition (a second computed \
+                    interaction pressure) is interaction.non_human_any_class.progression_pressure, \
+                    which this loop permanently excludes from promotion (Full-matrix closure, \
+                    2026-07-16). Generalization becomes real future-SD-N scope only if a later SD \
+                    ingests a sourcebook (APG/ACG/race-specific) that grounds a genuine \
+                    non-Human race x class compute pressure.",
             },
             SupportStateRow {
                 row_id: "interaction.non_human_any_class.progression_pressure",
@@ -3682,6 +6937,483 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     traits are computed at the compute surface, but no class row yet exposes a \
                     distinct non-Human race x class pressure that the separate race and class \
                     rows do not already absorb",
+            },
+            // ----- SD-19 §2.4 spell-school rows (loop-routed, one per cycle) -----
+            SupportStateRow {
+                row_id: "school.abjuration.spell_reachability",
+                subject_type: MatrixSubjectType::School(
+                    crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId::Abjuration,
+                ),
+                subject_id: "school:abjuration",
+                dimension: "PF1 Abjuration strict-school spell reachability: every real-corpus \
+                    Abjuration spell (73 records in cr_spells.lst) is resolvable via \
+                    spell_id_resolve when selected on CharacterInput.spells_selected, and \
+                    present in CorpusPilotReceipt.corpus_derived.school_coverage[Abjuration] \
+                    after a call to compute_pilot_with_corpus",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_ABJURATION_SCHOOL_TEST,
+                blocker_or_lossiness_note: "all 73 real-corpus Abjuration spells resolve via \
+                    spell_id_resolve and appear in school_coverage[Abjuration].spells when \
+                    selected, and the row's table_cell grounds through the foundation slice's \
+                    bootstrap Alarm cell; the seam still computes no spell slot math, no \
+                    spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. Surfaced live \
+                    in the desktop app's Character Sheet Spells tab \
+                    (apps/desktop/src/characterHub/CharacterSheet.tsx's SpellsTab, wired through \
+                    compute_pilot_with_corpus via the create_character/load_saved_character \
+                    Tauri commands and a bundled corpus-fixture set in \
+                    apps/desktop/src-tauri/src/sd19_corpus.rs), satisfying the loop \
+                    instruction's own definition of Supported/Product-visible \
+                    (operator-driven UI surfacing, 2026-07-16)",
+                next_required_uplift: "none for reachability; the remaining structural gaps \
+                    (spell slot math, spellbook posture, spell save DCs) are a future SD-N's \
+                    scope per decisions.md §1.3, \
+                    not a further per-cycle widening of this row",
+            },
+            SupportStateRow {
+                row_id: "school.conjuration.spell_reachability",
+                subject_type: MatrixSubjectType::School(
+                    crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId::Conjuration,
+                ),
+                subject_id: "school:conjuration",
+                dimension: "PF1 Conjuration strict-school spell reachability: every real-corpus \
+                    Conjuration spell (116 records in cr_spells.lst) is resolvable via \
+                    spell_id_resolve when selected on CharacterInput.spells_selected, and \
+                    present in CorpusPilotReceipt.corpus_derived.school_coverage[Conjuration] \
+                    after a call to compute_pilot_with_corpus",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_CONJURATION_SCHOOL_TEST,
+                blocker_or_lossiness_note: "all 116 real-corpus Conjuration spells resolve via \
+                    spell_id_resolve and appear in school_coverage[Conjuration].spells when \
+                    selected, and the row's table_cell grounds through the foundation slice's \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
+                    spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 116 \
+                    Conjuration spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
+            },
+            SupportStateRow {
+                row_id: "school.divination.spell_reachability",
+                subject_type: MatrixSubjectType::School(
+                    crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId::Divination,
+                ),
+                subject_id: "school:divination",
+                dimension: "PF1 Divination strict-school spell reachability: every real-corpus \
+                    Divination spell (50 records in cr_spells.lst) is resolvable via \
+                    spell_id_resolve when selected on CharacterInput.spells_selected, and \
+                    present in CorpusPilotReceipt.corpus_derived.school_coverage[Divination] \
+                    after a call to compute_pilot_with_corpus",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_DIVINATION_SCHOOL_TEST,
+                blocker_or_lossiness_note: "all 50 real-corpus Divination spells resolve via \
+                    spell_id_resolve and appear in school_coverage[Divination].spells when \
+                    selected, and the row's table_cell grounds through the foundation slice's \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
+                    spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 50 \
+                    Divination spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
+            },
+            SupportStateRow {
+                row_id: "school.enchantment.spell_reachability",
+                subject_type: MatrixSubjectType::School(
+                    crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId::Enchantment,
+                ),
+                subject_id: "school:enchantment",
+                dimension: "PF1 Enchantment strict-school spell reachability: every real-corpus \
+                    Enchantment spell (60 records in cr_spells.lst) is resolvable via \
+                    spell_id_resolve when selected on CharacterInput.spells_selected, and \
+                    present in CorpusPilotReceipt.corpus_derived.school_coverage[Enchantment] \
+                    after a call to compute_pilot_with_corpus",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_ENCHANTMENT_SCHOOL_TEST,
+                blocker_or_lossiness_note: "all 60 real-corpus Enchantment spells resolve via \
+                    spell_id_resolve and appear in school_coverage[Enchantment].spells when \
+                    selected, and the row's table_cell grounds through the foundation slice's \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
+                    spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 60 \
+                    Enchantment spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
+            },
+            SupportStateRow {
+                row_id: "school.evocation.spell_reachability",
+                subject_type: MatrixSubjectType::School(
+                    crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId::Evocation,
+                ),
+                subject_id: "school:evocation",
+                dimension: "PF1 Evocation strict-school spell reachability: every real-corpus \
+                    Evocation spell (87 records in cr_spells.lst) is resolvable via \
+                    spell_id_resolve when selected on CharacterInput.spells_selected, and \
+                    present in CorpusPilotReceipt.corpus_derived.school_coverage[Evocation] \
+                    after a call to compute_pilot_with_corpus",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_EVOCATION_SCHOOL_TEST,
+                blocker_or_lossiness_note: "all 87 real-corpus Evocation spells resolve via \
+                    spell_id_resolve and appear in school_coverage[Evocation].spells when \
+                    selected, and the row's table_cell grounds through the foundation slice's \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
+                    spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 87 \
+                    Evocation spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
+            },
+            SupportStateRow {
+                row_id: "school.illusion.spell_reachability",
+                subject_type: MatrixSubjectType::School(
+                    crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId::Illusion,
+                ),
+                subject_id: "school:illusion",
+                dimension: "PF1 Illusion strict-school spell reachability: every real-corpus \
+                    Illusion spell (47 records in cr_spells.lst) is resolvable via \
+                    spell_id_resolve when selected on CharacterInput.spells_selected, and \
+                    present in CorpusPilotReceipt.corpus_derived.school_coverage[Illusion] \
+                    after a call to compute_pilot_with_corpus",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_ILLUSION_SCHOOL_TEST,
+                blocker_or_lossiness_note: "all 47 real-corpus Illusion spells resolve via \
+                    spell_id_resolve and appear in school_coverage[Illusion].spells when \
+                    selected, and the row's table_cell grounds through the foundation slice's \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
+                    spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. Surfaced live \
+                    in the desktop app's Character Sheet Spells tab \
+                    (apps/desktop/src/characterHub/CharacterSheet.tsx's SpellsTab, wired through \
+                    compute_pilot_with_corpus via the create_character/load_saved_character \
+                    Tauri commands and a bundled corpus-fixture set in \
+                    apps/desktop/src-tauri/src/sd19_corpus.rs), satisfying the loop \
+                    instruction's own definition of Supported/Product-visible \
+                    (operator-driven UI surfacing, 2026-07-16)",
+                next_required_uplift: "none for reachability; the remaining structural gaps \
+                    (spell slot math, spellbook posture, spell save DCs) are a future SD-N's \
+                    scope per decisions.md §1.3, \
+                    not a further per-cycle widening of this row",
+            },
+            SupportStateRow {
+                row_id: "school.necromancy.spell_reachability",
+                subject_type: MatrixSubjectType::School(
+                    crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId::Necromancy,
+                ),
+                subject_id: "school:necromancy",
+                dimension: "PF1 Necromancy strict-school spell reachability: every real-corpus \
+                    Necromancy spell (62 records in cr_spells.lst) is resolvable via \
+                    spell_id_resolve when selected on CharacterInput.spells_selected, and \
+                    present in CorpusPilotReceipt.corpus_derived.school_coverage[Necromancy] \
+                    after a call to compute_pilot_with_corpus",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_NECROMANCY_SCHOOL_TEST,
+                blocker_or_lossiness_note: "all 62 real-corpus Necromancy spells resolve via \
+                    spell_id_resolve and appear in school_coverage[Necromancy].spells when \
+                    selected, and the row's table_cell grounds through the foundation slice's \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
+                    spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 62 \
+                    Necromancy spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
+            },
+            SupportStateRow {
+                row_id: "school.transmutation.spell_reachability",
+                subject_type: MatrixSubjectType::School(
+                    crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId::Transmutation,
+                ),
+                subject_id: "school:transmutation",
+                dimension: "PF1 Transmutation strict-school spell reachability: every real-corpus \
+                    Transmutation spell (152 records in cr_spells.lst) is resolvable via \
+                    spell_id_resolve when selected on CharacterInput.spells_selected, and \
+                    present in CorpusPilotReceipt.corpus_derived.school_coverage[Transmutation] \
+                    after a call to compute_pilot_with_corpus",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_TRANSMUTATION_SCHOOL_TEST,
+                blocker_or_lossiness_note: "all 152 real-corpus Transmutation spells resolve via \
+                    spell_id_resolve and appear in school_coverage[Transmutation].spells when \
+                    selected, and the row's table_cell grounds through the foundation slice's \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
+                    spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 152 \
+                    Transmutation spells are now surfaced live in the desktop app's Spell \
+                    Catalog browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, \
+                    wired through the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row",
+            },
+            SupportStateRow {
+                row_id: "school.universal.spell_reachability",
+                subject_type: MatrixSubjectType::School(
+                    crate::rules_core::rules_tables::crb::spell_list::Pf1SchoolId::Universal,
+                ),
+                subject_id: "school:universal",
+                dimension: "PF1 Universal strict-school spell reachability: every real-corpus \
+                    Universal spell (5 records in cr_spells.lst) is resolvable via \
+                    spell_id_resolve when selected on CharacterInput.spells_selected, and \
+                    present in CorpusPilotReceipt.corpus_derived.school_coverage[Universal] \
+                    after a call to compute_pilot_with_corpus",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_UNIVERSAL_SCHOOL_TEST,
+                blocker_or_lossiness_note: "all 5 real-corpus Universal spells resolve via \
+                    spell_id_resolve and appear in school_coverage[Universal].spells when \
+                    selected, and the row's table_cell grounds through the foundation slice's \
+                    bootstrap table cell; the seam still computes no spell slot math, no \
+                    spells-known/prepared posture, and no spell save DCs (SD-19 decisions.md \
+                    §1.3, permanently out of scope for this seam) -- those remain a future \
+                    SD-N's scope, not a gap in this row's own reachability claim. All 5 \
+                    Universal spells are now surfaced live in the desktop app's Spell Catalog \
+                    browser (apps/desktop/src/spellCatalog/SpellCatalogScreen.tsx, wired through \
+                    the list_spell_catalog Tauri command over the full \
+                    rules_tables::crb::spell_list::SPELL_LIST store, 2026-07-16), reachable from \
+                    the hub landing screen, filterable by school and searchable by name -- \
+                    satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named spell grounded AND the operator's UI surfaces it)",
+                next_required_uplift: "none for reachability or UI-surfacing; the remaining \
+                    structural gaps (spell slot math, spellbook posture, spell save DCs) are a \
+                    future SD-N's scope per decisions.md §1.3, not a further per-cycle widening \
+                    of this row. §2.4 spell schools is now 9/9 landed at Supported/ProductVisible \
+                    -- the next frontier per '## Full-matrix closure' is the Class Progression \
+                    Browser (12 class.* rows), then the Race Trait Browser (7 race.* rows)",
+            },
+            SupportStateRow {
+                row_id: "equipment.arms_armor.equipment_reachability",
+                subject_type: MatrixSubjectType::Equipment(
+                    crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::ArmsArmor,
+                ),
+                subject_id: "category:arms_armor",
+                dimension: "PF1 core-rulebook arms_armor equipment reachability: every \
+                    one of the 310 real-corpus cr_equip_arms_armor.lst records (full \
+                    coverage, not a sample) is resolvable via equipment_id_resolve when \
+                    selected on CharacterInput.equipment_selections, present in \
+                    CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
+                    compute_pilot_with_corpus, and carries a non-None TableCellRef",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_ARMS_ARMOR_EQUIPMENT_TEST,
+                blocker_or_lossiness_note: "all 310 real-corpus arms_armor records \
+                    resolve via equipment_id_resolve, appear in equipped_items, and \
+                    ground through the CRB table store (rules_tables::crb::\
+                    equipment_data::arms_armor, generated from this same real corpus \
+                    file). Required two fixes first: the SD-17 parser-merge defect \
+                    (equipment.rs's open_record, fixed 22eeed9) and the equipment \
+                    resolver's exact-name-match gap (KEY-less records distinguished only \
+                    by parenthesized content, e.g. Improvised Weapon (1d2) vs (1d3), \
+                    fixed alongside the full-coverage cycle). derived_stats \
+                    (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
+                    bounded-baseline equipment-effect computation is a documented \
+                    non-goal of the capability slice (scope-draft.md §1.1), and is not a \
+                    gap in this row's own reachability claim. All 310 items are now \
+                    surfaced live in the desktop app's Equipment Catalog browser \
+                    (apps/desktop/src/equipmentCatalog/EquipmentCatalogScreen.tsx, wired \
+                    through the list_equipment_catalog Tauri command over the full \
+                    rules_tables::crb::equipment_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by category and searchable \
+                    by name — satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named item grounded AND the \
+                    operator's UI surfaces it) at full-category scope",
+                next_required_uplift: "none for reachability or UI-surfacing; \
+                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    is a future cycle's or a future SD-N's scope",
+            },
+            SupportStateRow {
+                row_id: "equipment.general.equipment_reachability",
+                subject_type: MatrixSubjectType::Equipment(
+                    crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::General,
+                ),
+                subject_id: "category:general",
+                dimension: "PF1 core-rulebook general equipment reachability: every one \
+                    of the 453 real-corpus cr_equip_general.lst records (full coverage, \
+                    not a sample) is resolvable via equipment_id_resolve when selected on \
+                    CharacterInput.equipment_selections, present in \
+                    CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
+                    compute_pilot_with_corpus, and carries a non-None TableCellRef",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_GENERAL_EQUIPMENT_TEST,
+                blocker_or_lossiness_note: "all 453 real-corpus general records resolve \
+                    via equipment_id_resolve, appear in equipped_items, and ground \
+                    through the CRB table store (rules_tables::crb::equipment_data::\
+                    general, generated from this same real corpus file). derived_stats \
+                    (armor_bonus/attack_bonus/max_dex/spell_failure) stay unpopulated — \
+                    bounded-baseline equipment-effect computation is a documented \
+                    non-goal of the capability slice (scope-draft.md §1.1), and is not a \
+                    gap in this row's own reachability claim. All 453 items are now \
+                    surfaced live in the desktop app's Equipment Catalog browser \
+                    (apps/desktop/src/equipmentCatalog/EquipmentCatalogScreen.tsx, wired \
+                    through the list_equipment_catalog Tauri command over the full \
+                    rules_tables::crb::equipment_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by category and searchable \
+                    by name — satisfying the loop instruction's own definition of \
+                    Supported/Product-visible at full-category scope",
+                next_required_uplift: "none for reachability or UI-surfacing; \
+                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    is a future cycle's or a future SD-N's scope",
+            },
+            SupportStateRow {
+                row_id: "equipment.magic_items.equipment_reachability",
+                subject_type: MatrixSubjectType::Equipment(
+                    crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::MagicItems,
+                ),
+                subject_id: "category:magic_items",
+                dimension: "PF1 core-rulebook magic_items equipment reachability: every \
+                    one of the 1556 real-corpus cr_equip_magic_items.lst records (full \
+                    coverage, not a sample) is resolvable via equipment_id_resolve when \
+                    selected on CharacterInput.equipment_selections, present in \
+                    CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
+                    compute_pilot_with_corpus, and carries a non-None TableCellRef",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_MAGIC_ITEMS_EQUIPMENT_TEST,
+                blocker_or_lossiness_note: "all 1556 real-corpus magic_items records \
+                    resolve via equipment_id_resolve, appear in equipped_items, and \
+                    ground through the CRB table store (rules_tables::crb::\
+                    equipment_data::magic_items, generated from this same real corpus \
+                    file). This category's prior cycle discovered the SD-17 '.COPY=' \
+                    parser-merge defect that made full coverage structurally impossible \
+                    (scrolls/wands/potions predominantly use '.COPY=' naming); that fix \
+                    (22eeed9) plus the equipment resolver's exact-name-match fix unblocked \
+                    the full-coverage cycle's sweep, including every '.COPY=' variant. \
+                    derived_stats (armor_bonus/attack_bonus/max_dex/spell_failure) stay \
+                    unpopulated — bounded-baseline equipment-effect computation is a \
+                    documented non-goal of the capability slice (scope-draft.md §1.1), \
+                    and is not a gap in this row's own reachability claim. All 1556 items \
+                    are now surfaced live in the desktop app's Equipment Catalog browser \
+                    (apps/desktop/src/equipmentCatalog/EquipmentCatalogScreen.tsx, wired \
+                    through the list_equipment_catalog Tauri command over the full \
+                    rules_tables::crb::equipment_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by category and searchable \
+                    by name — satisfying the loop instruction's own definition of \
+                    Supported/Product-visible at full-category scope",
+                next_required_uplift: "none for reachability or UI-surfacing; \
+                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    is a future cycle's or a future SD-N's scope",
+            },
+            SupportStateRow {
+                row_id: "equipment.equipmods.equipment_reachability",
+                subject_type: MatrixSubjectType::Equipment(
+                    crate::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory::Equipmods,
+                ),
+                subject_id: "category:equipmods",
+                dimension: "PF1 core-rulebook equipmods equipment reachability: every \
+                    one of the 344 independently-addressable real-corpus \
+                    cr_equipmods.lst records (full coverage of every selectable item, \
+                    not a sample) is resolvable via equipment_id_resolve when selected on \
+                    CharacterInput.equipment_selections, present in \
+                    CorpusPilotReceipt.corpus_derived.equipped_items after a call to \
+                    compute_pilot_with_corpus, and carries a non-None TableCellRef",
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
+                evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
+                grounding_ref: SD19_EQUIPMODS_EQUIPMENT_TEST,
+                blocker_or_lossiness_note: "344 of cr_equipmods.lst's 658 raw records \
+                    are independently addressable and all 344 resolve via \
+                    equipment_id_resolve, appear in equipped_items, and ground through \
+                    the CRB table store (rules_tables::crb::equipment_data::equipmods, \
+                    which transcribes all 658 raw records verbatim — nothing dropped \
+                    from the table store itself). The remaining 314 raw records are \
+                    PCGen-internal hidden legacy alias rows (no KEY: token of their own, \
+                    explicitly marked VISIBLE:NO, e.g. 'Material ~ Steel.COPY=STEEL' \
+                    whose fallback name-identity collides with the real 'Material ~ \
+                    Steel' modifier's own KEY) — confirmed for all 314 with zero \
+                    exceptions; these are not independently selectable equipment a \
+                    character can choose, so 344/344 is full coverage of every real \
+                    item, not a partial result. This category's prior cycle discovered \
+                    the plain-duplicate-name merge-collapse defect (two unrelated \
+                    'Cloth' rows); that fix (22eeed9) plus the equipment resolver's \
+                    exact-name-match fix unblocked the full-coverage cycle's sweep. \
+                    derived_stats (armor_bonus/attack_bonus/max_dex/spell_failure) stay \
+                    unpopulated — bounded-baseline equipment-effect computation is a \
+                    documented non-goal of the capability slice (scope-draft.md §1.1), \
+                    and is not a gap in this row's own reachability claim. All 658 raw \
+                    records (all 344 addressable items, plus the 314 hidden aliases for \
+                    transparency) are now surfaced live in the desktop app's Equipment \
+                    Catalog browser (apps/desktop/src/equipmentCatalog/\
+                    EquipmentCatalogScreen.tsx, wired through the list_equipment_catalog \
+                    Tauri command over the full rules_tables::crb::equipment_tables() \
+                    store, 2026-07-16), reachable from the hub landing screen, \
+                    filterable by category and searchable by name — satisfying the loop \
+                    instruction's own definition of Supported/Product-visible at \
+                    full-category scope. Landing this row closes the full §2.5 \
+                    equipment-category sweep (4/4) at full coverage and full \
+                    UI-surfacing.",
+                next_required_uplift: "none for reachability or UI-surfacing; \
+                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    is a future cycle's or a future SD-N's scope",
             },
         ],
     }

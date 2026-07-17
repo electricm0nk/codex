@@ -278,8 +278,9 @@ fn matrix_cleric_row_names_touch_of_good_grounded_and_rebuke_death_heal_amount_u
         .row("class.cleric.progression_and_spell_burden")
         .expect("cleric row must exist");
 
-    assert_eq!(cleric.support_state, SupportState::Partial);
-    assert_ne!(cleric.support_state, SupportState::Supported);
+    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
+    // Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(cleric.support_state, SupportState::Supported);
     assert!(
         cleric.blocker_or_lossiness_note.contains("Touch of Good")
             && cleric.blocker_or_lossiness_note.contains("Rebuke Death"),

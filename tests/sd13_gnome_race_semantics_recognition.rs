@@ -273,8 +273,10 @@ fn matrix_gnome_row_is_partial_computed_and_names_four_recognized_families() {
         .row("race.gnome.bounded_semantics")
         .expect("gnome row must exist");
 
-    assert_eq!(gnome.support_state, SupportState::Partial);
-    assert_eq!(gnome.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(gnome.support_state, SupportState::Supported);
+    assert_eq!(gnome.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         gnome.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -307,12 +309,14 @@ fn matrix_gnome_row_is_partial_computed_and_names_four_recognized_families() {
 fn matrix_preserves_accepted_truth_and_unchanged_rows() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
+    // Later promoted to Supported/ProductVisible alongside every other race
+    // row by SD-19's Race Trait Catalog browser UI-surfacing work (2026-07-16).
     for id in ["race.dwarf.bounded_semantics", "race.elf.bounded_semantics"] {
         let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
             row.support_state,
-            SupportState::Partial,
-            "row {id} must keep its accepted Partial posture after the gnome slice"
+            SupportState::Supported,
+            "row {id} must keep its later-accepted Supported posture after the gnome slice"
         );
     }
 
@@ -324,7 +328,43 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         !matrix
             .rows
             .iter()
-            .any(|r| r.support_state == SupportState::Supported
+            // school.abjuration/illusion.spell_reachability were later promoted to
+            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
+            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
+            .any(|r| (r.support_state == SupportState::Supported
+                && r.row_id != "school.abjuration.spell_reachability"
+                && r.row_id != "school.illusion.spell_reachability"
+                && r.row_id != "school.conjuration.spell_reachability"
+                && r.row_id != "school.divination.spell_reachability"
+                && r.row_id != "school.enchantment.spell_reachability"
+                && r.row_id != "school.evocation.spell_reachability"
+                && r.row_id != "school.necromancy.spell_reachability"
+                && r.row_id != "school.transmutation.spell_reachability"
+                && r.row_id != "school.universal.spell_reachability"
+                && r.row_id != "equipment.arms_armor.equipment_reachability"
+                && r.row_id != "equipment.general.equipment_reachability"
+                && r.row_id != "equipment.magic_items.equipment_reachability"
+                && r.row_id != "race.human.pilot_semantics"
+                && r.row_id != "race.dwarf.bounded_semantics"
+                && r.row_id != "race.elf.bounded_semantics"
+                && r.row_id != "race.gnome.bounded_semantics"
+                && r.row_id != "race.half_elf.bounded_semantics"
+                && r.row_id != "race.half_orc.bounded_semantics"
+                && r.row_id != "race.halfling.bounded_semantics"
+                && r.row_id != "class.fighter.level_1_pilot"
+                && r.row_id != "class.fighter.levels_2_10"
+                && r.row_id != "class.monk.bounded_progression"
+                && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
+                && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
+                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
+                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
+                && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the gnome slice must not promote any row to Supported or Lossy"
     );

@@ -265,8 +265,200 @@ const HYBRID_BASELINE_LEVEL: u8 = 1;
 // effective-cleric dice rising at odd levels so the next rise lands at
 // 11th; 10th is NOT a repeat-Mercy-grant level, so the single grounded
 // level-3 selection carries over unchanged and no new named feature is left
-// unproven by this slice). Nothing here grounds level 11+ Paladin.
-const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 10;
+// unproven by this slice. SD18 widens the gate again to level 11: base
+// attack bonus genuinely rises to 11 (full BAB) while all three base saves
+// stay numerically unchanged (11/2+2=7, 11/3=3, integer-division
+// coincidences); Smite Evil's uses/day stay 4/day (another integer-division
+// coincidence, the next rise lands at 13th) but its damage bonus genuinely
+// rises to 11; Lay on Hands stays numerically unchanged on both axes;
+// Channel Positive Energy's die count genuinely rises to 6 (ceil(11/2), the
+// effective-cleric dice rising at odd levels); the effective caster level
+// genuinely rises to 8 (11-3); the 3rd-level spell's base count and
+// integrated total both genuinely rise from the honest ZERO at level 10 to
+// 1 (the raw spells-per-day table row is "2/1/1/--" at level 11, verified
+// independently against d20pfsrd and legacy.aonprd.com); 11th is NOT a
+// repeat-Mercy-grant level, so the single grounded level-3 selection
+// carries over unchanged again; and the level-11 "Special" column reads
+// "Aura of justice" only (verified independently against both primary
+// sources) -- grounded as a new bounded grant-only identity record
+// (class_chassis.paladin.aura_of_justice), mirroring the Monk Diamond Body
+// grant-only idiom exactly: no ally-aura/positional engine and no
+// smite-evil-resource-sharing execution engine exists anywhere in this
+// codebase to apply the shared smite to. A further SD18 slice
+// (cycle-2026-07-15T0700) widens the gate again to level 12, verified
+// independently against d20pfsrd and legacy.aonprd.com: base attack bonus
+// genuinely rises to 12 (full BAB) and this time ALL THREE base saves
+// genuinely rise too (good Fortitude/Will 12/2+2=8, poor Reflex 12/3=4,
+// unlike level 11 where all three stayed numerically unchanged); Smite
+// Evil's uses/day stay 4/day (another integer-division coincidence, the
+// next rise lands at 13th) but its damage bonus genuinely rises to 12; Lay
+// on Hands genuinely rises on both axes (uses 8, heal dice 6); Channel
+// Positive Energy's die count stays 6 ((12+1)/2=6, an integer-division
+// coincidence with level 11); the effective caster level genuinely rises
+// to 9 (12-3); the 2nd-level spell's base count and integrated total both
+// genuinely rise (base 1->2, total 2->3, the raw spells-per-day table row
+// is "2/2/1/--" at level 12), while the 1st- and 3rd-level counts/totals
+// stay numerically unchanged; and the level-12 "Special" column reads
+// "Mercy" only (verified independently against both primary sources) --
+// 12th IS a repeat-Mercy-grant level (the 3rd/6th/9th/12th cadence),
+// grounded here as a FOURTH numbered mercy choice slot
+// (class_chassis.paladin.mercy_4_choice), mirroring the proven slot-2/
+// slot-3 idiom exactly. SD18 cycle-2026-07-15T1800 widens this once more
+// to level 13: base attack genuinely rises to 13 (all three base saves
+// stay numerically unchanged, integer-division coincidences); the
+// level-13 "Special" column reads only "Smite evil 5/day" (verified
+// independently against d20pfsrd and legacy.aonprd.com), which is NOT a
+// new named feature -- the pre-existing smite-evil-uses-per-day formula
+// is level-generic and already yields 5 at level 13 with no code change;
+// 13th is NOT a repeat-Mercy-grant level, so no fifth mercy slot is
+// added. The base spells-per-day table's level-13 row is "3/2/1/0",
+// genuinely opening a 4th spell-level column
+// (`PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`) for the first
+// time, mirroring the Ranger level-13 widening's identical table shape
+// (Paladin and Ranger share the same PF1 CRB spells-per-day table).
+// SD18 cycle-2026-07-15T2500 widens this once more to level 14: base
+// attack genuinely rises to 14 and, unlike level 13, ALL THREE base saves
+// genuinely rise too (good Fortitude/Will 14/2+2=9, poor Reflex 14/3=4,
+// an integer-division coincidence with level 13); the level-14 "Special"
+// column reads only "Aura of faith" (verified independently against
+// d20pfsrd, the Archives of Nethys aonprd.com mirror, and
+// legacy.aonprd.com, all three agreeing byte-for-byte) -- a genuinely NEW
+// class feature, grounded as a bounded grant-only identity record
+// (class_chassis.paladin.aura_of_faith), mirroring the Aura of Justice /
+// Monk Diamond Body idiom exactly. 14th is NOT a repeat-Mercy-grant
+// level, so no fifth mercy slot is added. The base spells-per-day
+// table's level-14 row is "3/2/1/1": only the 4th-level column genuinely
+// rises (from 0 to 1), the first castable 4th-level paladin spell slot.
+// SD18 cycle-2026-07-15T4300 widens this once more to level 15: base
+// attack genuinely rises to 15 (full BAB) and poor Reflex genuinely rises
+// to 5 (15/3, up from 4), while both good saves stay numerically unchanged
+// at 9 (15/2+2, an integer-division coincidence with level 14). The
+// level-15 "Special" column reads only "Mercy" (verified independently
+// against d20pfsrd and the Archives of Nethys aonprd.com mirror,
+// byte-for-byte agreement) -- 15th IS a repeat-Mercy-grant level (the
+// 3rd/6th/9th/12th/15th cadence), grounded here as a FIFTH numbered mercy
+// choice slot, mirroring the proven slot-2/3/4 idiom exactly; unlike the
+// 6th/9th/12th-level repeat grants, both sources agree the CRB's named
+// mercy-list tiers stop growing after 12th level, so the fifth slot's
+// cited tier text names no new mercy condition, only the fifth pick from
+// the existing pool. The base spells-per-day table's level-15 row is
+// "3/2/2/1": only the 3rd-level column genuinely rises (from 1 to 2).
+// SD18 cycle-2026-07-15T5400 widens this once more to level 16: base
+// attack genuinely rises to 16 (full BAB) and, unlike level 15, BOTH good
+// saves genuinely rise too (Fortitude/Will 16/2+2=10, up from 9), while
+// poor Reflex stays numerically unchanged at 5 (16/3, an
+// integer-division coincidence with level 15). The level-16 "Special"
+// column reads only "Smite evil 6/day" (verified independently against
+// d20pfsrd and the Archives of Nethys aonprd.com mirror, byte-for-byte
+// agreement, so a third source was not required) -- this is NOT a new
+// named feature: the pre-existing smite-evil-uses-per-day formula is
+// already level-generic and yields 6 at level 16 with no code change.
+// 16th is NOT a repeat-Mercy-grant level, so no sixth mercy slot is
+// added. The base spells-per-day table's level-16 row is "3/3/2/1": only
+// the 2nd-level column genuinely rises (from 2 to 3). SD18
+// cycle-2026-07-15T10700 widens this once more to level 17: base attack
+// genuinely rises to 17 (full BAB) while ALL THREE base saves stay
+// numerically unchanged from level 16 (good Fortitude/Will 17/2+2=10,
+// poor Reflex 17/3=5, integer-division coincidences). The level-17
+// "Special" column reads only "Aura of righteousness" (verified
+// independently against d20pfsrd and the Archives of Nethys aonprd.com
+// mirror, byte-for-byte agreement, so a third source was not required)
+// -- a genuinely NEW class feature, grounded as a THIRD bounded
+// grant-only identity record mirroring the Aura of Justice / Aura of
+// Faith idiom exactly: no damage-reduction-application engine and no
+// compulsion-immunity-check engine exists anywhere in this codebase to
+// apply "DR 5/evil and immunity to compulsion spells and spell-like
+// abilities" to. 17th is NOT a repeat-Mercy-grant level, so no sixth
+// mercy slot is added. Smite Evil's uses-per-day formula stays 6/day
+// (an integer-division coincidence with level 16; the next rise lands
+// at level 19) while its damage bonus genuinely rises to 17. The base
+// spells-per-day table's level-17 row is "4/3/2/1": only the 1st-level
+// column genuinely rises (from 3 to 4).
+// SD18 cycle-2026-07-15T15000 widens this once more to level 18: base
+// attack genuinely rises to 18 (full BAB) and BOTH good saves genuinely
+// rise to 11 (18/2+2), while poor Reflex genuinely rises to 6 (18/3).
+// The level-18 "Special" column reads only "Mercy" (verified
+// independently against d20pfsrd and the Archives of Nethys aonprd.com
+// mirror, byte-for-byte agreement) -- 18th IS a repeat-Mercy-grant level
+// (the 3rd/6th/9th/12th/15th/18th cadence), grounded here as a SIXTH
+// numbered mercy choice slot, mirroring the proven slot-2/3/4/5 idiom
+// exactly; like the 15th-level repeat grant, both sources agree the
+// CRB's named mercy-list tiers stop growing after 12th level, so the
+// sixth slot's cited tier text names no new mercy condition, only the
+// sixth pick from the existing pool. Smite Evil's uses-per-day formula
+// stays 6/day (an integer-division coincidence with level 17; the next
+// rise lands at level 19) while its damage bonus genuinely rises to 18.
+// The base spells-per-day table's level-18 row is "4/3/2/2": only the
+// 4th-level column genuinely rises (from 1 to 2). The base spells-per-day
+// table's level-19 row is "4/3/3/2": only the 3rd-level column genuinely
+// rises (from 2 to 3). The base spells-per-day table's level-20 row is
+// "4/4/3/3" (verified independently against raw HTML fetches of d20pfsrd
+// and the Archives of Nethys aonprd.com mirror, byte-for-byte agreement):
+// the 2nd-level AND 4th-level columns BOTH genuinely rise simultaneously
+// (2nd from 3 to 4, 4th from 2 to 3) -- the first level in this row's own
+// widening history where two columns rise at once. Nothing here grounds
+// level 21+ Paladin (PF1's 1-20 character-level cap).
+const MAX_SUPPORTED_PALADIN_LEVEL: u8 = 20;
+
+// Aura of Faith is a 14th-level paladin feature in the PF1 Core Rulebook
+// (verified independently against d20pfsrd, the Archives of Nethys
+// aonprd.com mirror, and legacy.aonprd.com, all three agreeing
+// byte-for-byte): "At 14th level, a paladin's weapons are treated as
+// good-aligned for the purposes of overcoming damage reduction.
+// Additionally, any attack made against an enemy within 10 feet of her is
+// treated as good-aligned for the purposes of overcoming damage
+// reduction." Below this level its honest computed surface is its
+// correct ABSENCE (value 0); at or above it, this slice grounds a
+// bounded GRANT-only identity record (mirroring the Aura of Justice /
+// Monk Diamond Body idiom exactly): no alignment-treatment execution
+// engine and no damage-reduction-overcoming resolution engine exists
+// anywhere in this codebase to apply this to.
+const PALADIN_AURA_OF_FAITH_LEVEL: u8 = 14;
+
+// Aura of Justice is an 11th-level paladin feature in the PF1 Core Rulebook
+// (verified independently against d20pfsrd and legacy.aonprd.com): "At 11th
+// level, a paladin can expend two uses of her smite evil ability to grant
+// the ability to smite evil to all allies within 10 feet, using her
+// bonuses, but through their own weapons." Below this level its honest
+// computed surface is its correct ABSENCE (value 0); at or above it, this
+// slice grounds a bounded GRANT-only identity record (mirroring the Monk
+// Diamond Body idiom exactly): no ally-aura/positional engine and no
+// smite-evil-resource-sharing execution engine exists anywhere in this
+// codebase to apply the shared smite to.
+const PALADIN_AURA_OF_JUSTICE_LEVEL: u8 = 11;
+
+// Aura of Righteousness is a 17th-level paladin feature in the PF1 Core
+// Rulebook (verified independently against d20pfsrd and the Archives of
+// Nethys aonprd.com mirror, both agreeing byte-for-byte): "At 17th level,
+// a paladin gains DR 5/evil and immunity to compulsion spells and
+// spell-like abilities." Below this level its honest computed surface is
+// its correct ABSENCE (value 0); at or above it, this slice grounds a
+// bounded GRANT-only identity record (mirroring the Aura of Justice /
+// Aura of Faith idiom exactly): no damage-reduction-application engine
+// and no compulsion-immunity-check engine exists anywhere in this
+// codebase to apply this to.
+const PALADIN_AURA_OF_RIGHTEOUSNESS_LEVEL: u8 = 17;
+
+// Holy Champion is the 20th-level paladin capstone in the PF1 Core Rulebook
+// (verified independently against a raw HTML fetch of d20pfsrd.com's own
+// class table and description, and a raw HTML fetch of the Archives of
+// Nethys aonprd.com mirror's ClassDisplay.aspx, both agreeing byte-for-byte,
+// bypassing AI-summarization to guard against a tool-extraction artifact):
+// "At 20th level, a paladin becomes a conduit for the power of her god. Her
+// DR increases to 10/evil. Whenever she uses smite evil and successfully
+// strikes an evil outsider, the outsider is also subject to a banishment,
+// using her paladin level as the caster level... After the banishment
+// effect and the damage from the attack is resolved, the smite immediately
+// ends. In addition, whenever she channels positive energy or uses lay on
+// hands to heal a creature, she heals the maximum possible amount." Below
+// this level its honest computed surface is its correct ABSENCE (value 0);
+// at or above it, this slice grounds a bounded GRANT-only identity record
+// (mirroring the Aura of Justice / Aura of Faith / Aura of Righteousness
+// idiom exactly): no damage-reduction-application engine, no
+// banishment-spell-effect-resolution engine, and no healing-maximization
+// execution engine exists anywhere in this codebase to apply any of this
+// to.
+const PALADIN_HOLY_CHAMPION_LEVEL: u8 = 20;
 
 // Lay on hands and divine grace are both 2nd-level paladin features in the PF1 Core
 // Rulebook. Below this level their honest computed surface is their correct
@@ -324,10 +516,14 @@ const PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 /// The paladin level at which 3rd-level paladin spells first become available,
 /// verified against the raw table rows (both sources): level 9 shows
 /// "2/1/—/—", level 10 shows "2/1/0/—" — the first non-"—" 3rd-level column.
-/// The 4th-level column stays "—" through level 10 (4th-level paladin spells
-/// begin at 13, outside the tranche ceiling), so no 4th-level threshold const
-/// is grounded.
 const PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+/// The paladin level at which 4th-level paladin spells first become available,
+/// verified against the raw table rows (d20pfsrd and legacy.aonprd.com, both
+/// byte-for-byte identical): level 12 shows "2/2/1/—", level 13 shows
+/// "3/2/1/0" — the first non-"—" 4th-level column. Matches the Ranger
+/// `RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL` threshold exactly
+/// (Paladin and Ranger share the same PF1 CRB spells-per-day table shape).
+const PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
 
 /// SD13-E5 Paladin Mercy choice-slot id. The deterministic level-3 fixture names a
 /// chosen mercy (e.g. `mercy:shaken`); the compute seam recognizes whichever raw
@@ -351,6 +547,42 @@ const PALADIN_SECOND_MERCY_GRANT_LEVEL: u8 = 6;
 const PALADIN_SECOND_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_2";
 const PALADIN_THIRD_MERCY_GRANT_LEVEL: u8 = 9;
 const PALADIN_THIRD_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_3";
+
+/// PF1 Core Rulebook gate of the paladin's FOURTH mercy ("every three levels
+/// thereafter" from the level-3 mercy rule: 3, 6, 9, 12). The CRB 12th-level
+/// tier was verified for this SD18 slice: legacy.aonprd.com (Core Rulebook
+/// only) ADDS Blinded/Deafened/Paralyzed/Stunned; d20pfsrd's list is a
+/// superset whose CRB subset matches exactly -- its extra entries
+/// (Amputated, Ensorcelled, Petrified) are non-CRB expansions outside this
+/// seam's pf1.core_rulebook source package. Numbered slot per the proven
+/// repeat-grant idiom, mirroring slot 2/3 exactly.
+const PALADIN_FOURTH_MERCY_GRANT_LEVEL: u8 = 12;
+const PALADIN_FOURTH_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_4";
+
+/// PF1 Core Rulebook gate of the paladin's FIFTH mercy ("every three levels
+/// thereafter" from the level-3 mercy rule: 3, 6, 9, 12, 15). Verified
+/// independently for this SD18 slice against d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror (byte-for-byte agreement): UNLIKE the
+/// 6th/9th/12th-level repeat grants, no new named mercy-list tier is added
+/// at 15th level -- both sources agree the CRB's named mercy conditions
+/// stop growing after the 12th-level tier, so the 15th-level grant is
+/// simply a fifth pick from the already-existing 3rd/6th/9th/12th-tier
+/// pool. Numbered slot per the proven repeat-grant idiom, mirroring slot
+/// 2/3/4 exactly.
+const PALADIN_FIFTH_MERCY_GRANT_LEVEL: u8 = 15;
+const PALADIN_FIFTH_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_5";
+
+/// PF1 Core Rulebook gate of the paladin's SIXTH mercy ("every three levels
+/// thereafter" from the level-3 mercy rule: 3, 6, 9, 12, 15, 18). Verified
+/// independently for this SD18 slice against d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror (byte-for-byte agreement): like the 15th-level
+/// grant, no new named mercy-list tier is added at 18th level -- both
+/// sources agree the CRB's named mercy conditions stop growing after the
+/// 12th-level tier, so the 18th-level grant is simply a sixth pick from the
+/// already-existing 3rd/6th/9th/12th-tier pool. Numbered slot per the
+/// proven repeat-grant idiom, mirroring slot 2/3/4/5 exactly.
+const PALADIN_SIXTH_MERCY_GRANT_LEVEL: u8 = 18;
+const PALADIN_SIXTH_MERCY_CHOICE_ID: &str = "choice:paladin_mercy_6";
 
 // SD13-E5 Ranger Combat Style correction. Combat Style Feat is a 2nd-level ranger
 // feature in the PF1 Core Rulebook: the ranger selects a combat style (archery or
@@ -429,9 +661,139 @@ const RANGER_COMBAT_STYLE_LEVEL: u8 = 2;
 // third enemy-type selection PLUS the rule's own second +2
 // bonus-increase-target choice) is a real, newly-discovered multi-record
 // burden deliberately left named-but-unproven this slice, mirroring the
-// level-8 2nd-favored-terrain deferral precedent exactly. Nothing here
-// grounds level 11+ Ranger.
-const MAX_SUPPORTED_RANGER_LEVEL: u8 = 10;
+// level-8 2nd-favored-terrain deferral precedent exactly.
+//
+// SD18 cycle-2026-07-14T2300 widens the gate once more to level 11,
+// extending base attack/base save/Track to level 11 via the same formulas
+// (all three stay numerically unchanged from level 10 -- 11/2+2 = 7,
+// 11/3 = 3, max(11/2, 1) = 5 -- integer-division coincidences, re-verified
+// against d20pfsrd and the Archives of Nethys aonprd.com mirror rather than
+// assumed) and grounds the class table's 11th-level "Special" column entry,
+// "Quarry" (verified independently against both primary sources -- no other
+// new class feature is gained at 11th level). Quarry is grounded as a
+// bundle mirroring precedent exactly: a grant-only identity record (value
+// 0, mirroring the Woodland Stride/Swift Tracker idiom) for the
+// take-10-while-tracking and auto-confirm-critical-threats behaviors, since
+// neither a Survival-check-execution engine nor a critical-confirmation-roll
+// engine exists anywhere in this codebase; an open-ended target-choice
+// recognition record (mirroring the Favored Enemy/Favored Terrain
+// choice-recognition idiom exactly, no restricted-list validation, no
+// favored-enemy-type matching); and the rule's own flat +2 insight
+// attack-roll magnitude as a standalone, non-applied record (mirroring the
+// Favored Enemy attack/damage-bonus idiom exactly). No active-quarry state
+// (the 24-hour reselection cooldown, the 1-hour post-kill cooldown, or "only
+// one quarry at a time") is tracked. A still later SD18 slice widens the
+// gate once more to level 12, extending base attack/base save/Track to
+// level 12 via the same formulas (all three genuinely rise, unlike level
+// 11's integer-division coincidences) and grounds Camouflage, the class
+// table's 12th-level "Special" column entry (`RANGER_CAMOUFLAGE_LEVEL`), as
+// a grant-only identity record. A still later SD18 slice widens the gate
+// once more to level 13, extending base attack to level 13 (base saves stay
+// numerically unchanged from level 12, an integer-division coincidence) and
+// grounds the class table's 13th-level "Special" column entry, "3rd favored
+// terrain" (`RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL`) — the exact
+// structural mirror of the already-grounded Favored Enemy 10th-level
+// interval — plus the spell-level access ladder's genuinely new 4th-level
+// column (`RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`) and the base
+// spells-per-day table's own level-13 row. A still later SD18 slice
+// (cycle-2026-07-15T2100) widens the gate once more to level 14: base
+// attack bonus and both good saves genuinely rise, the base spells-per-day
+// table's 4th-level column genuinely rises from 0 to 1, and the level-14
+// "Special" column's FOURTH combat-style bonus feat
+// (`RANGER_COMBAT_STYLE_BONUS_FEAT_4_LEVEL`) is grounded as an open-ended
+// +0 recognition record, NOT a restricted-list match — the PF1 Core
+// Rulebook's own Combat Style feat lists (Archery, Two-Weapon Combat) do
+// not tabulate any named options beyond the 10th-level tier, verified
+// independently against three sources dedicated to the combat-style feat
+// lists themselves. A still later SD18 slice (cycle-2026-07-15T4000) widens
+// the gate once more to level 15: base attack bonus genuinely rises to 15
+// (full BAB) while both good saves stay 9 (15/2+2, an integer-division
+// coincidence with level 14) and poor Will genuinely rises to 5 (15/3, up
+// from 4); the level-15 "Special" column reads "4th favored enemy" — the
+// Favored Enemy rule's own 15th-level interval, the exact structural mirror
+// of the already-grounded 10th-level interval — plus the base
+// spells-per-day table's own level-15 row (3/2/2/1, the 3rd-level column
+// genuinely rising from 1 to 2). A still later SD18 slice
+// (cycle-2026-07-15T6100) widens the gate once more to level 16: base
+// attack bonus genuinely rises to 16 (full BAB) and both good saves
+// genuinely rise to 10 (16/2+2), while poor Will stays 5 (16/3, an
+// integer-division coincidence); the level-16 "Special" column reads
+// "Improved evasion" (`RANGER_IMPROVED_EVASION_LEVEL`) — grounded as a
+// bounded +0 identity/recognition record, mirroring Monk's own Improved
+// Evasion and Ranger's own base Evasion idiom exactly — plus the base
+// spells-per-day table's own level-16 row (3/3/2/1, the 1st-level column
+// genuinely rising from 2 to 3). A still later SD18 slice
+// (cycle-2026-07-15T7000) widens the gate once more to level 17: base
+// attack bonus genuinely rises to 17 (full BAB), while both good saves
+// stay 10 (17/2+2) and poor Will stays 5 (17/3), both integer-division
+// coincidences with level 16; the level-17 "Special" column reads "Hide in
+// plain sight" (`RANGER_HIDE_IN_PLAIN_SIGHT_LEVEL`) — grounded as a
+// bounded +0 identity/recognition record, mirroring Camouflage's own
+// idiom exactly — plus the base spells-per-day table's own level-17 row
+// (4/3/2/1, the 1st-level column genuinely rising from 3 to 4). A still
+// later SD18 slice (cycle-2026-07-16T0244) widens the gate once more to
+// level 18: base attack bonus genuinely rises to 18 (full BAB), and ALL
+// THREE base saves genuinely rise this time (good Fortitude/Reflex to 11,
+// `18/2+2`; poor Will to 6, `18/3`) — unlike level 17's all-coincidence
+// row; the level-18 "Special" column reads "4th favored terrain, combat
+// style feat" (verified independently against d20pfsrd and the Archives
+// of Nethys aonprd.com mirror, byte-for-byte agreement, confirming the
+// prior cycle's own carried-forward hypothesis exactly): the FOURTH
+// Favored Terrain interval (`RANGER_FAVORED_TERRAIN_FOURTH_INTERVAL_LEVEL`,
+// the exact structural mirror of the already-grounded Favored Enemy
+// 15th-level interval) plus the FIFTH combat-style bonus feat
+// (`RANGER_COMBAT_STYLE_BONUS_FEAT_5_LEVEL`), grounded as an open-ended +0
+// recognition record mirroring the fourth bonus feat's own idiom exactly
+// (the PF1 Core Rulebook's own Combat Style feat tables do not tabulate
+// any named options beyond the 10th-level tier) — plus the base
+// spells-per-day table's own level-18 row (4/3/2/2, the 4th-level column
+// genuinely rising from 1 to 2, numerically identical to the already-
+// landed Paladin level-18 row). A still later SD18 slice
+// (cycle-2026-07-16T3200) widens the gate once more to level 19: base
+// attack bonus genuinely rises to 19 (full BAB), while both good saves
+// stay 11 (19/2+2) and poor Will stays 6 (19/3), both integer-division
+// coincidences with level 18; the level-19 "Special" column reads
+// "Improved quarry" (verified independently against d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, both byte-for-byte identical) —
+// an UPGRADE of the already-grounded 11th-level Quarry identity
+// (`RANGER_QUARRY_LEVEL`), the exact structural mirror of Improved
+// Evasion's own upgrade of Evasion: a new bounded grant-only identity
+// record (`RANGER_IMPROVED_QUARRY_LEVEL`) names the free-action
+// reselection, take-20-while-tracking, and reduced 10-minute cooldown
+// upgrades, while the already-existing `quarry_attack_bonus` explanation
+// genuinely rises from +2 to +4 on the same id, mirroring the Bard
+// Inspire Competence tiered-magnitude idiom — plus the base
+// spells-per-day table's own level-19 row (4/3/3/2, the 3rd-level column
+// genuinely rising from 2 to 3). A still later SD18 slice
+// (cycle-2026-07-16T1600) widens the gate once more to level 20, the
+// FINAL level within PF1's 1-20 character-level cap: base attack bonus
+// genuinely rises to 20 (full BAB) and both good saves genuinely rise to
+// 12 (20/2+2), while poor Will stays 6 (20/3, an integer-division
+// coincidence with level 19); the level-20 "Special" column reads "5th
+// favored enemy, master hunter" (verified independently against d20pfsrd
+// and the Archives of Nethys aonprd.com mirror, both byte-for-byte
+// identical) — the Favored Enemy rule's own FINAL 20th-level interval
+// (`RANGER_FAVORED_ENEMY_FIFTH_INTERVAL_LEVEL`), the exact structural
+// mirror of the 15th-level interval, plus Master Hunter
+// (`RANGER_MASTER_HUNTER_LEVEL`), a brand-new capstone with no player
+// choice involved, grounded as a bounded grant-only identity record
+// mirroring the Paladin Holy Champion idiom — plus the base
+// spells-per-day table's own level-20 row (4/4/3/3, the 2nd- and
+// 4th-level columns both genuinely rising at once). This closes Ranger's
+// own per-level arithmetic-widening frontier.
+const MAX_SUPPORTED_RANGER_LEVEL: u8 = 20;
+
+/// PF1 Core Rulebook level gate at which Camouflage is granted (verified
+/// independently against two primary sources: both d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror list "Camouflage" as the sole
+/// Ranger 12th-level "Special" column entry). Camouflage is an automatic,
+/// no-choice grant with no numeric magnitude of its own: "A ranger of 12th
+/// level or higher can use the Stealth skill to hide, even while being
+/// observed, as long as she is within any sort of natural terrain that
+/// grants at least partial concealment or partial cover." Only the grant
+/// identity is grounded here; no terrain-detection engine and no
+/// Stealth-check-execution engine exists anywhere in this codebase.
+const RANGER_CAMOUFLAGE_LEVEL: u8 = 12;
 
 /// PF1 Core Rulebook level gate at which Woodland Stride is granted (verified
 /// independently against two primary sources: both d20pfsrd and
@@ -464,6 +826,77 @@ const RANGER_SWIFT_TRACKER_LEVEL: u8 = 8;
 /// legacy.aonprd.com both list "Evasion" as the Ranger 9th-level "Special"
 /// column entry — the same rule text as Rogue's and Monk's own Evasion).
 const RANGER_EVASION_LEVEL: u8 = 9;
+
+/// PF1 Core Rulebook level gate at which Ranger gains Improved Evasion (16th
+/// level, verified independently against two primary sources: d20pfsrd and
+/// the Archives of Nethys aonprd.com mirror both list "Improved evasion" as
+/// the Ranger 16th-level "Special" column entry, byte-for-byte agreement).
+/// An upgrade of the 9th-level Evasion identity: the ranger still takes no
+/// damage on a successful Reflex save, and henceforth takes only HALF
+/// damage on a failed save. Grounded as a bounded +0 identity/recognition
+/// record only at/above the gate, mirroring exactly how Monk's own
+/// Improved Evasion (`MONK_IMPROVED_EVASION_LEVEL`) and Ranger's own base
+/// Evasion (`RANGER_EVASION_LEVEL`) were grounded — no
+/// saving-throw-resolution or damage-resolution engine exists anywhere in
+/// this codebase, so no damage math is fabricated from the record.
+const RANGER_IMPROVED_EVASION_LEVEL: u8 = 16;
+
+/// PF1 Core Rulebook level gate at which Ranger gains Hide in Plain Sight
+/// (17th level, verified independently against three primary sources:
+/// d20pfsrd, the Archives of Nethys aonprd.com mirror, and
+/// legacy.aonprd.com all list "Hide in plain sight" as the sole Ranger
+/// 17th-level "Special" column entry, byte-for-byte agreement). Hide in
+/// Plain Sight carries no numeric magnitude of its own and only modifies a
+/// hide-while-observed check resolution that does not exist anywhere in
+/// this codebase -- exactly like Camouflage
+/// (`RANGER_CAMOUFLAGE_LEVEL`), it is a genuinely flat/identity-shaped,
+/// no-choice, no-magnitude grant: "While in any of his favored terrains, a
+/// ranger of 17th level or higher can use the Stealth skill even while
+/// being observed."
+const RANGER_HIDE_IN_PLAIN_SIGHT_LEVEL: u8 = 17;
+
+/// PF1 Core Rulebook level gate at which Ranger gains Quarry (11th level,
+/// verified independently against two primary sources: d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror both list "Quarry" as the sole
+/// Ranger 11th-level "Special" column entry): "At 11th level, a ranger can
+/// select one target within line of sight as his quarry... While tracking
+/// his quarry, a ranger can take 10 on his Survival skill checks while
+/// moving at normal speed without penalty. In addition, the ranger receives
+/// a +2 insight bonus on attack rolls made against his quarry, and he
+/// confirms all critical threats against the quarry automatically... Once a
+/// ranger has selected a quarry, he cannot select a different quarry until
+/// 24 hours have passed or the current quarry is dead." Only the flat
+/// magnitude and the grant identity are grounded here; the reselection
+/// cooldown state and any check/roll-resolution engine are not.
+const RANGER_QUARRY_LEVEL: u8 = 11;
+
+/// The open-ended chosen-input identity naming which target the ranger has
+/// designated as his quarry (PF1 Core Rulebook: "must correspond to one of
+/// his favored enemy types"). Mirrors the Favored Enemy/Favored Terrain
+/// choice-recognition idiom exactly: raw string interpolation, no
+/// restricted-list validation, and no matching against the ranger's own
+/// recognized favored-enemy types.
+const RANGER_QUARRY_CHOICE_ID: &str = "choice:ranger_quarry_target";
+
+/// PF1 Core Rulebook level gate at which Quarry improves (19th level,
+/// verified independently against two primary sources: d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror both list "Improved quarry" as
+/// the sole Ranger 19th-level "Special" column entry, with identical rule
+/// text): "At 19th level, the ranger's ability to hunt his quarry
+/// improves. He can now select a quarry as a free action, and can now
+/// take 20 while using Survival to track his quarry, while moving at
+/// normal speed without penalty. His insight bonus to attack his quarry
+/// increases to +4. If his quarry is killed or dismissed, he can select
+/// a new one after 10 minutes have passed." This is the exact structural
+/// mirror of Improved Evasion's own upgrade of Evasion: the free-action
+/// reselection, take-20-while-tracking, and reduced-cooldown behaviors
+/// are grounded as a bounded grant-only identity record (mirroring the
+/// Improved Evasion idiom exactly, pushed only at/above this gate with
+/// no separate absence record below it); the insight attack-roll bonus
+/// increase is grounded by widening the already-existing
+/// `quarry_attack_bonus` magnitude on the same explanation id, mirroring
+/// the Bard Inspire Competence tiered-magnitude idiom.
+const RANGER_IMPROVED_QUARRY_LEVEL: u8 = 19;
 
 /// PF1 Core Rulebook level gate at which the Favored Enemy rule's 5th-level
 /// interval is granted (verified independently against two primary sources:
@@ -507,8 +940,10 @@ const RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION: &str = "enemy:second
 /// additional favored enemy. In addition, at each such interval, the bonus
 /// against any one favored enemy (including the one just selected, if so
 /// desired) increases by +2." — each interval carries its OWN
-/// bonus-increase-target choice). Only the 10th-level interval is grounded
-/// here; the 15th/20th intervals stay out of scope.
+/// bonus-increase-target choice). The 10th-level interval is grounded here;
+/// the 15th-level interval is grounded by a later SD18 slice (see
+/// `RANGER_FAVORED_ENEMY_FOURTH_INTERVAL_LEVEL`); the 20th-level interval
+/// stays out of scope.
 const RANGER_FAVORED_ENEMY_THIRD_INTERVAL_LEVEL: u8 = 10;
 
 /// SD13-E5 Ranger THIRD Favored Enemy choice-slot id, mirroring
@@ -524,6 +959,75 @@ const RANGER_FAVORED_ENEMY_THIRD_CHOICE_ID: &str = "choice:ranger_favored_enemy_
 const RANGER_FAVORED_ENEMY_SECOND_BONUS_INCREASE_CHOICE_ID: &str =
     "choice:ranger_favored_enemy_bonus_increase_target_2";
 const RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION: &str = "enemy:third";
+
+/// PF1 Core Rulebook level gate of the Favored Enemy rule's FOURTH interval
+/// (verified independently against two primary sources: d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror, both agreeing byte-for-byte on the
+/// class table's level-15 "Special" column entry, "4th favored enemy", and
+/// on the rule's own text: "At 5th level and every five levels thereafter
+/// (10th, 15th, and 20th level), the ranger may select an additional
+/// favored enemy. In addition, at each such interval, the bonus against any
+/// one favored enemy (including the one just selected, if so desired)
+/// increases by +2." — each interval carries its OWN bonus-increase-target
+/// choice). The 15th-level interval is grounded here; the 20th-level
+/// interval stays out of scope.
+const RANGER_FAVORED_ENEMY_FOURTH_INTERVAL_LEVEL: u8 = 15;
+
+/// SD18 Ranger FOURTH Favored Enemy choice-slot id, mirroring
+/// `choice:ranger_favored_enemy_3`'s open-ended (non-restricted-list)
+/// recognition idiom exactly.
+const RANGER_FAVORED_ENEMY_FOURTH_CHOICE_ID: &str = "choice:ranger_favored_enemy_4";
+
+/// SD18 Ranger 15th-level-interval bonus-increase TARGET choice-slot id,
+/// mirroring `choice:ranger_favored_enemy_bonus_increase_target_2`'s
+/// restricted idiom, widened to the four-enemy set (`enemy:first` /
+/// `enemy:second` / `enemy:third` / `enemy:fourth`); any other selection is
+/// surfaced without grounding a target identity and no boost is fabricated
+/// from it.
+const RANGER_FAVORED_ENEMY_THIRD_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_enemy_bonus_increase_target_3";
+const RANGER_FAVORED_ENEMY_BONUS_INCREASE_FOURTH_SELECTION: &str = "enemy:fourth";
+
+/// PF1 Core Rulebook level gate of the Favored Enemy rule's FIFTH and FINAL
+/// interval (verified independently against two primary sources: d20pfsrd
+/// and the Archives of Nethys aonprd.com mirror, both agreeing byte-for-byte
+/// on the class table's level-20 "Special" column entry, "5th favored
+/// enemy, master hunter", and on the rule's own text: "At 5th level and
+/// every five levels thereafter (10th, 15th, and 20th level), the ranger
+/// may select an additional favored enemy. In addition, at each such
+/// interval, the bonus against any one favored enemy... increases by +2."
+/// — this is the last interval within PF1's 1-20 character-level cap).
+const RANGER_FAVORED_ENEMY_FIFTH_INTERVAL_LEVEL: u8 = 20;
+
+/// SD18 Ranger FIFTH Favored Enemy choice-slot id, mirroring
+/// `choice:ranger_favored_enemy_4`'s open-ended (non-restricted-list)
+/// recognition idiom exactly.
+const RANGER_FAVORED_ENEMY_FIFTH_CHOICE_ID: &str = "choice:ranger_favored_enemy_5";
+
+/// SD18 Ranger 20th-level-interval bonus-increase TARGET choice-slot id,
+/// mirroring `choice:ranger_favored_enemy_bonus_increase_target_3`'s
+/// restricted idiom, widened to the five-enemy set (`enemy:first` /
+/// `enemy:second` / `enemy:third` / `enemy:fourth` / `enemy:fifth`); any
+/// other selection is surfaced without grounding a target identity and no
+/// boost is fabricated from it.
+const RANGER_FAVORED_ENEMY_FOURTH_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_enemy_bonus_increase_target_4";
+const RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIFTH_SELECTION: &str = "enemy:fifth";
+
+/// PF1 Core Rulebook level gate at which Ranger becomes a Master Hunter
+/// (verified independently against two primary sources: d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror, both byte-for-byte identical: "A
+/// ranger of 20th level becomes a master hunter. He can always move at
+/// full speed while using Survival to follow tracks without penalty. He
+/// can, as a standard action, make a single attack against a favored enemy
+/// at his full attack bonus. If the attack hits, the target takes damage
+/// normally and must make a Fortitude save or die..."). This is the
+/// Ranger's 20th-level capstone, mirroring the Paladin Holy Champion
+/// capstone idiom exactly (a bounded grant-only identity record; no
+/// action-economy engine, no attack-resolution engine, and no
+/// saving-throw-resolution engine exists anywhere in this codebase to
+/// apply any of this to).
+const RANGER_MASTER_HUNTER_LEVEL: u8 = 20;
 
 /// PF1 Core Rulebook level gate at which Ranger gains Endurance (3rd level,
 /// verified independently against two primary sources: d20pfsrd and
@@ -551,8 +1055,11 @@ const RANGER_ENDURANCE_LEVEL: u8 = 3;
 /// chosen terrain, and the +2 is never wired into any actual Initiative total or
 /// skill-check total. The 8th-level additional-terrain and bonus-increase
 /// interval is grounded by a later SD13-E5 slice (see
-/// `RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL`); the 13th/18th intervals
-/// stay out of scope.
+/// `RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL`), and the 13th-level
+/// interval is grounded by a still later SD18 slice (see
+/// `RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL`), and the 18th-level
+/// interval is grounded by a still later SD18 slice (see
+/// `RANGER_FAVORED_TERRAIN_FOURTH_INTERVAL_LEVEL`).
 const RANGER_FAVORED_TERRAIN_LEVEL: u8 = 3;
 
 /// SD13-E5 Ranger Favored Terrain choice-slot id. The deterministic fixture names
@@ -570,8 +1077,10 @@ const RANGER_FAVORED_TERRAIN_CHOICE_ID: &str = "choice:ranger_favored_terrain";
 /// addition, at each such interval, the skill bonus and initiative bonus in
 /// any one favored terrain (including the one just selected, if so desired),
 /// increases by +2." — the exact structural mirror of the Favored Enemy
-/// 5th-level interval already grounded on this seam). Only the 8th-level
-/// interval is grounded here; the 13th/18th intervals stay out of scope.
+/// 5th-level interval already grounded on this seam). The 8th-level,
+/// 13th-level, and 18th-level intervals are all grounded (see
+/// `RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL` and
+/// `RANGER_FAVORED_TERRAIN_FOURTH_INTERVAL_LEVEL`).
 const RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL: u8 = 8;
 
 /// SD13-E5 Ranger SECOND Favored Terrain choice-slot id, mirroring
@@ -589,6 +1098,63 @@ const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_CHOICE_ID: &str =
     "choice:ranger_favored_terrain_bonus_increase_target";
 const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION: &str = "terrain:first";
 const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION: &str = "terrain:second";
+
+/// PF1 Core Rulebook level gate at which Ranger gains a THIRD additional
+/// favored terrain (verified independently against three primary sources —
+/// d20pfsrd, the Archives of Nethys aonprd.com mirror, and legacy.aonprd.com
+/// all agree byte-for-byte): "At 8th level and every five levels thereafter,
+/// the ranger may select an additional favored terrain. In addition, at each
+/// such interval, the skill bonus and initiative bonus in any one favored
+/// terrain (including the one just selected, if so desired), increases by
+/// +2." The 13th-level interval (8 + 5) is the exact structural mirror of
+/// the already-grounded Favored Enemy 10th-level interval
+/// (`RANGER_FAVORED_ENEMY_THIRD_INTERVAL_LEVEL`). The 18th-level interval
+/// is grounded by a still later SD18 slice (see
+/// `RANGER_FAVORED_TERRAIN_FOURTH_INTERVAL_LEVEL`).
+const RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL: u8 = 13;
+
+/// SD18 Ranger THIRD Favored Terrain choice-slot id, mirroring
+/// `choice:ranger_favored_enemy_3`'s open-ended (non-restricted-list)
+/// recognition idiom exactly -- no enum validation against Table: Ranger
+/// Favored Terrains is performed here.
+const RANGER_FAVORED_TERRAIN_THIRD_CHOICE_ID: &str = "choice:ranger_favored_terrain_3";
+
+/// SD18 Ranger 13th-level-interval bonus-increase TARGET choice-slot id,
+/// mirroring `choice:ranger_favored_enemy_bonus_increase_target_2`'s
+/// restricted idiom, widened to the three-terrain set (`terrain:first` /
+/// `terrain:second` / `terrain:third`); any other selection is surfaced
+/// without grounding a target identity and no boost is fabricated from it.
+const RANGER_FAVORED_TERRAIN_SECOND_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_terrain_bonus_increase_target_2";
+const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_THIRD_SELECTION: &str = "terrain:third";
+
+/// PF1 Core Rulebook level gate at which Ranger gains a FOURTH additional
+/// favored terrain (verified independently against two primary sources —
+/// d20pfsrd and the Archives of Nethys aonprd.com mirror, byte-for-byte
+/// agreement): "At 8th level and every five levels thereafter, the ranger
+/// may select an additional favored terrain. In addition, at each such
+/// interval, the skill bonus and initiative bonus in any one favored
+/// terrain (including the one just selected, if so desired), increases by
+/// +2." The 18th-level interval (13 + 5) is the exact structural mirror of
+/// the already-grounded Favored Enemy 15th-level interval
+/// (`RANGER_FAVORED_ENEMY_FOURTH_INTERVAL_LEVEL`).
+const RANGER_FAVORED_TERRAIN_FOURTH_INTERVAL_LEVEL: u8 = 18;
+
+/// SD18 Ranger FOURTH Favored Terrain choice-slot id, mirroring
+/// `choice:ranger_favored_enemy_4`'s open-ended (non-restricted-list)
+/// recognition idiom exactly -- no enum validation against Table: Ranger
+/// Favored Terrains is performed here.
+const RANGER_FAVORED_TERRAIN_FOURTH_CHOICE_ID: &str = "choice:ranger_favored_terrain_4";
+
+/// SD18 Ranger 18th-level-interval bonus-increase TARGET choice-slot id,
+/// mirroring `choice:ranger_favored_enemy_bonus_increase_target_3`'s
+/// restricted idiom, widened to the four-terrain set (`terrain:first` /
+/// `terrain:second` / `terrain:third` / `terrain:fourth`); any other
+/// selection is surfaced without grounding a target identity and no boost
+/// is fabricated from it.
+const RANGER_FAVORED_TERRAIN_THIRD_BONUS_INCREASE_CHOICE_ID: &str =
+    "choice:ranger_favored_terrain_bonus_increase_target_3";
+const RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FOURTH_SELECTION: &str = "terrain:fourth";
 
 /// The ranger level at which 1st-level ranger spells first become available,
 /// verified against the raw PF1 Core Rulebook Ranger spells-per-day table rows
@@ -610,10 +1176,16 @@ const RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 /// The ranger level at which 3rd-level ranger spells first become available,
 /// verified against the raw table rows (both sources): level 9 shows
 /// "2/1/—/—", level 10 shows "2/1/0/—" — the first non-"—" 3rd-level column.
-/// The 4th-level column stays "—" through level 10 (4th-level ranger spells
-/// begin at 13, outside the tranche ceiling), so no 4th-level threshold const
-/// is grounded.
 const RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+/// The ranger level at which 4th-level ranger spells first become available,
+/// verified independently against three primary sources (d20pfsrd, the
+/// Archives of Nethys aonprd.com mirror, and legacy.aonprd.com, all
+/// byte-for-byte identical): level 12 shows "2/2/1/—", level 13 shows
+/// "3/2/1/0" — the first non-"—" 4th-level column. The SAME level-13 row
+/// also genuinely raises the 1st-level column from 2 to 3 (a literal table
+/// lookup value, not a formula), while the 2nd/3rd-level columns stay
+/// numerically unchanged (2/1).
+const RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
 
 /// PF1 Core Rulebook level gate at which Ranger gains Hunter's Bond (4th level,
 /// verified independently against two primary sources: d20pfsrd and
@@ -706,6 +1278,44 @@ const MANYSHOT_FEAT_SELECTION: &str = "feat:manyshot";
 // PF1 Core Rulebook Two-Weapon Combat style, 6th-level bonus feat list.
 const IMPROVED_TWO_WEAPON_FIGHTING_FEAT_SELECTION: &str = "feat:improved_two_weapon_fighting";
 const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
+// SD18 cycle-2026-07-15T2100: the ranger's FOURTH combat-style bonus feat,
+// granted at 14th level (bonus feats land at 2nd, 6th, 10th, 14th, and 18th
+// ranger level per the Combat Style Feat class feature's own rule text).
+// Unlike the 2nd/6th/10th-level grants, the PF1 Core Rulebook's own Ranger
+// Combat Styles tables do not tabulate any NEW named feat options at the
+// 14th-level tier — verified independently against three sources dedicated
+// to the combat-style feat lists specifically (d20pfsrd's Ranger Combat
+// Styles page, the Archives of Nethys aonprd.com RangerCombatStyles page,
+// and a Paizo rules-forum thread addressing the same question directly):
+// all three agree the printed Core Rulebook list of named options stops
+// after the 10th-level tier; later sourcebooks (e.g. the Advanced Player's
+// Guide) are the ones that add named 14th/18th-level options, and those are
+// outside SD-18's Core-Rulebook-only scope. So this slot is recognized as
+// an OPEN-ENDED +0 identity record (mirroring the Favored Terrain/Quarry
+// choice-recognition idiom: raw string interpolation, no restricted-list
+// validation), not the closed-restricted-list idiom used for feats 1-3.
+const RANGER_COMBAT_STYLE_BONUS_FEAT_4_LEVEL: u8 = 14;
+const RANGER_COMBAT_STYLE_BONUS_FEAT_4_CHOICE_ID: &str =
+    "choice:ranger_combat_style_bonus_feat_4";
+// SD18 cycle-2026-07-16T0244 (level-18 widening): the ranger's FIFTH
+// combat-style bonus feat, granted at 18th level (bonus feats land at 2nd,
+// 6th, 10th, 14th, and 18th ranger level per the Combat Style Feat class
+// feature's own rule text, verified independently against d20pfsrd and the
+// Archives of Nethys aonprd.com mirror). Mirroring the fourth bonus feat's
+// own reasoning exactly: the PF1 Core Rulebook's own Ranger Combat Styles
+// tables (Archery, Two-Weapon Combat) do not tabulate any NEW named feat
+// options beyond the 10th-level tier (verified independently against three
+// sources dedicated to the combat-style feat lists specifically —
+// d20pfsrd's Ranger Combat Styles page, the Archives of Nethys aonprd.com
+// RangerCombatStyles page, and a Paizo rules-forum thread — all three agree
+// the printed list stops after 10th level; later sourcebooks add named
+// 14th/18th-level options, outside SD-18's Core-Rulebook-only scope). So
+// this slot is recognized as an OPEN-ENDED +0 identity record (mirroring
+// the Favored Terrain/Quarry choice-recognition idiom exactly), not the
+// closed-restricted-list idiom used for feats 1-3.
+const RANGER_COMBAT_STYLE_BONUS_FEAT_5_LEVEL: u8 = 18;
+const RANGER_COMBAT_STYLE_BONUS_FEAT_5_CHOICE_ID: &str =
+    "choice:ranger_combat_style_bonus_feat_5";
 
 // SD13-E4-F7 spell-bearing baseline identity. Sorcerer is a spontaneous full arcane
 // caster; this slice recognizes only its bounded single-class level-1 identity as direct
@@ -779,8 +1389,172 @@ const TWO_WEAPON_DEFENSE_FEAT_SELECTION: &str = "feat:two_weapon_defense";
 // pillars to level 10 via the same formulas (base attack genuinely rises to
 // +5 and good Will genuinely rises to +7, while poor Fortitude/Reflex stay
 // +3, integer-division coincidences).
+//
+// A further SD18 slice widens the gate again to level 11 (verified
+// independently against d20pfsrd and the Archives of Nethys aonprd.com
+// mirror): level 11 base attack bonus and all three base saves stay
+// numerically IDENTICAL to level 10 (`11/2=5`, `11/3=3`, `11/3=3`,
+// `11/2+2=7`, integer-division coincidences), the level-11 "Special" column
+// reads only "Bloodline spell" (bloodline-specific, left unproven,
+// mirroring levels 3/5/7/9), and the already-grounded spells-per-day and
+// spells-known table lookups both genuinely widen at level 11 (per-day
+// `6/6/6/5/3` -> `6/6/6/6/4`; known `9/5/4/3/2/1` -> `9/5/5/4/3/2`), with
+// the 6th-level column staying inaccessible at level 11 (arrives at level
+// 12) on both tables.
+//
+// SD18 cycle-2026-07-15T4400 widens the gate again to level 15 (the
+// loop's ninth §3.2 level-15 landing, after Barbarian, Rogue, Fighter,
+// Cleric, Druid, Ranger, Wizard, and Paladin), verified independently
+// against d20pfsrd and the Archives of Nethys aonprd.com mirror, both
+// byte-for-byte identical: base attack bonus (`15/2=7`) and good Will
+// (`15/2+2=9`) both stay numerically IDENTICAL to level 14, integer-division
+// coincidences, while both poor saves genuinely rise to +5 (`15/3=5`, up
+// from level 14's +4). The level-15 "Special" column reads "Bloodline
+// power, bloodline spell" — bloodline-specific, left named-but-unproven by
+// the pre-existing Arcane Bond / bloodline progression blocker, exactly
+// mirroring levels 3/5/7/9/11/13 — so no new pillar is grounded from it.
+// The already-grounded spells-per-day and spells-known table lookups both
+// genuinely widen at level 15 within their existing array shapes (per-day
+// `6/6/6/6/6/5/3` -> `6/6/6/6/6/6/4`; known `9/5/5/4/4/3/2/1` ->
+// `9/5/5/4/4/4/3/2`), with no genuinely new spell-level column opening (the
+// 8th-level column stays inaccessible through level 15) on either table.
+//
+// SD18 cycle-2026-07-15T5800 widens the gate again to level 16 (the loop's
+// SEVENTH §3.2 level-16 landing, after Barbarian, Fighter, Wizard, Rogue,
+// Cleric, and Paladin), verified independently against d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, both byte-for-byte identical: base
+// attack bonus genuinely rises to +8 (`16/2=8`, up from level 15's +7) and
+// good Will genuinely rises to +10 (`16/2+2=10`, up from level 15's +9),
+// while both poor saves stay numerically IDENTICAL to level 15 at +5
+// (`16/3=5`, an integer-division coincidence). The level-16 "Special"
+// column is genuinely BLANK on both primary sources — UNLIKE level 15's
+// "Bloodline power, bloodline spell" entry, this is a pure ceiling raise
+// with no bloodline-specific text left named-but-unproven. The
+// already-grounded spells-per-day and spells-known table lookups both
+// genuinely widen at level 16, each opening a genuinely NEW 8th-level
+// column for the first time (per-day `6/6/6/6/6/6/4` -> `6/6/6/6/6/6/5/3`;
+// known `9/5/5/4/4/4/3/2` -> `9/5/5/4/4/4/3/2/1`), so both arrays widen
+// from their prior 7/8-element shapes to 8/9-element shapes via a new
+// `SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 16` threshold
+// constant, mirroring the Wizard's own 8th-level-column-opening cycle. The
+// spell-level access ladder genuinely rises to 8 (up from 7 at level 15).
+//
+// SD18 cycle-2026-07-15T14100 widens the gate again to level 17 (the
+// loop's NINTH §3.2 level-17 landing, after Ranger, Bard, Rogue, Fighter,
+// Wizard, Cleric, Paladin, and Barbarian, and closing the level-17 sweep
+// at 9 of 10 non-Monk classes), verified independently against d20pfsrd
+// and the Archives of Nethys aonprd.com mirror, fetching the full
+// levels-15-through-19 class-table block (including the separate Spells
+// Known table) in one pass to rule out level-misattribution — both
+// sources agreed byte-for-byte on all five rows, so a third source was
+// not required: base attack bonus STAYS at +8 (`17/2=8`) and both poor
+// saves STAY at +5 (`17/3=5`) and good Will STAYS at +10 (`17/2+2=10`),
+// all integer-division coincidences with level 16. The level-17
+// "Special" column reads "Bloodline spell" — bloodline-specific, left
+// named-but-unproven by the pre-existing Arcane Bond / bloodline
+// progression blocker, exactly mirroring levels 3/5/7/9/11/13/15 — so no
+// new pillar is grounded from it. The already-grounded spells-per-day and
+// spells-known table lookups both genuinely widen at level 17 within
+// their already-widened 8/9-element shapes (per-day `6/6/6/6/6/6/5/3` ->
+// `6/6/6/6/6/6/6/4`; known `9/5/5/4/4/4/3/2/1` -> `9/5/5/4/4/4/3/3/2`),
+// with no genuinely new spell-level column opening (the 8th-level column
+// already opened at level 16). The spell-level access ladder STAYS at 8
+// (unchanged from level 16; no new threshold constant is needed).
+//
+// SD18 cycle-2026-07-16T0400 widens the gate again to level 18 (the loop's
+// EIGHTH §3.2 level-18 landing, after Wizard, Cleric, Paladin, Fighter,
+// Barbarian, Rogue, and Ranger). This cycle's primary task was resolving a
+// multi-cycle-carried-forward flag: prior cycles repeatedly noted that a raw
+// Sorcerer spells-per-day fetch looked internally inconsistent at level 18
+// (an apparent "premature" 9th-level spell column), suspected as a tool
+// artifact against a commonly-repeated folk-rule that sorcerers gain
+// 9th-level spells only at 20th level. This cycle re-fetched Sorcerer's full
+// levels 14-20 block fresh from THREE independent primary sources: a raw,
+// non-AI-summarized parse of d20pfsrd.com's own HTML table (bypassing any
+// tabular-summarization ambiguity entirely), the Archives of Nethys
+// aonprd.com mirror, and the legacy.aonprd.com CRB mirror. All three agree
+// byte-for-byte: the Sorcerer's spells-per-day table opens a genuinely NEW
+// spell-level column every two class levels starting at 4th (2nd at 4, 3rd
+// at 6, 4th at 8, 5th at 10, 6th at 12, 7th at 14, 8th at 16, 9th at 18 —
+// exactly matching this row's own already-grounded and already-verified
+// SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL through
+// SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL thresholds), with
+// 1st-level spells available from level 1 (no zero step). The 9th-level
+// column therefore genuinely, correctly opens at class level 18 — ONE LEVEL
+// EARLIER than Wizard/Cleric's own already-grounded
+// WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL /
+// CLERIC_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL threshold of 17, which is
+// exactly consistent with every other already-proven Sorcerer threshold in
+// this row being one level later than Wizard's own equivalent threshold
+// (e.g. Wizard's 8th-level threshold is 15, Sorcerer's is 16). The
+// previously-flagged "premature 9th-level column" was therefore the CORRECT
+// reading all along; the folk-rule assuming a 20th-level-only 9th-spell-level
+// threshold for Sorcerer never held for this class and was never
+// independently re-verified against a primary source in any prior cycle,
+// only carried forward by analogy. With the row now definitively resolved,
+// this slice widens the level-range gate again (supported_sorcerer_level,
+// 1..=18) and extends every one of the base-attack/base-save formulas above
+// to level 18 via the same formula, without re-derivation: level 18 base
+// attack bonus genuinely rises to +9 (18/2, up from level 17's +8) and both
+// poor saves genuinely rise to +6 (18/3, up from level 17's +5) and good
+// Will genuinely rises to +11 (18/2+2, up from level 17's +10); the
+// bloodline choice and bloodline class-skill choice recognitions are not
+// level-gated, so both still fire at level 18 for the same fixture
+// selections; the PF1 Core Rulebook Sorcerer class table's level-18
+// "Special" column is genuinely BLANK on all three sources — UNLIKE level
+// 17's "Bloodline spell" entry — so no new pillar is grounded from the
+// Special column; the already-grounded base spells-per-day table genuinely
+// widens (6/6/6/6/6/6/6/4 -> 6/6/6/6/6/6/6/5/3, the 8th-level column rising
+// by one AND a genuinely NEW 9th-level column opening at 3) and the
+// already-grounded base spells-known table genuinely widens
+// (9/5/5/4/4/4/3/3/2 -> 9/5/5/4/4/4/3/3/2/1, the 0th-8th columns staying
+// numerically unchanged while a genuinely NEW 9th-level column opens at 1);
+// the spell-level access ladder genuinely rises to 9 (up from 8 at level 17)
+// via a new SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 18 threshold
+// constant, mirroring the Wizard's and Cleric's own
+// 9th-level-column-opening cycles; the spell-save-DC and
+// Charisma-bonus-spell formulas widen automatically over the newly-risen
+// access ladder, with no new code needed. The row stays Partial, not
+// Supported: the Arcane Bond / bloodline progression burden and the
+// spontaneous which-spells-known / casting-execution burden remain named and
+// unproven, unchanged from level 17. No spell math is fabricated and no
+// Sorcerer level 19+ is proven.
+// SD18 cycle-2026-07-16T4900 widens the gate again to level 19 (the loop's
+// EIGHTH §3.2 level-19 landing, after Barbarian, Cleric, Fighter, Bard,
+// Paladin, Ranger, and Rogue), verified independently against TWO primary
+// sources (a raw non-AI-summarized parse of d20pfsrd.com's own HTML table
+// and the Archives of Nethys aonprd.com mirror, both byte-for-byte
+// identical, fetching the full levels-15-through-20 class-table block in
+// one pass to rule out level-misattribution; no disagreement was found, so
+// a third source was not required): level 19 base attack bonus STAYS at +9
+// (19/2, an integer-division coincidence with level 18's +9, confirmed
+// genuine by the raw table's own `+9/+4` cell matching level 18's `+9/+4`
+// cell exactly) and both poor saves STAY at +6 (19/3) and good Will STAYS
+// at +11 (19/2+2), all integer-division coincidences with level 18, not a
+// sign any formula stopped scaling; the bloodline choice and bloodline
+// class-skill choice recognitions are not level-gated, so both still fire
+// at level 19 for the same fixture selections; the PF1 Core Rulebook
+// Sorcerer class table's level-19 "Special" column reads "Bloodline feat,
+// bloodline spell" — bloodline-specific, left named-but-unproven by the
+// pre-existing Arcane Bond / bloodline progression blocker, exactly
+// mirroring levels 3/5/7/9/11/13/15/17 — so no new pillar is grounded from
+// it; the already-grounded base spells-per-day table genuinely widens
+// (6/6/6/6/6/6/6/5/3 -> 6/6/6/6/6/6/6/6/4, the 8th-level column rising by
+// one AND the 9th-level column rising by one, with no genuinely new
+// spell-level column opening) and the already-grounded base spells-known
+// table genuinely widens (9/5/5/4/4/4/3/3/2/1 -> 9/5/5/4/4/4/3/3/3/2, the
+// 0th-7th columns staying numerically unchanged while the 8th-level column
+// rises by one AND the 9th-level column rises by one); the spell-level
+// access ladder STAYS at 9 (unchanged from level 18; the ladder was already
+// fully populated through 9th-level spells, so no new threshold constant is
+// needed); the spell-save-DC and Charisma-bonus-spell formulas widen
+// automatically over the unchanged access ladder, with no new code needed.
+// The row stays Partial, not Supported: the Arcane Bond / bloodline
+// progression burden and the spontaneous which-spells-known /
+// casting-execution burden remain named and unproven, unchanged from level
+// 18. No spell math is fabricated and no Sorcerer level 20 is proven.
 const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 10;
+const MAX_SUPPORTED_SORCERER_LEVEL: u8 = 20;
 
 /// The sorcerer level at which 2nd-level sorcerer spells first become
 /// available, verified against the raw PF1 Core Rulebook Sorcerer
@@ -805,10 +1579,54 @@ const SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 8;
 /// The sorcerer level at which 5th-level sorcerer spells first become
 /// available, verified against the raw table rows (both sources): level 9
 /// shows "6/6/6/4/—/…", level 10 shows "6/6/6/5/3/—/…" — the first non-"—"
-/// 5th-level column. The 6th-level column stays "—" through level 10
-/// (6th-level sorcerer spells begin at 12, outside the tranche ceiling), so
-/// no 6th-level threshold const is grounded.
+/// 5th-level column.
 const SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 10;
+/// The sorcerer level at which 6th-level sorcerer spells first become
+/// available, verified against the raw table rows of all three primary-
+/// source fetches this SD18 slice performed (d20pfsrd, aonprd.com, and
+/// legacy.aonprd.com, all identical): level 11 shows "6/6/6/6/4/—", level 12
+/// shows "6/6/6/6/5/3" — the first non-"—" 6th-level column. This is the
+/// sorcerer's two-level cadence continuing exactly (4/6/8/10/12), one spell
+/// level deeper than the tranche's prior ceiling.
+const SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 12;
+/// The sorcerer level at which 7th-level sorcerer spells first become
+/// available, verified against the raw table rows of two independent
+/// primary-source fetches this SD18 slice performed (d20pfsrd and
+/// legacy.aonprd.com, identical): level 13 shows "6/6/6/6/6/4/—", level 14
+/// shows "6/6/6/6/6/5/3" — the first non-"—" 7th-level column (a third
+/// fetch, aonprd.com, was internally inconsistent with the already-landed
+/// level-13 truth on this same table and was rejected as a tool artifact,
+/// not treated as a genuine conflict). This is the sorcerer's two-level
+/// cadence continuing exactly (4/6/8/10/12/14), one spell level deeper than
+/// the tranche's prior ceiling.
+const SORCERER_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 14;
+/// The sorcerer level at which 8th-level sorcerer spells first become
+/// available, verified against the raw table rows of both primary-source
+/// fetches this SD18 slice performed (d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, byte-for-byte identical): level 15 shows
+/// "6/6/6/6/6/6/4/—", level 16 shows "6/6/6/6/6/6/5/3" — the first non-"—"
+/// 8th-level column. This is the sorcerer's two-level cadence continuing
+/// exactly (4/6/8/10/12/14/16), one spell level deeper than the tranche's
+/// prior ceiling, mirroring the Wizard's own
+/// `WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL` threshold idiom.
+const SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 16;
+/// The sorcerer level at which 9th-level sorcerer spells first become
+/// available, definitively resolved this SD18 slice (cycle-2026-07-16T0400)
+/// against THREE independent primary-source fetches (a raw, non-AI-
+/// summarized parse of d20pfsrd.com's own HTML table; the Archives of
+/// Nethys aonprd.com mirror; and the legacy.aonprd.com CRB mirror, all
+/// byte-for-byte identical): level 17 shows "6/6/6/6/6/6/6/4/—", level 18
+/// shows "6/6/6/6/6/6/6/5/3" — the first non-"—" 9th-level column. This is
+/// the sorcerer's two-level cadence continuing exactly
+/// (4/6/8/10/12/14/16/18), one level EARLIER than the Wizard's own
+/// `WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 17` threshold — exactly
+/// consistent with every other Sorcerer threshold in this ladder being one
+/// level behind Wizard's equivalent. This resolves a flag repeatedly carried
+/// forward across multiple prior SD18 cycles, which suspected (but never
+/// independently re-verified) that a 9th-level column appearing at 18 was a
+/// tool artifact contradicting a folk-rule that Sorcerer 9th-level spells
+/// arrive only at 20th level; that folk-rule does not hold for this class.
+const SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 18;
 
 // SD13-E5 canonical Sorcerer bloodline choice seam. The deterministic fixture names the
 // Arcane bloodline as its chosen selection; the compute seam recognizes exactly that
@@ -1024,7 +1842,343 @@ const BARD_VERSATILE_PERFORMANCE_TYPES: [(&str, &str, &str); 9] = [
 /// record (BARD_JACK_OF_ALL_TRADES_LEVEL), mirroring the Woodland Stride /
 /// Purity of Body idiom, while the repeat Versatile Performance grant stays
 /// named-but-unproven exactly like the 2nd/6th-level grants before it.
-const MAX_SUPPORTED_BARD_LEVEL: u8 = 10;
+///
+/// A still further SD18 slice widens the gate to level 11 (verified
+/// independently against d20pfsrd and legacy.aonprd.com, mirroring exactly
+/// how `MAX_SUPPORTED_BARBARIAN_LEVEL` was widened from 10 to 11): base
+/// attack (classlevel * 3 / 4) genuinely rises to +8, base saves stay
+/// Fortitude +3 / Reflex +7 / Will +7 (11/3 and 11/2+2, both
+/// integer-division coincidences unchanged from level 10), Bardic Knowledge
+/// stays 5 and the Fascinate DC/count stay 17/4 (all integer-division
+/// coincidences), the Bardic Performance rounds-per-day pool genuinely
+/// rises to 26 (4 + Charisma modifier + 2 per level after 1st), and the
+/// level-11 "Special" column reads "Inspire competence +4, inspire courage
+/// +3, lore master 2/day" only — three magnitude-rises on the
+/// already-grounded flat-constant pillars (Inspire Competence 2 +
+/// (level-3)/4, Inspire Courage's every-sixth-level-after-5th tier, and
+/// Lore Master's own every-sixth-level-after-5th take-20 usage-count tier),
+/// mirroring exactly how the Barbarian Greater Rage magnitude-rise was
+/// grounded. No new class feature (no new choice slot) is granted at 11th
+/// level, so no new engine is invented; Jack-of-All-Trades and the repeat
+/// Versatile Performance grant both carry over unchanged.
+///
+/// A still further SD18 slice widens the gate to level 12 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, mirroring exactly how `MAX_SUPPORTED_BARBARIAN_LEVEL` was
+/// widened from 11 to 12): base attack (classlevel * 3 / 4) genuinely
+/// rises to +9, base saves genuinely rise to Fortitude +4 (12/3) / Reflex
+/// +8 / Will +8 (both 12/2+2), Bardic Knowledge genuinely rises to 6
+/// (max(12/2, 1)), the Bardic Performance rounds-per-day pool genuinely
+/// rises to 28 (4 + Charisma modifier + 2 per level after 1st), and the
+/// Fascinate DC genuinely rises to 18 (10 + 12/2 + Charisma modifier)
+/// while the Fascinate affected-creature count stays 4 (1 + (12-1)/3, an
+/// integer-division coincidence with level 11). The level-12 "Special"
+/// column reads "Soothing performance" only — a wholly new 12th-level
+/// class feature, grounded ONLY as a bounded grant-only identity record
+/// (`BARD_SOOTHING_PERFORMANCE_LEVEL`), mirroring the Monk Diamond Body /
+/// Paladin Aura of Justice idiom exactly: no healing-application engine
+/// and no condition-removal engine exist anywhere in this codebase, so
+/// neither is fabricated. Inspire Courage, Inspire Competence, and Lore
+/// Master's flat magnitudes all stay unchanged at their level-11 third
+/// tier (their next tiers land at bard level 15 or 17, out of scope);
+/// Jack-of-All-Trades and the repeat Versatile Performance grant both
+/// carry over unchanged.
+///
+/// SD18 (cycle-2026-07-15T1700) widens the gate again to level 13, the
+/// loop's seventh §3.2 level-13 landing (after Rogue, Barbarian, Fighter,
+/// Ranger, Cleric, and Druid) and the first on a spontaneous
+/// (non-9-level) caster. All three primary sources (d20pfsrd, the
+/// Archives of Nethys aonprd.com mirror, and legacy.aonprd.com) agree
+/// byte-for-byte that the level-13 "Special" column is BLANK: base
+/// attack bonus and all three base saves stay numerically unchanged from
+/// level 12 (13*3/4=9, 13/3=4, 13/2+2=8, all integer-division
+/// coincidences), Bardic Knowledge stays 6 (max(13/2,1), also a
+/// coincidence), and the Fascinate DC stays 18 (10+13/2+CHA, since
+/// 13/2==12/2==6). The Bardic Performance rounds-per-day pool and the
+/// Fascinate affected-creature count both genuinely rise via their
+/// already-generic level-valued formulas. No new named class feature is
+/// granted, so this is a pure arithmetic-pillar widening: no new record
+/// is added, and the spontaneous spell-level-access ladder / base
+/// spells-per-day / spells-known table lookups stay at their
+/// pre-existing level-10 ceiling exactly as left by the level-11 and
+/// level-12 cycles (no 5th-level spell-access threshold is grounded).
+///
+/// SD18 (cycle-2026-07-15T2200) widens the gate again to level 14, the
+/// loop's FIFTH §3.2 level-14 landing (after Barbarian, Fighter, Rogue,
+/// and Ranger). Both primary sources (d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror) agree byte-for-byte: base attack bonus genuinely
+/// rises to +10 (14*3/4) and both good saves genuinely rise to +9
+/// (14/2+2, Reflex and Will) while poor Fortitude stays +4 (14/3, an
+/// integer-division coincidence with level 13); Bardic Knowledge
+/// genuinely rises to 7 (max(14/2,1)); the Bardic Performance
+/// rounds-per-day pool genuinely rises to 32 (4+CHA+2*(14-1)); the
+/// Fascinate DC genuinely rises to 19 (10+14/2+CHA) while the Fascinate
+/// affected-creature count stays 5 (1+(14-1)/3, an integer-division
+/// coincidence with level 13). The level-14 "Special" column reads
+/// "Frightening tune, Versatile performance": Frightening Tune is a
+/// wholly new 14th-level class feature whose rule text gives the exact
+/// same Will-save DC formula shape as the already-grounded Fascinate DC
+/// (10 + 1/2 bard level + Charisma modifier), so it is grounded ONLY as a
+/// flat standalone DC magnitude (`BARD_FRIGHTENING_TUNE_LEVEL`), mirroring
+/// the Fascinate DC idiom; unlike Fascinate, its affected scope is
+/// range-based ("each enemy within 30 feet who can hear the
+/// performance"), not a numeric-count formula, so no affected-creature
+/// count record is added for it. The repeat Versatile Performance grant
+/// (also at levels 2, 6, and 10) stays named-but-unproven unchanged.
+///
+/// SD18 (cycle-2026-07-15T4500) widens the gate again to level 15, the loop's
+/// TENTH §3.2 level-15 landing (after Barbarian, Rogue, Fighter, Cleric, Druid,
+/// Ranger, Wizard, Paladin, and Sorcerer) and the FINAL class needed to close
+/// the §3.2 level-15 sweep at 10 of 10 non-Monk classes. Both primary sources
+/// (d20pfsrd and the Archives of Nethys aonprd.com mirror) agree byte-for-byte:
+/// base attack bonus genuinely rises to +11 (15*3/4) and poor Fortitude
+/// genuinely rises to +5 (15/3), while both good saves (Reflex, Will) stay +9
+/// (15/2+2, an integer-division coincidence with level 14); Bardic Knowledge
+/// stays 7 (max(15/2,1), a coincidence); the Bardic Performance rounds-per-day
+/// pool genuinely rises to 34 (4+CHA+2*(15-1)); the Fascinate DC and
+/// affected-creature count both stay unchanged (19, 5 — both integer-division
+/// coincidences with level 14); Frightening Tune's DC (the same formula shape
+/// as the Fascinate DC) likewise stays 19 for the same reason. The level-15
+/// "Special" column reads "Inspire competence +5, inspire heroics"
+/// (resolving the level-13 cycle's own open question about whether the
+/// Inspire Courage/Lore Master tier thresholds land at level 15 or 17: they
+/// do NOT — both stay at their level-11 third tier, since their own next
+/// tier is at level 17, verified directly against the rule text "every six
+/// bard levels thereafter"). Inspire Competence's flat magnitude genuinely
+/// rises from +4 to +5 — a fourth tier on the already-generalized tiered
+/// if/else chain, the same arithmetic-widening idiom as the third-tier
+/// addition at level 11, needing no new grounding machinery. Inspire
+/// Heroics is a wholly new 15th-level class feature ("A bard of 15th level
+/// or higher can inspire tremendous heroism in himself or a single ally
+/// within 30 feet... Inspired creatures gain a +4 morale bonus on saving
+/// throws and a +4 dodge bonus to AC."); both magnitude numbers are flat
+/// and non-level-scaled at the level they are gained, so they are grounded
+/// as flat standalone magnitudes mirroring the Well-Versed idiom exactly,
+/// and the base target count (a single creature at 15th level, before the
+/// "+1 creature per three bard levels beyond 15th" scaling, which lands
+/// beyond this bounded slice's ceiling) is grounded as a flat count
+/// mirroring the Fascinate affected-creature-count idiom. No targeting,
+/// save resolution, AC application, or performance-state execution is
+/// grounded for Inspire Heroics — it remains named-but-unproven for
+/// execution, exactly like Frightening Tune and Soothing Performance
+/// before it.
+///
+/// Widened to level 16 by an SD18 slice (the loop's EIGHTH §3.2 level-16
+/// landing): verified independently against THREE primary sources
+/// (d20pfsrd, the Archives of Nethys aonprd.com mirror, and
+/// legacy.aonprd.com's corerulebook mirror, all three byte-for-byte
+/// identical: "+12/+7/+2 | +5 | +10 | +10 | —"). The level-16 "Special"
+/// column is genuinely BLANK, resolving a prior cycle's carried-forward
+/// risk-map note that had claimed a source disagreement (aonprd.com
+/// allegedly reading "Versatile performance" at level 16) — that text in
+/// fact belongs to level 14's own already-grounded Special column
+/// ("Frightening tune, Versatile performance"), misattributed to level 16
+/// by an earlier cycle's transcription. A pure ceiling raise: every
+/// formula below is already level-generic, so no new tier constant,
+/// record type, or choice slot is added.
+///
+/// Widened to level 17 by an SD18 slice (cycle-2026-07-15T7100, the loop's
+/// SECOND §3.2 level-17 landing, after Ranger): verified independently
+/// against TWO primary sources (d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, byte-for-byte identical: "+12/+7/+2 | +5 | +10 | +10
+/// | Inspire courage +4, lore master 3/day"), with neighboring levels 16
+/// ("—") and 18 ("Mass suggestion, versatile performance") re-fetched in
+/// the same pass to rule out misattribution. Base attack bonus (`17*3/4`),
+/// both good saves (`17/2+2`), poor Fortitude (`17/3`), Bardic Knowledge
+/// (`max(17/2,1)`), the Fascinate DC (`10+17/2+CHA`), and the Fascinate
+/// affected-creature count (`1+(17-1)/3`) are all numerically UNCHANGED
+/// from level 16 — every one an integer-division coincidence re-verified
+/// against the raw class table row rather than assumed — while the Bardic
+/// Performance rounds-per-day pool genuinely rises (`4+CHA+2*(17-1)`).
+/// Inspire Courage's flat magnitude GENUINELY RISES from +3 to +4 (a
+/// fourth tier on the already-generalized tiered if/else chain, the same
+/// arithmetic-widening idiom as Inspire Competence's own third/fourth
+/// tier additions) and Lore Master's flat take-20 usage-count magnitude
+/// GENUINELY RISES from 2/day to 3/day (a third tier on its own
+/// already-generalized tiered if/else chain), both the same
+/// every-six-bard-levels-after-5th cadence that produced their own
+/// level-11 third/second tier respectively. Inspire Competence stays at
+/// its level-15 fourth tier (next tier at level 19, out of scope);
+/// Inspire Heroics' flat magnitudes and base target count carry over
+/// unchanged (the "+1 creature per three bard levels beyond 15th" scaling
+/// lands at level 18, out of scope). Only two new tier constant pairs are
+/// added (on already-generalized tiered if/else chains); no new record
+/// type or choice slot is added, and no Bard level 18+ is proven.
+///
+/// SD18 (cycle-2026-07-16T0900) widens the gate again to level 18 — the
+/// loop's NINTH §3.2 level-18 landing (after Wizard, Cleric, Paladin,
+/// Fighter, Barbarian, Rogue, Ranger, and Sorcerer) and the CLOSE of the
+/// §3.2 level-18 sweep at 9 of 9 eligible classes (Druid capped at 15,
+/// Monk capped at 12, both documented structural exceptions) — verified
+/// independently against TWO primary sources fetched fresh this cycle: a
+/// raw HTML parse of d20pfsrd.com's own class table (bypassing
+/// AI-summarization, following the lesson from the Sorcerer level-18
+/// cycle) and the Archives of Nethys aonprd.com mirror via
+/// `ClassDisplay.aspx`, both byte-for-byte identical on the level-18 row
+/// ("+13/+8/+3 | +6 | +11 | +11 | Mass suggestion, versatile
+/// performance"), with neighboring levels 16 ("—"), 17 ("Inspire courage
+/// +4, lore master 3/day"), and 19 ("Inspire competence +6") re-fetched in
+/// the same pass to rule out misattribution. Base attack bonus (`18*3/4`),
+/// both good saves (`18/2+2`), and poor Fortitude (`18/3`) all GENUINELY
+/// RISE from level 17; Bardic Knowledge (`max(18/2,1)`) GENUINELY RISES;
+/// the Bardic Performance rounds-per-day pool GENUINELY RISES
+/// (`4+CHA+2*(18-1)`); the Fascinate DC (`10+18/2+CHA`) GENUINELY RISES
+/// while the Fascinate affected-creature count (`1+(18-1)/3`) STAYS
+/// unchanged, an integer-division coincidence; Frightening Tune's DC (the
+/// same formula shape) likewise GENUINELY RISES. Inspire Courage, Inspire
+/// Competence, and Lore Master all stay at their level-17/level-15 tiers
+/// (no further tier is defined within this bounded slice's ceiling, or
+/// lands at level 19, out of scope). Inspire Heroics' flat save-bonus
+/// (+4) and AC-bonus (+4) magnitudes stay unchanged, but its base target
+/// count GENUINELY RISES from 1 to 2 — the PF1 Core Rulebook's own text
+/// ("for every three bard levels the character attains beyond 15th, he
+/// can inspire heroics in one additional creature") places this exactly
+/// at bard level 18, a genuine arithmetic-pillar widening on an
+/// already-generalized tiered if/else chain, the same idiom as Inspire
+/// Courage's/Inspire Competence's/Lore Master's own tier additions.
+///
+/// The level-18 "Special" column's two named entries were checked and
+/// confirmed to require the SAME already-declined machinery as their own
+/// precedents, so NEITHER is grounded as a new record. "Mass suggestion"
+/// (PF1 Core Rulebook: "This ability functions just like suggestion, but
+/// allows a bard of 18th level or higher to make a suggestion
+/// simultaneously to any number of creatures that he has already
+/// fascinated") is a strict widening of the 6th-level Suggestion
+/// spell-like ability, which was already deliberately left
+/// named-but-unproven at level 6 (it requires a fascinated-target
+/// prerequisite and the "suggestion" spell's own effect-resolution
+/// engine, neither of which exists in this codebase) — Mass Suggestion
+/// inherits the identical blocker and adds a multi-target dimension on
+/// top of it, so it stays named-but-unproven, with no record fabricated
+/// for it, exactly mirroring the level-6 Suggestion precedent (this is
+/// NOT a new spell-like-ability-casting engine declined for the first
+/// time; it is the SAME already-declined engine, re-confirmed).
+/// "Versatile performance" is a REPEAT of the Bard's own 2nd-level grant
+/// (also seen at levels 6, 10, and 14): already deliberately left
+/// named-but-unproven at level 2 (requires a choice-gated
+/// skill-substitution engine that does not exist in this codebase), so
+/// this cycle adds no new record for its level-18 reappearance either.
+/// Only one new tier constant pair is added (on an already-generalized
+/// tiered if/else chain, Inspire Heroics' target count); no new record
+/// type or choice slot is added, and no Bard level 19+ is proven. A
+/// further SD18 slice (`cycle-2026-07-16T1400`, the loop's FOURTH §3.2
+/// level-19 landing, after Barbarian, Cleric, and Fighter) widens the gate
+/// again to 1..=19 (`MAX_SUPPORTED_BARD_LEVEL = 19`): the class table's
+/// level-19 "Special" column reads "Inspire competence +6" (verified
+/// independently against two primary sources — a raw HTML parse of
+/// d20pfsrd.com's own class table and the Archives of Nethys aonprd.com
+/// mirror via `ClassDisplay.aspx`, both covering the full
+/// levels-17-through-20 block, byte-for-byte agreement, so a third source
+/// was not required) — Inspire Competence's flat magnitude genuinely rises
+/// to +6 via a FIFTH tier constant
+/// (`BARD_INSPIRE_COMPETENCE_FIFTH_TIER_LEVEL = 19`), mirroring exactly
+/// the already-generalized tiered if/else chain idiom used for its own
+/// second/third/fourth tiers and for Inspire Courage's/Lore Master's own
+/// tier additions; this is the ONLY named feature at level 19, so no other
+/// new pillar is grounded from the Special column. Base attack bonus
+/// genuinely rises to +14 (`19 * 3 / 4 = 14`); poor Fortitude stays put at
+/// +6 (`19 / 3 = 6`) and both good saves stay put at +11 (`19 / 2 + 2 =
+/// 11`), integer-division coincidences with level 18, checked not assumed;
+/// Bardic Knowledge stays put at 9 (`max(19 / 2, 1) = 9`, also a
+/// coincidence); the Bardic Performance rounds-per-day pool genuinely
+/// rises (`4 + CHA + 2 * (19 - 1)`); the Fascinate DC stays put at
+/// `10 + 19 / 2 + CHA` (a coincidence with level 18) while the Fascinate
+/// affected-creature count genuinely rises to `1 + (19 - 1) / 3`;
+/// Frightening Tune's DC (the same formula shape) likewise stays put.
+/// Inspire Courage stays at its level-17 fourth tier (next tier at level
+/// 23, out of scope); Lore Master stays at its level-17 third tier (no
+/// further tier defined); Inspire Heroics' flat save-bonus/AC-bonus
+/// magnitudes and base target count (set at level 18) all carry over
+/// unchanged (the next target-count rise lands at level 21, out of
+/// scope). This needed ZERO new record types and ZERO new choice slots —
+/// only one new tier constant pair on an already-generalized tiered
+/// if/else chain, and no Bard level 20 is proven. A further SD18 slice
+/// (alphabetically the first of the six remaining §3.2 level-20
+/// candidates after Cleric, Wizard, and Barbarian) widens the gate again
+/// to 1..=20 (`MAX_SUPPORTED_BARD_LEVEL = 20`) — the final remaining
+/// level within PF1's 1-20 character-level cap for this class row.
+/// Verified independently against two primary sources (a raw HTML parse
+/// of d20pfsrd.com's own class table, bypassing AI-summarization, and
+/// the Archives of Nethys aonprd.com mirror via `ClassDisplay.aspx`,
+/// both covering the full levels-17-through-20 block, byte-for-byte
+/// agreement, so a third source was not required): the level-20 row
+/// reads "+15/+10/+5 | +6 | +12 | +12 | Deadly performance |
+/// 5/5/5/5/5/5" (spells per day) and "6/6/6/6/6/5/5" (spells known).
+/// Base attack bonus genuinely rises to +15 (`20 * 3 / 4 = 15`); poor
+/// Fortitude stays put at +6 (`20 / 3 = 6`, an integer-division
+/// coincidence with level 19) while both good saves (Reflex, Will)
+/// genuinely rise to +12 (`20 / 2 + 2 = 12`, up from +11); Bardic
+/// Knowledge genuinely rises to 10 (`max(20 / 2, 1) = 10`, up from 9);
+/// the Bardic Performance rounds-per-day pool genuinely rises to 44
+/// (`4 + CHA + 2 * (20 - 1)`, up from 42); the Fascinate DC genuinely
+/// rises to 22 (`10 + 20 / 2 + CHA`, up from 21) while the Fascinate
+/// affected-creature count stays put at 7 (`1 + (20 - 1) / 3 = 7`, an
+/// integer-division coincidence with level 19); Frightening Tune's DC
+/// (the same formula shape) likewise genuinely rises to 22. Inspire
+/// Courage stays at its level-17 fourth tier (next tier at level 23,
+/// out of scope); Inspire Competence stays at its level-19 fifth tier
+/// (no further tier is defined within PF1's Core Rulebook); Lore Master
+/// stays at its level-17 third tier (no further tier defined); Inspire
+/// Heroics' flat save-bonus/AC-bonus magnitudes and base target count
+/// (set at level 18) all carry over unchanged (the next target-count
+/// rise lands at level 21, out of scope); Soothing Performance carries
+/// over unchanged as a bounded grant-only identity record. The
+/// level-20 "Special" column's sole entry, Deadly Performance (the
+/// class capstone — PF1 Core Rulebook: "A bard of 20th level or higher
+/// can use his performance to cause one enemy to die from joy or
+/// sorrow... The target receives a Will save (DC 10 + 1/2 the bard's
+/// level + the bard's Cha modifier) to negate the effect... If a
+/// creature's saving throw fails, it dies"), is a genuinely NEW class
+/// feature whose named Will-save DC is the EXACT SAME formula shape as
+/// the already-grounded Fascinate DC and Frightening Tune DC, so only
+/// that flat DC magnitude is grounded here (`BARD_DEADLY_PERFORMANCE_LEVEL`),
+/// mirroring the Frightening Tune idiom exactly; no
+/// death-effect-resolution engine, no audible/visual-performance-
+/// requirement checking, and no range/targeting engine exists anywhere
+/// in this codebase, so none of that is fabricated. This needed ZERO
+/// new record types beyond the one new DC magnitude and ZERO new choice
+/// slots.
+const MAX_SUPPORTED_BARD_LEVEL: u8 = 20;
+/// PF1 Core Rulebook level gate at which Bard gains Frightening Tune
+/// (14th level, verified independently against two primary sources:
+/// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
+/// "Frightening tune, Versatile performance" as the Bard 14th-level
+/// "Special" column entry). The rule text: "Each enemy within range
+/// receives a Will save (DC 10 + 1/2 the bard's level + the bard's Cha
+/// modifier) to negate the effect" — the exact same DC formula shape as
+/// the already-grounded Fascinate DC, so this grounds ONLY that flat DC
+/// magnitude (mirroring the Fascinate DC idiom exactly); the
+/// range-based affected-creature scope, the fear/frightened-condition
+/// resolution, and the audible-performance-execution prerequisite are
+/// not computed because no targeting/range or condition-resolution
+/// engine exists anywhere in this codebase.
+const BARD_FRIGHTENING_TUNE_LEVEL: u8 = 14;
+/// PF1 Core Rulebook level gate at which Bard gains Deadly Performance,
+/// the class capstone (20th level, verified independently against two
+/// primary sources: d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror both list "Deadly performance" as the sole Bard 20th-level
+/// "Special" column entry). The rule text: "The target receives a Will
+/// save (DC 10 + 1/2 the bard's level + the bard's Cha modifier) to
+/// negate the effect" — the exact same DC formula shape as the
+/// already-grounded Fascinate DC and Frightening Tune DC, so this
+/// grounds ONLY that flat DC magnitude (mirroring the Frightening Tune
+/// idiom exactly); the audible/visual-performance-requirement checking,
+/// the Will-save resolution, and the death-effect application itself
+/// are not computed because no targeting/range, save-resolution, or
+/// death-effect-resolution engine exists anywhere in this codebase.
+const BARD_DEADLY_PERFORMANCE_LEVEL: u8 = 20;
+/// PF1 Core Rulebook level gate at which Bard gains Soothing Performance
+/// (12th level, verified independently against two primary sources:
+/// d20pfsrd and the Archives of Nethys aonprd.com mirror both list
+/// "Soothing performance" as the sole Bard 12th-level "Special" column
+/// entry). The rule text: "a bard of 12th level or higher can use his
+/// performance to help heal the wounds of his allies... this ability
+/// functions as mass cure serious wounds... this use of bardic
+/// performance also removes the fatigued, sickened, and shaken
+/// conditions." This is grounded ONLY as a bounded grant-only identity
+/// record (value 0, non-fabricated): no healing-application engine and no
+/// condition-removal engine exist anywhere in this codebase.
+const BARD_SOOTHING_PERFORMANCE_LEVEL: u8 = 12;
 /// PF1 Core Rulebook level gate at which Bard gains Jack-of-All-Trades (10th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Jack-of-all-trades, versatile performance" as
@@ -1057,32 +2211,98 @@ const BARD_INSPIRE_COMPETENCE_LEVEL: u8 = 3;
 /// competence +3" as the Bard 7th-level special feature entry, and both state
 /// the rule text "This bonus increases by +1 for every four levels the bard
 /// has attained beyond 3rd (+3 at 7th, +4 at 11th, +5 at 15th, and +6 at
-/// 19th)"). The next increase (to +4) lands at bard level 11, out of scope
-/// since only Bard levels 1-8 are supported.
+/// 19th)"). The next increase (to +4) lands at bard level 11 (grounded below
+/// by `BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL`).
 const BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL: u8 = 7;
 /// PF1 Core Rulebook Inspire Competence magnitude at the level it is first gained: a
 /// flat +2 competence bonus on skill checks with a particular skill. Verified
 /// against both primary sources.
 const BARD_INSPIRE_COMPETENCE_BONUS_FIRST_TIER: i16 = 2;
 /// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
-/// second-tier level gate (7th level and beyond, until the next tier at 11th
-/// level, out of scope here).
+/// second-tier level gate (7th level and beyond, until the third tier at
+/// 11th level).
 const BARD_INSPIRE_COMPETENCE_BONUS_SECOND_TIER: i16 = 3;
+/// PF1 Core Rulebook level at which the Inspire Competence flat magnitude
+/// increases again from +3 to +4 (11th level, verified independently
+/// against two primary sources: d20pfsrd and legacy.aonprd.com both list
+/// "Inspire competence +4, inspire courage +3, lore master 2/day" as the
+/// Bard 11th-level special feature entry). The next increase (to +5) lands
+/// at bard level 15 (grounded below by
+/// `BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL`).
+const BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL: u8 = 11;
+/// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
+/// third-tier level gate (11th level and beyond, until the fourth tier at
+/// 15th level).
+const BARD_INSPIRE_COMPETENCE_BONUS_THIRD_TIER: i16 = 4;
+/// PF1 Core Rulebook level at which the Inspire Competence flat magnitude
+/// increases again from +4 to +5 (15th level, verified independently
+/// against two primary sources: d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, both byte-for-byte identical: "Inspire competence
+/// +5, inspire heroics" is the Bard 15th-level special feature entry, and
+/// both state the rule text "This bonus increases by +1 for every four
+/// levels the bard has attained beyond 3rd"). The next increase (to +6)
+/// lands at bard level 19 (grounded below by
+/// `BARD_INSPIRE_COMPETENCE_FIFTH_TIER_LEVEL`).
+const BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL: u8 = 15;
+/// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
+/// fourth-tier level gate (15th level and beyond, until the fifth tier at
+/// 19th level).
+const BARD_INSPIRE_COMPETENCE_BONUS_FOURTH_TIER: i16 = 5;
+/// PF1 Core Rulebook level at which the Inspire Competence flat magnitude
+/// increases again from +5 to +6 (19th level, verified independently
+/// against two primary sources: d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, both byte-for-byte identical: "Inspire competence
+/// +6" is the Bard 19th-level "Special" column entry — the sole entry at
+/// that level — and both state the rule text "This bonus increases by +1
+/// for every four levels the bard has attained beyond 3rd"). The next
+/// increase (to +7) lands at bard level 23, out of scope since only Bard
+/// levels 1-19 are supported.
+const BARD_INSPIRE_COMPETENCE_FIFTH_TIER_LEVEL: u8 = 19;
+/// PF1 Core Rulebook Inspire Competence flat magnitude at or above the
+/// fifth-tier level gate (19th level and beyond, until the next tier at
+/// 23rd level, out of scope here).
+const BARD_INSPIRE_COMPETENCE_BONUS_FIFTH_TIER: i16 = 6;
 /// PF1 Core Rulebook level at which the Inspire Courage flat magnitude first
 /// increases from +1 to +2 (5th level, verified independently against two
 /// primary sources: d20pfsrd and legacy.aonprd.com both list "Inspire courage
 /// +2, lore master 1/day" as the Bard 5th-level special feature entry, and
 /// both state the rule text "At 5th level, and every six bard levels
 /// thereafter, this bonus increases by +1"). The next increase (to +3) lands
-/// at bard level 11, out of scope since only Bard levels 1-5 are supported.
+/// at bard level 11 (grounded below by `BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL`).
 const BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL: u8 = 5;
 /// PF1 Core Rulebook Inspire Courage flat magnitude below the second-tier
 /// level gate.
 const BARD_INSPIRE_COURAGE_BONUS_FIRST_TIER: i16 = 1;
 /// PF1 Core Rulebook Inspire Courage flat magnitude at or above the
-/// second-tier level gate (5th level and beyond, until the next tier at 11th
-/// level, out of scope here).
+/// second-tier level gate (5th level and beyond, until the third tier at
+/// 11th level).
 const BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER: i16 = 2;
+/// PF1 Core Rulebook level at which the Inspire Courage flat magnitude
+/// increases again from +2 to +3 (11th level, verified independently
+/// against two primary sources: d20pfsrd and legacy.aonprd.com both list
+/// "Inspire competence +4, inspire courage +3, lore master 2/day" as the
+/// Bard 11th-level special feature entry — "every six bard levels
+/// thereafter" after the 5th-level tier lands exactly on 11th). The next
+/// increase (to +4) lands at bard level 17 (grounded below by
+/// `BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL`).
+const BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL: u8 = 11;
+/// PF1 Core Rulebook Inspire Courage flat magnitude at or above the
+/// third-tier level gate (11th level and beyond, until the fourth tier at
+/// 17th level).
+const BARD_INSPIRE_COURAGE_BONUS_THIRD_TIER: i16 = 3;
+/// PF1 Core Rulebook level at which the Inspire Courage flat magnitude
+/// increases again from +3 to +4 (17th level, verified independently
+/// against two primary sources: d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, both byte-for-byte identical: "Inspire courage +4,
+/// lore master 3/day" as the Bard 17th-level special feature entry — the
+/// same "every six bard levels thereafter" cadence after the 11th-level
+/// tier lands exactly on 17th). The next increase (to +5) lands at bard
+/// level 23, out of scope since only Bard levels 1-17 are supported.
+const BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL: u8 = 17;
+/// PF1 Core Rulebook Inspire Courage flat magnitude at or above the
+/// fourth-tier level gate (17th level and beyond, until the next tier at
+/// 23rd level, out of scope here).
+const BARD_INSPIRE_COURAGE_BONUS_FOURTH_TIER: i16 = 4;
 /// PF1 Core Rulebook level gate at which Bard gains Lore Master (5th level,
 /// verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Inspire courage +2, lore master 1/day" as the
@@ -1094,9 +2314,72 @@ const BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER: i16 = 2;
 /// mirroring the Paladin Smite Evil / Wizard Force Missile uses-per-day
 /// idiom; neither mechanic is executed against any actual Knowledge check.
 const BARD_LORE_MASTER_LEVEL: u8 = 5;
-/// PF1 Core Rulebook Lore Master take-20 usage-count magnitude: a flat 1/day,
-/// non-level-scaled count (verified against both primary sources).
+/// PF1 Core Rulebook Lore Master take-20 usage-count magnitude at the level
+/// it is first gained: a flat 1/day count (verified against both primary
+/// sources).
 const BARD_LORE_MASTER_TAKE_20_USES_PER_DAY: i16 = 1;
+/// PF1 Core Rulebook level at which the Lore Master take-20 usage-count
+/// magnitude increases from 1/day to 2/day (11th level, verified
+/// independently against two primary sources: d20pfsrd and
+/// legacy.aonprd.com both list "Inspire competence +4, inspire courage +3,
+/// lore master 2/day" as the Bard 11th-level special feature entry — the
+/// same every-sixth-level-after-5th cadence as Inspire Courage). The next
+/// increase (to 3/day) lands at bard level 17 (grounded below by
+/// `BARD_LORE_MASTER_THIRD_TIER_LEVEL`).
+const BARD_LORE_MASTER_SECOND_TIER_LEVEL: u8 = 11;
+/// PF1 Core Rulebook Lore Master take-20 usage-count magnitude at or above
+/// the second-tier level gate (11th level and beyond, until the third tier
+/// at 17th level).
+const BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_SECOND_TIER: i16 = 2;
+/// PF1 Core Rulebook level at which the Lore Master take-20 usage-count
+/// magnitude increases again from 2/day to 3/day (17th level, verified
+/// independently against two primary sources: d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror, both byte-for-byte identical: "Inspire courage
+/// +4, lore master 3/day" as the Bard 17th-level special feature entry —
+/// the same every-sixth-level-after-5th cadence as Inspire Courage). The
+/// next increase lands beyond bard level 17, out of scope since only Bard
+/// levels 1-17 are supported.
+const BARD_LORE_MASTER_THIRD_TIER_LEVEL: u8 = 17;
+/// PF1 Core Rulebook Lore Master take-20 usage-count magnitude at or above
+/// the third-tier level gate (17th level and beyond, out of scope beyond
+/// here).
+const BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_THIRD_TIER: i16 = 3;
+/// PF1 Core Rulebook level gate at which Bard gains Inspire Heroics (15th
+/// level, verified independently against two primary sources: d20pfsrd and
+/// the Archives of Nethys aonprd.com mirror both list "Inspire competence
+/// +5, inspire heroics" as the Bard 15th-level "Special" column entry). The
+/// rule text: "A bard of 15th level or higher can inspire tremendous
+/// heroism in himself or a single ally within 30 feet... Inspired
+/// creatures gain a +4 morale bonus on saving throws and a +4 dodge bonus
+/// to AC." This grounds only the two flat, non-level-scaled magnitude
+/// numbers (the save bonus and the AC bonus) and the flat base target
+/// count, mirroring the Well-Versed flat-magnitude idiom and the Fascinate
+/// affected-creature-count idiom respectively; no targeting, save
+/// resolution, or AC application is computed because no such engine exists
+/// anywhere in this codebase.
+const BARD_INSPIRE_HEROICS_LEVEL: u8 = 15;
+/// PF1 Core Rulebook Inspire Heroics flat morale bonus on saving throws (a
+/// flat, non-level-scaled +4, verified against both primary sources).
+const BARD_INSPIRE_HEROICS_SAVE_BONUS: i16 = 4;
+/// PF1 Core Rulebook Inspire Heroics flat dodge bonus to AC (a flat,
+/// non-level-scaled +4, verified against both primary sources).
+const BARD_INSPIRE_HEROICS_AC_BONUS: i16 = 4;
+/// PF1 Core Rulebook Inspire Heroics base target count at the level it is
+/// first gained: "himself or a single ally" is a flat 1 target (verified
+/// against both primary sources).
+const BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT: i16 = 1;
+/// SD18 (cycle-2026-07-16T0900) PF1 Core Rulebook level gate at which
+/// Inspire Heroics' target count first rises: "For every three bard levels
+/// the character attains beyond 15th, he can inspire heroics in an
+/// additional creature" lands exactly at bard level 18 (15 + 3), verified
+/// against the rule text directly rather than assumed, mirroring the
+/// already-generalized tiered if/else chain idiom used for Inspire
+/// Courage / Inspire Competence / Lore Master's own tier constants.
+const BARD_INSPIRE_HEROICS_TARGET_COUNT_SECOND_TIER_LEVEL: u8 = 18;
+/// PF1 Core Rulebook Inspire Heroics target count at its second tier (bard
+/// level 18+): the base 1 target plus the rule's own "+1 creature per three
+/// bard levels beyond 15th" scaling, i.e. 2 at level 18.
+const BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT_SECOND_TIER: i16 = 2;
 
 // SD13-E5 Fascinate flat DC base. PF1 Core Rulebook Fascinate Will save DC is
 // 10 + 1/2 bard level + Charisma modifier; only the fixed base term is a named
@@ -1203,7 +2486,269 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 // open-ended metamagic/item-creation/Spell-Mastery choice already left
 // named-but-unproven at 5th level, not a new type of class feature, so no
 // new pillar record is grounded at level 10.
-const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 10;
+//
+// A further SD18 slice (the first §3.2 landing for Wizard beyond the SD13
+// tranche ceiling) widens the gate again to level 11
+// (`MAX_SUPPORTED_WIZARD_LEVEL = 11`): base attack and all three base saves
+// stay numerically IDENTICAL to level 10 (`11/2 = 5`, `11/3 = 3`,
+// `11/2+2 = 7`, integer-division coincidences, re-verified rather than
+// assumed); the specialist bonus slot flat count GENUINELY RISES to 6, since
+// the raw spells-per-day table's level-11 row is "4/4/4/4/3/2/1" — the first
+// non-"—" 6th-level column, up from the level-10 row "4/4/4/3/3/2" whose
+// 6th-level column is still "—" (verified independently against both
+// primary sources, d20pfsrd and the Archives of Nethys aonprd.com mirror,
+// checked rather than assumed) — so a level-11 specialist wizard casts
+// 6th-level spells for the first time; Intense Spells' bonus-damage
+// magnitude stays 5 (`max(11/2, 1) = 5`, another integer-division
+// coincidence); Force Missile's pool is level-independent and unchanged; the
+// level-11 "Special" column is genuinely blank (verified independently
+// against both sources — the Wizard's bonus feats land only at levels
+// 5/10/15/20), so no new pillar record is grounded at level 11 beyond
+// widening the specialist-bonus-slot pillar to its new value.
+//
+// A further SD18 slice widens the gate again to level 12
+// (`MAX_SUPPORTED_WIZARD_LEVEL = 12`): UNLIKE level 11 (where base attack
+// bonus and all three base saves stayed numerically unchanged from level
+// 10, integer-division coincidences), base attack bonus GENUINELY RISES to
+// +6 (`12/2 = 6`) and all three base saves GENUINELY RISE too (poor
+// Fortitude/Reflex `12/3 = 4`, good Will `12/2+2 = 8`) — verified rather
+// than assumed against both primary sources (d20pfsrd and the Archives of
+// Nethys aonprd.com mirror, which agree byte-for-byte), mirroring the
+// Sorcerer level-11-then-level-12 pattern exactly. The raw spells-per-day
+// table's level-12 row is "4/4/4/4/3/3/2" — the 6th-level column rises from
+// 1 to 2, but there is still no 7th-level column at all (7th-level wizard
+// spells do not become accessible until level 13), so the specialist
+// bonus-slot flat count (one bonus slot of each spell level she can cast)
+// STAYS at 6, a threshold stasis checked rather than assumed; Intense
+// Spells' bonus-damage magnitude GENUINELY RISES to 6 (`max(12/2, 1) = 6`,
+// up from 5 at level 11) via the pre-existing formula, not re-derived;
+// Force Missile's pool is level-independent and unchanged; the level-12
+// "Special" column is genuinely blank on both primary sources (the
+// Wizard's bonus feats land only at levels 5/10/15/20), so no new pillar
+// record is grounded at level 12 beyond the arithmetic pillars above. This
+// cycle independently re-verified (rather than assumed from the
+// immediately-preceding Sorcerer level-12 cycle's outcome) that Wizard's
+// own live `class_spell.wizard.prepared_spellbook.unsupported`
+// claim-blocker is pushed unconditionally alongside the level's other
+// explanations — it does not gate `supported_wizard_level` or this
+// constant, exactly mirroring every sibling class's own remaining-burden
+// diagnostics, so it marks incomplete coverage without blocking this
+// arithmetic widening.
+//
+// A further SD18 slice widens the gate again to level 13 — the LAST §3.2
+// level-13 landing among the 11 core classes (Monk excluded, confirmed dead
+// end: Diamond Soul needs spell resistance, not grounded in this codebase):
+// base attack bonus and all three base saves STAY numerically unchanged from
+// level 12 (`13/2 = 6`, `13/3 = 4`, `13/2+2 = 8`), integer-division
+// coincidences verified against both primary sources (d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, which agree byte-for-byte) rather
+// than assumed. The raw spells-per-day table's level-13 row is
+// "4/4/4/4/4/3/2/1" — the first non-"—" 7th-level column, up from the
+// level-12 row "4/4/4/4/3/3/2" whose 7th-level column does not exist at all
+// — so a level-13 specialist wizard casts 7th-level spells for the first
+// time, and the specialist bonus-slot flat count (one bonus slot of each
+// spell level she can cast) GENUINELY RISES to 7, from 6 at level 12, via a
+// new tier constant (`WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_13`) gated on a
+// new threshold constant (`WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`),
+// mirroring the existing level-3/5/7/9/11 idiom exactly; Intense Spells'
+// bonus-damage magnitude STAYS at 6 (`max(13/2, 1) = 6`, another
+// integer-division coincidence); Force Missile's pool is level-independent
+// and unchanged; the level-13 "Special" column is genuinely BLANK on both
+// primary sources (the Wizard's bonus feats land only at levels 5/10/15/20),
+// so no new pillar record is grounded at level 13 beyond widening the
+// specialist-bonus-slot pillar to its new value.
+//
+// A further SD18 slice widens the gate again to level 14 — the TENTH §3.2
+// level-14 landing, and the LAST of the 11 core classes to reach level 14
+// (Monk excluded, confirmed dead end at level 13): base attack bonus
+// GENUINELY RISES to +7 (`14/2 = 7`, up from +6) and good Will GENUINELY
+// RISES to +9 (`14/2+2 = 9`, up from +8), while poor Fortitude/Reflex both
+// STAY at +4 (`14/3 = 4`, an integer-division coincidence with level 13) —
+// verified against three primary sources (d20pfsrd, the Archives of Nethys
+// aonprd.com mirror, and legacy.aonprd.com, all byte-for-byte identical).
+// The raw spells-per-day table's level-14 row is "4/4/4/4/4/3/3/2" — up
+// from the level-13 row "4/4/4/4/4/3/2/1" (the 6th-level column rises from
+// 2 to 3 and the 7th-level column rises from 1 to 2), but the 8th-level
+// column stays "—" (8th-level wizard spells do not become accessible until
+// level 15, verified rather than assumed), so the specialist bonus-slot
+// flat count STAYS at 7, unchanged from level 13 — no new tier constant is
+// needed since the existing `>= WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`
+// branch already covers level 14. Intense Spells' bonus-damage magnitude
+// GENUINELY RISES to 7 (`max(14/2, 1) = 7`, up from 6) via the pre-existing
+// formula, not re-derived; Force Missile's pool is level-independent and
+// unchanged; the level-14 "Special" column is genuinely BLANK on all three
+// primary sources (the Wizard's bonus feats land only at levels
+// 5/10/15/20), so no new pillar record is grounded at level 14 — only the
+// already-grounded arithmetic pillars widen, and this is a pure ceiling
+// raise: every consuming formula already reads `level` generically, so no
+// new tier constant or threshold constant is needed at all.
+//
+// A further SD18 slice (the loop's SEVENTH §3.2 level-15 landing, after
+// Barbarian, Rogue, Fighter, Cleric, Druid, and Ranger) widens the gate
+// again to level 15: base attack bonus STAYS at +7 (`15/2 = 7`) and good
+// Will STAYS at +9 (`15/2+2 = 9`), both integer-division coincidences with
+// level 14, while poor Fortitude/Reflex both GENUINELY RISE to +5
+// (`15/3 = 5`, up from +4) — verified against two primary sources
+// (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree
+// byte-for-byte, so no third source was required). The raw spells-per-day
+// table's level-15 row is "4/4/4/4/4/4/3/2/1" — up from the level-14 row
+// "4/4/4/4/4/3/3/2" (the 5th-level column rises from 3 to 4) AND a
+// genuinely NEW 8th-level column appears for the first time (value 1) —
+// so a level-15 specialist wizard casts 8th-level spells for the first
+// time, and the specialist bonus-slot flat count GENUINELY RISES to 8, up
+// from 7 at level 14, via a new `WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL
+// = 15` threshold constant gated exactly like the existing
+// level-3/5/7/9/11/13 idiom. Intense Spells' bonus-damage magnitude STAYS
+// at 7 (`max(15/2, 1) = 7`, another integer-division coincidence with
+// level 14) via the pre-existing formula, not re-derived; Force Missile's
+// pool is level-independent and unchanged; the level-15 "Special" column
+// reads "Bonus feat" on both primary sources — the SAME genuinely
+// open-ended metamagic/item-creation/Spell-Mastery choice already left
+// named-but-unproven at levels 5 and 10, not a new type of class feature,
+// so no new pillar record is grounded at level 15 beyond widening the
+// specialist-bonus-slot pillar to its new value.
+//
+// A further SD18 slice widens the gate again to level 16 — the loop's
+// THIRD §3.2 level-16 landing, after Barbarian and Fighter, and the first
+// spell-bearing class to reach level 16 in the level-16 sweep: base
+// attack bonus GENUINELY RISES to +8 (`16/2 = 8`, up from +7) and good
+// Will GENUINELY RISES to +10 (`16/2+2 = 10`, up from +9), while poor
+// Fortitude/Reflex both STAY at +5 (`16/3 = 5`, an integer-division
+// coincidence with level 15) — verified independently against two primary
+// sources (d20pfsrd and the Archives of Nethys aonprd.com mirror, which
+// agree byte-for-byte, so no third source was required). The raw
+// spells-per-day table's level-16 row is "4/4/4/4/4/4/3/3/2" — up from the
+// level-15 row "4/4/4/4/4/4/3/2/1" (the 7th-level column rises from 2 to 3
+// and the 8th-level column rises from 1 to 2), but the 9th-level column
+// stays "—" (9th-level wizard spells do not become accessible until level
+// 17, verified rather than assumed), so the specialist bonus-slot flat
+// count STAYS at 8, unchanged from level 15 — the pre-existing
+// `>= WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL` branch already
+// covers level 16, so no new tier or threshold constant is needed at all.
+// Intense Spells' bonus-damage magnitude GENUINELY RISES to 8
+// (`max(16/2, 1) = 8`, up from 7) via the pre-existing formula, not
+// re-derived; Force Missile's pool is level-independent and unchanged; the
+// level-16 "Special" column is genuinely BLANK on both primary sources
+// (the Wizard's bonus feats land only at levels 5/10/15/20), so no new
+// pillar record is grounded at level 16 — only the already-grounded
+// arithmetic pillars widen, and this is a pure ceiling raise: every
+// consuming formula already reads `level` generically, so no new tier
+// constant or threshold constant is needed at all.
+//
+// A further SD18 slice (the loop's FIFTH §3.2 level-17 landing, after
+// Ranger, Bard, Rogue, and Fighter, and the first spell-bearing class to
+// reach level 17 in the level-17 sweep) widens the gate again to level 17:
+// base attack bonus STAYS at +8 (`17/2 = 8`) and good Will STAYS at +10
+// (`17/2+2 = 10`), both integer-division coincidences with level 16, while
+// poor Fortitude/Reflex both STAY at +5 (`17/3 = 5`, also an
+// integer-division coincidence with level 16) — verified independently
+// against two primary sources (d20pfsrd and the Archives of Nethys
+// aonprd.com mirror, which agree byte-for-byte, so no third source was
+// required), fetching the full levels-15-through-18 block in one pass to
+// rule out level-misattribution. The raw spells-per-day table's level-17
+// row is "4/4/4/4/4/4/4/3/2/1" — up from the level-16 row
+// "4/4/4/4/4/4/3/3/2/—" (the 6th-level column rises from 3 to 4) AND a
+// genuinely NEW 9th-level column appears for the first time (value 1), so
+// a level-17 specialist wizard casts 9th-level spells for the first time,
+// and the specialist bonus-slot flat count GENUINELY RISES to 9, up from 8
+// at levels 15-16, via a new
+// `WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 17` threshold constant
+// gated exactly like the existing level-3/5/7/9/11/13/15 idiom. Intense
+// Spells' bonus-damage magnitude STAYS at 8 (`max(17/2, 1) = 8`, an
+// integer-division coincidence with level 16) via the pre-existing
+// formula, not re-derived; Force Missile's pool is level-independent and
+// unchanged; the level-17 "Special" column is genuinely BLANK on both
+// primary sources (the Wizard's bonus feats land only at levels
+// 5/10/15/20), so no new named-feature pillar record is grounded at level
+// 17 beyond the 9th-level-column-opening widening of the pre-existing
+// specialist-bonus-slot pillar.
+//
+// A further SD18 slice (the loop's FIRST §3.2 level-18 landing, opening the
+// level-18 sweep) widens the gate again to level 18: base attack bonus
+// GENUINELY RISES to +9 (`18/2 = 9`, up from +8 at level 17) and good Will
+// GENUINELY RISES to +11 (`18/2+2 = 11`, up from +10 at level 17), while
+// poor Fortitude/Reflex both GENUINELY RISE to +6 (`18/3 = 6`, up from +5
+// at level 17) — verified independently against two primary sources
+// (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree
+// byte-for-byte, so no third source was required), fetching the full
+// levels-16-through-19 block in one pass to rule out level-misattribution.
+// The raw spells-per-day table's level-18 row is "4/4/4/4/4/4/4/3/3/2" —
+// up from the level-17 row "4/4/4/4/4/4/4/3/2/1" (the 8th-level column
+// rises from 2 to 3 and the 9th-level column rises from 1 to 2), but NO
+// genuinely new spell-level column opens (9th is already the highest
+// wizard spell level in PF1), so the specialist bonus-slot flat count
+// STAYS at 9 (checked rather than assumed) — no new threshold constant is
+// needed. Intense Spells' bonus-damage magnitude GENUINELY RISES to 9
+// (`max(18/2, 1) = 9`, up from 8 at level 17) via the pre-existing
+// formula, not re-derived; Force Missile's pool is level-independent and
+// unchanged; the level-18 "Special" column is genuinely BLANK on both
+// primary sources (the Wizard's bonus feats land only at levels
+// 5/10/15/20), so no new named-feature pillar record is grounded at level
+// 18 — a pure arithmetic-pillar widening on the already-grounded base
+// attack / base save / Intense Spells formulas, with the specialist
+// bonus-slot pillar staying flat.
+//
+// A further SD18 slice (the loop's NINTH §3.2 level-19 landing, after
+// Barbarian, Cleric, Fighter, Bard, Paladin, Ranger, Rogue, and Sorcerer,
+// and the LAST of the 9 eligible classes, fully closing the level-19 sweep)
+// widens the gate again to level 19: base attack bonus STAYS at +9
+// (18/2 = 9 vs 19/2 = 9, an integer-division coincidence with level 18) and
+// good Will STAYS at +11 (19/2+2 = 11), while poor Fortitude/Reflex both
+// STAY at +6 (19/3 = 6) — verified independently against two primary
+// sources (d20pfsrd and the Archives of Nethys aonprd.com mirror, which
+// agree byte-for-byte, so no third source was required), fetching the full
+// levels-16-through-20 block in one pass to rule out level-misattribution.
+// The raw spells-per-day table's level-19 row is "4/4/4/4/4/4/4/4/3/3" — up
+// from the level-18 row "4/4/4/4/4/4/4/3/3/2" (the 7th-level column rises
+// from 3 to 4 and the 9th-level column rises from 2 to 3), but NO genuinely
+// new spell-level column opens (9th is already the highest wizard spell
+// level in PF1, first opened at level 17), so the specialist bonus-slot
+// flat count STAYS at 9 (checked rather than assumed) — no new threshold
+// constant is needed. Intense Spells' bonus-damage magnitude STAYS at 9
+// (max(19/2, 1) = 9) via the pre-existing formula, not re-derived; Force
+// Missile's pool is level-independent and unchanged; the level-19
+// "Special" column is genuinely BLANK on both primary sources (the
+// Wizard's bonus feats land only at levels 5/10/15/20, confirmed directly
+// rather than assumed — 19 is NOT a bonus-feat level), so no new
+// named-feature pillar record is grounded at level 19 — a pure
+// arithmetic-pillar widening on the already-grounded base attack / base
+// save / Intense Spells formulas, with the specialist bonus-slot pillar
+// staying flat.
+//
+// A further SD18 slice (cycle-2026-07-16T1000, the loop's SECOND §3.2
+// level-20 landing, after Cleric) widens the gate again to level 20 — the
+// final remaining level within PF1's 1-20 character-level cap for this
+// class row: base attack bonus GENUINELY RISES to +10 (`20/2 = 10`, up
+// from +9) and good Will GENUINELY RISES to +12 (`20/2+2 = 12`, up from
+// +11), while poor Fortitude/Reflex both STAY at +6 (`20/3 = 6`, an
+// integer-division coincidence with level 19) — verified independently
+// against two primary sources (d20pfsrd and the Archives of Nethys
+// aonprd.com mirror, byte-for-byte agreement on the full
+// levels-15-through-20 block, so a third source was not required). The raw
+// spells-per-day table's level-20 row is "4/4/4/4/4/4/4/4/4/4" — up from
+// the level-19 row "4/4/4/4/4/4/4/4/3/3" (the 8th- and 9th-level columns
+// both rise to 4), but NO genuinely new spell-level column opens (9th is
+// already the highest wizard spell level in PF1, first opened at level
+// 17), so the specialist bonus-slot flat count STAYS at 9 (checked rather
+// than assumed) — no new threshold constant is needed. Intense Spells'
+// bonus-damage magnitude GENUINELY RISES to 10 (`max(20/2, 1) = 10`, up
+// from 9) via the pre-existing formula, not re-derived; Force Missile's
+// pool is level-independent and unchanged; the level-20 "Special" column
+// reads "Bonus feat" on both primary sources — the SAME genuinely
+// open-ended metamagic/item-creation/Spell-Mastery choice already left
+// named-but-unproven at levels 5, 10, and 15 (the class table's own
+// "Bonus Feats" ability text, "At 5th, 10th, 15th, and 20th level, a
+// wizard gains a bonus feat," is identical wording on both sources and
+// names no new mechanic at 20th level), so it stays deliberately
+// named-but-unproven and no new pillar record is grounded at level 20
+// either — only the base-attack, base-save, and Intense Spells pillars are
+// widened. A separate, non-Core-Rulebook "Well-Prepared" alternate
+// capstone appears on both sources but is explicitly sourced to
+// Pathfinder Player Companion: Chronicle of Legends (an optional splatbook
+// replacement ability) — out of SD18's Core Rulebook scope, not modeled
+// here. This is the final level within PF1's 1-20 character-level cap for
+// this class row.
+const MAX_SUPPORTED_WIZARD_LEVEL: u8 = 20;
 
 // SD13-E5 Wizard specialization slice: the canonical deterministic fixture
 // selections for the school specialization choice. The bounded seam recognizes
@@ -1256,6 +2801,39 @@ const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_5: i16 = 3;
 const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7: i16 = 4;
 const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_9: i16 = 5;
 
+/// SD18 level-11 widening: a level-11 wizard casts 6th-level spells for the first
+/// time (verified independently against both primary sources' raw Wizard
+/// spells-per-day table rows: level 10 shows "4/4/4/3/3/2", level 11 shows
+/// "4/4/4/4/3/2/1" — the first non-"—" 6th-level column), so a specialist wizard now
+/// gains one bonus slot of EACH spell level she can cast, 1st through 6th, for a flat
+/// count of 6, up from 5 at levels 9-10.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_11: i16 = 6;
+
+/// SD18 level-13 widening: a level-13 wizard casts 7th-level spells for the
+/// first time (verified independently against both primary sources' raw
+/// Wizard spells-per-day table rows: level 12 shows "4/4/4/4/3/3/2", level 13
+/// shows "4/4/4/4/4/3/2/1" — the first non-"—" 7th-level column), so a
+/// specialist wizard now gains one bonus slot of EACH spell level she can
+/// cast, 1st through 7th, for a flat count of 7, up from 6 at levels 11-12.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_13: i16 = 7;
+
+/// SD18 level-15 widening: a level-15 wizard casts 8th-level spells for the
+/// first time (verified independently against both primary sources' raw
+/// Wizard spells-per-day table rows: level 14 shows "4/4/4/4/4/3/3/2", level
+/// 15 shows "4/4/4/4/4/4/3/2/1" — the first non-"—" 8th-level column), so a
+/// specialist wizard now gains one bonus slot of EACH spell level she can
+/// cast, 1st through 8th, for a flat count of 8, up from 7 at levels 13-14.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_15: i16 = 8;
+
+/// SD18 level-17 widening: a level-17 wizard casts 9th-level spells for the
+/// first time (verified independently against both primary sources' raw
+/// Wizard spells-per-day table rows: level 16 shows "4/4/4/4/4/4/3/3/2",
+/// level 17 shows "4/4/4/4/4/4/4/3/2/1" — the first non-"—" 9th-level
+/// column), so a specialist wizard now gains one bonus slot of EACH spell
+/// level she can cast, 1st through 9th, for a flat count of 9, up from 8 at
+/// levels 15-16.
+const WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_17: i16 = 9;
+
 /// PF1 Core Rulebook Wizard spells-per-day table: the wizard class level at which
 /// 2nd-level wizard spells first become available (verified independently against
 /// both primary sources: level 1-2 wizards cast only 1st-level spells; level 3 is
@@ -1280,6 +2858,39 @@ const WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 /// column, level 9 is the first to show a non-"—" 5th-level column ("1", the
 /// level-9 row reading "4/4/4/3/2/1").
 const WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
+/// The wizard level at which 6th-level wizard spells (and so the sixth
+/// Evocation-only specialist bonus slot) first become available, verified
+/// against the raw PF1 Core Rulebook Wizard spells-per-day table rows
+/// (d20pfsrd and the Archives of Nethys aonprd.com mirror): level 10 shows
+/// a still-"—" 6th-level column, level 11 is the first to show a non-"—"
+/// 6th-level column ("1", the level-11 row reading "4/4/4/4/3/2/1").
+const WIZARD_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 11;
+/// The wizard level at which 7th-level wizard spells (and so the seventh
+/// Evocation-only specialist bonus slot) first become available, verified
+/// against the raw PF1 Core Rulebook Wizard spells-per-day table rows
+/// (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree
+/// byte-for-byte): level 12 shows a still-"—" 7th-level column, level 13 is
+/// the first to show a non-"—" 7th-level column ("1", the level-13 row
+/// reading "4/4/4/4/4/3/2/1").
+const WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
+/// The wizard level at which 8th-level wizard spells (and so the eighth
+/// Evocation-only specialist bonus slot) first become available, verified
+/// against the raw PF1 Core Rulebook Wizard spells-per-day table rows
+/// (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree
+/// byte-for-byte): level 14 shows a still-"—" 8th-level column (the level-14
+/// row reading "4/4/4/4/4/3/3/2"), level 15 is the first to show a
+/// non-"—" 8th-level column ("1", the level-15 row reading
+/// "4/4/4/4/4/4/3/2/1").
+const WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 15;
+/// The wizard level at which 9th-level wizard spells (and so the ninth
+/// Evocation-only specialist bonus slot) first become available, verified
+/// against the raw PF1 Core Rulebook Wizard spells-per-day table rows
+/// (d20pfsrd and the Archives of Nethys aonprd.com mirror, which agree
+/// byte-for-byte): level 16 shows a still-"—" 9th-level column (the
+/// level-16 row reading "4/4/4/4/4/4/3/3/2"), level 17 is the first to show
+/// a non-"—" 9th-level column ("1", the level-17 row reading
+/// "4/4/4/4/4/4/4/3/2/1").
+const WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 17;
 
 // SD13-E3/E5 martial chassis baseline identity. Barbarian is a non-spell pure
 // martial class; the bounded single-class level-1 identity is recognized as
@@ -1292,18 +2903,27 @@ const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 /// PF1 Core Rulebook rage power slots, verified identically on both primary
 /// sources: "Starting at 2nd level, a barbarian gains a rage power. She
 /// gains another rage power for every two levels of barbarian attained
-/// after 2nd level." — gates 2/4/6/8/10 within the tranche ceiling. "Unless
-/// otherwise noted, a barbarian cannot select an individual power more than
-/// once." Numbered slots per the proven repeat-grant idiom; open-ended
-/// recognition (no power-list validation — d20pfsrd merges non-CRB powers
-/// into its list, the same superset pattern as the mercy tiers, and the
-/// open-ended idiom sidesteps list encoding entirely).
-const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 5] = [
+/// after 2nd level." — gates 2/4/6/8/10/12/14/16/18/20 within the tranche
+/// ceiling (the SD18 level-18 widening added the ninth slot at gate 18;
+/// the SD18 level-20 widening added the tenth and FINAL slot at gate 20,
+/// the last rage-power grant within PF1's 1-20 character-level cap).
+/// "Unless otherwise noted, a barbarian cannot select an individual power
+/// more than once." Numbered
+/// slots per the proven repeat-grant idiom; open-ended recognition (no
+/// power-list validation — d20pfsrd merges non-CRB powers into its list,
+/// the same superset pattern as the mercy tiers, and the open-ended idiom
+/// sidesteps list encoding entirely).
+const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 10] = [
     (1, 2, "choice:barbarian_rage_power"),
     (2, 4, "choice:barbarian_rage_power_2"),
     (3, 6, "choice:barbarian_rage_power_3"),
     (4, 8, "choice:barbarian_rage_power_4"),
     (5, 10, "choice:barbarian_rage_power_5"),
+    (6, 12, "choice:barbarian_rage_power_6"),
+    (7, 14, "choice:barbarian_rage_power_7"),
+    (8, 16, "choice:barbarian_rage_power_8"),
+    (9, 18, "choice:barbarian_rage_power_9"),
+    (10, 20, "choice:barbarian_rage_power_10"),
 ];
 /// SD13-E5 Barbarian level-range gate, mirroring the Fighter
 /// `supported_fighter_level` / Paladin `supported_paladin_level` / Rogue
@@ -1336,7 +2956,234 @@ const BARBARIAN_RAGE_POWER_SLOTS: [(u8, u8, &str); 5] = [
 /// three levels thereafter) as a tier on the existing flat-magnitude pillar,
 /// and the rage-power entry is the same open-ended choice-list feature left
 /// named-but-unproven at 2/4/6/8; Trap Sense stays +3 (next rise 12th).
-const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 10;
+///
+/// A still further SD18 slice widens the gate to level 11 (verified
+/// independently against d20pfsrd and legacy.aonprd.com): base-attack
+/// (classlevel = 11) genuinely rises to +11, and base-save stays Fortitude
+/// +7 / Reflex +3 / Will +3 (11/2+2 and 11/3, both integer-division
+/// coincidences unchanged from level 10); the rage rounds-per-day pool
+/// genuinely rises to 27 (4 + Con mod + 2 per level after 1st); the
+/// level-11 "Special" column reads "Greater rage" only — Greater Rage
+/// GENUINELY RISES the flat while-raging Strength and Constitution morale
+/// bonuses from +4 to +6 and the Will-save morale bonus from +2 to +3 (the
+/// Armor Class penalty stays -2), a magnitude-rise on the already-grounded
+/// rage-constant pillar mirroring exactly how Trap Sense's and Damage
+/// Reduction's own flat magnitudes were widened at their rise levels; level
+/// 11 is NOT a rage-power level (powers land at 2/4/6/8/10/12...), so no
+/// new rage-power-selection-slot-count engine is invented; Trap Sense stays
+/// +3 (next rise 12th) and Damage Reduction stays 2/— (next rise 13th).
+///
+/// A still further SD18 slice widens the gate to level 12 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement): base-attack (classlevel = 12)
+/// genuinely rises to +12, and base-save genuinely rises to Fortitude +8
+/// (12/2+2) / Reflex +4 / Will +4 (12/3, both genuinely risen from +3); the
+/// rage rounds-per-day pool genuinely rises to 29 (4 + Con mod + 2 per
+/// level after 1st); the level-12 "Special" column reads "Rage power, trap
+/// sense +4" — Trap Sense GENUINELY RISES to +4 (12/3), a magnitude-rise on
+/// the already-grounded Trap Sense flat-magnitude formula pillar, mirroring
+/// exactly how the level-6/level-9 Trap Sense rises and the level-10/
+/// level-11 Damage Reduction/Greater Rage rises were widened; the
+/// rage-power entry is the SAME open-ended choice-list feature already
+/// deliberately left named-but-unproven-in-effect at levels 2/4/6/8/10 — a
+/// sixth numbered slot (gate 12) is added to `BARBARIAN_RAGE_POWER_SLOTS`
+/// mirroring the proven repeat-grant idiom exactly, so no new
+/// rage-power-EFFECT engine is invented; the Greater Rage constants
+/// (+6/+6/+3/-2) and Damage Reduction (2/—, next rise 13th) both stay
+/// unchanged from level 11.
+///
+/// A still further SD18 slice widens the gate to level 13 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement): base-attack (classlevel = 13) genuinely
+/// rises to +13, while base-save stays Fortitude +8 (13/2+2), Reflex +4, and
+/// Will +4 (13/3, both integer-division coincidences unchanged from level
+/// 12); the rage rounds-per-day pool genuinely rises to 31 (4 + Con mod + 2
+/// per level after 1st); the level-13 "Special" column reads "Damage
+/// reduction 3/-" only — Damage Reduction GENUINELY RISES to 3/- via a THIRD
+/// tier constant (`BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL`), mirroring
+/// exactly how the level-7/level-10 two-tier idiom was established; Trap
+/// Sense stays +4 (13/3, next rise 15th) and level 13 is NOT a rage-power
+/// level (powers land at 2/4/6/8/10/12/14...), so no seventh
+/// rage-power-selection-slot-count engine is invented.
+///
+/// A still further SD18 slice widens the gate to level 14 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement): base-attack (classlevel = 14) genuinely
+/// rises to +14, good Fortitude genuinely rises to +9 (14/2+2), while poor
+/// Reflex/Will both stay +4 (14/3, integer-division coincidences unchanged
+/// from level 13); the rage rounds-per-day pool genuinely rises to 33 (4 +
+/// Con mod + 2 per level after 1st); the level-14 "Special" column reads
+/// "Indomitable will, rage power" — level 14 IS a rage-power level (powers
+/// land at 2/4/6/8/10/12/14...), so a seventh numbered slot (gate 14) is
+/// added to `BARBARIAN_RAGE_POWER_SLOTS` mirroring the proven repeat-grant
+/// idiom exactly, no new rage-power-EFFECT engine invented; Indomitable
+/// Will is a genuinely NEW named class feature ("a barbarian gains a +4
+/// morale bonus on Will saves to resist enchantment spells and effects
+/// while raging"), grounded as a fifth flat while-raging magnitude
+/// (`BARBARIAN_INDOMITABLE_WILL_ENCHANTMENT_WILL_SAVE_BONUS`), mirroring
+/// exactly the shape of the four pre-existing flat rage constants (Strength/
+/// Constitution/Will-save morale bonuses, AC penalty): a bounded
+/// flat-magnitude record only, never applied to any actual Will-save total,
+/// since no saving-throw-resolution engine, no spell-school-classification
+/// engine, and no rage-state execution engine exists anywhere in this
+/// codebase to decide when a save is against an enchantment effect or
+/// whether the barbarian is currently raging; Trap Sense stays +4 (14/3,
+/// next rise 15th) and Damage Reduction stays 3/- (next rise 16th).
+///
+/// A still further SD18 slice — the loop's FIRST §3.2 level-15 landing,
+/// opening the level-15 sweep — widens the gate to level 15 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement): base-attack (classlevel = 15) genuinely
+/// rises to +15 (full BAB), and poor Reflex/Will both genuinely rise to +5
+/// (15/3), while good Fortitude stays +9 (15/2+2, an integer-division
+/// coincidence with level 14); the rage rounds-per-day pool genuinely rises
+/// to 35 (4 + Con mod + 2 per level after 1st); the level-15 "Special"
+/// column reads "Trap sense +5" only — Trap Sense GENUINELY RISES to +5
+/// (15/3) via the SAME pre-existing flat-magnitude formula pillar used at
+/// every prior tier (3rd/6th/9th/12th), so this slice needs no new tier
+/// constant, no new record type, and no new choice slot at all: the
+/// formula is already level-generic. Level 15 is NOT a rage-power level
+/// (powers land at 2/4/6/8/10/12/14/16/18/20...), so no eighth
+/// rage-power-selection-slot-count engine is invented; Damage Reduction
+/// stays 3/- (next rise 16th) and Indomitable Will's flat +4 magnitude
+/// carries over unchanged (already unconditional at level >= 14).
+///
+/// A still further SD18 slice — the loop's FIRST §3.2 level-16 landing,
+/// opening the level-16 sweep — widens the gate to level 16 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement): base-attack (classlevel = 16)
+/// genuinely rises to +16 (full BAB), and good Fortitude genuinely rises to
+/// +10 (16/2+2), while poor Reflex/Will both stay +5 (16/3, an
+/// integer-division coincidence with level 15); the rage rounds-per-day
+/// pool genuinely rises to 37 (4 + Con mod + 2 per level after 1st); the
+/// level-16 "Special" column reads "Damage reduction 4/-, rage power" —
+/// Damage Reduction GENUINELY RISES to 4/- via a FOURTH tier constant
+/// (`BARBARIAN_DAMAGE_REDUCTION_FOUR_LEVEL`), mirroring exactly how the
+/// level-10/level-13 two-tier-then-three-tier idiom was established (the
+/// same "10th level and every three barbarian levels thereafter" cadence:
+/// 10, 13, 16); level 16 IS a rage-power level (powers land at
+/// 2/4/6/8/10/12/14/16/18/20), so an EIGHTH numbered slot (gate 16) is
+/// added to `BARBARIAN_RAGE_POWER_SLOTS` mirroring the proven repeat-grant
+/// idiom exactly, no new rage-power-EFFECT engine invented; Trap Sense
+/// stays +5 (16/3, next rise 18th) and Indomitable Will's flat +4
+/// magnitude carries over unchanged.
+///
+/// A still further SD18 slice — the loop's EIGHTH §3.2 level-17 landing,
+/// after Ranger, Bard, Rogue, Fighter, Wizard, Cleric, and Paladin — widens
+/// the gate to level 17 (verified independently against d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror, byte-for-byte agreement across the
+/// full levels-15-through-19 block, so a third source was not required):
+/// base-attack (classlevel = 17) genuinely rises to +17 (full BAB), and
+/// good Fortitude stays +10 (17/2+2, an integer-division coincidence with
+/// level 16), while poor Reflex/Will both stay +5 (17/3, also an
+/// integer-division coincidence with level 16); the rage rounds-per-day
+/// pool genuinely rises to 39 (4 + Con mod + 2 per level after 1st); the
+/// level-17 "Special" column reads "Tireless rage" only — a genuinely NEW
+/// class feature ("Starting at 17th level, a barbarian no longer becomes
+/// fatigued at the end of her rage"), grounded here as a bounded
+/// grant-only identity record (value 0, non-fabricated) via a new
+/// `BARBARIAN_TIRELESS_RAGE_LEVEL` gate constant, mirroring the
+/// Indomitable Will / Paladin Aura-of-Justice/Aura-of-Faith/
+/// Aura-of-Righteousness idiom exactly: no rage-state execution engine
+/// exists anywhere in this codebase (confirmed by direct inspection), so
+/// there is no fatigue-application mechanism for Tireless Rage to interact
+/// with, and none is fabricated. 17 is NOT a rage-power level (powers land
+/// at 2/4/6/8/10/12/14/16/18/20), so no ninth numbered slot is added; Trap
+/// Sense stays +5 (17/3, next rise 18th), Damage Reduction stays 4/- (next
+/// rise 19th), and Indomitable Will's flat +4 magnitude carries over
+/// unchanged.
+///
+/// A still further SD18 slice — the loop's FIFTH §3.2 level-18 landing,
+/// after Wizard, Cleric, Paladin, and Fighter — widens the gate to level 18
+/// (verified independently against d20pfsrd and the Archives of Nethys
+/// aonprd.com mirror, byte-for-byte agreement across the full
+/// levels-15-through-20 block, so a third source was not required):
+/// base-attack (classlevel = 18) genuinely rises to +18 (full BAB), and
+/// good Fortitude genuinely rises to +11 (18/2+2), while poor Reflex/Will
+/// both genuinely rise to +6 (18/3); the rage rounds-per-day pool
+/// genuinely rises to 41 (4 + Con mod + 2 per level after 1st); the
+/// level-18 "Special" column reads "Rage power, trap sense +6": 18 IS a
+/// rage-power level (powers land at 2/4/6/8/10/12/14/16/18/20), so a NINTH
+/// numbered slot (`BARBARIAN_RAGE_POWER_SLOTS`, gate 18,
+/// `choice:barbarian_rage_power_9`) is added mirroring the proven
+/// repeat-grant idiom exactly, no rage-power-EFFECT engine invented; Trap
+/// Sense genuinely rises to +6 (18/3, the same pre-existing formula, up
+/// from +5 at level 17); Damage Reduction stays 4/- (next rise 19th);
+/// Indomitable Will's flat +4 magnitude and Tireless Rage both carry over
+/// unchanged. This needed ZERO new record types and ZERO formula changes
+/// on base attack, base saves, rage rounds, or Trap Sense (all were
+/// already level-generic formulas) — only a ninth numbered rage-power slot
+/// appended to `BARBARIAN_RAGE_POWER_SLOTS`.
+///
+/// A still further SD18 slice — the loop's FIRST §3.2 level-19 landing,
+/// opening the level-19 sweep — widens the gate to level 19 (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement across the full levels-15-through-20
+/// block, so a third source was not required): base-attack (classlevel = 19)
+/// genuinely rises to +19 (full BAB), while good Fortitude stays +11
+/// (19/2+2, an integer-division coincidence with level 18) and poor
+/// Reflex/Will both stay +6 (19/3, also an integer-division coincidence with
+/// level 18); the rage rounds-per-day pool genuinely rises to 43 (4 + Con
+/// mod + 2 per level after 1st); the level-19 "Special" column reads
+/// "Damage reduction 5/-" only — Damage Reduction GENUINELY RISES to 5/-
+/// via a FIFTH tier constant (`BARBARIAN_DAMAGE_REDUCTION_FIVE_LEVEL`),
+/// mirroring exactly how the level-10/level-13/level-16 three-prior-tier
+/// idiom was established (the same "10th level and every three barbarian
+/// levels thereafter" cadence: 10, 13, 16, 19); level 19 is NOT a
+/// rage-power level (powers land at 2/4/6/8/10/12/14/16/18/20), so no tenth
+/// numbered slot is added; Trap Sense stays +6 (19/3, its next rise would
+/// be 21st, outside the PF1 1-20 level range) and Indomitable Will's flat
+/// +4 magnitude and Tireless Rage both carry over unchanged. This needed
+/// ZERO new record types and ZERO new choice slots — only a new
+/// damage-reduction tier constant and one new arm on the existing
+/// flat-magnitude formula, mirroring the level-13/level-16 idiom exactly.
+///
+/// A still further SD18 slice — the loop's TENTH §3.2 level-20 landing
+/// candidate, widening the level-20 sweep — widens the gate to level 20,
+/// the FINAL level within PF1's 1-20 character-level cap (verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement: level 20 reads "+20/+15/+10/+5 | +12 |
+/// +6 | +6 | Mighty rage, Rage power"): base-attack (classlevel = 20)
+/// genuinely rises to +20 (full BAB) and good Fortitude genuinely rises to
+/// +12 (20/2+2, up from +11), while poor Reflex/Will both stay +6 (20/3,
+/// an integer-division coincidence with level 19); the rage rounds-per-day
+/// pool genuinely rises to 45 (4 + Con mod + 2 per level after 1st). The
+/// level-20 "Special" column's Mighty Rage entry is a genuine THIRD tier
+/// on the SAME flat rage-surface constants already grounded at level 1 and
+/// widened at level 11 (Greater Rage): the Strength/Constitution morale
+/// bonus rises from +6 to +8 and the Will-save morale bonus rises from +3
+/// to +4 via a new `BARBARIAN_MIGHTY_RAGE_LEVEL` gate constant, mirroring
+/// the Greater Rage precedent exactly — no new record type, just a third
+/// arm on the existing tiered formula. Level 20 IS a rage-power level
+/// (powers land at 2/4/6/8/10/12/14/16/18/20), so a TENTH and FINAL
+/// numbered slot (`choice:barbarian_rage_power_10`) is appended to
+/// `BARBARIAN_RAGE_POWER_SLOTS`, mirroring the proven repeat-grant idiom
+/// exactly; Damage Reduction stays 5/- (next rise would be 22nd, outside
+/// the PF1 1-20 range) and Trap Sense stays +6 (next rise would be 21st,
+/// also outside range); Indomitable Will's flat +4 magnitude and Tireless
+/// Rage both carry over unchanged. This needed ZERO new record types and
+/// ZERO new choice-slot mechanisms — only a new rage-magnitude tier
+/// constant and a tenth numbered rage-power slot. This closes the
+/// Barbarian per-level arithmetic-widening frontier: level 20 is the
+/// final level within PF1's 1-20 character-level cap.
+const MAX_SUPPORTED_BARBARIAN_LEVEL: u8 = 20;
+
+/// PF1 Core Rulebook level gate at which Barbarian Rage becomes Greater Rage
+/// (11th level — "At 11th level, a barbarian's rage improves. She gains a
+/// +6 morale bonus to Strength and Constitution and a +3 morale bonus on
+/// Will saves ... the –2 penalty to AC remains", verified independently
+/// against d20pfsrd and legacy.aonprd.com).
+const BARBARIAN_GREATER_RAGE_LEVEL: u8 = 11;
+
+/// PF1 Core Rulebook level gate at which Barbarian Greater Rage becomes
+/// Mighty Rage (20th level — "At 20th level, when a barbarian enters rage,
+/// the morale bonus to her Strength and Constitution increases to +8 and
+/// the morale bonus on her Will saves increases to +4", verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror, byte-for-byte agreement). A third tier on the same flat
+/// rage-surface magnitude formula established at level 1 (Rage) and level
+/// 11 (Greater Rage).
+const BARBARIAN_MIGHTY_RAGE_LEVEL: u8 = 20;
 
 /// PF1 Core Rulebook level gate at which Barbarian gains Uncanny Dodge (2nd level,
 /// verified against two independent primary sources — d20pfsrd and legacy.aonprd.com
@@ -1368,6 +3215,54 @@ const BARBARIAN_DAMAGE_REDUCTION_LEVEL: u8 = 7;
 /// thereafter, this damage reduction rises by 1 point", verified
 /// independently against d20pfsrd and legacy.aonprd.com).
 const BARBARIAN_DAMAGE_REDUCTION_TWO_LEVEL: u8 = 10;
+/// PF1 Core Rulebook level gate at which Barbarian Damage Reduction rises to
+/// 3/— (13th level — the same "every three barbarian levels thereafter"
+/// clause applied a second time from the 10th-level gate, verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror: both name "Damage reduction 3/-" as the Barbarian 13th-level
+/// "Special" class table entry).
+const BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL: u8 = 13;
+/// PF1 Core Rulebook level gate at which Barbarian Damage Reduction rises to
+/// 4/— (16th level — the same "every three barbarian levels thereafter"
+/// clause applied a third time from the 10th-level gate, verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror: both name "Damage reduction 4/-, rage power" as the Barbarian
+/// 16th-level "Special" class table entry).
+const BARBARIAN_DAMAGE_REDUCTION_FOUR_LEVEL: u8 = 16;
+/// PF1 Core Rulebook level gate at which Barbarian Damage Reduction rises to
+/// 5/— (19th level — the same "every three barbarian levels thereafter"
+/// clause applied a fourth time from the 10th-level gate, verified
+/// independently against d20pfsrd and the Archives of Nethys aonprd.com
+/// mirror: both name "Damage reduction 5/-" as the Barbarian 19th-level
+/// "Special" class table entry).
+const BARBARIAN_DAMAGE_REDUCTION_FIVE_LEVEL: u8 = 19;
+
+/// PF1 Core Rulebook level gate at which Barbarian gains Indomitable Will
+/// (14th level, verified independently against d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror, byte-for-byte agreement: both name "Indomitable
+/// will, rage power" as the Barbarian 14th-level "Special" class table
+/// entry, and both give the rule text "While she is raging, a barbarian
+/// gains a +4 morale bonus on Will saves to resist enchantment spells and
+/// effects").
+const BARBARIAN_INDOMITABLE_WILL_LEVEL: u8 = 14;
+/// The flat Indomitable Will Will-save morale bonus (+4), grounded as a
+/// value-only record mirroring the four pre-existing flat while-raging rage
+/// constants (Strength/Constitution/Will-save morale bonuses, AC penalty):
+/// never applied to any actual Will-save total.
+const BARBARIAN_INDOMITABLE_WILL_ENCHANTMENT_WILL_SAVE_BONUS: i16 = 4;
+
+/// PF1 Core Rulebook level gate at which Barbarian gains Tireless Rage
+/// (17th level, verified independently against d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror, byte-for-byte agreement across the full
+/// levels-15-through-19 block: both name "Tireless rage" as the Barbarian
+/// 17th-level "Special" class table entry, and both give the rule text
+/// "Starting at 17th level, a barbarian no longer becomes fatigued at the
+/// end of her rage"). This is a bounded grant-only identity record only
+/// (value 0, non-fabricated): no rage-state execution engine exists
+/// anywhere in this codebase to track when a rage ends or apply a fatigue
+/// condition, so there is no fatigue-application mechanism for this
+/// feature to interact with, and none is fabricated.
+const BARBARIAN_TIRELESS_RAGE_LEVEL: u8 = 17;
 
 // SD13-E3/E5 martial chassis baseline identity, mirroring the Barbarian pattern. Monk
 // is a non-spell pure martial class with a distinct four-pillar bounded burden; this
@@ -1407,8 +3302,37 @@ const MONK_CLASS_ID: &str = "class:monk";
 // (lawful)" — the ki-strike lawful DR-bypass property needs a
 // DR/attack-resolution engine that does not exist here, mirroring how the
 // 4th-level magic and 7th-level cold-iron/silver ki-strike properties were
-// never fabricated either.
-const MAX_SUPPORTED_MONK_LEVEL: u8 = 10;
+// never fabricated either. A further SD18 slice widens the gate to level 11
+// (verified independently against d20pfsrd and legacy.aonprd.com): level 11
+// base attack genuinely rises to +8 (11 * 3 / 4) while all three good saves
+// stay +7 (11 / 2 + 2, an integer-division coincidence with level 10); the
+// unarmed die stays 1d10 (band 8-11); the Flurry flat attack modifier
+// genuinely rises to +9 (level - 2) with the count staying 3; the ki pool
+// stays 8 (11 / 2 + Wisdom modifier, an integer-division coincidence) and
+// Slow Fall's reach stays 50 ft (the next rise lands at 12th); the level-11
+// "Special" column reads "Diamond body" only, grounded as a new bounded
+// grant-only poison-immunity identity record mirroring Purity of Body. A
+// further SD18 slice (cycle-2026-07-15T0600) widens the gate to level 12,
+// the loop's eighth §3.2 level-12 widening (verified independently against
+// d20pfsrd and the Archives of Nethys aonprd.com mirror): level 12 base
+// attack genuinely rises to +9 (12 * 3 / 4) and all three good saves
+// genuinely rise to +8 (12 / 2 + 2); the unarmed strike damage die
+// genuinely steps up from 1d10 to 2d6 (the 2d6 band spans levels 12-15),
+// grounded as two facets — the die-face facet (MONK_UNARMED_DAMAGE_DIE_
+// THIRD_STEP_UP_LEVEL) and a new die-count facet, since every level 1-11
+// band was a single die and this is the first level at which the count
+// itself rises; the Flurry flat attack modifier genuinely rises to +10
+// (level - 2) with the count staying 3; the ki pool genuinely rises to 9
+// (12 / 2 + Wisdom modifier); Slow Fall's reach genuinely rises to 60 ft
+// (MONK_SLOW_FALL_SIXTY_FOOT_REACH_LEVEL, named explicitly in the level-12
+// "Special" column); the level-12 "Special" column's other entry, Abundant
+// Step, is checked and confirmed NOT flat (it requires both a
+// ki-point-spending action-economy engine and a dimension-door-equivalent
+// teleportation-resolution engine, neither of which exists in this
+// codebase), so it is deliberately left named-but-unproven, mirroring the
+// Wholeness of Body / High Jump precedent exactly — no record is
+// fabricated for it.
+const MAX_SUPPORTED_MONK_LEVEL: u8 = 12;
 // PF1 Core Rulebook level gate at which Monk gains Wholeness of Body (7th
 // level, verified independently against two primary sources: d20pfsrd and
 // legacy.aonprd.com both name Wholeness of Body as the Monk 7th-level
@@ -1467,6 +3391,16 @@ const MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL: u8 = 4;
 /// against the same two primary sources' Medium-monk unarmed damage
 /// progression table: the 1d10 band runs levels 8-11).
 const MONK_UNARMED_DAMAGE_DIE_SECOND_STEP_UP_LEVEL: u8 = 8;
+/// PF1 Core Rulebook level gate at which the Medium-monk unarmed strike damage
+/// die steps up again, from 1d10 to 2d6 (12th level, verified independently
+/// against the same two primary sources' Medium-monk unarmed damage
+/// progression table: the 2d6 band runs levels 12-15). Unlike the two prior
+/// step-ups, this is the first level at which the die COUNT itself rises
+/// (from a single die to two dice), not just the face size, so it is
+/// grounded as two facets — the die-face facet (still `unarmed_die_value`)
+/// and a new, standalone die-count facet — mirroring the Flurry of Blows
+/// attack-bonus/attack-count split.
+const MONK_UNARMED_DAMAGE_DIE_THIRD_STEP_UP_LEVEL: u8 = 12;
 /// PF1 Core Rulebook level gate at which Flurry of Blows grants a third
 /// attack (8th level, verified independently against two primary sources'
 /// verbatim Flurry of Blows rule text: "At 8th level, the monk can make two
@@ -1490,6 +3424,17 @@ const MONK_SLOW_FALL_FORTY_FOOT_REACH_LEVEL: u8 = 8;
 /// fall 50 ft." explicitly, verified independently against d20pfsrd and
 /// legacy.aonprd.com).
 const MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL: u8 = 10;
+/// PF1 Core Rulebook level gate at which Monk's Slow Fall reach rises to 60
+/// ft (12th level — the class table's level-12 "Special" column names
+/// "slow fall 60 ft." explicitly, verified independently against d20pfsrd
+/// and the Archives of Nethys aonprd.com mirror). The column's other entry,
+/// Abundant Step, is checked and confirmed NOT flat (it requires both a
+/// ki-point-spending action-economy engine and a
+/// dimension-door-equivalent teleportation-resolution engine, neither of
+/// which exists in this codebase), so it is deliberately left
+/// named-but-unproven, mirroring the Wholeness of Body / High Jump
+/// precedent exactly — no record is fabricated for it.
+const MONK_SLOW_FALL_SIXTY_FOOT_REACH_LEVEL: u8 = 12;
 /// PF1 Core Rulebook level gate at which Monk gains the ki pool and Slow Fall
 /// (4th level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Ki pool (magic), slow fall 20 ft." as the Monk
@@ -1528,6 +3473,15 @@ const MONK_SLOW_FALL_INCREASED_REACH_LEVEL: u8 = 6;
 /// it is a flat, non-level-scaled grant (disease immunity) matching the
 /// Barbarian/Rogue Uncanny Dodge / Monk Slow Fall grant-only idiom exactly.
 const MONK_PURITY_OF_BODY_LEVEL: u8 = 5;
+/// The PF1 Core Rulebook level at which Diamond Body is granted (SD18):
+/// "at 11th level, a monk gains immunity to all poisons," verified
+/// independently against both d20pfsrd and legacy.aonprd.com, both of which
+/// list "Diamond body" as the sole level-11 Monk class table "Special"
+/// column entry. Grounded as a bounded grant-only identity record, mirroring
+/// the Purity of Body (disease immunity) idiom exactly: no
+/// poison-resolution engine exists in this codebase to apply the immunity
+/// to.
+const MONK_DIAMOND_BODY_LEVEL: u8 = 11;
 /// The PF1 Core Rulebook level at which the level-1 monk bonus feat (and the
 /// automatic Improved Unarmed Strike grant) always occurs, independent of the
 /// character's current supported level. Kept distinct from the generic
@@ -1729,8 +3683,98 @@ const CLERIC_CLASS_ID: &str = "class:cleric";
 // at 11th, the level-10 spells-per-day row's 6th-level column still "—");
 // Touch of Good's bonus genuinely rises to 5 (10 / 2) via the same
 // half-cleric-level formula; both domain-power uses-per-day pools stay
-// level-independent; no new pillar is grounded.
-const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 10;
+// level-independent; no new pillar is grounded. An SD18 slice
+// (`cycle-2026-07-15T9600`, mirroring the Ranger/Bard/Rogue/Fighter/Wizard
+// level-17 widenings — the loop's SIXTH §3.2 level-17 landing, and the
+// second full 9-level-caster class after Wizard to reach it) widens the
+// gate again to 1..=17 (`MAX_SUPPORTED_CLERIC_LEVEL = 17`): the class
+// table's level-17 "Special" column reads "Channel energy 9d6" (verified
+// independently against two primary sources — d20pfsrd and the Archives of
+// Nethys aonprd.com mirror, byte-for-byte agreement, so a third source was
+// not required) — Channel Energy's die count genuinely rises to 9d6
+// (`(17 + 1) / 2 = 9`, up from 8d6 at level 16) via the same pre-existing
+// formula, not re-derived — and the domain spell slot count also genuinely
+// rises, to 9 (a level-17 cleric casts 9th-level cleric spells for the
+// first time, verified independently against both primary sources' raw
+// spells-per-day table rows, mirroring the Wizard level-17 cycle's own
+// 9th-level spell column opening), while base attack bonus stays +12
+// (`17 * 3 / 4 = 12`), base Fortitude/Reflex/Will saves all stay
+// numerically unchanged from level 16, and Touch of Good's bonus stays 8
+// (`17 / 2 = 8`) — integer-division coincidences, checked not assumed — so
+// two pillars whose underlying formulas genuinely change (Channel Energy
+// dice, domain spell slot count) are widened; no new pillar record is added
+// at level 17 either, since "Channel energy 9d6" names only a tier-rise on
+// the already-grounded Channel Energy dice pillar, not a new class feature.
+// A further SD18 slice (`cycle-2026-07-15T14300`, mirroring
+// `a3762ca`'s Wizard level-18 widening — the loop's SECOND §3.2 level-18
+// landing, and the first full 9-level-caster class after Wizard to reach it)
+// widens the gate again to 1..=18 (`MAX_SUPPORTED_CLERIC_LEVEL = 18`): the
+// class table's level-18 "Special" column is genuinely BLANK (verified
+// independently against two primary sources — d20pfsrd and the Archives of
+// Nethys aonprd.com mirror, byte-for-byte agreement on the full
+// levels-16-through-19 block, so a third source was not required) — a pure
+// ceiling raise, exactly mirroring the Wizard level-18 cycle's own pure
+// ceiling raise: base attack bonus genuinely rises to +13 (`18 * 3 / 4 =
+// 13`), both good saves genuinely rise to +11 (`18 / 2 + 2 = 11`), poor
+// Reflex genuinely rises to +6 (`18 / 3 = 6`), and Touch of Good's bonus
+// genuinely rises to 9 (`18 / 2 = 9`), all via the same pre-existing
+// formulas, not re-derived, while Channel Energy's die count stays 9d6
+// (`(18 + 1) / 2 = 9`, the odd-level cadence's next rise landing at 19th)
+// and the domain spell slot count stays 9 (a level-18 cleric still casts
+// only up to 9th-level cleric spells, the highest cleric spell level in
+// PF1 — the top `domain_spell_slot_count` arm, gated on
+// `level >= CLERIC_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`, already covers
+// level 18 with zero code change, mirroring exactly how the Wizard
+// level-18 cycle's specialist-bonus-slot top arm already covered level 18)
+// — so no new pillar record is added at level 18 either, since no class
+// feature is named in the level-18 Special column. A further SD18 slice
+// (`cycle-2026-07-16T1100`, the loop's SECOND §3.2 level-19 landing, after
+// Barbarian) widens the gate again to 1..=19 (`MAX_SUPPORTED_CLERIC_LEVEL =
+// 19`): the class table's level-19 "Special" column reads "Channel energy
+// 10d6" (verified independently against two primary sources — a raw curl
+// fetch of d20pfsrd and the Archives of Nethys aonprd.com mirror, both
+// covering the full levels-16-through-20 block, byte-for-byte agreement, so
+// a third source was not required) — Channel Energy's die count genuinely
+// rises to 10d6 (`(19 + 1) / 2 = 10`, up from 9d6 at level 18) via the same
+// pre-existing formula, not re-derived, naming only a tier-rise on the
+// already-grounded Channel Energy dice pillar, not a new class feature,
+// exactly mirroring the level-17 cycle's own "Channel energy 9d6" finding —
+// so no new pillar record is added at level 19 either. Base attack bonus
+// genuinely rises to +14 (`19 * 3 / 4 = 14`), while both good saves stay put
+// at +11 (`19 / 2 + 2 = 11`) and poor Reflex stays put at +6 (`19 / 3 = 6`),
+// integer-division coincidences with level 18, checked not assumed. The
+// domain spell slot count stays 9 (still only 9th-level cleric spells, the
+// PF1 ceiling) and Touch of Good's bonus stays 9 (`19 / 2 = 9`, also an
+// integer-division coincidence with level 18) — all via the same
+// pre-existing formulas, not re-derived. An SD18 slice
+// (`cycle-2026-07-16T0844`, the loop's FIRST §3.2 level-20 landing,
+// opening the level-20 sweep — the final remaining level within PF1's
+// 1-20 character-level cap) widens the gate again to 1..=20
+// (`MAX_SUPPORTED_CLERIC_LEVEL = 20`): the class table's level-20
+// "Special" column is genuinely BLANK (verified independently against
+// two primary sources — d20pfsrd and the Archives of Nethys aonprd.com
+// mirror, byte-for-byte agreement on the full levels-16-through-20
+// block, so a third source was not required) — Cleric has no named
+// capstone class feature at 20th level at all, unlike Barbarian's Mighty
+// Rage, Fighter's Weapon Mastery, Rogue's Master Strike, Paladin's Holy
+// Champion, or Ranger's Master Hunter — a pure ceiling raise, exactly
+// mirroring the level-16 and level-18 cycles' own pure ceiling raises:
+// base attack bonus genuinely rises to +15 (`20 * 3 / 4 = 15`), both
+// good saves genuinely rise to +12 (`20 / 2 + 2 = 12`), and Touch of
+// Good's bonus genuinely rises to 10 (`20 / 2 = 10`), all via the same
+// pre-existing formulas, not re-derived, while poor Reflex stays +6
+// (`20 / 3 = 6`), Channel Energy's die count stays 10d6
+// (`(20 + 1) / 2 = 10`, the odd-level cadence's last rise having landed
+// at level 19; PF1 character levels do not go past 20, so no further
+// rise is possible), and the domain spell slot count stays 9 (a
+// level-20 cleric still casts only up to 9th-level cleric spells, the
+// highest cleric spell level in PF1 — the pre-existing top
+// domain-spell-slot-count arm already covers level 20 with zero code
+// change) — so no new pillar is grounded at level 20 either, only the
+// base-attack, base-save, and Touch of Good pillars are widened. This is
+// the final level within PF1's 1-20 character-level cap for this class
+// row.
+const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 20;
 
 // SD13-E5 canonical Human Cleric domain-choice seam. These name the exact accepted
 // deterministic domain selections on the level-1/level-2/level-3 seam (a cleric
@@ -1770,6 +3814,10 @@ const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_3_AND_4: i16 = 2;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVELS_5_AND_6: i16 = 3;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7: i16 = 4;
 const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9: i16 = 5;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11: i16 = 6;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_13: i16 = 7;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_15: i16 = 8;
+const CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_17: i16 = 9;
 /// The cleric level at which 2nd-level cleric spells (and so the second domain
 /// spell slot) first become available, verified against the raw PF1 Core Rulebook
 /// Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com): level 2 shows
@@ -1799,6 +3847,52 @@ const CLERIC_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 7;
 /// non-"—" 5th-level column ("1+1", the level-9 row reading
 /// "4/4+1/4+1/3+1/2+1/1+1").
 const CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 9;
+/// The cleric level at which 6th-level cleric spells (and so the sixth domain
+/// spell slot) first become available, verified against the raw PF1 Core
+/// Rulebook Cleric spells-per-day table rows (d20pfsrd and legacy.aonprd.com):
+/// level 10 shows a still-"—" 6th-level column, level 11 is the first to show
+/// a non-"—" 6th-level column ("1+1"). This is also the cleric level at which
+/// Channel Energy's die count rises again (the class table's level-11
+/// "Special" column reads "Channel energy 6d6"), via the same pre-existing
+/// `(level + 1) / 2` formula, not re-derived.
+const CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 11;
+/// The cleric level at which 7th-level cleric spells (and so the seventh domain
+/// spell slot) first become available, verified against the raw PF1 Core
+/// Rulebook Cleric spells-per-day table rows across three independent sources
+/// (d20pfsrd, Archives of Nethys aonprd.com, and legacy.aonprd.com, all three
+/// byte-for-byte identical): level 12 shows a still-"—" 7th-level column,
+/// level 13 is the first to show a non-"—" 7th-level column ("1+1"). This is
+/// also the cleric level at which Channel Energy's die count rises again (the
+/// class table's level-13 "Special" column reads "Channel energy 7d6"), via
+/// the same pre-existing `(level + 1) / 2` formula, not re-derived.
+const CLERIC_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 13;
+/// The cleric level at which 8th-level cleric spells (and so the eighth domain
+/// spell slot) first become available, verified against the raw PF1 Core
+/// Rulebook Cleric spells-per-day table rows: legacy.aonprd.com's full
+/// multi-row table extraction (levels 14-17 side by side) shows the 8th-level
+/// column as still "—" at level 14 and first non-"—" ("1+1") at level 15,
+/// internally consistent with the established every-other-odd-level cadence
+/// already grounded for the 2nd through 7th spell-level thresholds (3, 5, 7,
+/// 9, 11, 13). Two single-row summarized fetches (one from d20pfsrd, one from
+/// Archives of Nethys aonprd.com) disagreed with each other (claiming level
+/// 17 and level 16 respectively) in a way that broke that established
+/// cadence and were rejected as tool artifacts rather than treated as
+/// genuine source conflicts. This is also the cleric level at which Channel
+/// Energy's die count rises again (the class table's level-15 "Special"
+/// column reads "Channel energy 8d6"), via the same pre-existing
+/// `(level + 1) / 2` formula, not re-derived.
+const CLERIC_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 15;
+/// The cleric level at which 9th-level cleric spells (and so the ninth domain
+/// spell slot) first become available, verified independently against two
+/// primary sources (d20pfsrd and the Archives of Nethys aonprd.com mirror,
+/// byte-for-byte agreement): level 16 shows a still-"—" 9th-level column,
+/// level 17 is the first to show a non-"—" 9th-level column ("1+1"),
+/// mirroring the Wizard level-17 cycle's own 9th-level spell column opening
+/// (`WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL = 17`). This is also the
+/// cleric level at which Channel Energy's die count rises again (the class
+/// table's level-17 "Special" column reads "Channel energy 9d6"), via the
+/// same pre-existing `(level + 1) / 2` formula, not re-derived.
+const CLERIC_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL: u8 = 17;
 
 // Grounded SD13-E4 Human Druid level-1 prepared divine spell-bearing baseline
 // identity. Druid is a prepared divine caster whose bounded burden splits across
@@ -1916,12 +4010,121 @@ const DRUID_CLASS_ID: &str = "class:druid";
 // body III / plant shape II), so Wild Shape stays entirely
 // named-but-unproven, exactly as at level 4/6/8 — no explanation or
 // diagnostic record is fabricated for it this slice either.
-const MAX_SUPPORTED_DRUID_LEVEL: u8 = 10;
+// A still further SD18 slice widens the gate to level 11 (verified
+// independently against d20pfsrd and legacy.aonprd.com): level 11 base
+// attack bonus genuinely rises to +8 (11 * 3 / 4; the table's own "+8/+3"
+// iterative notation is not modeled anywhere in this codebase, only the
+// flat base value); both good saves stay +7 (11 / 2 + 2, an
+// integer-division coincidence with level 10) and poor Reflex stays +3
+// (11 / 3, also a coincidence); Wild Empathy genuinely rises to 12
+// (11 + Charisma modifier); Nature Sense, Woodland Stride, Trackless Step,
+// Resist Nature's Lure, Venom Immunity, and the nature-bond choice
+// recognition all carry over unchanged. UNLIKE every prior widened level
+// (2, 3, 4, 6, 8, 9, 10), the PF1 Core Rulebook Druid class table's
+// level-11 "Special" column is genuinely blank (checked independently
+// against both primary sources rather than assumed away — the next Wild
+// Shape frequency rise, "Wild shape (5/day)", does not land until 12th
+// level), so this slice grounds no new pillar at level 11 either — only
+// the existing arithmetic pillars are widened. A further SD18 slice
+// (cycle-2026-07-15T0500, mirroring cycle-2026-07-14T1814's Barbarian
+// level-12 widening, cycle-2026-07-14T2359's Bard level-12 widening, and
+// cycle-2026-07-15T0200's Cleric level-12 widening) widens the gate again
+// to level 12 (verified independently against d20pfsrd and Archives of
+// Nethys aonprd.com's legacy mirror): level 12 base attack bonus genuinely
+// rises to +9 (12 * 3 / 4) and all three base saves genuinely rise (both
+// good saves to +8, 12 / 2 + 2; poor Reflex to +4, 12 / 3); Wild Empathy
+// genuinely rises to 13 (12 + Charisma modifier). UNLIKE level 11, the
+// class table's level-12 "Special" column is NOT blank — it reads "Wild
+// shape (5/day)" — but per the level-4/6/8/10 precedent that frequency
+// rise is bundled with a non-separable form-list expansion (Huge elemental
+// or Huge plant creature) and functioning-level upgrade (elemental body IV
+// / plant shape III), so Wild Shape stays entirely named-but-unproven and
+// this slice grounds no new pillar at level 12 either — only the existing
+// arithmetic pillars are widened. A still further SD18 slice
+// (cycle-2026-07-15T1600, mirroring cycle-2026-07-15T1500's Cleric
+// level-13 widening, the loop's fifth §3.2 level-13 landing after Rogue,
+// Barbarian, Fighter, and Ranger) widens the gate again to level 13. All
+// three primary sources (d20pfsrd, Archives of Nethys aonprd.com, and
+// legacy.aonprd.com) were read directly and agree: level 13 base attack
+// bonus STAYS +9 (13 * 3 / 4 = 9) and all three base saves STAY +8/+4/+8
+// (Fortitude/Reflex/Will: 13/2+2=8, 13/3=4) — four integer-division
+// coincidences with level 12, checked rather than assumed; Wild Empathy
+// genuinely rises to 14 (13 + Charisma modifier). UNLIKE every prior
+// widened level's Wild-Shape-shaped "Special" column entry (levels
+// 4/6/8/10/12), the level-13 "Special" column reads "A thousand faces" — a
+// DIFFERENT class feature, not a Wild Shape frequency increase. Checked
+// directly rather than assumed: in PF1 (unlike the D&D 3.5 version of this
+// ability, which referenced the stronger `alter self` spell), A Thousand
+// Faces grants the druid the ability to change her own apparent appearance
+// at will, as if using `disguise self`, but only while in her normal
+// (unshifted) form. This is a genuinely flat/identity-shaped, no-choice,
+// no-magnitude, no-duration-tracking, at-will grant — mirroring exactly
+// how Venom Immunity was grounded at level 9 — so it is grounded here as a
+// bounded +0 identity/recognition record: no illusion-effect execution
+// engine and no Disguise-check-resolution engine exists anywhere in this
+// codebase, so no actual appearance-change or Disguise-check outcome is
+// fabricated. The spells-per-day table's 7th-level spell column also newly
+// opens at level 13 (matching the Cleric precedent exactly, since Druid
+// shares the identical "high" 9-level-caster progression shape), but Druid
+// has no currently-grounded spell-slot-count pillar (unlike Cleric's
+// domain slot), so there is no analogous pillar to widen. A further SD18
+// slice (cycle-2026-07-15T2400, mirroring cycle-2026-07-15T2300's Cleric
+// level-14 widening, the loop's sixth §3.2 level-14 landing after
+// Barbarian, Fighter, Rogue, Ranger, and Bard) widens the gate again to
+// level 14 (verified independently against both d20pfsrd and Archives of
+// Nethys aonprd.com, which agree byte-for-byte): base attack bonus
+// GENUINELY RISES to +10 (14 * 3 / 4) and both good saves GENUINELY RISE
+// to +9 (14 / 2 + 2), while poor Reflex STAYS +4 (14 / 3, an
+// integer-division coincidence with level 13); Wild Empathy genuinely
+// rises to 15 (14 + Charisma modifier). The level-14 "Special" column
+// reads "Wild shape (6/day)" — per the level-4/6/8/10/12 precedent this
+// frequency increase is bundled with a non-separable functioning-level
+// upgrade with no execution engine anywhere in this codebase, so Wild
+// Shape stays entirely named-but-unproven and this slice grounds no new
+// pillar at level 14 either — only the existing arithmetic pillars are
+// widened. A still further SD18 slice (the loop's FIFTH §3.2 level-15
+// landing after Barbarian, Rogue, Fighter, and Cleric) widens the gate
+// again to level 15 (verified independently against all three primary
+// sources: d20pfsrd, Archives of Nethys aonprd.com, and legacy.aonprd.com,
+// which agree byte-for-byte): base attack bonus GENUINELY RISES to +11
+// (15 * 3 / 4) and poor Reflex GENUINELY RISES to +5 (15 / 3), while both
+// good saves STAY +9 (15 / 2 + 2, an integer-division coincidence with
+// level 14); Wild Empathy genuinely rises to 16 (15 + Charisma modifier).
+// UNLIKE every prior widened level's Wild-Shape-shaped "Special" column
+// entry (levels 4/6/8/10/12/14), and unlike level 13's "A thousand faces",
+// the level-15 "Special" column reads "Timeless body" ONLY — checked
+// directly rather than assumed to also carry a Wild Shape frequency
+// increase (the next one, "Wild shape (7/day)", does not land until 16th
+// level). Timeless Body is a genuinely flat/identity-shaped, no-choice,
+// no-magnitude, no-duration-tracking grant (a druid no longer takes
+// ability score penalties for old age and cannot be magically aged),
+// mirroring exactly how Venom Immunity (level 9) and A Thousand Faces
+// (level 13) were grounded: a bounded +0 identity/recognition record, with
+// no aging-penalty-resolution engine fabricated.
+const MAX_SUPPORTED_DRUID_LEVEL: u8 = 15;
 /// PF1 Core Rulebook level gate at which Druid gains Venom Immunity (9th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Venom immunity" as the Druid 9th-level
 /// "Special" column entry).
 const DRUID_VENOM_IMMUNITY_LEVEL: u8 = 9;
+/// PF1 Core Rulebook level gate at which Druid gains A Thousand Faces (13th
+/// level, verified independently against three primary sources: d20pfsrd,
+/// Archives of Nethys aonprd.com, and legacy.aonprd.com all list "A
+/// thousand faces" as the Druid 13th-level "Special" column entry). In PF1
+/// (unlike the D&D 3.5 version of this ability, which referenced the
+/// stronger `alter self` spell), this grants the druid the ability to
+/// change her own apparent appearance at will, as if using `disguise
+/// self`, but only while in her normal (unshifted) form.
+const DRUID_A_THOUSAND_FACES_LEVEL: u8 = 13;
+/// PF1 Core Rulebook level gate at which Druid gains Timeless Body (15th
+/// level, verified independently against three primary sources: d20pfsrd,
+/// Archives of Nethys aonprd.com, and legacy.aonprd.com all list "Timeless
+/// body" — and ONLY that entry, with no accompanying Wild Shape frequency
+/// increase — as the Druid 15th-level "Special" column entry). A druid no
+/// longer takes ability score penalties for old age and cannot be
+/// magically aged (existing penalties remain in place; bonuses still
+/// accrue).
+const DRUID_TIMELESS_BODY_LEVEL: u8 = 15;
 /// PF1 Core Rulebook level gate at which Druid gains Resist Nature's Lure (4th
 /// level, verified independently against two primary sources: d20pfsrd and
 /// legacy.aonprd.com both list "Resist nature's lure" as part of the Druid
@@ -2030,12 +4233,60 @@ const CLASS_SKILL_BONUS: i16 = 3;
 const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
 
 // Bounded SD13-E3/SD13-E5 Fighter milestone widening. The accepted level-1 pilot
-// is now joined by levels 2 through 10. Nothing here grounds level 11+ Fighter
-// burden, the weapon-training damage-roll half, the Bravery Will-vs-fear bonus,
-// or any non-Fighter positive support. The generic PF1 ability-score-increase
-// milestones (levels 4 and 8) need no separate seam: the chosen ability score is
-// trusted at face value, like every other ability adjustment in this codebase.
-const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 10;
+// is now joined by levels 2 through 17 (SD18: level 11 widens the Armor
+// Training pillar to rank 3, see FIGHTER_ARMOR_TRAINING_3_LEVEL below; level
+// 12 widens the bonus-feat cadence with a sixth named slot, see
+// FIGHTER_LEVEL_12_BONUS_FEAT_CHOICE_ID below; level 13 widens Weapon
+// Training to rank 3 and its third chosen weapon group, see
+// FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID below; level 14 widens the
+// bonus-feat cadence with a seventh named slot, see
+// FIGHTER_LEVEL_14_BONUS_FEAT_CHOICE_ID below, and raises Bravery's
+// already-generic magnitude formula to +4; level 15 widens the Armor
+// Training pillar to rank 4, see FIGHTER_ARMOR_TRAINING_4_LEVEL below --
+// level 15 is neither a bonus-feat cadence level nor a weapon-training
+// rank-rise level, so no new choice slot is added there; level 16 widens
+// the bonus-feat cadence with an eighth named slot, see
+// FIGHTER_LEVEL_16_BONUS_FEAT_CHOICE_ID below -- level 16 is neither a
+// weapon-training rank-rise level nor an armor-training rank-rise level
+// (the PF1 Core Rulebook names no fifth Armor Training rank), so neither
+// pillar widens there; level 17 (SD18 widening) widens Weapon Training to
+// rank 4 and its fourth chosen weapon group, see
+// FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID below -- level 17 is neither a
+// bonus-feat cadence level (1, 2, 4, 6, 8, 10, 12, 14, 16, ...) nor an
+// armor-training rank-rise level, so neither of those pillars widens there;
+// level 18 (SD18 widening) widens the bonus-feat cadence with a ninth named
+// slot, see FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID below, and raises
+// Bravery's already-generic magnitude formula to +5 -- level 18 is neither
+// a weapon-training rank-rise level nor an armor-training rank-rise level,
+// so neither pillar widens there; level 19 (SD18 widening) is neither a
+// bonus-feat cadence level (1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 -- 19 is
+// absent), a weapon-training rank-rise level, nor an armor-training
+// rank-rise level, so none of those three pillars widen there, but the PF1
+// Core Rulebook level-19 Special column names a genuinely new class
+// feature, Armor Mastery (DR 5/-- while wearing armor or using a shield),
+// see FIGHTER_ARMOR_MASTERY_LEVEL below, grounded as a bounded
+// flat-magnitude record only, mirroring the already-proven Barbarian
+// Damage Reduction idiom); level 20 (SD18 widening, the FINAL level within
+// PF1's 1-20 character-level cap) IS a bonus-feat cadence level (1, 2, 4,
+// 6, 8, 10, 12, 14, 16, 18, 20), so this widens the bonus-feat cadence
+// with a TENTH named slot, see FIGHTER_LEVEL_20_BONUS_FEAT_CHOICE_ID
+// below, and the PF1 Core Rulebook level-20 Special column names a
+// genuinely new capstone class feature, Weapon Mastery (automatic
+// critical-threat confirmation and a +1 critical-multiplier increase for
+// one chosen weapon, plus immunity to being disarmed of that weapon), see
+// FIGHTER_WEAPON_MASTERY_LEVEL below, grounded as a bounded grant-only
+// identity/magnitude record only, mirroring exactly the Armor Mastery
+// idiom -- level 20 is neither a weapon-training rank-rise level nor an
+// armor-training rank-rise level, so neither of those pillars widens
+// there. Nothing here grounds the weapon-training damage-roll half, the
+// Bravery Will-vs-fear bonus resolution, the Armor Mastery
+// damage-reduction application, the Weapon Mastery critical-confirmation/
+// damage-multiplier/disarm-immunity application, or any non-Fighter
+// positive support. The generic PF1 ability-score-increase milestones
+// (levels 4 and 8) need no separate seam: the chosen ability score is
+// trusted at face value, like every other ability adjustment in this
+// codebase.
+const MAX_SUPPORTED_FIGHTER_LEVEL: u8 = 20;
 
 // Fighter level-1 hit points. PF1 maximizes the hit die at 1st character level:
 // the Fighter's d10 hit die grants 10 hit points at level 1, plus the
@@ -2082,22 +4333,88 @@ const IMPROVED_CRITICAL_FEAT_SELECTION: &str = "feat:improved_critical";
 const FIGHTER_LEVEL_10_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_10";
 const GREATER_WEAPON_FOCUS_FEAT_SELECTION: &str = "feat:greater_weapon_focus";
 
+// Fighter level-12 bonus-feat progression seam (SD18 widening). Fighter gains
+// an additional bonus feat at level 12 (the cadence continues 1, 2, 4, 6, 8,
+// 10, 12); this slice surfaces the named selection as an explicit seam only
+// and grounds no general feat-effect or prerequisite engine, mirroring the
+// level-2 through level-10 seams. The canonical Weapon Specialization
+// selection's prerequisites (fighter level 4 and Weapon Focus with the
+// chosen weapon) are honestly met by the canonical loadout: Weapon Focus
+// (longsword) is the level-1 fighter bonus feat.
+const FIGHTER_LEVEL_12_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_12";
+const WEAPON_SPECIALIZATION_FEAT_SELECTION: &str = "feat:weapon_specialization";
+
+// Fighter level-14 bonus-feat progression seam (SD18 widening). Fighter gains
+// an additional bonus feat at level 14 (the cadence continues 1, 2, 4, 6, 8,
+// 10, 12, 14); this slice surfaces the named selection as an explicit seam
+// only and grounds no general feat-effect or prerequisite engine, mirroring
+// the level-2 through level-12 seams. The canonical Greater Weapon
+// Specialization selection's prerequisites (fighter level 12, Weapon Focus
+// and Weapon Specialization with the chosen weapon) are honestly met by the
+// canonical loadout: Weapon Focus (longsword) is the level-1 fighter bonus
+// feat and Weapon Specialization (longsword) is the level-12 fighter bonus
+// feat.
+const FIGHTER_LEVEL_14_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_14";
+const GREATER_WEAPON_SPECIALIZATION_FEAT_SELECTION: &str = "feat:greater_weapon_specialization";
+
+// Fighter level-16 bonus-feat progression seam (SD18 widening). Fighter gains
+// an additional bonus feat at level 16 (the cadence continues 1, 2, 4, 6, 8,
+// 10, 12, 14, 16); this slice surfaces the named selection as an explicit
+// seam only and grounds no general feat-effect or prerequisite engine,
+// mirroring the level-2 through level-14 seams. The canonical Critical Focus
+// selection's prerequisite (base attack bonus +9) is honestly met by the
+// canonical loadout: the level-16 Fighter's own base attack bonus is +16.
+const FIGHTER_LEVEL_16_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_16";
+const CRITICAL_FOCUS_FEAT_SELECTION: &str = "feat:critical_focus";
+
+// Fighter level-18 bonus-feat progression seam (SD18 widening). Fighter gains
+// an additional bonus feat at level 18 (the cadence continues 1, 2, 4, 6, 8,
+// 10, 12, 14, 16, 18); this slice surfaces the named selection as an
+// explicit seam only and grounds no general feat-effect or prerequisite
+// engine, mirroring the level-2 through level-16 seams. The canonical
+// Staggering Critical selection's prerequisites (Critical Focus and base
+// attack bonus +13) are honestly met by the canonical loadout: Critical
+// Focus is the level-16 fighter bonus feat and the level-18 Fighter's own
+// base attack bonus is +18.
+const FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_18";
+const STAGGERING_CRITICAL_FEAT_SELECTION: &str = "feat:staggering_critical";
+
+// Fighter level-20 bonus-feat progression seam (SD18 widening, the FINAL
+// bonus-feat cadence level within PF1's 1-20 character-level cap). Fighter
+// gains an additional bonus feat at level 20 (the cadence continues 1, 2,
+// 4, 6, 8, 10, 12, 14, 16, 18, 20); this slice surfaces the named
+// selection as an explicit seam only and grounds no general feat-effect
+// or prerequisite engine, mirroring the level-2 through level-18 seams.
+// The canonical Critical Mastery selection's prerequisites (two other
+// critical feats) are honestly met by the canonical loadout: Improved
+// Critical, Critical Focus, and Staggering Critical are all
+// already-selected Fighter bonus feats.
+const FIGHTER_LEVEL_20_BONUS_FEAT_CHOICE_ID: &str = "choice:fighter_bonus_feat_20";
+const CRITICAL_MASTERY_FEAT_SELECTION: &str = "feat:critical_mastery";
+
 // Fighter Weapon Training, gained at level 5 with a new rank every four levels
 // (rank = 1 + (level - 5) / 4): Weapon Training 1 at level 5, Weapon Training 2
-// at level 9. Each rank grants the first chosen weapon group +rank to attack and
-// damage rolls; each later-chosen group sits one point lower. This slice grounds
-// only the attack-roll half of the first group (folded into the baseline melee
-// attack bonus for the deterministic Longsword, which falls under the canonical
-// Heavy Blades group) and surfaces the second group (canonically Bows, chosen at
-// level 9) as an explanation-only record; the damage-roll half is never computed
-// for any Fighter level in this codebase, so it stays explicitly unproven rather
-// than silently omitted.
+// at level 9, Weapon Training 3 at level 13, Weapon Training 4 at level 17
+// (SD18 widening). Each rank grants the first chosen weapon group +rank to
+// attack and damage rolls; each later-chosen group sits one point lower. This
+// slice grounds only the attack-roll half of the first group (folded into the
+// baseline melee attack bonus for the deterministic Longsword, which falls
+// under the canonical Heavy Blades group) and surfaces the second group
+// (canonically Bows, chosen at level 9), the third group (canonically
+// Polearms, chosen at level 13), and the fourth group (canonically Hammers,
+// chosen at level 17) as explanation-only records; the damage-roll half is
+// never computed for any Fighter level in this codebase, so it stays
+// explicitly unproven rather than silently omitted.
 const FIGHTER_WEAPON_TRAINING_1_LEVEL: u8 = 5;
 const FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE: u8 = 4;
 const FIGHTER_WEAPON_TRAINING_GROUP_CHOICE_ID: &str = "choice:fighter_weapon_training_group";
 const HEAVY_BLADES_GROUP_SELECTION: &str = "group:heavy_blades";
 const FIGHTER_WEAPON_TRAINING_GROUP_2_CHOICE_ID: &str = "choice:fighter_weapon_training_group_2";
 const BOWS_GROUP_SELECTION: &str = "group:bows";
+const FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID: &str = "choice:fighter_weapon_training_group_3";
+const POLEARMS_GROUP_SELECTION: &str = "group:polearms";
+const FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID: &str = "choice:fighter_weapon_training_group_4";
+const HAMMERS_GROUP_SELECTION: &str = "group:hammers";
 
 // Fighter armor training 1, gained at level 3. It reduces the worn armor's
 // armor-check penalty by 1 (to a minimum of 0) and raises its maximum Dexterity
@@ -2114,6 +4431,71 @@ const ARMOR_TRAINING_1_MAX_DEX_INCREASE: i16 = 1;
 const FIGHTER_ARMOR_TRAINING_2_LEVEL: u8 = 7;
 const ARMOR_TRAINING_2_ARMOR_CHECK_REDUCTION: i16 = 2;
 const ARMOR_TRAINING_2_MAX_DEX_INCREASE: i16 = 2;
+
+// Fighter armor training 3, gained at level 11 (SD18 widening). It further
+// reduces the worn armor's armor-check penalty (to a minimum of 0, cumulative
+// with Armor Training 1-2) and further raises its maximum Dexterity bonus.
+// Grounded from cr_abilities_class.lst Fighter armor training; not
+// oracle-checked parity. On the deterministic Chain Shirt fixture, the
+// armor-check-penalty reduction was already capped at 0 by Armor Training 2,
+// so this rise changes no derived Climb/Swim total; the raised maximum
+// Dexterity bonus also changes no derived armor class, since the
+// deterministic +2 Dexterity contribution is already well below both the old
+// and new caps. The rank rise itself is still a genuine, non-fabricated
+// magnitude widening on the already-grounded pillar.
+const FIGHTER_ARMOR_TRAINING_3_LEVEL: u8 = 11;
+const ARMOR_TRAINING_3_ARMOR_CHECK_REDUCTION: i16 = 3;
+const ARMOR_TRAINING_3_MAX_DEX_INCREASE: i16 = 3;
+
+// Fighter armor training 4, gained at level 15 (SD18 widening). It further
+// reduces the worn armor's armor-check penalty (to a minimum of 0, cumulative
+// with Armor Training 1-3) and further raises its maximum Dexterity bonus.
+// Grounded from cr_abilities_class.lst Fighter armor training; not
+// oracle-checked parity. On the deterministic Chain Shirt fixture, the
+// armor-check-penalty reduction was already capped at 0 by Armor Training 2,
+// so this rise changes no derived Climb/Swim total; the raised maximum
+// Dexterity bonus also changes no derived armor class, since the
+// deterministic +2 Dexterity contribution is already well below both the old
+// and new caps. The rank rise itself is still a genuine, non-fabricated
+// magnitude widening on the already-grounded pillar.
+const FIGHTER_ARMOR_TRAINING_4_LEVEL: u8 = 15;
+const ARMOR_TRAINING_4_ARMOR_CHECK_REDUCTION: i16 = 4;
+const ARMOR_TRAINING_4_MAX_DEX_INCREASE: i16 = 4;
+
+// Fighter Armor Mastery, gained at level 19 (SD18 widening). Verified
+// independently against d20pfsrd.com/classes/core-classes/fighter/ and
+// aonprd.com/ClassDisplay.aspx?ItemName=Fighter (byte-for-byte agreement):
+// "At 19th level, a fighter gains DR 5/-- whenever he is wearing armor or
+// using a shield." This is a genuinely new named class feature (NOT another
+// Armor Training rank -- the PF1 Core Rulebook names no fifth Armor
+// Training rank, and Armor Mastery is a distinct feature from the Armor
+// Training pillar). Grounded as a bounded flat-magnitude record only,
+// mirroring exactly how the Barbarian's own Damage Reduction class feature
+// was grounded: no damage-resolution engine and no incoming-damage total
+// exists anywhere in this codebase to apply it, and no
+// worn-armor-or-shield condition check is computed, so this grounds no
+// actual damage reduction.
+const FIGHTER_ARMOR_MASTERY_LEVEL: u8 = 19;
+const ARMOR_MASTERY_DAMAGE_REDUCTION: i16 = 5;
+
+// Fighter Weapon Mastery, gained at level 20 (SD18 widening, the Fighter
+// capstone -- the FINAL level within PF1's 1-20 character-level cap).
+// Verified independently against d20pfsrd.com/classes/core-classes/fighter/
+// and aonprd.com/ClassDisplay.aspx?ItemName=Fighter (byte-for-byte
+// agreement): "At 20th level, a fighter chooses one weapon, such as the
+// longsword, greataxe, or longbow. Any attacks made with that weapon
+// automatically confirm all critical threats and have their damage
+// multiplier increased by 1 (x2 becomes x3, for example). In addition, he
+// cannot be disarmed while wielding a weapon of this type." This is a
+// genuinely new named class feature. Grounded as a bounded grant-only
+// identity/magnitude record only, mirroring exactly how the Fighter's own
+// Armor Mastery class feature was grounded: no critical-hit-confirmation
+// engine, no damage-multiplier-application engine, and no
+// disarm-resolution engine exists anywhere in this codebase to apply it,
+// so this grounds no actual automatic-critical-confirmation, no actual
+// damage-multiplier change, and no actual disarm immunity.
+const FIGHTER_WEAPON_MASTERY_LEVEL: u8 = 20;
+const WEAPON_MASTERY_CRITICAL_MULTIPLIER_INCREASE: i16 = 1;
 
 // Fighter Bravery, gained at level 2 with an additional +1 every four Fighter
 // levels thereafter (level 6, level 10, ...): +1 Will save vs fear at level 2,
@@ -2500,30 +4882,71 @@ const DWARF_BASE_SPEED_FEET: i16 = 20;
 const DWARF_DARKVISION_FEET: i16 = 60;
 const DWARF_CON_ADJUSTMENT: i16 = 2;
 const DWARF_CHA_ADJUSTMENT: i16 = -2;
+/// PF1 Core Rulebook Dwarf Stonecunning flat Perception situational-bonus
+/// magnitude (verified against `dwarf_abilities_race.lst:27`'s
+/// `BONUS:SITUATION|Perception=to notice unusual stonework|2|TYPE=Racial`
+/// and `dwarf_skills.lst:6`'s `Perception.MOD SITUATION:to notice unusual
+/// stonework`). Distinct from the separate Greed (Appraise) racial trait.
+const DWARF_STONECUNNING_PERCEPTION_BONUS: i16 = 2;
+/// PF1 Core Rulebook Dwarf Greed flat Appraise situational-bonus magnitude
+/// (verified against `dwarf_abilities_race.lst:23`'s
+/// `BONUS:SITUATION|Appraise=to assess nonmagical metals or gemstones|2|TYPE=Racial`
+/// and `dwarf_skills.lst:5`'s `Appraise.MOD SITUATION:to assess nonmagical
+/// metals or gemstones`). Distinct from the already-grounded Stonecunning
+/// (Perception) racial trait.
+const DWARF_GREED_APPRAISE_BONUS: i16 = 2;
+/// PF1 Core Rulebook Dwarf Hardy flat racial saving-throw-bonus magnitude
+/// against poison, spells, and spell-like abilities (verified against
+/// `dwarf_abilities_race.lst:25`'s
+/// `BONUS:VAR|SaveBonus_vs_Poison|2|TYPE=Racial` and
+/// `BONUS:VAR|SaveBonus_vs_Spells|2|TYPE=Racial`). Both save categories
+/// share the same flat +2 magnitude, mirroring the already-grounded Elf
+/// Elven Immunities enchantment-save-bonus idiom.
+const DWARF_HARDY_SAVE_BONUS: i16 = 2;
+/// PF1 Core Rulebook Dwarf Stability flat racial Combat Maneuver Defense
+/// bonus magnitude against bull rush and trip attempts made while the Dwarf
+/// is standing on the ground (verified against
+/// `dwarf_abilities_race.lst:26`'s
+/// `BONUS:VAR|CMD_BullRush,CMD_Trip|4|TYPE=Racial`). Both maneuver
+/// categories share the same flat +4 magnitude, mirroring the already-
+/// grounded Dwarf Hardy two-save-category flat-bonus idiom exactly.
+const DWARF_STABILITY_CMD_BONUS: i16 = 4;
+/// PF1 Core Rulebook Dwarf Defensive Training flat racial dodge-bonus-to-AC
+/// magnitude against monsters of the giant subtype (verified against
+/// `dwarf_abilities_race.lst:22`'s
+/// `BONUS:VAR|RacialDefensiveTrainingBonus|4`). A single flat magnitude
+/// applied to a single named derived-stat target, mirroring the already-
+/// grounded Dwarf Stability flat-bonus idiom exactly.
+const DWARF_DEFENSIVE_TRAINING_DODGE_BONUS: i16 = 4;
 
 /// SD13-E2 Dwarf racial trait bundle explanation seam (mirroring the SD13-E6-F3a
-/// Human trait bundle pattern for the first non-Human core race).
+/// Human trait bundle pattern for the first non-Human core race), widened by the
+/// SD18 dwarf-stonecunning, dwarf-greed, dwarf-hardy, dwarf-stability, and
+/// dwarf-defensive-training cycles.
 ///
-/// Surfaces four grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
-/// modifiers, size, speed, senses) as explicit `ComputationExplanation` records so
-/// the Dwarf identity is legible on the runtime path rather than left behind the
-/// generic `race.semantics.unverified` diagnostic every other non-Human race still
-/// receives.
+/// Surfaces nine grounded PF1 Core Rulebook Dwarf racial trait dimensions (ability
+/// modifiers, size, speed, senses, Stonecunning, Greed, Hardy, Stability,
+/// Defensive Training) as explicit `ComputationExplanation` records so the Dwarf
+/// identity is legible on the runtime path rather than left behind the generic
+/// `race.semantics.unverified` diagnostic every other non-Human race still receives.
 ///
 /// This function:
 ///   - runs only when `race_id == race:dwarf`; every other race is unaffected
 ///     (Human keeps its own seam; every other non-Human race keeps the generic
 ///     `race.semantics.unverified` diagnostic from `explain_human_race_seam`),
-///   - adds no new computed mechanical contribution: the ability-modifiers record
-///     is recognition-only (the chosen Constitution/Charisma scores are understood
-///     to already reflect the fixed +2/-2 racial adjustment; no arithmetic is
-///     performed on this seam), and the size/senses records carry the grounded
-///     source value as identity only,
+///   - adds no new computed mechanical contribution beyond a flat, ungrounded-total
+///     situational-bonus magnitude: the ability-modifiers record is recognition-only
+///     (the chosen Constitution/Charisma scores are understood to already reflect
+///     the fixed +2/-2 racial adjustment; no arithmetic is performed on this seam),
+///     the size/senses records carry the grounded source value as identity only, and
+///     the Stonecunning, Greed, Hardy, Stability, and Defensive Training records each
+///     name only their own flat bonus magnitude (no Perception-check-total,
+///     Appraise-check-total, stonework-detection, goods-valuation, saving-throw-total,
+///     Combat-Maneuver-Defense-total, or Armor-Class-total engine exists),
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Dwarf-specific `race.dwarf.bounded_semantics` note naming the still-unproven
-///     families explicitly (Stonecunning and other skill/derived-stat modifiers,
-///     Defensive Training, Hardy, Stability, Hatred, weapon familiarity, and the
-///     explicit absence of any Dwarf racial bonus feat),
+///     families explicitly (Hatred, weapon familiarity, and the explicit absence of
+///     any Dwarf racial bonus feat),
 ///   - is bounded to race recognition only; it deliberately grounds no Dwarf
 ///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
 fn explain_dwarf_race_seam(
@@ -2599,22 +5022,175 @@ fn explain_dwarf_race_seam(
         ),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
-    // the generic race.semantics.unverified diagnostic for Dwarf specifically and
-    // stays non-claim-blocking so the deterministic pilot still reports computed
+    // ----- Stonecunning (SD18 dwarf-stonecunning cycle) -----
+    // Grounded flat +2 situational bonus on Perception checks to potentially
+    // notice unusual stonework, such as traps and hidden doors located in
+    // stone walls or floors (core_essentials/races/dwarf/dwarf_abilities_race.lst:27
+    // BONUS:SITUATION|Perception=to notice unusual stonework|2|TYPE=Racial;
+    // dwarf_skills.lst:6 Perception.MOD SITUATION:to notice unusual
+    // stonework). Mirrors the existing flat skill-bonus-magnitude idiom used
+    // elsewhere on this seam (e.g. Bard Inspire Competence, Ranger Track): no
+    // Perception-check-total or stonework-detection engine exists anywhere in
+    // this codebase, so this names only the flat situational-bonus magnitude,
+    // not a check-execution engine. Distinct from Greed (a separate +2
+    // Appraise racial trait for assessing nonmagical precious-metal/gemstone
+    // goods), which remains unground.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.stonecunning".to_owned(),
+        value: DWARF_STONECUNNING_PERCEPTION_BONUS,
+        detail: format!(
+            "Dwarf racial trait bundle — Stonecunning: PF1 Core Dwarf grants a flat \
+             {DWARF_STONECUNNING_PERCEPTION_BONUS:+} bonus on Perception checks to potentially \
+             notice unusual stonework, such as traps and hidden doors located in stone walls or \
+             floors (dwarf_abilities_race.lst:27 BONUS:SITUATION|Perception=to notice unusual \
+             stonework|{DWARF_STONECUNNING_PERCEPTION_BONUS}|TYPE=Racial; dwarf_skills.lst:6 \
+             Perception.MOD SITUATION:to notice unusual stonework). This is a bounded flat \
+             situational-bonus-magnitude recognition record naming the Stonecunning identity on \
+             the deterministic pilot seam; no Perception-check-total or stonework-detection \
+             engine exists anywhere in this codebase, so no check resolution is fabricated from \
+             this record"
+        ),
+    });
+
+    // ----- Greed (SD18 dwarf-greed cycle) -----
+    // Grounded flat +2 situational bonus on Appraise checks made to
+    // determine the price of nonmagical goods that contain precious metals
+    // or gemstones (core_essentials/races/dwarf/dwarf_abilities_race.lst:23
+    // BONUS:SITUATION|Appraise=to assess nonmagical metals or gemstones|2|TYPE=Racial;
+    // dwarf_skills.lst:5 Appraise.MOD SITUATION:to assess nonmagical metals
+    // or gemstones). Mirrors the already-grounded Stonecunning flat
+    // skill-bonus-magnitude idiom on this same seam: no
+    // Appraise-check-total or goods-valuation engine exists anywhere in
+    // this codebase, so this names only the flat situational-bonus
+    // magnitude, not a check-execution engine.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.greed".to_owned(),
+        value: DWARF_GREED_APPRAISE_BONUS,
+        detail: format!(
+            "Dwarf racial trait bundle — Greed: PF1 Core Dwarf grants a flat \
+             {DWARF_GREED_APPRAISE_BONUS:+} bonus on Appraise checks made to determine the \
+             price of nonmagical goods that contain precious metals or gemstones \
+             (dwarf_abilities_race.lst:23 BONUS:SITUATION|Appraise=to assess nonmagical \
+             metals or gemstones|{DWARF_GREED_APPRAISE_BONUS}|TYPE=Racial; \
+             dwarf_skills.lst:5 Appraise.MOD SITUATION:to assess nonmagical metals or \
+             gemstones). This is a bounded flat situational-bonus-magnitude recognition \
+             record naming the Greed identity on the deterministic pilot seam; no \
+             Appraise-check-total or goods-valuation engine exists anywhere in this \
+             codebase, so no check resolution is fabricated from this record"
+        ),
+    });
+
+    // ----- Hardy (SD18 dwarf-hardy cycle) -----
+    // Bundles two distinct save categories, both grounded honestly, mirroring
+    // the already-landed Elf Elven Immunities flat racial saving-throw-bonus
+    // idiom exactly (applied to a save category instead of a skill):
+    //   - a +2 racial saving throw bonus against poison
+    //     (dwarf_abilities_race.lst:25 BONUS:VAR|SaveBonus_vs_Poison|2|TYPE=Racial);
+    //   - a +2 racial saving throw bonus against spells and spell-like
+    //     abilities (dwarf_abilities_race.lst:25
+    //     BONUS:VAR|SaveBonus_vs_Spells|2|TYPE=Racial).
+    // Both share the same flat magnitude, so this names only the flat
+    // save-bonus magnitude, not a saving-throw-total engine: no
+    // saving-throw-resolution engine exists anywhere in this codebase, so no
+    // check resolution is fabricated from this record.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.hardy".to_owned(),
+        value: DWARF_HARDY_SAVE_BONUS,
+        detail: format!(
+            "Dwarf racial trait bundle — Hardy: PF1 Core Dwarf grants a flat \
+             {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against poison, and a \
+             flat {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against spells and \
+             spell-like abilities (dwarf_abilities_race.lst:25 \
+             BONUS:VAR|SaveBonus_vs_Poison|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial, \
+             BONUS:VAR|SaveBonus_vs_Spells|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial). This is a \
+             bounded flat saving-throw-bonus-magnitude recognition record naming the Hardy \
+             identity on the deterministic pilot seam, mirroring the already-grounded Elf \
+             Elven Immunities enchantment-save-bonus idiom; no saving-throw-total engine \
+             exists anywhere in this codebase, so no check resolution is fabricated from this \
+             record"
+        ),
+    });
+
+    // ----- Stability (SD18 dwarf-stability cycle) -----
+    // Bundles two distinct combat-maneuver-defense categories, both grounded
+    // honestly, mirroring the already-landed Dwarf Hardy flat racial-bonus
+    // idiom exactly (a single flat magnitude applied to two named derived-
+    // stat targets instead of two save categories):
+    //   - a +4 racial bonus to Combat Maneuver Defense when resisting a bull
+    //     rush attempt while standing on the ground
+    //     (dwarf_abilities_race.lst:26 BONUS:VAR|CMD_BullRush|4|TYPE=Racial);
+    //   - a +4 racial bonus to Combat Maneuver Defense when resisting a trip
+    //     attempt while standing on the ground (dwarf_abilities_race.lst:26
+    //     BONUS:VAR|CMD_Trip|4|TYPE=Racial).
+    // Both share the same flat magnitude, so this names only the flat
+    // CMD-bonus magnitude, not a Combat-Maneuver-Defense-total engine: no
+    // such engine exists anywhere in this codebase, so no check resolution
+    // is fabricated from this record.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.stability".to_owned(),
+        value: DWARF_STABILITY_CMD_BONUS,
+        detail: format!(
+            "Dwarf racial trait bundle — Stability: PF1 Core Dwarf grants a flat \
+             {DWARF_STABILITY_CMD_BONUS:+} racial bonus to Combat Maneuver Defense when \
+             resisting a bull rush attempt, and a flat {DWARF_STABILITY_CMD_BONUS:+} racial \
+             bonus to Combat Maneuver Defense when resisting a trip attempt, in both cases \
+             while standing on the ground (dwarf_abilities_race.lst:26 \
+             BONUS:VAR|CMD_BullRush,CMD_Trip|{DWARF_STABILITY_CMD_BONUS}|TYPE=Racial). This \
+             is a bounded flat CMD-bonus-magnitude recognition record naming the Stability \
+             identity on the deterministic pilot seam, mirroring the already-grounded Dwarf \
+             Hardy two-save-category flat-bonus idiom; no Combat-Maneuver-Defense-total \
+             engine exists anywhere in this codebase, so no check resolution is fabricated \
+             from this record"
+        ),
+    });
+
+    // ----- Defensive Training (SD18 dwarf-defensive-training cycle) -----
+    // Grounded flat +4 dodge bonus to Armor Class against monsters of the
+    // giant subtype (core_essentials/races/dwarf/dwarf_abilities_race.lst:22
+    // BONUS:VAR|RacialDefensiveTrainingBonus|4). Mirrors the already-grounded
+    // Dwarf Stability flat-bonus idiom on this same seam (a single flat
+    // magnitude applied to a single named derived-stat target): no
+    // Armor-Class-total or giant-subtype-detection engine exists anywhere in
+    // this codebase, so this names only the flat dodge-bonus magnitude, not
+    // a check-execution engine.
+    explanations.push(ComputationExplanation {
+        id: "race.dwarf.trait_bundle.defensive_training".to_owned(),
+        value: DWARF_DEFENSIVE_TRAINING_DODGE_BONUS,
+        detail: format!(
+            "Dwarf racial trait bundle — Defensive Training: PF1 Core Dwarf grants a flat \
+             {DWARF_DEFENSIVE_TRAINING_DODGE_BONUS:+} dodge bonus to Armor Class against \
+             monsters of the giant subtype (dwarf_abilities_race.lst:22 \
+             BONUS:VAR|RacialDefensiveTrainingBonus|{DWARF_DEFENSIVE_TRAINING_DODGE_BONUS}). \
+             This is a bounded flat dodge-bonus-magnitude recognition record naming the \
+             Defensive Training identity on the deterministic pilot seam, mirroring the \
+             already-grounded Dwarf Stability flat-bonus idiom; no Armor-Class-total or \
+             giant-subtype-detection engine exists anywhere in this codebase, so no check \
+             resolution is fabricated from this record"
+        ),
+    });
+
+    // Bounded honesty: nine named dimensions are now grounded (ability
+    // modifiers, size, speed, senses, Stonecunning, Greed, Hardy, Stability,
+    // Defensive Training). This replaces the generic
+    // race.semantics.unverified diagnostic for Dwarf specifically and stays
+    // non-claim-blocking so the deterministic pilot still reports computed
     // evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.dwarf.bounded_semantics".to_owned(),
         message: "Dwarf race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core \
-                  Dwarf racial trait surface remains unverified: skill or derived-stat \
-                  modifiers (Stonecunning Perception/Appraise bonuses), Defensive Training \
-                  (dodge bonus to AC against giants), Hardy (bonus on saves against poison, \
-                  spells, and spell-like abilities), Stability (bonus to CMD against bull \
-                  rush/trip), Hatred (bonus on attack rolls against orcs and goblinoids), and \
-                  weapon familiarity (battleaxe, heavy pick, warhammer, dwarven waraxe, \
-                  dwarven urgrosh). PF1 core Dwarves gain no racial bonus feat (unlike Human), \
-                  so that family is explicitly not applicable rather than silently omitted."
+                  modifiers, size, speed, senses, Stonecunning (flat +2 Perception \
+                  situational bonus to notice unusual stonework), Greed (flat +2 \
+                  Appraise situational bonus to assess nonmagical precious-metal/gemstone \
+                  goods), Hardy (flat +2 racial bonus on saving throws against poison, \
+                  spells, and spell-like abilities), Stability (flat +4 racial bonus to \
+                  Combat Maneuver Defense against bull rush and trip attempts while standing \
+                  on the ground), and Defensive Training (flat +4 dodge bonus to Armor Class \
+                  against monsters of the giant subtype) trait bundle; the remaining PF1 \
+                  Core Dwarf racial trait surface remains unverified: Hatred (bonus on \
+                  attack rolls against orcs and goblinoids), and weapon familiarity \
+                  (battleaxe, heavy pick, warhammer, dwarven waraxe, dwarven urgrosh). PF1 \
+                  core Dwarves gain no racial bonus feat (unlike Human), so that family is \
+                  explicitly not applicable rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
     });
@@ -2646,8 +5222,9 @@ const ELF_CON_ADJUSTMENT: i16 = -2;
 ///     the grounded source value as identity only,
 ///   - replaces the generic `race.semantics.unverified` diagnostic with an
 ///     Elf-specific `race.elf.bounded_semantics` note naming the still-unproven
-///     families explicitly (Elven Immunities, Keen Senses, weapon familiarity,
-///     bonus languages, and the explicit absence of any Elf racial bonus feat),
+///     families explicitly (weapon familiarity, bonus languages, and the
+///     explicit absence of any Elf racial bonus feat) now that Keen Senses
+///     and Elven Immunities are both grounded,
 ///   - is bounded to race recognition only; it deliberately grounds no Elf
 ///     class-chassis interaction, no other race, no alternate +2 Intelligence
 ///     ability variant, and no PF1 alternate ruleset.
@@ -2717,21 +5294,106 @@ fn explain_elf_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
-    // the generic race.semantics.unverified diagnostic for Elf specifically and
-    // stays non-claim-blocking so the deterministic pilot still reports computed
-    // evidence.
+    // ----- Keen Senses -----
+    // Flat +2 racial bonus on Perception checks. Mirrors the Dwarf Stonecunning
+    // idiom (flat skill-bonus-magnitude recognition record, not a Perception
+    // check-total engine).
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.keen_senses".to_owned(),
+        value: 2,
+        detail: "Elf racial trait bundle — Keen Senses: PF1 Core Elf grants a flat +2 racial \
+                  bonus on Perception checks \
+                  (core_essentials/races/elf/elf_abilities_race.lst Keen Senses entry — \
+                  BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
+                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
+                  only the flat racial-bonus magnitude on the deterministic pilot seam, not a \
+                  Perception-check-total engine."
+            .to_owned(),
+    });
+
+    // ----- Elven Immunities -----
+    // Bundles two distinct sub-effects, both grounded honestly:
+    //   - immunity to magic sleep effects: a flat, no-magnitude grant-only
+    //     identity record, mirroring the Monk Purity of Body / Diamond Body
+    //     disease/poison-immunity idiom exactly — no sleep-effect-resolution
+    //     engine exists anywhere in this codebase to apply the immunity to;
+    //   - a +2 racial saving throw bonus against enchantment spells and
+    //     effects: a flat racial-bonus magnitude, mirroring the Keen Senses /
+    //     Stonecunning / Greed flat-bonus idiom (applied to a save category
+    //     instead of a skill), not a saving-throw-total engine.
+    // The record's numeric value (2) names only the save-bonus magnitude;
+    // the sleep immunity is named in the detail text as a non-fabricated
+    // grant-only fact, contributing no additional numeric value.
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.elven_immunities".to_owned(),
+        value: 2,
+        detail: "Elf racial trait bundle — Elven Immunities: PF1 Core Elf is immune to magic \
+                  sleep effects and gets a flat +2 racial saving throw bonus against \
+                  enchantment spells and effects \
+                  (core_essentials/races/elf/elf_abilities_race.lst Elven Immunities entry — \
+                  DESC:\"Elves are immune to magic sleep effects and get a +2 racial saving \
+                  throw bonus against enchantment spells and effects.\", \
+                  ABILITY:Special Ability|AUTOMATIC|Immunity to Sleep, \
+                  BONUS:VAR|SaveBonus_vs_Enchantments|2|TYPE=Racial). The sleep immunity is a \
+                  bounded grant-only identity record (non-fabricated): no sleep-effect- \
+                  resolution engine exists anywhere in this codebase to apply the immunity to. \
+                  The recognized numeric value (2) names only the flat enchantment \
+                  saving-throw-bonus magnitude, not a saving-throw-total engine."
+            .to_owned(),
+    });
+
+    // ----- Elven Magic -----
+    // Bundles two distinct sub-effects, both grounded honestly, mirroring the
+    // Elven Immunities idiom exactly:
+    //   - a +2 racial bonus on caster level checks made to overcome spell
+    //     resistance: a flat, no-magnitude grant-only identity record (no
+    //     caster-level-check / spell-resistance-resolution engine exists
+    //     anywhere in this codebase to apply the bonus to);
+    //   - a +2 racial bonus on Spellcraft skill checks made to identify the
+    //     properties of magic items: a flat racial-bonus magnitude,
+    //     mirroring the Keen Senses / Stonecunning / Greed flat-bonus idiom
+    //     (applied to the Spellcraft skill), not a Spellcraft-check-total
+    //     engine.
+    // This trait was not previously named in the Elf row's unproven-family
+    // list (which named only weapon familiarity and bonus language grants);
+    // it is a genuine, distinct PF1 Core Elf racial trait present in the
+    // corpus that this slice newly recognizes.
+    explanations.push(ComputationExplanation {
+        id: "race.elf.trait_bundle.elven_magic".to_owned(),
+        value: 2,
+        detail: "Elf racial trait bundle — Elven Magic: PF1 Core Elf gets a flat +2 racial \
+                  bonus on caster level checks made to overcome spell resistance, and a flat \
+                  +2 racial bonus on Spellcraft skill checks made to identify the properties \
+                  of magic items \
+                  (core_essentials/races/elf/elf_abilities_race.lst Elven Magic entry — \
+                  DESC:\"Elves receive a +2 racial bonus on caster level checks made to \
+                  overcome spell resistance. In addition, elves receive a +2 racial bonus on \
+                  Spellcraft skill checks made to identify the properties of magic items.\", \
+                  BONUS:SITUATION|Spellcraft=to identify magic item properties|2|TYPE=Racial). \
+                  The caster-level-check-vs-spell-resistance bonus is a bounded grant-only \
+                  identity record (non-fabricated): no caster-level-check or \
+                  spell-resistance-resolution engine exists anywhere in this codebase to apply \
+                  the bonus to. The recognized numeric value (2) names only the flat \
+                  Spellcraft-identify racial-bonus magnitude, not a Spellcraft-check-total \
+                  engine."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the seven named dimensions are grounded. This
+    // replaces the generic race.semantics.unverified diagnostic for Elf
+    // specifically and stays non-claim-blocking so the deterministic pilot
+    // still reports computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.elf.bounded_semantics".to_owned(),
         message: "Elf race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core Elf \
-                  racial trait surface remains unverified: Elven Immunities (immunity to magic \
-                  sleep effects and a bonus on saves against enchantment spells and effects), \
-                  Keen Senses (a bonus on Perception checks), weapon familiarity (longbow, \
-                  composite longbow, longsword, rapier, shortbow, composite shortbow), and \
-                  bonus language grants. PF1 core Elves gain no racial bonus feat (unlike \
-                  Human), so that family is explicitly not applicable rather than silently \
-                  omitted."
+                  modifiers, size, speed, senses, Keen Senses (Perception bonus), Elven \
+                  Immunities (sleep immunity plus enchantment save bonus), and Elven Magic \
+                  (caster level check vs. spell resistance bonus plus Spellcraft identify \
+                  bonus) trait bundle; the remaining PF1 Core Elf racial trait surface remains \
+                  unverified: weapon familiarity (longbow, composite longbow, longsword, \
+                  rapier, shortbow, composite shortbow), and bonus language grants. PF1 core \
+                  Elves gain no racial bonus feat (unlike Human), so that family is explicitly \
+                  not applicable rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
     });
@@ -2743,29 +5405,31 @@ const GNOME_BASE_SPEED_FEET: i16 = 20;
 const GNOME_CON_ADJUSTMENT: i16 = 2;
 const GNOME_STR_ADJUSTMENT: i16 = -2;
 
-/// SD13-E2 Gnome racial trait bundle explanation seam (mirroring the Dwarf/Elf
-/// pattern for the third non-Human core race).
+/// SD13-E2/SD18 Gnome racial trait bundle explanation seam (mirroring the
+/// Dwarf/Elf pattern for the third non-Human core race).
 ///
-/// Surfaces four grounded PF1 Core Rulebook Gnome racial trait dimensions
-/// (ability modifiers, size, speed, senses) as explicit `ComputationExplanation`
-/// records so the Gnome identity is legible on the runtime path rather than left
-/// behind the generic `race.semantics.unverified` diagnostic every other
-/// non-Human race still receives.
+/// Surfaces six grounded PF1 Core Rulebook Gnome racial trait dimensions
+/// (ability modifiers, size, speed, senses, Keen Senses, Illusion
+/// Resistance) as explicit `ComputationExplanation` records so the Gnome
+/// identity is legible on the runtime path rather than left behind the
+/// generic `race.semantics.unverified` diagnostic every other non-Human race
+/// still receives.
 ///
 /// This function:
 ///   - runs only when `race_id == race:gnome`; every other race is unaffected
 ///     (Human, Dwarf, and Elf keep their own seams; every other non-Human race
 ///     keeps the generic `race.semantics.unverified` diagnostic),
-///   - adds no new computed mechanical contribution: the ability-modifiers record
-///     is recognition-only (the chosen Constitution/Strength scores are
+///   - adds no new computed mechanical contribution beyond the flat Keen
+///     Senses and Illusion Resistance bonus magnitudes: the ability-modifiers
+///     record is recognition-only (the chosen Constitution/Strength scores are
 ///     understood to already reflect the fixed +2/-2 racial adjustment; no
 ///     arithmetic is performed on this seam), and the size/senses records carry
 ///     the grounded source value as identity only,
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Gnome-specific `race.gnome.bounded_semantics` note naming the
-///     still-unproven families explicitly (Defensive Training, Illusion
-///     Resistance, Hatred, Keen Senses, Gnome Magic, weapon familiarity, and the
-///     explicit absence of any Gnome racial bonus feat),
+///     still-unproven families explicitly (Defensive Training, Hatred, Gnome
+///     Magic, weapon familiarity, and the explicit absence of any Gnome
+///     racial bonus feat),
 ///   - is bounded to race recognition only; it deliberately grounds no Gnome
 ///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
 fn explain_gnome_race_seam(
@@ -2831,22 +5495,79 @@ fn explain_gnome_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // ----- Keen Senses -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.keen_senses".to_owned(),
+        value: 2,
+        detail: "Gnome racial trait bundle — Keen Senses: PF1 Core Gnome grants a flat +2 \
+                  racial bonus on Perception skill checks \
+                  (core_essentials/races/gnome/gnome_abilities_race.lst Keen Senses entry — \
+                  BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
+                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
+                  only the flat racial-bonus magnitude on the deterministic pilot seam, not a \
+                  Perception-check-total engine."
+            .to_owned(),
+    });
+
+    // ----- Illusion Resistance -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.illusion_resistance".to_owned(),
+        value: 2,
+        detail: "Gnome racial trait bundle — Illusion Resistance: PF1 Core Gnome grants a \
+                  flat +2 racial saving throw bonus against illusion spells and effects \
+                  (core_essentials/races/gnome/gnome_abilities_race.lst Illusion Resistance \
+                  entry — BONUS:VAR|SaveBonus_vs_Illusions|2|TYPE=Racial). This is a bounded \
+                  recognition record naming only the flat racial-bonus magnitude on the \
+                  deterministic pilot seam, not a saving-throw-total engine."
+            .to_owned(),
+    });
+
+    // ----- Defensive Training -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.defensive_training".to_owned(),
+        value: 4,
+        detail: "Gnome racial trait bundle — Defensive Training: PF1 Core Gnome grants a flat \
+                  +4 dodge bonus to AC against monsters of the giant subtype \
+                  (core_essentials/races/gnome/gnome_abilities_race.lst Defensive Training \
+                  entry — BONUS:VAR|RacialDefensiveTrainingBonus|4). This is a bounded \
+                  recognition record naming only the flat racial-bonus magnitude on the \
+                  deterministic pilot seam, not an AC-total engine and not a \
+                  giant-subtype-detection engine (no \"is the target a giant\" resolution is \
+                  fabricated)."
+            .to_owned(),
+    });
+
+    // ----- Hatred -----
+    explanations.push(ComputationExplanation {
+        id: "race.gnome.trait_bundle.hatred".to_owned(),
+        value: 1,
+        detail: "Gnome racial trait bundle — Hatred: PF1 Core Gnome grants a flat +1 racial \
+                  bonus on attack rolls against humanoid creatures of the reptilian and \
+                  goblinoid subtypes \
+                  (core_essentials/races/gnome/gnome_abilities_race.lst Hatred entry — \
+                  BONUS:VAR|Gnome_Hatred_AttackBonus|1). This is a bounded recognition record \
+                  naming only the flat racial-bonus magnitude on the deterministic pilot seam, \
+                  not an attack-roll-total engine and not a reptilian/goblinoid-subtype- \
+                  detection engine (no \"is the target a reptilian humanoid or goblinoid\" \
+                  resolution is fabricated)."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the eight named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Gnome specifically and
     // stays non-claim-blocking so the deterministic pilot still reports computed
     // evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.gnome.bounded_semantics".to_owned(),
         message: "Gnome race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core Gnome \
-                  racial trait surface remains unverified: Defensive Training (a dodge bonus to \
-                  AC against giants), Illusion Resistance (a bonus on saves against illusion \
-                  spells and effects), Hatred (a bonus on attack rolls against reptilian \
-                  humanoids and goblinoids), Keen Senses (a bonus on Perception checks), Gnome \
-                  Magic (spell-like abilities keyed to a high Charisma), and weapon familiarity \
-                  (gnome hooked hammer). PF1 core Gnomes gain no racial bonus feat (unlike \
-                  Human), so that family is explicitly not applicable rather than silently \
-                  omitted."
+                  modifiers, size, speed, senses, Keen Senses (Perception bonus), Illusion \
+                  Resistance (illusion-save bonus), Defensive Training (dodge bonus to AC \
+                  against giants), and Hatred (attack-roll bonus against reptilian humanoids \
+                  and goblinoids) trait bundle; the remaining PF1 Core Gnome racial trait \
+                  surface remains unverified: Gnome Magic (spell-like abilities keyed to a high \
+                  Charisma), and weapon familiarity (gnome hooked hammer). PF1 core Gnomes gain \
+                  no racial bonus feat (unlike Human), so that family is explicitly not \
+                  applicable rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
     });
@@ -2857,28 +5578,32 @@ const HALF_ELF_SIZE_CATEGORY: &str = "Medium";
 const HALF_ELF_BASE_SPEED_FEET: i16 = 30;
 const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
 
-/// SD13-E2 Half-Elf racial trait bundle explanation seam (mirroring the
+/// SD13-E2/SD18 Half-Elf racial trait bundle explanation seam (mirroring the
 /// Dwarf/Elf/Gnome recognition pattern for the fourth non-Human core race, but
 /// with a choice-based ability bonus like Human's rather than a fixed pair).
 ///
-/// Surfaces four grounded PF1 Core Rulebook Half-Elf racial trait dimensions
-/// (chosen ability-bonus target, size, speed, senses) as explicit
-/// `ComputationExplanation` records so the Half-Elf identity is legible on the
-/// runtime path rather than left behind the generic `race.semantics.unverified`
-/// diagnostic every other non-Human race still receives.
+/// Surfaces six grounded PF1 Core Rulebook Half-Elf racial trait dimensions
+/// (chosen ability-bonus target, size, speed, senses, Keen Senses, Elven
+/// Immunities) as explicit `ComputationExplanation` records so the Half-Elf
+/// identity is legible on the runtime path rather than left behind the
+/// generic `race.semantics.unverified` diagnostic every other non-Human race
+/// still receives.
 ///
 /// This function:
 ///   - runs only when `race_id == race:half-elf`; every other race is unaffected
 ///     (Human, Dwarf, Elf, and Gnome keep their own seams; every other non-Human
 ///     race keeps the generic `race.semantics.unverified` diagnostic),
-///   - adds no new computed mechanical contribution: the ability-bonus-target
-///     record surfaces the already-computed modifier for the chosen ability as
-///     recognition (mirroring `race.human.ability_bonus_target`'s shape), and
-///     the size/senses records carry the grounded source value as identity only,
+///   - adds no new computed mechanical contribution beyond the flat Keen
+///     Senses and Elven Immunities enchantment-save bonus magnitudes: the
+///     ability-bonus-target record surfaces the already-computed modifier for
+///     the chosen ability as recognition (mirroring
+///     `race.human.ability_bonus_target`'s shape), the size/senses records
+///     carry the grounded source value as identity only, and Elven
+///     Immunities' sleep immunity is a bounded grant-only identity record
+///     (no sleep-effect-resolution engine exists in this codebase),
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Half-Elf-specific `race.half_elf.bounded_semantics` note naming the
-///     still-unproven families explicitly (Elven Immunities, Adaptability, Keen
-///     Senses, Multitalented),
+///     still-unproven families explicitly (Adaptability, Multitalented),
 ///   - is bounded to race recognition only; it deliberately grounds no Half-Elf
 ///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
 fn explain_half_elf_race_seam(
@@ -2953,19 +5678,64 @@ fn explain_half_elf_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // ----- Keen Senses -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_elf.trait_bundle.keen_senses".to_owned(),
+        value: 2,
+        detail: "Half-Elf racial trait bundle — Keen Senses: PF1 Core Half-Elf grants a flat \
+                  +2 racial bonus on Perception skill checks \
+                  (core_essentials/races/half_elf/halfelf_abilities_race.lst Keen Senses entry \
+                  — BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
+                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
+                  only the flat racial-bonus magnitude on the deterministic pilot seam, not a \
+                  Perception-check-total engine."
+            .to_owned(),
+    });
+
+    // ----- Elven Immunities -----
+    // Bundles two distinct sub-effects, both grounded honestly, mirroring the
+    // already-landed Elf Elven Immunities idiom exactly:
+    //   - immunity to magic sleep effects: a flat, no-magnitude grant-only
+    //     identity record, mirroring the Monk Purity of Body / Diamond Body
+    //     disease/poison-immunity idiom — no sleep-effect-resolution engine
+    //     exists anywhere in this codebase to apply the immunity to;
+    //   - a +2 racial saving throw bonus against enchantment spells and
+    //     effects: a flat racial-bonus magnitude, mirroring the Keen Senses
+    //     flat-bonus idiom (applied to a save category instead of a skill),
+    //     not a saving-throw-total engine.
+    // The record's numeric value (2) names only the save-bonus magnitude;
+    // the sleep immunity is named in the detail text as a non-fabricated
+    // grant-only fact, contributing no additional numeric value.
+    explanations.push(ComputationExplanation {
+        id: "race.half_elf.trait_bundle.elven_immunities".to_owned(),
+        value: 2,
+        detail: "Half-Elf racial trait bundle — Elven Immunities: PF1 Core Half-Elf is immune \
+                  to magic sleep effects and gets a flat +2 racial saving throw bonus against \
+                  enchantment spells and effects \
+                  (core_essentials/races/half_elf/halfelf_abilities_race.lst Elven Immunities \
+                  entry — DESC:\"Half-elves are immune to magic sleep effects and get a +2 \
+                  racial saving throw bonus against enchantment spells and effects.\", \
+                  ABILITY:Special Ability|AUTOMATIC|Immunity to Sleep, \
+                  BONUS:VAR|SaveBonus_vs_Enchantments|2|TYPE=Racial). The sleep immunity is a \
+                  bounded grant-only identity record (non-fabricated): no sleep-effect- \
+                  resolution engine exists anywhere in this codebase to apply the immunity to. \
+                  The recognized numeric value (2) names only the flat enchantment \
+                  saving-throw-bonus magnitude, not a saving-throw-total engine."
+            .to_owned(),
+    });
+
+    // Bounded honesty: only the six named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Half-Elf specifically
     // and stays non-claim-blocking so the deterministic pilot still reports
     // computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.half_elf.bounded_semantics".to_owned(),
         message: "Half-Elf race semantics are grounded for the deterministic pilot's chosen \
-                  ability-bonus target, size, speed, and senses trait bundle; the remaining PF1 \
-                  Core Half-Elf racial trait surface remains unverified: Elven Immunities \
-                  (immunity to magic sleep effects and a bonus on saves against enchantment \
-                  spells and effects), Adaptability (a bonus Skill Focus feat in a chosen skill \
-                  at 1st level), Keen Senses (a bonus on Perception checks), and Multitalented \
-                  (counting both parent classes as favored classes)."
+                  ability-bonus target, size, speed, senses, Keen Senses (Perception bonus), \
+                  and Elven Immunities (sleep immunity plus enchantment save bonus) trait \
+                  bundle; the remaining PF1 Core Half-Elf racial trait surface remains \
+                  unverified: Adaptability (a bonus Skill Focus feat in a chosen skill at 1st \
+                  level), and Multitalented (counting both parent classes as favored classes)."
             .to_owned(),
         claim_blocking: false,
     });
@@ -2976,30 +5746,34 @@ const HALF_ORC_SIZE_CATEGORY: &str = "Medium";
 const HALF_ORC_BASE_SPEED_FEET: i16 = 30;
 const HALF_ORC_DARKVISION_FEET: i16 = 60;
 const HALF_ORC_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_orc_ability_bonus";
+const HALF_ORC_INTIMIDATING_BONUS: i16 = 2;
 
-/// SD13-E2 Half-Orc racial trait bundle explanation seam (mirroring the
+/// SD13-E2/SD18 Half-Orc racial trait bundle explanation seam (mirroring the
 /// Half-Elf choice-based ability-bonus pattern for the fifth non-Human core
 /// race, with Darkvision instead of low-light vision).
 ///
-/// Surfaces four grounded PF1 Core Rulebook Half-Orc racial trait dimensions
-/// (chosen ability-bonus target, size, speed, senses) as explicit
-/// `ComputationExplanation` records so the Half-Orc identity is legible on the
-/// runtime path rather than left behind the generic `race.semantics.unverified`
-/// diagnostic every other non-Human race still receives.
+/// Surfaces five grounded PF1 Core Rulebook Half-Orc racial trait dimensions
+/// (chosen ability-bonus target, size, speed, senses, Intimidating) as
+/// explicit `ComputationExplanation` records so the Half-Orc identity is
+/// legible on the runtime path rather than left behind the generic
+/// `race.semantics.unverified` diagnostic every other non-Human race still
+/// receives.
 ///
 /// This function:
 ///   - runs only when `race_id == race:half-orc`; every other race is
 ///     unaffected (Human, Dwarf, Elf, Gnome, and Half-Elf keep their own seams;
 ///     every other non-Human race keeps the generic `race.semantics.unverified`
 ///     diagnostic),
-///   - adds no new computed mechanical contribution: the ability-bonus-target
+///   - adds no new computed mechanical contribution beyond the flat
+///     Intimidating skill-bonus magnitude (SD18): the ability-bonus-target
 ///     record surfaces the already-computed modifier for the chosen ability as
-///     recognition, and the size/senses records carry the grounded source value
-///     as identity only,
+///     recognition, the size/senses records carry the grounded source value as
+///     identity only, and Intimidating names only the flat racial-bonus
+///     magnitude (mirroring the Dwarf Stonecunning / Elf/Gnome/Half-Elf Keen
+///     Senses idiom) — no Intimidate-check-total engine is introduced,
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Half-Orc-specific `race.half_orc.bounded_semantics` note naming the
-///     still-unproven families explicitly (Intimidating, Orc Ferocity, weapon
-///     familiarity),
+///     still-unproven families explicitly (Orc Ferocity, weapon familiarity),
 ///   - is bounded to race recognition only; it deliberately grounds no Half-Orc
 ///     class-chassis interaction, no other race, and no PF1 alternate ruleset.
 fn explain_half_orc_race_seam(
@@ -3074,18 +5848,35 @@ fn explain_half_orc_race_seam(
         ),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
-    // the generic race.semantics.unverified diagnostic for Half-Orc specifically
+    // ----- intimidating (flat skill-bonus idiom, mirroring Dwarf Stonecunning /
+    // Elf/Gnome/Half-Elf Keen Senses) -----
+    explanations.push(ComputationExplanation {
+        id: "race.half_orc.trait_bundle.intimidating".to_owned(),
+        value: HALF_ORC_INTIMIDATING_BONUS,
+        detail: format!(
+            "Half-Orc racial trait bundle — Intimidating: PF1 Core Half-Orc grants a flat \
+             {HALF_ORC_INTIMIDATING_BONUS:+} racial bonus on Intimidate skill checks \
+             (halforc_abilities_race.lst — Intimidating entry, \
+             BONUS:SKILL|Intimidate|{HALF_ORC_INTIMIDATING_BONUS}|TYPE=Racial). This is a \
+             bounded recognition record naming only the flat racial-bonus magnitude, mirroring \
+             the Dwarf Stonecunning / Elf Keen Senses / Gnome Keen Senses / Half-Elf Keen \
+             Senses skill-bonus idiom already established on this seam; it is deliberately NOT \
+             an Intimidate-check-total engine"
+        ),
+    });
+
+    // Bounded honesty: five dimensions are now grounded. This replaces the
+    // generic race.semantics.unverified diagnostic for Half-Orc specifically
     // and stays non-claim-blocking so the deterministic pilot still reports
     // computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.half_orc.bounded_semantics".to_owned(),
         message: "Half-Orc race semantics are grounded for the deterministic pilot's chosen \
-                  ability-bonus target, size, speed, and senses trait bundle; the remaining PF1 \
-                  Core Half-Orc racial trait surface remains unverified: Intimidating (a bonus \
-                  on Intimidate checks), Orc Ferocity (fighting on for one more round after \
-                  being brought below 0 hit points), and weapon familiarity (orc double axe, \
-                  falchion, and treating any weapon with 'orc' in its name as martial)."
+                  ability-bonus target, size, speed, senses, and Intimidating trait bundle; the \
+                  remaining PF1 Core Half-Orc racial trait surface remains unverified: Orc \
+                  Ferocity (fighting on for one more round after being brought below 0 hit \
+                  points), and weapon familiarity (orc double axe, falchion, and treating any \
+                  weapon with 'orc' in its name as martial)."
             .to_owned(),
         claim_blocking: false,
     });
@@ -3096,30 +5887,38 @@ const HALFLING_SIZE_CATEGORY: &str = "Small";
 const HALFLING_BASE_SPEED_FEET: i16 = 20;
 const HALFLING_DEX_ADJUSTMENT: i16 = 2;
 const HALFLING_STR_ADJUSTMENT: i16 = -2;
+const HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS: i16 = 2;
+const HALFLING_LUCK_ALL_SAVES_BONUS: i16 = 1;
 
 /// SD13-E2 Halfling racial trait bundle explanation seam (mirroring the
 /// Dwarf/Elf/Gnome fixed-ability-pair pattern for the sixth and final
 /// non-Human core race).
 ///
-/// Surfaces four grounded PF1 Core Rulebook Halfling racial trait dimensions
-/// (ability modifiers, size, speed, senses) as explicit `ComputationExplanation`
-/// records so the Halfling identity is legible on the runtime path rather than
-/// left behind the generic `race.semantics.unverified` diagnostic.
+/// Surfaces six grounded PF1 Core Rulebook Halfling racial trait dimensions
+/// (ability modifiers, size, speed, senses, Keen Senses, Sure-Footed) as
+/// explicit `ComputationExplanation` records so the Halfling identity is
+/// legible on the runtime path rather than left behind the generic
+/// `race.semantics.unverified` diagnostic.
 ///
 /// This function:
 ///   - runs only when `race_id == race:halfling`; every other race is
 ///     unaffected (Human, Dwarf, Elf, Gnome, Half-Elf, and Half-Orc keep their
 ///     own seams),
-///   - adds no new computed mechanical contribution: the ability-modifiers
+///   - adds no new computed mechanical contribution beyond the flat Keen
+///     Senses / Sure-Footed skill-bonus magnitudes: the ability-modifiers
 ///     record is recognition-only (the chosen Dexterity/Strength scores are
 ///     understood to already reflect the fixed +2/-2 racial adjustment; no
-///     arithmetic is performed on this seam), and the size/senses records
-///     carry the grounded source value as identity only,
+///     arithmetic is performed on this seam), the size/senses records carry
+///     the grounded source value as identity only, Keen Senses names only the
+///     flat +2 Perception racial-bonus magnitude, and Sure-Footed names only
+///     the flat +2 Acrobatics/Climb racial-bonus magnitude (both mirroring
+///     the Dwarf Stonecunning / Elf/Gnome/Half-Elf Keen Senses / Half-Orc
+///     Intimidating idiom, not a skill-check-total engine),
 ///   - replaces the generic `race.semantics.unverified` diagnostic with a
 ///     Halfling-specific `race.halfling.bounded_semantics` note naming the
-///     still-unproven families explicitly (Fearless, Halfling Luck, Keen
-///     Senses, Sure-Footed, weapon familiarity, and the explicit absence of
-///     any Halfling racial bonus feat),
+///     still-unproven families explicitly (Fearless, Halfling Luck, weapon
+///     familiarity, and the explicit absence of any Halfling racial bonus
+///     feat),
 ///   - is bounded to race recognition only; it deliberately grounds no
 ///     Halfling class-chassis interaction, no other race, and no PF1
 ///     alternate ruleset.
@@ -3190,20 +5989,113 @@ fn explain_halfling_race_seam(
             .to_owned(),
     });
 
-    // Bounded honesty: only the four named dimensions are grounded. This replaces
+    // ----- Keen Senses (flat skill-bonus idiom, mirroring Dwarf Stonecunning /
+    // Elf/Gnome/Half-Elf Keen Senses / Half-Orc Intimidating) -----
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.keen_senses".to_owned(),
+        value: 2,
+        detail: "Halfling racial trait bundle — Keen Senses: PF1 Core Halfling grants a flat \
+                  +2 racial bonus on Perception skill checks \
+                  (core_essentials/races/halfling/halfling_abilities_race.lst Keen Senses entry \
+                  — BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
+                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
+                  only the flat racial-bonus magnitude on the deterministic pilot seam, \
+                  mirroring the Dwarf Stonecunning / Elf Keen Senses / Gnome Keen Senses / \
+                  Half-Elf Keen Senses / Half-Orc Intimidating skill-bonus idiom already \
+                  established on this seam; it is deliberately NOT a Perception-check-total \
+                  engine."
+            .to_owned(),
+    });
+
+    // ----- Sure-Footed (flat skill-bonus idiom, mirroring Keen Senses above and
+    // the Dwarf Stonecunning / Elf/Gnome/Half-Elf Keen Senses / Half-Orc
+    // Intimidating skill-bonus idiom already established on this seam) -----
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.sure_footed".to_owned(),
+        value: 2,
+        detail: "Halfling racial trait bundle — Sure-Footed: PF1 Core Halfling grants a flat \
+                  +2 racial bonus on Acrobatics and Climb skill checks \
+                  (core_essentials/races/halfling/halfling_abilities_race.lst Sure-Footed \
+                  entry — BONUS:SKILL|Acrobatics,Climb|2|TYPE=Racial). This is a bounded \
+                  recognition record naming only the flat racial-bonus magnitude on the \
+                  deterministic pilot seam, mirroring the Keen Senses / Dwarf Stonecunning / \
+                  Elf Keen Senses / Gnome Keen Senses / Half-Elf Keen Senses / Half-Orc \
+                  Intimidating skill-bonus idiom already established on this seam; it is \
+                  deliberately NOT an Acrobatics/Climb-check-total engine."
+            .to_owned(),
+    });
+
+    // ----- Fearless (flat racial saving-throw-bonus idiom, mirroring Dwarf
+    // Hardy's flat +2 saving-throw-vs-poison/spells bonuses applied to a
+    // Halfling-specific named save category) -----
+    // Grounded flat +2 racial bonus on saving throws against fear
+    // (core_essentials/races/halfling/halfling_abilities_race.lst Fearless
+    // entry — BONUS:VAR|SaveBonus_vs_Fear|2|TYPE=Racial). This is deliberately
+    // NOT a saving-throw-total engine: the recognized value names only the
+    // flat racial-bonus magnitude on the deterministic pilot seam, mirroring
+    // the already-grounded Dwarf Hardy flat racial saving-throw-bonus idiom
+    // on this same seam shape. Halfling Luck (a separate +1 luck bonus on
+    // ALL saving throws, which explicitly stacks with Fearless per the
+    // corpus DESC text) remains a distinct, still-unproven family.
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.fearless".to_owned(),
+        value: HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS,
+        detail: format!(
+            "Halfling racial trait bundle — Fearless: PF1 Core Halfling grants a flat \
+             {HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS:+} racial bonus on saving throws against \
+             fear (halfling_abilities_race.lst Fearless entry — \
+             BONUS:VAR|SaveBonus_vs_Fear|{HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS}|TYPE=Racial). \
+             This is a bounded flat saving-throw-bonus-magnitude recognition record naming the \
+             Fearless identity on the deterministic pilot seam, mirroring the already-grounded \
+             Dwarf Hardy flat racial saving-throw-bonus idiom; no saving-throw-total or \
+             fear-effect-resolution engine exists anywhere in this codebase, so no check \
+             resolution is fabricated from this record"
+        ),
+    });
+
+    // ----- Halfling Luck (flat racial saving-throw-bonus idiom, mirroring
+    // Fearless above and the Dwarf Hardy flat racial saving-throw-bonus idiom
+    // already established on this seam, applied to a broader "all saving
+    // throws" scope rather than a single named save category) -----
+    // Grounded flat +1 racial bonus on all saving throws
+    // (core_essentials/races/halfling/halfling_abilities_race.lst Halfling
+    // Luck entry — BONUS:VAR|Halfling_HalflingLuck_SaveBonus|1|TYPE=Racial).
+    // This is deliberately NOT a saving-throw-total engine: the recognized
+    // value names only the flat racial-bonus magnitude on the deterministic
+    // pilot seam, mirroring the already-grounded Dwarf Hardy / Halfling
+    // Fearless flat racial saving-throw-bonus idiom on this same seam shape.
+    // Per the corpus DESC text, this bonus explicitly stacks with Fearless
+    // (a distinct, already-grounded fear-specific save bonus).
+    explanations.push(ComputationExplanation {
+        id: "race.halfling.trait_bundle.halfling_luck".to_owned(),
+        value: HALFLING_LUCK_ALL_SAVES_BONUS,
+        detail: format!(
+            "Halfling racial trait bundle — Halfling Luck: PF1 Core Halfling grants a flat \
+             {HALFLING_LUCK_ALL_SAVES_BONUS:+} racial bonus on all saving throws \
+             (halfling_abilities_race.lst Halfling Luck entry — \
+             BONUS:VAR|Halfling_HalflingLuck_SaveBonus|{HALFLING_LUCK_ALL_SAVES_BONUS}|TYPE=Racial). \
+             This is a bounded flat saving-throw-bonus-magnitude recognition record naming the \
+             Halfling Luck identity on the deterministic pilot seam, mirroring the \
+             already-grounded Dwarf Hardy / Halfling Fearless flat racial saving-throw-bonus \
+             idiom; no saving-throw-total or luck-effect-resolution engine exists anywhere in \
+             this codebase, so no check resolution is fabricated from this record"
+        ),
+    });
+
+    // Bounded honesty: only the eight named dimensions are grounded. This replaces
     // the generic race.semantics.unverified diagnostic for Halfling specifically
     // and stays non-claim-blocking so the deterministic pilot still reports
     // computed evidence.
     diagnostics.push(ComputationDiagnostic {
         id: "race.halfling.bounded_semantics".to_owned(),
         message: "Halfling race semantics are grounded for the deterministic pilot's ability \
-                  modifiers, size, speed, and senses trait bundle; the remaining PF1 Core \
-                  Halfling racial trait surface remains unverified: Fearless (a bonus on saves \
-                  against fear), Halfling Luck (a luck bonus on all saving throws), Keen Senses \
-                  (a bonus on Perception checks), Sure-Footed (a bonus on Acrobatics and Climb \
-                  checks), and weapon familiarity (sling and thrown weapons). PF1 core \
-                  Halflings gain no racial bonus feat (unlike Human), so that family is \
-                  explicitly not applicable rather than silently omitted."
+                  modifiers, size, speed, senses, Keen Senses (Perception bonus), \
+                  Sure-Footed (Acrobatics/Climb bonus), Fearless (saving-throw-vs-fear \
+                  bonus), and Halfling Luck (all-saving-throws bonus) trait bundle; the \
+                  remaining PF1 Core Halfling racial trait surface remains unverified: weapon \
+                  familiarity (sling and thrown weapons). PF1 core Halflings gain no racial \
+                  bonus feat (unlike Human), so that family is explicitly not applicable \
+                  rather than silently omitted."
             .to_owned(),
         claim_blocking: false,
     });
@@ -3371,11 +6263,13 @@ fn supported_fighter_level(input: &CharacterInput) -> Option<u8> {
 }
 
 /// Fighter armor-training profile for a given Fighter level. Armor training 1 is
-/// gained at level 3, and armor training 2 at level 7; before level 3 there is no
-/// armor-training effect.
+/// gained at level 3, armor training 2 at level 7, armor training 3 at level
+/// 11, and armor training 4 at level 15 (SD18 widening); before level 3 there
+/// is no armor-training effect.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct FighterArmorTraining {
-    /// Armor-training rank (0 before level 3, 1 from level 3, 2 from level 7).
+    /// Armor-training rank (0 before level 3, 1 from level 3, 2 from level 7,
+    /// 3 from level 11, 4 from level 15).
     rank: u8,
     /// Reduction applied to the worn armor's armor-check penalty (moves it toward 0).
     armor_check_reduction: i16,
@@ -3384,7 +6278,19 @@ struct FighterArmorTraining {
 }
 
 fn fighter_armor_training(level: u8) -> FighterArmorTraining {
-    if level >= FIGHTER_ARMOR_TRAINING_2_LEVEL {
+    if level >= FIGHTER_ARMOR_TRAINING_4_LEVEL {
+        FighterArmorTraining {
+            rank: 4,
+            armor_check_reduction: ARMOR_TRAINING_4_ARMOR_CHECK_REDUCTION,
+            max_dex_increase: ARMOR_TRAINING_4_MAX_DEX_INCREASE,
+        }
+    } else if level >= FIGHTER_ARMOR_TRAINING_3_LEVEL {
+        FighterArmorTraining {
+            rank: 3,
+            armor_check_reduction: ARMOR_TRAINING_3_ARMOR_CHECK_REDUCTION,
+            max_dex_increase: ARMOR_TRAINING_3_MAX_DEX_INCREASE,
+        }
+    } else if level >= FIGHTER_ARMOR_TRAINING_2_LEVEL {
         FighterArmorTraining {
             rank: 2,
             armor_check_reduction: ARMOR_TRAINING_2_ARMOR_CHECK_REDUCTION,
@@ -3642,8 +6548,138 @@ fn explain_fighter_class_features(
         });
     }
 
+    if level >= 12
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_12_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_12_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 12 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_12_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. The canonical Weapon Specialization \
+                     selection's prerequisites (fighter level 4 and Weapon Focus with the chosen \
+                     weapon) are honestly met by the canonical loadout. This slice grounds the \
+                     bonus-feat slot, not a general feat-effect or prerequisite engine, so it \
+                     contributes no computed mechanical value (+0)"
+            ),
+        });
+    }
+
+    if level >= 14
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_14_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_14_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 14 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_14_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. The canonical Greater Weapon \
+                     Specialization selection's prerequisites (fighter level 12, Weapon Focus \
+                     and Weapon Specialization with the chosen weapon) are honestly met by the \
+                     canonical loadout. This slice grounds the bonus-feat slot, not a general \
+                     feat-effect or prerequisite engine, so it contributes no computed \
+                     mechanical value (+0)"
+            ),
+        });
+    }
+
+    if level >= 16
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_16_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_16_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 16 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_16_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. The canonical Critical Focus selection's \
+                     prerequisite (base attack bonus +9) is honestly met by the canonical \
+                     loadout. This slice grounds the bonus-feat slot, not a general feat-effect \
+                     or prerequisite engine, so it contributes no computed mechanical value (+0)"
+            ),
+        });
+    }
+
+    if level >= 18
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_18_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 18 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. The canonical Staggering Critical \
+                     selection's prerequisites (Critical Focus and base attack bonus +13) are \
+                     honestly met by the canonical loadout: Critical Focus is the level-16 \
+                     fighter bonus feat and the level-18 base attack bonus is +18. This slice \
+                     grounds the bonus-feat slot, not a general feat-effect or prerequisite \
+                     engine, so it contributes no computed mechanical value (+0)"
+            ),
+        });
+    }
+
+    if level >= 20
+        && let Some(selection) = choice_selection(input, FIGHTER_LEVEL_20_BONUS_FEAT_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.level_20_bonus_feat".to_owned(),
+            value: 0,
+            detail: format!(
+                "Fighter level 20 grants an additional bonus feat; the named selection \
+                     ({FIGHTER_LEVEL_20_BONUS_FEAT_CHOICE_ID} -> {selection}) is surfaced as an \
+                     explicit progression seam only. The canonical Critical Mastery selection's \
+                     prerequisites (two other critical feats) are honestly met by the canonical \
+                     loadout: Improved Critical, Critical Focus, and Staggering Critical are all \
+                     already-selected fighter bonus feats. This slice grounds the bonus-feat \
+                     slot, not a general feat-effect or prerequisite engine, so it contributes no \
+                     computed mechanical value (+0)"
+            ),
+        });
+    }
+
     let armor_training = fighter_armor_training(level);
-    if armor_training.rank == 2 {
+    if armor_training.rank == 4 {
+        let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
+        let raised_max_dex = CHAIN_SHIRT_MAX_DEX + armor_training.max_dex_increase;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.armor_training".to_owned(),
+            value: i16::from(armor_training.rank),
+            detail: format!(
+                "Fighter level {FIGHTER_ARMOR_TRAINING_4_LEVEL} Armor Training 4 (armor training, \
+                 cr_abilities_class.lst Fighter): further reduces the worn Chain Shirt armor-check \
+                 penalty by {ARMOR_TRAINING_4_ARMOR_CHECK_REDUCTION} cumulative (from \
+                 {CHAIN_SHIRT_ARMOR_CHECK_PENALTY:+} to {reduced_penalty:+}, already capped at 0 by \
+                 Armor Training 2, so no further reduction is visible), which raises the \
+                 armor-check-penalty-affected selected skill totals (Climb, Swim) by no additional \
+                 amount on this fixture, and raises the maximum Dexterity bonus by \
+                 {ARMOR_TRAINING_4_MAX_DEX_INCREASE} cumulative (from {CHAIN_SHIRT_MAX_DEX} to \
+                 {raised_max_dex}); on the deterministic +2 Dexterity contribution, this changes \
+                 no derived armor-class value on this fixture"
+            ),
+        });
+    } else if armor_training.rank == 3 {
+        let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
+        let raised_max_dex = CHAIN_SHIRT_MAX_DEX + armor_training.max_dex_increase;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.armor_training".to_owned(),
+            value: i16::from(armor_training.rank),
+            detail: format!(
+                "Fighter level {FIGHTER_ARMOR_TRAINING_3_LEVEL} Armor Training 3 (armor training, \
+                 cr_abilities_class.lst Fighter): further reduces the worn Chain Shirt armor-check \
+                 penalty by {ARMOR_TRAINING_3_ARMOR_CHECK_REDUCTION} cumulative (from \
+                 {CHAIN_SHIRT_ARMOR_CHECK_PENALTY:+} to {reduced_penalty:+}, already capped at 0 by \
+                 Armor Training 2, so no further reduction is visible), which raises the \
+                 armor-check-penalty-affected selected skill totals (Climb, Swim) by no additional \
+                 amount on this fixture, and raises the maximum Dexterity bonus by \
+                 {ARMOR_TRAINING_3_MAX_DEX_INCREASE} cumulative (from {CHAIN_SHIRT_MAX_DEX} to \
+                 {raised_max_dex}); on the deterministic +2 Dexterity contribution, this changes \
+                 no derived armor-class value on this fixture"
+            ),
+        });
+    } else if armor_training.rank == 2 {
         let reduced_penalty = effective_chain_shirt_armor_check_penalty(level);
         let raised_max_dex = CHAIN_SHIRT_MAX_DEX + armor_training.max_dex_increase;
         explanations.push(ComputationExplanation {
@@ -3680,7 +6716,11 @@ fn explain_fighter_class_features(
     let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
     if weapon_training_bonus > 0 {
         let rank = fighter_weapon_training_rank(level);
-        let rank_level = if rank >= 2 {
+        let rank_level = if rank >= 4 {
+            FIGHTER_WEAPON_TRAINING_1_LEVEL + 3 * FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE
+        } else if rank >= 3 {
+            FIGHTER_WEAPON_TRAINING_1_LEVEL + 2 * FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE
+        } else if rank >= 2 {
             FIGHTER_WEAPON_TRAINING_1_LEVEL + FIGHTER_WEAPON_TRAINING_RANK_LEVEL_STRIDE
         } else {
             FIGHTER_WEAPON_TRAINING_1_LEVEL
@@ -3727,6 +6767,120 @@ fn explain_fighter_class_features(
                 ),
             });
         }
+
+        // Weapon Training 3 (level 13, SD18 widening) also grants a third chosen
+        // weapon group a bonus two points lower than the first group's. The
+        // canonical third group (Polearms) covers no equipped weapon on the
+        // deterministic Longsword loadout, so this is an explanation-only record:
+        // its +1 is never folded into the Longsword baseline melee attack bonus,
+        // which uses the first-group rank. Mirrors the second-group idiom exactly.
+        if rank >= 3
+            && choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID)
+                == Some(POLEARMS_GROUP_SELECTION)
+        {
+            let third_group_bonus = rank - 2;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.fighter.weapon_training_group_3".to_owned(),
+                value: third_group_bonus,
+                detail: format!(
+                    "Fighter level {rank_level} Weapon Training {rank} also grants a third \
+                     chosen weapon group \
+                     ({FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID} -> {POLEARMS_GROUP_SELECTION}) \
+                     +{third_group_bonus} to attack and damage rolls with weapons of that \
+                     group. No polearm is part of the deterministic Longsword loadout, so this \
+                     seam is explanation-only: the +{third_group_bonus} is not folded into any \
+                     computed total, and the baseline melee attack bonus uses only the \
+                     first-group (Heavy Blades) rank"
+                ),
+            });
+        }
+
+        // Weapon Training 4 (level 17, SD18 widening) also grants a fourth
+        // chosen weapon group a bonus three points lower than the first
+        // group's. The canonical fourth group (Hammers) covers no equipped
+        // weapon on the deterministic Longsword loadout, so this is an
+        // explanation-only record: its +1 is never folded into the Longsword
+        // baseline melee attack bonus, which uses the first-group rank.
+        // Mirrors the second-group and third-group idiom exactly.
+        if rank >= 4
+            && choice_selection(input, FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID)
+                == Some(HAMMERS_GROUP_SELECTION)
+        {
+            let fourth_group_bonus = rank - 3;
+            explanations.push(ComputationExplanation {
+                id: "class_feature.fighter.weapon_training_group_4".to_owned(),
+                value: fourth_group_bonus,
+                detail: format!(
+                    "Fighter level {rank_level} Weapon Training {rank} also grants a fourth \
+                     chosen weapon group \
+                     ({FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID} -> {HAMMERS_GROUP_SELECTION}) \
+                     +{fourth_group_bonus} to attack and damage rolls with weapons of that \
+                     group. No hammer is part of the deterministic Longsword loadout, so this \
+                     seam is explanation-only: the +{fourth_group_bonus} is not folded into any \
+                     computed total, and the baseline melee attack bonus uses only the \
+                     first-group (Heavy Blades) rank"
+                ),
+            });
+        }
+    }
+
+    // Armor Mastery (level 19, SD18 widening): a bounded flat-magnitude
+    // record only, mirroring exactly how the Barbarian's own Damage
+    // Reduction class feature was grounded (class_feature.barbarian.
+    // damage_reduction). No damage-resolution engine and no incoming-damage
+    // total exists anywhere in this codebase to apply it, and no
+    // worn-armor-or-shield condition check is computed, so this grounds no
+    // actual damage reduction.
+    if level >= FIGHTER_ARMOR_MASTERY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.armor_mastery".to_owned(),
+            value: ARMOR_MASTERY_DAMAGE_REDUCTION,
+            detail: format!(
+                "Fighter level {FIGHTER_ARMOR_MASTERY_LEVEL} Armor Mastery (cr_abilities_class.lst \
+                 Fighter; verified against d20pfsrd.com/classes/core-classes/fighter/ and \
+                 aonprd.com/ClassDisplay.aspx?ItemName=Fighter, byte-for-byte agreement: \"a \
+                 fighter gains DR {ARMOR_MASTERY_DAMAGE_REDUCTION}/-- whenever he is wearing \
+                 armor or using a shield\"): a bounded flat-magnitude record only (value \
+                 {ARMOR_MASTERY_DAMAGE_REDUCTION}, non-fabricated), mirroring exactly how the \
+                 Barbarian's own Damage Reduction class feature was grounded -- no \
+                 damage-resolution engine and no incoming-damage total exists anywhere in this \
+                 codebase to apply it, and no worn-armor-or-shield condition check is computed, \
+                 so this grounds no actual damage reduction"
+            ),
+        });
+    }
+
+    // Weapon Mastery (level 20, SD18 widening, the Fighter capstone): a
+    // bounded grant-only identity/magnitude record only, mirroring exactly
+    // how the Fighter's own Armor Mastery class feature was grounded
+    // (class_feature.fighter.armor_mastery). No critical-hit-confirmation
+    // engine, no damage-multiplier-application engine, and no
+    // disarm-resolution engine exists anywhere in this codebase to apply
+    // it, so this grounds no actual automatic-critical-confirmation, no
+    // actual damage-multiplier change, and no actual disarm immunity.
+    if level >= FIGHTER_WEAPON_MASTERY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.fighter.weapon_mastery".to_owned(),
+            value: WEAPON_MASTERY_CRITICAL_MULTIPLIER_INCREASE,
+            detail: format!(
+                "Fighter level {FIGHTER_WEAPON_MASTERY_LEVEL} Weapon Mastery \
+                 (cr_abilities_class.lst Fighter; verified against \
+                 d20pfsrd.com/classes/core-classes/fighter/ and \
+                 aonprd.com/ClassDisplay.aspx?ItemName=Fighter, byte-for-byte agreement: \"a \
+                 fighter chooses one weapon, such as the longsword, greataxe, or longbow. Any \
+                 attacks made with that weapon automatically confirm all critical threats and \
+                 have their damage multiplier increased by {WEAPON_MASTERY_CRITICAL_MULTIPLIER_INCREASE} \
+                 (x2 becomes x3, for example). In addition, he cannot be disarmed while wielding \
+                 a weapon of this type\"): a bounded grant-only identity/magnitude record only \
+                 (critical-multiplier-increase value {WEAPON_MASTERY_CRITICAL_MULTIPLIER_INCREASE}, \
+                 non-fabricated), mirroring exactly how the Fighter's own Armor Mastery class \
+                 feature was grounded -- no critical-hit-confirmation engine, no \
+                 damage-multiplier-application engine, and no disarm-resolution engine exists \
+                 anywhere in this codebase to apply it, so this grounds no actual \
+                 automatic-critical-confirmation, no actual damage-multiplier change, and no \
+                 actual disarm immunity"
+            ),
+        });
     }
 }
 
@@ -3876,7 +7030,7 @@ fn explain_fighter_favored_class_bonus_choice(
 /// validates the level-5 and level-9 weapon-training-group choices, since each is
 /// structurally identical to a bonus-feat slot (a named choice-set that must match
 /// one canonical selection).
-const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 10] = [
+const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 17] = [
     (
         LEVEL_1_CHARACTER_FEAT_CHOICE_ID,
         POWER_ATTACK_FEAT_SELECTION,
@@ -3913,6 +7067,34 @@ const CANONICAL_FIGHTER_FEAT_CHOICES: [(&str, &str); 10] = [
     (
         FIGHTER_LEVEL_10_BONUS_FEAT_CHOICE_ID,
         GREATER_WEAPON_FOCUS_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_12_BONUS_FEAT_CHOICE_ID,
+        WEAPON_SPECIALIZATION_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_WEAPON_TRAINING_GROUP_3_CHOICE_ID,
+        POLEARMS_GROUP_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_14_BONUS_FEAT_CHOICE_ID,
+        GREATER_WEAPON_SPECIALIZATION_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_16_BONUS_FEAT_CHOICE_ID,
+        CRITICAL_FOCUS_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_WEAPON_TRAINING_GROUP_4_CHOICE_ID,
+        HAMMERS_GROUP_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_18_BONUS_FEAT_CHOICE_ID,
+        STAGGERING_CRITICAL_FEAT_SELECTION,
+    ),
+    (
+        FIGHTER_LEVEL_20_BONUS_FEAT_CHOICE_ID,
+        CRITICAL_MASTERY_FEAT_SELECTION,
     ),
 ];
 
@@ -4520,6 +7702,142 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
         });
     }
 
+    // Aura of Justice: below the level-11 gate, this stays a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it (SD18 level-11
+    // widening), it transitions to a bounded GRANT-only identity record
+    // (mirroring the Monk Diamond Body idiom exactly). No ally-aura/positional
+    // engine and no smite-evil-resource-sharing execution engine exists
+    // anywhere in this codebase to apply the shared smite to.
+    if level < PALADIN_AURA_OF_JUSTICE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_justice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Justice at paladin level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Aura of Justice is an 11th-level paladin class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_justice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Justice granted at paladin level {level} (PF1 Core Rulebook, \
+                 11th-level paladin class feature): \"At 11th level, a paladin can expend two \
+                 uses of her smite evil ability to grant the ability to smite evil to all \
+                 allies within 10 feet, using her bonuses, but through their own weapons.\" \
+                 This is a bounded grant-only identity record only (value 0, non-fabricated): \
+                 no ally-aura/positional engine and no smite-evil-resource-sharing execution \
+                 engine exists anywhere in this codebase to apply the shared smite to."
+            ),
+        });
+    }
+
+    // Aura of Faith: below the level-14 gate, this stays a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it (SD18 level-14
+    // widening), it transitions to a bounded GRANT-only identity record
+    // (mirroring the Aura of Justice / Monk Diamond Body idiom exactly). No
+    // alignment-treatment execution engine and no damage-reduction-
+    // overcoming resolution engine exists anywhere in this codebase to
+    // apply this to.
+    if level < PALADIN_AURA_OF_FAITH_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_faith".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Faith at paladin level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Aura of Faith is a 14th-level paladin class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_faith".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Faith granted at paladin level {level} (PF1 Core Rulebook, \
+                 14th-level paladin class feature): \"At 14th level, a paladin's weapons are \
+                 treated as good-aligned for the purposes of overcoming damage reduction. \
+                 Additionally, any attack made against an enemy within 10 feet of her is \
+                 treated as good-aligned for the purposes of overcoming damage reduction.\" \
+                 This is a bounded grant-only identity record only (value 0, non-fabricated): \
+                 no alignment-treatment execution engine and no damage-reduction-overcoming \
+                 resolution engine exists anywhere in this codebase to apply this to."
+            ),
+        });
+    }
+
+    // Aura of Righteousness: below the level-17 gate, this stays a correct
+    // PF1 Core Rulebook level-gate absence (value 0); at or above it (SD18
+    // level-17 widening), it transitions to a bounded GRANT-only identity
+    // record (mirroring the Aura of Justice / Aura of Faith idiom exactly).
+    // No damage-reduction-application engine and no compulsion-immunity-
+    // check engine exists anywhere in this codebase to apply this to.
+    if level < PALADIN_AURA_OF_RIGHTEOUSNESS_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_righteousness".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Righteousness at paladin level {level}: correctly absent at \
+                 level {level} by PF1 Core Rulebook level gate; the at-grant rule is named but \
+                 not computed. Aura of Righteousness is a 17th-level paladin class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.aura_of_righteousness".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Aura of Righteousness granted at paladin level {level} (PF1 Core \
+                 Rulebook, 17th-level paladin class feature): \"At 17th level, a paladin \
+                 gains DR 5/evil and immunity to compulsion spells and spell-like abilities.\" \
+                 This is a bounded grant-only identity record only (value 0, non-fabricated): \
+                 no damage-reduction-application engine and no compulsion-immunity-check \
+                 engine exists anywhere in this codebase to apply this to."
+            ),
+        });
+    }
+
+    // Holy Champion: below the level-20 gate, this stays a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it (SD18 level-20
+    // widening, the class capstone), it transitions to a bounded GRANT-only
+    // identity record (mirroring the Aura of Justice / Aura of Faith / Aura
+    // of Righteousness idiom exactly). No damage-reduction-application
+    // engine, no banishment-spell-effect-resolution engine, and no
+    // healing-maximization execution engine exists anywhere in this
+    // codebase to apply this to.
+    if level < PALADIN_HOLY_CHAMPION_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.holy_champion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Holy Champion at paladin level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Holy Champion is the 20th-level paladin capstone."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.paladin.holy_champion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Paladin Holy Champion granted at paladin level {level} (PF1 Core Rulebook, \
+                 20th-level paladin capstone): \"At 20th level, a paladin becomes a conduit for \
+                 the power of her god. Her DR increases to 10/evil. Whenever she uses smite evil \
+                 and successfully strikes an evil outsider, the outsider is also subject to a \
+                 banishment, using her paladin level as the caster level... After the \
+                 banishment effect and the damage from the attack is resolved, the smite \
+                 immediately ends. In addition, whenever she channels positive energy or uses \
+                 lay on hands to heal a creature, she heals the maximum possible amount.\" This \
+                 is a bounded grant-only identity record only (value 0, non-fabricated): no \
+                 damage-reduction-application engine, no banishment-spell-effect-resolution \
+                 engine, and no healing-maximization execution engine exists anywhere in this \
+                 codebase to apply any of this to."
+            ),
+        });
+    }
+
     // SD13-E5: ground the partial-caster IDENTITY itself as one more flat
     // level-gate record, distinct from the still-ungrounded spell burden
     // named below. PF1 Core Rulebook: effective caster level = max(paladin
@@ -4557,9 +7875,12 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // in each detail. No mercy's effect is computed (no lay-on-hands
     // execution engine exists) and prerequisite chains (e.g. the frightened
     // mercy requiring the shaken mercy) are named, not validated.
-    let repeat_mercy_slots: [(u8, u8, &str); 2] = [
+    let repeat_mercy_slots: [(u8, u8, &str); 5] = [
         (2, PALADIN_SECOND_MERCY_GRANT_LEVEL, PALADIN_SECOND_MERCY_CHOICE_ID),
         (3, PALADIN_THIRD_MERCY_GRANT_LEVEL, PALADIN_THIRD_MERCY_CHOICE_ID),
+        (4, PALADIN_FOURTH_MERCY_GRANT_LEVEL, PALADIN_FOURTH_MERCY_CHOICE_ID),
+        (5, PALADIN_FIFTH_MERCY_GRANT_LEVEL, PALADIN_FIFTH_MERCY_CHOICE_ID),
+        (6, PALADIN_SIXTH_MERCY_GRANT_LEVEL, PALADIN_SIXTH_MERCY_CHOICE_ID),
     ];
     for (slot_number, grant_level, choice_id) in repeat_mercy_slots {
         if level < grant_level {
@@ -4572,12 +7893,27 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
             "the 6th-level CRB tier additions are Dazed, Diseased, and Staggered \
              (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset contains them, its \
              extra entries being non-CRB expansions outside this pf1.core_rulebook seam)"
-        } else {
+        } else if slot_number == 3 {
             "the 9th-level CRB tier additions are Cursed, Exhausted, Frightened, Nauseated, \
              and Poisoned (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset \
              contains them); the rule text chains prerequisites — Exhausted requires the \
              fatigue mercy, Frightened requires the shaken mercy, Nauseated requires the \
              sickened mercy — which this bounded recognition names but does not validate"
+        } else if slot_number == 4 {
+            "the 12th-level CRB tier additions are Blinded, Deafened, Paralyzed, and Stunned \
+             (legacy.aonprd.com Core Rulebook text; d20pfsrd's superset contains them, its \
+             extra entries — Amputated, Ensorcelled, Petrified — being non-CRB expansions \
+             outside this pf1.core_rulebook seam)"
+        } else if slot_number == 5 {
+            "unlike the 6th/9th/12th-level repeat grants, the 15th-level grant adds NO new \
+             named mercy-list tier (verified independently against d20pfsrd and the Archives \
+             of Nethys aonprd.com mirror, byte-for-byte agreement): the paladin simply selects \
+             a fifth mercy from the already-existing 3rd/6th/9th/12th-tier pool"
+        } else {
+            "like the 15th-level grant, the 18th-level grant adds NO new named mercy-list tier \
+             (verified independently against d20pfsrd and the Archives of Nethys aonprd.com \
+             mirror, byte-for-byte agreement): the paladin simply selects a sixth mercy from the \
+             already-existing 3rd/6th/9th/12th-tier pool"
         };
         explanations.push(ComputationExplanation {
             id: format!("class_chassis.paladin.mercy_{slot_number}_choice"),
@@ -4617,7 +7953,9 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // themselves ("0", "1", "2") are never computed, and the "0"-entry
     // bonus-spells-only nuance is surfaced in the record text.
     let paladin_spell_level_access: i16 =
-        if level >= PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        if level >= PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            4
+        } else if level >= PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             3
         } else if level >= PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             2
@@ -4636,11 +7974,12 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
              of both primary sources: 1st-level spells begin at paladin level \
              {PALADIN_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 2nd-level at \
              {PALADIN_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
-             {PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}; the 4th-level column stays \
-             \"—\" through level 10). A gate-level \"0\" spells-per-day entry is access via \
-             Charisma bonus spells only, per the PF1 rule text. This grounds the access ladder \
-             only: no spell slot counts, no spells per day, no spells known or prepared \
-             posture, no bonus slots from a high Charisma, and no spell save DCs are computed"
+             {PALADIN_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
+             {PALADIN_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}). A gate-level \"0\" \
+             spells-per-day entry is access via Charisma bonus spells only, per the PF1 rule \
+             text. This grounds the access ladder only: no spell slot counts, no spells per \
+             day, no spells known or prepared posture, no bonus slots from a high Charisma, \
+             and no spell save DCs are computed"
         ),
     });
 
@@ -4651,18 +7990,67 @@ fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // against the raw table rows of both primary sources (identical on
     // d20pfsrd and legacy.aonprd.com): level 4 "0/—/—/—", level 5 "1/—/—/—",
     // level 6 "1/—/—/—", level 7 "1/0/—/—", level 8 "1/1/—/—", level 9
-    // "2/1/—/—", level 10 "2/1/0/—". A "0" is a genuine table entry
-    // (bonus-spells-only access), NOT an absence — inaccessible spell levels
-    // ("—" columns) get no record at all. Only the base counts are grounded:
-    // bonus spells per day from a high Charisma are never computed.
-    let paladin_base_spells_per_day: [Option<i16>; 3] = match level {
-        4 => [Some(0), None, None],
-        5 | 6 => [Some(1), None, None],
-        7 => [Some(1), Some(0), None],
-        8 => [Some(1), Some(1), None],
-        9 => [Some(2), Some(1), None],
-        10 => [Some(2), Some(1), Some(0)],
-        _ => [None, None, None],
+    // "2/1/—/—", level 10 "2/1/0/—", level 11 "2/1/1/—", level 12
+    // "2/2/1/—", and (SD18 cycle-2026-07-15T1800) level 13 "3/2/1/0" —
+    // verified independently against d20pfsrd and legacy.aonprd.com (a
+    // third and fourth fetch disagreed with each other and with this
+    // pairing, showing a nonsensical decrease from a "1" at level 12 to a
+    // "0" at level 13 on the 4th-level column, rejected as a known
+    // tool-extraction artifact since spells-per-day tables never decrease
+    // with level, and the accepted 2/2/1/— -> 3/2/1/0 pairing matches the
+    // already-landed Ranger level-13 widening's identical table shape), and
+    // (SD18 cycle-2026-07-15T2500) level 14 "3/2/1/1" — verified
+    // independently against d20pfsrd, the Archives of Nethys aonprd.com
+    // mirror, and legacy.aonprd.com, all three agreeing byte-for-byte with
+    // no self-contradictory fetches this time: only the 4th-level column
+    // genuinely rises (from 0 to 1), the first castable 4th-level paladin
+    // spell slot; and (SD18 cycle-2026-07-15T4300) level 15 "3/2/2/1" —
+    // verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror, byte-for-byte agreement with no disagreement or
+    // self-contradiction, so a third source was not required: only the
+    // 3rd-level column genuinely rises (from 1 to 2), while the 1st/2nd/
+    // 4th-level columns stay 3/2/1 numerically unchanged; and (SD18
+    // cycle-2026-07-16T2800) level 19 "4/3/3/2" — verified independently
+    // against d20pfsrd (a raw HTML parse of the class table, bypassing
+    // AI-summarization) and the Archives of Nethys aonprd.com mirror,
+    // byte-for-byte agreement with no disagreement or self-contradiction,
+    // so a third source was not required: only the 3rd-level column
+    // genuinely rises (from 2 to 3), while the 1st/2nd/4th-level columns
+    // stay 4/3/2 numerically unchanged; and (SD18 cycle-2026-07-16T1500)
+    // level 20 "4/4/3/3" — verified independently against a raw `curl`
+    // fetch of d20pfsrd.com's own class table HTML and a raw `curl` fetch
+    // of the Archives of Nethys aonprd.com mirror's ClassDisplay.aspx HTML,
+    // both bypassing AI-summarization, byte-for-byte agreement with no
+    // disagreement: the 1st/3rd-level columns stay 4/3 numerically
+    // unchanged, while the 2nd-level AND 4th-level columns BOTH genuinely
+    // rise simultaneously (2nd from 3 to 4, 4th from 2 to 3) — the first
+    // level in this row's own widening history where two columns rise at
+    // once, a deliberate deviation from the single-column-rise pattern seen
+    // at every level from 13 through 19, so both raw HTML fetches were
+    // double-checked directly to guard against a tool-extraction artifact.
+    // A "0" is a
+    // genuine table entry (bonus-spells-only access), NOT an absence —
+    // inaccessible spell levels ("—" columns) get no record at all. Only
+    // the base counts are grounded: bonus spells per day from a high
+    // Charisma are never computed.
+    let paladin_base_spells_per_day: [Option<i16>; 4] = match level {
+        4 => [Some(0), None, None, None],
+        5 | 6 => [Some(1), None, None, None],
+        7 => [Some(1), Some(0), None, None],
+        8 => [Some(1), Some(1), None, None],
+        9 => [Some(2), Some(1), None, None],
+        10 => [Some(2), Some(1), Some(0), None],
+        11 => [Some(2), Some(1), Some(1), None],
+        12 => [Some(2), Some(2), Some(1), None],
+        13 => [Some(3), Some(2), Some(1), Some(0)],
+        14 => [Some(3), Some(2), Some(1), Some(1)],
+        15 => [Some(3), Some(2), Some(2), Some(1)],
+        16 => [Some(3), Some(3), Some(2), Some(1)],
+        17 => [Some(4), Some(3), Some(2), Some(1)],
+        18 => [Some(4), Some(3), Some(2), Some(2)],
+        19 => [Some(4), Some(3), Some(3), Some(2)],
+        20 => [Some(4), Some(4), Some(3), Some(3)],
+        _ => [None, None, None, None],
     };
     for (index, base_count) in paladin_base_spells_per_day.iter().enumerate() {
         let Some(base_count) = base_count else {
@@ -4972,8 +8360,9 @@ fn supported_ranger_level(input: &CharacterInput) -> Option<u8> {
 ///
 /// This deliberately does not compute a supported class-feature surface. It
 /// grounds no favored-enemy conditional application, no combat-style feat
-/// grant, no animal companion, no favored-terrain breadth (the level-8th/13th/
-/// 18th additional-terrain and bonus-increase progression), no Hunter's Bond
+/// grant, no animal companion, no favored-terrain breadth beyond the
+/// grounded 8th/13th-level intervals (the level-18th additional-terrain and
+/// bonus-increase progression stays out of scope), no Hunter's Bond
 /// ally-bonus application or animal-companion stat block, and no spell posture.
 /// It only emits the grounded Track / Favored Enemy / combat-style / Endurance /
 /// Favored Terrain / Hunter's Bond level-gate values that prove the F6 surface
@@ -5340,6 +8729,90 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                     detail: detail_3,
                 });
             }
+
+            // SD18 cycle-2026-07-15T2100 (level-14 widening): the ranger's FOURTH
+            // combat-style bonus feat. Unlike feats 1-3, this slot is NOT validated
+            // against a restricted feat-name list: the PF1 Core Rulebook's own
+            // Combat Style feat tables (Archery, Two-Weapon Combat) do not name any
+            // options beyond the 10th-level tier (verified independently against
+            // three sources dedicated to the combat-style feat lists specifically —
+            // d20pfsrd's Ranger Combat Styles page, the Archives of Nethys
+            // aonprd.com RangerCombatStyles page, and a Paizo rules-forum thread —
+            // all three agree the printed list stops after 10th level; later
+            // sourcebooks add 14th/18th-level options, out of SD-18's
+            // Core-Rulebook-only scope). So this mirrors the Favored
+            // Terrain/Quarry OPEN-ENDED recognition idiom instead: the raw chosen
+            // feat string is recorded as a +0 identity record with no
+            // restricted-list validation and no feat mechanics computed.
+            if let Some(style) = style_name
+                && level >= RANGER_COMBAT_STYLE_BONUS_FEAT_4_LEVEL
+                && let Some(feat_selection_4) =
+                    choice_selection(input, RANGER_COMBAT_STYLE_BONUS_FEAT_4_CHOICE_ID)
+            {
+                explanations.push(ComputationExplanation {
+                    id: "class_chassis.ranger.combat_style_bonus_feat_4_choice".to_owned(),
+                    value: 0,
+                    detail: format!(
+                        "Ranger {style} FOURTH combat style bonus feat at ranger level {level} \
+                         ({RANGER_COMBAT_STYLE_BONUS_FEAT_4_CHOICE_ID} -> {feat_selection_4}): \
+                         the ranger's combat style grants bonus feats at 2nd, 6th, 10th, 14th, \
+                         and 18th level (verified independently against d20pfsrd and the \
+                         Archives of Nethys aonprd.com mirror), but unlike the 2nd/6th/10th-level \
+                         grants, the PF1 Core Rulebook does not tabulate any named {style} feat \
+                         options at the 14th-level tier (verified independently against three \
+                         sources dedicated to the combat-style feat lists themselves; later \
+                         sourcebooks such as the Advanced Player's Guide are the ones that add \
+                         named 14th-level options, outside SD-18's Core-Rulebook-only scope). \
+                         This is therefore an OPEN-ENDED recognition record of the choice slot \
+                         only (mirroring the Favored Terrain/Quarry idiom, not the \
+                         closed-restricted-list idiom used for feats 1-3): no restricted-list \
+                         validation is attempted at this tier, and no mechanical value is \
+                         fabricated (+0)"
+                    ),
+                });
+            }
+
+            // SD18 cycle-2026-07-16T0244 (level-18 widening): the ranger's FIFTH
+            // combat-style bonus feat. Mirrors the fourth bonus feat's own
+            // reasoning exactly: the PF1 Core Rulebook's own Combat Style feat
+            // tables (Archery, Two-Weapon Combat) do not name any options beyond
+            // the 10th-level tier (verified independently against three sources
+            // dedicated to the combat-style feat lists specifically — d20pfsrd's
+            // Ranger Combat Styles page, the Archives of Nethys aonprd.com
+            // RangerCombatStyles page, and a Paizo rules-forum thread — all three
+            // agree the printed list stops after 10th level; later sourcebooks
+            // add 18th-level options, out of SD-18's Core-Rulebook-only scope).
+            // So this mirrors the fourth bonus feat's own OPEN-ENDED recognition
+            // idiom: the raw chosen feat string is recorded as a +0 identity
+            // record with no restricted-list validation and no feat mechanics
+            // computed.
+            if let Some(style) = style_name
+                && level >= RANGER_COMBAT_STYLE_BONUS_FEAT_5_LEVEL
+                && let Some(feat_selection_5) =
+                    choice_selection(input, RANGER_COMBAT_STYLE_BONUS_FEAT_5_CHOICE_ID)
+            {
+                explanations.push(ComputationExplanation {
+                    id: "class_chassis.ranger.combat_style_bonus_feat_5_choice".to_owned(),
+                    value: 0,
+                    detail: format!(
+                        "Ranger {style} FIFTH combat style bonus feat at ranger level {level} \
+                         ({RANGER_COMBAT_STYLE_BONUS_FEAT_5_CHOICE_ID} -> {feat_selection_5}): \
+                         the ranger's combat style grants bonus feats at 2nd, 6th, 10th, 14th, \
+                         and 18th level (verified independently against d20pfsrd and the \
+                         Archives of Nethys aonprd.com mirror), but like the 14th-level grant, \
+                         the PF1 Core Rulebook does not tabulate any named {style} feat options \
+                         at the 18th-level tier (verified independently against three sources \
+                         dedicated to the combat-style feat lists themselves; later sourcebooks \
+                         such as the Advanced Player's Guide are the ones that add named \
+                         18th-level options, outside SD-18's Core-Rulebook-only scope). This is \
+                         therefore an OPEN-ENDED recognition record of the choice slot only \
+                         (mirroring the Favored Terrain/Quarry idiom, not the \
+                         closed-restricted-list idiom used for feats 1-3): no restricted-list \
+                         validation is attempted at this tier, and no mechanical value is \
+                         fabricated (+0)"
+                    ),
+                });
+            }
         }
     }
 
@@ -5504,9 +8977,151 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         favored_enemy_second_bonus_increase_target
             == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION);
 
+    // SD18 ranger level 15: recognize the THIRD interval's own
+    // bonus-increase TARGET choice, only meaningful once the ranger has
+    // reached the Favored Enemy rule's 15th-level interval. Each interval
+    // grants its own +2 increase to any ONE favored enemy — a genuine, free
+    // player choice, so an increase targeting the same enemy at all three
+    // grounded intervals STACKS (2 base + 2 + 2 + 2). Absent an explicit
+    // target selection in chosen input, nothing is fabricated.
+    let favored_enemy_third_bonus_increase_target =
+        if level >= RANGER_FAVORED_ENEMY_FOURTH_INTERVAL_LEVEL {
+            choice_selection(input, RANGER_FAVORED_ENEMY_THIRD_BONUS_INCREASE_CHOICE_ID)
+        } else {
+            None
+        };
+
+    if let Some(target) = favored_enemy_third_bonus_increase_target {
+        let target_name = if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION {
+            Some("the first favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION {
+            Some("the second favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION {
+            Some("the third favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FOURTH_SELECTION {
+            Some("the fourth favored enemy")
+        } else {
+            None
+        };
+        let detail = if let Some(name) = target_name {
+            format!(
+                "Ranger Favored Enemy 15th-level-interval bonus-increase target selection at \
+                 ranger level {level} \
+                 ({RANGER_FAVORED_ENEMY_THIRD_BONUS_INCREASE_CHOICE_ID} -> {target}): names \
+                 {name} as the one favored enemy whose bonus increases by +2 at this \
+                 15th-level interval, per the PF1 Core Rulebook rule that the bonus against \
+                 any ONE favored enemy -- including a newly selected one, if so desired -- \
+                 increases by +2 at each such interval (5th, 10th, 15th, and 20th ranger \
+                 level); an increase targeting the same enemy at multiple grounded intervals \
+                 stacks. This is a recognition record of the choice slot only (+0); the \
+                 increased magnitude itself is grounded separately on whichever favored enemy \
+                 was actually named"
+            )
+        } else {
+            format!(
+                "Ranger Favored Enemy 15th-level-interval bonus-increase target selection at \
+                 ranger level {level} is present \
+                 ({RANGER_FAVORED_ENEMY_THIRD_BONUS_INCREASE_CHOICE_ID} -> {target}), but \
+                 only the PF1 Core Rulebook restricted set (the first, second, third, or \
+                 fourth favored enemy) is recognized on this bounded seam; no target identity \
+                 is grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_bonus_increase_3_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    let first_favored_enemy_targeted_at_third_interval = favored_enemy_third_bonus_increase_target
+        == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION);
+    let second_favored_enemy_targeted_at_third_interval =
+        favored_enemy_third_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION);
+    let third_favored_enemy_targeted_at_third_interval = favored_enemy_third_bonus_increase_target
+        == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION);
+    let fourth_favored_enemy_targeted_at_third_interval =
+        favored_enemy_third_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FOURTH_SELECTION);
+
+    // SD18 ranger level 20: recognize the FOURTH (and final) interval's own
+    // bonus-increase TARGET choice, only meaningful once the ranger has
+    // reached the Favored Enemy rule's FINAL 20th-level interval. Each
+    // interval grants its own +2 increase to any ONE favored enemy — a
+    // genuine, free player choice, so an increase targeting the same enemy
+    // at all four grounded intervals STACKS (2 base + 2 + 2 + 2 + 2). Absent
+    // an explicit target selection in chosen input, nothing is fabricated.
+    let favored_enemy_fourth_bonus_increase_target =
+        if level >= RANGER_FAVORED_ENEMY_FIFTH_INTERVAL_LEVEL {
+            choice_selection(input, RANGER_FAVORED_ENEMY_FOURTH_BONUS_INCREASE_CHOICE_ID)
+        } else {
+            None
+        };
+
+    if let Some(target) = favored_enemy_fourth_bonus_increase_target {
+        let target_name = if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION {
+            Some("the first favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION {
+            Some("the second favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION {
+            Some("the third favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FOURTH_SELECTION {
+            Some("the fourth favored enemy")
+        } else if target == RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIFTH_SELECTION {
+            Some("the fifth favored enemy")
+        } else {
+            None
+        };
+        let detail = if let Some(name) = target_name {
+            format!(
+                "Ranger Favored Enemy 20th-level-interval bonus-increase target selection at \
+                 ranger level {level} \
+                 ({RANGER_FAVORED_ENEMY_FOURTH_BONUS_INCREASE_CHOICE_ID} -> {target}): names \
+                 {name} as the one favored enemy whose bonus increases by +2 at this FINAL \
+                 20th-level interval, per the PF1 Core Rulebook rule that the bonus against \
+                 any ONE favored enemy -- including a newly selected one, if so desired -- \
+                 increases by +2 at each such interval (5th, 10th, 15th, and 20th ranger \
+                 level, the last one within PF1's 1-20 level cap); an increase targeting the \
+                 same enemy at multiple grounded intervals stacks. This is a recognition \
+                 record of the choice slot only (+0); the increased magnitude itself is \
+                 grounded separately on whichever favored enemy was actually named"
+            )
+        } else {
+            format!(
+                "Ranger Favored Enemy 20th-level-interval bonus-increase target selection at \
+                 ranger level {level} is present \
+                 ({RANGER_FAVORED_ENEMY_FOURTH_BONUS_INCREASE_CHOICE_ID} -> {target}), but \
+                 only the PF1 Core Rulebook restricted set (the first, second, third, fourth, \
+                 or fifth favored enemy) is recognized on this bounded seam; no target identity \
+                 is grounded and no mechanical value is fabricated (+0)"
+            )
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_bonus_increase_4_choice".to_owned(),
+            value: 0,
+            detail,
+        });
+    }
+
+    let first_favored_enemy_targeted_at_fourth_interval =
+        favored_enemy_fourth_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIRST_SELECTION);
+    let second_favored_enemy_targeted_at_fourth_interval =
+        favored_enemy_fourth_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_SECOND_SELECTION);
+    let third_favored_enemy_targeted_at_fourth_interval =
+        favored_enemy_fourth_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_THIRD_SELECTION);
+    let fourth_favored_enemy_targeted_at_fourth_interval =
+        favored_enemy_fourth_bonus_increase_target
+            == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FOURTH_SELECTION);
+
     let favored_enemy_bonus: i16 = 2
         + if first_favored_enemy_targeted { 2 } else { 0 }
-        + if first_favored_enemy_targeted_at_second_interval { 2 } else { 0 };
+        + if first_favored_enemy_targeted_at_second_interval { 2 } else { 0 }
+        + if first_favored_enemy_targeted_at_third_interval { 2 } else { 0 }
+        + if first_favored_enemy_targeted_at_fourth_interval { 2 } else { 0 };
     explanations.push(ComputationExplanation {
         id: "class_chassis.ranger.favored_enemy_skill_bonus".to_owned(),
         value: favored_enemy_bonus,
@@ -5564,7 +9179,9 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
 
         let second_favored_enemy_bonus: i16 = 2
             + if second_favored_enemy_targeted { 2 } else { 0 }
-            + if second_favored_enemy_targeted_at_second_interval { 2 } else { 0 };
+            + if second_favored_enemy_targeted_at_second_interval { 2 } else { 0 }
+            + if second_favored_enemy_targeted_at_third_interval { 2 } else { 0 }
+            + if second_favored_enemy_targeted_at_fourth_interval { 2 } else { 0 };
         explanations.push(ComputationExplanation {
             id: "class_chassis.ranger.favored_enemy_2_skill_bonus".to_owned(),
             value: second_favored_enemy_bonus,
@@ -5620,8 +9237,10 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             ),
         });
 
-        let third_favored_enemy_bonus: i16 =
-            if third_favored_enemy_targeted_at_second_interval { 4 } else { 2 };
+        let third_favored_enemy_bonus: i16 = 2
+            + if third_favored_enemy_targeted_at_second_interval { 2 } else { 0 }
+            + if third_favored_enemy_targeted_at_third_interval { 2 } else { 0 }
+            + if third_favored_enemy_targeted_at_fourth_interval { 2 } else { 0 };
         explanations.push(ComputationExplanation {
             id: "class_chassis.ranger.favored_enemy_3_skill_bonus".to_owned(),
             value: third_favored_enemy_bonus,
@@ -5647,6 +9266,168 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                  conditional-application engine is implemented, so whether any specific attack \
                  is actually made against this favored enemy is never resolved and no combat \
                  baseline is modified by this record"
+            ),
+        });
+    }
+
+    // SD18 ranger level 15: recognize the FOURTH favored-enemy selection,
+    // the rule's 15th-level interval grant. Mirrors the third favored
+    // enemy's own choice-recognition idiom exactly (open-ended, raw string
+    // interpolation, no restricted-list validation) and its own flat
+    // magnitude formula (base +2, or +4 if the 15th-level interval's
+    // bonus-increase target names the fourth favored enemy -- the ONLY
+    // interval that can target it, since it did not exist before this
+    // level).
+    if level >= RANGER_FAVORED_ENEMY_FOURTH_INTERVAL_LEVEL
+        && let Some(fourth_favored_enemy) =
+            choice_selection(input, RANGER_FAVORED_ENEMY_FOURTH_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_4_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger 4th Favored Enemy selection \
+                 ({RANGER_FAVORED_ENEMY_FOURTH_CHOICE_ID} -> {fourth_favored_enemy}): at \
+                 ranger level {level}, PF1 Core Rulebook Favored Enemy grants \"an additional \
+                 favored enemy\" at the 15th-level interval. The level-{level} FOURTH \
+                 favored-enemy type chosen for this character is {fourth_favored_enemy}. This \
+                 is a bounded recognition record of the chosen enemy type only; the flat \
+                 bonus magnitude is grounded separately, and no target-type matching or \
+                 conditional-application engine is implemented, so it carries no fabricated \
+                 mechanical value (+0)"
+            ),
+        });
+
+        let fourth_favored_enemy_bonus: i16 = 2
+            + if fourth_favored_enemy_targeted_at_third_interval { 2 } else { 0 }
+            + if fourth_favored_enemy_targeted_at_fourth_interval { 2 } else { 0 };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_4_skill_bonus".to_owned(),
+            value: fourth_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 4th Favored Enemy skill bonus (PF1 Core Rulebook, level {level}): \
+                 +{fourth_favored_enemy_bonus} on Bluff, Knowledge, Perception, Sense Motive, \
+                 and Survival checks against the fourth favored enemy. This grounds only the \
+                 flat +{fourth_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific skill \
+                 check is actually made against this favored enemy is never resolved and no \
+                 skill total is modified by this record"
+            ),
+        });
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_4_attack_damage_bonus".to_owned(),
+            value: fourth_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 4th Favored Enemy weapon attack/damage bonus (PF1 Core Rulebook, \
+                 level {level}): +{fourth_favored_enemy_bonus} on weapon attack rolls AND \
+                 weapon damage rolls against the fourth favored enemy. This grounds only the \
+                 flat +{fourth_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific attack \
+                 is actually made against this favored enemy is never resolved and no combat \
+                 baseline is modified by this record"
+            ),
+        });
+    }
+
+    // SD18 ranger level 20: recognize the FIFTH (and final) favored-enemy
+    // selection, the rule's 20th-level interval grant. Mirrors the fourth
+    // favored enemy's own choice-recognition idiom exactly (open-ended, raw
+    // string interpolation, no restricted-list validation) and its own flat
+    // magnitude formula (base +2, or +4 if the 20th-level interval's
+    // bonus-increase target names the fifth favored enemy -- the ONLY
+    // interval that can target it, since it did not exist before this
+    // level).
+    if level >= RANGER_FAVORED_ENEMY_FIFTH_INTERVAL_LEVEL
+        && let Some(fifth_favored_enemy) =
+            choice_selection(input, RANGER_FAVORED_ENEMY_FIFTH_CHOICE_ID)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_5_choice".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger 5th Favored Enemy selection \
+                 ({RANGER_FAVORED_ENEMY_FIFTH_CHOICE_ID} -> {fifth_favored_enemy}): at \
+                 ranger level {level}, PF1 Core Rulebook Favored Enemy grants \"an additional \
+                 favored enemy\" at the FINAL 20th-level interval. The level-{level} FIFTH \
+                 favored-enemy type chosen for this character is {fifth_favored_enemy}. This \
+                 is a bounded recognition record of the chosen enemy type only; the flat \
+                 bonus magnitude is grounded separately, and no target-type matching or \
+                 conditional-application engine is implemented, so it carries no fabricated \
+                 mechanical value (+0)"
+            ),
+        });
+
+        let fifth_favored_enemy_targeted_at_fourth_interval =
+            favored_enemy_fourth_bonus_increase_target
+                == Some(RANGER_FAVORED_ENEMY_BONUS_INCREASE_FIFTH_SELECTION);
+        let fifth_favored_enemy_bonus: i16 =
+            if fifth_favored_enemy_targeted_at_fourth_interval { 4 } else { 2 };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_5_skill_bonus".to_owned(),
+            value: fifth_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 5th Favored Enemy skill bonus (PF1 Core Rulebook, level {level}): \
+                 +{fifth_favored_enemy_bonus} on Bluff, Knowledge, Perception, Sense Motive, \
+                 and Survival checks against the fifth favored enemy. This grounds only the \
+                 flat +{fifth_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific skill \
+                 check is actually made against this favored enemy is never resolved and no \
+                 skill total is modified by this record"
+            ),
+        });
+
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.favored_enemy_5_attack_damage_bonus".to_owned(),
+            value: fifth_favored_enemy_bonus,
+            detail: format!(
+                "Ranger 5th Favored Enemy weapon attack/damage bonus (PF1 Core Rulebook, \
+                 level {level}): +{fifth_favored_enemy_bonus} on weapon attack rolls AND \
+                 weapon damage rolls against the fifth favored enemy. This grounds only the \
+                 flat +{fifth_favored_enemy_bonus} magnitude; no target-type matching and no \
+                 conditional-application engine is implemented, so whether any specific attack \
+                 is actually made against this favored enemy is never resolved and no combat \
+                 baseline is modified by this record"
+            ),
+        });
+    }
+
+    // Master Hunter: below the level-20 gate, this stays a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it (SD18 level-20
+    // widening, the class capstone), it transitions to a bounded GRANT-only
+    // identity record (mirroring the Paladin Holy Champion idiom exactly).
+    // No action-economy engine, no attack-resolution engine, and no
+    // saving-throw-resolution engine exists anywhere in this codebase to
+    // apply this to.
+    if level < RANGER_MASTER_HUNTER_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.master_hunter".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Master Hunter at ranger level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Master Hunter is the 20th-level ranger capstone."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.master_hunter".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Master Hunter granted at ranger level {level} (PF1 Core Rulebook, \
+                 20th-level ranger capstone): \"A ranger of 20th level becomes a master \
+                 hunter. He can always move at full speed while using Survival to follow \
+                 tracks without penalty. He can, as a standard action, make a single attack \
+                 against a favored enemy at his full attack bonus. If the attack hits, the \
+                 target takes damage normally and must make a Fortitude save or die. The DC \
+                 of this save is equal to 10 + 1/2 the ranger's level + the ranger's Wisdom \
+                 modifier. A ranger can choose instead to deal an amount of nonlethal damage \
+                 equal to the creature's current hit points... A ranger can use this ability \
+                 once per day against each favored enemy type he possesses, but not against \
+                 the same creature more than once in a 24-hour period.\" This is a bounded \
+                 grant-only identity record only (value 0, non-fabricated): no action-economy \
+                 engine, no attack-resolution engine, and no saving-throw-resolution engine \
+                 exists anywhere in this codebase to apply any of this to."
             ),
         });
     }
@@ -5789,7 +9570,150 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         let second_favored_terrain_targeted = favored_terrain_bonus_increase_target
             == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION);
 
-        let favored_terrain_bonus: i16 = if first_favored_terrain_targeted { 4 } else { 2 };
+        // SD18 ranger level 13: recognize the 13th-level interval's own
+        // bonus-increase TARGET choice, only meaningful once the ranger has
+        // reached the Favored Terrain rule's 13th-level interval. Each
+        // interval grants its own +2 increase to any ONE favored terrain --
+        // a genuine, free player choice, so an increase targeting the same
+        // terrain at both grounded intervals STACKS (2 base + 2 + 2). Absent
+        // an explicit target selection in chosen input, nothing is
+        // fabricated. Mirrors the already-grounded Favored Enemy 10th-level
+        // interval's own bonus-increase-target idiom exactly.
+        let favored_terrain_second_bonus_increase_target =
+            if level >= RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL {
+                choice_selection(input, RANGER_FAVORED_TERRAIN_SECOND_BONUS_INCREASE_CHOICE_ID)
+            } else {
+                None
+            };
+
+        if let Some(target) = favored_terrain_second_bonus_increase_target {
+            let target_name = if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION {
+                Some("the first favored terrain")
+            } else if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION {
+                Some("the second favored terrain")
+            } else if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_THIRD_SELECTION {
+                Some("the third favored terrain")
+            } else {
+                None
+            };
+            let detail = if let Some(name) = target_name {
+                format!(
+                    "Ranger Favored Terrain 13th-level-interval bonus-increase target selection \
+                     at ranger level {level} \
+                     ({RANGER_FAVORED_TERRAIN_SECOND_BONUS_INCREASE_CHOICE_ID} -> {target}): \
+                     names {name} as the one favored terrain whose skill and initiative bonus \
+                     increases by +2 at this 13th-level interval, per the PF1 Core Rulebook rule \
+                     that the bonus in any ONE favored terrain -- including a newly selected \
+                     one, if so desired -- increases by +2 at each such interval (8th, 13th, and \
+                     18th ranger level); an increase targeting the same terrain at both grounded \
+                     intervals stacks. This is a recognition record of the choice slot only \
+                     (+0); the increased magnitude itself is grounded separately on whichever \
+                     favored terrain was actually named"
+                )
+            } else {
+                format!(
+                    "Ranger Favored Terrain 13th-level-interval bonus-increase target selection \
+                     at ranger level {level} is present \
+                     ({RANGER_FAVORED_TERRAIN_SECOND_BONUS_INCREASE_CHOICE_ID} -> {target}), but \
+                     only the PF1 Core Rulebook restricted set (the first, second, or third \
+                     favored terrain) is recognized on this bounded seam; no target identity is \
+                     grounded and no mechanical value is fabricated (+0)"
+                )
+            };
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_bonus_increase_2_choice".to_owned(),
+                value: 0,
+                detail,
+            });
+        }
+
+        let first_favored_terrain_targeted_at_second_interval =
+            favored_terrain_second_bonus_increase_target
+                == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION);
+        let second_favored_terrain_targeted_at_second_interval =
+            favored_terrain_second_bonus_increase_target
+                == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION);
+        let third_favored_terrain_targeted_at_second_interval =
+            favored_terrain_second_bonus_increase_target
+                == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_THIRD_SELECTION);
+
+        // SD18 ranger level 18: recognize the 18th-level interval's own
+        // bonus-increase TARGET choice, only meaningful once the ranger has
+        // reached the Favored Terrain rule's 18th-level interval. Each
+        // interval grants its own +2 increase to any ONE favored terrain --
+        // a genuine, free player choice, so an increase targeting the same
+        // terrain at all three grounded intervals STACKS (2 base + 2 + 2 +
+        // 2). Absent an explicit target selection in chosen input, nothing
+        // is fabricated. Mirrors the already-grounded Favored Enemy
+        // 15th-level interval's own bonus-increase-target idiom exactly
+        // (widened to the four-terrain set).
+        let favored_terrain_third_bonus_increase_target =
+            if level >= RANGER_FAVORED_TERRAIN_FOURTH_INTERVAL_LEVEL {
+                choice_selection(input, RANGER_FAVORED_TERRAIN_THIRD_BONUS_INCREASE_CHOICE_ID)
+            } else {
+                None
+            };
+
+        if let Some(target) = favored_terrain_third_bonus_increase_target {
+            let target_name = if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION {
+                Some("the first favored terrain")
+            } else if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION {
+                Some("the second favored terrain")
+            } else if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_THIRD_SELECTION {
+                Some("the third favored terrain")
+            } else if target == RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FOURTH_SELECTION {
+                Some("the fourth favored terrain")
+            } else {
+                None
+            };
+            let detail = if let Some(name) = target_name {
+                format!(
+                    "Ranger Favored Terrain 18th-level-interval bonus-increase target selection \
+                     at ranger level {level} \
+                     ({RANGER_FAVORED_TERRAIN_THIRD_BONUS_INCREASE_CHOICE_ID} -> {target}): \
+                     names {name} as the one favored terrain whose skill and initiative bonus \
+                     increases by +2 at this 18th-level interval, per the PF1 Core Rulebook rule \
+                     that the bonus in any ONE favored terrain -- including a newly selected \
+                     one, if so desired -- increases by +2 at each such interval (8th, 13th, and \
+                     18th ranger level); an increase targeting the same terrain at all three \
+                     grounded intervals stacks. This is a recognition record of the choice slot \
+                     only (+0); the increased magnitude itself is grounded separately on \
+                     whichever favored terrain was actually named"
+                )
+            } else {
+                format!(
+                    "Ranger Favored Terrain 18th-level-interval bonus-increase target selection \
+                     at ranger level {level} is present \
+                     ({RANGER_FAVORED_TERRAIN_THIRD_BONUS_INCREASE_CHOICE_ID} -> {target}), but \
+                     only the PF1 Core Rulebook restricted set (the first, second, third, or \
+                     fourth favored terrain) is recognized on this bounded seam; no target \
+                     identity is grounded and no mechanical value is fabricated (+0)"
+                )
+            };
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_bonus_increase_3_choice".to_owned(),
+                value: 0,
+                detail,
+            });
+        }
+
+        let first_favored_terrain_targeted_at_third_interval =
+            favored_terrain_third_bonus_increase_target
+                == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FIRST_SELECTION);
+        let second_favored_terrain_targeted_at_third_interval =
+            favored_terrain_third_bonus_increase_target
+                == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_SECOND_SELECTION);
+        let third_favored_terrain_targeted_at_third_interval =
+            favored_terrain_third_bonus_increase_target
+                == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_THIRD_SELECTION);
+        let fourth_favored_terrain_targeted_at_third_interval =
+            favored_terrain_third_bonus_increase_target
+                == Some(RANGER_FAVORED_TERRAIN_BONUS_INCREASE_FOURTH_SELECTION);
+
+        let favored_terrain_bonus: i16 = 2
+            + if first_favored_terrain_targeted { 2 } else { 0 }
+            + if first_favored_terrain_targeted_at_second_interval { 2 } else { 0 }
+            + if first_favored_terrain_targeted_at_third_interval { 2 } else { 0 };
         explanations.push(ComputationExplanation {
             id: "class_feature.ranger.favored_terrain".to_owned(),
             value: favored_terrain_bonus,
@@ -5811,8 +9735,8 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         // selection, the rule's 8th-level interval grant. Mirrors the second
         // Favored Enemy's own choice-recognition idiom exactly (open-ended,
         // raw string interpolation, no restricted-list validation) and its
-        // own flat magnitude formula (base +2, or +4 if this interval's
-        // bonus-increase target names the second favored terrain).
+        // own flat magnitude formula (base +2, plus +2 per grounded interval
+        // whose bonus-increase target names the second favored terrain).
         if level >= RANGER_FAVORED_TERRAIN_SECOND_INTERVAL_LEVEL
             && let Some(second_favored_terrain) =
                 choice_selection(input, RANGER_FAVORED_TERRAIN_SECOND_CHOICE_ID)
@@ -5833,8 +9757,10 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                 ),
             });
 
-            let second_favored_terrain_bonus: i16 =
-                if second_favored_terrain_targeted { 4 } else { 2 };
+            let second_favored_terrain_bonus: i16 = 2
+                + if second_favored_terrain_targeted { 2 } else { 0 }
+                + if second_favored_terrain_targeted_at_second_interval { 2 } else { 0 }
+                + if second_favored_terrain_targeted_at_third_interval { 2 } else { 0 };
             explanations.push(ComputationExplanation {
                 id: "class_feature.ranger.favored_terrain_2".to_owned(),
                 value: second_favored_terrain_bonus,
@@ -5843,6 +9769,97 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
                      interval): a flat +{second_favored_terrain_bonus} bonus on Initiative \
                      checks and Knowledge (geography), Perception, Stealth, and Survival \
                      checks made when the ranger is in this second chosen favored terrain. \
+                     This is a bounded flat-magnitude record only, non-fabricated: no \
+                     terrain-detection engine decides whether the character is actually in \
+                     the chosen terrain anywhere in this codebase, so no Initiative total or \
+                     skill-check total is modified by this record"
+                ),
+            });
+        }
+
+        // SD18 ranger level 13: recognize the THIRD favored-terrain
+        // selection, the rule's 13th-level interval grant. Mirrors the
+        // third favored enemy's own choice-recognition idiom exactly
+        // (open-ended, raw string interpolation, no restricted-list
+        // validation) and its own flat magnitude formula (base +2, or +4 if
+        // the 13th-level interval's bonus-increase target names it).
+        if level >= RANGER_FAVORED_TERRAIN_THIRD_INTERVAL_LEVEL
+            && let Some(third_favored_terrain) =
+                choice_selection(input, RANGER_FAVORED_TERRAIN_THIRD_CHOICE_ID)
+        {
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_3_choice".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Ranger 3rd Favored Terrain selection \
+                     ({RANGER_FAVORED_TERRAIN_THIRD_CHOICE_ID} -> {third_favored_terrain}): at \
+                     ranger level {level}, PF1 Core Rulebook Favored Terrain grants \"an \
+                     additional favored terrain\" at the 13th-level interval. The \
+                     level-{level} THIRD favored-terrain type chosen for this character is \
+                     {third_favored_terrain}. This is a bounded recognition record of the \
+                     chosen terrain type only; the flat bonus magnitude is grounded \
+                     separately, and no terrain-detection or conditional-application engine \
+                     is implemented, so it carries no fabricated mechanical value (+0)"
+                ),
+            });
+
+            let third_favored_terrain_bonus: i16 = 2
+                + if third_favored_terrain_targeted_at_second_interval { 2 } else { 0 }
+                + if third_favored_terrain_targeted_at_third_interval { 2 } else { 0 };
+            explanations.push(ComputationExplanation {
+                id: "class_feature.ranger.favored_terrain_3".to_owned(),
+                value: third_favored_terrain_bonus,
+                detail: format!(
+                    "Ranger 3rd Favored Terrain bonus (PF1 Core Rulebook, 13th-level \
+                     interval): a flat +{third_favored_terrain_bonus} bonus on Initiative \
+                     checks and Knowledge (geography), Perception, Stealth, and Survival \
+                     checks made when the ranger is in this third chosen favored terrain. \
+                     This is a bounded flat-magnitude record only, non-fabricated: no \
+                     terrain-detection engine decides whether the character is actually in \
+                     the chosen terrain anywhere in this codebase, so no Initiative total or \
+                     skill-check total is modified by this record"
+                ),
+            });
+        }
+
+        // SD18 ranger level 18: recognize the FOURTH favored-terrain
+        // selection, the rule's 18th-level interval grant. Mirrors the
+        // fourth favored enemy's own choice-recognition idiom exactly
+        // (open-ended, raw string interpolation, no restricted-list
+        // validation) and its own flat magnitude formula (base +2, or +4 if
+        // the 18th-level interval's own bonus-increase target names it --
+        // this is the only interval that can boost the fourth favored
+        // terrain, since it is the interval that grants it).
+        if level >= RANGER_FAVORED_TERRAIN_FOURTH_INTERVAL_LEVEL
+            && let Some(fourth_favored_terrain) =
+                choice_selection(input, RANGER_FAVORED_TERRAIN_FOURTH_CHOICE_ID)
+        {
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.favored_terrain_4_choice".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Ranger 4th Favored Terrain selection \
+                     ({RANGER_FAVORED_TERRAIN_FOURTH_CHOICE_ID} -> {fourth_favored_terrain}): at \
+                     ranger level {level}, PF1 Core Rulebook Favored Terrain grants \"an \
+                     additional favored terrain\" at the 18th-level interval. The \
+                     level-{level} FOURTH favored-terrain type chosen for this character is \
+                     {fourth_favored_terrain}. This is a bounded recognition record of the \
+                     chosen terrain type only; the flat bonus magnitude is grounded \
+                     separately, and no terrain-detection or conditional-application engine \
+                     is implemented, so it carries no fabricated mechanical value (+0)"
+                ),
+            });
+
+            let fourth_favored_terrain_bonus: i16 =
+                2 + if fourth_favored_terrain_targeted_at_third_interval { 2 } else { 0 };
+            explanations.push(ComputationExplanation {
+                id: "class_feature.ranger.favored_terrain_4".to_owned(),
+                value: fourth_favored_terrain_bonus,
+                detail: format!(
+                    "Ranger 4th Favored Terrain bonus (PF1 Core Rulebook, 18th-level \
+                     interval): a flat +{fourth_favored_terrain_bonus} bonus on Initiative \
+                     checks and Knowledge (geography), Perception, Stealth, and Survival \
+                     checks made when the ranger is in this fourth chosen favored terrain. \
                      This is a bounded flat-magnitude record only, non-fabricated: no \
                      terrain-detection engine decides whether the character is actually in \
                      the chosen terrain anywhere in this codebase, so no Initiative total or \
@@ -6075,6 +10092,279 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
         });
     }
 
+    // Grounded (SD18 cycle-2026-07-15T6100): Improved Evasion, the 16th-level
+    // Ranger class feature verified independently against two primary PF1
+    // sources (d20pfsrd and the Archives of Nethys aonprd.com mirror both
+    // list "Improved evasion" as the Ranger 16th-level "Special" entry,
+    // byte-for-byte agreement). An upgrade of the 9th-level Evasion identity:
+    // the ranger still takes no damage on a successful Reflex save, and
+    // henceforth takes only HALF damage on a failed save. Grounded as a
+    // bounded +0 identity/recognition record only at/above the gate,
+    // mirroring exactly how Monk's own Improved Evasion and Ranger's own
+    // base Evasion were grounded — no saving-throw-resolution or
+    // damage-resolution engine exists in this codebase, so no damage math is
+    // fabricated from the record. Below the level-16 gate no record is
+    // pushed at all (the level-15 slice's own level-16 negative control
+    // pinned that absence).
+    if level >= RANGER_IMPROVED_EVASION_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.improved_evasion".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Improved Evasion granted at ranger level {level} (PF1 Core Rulebook, \
+                 16th-level ranger class feature): the ranger's evasion improves — he still \
+                 takes no damage on a successful Reflex saving throw against attacks, and \
+                 henceforth takes only half damage on a failed save. This is a bounded \
+                 identity/recognition record only (value 0, non-fabricated): no \
+                 saving-throw-resolution engine and no damage-resolution engine exists anywhere \
+                 in this codebase to apply it, so this grounds no actual damage reduction on \
+                 any save outcome"
+            ),
+        });
+    }
+
+    // Grounded (SD18 cycle-2026-07-15T7000): Hide in Plain Sight, the
+    // 17th-level Ranger "Special" column entry, verified independently
+    // against three primary PF1 sources (d20pfsrd, the Archives of Nethys
+    // aonprd.com mirror, and legacy.aonprd.com all list "Hide in plain
+    // sight" as the sole Ranger 17th-level special feature entry, with
+    // identical rule text): "While in any of his favored terrains, a
+    // ranger of 17th level or higher can use the Stealth skill even while
+    // being observed." Hide in Plain Sight carries no numeric magnitude of
+    // its own and only modifies a hide-while-observed check resolution
+    // that does not exist anywhere in this codebase -- exactly like
+    // Camouflage, it is a genuinely flat/identity-shaped, no-choice,
+    // no-magnitude grant. Below the level-17 gate this is a correct
+    // level-gate absence (value 0); at or above it, it is a bounded
+    // grant-only identity record (value 0, non-fabricated): no
+    // terrain-classification engine and no Stealth-check-execution engine
+    // exists anywhere in this codebase to determine whether the ranger is
+    // actually within a favored terrain while observed, so only the grant
+    // itself is recorded.
+    if level < RANGER_HIDE_IN_PLAIN_SIGHT_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.hide_in_plain_sight".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Hide in Plain Sight at ranger level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant Stealth-while-observed \
+                 identity is named but not computed. Hide in Plain Sight is a 17th-level ranger \
+                 class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.hide_in_plain_sight".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Hide in Plain Sight granted at ranger level {level} (PF1 Core \
+                 Rulebook, 17th-level ranger class feature): while in any of his favored \
+                 terrains, the ranger can use the Stealth skill even while being observed. \
+                 This is a bounded grant-only identity record (value 0, non-fabricated): no \
+                 terrain-classification engine and no Stealth-check-execution engine exists \
+                 anywhere in this codebase to determine whether the ranger is actually within a \
+                 favored terrain while observed, so this only records the grant itself"
+            ),
+        });
+    }
+
+    // Grounded (SD18 cycle-2026-07-14T2300): Quarry, the 11th-level Ranger
+    // "Special" column entry, verified independently against two primary PF1
+    // sources (d20pfsrd and the Archives of Nethys aonprd.com mirror both
+    // list "Quarry" as the sole Ranger 11th-level special feature entry,
+    // with identical rule text): "At 11th level, a ranger can select one
+    // target within line of sight as his quarry... While tracking his
+    // quarry, a ranger can take 10 on his Survival skill checks while
+    // moving at normal speed without penalty. In addition, the ranger
+    // receives a +2 insight bonus on attack rolls made against his quarry,
+    // and he confirms all critical threats against the quarry
+    // automatically. A ranger can select a new quarry as a standard
+    // action... Once a ranger has selected a quarry, he cannot select a
+    // different quarry until 24 hours have passed or the current quarry is
+    // dead, in which case he must wait 1 hour before selecting a new one."
+    //
+    // Quarry mirrors precedent exactly, as a three-part bundle: the
+    // take-10-while-tracking and auto-confirm-critical-threats behaviors are
+    // grant-only identity records (value 0, mirroring the Woodland
+    // Stride/Swift Tracker idiom), since neither a Survival-check-execution
+    // engine nor a critical-confirmation-roll engine exists anywhere in this
+    // codebase; the chosen quarry target (when present in chosen input) is
+    // an open-ended +0 recognition record (mirroring the Favored
+    // Enemy/Favored Terrain choice-recognition idiom exactly, no
+    // restricted-list validation, no matching against the ranger's own
+    // favored-enemy types); and the rule's own flat +2 insight attack-roll
+    // bonus is grounded as a standalone, non-applied magnitude (mirroring
+    // the Favored Enemy attack/damage-bonus idiom exactly). Below the
+    // level-11 gate this is a correct level-gate absence (value 0); no
+    // active-quarry state (the 24-hour reselection cooldown, the 1-hour
+    // post-kill cooldown, or "only one quarry at a time") is tracked
+    // anywhere in this codebase.
+    if level < RANGER_QUARRY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.quarry".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Quarry at ranger level {level}: correctly absent at level {level} by \
+                 PF1 Core Rulebook level gate; the at-grant target-selection identity, its flat \
+                 attack-bonus magnitude, and its check/roll-resolution overrides are named but \
+                 not computed. Quarry is an 11th-level ranger class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.quarry".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Quarry granted at ranger level {level} (PF1 Core Rulebook, 11th-level \
+                 ranger class feature): the ranger can designate one target within line of \
+                 sight as his quarry with a standard action, take 10 on Survival checks while \
+                 tracking it at normal speed, and automatically confirm all critical threats \
+                 made against it. This is a bounded grant-only identity record (value 0, \
+                 non-fabricated): no Survival-check-execution engine and no \
+                 critical-confirmation-roll engine exists anywhere in this codebase, so only \
+                 the grant itself is recorded; the 24-hour reselection cooldown, the 1-hour \
+                 post-kill cooldown, and the \"only one quarry at a time\" constraint are named \
+                 but not tracked as state"
+            ),
+        });
+
+        if let Some(quarry_target) = choice_selection(input, RANGER_QUARRY_CHOICE_ID) {
+            explanations.push(ComputationExplanation {
+                id: "class_chassis.ranger.quarry_choice".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Ranger Quarry target selection ({RANGER_QUARRY_CHOICE_ID} -> \
+                     {quarry_target}): the level-{level} quarry target named for this character \
+                     is {quarry_target}. This is a bounded recognition record of the chosen \
+                     target identity only; PF1 Core Rulebook restricts the quarry to a target \
+                     corresponding to one of the ranger's own favored-enemy types, but no \
+                     favored-enemy-type matching is implemented, so no restriction is enforced \
+                     and no fabricated mechanical value is carried (+0)"
+                ),
+            });
+        }
+
+        // Grounded (SD18 cycle-2026-07-16T3200): the Quarry insight attack-roll
+        // bonus genuinely rises from +2 to +4 at the 19th-level Improved Quarry
+        // gate (RANGER_IMPROVED_QUARRY_LEVEL), verified independently against
+        // two primary PF1 sources (both byte-for-byte identical: "His insight
+        // bonus to attack his quarry increases to +4"). Reuses the
+        // already-existing explanation id, mirroring the Bard Inspire
+        // Competence tiered-magnitude idiom (same id, larger value at the
+        // higher tier) rather than minting a new id for the same magnitude
+        // family.
+        let quarry_attack_bonus = if level >= RANGER_IMPROVED_QUARRY_LEVEL {
+            4
+        } else {
+            2
+        };
+        let quarry_tier_note = if level >= RANGER_IMPROVED_QUARRY_LEVEL {
+            "a flat +2 base insight bonus, raised to +4 by Improved Quarry at 19th ranger level"
+        } else {
+            "a flat +2 insight bonus (rises to +4 at 19th ranger level via Improved Quarry, out \
+             of scope below that gate)"
+        };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.ranger.quarry_attack_bonus".to_owned(),
+            value: quarry_attack_bonus,
+            detail: format!(
+                "Ranger Quarry attack-roll bonus (PF1 Core Rulebook, level {level}): {quarry_tier_note} \
+                 on attack rolls made against the ranger's quarry. This grounds only the flat \
+                 {quarry_attack_bonus} magnitude; no target-selection engine and no \
+                 conditional-application engine is implemented, so whether any specific attack \
+                 is actually made against the quarry is never resolved and no combat baseline \
+                 is modified by this record"
+            ),
+        });
+
+        // Grounded (SD18 cycle-2026-07-16T3200): Improved Quarry, the
+        // 19th-level Ranger "Special" column entry, verified independently
+        // against two primary PF1 sources (d20pfsrd and the Archives of
+        // Nethys aonprd.com mirror both list "Improved quarry" as the sole
+        // Ranger 19th-level special feature entry, with identical rule
+        // text): "At 19th level, the ranger's ability to hunt his quarry
+        // improves. He can now select a quarry as a free action, and can
+        // now take 20 while using Survival to track his quarry, while
+        // moving at normal speed without penalty... If his quarry is
+        // killed or dismissed, he can select a new one after 10 minutes
+        // have passed." Grounded as a bounded +0 identity/recognition
+        // record only at/above the gate, mirroring exactly how Ranger's own
+        // Improved Evasion upgrade of Evasion was grounded (no separate
+        // absence record below the gate) — no action-economy engine and no
+        // Survival-check-execution engine exists in this codebase, so
+        // neither the free-action reselection nor the take-20 tracking
+        // behavior is ever applied to any actual roll or action
+        // resolution. The insight attack-roll bonus increase (+2 to +4) is
+        // grounded separately above, on the already-existing
+        // `quarry_attack_bonus` explanation id.
+        if level >= RANGER_IMPROVED_QUARRY_LEVEL {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.ranger.improved_quarry".to_owned(),
+                value: 0,
+                detail: format!(
+                    "Ranger Improved Quarry granted at ranger level {level} (PF1 Core \
+                     Rulebook, 19th-level ranger class feature): the ranger's ability to hunt \
+                     his quarry improves — he can now select a quarry as a free action \
+                     (up from a standard action) and can now take 20 while using Survival to \
+                     track his quarry while moving at normal speed without penalty (up from \
+                     take 10); if his quarry is killed or dismissed, he can select a new one \
+                     after 10 minutes have passed (down from the base Quarry cooldown of 24 \
+                     hours, or 1 hour after the quarry is confirmed dead). This is a bounded \
+                     identity/recognition record only (value 0, non-fabricated): no \
+                     action-economy engine and no Survival-check-execution engine exists \
+                     anywhere in this codebase to apply it, so this grounds no actual \
+                     free-action resolution, take-20 resolution, or cooldown-state tracking"
+                ),
+            });
+        }
+    }
+
+    // Grounded (SD18 cycle-2026-07-15T0900): Camouflage, the 12th-level
+    // Ranger "Special" column entry, verified independently against two
+    // primary PF1 sources (d20pfsrd and the Archives of Nethys aonprd.com
+    // mirror both list "Camouflage" as the sole Ranger 12th-level special
+    // feature entry, with identical rule text): "A ranger of 12th level or
+    // higher can use the Stealth skill to hide, even while being observed,
+    // as long as she is within any sort of natural terrain that grants at
+    // least partial concealment or partial cover." Camouflage carries no
+    // numeric magnitude of its own and only modifies a
+    // hide-while-observed check resolution that does not exist anywhere in
+    // this codebase -- exactly like Woodland Stride and Swift Tracker, it
+    // is a genuinely flat/identity-shaped, no-choice, no-magnitude grant.
+    // Below the level-12 gate this is a correct level-gate absence (value
+    // 0); at or above it, it is a bounded grant-only identity record (value
+    // 0, non-fabricated): no terrain-classification engine and no
+    // Stealth-check-execution engine exists anywhere in this codebase to
+    // determine whether the ranger is actually within qualifying terrain
+    // while observed, so only the grant itself is recorded.
+    if level < RANGER_CAMOUFLAGE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.camouflage".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Camouflage at ranger level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant Stealth-while-observed \
+                 identity is named but not computed. Camouflage is a 12th-level ranger class \
+                 feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.ranger.camouflage".to_owned(),
+            value: 0,
+            detail: format!(
+                "Ranger Camouflage granted at ranger level {level} (PF1 Core Rulebook, \
+                 12th-level ranger class feature): the ranger can use the Stealth skill to \
+                 hide, even while being observed, as long as she is within any sort of \
+                 natural terrain that grants at least partial concealment or partial cover. \
+                 This is a bounded grant-only identity record (value 0, non-fabricated): no \
+                 terrain-classification engine and no Stealth-check-execution engine exists \
+                 anywhere in this codebase to determine whether the ranger is actually within \
+                 qualifying terrain while observed, so this only records the grant itself"
+            ),
+        });
+    }
+
     // SD13-E5: the Ranger partial-caster identity pair, mirroring the
     // Paladin's effective_caster_level + spell_level_access records
     // record-for-record (PF1 CRB Ranger Spells: "At 4th level and higher,
@@ -6103,7 +10393,9 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     });
 
     let ranger_spell_level_access: i16 =
-        if level >= RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        if level >= RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            4
+        } else if level >= RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             3
         } else if level >= RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             2
@@ -6119,15 +10411,15 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
             "Ranger spell-level access at ranger level {level}: the highest ranger spell level \
              with a non-\"—\" spells-per-day column in the PF1 Core Rulebook Ranger class \
              table is {ranger_spell_level_access} (verified against the raw table rows of \
-             both primary sources: 1st-level spells begin at ranger level \
+             all three primary sources: 1st-level spells begin at ranger level \
              {RANGER_FIRST_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 2nd-level at \
              {RANGER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
-             {RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}; the 4th-level column stays \
-             \"—\" through level 10). A gate-level \"0\" spells-per-day entry is access \
-             via Wisdom bonus spells only, per the PF1 rule text — Wisdom, not the Paladin's \
-             Charisma. This grounds the access ladder only: no spells-per-day counts, no \
-             spells known or prepared posture, no bonus slots from a high Wisdom, and no \
-             spell save DCs are computed"
+             {RANGER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
+             {RANGER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}). A gate-level \"0\" \
+             spells-per-day entry is access via Wisdom bonus spells only, per the PF1 rule \
+             text — Wisdom, not the Paladin's Charisma. This grounds the access ladder only: \
+             no spells-per-day counts, no spells known or prepared posture, no bonus slots \
+             from a high Wisdom, and no spell save DCs are computed"
         ),
     });
 
@@ -6139,19 +10431,76 @@ fn explain_ranger_level1_chassis_and_class_feature_separation(
     // primary sources (identical on d20pfsrd and legacy.aonprd.com, and
     // numerically identical to the Paladin's rows): level 4 "0/—/—/—",
     // level 5 "1/—/—/—", level 6 "1/—/—/—", level 7 "1/0/—/—", level 8
-    // "1/1/—/—", level 9 "2/1/—/—", level 10 "2/1/0/—". A "0" is a genuine
-    // table entry (Wisdom-bonus-spells-only access), NOT an absence —
-    // inaccessible spell levels ("—" columns) get no record at all. Only
-    // the base counts are grounded: bonus spells per day from a high
-    // Wisdom are never computed.
-    let ranger_base_spells_per_day: [Option<i16>; 3] = match level {
-        4 => [Some(0), None, None],
-        5 | 6 => [Some(1), None, None],
-        7 => [Some(1), Some(0), None],
-        8 => [Some(1), Some(1), None],
-        9 => [Some(2), Some(1), None],
-        10 => [Some(2), Some(1), Some(0)],
-        _ => [None, None, None],
+    // "1/1/—/—", level 9 "2/1/—/—", level 10 "2/1/0/—", level 11 "2/1/1/—"
+    // (verified independently for the SD18 level-11 widening cycle: the
+    // 3rd-level column genuinely rises from 0 to 1, the 1st/2nd-level
+    // columns stay 2/1 unchanged, and the 4th-level column stays "—" —
+    // 4th-level ranger spells begin at level 13, outside this row's ceiling,
+    // checked rather than assumed away), level 12 "2/2/1/—" (verified
+    // independently for the SD18 level-12 widening cycle: the 2nd-level
+    // column genuinely rises from 1 to 2, the 1st/3rd-level columns stay
+    // 2/1 unchanged, and the 4th-level column stays "—"), and level 13
+    // "3/2/1/0" (verified independently for the SD18 level-13 widening
+    // cycle against all three primary sources: the 1st-level column
+    // genuinely rises from 2 to 3, the 2nd/3rd-level columns stay 2/1
+    // unchanged, and the 4th-level column newly opens at 0 — a genuine
+    // table entry, not an absence), and level 14 "3/2/1/1" (verified
+    // independently for the SD18 level-14 widening cycle against all three
+    // primary sources: the 1st/2nd/3rd-level columns stay 3/2/1 unchanged,
+    // and the 4th-level column genuinely rises from 0 to 1), and level 15
+    // "3/2/2/1" (verified independently for the SD18 level-15 widening
+    // cycle against two primary sources, d20pfsrd and the Archives of
+    // Nethys aonprd.com mirror, byte-for-byte agreement: the 1st/2nd/4th-
+    // level columns stay 3/2/1 unchanged, and the 3rd-level column
+    // genuinely rises from 1 to 2), and level 16 "3/3/2/1" (verified
+    // independently for the SD18 level-16 widening cycle against two
+    // primary sources, d20pfsrd and the Archives of Nethys aonprd.com
+    // mirror, byte-for-byte agreement: the 2nd/3rd/4th-level columns stay
+    // 3/2/1 unchanged, and the 1st-level column genuinely rises from 2 to
+    // 3), and level 17 "4/3/2/1" (verified independently for the SD18
+    // level-17 widening cycle against three primary sources, d20pfsrd, the
+    // Archives of Nethys aonprd.com mirror, and legacy.aonprd.com, all
+    // byte-for-byte identical: the 2nd/3rd/4th-level columns stay 3/2/1
+    // unchanged, and the 1st-level column genuinely rises from 3 to 4), and
+    // level 18 "4/3/2/2" (verified independently for the SD18 level-18
+    // widening cycle against two primary sources, d20pfsrd and the
+    // Archives of Nethys aonprd.com mirror, byte-for-byte agreement: the
+    // 1st/2nd/3rd-level columns stay 4/3/2 unchanged, and the 4th-level
+    // column genuinely rises from 1 to 2 -- numerically identical to the
+    // already-landed Paladin level-18 row), and level 19 "4/3/3/2"
+    // (verified independently for the SD18 level-19 widening cycle
+    // against two primary sources, d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror, byte-for-byte agreement: the 1st/2nd/4th-level
+    // columns stay 4/3/2 unchanged, and the 3rd-level column genuinely
+    // rises from 2 to 3), and level 20 "4/4/3/3" (verified independently
+    // for the SD18 level-20 widening cycle against two primary sources,
+    // d20pfsrd and the Archives of Nethys aonprd.com mirror, byte-for-byte
+    // agreement: the 1st/3rd-level columns stay 4/3 unchanged, and the
+    // 2nd/4th-level columns both genuinely rise at once, 3 to 4 and 2 to
+    // 3). A
+    // "0" is a
+    // genuine table entry (Wisdom-bonus-spells-only access), NOT an
+    // absence — inaccessible spell levels ("—" columns) get no record at
+    // all. Only the base counts are grounded: bonus spells per day from a
+    // high Wisdom are never computed.
+    let ranger_base_spells_per_day: [Option<i16>; 4] = match level {
+        4 => [Some(0), None, None, None],
+        5 | 6 => [Some(1), None, None, None],
+        7 => [Some(1), Some(0), None, None],
+        8 => [Some(1), Some(1), None, None],
+        9 => [Some(2), Some(1), None, None],
+        10 => [Some(2), Some(1), Some(0), None],
+        11 => [Some(2), Some(1), Some(1), None],
+        12 => [Some(2), Some(2), Some(1), None],
+        13 => [Some(3), Some(2), Some(1), Some(0)],
+        14 => [Some(3), Some(2), Some(1), Some(1)],
+        15 => [Some(3), Some(2), Some(2), Some(1)],
+        16 => [Some(3), Some(3), Some(2), Some(1)],
+        17 => [Some(4), Some(3), Some(2), Some(1)],
+        18 => [Some(4), Some(3), Some(2), Some(2)],
+        19 => [Some(4), Some(3), Some(3), Some(2)],
+        20 => [Some(4), Some(4), Some(3), Some(3)],
+        _ => [None, None, None, None],
     };
     for (index, base_count) in ranger_base_spells_per_day.iter().enumerate() {
         let Some(base_count) = base_count else {
@@ -6682,47 +11031,75 @@ fn explain_barbarian_level1_chassis(
     // execution burden named by the claim-blocking diagnostic below. Each entry also
     // carries a terse label (4th field) so the claim-blocking diagnostic below can
     // cite the same four values without hand-retyping them as a separate literal.
-    let rage_constants: [(&str, i16, &str, &str); 4] = [
+    // At level 11+ (BARBARIAN_GREATER_RAGE_LEVEL), Rage becomes Greater Rage: the
+    // Strength/Constitution morale bonuses genuinely rise from +4 to +6 and the
+    // Will-save morale bonus genuinely rises from +2 to +3; the Armor Class penalty
+    // stays -2 either way (PF1 Core Rulebook Greater Rage: "the -2 penalty to AC
+    // remains"). At level 20+ (BARBARIAN_MIGHTY_RAGE_LEVEL), Greater Rage becomes
+    // Mighty Rage: the Strength/Constitution morale bonuses genuinely rise again
+    // to +8 and the Will-save morale bonus genuinely rises to +4 (PF1 Core
+    // Rulebook Mighty Rage: "the morale bonus to her Strength and Constitution
+    // increases to +8 and the morale bonus on her Will saves increases to +4").
+    // This is a third tier on the same flat-constant pillar, not a new
+    // rage-state execution engine.
+    let is_mighty_rage = level >= BARBARIAN_MIGHTY_RAGE_LEVEL;
+    let is_greater_rage = level >= BARBARIAN_GREATER_RAGE_LEVEL;
+    let rage_source_feature = if is_mighty_rage {
+        "Mighty Rage"
+    } else if is_greater_rage {
+        "Greater Rage"
+    } else {
+        "Rage"
+    };
+    let (strength_bonus, constitution_bonus, will_save_bonus) = if is_mighty_rage {
+        (8, 8, 4)
+    } else if is_greater_rage {
+        (6, 6, 3)
+    } else {
+        (4, 4, 2)
+    };
+    let rage_constants: [(&str, i16, String, &str); 4] = [
         (
             "class_chassis.barbarian.rage.strength_morale_bonus",
-            4,
-            "+4 morale bonus to Strength while raging",
-            "+4 morale Strength",
+            strength_bonus,
+            format!("+{strength_bonus} morale bonus to Strength while raging"),
+            "morale Strength",
         ),
         (
             "class_chassis.barbarian.rage.constitution_morale_bonus",
-            4,
-            "+4 morale bonus to Constitution while raging",
-            "+4 morale Constitution",
+            constitution_bonus,
+            format!("+{constitution_bonus} morale bonus to Constitution while raging"),
+            "morale Constitution",
         ),
         (
             "class_chassis.barbarian.rage.will_save_morale_bonus",
-            2,
-            "+2 morale bonus on Will saves while raging",
-            "+2 morale Will saves",
+            will_save_bonus,
+            format!("+{will_save_bonus} morale bonus on Will saves while raging"),
+            "morale Will saves",
         ),
         (
             "class_chassis.barbarian.rage.armor_class_penalty",
             -2,
-            "-2 penalty to Armor Class while raging",
-            "-2 AC",
+            "-2 penalty to Armor Class while raging".to_owned(),
+            "AC",
         ),
     ];
-    for (id, value, effect, _short_label) in rage_constants {
+    for (id, value, effect, _short_label) in &rage_constants {
         explanations.push(ComputationExplanation {
-            id: id.to_owned(),
-            value,
+            id: (*id).to_owned(),
+            value: *value,
             detail: format!(
-                "{class_name} Rage flat constant from the PF1 Core Rulebook Rage class feature: \
-                 {effect}. This slice grounds only the flat value; it is never applied to the \
-                 integrated ability modifiers, saves, or armor class — temporary application is \
-                 part of the unimplemented rage-state execution engine"
+                "{class_name} {rage_source_feature} flat constant from the PF1 Core Rulebook \
+                 {rage_source_feature} class feature: {effect}. This slice grounds only the \
+                 flat value; it is never applied to the integrated ability modifiers, saves, or \
+                 armor class — temporary application is part of the unimplemented rage-state \
+                 execution engine"
             ),
         });
     }
     let rage_constants_summary = rage_constants
         .iter()
-        .map(|(_, _, _, short_label)| *short_label)
+        .map(|(_, value, _, short_label)| format!("{value:+} {short_label}"))
         .collect::<Vec<_>>()
         .join(", ");
 
@@ -6877,8 +11254,14 @@ fn explain_barbarian_level1_chassis(
     } else {
         let damage_reduction_value: i16 = if level < BARBARIAN_DAMAGE_REDUCTION_TWO_LEVEL {
             1
-        } else {
+        } else if level < BARBARIAN_DAMAGE_REDUCTION_THREE_LEVEL {
             2
+        } else if level < BARBARIAN_DAMAGE_REDUCTION_FOUR_LEVEL {
+            3
+        } else if level < BARBARIAN_DAMAGE_REDUCTION_FIVE_LEVEL {
+            4
+        } else {
+            5
         };
         explanations.push(ComputationExplanation {
             id: "class_feature.barbarian.damage_reduction".to_owned(),
@@ -6895,6 +11278,92 @@ fn explain_barbarian_level1_chassis(
                  engine and no \
                  incoming-damage total exists anywhere in this codebase to apply it, so this \
                  grounds no actual damage reduction"
+            ),
+        });
+    }
+
+    // Grounded (SD18): Indomitable Will, a 14th-level Barbarian class feature
+    // (verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror, byte-for-byte agreement: both name "Indomitable will,
+    // rage power" as the Barbarian 14th-level "Special" class table entry, and
+    // both give the rule text "While she is raging, a barbarian gains a +4
+    // morale bonus on Will saves to resist enchantment spells and effects").
+    // Below the level-14 gate this is a correct PF1 Core Rulebook level-gate
+    // absence (value 0); at or above it, it is a bounded flat-magnitude record
+    // only (a flat value of 4, non-fabricated) naming the rule text —
+    // mirroring exactly how the four pre-existing flat while-raging rage
+    // constants were grounded: the magnitude is never applied to any actual
+    // Will-save total, since no saving-throw-resolution engine, no
+    // spell-school-classification engine (to decide whether an incoming save
+    // is against an enchantment effect), and no rage-state execution engine
+    // (to decide whether the barbarian is currently raging) exists anywhere
+    // in this codebase to apply it.
+    if level < BARBARIAN_INDOMITABLE_WILL_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.indomitable_will".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian Indomitable Will at barbarian level {level}: correctly absent at \
+                 level {level} by PF1 Core Rulebook level gate; the at-grant magnitude is named \
+                 but not computed. Indomitable Will is a 14th-level barbarian class feature."
+            ),
+        });
+    } else {
+        let indomitable_will_bonus = BARBARIAN_INDOMITABLE_WILL_ENCHANTMENT_WILL_SAVE_BONUS;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.barbarian.indomitable_will".to_owned(),
+            value: indomitable_will_bonus,
+            detail: format!(
+                "Barbarian Indomitable Will granted at barbarian level {level} (PF1 Core \
+                 Rulebook, 14th-level barbarian class feature): while raging, a +{indomitable_will_bonus} \
+                 morale bonus on Will saves to resist enchantment spells and effects. This is a \
+                 bounded flat-magnitude record only (value {indomitable_will_bonus}, \
+                 non-fabricated): no saving-throw-resolution engine, no \
+                 spell-school-classification engine, and no rage-state execution engine exists \
+                 anywhere in this codebase to apply it, so this grounds no actual Will-save \
+                 bonus"
+            ),
+        });
+    }
+
+    // Grounded (SD18): Tireless Rage, a 17th-level Barbarian class feature
+    // (verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror, byte-for-byte agreement across the full
+    // levels-15-through-19 block: both name "Tireless rage" as the Barbarian
+    // 17th-level "Special" class table entry, and both give the rule text
+    // "Starting at 17th level, a barbarian no longer becomes fatigued at the
+    // end of her rage"). Below the level-17 gate this is a correct PF1 Core
+    // Rulebook level-gate absence (value 0); at or above it, it transitions
+    // to a bounded GRANT-only identity record (value 0, non-fabricated)
+    // mirroring the Indomitable Will / Paladin Aura-of-Justice /
+    // Aura-of-Faith / Aura-of-Righteousness idiom exactly: no rage-state
+    // execution engine exists anywhere in this codebase to track rage
+    // activation, round-by-round consumption, or the moment a rage ends, so
+    // there is no fatigue-application mechanism for this feature to
+    // interact with, and none is fabricated.
+    if level < BARBARIAN_TIRELESS_RAGE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.barbarian.tireless_rage".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian Tireless Rage at barbarian level {level}: correctly absent at \
+                 level {level} by PF1 Core Rulebook level gate; the at-grant rule is named but \
+                 not computed. Tireless Rage is a 17th-level barbarian class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.barbarian.tireless_rage".to_owned(),
+            value: 0,
+            detail: format!(
+                "Barbarian Tireless Rage granted at barbarian level {level} (PF1 Core \
+                 Rulebook, 17th-level barbarian class feature): \"Starting at 17th level, a \
+                 barbarian no longer becomes fatigued at the end of her rage.\" This is a \
+                 bounded grant-only identity record only (value 0, non-fabricated): no \
+                 rage-state execution engine exists anywhere in this codebase to track rage \
+                 activation, round-by-round consumption, or the moment a rage ends, so there \
+                 is no fatigue-application mechanism for this feature to interact with, and \
+                 none is fabricated."
             ),
         });
     }
@@ -7183,19 +11652,25 @@ fn explain_monk_level1_chassis(
 
     // Grounded (4/6): unarmed strike damage die. PF1 Core Rulebook Monk class table:
     // a Medium monk deals 1d6 unarmed strike damage at levels 1-3, stepping up to
-    // 1d8 at levels 4-7 (verified independently against d20pfsrd and
-    // legacy.aonprd.com: the full Medium-monk progression is 1d6/1d8/1d10/2d6/2d8/2d10
-    // at levels 1-3/4-7/8-11/12-15/16-19/20). Mirroring the Rogue sneak-attack
-    // die-count record, only the die-size facet is grounded here — no damage roll,
-    // damage total, or attack-resolution engine is computed, and the level-8+ die
-    // progression (1d10 and beyond) is not grounded.
-    let (unarmed_die_value, unarmed_die_name) =
+    // 1d8 at levels 4-7, then 1d10 at levels 8-11, then 2d6 at levels 12-15
+    // (verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror: the full Medium-monk progression is
+    // 1d6/1d8/1d10/2d6/2d8/2d10 at levels 1-3/4-7/8-11/12-15/16-19/20). Levels
+    // 1-11 grounded only the die-size facet (a single die throughout); level 12
+    // is the first level at which the die COUNT itself rises (from one die to
+    // two), so a second, standalone die-count facet is grounded starting here,
+    // mirroring the Flurry of Blows attack-bonus/attack-count split — no damage
+    // roll, damage total, or attack-resolution engine is computed, and the
+    // level-16+ die progression (2d8 and beyond) is not grounded.
+    let (unarmed_die_value, unarmed_die_count, unarmed_die_name) =
         if level < MONK_UNARMED_DAMAGE_DIE_STEP_UP_LEVEL {
-            (6, "1d6")
+            (6, 1, "1d6")
         } else if level < MONK_UNARMED_DAMAGE_DIE_SECOND_STEP_UP_LEVEL {
-            (8, "1d8")
+            (8, 1, "1d8")
+        } else if level < MONK_UNARMED_DAMAGE_DIE_THIRD_STEP_UP_LEVEL {
+            (10, 1, "1d10")
         } else {
-            (10, "1d10")
+            (6, 2, "2d6")
         };
     explanations.push(ComputationExplanation {
         id: "class_chassis.monk.unarmed_strike_damage_die".to_owned(),
@@ -7203,16 +11678,46 @@ fn explain_monk_level1_chassis(
         detail: format!(
             "Monk level {level} unarmed strike from the PF1 Core Rulebook Monk class table: a \
              Medium monk deals 1d6 unarmed strike damage at levels 1-3, stepping up to 1d8 at \
-             levels 4-7, then to 1d10 at levels 8-11, so it is {unarmed_die_name} at level \
-             {level}. Only the die-size facet ({unarmed_die_value}, i.e. {unarmed_die_name}) is \
-             grounded here; no damage roll or damage total is computed and no attack-resolution \
-             engine exists. Two PF1 unarmed-strike rules are recorded as statements only: the \
-             monk may choose to deal lethal or nonlethal damage with no penalty on the attack \
-             roll, and monk unarmed strikes carry no off-hand penalty (a monk applies her full \
-             Strength bonus on damage rolls for all her unarmed strikes). The higher-level \
-             unarmed damage die progression beyond level 11 (2d6 and beyond) is not grounded"
+             levels 4-7, to 1d10 at levels 8-11, and to 2d6 at levels 12-15, so it is \
+             {unarmed_die_name} at level {level}. Only the die-face-size facet \
+             ({unarmed_die_value}, i.e. the d{unarmed_die_value} in {unarmed_die_name}) is \
+             grounded on this record (the die-count facet is grounded separately below); no \
+             damage roll or damage total is computed and no attack-resolution engine exists. Two \
+             PF1 unarmed-strike rules are recorded as statements only: the monk may choose to \
+             deal lethal or nonlethal damage with no penalty on the attack roll, and monk \
+             unarmed strikes carry no off-hand penalty (a monk applies her full Strength bonus \
+             on damage rolls for all her unarmed strikes). The higher-level unarmed damage die \
+             progression beyond level 15 (2d8 and beyond) is not grounded"
         ),
     });
+    // Grounded (SD18): the unarmed strike damage die's COUNT facet, standalone
+    // from the die-face-size facet above. Every level 1-11 band is implicitly a
+    // single die, never previously surfaced as its own record; level 12 is the
+    // first level at which the PF1 Core Rulebook Medium-monk unarmed damage
+    // progression rises the die count itself (to 2d6), verified independently
+    // against both primary sources' Medium-monk unarmed damage progression
+    // table. Mirroring the Improved Evasion idiom (no record at all below its
+    // introduction gate, rather than an explicit level-gate-absence record):
+    // this new facet is grounded starting only at its introduction level, since
+    // it names a genuinely new computational dimension (die count), not a PF1
+    // rule-text-named feature with its own "correctly absent below" wording.
+    // Mirrors the Flurry of Blows attack-bonus/attack-count split: only the
+    // count facet is grounded here, no damage roll or damage total is
+    // computed.
+    if level >= MONK_UNARMED_DAMAGE_DIE_THIRD_STEP_UP_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.unarmed_strike_damage_die_count".to_owned(),
+            value: unarmed_die_count,
+            detail: format!(
+                "Monk level {level} unarmed strike damage die count from the PF1 Core Rulebook \
+                 Monk class table: the die count genuinely rises to 2 at level 12 (the 2d6 band \
+                 spans levels 12-15), so the count is {unarmed_die_count} at level {level}. Only \
+                 this count facet is grounded; the die-face-size facet is grounded separately \
+                 above, and no damage roll, damage total, or attack-resolution engine is \
+                 computed"
+            ),
+        });
+    }
 
     // Grounded (5/6): Flurry of Blows flat attack surface, in two facets. PF1 Core
     // Rulebook: when making a flurry of blows as a full-attack action, the monk uses
@@ -7441,21 +11946,23 @@ fn explain_monk_level1_chassis(
             30
         } else if level < MONK_SLOW_FALL_FIFTY_FOOT_REACH_LEVEL {
             40
-        } else {
+        } else if level < MONK_SLOW_FALL_SIXTY_FOOT_REACH_LEVEL {
             50
+        } else {
+            60
         };
         explanations.push(ComputationExplanation {
             id: "class_chassis.monk.slow_fall".to_owned(),
             value: 0,
             detail: format!(
                 "Monk Slow Fall granted at monk level {level} (PF1 Core Rulebook, 4th-level monk \
-                 class feature whose own reach magnitude increases to 30 ft. at 6th level and \
-                 40 ft. at 8th level): \"a monk within arm's reach of a wall can use it to slow \
-                 his descent\" — she takes falling damage as if the fall were \
-                 {slow_fall_reach_feet} feet shorter than it actually is. This is a bounded \
-                 grant-only identity record only (value 0, non-fabricated): no \
-                 fall-damage-resolution engine exists anywhere in this codebase to apply the \
-                 {slow_fall_reach_feet}-foot reduction to"
+                 class feature whose own reach magnitude increases to 30 ft. at 6th level, 40 \
+                 ft. at 8th level, 50 ft. at 10th level, and 60 ft. at 12th level): \"a monk \
+                 within arm's reach of a wall can use it to slow his descent\" — she takes \
+                 falling damage as if the fall were {slow_fall_reach_feet} feet shorter than it \
+                 actually is. This is a bounded grant-only identity record only (value 0, \
+                 non-fabricated): no fall-damage-resolution engine exists anywhere in this \
+                 codebase to apply the {slow_fall_reach_feet}-foot reduction to"
             ),
         });
     }
@@ -7499,6 +12006,39 @@ fn explain_monk_level1_chassis(
                  level-5 class table's other \"Special\" column entry, is checked and confirmed \
                  not flat (it requires an Acrobatics-check-total engine and ki-point-spending \
                  action, neither of which exists here) and is deliberately not grounded"
+            ),
+        });
+    }
+
+    // Grounded (SD18): Diamond Body, an 11th-level Monk class feature verified
+    // independently against two primary PF1 sources (d20pfsrd and
+    // legacy.aonprd.com both list "Diamond body" as the sole Monk 11th-level
+    // "Special" column entry). Below the level-11 gate this is a correct PF1
+    // Core Rulebook level-gate absence (value 0); at or above it, it is a
+    // bounded grant-only identity record (value 0, non-fabricated) naming the
+    // rule text — mirroring the Purity of Body grant-only idiom exactly: no
+    // poison-resolution engine exists anywhere in this codebase to apply the
+    // immunity to.
+    if level < MONK_DIAMOND_BODY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.diamond_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Diamond Body at monk level {level}: correctly absent at level {level} by \
+                 PF1 Core Rulebook level gate; the at-grant rule is named but not computed. \
+                 Diamond Body is an 11th-level monk class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.monk.diamond_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Monk Diamond Body granted at monk level {level} (PF1 Core Rulebook, 11th-level \
+                 monk class feature): \"at 11th level, a monk gains immunity to all poisons.\" \
+                 This is a bounded grant-only identity record only (value 0, non-fabricated): no \
+                 poison-resolution engine exists anywhere in this codebase to apply the immunity \
+                 to."
             ),
         });
     }
@@ -7796,7 +12336,201 @@ const ROGUE_SECOND_TALENT_CHOICE_ID: &str = "choice:rogue_talent_2";
 // at levels 2/4/6/8 (the advanced-talent unlock is a list expansion of that
 // feature, not a new pillar), so no new pillar is grounded at level 10
 // either.
-const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 10;
+// SD18 widening (cycle-2026-07-14T2000, tests/sd18_rogue_level11_sneak_attack.rs):
+// widens the gate to level 11, verified independently against d20pfsrd and
+// the Archives of Nethys aonprd.com mirror (both agree byte-for-byte): base
+// attack genuinely rises to +8 (11 * 3 / 4) while all three base saves stay
+// numerically unchanged (Fortitude/Will 11/3 = 3, Reflex 11/2+2 = 7,
+// integer-division coincidences with level 10); the level-11 "Special"
+// column reads only "Sneak attack +6d6" — the pre-existing sneak-attack
+// die-count formula ((level + 1) / 2) genuinely rises to 6 (i.e. 6d6), up
+// from 5 (5d6) at level 10, via the same formula, not a new record; Trap
+// Sense stays +3 (11/3, next rise at 12th) and Trapfinding stays 5
+// (max(11/2, 1), a coincidence); Evasion, Uncanny Dodge, and Improved
+// Uncanny Dodge all stay granted, not re-derived; level 11 is NOT a
+// rogue-talent level (talents land at 2/4/6/8/10/12), so no new talent
+// pillar is grounded or fabricated either.
+// SD18 widening (cycle-2026-07-15T0800, tests/sd18_rogue_level12_widening.rs):
+// widens the gate to level 12, verified independently against d20pfsrd and
+// the Archives of Nethys aonprd.com mirror (both agree byte-for-byte): base
+// attack genuinely rises to +9 (12 * 3 / 4) and all three base saves
+// genuinely rise too (Fortitude/Will 12/3 = 4, Reflex 12/2+2 = 8, up from
+// 3/3/7 at level 11); the level-12 "Special" column reads "Rogue talent,
+// trap sense +4" — Trap Sense genuinely rises to +4 (12/3) via the
+// pre-existing formula, not a new record, and Rogue Talent is the SIXTH
+// numbered choice slot (talents land at 2/4/6/8/10/12), surfaced via the
+// same open-ended, non-validated raw-string idiom already proven at slots
+// 1-5 (see ROGUE_SIXTH_TALENT_GRANT_LEVEL / ROGUE_SIXTH_TALENT_CHOICE_ID
+// below); sneak attack stays 6d6 ((12 + 1) / 2, an integer-division
+// coincidence with level 11, next rise at level 13) but Trapfinding
+// genuinely rises to 6 (max(12/2, 1), up from 5 at level 11, via the
+// pre-existing formula — this rise is not named in the level-12 "Special"
+// column, since Trapfinding's own formula is independent of it); Evasion,
+// Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not
+// re-derived.
+// SD18 widening (cycle-2026-07-15T1100, tests/sd18_rogue_level13_widening.rs):
+// widens the gate to level 13, the first §3.2 level-13 widening attempted
+// across any of the 11 core classes (all 11 landed level 12 as of
+// cycle-2026-07-14T2244), verified independently against d20pfsrd and the
+// Archives of Nethys aonprd.com mirror (both agree byte-for-byte): base
+// attack STAYS +9 (13 * 3 / 4, an integer-division coincidence with level
+// 12) and all three base saves also STAY unchanged (Fortitude/Will 13/3 =
+// 4, Reflex 13/2+2 = 8); the level-13 "Special" column reads only "Sneak
+// attack +7d6" — a tier-rise on the already-grounded sneak-attack die-count
+// formula ((level + 1) / 2), which genuinely rises to 7 (7d6), up from 6
+// (6d6) at level 12, via the same formula, not a new record; Trap Sense
+// stays +4 (13/3, next rise at level 15) and Trapfinding stays 6
+// (max(13/2, 1), unchanged from level 12); Evasion, Uncanny Dodge, and
+// Improved Uncanny Dodge all stay granted, not re-derived; level 13 is NOT
+// a rogue-talent level (talents land at 2/4/6/8/10/12/14...), so no seventh
+// talent choice-slot record is grounded or fabricated either. This is the
+// cleanest possible widening shape: the ONLY value that genuinely changes
+// is the sneak-attack die count, entirely through the pre-existing formula
+// — zero new record types, zero new named pillars, zero new choice slots.
+// SD18 widening (cycle-2026-07-15T2000, tests/sd18_rogue_level14_widening.rs):
+// widens the gate to level 14, the loop's Rogue level-14 sweep landing,
+// verified independently against both primary sources (d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, which agree byte-for-byte): base
+// attack genuinely rises to +10 (14 * 3 / 4) and good Reflex genuinely
+// rises to +9 (14 / 2 + 2), up from 9/8 at level 13, while poor
+// Fortitude/Will both stay +4 (14 / 3, integer-division coincidences); the
+// level-14 "Special" column reads only "Rogue talent" — level 14 IS a
+// rogue-talent cadence level (talents land at 2/4/6/8/10/12/14), so a
+// SEVENTH numbered choice-recognition slot (choice:rogue_talent_7) is
+// added, mirroring the proven open-ended raw-string idiom used at slots 1-6
+// exactly; sneak attack stays 7d6 ((14 + 1) / 2, an integer-division
+// coincidence with level 13, next rise at level 15) but Trapfinding
+// genuinely rises to 7 (max(14/2, 1), up from 6 at level 13, via the
+// pre-existing formula — this rise is not named in the level-14 "Special"
+// column); Trap Sense stays +4 (14/3, next rise at level 15); Evasion,
+// Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not
+// re-derived.
+// SD18 widening (cycle-2026-07-15T2900, tests/sd18_rogue_level15_widening.rs):
+// widens the gate to level 15, the loop's Rogue level-15 sweep landing,
+// verified independently against both primary sources (d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, which agree byte-for-byte): base
+// attack genuinely rises to +11 (15 * 3 / 4) and poor Fortitude/Will both
+// genuinely rise to +5 (15 / 3), while good Reflex STAYS +9 (15 / 2 + 2, an
+// integer-division coincidence with level 14); the level-15 "Special"
+// column reads only "Sneak attack +8d6, trap sense +5" — both entries are
+// tier-rises on already-grounded formula pillars, not new class features:
+// the sneak-attack die-count formula ((level + 1) / 2) genuinely rises to 8
+// (8d6), up from 7d6 at level 14, and the Trap Sense flat-magnitude formula
+// (level / 3) genuinely rises to +5, up from +4 at level 14; Trapfinding
+// stays 7 (max(15/2, 1), an integer-division coincidence with level 14);
+// level 15 is NOT a rogue-talent level (talents land at
+// 2/4/6/8/10/12/14/16...), so no eighth talent choice-slot record is
+// grounded or fabricated either; Evasion, Uncanny Dodge, and Improved
+// Uncanny Dodge all stay granted, not re-derived. This is the cleanest
+// possible widening shape, mirroring the Barbarian level-15 landing: zero
+// new record types, zero new named pillars, zero new choice slots — the
+// ONLY production-code change is this ceiling raise.
+// SD18 widening (cycle-2026-07-15T5200, tests/sd18_rogue_level16_widening.rs):
+// widens the gate to level 16, the loop's Rogue level-16 sweep landing (the
+// FOURTH §3.2 level-16 landing, after Barbarian, Fighter, and Wizard),
+// verified independently against both primary sources (d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, which agree byte-for-byte): base
+// attack genuinely rises to +12 (16 * 3 / 4) and good Reflex genuinely rises
+// to +10 (16 / 2 + 2), up from 11/9 at level 15, while poor Fortitude/Will
+// both stay +5 (16 / 3, integer-division coincidences); the level-16
+// "Special" column reads only "Rogue talent" — level 16 IS a rogue-talent
+// cadence level (talents land at 2/4/6/8/10/12/14/16), so an EIGHTH
+// numbered choice-recognition slot (choice:rogue_talent_8) is added,
+// mirroring the proven open-ended raw-string idiom used at slots 1-7
+// exactly; sneak attack stays 8d6 ((16 + 1) / 2, an integer-division
+// coincidence with level 15, next rise at level 17) but Trapfinding
+// genuinely rises to 8 (max(16/2, 1), up from 7 at level 15, via the
+// pre-existing formula — this rise is not named in the level-16 "Special"
+// column); Trap Sense stays +5 (16/3, next rise at level 18); Evasion,
+// Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not
+// re-derived.
+// SD18 widening (cycle-2026-07-15T8100, tests/sd18_rogue_level17_widening.rs):
+// widens the gate to level 17, the loop's THIRD §3.2 level-17 sweep landing
+// (after Ranger and Bard), verified independently against both primary
+// sources (d20pfsrd and the Archives of Nethys aonprd.com mirror, which
+// agree byte-for-byte, fetched across the full levels-14-18 block to guard
+// against level-misattribution): base attack stays +12 (17 * 3 / 4) and all
+// three base saves stay unchanged (Fortitude/Will 17/3=5, Reflex 17/2+2=10),
+// all integer-division coincidences with level 16; the level-17 "Special"
+// column reads only "Sneak attack +9d6" — level 17 is NOT a rogue-talent
+// cadence level (talents land at 2/4/6/8/10/12/14/16, next at 18), so no
+// ninth talent slot is grounded; the sneak-attack die-count formula
+// ((level + 1) / 2) genuinely rises to 9d6, up from 8d6 at level 16, via
+// the same pre-existing formula, not a new record; Trap Sense stays +5
+// (17/3, next rise at level 18) and Trapfinding stays 8 (max(17/2, 1), an
+// integer-division coincidence with level 16), neither named in the
+// level-17 "Special" column; Evasion, Uncanny Dodge, and Improved Uncanny
+// Dodge all stay granted, not re-derived. This needs ZERO new tier
+// constants and ZERO new choice slots — the ONLY production-code change is
+// this ceiling raise.
+// SD18 widening (cycle-2026-07-16T0212, tests/sd18_rogue_level18_widening.rs):
+// widens the gate to level 18, the loop's SIXTH §3.2 level-18 sweep landing
+// (after Wizard, Cleric, Paladin, Fighter, and Barbarian), verified
+// independently against both primary sources (d20pfsrd and the Archives of
+// Nethys aonprd.com mirror, which agree byte-for-byte, fetched across the
+// full levels-16-19 block to guard against level-misattribution): base
+// attack genuinely rises to +13 (18 * 3 / 4) and all three base saves
+// genuinely rise too (Fortitude/Will 18/3=6, Reflex 18/2+2=11, up from
+// 12/5/5/10 at level 17); the level-18 "Special" column reads "Rogue
+// talent, trap sense +6" — level 18 IS a rogue-talent cadence level
+// (talents land at 2/4/6/8/10/12/14/16/18), so a NINTH numbered
+// choice-recognition slot (choice:rogue_talent_9) is added, mirroring the
+// proven open-ended raw-string idiom used at slots 1-8 exactly; and the
+// pre-existing Trap Sense flat-magnitude formula (level / 3) genuinely
+// rises to +6, up from +5 at level 17, via the same formula, not a new
+// record; the sneak-attack die-count formula ((level + 1) / 2) stays at 9
+// (9d6, an integer-division coincidence with level 17, next rise at level
+// 19), not named in the level-18 "Special" column; Trapfinding genuinely
+// rises to 9 (max(18/2, 1), up from 8 at level 17, via its own independent
+// pre-existing formula), also not named in the level-18 "Special" column;
+// Evasion, Uncanny Dodge, and Improved Uncanny Dodge all stay granted, not
+// re-derived. This needs ZERO new tier constants for base-attack/save/
+// trap-sense/trapfinding/sneak-attack (all already level-generic
+// formulas) — the ONLY production-code changes are this ceiling raise and
+// a ninth numbered talent slot appended to the existing tuple-array idiom.
+// SD18 widening (cycle-2026-07-16T3600, tests/sd18_rogue_level19_widening.rs):
+// widens the gate to level 19, the loop's SEVENTH §3.2 level-19 sweep
+// landing (after Barbarian, Cleric, Fighter, Bard, Paladin, and Ranger),
+// verified independently against both primary sources (d20pfsrd and the
+// Archives of Nethys aonprd.com mirror, which agree byte-for-byte, fetched
+// across the full levels-15-20 block to guard against
+// level-misattribution): base attack genuinely rises to +14 (19 * 3 / 4),
+// while all three base saves stay put (Fortitude/Will 19/3=6, Reflex
+// 19/2+2=11, integer-division coincidences with level 18); the level-19
+// "Special" column reads only "Sneak attack +10d6" — 19 is NOT a
+// rogue-talent cadence level (talents land at 2/4/6/8/10/12/14/16/18, next
+// at 20), so no tenth numbered talent slot is added; the sneak-attack
+// die-count formula ((level + 1) / 2) genuinely rises to 10 (10d6, up from
+// 9d6 at level 18, its own final PF1 CRB tier); Trap Sense stays +6 (19/3,
+// an integer-division coincidence with level 18) and Trapfinding stays 9
+// (max(19/2, 1), also a coincidence), neither named in the level-19
+// "Special" column; Evasion, Uncanny Dodge, and Improved Uncanny Dodge all
+// stay granted, not re-derived.
+// SD18 widening (cycle-2026-07-16T1431, tests/sd18_rogue_level20_widening.rs):
+// widened again to level 20 (verified independently against both d20pfsrd
+// and the Archives of Nethys aonprd.com mirror, byte-for-byte agreement).
+// Level 20's "Special" column reads "Master strike, rogue talent" — base
+// attack bonus genuinely rises to +15 (20*3/4) and good Reflex genuinely
+// rises to +12 (20/2+2), while poor Fortitude/Will both stay +6 (20/3,
+// integer-division coincidences with level 19); sneak attack stays 10d6
+// ((20+1)/2, its own final PF1 CRB tier) and Trap Sense stays +6 (20/3,
+// its own final PF1 CRB tier), neither named in the level-20 "Special"
+// column; Trapfinding genuinely rises to 10 (max(20/2,1)), also not named.
+// 20 IS a rogue-talent cadence level (talents land at
+// 2/4/6/8/10/12/14/16/18/20), so a TENTH numbered talent slot is appended
+// to the existing tuple-array idiom; Master Strike, the rogue's 20th-level
+// capstone, is newly granted as a bounded grant-only identity record
+// (value 0, non-fabricated) mirroring exactly the already-proven Paladin
+// Holy Champion / Ranger Master Hunter capstone idiom — no
+// action-economy, attack-resolution, or saving-throw-resolution engine
+// exists anywhere in this codebase, so this grounds no actual mechanic.
+// This closes Rogue's own per-level arithmetic-widening frontier: level 20
+// is the final level within PF1's 1-20 character-level cap.
+const MAX_SUPPORTED_ROGUE_LEVEL: u8 = 20;
+/// PF1 Core Rulebook level gate at which Rogue gains Master Strike (the
+/// 20th-level capstone, verified independently against d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror).
+const ROGUE_MASTER_STRIKE_LEVEL: u8 = 20;
 /// PF1 Core Rulebook level gate at which Rogue gains Evasion.
 const ROGUE_EVASION_LEVEL: u8 = 2;
 /// PF1 Core Rulebook level gate at which Rogue gains Trap Sense.
@@ -8317,10 +13051,41 @@ fn explain_rogue_level1_chassis(
     // text), each the same open-ended +0 recognition. With these the full
     // five-slot count at the tranche ceiling is recognized; the talent
     // tree's effects stay the named new-subsystem burden.
-    let additional_talent_slots: [(u8, u8, &str); 3] = [
+    // SD18 widening (cycle-2026-07-15T0800, tests/sd18_rogue_level12_widening.rs):
+    // slot 6, gated to rogue level 12 (the level-12 "Special" column's
+    // "Rogue talent" entry, verified independently against both primary
+    // sources), the same open-ended +0 recognition idiom — no talent-list
+    // validation, no talent-effect engine.
+    // SD18 widening (cycle-2026-07-15T2000, tests/sd18_rogue_level14_widening.rs):
+    // slot 7, gated to rogue level 14 (the level-14 "Special" column's
+    // "Rogue talent" entry, verified independently against both primary
+    // sources), the same open-ended +0 recognition idiom — no talent-list
+    // validation, no talent-effect engine.
+    // SD18 widening (cycle-2026-07-15T5200, tests/sd18_rogue_level16_widening.rs):
+    // slot 8, gated to rogue level 16 (the level-16 "Special" column's
+    // "Rogue talent" entry, verified independently against both primary
+    // sources), the same open-ended +0 recognition idiom — no talent-list
+    // validation, no talent-effect engine.
+    // SD18 widening (cycle-2026-07-16T0212, tests/sd18_rogue_level18_widening.rs):
+    // slot 9, gated to rogue level 18 (the level-18 "Special" column's
+    // "Rogue talent, trap sense +6" entry, verified independently against
+    // both primary sources), the same open-ended +0 recognition idiom — no
+    // talent-list validation, no talent-effect engine.
+    // SD18 widening (cycle-2026-07-16T1431, tests/sd18_rogue_level20_widening.rs):
+    // slot 10, gated to rogue level 20 (the level-20 "Special" column's
+    // "Master strike, rogue talent" entry, verified independently against
+    // both primary sources), the same open-ended +0 recognition idiom — no
+    // talent-list validation, no talent-effect engine. This is the FINAL
+    // numbered talent slot within PF1's 1-20 character-level cap.
+    let additional_talent_slots: [(u8, u8, &str); 8] = [
         (3, 6, "choice:rogue_talent_3"),
         (4, 8, "choice:rogue_talent_4"),
         (5, 10, "choice:rogue_talent_5"),
+        (6, 12, "choice:rogue_talent_6"),
+        (7, 14, "choice:rogue_talent_7"),
+        (8, 16, "choice:rogue_talent_8"),
+        (9, 18, "choice:rogue_talent_9"),
+        (10, 20, "choice:rogue_talent_10"),
     ];
     for (slot_number, grant_level, choice_id) in additional_talent_slots {
         if level < grant_level {
@@ -8342,6 +13107,47 @@ fn explain_rogue_level1_chassis(
                  the numbered choice slot only (open-ended raw string, no talent-list \
                  validation): the selected talent's own effect is not computed — no \
                  talent-effect engine exists in this codebase"
+            ),
+        });
+    }
+
+    // Master Strike: below the level-20 gate, this stays a correct PF1
+    // Core Rulebook level-gate absence (value 0); at or above it (SD18
+    // level-20 widening, the class capstone), it transitions to a bounded
+    // GRANT-only identity record (mirroring the Paladin Holy Champion /
+    // Ranger Master Hunter idiom exactly). No action-economy engine, no
+    // attack-resolution engine, and no saving-throw-resolution engine
+    // exists anywhere in this codebase to apply this to.
+    if level < ROGUE_MASTER_STRIKE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.master_strike".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Master Strike at rogue level {level}: correctly absent at level {level} \
+                 by PF1 Core Rulebook level gate; the at-grant rule is named but not computed. \
+                 Master Strike is the 20th-level rogue capstone."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.rogue.master_strike".to_owned(),
+            value: 0,
+            detail: format!(
+                "Rogue Master Strike granted at rogue level {level} (PF1 Core Rulebook, \
+                 20th-level rogue capstone): \"Upon reaching 20th level, a rogue becomes \
+                 incredibly deadly when dealing sneak attack damage. Each time the rogue deals \
+                 sneak attack damage, she can choose one of the following three effects: the \
+                 target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. \
+                 Regardless of the effect chosen, the target receives a Fortitude save to \
+                 negate the additional effect. The DC of this save is equal to 10 + 1/2 the \
+                 rogue's level + the rogue's Intelligence modifier. Once a creature has been \
+                 the target of a master strike, regardless of whether or not the save is made, \
+                 that creature is immune to that rogue's master strike for 24 hours.\" This is \
+                 a bounded grant-only identity record only (value 0, non-fabricated): no \
+                 action-economy engine, no attack-resolution engine, and no \
+                 saving-throw-resolution engine exists anywhere in this codebase to apply this \
+                 to, so this grounds no actual sleep, paralysis, or death effect and no save-DC \
+                 computation"
             ),
         });
     }
@@ -8737,7 +13543,15 @@ fn explain_sorcerer_level1_spell_baseline(
     // are never computed. Cantrips (0th level, "spells known" only) are
     // outside the spells-per-day ladder and are not counted.
     let sorcerer_spell_level_access: i16 =
-        if level >= SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        if level >= SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            9
+        } else if level >= SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            8
+        } else if level >= SORCERER_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            7
+        } else if level >= SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            6
+        } else if level >= SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             5
         } else if level >= SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
             4
@@ -8755,17 +13569,20 @@ fn explain_sorcerer_level1_spell_baseline(
             "Sorcerer spell-level access at sorcerer level {level}: the highest sorcerer spell \
              level (1st+) with a non-\"—\" spells-per-day column in the PF1 Core Rulebook \
              Sorcerer class table is {sorcerer_spell_level_access} (verified against the raw \
-             table rows of both primary sources: 1st-level spells from level 1 — the ladder \
-             has no zero step — 2nd-level at \
+             table rows of the primary-source fetches: 1st-level spells from level 1 — \
+             the ladder has no zero step — 2nd-level at \
              {SORCERER_SECOND_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 3rd-level at \
              {SORCERER_THIRD_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 4th-level at \
              {SORCERER_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 5th-level at \
-             {SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL} — the sorcerer's two-level \
-             cadence; the 6th-level column stays \"—\" through level 10). Cantrips are \
-             \"spells known\" only and sit outside the spells-per-day ladder, so they are \
-             not counted. This grounds the access ladder only: no spells-per-day counts, no \
-             spells-known posture, no bonus slots from a high Charisma, and no spell save DCs \
-             are computed"
+             {SORCERER_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 6th-level at \
+             {SORCERER_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 7th-level at \
+             {SORCERER_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 8th-level at \
+             {SORCERER_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}, 9th-level at \
+             {SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL} — the sorcerer's two-level \
+             cadence continuing exactly). Cantrips are \"spells known\" only and sit outside \
+             the spells-per-day ladder, so they are not counted. This grounds the access \
+             ladder only: no spells-per-day counts, no spells-known posture, no bonus slots \
+             from a high Charisma, and no spell save DCs are computed"
         ),
     });
 
@@ -8775,27 +13592,84 @@ fn explain_sorcerer_level1_spell_baseline(
     // precedent — the PF1 spells-per-day table is a lookup table, not
     // arithmetic, so no formula is invented for it. Verified against the
     // raw table rows of both primary sources (identical on d20pfsrd and
-    // legacy.aonprd.com): level 1 "3/—/—/—/—", level 2 "4/—/—/—/—", level
-    // 3 "5/—/—/—/—", level 4 "6/3/—/—/—", level 5 "6/4/—/—/—", level 6
-    // "6/5/3/—/—", level 7 "6/6/4/—/—", level 8 "6/6/5/3/—", level 9
-    // "6/6/6/4/—", level 10 "6/6/6/5/3". Like the Bard and unlike the
-    // Paladin/Ranger, there are NO "0" entries at levels 1-10; every
+    // legacy.aonprd.com): level 1 "3/—/—/—/—/—", level 2 "4/—/—/—/—/—",
+    // level 3 "5/—/—/—/—/—", level 4 "6/3/—/—/—/—", level 5 "6/4/—/—/—/—",
+    // level 6 "6/5/3/—/—/—", level 7 "6/6/4/—/—/—", level 8
+    // "6/6/5/3/—/—", level 9 "6/6/6/4/—/—", level 10 "6/6/6/5/3/—",
+    // level 11 "6/6/6/6/4/—", level 12 "6/6/6/6/5/3", level 13 "6/6/6/6/6/4",
+    // level 14 "6/6/6/6/6/5/3", level 15 "6/6/6/6/6/6/4", level 16
+    // "6/6/6/6/6/6/5/3", level 17 "6/6/6/6/6/6/6/4"
+    // (level 13 was an SD18 widening verified independently against all
+    // three primary-source fetches that slice performed — d20pfsrd,
+    // aonprd.com, and legacy.aonprd.com, all identical: the 5th-level column
+    // rose from 5 to 6 and the 6th-level column rose from 3 to 4, with no
+    // genuinely new spell-level column at level 13. Level 14 widened the
+    // 6th-level column from 4 to 5 AND opened a genuinely new 7th-level
+    // column at 3 — the sorcerer's two-level cadence (4/6/8/10/12/14)
+    // continuing exactly. Level 15 widened the 6th-level column from 5 to 6
+    // AND the 7th-level column from 3 to 4, with no genuinely new
+    // spell-level column opening. Level 16 widened the 7th-level column
+    // from 4 to 5 AND a genuinely new 8th-level column opened at 3 —
+    // verified independently against d20pfsrd and the Archives of Nethys
+    // aonprd.com mirror, both byte-for-byte identical — the sorcerer's
+    // two-level cadence (4/6/8/10/12/14/16) continuing exactly, mirroring
+    // the Wizard's own 8th-level-column-opening cycle. Level 17 is THIS
+    // SD18 slice's widening (cycle-2026-07-15T14100), verified independently
+    // against d20pfsrd and the Archives of Nethys aonprd.com mirror, both
+    // byte-for-byte identical (fetching the full levels-15-through-19 block
+    // in one pass to rule out level-misattribution): the 7th-level column
+    // rises from 5 to 6 AND the 8th-level column rises from 3 to 4, with no
+    // genuinely new spell-level column opening. Level 18 is THIS SD18
+    // slice's widening (cycle-2026-07-16T0400), verified independently
+    // against THREE primary sources (a raw non-AI-summarized parse of
+    // d20pfsrd.com's own HTML table, the Archives of Nethys aonprd.com
+    // mirror, and legacy.aonprd.com, all byte-for-byte identical): the
+    // 8th-level column rises from 4 to 5 AND a genuinely NEW 9th-level
+    // column opens at 3 for the first time — this definitively resolves a
+    // flag carried forward across multiple prior cycles that suspected this
+    // 9th-level column was a tool artifact; it is not (see the
+    // SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL doc comment for the
+    // full resolution). Level 19 is THIS SD18 slice's widening
+    // (cycle-2026-07-16T4900), verified independently against two primary
+    // sources (raw d20pfsrd parse and the Archives of Nethys aonprd.com
+    // mirror, byte-for-byte identical): the 8th-level column rises from 5 to
+    // 6 AND the 9th-level column rises from 3 to 4, with no genuinely new
+    // spell-level column opening (the 9th-level column already opened at
+    // level 18). Level 20 is THIS SD18 slice's widening
+    // (cycle-2026-07-16T1503), the FINAL level within PF1's 1-20
+    // character-level cap, verified independently against two primary
+    // sources (raw d20pfsrd parse and the Archives of Nethys aonprd.com
+    // mirror, byte-for-byte identical): the 9th-level column rises from 4 to
+    // 6, with no genuinely new spell-level column opening.
+    // Like the Bard and
+    // unlike the
+    // Paladin/Ranger, there are NO "0" entries at levels 1-18; every
     // accessible column carries a positive base count. Inaccessible spell
     // levels ("—" columns) get no record at all. Only the base counts are
     // grounded: bonus spells per day from a high Charisma are never
     // computed, and spells KNOWN (a separate table) stays untouched.
-    let sorcerer_base_spells_per_day: [Option<i16>; 5] = match level {
-        1 => [Some(3), None, None, None, None],
-        2 => [Some(4), None, None, None, None],
-        3 => [Some(5), None, None, None, None],
-        4 => [Some(6), Some(3), None, None, None],
-        5 => [Some(6), Some(4), None, None, None],
-        6 => [Some(6), Some(5), Some(3), None, None],
-        7 => [Some(6), Some(6), Some(4), None, None],
-        8 => [Some(6), Some(6), Some(5), Some(3), None],
-        9 => [Some(6), Some(6), Some(6), Some(4), None],
-        10 => [Some(6), Some(6), Some(6), Some(5), Some(3)],
-        _ => [None, None, None, None, None],
+    let sorcerer_base_spells_per_day: [Option<i16>; 9] = match level {
+        1 => [Some(3), None, None, None, None, None, None, None, None],
+        2 => [Some(4), None, None, None, None, None, None, None, None],
+        3 => [Some(5), None, None, None, None, None, None, None, None],
+        4 => [Some(6), Some(3), None, None, None, None, None, None, None],
+        5 => [Some(6), Some(4), None, None, None, None, None, None, None],
+        6 => [Some(6), Some(5), Some(3), None, None, None, None, None, None],
+        7 => [Some(6), Some(6), Some(4), None, None, None, None, None, None],
+        8 => [Some(6), Some(6), Some(5), Some(3), None, None, None, None, None],
+        9 => [Some(6), Some(6), Some(6), Some(4), None, None, None, None, None],
+        10 => [Some(6), Some(6), Some(6), Some(5), Some(3), None, None, None, None],
+        11 => [Some(6), Some(6), Some(6), Some(6), Some(4), None, None, None, None],
+        12 => [Some(6), Some(6), Some(6), Some(6), Some(5), Some(3), None, None, None],
+        13 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(4), None, None, None],
+        14 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(3), None, None],
+        15 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(4), None, None],
+        16 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(3), None],
+        17 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(4), None],
+        18 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(5), Some(3)],
+        19 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(4)],
+        20 => [Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6), Some(6)],
+        _ => [None, None, None, None, None, None, None, None, None],
     };
     for (index, base_count) in sorcerer_base_spells_per_day.iter().enumerate() {
         let Some(base_count) = base_count else {
@@ -8853,29 +13727,106 @@ fn explain_sorcerer_level1_spell_baseline(
     // a non-"—" column in the Sorcerer Spells Known table, as a literal
     // table lookup mirroring the Bard known slice. Verified against the raw
     // table rows of both primary sources (identical on d20pfsrd and
-    // legacy.aonprd.com): level 1 "4/2/—/—/—/—", level 2 "5/2/—/—/—/—",
-    // level 3 "5/3/—/—/—/—", level 4 "6/3/1/—/—/—", level 5 "6/4/2/—/—/—",
-    // level 6 "7/4/2/1/—/—", level 7 "7/5/3/2/—/—", level 8 "8/5/3/2/1/—",
-    // level 9 "8/5/4/3/2/—", level 10 "9/5/4/3/2/1" (0th through 5th spell
-    // level). The known table INCLUDES the 0th level (cantrips are "spells
+    // legacy.aonprd.com): level 1 "4/2/—/—/—/—/—", level 2 "5/2/—/—/—/—/—",
+    // level 3 "5/3/—/—/—/—/—", level 4 "6/3/1/—/—/—/—", level 5
+    // "6/4/2/—/—/—/—", level 6 "7/4/2/1/—/—/—", level 7 "7/5/3/2/—/—/—",
+    // level 8 "8/5/3/2/1/—/—", level 9 "8/5/4/3/2/—/—", level 10
+    // "9/5/4/3/2/1/—", level 11 "9/5/5/4/3/2/—", level 12 "9/5/5/4/3/2/1",
+    // level 13 "9/5/5/4/4/3/2", level 14 "9/5/5/4/4/3/2/1",
+    // level 15 "9/5/5/4/4/4/3/2", level 16 "9/5/5/4/4/4/3/2/1", level 17
+    // "9/5/5/4/4/4/3/3/2"
+    // (0th through 8th spell level; the level-13 row was an SD18 widening
+    // verified independently against all three primary-source fetches that
+    // slice performed — d20pfsrd, aonprd.com, and legacy.aonprd.com, all
+    // identical: the 0th through 3rd columns stayed numerically unchanged
+    // from level 12's row, and the 4th, 5th, and 6th-level columns each
+    // rose by one. Level 14 widened the 0th through 6th columns numerically
+    // unchanged from level 13's row, AND opened a genuinely new 7th-level
+    // column at 1. Level 15 widened the 0th through 4th columns numerically
+    // unchanged from level 14's row, while the 5th, 6th, and 7th-level
+    // columns each rose by one — no genuinely new spell-level column
+    // opened. Level 16 widened the 0th through 7th columns numerically
+    // unchanged from level 15's row, while a genuinely new 8th-level
+    // column opened at 1 — verified independently against d20pfsrd and the
+    // Archives of Nethys aonprd.com mirror, both byte-for-byte identical —
+    // mirroring the same-cycle opening of the 8th-level column on the
+    // spells-per-day table above. Level 17 is the loop's cycle-2026-07-15T14100
+    // widening, verified independently against d20pfsrd and the Archives of
+    // Nethys aonprd.com mirror, both byte-for-byte identical (fetching the
+    // full levels-15-through-19 block in one pass to rule out
+    // level-misattribution): the 0th through 6th columns stay numerically
+    // unchanged from level 16's row, while the 7th-level column rises from
+    // 2 to 3 AND the 8th-level column rises from 1 to 2 — no genuinely new
+    // spell-level column opens. Level 18 is THIS SD18 slice's widening
+    // (cycle-2026-07-16T0400), verified independently against THREE primary
+    // sources (a raw non-AI-summarized parse of d20pfsrd.com's own HTML
+    // table, the Archives of Nethys aonprd.com mirror, and
+    // legacy.aonprd.com, all byte-for-byte identical): the 0th through 8th
+    // columns stay numerically unchanged from level 17's row, while a
+    // genuinely NEW 9th-level column opens at 1 for the first time — this
+    // definitively resolves the multi-cycle-carried-forward "premature
+    // 9th-level column" flag (see the
+    // SORCERER_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL doc comment for the
+    // full resolution). Level 19 is THIS SD18 slice's widening
+    // (cycle-2026-07-16T4900), verified independently against two primary
+    // sources (raw d20pfsrd parse and the Archives of Nethys aonprd.com
+    // mirror, byte-for-byte identical): the 0th through 7th columns stay
+    // numerically unchanged from level 18's row, while the 8th-level column
+    // rises from 2 to 3 AND the 9th-level column rises from 1 to 2, with no
+    // genuinely new spell-level column opening. Level 20 is THIS SD18
+    // slice's widening (cycle-2026-07-16T1503), the FINAL level within
+    // PF1's 1-20 character-level cap, verified independently against two
+    // primary sources (raw d20pfsrd parse and the Archives of Nethys
+    // aonprd.com mirror, byte-for-byte identical): the 0th through 8th
+    // columns stay numerically unchanged from level 19's row, while the
+    // 9th-level column rises from 2 to 3, with no genuinely new spell-level
+    // column opening.
+    // The known table
+    // INCLUDES the 0th level (cantrips are "spells
     // known" only), and its new-spell-level cadence matches the grounded
     // per-day access ladder exactly (2nd at 4, 3rd at 6, 4th at 8, 5th at
-    // 10 — checked rather than assumed). Only the known COUNTS are
-    // grounded: the selection of WHICH spells are known is never computed,
-    // and the 3rd/5th/7th-level bloodline bonus spells are part of the
-    // still-unproven bloodline progression burden, not this table.
-    let sorcerer_spells_known: [Option<i16>; 6] = match level {
-        1 => [Some(4), Some(2), None, None, None, None],
-        2 => [Some(5), Some(2), None, None, None, None],
-        3 => [Some(5), Some(3), None, None, None, None],
-        4 => [Some(6), Some(3), Some(1), None, None, None],
-        5 => [Some(6), Some(4), Some(2), None, None, None],
-        6 => [Some(7), Some(4), Some(2), Some(1), None, None],
-        7 => [Some(7), Some(5), Some(3), Some(2), None, None],
-        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None],
-        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None],
-        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1)],
-        _ => [None, None, None, None, None, None],
+    // 10, 6th at 12, 7th at 14, 8th at 16, 9th at 18 — checked rather than
+    // assumed).
+    // Only the known COUNTS
+    // are grounded: the selection of WHICH spells are known is never
+    // computed, and the 3rd/5th/7th/9th/11th/13th/15th/17th-level bloodline
+    // bonus spells are part of the still-unproven bloodline progression
+    // burden, not this table.
+    let sorcerer_spells_known: [Option<i16>; 10] = match level {
+        1 => [Some(4), Some(2), None, None, None, None, None, None, None, None],
+        2 => [Some(5), Some(2), None, None, None, None, None, None, None, None],
+        3 => [Some(5), Some(3), None, None, None, None, None, None, None, None],
+        4 => [Some(6), Some(3), Some(1), None, None, None, None, None, None, None],
+        5 => [Some(6), Some(4), Some(2), None, None, None, None, None, None, None],
+        6 => [Some(7), Some(4), Some(2), Some(1), None, None, None, None, None, None],
+        7 => [Some(7), Some(5), Some(3), Some(2), None, None, None, None, None, None],
+        8 => [Some(8), Some(5), Some(3), Some(2), Some(1), None, None, None, None, None],
+        9 => [Some(8), Some(5), Some(4), Some(3), Some(2), None, None, None, None, None],
+        10 => [Some(9), Some(5), Some(4), Some(3), Some(2), Some(1), None, None, None, None],
+        11 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), None, None, None, None],
+        12 => [Some(9), Some(5), Some(5), Some(4), Some(3), Some(2), Some(1), None, None, None],
+        13 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), None, None, None],
+        14 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(3), Some(2), Some(1), None, None],
+        15 => [Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2), None, None],
+        16 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(2), Some(1), None,
+        ],
+        17 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2), None,
+        ],
+        18 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(2),
+            Some(1),
+        ],
+        19 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
+            Some(2),
+        ],
+        20 => [
+            Some(9), Some(5), Some(5), Some(4), Some(4), Some(4), Some(3), Some(3), Some(3),
+            Some(3),
+        ],
+        _ => [None, None, None, None, None, None, None, None, None, None],
     };
     for (spell_level, known_count) in sorcerer_spells_known.iter().enumerate() {
         let Some(known_count) = known_count else {
@@ -9004,8 +13955,8 @@ fn explain_sorcerer_level1_spell_baseline(
 
 /// The bounded Wizard milestone level this decomposition surface grounds, if any.
 /// Returns the single Wizard level when the chosen input is exactly a single-class
-/// Wizard at one of the supported milestone levels (1 through 10). Returns `None` for
-/// no Wizard, a non-Wizard class, a multiclass mix, or any level-11+ Wizard this slice
+/// Wizard at one of the supported milestone levels (1 through 11). Returns `None` for
+/// no Wizard, a non-Wizard class, a multiclass mix, or any level-12+ Wizard this slice
 /// deliberately does not recognize — each of which stays claim-blocked exactly as
 /// before. Mirrors the Fighter `supported_fighter_level` / Paladin
 /// `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
@@ -9399,7 +14350,15 @@ fn explain_wizard_level1_prepared_spell_baseline(
         // of EACH spell level she can cast — one 1st-level bonus slot plus one
         // 2nd-level bonus slot, a flat count of 2.
         let wizard_specialist_bonus_slot_count =
-            if level >= WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+            if level >= WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_17
+            } else if level >= WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_15
+            } else if level >= WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_13
+            } else if level >= WIZARD_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+                WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_11
+            } else if level >= WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_9
             } else if level >= WIZARD_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
                 WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7
@@ -9434,7 +14393,39 @@ fn explain_wizard_level1_prepared_spell_baseline(
                  spells for the first time (verified against both primary sources' raw \
                  spells-per-day table rows), so the flat count becomes \
                  {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_7:+} (one 1st-level, one 2nd-level, one \
-                 3rd-level, and one 4th-level Evocation-only bonus slot). At level {level} this \
+                 3rd-level, and one 4th-level Evocation-only bonus slot); at level \
+                 {WIZARD_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 5th-level \
+                 spells for the first time (verified against both primary sources' raw \
+                 spells-per-day table rows), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_9:+}; at level \
+                 {WIZARD_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 6th-level \
+                 spells for the first time (verified independently against both primary sources' \
+                 raw spells-per-day table rows: the level-10 row is \"4/4/4/3/3/2\" with a still-\
+                 \"—\" 6th-level column, the level-11 row is \"4/4/4/4/3/2/1\", the first non-\"—\" \
+                 6th-level column), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_11:+} (one bonus slot of each spell \
+                 level 1st through 6th); at level \
+                 {WIZARD_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 7th-level \
+                 spells for the first time (verified independently against both primary sources' \
+                 raw spells-per-day table rows: the level-12 row is \"4/4/4/4/3/3/2\" with a \
+                 still-\"—\" 7th-level column, the level-13 row is \"4/4/4/4/4/3/2/1\", the first \
+                 non-\"—\" 7th-level column), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_13:+} (one bonus slot of each spell \
+                 level 1st through 7th); at level \
+                 {WIZARD_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 8th-level \
+                 spells for the first time (verified independently against both primary sources' \
+                 raw spells-per-day table rows: the level-14 row is \"4/4/4/4/4/3/3/2\" with a \
+                 still-\"—\" 8th-level column, the level-15 row is \"4/4/4/4/4/4/3/2/1\", the \
+                 first non-\"—\" 8th-level column), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_15:+} (one bonus slot of each spell \
+                 level 1st through 8th); at level \
+                 {WIZARD_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a wizard also casts 9th-level \
+                 spells for the first time (verified independently against both primary sources' \
+                 raw spells-per-day table rows: the level-16 row is \"4/4/4/4/4/4/3/3/2\" with a \
+                 still-\"—\" 9th-level column, the level-17 row is \"4/4/4/4/4/4/4/3/2/1\", the \
+                 first non-\"—\" 9th-level column), so the flat count becomes \
+                 {WIZARD_SPECIALIST_BONUS_SLOTS_AT_LEVEL_17:+} (one bonus slot of each spell \
+                 level 1st through 9th). At level {level} this \
                  is {wizard_specialist_bonus_slot_count:+} flat count; there is no cantrip-level \
                  bonus slot. This grounds the flat count only: no slot contents, no spells \
                  prepared per day, no per-day slot totals, and no bonus slots from a high \
@@ -9611,7 +14602,122 @@ fn supported_cleric_level(input: &CharacterInput) -> Option<u8> {
 /// increases only at level 8) — so two pillars whose underlying formulas
 /// genuinely change (Channel Energy dice, domain spell slot count) are widened;
 /// no new pillar record is added at level 7 either, since no other class feature
-/// is named in the level-7 Special column. It only:
+/// is named in the level-7 Special column. An SD18 slice
+/// (`cycle-2026-07-13T2007`, mirroring `cycle-2026-07-13T1255`'s Barbarian
+/// level-11 widening and `cycle-2026-07-13T1830`'s Bard level-11 widening)
+/// widens the gate again to 1..=11 (`MAX_SUPPORTED_CLERIC_LEVEL = 11`,
+/// generalized from the SD13-E5 1..=10 ceiling): the class table's level-11
+/// "Special" column reads "Channel energy 6d6" (verified independently
+/// against d20pfsrd and legacy.aonprd.com) — Channel Energy's die count
+/// genuinely rises to 6d6 (`(11 + 1) / 2 = 6`, up from 5d6 at level 10) via
+/// the same pre-existing formula, not re-derived — and the domain spell slot
+/// count also genuinely rises, to 6 (a level-11 cleric casts 6th-level cleric
+/// spells for the first time, verified independently against both primary
+/// sources' raw spells-per-day table rows), while base attack bonus rises to
+/// +8 (`11 * 3 / 4 = 8`) and base Fortitude/Reflex/Will saves and Touch of
+/// Good's sacred bonus all stay numerically unchanged from level 10
+/// (integer-division coincidences, checked not assumed) — so two pillars
+/// whose underlying formulas genuinely change (Channel Energy dice, domain
+/// spell slot count) plus the base-attack-bonus arithmetic extension are
+/// widened; no new pillar record is added at level 11 either, since no other
+/// class feature is named in the level-11 Special column. A further SD18
+/// slice (`cycle-2026-07-15T0200`, mirroring `cycle-2026-07-14T1814`'s
+/// Barbarian level-12 widening and `cycle-2026-07-14T2359`'s Bard level-12
+/// widening) widens the gate again to 1..=12 (`MAX_SUPPORTED_CLERIC_LEVEL =
+/// 12`): the class table's level-12 "Special" column is genuinely BLANK
+/// (verified independently against d20pfsrd and Archives of Nethys
+/// aonprd.com) — base attack bonus rises to +9 (`12 * 3 / 4 = 9`), base
+/// Fortitude/Will (good saves) rise to +8 (`12 / 2 + 2 = 8`), base Reflex
+/// (poor save) rises to +4 (`12 / 3 = 4`), and the Good domain's Touch of
+/// Good sacred bonus rises to 6 (`12 / 2 = 6`) via the same pre-existing
+/// formulas, not re-derived, while Channel Energy's die count stays 6d6
+/// (`(12 + 1) / 2 = 6`, the odd-level cadence's next rise landing at 13th)
+/// and the domain spell slot count stays 6 (a level-12 cleric still casts
+/// only up to 6th-level cleric spells; 7th-level cleric spells first appear
+/// at level 13) — so four pillars whose underlying formulas genuinely
+/// change (base attack, all three base saves via two distinct formulas,
+/// Touch of Good's bonus) are widened; no new pillar record is added at
+/// level 12 either, since no other class feature is named in the level-12
+/// Special column. An SD18 slice (`cycle-2026-07-15T1500`, mirroring
+/// `cycle-2026-07-15T1100`'s Rogue, `cycle-2026-07-15T1200`'s Barbarian,
+/// `cycle-2026-07-15T1300`'s Fighter, and `cycle-2026-07-15T1400`'s Ranger
+/// level-13 widenings) widens the gate again to 1..=13
+/// (`MAX_SUPPORTED_CLERIC_LEVEL = 13`): the class table's level-13 "Special"
+/// column reads "Channel energy 7d6" (verified independently against three
+/// primary sources — d20pfsrd, Archives of Nethys aonprd.com, and
+/// legacy.aonprd.com, all three byte-for-byte identical) — Channel Energy's
+/// die count genuinely rises to 7d6 (`(13 + 1) / 2 = 7`, up from 6d6 at
+/// level 12) via the same pre-existing formula, not re-derived — and the
+/// domain spell slot count also genuinely rises, to 7 (a level-13 cleric
+/// casts 7th-level cleric spells for the first time, verified independently
+/// against all three primary sources' raw spells-per-day table rows), while
+/// base attack bonus stays +9 (`13 * 3 / 4 = 9`), base Fortitude/Reflex/Will
+/// saves all stay numerically unchanged from level 12, and Touch of Good's
+/// bonus stays 6 (`13 / 2 = 6`) (integer-division coincidences, checked not
+/// assumed) — so two pillars whose underlying formulas genuinely change
+/// (Channel Energy dice, domain spell slot count) are widened; no new
+/// pillar record is added at level 13 either, since no other class feature
+/// is named in the level-13 Special column. An SD18 slice
+/// (`cycle-2026-07-15T2300`, mirroring `cycle-2026-07-15T1900`'s Barbarian,
+/// `cycle-2026-07-15T2000`'s Fighter and Rogue, and `cycle-2026-07-15T2100`'s
+/// Ranger level-14 widenings) widens the gate again to 1..=14
+/// (`MAX_SUPPORTED_CLERIC_LEVEL = 14`): the class table's level-14 "Special"
+/// column is genuinely BLANK (verified independently against d20pfsrd,
+/// Archives of Nethys aonprd.com, and legacy.aonprd.com, all three
+/// byte-for-byte identical) — base attack bonus genuinely rises to +10
+/// (`14 * 3 / 4 = 10`), both good saves genuinely rise to +9
+/// (`14 / 2 + 2 = 9`), and the Good domain's Touch of Good sacred bonus
+/// genuinely rises to 7 (`14 / 2 = 7`), all via the same pre-existing
+/// formulas, not re-derived, while poor Reflex stays +4 (`14 / 3 = 4`),
+/// Channel Energy's die count stays 7d6 (`(14 + 1) / 2 = 7`, the odd-level
+/// cadence's next rise landing at 15th), and the domain spell slot count
+/// stays 7 (a level-14 cleric still casts only up to 7th-level cleric
+/// spells; 8th-level cleric spells first appear at level 15) — all
+/// integer-division coincidences, checked not assumed — so no new pillar
+/// record is added at level 14 either, since no class feature is named in
+/// the level-14 Special column. An SD18 slice (`cycle-2026-07-15T3100`,
+/// mirroring `cycle-2026-07-15T2800`'s Barbarian, `cycle-2026-07-15T2900`'s
+/// Rogue, and `cycle-2026-07-15T3000`'s Fighter level-15 widenings, and the
+/// first §3.2 level-15 landing on a full 9-level-caster class) widens the
+/// gate again to 1..=15 (`MAX_SUPPORTED_CLERIC_LEVEL = 15`): the class
+/// table's level-15 "Special" column reads "Channel energy 8d6" (verified
+/// independently against two primary sources — d20pfsrd and the Archives of
+/// Nethys aonprd.com mirror, byte-for-byte agreement) — Channel Energy's die
+/// count genuinely rises to 8d6 (`(15 + 1) / 2 = 8`, up from 7d6 at level
+/// 14) via the same pre-existing formula, not re-derived — and the domain
+/// spell slot count also genuinely rises, to 8 (a level-15 cleric casts
+/// 8th-level cleric spells for the first time, verified against
+/// legacy.aonprd.com's raw spells-per-day table rows after two single-row
+/// summarized fetches disagreed with each other and were rejected as tool
+/// artifacts, see `CLERIC_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL`), while
+/// base attack bonus genuinely rises to +11 (`15 * 3 / 4 = 11`), base Reflex
+/// (poor save) genuinely rises to +5 (`15 / 3 = 5`), and both good saves
+/// stay +9 (`15 / 2 + 2 = 9`) and Touch of Good's bonus stays 7
+/// (`15 / 2 = 7`), integer-division coincidences with level 14, checked not
+/// assumed — so two pillars whose underlying formulas genuinely change
+/// (Channel Energy dice, domain spell slot count) are widened, plus the
+/// base-attack/base-save pillar; no new pillar record is added at level 15
+/// either, since the level-15 Special column names only the Channel Energy
+/// tier-rise, not a new class feature. An SD18 slice (`cycle-2026-07-15T5300`,
+/// mirroring `cycle-2026-07-15T4600`'s Barbarian, the Fighter, `fd3fbe9`'s
+/// Wizard, and `c265972`'s Rogue level-16 widenings — the loop's FIFTH §3.2
+/// level-16 landing, and the second full 9-level-caster class after Wizard
+/// to reach it) widens the gate again to 1..=16 (`MAX_SUPPORTED_CLERIC_LEVEL
+/// = 16`): the class table's level-16 "Special" column is genuinely BLANK
+/// (verified independently against two primary sources — d20pfsrd and the
+/// Archives of Nethys aonprd.com mirror, byte-for-byte agreement) — a pure
+/// ceiling raise, exactly mirroring the Wizard level-16 cycle's own pure
+/// ceiling raise: base attack bonus genuinely rises to +12 (`16 * 3 / 4 =
+/// 12`), both good saves genuinely rise to +10 (`16 / 2 + 2 = 10`), and
+/// Touch of Good's bonus genuinely rises to 8 (`16 / 2 = 8`), all via the
+/// same pre-existing formulas, not re-derived, while poor Reflex stays +5
+/// (`16 / 3 = 5`), Channel Energy's die count stays 8d6 (`(16 + 1) / 2 = 8`,
+/// the odd-level cadence's next rise landing at 17th), and the domain spell
+/// slot count stays 8 (a level-16 cleric still casts only up to 8th-level
+/// cleric spells; 9th-level cleric spells are out of this bounded ceiling's
+/// scope) — all integer-division coincidences, checked not assumed — so no
+/// new pillar record is added at level 16 either, since no class feature is
+/// named in the level-16 Special column. It only:
 /// - leaves one recognition explanation so the `class:cleric:N` identity is acknowledged
 ///   as a prepared divine spell-bearing class rather than an undocumented packet
 ///   placeholder (direct runtime evidence, carrying no fabricated mechanical value),
@@ -9844,7 +14950,15 @@ fn explain_cleric_level1_spell_baseline(
     // primary sources' raw spells-per-day table rows), so the count genuinely
     // becomes 4 — one 1st-level, one 2nd-level, one 3rd-level, and one
     // 4th-level domain slot.
-    let domain_spell_slot_count = if level >= CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+    let domain_spell_slot_count = if level >= CLERIC_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_17
+    } else if level >= CLERIC_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_15
+    } else if level >= CLERIC_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_13
+    } else if level >= CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
+        CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11
+    } else if level >= CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9
     } else if level >= CLERIC_FOURTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL {
         CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7
@@ -9878,7 +14992,30 @@ fn explain_cleric_level1_spell_baseline(
              cleric spells for the first time (verified against both primary sources' raw \
              spells-per-day table rows), so the flat count becomes \
              {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_7} (one 1st-level, one 2nd-level, one \
-             3rd-level, and one 4th-level domain slot). At Cleric level {level} this is \
+             3rd-level, and one 4th-level domain slot); at levels \
+             {CLERIC_FIFTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}-10 a cleric also casts 5th-level \
+             cleric spells for the first time, so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_9}; at level \
+             {CLERIC_SIXTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a cleric also casts 6th-level \
+             cleric spells for the first time (verified against both primary sources' raw \
+             spells-per-day table rows), so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_11} (one each of 1st through 6th-level \
+             domain slots); at level {CLERIC_SEVENTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a \
+             cleric also casts 7th-level cleric spells for the first time (verified \
+             independently against three primary sources' raw spells-per-day table rows: \
+             d20pfsrd, Archives of Nethys aonprd.com, and legacy.aonprd.com, all three \
+             byte-for-byte identical), so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_13} (one each of 1st through 7th-level \
+             domain slots); at level {CLERIC_EIGHTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a \
+             cleric also casts 8th-level cleric spells for the first time (verified against \
+             legacy.aonprd.com's raw spells-per-day table rows), so the flat count becomes \
+             {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_15} (one each of 1st through 8th-level \
+             domain slots); at level {CLERIC_NINTH_LEVEL_SPELLS_BEGIN_AT_CLASS_LEVEL}+ a cleric \
+             also casts 9th-level cleric spells for the first time (verified independently \
+             against two primary sources' raw spells-per-day table rows: d20pfsrd and the \
+             Archives of Nethys aonprd.com mirror, byte-for-byte agreement), so the flat count \
+             becomes {CLERIC_DOMAIN_SPELL_SLOT_COUNT_AT_LEVEL_17} (one each of 1st through \
+             9th-level domain slots). At Cleric level {level} this is \
              {domain_spell_slot_count} domain spell slot(s). \
              This grounds only the flat slot count; it grounds no slot contents (which domain \
              spell may fill it), no domain spell lists, and no prepared-spell posture"
@@ -10427,6 +15564,68 @@ fn explain_druid_level1_spell_baseline(
         });
     }
 
+    // Grounded (SD18 level-13 slice): A Thousand Faces, the 13th-level Druid class
+    // feature verified independently against three primary PF1 sources (d20pfsrd,
+    // Archives of Nethys aonprd.com, and legacy.aonprd.com all list "A thousand
+    // faces" as the Druid 13th-level "Special" column entry). UNLIKE the class
+    // table's Wild-Shape-shaped entries at levels 4/6/8/10/12, this is a genuinely
+    // flat/identity-shaped, no-choice, no-magnitude, no-duration-tracking, at-will
+    // grant — in PF1 (unlike the D&D 3.5 version of this ability, which referenced
+    // the stronger `alter self` spell), the druid gains the ability to change her
+    // own apparent appearance at will, as if using `disguise self`, but only while
+    // in her normal (unshifted) form — mirroring exactly how Venom Immunity was
+    // grounded at level 9: a bounded +0 identity/recognition record at or above the
+    // gate: no illusion-effect execution engine and no Disguise-check-resolution
+    // engine exists anywhere in this codebase to apply it, so no actual
+    // appearance-change or Disguise-check outcome is fabricated. Below the
+    // level-13 gate no record is pushed at all (the level-13 slice's own level-12
+    // control pins that absence).
+    if level >= DRUID_A_THOUSAND_FACES_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.a_thousand_faces".to_owned(),
+            value: 0,
+            detail: format!(
+                "Druid A Thousand Faces granted at druid level {level} (PF1 Core Rulebook, \
+                 13th-level druid class feature): the druid gains the ability to change her \
+                 own apparent appearance at will, as if using disguise self, but only while in \
+                 her normal (unshifted) form. This is a bounded identity/recognition record \
+                 only (value 0, non-fabricated): no illusion-effect execution engine and no \
+                 Disguise-check-resolution engine exists anywhere in this codebase to apply it, \
+                 so this grounds no actual appearance-change or Disguise-check outcome"
+            ),
+        });
+    }
+
+    // Grounded (SD18 level-15 slice): Timeless Body, the 15th-level Druid class
+    // feature verified independently against three primary PF1 sources (d20pfsrd,
+    // Archives of Nethys aonprd.com, and legacy.aonprd.com all list "Timeless body"
+    // — and ONLY that entry, with no accompanying Wild Shape frequency increase —
+    // as the Druid 15th-level "Special" column entry). A genuinely flat/
+    // identity-shaped, no-choice, no-magnitude, no-duration-tracking grant — a
+    // druid no longer takes ability score penalties for old age and cannot be
+    // magically aged (existing penalties remain in place; bonuses still accrue) —
+    // mirroring exactly how Venom Immunity was grounded at level 9 and A Thousand
+    // Faces at level 13: a bounded +0 identity/recognition record at or above the
+    // gate: no aging-penalty-resolution engine exists anywhere in this codebase to
+    // apply it, so this grounds no actual ability-score-penalty or magical-aging
+    // outcome. Below the level-15 gate no record is pushed at all (the level-15
+    // slice's own level-14 control pins that absence).
+    if level >= DRUID_TIMELESS_BODY_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.druid.timeless_body".to_owned(),
+            value: 0,
+            detail: format!(
+                "Druid Timeless Body granted at druid level {level} (PF1 Core Rulebook, \
+                 15th-level druid class feature): the druid no longer takes ability score \
+                 penalties for old age and cannot be magically aged (existing penalties remain \
+                 in place; bonuses still accrue). This is a bounded identity/recognition record \
+                 only (value 0, non-fabricated): no aging-penalty-resolution engine exists \
+                 anywhere in this codebase to apply it, so this grounds no actual \
+                 ability-score-penalty or magical-aging outcome"
+            ),
+        });
+    }
+
     // Still blocked (1/2): name the animal companion execution burden explicitly. Wild
     // Empathy, Nature Sense, and (when recognized) the nature-bond choice recognition
     // are grounded above and no longer named here as blockers. The message must not
@@ -10471,8 +15670,8 @@ fn explain_druid_level1_spell_baseline(
 /// The bounded Bard milestone level this decomposition surface grounds, if any.
 /// Returns the single Bard level when the chosen input is exactly a single-class
 /// Bard at one of the supported milestone levels (1 through `MAX_SUPPORTED_BARD_LEVEL`,
-/// currently 8). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
-/// any level-9+ Bard this slice deliberately does not recognize — each of which stays
+/// currently 19). Returns `None` for no Bard, a non-Bard class, a multiclass mix, or
+/// any level-20 Bard this slice deliberately does not recognize — each of which stays
 /// claim-blocked exactly as before. Mirrors the Fighter `supported_fighter_level` /
 /// Paladin `supported_paladin_level` / Rogue `supported_rogue_level` / Barbarian
 /// `supported_barbarian_level` / Monk `supported_monk_level` / Cleric
@@ -10757,7 +15956,11 @@ fn explain_bard_level1_spell_baseline(
     // +1 through level 5" framing turns out to have been precise). Only the flat
     // magnitude is grounded; no performance-state engine exists to start the
     // performance or apply the bonus to any computed total.
-    let inspire_courage_bonus = if level >= BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL {
+    let inspire_courage_bonus = if level >= BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL {
+        BARD_INSPIRE_COURAGE_BONUS_FOURTH_TIER
+    } else if level >= BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL {
+        BARD_INSPIRE_COURAGE_BONUS_THIRD_TIER
+    } else if level >= BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL {
         BARD_INSPIRE_COURAGE_BONUS_SECOND_TIER
     } else {
         BARD_INSPIRE_COURAGE_BONUS_FIRST_TIER
@@ -10770,11 +15973,13 @@ fn explain_bard_level1_spell_baseline(
              Courage): a +{inspire_courage_bonus} competence bonus on attack rolls and weapon \
              damage rolls and a +{inspire_courage_bonus} morale bonus on saving throws against \
              charm and fear effects for affected allies. This magnitude increases from +1 to +2 \
-             exactly at bard level {BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL} (PF1 Core Rulebook: \
-             \"At 5th level, and every six bard levels thereafter, this bonus increases by \
-             +1\"), so it is +{inspire_courage_bonus} at level {level}; the next increase (to \
-             +3) is at bard level 11, out of scope for this bounded slice. This grounds only the \
-             flat magnitude of the fixture's chosen performance \
+             exactly at bard level {BARD_INSPIRE_COURAGE_SECOND_TIER_LEVEL}, again from +2 to +3 \
+             exactly at bard level {BARD_INSPIRE_COURAGE_THIRD_TIER_LEVEL}, and again from +3 to \
+             +4 exactly at bard level {BARD_INSPIRE_COURAGE_FOURTH_TIER_LEVEL} (PF1 Core \
+             Rulebook: \"At 5th level, and every six bard levels thereafter, this bonus \
+             increases by +1\"), so it is +{inspire_courage_bonus} at level {level}; the next \
+             increase (to +5) is at bard level 23, out of scope for this bounded slice. This \
+             grounds only the flat magnitude of the fixture's chosen performance \
              (choice:bard_bardic_music -> performance:inspire_courage); it is never applied to \
              any attack, damage, or save total because the performance-state engine \
              (start/maintain action economy, round tracking) is not implemented"
@@ -10896,7 +16101,13 @@ fn explain_bard_level1_spell_baseline(
             ),
         });
     } else {
-        let inspire_competence_bonus = if level >= BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL {
+        let inspire_competence_bonus = if level >= BARD_INSPIRE_COMPETENCE_FIFTH_TIER_LEVEL {
+            BARD_INSPIRE_COMPETENCE_BONUS_FIFTH_TIER
+        } else if level >= BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL {
+            BARD_INSPIRE_COMPETENCE_BONUS_FOURTH_TIER
+        } else if level >= BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL {
+            BARD_INSPIRE_COMPETENCE_BONUS_THIRD_TIER
+        } else if level >= BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL {
             BARD_INSPIRE_COMPETENCE_BONUS_SECOND_TIER
         } else {
             BARD_INSPIRE_COMPETENCE_BONUS_FIRST_TIER
@@ -10908,10 +16119,14 @@ fn explain_bard_level1_spell_baseline(
                 "Bard Inspire Competence granted at bard level {level} (PF1 Core Rulebook, \
                  3rd-level Bard class feature): a flat +{inspire_competence_bonus} competence \
                  bonus on skill checks with a particular skill. This magnitude increases from \
-                 +2 to +3 exactly at bard level {BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL} (PF1 \
-                 Core Rulebook: \"This bonus increases by +1 for every four levels the bard has \
+                 +2 to +3 exactly at bard level {BARD_INSPIRE_COMPETENCE_SECOND_TIER_LEVEL}, \
+                 again from +3 to +4 exactly at bard level \
+                 {BARD_INSPIRE_COMPETENCE_THIRD_TIER_LEVEL}, again from +4 to +5 exactly at \
+                 bard level {BARD_INSPIRE_COMPETENCE_FOURTH_TIER_LEVEL}, and again from +5 to \
+                 +6 exactly at bard level {BARD_INSPIRE_COMPETENCE_FIFTH_TIER_LEVEL} (PF1 Core \
+                 Rulebook: \"This bonus increases by +1 for every four levels the bard has \
                  attained beyond 3rd\"), so it is +{inspire_competence_bonus} at level {level}; \
-                 the next increase (to +4) is at bard level 11, out of scope for this bounded \
+                 the next increase (to +7) is at bard level 23, out of scope for this bounded \
                  slice. This is a standalone explanation record only; it is never applied to any \
                  actual skill-check total because no skill-check-resolution engine exists \
                  anywhere in this codebase, and no task-selection/action-economy engine decides \
@@ -10950,18 +16165,33 @@ fn explain_bard_level1_spell_baseline(
             ),
         });
     } else {
+        let lore_master_uses_per_day = if level >= BARD_LORE_MASTER_THIRD_TIER_LEVEL {
+            BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_THIRD_TIER
+        } else if level >= BARD_LORE_MASTER_SECOND_TIER_LEVEL {
+            BARD_LORE_MASTER_TAKE_20_USES_PER_DAY_SECOND_TIER
+        } else {
+            BARD_LORE_MASTER_TAKE_20_USES_PER_DAY
+        };
         explanations.push(ComputationExplanation {
             id: "class_feature.bard.lore_master".to_owned(),
-            value: BARD_LORE_MASTER_TAKE_20_USES_PER_DAY,
+            value: lore_master_uses_per_day,
             detail: format!(
                 "Bard Lore Master granted at bard level {level} (PF1 Core Rulebook, 5th-level \
                  Bard class feature): \"the bard becomes a master of lore and can take 10 on any \
                  Knowledge skill check that he has ranks in... once per day, the bard can take \
                  20 on any Knowledge skill check as a standard action.\" This grounds only the \
-                 rule's own flat {BARD_LORE_MASTER_TAKE_20_USES_PER_DAY}/day usage-count \
-                 magnitude for the take-20 half of the feature (a bounded grant-only identity \
-                 record, mirroring the Paladin Smite Evil / Wizard Force Missile uses-per-day \
-                 idiom); the take-10 capability has no flat magnitude to ground (it is an \
+                 rule's own flat {lore_master_uses_per_day}/day usage-count magnitude for the \
+                 take-20 half of the feature (a bounded grant-only identity record, mirroring \
+                 the Paladin Smite Evil / Wizard Force Missile uses-per-day idiom), which \
+                 genuinely rises from 1/day to 2/day exactly at bard level \
+                 {BARD_LORE_MASTER_SECOND_TIER_LEVEL} (PF1 Core Rulebook: \"Inspire competence \
+                 +4, inspire courage +3, lore master 2/day\" at the Bard 11th-level special \
+                 feature entry, the same every-sixth-level-after-5th cadence as Inspire \
+                 Courage), and again from 2/day to 3/day exactly at bard level \
+                 {BARD_LORE_MASTER_THIRD_TIER_LEVEL} (PF1 Core Rulebook: \"Inspire courage +4, \
+                 lore master 3/day\" at the Bard 17th-level special feature entry, the same \
+                 cadence); the next increase lands beyond bard level 17, out of scope for this \
+                 bounded slice. The take-10 capability has no flat magnitude to ground (it is an \
                  at-will resolution-mode toggle, not a countable resource), and neither the \
                  take-10 nor the take-20 mechanic is actually executed against any Knowledge \
                  check, since no skill-check-resolution engine exists anywhere in this codebase"
@@ -10999,6 +16229,184 @@ fn explain_bard_level1_spell_baseline(
         });
     }
 
+    // Grounded (SD18): Soothing Performance, a 12th-level Bard class feature
+    // verified independently against two primary PF1 sources (d20pfsrd and
+    // the Archives of Nethys aonprd.com mirror both list "Soothing
+    // performance" as the sole Bard 12th-level "Special" column entry).
+    // Below the level-12 gate this is a correct PF1 Core Rulebook
+    // level-gate absence (value 0); at or above it, it is a bounded
+    // grant-only identity record (value 0, non-fabricated) naming the rule
+    // text — mirroring the Monk Diamond Body / Paladin Aura of Justice
+    // grant-only idiom exactly: no healing-application engine and no
+    // condition-removal engine exist anywhere in this codebase to apply
+    // the effect to.
+    if level < BARD_SOOTHING_PERFORMANCE_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.soothing_performance".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bard Soothing Performance at bard level {level}: correctly absent at level \
+                 {level} by PF1 Core Rulebook level gate; the at-grant rule is named but not \
+                 computed. Soothing Performance is a 12th-level Bard class feature."
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.soothing_performance".to_owned(),
+            value: 0,
+            detail: format!(
+                "Bard Soothing Performance granted at bard level {level} (PF1 Core Rulebook, \
+                 12th-level Bard class feature): \"a bard of 12th level or higher can use his \
+                 performance to help heal the wounds of his allies... this ability functions \
+                 as mass cure serious wounds... this use of bardic performance also removes \
+                 the fatigued, sickened, and shaken conditions.\" This is a bounded grant-only \
+                 identity record only (value 0, non-fabricated): no healing-application engine \
+                 and no condition-removal engine exists anywhere in this codebase to apply the \
+                 effect to."
+            ),
+        });
+    }
+
+    // Grounded (SD18): Frightening Tune, a 14th-level Bard class feature
+    // verified independently against two primary PF1 sources (d20pfsrd and
+    // the Archives of Nethys aonprd.com mirror both list "Frightening tune,
+    // Versatile performance" as the Bard 14th-level "Special" column entry).
+    // The rule text gives a Will-save DC (10 + 1/2 the bard's level + the
+    // bard's Cha modifier) — the exact same formula shape as the
+    // already-grounded Fascinate DC, so only that flat DC magnitude is
+    // grounded here, mirroring the Fascinate DC idiom exactly. Below the
+    // level-14 gate no record is pushed at all. Unlike Fascinate, this
+    // feature's affected scope ("each enemy within 30 feet who can hear the
+    // performance") is range-based, not a numeric-count formula, so no
+    // affected-creature-count record is added for it, and no fear/frightened
+    // condition is ever applied because no condition-resolution engine
+    // exists anywhere in this codebase.
+    if level >= BARD_FRIGHTENING_TUNE_LEVEL {
+        let frightening_tune_dc = FASCINATE_DC_BASE + (level_value / 2) + ability_modifiers.charisma;
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.bard.frightening_tune_dc".to_owned(),
+            value: frightening_tune_dc,
+            detail: format!(
+                "Bard Frightening Tune Will save DC at bard level {level} (PF1 Core Rulebook, \
+                 14th-level Bard class feature): DC = 10 + 1/2 bard level + Charisma modifier, \
+                 the same formula shape as the Fascinate DC. At bard level {level} and Charisma \
+                 modifier {} this is {FASCINATE_DC_BASE} + ({level} / 2) + {} = \
+                 {frightening_tune_dc}. This grounds only the flat DC magnitude; no \
+                 range/line-of-sight/audible-performance-requirement checking, no \
+                 affected-creature-count (the rule text is range-based, not a numeric-count \
+                 formula), no Will-save resolution, and no application of a frightened \
+                 condition to any target is computed because neither the performance-state \
+                 engine nor a condition-resolution engine is implemented",
+                ability_modifiers.charisma, ability_modifiers.charisma
+            ),
+        });
+    }
+
+    // Grounded (SD18): Deadly Performance, the Bard's 20th-level class
+    // capstone, verified independently against two primary PF1 sources
+    // (d20pfsrd and the Archives of Nethys aonprd.com mirror both list
+    // "Deadly performance" as the sole Bard 20th-level "Special" column
+    // entry). The rule text gives a Will-save DC (10 + 1/2 the bard's
+    // level + the bard's Cha modifier) — the exact same formula shape as
+    // the already-grounded Fascinate DC and Frightening Tune DC, so only
+    // that flat DC magnitude is grounded here, mirroring the Frightening
+    // Tune idiom exactly. Below the level-20 gate no record is pushed at
+    // all. No audible/visual-performance-requirement checking, no
+    // Will-save resolution, and no death-effect application is ever
+    // computed because no targeting/range, save-resolution, or
+    // death-effect-resolution engine exists anywhere in this codebase.
+    if level >= BARD_DEADLY_PERFORMANCE_LEVEL {
+        let deadly_performance_dc = FASCINATE_DC_BASE + (level_value / 2) + ability_modifiers.charisma;
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.deadly_performance_dc".to_owned(),
+            value: deadly_performance_dc,
+            detail: format!(
+                "Bard Deadly Performance Will save DC at bard level {level} (PF1 Core Rulebook, \
+                 20th-level Bard class capstone): DC = 10 + 1/2 bard level + Charisma modifier, \
+                 the same formula shape as the Fascinate DC and Frightening Tune DC. At bard \
+                 level {level} and Charisma modifier {} this is {FASCINATE_DC_BASE} + \
+                 ({level} / 2) + {} = {deadly_performance_dc}. This grounds only the flat DC \
+                 magnitude; no range/line-of-sight/audible-and-visual-performance-requirement \
+                 checking, no Will-save resolution, and no death-effect application to any \
+                 target is computed because neither the performance-state engine nor a \
+                 death-effect-resolution engine is implemented",
+                ability_modifiers.charisma, ability_modifiers.charisma
+            ),
+        });
+    }
+
+    // Grounded (SD18): Inspire Heroics, a 15th-level Bard class feature
+    // verified independently against two primary PF1 sources (d20pfsrd and
+    // the Archives of Nethys aonprd.com mirror both list "Inspire competence
+    // +5, inspire heroics" as the Bard 15th-level "Special" column entry).
+    // The rule text: "A bard of 15th level or higher can inspire tremendous
+    // heroism in himself or a single ally within 30 feet... Inspired
+    // creatures gain a +4 morale bonus on saving throws and a +4 dodge bonus
+    // to AC." Below the level-15 gate no record is pushed at all (mirroring
+    // the Frightening Tune idiom exactly, since a "correctly absent"
+    // placeholder is unnecessary busywork across three separate ids); at or
+    // above it, it grounds only the two flat, non-level-scaled magnitude
+    // numbers (mirroring the Well-Versed flat-magnitude idiom) and the flat
+    // base target count of 1 (mirroring the Fascinate affected-creature-count
+    // idiom — the rule's own further scaling, "+1 creature per three bard
+    // levels beyond 15th," lands at bard level 18, beyond this bounded
+    // slice's ceiling, and is not grounded). No targeting, save resolution,
+    // or AC application is ever computed because no such engine exists
+    // anywhere in this codebase.
+    if level >= BARD_INSPIRE_HEROICS_LEVEL {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.inspire_heroics_save_bonus".to_owned(),
+            value: BARD_INSPIRE_HEROICS_SAVE_BONUS,
+            detail: format!(
+                "Bard Inspire Heroics granted at bard level {level} (PF1 Core Rulebook, \
+                 15th-level Bard class feature): a flat +{BARD_INSPIRE_HEROICS_SAVE_BONUS} \
+                 morale bonus on saving throws for the inspired creature(s). This magnitude is \
+                 non-level-scaled (fixed at +4 for the class feature's entire existence), \
+                 mirroring the Well-Versed idiom. This is a standalone explanation record only; \
+                 it is never applied to any actual saving-throw total because no \
+                 save-resolution engine exists anywhere in this codebase, and no \
+                 targeting/action-economy engine decides which creature(s) it affects"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.inspire_heroics_ac_bonus".to_owned(),
+            value: BARD_INSPIRE_HEROICS_AC_BONUS,
+            detail: format!(
+                "Bard Inspire Heroics granted at bard level {level} (PF1 Core Rulebook, \
+                 15th-level Bard class feature): a flat +{BARD_INSPIRE_HEROICS_AC_BONUS} dodge \
+                 bonus to AC for the inspired creature(s). This magnitude is non-level-scaled \
+                 (fixed at +4 for the class feature's entire existence), mirroring the \
+                 Well-Versed idiom. This is a standalone explanation record only; it is never \
+                 applied to any actual AC total because no AC-application engine exists \
+                 anywhere in this codebase"
+            ),
+        });
+        let inspire_heroics_target_count =
+            if level >= BARD_INSPIRE_HEROICS_TARGET_COUNT_SECOND_TIER_LEVEL {
+                BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT_SECOND_TIER
+            } else {
+                BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT
+            };
+        explanations.push(ComputationExplanation {
+            id: "class_feature.bard.inspire_heroics_target_count".to_owned(),
+            value: inspire_heroics_target_count,
+            detail: format!(
+                "Bard Inspire Heroics target count at bard level {level} (PF1 Core Rulebook, \
+                 15th-level Bard class feature): \"himself or a single ally within 30 feet\" is \
+                 a flat {BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT} target starting at level \
+                 {BARD_INSPIRE_HEROICS_LEVEL}, mirroring the Fascinate affected-creature-count \
+                 idiom. The rule's own further scaling (\"for every three bard levels the \
+                 character attains beyond 15th, he can inspire heroics in an additional \
+                 creature\") genuinely rises the count to \
+                 {BARD_INSPIRE_HEROICS_BASE_TARGET_COUNT_SECOND_TIER} starting exactly at bard \
+                 level {BARD_INSPIRE_HEROICS_TARGET_COUNT_SECOND_TIER_LEVEL} (a second tier on \
+                 an already-generalized tiered if/else chain, the same idiom as Inspire \
+                 Courage/Inspire Competence/Lore Master's own tier additions). This grounds \
+                 only the flat count; no targeting or performance-state execution is computed"
+            ),
+        });
+    }
+
     // Still blocked (1/2): name the narrowed bardic performance-execution burden
     // explicitly, now separated from the grounded flat pillars (Bardic Knowledge,
     // the rounds-per-day budget, the Inspire Courage magnitude, and the Fascinate
@@ -11018,10 +16426,24 @@ fn explain_bard_level1_spell_baseline(
              affected-creature-count to any actual Will-save resolution or targeting), the two \
              remaining level-1 performances (countersong, distraction) are not grounded at all \
              — both require an opposed Perform-check-vs-effect substitution resolution rather \
-             than a flat number — and Versatile Performance (the Bard's other 2nd-level class \
+             than a flat number — Versatile Performance (the Bard's other 2nd-level class \
              feature) is not grounded either — it requires a choice-gated skill-substitution \
-             engine rather than a flat number — so no Bard bardic-performance execution \
-             support is claimed"
+             engine rather than a flat number — and Soothing Performance (the Bard's 12th-level \
+             class feature, granted only as a bounded identity record) is not executed either \
+             — it requires a healing-application engine and a condition-removal engine, \
+             neither of which exists in this codebase — and Frightening Tune (the Bard's \
+             14th-level class feature, granted only as a bounded flat Will-save DC magnitude) \
+             is not executed either — it requires the same performance-state engine plus a \
+             fear/frightened-condition-resolution engine, neither of which exists in this \
+             codebase — and Inspire Heroics (the Bard's 15th-level class feature, granted only \
+             as bounded flat save-bonus/AC-bonus/target-count magnitudes) is not executed \
+             either — it requires the same performance-state engine plus a \
+             targeting/save-application/AC-application engine, none of which exists in this \
+             codebase — and Deadly Performance (the Bard's 20th-level class capstone, granted \
+             only as a bounded flat Will-save DC magnitude) is not executed either — it \
+             requires the same performance-state engine plus a death-effect-resolution engine, \
+             neither of which exists in this codebase — so no Bard bardic-performance \
+             execution support is claimed"
         ),
         claim_blocking: true,
     });

@@ -258,8 +258,7 @@ fn matrix_ranger_row_note_names_favored_terrain_as_grounded() {
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger row must exist");
 
-    assert_eq!(ranger.support_state, SupportState::Partial);
-    assert_ne!(ranger.support_state, SupportState::Supported);
+    assert_eq!(ranger.support_state, SupportState::Supported);
     assert!(
         ranger.grounding_ref.contains("sd13_ranger_favored_terrain_choice"),
         "ranger row must cite the live favored-terrain proof surface: {}",

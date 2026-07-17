@@ -512,7 +512,26 @@ CLASS:Rogue\tHD:8
     );
 }
 
+// Both real-corpus tests below are opt-in via `PCGEN_CORPUS_ROOT` because
+// the corpus is a separate checkout (~700MB) and not part of the codex
+// repo. CI and the operator's local box should both set it. Mirrors the
+// established pattern in tests/sd17_b1_martial_class.rs,
+// tests/sd17_a_include_graph.rs, and tests/sd17_b5_equipment.rs — read the
+// real corpus file at runtime via `PCGEN_CORPUS_ROOT`, not `include_str!`
+// (a compile-time embed of an absolute local path breaks the build on any
+// machine without that exact path, including every CI runner).
+fn real_cr_classes_lst() -> String {
+    let corpus_root = PathBuf::from(
+        std::env::var("PCGEN_CORPUS_ROOT")
+            .expect("PCGEN_CORPUS_ROOT must point at a local pcgen/data checkout"),
+    );
+    let source = corpus_root.join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst");
+    fs::read_to_string(&source)
+        .unwrap_or_else(|err| panic!("failed to read real cr_classes.lst at {}: {err}", source.display()))
+}
+
 #[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
 fn parses_real_pathfinder_core_rulebook_spellcasting_classes() {
     // End-to-end: parse the real `cr_classes.lst` and confirm every
     // spellcasting class lands deterministically with its expected
@@ -520,9 +539,7 @@ fn parses_real_pathfinder_core_rulebook_spellcasting_classes() {
     let corpus = TestCorpus::new("pf1_cr_classes");
     corpus.write(
         "data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
-        include_str!(
-            "/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst"
-        ),
+        &real_cr_classes_lst(),
     );
     let result = parse_spellcasting_class_file(
         &corpus.path("data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst"),
@@ -583,17 +600,13 @@ fn parses_real_pathfinder_core_rulebook_spellcasting_classes() {
 }
 
 #[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
 fn parses_within_linear_time_bound_on_real_corpus() {
     // Performance assertion: the parser is O(n) over input length.
     // A 256 KiB ceiling on the real 5.5 KiB pf1 cr_classes.lst gives
     // ~46x slack without making the test flaky.
     let corpus = TestCorpus::new("pf1_cr_classes_perf");
-    corpus.write(
-        "cr_classes.lst",
-        include_str!(
-            "/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst"
-        ),
-    );
+    corpus.write("cr_classes.lst", &real_cr_classes_lst());
     let path = corpus.path("cr_classes.lst");
     let bytes = fs::metadata(&path).expect("stat fixture").len();
     assert!(bytes > 4_000, "real cr_classes.lst should exceed 4 KiB");

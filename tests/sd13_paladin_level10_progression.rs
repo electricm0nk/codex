@@ -291,19 +291,34 @@ fn paladin_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(caster_level.value, 6, "Paladin level 9 effective caster level must stay 6");
 }
 
-// ----- Negative control: level 11 stays unrecognized by this slice -----
+// ----- Negative control: level 14 stays unrecognized by this slice -----
+// (level 11 was later widened into the supported tranche by SD18's
+// cycle-2026-07-13T2334 Aura of Justice slice, level 12 by SD18's
+// cycle-2026-07-15T0700 widening slice, level 13 by SD18's
+// cycle-2026-07-15T1800 widening slice, level 14 by SD18's
+// cycle-2026-07-15T2500 widening slice, level 15 by SD18's
+// cycle-2026-07-15T4300 widening slice, level 16 by SD18's
+// cycle-2026-07-15T5400 widening slice, and level 17 by SD18's
+// cycle-2026-07-15T10700 widening slice; see
+// tests/sd18_paladin_level11_aura_of_justice.rs,
+// tests/sd18_paladin_level12_widening.rs,
+// tests/sd18_paladin_level13_widening.rs,
+// tests/sd18_paladin_level14_widening.rs,
+// tests/sd18_paladin_level15_widening.rs,
+// tests/sd18_paladin_level16_widening.rs, and
+// tests/sd18_paladin_level17_widening.rs for their own boundaries.)
 
 #[test]
-fn paladin_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = PALADIN_LEVEL10_FIXTURE.replace("class:paladin:10", "class:paladin:11");
-    let input = load(&level_11);
+fn paladin_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = PALADIN_LEVEL10_FIXTURE.replace("class:paladin:10", "class:paladin:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
             .explanations
             .iter()
             .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "level-11 Paladin must not gain any bounded paladin chassis explanation: {:?}",
+        "level-21 Paladin must not gain any bounded paladin chassis explanation: {:?}",
         computation.explanations
     );
 }
@@ -357,8 +372,8 @@ fn matrix_paladin_row_names_level_10_widening() {
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid_chassis_and_spell_burden row must exist");
 
-    assert_eq!(paladin.support_state, SupportState::Partial);
-    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(paladin.support_state, SupportState::Supported);
+    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         paladin.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

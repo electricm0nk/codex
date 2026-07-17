@@ -18,11 +18,14 @@ use serde::{Deserialize, Serialize};
 use tauri::Manager;
 
 use codex::rules_core::character_input::{
-    AbilityScores, ActiveState, CharacterClassLevel, CharacterInput, ChosenCharacterState,
-    EquipmentSelection, SelectedChoice, SkillAllocation,
+    AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
+    ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
 use codex::rules_core::pilot_compute::{build_pilot_headless_receipt, HeadlessReceiptStatus};
+use codex::rules_core::pilot_compute_corpus::{compute_pilot_with_corpus, CorpusDerivedSection};
 use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotViewModel};
+
+use crate::sd19_corpus::corpus_fixture_bundle;
 use codex::saved_character::local_store::SavedCharacterStore;
 use codex::saved_character::{
     SavedCharacterEnvelope, SavedCharacterRevisionKind, SavedCharacterSummary,
@@ -89,6 +92,37 @@ pub struct PilotSnapshotDto {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
+pub struct SchoolCoverageDto {
+    /// e.g. "Abjuration" — the `Pf1SchoolId` variant name, verbatim.
+    pub school: String,
+    /// Corpus spell identities resolved for this school, sorted.
+    pub spells: Vec<String>,
+    /// Whether the resolved spell(s) also ground through the foundation
+    /// slice's bootstrap table cell (`TableCellRef`), not just the corpus.
+    pub grounded: bool,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ResolvedEquipmentDto {
+    /// The `CharacterInput.equipment_selections[].item_id` verbatim.
+    pub item_id: String,
+    pub equipment_record_name: String,
+    pub equipment_record_key: String,
+    /// Whether this item also grounds through the foundation slice's
+    /// bootstrap table cell (`TableCellRef`), not just the corpus.
+    pub grounded: bool,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CorpusDerivedDto {
+    pub school_coverage: Vec<SchoolCoverageDto>,
+    pub equipped_items: Vec<ResolvedEquipmentDto>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct DiagnosticDto {
     pub id: String,
     pub message: String,
@@ -139,6 +173,7 @@ pub struct LoadSavedCharacterResponse {
     pub summary: CharacterSummaryDto,
     pub snapshot: Option<PilotSnapshotDto>,
     pub diagnostics: Vec<DiagnosticDto>,
+    pub corpus_derived: CorpusDerivedDto,
 }
 
 /// The `kind` tag stays PascalCase (`Saved` / `Blocked`) — no container-level
@@ -150,6 +185,7 @@ pub enum CreateCharacterResponse {
     Saved {
         summary: CharacterSummaryDto,
         snapshot: PilotSnapshotDto,
+        corpus_derived: CorpusDerivedDto,
     },
     Blocked {
         diagnostics: Vec<DiagnosticDto>,
@@ -248,9 +284,34 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
                 },
             ],
             selected_choices,
+            spells_selected: sd19_demo_spells_selected(),
         },
         selection_provenance: Vec::new(),
     }
+}
+
+/// Fixed SD-19 demo spell selections for the fixed loadout, mirroring the
+/// existing fixed equipment loadout above. Only Human Fighter levels 1-3
+/// reach `Computed` status today, so this loadout is necessarily a
+/// Fighter's — these two spells are a reachability-demonstration sample
+/// (proving `compute_pilot_with_corpus` resolves real corpus data end to
+/// end in the live UI), not a claim that Fighters cast Abjuration/Illusion
+/// spells. `source_class_id` is left generic (`"class:demo"`) for the same
+/// reason: no class-appropriateness check consumes this field yet (see
+/// `SpellSelection.source_class_id`'s own doc comment).
+fn sd19_demo_spells_selected() -> Vec<SpellSelection> {
+    vec![
+        SpellSelection {
+            spell_id: "Alarm".to_owned(),
+            source_class_id: "class:demo".to_owned(),
+            acquisition_mode: AcquisitionMode::Granted,
+        },
+        SpellSelection {
+            spell_id: "Blur".to_owned(),
+            source_class_id: "class:demo".to_owned(),
+            acquisition_mode: AcquisitionMode::Granted,
+        },
+    ]
 }
 
 /// Join the OS app-data directory with the characters-root subdirectory.
@@ -302,6 +363,30 @@ fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
         selected_skill_modifiers: map_selected_skill_modifiers_dto(
             snapshot.skill.selected_modifier,
         ),
+    }
+}
+
+fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDerivedDto {
+    CorpusDerivedDto {
+        school_coverage: section
+            .school_coverage
+            .values()
+            .map(|coverage| SchoolCoverageDto {
+                school: format!("{:?}", coverage.school),
+                spells: coverage.spells.clone(),
+                grounded: coverage.table_cell.is_some(),
+            })
+            .collect(),
+        equipped_items: section
+            .equipped_items
+            .iter()
+            .map(|item| ResolvedEquipmentDto {
+                item_id: item.item_id.clone(),
+                equipment_record_name: item.equipment_record_name.clone(),
+                equipment_record_key: item.equipment_record_key.clone(),
+                grounded: item.table_cell.is_some(),
+            })
+            .collect(),
     }
 }
 
@@ -373,6 +458,8 @@ pub fn create_character(
         .as_ref()
         .expect("Computed status guarantees a snapshot");
 
+    let corpus_receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
+
     let envelope = SavedCharacterEnvelope {
         character_id: request.character_id.clone(),
         revision_id: format!("{}.rev.1", request.character_id),
@@ -393,6 +480,7 @@ pub fn create_character(
     Ok(CreateCharacterResponse::Saved {
         summary: summarize_envelope(&envelope),
         snapshot: map_snapshot_dto(snapshot),
+        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
 }
 
@@ -417,11 +505,14 @@ pub fn load_saved_character(
 
     let receipt = build_pilot_headless_receipt(&envelope.character_input);
     let view_model = PilotViewModel::from_receipt(&receipt);
+    let corpus_receipt =
+        compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
 
     Ok(LoadSavedCharacterResponse {
         summary: summarize_envelope(&envelope),
         snapshot: view_model.snapshot.as_ref().map(map_snapshot_dto),
         diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
+        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
 }
 

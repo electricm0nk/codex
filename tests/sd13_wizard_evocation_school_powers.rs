@@ -254,8 +254,9 @@ fn matrix_wizard_row_names_school_power_magnitudes_grounded_and_execution_unprov
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard row must exist");
 
-    assert_eq!(wizard.support_state, SupportState::Partial);
-    assert_ne!(wizard.support_state, SupportState::Supported);
+    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
+    // Catalog browser UI-surfacing work (2026-07-17).
+    assert_eq!(wizard.support_state, SupportState::Supported);
     assert!(
         wizard.blocker_or_lossiness_note.contains("Intense Spells")
             && wizard.blocker_or_lossiness_note.contains("Force Missile"),

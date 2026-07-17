@@ -63,16 +63,16 @@ fn assert_kind_payload(
         "expected kind {expected_kind:?}, got {kind:?}",
         kind = record.kind,
     );
-    let payload_label_matches = match (&record.payload, payload_label) {
-        (SourceContentPayload::Class(_), "Class") => true,
-        (SourceContentPayload::SpellcastingClass(_), "SpellcastingClass") => true,
-        (SourceContentPayload::Race(_), "Race") => true,
-        (SourceContentPayload::Ability(_), "Ability") => true,
-        (SourceContentPayload::Spell(_), "Spell") => true,
-        (SourceContentPayload::Equipment(_), "Equipment") => true,
-        (SourceContentPayload::Metadata(_), "Metadata") => true,
-        _ => false,
-    };
+    let payload_label_matches = matches!(
+        (&record.payload, payload_label),
+        (SourceContentPayload::Class(_), "Class")
+            | (SourceContentPayload::SpellcastingClass(_), "SpellcastingClass")
+            | (SourceContentPayload::Race(_), "Race")
+            | (SourceContentPayload::Ability(_), "Ability")
+            | (SourceContentPayload::Spell(_), "Spell")
+            | (SourceContentPayload::Equipment(_), "Equipment")
+            | (SourceContentPayload::Metadata(_), "Metadata")
+    );
     assert!(
         payload_label_matches,
         "payload variant did not match expected label `{payload_label}`: got {:?}",

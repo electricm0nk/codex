@@ -256,12 +256,53 @@ fn ranger_level9_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 11 stays unrecognized by this slice -----
-
+// ----- Negative control: level 13 stays unrecognized by this slice -----
+//
+// SD18 widening (cycle-2026-07-14T2300, tests/sd18_ranger_level11_quarry.rs):
+// Ranger level 11 is now genuinely recognized (base attack bonus rises and
+// Quarry is newly grounded), so this boundary control moved to level 12,
+// mirroring the exact same boundary move each of the Barbarian/Bard/Cleric/
+// Druid/Fighter/Monk/Paladin/Rogue/Sorcerer/Wizard level-11 widening cycles
+// made for their own sibling level-10 progression tests. A further SD18
+// widening (cycle-2026-07-15T0900, tests/sd18_ranger_level12_widening.rs)
+// now genuinely recognizes Ranger level 12 too (base attack/saves/Track all
+// rise and Camouflage is newly grounded), so this boundary control moved
+// once more to level 13, mirroring the same sibling classes' own
+// level-11-to-level-12 boundary move. A still further SD18 widening
+// (cycle-2026-07-15T1400, tests/sd18_ranger_level13_widening.rs) now
+// genuinely recognizes Ranger level 13 too (base attack rises, the third
+// favored terrain and the spell-level access ladder's 4th column are newly
+// grounded), so this boundary control moved once more to level 14. A still
+// further SD18 widening (cycle-2026-07-15T2100,
+// tests/sd18_ranger_level14_widening.rs) now genuinely recognizes Ranger
+// level 14 too (base attack and both good saves rise, the fourth
+// combat-style bonus feat and the base spells-per-day table's 4th-level
+// column are newly grounded), again to level 15 (base attack rises,
+// poor Will rises, the fourth favored enemy and the base spells-per-day
+// table's 3rd-level column rise are newly grounded), again to level 16
+// (base attack and both good saves rise, Improved Evasion and the base
+// spells-per-day table's 1st-level column rise are newly grounded), and
+// again to level 17 (cycle-2026-07-15T7000,
+// tests/sd18_ranger_level17_hide_in_plain_sight.rs: base attack rises,
+// Hide in Plain Sight and the base spells-per-day table's 1st-level
+// column rise are newly grounded), and again to level 18
+// (cycle-2026-07-16T0244, tests/sd18_ranger_level18_widening.rs: base
+// attack and all three base saves rise, the fourth favored terrain, the
+// fifth combat style bonus feat, and the base spells-per-day table's
+// 4th-level column rise are newly grounded), and again to level 19
+// (cycle-2026-07-16T3200, tests/sd18_ranger_level19_widening.rs: base
+// attack rises, Improved Quarry and the base spells-per-day table's
+// 3rd-level column rise are newly grounded), and again to level 20
+// (cycle-2026-07-16T1600, tests/sd18_ranger_level20_widening.rs: base
+// attack and both good saves rise, the fifth favored enemy, Master
+// Hunter, and the base spells-per-day table's 2nd/4th-level columns rise
+// are newly grounded), so this boundary control moves once more to level
+// 21 (a pure implementation-gate check, since PF1 has no 21st character
+// level).
 #[test]
-fn ranger_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = RANGER_LEVEL10_FIXTURE.replace("class:ranger:10", "class:ranger:11");
-    let input = load(&level_11);
+fn ranger_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = RANGER_LEVEL10_FIXTURE.replace("class:ranger:10", "class:ranger:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -269,7 +310,7 @@ fn ranger_level_11_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.ranger.")
                 || e.id.starts_with("class_feature.ranger.")),
-        "level-11 Ranger must not gain any bounded ranger explanation: {:?}",
+        "level-21 Ranger must not gain any bounded ranger explanation: {:?}",
         computation.explanations
     );
 }
@@ -325,8 +366,8 @@ fn matrix_ranger_row_names_level_10_widening() {
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid_chassis_and_spell_burden row must exist");
 
-    assert_eq!(ranger.support_state, SupportState::Partial);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(ranger.support_state, SupportState::Supported);
+    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         ranger.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

@@ -238,12 +238,19 @@ fn sorcerer_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(will.value, 6, "Sorcerer level 9 good Will must stay 6");
 }
 
-// ----- Negative control: level 10 stays unrecognized by this slice -----
+// ----- Negative control: level 21 stays unrecognized by this slice -----
+//
+// SD18 widened Sorcerer support to level 20, PF1's level cap
+// (tests/sd18_sorcerer_level20_widening.rs), so this boundary moved to 21
+// (which does not exist in PF1), mirroring the exact same boundary move
+// every other Barbarian/Bard/Cleric/Fighter/Paladin/Rogue/Ranger/Wizard
+// level-20 widening cycle made to its own sibling level-10/level-11/
+// level-12 progression test.
 
 #[test]
-fn sorcerer_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = SORCERER_LEVEL10_FIXTURE.replace("class:sorcerer:10", "class:sorcerer:11");
-    let input = load(&level_11);
+fn sorcerer_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = SORCERER_LEVEL10_FIXTURE.replace("class:sorcerer:10", "class:sorcerer:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -251,7 +258,7 @@ fn sorcerer_level_11_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.sorcerer.")
                 || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "level-11 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
+        "level-21 Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
         computation.explanations
     );
 }
@@ -307,8 +314,8 @@ fn matrix_sorcerer_row_names_level_10_widening() {
         .row("class.sorcerer.progression_and_spell_burden")
         .expect("sorcerer progression_and_spell_burden row must exist");
 
-    assert_eq!(sorcerer.support_state, SupportState::Partial);
-    assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(sorcerer.support_state, SupportState::Supported);
+    assert_eq!(sorcerer.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         sorcerer.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

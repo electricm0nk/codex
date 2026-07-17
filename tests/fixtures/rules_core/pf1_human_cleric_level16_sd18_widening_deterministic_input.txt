@@ -1,0 +1,46 @@
+# SD18 deterministic Human Cleric level 16 progression fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Cleric
+# level-1..level-15 prepared divine spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_cleric_level15_sd18_widening_deterministic_input.txt)
+# to level 16 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-15 fixtures, and the
+# same canonical domain selections (Good, Healing), adding only the level
+# bump this bounded slice needs.
+#
+# It deliberately avoids every later Cleric burden surface: no spellbook, no
+# spells prepared, no spell slots, no spell DCs, no bonus spells, no domain
+# power execution beyond the flat facets already grounded at levels 1-15, no
+# domain spell-list contents, and no level-17+ progression. The PF1 CRB
+# Cleric class table's level-16 "Special" column is genuinely BLANK
+# (verified independently against both d20pfsrd and the Archives of Nethys
+# aonprd.com mirror, byte-for-byte agreement — the next Channel Energy
+# die-count rise, at the odd-level cadence, does not land until 17th level):
+# base attack bonus genuinely rises to +12 (16 * 3 / 4 = 12, up from 11 at
+# level 15), good Fortitude/Will genuinely rise to +10 (16 / 2 + 2 = 10, up
+# from 9 at level 15), while poor Reflex stays +5 (16 / 3 = 5, an
+# integer-division coincidence with level 15). Channel Energy's die count
+# stays 8d6 ((16 + 1) / 2 = 8, an integer-division coincidence with level
+# 15, since the die-count rises only at odd cleric levels) and the flat
+# domain spell slot count stays 8 (a level-16 cleric still casts only up to
+# 8th-level cleric spells; 9th-level cleric spells are out of this bounded
+# ceiling's scope). The Good domain's Touch of Good sacred bonus genuinely
+# rises to 8 (16 / 2 = 8, up from 7 at level 15) via the same pre-existing
+# formula, not re-derived.
+case_id=pf1-crb-human-cleric-level16
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:cleric:16
+ability=strength:10
+ability=dexterity:12
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:14
+feat=feat:dodge
+choice=choice:cleric_domain:domain:good
+choice=choice:cleric_domain:domain:healing
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

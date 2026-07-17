@@ -235,12 +235,20 @@ fn wizard_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(bonus_damage.value, 4, "Wizard level 9 Intense Spells bonus damage must stay 4");
 }
 
-// ----- Negative control: level 10 stays unrecognized by this slice -----
+// ----- Negative control: level 21 stays unrecognized by this slice -----
+// (widened from level 10 all the way to level 20 by the SD18
+// wizard-level11-widening through wizard-level20-widening cycles, which
+// genuinely promote levels 11-20 — see tests/sd18_wizard_level11_widening.rs
+// through tests/sd18_wizard_level20_widening.rs — mirroring the exact same
+// boundary move the Cleric level-20 widening cycle made for its own sibling
+// level-10 progression test. PF1 has no 21st character level; this is a
+// pure implementation-gate check that the code's own range gate does not
+// overshoot the newly raised ceiling of 20.)
 
 #[test]
-fn wizard_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = WIZARD_LEVEL10_FIXTURE.replace("class:wizard:10", "class:wizard:11");
-    let input = load(&level_11);
+fn wizard_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = WIZARD_LEVEL10_FIXTURE.replace("class:wizard:10", "class:wizard:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -248,7 +256,7 @@ fn wizard_level_11_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.wizard.")
                 || e.id == "class_chassis.spell_baseline.wizard"),
-        "level-11 Wizard must not gain any bounded wizard chassis explanation: {:?}",
+        "level-21 Wizard must not gain any bounded wizard chassis explanation: {:?}",
         computation.explanations
     );
 }
@@ -304,8 +312,8 @@ fn matrix_wizard_row_names_level_10_widening() {
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard progression_and_spell_burden row must exist");
 
-    assert_eq!(wizard.support_state, SupportState::Partial);
-    assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(wizard.support_state, SupportState::Supported); // Later promoted to Supported/ProductVisible by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-17).
+    assert_eq!(wizard.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         wizard.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

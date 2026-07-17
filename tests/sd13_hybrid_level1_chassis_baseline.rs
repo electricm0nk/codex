@@ -303,15 +303,17 @@ fn matrix_paladin_row_is_partial_computed_and_names_both_burdens() {
     // F6 moved this row off the pure Unverified/Observed placeholder to
     // Blocked/Computed; the SD13-E4 slice grounded Smite Evil and the SD13-E5
     // level-gate slice grounded lay on hands / divine grace / mercy as correct
-    // level-1 absences and promoted the row to Partial. The F6 chassis and
+    // level-1 absences and promoted the row to Partial; SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-17) later
+    // promotes the row to Supported/ProductVisible. The F6 chassis and
     // blocker truth this file otherwise pins is unchanged.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid row must exist");
 
-    assert_eq!(paladin.support_state, SupportState::Partial);
-    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(paladin.support_state, SupportState::Supported);
+    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         paladin.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -335,19 +337,21 @@ fn matrix_paladin_row_is_partial_computed_and_names_both_burdens() {
 }
 
 #[test]
-fn matrix_ranger_row_is_partial_computed_and_names_remaining_burdens() {
+fn matrix_ranger_row_is_supported_and_names_remaining_burdens() {
     // The SD13-E3 Ranger decomposition slice
     // (sd13_ranger_level1_chassis_and_class_feature_separation.rs) later
-    // grounded Track for real and promoted this row from Blocked to Partial.
-    // The F6 chassis-recognition and hybrid-blocker truth this file otherwise
-    // pins is unchanged; only the row's matrix-level posture moved.
+    // grounded Track for real and promoted this row from Blocked to Partial,
+    // then SD-19's Class Progression Catalog browser UI-surfacing work
+    // (2026-07-17) promoted it again to Supported/ProductVisible. The F6
+    // chassis-recognition and hybrid-blocker truth this file otherwise pins
+    // is unchanged; only the row's matrix-level posture moved.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must exist");
 
-    assert_eq!(ranger.support_state, SupportState::Partial);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(ranger.support_state, SupportState::Supported);
+    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         ranger.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -376,32 +380,70 @@ fn matrix_ranger_row_is_partial_computed_and_names_remaining_burdens() {
 fn matrix_preserves_fighter_and_rogue_accepted_truth() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
-    // Fighter level-1 and levels-2-10 remain Partial/Computed (not downgraded).
+    // Fighter rows were later promoted to Supported/ProductVisible by SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-16).
     for id in ["class.fighter.level_1_pilot", "class.fighter.levels_2_10"] {
         let fighter = matrix
             .row(id)
             .unwrap_or_else(|| panic!("row {id} must exist"));
         assert_eq!(
             fighter.support_state,
-            SupportState::Partial,
-            "row {id} must stay Partial after the hybrid slice"
+            SupportState::Supported,
+            "row {id} must be Supported after the SD-19 class-row promotion"
         );
-        assert_eq!(fighter.evidence_tier, EvidenceTier::Computed);
+        assert_eq!(fighter.evidence_tier, EvidenceTier::ProductVisible);
     }
 
-    // Rogue was later promoted to Partial/Computed by its own SD13-E3 chassis
-    // recognition slice.
+    // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-17).
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("rogue row must exist");
-    assert_eq!(rogue.support_state, SupportState::Partial);
+    assert_eq!(rogue.support_state, SupportState::Supported);
+    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
 
     // No row is silently promoted to Supported or Lossy by this slice.
     assert!(
         !matrix
             .rows
             .iter()
-            .any(|r| r.support_state == SupportState::Supported
+            // school.abjuration/illusion.spell_reachability were later promoted to
+            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
+            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
+            .any(|r| (r.support_state == SupportState::Supported
+                && r.row_id != "school.abjuration.spell_reachability"
+                && r.row_id != "school.illusion.spell_reachability"
+                && r.row_id != "school.conjuration.spell_reachability"
+                && r.row_id != "school.divination.spell_reachability"
+                && r.row_id != "school.enchantment.spell_reachability"
+                && r.row_id != "school.evocation.spell_reachability"
+                && r.row_id != "school.necromancy.spell_reachability"
+                && r.row_id != "school.transmutation.spell_reachability"
+                && r.row_id != "school.universal.spell_reachability"
+                && r.row_id != "equipment.arms_armor.equipment_reachability"
+                && r.row_id != "equipment.general.equipment_reachability"
+                && r.row_id != "equipment.magic_items.equipment_reachability"
+                && r.row_id != "race.human.pilot_semantics"
+                && r.row_id != "race.dwarf.bounded_semantics"
+                && r.row_id != "race.elf.bounded_semantics"
+                && r.row_id != "race.gnome.bounded_semantics"
+                && r.row_id != "race.half_elf.bounded_semantics"
+                && r.row_id != "race.half_orc.bounded_semantics"
+                && r.row_id != "race.halfling.bounded_semantics"
+                && r.row_id != "class.fighter.level_1_pilot"
+                && r.row_id != "class.fighter.levels_2_10"
+                && r.row_id != "class.monk.bounded_progression"
+                && r.row_id != "class.druid.progression_and_spell_burden"
+                && r.row_id != "class.barbarian.bounded_progression"
+                && r.row_id != "class.cleric.progression_and_spell_burden"
+                && r.row_id != "class.wizard.progression_and_spell_burden"
+                && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
+                && r.row_id != "class.bard.progression_and_spell_burden"
+                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
+                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
+                && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the hybrid slice must not promote any row to Supported or Lossy"
     );

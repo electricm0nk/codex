@@ -1,7 +1,7 @@
 import { useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
-import type { AbilityScoresDto } from '../boundary/loadCreateCharacter';
+import type { AbilityScoresDto, CorpusDerivedDto } from '../boundary/loadCreateCharacter';
 import {
   buildLevelEntries,
   buildNextEntries,
@@ -380,6 +380,80 @@ function WeaponsTab(props: { proficiency: WeaponProficiency }) {
   );
 }
 
+/**
+ * Spell-school reachability, sourced from `compute_pilot_with_corpus` via
+ * the real IPC boundary — not mock data. Resolved against a small bundled
+ * corpus-fixture set (see `src-tauri/src/sd19_corpus.rs`), not the full
+ * PCGen corpus, so only schools with a selected, resolvable spell appear
+ * here; this is a reachability proof, not a spellbook or slot tracker
+ * (spell slots, DCs, and prepared/known posture remain out of scope).
+ */
+function SpellsTab(props: { corpusDerived: CorpusDerivedDto | undefined }) {
+  const schools = props.corpusDerived?.schoolCoverage ?? [];
+  if (schools.length === 0) {
+    return (
+      <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
+        No corpus-reachable spells selected yet.
+      </p>
+    );
+  }
+  return (
+    <div>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
+        Corpus-derived spell-school reachability — proves each spell resolves against the real
+        PF1 corpus; does not compute slots, DCs, or prepared/known posture.
+      </p>
+      {schools.map((school) => (
+        <div key={school.school} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+          <span style={{ fontWeight: 700 }}>{school.school}</span>
+          <span style={{ color: 'var(--color-text-muted)', marginLeft: '0.5rem' }}>
+            {school.spells.join(', ')}
+          </span>
+          {school.grounded ? (
+            <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
+          ) : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Equipped-item reachability, sourced from `compute_pilot_with_corpus` via
+ * the real IPC boundary — not mock data. Same bundled-fixture scope note
+ * as `SpellsTab`: derived stats (armor bonus, attack bonus, etc.) are a
+ * documented capability-slice non-goal and are not yet populated.
+ */
+function GearTab(props: { corpusDerived: CorpusDerivedDto | undefined }) {
+  const items = props.corpusDerived?.equippedItems ?? [];
+  if (items.length === 0) {
+    return (
+      <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
+        No corpus-reachable equipment selected yet.
+      </p>
+    );
+  }
+  return (
+    <div>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
+        Corpus-derived equipment reachability — proves each item resolves against the real PF1
+        corpus; derived combat stats are not yet computed.
+      </p>
+      {items.map((item) => (
+        <div key={item.itemId} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+          <span style={{ fontWeight: 700 }}>{item.equipmentRecordName}</span>
+          <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>
+            ({item.itemId})
+          </span>
+          {item.grounded ? (
+            <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
+          ) : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // ---------- root ----------
 
 export function CharacterSheet(props: {
@@ -649,6 +723,10 @@ export function CharacterSheet(props: {
             <div style={{ ...panel, minHeight: 200, padding: '1.25rem' }}>
               {tab === 'Weapons' ? (
                 <WeaponsTab proficiency={weaponProficiency} />
+              ) : tab === 'Spells' ? (
+                <SpellsTab corpusDerived={props.detail?.corpusDerived} />
+              ) : tab === 'Gear' ? (
+                <GearTab corpusDerived={props.detail?.corpusDerived} />
               ) : (
                 <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>{tab} — coming soon.</p>
               )}

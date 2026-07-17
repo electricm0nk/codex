@@ -46,9 +46,11 @@ fn half_orc_row_is_partial_computed_after_sd13_e2_recognition() {
     let matrix = matrix();
     let half_orc = row(&matrix, HALF_ORC_ROW_ID);
 
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16).
     assert_eq!(half_orc.subject_id, HALF_ORC_SUBJECT_ID);
-    assert_eq!(half_orc.support_state, SupportState::Partial);
-    assert_eq!(half_orc.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(half_orc.support_state, SupportState::Supported);
+    assert_eq!(half_orc.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         half_orc.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof,

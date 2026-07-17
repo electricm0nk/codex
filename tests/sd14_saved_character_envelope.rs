@@ -382,3 +382,39 @@ fn sd14_save_rejects_newlines_in_character_input_payload_strings() {
 
     fs::remove_dir_all(&root).ok();
 }
+
+/// SD-19 regression test: `spells_selected` was added to `ChosenCharacterState`
+/// without a corresponding `render_character_input` write path, so it silently
+/// dropped on every save (discovered live in the desktop app: a character
+/// created with demo spell selections reloaded with an empty spell list). The
+/// existing round-trip test above didn't catch this because its fixture's
+/// `spells_selected` is empty, and empty round-trips to empty either way.
+#[test]
+fn sd19_round_trip_save_and_load_preserves_spells_selected() {
+    use codex::rules_core::character_input::{AcquisitionMode, SpellSelection};
+
+    let mut envelope = pilot_envelope();
+    envelope.character_input.chosen.spells_selected = vec![
+        SpellSelection {
+            spell_id: "Alarm".to_owned(),
+            source_class_id: "class:demo".to_owned(),
+            acquisition_mode: AcquisitionMode::Granted,
+        },
+        SpellSelection {
+            spell_id: "Blur".to_owned(),
+            source_class_id: "class:demo".to_owned(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        },
+    ];
+    let root = fresh_temp_dir("sd19-spells-selected-round-trip");
+
+    SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+    let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+    assert_eq!(
+        reloaded.character_input.chosen.spells_selected,
+        envelope.character_input.chosen.spells_selected
+    );
+
+    fs::remove_dir_all(&root).ok();
+}

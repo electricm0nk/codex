@@ -251,12 +251,36 @@ fn druid_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(fortitude.value, 6, "Druid level 9 good Fortitude must stay 6");
 }
 
-// ----- Negative control: level 10 stays unrecognized by this slice -----
-
+// ----- Negative control: level 14 stays unrecognized by this slice -----
+//
+// Updated by the SD18 druid-level11-widening cycle: Druid level 11 is now
+// genuinely promoted (MAX_SUPPORTED_DRUID_LEVEL widened to 11 by
+// tests/sd18_druid_level11_widening.rs), so this row's own negative control
+// boundary moved to level 12, mirroring the identical fix already made for
+// Barbarian's, Bard's, and Cleric's own level-10 sibling tests. The SD18
+// druid-level12-widening cycle (cycle-2026-07-15T0500) then genuinely
+// promotes level 12 too (MAX_SUPPORTED_DRUID_LEVEL widened to 12 by
+// tests/sd18_druid_level12_widening.rs), so this row's own negative control
+// boundary moves again to level 13, mirroring the same boundary move
+// cycle-2026-07-15T0200 made for Cleric. The SD18 druid-level13-widening
+// cycle (cycle-2026-07-15T1600) then genuinely promotes level 13 too
+// (MAX_SUPPORTED_DRUID_LEVEL widened to 13 by
+// tests/sd18_druid_level13_widening.rs), so this row's own negative control
+// boundary moves again to level 14, mirroring the same boundary move
+// cycle-2026-07-15T1500 made for Cleric. The SD18 druid-level14-widening
+// cycle (cycle-2026-07-15T2400) then genuinely promotes level 14 too
+// (MAX_SUPPORTED_DRUID_LEVEL widened to 14 by
+// tests/sd18_druid_level14_widening.rs), so this row's own negative control
+// boundary moves again to level 15, mirroring the same boundary move
+// cycle-2026-07-15T2300 made for Cleric. A still further SD18 slice (the
+// loop's FIFTH §3.2 level-15 landing) then genuinely promotes level 15 too
+// (MAX_SUPPORTED_DRUID_LEVEL widened to 15 by
+// tests/sd18_druid_level15_widening.rs), so this row's own negative control
+// boundary moves once more to level 16.
 #[test]
-fn druid_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = DRUID_LEVEL10_FIXTURE.replace("class:druid:10", "class:druid:11");
-    let input = load(&level_11);
+fn druid_level_16_is_not_promoted_by_this_slice() {
+    let level_16 = DRUID_LEVEL10_FIXTURE.replace("class:druid:10", "class:druid:16");
+    let input = load(&level_16);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -265,7 +289,7 @@ fn druid_level_11_is_not_promoted_by_this_slice() {
             .any(|e| e.id.starts_with("class_chassis.druid.")
                 || e.id.starts_with("class_feature.druid.")
                 || e.id == "class_chassis.spell_baseline.druid"),
-        "level-11 Druid must not gain any bounded druid explanation: {:?}",
+        "level-16 Druid must not gain any bounded druid explanation: {:?}",
         computation.explanations
     );
 }
@@ -321,8 +345,10 @@ fn matrix_druid_row_names_level_10_widening() {
         .row("class.druid.progression_and_spell_burden")
         .expect("druid progression_and_spell_burden row must exist");
 
-    assert_eq!(druid.support_state, SupportState::Partial);
-    assert_eq!(druid.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(druid.support_state, SupportState::Supported);
+    assert_eq!(druid.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         druid.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

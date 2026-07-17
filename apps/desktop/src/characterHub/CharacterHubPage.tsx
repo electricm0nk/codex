@@ -6,6 +6,10 @@ import { CreateCharacterForm } from './CreateCharacterForm';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
 import { LoadCharacterScreen } from './LoadCharacterScreen';
 import { CharacterSheet } from './CharacterSheet';
+import { EquipmentCatalogScreen } from '../equipmentCatalog/EquipmentCatalogScreen';
+import { SpellCatalogScreen } from '../spellCatalog/SpellCatalogScreen';
+import { ClassCatalogScreen } from '../classCatalog/ClassCatalogScreen';
+import { RaceCatalogScreen } from '../raceCatalog/RaceCatalogScreen';
 import { StubScreen } from './StubScreen';
 import { isGoogleDriveConfigured } from '../settings/googleDrive';
 import { CampaignManagerScreen } from '../campaign/CampaignManagerScreen';
@@ -18,6 +22,10 @@ type Mode =
   | 'load'
   | 'create'
   | 'sheet'
+  | 'equipmentCatalog'
+  | 'spellCatalog'
+  | 'classCatalog'
+  | 'raceCatalog'
   | 'dm-toolkit'
   | 'campaign-list'
   | 'campaign-create'
@@ -57,12 +65,32 @@ export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' |
         onCreate={() => setMode('create')}
         onLoad={() => setMode('load')}
         onLoadMostRecent={() => setMode('load')}
+        onBrowseEquipment={() => setMode('equipmentCatalog')}
+        onBrowseSpells={() => setMode('spellCatalog')}
+        onBrowseClasses={() => setMode('classCatalog')}
+        onBrowseRaces={() => setMode('raceCatalog')}
         onCampaignManager={() => setMode('campaign-list')}
         campaignManagerEnabled={isGoogleDriveConfigured()}
         onDmToolkit={() => setMode('dm-toolkit')}
         hasCharacters={hasCharacters}
       />
     );
+  }
+
+  if (mode === 'equipmentCatalog') {
+    return <EquipmentCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'spellCatalog') {
+    return <SpellCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'classCatalog') {
+    return <ClassCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'raceCatalog') {
+    return <RaceCatalogScreen onClose={() => setMode('landing')} />;
   }
 
   if (mode === 'dm-toolkit') {

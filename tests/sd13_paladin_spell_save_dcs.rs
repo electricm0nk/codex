@@ -232,8 +232,8 @@ fn matrix_paladin_row_names_the_dc_grounding() {
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid_chassis_and_spell_burden row must exist");
 
-    assert_eq!(paladin.support_state, SupportState::Partial);
-    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(paladin.support_state, SupportState::Supported);
+    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         paladin.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

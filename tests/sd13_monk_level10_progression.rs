@@ -272,12 +272,12 @@ fn monk_level9_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: level 11 stays unrecognized by this slice -----
+// ----- Negative control: level 13 stays unrecognized by this slice -----
 
 #[test]
-fn monk_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = MONK_LEVEL10_FIXTURE.replace("class:monk:10", "class:monk:11");
-    let input = load(&level_11);
+fn monk_level_13_is_not_promoted_by_this_slice() {
+    let level_13 = MONK_LEVEL10_FIXTURE.replace("class:monk:10", "class:monk:13");
+    let input = load(&level_13);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -285,7 +285,7 @@ fn monk_level_11_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.monk.")
                 || e.id.starts_with("class_feature.monk.")),
-        "level-11 Monk must not gain any bounded monk explanation: {:?}",
+        "level-13 Monk must not gain any bounded monk explanation: {:?}",
         computation.explanations
     );
 }
@@ -341,8 +341,10 @@ fn matrix_monk_row_names_level_10_widening() {
         .row("class.monk.bounded_progression")
         .expect("monk bounded_progression row must exist");
 
-    assert_eq!(monk.support_state, SupportState::Partial);
-    assert_eq!(monk.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(monk.support_state, SupportState::Supported);
+    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         monk.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

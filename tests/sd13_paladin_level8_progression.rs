@@ -309,22 +309,33 @@ fn paladin_level8_does_not_fabricate_aura_of_resolve() {
     let input = load(PALADIN_LEVEL8_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    // SD18 (cycle-2026-07-13T2334) grounded a DIFFERENT, distinct paladin
+    // feature that also happens to contain the substring "aura" in its name
+    // -- Aura of Justice, an 11th-level feature -- as a bounded grant-only
+    // identity record with a correct PF1 CRB level-gate absence below level
+    // 11 (so it legitimately DOES emit an absence-placeholder record at
+    // level 8, mirroring lay on hands / divine grace / mercy / channel
+    // positive energy's own absence-gate idiom). This assertion is narrowed
+    // from a blanket "aura" substring match to specifically "resolve" so it
+    // keeps guarding against Aura of Resolve (still named-but-unproven,
+    // unaffected by SD18's unrelated Aura of Justice grounding) without
+    // colliding with the new, distinct, legitimately-grounded record.
     assert!(
         !computation
             .explanations
             .iter()
-            .any(|e| e.id.to_lowercase().contains("aura")),
-        "level-8 Paladin must not fabricate any aura explanation record (Aura of Resolve \
-         needs a condition-immunity engine and an ally-aura/positional engine, neither of \
-         which exists in this codebase): {:?}",
+            .any(|e| e.id.to_lowercase().contains("resolve")),
+        "level-8 Paladin must not fabricate any Aura of Resolve explanation record (Aura of \
+         Resolve needs a condition-immunity engine and an ally-aura/positional engine, \
+         neither of which exists in this codebase): {:?}",
         computation.explanations
     );
     assert!(
         !computation
             .diagnostics
             .iter()
-            .any(|d| d.id.to_lowercase().contains("aura")),
-        "level-8 Paladin must not fabricate any aura diagnostic either: {:?}",
+            .any(|d| d.id.to_lowercase().contains("resolve")),
+        "level-8 Paladin must not fabricate any Aura of Resolve diagnostic either: {:?}",
         computation.diagnostics
     );
 }
@@ -413,8 +424,8 @@ fn matrix_paladin_row_names_level_8_widening() {
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid_chassis_and_spell_burden row must exist");
 
-    assert_eq!(paladin.support_state, SupportState::Partial);
-    assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(paladin.support_state, SupportState::Supported);
+    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         paladin.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

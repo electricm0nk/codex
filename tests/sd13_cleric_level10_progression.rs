@@ -246,12 +246,32 @@ fn cleric_level9_truth_is_unchanged_by_this_slice() {
     assert_eq!(fortitude.value, 6, "Cleric level 9 good Fortitude must stay 6");
 }
 
-// ----- Negative control: level 11 stays unrecognized by this slice -----
+// ----- Negative control: level 21 stays unrecognized by this slice -----
+// (widened from level 11 by the SD18 cycle-2026-07-13T2007 level-11
+// widening, then moved to level 12, then level 13, then level 14, then level
+// 15 by later cycles' own boundary moves — see
+// tests/sd18_cleric_level11_widening.rs, tests/sd18_cleric_level12_widening.rs,
+// tests/sd18_cleric_level13_widening.rs, and
+// tests/sd18_cleric_level14_widening.rs. The SD18 cycle-2026-07-15T3100
+// level-15 widening genuinely promotes level 15 — see
+// tests/sd18_cleric_level15_widening.rs — so the correct negative control
+// boundary for this file's own (level-10-era) baseline moved to level 17 by
+// cycle-2026-07-15T5300, mirroring the exact same boundary move
+// cycle-2026-07-15T3000 made for Fighter; cycle-2026-07-15T9600 moved this
+// boundary again, from 17 to 18, since level 17 was then itself Cleric's
+// supported/grounded row; cycle-2026-07-15T14300 moved this boundary again,
+// from 18 to 19, since level 18 was then itself Cleric's supported/grounded
+// row; cycle-2026-07-16T1100 moved this boundary again, from 19 to 20, since
+// level 19 was then itself Cleric's supported/grounded row;
+// cycle-2026-07-16T0844 moves this boundary again, from 20 to 21, since
+// level 20 is now itself Cleric's supported/grounded row — and the final
+// level within PF1's 1-20 character-level cap, so this boundary check is now
+// a pure implementation-gate check with no further real level to move to.)
 
 #[test]
-fn cleric_level_11_is_not_promoted_by_this_slice() {
-    let level_11 = CLERIC_LEVEL10_FIXTURE.replace("class:cleric:10", "class:cleric:11");
-    let input = load(&level_11);
+fn cleric_level_21_is_not_promoted_by_this_slice() {
+    let level_21 = CLERIC_LEVEL10_FIXTURE.replace("class:cleric:10", "class:cleric:21");
+    let input = load(&level_21);
     let computation = compute_pilot_base_chassis(&input);
     assert!(
         !computation
@@ -259,7 +279,7 @@ fn cleric_level_11_is_not_promoted_by_this_slice() {
             .iter()
             .any(|e| e.id.starts_with("class_chassis.cleric.")
                 || e.id == "class_chassis.spell_baseline.cleric"),
-        "level-11 Cleric must not gain any bounded cleric chassis explanation: {:?}",
+        "level-21 Cleric must not gain any bounded cleric chassis explanation: {:?}",
         computation.explanations
     );
 }
@@ -313,8 +333,10 @@ fn matrix_cleric_row_names_level_10_widening() {
         .row("class.cleric.progression_and_spell_burden")
         .expect("cleric progression_and_spell_burden row must exist");
 
-    assert_eq!(cleric.support_state, SupportState::Partial);
-    assert_eq!(cleric.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
+    // Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(cleric.support_state, SupportState::Supported);
+    assert_eq!(cleric.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         cleric.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof

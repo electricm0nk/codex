@@ -254,6 +254,10 @@ export function LandingScreen(props: {
   onCreate: () => void;
   onLoad: () => void;
   onLoadMostRecent: () => void;
+  onBrowseEquipment: () => void;
+  onBrowseSpells: () => void;
+  onBrowseClasses: () => void;
+  onBrowseRaces: () => void;
   onCampaignManager: () => void;
   campaignManagerEnabled: boolean;
   onDmToolkit: () => void;
@@ -287,6 +291,65 @@ export function LandingScreen(props: {
       <div style={{ alignItems: 'center', alignSelf: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center', marginTop: '0.25rem' }}>
         <SecondaryButton label="Load Most Recent Character" onClick={props.onLoadMostRecent} disabled={!props.hasCharacters} />
         <SecondaryButton label="DM Toolkit" onClick={props.onDmToolkit} />
+      </div>
+
+      <div style={{ alignSelf: 'center', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', justifyContent: 'center' }}>
+        <button
+          type="button"
+          onClick={props.onBrowseEquipment}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Browse Equipment Catalog
+        </button>
+        <button
+          type="button"
+          onClick={props.onBrowseSpells}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Browse Spell Catalog
+        </button>
+        <button
+          type="button"
+          onClick={props.onBrowseClasses}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Browse Class Progression
+        </button>
+        <button
+          type="button"
+          onClick={props.onBrowseRaces}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Browse Race Traits
+        </button>
       </div>
     </section>
   );

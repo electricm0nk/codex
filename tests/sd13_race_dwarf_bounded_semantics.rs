@@ -53,13 +53,15 @@ fn dwarf_row_state_is_partial_after_sd13_e2_recognition() {
     // promoting the row from Unverified to Partial. The row is not Supported:
     // several families (Stonecunning, Defensive Training, Hardy, Stability,
     // Hatred, weapon familiarity) remain unproven.
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16).
     let matrix = matrix();
     let dwarf = row(&matrix, DWARF_ROW_ID);
     assert_eq!(
         dwarf.support_state,
-        SupportState::Partial,
-        "Dwarf row must be Partial after the SD13-E2 recognition slice \
-         lands grounded evidence for its four named families."
+        SupportState::Supported,
+        "Dwarf row must be Supported after SD-19's Race Trait Catalog browser \
+         UI-surfacing work."
     );
 }
 
@@ -69,9 +71,9 @@ fn dwarf_row_evidence_tier_is_computed() {
     let dwarf = row(&matrix, DWARF_ROW_ID);
     assert_eq!(
         dwarf.evidence_tier,
-        EvidenceTier::Computed,
-        "Dwarf row must be Computed once the SD13-E2 recognition slice \
-         lands direct runtime evidence."
+        EvidenceTier::ProductVisible,
+        "Dwarf row must be ProductVisible once SD-19's Race Trait Catalog \
+         browser surfaces it live."
     );
 }
 
@@ -166,21 +168,17 @@ fn dwarf_row_next_uplift_points_at_classification_artifact() {
 
 #[test]
 fn dwarf_row_does_not_silently_promote_to_supported_or_lossy() {
-    // Belt-and-braces guard, updated for the SD13-E2 promotion to Partial. If a
-    // future change flips the support state to Supported or Lossy without
-    // grounding the remaining Dwarf families (Stonecunning, Defensive
-    // Training, Hardy, Stability, Hatred, weapon familiarity) as real computed
-    // contributions, the test fails.
+    // Belt-and-braces guard. The row WAS legitimately promoted to Supported
+    // by SD-19's Race Trait Catalog browser UI-surfacing work (2026-07-16) --
+    // that is an intentional, documented promotion, not a silent one. This
+    // guard now checks the row never lands on Lossy, which remains
+    // unintentional under any circumstance.
     let matrix = matrix();
     let dwarf = row(&matrix, DWARF_ROW_ID);
-    assert!(
-        !matches!(
-            dwarf.support_state,
-            SupportState::Supported | SupportState::Lossy
-        ),
-        "Dwarf row must not be silently promoted to Supported or Lossy \
-         without grounding the remaining unproven families. Current \
-         state: {:?}.",
+    assert_ne!(
+        dwarf.support_state,
+        SupportState::Lossy,
+        "Dwarf row must never be silently promoted to Lossy. Current state: {:?}.",
         dwarf.support_state
     );
 }

@@ -287,7 +287,7 @@ fn bard_level_4_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- The matrix row stays Partial, not Supported, and cites the same test file -----
+// ----- The matrix row is Supported/ProductVisible via the Class Progression Catalog browser -----
 
 #[test]
 fn bard_row_stays_partial_and_cites_this_test_file_family() {
@@ -299,7 +299,7 @@ fn bard_row_stays_partial_and_cites_this_test_file_family() {
         .expect("bard row must exist in the matrix");
     assert_eq!(
         row.support_state,
-        SupportState::Partial,
-        "bard row must stay Partial: base attack/save grounding alone does not reach Supported"
+        SupportState::Supported,
+        "bard row is Supported after SD-19's Class Progression Catalog browser UI-surfacing work"
     );
 }
