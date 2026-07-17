@@ -41,7 +41,7 @@
 //! `equipment_effects/arms_armor.rs`'s own unit test already copied
 //! verbatim for its weapon-control-record case.
 //!
-//! This cycle's addition, `resolve_str_damage_modifier`, lands the
+//! The second work-unit, `resolve_str_damage_modifier`, lands the
 //! STR-modifier slice the same way: it resolves a weapon `item_id`
 //! against the corpus via the identical `equipment_id_resolve` path,
 //! reads its real `WIELD:` token, and computes the STR contribution per
@@ -50,8 +50,23 @@
 //! carries `WIELD:Light`, `KEY:Longspear (Base)` carries
 //! `WIELD:TwoHanded` (`core_rulebook/cr_equip_arms_armor.lst` lines 165,
 //! 142, 151 respectively).
+//!
+//! This cycle lands the third work-unit, `resolve_weapon_enhancement_modifier`:
+//! a weapon's magical enhancement bonus (e.g. a "+1" weapon), which PF1
+//! adds to both the attack roll and the damage roll. Unlike the first two
+//! work-units (which read a corpus token directly off the weapon
+//! record), this one composes with Epic 5's already-landed,
+//! already-closed equipment-effect engine
+//! (`equipment_effects::compute_equipment_effects` /
+//! `equipment_effects::equipmods::compute_equipmods_effect`) rather than
+//! re-deriving the `BONUS:WEAPON|...|TYPE=Enhancement` corpus lookup
+//! independently — per this cycle's brief, that lookup is Epic 5's closed
+//! authority for this token family. See `resolve_weapon_enhancement_modifier`'s
+//! own doc comment for the bounded no-attachment-model scope this
+//! composition works within.
 
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
+use crate::rules_core::equipment_effects::EquipmentEffects;
 use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::RuleSetId;
@@ -241,11 +256,101 @@ fn str_damage_modifier_for(str_modifier: i16, wield: WieldCategory, hand: Weapon
     }
 }
 
+/// One resolved weapon's magical-enhancement contribution to attack and
+/// damage. PF1's weapon-enhancement rule: a magic weapon's enhancement
+/// bonus applies to **both** the attack roll and the damage roll (e.g. a
+/// "+1 longsword" adds +1 to hit and +1 to damage) — confirmed via
+/// `technical-design.md` §2.4's illustrative equipment-effects
+/// deliverable ("Magic weapons with enhancement bonuses contribute to
+/// `attack_bonus_delta`") and §2.5's `damage_modifier` doc comment ("STR
+/// mod + weapon enhancement + ..."). Not every `equipmods` enhancement
+/// source affects both rolls uniformly, though: a masterwork/special
+/// -material record (e.g. `KEY:Material ~ Adamantine ~ Weapon`) carries a
+/// narrower `TOHIT`-only `BONUS:WEAPON|...|TYPE=Enhancement` chain, while
+/// a true magical "+N" record (e.g. `KEY:Special Ability ~ +1 ~ Weapon`)
+/// carries the full `DAMAGE,TOHIT` chain — this engine reads that
+/// distinction verbatim off
+/// `equipment_effects::equipmods::WeaponEnhancementBonus::affects` rather
+/// than assuming uniformity.
+#[derive(Debug, Clone, PartialEq)]
+pub struct DamageRollWeaponEnhancement {
+    pub weapon_item_id: String,
+    pub weapon_record_key: String,
+    pub attack_bonus: i16,
+    pub damage_bonus: i16,
+    pub table_cell: Option<TableCellRef>,
+}
+
+/// The damage-total engine's third work-unit (SD-20 §1.6): weapon
+/// -enhancement modifier. Composes with Epic 5's already-landed,
+/// already-closed equipment-effect engine
+/// (`equipment_effects::compute_equipment_effects`, per that module's own
+/// doc comment "closing Epic 5") rather than re-deriving the corpus
+/// `BONUS:WEAPON|...|TYPE=Enhancement` lookup independently — per this
+/// cycle's brief, Epic 5's `equipment_effects::equipmods::compute_equipmods_effect`
+/// is the closed, already-landed authority for that token family.
+///
+/// This bounded model has no explicit weapon-to-equipmod attachment link
+/// — `EquipmentSelection` carries only a flat `item_id`, and
+/// `compute_equipment_effects` resolves every equipped selection
+/// independently (see that module's own doc comment). A loadout's
+/// magical-enhancement equipmod item(s) (e.g. `Special Ability ~ +1 ~
+/// Weapon`) are therefore summed across the *entire* already-computed
+/// `EquipmentEffects.per_item`, matching the single-primary-weapon
+/// tabletop convention this engine's fixtures use elsewhere (one weapon,
+/// its enhancement equipmod(s) equipped alongside it). A loadout with
+/// more than one weapon and more than one enhancement equipmod would
+/// double-count; that is out of this narrow work-unit's bounded scope —
+/// the same posture Epic 4's `skill_allocation.rs` module doc comment
+/// documents for its own bounded class-skill set, for a future cycle to
+/// widen if a real attachment model lands.
+///
+/// Returns `None` only when the weapon itself does not resolve against
+/// the corpus at all (honest absence, matching
+/// `resolve_base_damage_dice` / `resolve_str_damage_modifier`). A
+/// resolvable weapon with no matching enhancement equipmod in the
+/// loadout yields real `0` bonuses (an honest zero contribution — the
+/// weapon is real, its enhancement value is genuinely nil), not `None`.
+pub fn resolve_weapon_enhancement_modifier(
+    weapon_item_id: &str,
+    corpus: &SourcePackageContent,
+    equipment_effects: &EquipmentEffects,
+) -> Option<DamageRollWeaponEnhancement> {
+    let (record, table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
+    let weapon_record_key = equipment_key_token(record)
+        .unwrap_or(&record.name)
+        .to_string();
+
+    let mut attack_bonus: i16 = 0;
+    let mut damage_bonus: i16 = 0;
+    for item in &equipment_effects.per_item {
+        let Some(bonus) = &item.weapon_enhancement_bonus else {
+            continue;
+        };
+        if bonus.affects.contains("TOHIT") {
+            attack_bonus += bonus.bonus;
+        }
+        if bonus.affects.contains("DAMAGE") {
+            damage_bonus += bonus.bonus;
+        }
+    }
+
+    Some(DamageRollWeaponEnhancement {
+        weapon_item_id: weapon_item_id.to_string(),
+        weapon_record_key,
+        attack_bonus,
+        damage_bonus,
+        table_cell,
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::pcgen_import::ir_converter::convert_equipment_record;
     use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
+    use crate::rules_core::equipment_effects::compute_equipment_effects;
     use crate::rules_core::source_content::SourceRef;
 
     fn corpus_from(text: &str) -> SourcePackageContent<'static> {
@@ -393,5 +498,84 @@ mod tests {
             -5,
             "floor(1.5 * -3) = floor(-4.5) = -5"
         );
+    }
+
+    fn selection(item_id: &str) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item_id.to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+        }
+    }
+
+    /// Real verbatim tokens: `KEY:Longsword (Base)`
+    /// (`core_rulebook/cr_equip_arms_armor.lst`) plus `KEY:Special
+    /// Ability ~ +1 ~ Weapon` (`core_rulebook/cr_equipmods.lst` line 219,
+    /// `BONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement`).
+    #[test]
+    fn plus_one_weapon_enhancement_adds_to_both_attack_and_damage() {
+        let text = "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n\
++1 (Enhancement to Weapon)\tKEY:Special Ability ~ +1 ~ Weapon\tTYPE:Weapon\tPLUS:1\tCOST:0\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\n";
+        let corpus = corpus_from(text);
+        let equipped = vec![
+            selection("Longsword (Base)"),
+            selection("Special Ability ~ +1 ~ Weapon"),
+        ];
+        let effects = compute_equipment_effects(&equipped, &corpus);
+
+        let resolved = resolve_weapon_enhancement_modifier("Longsword (Base)", &corpus, &effects)
+            .expect("Longsword (Base) must resolve");
+        assert_eq!(resolved.weapon_record_key, "Longsword (Base)");
+        assert_eq!(resolved.attack_bonus, 1);
+        assert_eq!(resolved.damage_bonus, 1);
+    }
+
+    /// Real verbatim tokens: `KEY:Material ~ Adamantine ~ Weapon`
+    /// (`core_rulebook/cr_equipmods.lst` line 101,
+    /// `BONUS:WEAPON|TOHIT|1|TYPE=Enhancement`) — a `TOHIT`-only chain,
+    /// proving the engine reads the affected-roll set off the token
+    /// rather than assuming every enhancement source hits both rolls.
+    #[test]
+    fn tohit_only_enhancement_does_not_add_to_damage() {
+        let text = "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n\
+Adamantine\tKEY:Material ~ Adamantine ~ Weapon\tTYPE:BaseMaterial.MasterworkQuality.Weapon\tCOST:3000\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\n";
+        let corpus = corpus_from(text);
+        let equipped = vec![
+            selection("Longsword (Base)"),
+            selection("Material ~ Adamantine ~ Weapon"),
+        ];
+        let effects = compute_equipment_effects(&equipped, &corpus);
+
+        let resolved = resolve_weapon_enhancement_modifier("Longsword (Base)", &corpus, &effects)
+            .expect("Longsword (Base) must resolve");
+        assert_eq!(resolved.attack_bonus, 1);
+        assert_eq!(resolved.damage_bonus, 0);
+    }
+
+    #[test]
+    fn no_enhancement_equipped_yields_honest_zero_not_fabricated() {
+        let text = "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n";
+        let corpus = corpus_from(text);
+        let equipped = vec![selection("Longsword (Base)")];
+        let effects = compute_equipment_effects(&equipped, &corpus);
+
+        let resolved = resolve_weapon_enhancement_modifier("Longsword (Base)", &corpus, &effects)
+            .expect("Longsword (Base) must resolve");
+        assert_eq!(resolved.attack_bonus, 0);
+        assert_eq!(resolved.damage_bonus, 0);
+    }
+
+    #[test]
+    fn unresolvable_weapon_yields_none_not_fabricated() {
+        let text = "Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITMULT:x2\tCRITRANGE:2\tDAMAGE:1d8\n";
+        let corpus = corpus_from(text);
+        let effects = compute_equipment_effects(&[], &corpus);
+
+        assert!(resolve_weapon_enhancement_modifier(
+            "item:does-not-exist-in-this-corpus",
+            &corpus,
+            &effects
+        )
+        .is_none());
     }
 }
