@@ -605,19 +605,30 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
     assert_eq!(rogue.support_state, SupportState::Supported);
     assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
 
-    // Sorcerer and Bard were later promoted to Partial/Computed by their own
-    // SD13-E4 decomposition slices (Eschew Materials, Bardic Knowledge).
-    for id in [
-        "class.sorcerer.progression_and_spell_burden",
-        "class.bard.progression_and_spell_burden",
-    ] {
-        let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Partial,
-            "row {id} must be Partial after its own SD13-E4 decomposition slice"
-        );
-    }
+    // Sorcerer was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Eschew Materials grounded for real), then to
+    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-17).
+    let sorcerer = matrix
+        .row("class.sorcerer.progression_and_spell_burden")
+        .unwrap_or_else(|| panic!("row class.sorcerer.progression_and_spell_burden must exist"));
+    assert_eq!(
+        sorcerer.support_state,
+        SupportState::Supported,
+        "sorcerer row must be Supported after the SD-19 class-row promotion"
+    );
+    assert_eq!(sorcerer.evidence_tier, EvidenceTier::ProductVisible);
+
+    // Bard was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Bardic Knowledge grounded for real).
+    let bard = matrix
+        .row("class.bard.progression_and_spell_burden")
+        .unwrap_or_else(|| panic!("row class.bard.progression_and_spell_burden must exist"));
+    assert_eq!(
+        bard.support_state,
+        SupportState::Partial,
+        "bard row must be Partial after its own SD13-E4 decomposition slice"
+    );
 
     // Wizard was later promoted to Partial/Computed by its own SD13-E4 Scribe
     // Scroll decomposition slice, then to Supported/ProductVisible by SD-19's
@@ -666,6 +677,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "no row may be silently promoted to Supported or Lossy outside the \

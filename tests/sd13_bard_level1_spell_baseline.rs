@@ -697,20 +697,22 @@ fn matrix_wizard_row_reflects_current_truth_after_bard_slice() {
 }
 
 #[test]
-fn matrix_keeps_sorcerer_and_paladin_blocked_computed_after_bard_slice() {
+fn matrix_keeps_sorcerer_supported_and_paladin_blocked_computed_after_bard_slice() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
     // Sorcerer was later promoted to Partial/Computed by its own SD13-E4 Sorcerer
-    // decomposition slice (Eschew Materials grounded for real).
+    // decomposition slice (Eschew Materials grounded for real), then to
+    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-17).
     let sorcerer = matrix
         .row("class.sorcerer.progression_and_spell_burden")
         .expect("sorcerer row must exist");
     assert_eq!(
         sorcerer.support_state,
-        SupportState::Partial,
-        "sorcerer row must be Partial after its own SD13-E4 decomposition slice"
+        SupportState::Supported,
+        "sorcerer row must be Supported after the SD-19 class-row promotion"
     );
-    assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(sorcerer.evidence_tier, EvidenceTier::ProductVisible);
 
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as
@@ -776,6 +778,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy_after_bard_slice() {
                 && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Bard slice must not promote any row to Supported or Lossy"

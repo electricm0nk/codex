@@ -752,12 +752,10 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
     );
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
 
-    // Bard and Sorcerer were later promoted to Partial/Computed by their own
-    // SD13-E4 decomposition slices (Bardic Knowledge, Eschew Materials).
-    for id in [
-        "class.bard.progression_and_spell_burden",
-        "class.sorcerer.progression_and_spell_burden",
-    ] {
+    // Bard was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Bardic Knowledge grounded for real).
+    {
+        let id = "class.bard.progression_and_spell_burden";
         let row = matrix
             .row(id)
             .unwrap_or_else(|| panic!("row {id} must exist"));
@@ -767,6 +765,22 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
             "row {id} must be Partial after its own SD13-E4 decomposition slice"
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    }
+
+    // Sorcerer was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Eschew Materials grounded for real), then to
+    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-17).
+    {
+        let row = matrix
+            .row("class.sorcerer.progression_and_spell_burden")
+            .unwrap_or_else(|| panic!("row class.sorcerer.progression_and_spell_burden must exist"));
+        assert_eq!(
+            row.support_state,
+            SupportState::Supported,
+            "sorcerer row must be Supported after the SD-19 class-row promotion"
+        );
+        assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     }
 
     // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
@@ -854,6 +868,7 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
                 && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the ranger-decomposition slice must not promote any row to Supported or Lossy"

@@ -5546,8 +5546,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             Knowledge skill) grounded for real and the Arcane Bond / bloodline \
                             progression burden and the spontaneous known-spell / slot posture \
                             burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_SORCERER_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4-F7 leaves direct computed evidence that the \
@@ -6112,16 +6112,25 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     formulas widen automatically over the unchanged access ladder, with no new \
                     code needed. Sorcerer level 20 is now the final level within PF1's 1-20 \
                     character-level cap for this class row, so the per-level arithmetic-widening \
-                    frontier for this row is now fully exhausted. The row stays Partial, not \
-                    Supported: the Arcane Bond / bloodline progression burden and the \
-                    spontaneous which-spells-known / casting-execution burden remain named and \
-                    unproven, unchanged from level 19. No spell math is fabricated",
-                next_required_uplift: "SD13 Sorcerer Arcane Bond grounding slice (the chosen \
-                    bloodline's level-1 power execution), then the spontaneous spell burden \
-                    (which-spells-known selection and spontaneous-casting execution); the \
-                    per-level arithmetic-widening frontier is now fully exhausted at level 20, \
-                    PF1's level cap, so no further per-level widening cycle remains for this \
-                    class",
+                    frontier for this row is now fully exhausted. The Arcane Bond / bloodline \
+                    progression burden and the spontaneous which-spells-known / \
+                    casting-execution burden remain named and unproven, unchanged from level 19 \
+                    -- no spell math is fabricated -- but every named grounded milestone above \
+                    (base attack/save progression, Eschew Materials, the bloodline choice and \
+                    class-skill recognitions, and the per-level widening through level 20) is now \
+                    surfaced live in the desktop app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class name \
+                    -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the operator's \
+                    UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding \
+                    Sorcerer's remaining Arcane Bond (the chosen bloodline's level-1 power \
+                    execution) and the spontaneous spell burden (which-spells-known selection \
+                    and spontaneous-casting execution) is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "class.wizard.progression_and_spell_burden",

@@ -611,7 +611,7 @@ fn matrix_druid_row_is_partial_computed_and_names_remaining_burdens() {
 }
 
 #[test]
-fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_truth() {
+fn matrix_preserves_bard_wizard_cleric_hybrid_blocked_computed_and_sorcerer_supported_truth() {
     let matrix = seeded_sd13_e1_f1_current_truth();
 
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
@@ -627,22 +627,31 @@ fn matrix_preserves_sorcerer_bard_wizard_cleric_and_hybrid_blocked_computed_trut
     );
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
 
-    // Sorcerer and Bard were later promoted to Partial/Computed by their own
-    // SD13-E4 decomposition slices (Eschew Materials, Bardic Knowledge).
-    for row_id in [
-        "class.sorcerer.progression_and_spell_burden",
-        "class.bard.progression_and_spell_burden",
-    ] {
-        let row = matrix
-            .row(row_id)
-            .unwrap_or_else(|| panic!("row {row_id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Partial,
-            "row {row_id} must be Partial after its own SD13-E4 decomposition slice"
-        );
-        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
-    }
+    // Sorcerer was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Eschew Materials grounded for real), then to
+    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-17).
+    let sorcerer = matrix
+        .row("class.sorcerer.progression_and_spell_burden")
+        .unwrap_or_else(|| panic!("row class.sorcerer.progression_and_spell_burden must exist"));
+    assert_eq!(
+        sorcerer.support_state,
+        SupportState::Supported,
+        "sorcerer row must be Supported after the SD-19 class-row promotion"
+    );
+    assert_eq!(sorcerer.evidence_tier, EvidenceTier::ProductVisible);
+
+    // Bard was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Bardic Knowledge grounded for real).
+    let bard = matrix
+        .row("class.bard.progression_and_spell_burden")
+        .unwrap_or_else(|| panic!("row class.bard.progression_and_spell_burden must exist"));
+    assert_eq!(
+        bard.support_state,
+        SupportState::Partial,
+        "bard row must be Partial after its own SD13-E4 decomposition slice"
+    );
+    assert_eq!(bard.evidence_tier, EvidenceTier::Computed);
 
     // Cleric was later promoted to Supported/ProductVisible by SD-19's Class
     // Progression Catalog browser UI-surfacing work (2026-07-16).
@@ -720,6 +729,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "class.cleric.progression_and_spell_burden"
                 && r.row_id != "class.wizard.progression_and_spell_burden"
                 && r.row_id != "class.rogue.bounded_progression"
+                && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Druid slice must not promote any row to Supported or Lossy"

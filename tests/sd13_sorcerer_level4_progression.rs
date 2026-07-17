@@ -290,8 +290,8 @@ fn matrix_sorcerer_row_names_level_4_widening() {
         .row("class.sorcerer.progression_and_spell_burden")
         .expect("sorcerer progression_and_spell_burden row must exist");
 
-    assert_eq!(sorcerer.support_state, SupportState::Partial);
-    assert_eq!(sorcerer.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(sorcerer.support_state, SupportState::Supported);
+    assert_eq!(sorcerer.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         sorcerer.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
