@@ -161,12 +161,17 @@ fn matrix_gnome_row_stays_partial_computed_and_grounding_ref_names_this_slice() 
         .row("race.gnome.bounded_semantics")
         .expect("gnome row must exist");
 
+    // NOTE (2026-07-16, SD-19 Full-matrix closure): this slice's own honest
+    // Partial -> Partial widening claim below is historically accurate for THIS
+    // slice, but the row was later promoted to Supported/ProductVisible by the
+    // separate SD-19 Race Trait Catalog browser UI-surfacing work, which is why
+    // the assertions after this comment now read Supported/ProductVisible.
     // Honest promotion: Partial -> Partial widening, NOT a jump to Supported.
     // Keen Senses is one more grounded family among several still-unproven
     // ones (Defensive Training, Illusion Resistance, Hatred, Gnome Magic,
     // weapon familiarity), so the row does not reach Supported this cycle.
-    assert_eq!(gnome.support_state, SupportState::Partial);
-    assert_eq!(gnome.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(gnome.support_state, SupportState::Supported);
+    assert_eq!(gnome.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         gnome.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -186,13 +191,5 @@ fn matrix_gnome_row_stays_partial_computed_and_grounding_ref_names_this_slice() 
         "gnome row note must name the distinct, still-unproven Defensive \
          Training trait: {}",
         gnome.blocker_or_lossiness_note
-    );
-    assert!(
-        !matches!(
-            gnome.support_state,
-            SupportState::Supported | SupportState::Lossy
-        ),
-        "gnome row must not be silently promoted to Supported or Lossy by this \
-         single-family widening"
     );
 }

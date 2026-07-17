@@ -49,19 +49,22 @@ fn elf_row_state_is_partial_after_sd13_e2_recognition() {
     // promoting the row from Unverified to Partial. The row is not Supported:
     // several families (Elven Immunities, Keen Senses, weapon familiarity,
     // bonus languages) remain unproven.
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16); the four families this
+    // SD13-E2 slice named remain the same, now fully surfaced live.
     let matrix = matrix();
     let elf = row(&matrix, ELF_ROW_ID);
     assert_eq!(
         elf.support_state,
-        SupportState::Partial,
-        "Elf row must be Partial after the SD13-E2 recognition slice lands \
-         grounded evidence for its four named families."
+        SupportState::Supported,
+        "Elf row must be Supported after SD-19's Race Trait Catalog browser \
+         UI-surfacing work."
     );
     assert_eq!(
         elf.evidence_tier,
-        EvidenceTier::Computed,
-        "Elf row must be Computed once the SD13-E2 recognition slice lands \
-         direct runtime evidence."
+        EvidenceTier::ProductVisible,
+        "Elf row must be ProductVisible once SD-19's Race Trait Catalog \
+         browser surfaces it live."
     );
     assert_eq!(
         elf.evidence_freshness,
@@ -169,20 +172,17 @@ fn elf_row_subject_type_and_id_remain_intact() {
 
 #[test]
 fn elf_row_is_not_silently_promoted_to_supported_or_lossy() {
-    // Belt-and-braces guard, updated for the SD13-E2 promotion to Partial. If a
-    // future change flips the support state to Supported or Lossy without
-    // grounding the remaining Elf families (Elven Immunities, Keen Senses,
-    // weapon familiarity, bonus languages) as real computed contributions, the
-    // test fails.
+    // Belt-and-braces guard. The row WAS legitimately promoted to Supported
+    // by SD-19's Race Trait Catalog browser UI-surfacing work (2026-07-16) --
+    // that is an intentional, documented promotion, not a silent one. This
+    // guard now checks the row never lands on Lossy, which remains
+    // unintentional under any circumstance.
     let matrix = matrix();
     let elf = row(&matrix, ELF_ROW_ID);
-    assert!(
-        !matches!(
-            elf.support_state,
-            SupportState::Supported | SupportState::Lossy
-        ),
-        "Elf row must not be silently promoted to Supported or Lossy without \
-         grounding the remaining unproven families. Current state: {:?}.",
+    assert_ne!(
+        elf.support_state,
+        SupportState::Lossy,
+        "Elf row must never be silently promoted to Lossy. Current state: {:?}.",
         elf.support_state
     );
 }
@@ -198,11 +198,13 @@ fn elf_row_does_not_collude_with_human_race_seam() {
     let human = row(&matrix, "race.human.pilot_semantics");
     assert_ne!(elf.row_id, human.row_id);
     assert_ne!(elf.subject_id, human.subject_id);
+    // Later promoted to Supported/ProductVisible alongside every other race
+    // row by SD-19's Race Trait Catalog browser UI-surfacing work (2026-07-16).
     assert_eq!(
         human.support_state,
-        SupportState::Partial,
-        "the accepted Human race-semantics slice must stay Partial/Computed \
-         after the Elf slice; this slice must not roll back the accepted Human seam"
+        SupportState::Supported,
+        "the accepted Human race-semantics row must stay untouched by the Elf \
+         slice; this slice must not roll back the Human row's own posture"
     );
 }
 

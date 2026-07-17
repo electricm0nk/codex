@@ -302,14 +302,16 @@ fn matrix_keeps_rogue_partial_after_its_own_recognition_slice() {
 
 #[test]
 fn matrix_keeps_human_race_partial_seam() {
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16).
     let matrix = seeded_sd13_e1_f1_current_truth();
     let human = matrix
         .row("race.human.pilot_semantics")
         .expect("Human race row must exist");
     assert_eq!(
         human.support_state,
-        SupportState::Partial,
-        "Human race seam must remain Partial after the Fighter L1 widening"
+        SupportState::Supported,
+        "Human race seam must remain untouched by the Fighter L1 widening"
     );
-    assert_eq!(human.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(human.evidence_tier, EvidenceTier::ProductVisible);
 }

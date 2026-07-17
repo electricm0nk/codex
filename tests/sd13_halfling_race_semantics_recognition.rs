@@ -253,8 +253,10 @@ fn matrix_halfling_row_is_partial_computed_and_names_four_recognized_families() 
         .row("race.halfling.bounded_semantics")
         .expect("halfling row must exist");
 
-    assert_eq!(halfling.support_state, SupportState::Partial);
-    assert_eq!(halfling.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(halfling.support_state, SupportState::Supported);
+    assert_eq!(halfling.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         halfling.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -294,12 +296,14 @@ fn matrix_all_six_non_human_race_rows_now_carry_runtime_evidence() {
         "race.halfling.bounded_semantics",
     ] {
         let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
+        // All seven race rows were later promoted to Supported/ProductVisible
+        // by SD-19's Race Trait Catalog browser UI-surfacing work (2026-07-16).
         assert_eq!(
             row.support_state,
-            SupportState::Partial,
-            "row {id} must be Partial after the halfling slice"
+            SupportState::Supported,
+            "row {id} must be Supported after SD-19's Race Trait Catalog browser work"
         );
-        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+        assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     }
 
     assert!(
@@ -322,6 +326,13 @@ fn matrix_all_six_non_human_race_rows_now_carry_runtime_evidence() {
                 && r.row_id != "equipment.arms_armor.equipment_reachability"
                 && r.row_id != "equipment.general.equipment_reachability"
                 && r.row_id != "equipment.magic_items.equipment_reachability"
+                && r.row_id != "race.human.pilot_semantics"
+                && r.row_id != "race.dwarf.bounded_semantics"
+                && r.row_id != "race.elf.bounded_semantics"
+                && r.row_id != "race.gnome.bounded_semantics"
+                && r.row_id != "race.half_elf.bounded_semantics"
+                && r.row_id != "race.half_orc.bounded_semantics"
+                && r.row_id != "race.halfling.bounded_semantics"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the halfling slice must not promote any row to Supported or Lossy"

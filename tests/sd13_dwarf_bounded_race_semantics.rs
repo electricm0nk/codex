@@ -283,8 +283,11 @@ fn matrix_dwarf_row_is_partial_computed_and_names_four_recognized_families() {
         .row("race.dwarf.bounded_semantics")
         .expect("dwarf row must exist");
 
-    assert_eq!(dwarf.support_state, SupportState::Partial);
-    assert_eq!(dwarf.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16); the four families this
+    // SD13-E2 slice named remain the same, now fully surfaced live.
+    assert_eq!(dwarf.support_state, SupportState::Supported);
+    assert_eq!(dwarf.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         dwarf.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -320,7 +323,9 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
     let human = matrix
         .row("race.human.pilot_semantics")
         .expect("human row must exist");
-    assert_eq!(human.support_state, SupportState::Partial);
+    // Later promoted to Supported/ProductVisible alongside every other race
+    // row by SD-19's Race Trait Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(human.support_state, SupportState::Supported);
 
     // Elf, Gnome, Half-Elf, Half-Orc, and Halfling were later promoted to
     // Partial/Computed by their own SD13-E2 recognition slices; this
@@ -346,6 +351,13 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "equipment.arms_armor.equipment_reachability"
                 && r.row_id != "equipment.general.equipment_reachability"
                 && r.row_id != "equipment.magic_items.equipment_reachability"
+                && r.row_id != "race.human.pilot_semantics"
+                && r.row_id != "race.dwarf.bounded_semantics"
+                && r.row_id != "race.elf.bounded_semantics"
+                && r.row_id != "race.gnome.bounded_semantics"
+                && r.row_id != "race.half_elf.bounded_semantics"
+                && r.row_id != "race.half_orc.bounded_semantics"
+                && r.row_id != "race.halfling.bounded_semantics"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the dwarf slice must not promote any row to Supported or Lossy"

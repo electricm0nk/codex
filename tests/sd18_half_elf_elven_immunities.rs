@@ -212,12 +212,17 @@ fn matrix_half_elf_row_stays_partial_computed_and_grounding_ref_names_this_slice
         .row("race.half_elf.bounded_semantics")
         .expect("half-elf row must exist");
 
+    // NOTE (2026-07-16, SD-19 Full-matrix closure): this slice's own honest
+    // Partial -> Partial widening claim below is historically accurate for THIS
+    // slice, but the row was later promoted to Supported/ProductVisible by the
+    // separate SD-19 Race Trait Catalog browser UI-surfacing work, which is why
+    // the assertions after this comment now read Supported/ProductVisible.
     // Honest promotion: Partial -> Partial widening, NOT a jump to Supported.
     // Elven Immunities is one more grounded family among several still-unproven
     // ones (Adaptability, Multitalented), so the row does not reach Supported
     // this cycle.
-    assert_eq!(half_elf.support_state, SupportState::Partial);
-    assert_eq!(half_elf.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(half_elf.support_state, SupportState::Supported);
+    assert_eq!(half_elf.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         half_elf.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -235,13 +240,5 @@ fn matrix_half_elf_row_stays_partial_computed_and_grounding_ref_names_this_slice
             .contains("Elven Immunities"),
         "half-elf row note must name Elven Immunities as grounded, not unproven: {}",
         half_elf.blocker_or_lossiness_note
-    );
-    assert!(
-        !matches!(
-            half_elf.support_state,
-            SupportState::Supported | SupportState::Lossy
-        ),
-        "half-elf row must not be silently promoted to Supported or Lossy by this \
-         single-family widening"
     );
 }

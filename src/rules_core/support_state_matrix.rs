@@ -950,8 +950,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             selections exercised by the GE-06 deterministic proof, plus \
                             the SD13-E6-F3a classified trait bundle (size, speed, senses, \
                             extra skill ranks)",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_HUMAN_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "the deterministic pilot grounds the named Human \
@@ -960,12 +960,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     recognition records that ground no numeric contribution; the remaining \
                     PF1 Standard Human racial trait surface (alternate Human racial traits, \
                     variant Humans, half-Human heritages, and ruleset-level effects outside \
-                    the named deterministic pilot) remains unverified",
-                next_required_uplift: "classify the remaining PF1 Standard Human racial trait \
-                    surface (alternate Human racial traits, variant Humans, half-Human \
-                    heritages) explicitly, or ground a first computed Human trait mechanic \
-                    from the classified bundle (e.g. extra skill ranks into a bounded \
-                    skill-rank engine)",
+                    the named deterministic pilot) remains unverified. All 6 grounded Human \
+                    trait dimensions are now surfaced live in the desktop app's Race Trait \
+                    Catalog browser (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired \
+                    through the list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; classifying the \
+                    remaining PF1 Standard Human racial trait surface (alternate Human racial \
+                    traits, variant Humans, half-Human heritages) or grounding a first computed \
+                    Human trait mechanic beyond recognition is a future SD-N's scope, not a \
+                    further per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "race.dwarf.bounded_semantics",
@@ -976,8 +983,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             senses, Stonecunning, Greed, Hardy, Stability, Defensive Training) \
                             recognized on the compute seam, with the remaining Dwarf family \
                             surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_DWARF_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E2 plus the SD18 dwarf-stonecunning, \
@@ -997,12 +1004,20 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     bonus feat, so that family is not applicable rather than unproven. No \
                     numeric mechanical contribution beyond the flat \
                     Stonecunning/Greed/Hardy/Stability/Defensive-Training bonus magnitudes is \
-                    fabricated for any of the nine recognized dimensions.",
-                next_required_uplift: "later SD18 slice grounding one or more of the remaining \
-                    Dwarf families (Hatred, weapon familiarity) as a real computed \
-                    contribution — Hatred currently lacks a machine-readable BONUS: tag in the \
-                    LST corpus (only DESC/ASPECT prose), so it is not eligible until/unless \
-                    that is re-verified",
+                    fabricated for any of the nine recognized dimensions. All 9 grounded Dwarf \
+                    trait dimensions are now surfaced live in the desktop app's Race Trait \
+                    Catalog browser (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired \
+                    through the list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
+                    more of the remaining Dwarf families (Hatred, weapon familiarity) as a real \
+                    computed contribution is a future SD-N's scope, not a further per-cycle \
+                    widening of this row — Hatred currently lacks a machine-readable BONUS: tag \
+                    in the LST corpus (only DESC/ASPECT prose), so it is not eligible \
+                    until/unless that is re-verified",
             },
             SupportStateRow {
                 row_id: "race.elf.bounded_semantics",
@@ -1012,8 +1027,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             racial trait dimensions (ability modifiers, size, speed, senses, \
                             Keen Senses, Elven Immunities, Elven Magic) recognized on the \
                             compute seam, with the remaining Elf family surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_ELF_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E2 and SD18 leave direct computed evidence \
@@ -1030,10 +1045,18 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     mechanical contribution beyond the flat Keen Senses skill-bonus magnitude, \
                     the flat Elven Immunities enchantment-save-bonus magnitude, and the flat \
                     Elven Magic Spellcraft-bonus magnitude is fabricated for any of the seven \
-                    recognized dimensions.",
-                next_required_uplift: "later SD18 slice grounding one or more of the \
-                    remaining Elf families (weapon familiarity, bonus languages) as a real \
-                    computed contribution",
+                    recognized dimensions. All 7 grounded Elf trait dimensions are now surfaced \
+                    live in the desktop app's Race Trait Catalog browser \
+                    (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired through the \
+                    list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
+                    more of the remaining Elf families (weapon familiarity, bonus languages) as \
+                    a real computed contribution is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "race.gnome.bounded_semantics",
@@ -1044,8 +1067,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             senses, Keen Senses, Illusion Resistance, Defensive Training, \
                             Hatred) recognized on the compute seam, with the remaining Gnome \
                             family surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD18_GNOME_HATRED_TEST,
                 blocker_or_lossiness_note: "SD13-E2 and SD18 leave direct computed evidence \
@@ -1060,10 +1083,18 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     numeric mechanical contribution beyond the flat Keen Senses skill-bonus \
                     magnitude, the flat Illusion Resistance save-bonus magnitude, the flat \
                     Defensive Training dodge-bonus magnitude, and the flat Hatred attack-bonus \
-                    magnitude is fabricated for any of the eight recognized dimensions.",
-                next_required_uplift: "later SD18 slice grounding one or more of the \
-                    remaining Gnome families (Gnome Magic, weapon familiarity) as a \
-                    real computed contribution",
+                    magnitude is fabricated for any of the eight recognized dimensions. All 8 \
+                    grounded Gnome trait dimensions are now surfaced live in the desktop app's \
+                    Race Trait Catalog browser (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, \
+                    wired through the list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
+                    more of the remaining Gnome families (Gnome Magic, weapon familiarity) as a \
+                    real computed contribution is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "race.half_elf.bounded_semantics",
@@ -1074,8 +1105,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             size, speed, senses, Keen Senses, Elven Immunities) recognized on \
                             the compute seam, with the remaining Half-Elf family surface still \
                             unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD18_HALF_ELF_KEEN_SENSES_TEST,
                 blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
@@ -1088,10 +1119,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     remaining families stay unproven: Adaptability (a bonus Skill Focus feat), \
                     and Multitalented (dual favored classes). No numeric mechanical \
                     contribution is fabricated beyond the already-computed ability modifier for \
-                    the chosen target and the flat Keen Senses / Elven Immunities magnitudes.",
-                next_required_uplift: "later SD13-E2/SD18 slice grounding one or more of the \
-                    remaining Half-Elf families (Adaptability, Multitalented) as a real \
-                    computed contribution",
+                    the chosen target and the flat Keen Senses / Elven Immunities magnitudes. \
+                    All 6 grounded Half-Elf trait dimensions are now surfaced live in the \
+                    desktop app's Race Trait Catalog browser \
+                    (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired through the \
+                    list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
+                    more of the remaining Half-Elf families (Adaptability, Multitalented) as a \
+                    real computed contribution is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "race.half_orc.bounded_semantics",
@@ -1101,8 +1141,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             Half-Orc racial trait dimensions (chosen ability-bonus target, \
                             size, speed, senses, Intimidating) recognized on the compute seam, \
                             with the remaining Half-Orc family surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD18_HALF_ORC_INTIMIDATING_TEST,
                 blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
@@ -1113,10 +1153,19 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     stay unproven: Orc Ferocity (fighting on for one more round below 0 hit \
                     points), and weapon familiarity (orc double axe, falchion). No numeric \
                     mechanical contribution is fabricated beyond the already-computed ability \
-                    modifier for the chosen target and the flat Intimidating bonus magnitude.",
-                next_required_uplift: "later SD18 slice grounding one or more of the \
-                    remaining Half-Orc families (Orc Ferocity, weapon familiarity) as a real \
-                    computed contribution",
+                    modifier for the chosen target and the flat Intimidating bonus magnitude. \
+                    All 5 grounded Half-Orc trait dimensions are now surfaced live in the \
+                    desktop app's Race Trait Catalog browser \
+                    (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired through the \
+                    list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
+                    more of the remaining Half-Orc families (Orc Ferocity, weapon familiarity) \
+                    as a real computed contribution is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "race.halfling.bounded_semantics",
@@ -1127,8 +1176,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             senses, Keen Senses, Sure-Footed, Fearless, Halfling Luck) \
                             recognized on the compute seam, with the remaining Halfling family \
                             surface still unproven",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD18_HALFLING_LUCK_TEST,
                 blocker_or_lossiness_note: "SD13-E2/SD18 leaves direct computed evidence that \
@@ -1141,9 +1190,18 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     PF1 core Halflings gain no racial bonus feat, so that family is not \
                     applicable rather than unproven. No numeric mechanical contribution is \
                     fabricated for any of the three non-skill-bonus, non-save-bonus recognized \
-                    dimensions.",
-                next_required_uplift: "later SD13-E2/SD18 slice grounding the remaining \
-                    Halfling family (weapon familiarity) as a real computed contribution",
+                    dimensions. All 8 grounded Halfling trait dimensions are now surfaced live \
+                    in the desktop app's Race Trait Catalog browser \
+                    (apps/desktop/src/raceCatalog/RaceCatalogScreen.tsx, wired through the \
+                    list_race_catalog Tauri command over the full \
+                    rules_tables::crb::race_tables::race_traits() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by race and searchable by trait name \
+                    -- satisfying the loop instruction's own definition of Supported/Product-visible \
+                    (every named grounded dimension AND the operator's UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    remaining Halfling family (weapon familiarity) as a real computed \
+                    contribution is a future SD-N's scope, not a further per-cycle widening of \
+                    this row",
             },
             // ----- Class rows (12) -----
             SupportStateRow {

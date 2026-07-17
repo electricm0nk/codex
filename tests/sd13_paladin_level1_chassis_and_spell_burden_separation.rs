@@ -669,6 +669,13 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
             && r.row_id != "equipment.arms_armor.equipment_reachability"
             && r.row_id != "equipment.general.equipment_reachability"
             && r.row_id != "equipment.magic_items.equipment_reachability"
+            && r.row_id != "race.human.pilot_semantics"
+            && r.row_id != "race.dwarf.bounded_semantics"
+            && r.row_id != "race.elf.bounded_semantics"
+            && r.row_id != "race.gnome.bounded_semantics"
+            && r.row_id != "race.half_elf.bounded_semantics"
+            && r.row_id != "race.half_orc.bounded_semantics"
+            && r.row_id != "race.halfling.bounded_semantics"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "the paladin-decomposition slice must not promote any row to Supported"
     );

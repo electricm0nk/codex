@@ -145,12 +145,14 @@ fn seed_exposes_exact_row_ids_and_no_extras() {
 
 #[test]
 fn human_race_row_is_partial_and_computed() {
+    // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+    // Catalog browser UI-surfacing work (2026-07-16).
     let matrix = matrix();
     let human = row(&matrix, "race.human.pilot_semantics");
     assert_eq!(human.subject_type, MatrixSubjectType::Race);
     assert_eq!(human.subject_id, "race:human");
-    assert_eq!(human.support_state, SupportState::Partial);
-    assert_eq!(human.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(human.support_state, SupportState::Supported);
+    assert_eq!(human.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         !human.grounding_ref.is_empty(),
         "computed Human row must cite grounding evidence"
@@ -326,16 +328,18 @@ fn every_non_human_race_row_now_carries_runtime_evidence() {
             "unexpected non-Human race row '{}'",
             race.row_id
         );
+        // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+        // Catalog browser UI-surfacing work (2026-07-16).
         assert_eq!(
             race.support_state,
-            SupportState::Partial,
-            "non-Human race row '{}' must be Partial",
+            SupportState::Supported,
+            "non-Human race row '{}' must be Supported",
             race.row_id
         );
         assert_eq!(
             race.evidence_tier,
-            EvidenceTier::Computed,
-            "non-Human race row '{}' must be Computed",
+            EvidenceTier::ProductVisible,
+            "non-Human race row '{}' must be ProductVisible",
             race.row_id
         );
     }
@@ -626,6 +630,13 @@ fn seed_contains_no_unexpectedly_supported_rows() {
             && r.row_id != "equipment.arms_armor.equipment_reachability"
             && r.row_id != "equipment.general.equipment_reachability"
             && r.row_id != "equipment.magic_items.equipment_reachability"
+            && r.row_id != "race.human.pilot_semantics"
+            && r.row_id != "race.dwarf.bounded_semantics"
+            && r.row_id != "race.elf.bounded_semantics"
+            && r.row_id != "race.gnome.bounded_semantics"
+            && r.row_id != "race.half_elf.bounded_semantics"
+            && r.row_id != "race.half_orc.bounded_semantics"
+            && r.row_id != "race.halfling.bounded_semantics"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "no row may be silently promoted to Supported outside the two named, \
          intentionally-promoted SD-19 rows"

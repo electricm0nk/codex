@@ -251,12 +251,14 @@ mod tests {
 
     #[test]
     fn human_pilot_row_remains_partial_and_computed() {
+        // Later promoted to Supported/ProductVisible by SD-19's Race Trait
+        // Catalog browser UI-surfacing work (2026-07-16).
         let snapshot = snapshot();
         let human = row(&snapshot, "race.human.pilot_semantics");
         assert_eq!(human.subject_type, "race");
         assert_eq!(human.subject_id, "race:human");
-        assert_eq!(human.support_state, "partial");
-        assert_eq!(human.evidence_tier, "computed");
+        assert_eq!(human.support_state, "supported");
+        assert_eq!(human.evidence_tier, "product-visible");
     }
 
     #[test]
