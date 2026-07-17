@@ -20,6 +20,19 @@
 //! `WIELD:` token the same way `resolve_base_damage_dice` reads
 //! `DAMAGE:`).
 //!
+//! This cycle lands the fourth work-unit, `resolve_feat_damage_effect`:
+//! a feat's damage-modifier contribution, **bounded to feats whose
+//! `BONUS:` token is a directly-usable constant** (e.g. Weapon
+//! Specialization / Greater Weapon Specialization's real
+//! `BONUS:WEAPONPROF=%LIST|DAMAGE|2`), not the PCGen-formula-over-BAB
+//! shape feats like Power Attack carry. See
+//! `resolve_feat_damage_effect`'s own doc comment for the full in-scope
+//! vs. out-of-scope boundary — this cycle resolves the prior blocked
+//! attempt (`cycle-2026-07-17T1738`, recorded in the progress doc's
+//! `damage:feat_effect` Open Blockers entry), a real gap
+//! (`rules_tables::crb::feats::FeatTableEntry` had no numeric effect
+//! field at all) since resolved by `3d962c2`.
+//!
 //! Adapts `technical-design.md` §2.5's illustrative `compute_damage`
 //! seam to this repo's real types per §2.0 (`RulesTables` retired — no
 //! `rules_tables: &RulesTables` parameter anywhere; a table-store read,
@@ -81,6 +94,7 @@ use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::equipment_effects::EquipmentEffects;
 use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
+use crate::rules_core::rules_tables::crb::feats::{feat_tables, FeatEffectBonus};
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::source_content::SourcePackageContent;
 
@@ -414,6 +428,131 @@ fn critical_threat_range_token(record: &EquipmentRecord) -> Option<(u8, u8)> {
         .map(|width| (20 - width + 1, 20))
 }
 
+/// One resolved feat's constant-valued damage contribution, with its
+/// corpus provenance. This is the feat-effect slice of the eventual
+/// `DamageRoll` (`technical-design.md` §2.5) — `critical_threat_range`
+/// and `critical_multiplier` are later work-units' fields, not
+/// fabricated here. Unlike the three earlier work-units'
+/// `table_cell: Option<TableCellRef>` (whose corpus resolver,
+/// `equipment_id_resolve`, can find a record but no cell metadata),
+/// `table_cell` here is never optional — it is constructed directly from
+/// the matched `FeatTableEntry.key`, the same always-`Some` shape
+/// `feat_prereqs::combat::resolve_combat_feat_effect`'s own
+/// `CombatFeatEffect.table_cell: TableCellRef` (non-`Option`) already
+/// uses for this identical table.
+#[derive(Debug, Clone, PartialEq)]
+pub struct DamageRollFeatEffect {
+    pub feat_key: String,
+    pub damage_bonus: i16,
+    pub table_cell: TableCellRef,
+}
+
+/// The damage-total engine's fourth work-unit (SD-20 §1.6): feat-effect
+/// modifier — **bounded to feats whose `BONUS:` token is a directly
+/// usable constant**, per this cycle's explicit scoping (see below).
+/// Reads `rules_tables::crb::feats::feat_tables()` directly (no
+/// `RulesTables` parameter, `technical-design.md` §2.0) — the same
+/// direct-import pattern `feat_prereqs/combat.rs::resolve_combat_feat_effect`
+/// already uses for this table. Deliberately does **not** compose with
+/// Epic 3's `feat_prereqs.rs` / `FeatEffects` the way
+/// `resolve_weapon_enhancement_modifier` composes with Epic 5's
+/// `equipment_effects.rs`: `FeatEffects` (and every per-category effect
+/// struct built from it) carries only `feat_id` / `description` /
+/// `table_cell` — no numeric field at all (see the progress doc's
+/// `damage:feat_effect` Open Blockers entry, resolved 2026-07-17 at
+/// `3d962c2`) — so this work-unit reads the table store's own
+/// `FeatTableEntry.effect` field directly instead, the same table Epic
+/// 3's resolvers already read `key`/`category`/`name`/`description` from.
+///
+/// ## Scoping: constant-valued feats in scope; formula-based feats still
+/// out of scope
+///
+/// `FeatTableEntry.effect`'s own doc comment explains why this can't be
+/// a blanket resolution: many real `cr_feats.lst` `BONUS:` tokens are
+/// PCGen formula expressions over runtime character state, not static
+/// literals — e.g. Power Attack's damage bonus
+/// (`BONUS:VAR|PowerAttackDamageModifier|PowerAttackDamageBase*floor(PowerAttackModifier)`)
+/// depends on the wielder's base attack bonus (`BAB`). Resolving a
+/// formula like that into a real number needs a full PCGen formula
+/// evaluator (parsing `floor()`, variable lookups such as `BAB`, and
+/// PCGen's `DEFINE:`-scoped runtime state) — a much larger undertaking
+/// than this one cycle's bounded slice, and explicitly out of scope
+/// here. Fabricating a plausible resolved integer for a formula-based
+/// feat (e.g. hardcoding Power Attack's "+2 damage per 4 BAB" rule text)
+/// was already rejected once by this exact work-unit's prior blocked
+/// attempt (`cycle-2026-07-17T1738`) as counterfeit completion, and
+/// stays rejected here.
+///
+/// **In scope today:** a feat whose `BONUS:` token qualifier list is
+/// exactly `[<category>, "DAMAGE", "<integer>"]` — a bare `DAMAGE`
+/// target (not a qualified/compound one like `DAMAGE-SHORTRANGE` or
+/// `DAMAGE.ShieldBash`, which apply only under a condition this bounded
+/// slice does not model) with a literal, directly-parseable value (not a
+/// `VAR`-category token, since `VAR` defines a named formula variable
+/// for other tokens to reference, not a direct roll bonus itself).
+/// Verified against the real corpus (`core_rulebook/cr_feats.lst`, lines
+/// 89 and 185): `KEY:Weapon Specialization` and `KEY:Greater Weapon
+/// Specialization` both carry exactly `BONUS:WEAPONPROF=%LIST|DAMAGE|2`
+/// (SOURCEPAGE p.137 / p.126: "You gain a +2 bonus on all damage rolls
+/// you make using the selected weapon") — a genuine constant `+2`, not a
+/// formula. Both resolve through this function.
+///
+/// **Still out of scope (formula-based; needs a future formula-evaluator
+/// cycle to widen):** every feat whose `BONUS:` token category is `VAR`
+/// (e.g. Power Attack, Arcane Strike, Shield Master) or whose target is
+/// not the bare `DAMAGE` string (e.g. Point-Blank Shot's
+/// `TOHIT-SHORTRANGE,DAMAGE-SHORTRANGE`, Double Slice's `DAMAGEMULT:0`).
+/// These feats' `FeatTableEntry.effect` is real, landed data (`3d962c2`),
+/// but this function honestly returns `None` for them rather than
+/// resolving a wrong or fabricated number — the same "honest absence
+/// over fabricated default" discipline every other resolver in this file
+/// already follows.
+///
+/// Returns `None` when `feat_key` does not resolve to a real
+/// `FeatTableEntry` in the catalog at all (matches `key` or `name`, the
+/// same fallback `feat_prereqs`'s per-category resolvers use), when the
+/// matched entry carries no `effect` data at all, or when none of its
+/// `BONUS:` tokens are a constant-valued `DAMAGE` bonus per the scoping
+/// above.
+pub fn resolve_feat_damage_effect(feat_key: &str) -> Option<DamageRollFeatEffect> {
+    let entry = feat_tables()
+        .iter()
+        .find(|entry| entry.key == feat_key || entry.name == feat_key)?;
+    let effect = entry.effect?;
+    let damage_bonus = effect.iter().find_map(constant_damage_bonus)?;
+
+    Some(DamageRollFeatEffect {
+        feat_key: entry.key.to_string(),
+        damage_bonus,
+        table_cell: TableCellRef {
+            rule_set: RuleSetId::Crb,
+            table: "feats".to_string(),
+            row_key: entry.key.to_string(),
+            column_key: String::new(),
+        },
+    })
+}
+
+/// A `BONUS:` token is a directly-usable constant damage bonus, per
+/// `resolve_feat_damage_effect`'s scoping doc comment, only when its
+/// qualifier list is exactly `[<category>, "DAMAGE", "<integer>"]` and
+/// `<category>` is not `VAR` (a `VAR` token defines a named formula
+/// variable, not a direct roll bonus — e.g. Power Attack's
+/// `BONUS:VAR|PowerAttackDamageModifier|...`). Anything else (a
+/// qualified/compound target, a non-numeric value, a `VAR` category, a
+/// wrong-length qualifier list) is a formula or a non-constant-damage
+/// bonus and is honestly excluded, not coerced.
+fn constant_damage_bonus(bonus: &FeatEffectBonus) -> Option<i16> {
+    let qualifiers = bonus.qualifiers;
+    if qualifiers.len() != 3 {
+        return None;
+    }
+    if qualifiers[0] == "VAR" || qualifiers[1] != "DAMAGE" {
+        return None;
+    }
+    qualifiers[2].parse::<i16>().ok()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -689,6 +828,62 @@ Adamantine\tKEY:Material ~ Adamantine ~ Weapon\tTYPE:BaseMaterial.MasterworkQual
         assert!(
             resolve_critical_threat_range("item:does-not-exist-in-this-corpus", &corpus)
                 .is_none()
+        );
+    }
+
+    /// Real verbatim token from `KEY:Weapon Specialization`
+    /// (`core_rulebook/cr_feats.lst` line 185): `BONUS:WEAPONPROF=%LIST|DAMAGE|2`.
+    #[test]
+    fn weapon_specialization_yields_its_real_constant_damage_bonus() {
+        let resolved = resolve_feat_damage_effect("Weapon Specialization")
+            .expect("Weapon Specialization is a real Combat feat with a constant BONUS: token");
+        assert_eq!(resolved.feat_key, "Weapon Specialization");
+        assert_eq!(resolved.damage_bonus, 2);
+        assert_eq!(resolved.table_cell.table, "feats");
+        assert_eq!(resolved.table_cell.row_key, "Weapon Specialization");
+    }
+
+    /// Power Attack's `BONUS:` tokens are all `VAR`-category PCGen
+    /// formula expressions over BAB — out of this work-unit's bounded
+    /// scope. Honest `None`, not a fabricated resolved integer.
+    #[test]
+    fn power_attack_formula_based_bonus_is_out_of_scope() {
+        assert!(resolve_feat_damage_effect("Power Attack").is_none());
+    }
+
+    #[test]
+    fn unrecognized_feat_key_yields_none_not_fabricated() {
+        assert!(resolve_feat_damage_effect("Not A Real Feat In The Catalog").is_none());
+    }
+
+    #[test]
+    fn constant_damage_bonus_examples() {
+        assert_eq!(
+            constant_damage_bonus(&FeatEffectBonus {
+                qualifiers: &["WEAPONPROF=%LIST", "DAMAGE", "2"]
+            }),
+            Some(2)
+        );
+        assert_eq!(
+            constant_damage_bonus(&FeatEffectBonus {
+                qualifiers: &["VAR", "PowerAttackDamageBase", "2"]
+            }),
+            None,
+            "a VAR-category token defines a formula variable, not a direct bonus"
+        );
+        assert_eq!(
+            constant_damage_bonus(&FeatEffectBonus {
+                qualifiers: &["COMBAT", "TOHIT-SHORTRANGE,DAMAGE-SHORTRANGE", "1"]
+            }),
+            None,
+            "a compound/qualified target is not the bare DAMAGE this slice models"
+        );
+        assert_eq!(
+            constant_damage_bonus(&FeatEffectBonus {
+                qualifiers: &["HP", "CURRENTMAX", "max(3,TL)"]
+            }),
+            None,
+            "a non-numeric value signals a formula, not a constant"
         );
     }
 }
