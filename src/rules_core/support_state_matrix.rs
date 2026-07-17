@@ -6811,23 +6811,54 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 // ability:strength selections is therefore not only
                 // computed by the engine but visible through the
                 // composed-input contract to the consumer.
-                support_state: SupportState::Partial,
+                // Full-matrix closure (operator directive 2026-07-16), Human
+                // interaction-row judgment call: option (a) taken, written
+                // here per the loop instruction's explicit requirement to
+                // record the choice and its reasoning. The row's own
+                // documented uplift ("generalize... once a second computed
+                // interaction pressure exists") is now structurally
+                // unreachable -- the only candidate second pressure is
+                // interaction.non_human_any_class.progression_pressure,
+                // which this loop permanently excludes (see that row's own
+                // note). Rather than hold this row hostage to a promotion
+                // path that can never complete without inventing an
+                // unwarranted non-Human interaction pressure, this row is
+                // promoted on the same bar every other Full-matrix-closure
+                // row was promoted on: both conditions in
+                // "What supported/Product-visible actually means for
+                // SD-19" are independently satisfied today -- (1) evidence_tier
+                // was already Product-visible (tests/sd18_preloop_consumer_compose.rs)
+                // and (2) every named sample in this row's own note
+                // (human_bonus_feat -> feat:dodge,
+                // human_ability_bonus -> ability:strength) is grounded as a
+                // real compute explanation, not a diagnostic string. The
+                // broader "generalize the interaction-row model" ambition is
+                // decoupled from this row's own Supported bar and named
+                // below as future-SD-N scope, exactly as every class row's
+                // own out-of-scope compute burdens (slot math, spellbook
+                // engine, etc.) were named as future-SD-N scope rather than
+                // blocking their promotion.
+                support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: GE06_INPUT_CONTRACT_TEST,
-                // Updated to also name the SD18-PRELOOP bridge test as
-                // the Product-visible grounding reference.
                 blocker_or_lossiness_note: "the named deterministic Human Fighter pilot \
-                    seam is grounded: the human_bonus_feat -> feat:dodge and \
-                    human_ability_bonus -> ability:strength selections now surface as explicit \
+                    seam is grounded and product-visible: the human_bonus_feat -> feat:dodge and \
+                    human_ability_bonus -> ability:strength selections surface as explicit \
                     compute explanations, and the consumer-side composer \
                     (rules_core::composed_input) reaches pilot_compute through the \
-                    composed-input contract verified by tests/sd18_preloop_consumer_compose.rs; \
-                    the general interaction-row model is not yet generalized beyond the \
-                    named Human pilot pressure",
-                next_required_uplift: "generalize the named Human pilot pressure into the \
-                    interaction-row model once a second computed interaction pressure exists \
-                    (per the non-Human interaction row's warrant condition)",
+                    composed-input contract verified by tests/sd18_preloop_consumer_compose.rs. \
+                    This row's own named claim is fully grounded and surfaced -- 'Supported' here \
+                    means that, not that the interaction-row model itself has been generalized \
+                    beyond the named Human pilot pressure; see next_required_uplift.",
+                next_required_uplift: "generalizing the named Human pilot pressure into a \
+                    broader interaction-row model remains permanently decoupled from this row's \
+                    own Supported bar: the documented trigger condition (a second computed \
+                    interaction pressure) is interaction.non_human_any_class.progression_pressure, \
+                    which this loop permanently excludes from promotion (Full-matrix closure, \
+                    2026-07-16). Generalization becomes real future-SD-N scope only if a later SD \
+                    ingests a sourcebook (APG/ACG/race-specific) that grounds a genuine \
+                    non-Human race x class compute pressure.",
             },
             SupportStateRow {
                 row_id: "interaction.non_human_any_class.progression_pressure",
