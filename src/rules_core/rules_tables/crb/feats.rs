@@ -27,6 +27,13 @@
 //! rather than defining a new one. None of these carry a `TYPE:` facet
 //! this catalog can honestly classify, matching `Pf1SchoolId::from_corpus_str`'s
 //! own discipline of returning nothing rather than guessing.
+//!
+//! Beyond `key`/`category`/`name`/`description`, every record also
+//! carries `FeatTableEntry.effect`: its `BONUS:` token(s), verbatim,
+//! `None` when the record has none (81 of the 185 records carry at
+//! least one `BONUS:` token; the other 104, including all 8
+//! `ItemCreation` feats, do not). See `FeatEffectBonus`'s own doc
+//! comment for the token shape.
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum FeatCategory {
@@ -71,6 +78,56 @@ pub struct FeatTableEntry {
     /// which carry only `ADDSPELLLEVEL:`/`BONUS:`/`FACT:` tokens) --
     /// mirrors `EquipmentTableEntry.cost_gp`'s `None`-when-absent rule.
     pub description: Option<&'static str>,
+    /// Every `BONUS:` token the corpus record carries, verbatim, in
+    /// source order. `None` when the record has no `BONUS:` token at all
+    /// (104 of this catalog's 185 records -- e.g. every `ItemCreation`
+    /// feat, whose real mechanical effect is a crafting-rule paragraph,
+    /// not a numeric bonus). `Some(&[])` never occurs: an empty slice
+    /// would be indistinguishable from "no data gathered yet", so
+    /// absence is always `None`, mirroring `description`'s own
+    /// `None`-when-absent rule and `EquipmentTableEntry.cost_gp`'s
+    /// convention it already follows.
+    ///
+    /// Deliberately not collapsed into one flat numeric field the way
+    /// `EquipmentStatEffect.armor_class_bonus` is. Real `cr_feats.lst`
+    /// `BONUS:` tokens are frequently PCGen formula expressions over
+    /// runtime state -- e.g. Power Attack's damage bonus is
+    /// `BONUS:VAR|PowerAttackDamageModifier|PowerAttackDamageBase*floor(PowerAttackModifier)`,
+    /// which depends on `BAB` (base attack bonus) -- not a static
+    /// literal the way an equipment item's `BONUS:COMBAT|AC|2|TYPE=Armor`
+    /// is. Forcing every feat's effect into a single resolved integer
+    /// here would fabricate a number the corpus does not give as a
+    /// constant; resolving these formulas against real character state
+    /// is a future cycle's job (SD-20 Epic 6's `feat_effect` damage-class
+    /// criterion), not this table's.
+    pub effect: Option<&'static [FeatEffectBonus]>,
+}
+
+/// One `BONUS:` token lifted from a feat's corpus record, captured as a
+/// flat pipe-delimited qualifier list -- the same non-recursive
+/// representation `pcgen_import::lst_parser::equipment::BonusToken` uses
+/// for equipment tokens (`qualifiers: Vec<String>`), adapted to this
+/// table's compile-time `&'static` data. There is no feat LST parser in
+/// this repo the way `equipment.rs` has one for equipment records --
+/// `feat_data/` is baked from the corpus offline, same as every other
+/// `FeatTableEntry` field, so this type stores the already-split
+/// qualifier list directly rather than a `raw_bonus` string to re-split
+/// at runtime.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct FeatEffectBonus {
+    /// Pipe-delimited segments of the raw `BONUS:` token, verbatim, in
+    /// source order. A token `BONUS:SAVE|Fortitude|2` yields
+    /// `["SAVE", "Fortitude", "2"]`; a token
+    /// `BONUS:COMBAT|AC|1|TYPE=Dodge` yields
+    /// `["COMBAT", "AC", "1", "TYPE=Dodge"]`. Element 0 is the PCGen
+    /// bonus category (`SKILL`, `VAR`, `COMBAT`, `SAVE`, `DC`,
+    /// `ABILITYPOOL`, `MOVEADD`, `HP`, or the corpus's own
+    /// `WEAPONPROF=%LIST`-shaped category on e.g. Weapon Focus); further
+    /// elements are the target, the value/formula expression, and any
+    /// trailing qualifiers. None of these are re-parsed or evaluated
+    /// here -- this table stores what the corpus says, not a resolved
+    /// game-mechanical delta.
+    pub qualifiers: &'static [&'static str],
 }
 
 /// Full CRB feat catalog: every real corpus record across all 4 book

@@ -17,7 +17,7 @@
 
 use std::path::PathBuf;
 
-use codex::rules_core::rules_tables::crb::feats::{feat_tables, FeatCategory, FeatTableEntry};
+use codex::rules_core::rules_tables::crb::feats::{feat_tables, FeatCategory, FeatEffectBonus, FeatTableEntry};
 
 #[test]
 fn every_feat_category_is_non_empty() {
@@ -106,6 +106,88 @@ fn duplicate_corpus_records_are_preserved_verbatim_not_deduplicated() {
     assert_eq!(count, 2, "expected both real corpus 'Combat Expertise' variants to be present");
 }
 
+#[test]
+fn great_fortitude_carries_its_real_save_bonus_token() {
+    // `KEY:Great Fortitude` in cr_feats.lst carries a single verbatim
+    // `BONUS:SAVE|Fortitude|2` token -- this asserts the effect field
+    // captures that real numeric mechanical delta, not just prose.
+    let all = feat_tables();
+    let great_fortitude = all
+        .iter()
+        .find(|f| f.key == "Great Fortitude")
+        .expect("Great Fortitude must be in the catalog");
+    assert_eq!(
+        great_fortitude.effect,
+        Some(&[FeatEffectBonus {
+            qualifiers: &["SAVE", "Fortitude", "2"]
+        }] as &[FeatEffectBonus])
+    );
+}
+
+#[test]
+fn power_attack_carries_all_four_real_bonus_var_tokens() {
+    // `KEY:Power Attack` (the SD-20 Epic 6 damage:feat_effect blocker's
+    // own motivating example) carries four `BONUS:VAR|...` tokens in
+    // cr_feats.lst, none of which are flat integer literals -- the
+    // damage-bearing one
+    // (`PowerAttackDamageModifier|PowerAttackDamageBase*floor(PowerAttackModifier)`)
+    // is a formula over `BAB`, proving why `effect` cannot honestly be a
+    // single resolved `i16`.
+    let all = feat_tables();
+    let power_attack = all
+        .iter()
+        .find(|f| f.key == "Power Attack")
+        .expect("Power Attack must be in the catalog");
+    let effect = power_attack.effect.expect("Power Attack must carry BONUS: tokens");
+    assert_eq!(effect.len(), 4);
+    assert_eq!(effect[0].qualifiers, &["VAR", "PowerAttackModifier", "(BAB/4)+1"]);
+    assert_eq!(effect[1].qualifiers, &["VAR", "PowerAttackDamageBase", "2"]);
+    assert_eq!(
+        effect[2].qualifiers,
+        &["VAR", "PowerAttackDamageModifier", "PowerAttackDamageBase*floor(PowerAttackModifier)"]
+    );
+    assert_eq!(
+        effect[3].qualifiers,
+        &["VAR", "MonkFlurryPowerAttackModifier", "BAB+(FlurryLVL-MonkBAB)"]
+    );
+}
+
+#[test]
+fn item_creation_feats_never_carry_a_bonus_token() {
+    // Crafting feats' real mechanical effect is a prose crafting rule
+    // (gp cost / time), never a `BONUS:` token in the real corpus --
+    // this is an honest absence, not missing data.
+    for entry in feat_tables().iter().filter(|f| f.category == FeatCategory::ItemCreation) {
+        assert_eq!(
+            entry.effect, None,
+            "expected no BONUS: effect for ItemCreation feat '{}'",
+            entry.name
+        );
+    }
+}
+
+#[test]
+fn feat_effect_counts_match_the_live_corpus_bonus_token_census() {
+    // 81 of the 185 catalogued records carry at least one real `BONUS:`
+    // token, broken down per category as below -- if this drifts, either
+    // the corpus changed or feat_data/ needs regenerating.
+    let all = feat_tables();
+    let with_effect = |category: FeatCategory| {
+        all.iter()
+            .filter(|f| f.category == category && f.effect.is_some())
+            .count()
+    };
+    assert_eq!(with_effect(FeatCategory::General), 30);
+    assert_eq!(with_effect(FeatCategory::Combat), 42);
+    assert_eq!(with_effect(FeatCategory::Metamagic), 9);
+    assert_eq!(with_effect(FeatCategory::ItemCreation), 0);
+    assert_eq!(
+        all.iter().filter(|f| f.effect.is_some()).count(),
+        81,
+        "expected 81 total feat records with at least one real BONUS: token"
+    );
+}
+
 fn corpus_root() -> Option<PathBuf> {
     match std::env::var("CORPUS_ROOT") {
         Ok(value) => {
@@ -191,5 +273,98 @@ fn catalog_matches_live_corpus_type_facet_counts() {
             catalog.iter().any(|entry| entry.name == name),
             "corpus record '{name}' is classifiable but missing from feat_tables()"
         );
+    }
+}
+
+/// Whether a classifiable record's raw tab-delimited fields carry at
+/// least one `BONUS:` token -- deliberately not sharing code with the
+/// generator, so this test would fail if `effect` drifted from the live
+/// corpus (same discipline `catalog_matches_live_corpus_type_facet_counts`
+/// already applies to `key`/`category`/`name`).
+fn record_has_bonus_token(fields: &[&str]) -> bool {
+    fields.iter().skip(1).any(|f| f.trim().starts_with("BONUS:"))
+}
+
+#[test]
+fn catalog_effect_presence_matches_live_corpus_bonus_tokens() {
+    let Some(root) = corpus_root() else {
+        eprintln!(
+            "CORPUS_ROOT not set or not a directory; skipping (set \
+             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
+        );
+        return;
+    };
+    let cr_feats = cr_feats_path(&root);
+    if !cr_feats.is_file() {
+        eprintln!("canonical cr_feats.lst not present at {}; skipping", cr_feats.display());
+        return;
+    }
+
+    let text = std::fs::read_to_string(&cr_feats).expect("cr_feats.lst must be readable");
+    // (category, name, whether the record itself has a BONUS: token), in
+    // file order per classifiable record. `feat_tables()` concatenates
+    // one per-category table per category (see feats.rs's own
+    // `feat_tables()`), each internally in file order -- not one single
+    // whole-file order -- so this groups by category to match.
+    let mut corpus_records: Vec<(&'static str, String, bool)> = Vec::new();
+    for line in text.lines() {
+        if line.trim().is_empty() || line.starts_with('#') || line.starts_with("###Block") {
+            continue;
+        }
+        let fields: Vec<&str> = line.split('\t').collect();
+        let name = fields[0].trim();
+        if name.is_empty() || name.starts_with("SOURCELONG") || name.starts_with("CATEGORY=") {
+            continue;
+        }
+        let type_field = fields
+            .iter()
+            .skip(1)
+            .find_map(|f| f.trim().strip_prefix("TYPE:"));
+        let Some(type_value) = type_field else {
+            continue;
+        };
+        if let Some(category) = facet_category(type_value) {
+            corpus_records.push((category, name.to_string(), record_has_bonus_token(&fields)));
+        }
+    }
+
+    let corpus_with_bonus = corpus_records.iter().filter(|(_, _, has_bonus)| *has_bonus).count();
+    let catalog = feat_tables();
+    let catalog_with_effect = catalog.iter().filter(|f| f.effect.is_some()).count();
+    assert_eq!(
+        catalog_with_effect, corpus_with_bonus,
+        "catalog's effect-populated record count drifted from the live corpus's \
+         BONUS:-token-carrying record count; regenerate feat_data/"
+    );
+
+    // Positional cross-check, per category (file order within each
+    // category, matching feat_tables()'s own per-category concatenation
+    // order): every corpus record's real BONUS:-presence agrees with the
+    // catalog entry at the same position within its category.
+    for category_name in ["General", "Combat", "ItemCreation", "Metamagic"] {
+        let category = match category_name {
+            "General" => FeatCategory::General,
+            "Combat" => FeatCategory::Combat,
+            "ItemCreation" => FeatCategory::ItemCreation,
+            "Metamagic" => FeatCategory::Metamagic,
+            _ => unreachable!(),
+        };
+        let corpus_in_category: Vec<&(&'static str, String, bool)> =
+            corpus_records.iter().filter(|(cat, _, _)| *cat == category_name).collect();
+        let catalog_in_category: Vec<&FeatTableEntry> =
+            catalog.iter().filter(|f| f.category == category).collect();
+        assert_eq!(
+            catalog_in_category.len(),
+            corpus_in_category.len(),
+            "category {category_name} record count drifted"
+        );
+        for (entry, (_, name, has_bonus)) in catalog_in_category.iter().zip(corpus_in_category.iter()) {
+            assert_eq!(&entry.name, name, "catalog/corpus order drifted within category {category_name}");
+            assert_eq!(
+                entry.effect.is_some(),
+                *has_bonus,
+                "'{name}' effect presence disagrees with live corpus BONUS: token presence"
+            );
+        }
     }
 }
