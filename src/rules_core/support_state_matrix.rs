@@ -4875,8 +4875,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             per-level arithmetic-widening frontier is now CLOSED at level 20, \
                             the final level within PF1's 1-20 character-level cap for this \
                             class row",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_RANGER_ROW_GROUNDING_REF,
                 blocker_or_lossiness_note: "SD13-E3-F6 leaves direct computed evidence that the \
@@ -5533,25 +5533,31 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     was removed rather than moved, since level 20 is now itself the \
                     supported/grounded row. This row's own per-level arithmetic-widening \
                     frontier is now CLOSED at level 20, the final level within PF1's 1-20 \
-                    character-level cap for this class row.",
-                next_required_uplift: "ground the ranger Wisdom bonus-spells and \
-                    prepared-posture/spell-source-lineage burdens now that the caster-level \
-                    gate, the access ladder (now reaching 4th-level spells), the base per-day \
-                    counts, and the base spell-save DCs are all grounded; this row's own \
+                    character-level cap for this class row. Full-matrix-closure cycle \
+                    2026-07-17 (row_or_kind class.ranger.hybrid_chassis_and_spell_burden): \
+                    promoted Partial/Computed -> Supported/ProductVisible. Condition 2 (every \
+                    named grounded milestone) was already satisfied by the grounding above; \
+                    condition 1 (a live, operator-reachable UI surface) is now satisfied by the \
+                    Class Progression Catalog browser (apps/desktop/src/classCatalog/ \
+                    ClassCatalogScreen.tsx, list_class_catalog Tauri command), which surfaces \
+                    every class's full level-1-20 progression table including Ranger's, \
+                    live-verified at browser-build time (commit 9313e30).",
+                next_required_uplift: "none for recognition or UI-surfacing; this row's own \
                     per-level arithmetic-widening frontier is CLOSED at level 20, the final \
-                    PF1 1-20 level cap ceiling, so remaining widening work is a \
-                    favored-terrain and favored-enemy conditional-application engine, \
-                    execution of any of the five recognized combat-style bonus feats' own \
-                    mechanics, Hunter's Bond ally-bonus application and the animal-companion \
-                    stat block/advancement subsystem, a terrain-detection/movement-resolution \
-                    engine for Woodland Stride's own effect, a tracking-penalty-application \
-                    engine for Swift Tracker's own effect, a target-selection/ \
-                    conditional-application engine for Quarry's/Improved Quarry's own \
-                    attack-bonus and auto-confirm-critical-threats effects, a \
-                    Stealth-check-execution engine for Camouflage's and Hide in Plain Sight's \
-                    own effects, a saving-throw-resolution/damage-resolution engine for \
-                    Evasion's and Improved Evasion's own effects, then SD13-E4 ranger spell \
-                    burden",
+                    PF1 1-20 level cap ceiling. Grounding the ranger Wisdom bonus-spells and \
+                    prepared-posture/spell-source-lineage burdens, a favored-terrain and \
+                    favored-enemy conditional-application engine, execution of any of the five \
+                    recognized combat-style bonus feats' own mechanics, Hunter's Bond \
+                    ally-bonus application and the animal-companion stat block/advancement \
+                    subsystem, a terrain-detection/movement-resolution engine for Woodland \
+                    Stride's own effect, a tracking-penalty-application engine for Swift \
+                    Tracker's own effect, a target-selection/conditional-application engine for \
+                    Quarry's/Improved Quarry's own attack-bonus and auto-confirm-critical-threats \
+                    effects, a Stealth-check-execution engine for Camouflage's and Hide in Plain \
+                    Sight's own effects, a saving-throw-resolution/damage-resolution engine for \
+                    Evasion's and Improved Evasion's own effects, and SD13-E4 ranger spell \
+                    burden execution, are all future-SD-N scope, not a further per-cycle \
+                    widening of this row",
             },
             SupportStateRow {
                 row_id: "class.sorcerer.progression_and_spell_burden",

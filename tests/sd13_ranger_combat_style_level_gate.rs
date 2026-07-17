@@ -134,10 +134,12 @@ fn matrix_ranger_row_note_no_longer_claims_a_level1_combat_style_choice() {
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must exist");
 
+    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
+    // Catalog browser UI-surfacing work (2026-07-17).
     assert_eq!(
         ranger.support_state,
-        SupportState::Partial,
-        "the combat-style level-gate correction does not promote the row past Partial"
+        SupportState::Supported,
+        "ranger row must be Supported after the SD-19 class-row promotion"
     );
 
     let note = ranger.blocker_or_lossiness_note;

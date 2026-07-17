@@ -737,10 +737,10 @@ fn matrix_keeps_sorcerer_and_paladin_supported_after_bard_slice() {
         .expect("ranger row must exist");
     assert_eq!(
         ranger.support_state,
-        SupportState::Partial,
-        "ranger row must keep its later-accepted Partial posture after the Bard slice"
+        SupportState::Supported,
+        "ranger row must be Supported after the SD-19 class-row promotion"
     );
-    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
 }
 
 #[test]
@@ -784,6 +784,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy_after_bard_slice() {
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
                 && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Bard slice must not promote any row to Supported or Lossy"

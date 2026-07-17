@@ -534,8 +534,8 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
         .expect("ranger row must exist");
     assert_eq!(
         ranger.support_state,
-        SupportState::Partial,
-        "ranger row must keep its later-accepted Partial posture after the rogue slice"
+        SupportState::Supported,
+        "ranger row must be Supported after the SD-19 class-row promotion"
     );
 
     assert!(
@@ -576,6 +576,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
                 && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the rogue slice must not promote any row to Supported or Lossy"

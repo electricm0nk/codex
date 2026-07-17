@@ -736,10 +736,10 @@ fn matrix_preserves_paladin_hybrid_supported_product_visible_truth() {
         .expect("ranger row must exist");
     assert_eq!(
         ranger.support_state,
-        SupportState::Partial,
-        "ranger hybrid row must keep its later-accepted Partial posture after the Sorcerer slice"
+        SupportState::Supported,
+        "ranger hybrid row must be Supported after the SD-19 class-row promotion"
     );
-    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
 }
 
 #[test]
@@ -783,6 +783,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
                 && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Sorcerer slice must not promote any row to Supported or Lossy"

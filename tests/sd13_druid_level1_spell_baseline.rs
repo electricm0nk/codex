@@ -674,10 +674,10 @@ fn matrix_preserves_wizard_hybrid_blocked_computed_and_sorcerer_bard_cleric_supp
         .expect("ranger row must exist");
     assert_eq!(
         ranger.support_state,
-        SupportState::Partial,
-        "ranger row must keep its later-accepted Partial posture after the Druid slice"
+        SupportState::Supported,
+        "ranger row must be Supported after the SD-19 class-row promotion"
     );
-    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
 
     // Wizard was later promoted to Partial/Computed by its own SD13-E4 Scribe
     // Scroll decomposition slice, then to Supported/ProductVisible by SD-19's
@@ -734,6 +734,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
                 && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Druid slice must not promote any row to Supported or Lossy"

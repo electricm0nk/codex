@@ -337,19 +337,21 @@ fn matrix_paladin_row_is_partial_computed_and_names_both_burdens() {
 }
 
 #[test]
-fn matrix_ranger_row_is_partial_computed_and_names_remaining_burdens() {
+fn matrix_ranger_row_is_supported_and_names_remaining_burdens() {
     // The SD13-E3 Ranger decomposition slice
     // (sd13_ranger_level1_chassis_and_class_feature_separation.rs) later
-    // grounded Track for real and promoted this row from Blocked to Partial.
-    // The F6 chassis-recognition and hybrid-blocker truth this file otherwise
-    // pins is unchanged; only the row's matrix-level posture moved.
+    // grounded Track for real and promoted this row from Blocked to Partial,
+    // then SD-19's Class Progression Catalog browser UI-surfacing work
+    // (2026-07-17) promoted it again to Supported/ProductVisible. The F6
+    // chassis-recognition and hybrid-blocker truth this file otherwise pins
+    // is unchanged; only the row's matrix-level posture moved.
     let matrix = seeded_sd13_e1_f1_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must exist");
 
-    assert_eq!(ranger.support_state, SupportState::Partial);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(ranger.support_state, SupportState::Supported);
+    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         ranger.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -439,6 +441,7 @@ fn matrix_preserves_fighter_and_rogue_accepted_truth() {
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
                 && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the hybrid slice must not promote any row to Supported or Lossy"

@@ -681,7 +681,8 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
             && r.row_id != "equipment.equipmods.equipment_reachability"
-            && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"),
+            && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+            && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"),
         "the paladin-decomposition slice must not promote any row to Supported"
     );
 }

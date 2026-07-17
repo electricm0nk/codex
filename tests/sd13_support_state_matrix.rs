@@ -393,20 +393,23 @@ fn paladin_hybrid_row_is_partial_and_computed_with_named_burdens() {
 }
 
 #[test]
-fn ranger_hybrid_row_is_partial_and_computed_with_named_burdens() {
+fn ranger_hybrid_row_is_supported_and_product_visible_with_named_burdens() {
     // The SD13-E3 Ranger decomposition slice grounds Track for real and
     // promotes this row from Blocked to Partial; the SD13-E5 slice further
-    // grounds the Favored Enemy flat surface. Combat style, the favored-enemy
-    // conditional-application engine, and the later spell burden remain named
-    // and unproven.
+    // grounds the Favored Enemy flat surface. Later still, SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-17) promotes the
+    // row to Supported/ProductVisible — condition 2 (every named grounded
+    // milestone) was already satisfied, so only the UI surface was missing.
+    // Combat style, the favored-enemy conditional-application engine, and the
+    // later spell burden remain named and unproven future-SD-N scope.
     let matrix = matrix();
     let hybrid = row(&matrix, "class.ranger.hybrid_chassis_and_spell_burden");
     assert_eq!(hybrid.subject_type, MatrixSubjectType::Class);
     assert_eq!(hybrid.subject_id, "class:ranger");
-    assert_eq!(hybrid.support_state, SupportState::Partial);
+    assert_eq!(hybrid.support_state, SupportState::Supported);
     assert_ne!(hybrid.support_state, SupportState::Blocked);
-    assert_ne!(hybrid.support_state, SupportState::Supported);
-    assert_eq!(hybrid.evidence_tier, EvidenceTier::Computed);
+    assert_ne!(hybrid.support_state, SupportState::Partial);
+    assert_eq!(hybrid.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         hybrid
             .grounding_ref
@@ -653,8 +656,9 @@ fn seed_contains_no_unexpectedly_supported_rows() {
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
                 && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
-        "no row may be silently promoted to Supported outside the two named, \
+        "no row may be silently promoted to Supported outside the named, \
          intentionally-promoted SD-19 rows"
     );
 }

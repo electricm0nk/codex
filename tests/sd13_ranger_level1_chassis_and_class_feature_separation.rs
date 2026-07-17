@@ -659,18 +659,19 @@ fn ranger_level1_still_yields_blocked_headless_receipt_and_view_model() {
     );
 }
 
-// ----- Control plane: matrix row is promoted to Partial with the right note -----
+// ----- Control plane: matrix row is promoted to Supported with the right note -----
 
 #[test]
-fn matrix_ranger_row_is_promoted_to_partial_and_names_remaining_pillars() {
+fn matrix_ranger_row_is_promoted_to_supported_and_names_remaining_pillars() {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must exist");
 
-    // The one intentional promotion in this batch.
-    assert_eq!(ranger.support_state, SupportState::Partial);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
+    // Catalog browser UI-surfacing work (2026-07-17).
+    assert_eq!(ranger.support_state, SupportState::Supported);
+    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         ranger.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -874,6 +875,7 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
                 && r.row_id != "class.sorcerer.progression_and_spell_burden"
                 && r.row_id != "class.bard.progression_and_spell_burden"
                 && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
+                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the ranger-decomposition slice must not promote any row to Supported or Lossy"

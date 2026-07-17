@@ -307,8 +307,7 @@ fn matrix_ranger_row_note_names_base_attack_and_base_save_as_grounded() {
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger row must exist");
 
-    assert_eq!(ranger.support_state, SupportState::Partial);
-    assert_ne!(ranger.support_state, SupportState::Supported);
+    assert_eq!(ranger.support_state, SupportState::Supported);
     for token in ["base attack", "base save", "standalone"] {
         assert!(
             ranger.blocker_or_lossiness_note.contains(token),
