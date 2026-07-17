@@ -43,14 +43,16 @@
 //! `pick_from_lists`, not a blocker on the whole `LevelUpPlan`).
 
 pub mod barbarian;
+pub mod bard;
 
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 
-/// The single core class this cycle's dispatch recognizes. Widens by one
-/// per future cycle (bard, cleric, ..., wizard), per Step 2's stated
+/// The core classes this cycle's dispatch recognizes so far. Widens by
+/// one per future cycle (cleric, druid, ..., wizard), per Step 2's stated
 /// order.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
+const BARD_CLASS_ID: &str = "class:bard";
 
 /// `technical-design.md` §2.6's `LevelUpPlan`, adapted per §2.0 (no
 /// `rules_tables: &RulesTables` parameter on the seam that produces it)
@@ -159,6 +161,9 @@ pub fn compute_level_up_grants(
     match character.chosen.class_levels.as_slice() {
         [class_level] if class_level.class_id == BARBARIAN_CLASS_ID => {
             barbarian::compute_barbarian_level_up_grants(character, from_level, to_level)
+        }
+        [class_level] if class_level.class_id == BARD_CLASS_ID => {
+            bard::compute_bard_level_up_grants(character, from_level, to_level)
         }
         _ => LevelUpPlan::default(),
     }
