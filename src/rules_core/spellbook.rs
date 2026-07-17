@@ -15,11 +15,12 @@
 //!
 //! Landed one school per cycle (`scope-draft.md` §1.2 Step 2 order:
 //! abjuration, then conjuration, divination, enchantment, evocation,
-//! illusion, necromancy, transmutation, universal). This cycle lands
-//! Abjuration only (`spellbook::abjuration`); `compute_spellbook_coverage`
-//! dispatches by school and produces a real `SpellEffect` only for the
-//! schools whose per-school contribution module has landed. Unlanded
-//! schools' selections still resolve (existence + school are checked) but
+//! illusion, necromancy, transmutation, universal). Abjuration
+//! (`spellbook::abjuration`) and Conjuration (`spellbook::conjuration`)
+//! are landed as of this cycle; `compute_spellbook_coverage` dispatches by
+//! school and produces a real `SpellEffect` only for the schools whose
+//! per-school contribution module has landed. Unlanded schools'
+//! selections still resolve (existence + school are checked) but
 //! contribute no effect yet — a future cycle's per-school file adds that
 //! school's contribution without touching this dispatch's shape.
 //!
@@ -41,6 +42,7 @@
 //! `spell_resolver.rs` and `equipment_resolver.rs` already read it.
 
 pub mod abjuration;
+pub mod conjuration;
 
 use std::collections::BTreeMap;
 
@@ -187,23 +189,32 @@ pub fn compute_spellbook_coverage(
         };
 
         // Per-school contribution functions land one per cycle (Step 2).
-        // Only Abjuration is wired as of this cycle.
+        // Abjuration and Conjuration are wired as of this cycle.
         let landed_effect = match school {
-            Pf1SchoolId::Abjuration => {
-                abjuration::resolve_abjuration_spell_effect(&selection.spell_id)
-            }
+            Pf1SchoolId::Abjuration => abjuration::resolve_abjuration_spell_effect(
+                &selection.spell_id,
+            )
+            .map(|effect| SpellEffect {
+                spell_id: effect.spell_id,
+                school,
+                level: effect.level,
+                effect_text: effect.effect_text,
+                table_cell: effect.table_cell,
+            }),
+            Pf1SchoolId::Conjuration => conjuration::resolve_conjuration_spell_effect(
+                &selection.spell_id,
+            )
+            .map(|effect| SpellEffect {
+                spell_id: effect.spell_id,
+                school,
+                level: effect.level,
+                effect_text: effect.effect_text,
+                table_cell: effect.table_cell,
+            }),
             _ => None,
         };
-        let Some(effect) = landed_effect else {
+        let Some(spell_effect) = landed_effect else {
             continue;
-        };
-
-        let spell_effect = SpellEffect {
-            spell_id: effect.spell_id,
-            school,
-            level: effect.level,
-            effect_text: effect.effect_text,
-            table_cell: effect.table_cell,
         };
 
         match selection.acquisition_mode {
