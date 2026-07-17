@@ -38,7 +38,9 @@ import {
 import type { Sd16UpdateControllerDeps } from './sd16/update/updateModel';
 import { SettingsModal, type SettingsTab } from './settings/SettingsModal';
 import { AppearancePanel } from './settings/AppearancePanel';
+import { GoogleDrivePanel } from './settings/GoogleDrivePanel';
 import { applyThemeMode, getStoredThemeMode, type ThemeMode } from './settings/themeMode';
+import { applyActiveTheme, applyObsidianModeClass } from './settings/communityTheme';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -1056,7 +1058,15 @@ export default function App() {
 
   useEffect(() => {
     applyThemeMode(themeMode);
+    applyObsidianModeClass(themeMode);
   }, [themeMode]);
+
+  // Re-inject any persisted community theme's CSS on boot — localStorage
+  // survives reloads, but the injected <style> tags themselves do not.
+  useEffect(() => {
+    applyActiveTheme();
+  }, []);
+
 
   useEffect(() => {
     loadSd11TesterWorkbenchSurfaceRuntime({
@@ -1127,6 +1137,7 @@ export default function App() {
         onClose={() => setSettingsOpen(false)}
         panels={{
           appearance: <AppearancePanel mode={themeMode} onModeChange={setThemeMode} />,
+          'google-drive': <GoogleDrivePanel />,
           developer: (
             <>
           <header>

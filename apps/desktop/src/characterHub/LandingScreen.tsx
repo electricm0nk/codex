@@ -7,19 +7,23 @@ import type { CSSProperties } from 'react';
  * present as unselectable stubs until their rules land.
  */
 
-export type RuleSetId = 'pathfinder-1e' | 'solarus-arcanum' | 'traveller' | 'cyberpunk';
+export type RuleSetId = 'pathfinder-1e' | 'solarus-arcanum' | 'traveller' | 'cyberpunk' | 'starfinder-1e' | 'world-of-darkness';
 
-interface RuleSet {
+export interface RuleSet {
   id: RuleSetId;
   name: string;
   tagline: string;
   available: boolean;
+  /** Overrides the auto-generated (first-letter-per-word) badge initials when that would read poorly, e.g. "World of Darkness" -> "WoD" instead of "WO". */
+  abbr?: string;
   /** Banner artwork per action. Gradients today; drop in illustration URLs later. */
   art: { create: string; load: string };
 }
 
 // Amber/Wasp-toned gradient placeholders standing in for per-rule-set artwork.
-const RULE_SETS: readonly RuleSet[] = [
+// Exported so other screens (e.g. campaign creation's rule-set picker) share
+// one catalogue instead of maintaining their own copy of the list.
+export const RULE_SETS: readonly RuleSet[] = [
   {
     id: 'pathfinder-1e',
     name: 'Pathfinder 1e',
@@ -42,7 +46,7 @@ const RULE_SETS: readonly RuleSet[] = [
   },
   {
     id: 'traveller',
-    name: 'Traveller',
+    name: 'Traveller MGT 2e',
     tagline: 'Hard sci-fi',
     available: false,
     art: {
@@ -52,12 +56,33 @@ const RULE_SETS: readonly RuleSet[] = [
   },
   {
     id: 'cyberpunk',
-    name: 'Cyberpunk',
+    name: 'Cyberpunk Red',
     tagline: 'Neon dystopia',
     available: false,
     art: {
       create: 'linear-gradient(115deg, #2a0820 0%, #6b1050 55%, #f838a0 130%)',
       load: 'linear-gradient(115deg, #1a0514 0%, #500a38 55%, #c81e7c 130%)',
+    },
+  },
+  {
+    id: 'starfinder-1e',
+    name: 'Starfinder 1e',
+    tagline: 'Sci-fi fantasy',
+    available: false,
+    art: {
+      create: 'linear-gradient(115deg, #062a1a 0%, #0e5c3a 55%, #2ad68a 130%)',
+      load: 'linear-gradient(115deg, #041a10 0%, #0a4228 55%, #1ea868 135%)',
+    },
+  },
+  {
+    id: 'world-of-darkness',
+    name: 'World of Darkness',
+    tagline: 'Gothic horror',
+    available: false,
+    abbr: 'WoD',
+    art: {
+      create: 'linear-gradient(115deg, #240808 0%, #5c1414 55%, #c8283a 130%)',
+      load: 'linear-gradient(115deg, #180505 0%, #420e0e 55%, #96202c 135%)',
     },
   },
 ];
@@ -81,12 +106,14 @@ function RuleSetChip(props: { ruleSet: RuleSet; selected: boolean; onSelect: () 
     ? { backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' }
     : { backgroundColor: 'var(--color-surface-2)', color: 'var(--color-text-secondary)' };
 
-  const initials = ruleSet.name
-    .split(' ')
-    .map((word) => word[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
+  const initials = (
+    ruleSet.abbr ??
+    ruleSet.name
+      .split(' ')
+      .map((word) => word[0])
+      .join('')
+      .slice(0, 2)
+  ).toUpperCase();
 
   return (
     <button
@@ -122,23 +149,28 @@ function RuleSetChip(props: { ruleSet: RuleSet; selected: boolean; onSelect: () 
   );
 }
 
-function ActionBanner(props: { title: string; art: string; onClick: () => void }) {
+function ActionBanner(props: { title: string; art: string; onClick: () => void; disabled?: boolean; disabledHint?: string }) {
+  const disabled = Boolean(props.disabled);
   return (
     <button
       type="button"
       className="landing-banner"
-      onClick={props.onClick}
+      onClick={disabled ? undefined : props.onClick}
+      disabled={disabled}
+      title={disabled ? props.disabledHint : undefined}
       style={{
         alignItems: 'flex-end',
         backgroundImage: props.art,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
-        border: '2px solid var(--color-accent)',
+        border: `2px solid ${disabled ? 'var(--color-border)' : 'var(--color-accent)'}`,
         borderRadius: 14,
-        cursor: 'pointer',
+        cursor: disabled ? 'not-allowed' : 'pointer',
         display: 'flex',
+        filter: disabled ? 'grayscale(0.8)' : 'none',
         justifyContent: 'flex-end',
         minHeight: 160,
+        opacity: disabled ? 0.55 : 1,
         overflow: 'hidden',
         padding: '1.1rem 1.4rem',
         position: 'relative',
@@ -169,6 +201,49 @@ function ActionBanner(props: { title: string; art: string; onClick: () => void }
       >
         {props.title}
       </span>
+      {disabled && props.disabledHint ? (
+        <span
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.55)',
+            borderRadius: 999,
+            bottom: '1.1rem',
+            color: '#ffffff',
+            fontSize: '0.72rem',
+            fontWeight: 700,
+            left: '1.4rem',
+            padding: '0.3rem 0.7rem',
+            position: 'absolute',
+            textTransform: 'none',
+          }}
+        >
+          {props.disabledHint}
+        </span>
+      ) : null}
+    </button>
+  );
+}
+
+const CAMPAIGN_MANAGER_ART = 'linear-gradient(115deg, #0a1428 0%, #1c3466 55%, #4a7ad6 130%)';
+
+function SecondaryButton(props: { label: string; onClick: () => void; disabled?: boolean }) {
+  const enabled = !props.disabled;
+  return (
+    <button
+      type="button"
+      onClick={props.onClick}
+      disabled={props.disabled}
+      style={{
+        backgroundColor: 'var(--color-surface-2)',
+        border: '1px solid var(--color-border)',
+        borderRadius: 10,
+        color: enabled ? 'var(--color-text)' : 'var(--color-text-muted)',
+        cursor: enabled ? 'pointer' : 'not-allowed',
+        fontSize: '0.95rem',
+        opacity: enabled ? 1 : 0.6,
+        padding: '0.7rem 1.4rem',
+      }}
+    >
+      {props.label}
     </button>
   );
 }
@@ -179,6 +254,9 @@ export function LandingScreen(props: {
   onCreate: () => void;
   onLoad: () => void;
   onLoadMostRecent: () => void;
+  onCampaignManager: () => void;
+  campaignManagerEnabled: boolean;
+  onDmToolkit: () => void;
   hasCharacters: boolean;
 }) {
   const active = RULE_SETS.find((rs) => rs.id === props.selectedRuleSet) ?? RULE_SETS[0];
@@ -198,26 +276,18 @@ export function LandingScreen(props: {
 
       <ActionBanner title={'New\nCharacter'} art={active.art.create} onClick={props.onCreate} />
       <ActionBanner title={'Load\nCharacter'} art={active.art.load} onClick={props.onLoad} />
+      <ActionBanner
+        title={'Campaign\nManager'}
+        art={CAMPAIGN_MANAGER_ART}
+        onClick={props.onCampaignManager}
+        disabled={!props.campaignManagerEnabled}
+        disabledHint="Complete Google Drive setup under ⚙ Settings to enable"
+      />
 
-      <button
-        type="button"
-        onClick={props.onLoadMostRecent}
-        disabled={!props.hasCharacters}
-        style={{
-          alignSelf: 'center',
-          backgroundColor: 'var(--color-surface-2)',
-          border: '1px solid var(--color-border)',
-          borderRadius: 10,
-          color: props.hasCharacters ? 'var(--color-text)' : 'var(--color-text-muted)',
-          cursor: props.hasCharacters ? 'pointer' : 'not-allowed',
-          fontSize: '0.95rem',
-          marginTop: '0.25rem',
-          opacity: props.hasCharacters ? 1 : 0.6,
-          padding: '0.7rem 1.4rem',
-        }}
-      >
-        Load Most Recent Character
-      </button>
+      <div style={{ alignItems: 'center', alignSelf: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center', marginTop: '0.25rem' }}>
+        <SecondaryButton label="Load Most Recent Character" onClick={props.onLoadMostRecent} disabled={!props.hasCharacters} />
+        <SecondaryButton label="DM Toolkit" onClick={props.onDmToolkit} />
+      </div>
     </section>
   );
 }
