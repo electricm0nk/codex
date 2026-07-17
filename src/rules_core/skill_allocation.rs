@@ -169,11 +169,47 @@
 //! only what `totals` already grounds; it does not enumerate every skill
 //! in the bounded universe regardless of whether the character allocated
 //! it (no such enumeration exists anywhere in this module).
+//!
+//! Fourth work-unit (this cycle): **max-rank-cap handling**. Closes
+//! Epic 4.
+//!
+//! ## PF1 max-rank-cap rule (confirmed, not guessed)
+//!
+//! Per `scope-draft.md` §1.4 / `epic-breakdown.md` criterion 9: "class
+//! skills max at character level + 3, cross-class skills max at
+//! (character level + 1) / 2 rounded up. Cap violations produce
+//! diagnostics, not fabricated totals."
+//!
+//! Checked against what the two prior work-units already do, to confirm
+//! this is genuinely distinct rather than already covered:
+//!
+//! - The class-skill cap (`character level + 3`) was **never enforced**
+//!   before this cycle — the class-skill-handling cycle's `(ranks,
+//!   class_skill_bonus) = (allocation.ranks, bonus)` branch passes the
+//!   raw allocated `ranks` straight through, uncapped, and the
+//!   cross-class-penalty cycle did not touch that branch.
+//! - The cross-class half-cap (`ceil((character level + 1) / 2)`) *was*
+//!   already enforced by the cross-class-penalty cycle
+//!   (`allocation.ranks.min(cross_class_cap)`), but silently — no
+//!   diagnostic was ever produced when that clip actually fired on a
+//!   genuine over-allocation. Criterion 9's diagnostic requirement is not
+//!   yet satisfied for that cap either.
+//!
+//! This cycle therefore does two things: (1) enforces the previously
+//! unenforced class-skill cap, and (2) adds a `ComputationDiagnostic` to
+//! the new `SkillTotals.diagnostics` field whenever either cap actually
+//! clips a raw allocation — for both categories, not just the newly
+//! enforced one. In both cases the reported `SkillTotal.ranks` remains
+//! the real, legal, capped number (never the raw over-allocated one, and
+//! never silently uncapped) — the diagnostic is additive information, not
+//! a change to the already-correct capped total.
 
 use std::collections::BTreeMap;
 
 use crate::rules_core::character_input::CharacterInput;
-use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, AbilityModifiers};
+use crate::rules_core::pilot_compute::{
+    compute_pilot_base_chassis, AbilityModifiers, ComputationDiagnostic,
+};
 
 /// Plain-string skill identity, matching
 /// `character_input::SkillAllocation.skill_id`'s existing convention —
@@ -206,6 +242,16 @@ const TRAINED_CLASS_SKILL_BONUS: i8 = 3;
 /// territory).
 const TRAINED_ONLY_SKILLS: &[&str] = &["skill:disable_device"];
 
+/// [`ComputationDiagnostic::id`] for a class skill's raw allocated ranks
+/// exceeding its `character level + 3` cap. See the module doc comment's
+/// "PF1 max-rank-cap rule" section.
+const CLASS_SKILL_MAX_RANK_EXCEEDED_ID: &str = "skill_allocation.class_skill_max_rank_exceeded";
+
+/// [`ComputationDiagnostic::id`] for a cross-class skill's raw allocated
+/// ranks exceeding its `ceil((character level + 1) / 2)` cap. See the
+/// module doc comment's "PF1 max-rank-cap rule" section.
+const CROSS_CLASS_MAX_RANK_EXCEEDED_ID: &str = "skill_allocation.cross_class_max_rank_exceeded";
+
 /// Output of [`allocate_skill_ranks`]. Per `technical-design.md` §2.3.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct SkillTotals {
@@ -235,6 +281,17 @@ pub struct SkillTotals {
     /// never appears here, or in `totals`, at all: it cannot be attempted
     /// untrained, so no total of any kind is reported for it.
     pub untrained_use: BTreeMap<SkillId, i8>,
+    /// One [`ComputationDiagnostic`] per recognized, allocated skill whose
+    /// raw allocated ranks exceeded its legal PF1 max-rank cap (class
+    /// skill: `character level + 3`; cross-class: `ceil((character
+    /// level + 1) / 2)`) — see the module doc comment's "PF1
+    /// max-rank-cap rule" section. Every such diagnostic has
+    /// `claim_blocking: false`: the corresponding `SkillTotal.ranks` in
+    /// `totals` already carries the real, legal, capped number, never
+    /// the raw over-allocated one and never a fabricated uncapped one.
+    /// Empty when no allocated skill in this module's bounded,
+    /// recognized universe exceeded its cap.
+    pub diagnostics: Vec<ComputationDiagnostic>,
 }
 
 /// One skill's computed total, per `technical-design.md` §2.3.
@@ -301,6 +358,13 @@ fn cross_class_max_ranks(character_level: u16) -> u8 {
     ((character_level + 2) / 2) as u8
 }
 
+/// PF1's class-skill maximum rank cap: `character level + 3`, per
+/// `scope-draft.md` §1.4's explicit formula. See the module doc comment's
+/// "PF1 max-rank-cap rule" section.
+fn class_skill_max_ranks(character_level: u16) -> u8 {
+    (character_level + 3) as u8
+}
+
 /// The character's class-skill set: the union, across every class the
 /// character has levels in, of that class's grounded class-skill
 /// posture. Only Fighter has a grounded posture as of this cycle (see
@@ -326,16 +390,19 @@ fn class_skill_set(input: &CharacterInput) -> Vec<SkillId> {
 
 /// Computes per-skill rank totals for every skill the character both
 /// allocated ranks to and that this module's bounded, cited posture
-/// recognizes. Applies PF1's cross-class half-cap and trained-only
-/// exclusion (see the module doc comment's "PF1 cross-class rule" and
-/// "PF1 untrained-use rule" sections). See the module doc comment for
-/// what's deliberately not yet handled (the class-skill max-rank cap,
-/// cap-violation diagnostics for either category, non-Fighter class-skill
+/// recognizes. Applies PF1's class-skill cap, cross-class half-cap, and
+/// trained-only exclusion (see the module doc comment's "PF1 cross-class
+/// rule", "PF1 untrained-use rule", and "PF1 max-rank-cap rule"
+/// sections), surfacing a [`ComputationDiagnostic`] whenever either cap
+/// actually clips a raw over-allocation. See the module doc comment for
+/// what's deliberately not yet handled (non-Fighter class-skill
 /// postures).
 pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
     let chassis = compute_pilot_base_chassis(input);
     let class_skills = class_skill_set(input);
-    let cross_class_cap = cross_class_max_ranks(character_level(input));
+    let level = character_level(input);
+    let cross_class_cap = cross_class_max_ranks(level);
+    let class_cap = class_skill_max_ranks(level);
     // The cross-class half-cap is only knowable for a skill when the
     // character has at least one class with a *grounded* class-skill
     // posture (Fighter, this cycle) — only then do we have real PF1
@@ -351,6 +418,7 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
 
     let mut totals = BTreeMap::new();
     let mut untrained_use = BTreeMap::new();
+    let mut diagnostics = Vec::new();
     let mut cross_class_penalty_applied = false;
     for allocation in &input.chosen.skill_allocations {
         let Some(ability_mod) =
@@ -386,9 +454,38 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
             } else {
                 0
             };
-            (allocation.ranks, bonus)
+            // PF1's class-skill max-rank cap (`character level + 3`, see
+            // the module doc comment's "PF1 max-rank-cap rule" section):
+            // the real, legal, capped ranks -- never the raw
+            // over-allocated number -- with a diagnostic recording the
+            // violation when the raw allocation actually exceeded it.
+            if allocation.ranks > class_cap {
+                diagnostics.push(ComputationDiagnostic {
+                    id: CLASS_SKILL_MAX_RANK_EXCEEDED_ID.to_string(),
+                    message: format!(
+                        "{} allocated {} ranks exceeds the class-skill max-rank cap of {} at character level {}",
+                        allocation.skill_id, allocation.ranks, class_cap, level
+                    ),
+                    claim_blocking: false,
+                });
+            }
+            (allocation.ranks.min(class_cap), bonus)
         } else if has_grounded_class_skill_posture {
             cross_class_penalty_applied = true;
+            // PF1's cross-class half-cap (see the module doc comment's
+            // "PF1 cross-class rule" and "PF1 max-rank-cap rule"
+            // sections): same capped-total behavior as before this
+            // cycle, now paired with a diagnostic on genuine violation.
+            if allocation.ranks > cross_class_cap {
+                diagnostics.push(ComputationDiagnostic {
+                    id: CROSS_CLASS_MAX_RANK_EXCEEDED_ID.to_string(),
+                    message: format!(
+                        "{} allocated {} ranks exceeds the cross-class max-rank cap of {} at character level {}",
+                        allocation.skill_id, allocation.ranks, cross_class_cap, level
+                    ),
+                    claim_blocking: false,
+                });
+            }
             (allocation.ranks.min(cross_class_cap), 0)
         } else {
             (allocation.ranks, 0)
@@ -424,5 +521,6 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         class_skills,
         cross_class_penalty_applied,
         untrained_use,
+        diagnostics,
     }
 }
