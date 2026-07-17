@@ -333,6 +333,8 @@ fn matrix_all_six_non_human_race_rows_now_carry_runtime_evidence() {
                 && r.row_id != "race.half_elf.bounded_semantics"
                 && r.row_id != "race.half_orc.bounded_semantics"
                 && r.row_id != "race.halfling.bounded_semantics"
+                && r.row_id != "class.fighter.level_1_pilot"
+                && r.row_id != "class.fighter.levels_2_10"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the halfling slice must not promote any row to Supported or Lossy"

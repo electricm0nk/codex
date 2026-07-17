@@ -777,8 +777,6 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
         "class.rogue.bounded_progression",
         "class.barbarian.bounded_progression",
         "class.monk.bounded_progression",
-        "class.fighter.level_1_pilot",
-        "class.fighter.levels_2_10",
     ] {
         let row = matrix
             .row(id)
@@ -789,6 +787,20 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
             "row {id} must stay Partial after the ranger-decomposition slice"
         );
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    }
+
+    // Fighter rows were later promoted to Supported/ProductVisible by SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-16).
+    for id in ["class.fighter.level_1_pilot", "class.fighter.levels_2_10"] {
+        let row = matrix
+            .row(id)
+            .unwrap_or_else(|| panic!("row {id} must exist"));
+        assert_eq!(
+            row.support_state,
+            SupportState::Supported,
+            "row {id} must be Supported after the SD-19 class-row promotion"
+        );
+        assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     }
 
     // Wizard was later promoted to Partial/Computed by its own SD13-E4 Scribe
@@ -831,6 +843,8 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
                 && r.row_id != "race.half_elf.bounded_semantics"
                 && r.row_id != "race.half_orc.bounded_semantics"
                 && r.row_id != "race.halfling.bounded_semantics"
+                && r.row_id != "class.fighter.level_1_pilot"
+                && r.row_id != "class.fighter.levels_2_10"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the ranger-decomposition slice must not promote any row to Supported or Lossy"

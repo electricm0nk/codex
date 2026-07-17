@@ -218,8 +218,10 @@ fn matrix_levels_2_10_names_bravery_as_grounded() {
         .row("class.fighter.levels_2_10")
         .expect("row must exist");
 
-    assert_eq!(row.support_state, SupportState::Partial);
-    assert_eq!(row.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(row.support_state, SupportState::Supported);
+    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         row.blocker_or_lossiness_note.contains("Bravery"),
         "levels-2-10 row note must still name Bravery: {}",
@@ -247,7 +249,9 @@ fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 row must exist");
-    assert_eq!(level_1.support_state, SupportState::Partial);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(level_1.support_state, SupportState::Supported);
 
     assert!(
         !matrix
@@ -276,6 +280,8 @@ fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
                 && r.row_id != "race.half_elf.bounded_semantics"
                 && r.row_id != "race.half_orc.bounded_semantics"
                 && r.row_id != "race.halfling.bounded_semantics"
+                && r.row_id != "class.fighter.level_1_pilot"
+                && r.row_id != "class.fighter.levels_2_10"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Bravery slice must not promote any row to Supported or Lossy"

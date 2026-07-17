@@ -161,12 +161,14 @@ fn human_race_row_is_partial_and_computed() {
 
 #[test]
 fn fighter_level_1_row_is_partial_and_computed() {
+    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
+    // Catalog browser UI-surfacing work (2026-07-16).
     let matrix = matrix();
     let fighter = row(&matrix, "class.fighter.level_1_pilot");
     assert_eq!(fighter.subject_type, MatrixSubjectType::Class);
     assert_eq!(fighter.subject_id, "class:fighter");
-    assert_eq!(fighter.support_state, SupportState::Partial);
-    assert_eq!(fighter.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(fighter.support_state, SupportState::Supported);
+    assert_eq!(fighter.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         !fighter.grounding_ref.is_empty(),
         "computed Fighter level-1 row must cite grounding evidence"
@@ -209,10 +211,11 @@ fn fighter_levels_2_10_row_is_partial_and_computed_and_names_what_remains() {
     let partial = row(&matrix, "class.fighter.levels_2_10");
     assert_eq!(partial.subject_type, MatrixSubjectType::Class);
     assert_eq!(partial.subject_id, "class:fighter");
-    // The SD13-E3 tranche moves the row from Blocked to a bounded Partial posture,
-    // but it must never be silently promoted to Supported.
-    assert_eq!(partial.support_state, SupportState::Partial);
-    assert_eq!(partial.evidence_tier, EvidenceTier::Computed);
+    // The SD13-E3 tranche moved the row from Blocked to a bounded Partial
+    // posture; it was later promoted to Supported/ProductVisible by SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(partial.support_state, SupportState::Supported);
+    assert_eq!(partial.evidence_tier, EvidenceTier::ProductVisible);
     assert!(
         !partial.blocker_or_lossiness_note.is_empty(),
         "partial Fighter levels-2-10 row must carry a non-empty note on what remains unproven"
@@ -637,6 +640,8 @@ fn seed_contains_no_unexpectedly_supported_rows() {
             && r.row_id != "race.half_elf.bounded_semantics"
             && r.row_id != "race.half_orc.bounded_semantics"
             && r.row_id != "race.halfling.bounded_semantics"
+            && r.row_id != "class.fighter.level_1_pilot"
+            && r.row_id != "class.fighter.levels_2_10"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "no row may be silently promoted to Supported outside the two named, \
          intentionally-promoted SD-19 rows"

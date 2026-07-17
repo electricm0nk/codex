@@ -320,8 +320,10 @@ fn matrix_fighter_row_names_level_19_widening() {
         .row("class.fighter.levels_2_10")
         .expect("fighter levels_2_10 row must exist");
 
-    assert_eq!(fighter.support_state, SupportState::Partial);
-    assert_eq!(fighter.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(fighter.support_state, SupportState::Supported);
+    assert_eq!(fighter.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(fighter.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
         fighter.grounding_ref.contains("sd18_fighter_level19_widening"),

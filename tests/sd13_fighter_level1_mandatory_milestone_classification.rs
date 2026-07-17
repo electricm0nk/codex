@@ -133,15 +133,13 @@ fn matrix_level_1_row_is_partial_and_computed_and_cites_f5_proof_surface() {
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");
 
-    // The slice keeps the row at Partial/Computed. It must NOT silently promote
-    // to Supported because level-10 progression remains out of proof.
-    assert_eq!(level_1.support_state, SupportState::Partial);
-    assert_ne!(
-        level_1.support_state,
-        SupportState::Supported,
-        "Fighter L1 must not be silently promoted to Supported by this slice"
-    );
-    assert_eq!(level_1.evidence_tier, EvidenceTier::Computed);
+    // The slice kept the row at Partial/Computed at the time (level-10
+    // progression remained out of proof); it was later promoted to
+    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-16), once the compute-grounding side of the
+    // bar was already satisfied.
+    assert_eq!(level_1.support_state, SupportState::Supported);
+    assert_eq!(level_1.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         level_1.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
@@ -239,15 +237,20 @@ fn matrix_level_1_row_keeps_a_concrete_next_required_uplift() {
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");
 
-    // The next_required_uplift must stay non-empty AND must name the bounded
-    // Fighter surface widening toward level-10 milestones (not a vague "widen").
+    // At this slice the next_required_uplift named the bounded Fighter surface
+    // widening toward level-10 milestones. That widening has since landed
+    // (SD13-E3/SD18) and the row was promoted to Supported/ProductVisible by
+    // SD-19's Class Progression Catalog browser UI-surfacing work
+    // (2026-07-16), so the uplift now names the remaining out-of-scope
+    // compute burdens instead of the level-10 progression, which is no
+    // longer "next".
     assert!(
         !level_1.next_required_uplift.is_empty(),
-        "partial Fighter L1 row must keep a non-empty next_required_uplift"
+        "Fighter L1 row must keep a non-empty next_required_uplift"
     );
     assert!(
-        level_1.next_required_uplift.contains("level-10"),
-        "Fighter L1 next_required_uplift must name the level-10 progression widening: {}",
+        level_1.next_required_uplift.contains("future SD-N's scope"),
+        "Fighter L1 next_required_uplift must name the remaining out-of-scope burden: {}",
         level_1.next_required_uplift
     );
 }

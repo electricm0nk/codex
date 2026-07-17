@@ -332,10 +332,11 @@ fn matrix_levels_2_10_is_partial_but_not_supported_and_names_what_remains() {
         .row("class.fighter.levels_2_10")
         .expect("levels-2-10 row must exist");
 
-    // Widened to a bounded partial posture, but explicitly still not Supported.
-    assert_eq!(levels_2_10.support_state, SupportState::Partial);
-    assert_ne!(levels_2_10.support_state, SupportState::Supported);
-    assert_eq!(levels_2_10.evidence_tier, EvidenceTier::Computed);
+    // Widened to a bounded partial posture at this slice; later promoted to
+    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
+    // UI-surfacing work (2026-07-16).
+    assert_eq!(levels_2_10.support_state, SupportState::Supported);
+    assert_eq!(levels_2_10.evidence_tier, EvidenceTier::ProductVisible);
 
     // The note must name what remains out of proof after this slice: levels 4-10.
     assert!(
