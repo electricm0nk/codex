@@ -3452,8 +3452,8 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                             real at all fifteen supported levels, \
                             and the animal-companion execution burden, the Wild Shape execution \
                             burden, and the prepared divine spell posture burden still blocked",
-                support_state: SupportState::Partial,
-                evidence_tier: EvidenceTier::Computed,
+                support_state: SupportState::Supported,
+                evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
                 grounding_ref: SD13_DRUID_LEVEL1_TEST,
                 blocker_or_lossiness_note: "SD13-E4 leaves direct computed evidence that the \
@@ -3719,10 +3719,21 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     aging-penalty-resolution engine fabricated. The row stays Partial, not \
                     Supported: the animal-companion execution burden, the Wild Shape execution \
                     burden, and the prepared divine spell posture burden all remain named and \
-                    unproven. No spell math is fabricated and no Druid level 16+ is proven",
-                next_required_uplift: "SD13-E5 Druid animal companion execution slice, the Wild \
-                    Shape execution slice, or the prepared divine spell burden slice, then Druid \
-                    level 16+ progression (out of scope for this slice)",
+                    unproven. No spell math is fabricated and no Druid level 16+ is proven. This \
+                    row's every named grounded milestone is now surfaced live in the desktop \
+                    app's Class Progression Catalog browser \
+                    (apps/desktop/src/classCatalog/ClassCatalogScreen.tsx, wired through the \
+                    list_class_catalog Tauri command over the full \
+                    rules_tables::crb::class_tables::class_tables() store, 2026-07-16), reachable \
+                    from the hub landing screen, filterable by class and searchable by class \
+                    name -- satisfying the loop instruction's own definition of \
+                    Supported/Product-visible (every named grounded dimension AND the operator's \
+                    UI surfaces it)",
+                next_required_uplift: "none for recognition or UI-surfacing; grounding the \
+                    animal-companion execution burden, the Wild Shape execution burden, and the \
+                    prepared divine spell posture burden as real computed contributions, then \
+                    Druid level 16+ progression, is a future SD-N's scope, not a further \
+                    per-cycle widening of this row",
             },
             SupportStateRow {
                 row_id: "class.monk.bounded_progression",

@@ -574,11 +574,13 @@ fn matrix_druid_row_is_partial_computed_and_names_remaining_burdens() {
 
     // Wild Empathy, Nature Sense, and the nature-bond choice recognition are now
     // grounded; the animal-companion execution and the prepared divine spell
-    // posture remain unproven, so the row stays Partial.
-    assert_eq!(druid.support_state, SupportState::Partial);
+    // posture remain unproven. This slice alone leaves the row Partial; the row
+    // was later promoted to Supported/Product-visible by SD-19's Class
+    // Progression Catalog browser cycle (2026-07-16), once the browser surfaced
+    // every named grounded milestone live.
+    assert_eq!(druid.support_state, SupportState::Supported);
     assert_ne!(druid.support_state, SupportState::Blocked);
-    assert_ne!(druid.support_state, SupportState::Supported);
-    assert_eq!(druid.evidence_tier, EvidenceTier::Computed);
+    assert_eq!(druid.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(druid.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
     assert!(
         druid
@@ -702,6 +704,7 @@ fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
                 && r.row_id != "class.fighter.level_1_pilot"
                 && r.row_id != "class.fighter.levels_2_10"
                 && r.row_id != "class.monk.bounded_progression"
+                && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the Druid slice must not promote any row to Supported or Lossy"

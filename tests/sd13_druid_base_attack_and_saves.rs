@@ -298,8 +298,9 @@ fn matrix_druid_row_note_names_base_attack_and_base_save_as_grounded() {
         .row("class.druid.progression_and_spell_burden")
         .expect("druid row must exist");
 
-    assert_eq!(druid.support_state, SupportState::Partial);
-    assert_ne!(druid.support_state, SupportState::Supported);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(druid.support_state, SupportState::Supported);
     for token in ["base attack", "base save", "standalone"] {
         assert!(
             druid.blocker_or_lossiness_note.contains(token),

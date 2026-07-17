@@ -752,13 +752,12 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
     );
     assert_eq!(paladin.evidence_tier, EvidenceTier::Computed);
 
-    // Bard, Cleric, Druid, and Sorcerer were later promoted to Partial/Computed by
+    // Bard, Cleric, and Sorcerer were later promoted to Partial/Computed by
     // their own SD13-E4 decomposition slices (Bardic Knowledge, Channel Energy,
-    // Wild Empathy, Eschew Materials).
+    // Eschew Materials).
     for id in [
         "class.bard.progression_and_spell_burden",
         "class.cleric.progression_and_spell_burden",
-        "class.druid.progression_and_spell_burden",
         "class.sorcerer.progression_and_spell_burden",
     ] {
         let row = matrix
@@ -788,12 +787,13 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
         assert_eq!(row.evidence_tier, EvidenceTier::Computed);
     }
 
-    // Fighter and Monk rows were later promoted to Supported/ProductVisible by
-    // SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-16).
+    // Fighter, Monk, and Druid rows were later promoted to Supported/ProductVisible
+    // by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-16).
     for id in [
         "class.fighter.level_1_pilot",
         "class.fighter.levels_2_10",
         "class.monk.bounded_progression",
+        "class.druid.progression_and_spell_burden",
     ] {
         let row = matrix
             .row(id)
@@ -849,6 +849,7 @@ fn matrix_preserves_sibling_rows_after_ranger_promotion() {
                 && r.row_id != "class.fighter.level_1_pilot"
                 && r.row_id != "class.fighter.levels_2_10"
                 && r.row_id != "class.monk.bounded_progression"
+                && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the ranger-decomposition slice must not promote any row to Supported or Lossy"

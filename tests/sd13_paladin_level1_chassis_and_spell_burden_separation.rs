@@ -618,18 +618,13 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
         "barbarian row must keep its accepted Partial posture after the paladin-decomposition slice"
     );
     assert_eq!(barbarian.evidence_tier, EvidenceTier::Computed);
-    // Cleric and Druid were later promoted to Partial/Computed by their own
-    // SD13-E4 decomposition slices (Channel Energy, Wild Empathy).
-    for id in [
-        "class.cleric.progression_and_spell_burden",
-        "class.druid.progression_and_spell_burden",
-    ] {
-        let row = matrix
-            .row(id)
-            .unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(row.support_state, SupportState::Partial);
-        assert_eq!(row.evidence_tier, EvidenceTier::Computed);
-    }
+    // Cleric was later promoted to Partial/Computed by its own SD13-E4
+    // decomposition slice (Channel Energy).
+    let cleric = matrix
+        .row("class.cleric.progression_and_spell_burden")
+        .expect("cleric row must exist");
+    assert_eq!(cleric.support_state, SupportState::Partial);
+    assert_eq!(cleric.evidence_tier, EvidenceTier::Computed);
 
     // Wizard carried its accepted post-merge-receipt posture (Blocked/Computed) at
     // the time this test was first written, but a later SD13-E4 Wizard
@@ -645,13 +640,18 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
     );
     assert_eq!(wizard.evidence_tier, EvidenceTier::Computed);
 
-    // Monk was later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    let monk = matrix
-        .row("class.monk.bounded_progression")
-        .expect("monk row must exist");
-    assert_eq!(monk.support_state, SupportState::Supported);
-    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
+    // Monk and Druid were later promoted to Supported/ProductVisible by SD-19's
+    // Class Progression Catalog browser UI-surfacing work (2026-07-16).
+    for id in [
+        "class.monk.bounded_progression",
+        "class.druid.progression_and_spell_burden",
+    ] {
+        let row = matrix
+            .row(id)
+            .unwrap_or_else(|| panic!("row {id} must exist"));
+        assert_eq!(row.support_state, SupportState::Supported);
+        assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
+    }
 
     // No row is silently promoted to Supported by this slice. (school.abjuration/
     // illusion.spell_reachability were later promoted to Supported/Product-visible
@@ -681,6 +681,7 @@ fn matrix_preserves_fighter_rogue_sorcerer_and_other_class_truth() {
             && r.row_id != "class.fighter.level_1_pilot"
             && r.row_id != "class.fighter.levels_2_10"
             && r.row_id != "class.monk.bounded_progression"
+            && r.row_id != "class.druid.progression_and_spell_burden"
             && r.row_id != "equipment.equipmods.equipment_reachability"),
         "the paladin-decomposition slice must not promote any row to Supported"
     );

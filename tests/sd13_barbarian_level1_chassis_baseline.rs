@@ -705,6 +705,7 @@ fn matrix_preserves_accepted_truth_and_unchanged_rows() {
                 && r.row_id != "class.fighter.level_1_pilot"
                 && r.row_id != "class.fighter.levels_2_10"
                 && r.row_id != "class.monk.bounded_progression"
+                && r.row_id != "class.druid.progression_and_spell_burden"
                 && r.row_id != "equipment.equipmods.equipment_reachability")
                 || r.support_state == SupportState::Lossy),
         "the barbarian slice must not promote any row to Supported or Lossy"

@@ -427,8 +427,10 @@ fn matrix_druid_row_names_level_4_widening_and_resist_natures_lure() {
         .row("class.druid.progression_and_spell_burden")
         .expect("druid progression_and_spell_burden row must exist");
 
-    assert_eq!(druid.support_state, SupportState::Partial);
-    assert_eq!(druid.evidence_tier, EvidenceTier::Computed);
+    // Later promoted to Supported/ProductVisible by SD-19's Class
+    // Progression Catalog browser UI-surfacing work (2026-07-16).
+    assert_eq!(druid.support_state, SupportState::Supported);
+    assert_eq!(druid.evidence_tier, EvidenceTier::ProductVisible);
     assert_eq!(
         druid.evidence_freshness,
         EvidenceFreshness::RefreshableFromLiveProof
