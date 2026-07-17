@@ -45,16 +45,18 @@
 pub mod barbarian;
 pub mod bard;
 pub mod cleric;
+pub mod druid;
 
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 
-/// The core classes this cycle's dispatch recognizes so far. Widens by
-/// one per future cycle (druid, fighter, ..., wizard), per Step 2's
-/// stated order.
+/// The core classes this cycle's dispatch recognizes so far (barbarian,
+/// bard, cleric, druid). Widens by one per future cycle (fighter, ...,
+/// wizard), per Step 2's stated order.
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
 const BARD_CLASS_ID: &str = "class:bard";
 const CLERIC_CLASS_ID: &str = "class:cleric";
+const DRUID_CLASS_ID: &str = "class:druid";
 
 /// `technical-design.md` §2.6's `LevelUpPlan`, adapted per §2.0 (no
 /// `rules_tables: &RulesTables` parameter on the seam that produces it)
@@ -151,9 +153,10 @@ pub struct Prerequisite {
 /// §2.6, adapted per §2.0). Dispatches on the character's sole class
 /// (multiclass layering per `risks-and-open-questions.md` Open Q2 is a
 /// future cycle's scope — this cycle bounds to single-class inputs,
-/// mirroring `pilot_compute.rs`'s own `supported_barbarian_level`
-/// single-class gate). Unrecognized classes (every core class except
-/// Barbarian, as of this cycle) return an honestly-empty `LevelUpPlan`
+/// mirroring `pilot_compute.rs`'s own `supported_barbarian_level` /
+/// `supported_bard_level` / `supported_druid_level` single-class gate).
+/// Unrecognized classes (every core class except Barbarian, Bard, and
+/// Druid, as of this cycle) return an honestly-empty `LevelUpPlan`
 /// rather than a fabricated one.
 pub fn compute_level_up_grants(
     character: &CharacterInput,
@@ -169,6 +172,9 @@ pub fn compute_level_up_grants(
         }
         [class_level] if class_level.class_id == CLERIC_CLASS_ID => {
             cleric::compute_cleric_level_up_grants(character, from_level, to_level)
+        }
+        [class_level] if class_level.class_id == DRUID_CLASS_ID => {
+            druid::compute_druid_level_up_grants(character, from_level, to_level)
         }
         _ => LevelUpPlan::default(),
     }
