@@ -6,11 +6,11 @@
 //! (`CharacterInput.chosen.skill_allocations` — the existing, already-wired
 //! type; see below), whether that skill is a class skill for the
 //! character's class(es), and computes each allocated skill's total
-//! modifier. Later Epic-4 cycles add untrained-use handling and
-//! max-rank-cap handling on top of this module (`SkillTotals.untrained_use`
-//! is present at the type level, per `technical-design.md` §2.3, but stays
-//! at its bounded default — empty — until those later work-units land;
-//! this cycle does not claim to enforce them).
+//! modifier. A later Epic-4 cycle adds max-rank-cap handling on top of
+//! this module (`SkillTotals.untrained_use` is present at the type level,
+//! per `technical-design.md` §2.3, and is populated starting with the
+//! third work-unit below; this cycle does not yet enforce a max-rank-cap
+//! diagnostic).
 //!
 //! Second work-unit (this cycle): **cross-class-penalty handling**. See
 //! the "PF1 cross-class rule" section below for the exact rule (confirmed
@@ -129,6 +129,46 @@
 //! (Dungeoneering)|Knowledge (Engineering)|TYPE=Profession|Ride|Survival|
 //! Swim" — no Diplomacy) and its Charisma key from `cr_skills.lst:35`
 //! (`Diplomacy ... KEYSTAT:CHA`).
+//!
+//! Third work-unit (this cycle): **untrained-use handling**.
+//!
+//! ## PF1 untrained-use rule (confirmed, not guessed)
+//!
+//! Most PF1 skills may be attempted with zero ranks invested, at the
+//! character's raw ability-modifier value (no ranks, no trained bonus —
+//! this was already this module's behavior for any recognized skill with
+//! `ranks == 0`, prior to this cycle, simply because `class_skill_bonus`
+//! is `0` below 1 rank). A bounded set of skills are "Trained Only" per
+//! the Core Rulebook's skill summary table (Disable Device, Handle
+//! Animal, all Knowledge subtypes, Linguistics, Profession, Sleight of
+//! Hand, Spellcraft, Use Magic Device): a character with zero ranks
+//! invested in one of those skills cannot attempt the check at all — no
+//! total modifier of any kind, fabricated or otherwise, may be reported
+//! for it.
+//!
+//! This cycle widens the bounded ability-key mapping by exactly one
+//! skill, `skill:disable_device` (Dexterity-keyed), to make the
+//! trained-only path exercisable at all: cited from `cr_skills.lst:36`
+//! (`Disable Device ... KEYSTAT:DEX ... USEUNTRAINED:NO`) — the same
+//! corpus file this module's earlier cycles already cite for every other
+//! recognized skill's key-ability mapping. Disable Device is not a member
+//! of Fighter's grounded class-skill list either (see the citation
+//! above), so a ranked Disable Device allocation on a Fighter build also
+//! exercises the already-landed cross-class path; that is incidental to
+//! this cycle, not a new rule.
+//!
+//! `SkillTotals.untrained_use` (present at the type level since the
+//! class-skill-handling cycle, always empty until now) is populated by
+//! this cycle: for every recognized, allocated skill whose *final*
+//! effective rank count is `0` (which, after the trained-only exclusion
+//! above, can only be a skill that is genuinely usable untrained), the
+//! map records that skill's raw ability-modifier value — the same number
+//! already present in `SkillTotal.total_modifier` for that entry, since
+//! ranks and class-skill bonus are both `0` at that point. This is a
+//! deliberately narrow, non-fabricating scope: `untrained_use` mirrors
+//! only what `totals` already grounds; it does not enumerate every skill
+//! in the bounded universe regardless of whether the character allocated
+//! it (no such enumeration exists anywhere in this module).
 
 use std::collections::BTreeMap;
 
@@ -157,6 +197,15 @@ const GROUNDED_FIGHTER_CLASS_SKILLS: &[&str] = &["skill:climb", "skill:intimidat
 /// data — see the module doc comment's closing section.
 const TRAINED_CLASS_SKILL_BONUS: i8 = 3;
 
+/// The bounded, cited set of skills this module recognizes as "Trained
+/// Only" — a character with zero ranks invested in one of these cannot
+/// attempt the check at all. See the module doc comment's "PF1
+/// untrained-use rule" section for the citation and what this is and is
+/// not (only skills in this module's bounded ability-key universe can
+/// ever appear here; widening it further is future Epic-4 cycle
+/// territory).
+const TRAINED_ONLY_SKILLS: &[&str] = &["skill:disable_device"];
+
 /// Output of [`allocate_skill_ranks`]. Per `technical-design.md` §2.3.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct SkillTotals {
@@ -178,9 +227,13 @@ pub struct SkillTotals {
     /// allocated skill fell into that bounded, recognized cross-class
     /// universe.
     pub cross_class_penalty_applied: bool,
-    /// Not yet populated by this cycle (a later Epic-4 work-unit per the
-    /// loop instruction's Step 2: "untrained-use handling"). Always
-    /// empty until that work-unit lands.
+    /// One entry per recognized, allocated skill that was actually used
+    /// untrained (i.e. its final effective `ranks` in `totals` is `0`),
+    /// mapping to that skill's raw ability-modifier value — see the
+    /// module doc comment's "PF1 untrained-use rule" section. A
+    /// trained-only skill (see [`TRAINED_ONLY_SKILLS`]) with zero ranks
+    /// never appears here, or in `totals`, at all: it cannot be attempted
+    /// untrained, so no total of any kind is reported for it.
     pub untrained_use: BTreeMap<SkillId, i8>,
 }
 
@@ -210,8 +263,19 @@ fn skill_key_ability_modifier(skill_id: &str, ability_modifiers: &AbilityModifie
         // "PF1 cross-class rule" section for the citation). Charisma-keyed
         // per `cr_skills.lst:35`.
         "skill:diplomacy" => Some(ability_modifiers.charisma),
+        // Trained-only (see `TRAINED_ONLY_SKILLS` and the module doc
+        // comment's "PF1 untrained-use rule" section). Dexterity-keyed
+        // per `cr_skills.lst:36`.
+        "skill:disable_device" => Some(ability_modifiers.dexterity),
         _ => None,
     }
+}
+
+/// Whether `skill_id` is one of this module's bounded, cited "Trained
+/// Only" skills. See [`TRAINED_ONLY_SKILLS`] and the module doc comment's
+/// "PF1 untrained-use rule" section.
+fn is_trained_only_skill(skill_id: &str) -> bool {
+    TRAINED_ONLY_SKILLS.contains(&skill_id)
 }
 
 /// The character's total level across every class (PF1's "character
@@ -262,11 +326,12 @@ fn class_skill_set(input: &CharacterInput) -> Vec<SkillId> {
 
 /// Computes per-skill rank totals for every skill the character both
 /// allocated ranks to and that this module's bounded, cited posture
-/// recognizes. Applies PF1's cross-class half-cap (see the module doc
-/// comment's "PF1 cross-class rule" section). See the module doc comment
-/// for what's deliberately not yet handled (untrained use, the
-/// class-skill max-rank cap, cap-violation diagnostics for either
-/// category, non-Fighter class-skill postures).
+/// recognizes. Applies PF1's cross-class half-cap and trained-only
+/// exclusion (see the module doc comment's "PF1 cross-class rule" and
+/// "PF1 untrained-use rule" sections). See the module doc comment for
+/// what's deliberately not yet handled (the class-skill max-rank cap,
+/// cap-violation diagnostics for either category, non-Fighter class-skill
+/// postures).
 pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
     let chassis = compute_pilot_base_chassis(input);
     let class_skills = class_skill_set(input);
@@ -285,6 +350,7 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         .any(|class_level| class_level.class_id == FIGHTER_CLASS_ID);
 
     let mut totals = BTreeMap::new();
+    let mut untrained_use = BTreeMap::new();
     let mut cross_class_penalty_applied = false;
     for allocation in &input.chosen.skill_allocations {
         let Some(ability_mod) =
@@ -294,6 +360,15 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
             // ability-key mapping. Omit rather than fabricate.
             continue;
         };
+
+        if is_trained_only_skill(&allocation.skill_id) && allocation.ranks == 0 {
+            // PF1's untrained-use rule: a trained-only skill with zero
+            // ranks invested cannot be attempted at all. See the module
+            // doc comment's "PF1 untrained-use rule" section. Omit
+            // entirely rather than reporting any total (fabricated or
+            // otherwise).
+            continue;
+        }
 
         let is_class_skill = class_skills
             .iter()
@@ -323,6 +398,15 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         let misc_modifier = 0;
         let total_modifier = ranks as i8 + ability_modifier + class_skill_bonus + misc_modifier;
 
+        if ranks == 0 {
+            // Genuinely usable untrained: the trained-only, zero-rank case
+            // was already excluded above, so any zero-rank entry reaching
+            // this point is a skill PF1 allows to be attempted without
+            // ranks. Record its raw ability-modifier value. See the
+            // module doc comment's "PF1 untrained-use rule" section.
+            untrained_use.insert(allocation.skill_id.clone(), ability_modifier);
+        }
+
         totals.insert(
             allocation.skill_id.clone(),
             SkillTotal {
@@ -339,6 +423,6 @@ pub fn allocate_skill_ranks(input: &CharacterInput) -> SkillTotals {
         totals,
         class_skills,
         cross_class_penalty_applied,
-        untrained_use: BTreeMap::new(),
+        untrained_use,
     }
 }
