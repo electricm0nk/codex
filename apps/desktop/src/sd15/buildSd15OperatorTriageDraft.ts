@@ -138,7 +138,7 @@ export interface Sd15OperatorInput {
   primaryClass: string;
   outcomeState: string;
   adjacentAuthorityReferences: string[];
-  sd13SupportStateContext?: string | null;
+  supportStateContext?: string | null;
   sd14PersistenceMigrationContext?: string | null;
 
   // Claim statement (schema section 5, operator-added parts)
@@ -215,7 +215,7 @@ export interface Sd15WorkflowAndAuthorityContext {
   outcomeState: Sd15OutcomeState | null;
   outcomeStateInput: string | null;
   adjacentAuthorityReferences: string[];
-  sd13SupportStateContext: string | null;
+  supportStateContext: string | null;
   sd14PersistenceMigrationContext: string | null;
 }
 
@@ -354,7 +354,7 @@ export function buildSd15OperatorTriageDraft(
       outcomeState,
       outcomeStateInput,
       adjacentAuthorityReferences,
-      sd13SupportStateContext: blankToNull(operator.sd13SupportStateContext),
+      supportStateContext: blankToNull(operator.supportStateContext),
       sd14PersistenceMigrationContext: blankToNull(operator.sd14PersistenceMigrationContext),
     },
     claimStatement: {
@@ -499,7 +499,7 @@ function buildPartitions(
       'Adjacent-authority references',
       resolved.adjacentAuthorityReferences.length > 0 ? resolved.adjacentAuthorityReferences.join('; ') : null
     ),
-    operatorEntry('sd13SupportStateContext', 'SD-13 support-state context', blankToNull(operator.sd13SupportStateContext)),
+    operatorEntry('supportStateContext', 'Support-state context', blankToNull(operator.supportStateContext)),
     operatorEntry(
       'sd14PersistenceMigrationContext',
       'SD-14 persistence/migration context',
@@ -633,7 +633,7 @@ function renderTextDraft(
         : ABSENT_MARKER
     }`
   );
-  lines.push(`SD-13 support-state context: ${render(draft.workflowAndAuthorityContext.sd13SupportStateContext)}`);
+  lines.push(`Support-state context: ${render(draft.workflowAndAuthorityContext.supportStateContext)}`);
   lines.push(`SD-14 persistence/migration context: ${render(draft.workflowAndAuthorityContext.sd14PersistenceMigrationContext)}`);
   lines.push('');
 

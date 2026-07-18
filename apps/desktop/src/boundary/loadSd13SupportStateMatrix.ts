@@ -2,20 +2,19 @@ import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
 
 /**
- * Read-only desktop boundary over the SD-13 support-state matrix.
+ * Read-only desktop boundary over the support-state matrix.
  *
  * This loader is documentary/control-plane only: it invokes the
- * `load_support_state_matrix` Tauri command and returns the seeded SD-13
+ * `load_support_state_matrix` Tauri command and returns the seeded
  * truth verbatim. It performs no rules computation, filtering, promotion, or
  * feedback/issue-transport work, and it must never treat app/build success as
  * proof that a roster row is `supported`.
  *
- * SD13-E6-F12 remains explicitly deferred: this boundary does not capture
- * evidence, submit issues, persist support truth, or couple matrix debt to
- * update behavior.
+ * Capturing evidence, submitting issues, persisting support truth, and
+ * coupling matrix debt to update behavior remain explicitly deferred.
  */
 
-export interface Sd13SupportStateRow {
+export interface SupportStateRow {
   rowId: string;
   subjectType: string;
   subjectId: string;
@@ -23,12 +22,12 @@ export interface Sd13SupportStateRow {
   supportState: string;
   evidenceTier: string;
   /**
-   * SD13-E7-F13 evidence-freshness token projected verbatim from the SD-13
+   * Evidence-freshness token projected verbatim from the support-state
    * carrier (`refreshable-from-live-proof` | `awaiting-initial-evidence`). It is
    * never reinterpreted here; the carrier owns freshness truth.
    */
   evidenceFreshness: string;
-  /** SD-13-owned refresh-audit wording; both current postures are refresh-required. */
+  /** Support-state-owned refresh-audit wording; both current postures are refresh-required. */
   refreshAuditLabel: string;
   testerFacingStateLabel: string;
   groundingRef: string;
@@ -36,20 +35,20 @@ export interface Sd13SupportStateRow {
   nextRequiredUplift: string;
 }
 
-export interface Sd13SupportStateMatrixSnapshot {
-  rows: Sd13SupportStateRow[];
+export interface SupportStateMatrixSnapshot {
+  rows: SupportStateRow[];
   dataSource: string;
   note: string;
 }
 
-export async function loadSd13SupportStateMatrix(): Promise<Sd13SupportStateMatrixSnapshot> {
+export async function loadSupportStateMatrix(): Promise<SupportStateMatrixSnapshot> {
   if (!hasTauriRuntime()) {
-    throw new Error('Tauri runtime not available for the SD-13 support-state matrix');
+    throw new Error('Tauri runtime not available for the support-state matrix');
   }
 
   try {
-    return await invoke<Sd13SupportStateMatrixSnapshot>('load_support_state_matrix');
+    return await invoke<SupportStateMatrixSnapshot>('load_support_state_matrix');
   } catch (cause: unknown) {
-    throw new Error(`Failed to load SD-13 support-state matrix: ${formatError(cause)}`);
+    throw new Error(`Failed to load support-state matrix: ${formatError(cause)}`);
   }
 }

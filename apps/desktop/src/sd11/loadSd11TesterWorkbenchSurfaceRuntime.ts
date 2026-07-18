@@ -1,7 +1,7 @@
 import { loadGe08AuthoringWorkbench } from '../boundary/loadGe08AuthoringWorkbench';
 import { loadPilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
 import { loadSd12ReleaseTruth } from '../boundary/loadSd12ReleaseTruth';
-import { loadSd13SupportStateMatrix } from '../boundary/loadSd13SupportStateMatrix';
+import { loadSupportStateMatrix } from '../boundary/loadSd13SupportStateMatrix';
 import { loadBackendHealth } from '../boundary/loadBackendHealth';
 import {
   loadSd11TesterWorkbenchSurface,
@@ -16,7 +16,7 @@ export async function loadSd11TesterWorkbenchSurfaceRuntime(
     loadGe08AuthoringWorkbench,
     loadPilotShellSnapshot,
     loadSd12ReleaseTruth,
-    loadSd13SupportStateMatrix,
+    loadSupportStateMatrix,
     loadBackendHealth,
   });
 }
