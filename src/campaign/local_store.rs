@@ -25,7 +25,7 @@
 //! from whatever `.md` files it finds, honoring external edits.
 
 use std::fs;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use super::{
     CampaignAsset, CampaignAssets, CampaignListing, CampaignListingError, CampaignSnapshot,
@@ -150,6 +150,21 @@ impl CampaignStore {
             return Ok(());
         }
         fs::remove_dir_all(campaign_dir).map_err(|err| io_error(campaign_dir, err))
+    }
+
+    /// Convenience for callers that only know the campaigns root (not a
+    /// specific campaign directory) — sanitizes `snapshot.name` into a
+    /// directory name under `campaigns_root`, saves there, and returns the
+    /// campaign directory that was created. This is the shape
+    /// `campaign_drive.rs`'s Tauri commands consume: they only ever see a
+    /// user-configured Drive folder path plus a campaign name/snapshot.
+    pub fn save_under_root(
+        snapshot: &CampaignSnapshot,
+        campaigns_root: &Path,
+    ) -> Result<PathBuf, CampaignStoreError> {
+        let campaign_dir = campaigns_root.join(sanitize_filename(&snapshot.name));
+        Self::save(snapshot, &campaign_dir)?;
+        Ok(campaign_dir)
     }
 }
 
@@ -354,6 +369,30 @@ mod tests {
         assert_eq!(listing.campaigns[0].name, "The Void Between");
         assert_eq!(listing.unreadable_entries.len(), 1);
         assert_eq!(listing.unreadable_entries[0].entry_name, "corrupt-campaign");
+
+        let _ = fs::remove_dir_all(&campaigns_root);
+    }
+
+    #[test]
+    fn sanitize_filename_replaces_unsafe_characters() {
+        assert_eq!(
+            sanitize_filename("The Void / Between: The Stars?"),
+            "The Void _ Between_ The Stars_"
+        );
+    }
+
+    #[test]
+    fn save_under_root_sanitizes_the_campaign_name_into_a_directory() {
+        let campaigns_root = temp_root("save-under-root");
+        let _ = fs::remove_dir_all(&campaigns_root);
+
+        let mut snapshot = sample_snapshot();
+        snapshot.name = "Tales From: The Void?".to_owned();
+        let campaign_dir =
+            CampaignStore::save_under_root(&snapshot, &campaigns_root).expect("save should succeed");
+
+        assert_eq!(campaign_dir, campaigns_root.join("Tales From_ The Void_"));
+        assert!(campaign_dir.join(".config").exists());
 
         let _ = fs::remove_dir_all(&campaigns_root);
     }

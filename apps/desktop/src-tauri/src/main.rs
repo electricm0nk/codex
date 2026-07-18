@@ -14,7 +14,10 @@ mod update;
 
 use serde::Serialize;
 
-use campaign_drive::write_campaign_drive_artifacts;
+use campaign_drive::{
+    drive_delete_campaign, drive_list_campaigns, drive_load_campaign, drive_save_campaign,
+    write_campaign_drive_artifacts,
+};
 use character_hub::{
     create_character, delete_character_portrait, list_saved_characters, load_character_portrait,
     load_saved_character, save_character_portrait,
@@ -124,6 +127,10 @@ fn main() {
             load_character_portrait,
             delete_character_portrait,
             write_campaign_drive_artifacts,
+            drive_list_campaigns,
+            drive_load_campaign,
+            drive_save_campaign,
+            drive_delete_campaign,
             list_equipment_catalog,
             list_spell_catalog,
             list_class_catalog,
