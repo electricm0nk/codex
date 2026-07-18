@@ -30,6 +30,7 @@ use crate::rules_core::pilot_compute::{ComputationDiagnostic, PilotBaseChassisCo
 use crate::rules_core::pilot_compute_corpus::{CorpusDerivedSection, CorpusPilotReceipt};
 use crate::rules_core::skill_allocation::{allocate_skill_ranks, SkillTotals};
 use crate::rules_core::source_content::SourcePackageContent;
+use crate::rules_core::spellbook::{compute_spellbook_coverage, SpellbookCoverage};
 
 /// The three canonical `CharacterInput` permutations the boundary
 /// contract documents in its "Inputs" section
@@ -120,6 +121,21 @@ pub struct PilotReceipt {
     /// gate `sheet.skill.*` cells; see `printed_sheet_cell_map`'s doc
     /// comment for the cell-level consequence.
     pub skills: SkillTotals,
+    /// Epic 2's real spellbook coverage
+    /// (`spellbook::compute_spellbook_coverage`), wired in by the
+    /// `contract:spellbook_wiring` cycle (`adaptive-squishing-mccarthy.md`).
+    /// Per that cycle's "Not every epic output becomes a sheet cell"
+    /// design decision, only `slots_total`, `slots_used`, and
+    /// `spell_save_dc` are flattened into `printed_sheet_cell_map` cells
+    /// (one dynamic cell per present `BTreeMap` key); `spells_prepared`,
+    /// `spells_known`, and `school_specialization` do not reduce to
+    /// `PrintedSheetCellValue::Number(i16) | Blocked` cleanly and stay
+    /// reachable only via this field directly. As of this cycle,
+    /// `slots_total`/`slots_used` are always empty `BTreeMap`s for every
+    /// character (confirmed by reading `spellbook.rs`: no slot-math code
+    /// exists yet) -- cell generation below is still correct and ready
+    /// for when that lands.
+    pub spellbook: SpellbookCoverage,
 }
 
 /// Build the boundary contract's `PilotReceipt` from the corpus-aware
@@ -135,21 +151,25 @@ pub struct PilotReceipt {
 /// reachable from `CorpusPilotReceipt` alone.
 ///
 /// The `contract:skill_wiring` cycle (`adaptive-squishing-mccarthy.md`)
-/// is the first to actually use `input`: it calls Epic 4's
+/// was the first to actually use `input`: it calls Epic 4's
 /// `allocate_skill_ranks(input)` to populate `PilotReceipt.skills`. See
 /// that field's doc comment and `skill_allocation.rs` for what it
-/// computes. `corpus` remains unused this cycle — no Epic 2-7 engine
-/// wired in so far needs it.
+/// computes. The `contract:spellbook_wiring` cycle is the first to use
+/// `corpus`: it calls Epic 2's
+/// `compute_spellbook_coverage(input, corpus)` to populate
+/// `PilotReceipt.spellbook`. See that field's doc comment and
+/// `spellbook.rs` for what it computes.
 pub fn to_pilot_receipt(
     receipt: &CorpusPilotReceipt,
     input: &CharacterInput,
-    _corpus: &SourcePackageContent,
+    corpus: &SourcePackageContent,
 ) -> PilotReceipt {
     PilotReceipt {
         diagnostics: receipt.base.diagnostics.clone(),
         chassis: receipt.base.clone(),
         corpus_derived: receipt.corpus_derived.clone(),
         skills: allocate_skill_ranks(input),
+        spellbook: compute_spellbook_coverage(input, corpus),
     }
 }
 
@@ -283,6 +303,27 @@ fn diagnostic_blocking(receipt: &PilotReceipt, diagnostic_id: &str) -> bool {
 /// entry for an unallocated skill either. `Blocked` here means "no
 /// computed value exists", not "a diagnostic gated this" and not a
 /// fabricated `Number(0)`.
+///
+/// The `sheet.spellbook.*` cells (as of the `contract:spellbook_wiring`
+/// cycle) are a third, dynamic case: `receipt.spellbook.slots_total`,
+/// `.slots_used`, and `.spell_save_dc` are each `BTreeMap`s keyed by
+/// spell level (`u8`) or class id (`String`), not fixed single fields, so
+/// this function emits one cell per *present* key
+/// (`sheet.spellbook.slots_total.<level>`,
+/// `sheet.spellbook.slots_used.<level>`,
+/// `sheet.spellbook.spell_save_dc.<class_id>`) rather than a fixed set of
+/// cell ids. A non-caster (or any character with an empty map for one of
+/// these fields) naturally produces zero cells of that kind — never a
+/// fabricated placeholder cell for a key that is not present.
+/// `compute_spellbook_coverage` pushes no diagnostics at all (`spellbook.rs`
+/// has no `claim_blocking` machinery), so none of these cells is ever
+/// `Blocked`; absence is expressed purely by the cell not existing in the
+/// returned `Vec`. Per `adaptive-squishing-mccarthy.md`'s "Not every epic
+/// output becomes a sheet cell" design decision, `spells_prepared`,
+/// `spells_known`, and `school_specialization` are deliberately NOT
+/// flattened into cells here — they don't reduce to
+/// `PrintedSheetCellValue::Number(i16) | Blocked` cleanly and stay
+/// reachable via `receipt.spellbook` directly.
 pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
     let chassis_unsupported =
         diagnostic_blocking(receipt, CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID);
@@ -329,7 +370,7 @@ pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
 
     let chassis = &receipt.chassis;
 
-    vec![
+    let mut cells = vec![
         cell(
             "sheet.base_attack_bonus",
             "chassis.base_attack_bonus",
@@ -421,5 +462,33 @@ pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
             "chassis.ability_modifiers.charisma",
             chassis.ability_modifiers.charisma,
         ),
-    ]
+    ];
+
+    // See this function's doc comment for why these three families are
+    // dynamic (one cell per present BTreeMap key) rather than a fixed set
+    // of cell ids, and why an empty map naturally yields zero cells of
+    // that kind.
+    for (&level, &slots) in &receipt.spellbook.slots_total {
+        cells.push(independent_cell(
+            &format!("sheet.spellbook.slots_total.{level}"),
+            &format!("spellbook.slots_total.{level}"),
+            slots as i16,
+        ));
+    }
+    for (&level, &slots) in &receipt.spellbook.slots_used {
+        cells.push(independent_cell(
+            &format!("sheet.spellbook.slots_used.{level}"),
+            &format!("spellbook.slots_used.{level}"),
+            slots as i16,
+        ));
+    }
+    for (class_id, &dc) in &receipt.spellbook.spell_save_dc {
+        cells.push(independent_cell(
+            &format!("sheet.spellbook.spell_save_dc.{class_id}"),
+            &format!("spellbook.spell_save_dc.{class_id}"),
+            dc as i16,
+        ));
+    }
+
+    cells
 }
