@@ -1,43 +1,43 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Sd16ChannelSelector } from './ChannelSelector';
-import { Sd16CheckPanel } from './CheckPanel';
-import { Sd16InstallControl } from './InstallControl';
-import { Sd16InstalledPanel } from './installedPanel';
-import { Sd16LastCheckPanel } from './lastCheckPanel';
-import { Sd16PendingRollbackPanel } from './pendingRollbackPanel';
-import { Sd16RestoreOffer } from './restoreOffer';
+import { ChannelSelector } from './ChannelSelector';
+import { CheckPanel } from './CheckPanel';
+import { InstallControl } from './InstallControl';
+import { InstalledPanel } from './installedPanel';
+import { LastCheckPanel } from './lastCheckPanel';
+import { PendingRollbackPanel } from './pendingRollbackPanel';
+import { RestoreOffer } from './restoreOffer';
 import {
   buildUnwiredUpdateDeps,
-  SD16_UI_BUTTON_BASE_STYLE,
-  SD16_UI_BUTTON_DISABLED_STYLE,
-  SD16_UI_CONTAINER_STYLE,
-  type Sd16UpdateChannelLabel,
-  type Sd16UpdateControllerDeps,
+  UI_BUTTON_BASE_STYLE,
+  UI_BUTTON_DISABLED_STYLE,
+  UI_CONTAINER_STYLE,
+  type UpdateChannelLabel,
+  type UpdateControllerDeps,
 } from './updateModel';
 
-export const SD16_UPDATE_UI_ID = 'sd16-update-ui';
+export const UPDATE_UI_ID = 'sd16-update-ui';
 
-export interface Sd16RestoreOfferProps {
+export interface RestoreOfferProps {
   priorVersion: string;
   restoreAvailable: boolean;
   onRestore: () => Promise<void>;
 }
 
-export interface Sd16UpdateUiProps {
+export interface UpdateUiProps {
   /**
    * Optional initial deps. When omitted, the UI mounts with the
    * deterministic unwired controller (no F3a/F3b fetcher wired yet).
    * The runtime can later swap `deps` to a wired controller; the UI
    * remounts with the new state but never fabricates eligibility.
    */
-  initialDeps?: Sd16UpdateControllerDeps;
+  initialDeps?: UpdateControllerDeps;
   /**
    * Present only when `verify_relaunch_artifact` (real, run at mount by the
-   * caller) reported a verification mismatch. `Sd16RestoreOffer` itself is
+   * caller) reported a verification mismatch. `RestoreOffer` itself is
    * pure/no-side-effects by design, so the actionable "Restore" control and
    * its `perform_restore_previous` call live here at the orchestration layer.
    */
-  restoreOffer?: Sd16RestoreOfferProps;
+  restoreOffer?: RestoreOfferProps;
 }
 
 /**
@@ -50,8 +50,8 @@ export interface Sd16UpdateUiProps {
  * `initialDeps` is supplied with a wired controller and release-notes
  * payload; nothing in this file has to change.
  */
-export function Sd16UpdateUi({ initialDeps, restoreOffer }: Sd16UpdateUiProps) {
-  const [deps, setDeps] = useState<Sd16UpdateControllerDeps>(
+export function UpdateUi({ initialDeps, restoreOffer }: UpdateUiProps) {
+  const [deps, setDeps] = useState<UpdateControllerDeps>(
     () => initialDeps ?? buildUnwiredUpdateDeps(),
   );
   useEffect(() => {
@@ -77,7 +77,7 @@ export function Sd16UpdateUi({ initialDeps, restoreOffer }: Sd16UpdateUiProps) {
   // Re-derive lastCheck.selectedChannel from the deps so the visible
   // selector reflects the most recent authoritative value, including any
   // state mutation F3a performs during runCheck().
-  const [selectedChannel, setSelectedChannel] = useState<Sd16UpdateChannelLabel>(
+  const [selectedChannel, setSelectedChannel] = useState<UpdateChannelLabel>(
     () => (initialDeps ? initialDeps.lastCheck.selectedChannel : 'alpha'),
   );
 
@@ -86,14 +86,14 @@ export function Sd16UpdateUi({ initialDeps, restoreOffer }: Sd16UpdateUiProps) {
   }, [deps.lastCheck.selectedChannel]);
 
   const handleCheck = useCallback(
-    async (channel: Sd16UpdateChannelLabel) => {
+    async (channel: UpdateChannelLabel) => {
       setCheckInProgress(true);
       setInstallInProgress(false);
       try {
         await deps.controller.runCheck(channel);
         // The wired controller (F3a/F3b) mutates `lastCheck` and
         // `releaseNotes` in place; the UI re-reads them on next render
-        // because they are props of `Sd16UpdateControllerDeps`. The
+        // because they are props of `UpdateControllerDeps`. The
         // unwired controller is a no-op; the UI surfaces its
         // "not wired" reason unchanged.
       } finally {
@@ -117,7 +117,7 @@ export function Sd16UpdateUi({ initialDeps, restoreOffer }: Sd16UpdateUiProps) {
   }, []);
 
   const handleChannelChange = useCallback(
-    (channel: Sd16UpdateChannelLabel) => {
+    (channel: UpdateChannelLabel) => {
       setSelectedChannel(channel);
       setDeps((prev) => ({
         ...prev,
@@ -129,9 +129,9 @@ export function Sd16UpdateUi({ initialDeps, restoreOffer }: Sd16UpdateUiProps) {
 
   return (
     <main
-      id={SD16_UPDATE_UI_ID}
-      data-testid={SD16_UPDATE_UI_ID}
-      style={SD16_UI_CONTAINER_STYLE}
+      id={UPDATE_UI_ID}
+      data-testid={UPDATE_UI_ID}
+      style={UI_CONTAINER_STYLE}
     >
       <h1
         style={{
@@ -142,27 +142,27 @@ export function Sd16UpdateUi({ initialDeps, restoreOffer }: Sd16UpdateUiProps) {
       >
         Codex Desktop Updates
       </h1>
-      <Sd16ChannelSelector
+      <ChannelSelector
         selected={selectedChannel}
         onChange={handleChannelChange}
         disabled={checkInProgress || installInProgress}
       />
-      <Sd16CheckPanel
+      <CheckPanel
         deps={deps}
         checkInProgress={checkInProgress}
         onCheck={handleCheck}
       />
-      <Sd16InstallControl
+      <InstallControl
         deps={deps}
         installInProgress={installInProgress}
         onInstall={handleInstall}
       />
-      <Sd16InstalledPanel deps={deps} />
-      <Sd16LastCheckPanel deps={deps} />
-      <Sd16PendingRollbackPanel deps={deps} />
+      <InstalledPanel deps={deps} />
+      <LastCheckPanel deps={deps} />
+      <PendingRollbackPanel deps={deps} />
       {restoreOffer ? (
         <>
-          <Sd16RestoreOffer
+          <RestoreOffer
             priorVersion={restoreOffer.priorVersion}
             restoreAvailable={restoreOffer.restoreAvailable}
           />
@@ -172,7 +172,7 @@ export function Sd16UpdateUi({ initialDeps, restoreOffer }: Sd16UpdateUiProps) {
               data-testid="sd16-restore-previous-button"
               type="button"
               disabled={restoreInProgress}
-              style={restoreInProgress ? SD16_UI_BUTTON_DISABLED_STYLE : SD16_UI_BUTTON_BASE_STYLE}
+              style={restoreInProgress ? UI_BUTTON_DISABLED_STYLE : UI_BUTTON_BASE_STYLE}
               onClick={() => {
                 void handleRestore();
               }}

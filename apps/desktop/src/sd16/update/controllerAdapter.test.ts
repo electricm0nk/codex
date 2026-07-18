@@ -1,8 +1,8 @@
 import { assert, assertEqual } from '../../testSupport/asserts';
 import type { FetchLike } from './fetch';
 import {
-  createSd16UpdateControllerDeps,
-  loadSd16MountTimeState,
+  createUpdateControllerDeps,
+  loadMountTimeState,
   restorePreviousVersion,
   type InvokeLike,
 } from './controllerAdapter';
@@ -97,7 +97,7 @@ function makeFetchImpl(stubs: Stub[]): FetchLike {
 }
 
 function emptyMountTimeState() {
-  return loadSd16MountTimeState({
+  return loadMountTimeState({
     invokeImpl: (async () => ({ kind: 'no-pending-update' })) as InvokeLike,
   });
 }
@@ -106,7 +106,7 @@ function emptyMountTimeState() {
 
 async function verifiesRunCheckOnSuccessPopulatesLastCheckHonestly() {
   const mountTimeState = await emptyMountTimeState();
-  const deps = createSd16UpdateControllerDeps(mountTimeState, 'alpha', {
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
     fetchImpl: makeFetchImpl([
       { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
       { url: MANIFEST_URL, status: 200, responded: manifestText() },
@@ -134,7 +134,7 @@ async function verifiesRunCheckOnSuccessPopulatesLastCheckHonestly() {
     'disabledReason must not be the old canned unwired-controller string',
   );
 
-  // Regression: Sd16LastCheckPanel reads lastCheck.eligibilityResult /
+  // Regression: LastCheckPanel reads lastCheck.eligibilityResult /
   // installDisabledReason directly rather than calling the controller — these
   // must be kept in sync by runCheck itself, or the panel shows a stale
   // pre-check placeholder forever after a real, completed check.
@@ -154,7 +154,7 @@ async function verifiesRunCheckOnSuccessPopulatesLastCheckHonestly() {
 
 async function verifiesRunCheckSurfacesRealIndexFetchFailure() {
   const mountTimeState = await emptyMountTimeState();
-  const deps = createSd16UpdateControllerDeps(mountTimeState, 'alpha', {
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
     fetchImpl: makeFetchImpl([{ url: CHANNEL_INDEX_URL, status: 404, responded: 'not found' }]),
   });
 
@@ -179,7 +179,7 @@ async function verifiesRunCheckSurfacesRealIndexFetchFailure() {
 
 async function verifiesRunCheckSurfacesRealSchemaInvalidReason() {
   const mountTimeState = await emptyMountTimeState();
-  const deps = createSd16UpdateControllerDeps(mountTimeState, 'alpha', {
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
     fetchImpl: makeFetchImpl([
       { url: CHANNEL_INDEX_URL, status: 200, responded: channelText({ schema_version: 'v9' }) },
     ]),
@@ -199,7 +199,7 @@ async function verifiesRunCheckSurfacesRealSchemaInvalidReason() {
 
 async function verifiesRunCheckSurfacesRealManifestFetchFailure() {
   const mountTimeState = await emptyMountTimeState();
-  const deps = createSd16UpdateControllerDeps(mountTimeState, 'alpha', {
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
     fetchImpl: makeFetchImpl([
       { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
       { url: MANIFEST_URL, status: 500, responded: 'server error' },
@@ -221,7 +221,7 @@ async function verifiesRunCheckSurfacesRealManifestFetchFailure() {
 
 async function verifiesEligibilityUnknownBeforeAnyCheck() {
   const mountTimeState = await emptyMountTimeState();
-  const deps = createSd16UpdateControllerDeps(mountTimeState, 'alpha');
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha');
   assertEqual(
     deps.controller.computeEligibility(deps.installed, deps.lastCheck),
     'unknown',
@@ -234,7 +234,7 @@ async function verifiesEligibilityUnknownBeforeAnyCheck() {
 // ---------- mount-time verify_relaunch_artifact mapping ----------
 
 async function verifiesNoPendingUpdateMapsToEmptyState() {
-  const state = await loadSd16MountTimeState({
+  const state = await loadMountTimeState({
     invokeImpl: (async () => ({ kind: 'no-pending-update' })) as InvokeLike,
   });
   assertEqual(state.installed.version, 'unknown', 'no installed record yet');
@@ -243,7 +243,7 @@ async function verifiesNoPendingUpdateMapsToEmptyState() {
 }
 
 async function verifiesVerificationFailedOffersRestoreHonestly() {
-  const state = await loadSd16MountTimeState({
+  const state = await loadMountTimeState({
     invokeImpl: (async () => ({
       kind: 'verification-failed',
       expected: SHA64,
@@ -260,7 +260,7 @@ async function verifiesVerificationFailedOffersRestoreHonestly() {
 }
 
 async function verifiesPromotedMapsKnownFieldsOnlyWithoutFabricating() {
-  const state = await loadSd16MountTimeState({
+  const state = await loadMountTimeState({
     invokeImpl: (async () => ({
       kind: 'promoted',
       installedStatePath: '/home/ubuntu/.config/codex/update/installed-state.json',

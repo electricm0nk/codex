@@ -1,5 +1,5 @@
 /**
- * Character Hub Phase 3 — real `Sd16UpdateController` adapter.
+ * Character Hub Phase 3 — real `UpdateController` adapter.
  *
  * Bridges the sd16/update UI to the parts of the update system that are
  * genuinely real today: `fetch.ts`'s discovery fetch/validate, `eligibility.ts`'s
@@ -29,12 +29,12 @@ import {
   emptyInstalledState,
   emptyLastCheckState,
   emptyPendingRollbackState,
-  type Sd16EligibilityResult,
-  type Sd16InstalledState,
-  type Sd16PendingRollbackState,
-  type Sd16UpdateChannelLabel,
-  type Sd16UpdateController,
-  type Sd16UpdateControllerDeps,
+  type EligibilityResult,
+  type InstalledState,
+  type PendingRollbackState,
+  type UpdateChannelLabel,
+  type UpdateController,
+  type UpdateControllerDeps,
 } from './updateModel';
 
 // ---------- Tauri invoke indirection ----------
@@ -124,31 +124,31 @@ const LOCAL_STATE_UNAVAILABLE_REASON =
   'local installed-state is not available yet — is_install_eligible / perform_install remain deferred; real install-kind, writability, and version comparison cannot be verified';
 
 /**
- * Build a real `Sd16UpdateControllerDeps`. `mountTimeState` supplies the
- * `installed`/`pendingRollback` fields (from `loadSd16MountTimeState`); this
+ * Build a real `UpdateControllerDeps`. `mountTimeState` supplies the
+ * `installed`/`pendingRollback` fields (from `loadMountTimeState`); this
  * function owns `lastCheck`/`releaseNotes`/`controller`, whose methods
  * mutate `lastCheck`/`releaseNotes` on the returned object in place — the
  * contract `Ui.tsx` already expects (see its `handleCheck` comment).
  */
-export function createSd16UpdateControllerDeps(
-  mountTimeState: Pick<Sd16MountTimeState, 'installed' | 'pendingRollback'>,
-  defaultChannel: Sd16UpdateChannelLabel = 'alpha',
+export function createUpdateControllerDeps(
+  mountTimeState: Pick<MountTimeState, 'installed' | 'pendingRollback'>,
+  defaultChannel: UpdateChannelLabel = 'alpha',
   options: { fetchImpl?: FetchLike } = {},
-): Sd16UpdateControllerDeps {
-  const deps: Sd16UpdateControllerDeps = {
+): UpdateControllerDeps {
+  const deps: UpdateControllerDeps = {
     installed: mountTimeState.installed,
     lastCheck: emptyLastCheckState(defaultChannel),
     pendingRollback: mountTimeState.pendingRollback,
     releaseNotes: null,
-    controller: undefined as unknown as Sd16UpdateController,
+    controller: undefined as unknown as UpdateController,
   };
 
   let hasRun = false;
-  let checkedChannel: Sd16UpdateChannelLabel | null = null;
+  let checkedChannel: UpdateChannelLabel | null = null;
   let fetchOutcomes = emptyFetchOutcomes();
 
-  function computeDecision(currentChannel: Sd16UpdateChannelLabel): {
-    result: Sd16EligibilityResult;
+  function computeDecision(currentChannel: UpdateChannelLabel): {
+    result: EligibilityResult;
     reason: string;
   } {
     if (!hasRun || checkedChannel !== currentChannel) {
@@ -180,20 +180,20 @@ export function createSd16UpdateControllerDeps(
   }
 
   /**
-   * `Sd16LastCheckPanel` reads `lastCheck.eligibilityResult`/`installDisabledReason`
+   * `LastCheckPanel` reads `lastCheck.eligibilityResult`/`installDisabledReason`
    * directly (it does not call the controller), so `runCheck` must keep these
    * two fields in sync with the same decision `computeEligibility`/
    * `disabledReason` would return — otherwise the panel shows a stale
    * pre-check placeholder forever after a real check completes.
    */
-  function syncLastCheckEligibility(channel: Sd16UpdateChannelLabel): void {
+  function syncLastCheckEligibility(channel: UpdateChannelLabel): void {
     const decision = computeDecision(channel);
     deps.lastCheck.eligibilityResult = decision.result;
     deps.lastCheck.installDisabledReason = decision.reason;
   }
 
   deps.controller = {
-    async runCheck(channel: Sd16UpdateChannelLabel): Promise<void> {
+    async runCheck(channel: UpdateChannelLabel): Promise<void> {
       deps.lastCheck.selectedChannel = channel;
       deps.lastCheck.indexUrl = `https://raw.githubusercontent.com/electricm0nk/codex/update-index/channels/${channel}.json`;
       deps.lastCheck.indexStatus = 'in-progress';
@@ -260,15 +260,15 @@ export function createSd16UpdateControllerDeps(
 
 // ---------- mount-time state: verify_relaunch_artifact ----------
 
-export interface Sd16RestoreOfferState {
+export interface RestoreOfferState {
   priorVersion: string;
   restoreAvailable: boolean;
 }
 
-export interface Sd16MountTimeState {
-  installed: Sd16InstalledState;
-  pendingRollback: Sd16PendingRollbackState;
-  restoreOffer: Sd16RestoreOfferState | null;
+export interface MountTimeState {
+  installed: InstalledState;
+  pendingRollback: PendingRollbackState;
+  restoreOffer: RestoreOfferState | null;
 }
 
 /**
@@ -277,9 +277,9 @@ export interface Sd16MountTimeState {
  * where a pending relaunch verification is checked and, on success,
  * promoted into `installed-state.json` server-side.
  */
-export async function loadSd16MountTimeState(
+export async function loadMountTimeState(
   options: { invokeImpl?: InvokeLike } = {},
-): Promise<Sd16MountTimeState> {
+): Promise<MountTimeState> {
   let outcome: ReloadVerifyOutcome;
   try {
     outcome =
@@ -333,7 +333,7 @@ export async function loadSd16MountTimeState(
 
 // ---------- restore action: perform_restore_previous ----------
 
-export type Sd16RollbackOutcome =
+export type RollbackOutcome =
   | { kind: 'promoted'; restoredVersion: string }
   | { kind: 'auto-restored'; restoredVersion: string }
   | { kind: 'rollback-failed'; reason: string }
@@ -349,7 +349,7 @@ interface RustRollbackOutcome {
 /** Call the real, already-tested `perform_restore_previous` Tauri command. */
 export async function restorePreviousVersion(
   options: { invokeImpl?: InvokeLike } = {},
-): Promise<Sd16RollbackOutcome> {
+): Promise<RollbackOutcome> {
   let raw: RustRollbackOutcome;
   try {
     raw =

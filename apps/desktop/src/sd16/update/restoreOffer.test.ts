@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
-  Sd16RestoreOffer,
+  RestoreOffer,
   RESTORE_OFFER_ID,
   buildRestoreOfferMarkup,
 } from './restoreOffer';
@@ -14,7 +14,7 @@ function assertContains(actual: string, needle: string, message: string) {
 
 function renderRestoreOffer(priorVersion: string, restoreAvailable: boolean): string {
   return renderToStaticMarkup(
-    Sd16RestoreOffer({ priorVersion, restoreAvailable }),
+    RestoreOffer({ priorVersion, restoreAvailable }),
   );
 }
 
@@ -66,7 +66,7 @@ function testMarksRestoreUnavailableWhenF3bNotYetWired() {
 
 function testBuildRestoreOfferMarkupMatchesReactRenderContract() {
   const props = { priorVersion: '0.0.7', restoreAvailable: true };
-  const reactHtml = renderToStaticMarkup(Sd16RestoreOffer(props));
+  const reactHtml = renderToStaticMarkup(RestoreOffer(props));
   const pureHtml = buildRestoreOfferMarkup(props);
   // The pure renderer mirrors the React renderer's *contract* (id, data-testid,
   // data-prior-version, data-restore-available, visible text). React adds a

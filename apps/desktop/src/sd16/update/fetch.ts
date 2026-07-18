@@ -50,9 +50,9 @@ import { parseUpdateManifest, type UpdateManifestFile } from './parseUpdateManif
 // integration, the SD-11 boundary) consume these re-exported aliases so
 // the schema contract has exactly one TS surface.
 
-export type Sd16ChannelLabel = ChannelLabel;
-export type Sd16ChannelIndexFile = ChannelIndexFile;
-export type Sd16UpdateManifestFile = UpdateManifestFile;
+export type ChannelLabel = ChannelLabel;
+export type ChannelIndexFile = ChannelIndexFile;
+export type UpdateManifestFile = UpdateManifestFile;
 
 // ---------- discriminated results ----------
 
@@ -107,11 +107,11 @@ const RAW_BASE_URL =
  * Resolve the raw `update-index` URL for a given channel pointer. Kept
  * exported so tests can pin the URL shape without depending on the fetcher.
  */
-export function channelIndexUrl(channel: Sd16ChannelLabel): string {
+export function channelIndexUrl(channel: ChannelLabel): string {
   return `${RAW_BASE_URL}/${channel}.json`;
 }
 
-function isSd16ChannelLabel(value: unknown): value is Sd16ChannelLabel {
+function isChannelLabel(value: unknown): value is ChannelLabel {
   return value === 'alpha' || value === 'beta' || value === 'stable';
 }
 
@@ -145,7 +145,7 @@ function jsonParseError(errors: ReadonlyArray<ErrorObject>): ErrorObject | undef
 export function validateChannelIndexShape(
   rawText: string,
   atUrl: string
-): FetchResult<Sd16ChannelIndexFile> {
+): FetchResult<ChannelIndexFile> {
   const parsed = parseChannelIndex(rawText);
   if (!parsed.ok) {
     const parseFailure = jsonParseError(parsed.errors);
@@ -176,10 +176,10 @@ export function validateChannelIndexShape(
  * `update-index` branch. Returns a discriminated result; never throws.
  */
 export async function fetchChannelIndex(
-  channel: Sd16ChannelLabel,
+  channel: ChannelLabel,
   options: { fetchImpl?: FetchLike; baseUrl?: string } = {}
-): Promise<FetchResult<Sd16ChannelIndexFile>> {
-  if (!isSd16ChannelLabel(channel)) {
+): Promise<FetchResult<ChannelIndexFile>> {
+  if (!isChannelLabel(channel)) {
     return {
       ok: false,
       failure: {
@@ -192,7 +192,7 @@ export async function fetchChannelIndex(
     options.baseUrl !== undefined
       ? `${options.baseUrl.replace(/\/$/, '')}/${channel}.json`
       : channelIndexUrl(channel);
-  return fetchAndValidate<Sd16ChannelIndexFile>(url, validateChannelIndexShape, options.fetchImpl);
+  return fetchAndValidate<ChannelIndexFile>(url, validateChannelIndexShape, options.fetchImpl);
 }
 
 /**
@@ -204,7 +204,7 @@ export async function fetchChannelIndex(
 export async function fetchUpdateManifest(
   manifestUrl: string,
   options: { fetchImpl?: FetchLike } = {}
-): Promise<FetchResult<Sd16UpdateManifestFile>> {
+): Promise<FetchResult<UpdateManifestFile>> {
   if (!isNonEmptyString(manifestUrl)) {
     return {
       ok: false,
@@ -215,7 +215,7 @@ export async function fetchUpdateManifest(
       },
     };
   }
-  return fetchAndValidate<Sd16UpdateManifestFile>(manifestUrl, validateManifestShape, options.fetchImpl);
+  return fetchAndValidate<UpdateManifestFile>(manifestUrl, validateManifestShape, options.fetchImpl);
 }
 
 // ---------- update manifest ----------
@@ -227,7 +227,7 @@ export async function fetchUpdateManifest(
 export function validateManifestShape(
   rawText: string,
   atUrl: string
-): FetchResult<Sd16UpdateManifestFile> {
+): FetchResult<UpdateManifestFile> {
   const parsed = parseUpdateManifest(rawText);
   if (!parsed.ok) {
     const parseFailure = jsonParseError(parsed.errors);

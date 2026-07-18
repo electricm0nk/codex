@@ -8,7 +8,7 @@ import {
   type FetchFailure,
   type FetchLike,
   type FetchResult,
-  type Sd16ChannelIndexFile,
+  type ChannelIndexFile,
 } from './fetch';
 
 // ---------- helpers ----------
@@ -313,7 +313,7 @@ async function verifiesFetcherRejectsUnsupportedChannel() {
   // The type system already constrains this, but mirror the upstream guard
   // at runtime so a caller cannot smuggle in 'rc' via string coercion.
   const result = await fetchChannelIndex(
-    'rc' as unknown as Sd16ChannelIndexFile['channel']
+    'rc' as unknown as ChannelIndexFile['channel']
   );
   expectFailure(result, 'unsupported-channel', 'unsupported channel');
 }

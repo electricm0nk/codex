@@ -1,14 +1,14 @@
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Sd16CheckPanel } from './CheckPanel';
-import { Sd16InstallControl } from './InstallControl';
+import { CheckPanel } from './CheckPanel';
+import { InstallControl } from './InstallControl';
 import {
   buildUnwiredUpdateDeps,
   emptyInstalledState,
   emptyLastCheckState,
-  type Sd16EligibilityResult,
-  type Sd16UpdateController,
-  type Sd16UpdateControllerDeps,
-  type Sd16InstallKind,
+  type EligibilityResult,
+  type UpdateController,
+  type UpdateControllerDeps,
+  type InstallKind,
 } from './updateModel';
 import { assertEqual } from '../../testSupport/asserts';
 
@@ -19,9 +19,9 @@ function assertContains(actual: string, needle: string, message: string) {
 }
 
 function fixedController(
-  result: Sd16EligibilityResult,
+  result: EligibilityResult,
   reason: string | null,
-): Sd16UpdateController {
+): UpdateController {
   return {
     async runCheck() {
       return;
@@ -39,9 +39,9 @@ function fixedController(
 }
 
 function buildDepsForInstallKind(
-  installKind: Sd16InstallKind,
+  installKind: InstallKind,
   reason: string,
-): Sd16UpdateControllerDeps {
+): UpdateControllerDeps {
   return {
     installed: { ...emptyInstalledState(), installKind },
     lastCheck: {
@@ -69,7 +69,7 @@ function testDevBuildCannotInstallButCheckStillRuns() {
   // Check button must remain enabled — the AV-UI-6 contract is that
   // non-eligible builds may still Check; only Install is gated.
   const checkHtml = renderToStaticMarkup(
-    Sd16CheckPanel({ deps, checkInProgress: false, onCheck: () => undefined }),
+    CheckPanel({ deps, checkInProgress: false, onCheck: () => undefined }),
   );
   assertEqual(
     checkHtml.includes('disabled=""'),
@@ -78,7 +78,7 @@ function testDevBuildCannotInstallButCheckStillRuns() {
   );
   // Install must be disabled with the F1 closure's pinned reason string.
   const installHtml = renderToStaticMarkup(
-    Sd16InstallControl({
+    InstallControl({
       deps,
       installInProgress: false,
       onInstall: () => undefined,
@@ -107,7 +107,7 @@ function testTarballBuildCannotInstallButCheckStillRuns() {
     'tarball install is not update-eligible',
   );
   const checkHtml = renderToStaticMarkup(
-    Sd16CheckPanel({ deps, checkInProgress: false, onCheck: () => undefined }),
+    CheckPanel({ deps, checkInProgress: false, onCheck: () => undefined }),
   );
   assertEqual(
     checkHtml.includes('disabled=""'),
@@ -115,7 +115,7 @@ function testTarballBuildCannotInstallButCheckStillRuns() {
     'AV-UI-6: Check button must remain enabled for tarball builds',
   );
   const installHtml = renderToStaticMarkup(
-    Sd16InstallControl({
+    InstallControl({
       deps,
       installInProgress: false,
       onInstall: () => undefined,
@@ -133,7 +133,7 @@ function testNonEligibleWiredUnwiredStillSurfacesReason() {
   // reason surfaces the explicit "not wired yet" posture so reviewers
   // can confirm the gate is honest rather than fabricated eligibility.
   const html = renderToStaticMarkup(
-    Sd16InstallControl({
+    InstallControl({
       deps: { ...buildUnwiredUpdateDeps(), installed: { ...buildUnwiredUpdateDeps().installed, installKind: 'appimage' } },
       installInProgress: false,
       onInstall: () => undefined,

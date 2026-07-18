@@ -1,16 +1,16 @@
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Sd16InstallControl } from './InstallControl';
+import { InstallControl } from './InstallControl';
 import {
   buildUnwiredUpdateDeps,
   emptyLastCheckState,
-  SD16_UNWIRED_CONTROLLER,
+  UNWIRED_CONTROLLER,
 } from './updateModel';
 import type {
-  Sd16EligibilityResult,
-  Sd16InstalledState,
-  Sd16LastCheckState,
-  Sd16UpdateController,
-  Sd16UpdateControllerDeps,
+  EligibilityResult,
+  InstalledState,
+  LastCheckState,
+  UpdateController,
+  UpdateControllerDeps,
 } from './updateModel';
 import { assert, assertEqual } from '../../testSupport/asserts';
 
@@ -21,11 +21,11 @@ function assertContains(actual: string, needle: string, message: string) {
 }
 
 function render(props: {
-  deps: Sd16UpdateControllerDeps;
+  deps: UpdateControllerDeps;
   installInProgress?: boolean;
 }): string {
   return renderToStaticMarkup(
-    Sd16InstallControl({
+    InstallControl({
       deps: props.deps,
       installInProgress: props.installInProgress ?? false,
       onInstall: () => undefined,
@@ -34,9 +34,9 @@ function render(props: {
 }
 
 function eligibilityController(
-  result: Sd16EligibilityResult,
+  result: EligibilityResult,
   reason: string | null,
-): Sd16UpdateController {
+): UpdateController {
   return {
     async runCheck() {
       return;
@@ -68,7 +68,7 @@ function testInstallButtonDisabledWhenEligibilityUnknown() {
 }
 
 function testDisabledReasonPopulatedWhenIneligible() {
-  const deps: Sd16UpdateControllerDeps = {
+  const deps: UpdateControllerDeps = {
     ...buildUnwiredUpdateDeps(),
     controller: eligibilityController(
       'ineligible',
@@ -90,7 +90,7 @@ function testDisabledReasonPopulatedWhenIneligible() {
 }
 
 function testDisabledReasonPopulatedEvenWhenReasonIsNull() {
-  const deps: Sd16UpdateControllerDeps = {
+  const deps: UpdateControllerDeps = {
     ...buildUnwiredUpdateDeps(),
     controller: eligibilityController('ineligible', null),
   };
@@ -108,7 +108,7 @@ function testDisabledReasonPopulatedEvenWhenReasonIsNull() {
 }
 
 function testInstallButtonEnabledOnlyWhenEligible() {
-  const deps: Sd16UpdateControllerDeps = {
+  const deps: UpdateControllerDeps = {
     ...buildUnwiredUpdateDeps(),
     controller: eligibilityController('eligible', null),
     installed: {
@@ -136,7 +136,7 @@ function testInstallButtonEnabledOnlyWhenEligible() {
 }
 
 function testInstallButtonDisabledWhenInstallInProgress() {
-  const deps: Sd16UpdateControllerDeps = {
+  const deps: UpdateControllerDeps = {
     ...buildUnwiredUpdateDeps(),
     controller: eligibilityController('eligible', null),
   };

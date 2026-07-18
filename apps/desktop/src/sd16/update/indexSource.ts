@@ -12,7 +12,7 @@
 // this URL via its `defaultFetchImpl` indirection. Keeping the URL
 // helper pure means the TS lane can pin the URL shape in isolation.
 //
-// This module also accepts the E6 surface's `Sd16ChannelLabel` shape so
+// This module also accepts the E6 surface's `ChannelLabel` shape so
 // callers can pass `'alpha' | 'beta' | 'stable'` without casting.
 
 const REPO_OWNER = 'electricm0nk';

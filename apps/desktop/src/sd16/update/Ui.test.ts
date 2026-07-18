@@ -1,6 +1,6 @@
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Sd16UpdateUi, SD16_UPDATE_UI_ID } from './Ui';
+import { UpdateUi, UPDATE_UI_ID } from './Ui';
 import { RESTORE_OFFER_ID } from './restoreOffer';
 import { buildUnwiredUpdateDeps } from './updateModel';
 import { assert } from '../../testSupport/asserts';
@@ -17,13 +17,13 @@ function assertNotContains(actual: string, needle: string, message: string) {
   }
 }
 
-function render(props: Parameters<typeof Sd16UpdateUi>[0]): string {
-  return renderToStaticMarkup(createElement(Sd16UpdateUi, props));
+function render(props: Parameters<typeof UpdateUi>[0]): string {
+  return renderToStaticMarkup(createElement(UpdateUi, props));
 }
 
 function testMountsWithCanonicalIdAndAllSubPanels() {
   const html = render({ initialDeps: buildUnwiredUpdateDeps() });
-  assertContains(html, `id="${SD16_UPDATE_UI_ID}"`, 'page must render with the canonical Sd16UpdateUi id');
+  assertContains(html, `id="${UPDATE_UI_ID}"`, 'page must render with the canonical UpdateUi id');
   assertContains(html, 'id="check-panel"', 'check panel must be mounted');
   assertContains(html, 'id="install-panel"', 'install panel must be mounted');
   assertContains(html, 'id="installed-panel"', 'installed panel must be mounted');

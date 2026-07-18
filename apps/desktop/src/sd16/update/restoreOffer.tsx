@@ -48,7 +48,7 @@ export interface RestoreOfferProps {
  * The parent UI is responsible for fetching the prior version from
  * `pending-update.json` and forwarding it as a prop.
  */
-export function Sd16RestoreOffer({ priorVersion, restoreAvailable }: RestoreOfferProps) {
+export function RestoreOffer({ priorVersion, restoreAvailable }: RestoreOfferProps) {
   return (
     <section
       id={RESTORE_OFFER_ID}
@@ -66,7 +66,7 @@ export function Sd16RestoreOffer({ priorVersion, restoreAvailable }: RestoreOffe
 
 /**
  * Pure renderer used by the test surface — produces the markup string
- * without React's runtime. Mirrors `Sd16RestoreOffer` 1:1 so tests can
+ * without React's runtime. Mirrors `RestoreOffer` 1:1 so tests can
  * assert on the wire contract in node tsx hosts without a React renderer.
  */
 export function buildRestoreOfferMarkup(props: RestoreOfferProps): string {

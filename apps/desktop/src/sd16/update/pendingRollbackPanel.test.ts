@@ -1,13 +1,13 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import {
-  Sd16PendingRollbackPanel,
+  PendingRollbackPanel,
   PENDING_ROLLBACK_PANEL_ID,
 } from './pendingRollbackPanel';
 import {
   buildUnwiredUpdateDeps,
   emptyPendingRollbackState,
-  type Sd16UpdateControllerDeps,
-  type Sd16PendingRollbackState,
+  type UpdateControllerDeps,
+  type PendingRollbackState,
 } from './updateModel';
 import { assert, assertEqual } from '../../testSupport/asserts';
 
@@ -17,8 +17,8 @@ function assertContains(actual: string, needle: string, message: string) {
   }
 }
 
-function render(deps: Sd16UpdateControllerDeps): string {
-  return renderToStaticMarkup(Sd16PendingRollbackPanel({ deps }));
+function render(deps: UpdateControllerDeps): string {
+  return renderToStaticMarkup(PendingRollbackPanel({ deps }));
 }
 
 function testPanelRendersWithCanonicalId() {
@@ -63,14 +63,14 @@ function testE7PlaceholderNoteIsVisibleUntilE7Lands() {
 }
 
 function testSuppliedStateRendersValues() {
-  const pendingRollback: Sd16PendingRollbackState = {
+  const pendingRollback: PendingRollbackState = {
     pendingUpdateState: 'pending-relaunch',
     previousVersionAvailable: true,
     rollbackState: 'available',
     backupCount: 2,
     retainedUpdateStorageBytes: 134217728,
   };
-  const deps: Sd16UpdateControllerDeps = {
+  const deps: UpdateControllerDeps = {
     ...buildUnwiredUpdateDeps(),
     pendingRollback,
   };

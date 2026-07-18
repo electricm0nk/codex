@@ -1,17 +1,17 @@
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Sd16CheckPanel } from './CheckPanel';
+import { CheckPanel } from './CheckPanel';
 import {
   buildUnwiredUpdateDeps,
   emptyLastCheckState,
-  SD16_UNWIRED_CONTROLLER,
+  UNWIRED_CONTROLLER,
 } from './updateModel';
 import type {
-  Sd16EligibilityResult,
-  Sd16LastCheckState,
-  Sd16PendingRollbackState,
-  Sd16ReleaseNotes,
-  Sd16UpdateController,
-  Sd16UpdateControllerDeps,
+  EligibilityResult,
+  LastCheckState,
+  PendingRollbackState,
+  ReleaseNotes,
+  UpdateController,
+  UpdateControllerDeps,
 } from './updateModel';
 import { assert, assertEqual } from '../../testSupport/asserts';
 
@@ -21,9 +21,9 @@ function assertContains(actual: string, needle: string, message: string) {
   }
 }
 
-function render(deps: Sd16UpdateControllerDeps, checkInProgress: boolean): string {
+function render(deps: UpdateControllerDeps, checkInProgress: boolean): string {
   return renderToStaticMarkup(
-    Sd16CheckPanel({
+    CheckPanel({
       deps,
       checkInProgress,
       onCheck: () => undefined,
@@ -32,7 +32,7 @@ function render(deps: Sd16UpdateControllerDeps, checkInProgress: boolean): strin
 }
 
 
-function withLastCheck(overrides: Partial<Sd16LastCheckState>): Sd16LastCheckState {
+function withLastCheck(overrides: Partial<LastCheckState>): LastCheckState {
   return { ...emptyLastCheckState(), ...overrides };
 }
 
@@ -51,11 +51,11 @@ function testReleaseNotesPanelAlwaysVisible() {
 }
 
 function testReleaseNotesPanelSurfacesLoadedNotesAfterCheck() {
-  const notes: Sd16ReleaseNotes = {
+  const notes: ReleaseNotes = {
     releaseVersion: '1.2.3',
     body: '## Highlights\n- add update UI\n- surface diagnostics',
   };
-  const deps: Sd16UpdateControllerDeps = {
+  const deps: UpdateControllerDeps = {
     ...buildUnwiredUpdateDeps(),
     lastCheck: withLastCheck({
       indexStatus: 'ok',
@@ -84,7 +84,7 @@ function testReleaseNotesPanelSurfacesLoadedNotesAfterCheck() {
 }
 
 function testReleaseNotesNullBodyFallsBackToPlaceholder() {
-  const deps: Sd16UpdateControllerDeps = {
+  const deps: UpdateControllerDeps = {
     ...buildUnwiredUpdateDeps(),
     lastCheck: withLastCheck({
       indexStatus: 'ok',
