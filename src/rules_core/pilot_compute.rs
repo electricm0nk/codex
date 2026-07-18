@@ -6542,7 +6542,9 @@ fn compute_multiclass_base_chassis(
     }
 
     let mut total_bab: i16 = 0;
-    let mut total_saves = BaseSaves::default();
+    let mut fort_fraction = 0.0_f64;
+    let mut ref_fraction = 0.0_f64;
+    let mut will_fraction = 0.0_f64;
     let mut class_summaries: Vec<String> = Vec::new();
 
     for class_level in &input.chosen.class_levels {
@@ -6551,18 +6553,37 @@ fn compute_multiclass_base_chassis(
 
         let mut isolated_explanations = Vec::new();
         let mut isolated_diagnostics = Vec::new();
-        let (bab, saves) =
+        let (bab, _isolated_saves) =
             compute_class_chassis(&isolated, &mut isolated_explanations, &mut isolated_diagnostics)?;
-
         total_bab += bab;
-        total_saves.fortitude += saves.fortitude;
-        total_saves.reflex += saves.reflex;
-        total_saves.will += saves.will;
+
+        // SD-21 E7.29: PF1's multiclass base-save rule sums each class's
+        // *un-rounded* fractional save contribution before rounding down once
+        // for the total -- it is not a naive per-class-round-then-sum (which
+        // would round each class's contribution down separately first, losing
+        // any fractional remainder that would otherwise carry into the next
+        // integer once combined with another class's remainder). The
+        // good/poor classification per save mirrors `class_tables.rs`'s
+        // `GoodSaves` rows for Fighter (`:77`, good Fortitude only) and Wizard
+        // (`:83`, good Will only) -- the only two classes a multiclass mix can
+        // combine until a future epic grounds more per-class chassis
+        // functions.
+        let (fort_good, ref_good, will_good) = multiclass_good_saves(&class_level.class_id)?;
+        fort_fraction += fractional_save_value(class_level.level, fort_good);
+        ref_fraction += fractional_save_value(class_level.level, ref_good);
+        will_fraction += fractional_save_value(class_level.level, will_good);
+
         class_summaries.push(format!(
-            "{} {}: base attack bonus {bab}, base saves fort {} / ref {} / will {}",
-            class_level.class_id, class_level.level, saves.fortitude, saves.reflex, saves.will
+            "{} {}: base attack bonus {bab}",
+            class_level.class_id, class_level.level
         ));
     }
+
+    let total_saves = BaseSaves {
+        fortitude: fort_fraction.floor() as i16,
+        reflex: ref_fraction.floor() as i16,
+        will: will_fraction.floor() as i16,
+    };
 
     let class_summary = class_summaries.join("; ");
 
@@ -6578,8 +6599,8 @@ fn compute_multiclass_base_chassis(
         id: "class_chassis.base_save.fortitude".to_owned(),
         value: total_saves.fortitude,
         detail: format!(
-            "Multiclass base Fortitude save {}: combined from each class's own base save \
-             ({class_summary})",
+            "Multiclass base Fortitude save {}: PF1's sum-fractions-then-round-down-once rule, \
+             fractional total {fort_fraction:.3} across ({class_summary})",
             total_saves.fortitude
         ),
     });
@@ -6587,8 +6608,8 @@ fn compute_multiclass_base_chassis(
         id: "class_chassis.base_save.reflex".to_owned(),
         value: total_saves.reflex,
         detail: format!(
-            "Multiclass base Reflex save {}: combined from each class's own base save \
-             ({class_summary})",
+            "Multiclass base Reflex save {}: PF1's sum-fractions-then-round-down-once rule, \
+             fractional total {ref_fraction:.3} across ({class_summary})",
             total_saves.reflex
         ),
     });
@@ -6596,13 +6617,41 @@ fn compute_multiclass_base_chassis(
         id: "class_chassis.base_save.will".to_owned(),
         value: total_saves.will,
         detail: format!(
-            "Multiclass base Will save {}: combined from each class's own base save \
-             ({class_summary})",
+            "Multiclass base Will save {}: PF1's sum-fractions-then-round-down-once rule, \
+             fractional total {will_fraction:.3} across ({class_summary})",
             total_saves.will
         ),
     });
 
     Some((total_bab, total_saves))
+}
+
+/// PF1's per-class base-save fractional value at a class level, before
+/// rounding (SD-21 E7.29). A "good" save's fractional formula is
+/// `level/2 + 2`; a "poor" save's is `level/3` -- the same formulas
+/// `compute_fighter_chassis` and `class_tables.rs`'s `save_bonus` already
+/// apply, just evaluated as a real number instead of floored per-class. The
+/// canonical multiclass rule sums these fractional values across every class
+/// in the mix and rounds down only once for the total.
+fn fractional_save_value(level: u8, good: bool) -> f64 {
+    let level = f64::from(level);
+    if good { level / 2.0 + 2.0 } else { level / 3.0 }
+}
+
+/// Whether `class_id` grounds a "good" progression for Fortitude, Reflex, and
+/// Will respectively (SD-21 E7.29), mirroring `class_tables.rs`'s `GoodSaves`
+/// rows for Fighter (`:77`, good Fortitude only) and Wizard (`:83`, good Will
+/// only) -- the only two classes a multiclass mix can combine until a future
+/// epic grounds more per-class chassis functions. Returns `None` for any other
+/// class id.
+fn multiclass_good_saves(class_id: &str) -> Option<(bool, bool, bool)> {
+    if class_id == FIGHTER_CLASS_ID {
+        Some((true, false, false))
+    } else if class_id == WIZARD_CLASS_ID {
+        Some((false, false, true))
+    } else {
+        None
+    }
 }
 
 /// Compute the Wizard base-attack-bonus / base-save chassis pillar (SD-21 E6.26).

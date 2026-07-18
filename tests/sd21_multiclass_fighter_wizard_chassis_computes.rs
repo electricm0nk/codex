@@ -163,3 +163,41 @@ fn single_class_fighter_dispatch_is_unaffected_by_the_multiclass_extension() {
         "the multiclass extension must not change single-class Fighter's own chassis result"
     );
 }
+
+/// SD-21 E7.29: PF1's actual multiclass base-save rule is NOT a naive
+/// per-class-round-then-sum (round each class's save down separately, then add
+/// the two already-rounded integers) -- it sums each class's *un-rounded*
+/// fractional save contribution across every class in the mix, and rounds down
+/// only once for the total. A Fighter 3 / Wizard 2 mix is the reproducer that
+/// distinguishes the two on Fortitude:
+///
+/// Fortitude: Fighter 3 good-save fraction (3/2 + 2 = 3.5) + Wizard 2 poor-save
+/// fraction (2/3 = 0.667) = 4.167, floored once = 4. The naive shape instead
+/// rounds each class down first (Fighter 3 fort = floor(3/2)+2 = 3, Wizard 2
+/// fort = floor(2/3) = 0) and sums the integers = 3 -- one short of the
+/// correct 4.
+///
+/// Reflex and Will do not diverge for this particular level pair (Reflex: both
+/// classes are poor Reflex with fractional remainders that don't cross an
+/// integer boundary together; Will: Fighter 3's poor-Will fraction is exactly
+/// 1.0 and Wizard 2's good-Will fraction is exactly 3.0, so neither carries a
+/// remainder to lose). Both are asserted anyway as same-mix controls that the
+/// fractional fix doesn't perturb the values the naive shape already got
+/// right.
+#[test]
+fn fighter3_wizard2_base_saves_use_fractional_progression_stacking_not_a_naive_sum() {
+    let input = multiclass_fighter_wizard(3, 2);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert_eq!(
+        computation.base_saves,
+        BaseSaves {
+            fortitude: 4,
+            reflex: 1,
+            will: 4,
+        },
+        "Fighter 3 / Wizard 2 base saves must use PF1's sum-fractions-then-round-down-once \
+         multiclass rule, not a naive per-class-round-then-sum (which would give fortitude \
+         3 instead of the correct 4): {computation:?}"
+    );
+}
