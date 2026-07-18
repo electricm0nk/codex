@@ -651,24 +651,122 @@ fn sha256_of_file(path: &Path) -> std::io::Result<String> {
 
 /// Tauri command shim — `is_install_eligible`.
 ///
-/// F3a's PR #61 deferred the Tauri command layer; F0-EXTEND `t_5b652e93` authorizes F3c to
-/// register the command surface. The eligibility probe body remains F3a's deferred
-/// surface, so until it ships this shim returns an honest wiring error instead of
-/// fabricating an eligibility verdict.
+/// E3.13: this is now a real local-state probe (F3a's PR #61 registered the
+/// command; the body was deferred until this slice). It reads
+/// `installed-state.json` under the resolved config root and derives a
+/// genuine `EligibilityPolicy` from install-kind and managed-path
+/// writability — mirroring `eligibility.ts`'s `decideEligibility` rows 5-7.
+///
+/// This is deliberately a *local* probe only: it takes no manifest argument,
+/// so it cannot answer "is version X eligible" (that comparison is
+/// `decideEligibility`'s job on the TS side once it has both this probe's
+/// output and a fetched manifest). It answers the narrower question this
+/// slice can honestly answer without a network round-trip: is the install
+/// itself even the kind of install that self-update can ever apply to.
 #[tauri::command]
 pub fn is_install_eligible() -> Result<EligibilityPolicy, String> {
-    Err(
-        "is_install_eligible is registered but not wired: the eligibility probe body was \
-         deferred by F3a (PR #61); no eligibility truth is fabricated here"
-            .to_string(),
-    )
+    is_install_eligible_impl(&resolve_config_root())
+}
+
+/// Real body behind the `is_install_eligible` shim, injectable with a config
+/// root so tests never touch the real `$HOME/.config` tree.
+fn is_install_eligible_impl(config_dir: &Path) -> Result<EligibilityPolicy, String> {
+    let installed_state_path = config_update_dir(config_dir).join(INSTALLED_STATE_FILENAME);
+    let bytes = match fs::read(&installed_state_path) {
+        Ok(b) => b,
+        Err(_) => {
+            // No installed-state record yet — either this is the first run
+            // ever, or `verify_relaunch_artifact` has never promoted one.
+            // Honest ineligible verdict, not an error: the probe ran fine,
+            // it just found nothing to certify eligible.
+            return Ok(EligibilityPolicy {
+                update_eligible: false,
+                ineligible_reason: Some(
+                    "no installed-state record yet (first run, or verify_relaunch_artifact \
+                     has never promoted one)"
+                        .to_string(),
+                ),
+            });
+        }
+    };
+    let installed: InstalledState = serde_json::from_slice(&bytes).map_err(|source| {
+        format!(
+            "installed-state.json at {} is unreadable: {source}",
+            installed_state_path.display()
+        )
+    })?;
+
+    match installed.install_kind {
+        InstallKind::DevLocal => {
+            return Ok(EligibilityPolicy {
+                update_eligible: false,
+                ineligible_reason: Some("dev-local build is not update-eligible".to_string()),
+            });
+        }
+        InstallKind::Deb => {
+            return Ok(EligibilityPolicy {
+                update_eligible: false,
+                ineligible_reason: Some(
+                    "deb install is not update-eligible via the AppImage self-update path"
+                        .to_string(),
+                ),
+            });
+        }
+        InstallKind::AppImage => {}
+    }
+
+    if !managed_path_is_writable(&installed.managed_executable_path) {
+        return Ok(EligibilityPolicy {
+            update_eligible: false,
+            ineligible_reason: Some(format!(
+                "managed executable path {} is not writable",
+                installed.managed_executable_path.display()
+            )),
+        });
+    }
+
+    Ok(EligibilityPolicy {
+        update_eligible: true,
+        ineligible_reason: None,
+    })
+}
+
+/// Real writability probe: attempt to create-and-remove a sentinel file next
+/// to the managed executable. Permission *bits* alone don't decide
+/// writability (ownership/ACLs matter too), so this probes the real
+/// operation rather than parsing `st_mode`.
+fn managed_path_is_writable(managed_executable_path: &Path) -> bool {
+    let Some(parent) = managed_executable_path.parent() else {
+        return false;
+    };
+    let probe = parent.join(".codex-update-write-probe");
+    match fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .open(&probe)
+    {
+        Ok(_) => {
+            let _ = fs::remove_file(&probe);
+            true
+        }
+        Err(_) => false,
+    }
 }
 
 /// Tauri command shim — `perform_install`.
 ///
-/// Registration-only (F0-EXTEND `t_5b652e93`): the staged-transaction command body — its
-/// argument contract included — is F3a's deferred surface around `execute_transaction`.
-/// Until F3a wires it, the shim errors rather than pretending an install ran.
+/// Registration-only (F0-EXTEND `t_5b652e93`): the staged-transaction body
+/// (`execute_transaction`) already exists and is fully tested (see `mod
+/// tests` above) — what remains genuinely missing is the *download* step
+/// `execute_transaction`'s `download` closure needs: this crate carries no
+/// HTTP client dependency (no `reqwest`/`ureq`/etc. in `Cargo.toml`), so
+/// there is no way to fetch the AppImage artifact bytes from here without
+/// adding one. Rather than adding a new dependency as a side-effect of an
+/// Update-UI bug-fix slice (E3.13's authorized file-touch scope does not
+/// include `Cargo.toml`), this shim stays an honest deferred error naming
+/// that exact, narrower gap. `is_install_eligible` above no longer shares
+/// this limitation — E3.13 gave it a real body.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PerformInstallArgs {
@@ -679,8 +777,10 @@ pub struct PerformInstallArgs {
 #[tauri::command]
 pub fn perform_install(_args: PerformInstallArgs) -> Result<RelaunchPrompt, String> {
     Err(
-        "perform_install is registered but not wired: the staged-transaction command body \
-         was deferred by F3a (PR #61); no install is performed here"
+        "perform_install is registered but not wired: downloading the AppImage artifact \
+         requires an HTTP client this crate does not carry as a dependency yet; \
+         execute_transaction itself is real and tested, but no install is performed here \
+         until a download step lands"
             .to_string(),
     )
 }
@@ -1062,7 +1162,7 @@ mod tests {
             installed_state: Some(installed),
             download: |w| {
                 w.write_all(artifact)
-                    .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?;
+                    .map_err(std::io::Error::other)?;
                 Ok(artifact.len() as u64)
             },
         });
@@ -1119,7 +1219,7 @@ mod tests {
             installed_state: Some(make_installed(&dir)),
             download: |w| {
                 w.write_all(fake_artifact)
-                    .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?;
+                    .map_err(std::io::Error::other)?;
                 Ok(fake_artifact.len() as u64)
             },
         });
@@ -1188,7 +1288,7 @@ mod tests {
             installed_state: None,
             download: |w| {
                 w.write_all(artifact)
-                    .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?;
+                    .map_err(std::io::Error::other)?;
                 Ok(artifact.len() as u64)
             },
         });
@@ -1278,7 +1378,7 @@ mod tests {
             installed_state: Some(make_installed(&dir)),
             download: |w| {
                 w.write_all(artifact)
-                    .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?;
+                    .map_err(std::io::Error::other)?;
                 Ok(artifact.len() as u64)
             },
         });
@@ -1611,26 +1711,112 @@ mod verify_relaunch_artifact_tests {
         );
     }
 
-    /// The F3a/F3b-deferred command bodies are not all wired yet. The
-    /// `is_install_eligible` and `perform_install` shims are still
-    /// registration-only (F3a did not author their bodies in PR #61; the
-    /// bodies are owned by a future slice) and must return honest errors
-    /// instead of fabricating eligibility or install truth.
+    /// `perform_install`'s staged-transaction body (downloading the artifact
+    /// bytes) needs an HTTP client this crate does not carry as a dependency
+    /// yet — that remains a genuinely deferred surface, not fabricated. This
+    /// test no longer covers `is_install_eligible`: E3.13 gave that shim a
+    /// real, tested body (`is_install_eligible_probe_tests` below) — it now
+    /// reads real on-disk state rather than always erroring.
     ///
     /// `perform_restore_previous` was a registration-only stub through the
     /// F3c PR (#63). F3b (backfill card t_da3470a3) ships its real body,
     /// so this test no longer asserts `perform_restore_previous().is_err()`
-    /// — it asserts only the still-deferred F3a commands. F3b's own
-    /// rollback_retention_tests mod covers the F3b body contract.
+    /// — it asserts only the still-deferred `perform_install` command. F3b's
+    /// own rollback_retention_tests mod covers the F3b body contract.
     #[test]
-    fn deferred_command_shims_error_instead_of_fabricating_truth() {
-        assert!(is_install_eligible().is_err());
+    fn perform_install_shim_errors_instead_of_fabricating_truth() {
         assert!(
             perform_install(PerformInstallArgs {
                 manifest: serde_json::json!({}),
                 index_url: "https://example.invalid/index.json".to_string(),
             })
             .is_err()
+        );
+    }
+
+    /// E3.13 — `is_install_eligible`'s real probe body: with no
+    /// `installed-state.json` on disk yet (first run, or a run that never
+    /// completed `verify_relaunch_artifact`), the probe must degrade to an
+    /// honest "no record yet" ineligible verdict rather than erroring or
+    /// fabricating an eligible verdict.
+    #[test]
+    fn is_install_eligible_probe_reports_honest_no_record_when_installed_state_missing() {
+        let dir = tempdir("probe-no-record");
+        let policy = is_install_eligible_impl(&dir).expect("probe body is real, not an error");
+        assert!(!policy.update_eligible, "no record yet must never read as eligible");
+        assert!(
+            policy
+                .ineligible_reason
+                .as_deref()
+                .is_some_and(|r| r.contains("no installed-state")),
+            "reason must honestly name the missing record: {:?}",
+            policy.ineligible_reason
+        );
+    }
+
+    /// A real `installed-state.json` recording an `AppImage` install on a
+    /// writable managed path is genuinely update-eligible from the local
+    /// probe's point of view (it does not compare against a manifest — that
+    /// remains `decideEligibility`'s job on the TS side).
+    #[test]
+    fn is_install_eligible_probe_reports_appimage_on_writable_path_as_eligible() {
+        let dir = tempdir("probe-appimage-writable");
+        let update_dir = config_update_dir(&dir);
+        fs::create_dir_all(&update_dir).expect("mkdir update dir");
+        let managed = dir.join("Codex.AppImage");
+        fs::write(&managed, b"binary").expect("write managed binary");
+        let installed = InstalledState {
+            managed_executable_path: managed,
+            install_kind: InstallKind::AppImage,
+            channel: "alpha".into(),
+            version: "0.1.0".into(),
+            source_commit: "deadbeef".into(),
+            release_tag: "alpha/v0.1.0".into(),
+            manifest_hash: "manifest-hash".into(),
+            artifact_sha256: "artifact-sha".into(),
+            installed_at: "2026-07-03T00:00:00Z".into(),
+            update_eligible: true,
+            ineligible_reason: None,
+        };
+        write_atomic_json(&update_dir.join(INSTALLED_STATE_FILENAME), &installed)
+            .expect("write installed-state.json");
+
+        let policy = is_install_eligible_impl(&dir).expect("probe body is real, not an error");
+        assert!(policy.update_eligible, "appimage on writable path must read eligible");
+        assert_eq!(policy.ineligible_reason, None);
+    }
+
+    /// A `dev-local` install must never read as update-eligible — mirrors
+    /// `eligibility.ts`'s `decideEligibility` row for `install_kind === 'dev'`.
+    #[test]
+    fn is_install_eligible_probe_reports_dev_local_as_ineligible() {
+        let dir = tempdir("probe-dev-local");
+        let update_dir = config_update_dir(&dir);
+        fs::create_dir_all(&update_dir).expect("mkdir update dir");
+        let managed = dir.join("codex-dev-binary");
+        fs::write(&managed, b"binary").expect("write managed binary");
+        let installed = InstalledState {
+            managed_executable_path: managed,
+            install_kind: InstallKind::DevLocal,
+            channel: "alpha".into(),
+            version: "0.1.0".into(),
+            source_commit: "deadbeef".into(),
+            release_tag: "alpha/v0.1.0".into(),
+            manifest_hash: "manifest-hash".into(),
+            artifact_sha256: "artifact-sha".into(),
+            installed_at: "2026-07-03T00:00:00Z".into(),
+            update_eligible: false,
+            ineligible_reason: None,
+        };
+        write_atomic_json(&update_dir.join(INSTALLED_STATE_FILENAME), &installed)
+            .expect("write installed-state.json");
+
+        let policy = is_install_eligible_impl(&dir).expect("probe body is real, not an error");
+        assert!(!policy.update_eligible, "dev-local install must never read eligible");
+        assert!(
+            policy.ineligible_reason.as_deref().is_some_and(|r| r.contains("dev-local")),
+            "reason must honestly name the dev-local install kind: {:?}",
+            policy.ineligible_reason
         );
     }
 
@@ -1739,11 +1925,12 @@ pub const ROLLBACK_STATE_FILENAME: &str = "rollback-state.json";
 /// state itself (it would be AV-RB-8 if proposed as an L0-B amendment).
 /// F3b writes the state honestly so the future AV row has a wire contract to
 /// bind against.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Default)]
 #[serde(rename_all = "kebab-case")]
 pub enum RollbackState {
     /// No rollback has been attempted or the previous rollback succeeded and
     /// the sidecar was cleared.
+    #[default]
     None,
     /// A previous restore attempt failed; the operator must clear this state
     /// explicitly (per `technical-requirements.md` §"Retention Requirements":
@@ -1752,12 +1939,6 @@ pub enum RollbackState {
     /// The 3-cycle mismatch threshold has been reached; the next restore
     /// call auto-runs (AV-RB-3).
     AutoRestorePrevious,
-}
-
-impl Default for RollbackState {
-    fn default() -> Self {
-        RollbackState::None
-    }
 }
 
 /// F3b-owned sidecar record persisted at
