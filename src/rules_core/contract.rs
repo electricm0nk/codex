@@ -26,6 +26,7 @@
 //! this bundle's progress doc for the current frontier.
 
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
+use crate::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
 use crate::rules_core::feat_prereqs::{
     compute_feat_effects, evaluate_feat_prerequisites, FeatEffects, FeatKey,
@@ -186,6 +187,38 @@ pub struct PilotReceipt {
     /// `max_dex_cap` (an `Option<i16>`, cell present only when `Some`) DO
     /// become cells -- see `printed_sheet_cell_map`'s doc comment.
     pub equipment_effects: EquipmentEffects,
+    /// Epic 6's real per-weapon damage breakdown
+    /// (`damage_total::resolve_weapon_damage_breakdown`), wired in by the
+    /// `contract:damage_wiring` cycle (Cycle 5b,
+    /// `adaptive-squishing-mccarthy.md`). Computed by reusing the exact
+    /// same `equipment_effects` local `to_pilot_receipt` already built for
+    /// `PilotReceipt.equipment_effects` above (not recomputed a second
+    /// time -- see that field's doc comment and `to_pilot_receipt`'s doc
+    /// comment for why the local was kept separate precisely for this
+    /// reuse) and `chassis.ability_modifiers.strength` (the
+    /// already-computed STR modifier from the unchanged chassis
+    /// computation, `PilotBaseChassisComputation::ability_modifiers`).
+    /// One `WeaponDamageBreakdown` per `EquippedActive` equipped item that
+    /// `resolve_base_damage_dice` identifies as a weapon (carries a
+    /// `DAMAGE:` corpus token); a non-weapon equipped item (e.g. armor)
+    /// is silently absent from this `Vec`, never represented with `None`
+    /// fields -- see `resolve_weapon_damage_breakdown`'s own doc comment
+    /// for the full identification/limitation discipline (including its
+    /// `WeaponHandSlot::Primary`-only bound).
+    ///
+    /// **Scope boundary, deliberate**: this cycle adds NO new
+    /// `printed_sheet_cell_map` cells. No summed "damage roll total"
+    /// formula (base dice + STR + weapon enhancement + feat bonuses,
+    /// combined into one number) exists anywhere in this codebase --
+    /// inventing one here would be exactly the fabrication this project's
+    /// discipline forbids (see `adaptive-squishing-mccarthy.md`'s "No
+    /// fabricated damage total" design decision). `receipt.weapon_damage`
+    /// stays the structured per-weapon breakdown, reachable directly by
+    /// callers, matching the same "not every epic output becomes a sheet
+    /// cell" precedent `spellbook`/`feats`/`equipment_effects` above
+    /// already set. A future, separate cycle owns turning this structured
+    /// data into a summed display number, if that is ever wanted.
+    pub weapon_damage: Vec<WeaponDamageBreakdown>,
 }
 
 /// One selected feat, resolved against the CRB feat catalog and evaluated
@@ -250,9 +283,20 @@ pub struct ResolvedFeat {
 /// `equipment_effects::compute_equipment_effects(&equipped, corpus)`. Both
 /// the filtered `equipped` slice and the resulting `EquipmentEffects` are
 /// kept as their own local variables (not inlined into the `PilotReceipt`
-/// literal below) precisely so a near-future cycle (Cycle 5b, damage
-/// wiring) can reuse the exact same `EquipmentEffects` value when calling
+/// literal below) precisely so Cycle 5b (damage wiring) can reuse the
+/// exact same `EquipmentEffects` value when calling
 /// `damage_total::resolve_weapon_damage_breakdown` without recomputing it.
+///
+/// The `contract:damage_wiring` cycle (Cycle 5b) populates
+/// `PilotReceipt.weapon_damage`: it calls Epic 6's real
+/// `damage_total::resolve_weapon_damage_breakdown(input, corpus,
+/// &equipment_effects, chassis_str_modifier)`, reusing this same
+/// `equipment_effects` local (computed once, immediately above, for
+/// `PilotReceipt.equipment_effects`) rather than recomputing
+/// `compute_equipment_effects` a second time, and reusing
+/// `receipt.base.ability_modifiers.strength` -- the already-computed STR
+/// modifier from the unchanged chassis computation -- rather than
+/// re-deriving it from `input.chosen.ability_scores.strength`.
 pub fn to_pilot_receipt(
     receipt: &CorpusPilotReceipt,
     input: &CharacterInput,
@@ -292,6 +336,17 @@ pub fn to_pilot_receipt(
         .collect();
     let equipment_effects = compute_equipment_effects(&equipped, corpus);
 
+    // Reuses `equipment_effects` (built immediately above for
+    // `PilotReceipt.equipment_effects`) and the chassis's already-computed
+    // STR modifier -- see this function's doc comment and
+    // `PilotReceipt.weapon_damage`'s doc comment. Neither is recomputed.
+    let weapon_damage = resolve_weapon_damage_breakdown(
+        input,
+        corpus,
+        &equipment_effects,
+        receipt.base.ability_modifiers.strength,
+    );
+
     PilotReceipt {
         diagnostics: receipt.base.diagnostics.clone(),
         chassis: receipt.base.clone(),
@@ -300,6 +355,7 @@ pub fn to_pilot_receipt(
         spellbook: compute_spellbook_coverage(input, corpus),
         feats,
         equipment_effects,
+        weapon_damage,
     }
 }
 
