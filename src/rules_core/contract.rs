@@ -25,7 +25,8 @@
 //! lands in this cycle (cycle 3) — see the loop instruction's Step 2 and
 //! this bundle's progress doc for the current frontier.
 
-use crate::rules_core::character_input::CharacterInput;
+use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
+use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
 use crate::rules_core::feat_prereqs::{
     compute_feat_effects, evaluate_feat_prerequisites, FeatEffects, FeatKey,
     PrerequisiteEvaluation,
@@ -164,6 +165,26 @@ pub struct PilotReceipt {
     /// directly by callers, matching the same "not every epic output
     /// becomes a sheet cell" precedent `spellbook` above already set.
     pub feats: Vec<ResolvedFeat>,
+    /// Epic 5's real equipment-effect aggregate
+    /// (`equipment_effects::compute_equipment_effects`), wired in by the
+    /// `contract:equipment_wiring` cycle (`adaptive-squishing-mccarthy.md`).
+    /// Computed over `input.chosen.equipment_selections` filtered to
+    /// `active_state == ActiveState::EquippedActive` only -- a selection
+    /// that is merely `SelectedInactive` or `Absent` contributes nothing,
+    /// matching the same filtering `to_pilot_receipt`'s doc comment
+    /// documents.
+    ///
+    /// **Scope boundary, deliberate**: `EquipmentEffects.spell_failure_chance:
+    /// Option<f32>` is NOT flattened into a `printed_sheet_cell_map` cell
+    /// this cycle -- a fractional percentage doesn't cleanly fit
+    /// `PrintedSheetCellValue::Number(i16)` without a real type extension,
+    /// which is out of this cycle's scope (same "not every epic output
+    /// becomes a sheet cell" precedent `spellbook`/`feats` above already
+    /// set). It stays reachable via `receipt.equipment_effects.spell_failure_chance`
+    /// directly. `armor_class_delta` (a plain `i16`, always real) and
+    /// `max_dex_cap` (an `Option<i16>`, cell present only when `Some`) DO
+    /// become cells -- see `printed_sheet_cell_map`'s doc comment.
+    pub equipment_effects: EquipmentEffects,
 }
 
 /// One selected feat, resolved against the CRB feat catalog and evaluated
@@ -219,6 +240,18 @@ pub struct ResolvedFeat {
 /// or a typo) produces no `ResolvedFeat` at all -- the same honest-skip
 /// discipline `feats.rs`'s own catalog generator already applies to
 /// corpus records it cannot classify.
+///
+/// The `contract:equipment_wiring` cycle (Cycle 4) populates
+/// `PilotReceipt.equipment_effects`: `input.chosen.equipment_selections` is
+/// filtered to `active_state == ActiveState::EquippedActive` first (a
+/// `SelectedInactive` or `Absent` selection contributes nothing), then the
+/// filtered slice is fed to Epic 5's real
+/// `equipment_effects::compute_equipment_effects(&equipped, corpus)`. Both
+/// the filtered `equipped` slice and the resulting `EquipmentEffects` are
+/// kept as their own local variables (not inlined into the `PilotReceipt`
+/// literal below) precisely so a near-future cycle (Cycle 5b, damage
+/// wiring) can reuse the exact same `EquipmentEffects` value when calling
+/// `damage_total::resolve_weapon_damage_breakdown` without recomputing it.
 pub fn to_pilot_receipt(
     receipt: &CorpusPilotReceipt,
     input: &CharacterInput,
@@ -246,6 +279,18 @@ pub fn to_pilot_receipt(
         })
         .collect();
 
+    // Pre-filtered to EquippedActive only -- see this function's doc
+    // comment. Kept as its own local (not inlined) so Cycle 5b can reuse
+    // both `equipped` and `equipment_effects` verbatim.
+    let equipped: Vec<EquipmentSelection> = input
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+        .cloned()
+        .collect();
+    let equipment_effects = compute_equipment_effects(&equipped, corpus);
+
     PilotReceipt {
         diagnostics: receipt.base.diagnostics.clone(),
         chassis: receipt.base.clone(),
@@ -253,6 +298,7 @@ pub fn to_pilot_receipt(
         skills: allocate_skill_ranks(input),
         spellbook: compute_spellbook_coverage(input, corpus),
         feats,
+        equipment_effects,
     }
 }
 
@@ -407,6 +453,22 @@ fn diagnostic_blocking(receipt: &PilotReceipt, diagnostic_id: &str) -> bool {
 /// flattened into cells here — they don't reduce to
 /// `PrintedSheetCellValue::Number(i16) | Blocked` cleanly and stay
 /// reachable via `receipt.spellbook` directly.
+///
+/// The two `sheet.equipment.*` cells (as of the `contract:equipment_wiring`
+/// cycle) follow a fourth, distinct discipline: `armor_class_delta` is a
+/// plain `i16` (not `Option`), so `sheet.equipment.armor_class_delta` is
+/// ALWAYS present -- `0` for "no armor bonus contributed" is a real,
+/// honest value, not a fabricated placeholder. `max_dex_cap` is
+/// `Option<i16>`, so `sheet.equipment.max_dex_cap` is present ONLY when
+/// `Some` -- an unarmored/shieldless loadout has no cap at all, and this
+/// cycle's explicit discipline is to omit the cell entirely in that case
+/// rather than fabricate a cell for "no cap exists" (never `Blocked`
+/// either -- `compute_equipment_effects` pushes no diagnostics of its
+/// own). Per that same cycle's scope boundary,
+/// `EquipmentEffects.spell_failure_chance: Option<f32>` is deliberately
+/// EXCLUDED from cells entirely -- a fractional percentage doesn't reduce
+/// to `PrintedSheetCellValue::Number(i16)` cleanly -- and stays reachable
+/// only via `receipt.equipment_effects.spell_failure_chance` directly.
 pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
     let chassis_unsupported =
         diagnostic_blocking(receipt, CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID);
@@ -570,6 +632,23 @@ pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
             &format!("sheet.spellbook.spell_save_dc.{class_id}"),
             &format!("spellbook.spell_save_dc.{class_id}"),
             dc as i16,
+        ));
+    }
+
+    // See this function's doc comment for the armor_class_delta /
+    // max_dex_cap cell discipline: armor_class_delta is a plain i16 so it
+    // is always present; max_dex_cap is Option<i16> so its cell is
+    // present only when Some (never fabricated for "no cap exists").
+    cells.push(independent_cell(
+        "sheet.equipment.armor_class_delta",
+        "equipment_effects.armor_class_delta",
+        receipt.equipment_effects.armor_class_delta,
+    ));
+    if let Some(max_dex_cap) = receipt.equipment_effects.max_dex_cap {
+        cells.push(independent_cell(
+            "sheet.equipment.max_dex_cap",
+            "equipment_effects.max_dex_cap",
+            max_dex_cap,
         ));
     }
 

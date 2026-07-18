@@ -105,7 +105,9 @@
       { "cell_id": "sheet.ability_modifier.constitution", "source_field": "chassis.ability_modifiers.constitution", "value": { "kind": "Number", "value": 2 } },
       { "cell_id": "sheet.ability_modifier.intelligence", "source_field": "chassis.ability_modifiers.intelligence", "value": { "kind": "Number", "value": 0 } },
       { "cell_id": "sheet.ability_modifier.wisdom", "source_field": "chassis.ability_modifiers.wisdom", "value": { "kind": "Number", "value": 1 } },
-      { "cell_id": "sheet.ability_modifier.charisma", "source_field": "chassis.ability_modifiers.charisma", "value": { "kind": "Number", "value": -1 } }
+      { "cell_id": "sheet.ability_modifier.charisma", "source_field": "chassis.ability_modifiers.charisma", "value": { "kind": "Number", "value": -1 } },
+      { "cell_id": "sheet.equipment.armor_class_delta", "source_field": "equipment_effects.armor_class_delta", "value": { "kind": "Number", "value": 4 } },
+      { "cell_id": "sheet.equipment.max_dex_cap", "source_field": "equipment_effects.max_dex_cap", "value": { "kind": "Number", "value": 4 } }
     ]
   },
   "expected_diagnostics": []
