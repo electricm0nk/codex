@@ -1,4 +1,4 @@
-// SD16-E3-F3b-BACKFILL — indexSource URL-shape tests.
+// indexSource URL-shape tests.
 //
 // AV-SCH-7 (channel index fetched from update-index branch, not GitHub
 // Release scanning) is enforced by this module's URL helper. These

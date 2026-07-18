@@ -1,7 +1,7 @@
 /**
- * SD16-E6-F3b — shell update diagnostics model.
+ * Shell update diagnostics model.
  *
- * Three pure typed shapes whose field names match the SD16 "Diagnostics Requirements"
+ * Three pure typed shapes whose field names match the "Diagnostics Requirements"
  * contract verbatim, plus deterministic default factories and render helpers.
  * `#installed-panel`, `#last-check-panel`, and `#pending-rollback-panel` DOM
  * hooks. The `pending/rollback.*` group has a soft dependency on E7 (E6 -> E8

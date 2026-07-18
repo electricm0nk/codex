@@ -1,4 +1,4 @@
-// SD16-E3-F3b-BACKFILL — channel index parser.
+// Channel index parser.
 //
 // Validates a raw JSON text string against the canonical
 // `channel-index.schema.json` using ajv programmatically (NOT ajv-cli).

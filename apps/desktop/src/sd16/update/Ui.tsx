@@ -41,7 +41,7 @@ export interface UpdateUiProps {
 }
 
 /**
- * SD-16-E6-F3c page-level entry. Wires the five sub-components together
+ * Page-level entry. Wires the five sub-components together
  * and owns the transient UI-only state (which channel is selected,
  * whether Check / Install are in progress).
  *
@@ -109,8 +109,8 @@ export function UpdateUi({ initialDeps, restoreOffer }: UpdateUiProps) {
 
   const handleInstall = useCallback(() => {
     setInstallInProgress(true);
-    // The actual install transaction lives in SD-16-E7 (Tauri backend);
-    // F3c only owns the gate. When E7 lands, the wired `controller` will
+    // The actual install transaction lives in the update backend (Tauri);
+    // F3c only owns the gate. When that backend lands, the wired `controller` will
     // either expose an `install` method or hand the UI off to a Tauri
     // command. F3c never invokes a Tauri command directly.
     setInstallInProgress(false);

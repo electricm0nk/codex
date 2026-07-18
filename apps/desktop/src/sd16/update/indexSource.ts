@@ -1,4 +1,4 @@
-// SD16-E3-F3b-BACKFILL — index source URL resolver.
+// Index source URL resolver.
 //
 // Resolves the canonical raw URL for a channel's index file on the
 // protected `update-index` branch on origin. The shell's Install

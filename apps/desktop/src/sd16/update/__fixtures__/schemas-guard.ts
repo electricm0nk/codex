@@ -1,4 +1,4 @@
-// SD16-E3-F3b-BACKFILL — schemas guard.
+// Schemas guard.
 //
 // Runtime defensive assertion that the JSON Schema files imported by
 // `loadSchemas.ts` are the canonical documents hosted at the repo paths
@@ -30,7 +30,7 @@ import { loadChannelIndexSchema, loadUpdateManifestSchema } from '../loadSchemas
 interface CanonicalChannelIndexSchemaShape {
   readonly expectedId: string;
   readonly expectedTitle: string;
-  // SD16-F-WINDOWS: the array-of-accepted-consts shape is uniform
+  // The array-of-accepted-consts shape is uniform
   // across both schemas. Channel-index stays at the historical
   // ['1.0.0']; update-manifest carries ['1.0.0', '1.1.0'] because the
   // bump was additive-only.

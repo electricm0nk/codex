@@ -1,5 +1,5 @@
 /**
- * SD-16-E6 shared update-UI model.
+ * Shared update-UI model.
  *
  * This module is the contract surface consumed by the F3c shell-update-UI
  * slice. It declares the type shapes the UI renders against, plus the
@@ -7,8 +7,8 @@
  * fetch/index parser and F3b eligibility/diagnostics rules) have not yet
  * landed on `origin/develop`.
  *
- * The F1 closure
- * (`programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/artifacts/SD16-E6-execution-readiness-closure-2026-07-03.md`)
+ * The F1 closure (see the execution-readiness closure record in
+ * `programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/`)
  * places F3a (fetch + validate) and F3b (eligibility + diagnostics model)
  * as sibling slices that F3c wires into the shell. F3c is therefore the
  * last of the three to land on `develop`; the UI must be reviewable on

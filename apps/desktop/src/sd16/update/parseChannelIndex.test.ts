@@ -1,4 +1,4 @@
-// SD16-E3-F3b-BACKFILL — channel-index TS parser tests.
+// Channel-index TS parser tests.
 //
 // These tests are the TS-lane half of the dual-validator posture the
 // F1 readiness closure committed to (Python lane:

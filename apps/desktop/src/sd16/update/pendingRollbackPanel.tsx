@@ -68,7 +68,7 @@ export function PendingRollbackPanel({
           fontStyle: 'italic',
         }}
       >
-        Values are populated by the SD-16-E7 staged-transaction module;
+        Values are populated by the staged-transaction module;
         until that surface lands, defaults are deterministic placeholders.
       </p>
     </section>

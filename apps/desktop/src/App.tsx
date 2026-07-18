@@ -330,7 +330,7 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
     return composeBugReport({ title, payload });
   }, [props.surface, title, observedBehavior, expectedBehavior, reproductionSteps]);
 
-  // Submittable drafts go through the governed browser handoff (SD-16 F4):
+  // Submittable drafts go through the governed browser handoff (F4):
   // the Rust boundary builds + validates a prefilled GitHub issue URL and
   // opens it in the OS browser. No secret-bearing auth is ever improvised,
   // and no submission is claimed — filing completes in the browser.
@@ -538,7 +538,7 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
     return composeEnhancementRequest({ title, payload });
   }, [props.surface, title, testerGoal, currentFriction, requestedCapability, affectedSurface]);
 
-  // Submittable drafts go through the governed browser handoff (SD-16 F4):
+  // Submittable drafts go through the governed browser handoff (F4):
   // the Rust boundary builds + validates a prefilled GitHub issue URL and
   // opens it in the OS browser. No secret-bearing auth is ever improvised,
   // and no submission is claimed — filing completes in the browser.

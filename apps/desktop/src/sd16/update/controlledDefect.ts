@@ -1,7 +1,7 @@
-// SD16-E8-F3 — controlled-defect dispatcher.
+// Controlled-defect dispatcher.
 //
 // This module is the in-tranche controlled-defect SHA-256 surface for
-// the SD-16 E8 final-acceptance run. It pairs with the F1-pinned
+// the E8 final-acceptance run. It pairs with the F1-pinned
 // "primary scenario: SHA-256 pre-replacement mismatch" controlled
 // defect and is the seam that lets the shell prove the E7 staged
 // transaction's pre-replacement SHA-256 guard is discriminating, not

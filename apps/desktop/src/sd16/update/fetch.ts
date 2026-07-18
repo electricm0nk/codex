@@ -1,4 +1,4 @@
-// SD16-E6-F3a — channel index + update manifest fetch with canonical
+// Channel index + update manifest fetch with canonical
 // JSON-Schema validation.
 //
 // This module is the shell-side update discovery path for Tranche 2.5. It

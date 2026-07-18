@@ -1,4 +1,4 @@
-// SD16-E8-F3 — controlledDefect tests.
+// controlledDefect tests.
 //
 // Covers the four F2-pinned acceptance cases:
 //   (a) controlled mismatch returns `match: false` and the verbatim

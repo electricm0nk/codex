@@ -1,5 +1,5 @@
 /**
- * SD-16-E7-F3c shell-side install action bridge.
+ * Shell-side install action bridge.
  *
  * The desktop shell mounts a `#install-relaunch-prompt` DOM hook whenever the
  * staged-transaction Tauri command returns a relaunch prompt payload. This
@@ -28,7 +28,7 @@ import { formatError, hasTauriRuntime } from "../../boundary/runtime";
 /**
  * Response shape returned by the staged-transaction Tauri command.
  *
- * This is the frontend bridge contract consumed by the SD-16 update UI.
+ * This is the frontend bridge contract consumed by the update UI.
  */
 export interface PerformInstallResponse {
   pendingUpdatePath: string;

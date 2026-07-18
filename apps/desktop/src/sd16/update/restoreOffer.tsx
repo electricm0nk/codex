@@ -1,5 +1,5 @@
 /**
- * SD-16-E7-F3c restore-offer panel.
+ * Restore-offer panel.
  *
  * On `verification_failed`, the desktop shell renders `#restore-prior` with
  * the prior version string so the operator can elect to roll back via

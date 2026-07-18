@@ -57,7 +57,7 @@ function testE7PlaceholderNoteIsVisibleUntilE7Lands() {
   );
   assertContains(
     html,
-    'populated by the SD-16-E7 staged-transaction module',
+    'populated by the staged-transaction module',
     'AV-DIAG-3: carryover note must mention the E7 staged-transaction module',
   );
 }

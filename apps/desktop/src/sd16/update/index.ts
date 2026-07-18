@@ -1,5 +1,5 @@
 /**
- * SD-16-E6 barrel.
+ * Update module barrel.
  *
  * Exports the public surface of F3b (eligibility + diagnostics model) and
  * F3c (shell-update-UI). The runtime (F4 wiring) imports the page-level

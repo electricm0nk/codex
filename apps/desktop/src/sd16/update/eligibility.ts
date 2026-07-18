@@ -1,5 +1,5 @@
 /**
- * SD16-E6-F3b — shell update eligibility rules.
+ * Shell update eligibility rules.
  *
  * A pure decision function over installed-state, manifest identity, and fetch
  * outcomes. It never performs I/O; F3a owns fetching/parsing and passes the

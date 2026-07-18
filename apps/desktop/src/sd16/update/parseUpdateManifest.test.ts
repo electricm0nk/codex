@@ -1,4 +1,4 @@
-// SD16-E3-F3b-BACKFILL — update-manifest TS parser tests.
+// Update-manifest TS parser tests.
 //
 // Mirror of `parseChannelIndex.test.ts` against the manifest schema.
 // The same fixtures drive both lanes (Python jsonschema and TypeScript
@@ -182,7 +182,7 @@ export function test_parseUpdateManifest_invalid_json_returns_typed_error(): voi
   }
 }
 
-// ---------- SD16-F-WINDOWS: optional Windows MSI artifact identity ----------
+// ---------- Optional Windows MSI artifact identity ----------
 
 const WINDOWS_MSI_MANIFEST_JSON = `{
   "schema_version": "1.1.0",
@@ -266,7 +266,7 @@ const MACOS_DMG_MANIFEST_JSON = `{
   "signature": null
 }`;
 
-export function test_sd16_f_windows_msi_block_optional_and_typed(): void {
+export function test_windows_msi_block_optional_and_typed(): void {
   const result = parseUpdateManifest(WINDOWS_MSI_MANIFEST_JSON);
   assert(
     result.ok,
@@ -287,7 +287,7 @@ export function test_sd16_f_windows_msi_block_optional_and_typed(): void {
   }
 }
 
-export function test_sd16_f_macos_dmg_block_optional_and_typed(): void {
+export function test_macos_dmg_block_optional_and_typed(): void {
   const result = parseUpdateManifest(MACOS_DMG_MANIFEST_JSON);
   assert(
     result.ok,
@@ -311,9 +311,9 @@ function run(): void {
   test_av_sch_5_manifest_tranche_id_and_path_locked_at_parse();
   test_av_sch_6_manifest_rejects_bad_path();
   test_parseUpdateManifest_invalid_json_returns_typed_error();
-  test_sd16_f_windows_msi_block_optional_and_typed();
-  test_sd16_f_macos_dmg_block_optional_and_typed();
-  console.log('parseUpdateManifest.test.ts: 7/7 AV-SCH-* + SD16-F-WINDOWS + SD16-F-MACOS assertions passed');
+  test_windows_msi_block_optional_and_typed();
+  test_macos_dmg_block_optional_and_typed();
+  console.log('parseUpdateManifest.test.ts: 7/7 AV-SCH-* + Windows MSI + macOS DMG assertions passed');
 }
 
 run();
