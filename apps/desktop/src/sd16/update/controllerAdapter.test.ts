@@ -364,6 +364,133 @@ async function verifiesUnknownHonestlyWhenLocalProbeInvokeFails() {
   );
 }
 
+// ---------- E3.15: additional per-probe/per-decision outcome coverage ----------
+
+async function verifiesIneligibleWhenRealLocalProbeReportsUnwritableManagedPath() {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      { url: MANIFEST_URL, status: 200, responded: manifestText({ version: '0.2.0' }) },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        return {
+          installed: {
+            managedExecutablePath: '/opt/codex/codex.AppImage',
+            installKind: 'app-image',
+            channel: 'alpha',
+            version: '0.1.0',
+            sourceCommit: 'deadbeef',
+            releaseTag: 'alpha/v0.1.0',
+            manifestHash: 'manifest-hash',
+            artifactSha256: 'b'.repeat(64),
+            installedAt: '2026-07-03T00:00:00Z',
+            updateEligible: false,
+            ineligibleReason: null,
+          },
+          isManagedPathWritable: false,
+        };
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+  assertEqual(eligibility, 'ineligible', 'an unwritable managed path must resolve ineligible via decideEligibility');
+  const reason = deps.controller.disabledReason(deps.installed, deps.lastCheck);
+  assert((reason ?? '').includes('not writable'), `reason must name the writability gate, got: ${reason}`);
+}
+
+async function verifiesIneligibleWhenRealLocalProbeReportsDebInstall() {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      { url: MANIFEST_URL, status: 200, responded: manifestText({ version: '0.2.0' }) },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        return {
+          installed: {
+            managedExecutablePath: '/usr/bin/codex-desktop',
+            installKind: 'deb',
+            channel: 'alpha',
+            version: '0.1.0',
+            sourceCommit: 'deadbeef',
+            releaseTag: 'alpha/v0.1.0',
+            manifestHash: 'manifest-hash',
+            artifactSha256: SHA64,
+            installedAt: '2026-07-03T00:00:00Z',
+            updateEligible: false,
+            ineligibleReason: 'deb install is not update-eligible via the AppImage self-update path',
+          },
+          isManagedPathWritable: true,
+        };
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+  assertEqual(
+    eligibility,
+    'ineligible',
+    'a deb install (mapped onto the tarball bucket) must resolve ineligible via decideEligibility',
+  );
+}
+
+async function verifiesIneligibleWhenFetchedManifestMatchesAlreadyInstalledVersion() {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      {
+        url: MANIFEST_URL,
+        status: 200,
+        responded: manifestText({
+          version: '0.1.0',
+          linux_appimage: { ...VALID_MANIFEST_WIRE.linux_appimage, sha256: 'c'.repeat(64) },
+        }),
+      },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        return {
+          installed: {
+            managedExecutablePath: '/opt/codex/codex.AppImage',
+            installKind: 'app-image',
+            channel: 'alpha',
+            version: '0.1.0',
+            sourceCommit: 'deadbeef',
+            releaseTag: 'alpha/v0.1.0',
+            manifestHash: 'manifest-hash',
+            artifactSha256: 'c'.repeat(64),
+            installedAt: '2026-07-03T00:00:00Z',
+            updateEligible: true,
+            ineligibleReason: null,
+          },
+          isManagedPathWritable: true,
+        };
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+  assertEqual(
+    eligibility,
+    'ineligible',
+    'a fetched manifest identical to what is already installed must resolve ineligible, never eligible',
+  );
+}
+
 // ---------- runCheck: index fetch network failure ----------
 
 async function verifiesRunCheckSurfacesRealIndexFetchFailure() {
@@ -538,6 +665,9 @@ async function main() {
   await verifiesIneligibleWhenRealLocalProbeReportsDevLocalInstall();
   await verifiesUnknownHonestlyWhenNoLocalInstalledStateRecordExists();
   await verifiesUnknownHonestlyWhenLocalProbeInvokeFails();
+  await verifiesIneligibleWhenRealLocalProbeReportsUnwritableManagedPath();
+  await verifiesIneligibleWhenRealLocalProbeReportsDebInstall();
+  await verifiesIneligibleWhenFetchedManifestMatchesAlreadyInstalledVersion();
   await verifiesEligibilityUnknownBeforeAnyCheck();
   await verifiesNoPendingUpdateMapsToEmptyState();
   await verifiesVerificationFailedOffersRestoreHonestly();

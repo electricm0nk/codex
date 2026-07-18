@@ -1765,6 +1765,38 @@ mod verify_relaunch_artifact_tests {
         assert!(probe.is_managed_path_writable, "the managed path's parent dir is genuinely writable in a tempdir");
     }
 
+    /// E3.15 — per-probe outcome: a managed path whose parent directory does
+    /// not exist can never be opened for writing, so the real writability
+    /// probe must honestly report `false` (not silently default to `true`).
+    #[test]
+    fn is_install_eligible_probe_reports_writability_false_when_parent_dir_missing() {
+        let dir = tempdir("probe-unwritable-parent");
+        let update_dir = config_update_dir(&dir);
+        fs::create_dir_all(&update_dir).expect("mkdir update dir");
+        let managed = dir.join("nonexistent-subdir").join("Codex.AppImage");
+        let installed = InstalledState {
+            managed_executable_path: managed,
+            install_kind: InstallKind::AppImage,
+            channel: "alpha".into(),
+            version: "0.1.0".into(),
+            source_commit: "deadbeef".into(),
+            release_tag: "alpha/v0.1.0".into(),
+            manifest_hash: "manifest-hash".into(),
+            artifact_sha256: "artifact-sha".into(),
+            installed_at: "2026-07-03T00:00:00Z".into(),
+            update_eligible: true,
+            ineligible_reason: None,
+        };
+        write_atomic_json(&update_dir.join(INSTALLED_STATE_FILENAME), &installed)
+            .expect("write installed-state.json");
+
+        let probe = is_install_eligible_impl(&dir).expect("probe body is real, not an error");
+        assert!(
+            !probe.is_managed_path_writable,
+            "a managed path under a nonexistent parent dir must probe as unwritable"
+        );
+    }
+
     /// A `dev-local` install still round-trips through the probe as real
     /// data — the probe reports facts, it does not gate on install kind.
     /// `decideEligibility`'s row for `install_kind === 'dev'` is what
