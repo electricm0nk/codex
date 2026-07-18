@@ -31,6 +31,7 @@ use crate::rules_core::feat_prereqs::{
     compute_feat_effects, evaluate_feat_prerequisites, FeatEffects, FeatKey,
     PrerequisiteEvaluation,
 };
+use crate::rules_core::level_up::{compute_level_up_grants, LevelUpPlan};
 use crate::rules_core::pilot_compute::{ComputationDiagnostic, PilotBaseChassisComputation};
 use crate::rules_core::pilot_compute_corpus::{CorpusDerivedSection, CorpusPilotReceipt};
 use crate::rules_core::rules_tables::crb::feats::feat_tables;
@@ -300,6 +301,35 @@ pub fn to_pilot_receipt(
         feats,
         equipment_effects,
     }
+}
+
+/// Cycle 6's standalone Level-Up preview seam
+/// (`contract:level_up_preview`, `adaptive-squishing-mccarthy.md`). A
+/// thin pass-through to Epic 7's
+/// `level_up::compute_level_up_grants(character, from_level, to_level)`
+/// -- this function adds no logic of its own.
+///
+/// **Deliberately NOT part of `PilotReceipt`.** Per the plan's Q1
+/// design-decision rationale: Level-Up models a level *transition* (it
+/// needs `from_level`/`to_level`, two extra parameters no other
+/// `PilotReceipt` consumer has), not current-state snapshot data like
+/// every other field on `PilotReceipt`. Folding it into `PilotReceipt`
+/// would force one of two bad outcomes -- fabricating `from_level`/
+/// `to_level` values for every snapshot-only consumer that never asked
+/// for a transition, or contaminating the whole contract with
+/// transition-only params that only this one use case needs. So
+/// `compute_level_up_preview` stays a standalone function that coexists
+/// with `PilotReceipt` (and `to_pilot_receipt`) rather than being
+/// embedded in it. This cycle adds no `PilotReceipt` field and no
+/// `printed_sheet_cell_map` cell -- see
+/// `tests/sd20_contract_level_up_preview.rs` for the parity proof
+/// against calling `compute_level_up_grants` directly.
+pub fn compute_level_up_preview(
+    character: &CharacterInput,
+    from_level: u8,
+    to_level: u8,
+) -> LevelUpPlan {
+    compute_level_up_grants(character, from_level, to_level)
 }
 
 /// The diagnostic id that, when `claim_blocking: true`, means the chassis
