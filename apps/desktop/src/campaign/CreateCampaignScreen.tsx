@@ -1,6 +1,6 @@
 import { useState, type CSSProperties, type FormEvent } from 'react';
 import { RULE_SETS } from '../characterHub/LandingScreen';
-import { createCampaign } from './campaignModel';
+import { createCampaign, syncCampaignDriveArtifacts } from './campaignModel';
 import { getGoogleDriveConfig } from '../settings/googleDrive';
 
 const LABEL_STYLE: CSSProperties = {
@@ -49,11 +49,17 @@ export function CreateCampaignScreen(props: { onCancel: () => void; onCreated: (
     try {
       const drive = getGoogleDriveConfig();
       const cleanedEmails = memberEmails.map((email) => email.trim()).filter(Boolean);
-      const { campaign, driveActionSummary: summary } = createCampaign(
+      const { campaign } = createCampaign(
         { name: name.trim(), ruleSetId: selectedRuleSet.id, ruleSetLabel: selectedRuleSet.name, description: description.trim(), memberEmails: cleanedEmails },
         drive?.driveFolderPath ?? null
       );
-      setDriveActionSummary(summary);
+
+      const result = await syncCampaignDriveArtifacts(campaign.id);
+      setDriveActionSummary(
+        result.ok
+          ? `Campaign folder created at ${result.campaignFolderPath}.`
+          : `Campaign saved, but the Drive folder could not be written: ${result.error}`
+      );
       props.onCreated(campaign.id);
     } finally {
       setSubmitting(false);

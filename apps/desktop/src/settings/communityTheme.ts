@@ -5,8 +5,9 @@ import { rawFileUrl, type ObsidianThemeCatalogEntry } from './obsidianThemeCatal
  *
  * Installing follows the same steps Obsidian itself takes: resolve the
  * theme repo's default branch via the GitHub API, then fetch `theme.css`
- * from the root of that branch. The fetched CSS is the theme author's
- * actual stylesheet — nothing is reinterpreted.
+ * (falling back to `obsidian.css`, a common deviation from the documented
+ * convention) from the root of that branch. The fetched CSS is the theme
+ * author's actual stylesheet — nothing is reinterpreted.
  *
  * Applying works by injecting that CSS verbatim into the document (Obsidian
  * community themes scope their variables under `.theme-dark` / `.theme-light`
@@ -55,16 +56,25 @@ function saveInstalledThemes(themes: InstalledTheme[]): void {
 // `main`/`master` are a defensive fallback for the rare case it doesn't.
 const BRANCH_FALLBACKS = ['HEAD', 'main', 'master'];
 
+// `theme.css` is the documented Obsidian convention, but a fair number of
+// published community themes ship their stylesheet as `obsidian.css` instead
+// (e.g. bcdavasconcelos/Obsidian-Ayu_Mirage) — try both names at the root.
+const THEME_FILE_CANDIDATES = ['theme.css', 'obsidian.css'];
+
 async function fetchThemeCss(repo: string): Promise<string> {
   let lastStatus = 0;
   for (const ref of BRANCH_FALLBACKS) {
-    const response = await fetch(rawFileUrl(repo, 'theme.css', ref));
-    if (response.ok) {
-      return response.text();
+    for (const fileName of THEME_FILE_CANDIDATES) {
+      const response = await fetch(rawFileUrl(repo, fileName, ref));
+      if (response.ok) {
+        return response.text();
+      }
+      lastStatus = response.status;
     }
-    lastStatus = response.status;
   }
-  throw new Error(`No theme.css found at the root of ${repo} (last HTTP ${lastStatus}). The repo may have moved or renamed the file.`);
+  throw new Error(
+    `No theme.css or obsidian.css found at the root of ${repo} (last HTTP ${lastStatus}). The repo may have moved or renamed the file.`
+  );
 }
 
 export async function installTheme(entry: ObsidianThemeCatalogEntry): Promise<InstalledTheme> {
@@ -82,6 +92,55 @@ export async function installTheme(entry: ObsidianThemeCatalogEntry): Promise<In
 
   saveInstalledThemes([...getInstalledThemes().filter((theme) => theme.id !== installed.id), installed]);
   return installed;
+}
+
+// Themes worth shipping pre-installed so testers see them without hunting
+// through the community browser first. This still fetches the real CSS live
+// from GitHub (nothing third-party is committed into this repo) — it just
+// runs that fetch once automatically instead of waiting for a manual click.
+const BUILTIN_FEATURED_THEMES: ObsidianThemeCatalogEntry[] = [
+  { name: 'Ayu Mirage', author: 'bcdavasconcelos', repo: 'bcdavasconcelos/Obsidian-Ayu_Mirage', screenshot: 'ayu1.png', modes: ['dark'] },
+];
+
+const SEEDED_BUILTINS_KEY = 'codex.theme.community.seededBuiltins';
+
+function getSeededBuiltinIds(): string[] {
+  try {
+    const raw = localStorage.getItem(SEEDED_BUILTINS_KEY);
+    return raw ? (JSON.parse(raw) as string[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function markBuiltinSeeded(id: string): void {
+  try {
+    localStorage.setItem(SEEDED_BUILTINS_KEY, JSON.stringify([...getSeededBuiltinIds(), id]));
+  } catch {
+    /* best-effort — worst case we retry the seed fetch next launch */
+  }
+}
+
+/**
+ * Installs any featured built-in theme the app hasn't tried to seed yet.
+ * Seeding is a one-time attempt per theme id: if the tester later uninstalls
+ * it, `getSeededBuiltinIds` still marks it seeded, so it won't come back.
+ * Call once on app boot; failures (offline, repo moved) are silent since this
+ * is a convenience seed, not a required install.
+ */
+export async function seedBuiltinThemes(): Promise<void> {
+  const seeded = new Set(getSeededBuiltinIds());
+  const pending = BUILTIN_FEATURED_THEMES.filter((entry) => !seeded.has(entry.repo));
+
+  for (const entry of pending) {
+    try {
+      await installTheme(entry);
+    } catch {
+      /* offline or upstream repo issue — leave unseeded so we retry next launch */
+      continue;
+    }
+    markBuiltinSeeded(entry.repo);
+  }
 }
 
 export function uninstallTheme(id: string): void {

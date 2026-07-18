@@ -1,17 +1,24 @@
 /**
  * Campaign data model and local persistence.
  *
- * The real design calls for a Google Drive-backed campaign: a Drive folder
- * per campaign, a `.config/<campaign_name>.json` metadata file alongside
- * synced character-sheet JSON files, party resources / adventure logs /
- * maps / a wiki as markdown files, all in that Drive folder. None of that
- * exists yet — it needs the Google Drive integration (see settings/googleDrive.ts)
- * plus real file I/O from the backend. This module gives the UI a real,
- * locally-persisted stand-in for all of it (localStorage today) so the full
- * click-through flow — create, edit, build a party, load, manage resources —
- * works end-to-end now and can be swapped for real Drive storage later
- * without changing the screens built against it.
+ * The campaign record itself, its party, and its resources/adventure-log/
+ * maps/wiki assets are the source of truth in localStorage (this module) —
+ * that part works fully offline and needs no Drive connection.
+ *
+ * Real Google OAuth / Drive API access does not exist yet (see
+ * settings/googleDrive.ts) — the "Drive folder" is really just a local path
+ * (typically a Drive-desktop-sync-client mirror). What IS real: `syncCampaignDriveArtifacts`
+ * below writes an actual folder per campaign at `<driveFolderPath>/<name>/`,
+ * with `.config/<name>.json` and markdown files for resources/adventure-log/
+ * maps/wiki, via the `write_campaign_drive_artifacts` Tauri command
+ * (apps/desktop/src-tauri/src/campaign_drive.rs). This is a write-through
+ * mirror of the localStorage data, not itself the source of truth — if the
+ * write fails (no folder configured, disk error), the campaign still exists
+ * and works entirely from localStorage.
  */
+
+import { getGoogleDriveConfig } from '../settings/googleDrive';
+import { writeCampaignDriveArtifacts } from '../boundary/writeCampaignDriveArtifacts';
 
 export interface CampaignMember {
   email: string;
@@ -150,11 +157,19 @@ function saveCampaignAssets(campaignId: string, assets: CampaignAssets): void {
 
 export type CampaignAssetKind = keyof CampaignAssets;
 
+/** Fire-and-forget: mirrors current localStorage state to disk. localStorage stays the source of truth regardless of outcome. */
+function syncCampaignDriveArtifactsInBackground(campaignId: string): void {
+  syncCampaignDriveArtifacts(campaignId).catch(() => {
+    /* best-effort mirror — see module doc comment */
+  });
+}
+
 export function addCampaignAsset(campaignId: string, kind: CampaignAssetKind, title: string): MarkdownAsset {
   const assets = getCampaignAssets(campaignId);
   const asset: MarkdownAsset = { id: crypto.randomUUID(), title, body: '', updatedAt: new Date().toISOString() };
   assets[kind] = [...assets[kind], asset];
   saveCampaignAssets(campaignId, assets);
+  syncCampaignDriveArtifactsInBackground(campaignId);
   return asset;
 }
 
@@ -164,10 +179,50 @@ export function updateCampaignAsset(campaignId: string, kind: CampaignAssetKind,
     asset.id === assetId ? { ...asset, ...changes, updatedAt: new Date().toISOString() } : asset
   );
   saveCampaignAssets(campaignId, assets);
+  syncCampaignDriveArtifactsInBackground(campaignId);
 }
 
 export function deleteCampaignAsset(campaignId: string, kind: CampaignAssetKind, assetId: string): void {
   const assets = getCampaignAssets(campaignId);
   assets[kind] = assets[kind].filter((asset) => asset.id !== assetId);
   saveCampaignAssets(campaignId, assets);
+  syncCampaignDriveArtifactsInBackground(campaignId);
+}
+
+export type SyncCampaignDriveArtifactsResult =
+  | { ok: true; campaignFolderPath: string }
+  | { ok: false; error: string };
+
+/**
+ * Writes the campaign's real, current localStorage state (record + all
+ * assets) to disk under the configured Drive folder — see the module
+ * doc comment above. Safe to call any time the campaign or its assets
+ * change; each call rewrites the full current state, so it's idempotent.
+ */
+export async function syncCampaignDriveArtifacts(campaignId: string): Promise<SyncCampaignDriveArtifactsResult> {
+  const campaign = getCampaign(campaignId);
+  if (!campaign) {
+    return { ok: false, error: 'Campaign not found.' };
+  }
+
+  const driveFolderPath = getGoogleDriveConfig()?.driveFolderPath ?? '';
+  const assets = getCampaignAssets(campaignId);
+  const toAssetDto = (list: MarkdownAsset[]) => list.map((asset) => ({ title: asset.title, body: asset.body }));
+
+  try {
+    const response = await writeCampaignDriveArtifacts({
+      driveFolderPath,
+      campaignName: campaign.name,
+      campaignConfigJson: JSON.stringify(campaign, null, 2),
+      assets: {
+        resources: toAssetDto(assets.resources),
+        adventureLog: toAssetDto(assets.adventureLog),
+        maps: toAssetDto(assets.maps),
+        wiki: toAssetDto(assets.wiki),
+      },
+    });
+    return { ok: true, campaignFolderPath: response.campaignFolderPath };
+  } catch (cause: unknown) {
+    return { ok: false, error: cause instanceof Error ? cause.message : 'Failed to write campaign Drive artifacts.' };
+  }
 }

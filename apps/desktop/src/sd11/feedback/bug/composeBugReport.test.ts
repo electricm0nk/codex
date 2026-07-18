@@ -97,7 +97,7 @@ function fallbackDataSourceIsPreservedInBuildContext() {
   const metadata = composed.draft.sections.find((s) => s.heading === 'Current build / channel / platform / workflow');
 
   assert(
-    !!metadata && metadata.body.includes('Real Tauri command snapshot (fallback: Tauri command unavailable; using sample fixture)'),
+    !!metadata && metadata.body.includes('Live backend data (fallback: Tauri command unavailable; using sample fixture)'),
     'fallback data-source identity is preserved in the build/channel/platform/workflow section'
   );
 }

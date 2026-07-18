@@ -136,8 +136,8 @@ async function verifiesRealGe08SnapshotSurface() {
     'resources/ge08/guard-stance-package',
     'default GE08 package root uses the packaged resource path instead of source checkout fixtures'
   );
-  assertEqual(model.surfaceLabel, 'SD-11 tester workbench', 'surface label');
-  assertEqual(model.workflowName, 'GE08 Guard Stance authoring workbench', 'workflow name');
+  assertEqual(model.surfaceLabel, 'Developer diagnostics', 'surface label');
+  assertEqual(model.workflowName, 'Character-preview authoring check', 'workflow name');
   assertEqual(model.workflowState, 'valid / success', 'workflow state');
   assertEqual(model.channelLabel, 'alpha', 'channel label');
   assertEqual(
@@ -145,7 +145,7 @@ async function verifiesRealGe08SnapshotSurface() {
     'Linux first-class · macOS second-class · Windows third-class',
     'support tier label'
   );
-  assertEqual(model.dataTruthLabel, 'Real Tauri command snapshot', 'data truth label');
+  assertEqual(model.dataTruthLabel, 'Live backend data', 'data truth label');
   assertEqual(model.summaryRows[0]?.label, 'Package', 'summary row label');
   assertEqual(model.summaryRows[0]?.value, 'guard-stance', 'summary row value');
   assertEqual(
@@ -214,19 +214,17 @@ async function verifiesExplicitFallbackSurface() {
     }
   );
 
-  assertEqual(model.workflowName, 'GE07 pilot snapshot seam', 'fallback workflow name');
-  assertEqual(model.dataTruthLabel, 'Explicit fallback placeholder', 'fallback data truth');
-  assertEqual(model.summaryRows[0]?.label, 'Case', 'fallback summary row label');
-  assertEqual(model.summaryRows[0]?.value, 'ge07-e1-scaffold-placeholder', 'fallback summary row value');
+  assertEqual(model.workflowName, 'Fallback data source', 'fallback workflow name');
+  assertEqual(model.dataTruthLabel, 'Fallback data (backend unavailable)', 'fallback data truth');
+  // Placeholder-sourced summary rows / explanation refs / notes carry zero real
+  // diagnostic value (loadPilotShellSnapshot has no live backend today), so the
+  // surface suppresses them rather than showing static filler as if it were data.
+  assertEqual(model.summaryRows.length, 0, 'fallback summary rows suppressed for placeholder data');
+  assertEqual(model.explanationRefs.length, 0, 'fallback explanation refs suppressed for placeholder data');
+  assertEqual(model.notes.length, 0, 'fallback notes suppressed for placeholder data');
   assertEqual(model.diagnostics[0]?.classLabel, 'Fallback', 'fallback diagnostic class label');
   assertEqual(model.diagnostics[0]?.severityLabel, 'Warning', 'fallback diagnostic severity label');
   assertEqual(model.diagnostics[0]?.message, 'Real GE08 data could not load in this slice.', 'fallback diagnostic message');
-  assertEqual(model.explanationRefs[0]?.label, 'future/load_pilot_shell_snapshot', 'fallback explanation ref label');
-  assertEqual(
-    model.explanationRefs[0]?.detail,
-    'Fallback explanation reference preserved for later evidence capture.',
-    'fallback explanation ref detail'
-  );
   assertEqual(model.provenanceRefs.length, 0, 'fallback provenance refs');
   assertEqual(model.status.support.platformTier, 'first-class', 'fallback status platform tier');
   assertEqual(
@@ -236,7 +234,8 @@ async function verifiesExplicitFallbackSurface() {
   );
   assertEqual(
     model.fallbackNotice,
-    'GE08 authoring workbench unavailable: Tauri runtime not available for GE08 authoring workbench. This fallback exists because the real bounded snapshot could not load and the UI must not counterfeit product truth.',
+    'This check needs the compiled Codex desktop app — it can\'t reach a backend from a plain browser tab. ' +
+      'If you opened this at localhost:1420 in a browser, open the actual Codex app window instead.',
     'fallback notice'
   );
 }

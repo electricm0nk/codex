@@ -6,11 +6,14 @@ import { useEffect, type ReactNode } from 'react';
  * added by extending `SETTINGS_TABS` and the `panels` map the caller passes.
  */
 
-export type SettingsTab = 'appearance' | 'google-drive' | 'developer';
+export type SettingsTab = 'appearance' | 'google-drive' | 'update' | 'bug' | 'enhancement' | 'developer';
 
 export const SETTINGS_TABS: ReadonlyArray<{ id: SettingsTab; label: string }> = [
   { id: 'appearance', label: 'Appearance' },
   { id: 'google-drive', label: 'Google Drive' },
+  { id: 'update', label: 'Update' },
+  { id: 'bug', label: 'Bug Report' },
+  { id: 'enhancement', label: 'Enhancement Request' },
   { id: 'developer', label: 'Developer' },
 ];
 
@@ -69,7 +72,12 @@ export function SettingsModal(props: {
           boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)',
           display: 'flex',
           height: 'min(620px, 85vh)',
-          overflow: 'hidden',
+          maxHeight: '92vh',
+          maxWidth: '96vw',
+          minHeight: 360,
+          minWidth: 480,
+          overflow: 'auto',
+          resize: 'both',
           width: 'min(900px, 92vw)',
         }}
       >

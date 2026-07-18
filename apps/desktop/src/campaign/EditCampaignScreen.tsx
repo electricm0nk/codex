@@ -1,9 +1,10 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { RULE_SETS } from '../characterHub/LandingScreen';
-import { getCampaign, updateCampaign, type Campaign } from './campaignModel';
+import { getCampaign, syncCampaignDriveArtifacts, updateCampaign, type Campaign } from './campaignModel';
 import { loadCharacterHubListSurfaceRuntime } from '../characterHub/characterHubRuntime';
 import type { CharacterHubListRowSurface } from '../characterHub/buildCharacterHubListSurface';
 import { formatHeldClasses } from '../characterHub/characterProgression';
+import { getFriends } from '../settings/friends';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -42,6 +43,7 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
   const [partyIds, setPartyIds] = useState<string[]>(campaign?.partyCharacterIds ?? []);
   const [availableCharacters, setAvailableCharacters] = useState<CharacterHubListRowSurface[]>([]);
   const [status, setStatus] = useState<string | null>(null);
+  const friends = getFriends();
 
   useEffect(() => {
     loadCharacterHubListSurfaceRuntime()
@@ -76,11 +78,24 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
     setMemberEmails((prev) => (prev.length > 1 ? prev.filter((_, i) => i !== index) : prev));
   }
 
+  function addFriendAsMember(gmailAddress: string) {
+    setMemberEmails((prev) => {
+      if (prev.includes(gmailAddress)) {
+        return prev;
+      }
+      const firstEmptyIndex = prev.findIndex((email) => email.trim() === '');
+      if (firstEmptyIndex !== -1) {
+        return prev.map((email, i) => (i === firstEmptyIndex ? gmailAddress : email));
+      }
+      return [...prev, gmailAddress];
+    });
+  }
+
   function toggleParty(characterId: string) {
     setPartyIds((prev) => (prev.includes(characterId) ? prev.filter((id) => id !== characterId) : [...prev, characterId]));
   }
 
-  function handleSave() {
+  async function handleSave() {
     if (!campaign) {
       return;
     }
@@ -100,7 +115,13 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
     if (updated) {
       setCampaign(updated);
     }
-    setStatus(`Saved. Would write .config/${name.trim()}.json to the campaign's Drive folder.`);
+    setStatus('Saving…');
+    const result = await syncCampaignDriveArtifacts(campaign.id);
+    setStatus(
+      result.ok
+        ? `Saved. Wrote .config/${name.trim()}.json to ${result.campaignFolderPath}.`
+        : `Saved, but the Drive folder could not be written: ${result.error}`
+    );
     props.onSaved();
   }
 
@@ -161,6 +182,42 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
 
           <div style={FIELD_STYLE}>
             <p style={LABEL_STYLE}>Campaign members</p>
+
+            {friends.length ? (
+              <div style={{ marginBottom: '0.75rem' }}>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0 0 0.4rem' }}>
+                  Add from your friends list:
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  {friends.map((friend) => {
+                    const alreadyAdded = memberEmails.includes(friend.gmailAddress);
+                    return (
+                      <button
+                        key={friend.id}
+                        type="button"
+                        onClick={() => addFriendAsMember(friend.gmailAddress)}
+                        disabled={alreadyAdded}
+                        title={friend.gmailAddress}
+                        style={{
+                          backgroundColor: alreadyAdded ? 'var(--color-surface-2)' : 'transparent',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: 999,
+                          color: alreadyAdded ? 'var(--color-text-muted)' : 'var(--color-text)',
+                          cursor: alreadyAdded ? 'not-allowed' : 'pointer',
+                          fontSize: '0.8rem',
+                          opacity: alreadyAdded ? 0.6 : 1,
+                          padding: '0.3rem 0.7rem',
+                        }}
+                      >
+                        {alreadyAdded ? '✓ ' : '+ '}
+                        {friend.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : null}
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               {memberEmails.map((email, index) => (
                 <div key={index} style={{ display: 'flex', gap: '0.5rem' }}>

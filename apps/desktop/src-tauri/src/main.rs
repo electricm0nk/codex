@@ -1,5 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod campaign_drive;
 mod character_hub;
 mod ge08_workbench;
 mod sd13_support_state_matrix;
@@ -13,7 +14,11 @@ mod update;
 
 use serde::Serialize;
 
-use character_hub::{create_character, list_saved_characters, load_saved_character};
+use campaign_drive::write_campaign_drive_artifacts;
+use character_hub::{
+    create_character, delete_character_portrait, list_saved_characters, load_character_portrait,
+    load_saved_character, save_character_portrait,
+};
 use sd13_support_state_matrix::{load_sd13_support_state_matrix_snapshot, Sd13SupportStateMatrixSnapshot};
 use sd19_class_catalog::list_class_catalog;
 use sd19_equipment_catalog::list_equipment_catalog;
@@ -71,13 +76,42 @@ fn load_sd13_support_state_matrix() -> Sd13SupportStateMatrixSnapshot {
     load_sd13_support_state_matrix_snapshot()
 }
 
+/// Identifies which build of the Rust backend is actually running. `version`
+/// is the crate's own Cargo.toml version (not the npm frontend version, which
+/// is tracked separately); `gitCommit` is the short commit hash embedded at
+/// compile time by build.rs, or "unknown" for a build outside a git checkout.
+/// Reaching this command at all — regardless of what it returns — is itself
+/// proof the Tauri IPC bridge to the Rust backend is alive.
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct BackendHealthSnapshot {
+    version: String,
+    git_commit: String,
+}
+
+#[tauri::command]
+fn load_backend_health() -> BackendHealthSnapshot {
+    BackendHealthSnapshot {
+        version: env!("CARGO_PKG_VERSION").to_string(),
+        git_commit: env!("CODEX_GIT_SHA").to_string(),
+    }
+}
+
 fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_dialog::init())
+        .setup(|app| {
+            if let Err(err) = character_hub::seed_default_character_if_needed(app.handle()) {
+                eprintln!("Failed to seed default character: {err}");
+            }
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             load_pilot_shell_snapshot,
             load_ge08_authoring_workbench_snapshot,
             load_sd13_support_state_matrix,
+            load_backend_health,
             sd16_browser_handoff::sd16_browser_handoff,
             is_install_eligible,
             perform_install,
@@ -86,6 +120,10 @@ fn main() {
             create_character,
             list_saved_characters,
             load_saved_character,
+            save_character_portrait,
+            load_character_portrait,
+            delete_character_portrait,
+            write_campaign_drive_artifacts,
             list_equipment_catalog,
             list_spell_catalog,
             list_class_catalog,

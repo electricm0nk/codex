@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import desktopPackage from '../package.json';
 import {
   loadSd11TesterWorkbenchSurfaceRuntime,
@@ -40,7 +40,7 @@ import { SettingsModal, type SettingsTab } from './settings/SettingsModal';
 import { AppearancePanel } from './settings/AppearancePanel';
 import { GoogleDrivePanel } from './settings/GoogleDrivePanel';
 import { applyThemeMode, getStoredThemeMode, type ThemeMode } from './settings/themeMode';
-import { applyActiveTheme, applyObsidianModeClass } from './settings/communityTheme';
+import { applyActiveTheme, applyObsidianModeClass, seedBuiltinThemes } from './settings/communityTheme';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -144,11 +144,11 @@ function FeedbackEvidencePanel(props: { surface: Sd11TesterWorkbenchSurface }) {
 
   return (
     <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
-      <h2 style={{ marginTop: 0 }}>Feedback evidence capture &amp; redaction</h2>
+      <h2 style={{ marginTop: 0 }}>What gets attached to bug reports &amp; enhancement requests</h2>
       <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-        Shared substrate for the upcoming GitHub bug-report and enhancement-request flows. The auto-captured
-        backbone below is reused by both flows without schema drift; tester-entered narrative fields are added
-        by each composer, and attachments are never captured silently.
+        These fields are captured automatically and included with every bug report or enhancement request you
+        submit, on top of whatever you write yourself. Attachments (screenshots, logs, save files) are never
+        captured without your explicit confirmation.
       </p>
 
       <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginTop: '1rem' }}>
@@ -168,8 +168,7 @@ function FeedbackEvidencePanel(props: { surface: Sd11TesterWorkbenchSurface }) {
         </p>
         <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>{REDACTION_POLICY_NOTICE}</p>
         <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.45rem 0 0' }}>
-          Attachments captured in this substrate slice: none. No screenshot, log, or save file is collected without
-          explicit tester confirmation and a recorded redaction declaration.
+          No attachments have been captured yet. Nothing is collected without your explicit confirmation.
         </p>
       </div>
     </section>
@@ -815,12 +814,59 @@ function supportStateTone(state: string): 'info' | 'warning' | 'error' {
   return 'warning';
 }
 
+function freshnessLabel(evidenceFreshness: string): string {
+  if (evidenceFreshness === 'refreshable-from-live-proof') {
+    return 'can be refreshed from live data';
+  }
+  if (evidenceFreshness === 'awaiting-initial-evidence') {
+    return 'awaiting first check';
+  }
+  return evidenceFreshness;
+}
+
+const SUBJECT_TYPE_LABELS: Record<string, string> = {
+  race: 'Race',
+  class: 'Class',
+  interaction: 'Rule interaction',
+  school: 'Spell school',
+  equipment: 'Equipment',
+};
+
+function subjectTypeLabel(subjectType: string): string {
+  return SUBJECT_TYPE_LABELS[subjectType] ?? subjectType;
+}
+
+// Row subjectIds are namespaced like "race:human" or "category:arms_armor" —
+// show only the human-readable part.
+function humanizeSubjectId(subjectId: string): string {
+  const colonIndex = subjectId.indexOf(':');
+  const raw = colonIndex >= 0 ? subjectId.slice(colonIndex + 1) : subjectId;
+  return raw
+    .replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+// Other Pathfinder 1e sourcebooks with no support data at all yet — listed
+// honestly as not started rather than fabricating a per-item breakdown for
+// content that doesn't exist in the app.
+const NOT_STARTED_SOURCEBOOKS = [
+  "Advanced Player's Guide",
+  'Advanced Class Guide',
+  'Ultimate Combat',
+  'Ultimate Magic',
+  'Ultimate Equipment',
+];
+
 function SupportDebtPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
   const debt = props.surface.supportDebt;
 
   if (!debt) {
     return null;
   }
+
+  const blockingStates = new Set(['partial', 'lossy', 'blocked', 'unverified']);
+  const coreRulebookIsFullySupported =
+    debt.rows.length > 0 && debt.rows.every((row) => !blockingStates.has(row.supportState));
 
   return (
     <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
@@ -833,6 +879,13 @@ function SupportDebtPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
         </div>
       ) : (
         <>
+          <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem', marginBottom: '0.75rem', marginTop: '1.25rem' }}>
+            <h3 style={{ margin: 0 }}>Core Rulebook</h3>
+            <span style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
+              {coreRulebookIsFullySupported ? 'Fully supported' : 'Partially supported — see breakdown below'}
+            </span>
+          </div>
+
           {debt.stateCounts.length ? (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
               {debt.stateCounts.map((tally) => (
@@ -880,26 +933,37 @@ function SupportDebtPanel(props: { surface: Sd11TesterWorkbenchSurface }) {
                   {row.supportState} · evidence: {row.evidenceTier}
                 </p>
                 <p style={{ color: 'var(--color-text)', fontSize: '1rem', fontWeight: 700, margin: '0.35rem 0 0' }}>
-                  {row.subjectId} <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>({row.subjectType})</span>
+                  {humanizeSubjectId(row.subjectId)}{' '}
+                  <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>({subjectTypeLabel(row.subjectType)})</span>
                 </p>
-                <p style={{ color: 'var(--color-text-secondary)', margin: '0.3rem 0 0' }}>{row.dimension}</p>
                 <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.5rem 0 0' }}>{row.testerFacingStateLabel}</p>
-                {row.hasDebtNote ? (
-                  <p style={{ color: 'var(--color-warn)', lineHeight: 1.6, margin: '0.5rem 0 0' }}>
-                    <strong>Blocker / lossiness:</strong> {row.blockerOrLossinessNote}
-                  </p>
-                ) : null}
-                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.5rem 0 0' }}>
-                  Grounding: <code style={{ color: 'var(--color-text-secondary)' }}>{row.groundingRef}</code>
-                </p>
-                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.3rem 0 0' }}>
-                  Next uplift: {row.nextRequiredUplift}
-                </p>
-                <p style={{ margin: '0.4rem 0 0' }}>
-                  <code style={{ color: 'var(--color-text-faint)', fontSize: '0.75rem' }}>{row.rowId}</code>
-                </p>
               </div>
             ))}
+          </div>
+
+          <div style={{ marginTop: '1.75rem' }}>
+            <h3 style={{ marginBottom: '0.5rem' }}>Other sourcebooks</h3>
+            <div style={{ display: 'grid', gap: '0.5rem' }}>
+              {NOT_STARTED_SOURCEBOOKS.map((book) => (
+                <div
+                  key={book}
+                  style={{
+                    alignItems: 'center',
+                    backgroundColor: 'var(--color-surface)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 10,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    padding: '0.6rem 0.9rem',
+                  }}
+                >
+                  <span>{book}</span>
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                    Not started
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </>
       )}
@@ -919,7 +983,7 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
   return (
     <section style={{ border: '1px dashed var(--color-text-faint)', borderRadius: 12, marginTop: '1rem', padding: '1.25rem' }}>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
-        Audit surface · subordinate to the support and debt truth above
+        Checks the support status above
       </p>
       <h3 style={{ margin: '0.35rem 0 0' }}>{audit.sectionLabel}</h3>
       <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{audit.lead}</p>
@@ -939,11 +1003,11 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
             }}
           >
             <p style={{ color: toneColor(postureTone), fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
-              Overall posture: {audit.overallPosture}
+              {audit.overallPosture === 'refresh-backed' ? 'Freshness-verified' : 'Needs a freshness check'}
             </p>
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: '0.35rem 0 0' }}>{audit.overallLabel}</p>
             <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.45rem 0 0' }}>
-              Refresh-required rows: {audit.refreshRequiredCount} · promoted breadth claims: {audit.positiveBreadthClaimCount}
+              Rows needing a refresh: {audit.refreshRequiredCount} · freshness-verified rows: {audit.positiveBreadthClaimCount}
             </p>
           </div>
 
@@ -964,7 +1028,7 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
                     textTransform: 'uppercase',
                   }}
                 >
-                  {tally.evidenceFreshness}: {tally.count}
+                  {freshnessLabel(tally.evidenceFreshness)}: {tally.count}
                 </span>
               ))}
             </div>
@@ -982,23 +1046,13 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
                 }}
               >
                 <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.06em', margin: 0, textTransform: 'uppercase' }}>
-                  {row.evidenceFreshness} · {row.supportState} · evidence: {row.evidenceTier}
+                  {freshnessLabel(row.evidenceFreshness)} · {row.supportState} · evidence: {row.evidenceTier}
                 </p>
                 <p style={{ color: 'var(--color-text)', fontSize: '0.95rem', fontWeight: 700, margin: '0.3rem 0 0' }}>
-                  {row.subjectId} <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>({row.subjectType})</span>
+                  {humanizeSubjectId(row.subjectId)}{' '}
+                  <span style={{ color: 'var(--color-text-muted)', fontWeight: 400 }}>({subjectTypeLabel(row.subjectType)})</span>
                 </p>
                 <p style={{ color: 'var(--color-warn)', lineHeight: 1.6, margin: '0.4rem 0 0' }}>{row.refreshAuditLabel}</p>
-                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.4rem 0 0' }}>
-                  Grounding: <code style={{ color: 'var(--color-text-secondary)' }}>{row.groundingRef}</code>
-                </p>
-                {row.blockerOrLossinessNote ? (
-                  <p style={{ color: 'var(--color-warn)', fontSize: '0.85rem', lineHeight: 1.6, margin: '0.3rem 0 0' }}>
-                    <strong>Blocker / lossiness:</strong> {row.blockerOrLossinessNote}
-                  </p>
-                ) : null}
-                <p style={{ margin: '0.35rem 0 0' }}>
-                  <code style={{ color: 'var(--color-text-faint)', fontSize: '0.75rem' }}>{row.rowId}</code>
-                </p>
               </div>
             ))}
           </div>
@@ -1008,51 +1062,10 @@ function BreadthClaimAuditPanel(props: { surface: Sd11TesterWorkbenchSurface }) 
   );
 }
 
-export type SheetTool = 'update' | 'bug' | 'enhancement';
-
-const SHEET_TOOL_TITLES: Record<SheetTool, string> = {
-  update: 'Update',
-  bug: 'Bug Report',
-  enhancement: 'Enhancement Request',
-};
-
-/** Centered modal hosting a single Menu tool (Update / Bug Report / Enhancement). */
-function ToolModal(props: { title: string; onClose: () => void; children: ReactNode }) {
-  return (
-    <div
-      role="presentation"
-      onClick={props.onClose}
-      style={{ alignItems: 'flex-start', backgroundColor: 'rgba(0, 0, 0, 0.55)', display: 'flex', inset: 0, justifyContent: 'center', overflowY: 'auto', padding: '3rem 1.5rem', position: 'fixed', zIndex: 1000 }}
-    >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label={props.title}
-        onClick={(event) => event.stopPropagation()}
-        style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 12, boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)', maxWidth: 900, width: '100%' }}
-      >
-        <header style={{ alignItems: 'center', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', padding: '1rem 1.5rem' }}>
-          <h2 style={{ fontSize: '1.1rem', margin: 0 }}>{props.title}</h2>
-          <button
-            type="button"
-            aria-label="Close"
-            onClick={props.onClose}
-            style={{ background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '1.4rem', lineHeight: 1, padding: '0.15rem 0.35rem' }}
-          >
-            ×
-          </button>
-        </header>
-        <div style={{ padding: '1.25rem 1.5rem' }}>{props.children}</div>
-      </div>
-    </div>
-  );
-}
-
 export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [settingsTab, setSettingsTab] = useState<SettingsTab>('appearance');
   const [themeMode, setThemeMode] = useState<ThemeMode>(getStoredThemeMode);
-  const [activeTool, setActiveTool] = useState<SheetTool | null>(null);
   const [surface, setSurface] = useState<Sd11TesterWorkbenchSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -1067,6 +1080,13 @@ export default function App() {
     applyActiveTheme();
   }, []);
 
+  // One-time fetch of featured community themes (e.g. Ayu Mirage) so they
+  // show up pre-installed in the Theme dropdown without a manual browse step.
+  // Does not change the active theme — it only makes the option available.
+  useEffect(() => {
+    seedBuiltinThemes();
+  }, []);
+
 
   useEffect(() => {
     loadSd11TesterWorkbenchSurfaceRuntime({
@@ -1075,7 +1095,7 @@ export default function App() {
     })
       .then(setSurface)
       .catch((cause: unknown) => {
-        setError(cause instanceof Error ? cause.message : 'Unknown SD-11 tester workbench failure');
+        setError(cause instanceof Error ? cause.message : 'Unknown developer diagnostics failure');
       });
   }, []);
 
@@ -1108,27 +1128,7 @@ export default function App() {
         ⚙
       </button>
 
-      <CharacterHubPage onOpenTool={setActiveTool} />
-
-      {activeTool ? (
-        <ToolModal title={SHEET_TOOL_TITLES[activeTool]} onClose={() => setActiveTool(null)}>
-          {activeTool === 'update' ? <Sd16UpdateSection /> : null}
-          {activeTool === 'bug' ? (
-            surface ? (
-              <BugReportComposer surface={surface} />
-            ) : (
-              <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Workbench data is unavailable, so a bug report cannot be composed right now.</p>
-            )
-          ) : null}
-          {activeTool === 'enhancement' ? (
-            surface ? (
-              <EnhancementRequestComposer surface={surface} />
-            ) : (
-              <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Workbench data is unavailable, so an enhancement request cannot be composed right now.</p>
-            )
-          ) : null}
-        </ToolModal>
-      ) : null}
+      <CharacterHubPage />
 
       <SettingsModal
         open={settingsOpen}
@@ -1138,22 +1138,32 @@ export default function App() {
         panels={{
           appearance: <AppearancePanel mode={themeMode} onModeChange={setThemeMode} />,
           'google-drive': <GoogleDrivePanel />,
+          update: <Sd16UpdateSection />,
+          bug: surface ? (
+            <BugReportComposer surface={surface} />
+          ) : (
+            <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Workbench data is unavailable, so a bug report cannot be composed right now.</p>
+          ),
+          enhancement: surface ? (
+            <EnhancementRequestComposer surface={surface} />
+          ) : (
+            <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Workbench data is unavailable, so an enhancement request cannot be composed right now.</p>
+          ),
           developer: (
             <>
           <header>
             <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', letterSpacing: '0.08em', margin: 0, textTransform: 'uppercase' }}>
-              {surface?.surfaceLabel ?? 'SD-11 tester workbench'}
+              {surface?.surfaceLabel ?? 'Developer diagnostics'}
             </p>
-            <h1 style={{ marginBottom: '0.5rem' }}>{surface?.headline ?? 'Loading bounded tester workbench frame…'}</h1>
+            <h1 style={{ marginBottom: '0.5rem' }}>{surface?.headline ?? 'Connecting to the app backend…'}</h1>
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: 0 }}>
-              {surface?.lead ??
-                'Loading the first bounded tester-facing workbench frame over the current desktop runtime seam.'}
+              {surface?.lead ?? 'Loading backend diagnostics.'}
             </p>
           </header>
 
           {error ? (
         <section style={{ backgroundColor: 'var(--color-error-bg)', border: '1px solid var(--color-error-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1rem 1.25rem' }}>
-          <h2 style={{ color: 'var(--color-error)', marginTop: 0 }}>Workbench load failure</h2>
+          <h2 style={{ color: 'var(--color-error)', marginTop: 0 }}>Failed to load diagnostics</h2>
           <p style={{ color: 'var(--color-error)', marginBottom: 0, whiteSpace: 'pre-wrap' }}>{error}</p>
         </section>
       ) : null}
@@ -1162,31 +1172,46 @@ export default function App() {
         <>
           <section style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginTop: '2rem' }}>
             <AppCard label="Build" value={surface.status.build.label} detail={surface.status.update.label} />
-            <AppCard label="Channel" value={surface.status.channel.testerFacingLabel} detail={surface.status.channel.audience} />
             <AppCard label="Platform" value={surface.platformLabel} detail={surface.status.support.currentPlatformSupportLabel} />
-            <AppCard label="Workflow" value={surface.workflowName} detail={surface.workflowState} />
-            <AppCard label="Data truth" value={surface.dataTruthLabel} detail="Real bounded snapshot when available, explicit fallback when it is not." />
+            <AppCard
+              label="Backend"
+              value={surface.backendHealth?.reachable ? `v${surface.backendHealth.version} · ${surface.backendHealth.gitCommit}` : 'Unreachable'}
+              detail={
+                surface.backendHealth?.reachable
+                  ? 'Rust backend version and the commit this build was compiled from.'
+                  : surface.backendHealth?.unavailableNotice ?? 'Backend health has not been checked yet.'
+              }
+            />
+            <AppCard label="Feature check" value={surface.workflowName} detail={surface.workflowState} />
+            <AppCard label="Data source" value={surface.dataTruthLabel} detail="Live backend data when reachable, clearly-labeled fallback data when it isn't." />
           </section>
+
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', lineHeight: 1.6, marginTop: '0.75rem' }}>
+            There is no database in this app. Rule content (races, classes, spells, equipment) is built directly
+            into this version of the app; your saved characters are stored as local files on this device.
+          </p>
 
           {surface.fallbackNotice ? (
             <section style={{ backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1rem 1.25rem' }}>
-              <h2 style={{ color: 'var(--color-warn)', marginTop: 0 }}>Explicit fallback</h2>
+              <h2 style={{ color: 'var(--color-warn)', marginTop: 0 }}>Showing fallback data</h2>
               <p style={{ color: 'var(--color-warn)', marginBottom: 0 }}>{surface.fallbackNotice}</p>
             </section>
           ) : null}
 
-          <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
-            <h2 style={{ marginTop: 0 }}>Current bounded workflow</h2>
-            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{surface.boundedScopeNotice}</p>
-            <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginTop: '1rem' }}>
-              {surface.summaryRows.map((row) => (
-                <AppCard key={row.label} label={row.label} value={row.value} />
-              ))}
-            </div>
-          </section>
+          {surface.summaryRows.length ? (
+            <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+              <h2 style={{ marginTop: 0 }}>Backend feature check</h2>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{surface.boundedScopeNotice}</p>
+              <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginTop: '1rem' }}>
+                {surface.summaryRows.map((row) => (
+                  <AppCard key={row.label} label={row.label} value={row.value} />
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
-            <h2 style={{ marginTop: 0 }}>Diagnostics and explanation visibility</h2>
+            <h2 style={{ marginTop: 0 }}>Diagnostics</h2>
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{surface.feedbackStatusNotice}</p>
 
             <div style={{ display: 'grid', gap: '0.75rem', marginTop: '1rem' }}>
@@ -1218,15 +1243,15 @@ export default function App() {
                   </div>
                 ))
               ) : (
-                <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>No diagnostics were returned for the current bounded snapshot.</p>
+                <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>No diagnostics for this check.</p>
               )}
             </div>
 
             <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', marginTop: '1rem' }}>
               <div>
-                <h3 style={{ marginBottom: '0.5rem' }}>Blocked claims</h3>
+                <h3 style={{ marginBottom: '0.5rem' }}>Blocked calculations</h3>
                 <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem', lineHeight: 1.5, marginTop: 0 }}>
-                  Runtime-blocked claims stay separate from broad unsupported-scope messaging so testers can tell a bounded workflow failure from an out-of-scope request.
+                  Things this check tried to compute but couldn't — distinct from features that are simply out of scope for this check.
                 </p>
                 {surface.blockedClaims.length ? (
                   <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
@@ -1235,45 +1260,31 @@ export default function App() {
                     ))}
                   </ul>
                 ) : (
-                  <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>No blocked claims surfaced in the current bounded snapshot.</p>
+                  <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>Nothing was blocked in this check.</p>
                 )}
               </div>
               <div>
-                <h3 style={{ marginBottom: '0.5rem' }}>Explanation references</h3>
-                <EvidenceList
-                  emptyMessage="No explanation references were returned for the current bounded snapshot."
-                  items={surface.explanationRefs}
-                />
+                <h3 style={{ marginBottom: '0.5rem' }}>Explanations</h3>
+                <EvidenceList emptyMessage="No explanations for this check." items={surface.explanationRefs} />
               </div>
               <div>
-                <h3 style={{ marginBottom: '0.5rem' }}>Provenance references</h3>
-                <EvidenceList
-                  emptyMessage="No provenance references were returned for the current bounded snapshot."
-                  items={surface.provenanceRefs}
-                />
+                <h3 style={{ marginBottom: '0.5rem' }}>Sources</h3>
+                <EvidenceList emptyMessage="No sources for this check." items={surface.provenanceRefs} />
               </div>
             </div>
           </section>
 
           <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
-            <h2 style={{ marginTop: 0 }}>Update and support posture</h2>
+            <h2 style={{ marginTop: 0 }}>Update &amp; platform support</h2>
             <div style={{ display: 'grid', gap: '0.9rem', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
-              <AppCard label="Tester track" value={surface.status.channel.testerFacingLabel} detail={surface.status.channel.detail} />
-              <AppCard label="Support matrix" value={surface.status.support.tierMatrixLabel} detail={surface.status.support.currentPlatformSupportLabel} />
-              <AppCard label="Update status" value={surface.status.update.label} detail={`${surface.status.channel.testerFacingLabel} tester track on ${surface.status.support.currentPlatformSupportLabel}`} />
-              <AppCard
-                label="Issue payload status"
-                value={surface.status.issueCapture.testerFacingChannelSupportLabel}
-                detail="Structured status object reused for later evidence capture."
-              />
+              <AppCard label="Build track" value={surface.status.channel.testerFacingLabel} detail={surface.status.channel.detail} />
+              <AppCard label="Platform support" value={surface.status.support.tierMatrixLabel} detail={surface.status.support.currentPlatformSupportLabel} />
+              <AppCard label="Update status" value={surface.status.update.label} detail={`${surface.status.channel.testerFacingLabel} build on ${surface.status.support.currentPlatformSupportLabel}`} />
             </div>
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '0.75rem', marginTop: '1rem' }}>
               {surface.status.support.platformSupportDetail}
             </p>
-            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '0.75rem' }}>{surface.status.update.detail}</p>
-            <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.6, marginBottom: 0 }}>
-              Operator provenance remains {surface.status.channel.operatorPromotionPath}.
-            </p>
+            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: 0 }}>{surface.status.update.detail}</p>
           </section>
 
           <SupportDebtPanel surface={surface} />
@@ -1282,15 +1293,16 @@ export default function App() {
 
           <FeedbackEvidencePanel surface={surface} />
 
-          <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
-            <h2 style={{ marginTop: 0 }}>Bounded truth and next surface</h2>
-            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{surface.boundedScopeNotice}</p>
-            <ul style={{ marginBottom: 0, paddingLeft: '1.2rem' }}>
-              {surface.notes.map((note) => (
-                <li key={note} style={{ marginBottom: '0.45rem' }}>{note}</li>
-              ))}
-            </ul>
-          </section>
+          {surface.notes.length ? (
+            <section style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '1.5rem', padding: '1.25rem' }}>
+              <h2 style={{ marginTop: 0 }}>Notes</h2>
+              <ul style={{ marginBottom: 0, paddingLeft: '1.2rem' }}>
+                {surface.notes.map((note) => (
+                  <li key={note} style={{ marginBottom: '0.45rem' }}>{note}</li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
             </>
           ) : null}
             </>
