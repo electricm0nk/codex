@@ -196,14 +196,27 @@ fn campaign_dir_for(request: &DriveCampaignFolderRequest) -> PathBuf {
     PathBuf::from(&request.drive_folder_path).join(&request.folder_name)
 }
 
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DriveLoadCampaignResponse {
+    pub snapshot: CampaignSnapshot,
+    /// Pass this back as `expectedNonce` on the next `drive_save_campaign`
+    /// call for this campaign — see E2.10 conflict detection.
+    pub nonce: u64,
+}
+
 pub fn drive_load_campaign_impl(
     request: &DriveCampaignFolderRequest,
-) -> Result<CampaignSnapshot, String> {
-    CampaignStore::load(&campaign_dir_for(request)).map_err(|err| err.message)
+) -> Result<DriveLoadCampaignResponse, String> {
+    let loaded = CampaignStore::load_with_nonce(&campaign_dir_for(request)).map_err(|err| err.message)?;
+    Ok(DriveLoadCampaignResponse {
+        snapshot: loaded.snapshot,
+        nonce: loaded.nonce,
+    })
 }
 
 #[tauri::command]
-pub fn drive_load_campaign(request: DriveCampaignFolderRequest) -> Result<CampaignSnapshot, String> {
+pub fn drive_load_campaign(request: DriveCampaignFolderRequest) -> Result<DriveLoadCampaignResponse, String> {
     drive_load_campaign_impl(&request)
 }
 
@@ -212,23 +225,40 @@ pub fn drive_load_campaign(request: DriveCampaignFolderRequest) -> Result<Campai
 pub struct DriveSaveCampaignRequest {
     pub drive_folder_path: String,
     pub snapshot: CampaignSnapshot,
+    /// The nonce this snapshot was loaded at (from a prior
+    /// `drive_load_campaign` call), or `None` for a brand-new campaign that
+    /// has never been saved before. See E2.10 conflict detection.
+    #[serde(default)]
+    pub expected_nonce: Option<u64>,
 }
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DriveSaveCampaignResponse {
     pub campaign_folder_path: String,
+    pub nonce: u64,
+    /// `Some(path)` if this save detected a conflict (another writer saved
+    /// since `expected_nonce` was read) and moved the prior on-disk state
+    /// there before writing the caller's snapshot as the new active state.
+    pub conflict_dir: Option<String>,
 }
 
 pub fn drive_save_campaign_impl(
     request: &DriveSaveCampaignRequest,
 ) -> Result<DriveSaveCampaignResponse, String> {
     require_drive_folder_path(&request.drive_folder_path)?;
-    let campaign_dir =
-        CampaignStore::save_under_root(&request.snapshot, Path::new(&request.drive_folder_path))
-            .map_err(|err| err.message)?;
+    let outcome = CampaignStore::save_under_root_with_conflict_detection(
+        &request.snapshot,
+        Path::new(&request.drive_folder_path),
+        request.expected_nonce,
+    )
+    .map_err(|err| err.message)?;
     Ok(DriveSaveCampaignResponse {
-        campaign_folder_path: campaign_dir.to_string_lossy().into_owned(),
+        campaign_folder_path: outcome.campaign_dir.to_string_lossy().into_owned(),
+        nonce: outcome.nonce,
+        conflict_dir: outcome
+            .conflict_dir
+            .map(|path| path.to_string_lossy().into_owned()),
     })
 }
 
@@ -336,7 +366,7 @@ mod tests {
             folder_name: folder_name.clone(),
         };
         let loaded = drive_load_campaign_impl(&load_request).expect("load should succeed");
-        assert_eq!(loaded.name, "Round Trip");
+        assert_eq!(loaded.snapshot.name, "Round Trip");
 
         drive_delete_campaign_impl(&load_request).expect("delete should succeed");
         let listing_after_delete = drive_list_campaigns_impl(&DriveListCampaignsRequest {
@@ -355,7 +385,45 @@ mod tests {
         let request = DriveSaveCampaignRequest {
             drive_folder_path: String::new(),
             snapshot,
+            expected_nonce: None,
         };
         assert!(drive_save_campaign_impl(&request).is_err());
+    }
+
+    #[test]
+    fn drive_save_campaign_reports_a_conflict_dir_for_a_stale_expected_nonce() {
+        let temp = temp_dir("conflict-via-command");
+        let _ = fs::remove_dir_all(&temp);
+        let drive_folder_path = temp.to_string_lossy().into_owned();
+
+        let snapshot: CampaignSnapshot =
+            serde_json::from_str(&sample_campaign_config_json("Conflict Campaign")).expect("fixture parses");
+
+        let first_save = drive_save_campaign_impl(&DriveSaveCampaignRequest {
+            drive_folder_path: drive_folder_path.clone(),
+            snapshot: snapshot.clone(),
+            expected_nonce: None,
+        })
+        .expect("first save should succeed");
+        assert!(first_save.conflict_dir.is_none());
+
+        // Another writer saves in between, bumping the on-disk nonce past
+        // what this caller still thinks is current.
+        drive_save_campaign_impl(&DriveSaveCampaignRequest {
+            drive_folder_path: drive_folder_path.clone(),
+            snapshot: snapshot.clone(),
+            expected_nonce: Some(first_save.nonce),
+        })
+        .expect("second save should succeed");
+
+        let conflicting_save = drive_save_campaign_impl(&DriveSaveCampaignRequest {
+            drive_folder_path,
+            snapshot,
+            expected_nonce: Some(first_save.nonce),
+        })
+        .expect("conflicting save should still succeed");
+        assert!(conflicting_save.conflict_dir.is_some());
+
+        let _ = fs::remove_dir_all(&temp);
     }
 }

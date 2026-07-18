@@ -29,7 +29,7 @@ use std::path::{Path, PathBuf};
 
 use super::{
     CampaignAsset, CampaignAssets, CampaignListing, CampaignListingError, CampaignSnapshot,
-    CampaignStoreError, CampaignSummary,
+    CampaignStoreError, CampaignSummary, LoadedCampaign, SaveOutcome,
 };
 
 const CONFIG_DIR: &str = ".config";
@@ -37,6 +37,11 @@ const RESOURCES_DIR: &str = "resources";
 const ADVENTURE_LOG_DIR: &str = "adventure-log";
 const MAPS_DIR: &str = "maps";
 const WIKI_DIR: &str = "wiki";
+const CONFLICTS_DIR: &str = "conflicts";
+/// Revision nonce sidecar file, deliberately not part of the JSON config
+/// (and not a `CampaignSnapshot` field — the addendum's field list mirrors
+/// `campaignModel.ts` 1:1 and a revision nonce has no frontend counterpart).
+const NONCE_FILE: &str = "nonce";
 
 pub struct CampaignStore;
 
@@ -166,6 +171,99 @@ impl CampaignStore {
         Self::save(snapshot, &campaign_dir)?;
         Ok(campaign_dir)
     }
+
+    /// Loads a campaign snapshot from `campaign_dir` along with the revision
+    /// nonce it was saved at (0 if this campaign predates nonce-tracking).
+    /// Pass the returned `nonce` back into `save_with_conflict_detection` on
+    /// the next save so a stale-read save can be detected as a conflict.
+    pub fn load_with_nonce(campaign_dir: &Path) -> Result<LoadedCampaign, CampaignStoreError> {
+        let snapshot = Self::load(campaign_dir)?;
+        let nonce = read_nonce(campaign_dir).unwrap_or(0);
+        Ok(LoadedCampaign { snapshot, nonce })
+    }
+
+    /// Saves a campaign snapshot with conflict detection: if `expected_nonce`
+    /// (the nonce this save's in-memory state was loaded at) doesn't match
+    /// the nonce currently on disk, another writer has saved since — the
+    /// existing on-disk contents are preserved under
+    /// `<campaign_dir>/conflicts/<timestamp>/` before the new snapshot is
+    /// written as the active state (local wins, per `decisions.md` §7; the
+    /// DM resolves the conflict copy manually). `expected_nonce: None` means
+    /// "no prior read to compare against" (a brand-new campaign) and never
+    /// triggers a conflict.
+    pub fn save_with_conflict_detection(
+        snapshot: &CampaignSnapshot,
+        campaign_dir: &Path,
+        expected_nonce: Option<u64>,
+    ) -> Result<SaveOutcome, CampaignStoreError> {
+        let current_nonce = read_nonce(campaign_dir);
+
+        let conflict_dir = match (expected_nonce, current_nonce) {
+            (Some(expected), Some(current)) if expected != current => {
+                Some(move_existing_state_to_conflicts(campaign_dir)?)
+            }
+            _ => None,
+        };
+
+        Self::save(snapshot, campaign_dir)?;
+        let new_nonce = current_nonce.unwrap_or(0) + 1;
+        write_nonce(campaign_dir, new_nonce)?;
+
+        Ok(SaveOutcome {
+            campaign_dir: campaign_dir.to_path_buf(),
+            nonce: new_nonce,
+            conflict_dir,
+        })
+    }
+
+    /// `save_under_root` + `save_with_conflict_detection` combined, for
+    /// callers (namely `campaign_drive.rs`'s Tauri commands) that only know
+    /// the campaigns root and a snapshot, not a specific campaign directory.
+    pub fn save_under_root_with_conflict_detection(
+        snapshot: &CampaignSnapshot,
+        campaigns_root: &Path,
+        expected_nonce: Option<u64>,
+    ) -> Result<SaveOutcome, CampaignStoreError> {
+        let campaign_dir = campaigns_root.join(sanitize_filename(&snapshot.name));
+        Self::save_with_conflict_detection(snapshot, &campaign_dir, expected_nonce)
+    }
+}
+
+fn read_nonce(campaign_dir: &Path) -> Option<u64> {
+    let path = campaign_dir.join(CONFIG_DIR).join(NONCE_FILE);
+    fs::read_to_string(path)
+        .ok()
+        .and_then(|text| text.trim().parse::<u64>().ok())
+}
+
+fn write_nonce(campaign_dir: &Path, nonce: u64) -> Result<(), CampaignStoreError> {
+    let config_dir = campaign_dir.join(CONFIG_DIR);
+    fs::create_dir_all(&config_dir).map_err(|err| io_error(&config_dir, err))?;
+    let path = config_dir.join(NONCE_FILE);
+    fs::write(&path, nonce.to_string()).map_err(|err| io_error(&path, err))
+}
+
+/// Moves every existing top-level content directory (config + the four
+/// asset groups — never the `conflicts/` directory itself) into a fresh
+/// `conflicts/<timestamp>/` directory, so the caller can write a new active
+/// state into `campaign_dir` afterward without losing what was there.
+fn move_existing_state_to_conflicts(campaign_dir: &Path) -> Result<PathBuf, CampaignStoreError> {
+    let timestamp = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|duration| duration.as_nanos().to_string())
+        .unwrap_or_else(|_| "0".to_owned());
+    let conflict_dir = campaign_dir.join(CONFLICTS_DIR).join(&timestamp);
+    fs::create_dir_all(&conflict_dir).map_err(|err| io_error(&conflict_dir, err))?;
+
+    for dir_name in [CONFIG_DIR, RESOURCES_DIR, ADVENTURE_LOG_DIR, MAPS_DIR, WIKI_DIR] {
+        let source = campaign_dir.join(dir_name);
+        if source.exists() {
+            let dest = conflict_dir.join(dir_name);
+            fs::rename(&source, &dest).map_err(|err| io_error(&source, err))?;
+        }
+    }
+
+    Ok(conflict_dir)
 }
 
 fn summarize(snapshot: &CampaignSnapshot, folder_name: String) -> CampaignSummary {
@@ -440,6 +538,102 @@ mod tests {
         assert!(campaign_dir.join(".config").exists());
 
         let _ = fs::remove_dir_all(&campaigns_root);
+    }
+
+    #[test]
+    fn first_save_with_conflict_detection_bumps_nonce_to_one_and_reports_no_conflict() {
+        let root = temp_root("conflict-first-save");
+        let _ = fs::remove_dir_all(&root);
+
+        let outcome = CampaignStore::save_with_conflict_detection(&sample_snapshot(), &root, None)
+            .expect("save should succeed");
+
+        assert_eq!(outcome.nonce, 1);
+        assert!(outcome.conflict_dir.is_none());
+
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn save_with_a_matching_expected_nonce_never_conflicts() {
+        let root = temp_root("conflict-matching-nonce");
+        let _ = fs::remove_dir_all(&root);
+
+        let first = CampaignStore::save_with_conflict_detection(&sample_snapshot(), &root, None)
+            .expect("first save should succeed");
+
+        let mut updated = sample_snapshot();
+        updated.description = "Updated after an honest read-then-write.".to_owned();
+        let second =
+            CampaignStore::save_with_conflict_detection(&updated, &root, Some(first.nonce))
+                .expect("second save should succeed");
+
+        assert!(second.conflict_dir.is_none());
+        assert_eq!(second.nonce, first.nonce + 1);
+        assert_eq!(
+            CampaignStore::load(&root).expect("load should succeed").description,
+            "Updated after an honest read-then-write."
+        );
+
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn save_with_a_stale_expected_nonce_moves_the_prior_state_into_conflicts() {
+        let root = temp_root("conflict-stale-nonce");
+        let _ = fs::remove_dir_all(&root);
+
+        // "Device A" saves first.
+        let device_a_first = CampaignStore::save_with_conflict_detection(&sample_snapshot(), &root, None)
+            .expect("device A's first save should succeed");
+
+        // "Device B" also saved since, bumping the on-disk nonce past what
+        // device A still thinks is current.
+        let mut device_b_snapshot = sample_snapshot();
+        device_b_snapshot.description = "Device B's edit.".to_owned();
+        CampaignStore::save_with_conflict_detection(&device_b_snapshot, &root, Some(device_a_first.nonce))
+            .expect("device B's save should succeed");
+
+        // Device A now saves its own (stale-based) edit using the nonce it
+        // originally loaded at — a real conflict.
+        let mut device_a_snapshot = sample_snapshot();
+        device_a_snapshot.description = "Device A's edit.".to_owned();
+        let conflicting_outcome = CampaignStore::save_with_conflict_detection(
+            &device_a_snapshot,
+            &root,
+            Some(device_a_first.nonce),
+        )
+        .expect("conflicting save should still succeed");
+
+        let conflict_dir = conflicting_outcome
+            .conflict_dir
+            .expect("a stale expected_nonce must produce a conflict directory");
+        assert!(conflict_dir.starts_with(root.join("conflicts")));
+        // Device B's contents are preserved in the conflict directory...
+        assert!(conflict_dir.join(".config").join("The Void Between.json").exists());
+        let preserved_config =
+            fs::read_to_string(conflict_dir.join(".config").join("The Void Between.json")).unwrap();
+        assert!(preserved_config.contains("Device B's edit."));
+        // ...while device A's write becomes the active state.
+        assert_eq!(
+            CampaignStore::load(&root).expect("load should succeed").description,
+            "Device A's edit."
+        );
+
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn load_with_nonce_returns_zero_for_a_campaign_saved_without_conflict_detection() {
+        let root = temp_root("load-with-nonce-legacy");
+        let _ = fs::remove_dir_all(&root);
+        CampaignStore::save(&sample_snapshot(), &root).expect("save should succeed");
+
+        let loaded = CampaignStore::load_with_nonce(&root).expect("load should succeed");
+        assert_eq!(loaded.nonce, 0);
+        assert_eq!(loaded.snapshot, sample_snapshot());
+
+        let _ = fs::remove_dir_all(&root);
     }
 
     #[test]

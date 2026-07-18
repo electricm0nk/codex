@@ -125,6 +125,32 @@ pub struct CampaignListing {
     pub unreadable_entries: Vec<CampaignListingError>,
 }
 
+/// A campaign snapshot plus the on-disk revision nonce it was loaded at —
+/// pass `nonce` back into `local_store::CampaignStore::save_with_conflict_detection`
+/// so a save based on a stale read can be detected as a conflict rather than
+/// silently clobbering a write another device/process made in between.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LoadedCampaign {
+    pub snapshot: CampaignSnapshot,
+    pub nonce: u64,
+}
+
+/// Outcome of a conflict-aware save.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SaveOutcome {
+    pub campaign_dir: std::path::PathBuf,
+    /// The new nonce written by this save; the next
+    /// `save_with_conflict_detection` call for this campaign should pass
+    /// this value back as `expected_nonce`.
+    pub nonce: u64,
+    /// `Some(path)` if the on-disk state at save time didn't match
+    /// `expected_nonce` — the previous on-disk contents were moved to this
+    /// `conflicts/<timestamp>/` directory before the new snapshot was
+    /// written as the active state (per `decisions.md` §7: local becomes
+    /// active, both copies are preserved for manual DM review).
+    pub conflict_dir: Option<std::path::PathBuf>,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
