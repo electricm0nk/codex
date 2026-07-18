@@ -29,11 +29,11 @@ export function ChannelSelector({
   disabled = false,
 }: ChannelSelectorProps) {
   return (
-    <label data-testid="sd16-channel-selector-label">
+    <label data-testid="channel-selector-label">
       <span>Channel: </span>
       <select
         id="channel-selector"
-        data-testid="sd16-channel-selector"
+        data-testid="channel-selector"
         value={selected}
         disabled={disabled}
         onChange={(event) =>

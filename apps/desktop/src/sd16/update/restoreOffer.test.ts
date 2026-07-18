@@ -75,7 +75,7 @@ function testBuildRestoreOfferMarkupMatchesReactRenderContract() {
   // on byte-for-byte equality.
   const contractFragments = [
     `id="${RESTORE_OFFER_ID}"`,
-    'data-testid="sd16-restore-offer"',
+    'data-testid="restore-offer"',
     'data-prior-version="0.0.7"',
     'data-restore-available="true"',
     'Restore previous version: 0.0.7',

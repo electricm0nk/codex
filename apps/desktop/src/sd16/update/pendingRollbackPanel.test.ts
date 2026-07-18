@@ -52,7 +52,7 @@ function testE7PlaceholderNoteIsVisibleUntilE7Lands() {
   const html = render(buildUnwiredUpdateDeps());
   assertContains(
     html,
-    'id="sd16-pending-rollback-source-note"',
+    'id="pending-rollback-source-note"',
     'AV-DIAG-3: panel must surface the E7 carryover note anchor',
   );
   assertContains(

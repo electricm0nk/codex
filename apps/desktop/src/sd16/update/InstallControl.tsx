@@ -38,7 +38,7 @@ export function InstallControl({
   return (
     <section
       id="install-panel"
-      data-testid="sd16-install-control"
+      data-testid="install-control"
       style={UI_PANEL_STYLE}
     >
       <h2 style={UI_PANEL_TITLE_STYLE}>Install</h2>
@@ -46,7 +46,7 @@ export function InstallControl({
         Eligibility:{' '}
         <strong
           id="install-eligibility"
-          data-testid="sd16-install-eligibility"
+          data-testid="install-eligibility"
           data-eligibility={eligibility}
         >
           {eligibility}
@@ -54,7 +54,7 @@ export function InstallControl({
         {!eligible ? (
           <span
             id={INSTALL_DISABLED_REASON_ID}
-            data-testid="sd16-install-disabled-reason"
+            data-testid="install-disabled-reason"
             data-reason={disabledReason ?? ''}
             style={UI_BADGE_DISABLED_STYLE}
           >
@@ -64,7 +64,7 @@ export function InstallControl({
       </p>
       <button
         id={INSTALL_BUTTON_ID}
-        data-testid="sd16-install-button"
+        data-testid="install-button"
         type="button"
         disabled={blocked}
         data-eligible={eligible ? 'true' : 'false'}

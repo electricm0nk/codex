@@ -52,7 +52,7 @@ export function RestoreOffer({ priorVersion, restoreAvailable }: RestoreOfferPro
   return (
     <section
       id={RESTORE_OFFER_ID}
-      data-testid="sd16-restore-offer"
+      data-testid="restore-offer"
       data-prior-version={priorVersion}
       data-restore-available={restoreAvailable ? 'true' : 'false'}
       style={RESTORE_OFFER_STYLE}
@@ -76,7 +76,7 @@ export function buildRestoreOfferMarkup(props: RestoreOfferProps): string {
     : `Restore previous version (${escapeText(props.priorVersion)}) — restore mechanism not yet wired by F3b`;
   const attrs = [
     `id="${RESTORE_OFFER_ID}"`,
-    'data-testid="sd16-restore-offer"',
+    'data-testid="restore-offer"',
     `data-prior-version="${escapeAttr(props.priorVersion)}"`,
     `data-restore-available="${restoreAttr}"`,
   ].join(' ');

@@ -34,25 +34,25 @@ export function CheckPanel({ deps, checkInProgress, onCheck }: CheckPanelProps) 
   return (
     <section
       id="check-panel"
-      data-testid="sd16-check-panel"
+      data-testid="check-panel"
       style={UI_PANEL_STYLE}
     >
       <h2 style={UI_PANEL_TITLE_STYLE}>Check for updates</h2>
       <p style={{ margin: '0 0 8px 0' }}>
         Channel:{' '}
-        <strong id="check-channel" data-testid="sd16-check-channel">
+        <strong id="check-channel" data-testid="check-channel">
           {channel}
         </strong>
       </p>
       <p style={{ margin: '0 0 12px 0' }}>
         Last check:{' '}
-        <span id="check-status" data-testid="sd16-check-status">
+        <span id="check-status" data-testid="check-status">
           {describeCheckStatus(lastCheck.indexStatus, lastCheck.manifestStatus)}
         </span>
       </p>
       <button
         id={CHECK_BUTTON_ID}
-        data-testid="sd16-check-button"
+        data-testid="check-button"
         type="button"
         disabled={
           checkInProgress ||
@@ -66,7 +66,7 @@ export function CheckPanel({ deps, checkInProgress, onCheck }: CheckPanelProps) 
       </button>
       <div
         id={RELEASE_NOTES_ID}
-        data-testid="sd16-release-notes"
+        data-testid="release-notes"
         style={{ marginTop: '12px' }}
       >
         <h3 style={{ ...UI_PANEL_TITLE_STYLE, marginTop: '8px' }}>
@@ -103,7 +103,7 @@ function renderReleaseNotes(
   if (!notes) {
     return (
       <p
-        data-testid="sd16-release-notes-empty"
+        data-testid="release-notes-empty"
         style={{ margin: 0, fontStyle: 'italic', color: 'var(--color-text-muted)' }}
       >
         No release notes available yet. Run Check to load them.

@@ -39,7 +39,7 @@ export function PendingRollbackPanel({
   return (
     <section
       id={PENDING_ROLLBACK_PANEL_ID}
-      data-testid="sd16-pending-rollback-panel"
+      data-testid="pending-rollback-panel"
       data-state-source={stateSource}
       data-promoted-version={promotedVersion}
       style={UI_PANEL_STYLE}
@@ -59,8 +59,8 @@ export function PendingRollbackPanel({
         )}
       </dl>
       <p
-        id="sd16-pending-rollback-source-note"
-        data-testid="sd16-pending-rollback-source-note"
+        id="pending-rollback-source-note"
+        data-testid="pending-rollback-source-note"
         style={{
           margin: '8px 0 0 0',
           fontSize: '11px',

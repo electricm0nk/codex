@@ -15,7 +15,7 @@ import {
   type UpdateControllerDeps,
 } from './updateModel';
 
-export const UPDATE_UI_ID = 'sd16-update-ui';
+export const UPDATE_UI_ID = 'update-ui';
 
 export interface RestoreOfferProps {
   priorVersion: string;
@@ -169,7 +169,7 @@ export function UpdateUi({ initialDeps, restoreOffer }: UpdateUiProps) {
           {restoreOffer.restoreAvailable ? (
             <button
               id="restore-previous-button"
-              data-testid="sd16-restore-previous-button"
+              data-testid="restore-previous-button"
               type="button"
               disabled={restoreInProgress}
               style={restoreInProgress ? UI_BUTTON_DISABLED_STYLE : UI_BUTTON_BASE_STYLE}

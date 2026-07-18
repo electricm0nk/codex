@@ -12,7 +12,7 @@ export function InstalledPanel({ deps }: { deps: UpdateControllerDeps }) {
   return (
     <section
       id={INSTALLED_PANEL_ID}
-      data-testid="sd16-installed-panel"
+      data-testid="installed-panel"
       style={UI_PANEL_STYLE}
     >
       <h2 style={UI_PANEL_TITLE_STYLE}>Installed</h2>

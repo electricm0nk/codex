@@ -12,7 +12,7 @@ export function LastCheckPanel({ deps }: { deps: UpdateControllerDeps }) {
   return (
     <section
       id={LAST_CHECK_PANEL_ID}
-      data-testid="sd16-last-check-panel"
+      data-testid="last-check-panel"
       style={UI_PANEL_STYLE}
     >
       <h2 style={UI_PANEL_TITLE_STYLE}>Last check</h2>
