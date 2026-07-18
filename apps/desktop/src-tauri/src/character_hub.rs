@@ -892,11 +892,20 @@ mod tests {
             ])
         );
 
+        // SD-21 Epic 6 gave Wizard a real compute_wizard_chassis (BAB + saves, via
+        // compute_class_chassis's per-class dispatch), so Wizard no longer trips the
+        // two chassis-wide generic diagnostics (class_chassis.unsupported,
+        // defense.total_save.unsupported) that every other still-unsupported class
+        // does. combat.baseline_unsupported and skill.selected_modifier.unsupported
+        // remain because compute_combat_baseline / compute_selected_skill_modifiers
+        // still gate on Fighter only -- a known Epic 6 follow-on, not a regression.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:wizard", 1),
-            generic_plus(&[
-                "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported",
-                "class_spell.wizard.prepared_spellbook.unsupported",
+            BTreeSet::from([
+                "combat.baseline_unsupported".to_string(),
+                "skill.selected_modifier.unsupported".to_string(),
+                "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported".to_string(),
+                "class_spell.wizard.prepared_spellbook.unsupported".to_string(),
             ])
         );
 
