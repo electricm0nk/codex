@@ -35,7 +35,7 @@ async function testHappyPathConfirmsOnlyAfterRealOpen() {
   assertEqual(outcome.manualUrl, BUILT_URL, 'manual url mirrors the opened url');
 
   assertEqual(calls.length, 1, 'exactly one IPC call');
-  assertEqual(calls[0].cmd, 'sd16_browser_handoff', 'command name');
+  assertEqual(calls[0].cmd, 'handoff_defect_report_to_browser', 'command name');
   const req = calls[0].args.req as Record<string, unknown>;
   assertEqual(req.owner, GITHUB_ISSUE_OWNER, 'owner pinned');
   assertEqual(req.repo, GITHUB_ISSUE_REPO, 'repo pinned');

@@ -112,7 +112,7 @@ fn main() {
             load_ge08_authoring_workbench_snapshot,
             load_sd13_support_state_matrix,
             load_backend_health,
-            sd16_browser_handoff::sd16_browser_handoff,
+            sd16_browser_handoff::handoff_defect_report_to_browser,
             is_install_eligible,
             perform_install,
             perform_restore_previous,

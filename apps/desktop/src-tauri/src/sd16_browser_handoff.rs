@@ -242,7 +242,7 @@ fn perform_handoff(
 /// still refuses to claim submission: `opened: true` means the prefilled
 /// issue form was opened in the tester's browser, nothing more.
 #[tauri::command]
-pub fn sd16_browser_handoff(
+pub fn handoff_defect_report_to_browser(
     app: tauri::AppHandle,
     req: IssueUrlRequest,
 ) -> Result<IssueUrlResponse, IssueUrlError> {
