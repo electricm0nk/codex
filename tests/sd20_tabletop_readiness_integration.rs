@@ -726,6 +726,23 @@ fn tabletop_readiness_fighter_level_1_chassis_composes_via_printed_sheet_cell_ma
         expected_cells.len(),
         "printed_sheet_cell_map must produce exactly the cells the fixture names, in the same order"
     );
+    // As of the `contract:skill_wiring` cycle (`adaptive-squishing-mccarthy.md`),
+    // two cells (`sheet.skill.diplomacy`, `sheet.skill.disable_device`) are
+    // *honestly* Blocked for this fixture, and that is not a regression of
+    // the "fully-supported Fighter never Blocked" invariant below: this
+    // fixture's `input.skill_allocations` deliberately allocates exactly
+    // climb/intimidate/swim (a level-1 human Fighter's real skill-point
+    // budget: 2 base + 1 Int-0 + 1 human bonus = 3 points, already fully
+    // spent -- allocating Diplomacy/Disable Device too would fabricate
+    // skill points this character doesn't have). `allocate_skill_ranks`
+    // has no entry in `SkillTotals.totals` for a skill the character never
+    // allocated ranks to at all (see `contract.rs::printed_sheet_cell_map`'s
+    // doc comment), so `Blocked` here means "this character never trained
+    // this skill", a different and legitimate case from the
+    // unsupported-chassis `Blocked` the rest of this assertion still
+    // guards against.
+    const HONESTLY_UNTRAINED_SKILL_CELLS: &[&str] =
+        &["sheet.skill.diplomacy", "sheet.skill.disable_device"];
     for (cell, expected_cell) in cells.iter().zip(expected_cells.iter()) {
         assert_eq!(cell.cell_id, expected_cell.get("cell_id").as_str());
         assert_eq!(cell.source_field, expected_cell.get("source_field").as_str());
@@ -740,23 +757,31 @@ fn tabletop_readiness_fighter_level_1_chassis_composes_via_printed_sheet_cell_ma
                     cell.cell_id
                 );
             }
-            "Blocked" => panic!(
-                "the tabletop-readiness fixture's cells must never be Blocked -- a level-1 \
-                 Fighter is a fully-supported class per Epic 1's own contract; a Blocked entry \
-                 here in expected_output would itself be a fixture-authoring bug"
+            "Blocked" => assert!(
+                HONESTLY_UNTRAINED_SKILL_CELLS.contains(&cell.cell_id.as_str()),
+                "the tabletop-readiness fixture's cells must never be Blocked by an unsupported \
+                 chassis posture -- a level-1 Fighter is a fully-supported class per Epic 1's own \
+                 contract; a Blocked entry here in expected_output for any cell other than {:?} \
+                 would itself be a fixture-authoring bug: got Blocked for {}",
+                HONESTLY_UNTRAINED_SKILL_CELLS,
+                cell.cell_id
             ),
             other => panic!("unrecognized expected cell value kind: {other:?}"),
         }
     }
     // Doubly explicit, independent of the fixture's own JSON: no cell in
-    // the live output is ever Blocked for this fully-supported Fighter,
-    // per this epic's brief point 2 ("no PrintedSheetCellValue::Blocked
-    // cells for anything a level-1 fighter should have fully supported").
+    // the live output is ever Blocked for this fully-supported Fighter
+    // *because of chassis support* -- per this epic's brief point 2 ("no
+    // PrintedSheetCellValue::Blocked cells for anything a level-1 fighter
+    // should have fully supported"). The two honestly-untrained skill
+    // cells above are the sole, documented exception (see the comment
+    // above): they are Blocked because this character never allocated
+    // ranks to those skills, not because the chassis is unsupported.
     assert!(
-        cells
-            .iter()
-            .all(|cell| !matches!(cell.value, PrintedSheetCellValue::Blocked)),
-        "no cell may render Blocked for this fully-supported level-1 Fighter posture: {cells:?}"
+        cells.iter().all(|cell| !matches!(cell.value, PrintedSheetCellValue::Blocked)
+            || HONESTLY_UNTRAINED_SKILL_CELLS.contains(&cell.cell_id.as_str())),
+        "no cell may render Blocked for this fully-supported level-1 Fighter posture, except the \
+         two honestly-untrained skill cells {HONESTLY_UNTRAINED_SKILL_CELLS:?}: {cells:?}"
     );
 
     // Diagnostics: exact claim_blocking id-set match, mirroring the Epic
@@ -799,16 +824,31 @@ fn tabletop_readiness_fighter_level_1_chassis_composes_via_printed_sheet_cell_ma
 // `combat.baseline_unsupported` or `skill.selected_modifier.unsupported`
 // without also tripping `class_chassis.unsupported` still rendered a
 // fabricated `Number(0)`. `printed_sheet_cell_map` now also checks
-// `combat.baseline_unsupported`, `skill.selected_modifier.unsupported`,
-// and `defense.total_save.unsupported` (the third diagnostic Finding 2
-// named, not separately exercised below since it always co-fires with
-// `class_chassis.unsupported` for the Fighter-only compute surface this
-// suite exercises), each OR'd additively with the universal
-// `class_chassis.unsupported` fallback -- see `contract.rs`'s
-// `COMBAT_BASELINE_UNSUPPORTED_DIAGNOSTIC_ID` /
-// `SKILL_SELECTED_MODIFIER_UNSUPPORTED_DIAGNOSTIC_ID` /
-// `TOTAL_SAVE_UNSUPPORTED_DIAGNOSTIC_ID` constants. These tests now assert
-// the fixed (`Blocked`) behavior instead of pinning the bug.
+// `combat.baseline_unsupported` and `defense.total_save.unsupported`
+// (the third diagnostic Finding 2 named, not separately exercised below
+// since it always co-fires with `class_chassis.unsupported` for the
+// Fighter-only compute surface this suite exercises), each OR'd
+// additively with the universal `class_chassis.unsupported` fallback --
+// see `contract.rs`'s `COMBAT_BASELINE_UNSUPPORTED_DIAGNOSTIC_ID` /
+// `TOTAL_SAVE_UNSUPPORTED_DIAGNOSTIC_ID` constants.
+//
+// UPDATE (`contract:skill_wiring` cycle, `adaptive-squishing-mccarthy.md`):
+// the skill half of Finding 2's fix (gating `sheet.skill.*` on
+// `skill.selected_modifier.unsupported` /
+// `SKILL_SELECTED_MODIFIER_UNSUPPORTED_DIAGNOSTIC_ID`) has since been
+// *superseded*, not merely extended: `sheet.skill.*` cells no longer
+// source from the chassis field that diagnostic gates at all -- they
+// source from Epic 4's real `allocate_skill_ranks` via
+// `PilotReceipt.skills`, whose diagnostics are all `claim_blocking:
+// false`. `SKILL_SELECTED_MODIFIER_UNSUPPORTED_DIAGNOSTIC_ID` has been
+// deleted from `contract.rs` (dead code); the diagnostic id string itself
+// still fires from `pilot_compute.rs` (untouched trunk) and still appears
+// in `receipt.diagnostics`, it just no longer gates any cell.
+// `tabletop_readiness_selected_skill_posture_deviation_no_longer_blocks_skill_cells`
+// below (originally `..._is_blocked_not_zeroed`) now asserts this
+// superseding behavior instead of the old fixed-but-now-stale one; the
+// combat-baseline test below is unaffected (combat-baseline gating is
+// unchanged by this cycle).
 // ---------------------------------------------------------------------
 
 /// A variant of the fixture's base character with `feat:dodge` (and its
@@ -873,15 +913,34 @@ fn tabletop_readiness_combat_baseline_deviation_is_blocked_not_zeroed() {
     );
 }
 
+/// Superseded by the `contract:skill_wiring` cycle
+/// (`adaptive-squishing-mccarthy.md`), which is a deliberate,
+/// documented behavior change (the plan's "Skill wiring replaces, not
+/// adds" design decision), not a silent regression: originally named
+/// `tabletop_readiness_selected_skill_posture_deviation_is_blocked_not_zeroed`
+/// and asserted that widening skill_allocations beyond the chassis's old
+/// exact Climb/Intimidate/Swim rank-1 posture check
+/// (`unmet_selected_skill_posture_conditions`) blocked the
+/// `sheet.skill.*` cells via claim-blocking `skill.selected_modifier.unsupported`.
+/// That diagnostic still fires -- `pilot_compute.rs` is untouched trunk --
+/// but `sheet.skill.*` cells no longer source from the chassis field it
+/// gates at all: they source from `PilotReceipt.skills`
+/// (`skill_allocation::allocate_skill_ranks`), whose diagnostics are all
+/// `claim_blocking: false` and which has no notion of "exactly these
+/// three skills and no more". So the same input that used to render
+/// `Blocked` for climb/intimidate/swim now correctly renders their real,
+/// independently-computed totals -- a real, out-of-the-box improvement
+/// this project's wiring is meant to deliver (see
+/// `tests/sd20_contract_skill_wiring.rs` for the dedicated regression
+/// test), not a bug.
 #[test]
-fn tabletop_readiness_selected_skill_posture_deviation_is_blocked_not_zeroed() {
+fn tabletop_readiness_selected_skill_posture_deviation_no_longer_blocks_skill_cells() {
     let fixture = load_fixture();
     let mut input = character_input_from_fixture(fixture.get("input"));
-    // Widen beyond the exact Climb/Intimidate/Swim rank-1 posture
-    // `unmet_selected_skill_posture_conditions` requires -- a single
-    // extra, otherwise perfectly legal skill allocation is enough to
-    // trip it ("Refuse any widening beyond exactly the three selected
-    // skills").
+    // Same deviation as before this cycle: widen beyond the exact
+    // Climb/Intimidate/Swim rank-1 posture `unmet_selected_skill_posture_conditions`
+    // requires -- a single extra, otherwise perfectly legal skill
+    // allocation is enough to trip it.
     input.chosen.skill_allocations.push(SkillAllocation {
         skill_id: "skill:diplomacy".to_string(),
         ranks: 1,
@@ -891,16 +950,31 @@ fn tabletop_readiness_selected_skill_posture_deviation_is_blocked_not_zeroed() {
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
     let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
+    // The old chassis-level diagnostic still fires (unrelated trunk
+    // behavior, unchanged by this cycle) -- confirming this test still
+    // exercises the exact same deviation as before.
     assert!(
         receipt
             .diagnostics
             .iter()
             .any(|d| d.id == "skill.selected_modifier.unsupported" && d.claim_blocking),
-        "adding a diplomacy allocation must trip skill.selected_modifier.unsupported \
-         (claim_blocking: true): {:?}",
+        "adding a diplomacy allocation must still trip skill.selected_modifier.unsupported \
+         (claim_blocking: true) at the chassis level: {:?}",
         receipt.diagnostics
     );
     assert_eq!(receipt.chassis.selected_skill_modifiers.climb, 0);
+
+    // Epic 4's allocate_skill_ranks has no notion of that chassis posture
+    // and computes climb/intimidate/swim exactly as it would without the
+    // extra diplomacy allocation (each skill is computed independently).
+    let direct = allocate_skill_ranks(&input);
+    let expected_climb = direct.totals.get("skill:climb").expect("climb resolves").total_modifier;
+    let expected_intimidate = direct
+        .totals
+        .get("skill:intimidate")
+        .expect("intimidate resolves")
+        .total_modifier;
+    let expected_swim = direct.totals.get("skill:swim").expect("swim resolves").total_modifier;
 
     let cells = printed_sheet_cell_map(&receipt);
     let climb_cell = cells
@@ -915,25 +989,20 @@ fn tabletop_readiness_selected_skill_posture_deviation_is_blocked_not_zeroed() {
         .iter()
         .find(|cell| cell.cell_id == "sheet.skill.swim")
         .expect("sheet.skill.swim cell must exist");
-    // Fixed behavior: printed_sheet_cell_map now also gates on
-    // skill.selected_modifier.unsupported, so these cells render Blocked
-    // instead of a fabricated Number(0).
+    // The load-bearing assertion: despite the old chassis-level diagnostic
+    // firing claim_blocking: true above, these cells now render the real
+    // Numbers Epic 4 computed -- never Blocked.
     assert_eq!(
         climb_cell.value,
-        PrintedSheetCellValue::Blocked,
-        "skill.selected_modifier.unsupported (claim_blocking: true) must block sheet.skill.climb"
+        PrintedSheetCellValue::Number(expected_climb as i16),
+        "sheet.skill.climb must render the real allocate_skill_ranks total, not Blocked, even \
+         though the old chassis single-posture diagnostic still fires"
     );
     assert_eq!(
         intimidate_cell.value,
-        PrintedSheetCellValue::Blocked,
-        "skill.selected_modifier.unsupported (claim_blocking: true) must block \
-         sheet.skill.intimidate"
+        PrintedSheetCellValue::Number(expected_intimidate as i16)
     );
-    assert_eq!(
-        swim_cell.value,
-        PrintedSheetCellValue::Blocked,
-        "skill.selected_modifier.unsupported (claim_blocking: true) must block sheet.skill.swim"
-    );
+    assert_eq!(swim_cell.value, PrintedSheetCellValue::Number(expected_swim as i16));
 }
 
 // ---------------------------------------------------------------------

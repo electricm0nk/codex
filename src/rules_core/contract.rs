@@ -28,6 +28,7 @@
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute::{ComputationDiagnostic, PilotBaseChassisComputation};
 use crate::rules_core::pilot_compute_corpus::{CorpusDerivedSection, CorpusPilotReceipt};
+use crate::rules_core::skill_allocation::{allocate_skill_ranks, SkillTotals};
 use crate::rules_core::source_content::SourcePackageContent;
 
 /// The three canonical `CharacterInput` permutations the boundary
@@ -108,6 +109,17 @@ pub struct PilotReceipt {
     /// Diagnostic fields; `claim_blocking: true` diagnostics are
     /// preserved unchanged from the chassis computation.
     pub diagnostics: Vec<ComputationDiagnostic>,
+    /// Epic 4's real skill-rank allocation totals
+    /// (`skill_allocation::allocate_skill_ranks`), wired in by the
+    /// `contract:skill_wiring` cycle (`adaptive-squishing-mccarthy.md`).
+    /// Per that module's own doc comment, every diagnostic
+    /// `allocate_skill_ranks` produces is `claim_blocking: false` — it
+    /// never fabricates a total, it either computes a real one or omits
+    /// the skill from `totals`/`untrained_use` entirely. This replaces
+    /// (not supplements) the old narrow single-posture check that used to
+    /// gate `sheet.skill.*` cells; see `printed_sheet_cell_map`'s doc
+    /// comment for the cell-level consequence.
+    pub skills: SkillTotals,
 }
 
 /// Build the boundary contract's `PilotReceipt` from the corpus-aware
@@ -116,22 +128,28 @@ pub struct PilotReceipt {
 /// this wraps rather than duplicates the existing shapes.
 ///
 /// `input` and `corpus` are the raw `CharacterInput` and
-/// `SourcePackageContent` that produced `receipt`. This cycle
-/// (`contract:receipt_signature_threading`, per
-/// `adaptive-squishing-mccarthy.md`) widens the signature to accept them
-/// so later cycles can call SD-20's Epic 2-7 engines (spellbook, feat
-/// prereqs, skill allocation, equipment effects, damage total), none of
-/// which are reachable from `CorpusPilotReceipt` alone. This cycle does
-/// not change behavior: `input`/`corpus` are unused by the body below.
+/// `SourcePackageContent` that produced `receipt`. Widened by the
+/// `contract:receipt_signature_threading` cycle (cycle 0) so later cycles
+/// can call SD-20's Epic 2-7 engines (spellbook, feat prereqs, skill
+/// allocation, equipment effects, damage total), none of which are
+/// reachable from `CorpusPilotReceipt` alone.
+///
+/// The `contract:skill_wiring` cycle (`adaptive-squishing-mccarthy.md`)
+/// is the first to actually use `input`: it calls Epic 4's
+/// `allocate_skill_ranks(input)` to populate `PilotReceipt.skills`. See
+/// that field's doc comment and `skill_allocation.rs` for what it
+/// computes. `corpus` remains unused this cycle — no Epic 2-7 engine
+/// wired in so far needs it.
 pub fn to_pilot_receipt(
     receipt: &CorpusPilotReceipt,
-    _input: &CharacterInput,
+    input: &CharacterInput,
     _corpus: &SourcePackageContent,
 ) -> PilotReceipt {
     PilotReceipt {
         diagnostics: receipt.base.diagnostics.clone(),
         chassis: receipt.base.clone(),
         corpus_derived: receipt.corpus_derived.clone(),
+        skills: allocate_skill_ranks(input),
     }
 }
 
@@ -139,15 +157,22 @@ pub fn to_pilot_receipt(
 /// as a whole has no supported single-class posture
 /// (`compute_pilot_base_chassis`'s `class_chassis.unsupported`). The
 /// chassis-dependent `PilotReceipt` fields it zeroes (base attack bonus,
-/// total saves, the deterministic baseline melee attack bonus / armor
-/// class, and the selected skill modifiers) are not real data in that
-/// case — the cell map must render `PrintedSheetCellValue::Blocked` for
-/// the cells sourced from them rather than show the zero as if it were a
-/// computed number.
+/// total saves, and the deterministic baseline melee attack bonus / armor
+/// class) are not real data in that case — the cell map must render
+/// `PrintedSheetCellValue::Blocked` for the cells sourced from them rather
+/// than show the zero as if it were a computed number.
+///
+/// `chassis.selected_skill_modifiers` is also zeroed by this diagnostic
+/// at the `PilotBaseChassisComputation` level, but as of the
+/// `contract:skill_wiring` cycle no `sheet.skill.*` cell sources from
+/// that chassis field any more — they source from
+/// `PilotReceipt.skills.totals` (Epic 4's `allocate_skill_ranks`)
+/// instead, which is not gated by this diagnostic at all. See
+/// `printed_sheet_cell_map`'s doc comment for why.
 ///
 /// This is a *universal* fallback: a wholly-unsupported class posture
 /// blocks every chassis-dependent cell. It is additively layered (OR'd)
-/// with the three more specific diagnostic ids below — each of those can
+/// with the two more specific diagnostic ids below — each of those can
 /// fire independently of this one (e.g. a supported Fighter chassis whose
 /// combat-baseline equipment posture is wrong still leaves
 /// `class_chassis.unsupported` un-fired), so `printed_sheet_cell_map` must
@@ -178,22 +203,6 @@ const TOTAL_SAVE_UNSUPPORTED_DIAGNOSTIC_ID: &str = "defense.total_save.unsupport
 /// / `sheet.melee_attack_bonus` cells, additively with
 /// `CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID`.
 const COMBAT_BASELINE_UNSUPPORTED_DIAGNOSTIC_ID: &str = "combat.baseline_unsupported";
-
-/// The diagnostic id
-/// `pilot_compute.rs::compute_selected_skill_modifiers` pushes
-/// (`claim_blocking: true`) whenever the exact deterministic
-/// Climb/Intimidate/Swim rank-1 posture (plus the grounded Chain Shirt
-/// armor-check posture the Climb/Swim totals depend on,
-/// `unmet_selected_skill_posture_conditions`) is not fully met, zeroing
-/// `chassis.selected_skill_modifiers.{climb,intimidate,swim}`. Like the
-/// combat-baseline diagnostic above, this checks conditions beyond the
-/// supported-Fighter-chassis check (exact skill allocations, no widening
-/// beyond the three selected skills, Chain Shirt equipped), so it can fire
-/// even when `class_chassis.unsupported` does not — it must be checked
-/// independently. Gates the `sheet.skill.*` cells, additively with
-/// `CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID`.
-const SKILL_SELECTED_MODIFIER_UNSUPPORTED_DIAGNOSTIC_ID: &str =
-    "skill.selected_modifier.unsupported";
 
 /// A single row of the printed PF1 character sheet
 /// (`technical-design.md` §1.1 "Cells"): a stable cell id and the value
@@ -238,24 +247,48 @@ fn diagnostic_blocking(receipt: &PilotReceipt, diagnostic_id: &str) -> bool {
 /// `class_chassis.unsupported` is a universal fallback that blocks every
 /// chassis-dependent cell (a wholly-unsupported class posture invalidates
 /// all of them), but it is not the *only* diagnostic that can zero a
-/// chassis-dependent field: `compute_total_saves`,
-/// `compute_combat_baseline`, and `compute_selected_skill_modifiers` each
-/// check their own, more specific posture conditions (beyond just "is the
-/// Fighter chassis supported") and push their own claim-blocking
-/// diagnostic ids when those are unmet — independently of whether
-/// `class_chassis.unsupported` fires. So each chassis-dependent cell below
-/// is gated on `class_chassis.unsupported` OR'd with whichever of those
-/// more specific diagnostic ids actually governs its source field. Ability
-/// modifiers are computed directly from ability scores independent of
-/// chassis support, so they are never blocked by any of these diagnostics.
+/// chassis-dependent field: `compute_total_saves` and
+/// `compute_combat_baseline` each check their own, more specific posture
+/// conditions (beyond just "is the Fighter chassis supported") and push
+/// their own claim-blocking diagnostic ids when those are unmet —
+/// independently of whether `class_chassis.unsupported` fires. So each of
+/// those chassis-dependent cells below is gated on
+/// `class_chassis.unsupported` OR'd with whichever of those more specific
+/// diagnostic ids actually governs its source field. Ability modifiers
+/// are computed directly from ability scores independent of chassis
+/// support, so they are never blocked by any of these diagnostics.
+///
+/// The five `sheet.skill.*` cells (climb, intimidate, swim, diplomacy,
+/// disable_device) are a different case as of the `contract:skill_wiring`
+/// cycle: they no longer source from the chassis's old
+/// `compute_selected_skill_modifiers` single-posture check at all — they
+/// source from `PilotReceipt.skills.totals` (Epic 4's real
+/// `allocate_skill_ranks`, called in `to_pilot_receipt`). Every
+/// diagnostic `allocate_skill_ranks` can produce is `claim_blocking:
+/// false` (see `skill_allocation.rs`'s `SkillTotals::diagnostics` doc
+/// comment), so none of these five cells is ever blocked by a
+/// skill-specific diagnostic, and they are not gated on
+/// `class_chassis.unsupported` either (the ability modifiers
+/// `allocate_skill_ranks` uses come from the chassis's own
+/// `AbilityModifiers`, which — like the standalone ability-modifier cells
+/// above — are computed directly from ability scores). The only way one
+/// of these five cells renders `Blocked` is genuine absence of data: a
+/// skill with no entry at all in `input.chosen.skill_allocations` (never
+/// allocated, not even at 0 ranks) has no entry in
+/// `receipt.skills.totals` — `allocate_skill_ranks` only produces a
+/// result for skills the player actually submitted an allocation for; it
+/// does not enumerate its whole bounded skill universe regardless of
+/// whether the character touched it, and `SkillTotals.untrained_use` is
+/// populated from that same per-allocation loop, so it has no fallback
+/// entry for an unallocated skill either. `Blocked` here means "no
+/// computed value exists", not "a diagnostic gated this" and not a
+/// fabricated `Number(0)`.
 pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
     let chassis_unsupported =
         diagnostic_blocking(receipt, CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID);
     let total_save_unsupported = diagnostic_blocking(receipt, TOTAL_SAVE_UNSUPPORTED_DIAGNOSTIC_ID);
     let combat_baseline_unsupported =
         diagnostic_blocking(receipt, COMBAT_BASELINE_UNSUPPORTED_DIAGNOSTIC_ID);
-    let skill_modifier_unsupported =
-        diagnostic_blocking(receipt, SKILL_SELECTED_MODIFIER_UNSUPPORTED_DIAGNOSTIC_ID);
 
     // Base attack bonus has no dedicated diagnostic beyond
     // `class_chassis.unsupported` -- `compute_fighter_chassis` is its only
@@ -263,7 +296,6 @@ pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
     let base_attack_bonus_blocked = chassis_unsupported;
     let save_blocked = chassis_unsupported || total_save_unsupported;
     let combat_baseline_blocked = chassis_unsupported || combat_baseline_unsupported;
-    let skill_modifier_blocked = chassis_unsupported || skill_modifier_unsupported;
 
     let cell = |cell_id: &str, source_field: &str, value: i16, blocked: bool| PrintedSheetCell {
         cell_id: cell_id.to_owned(),
@@ -279,6 +311,20 @@ pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
         cell_id: cell_id.to_owned(),
         source_field: source_field.to_owned(),
         value: PrintedSheetCellValue::Number(value),
+    };
+
+    // See this function's doc comment for why these five skill cells are
+    // sourced from `receipt.skills.totals` (Epic 4's real
+    // `allocate_skill_ranks`) rather than the chassis's old single-posture
+    // check, and why `Blocked` here means "no entry at all", never a
+    // diagnostic gate.
+    let skill_cell = |cell_id: &str, source_field: &str, skill_id: &str| PrintedSheetCell {
+        cell_id: cell_id.to_owned(),
+        source_field: source_field.to_owned(),
+        value: match receipt.skills.totals.get(skill_id) {
+            Some(total) => PrintedSheetCellValue::Number(total.total_modifier as i16),
+            None => PrintedSheetCellValue::Blocked,
+        },
     };
 
     let chassis = &receipt.chassis;
@@ -320,23 +366,30 @@ pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
             chassis.baseline_melee_attack_bonus,
             combat_baseline_blocked,
         ),
-        cell(
+        skill_cell(
             "sheet.skill.climb",
-            "chassis.selected_skill_modifiers.climb",
-            chassis.selected_skill_modifiers.climb,
-            skill_modifier_blocked,
+            "skills.totals.skill:climb.total_modifier",
+            "skill:climb",
         ),
-        cell(
+        skill_cell(
             "sheet.skill.intimidate",
-            "chassis.selected_skill_modifiers.intimidate",
-            chassis.selected_skill_modifiers.intimidate,
-            skill_modifier_blocked,
+            "skills.totals.skill:intimidate.total_modifier",
+            "skill:intimidate",
         ),
-        cell(
+        skill_cell(
             "sheet.skill.swim",
-            "chassis.selected_skill_modifiers.swim",
-            chassis.selected_skill_modifiers.swim,
-            skill_modifier_blocked,
+            "skills.totals.skill:swim.total_modifier",
+            "skill:swim",
+        ),
+        skill_cell(
+            "sheet.skill.diplomacy",
+            "skills.totals.skill:diplomacy.total_modifier",
+            "skill:diplomacy",
+        ),
+        skill_cell(
+            "sheet.skill.disable_device",
+            "skills.totals.skill:disable_device.total_modifier",
+            "skill:disable_device",
         ),
         independent_cell(
             "sheet.ability_modifier.strength",
