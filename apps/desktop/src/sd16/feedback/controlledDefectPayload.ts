@@ -1,4 +1,4 @@
-// SD16-E8-F3 — controlled-defect GitHub issue payload assembly.
+// Controlled-defect GitHub issue payload assembly.
 //
 // Assembles the GitHub issue body for the E5 lane to file post-merge
 // (the in-tranche spec is authored by E5-bis; the actual issue is
@@ -10,7 +10,7 @@
 //     install-disabled-reason, operator-visible pre/post state,
 //     relaunch prompt, and hash check result;
 //   - EXCLUDE secrets, tokens, raw full logs, and any agent-context
-//     markers (per AV-PAY-4).
+//     markers.
 //
 // Pure function: no I/O, deterministic on the same input, and throws if
 // forbidden tokens are detected while assembling the payload.
@@ -67,7 +67,7 @@ const FORBIDDEN_TOKENS: readonly string[] = [
   'session_cookie=',
   'COOKIE=',
   // Agent-context markers that have no place in operator-visible
-  // GitHub issues per AV-PAY-4.
+  // GitHub issues.
   'claude-execution-receipt',
   'kanban-session-id',
   'hermes-run-id',

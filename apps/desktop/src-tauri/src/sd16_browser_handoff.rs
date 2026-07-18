@@ -1,7 +1,7 @@
 //! SD-16 E5-F3b — browser-open handoff seam.
 //!
 //! This module owns the Rust/Tauri half of the defect-submission "browser-open"
-//! boundary (AV-PAY-1 browser-open half, AV-PAY-7 URL-half). It builds a
+//! boundary (covering both the browser-open half and the URL-building half). It builds a
 //! prefilled GitHub "new issue" URL from a shell-supplied request, re-validates
 //! the URL as defense-in-depth, and returns it to the React layer.
 //!
@@ -28,7 +28,7 @@
 
 use serde::{Deserialize, Serialize};
 
-/// Upper bound on the generated GitHub issue URL length (AV-PAY-6 boundary).
+/// Upper bound on the generated GitHub issue URL length.
 pub const MAX_URL_LENGTH: usize = 8192;
 
 /// GitHub username rule: 1-39 chars.

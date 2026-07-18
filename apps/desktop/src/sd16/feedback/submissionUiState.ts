@@ -1,5 +1,5 @@
 /**
- * React-agnostic view of the SD-16 submission reducer state (AV-PAY-5).
+ * React-agnostic view of the defect-submission reducer state.
  *
  * `status` is a flattened enum so the React layer (F4) does not have to walk
  * the discriminated union, and `canClaimSubmitted` is computed via the reducer's
