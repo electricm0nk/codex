@@ -1,0 +1,48 @@
+{
+  "name": "skill_allocation_class_cross_class_untrained_and_cap_parity",
+  "epic": "Epic 4 -- Skill-rank allocation engine",
+  "shape": "sd20-epic-seam-v1",
+  "shape_note": "SD-20 fixture-shape decision, documented identically across all six Epic 2-7 wire-fixture parity fixtures (spellbook_parity.json, feat_prereqs_parity.json, skill_allocation_parity.json, equipment_effects_parity.json, damage_total_parity.json, level_up_parity.json): technical-design.md section 1.2 illustrates a CharacterInput -> PilotReceipt shaped fixture, but Epic 8's own integration-closure cycle (tests/sd20_tabletop_readiness_integration.rs module doc comment, Finding 1) found Epics 2-7's compute functions are never wired into PilotReceipt / printed_sheet_cell_map at all -- each epic's real seam takes and returns its own distinct type, not a CharacterInput/PilotReceipt pair. Section 1.2's illustrative format therefore does not fit Epics 2-7 as actually landed. This fixture instead captures that epic's OWN real compute function's input -> output round trip directly: {name, epic, seam_function, input, expected_output}, where input/expected_output mirror the real Rust input/output types field-by-field. A Rust enum variant is represented as its Debug-format string; a Rust Option::None is represented as JSON null. Only boundary_contract_parity.json (Epic 1) and human_fighter_level_1_tabletop.json (Epic 8) are genuinely CharacterInput -> PilotReceipt shaped, because only Epic 1's contract and Epic 8's integration test actually route through that pipeline.",
+  "seam_function": "rules_core::skill_allocation::allocate_skill_ranks",
+  "input": {
+    "note": "reuses the same level-1 Human Fighter ability scores as tests/fixtures/wire/sd20/human_fighter_level_1_tabletop.json, with a broader skill_allocations set (mirroring tests/sd20_tabletop_readiness_integration.rs's epic_probe_skill_allocation_covers_class_cross_class_and_untrained_breadth) that exercises class-skill handling, cross-class-penalty handling, untrained-use handling, and max-rank-cap handling in one scenario, per the SD-20 loop's Epic 4 ask",
+    "character": {
+      "race_id": "human",
+      "class_levels": [{ "class_id": "class:fighter", "level": 1 }],
+      "ability_scores": {
+        "strength": 16,
+        "dexterity": 14,
+        "constitution": 14,
+        "intelligence": 10,
+        "wisdom": 12,
+        "charisma": 8
+      },
+      "skill_allocations": [
+        { "skill_id": "skill:climb", "ranks": 5, "note": "class skill; raw 5 ranks exceeds the level-1 class-skill cap of 4 -> capped, with a diagnostic" },
+        { "skill_id": "skill:intimidate", "ranks": 1, "note": "class skill, within cap" },
+        { "skill_id": "skill:swim", "ranks": 0, "note": "class skill, 0 ranks -> untrained use" },
+        { "skill_id": "skill:diplomacy", "ranks": 1, "note": "cross-class, exactly at the level-1 cross-class cap of 1" },
+        { "skill_id": "skill:disable_device", "ranks": 1, "note": "cross-class AND trained-only, invested at 1 rank" }
+      ]
+    }
+  },
+  "expected_output": {
+    "class_skills": ["skill:climb", "skill:intimidate", "skill:swim"],
+    "cross_class_penalty_applied": true,
+    "totals": {
+      "skill:climb": { "ranks": 4, "ability_modifier": 3, "class_skill_bonus": 3, "misc_modifier": 0, "total_modifier": 10 },
+      "skill:intimidate": { "ranks": 1, "ability_modifier": -1, "class_skill_bonus": 3, "misc_modifier": 0, "total_modifier": 3 },
+      "skill:swim": { "ranks": 0, "ability_modifier": 3, "class_skill_bonus": 0, "misc_modifier": 0, "total_modifier": 3 },
+      "skill:diplomacy": { "ranks": 1, "ability_modifier": -1, "class_skill_bonus": 0, "misc_modifier": 0, "total_modifier": 0 },
+      "skill:disable_device": { "ranks": 1, "ability_modifier": 2, "class_skill_bonus": 0, "misc_modifier": 0, "total_modifier": 3 }
+    },
+    "untrained_use": { "skill:swim": 3 },
+    "diagnostics": [
+      {
+        "id": "skill_allocation.class_skill_max_rank_exceeded",
+        "claim_blocking": false,
+        "message": "skill:climb allocated 5 ranks exceeds the class-skill max-rank cap of 4 at character level 1"
+      }
+    ]
+  }
+}

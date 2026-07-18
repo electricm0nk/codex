@@ -1,0 +1,71 @@
+{
+  "name": "human_fighter_level_1_boundary_contract_parity",
+  "input": {
+    "case_id": "sd20_boundary_contract_parity",
+    "source_package_id": "sd20_boundary_contract_parity",
+    "race_id": "human",
+    "class_levels": [
+      { "class_id": "class:fighter", "level": 1 }
+    ],
+    "ability_scores": {
+      "strength": 14,
+      "dexterity": 12,
+      "constitution": 13,
+      "intelligence": 10,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "selected_feats": [],
+    "skill_allocations": [],
+    "equipment_selections": [],
+    "selected_choices": [],
+    "spells_selected": []
+  },
+  "expected_permutation": "BrandNew",
+  "expected_output": {
+    "chassis": {
+      "ability_modifiers": {
+        "strength": 2,
+        "dexterity": 1,
+        "constitution": 1,
+        "intelligence": 0,
+        "wisdom": 0,
+        "charisma": -1
+      },
+      "base_attack_bonus": 1,
+      "base_saves": { "fortitude": 2, "reflex": 0, "will": 0 },
+      "baseline_melee_attack_bonus": 0,
+      "baseline_armor_class": 0,
+      "total_saves": { "fortitude": 3, "reflex": 1, "will": 0 },
+      "selected_skill_modifiers": { "climb": 0, "intimidate": 0, "swim": 0 }
+    },
+    "corpus_derived": {
+      "school_coverage": {},
+      "equipped_items": []
+    },
+    "cells": [
+      { "cell_id": "sheet.base_attack_bonus", "source_field": "chassis.base_attack_bonus", "value": { "kind": "Number", "value": 1 } },
+      { "cell_id": "sheet.save.fortitude", "source_field": "chassis.total_saves.fortitude", "value": { "kind": "Number", "value": 3 } },
+      { "cell_id": "sheet.save.reflex", "source_field": "chassis.total_saves.reflex", "value": { "kind": "Number", "value": 1 } },
+      { "cell_id": "sheet.save.will", "source_field": "chassis.total_saves.will", "value": { "kind": "Number", "value": 0 } },
+      { "cell_id": "sheet.armor_class", "source_field": "chassis.baseline_armor_class", "value": { "kind": "Blocked" } },
+      { "cell_id": "sheet.melee_attack_bonus", "source_field": "chassis.baseline_melee_attack_bonus", "value": { "kind": "Blocked" } },
+      { "cell_id": "sheet.skill.climb", "source_field": "skills.totals.skill:climb.total_modifier", "value": { "kind": "Blocked" } },
+      { "cell_id": "sheet.skill.intimidate", "source_field": "skills.totals.skill:intimidate.total_modifier", "value": { "kind": "Blocked" } },
+      { "cell_id": "sheet.skill.swim", "source_field": "skills.totals.skill:swim.total_modifier", "value": { "kind": "Blocked" } },
+      { "cell_id": "sheet.skill.diplomacy", "source_field": "skills.totals.skill:diplomacy.total_modifier", "value": { "kind": "Blocked" } },
+      { "cell_id": "sheet.skill.disable_device", "source_field": "skills.totals.skill:disable_device.total_modifier", "value": { "kind": "Blocked" } },
+      { "cell_id": "sheet.ability_modifier.strength", "source_field": "chassis.ability_modifiers.strength", "value": { "kind": "Number", "value": 2 } },
+      { "cell_id": "sheet.ability_modifier.dexterity", "source_field": "chassis.ability_modifiers.dexterity", "value": { "kind": "Number", "value": 1 } },
+      { "cell_id": "sheet.ability_modifier.constitution", "source_field": "chassis.ability_modifiers.constitution", "value": { "kind": "Number", "value": 1 } },
+      { "cell_id": "sheet.ability_modifier.intelligence", "source_field": "chassis.ability_modifiers.intelligence", "value": { "kind": "Number", "value": 0 } },
+      { "cell_id": "sheet.ability_modifier.wisdom", "source_field": "chassis.ability_modifiers.wisdom", "value": { "kind": "Number", "value": 0 } },
+      { "cell_id": "sheet.ability_modifier.charisma", "source_field": "chassis.ability_modifiers.charisma", "value": { "kind": "Number", "value": -1 } },
+      { "cell_id": "sheet.equipment.armor_class_delta", "source_field": "equipment_effects.armor_class_delta", "value": { "kind": "Number", "value": 0 } }
+    ]
+  },
+  "expected_diagnostics": [
+    { "id": "combat.baseline_unsupported", "claim_blocking": true },
+    { "id": "skill.selected_modifier.unsupported", "claim_blocking": true }
+  ]
+}
