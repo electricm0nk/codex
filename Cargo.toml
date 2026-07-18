@@ -4,3 +4,9 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+# Added for SD-21 Epic 2 (campaign persistence): CampaignSnapshot is JSON
+# over the wire (matches what apps/desktop's frontend already sends via
+# `campaign_config_json`), unlike saved_character's hand-rolled line fixture
+# grammar. Versions match apps/desktop/src-tauri/Cargo.toml.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
