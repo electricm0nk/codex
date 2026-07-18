@@ -5,7 +5,7 @@ import { formatError, hasTauriRuntime } from './runtime';
  * Read-only desktop boundary over the SD-13 support-state matrix.
  *
  * This loader is documentary/control-plane only: it invokes the
- * `load_sd13_support_state_matrix` Tauri command and returns the seeded SD-13
+ * `load_support_state_matrix` Tauri command and returns the seeded SD-13
  * truth verbatim. It performs no rules computation, filtering, promotion, or
  * feedback/issue-transport work, and it must never treat app/build success as
  * proof that a roster row is `supported`.
@@ -48,7 +48,7 @@ export async function loadSd13SupportStateMatrix(): Promise<Sd13SupportStateMatr
   }
 
   try {
-    return await invoke<Sd13SupportStateMatrixSnapshot>('load_sd13_support_state_matrix');
+    return await invoke<Sd13SupportStateMatrixSnapshot>('load_support_state_matrix');
   } catch (cause: unknown) {
     throw new Error(`Failed to load SD-13 support-state matrix: ${formatError(cause)}`);
   }
