@@ -58,7 +58,7 @@ export interface Sd11WorkbenchStatus {
   issueCapture: Sd11WorkbenchIssueCaptureStatus;
 }
 
-const BUILD_PREFIX = 'codex';
+const BUILD_PREFIX = 'Codex';
 const TESTER_CHANNEL: Sd11WorkbenchChannelStatus['testerFacingLabel'] = 'alpha';
 const OPERATOR_BRANCH: Sd11WorkbenchChannelStatus['operatorBranch'] = 'develop';
 const OPERATOR_PROMOTION_PATH: Sd11WorkbenchChannelStatus['operatorPromotionPath'] = 'develop -> main';
@@ -70,7 +70,7 @@ const DEFAULT_UPDATE_DETAIL =
   'Checks for a newer release on GitHub for your platform. Outcomes are always honest about what was found: up-to-date, an update is available, manual install only, blocked, withdrawn, unsupported on this platform, the check itself failed, or there is no official release for this build yet.';
 
 export function formatSd11WorkbenchBuildLabel(buildVersion: string): string {
-  return `${BUILD_PREFIX}@${buildVersion}`;
+  return `${BUILD_PREFIX} ${buildVersion}`;
 }
 
 export function createSd11WorkbenchStatus(
