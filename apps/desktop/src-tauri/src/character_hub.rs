@@ -285,7 +285,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
                 },
             ],
             selected_choices,
-            spells_selected: sd19_demo_spells_selected(),
+            spells_selected: demo_spells_selected(),
         },
         selection_provenance: Vec::new(),
     }
@@ -300,7 +300,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
 /// spells. `source_class_id` is left generic (`"class:demo"`) for the same
 /// reason: no class-appropriateness check consumes this field yet (see
 /// `SpellSelection.source_class_id`'s own doc comment).
-fn sd19_demo_spells_selected() -> Vec<SpellSelection> {
+fn demo_spells_selected() -> Vec<SpellSelection> {
     vec![
         SpellSelection {
             spell_id: "Alarm".to_owned(),

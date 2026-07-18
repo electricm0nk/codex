@@ -741,7 +741,7 @@ fn managed_path_is_writable(managed_executable_path: &Path) -> bool {
 
 /// Tauri command shim — `perform_install`.
 ///
-/// Registration-only (F0-EXTEND `t_5b652e93`): the staged-transaction body
+/// Registration-only: the staged-transaction body
 /// (`execute_transaction`) already exists and is fully tested (see `mod
 /// tests` above) — what remains genuinely missing is the *download* step
 /// `execute_transaction`'s `download` closure needs: this crate carries no
@@ -1703,11 +1703,11 @@ mod verify_relaunch_artifact_tests {
     /// real, tested body (`is_install_eligible_probe_tests` below) — it now
     /// reads real on-disk state rather than always erroring.
     ///
-    /// `perform_restore_previous` was a registration-only stub through the
-    /// F3c PR (#63). F3b (backfill card t_da3470a3) ships its real body,
-    /// so this test no longer asserts `perform_restore_previous().is_err()`
-    /// — it asserts only the still-deferred `perform_install` command. F3b's
-    /// own rollback_retention_tests mod covers the F3b body contract.
+    /// `perform_restore_previous` was a registration-only stub through PR #63.
+    /// A later backfill shipped its real body, so this test no longer asserts
+    /// `perform_restore_previous().is_err()` — it asserts only the
+    /// still-deferred `perform_install` command. The `rollback_retention_tests`
+    /// mod covers the restore-previous body contract.
     #[test]
     fn perform_install_shim_errors_instead_of_fabricating_truth() {
         assert!(
@@ -1867,9 +1867,8 @@ mod verify_relaunch_artifact_tests {
     }
 }
 // ===================================================================================
-// SD-16-E7-F3b — rollback / retention surface (backfill)
+// Rollback / retention surface
 //
-// Owner: F3b (god-emporer direct execution; see card t_da3470a3).
 // Slice: rollback decision table + retention sweep.
 //
 // Scope note:
