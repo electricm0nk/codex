@@ -95,7 +95,7 @@ function bodyHasSevenSectionsInContractOrder() {
   assert(composed.draft.markdownBody.includes('codex@0.0.0-test'), 'build label present in body');
   assert(composed.draft.markdownBody.includes('alpha · Linux first-class'), 'channel/support label present in body');
   assert(composed.draft.markdownBody.includes('Linux'), 'platform present in body');
-  assert(composed.draft.markdownBody.includes('GE08 Guard Stance authoring workbench'), 'workflow present in body');
+  assert(composed.draft.markdownBody.includes('Character-preview authoring check'), 'workflow present in body');
   assert(
     composed.draft.markdownBody.includes('Governed release unit id: alpha-v0.0.0-test-1234abcd'),
     'release unit id present in body'
@@ -116,7 +116,7 @@ function fallbackDataSourceIsPreservedInBuildContext() {
 
   assert(
     !!metadata &&
-      metadata.body.includes('Real Tauri command snapshot (fallback: Tauri command unavailable; using sample fixture)'),
+      metadata.body.includes('Live backend data (fallback: Tauri command unavailable; using sample fixture)'),
     'fallback data-source identity is preserved in the build/channel/platform/workflow section'
   );
 }

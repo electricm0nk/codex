@@ -16,6 +16,7 @@ import {
   type WeaponProficiency,
 } from './characterProgression';
 import { RACE_OPTIONS } from './characterHubModel';
+import { PortraitUpload } from './PortraitUpload';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -460,7 +461,6 @@ export function CharacterSheet(props: {
   row: CharacterHubListRowSurface;
   detail: LoadSavedCharacterResponse | null;
   onClose: () => void;
-  onOpenTool?: (tool: 'update' | 'bug' | 'enhancement') => void;
 }) {
   const [tab, setTab] = useState<Tab>('Weapons');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -513,9 +513,6 @@ export function CharacterSheet(props: {
     { label: 'Save', onSelect: () => {} },
     { label: 'Clone', onSelect: () => {} },
     { label: 'Print', onSelect: () => window.print() },
-    { label: 'Update', onSelect: () => props.onOpenTool?.('update'), dividerBefore: true },
-    { label: 'Bug Report', onSelect: () => props.onOpenTool?.('bug') },
-    { label: 'Enhancement', onSelect: () => props.onOpenTool?.('enhancement') },
   ];
 
   return (
@@ -625,6 +622,10 @@ export function CharacterSheet(props: {
 
           {!leftCollapsed ? (
             <>
+              <div style={{ marginBottom: '0.75rem' }}>
+                <PortraitUpload characterId={props.row.characterId} />
+              </div>
+
               {/* Level / XP */}
               <div style={{ ...panel, display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', padding: '0.4rem' }}>
                 <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', textAlign: 'center' }}>

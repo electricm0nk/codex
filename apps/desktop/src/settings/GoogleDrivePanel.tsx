@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { open } from '@tauri-apps/plugin-dialog';
 import { SettingRow } from './AppearancePanel';
 import {
   clearGoogleDriveConfig,
@@ -6,6 +7,8 @@ import {
   isGoogleDriveConfigured,
   saveGoogleDriveConfig,
 } from './googleDrive';
+import { hasTauriRuntime } from '../boundary/runtime';
+import { FriendsSection } from './FriendsSection';
 
 const inputStyle = {
   backgroundColor: 'var(--color-surface-2)',
@@ -43,6 +46,16 @@ export function GoogleDrivePanel(props: { onChange?: () => void }) {
     setDriveFolderPath('');
     setConfigured(false);
     props.onChange?.();
+  }
+
+  async function handleBrowseFolder() {
+    if (!hasTauriRuntime()) {
+      return;
+    }
+    const picked = await open({ directory: true, multiple: false });
+    if (typeof picked === 'string') {
+      setDriveFolderPath(picked);
+    }
   }
 
   return (
@@ -98,13 +111,31 @@ export function GoogleDrivePanel(props: { onChange?: () => void }) {
         name="Campaign Drive folder"
         description="Destination folder for campaign subfolders, e.g. My Drive/TTRPG Campaigns."
         control={
-          <input
-            type="text"
-            placeholder="My Drive/TTRPG Campaigns"
-            value={driveFolderPath}
-            onChange={(event) => setDriveFolderPath(event.target.value)}
-            style={inputStyle}
-          />
+          <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem' }}>
+            <input
+              type="text"
+              placeholder="My Drive/TTRPG Campaigns"
+              value={driveFolderPath}
+              onChange={(event) => setDriveFolderPath(event.target.value)}
+              style={inputStyle}
+            />
+            <button
+              type="button"
+              onClick={handleBrowseFolder}
+              style={{
+                backgroundColor: 'var(--color-surface-2)',
+                border: '1px solid var(--color-border)',
+                borderRadius: 6,
+                color: 'var(--color-text)',
+                cursor: 'pointer',
+                fontSize: '0.85rem',
+                fontWeight: 600,
+                padding: '0.4rem 0.85rem',
+              }}
+            >
+              Browse…
+            </button>
+          </div>
         }
       />
 
@@ -152,6 +183,10 @@ export function GoogleDrivePanel(props: { onChange?: () => void }) {
         flow, token storage, and Drive API calls). Saving here only records the account and folder so the rest of
         the Campaign Manager has a real setup gate to build against.
       </p>
+
+      <div style={{ borderTop: '1px solid var(--color-border)', marginTop: '1.75rem', paddingTop: '1.5rem' }}>
+        <FriendsSection />
+      </div>
     </div>
   );
 }

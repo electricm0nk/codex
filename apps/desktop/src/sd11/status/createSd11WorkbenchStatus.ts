@@ -62,12 +62,12 @@ const BUILD_PREFIX = 'codex';
 const TESTER_CHANNEL: Sd11WorkbenchChannelStatus['testerFacingLabel'] = 'alpha';
 const OPERATOR_BRANCH: Sd11WorkbenchChannelStatus['operatorBranch'] = 'develop';
 const OPERATOR_PROMOTION_PATH: Sd11WorkbenchChannelStatus['operatorPromotionPath'] = 'develop -> main';
-const CHANNEL_AUDIENCE = 'fastest-moving tester track; highest churn; acceptable for close/internal testers';
-const CHANNEL_DETAIL = 'Tester-facing channel language over the develop → main operator path.';
+const CHANNEL_AUDIENCE = 'Fastest-moving build track — changes often, meant for close/internal testers.';
+const CHANNEL_DETAIL = 'Builds ship from the develop branch to main.';
 const SUPPORT_TIER_MATRIX_LABEL = 'Linux first-class · macOS second-class · Windows third-class';
-const DEFAULT_UPDATE_LABEL = 'Bounded update check available';
+const DEFAULT_UPDATE_LABEL = 'Update check available';
 const DEFAULT_UPDATE_DETAIL =
-  'Run a bounded check against governed SD-12 release truth. SD-11 consumes release truth as a client; it never authors releases, applies installers, or surfaces raw branch names as the primary tester UX. Outcomes stay honest and platform-aware: up-to-date, update-available, manual-only, blocked, withdrawn, unsupported, check-failed, or no official release for this build.';
+  'Checks for a newer release on GitHub for your platform. Outcomes are always honest about what was found: up-to-date, an update is available, manual install only, blocked, withdrawn, unsupported on this platform, the check itself failed, or there is no official release for this build yet.';
 
 export function formatSd11WorkbenchBuildLabel(buildVersion: string): string {
   return `${BUILD_PREFIX}@${buildVersion}`;
@@ -168,16 +168,16 @@ function formatCurrentPlatformSupportLabel(platformLabel: string, platformTier: 
 
 function describePlatformSupport(platformLabel: string, platformTier: Sd11SupportTier): string {
   if (platformTier === 'first-class') {
-    return 'Linux is the first-class tester surface in this tranche and the strongest candidate for later self-update coverage.';
+    return 'Linux gets the most testing and is the strongest candidate for automatic updates once that ships.';
   }
 
   if (platformTier === 'second-class') {
-    return 'macOS is a real but less mature tester surface in this tranche.';
+    return 'macOS is supported but tested less thoroughly than Linux right now.';
   }
 
   if (platformTier === 'third-class') {
-    return 'Windows remains explicitly bounded in this tranche. No fake parity claims.';
+    return 'Windows support is still limited — some features may not work as well here yet.';
   }
 
-  return `${platformLabel} is outside the named support matrix for this tranche.`;
+  return `${platformLabel} isn't a platform this app currently targets.`;
 }

@@ -32,7 +32,7 @@ type Mode =
   | 'campaign-edit'
   | 'campaign-sheet';
 
-export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' | 'enhancement') => void }) {
+export function CharacterHubPage() {
   const [mode, setMode] = useState<Mode>('landing');
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
   const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
@@ -55,8 +55,6 @@ export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' |
     reload();
   }, []);
 
-  const hasCharacters = Boolean(surface && !surface.isEmpty && surface.rows.length > 0);
-
   if (mode === 'landing') {
     return (
       <LandingScreen
@@ -64,7 +62,6 @@ export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' |
         onSelectRuleSet={setRuleSet}
         onCreate={() => setMode('create')}
         onLoad={() => setMode('load')}
-        onLoadMostRecent={() => setMode('load')}
         onBrowseEquipment={() => setMode('equipmentCatalog')}
         onBrowseSpells={() => setMode('spellCatalog')}
         onBrowseClasses={() => setMode('classCatalog')}
@@ -72,7 +69,6 @@ export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' |
         onCampaignManager={() => setMode('campaign-list')}
         campaignManagerEnabled={isGoogleDriveConfigured()}
         onDmToolkit={() => setMode('dm-toolkit')}
-        hasCharacters={hasCharacters}
       />
     );
   }
@@ -157,7 +153,7 @@ export function CharacterHubPage(props: { onOpenTool?: (tool: 'update' | 'bug' |
   }
 
   if (mode === 'sheet' && sheet) {
-    return <CharacterSheet row={sheet.row} detail={sheet.detail} onClose={() => setMode(sheetReturnMode)} onOpenTool={props.onOpenTool} />;
+    return <CharacterSheet row={sheet.row} detail={sheet.detail} onClose={() => setMode(sheetReturnMode)} />;
   }
 
   if (mode === 'load') {

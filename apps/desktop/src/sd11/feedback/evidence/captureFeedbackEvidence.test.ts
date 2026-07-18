@@ -22,8 +22,8 @@ function autoEvidenceResolvesFromSurface() {
   assertEqual(auto.buildLabel, 'codex@0.0.0-test', 'auto build label');
   assertEqual(auto.channelSupportLabel, 'alpha · Linux first-class', 'auto channel/support label');
   assertEqual(auto.platformLabel, 'Linux', 'auto platform label');
-  assertEqual(auto.currentWorkflow, 'GE08 Guard Stance authoring workbench / Authored / Computed', 'auto workflow');
-  assertEqual(auto.dataSourceIdentity, 'Real Tauri command snapshot', 'auto data source identity');
+  assertEqual(auto.currentWorkflow, 'Character-preview authoring check / Authored / Computed', 'auto workflow');
+  assertEqual(auto.dataSourceIdentity, 'Live backend data', 'auto data source identity');
   assertEqual(auto.releaseUnitId, 'alpha-v0.0.0-test-1234abcd', 'auto release unit id');
   assertEqual(auto.updateEligibilityState, 'manual-only', 'auto update eligibility state');
   assertEqual(auto.trustGateStatus, 'governed-manual-only', 'auto trust-gate status');

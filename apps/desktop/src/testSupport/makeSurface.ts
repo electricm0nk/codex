@@ -16,16 +16,16 @@ export function makeSurface(
   overrides: Partial<Sd11TesterWorkbenchSurface> = {}
 ): Sd11TesterWorkbenchSurface {
   return {
-    surfaceLabel: 'SD-11 tester workbench',
-    headline: 'Bounded tester workbench',
+    surfaceLabel: 'Developer diagnostics',
+    headline: 'Connected to the app backend',
     lead: 'lead',
     buildLabel: 'codex@0.0.0-test',
     channelLabel: 'alpha',
     platformLabel: 'Linux',
     supportTierLabel: 'Linux first-class · macOS second-class · Windows third-class',
-    workflowName: 'GE08 Guard Stance authoring workbench',
+    workflowName: 'Character-preview authoring check',
     workflowState: 'Authored / Computed',
-    dataTruthLabel: 'Real Tauri command snapshot',
+    dataTruthLabel: 'Live backend data',
     fallbackNotice: null,
     boundedScopeNotice: 'bounded',
     feedbackStatusNotice: 'feedback',

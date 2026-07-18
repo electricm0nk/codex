@@ -56,7 +56,7 @@ function verifiesLinuxAlphaStatusTruth() {
   assertEqual(status.channel.operatorPromotionPath, 'develop -> main', 'operator promotion path');
   assertEqual(
     status.channel.audience,
-    'fastest-moving tester track; highest churn; acceptable for close/internal testers',
+    'Fastest-moving build track — changes often, meant for close/internal testers.',
     'channel audience'
   );
   assertEqual(status.support.platformTier, 'first-class', 'linux support tier');
@@ -86,7 +86,7 @@ function verifiesWindowsSupportAsymmetry() {
   assertEqual(status.support.currentPlatformSupportLabel, 'Windows third-class', 'windows support label');
   assertEqual(
     status.support.platformSupportDetail,
-    'Windows remains explicitly bounded in this tranche. No fake parity claims.',
+    'Windows support is still limited — some features may not work as well here yet.',
     'windows support detail'
   );
 }

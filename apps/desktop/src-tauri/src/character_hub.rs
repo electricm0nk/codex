@@ -14,6 +14,7 @@
 
 use std::path::{Path, PathBuf};
 
+use base64::Engine as _;
 use serde::{Deserialize, Serialize};
 use tauri::Manager;
 
@@ -484,6 +485,85 @@ pub fn create_character(
     })
 }
 
+const DEFAULT_CHARACTER_SEED_MARKER: &str = ".default_character_seeded";
+const DEFAULT_CHARACTER_ID: &str = "00000000-0000-0000-0000-000000000001";
+const DEFAULT_CHARACTER_SAVED_AT: &str = "2026-01-01T00:00:00.000Z";
+
+/// Seeds a starter character ("Aldric Ironhand": Human Fighter 3) into a
+/// fresh install so there's something to open immediately instead of an
+/// empty character list.
+///
+/// Aldric is a single-class Fighter, not the Fighter 3 / Wizard 1 multiclass
+/// build shown in the browser-preview sample data (`previewData.ts`) — the
+/// real compute engine only reaches `Computed` for a single-class Fighter
+/// today (`compute_fighter_chassis` in `src/rules_core/pilot_compute.rs`
+/// gates base attack bonus / base saves on that alone; verified directly,
+/// not assumed — a single-class Wizard build was tried and still comes back
+/// `Blocked`). Ability scores are chosen to reproduce the same ability
+/// modifiers as the preview's Aldric (+3/+1/+2/+2/+1/-1).
+///
+/// Gated on a marker file, not on whether the characters directory is
+/// currently empty — so deleting the starter character does not bring it
+/// back on next launch. Reuses `compose_character_input`/`create_character`'s
+/// own invariant: only saves if the build actually computes, never writes an
+/// unproven build.
+pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), String> {
+    let app_data_dir = app
+        .path()
+        .app_data_dir()
+        .map_err(|err| format!("could not resolve app data directory: {err}"))?;
+    let marker_path = app_data_dir.join(DEFAULT_CHARACTER_SEED_MARKER);
+    if marker_path.exists() {
+        return Ok(());
+    }
+
+    let request = CreateCharacterRequest {
+        character_id: DEFAULT_CHARACTER_ID.to_owned(),
+        display_label: "Aldric Ironhand".to_owned(),
+        race_id: HUMAN_RACE_ID.to_owned(),
+        class_id: "class:fighter".to_owned(),
+        level: 3,
+        ability_scores: AbilityScoresDto {
+            strength: 17,
+            dexterity: 13,
+            constitution: 14,
+            intelligence: 14,
+            wisdom: 12,
+            charisma: 8,
+        },
+        ability_bonus_target: "strength".to_owned(),
+        saved_at: DEFAULT_CHARACTER_SAVED_AT.to_owned(),
+    };
+
+    let character_input = compose_character_input(&request);
+    let receipt = build_pilot_headless_receipt(&character_input);
+    if receipt.status != HeadlessReceiptStatus::Computed {
+        return Err("default starter character build did not compute; not seeding".to_owned());
+    }
+
+    let envelope = SavedCharacterEnvelope {
+        character_id: request.character_id.clone(),
+        revision_id: format!("{}.rev.1", request.character_id),
+        revision_kind: SavedCharacterRevisionKind::Authoritative,
+        saved_at: request.saved_at.clone(),
+        schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+        app_or_runtime_version: app.package_info().version.to_string(),
+        content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+        game_system: GAME_SYSTEM_ID.to_owned(),
+        latest_authoritative_revision_ref: format!("{}.rev.1", request.character_id),
+        display_label: request.display_label.clone(),
+        character_input,
+    };
+
+    let root = characters_root_from_app_data_dir(&app_data_dir).join(&request.character_id);
+    SavedCharacterStore::save(&envelope, &root).map_err(|err| err.message)?;
+
+    std::fs::create_dir_all(&app_data_dir).map_err(|err| format!("{}: {err}", app_data_dir.display()))?;
+    std::fs::write(&marker_path, "seeded\n").map_err(|err| format!("{}: {err}", marker_path.display()))?;
+
+    Ok(())
+}
+
 #[tauri::command]
 pub fn list_saved_characters(app: tauri::AppHandle) -> Result<ListSavedCharactersResponse, String> {
     let characters_root = resolve_characters_root(&app)?;
@@ -526,6 +606,93 @@ fn resolve_characters_root(app: &tauri::AppHandle) -> Result<PathBuf, String> {
 
 fn resolve_character_root(app: &tauri::AppHandle, character_id: &str) -> Result<PathBuf, String> {
     Ok(resolve_characters_root(app)?.join(character_id))
+}
+
+const PORTRAIT_FILE_NAME: &str = "portrait.png";
+// The frontend crops/resizes to a small fixed square before ever sending
+// bytes here; this is a defensive backstop against a buggy or malicious
+// caller, not the primary size control.
+const MAX_PORTRAIT_BYTES: usize = 3 * 1024 * 1024;
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SaveCharacterPortraitRequest {
+    pub character_id: String,
+    /// PNG image bytes, base64-encoded (no `data:` URL prefix).
+    pub image_base64: String,
+}
+
+/// Persists a character portrait as `portrait.png` alongside the character's
+/// existing envelope/input files. Requires the character to already be
+/// saved — a portrait is never the first write to a character directory.
+#[tauri::command]
+pub fn save_character_portrait(
+    app: tauri::AppHandle,
+    request: SaveCharacterPortraitRequest,
+) -> Result<(), String> {
+    let bytes = base64::engine::general_purpose::STANDARD
+        .decode(request.image_base64.as_bytes())
+        .map_err(|err| format!("invalid base64 image data: {err}"))?;
+    if bytes.len() > MAX_PORTRAIT_BYTES {
+        return Err(format!(
+            "portrait image is {} bytes, over the {MAX_PORTRAIT_BYTES} byte limit",
+            bytes.len()
+        ));
+    }
+
+    let root = resolve_character_root(&app, &request.character_id)?;
+    if !root.exists() {
+        return Err(format!(
+            "no saved character found for id {}",
+            request.character_id
+        ));
+    }
+
+    let path = root.join(PORTRAIT_FILE_NAME);
+    std::fs::write(&path, &bytes).map_err(|err| format!("{}: {err}", path.display()))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LoadCharacterPortraitRequest {
+    pub character_id: String,
+}
+
+/// Returns the character's portrait as a `data:image/png;base64,...` URL, or
+/// `None` if no portrait has been uploaded for this character.
+#[tauri::command]
+pub fn load_character_portrait(
+    app: tauri::AppHandle,
+    request: LoadCharacterPortraitRequest,
+) -> Result<Option<String>, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let path = root.join(PORTRAIT_FILE_NAME);
+    if !path.exists() {
+        return Ok(None);
+    }
+
+    let bytes = std::fs::read(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+    let encoded = base64::engine::general_purpose::STANDARD.encode(bytes);
+    Ok(Some(format!("data:image/png;base64,{encoded}")))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DeleteCharacterPortraitRequest {
+    pub character_id: String,
+}
+
+#[tauri::command]
+pub fn delete_character_portrait(
+    app: tauri::AppHandle,
+    request: DeleteCharacterPortraitRequest,
+) -> Result<(), String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let path = root.join(PORTRAIT_FILE_NAME);
+    if path.exists() {
+        std::fs::remove_file(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+    }
+    Ok(())
 }
 
 #[cfg(test)]

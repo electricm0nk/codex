@@ -8,6 +8,7 @@ import type {
   Sd13SupportStateMatrixSnapshot,
   Sd13SupportStateRow,
 } from '../boundary/loadSd13SupportStateMatrix';
+import type { BackendHealthSnapshot } from '../boundary/loadBackendHealth';
 import {
   buildFallbackDiagnostics,
   buildFallbackExplanationRefs,
@@ -44,6 +45,19 @@ export interface Sd11WorkbenchDependencies {
    * explicit unavailable notice instead of fabricating support labels.
    */
   loadSd13SupportStateMatrix?: () => Promise<Sd13SupportStateMatrixSnapshot>;
+  /**
+   * Rust backend version/commit check. Optional for the same back-compat
+   * reason as `loadSd13SupportStateMatrix`; when absent or it fails, the
+   * backend health card reports unreachable rather than fabricating a version.
+   */
+  loadBackendHealth?: () => Promise<BackendHealthSnapshot>;
+}
+
+export interface Sd11BackendHealthPresentation {
+  reachable: boolean;
+  version: string | null;
+  gitCommit: string | null;
+  unavailableNotice: string | null;
 }
 
 /**
@@ -178,17 +192,21 @@ export interface Sd11TesterWorkbenchSurface {
    * `supportDebt` and never promotes a row.
    */
   breadthClaimAudit?: Sd11BreadthClaimAuditPresentation;
+  /**
+   * Rust backend version/commit check. Optional for the same back-compat
+   * reason as `supportDebt`; the live loader always populates it.
+   */
+  backendHealth?: Sd11BackendHealthPresentation;
   notes: string[];
   status: Sd11WorkbenchStatus;
 }
 
-const SUPPORT_DEBT_SECTION_LABEL = 'SD-13 core roster support and debt';
+const SUPPORT_DEBT_SECTION_LABEL = 'Rule content support status';
 const SUPPORT_DEBT_LEAD =
-  'Read-only SD-13 support-state and debt truth for the current bounded PF1 Core Rulebook roster. ' +
-  'Support state, evidence tier, blocker/lossiness notes, grounding references, and next uplifts come ' +
-  'straight from the SD-13 support-state matrix. Nothing here is promoted by app, build, or platform ' +
-  'success, and no blocked, partial, lossy, or unverified row is hidden. SD13-E6-F12 remains deferred; ' +
-  'this section does not capture evidence, submit issues, persist support truth, or alter update behavior.';
+  'What parts of the Pathfinder 1e Core Rulebook content are fully supported, partially supported, or ' +
+  'not supported yet — pulled straight from the support-tracking data, with nothing hidden or promoted ' +
+  'just because the app otherwise looks healthy. This view is read-only: it does not capture evidence, ' +
+  'submit issues, or change update behavior.';
 
 function mapSupportDebtRow(row: Sd13SupportStateRow): Sd11SupportDebtRow {
   return {
@@ -253,19 +271,17 @@ function buildUnavailableSupportDebt(reason: string): Sd11SupportDebtPresentatio
     rows: [],
     stateCounts: [],
     unavailableNotice:
-      `SD-13 support-state matrix unavailable: ${reason}. This section shows nothing rather than ` +
-      'inventing local support labels; SD-13 truth must load through the read-only bridge before it can be presented.',
+      `Support status data is unavailable: ${reason}. This section shows nothing rather than making up ` +
+      'support labels — it needs to load real data before it can be shown.',
   };
 }
 
-const BREADTH_CLAIM_AUDIT_SECTION_LABEL = 'SD-13 breadth-claim evidence-refresh audit';
+const BREADTH_CLAIM_AUDIT_SECTION_LABEL = 'Support claim freshness check';
 const BREADTH_CLAIM_AUDIT_LEAD =
-  'Read-only SD13-E7-F13 audit derived from the same SD-13 matrix truth shown above. It is subordinate to the ' +
-  'support/debt section: it does not own support state and it promotes nothing. It reports whether the current ' +
-  'breadth claim surface is refresh-backed by confirmed evidence or still refresh-required, using the freshness ' +
-  'posture carried by the SD-13 carrier. This first slice records no completed refresh checkpoint, so the whole ' +
-  'surface is refresh-required; no partial, lossy, blocked, or unverified row — and no row without confirmed ' +
-  'fresh evidence — is collapsed into a positive breadth claim.';
+  'Double-checks that the "supported" labels above are backed by evidence that has actually been re-verified ' +
+  'recently, not just marked supported once and never rechecked. This build has no confirmed refresh checkpoints ' +
+  'yet, so every row below is marked as needing a refresh — nothing is claimed as freshness-verified until it ' +
+  'genuinely is.';
 
 /**
  * Whether a projected freshness token asserts a completed refresh checkpoint.
@@ -335,8 +351,8 @@ function buildBreadthClaimAudit(
     lead: BREADTH_CLAIM_AUDIT_LEAD,
     overallPosture: refreshBacked ? 'refresh-backed' : 'refresh-required',
     overallLabel: refreshBacked
-      ? 'Breadth claim surface is refresh-backed: every row carries confirmed fresh evidence.'
-      : 'Breadth claim surface is refresh-required: no row carries a confirmed evidence-refresh checkpoint yet, so no breadth claim is promoted on freshness grounds.',
+      ? 'Every row below is backed by recently-verified evidence.'
+      : 'No row below has a confirmed recent-verification checkpoint yet, so none are marked freshness-verified.',
     refreshRequiredCount: rows.filter((row) => !row.refreshConfirmed).length,
     positiveBreadthClaimCount,
     freshnessCounts: buildBreadthClaimFreshnessCounts(rows),
@@ -353,7 +369,7 @@ function buildUnavailableBreadthClaimAudit(reason: string): Sd11BreadthClaimAudi
     lead: BREADTH_CLAIM_AUDIT_LEAD,
     overallPosture: 'refresh-required',
     overallLabel:
-      'Breadth claim audit unavailable: with no SD-13 truth loaded, the surface must stay refresh-required rather than imply freshness.',
+      'Freshness check unavailable: with no support-status data loaded, this can\'t claim anything is freshness-verified.',
     refreshRequiredCount: 0,
     positiveBreadthClaimCount: 0,
     freshnessCounts: [],
@@ -361,9 +377,40 @@ function buildUnavailableBreadthClaimAudit(reason: string): Sd11BreadthClaimAudi
     dataSource: null,
     note: null,
     unavailableNotice:
-      `SD-13 breadth-claim audit unavailable: ${reason}. This section shows nothing rather than inventing local ` +
-      'freshness labels; SD-13 truth must load through the read-only bridge before any audit posture can be presented.',
+      `Freshness check unavailable: ${reason}. This section shows nothing rather than making up freshness ` +
+      'labels — it needs real support-status data to load first.',
   };
+}
+
+/** Loads and shapes the backend-health check; never rejects — a failure becomes an unreachable presentation. */
+async function loadBackendHealthPresentation(
+  dependencies: Sd11WorkbenchDependencies
+): Promise<Sd11BackendHealthPresentation> {
+  if (!dependencies.loadBackendHealth) {
+    return {
+      reachable: false,
+      version: null,
+      gitCommit: null,
+      unavailableNotice: 'Backend health check unavailable: no backend health bridge was provided to the workbench.',
+    };
+  }
+
+  try {
+    const health = await dependencies.loadBackendHealth();
+    return {
+      reachable: true,
+      version: health.version,
+      gitCommit: health.gitCommit,
+      unavailableNotice: null,
+    };
+  } catch (cause: unknown) {
+    return {
+      reachable: false,
+      version: null,
+      gitCommit: null,
+      unavailableNotice: `Backend health check unavailable: ${formatError(cause)}.`,
+    };
+  }
 }
 
 const DEFAULT_REQUEST: Ge08AuthoringWorkbenchRequest = {
@@ -424,19 +471,27 @@ export async function loadSd11TesterWorkbenchSurface(
     };
   });
   const sd13Promise = loadSd13Presentations(dependencies);
+  const backendHealthPromise = loadBackendHealthPresentation(dependencies);
 
   try {
     const [snapshot, releaseTruth] = await Promise.all([
       dependencies.loadGe08AuthoringWorkbench(DEFAULT_REQUEST),
       releaseTruthPromise,
     ]);
-    return mapGe08Snapshot(context, snapshot, releaseTruth, await sd13Promise);
+    return mapGe08Snapshot(context, snapshot, releaseTruth, await sd13Promise, await backendHealthPromise);
   } catch (cause: unknown) {
     const [fallbackSnapshot, releaseTruth] = await Promise.all([
       dependencies.loadPilotShellSnapshot(),
       releaseTruthPromise,
     ]);
-    return mapPilotFallback(context, fallbackSnapshot, formatError(cause), releaseTruth, await sd13Promise);
+    return mapPilotFallback(
+      context,
+      fallbackSnapshot,
+      formatError(cause),
+      releaseTruth,
+      await sd13Promise,
+      await backendHealthPromise
+    );
   }
 }
 
@@ -497,27 +552,28 @@ function mapGe08Snapshot(
   context: Sd11WorkbenchRuntimeContext,
   snapshot: Ge08AuthoringWorkbenchSnapshot,
   releaseTruth: Sd12ReleaseTruthSnapshot,
-  sd13: Sd13WorkbenchPresentations
+  sd13: Sd13WorkbenchPresentations,
+  backendHealth: Sd11BackendHealthPresentation
 ): Sd11TesterWorkbenchSurface {
   const status = createSd11WorkbenchStatus(context, releaseTruth);
 
   return {
-    surfaceLabel: 'SD-11 tester workbench',
-    headline: 'Bounded tester workbench over a real desktop command surface',
+    surfaceLabel: 'Developer diagnostics',
+    headline: 'Connected to the app backend',
     lead:
-      'This frame is the first SD-11 tester workbench slice: it presents one real bounded workflow over the Tauri command boundary, keeps diagnostics visible, and refuses to pretend broader product readiness.',
+      'This tab shows live diagnostics from one specific backend check (character-preview authoring) so you can see whether the app is actually talking to its backend and what it found, rather than a guess.',
     buildLabel: status.build.label,
     channelLabel: status.channel.testerFacingLabel,
     platformLabel: status.support.platformLabel,
     supportTierLabel: status.support.tierMatrixLabel,
-    workflowName: 'GE08 Guard Stance authoring workbench',
+    workflowName: 'Character-preview authoring check',
     workflowState: `${snapshot.packageState} / ${snapshot.preview.previewStatus}`,
-    dataTruthLabel: 'Real Tauri command snapshot',
+    dataTruthLabel: 'Live backend data',
     fallbackNotice: null,
     boundedScopeNotice:
-      'Bounded scope only: this slice proves the GE08 authoring workflow, not a full character-builder surface, GitHub submission transport, or updater mechanics.',
+      'This check only covers character-preview authoring — it is not a full health check of every feature in the app.',
     feedbackStatusNotice:
-      'Feedback intake is intentionally deferred in this slice. The frame keeps diagnostics, workflow identity, and synchronized release-truth evidence visible so later GitHub flows can consume honest evidence.',
+      'Automatic feedback capture from this tab is not built yet. Use the diagnostics and any error details below when filing a bug report.',
     updateStatusLabel: status.update.label,
     summaryRows: [
       {
@@ -543,9 +599,38 @@ function mapGe08Snapshot(
     provenanceRefs: buildGe08ProvenanceRefs(snapshot.preview.provenanceRefs),
     supportDebt: sd13.supportDebt,
     breadthClaimAudit: sd13.breadthClaimAudit,
+    backendHealth,
     notes: [snapshot.note],
     status,
   };
+}
+
+const NO_TAURI_RUNTIME_FAILURE = 'Tauri runtime not available for GE08 authoring workbench';
+
+// `loadPilotShellSnapshot` has no real backend behind it today — every field
+// it returns for this marker is a hardcoded placeholder (see its own file),
+// so surfacing it as if it were diagnostic data would just be noise. Real
+// content instead comes from `failure`, the actual error from the primary
+// backend check. If a future slice gives PilotShellSnapshot a real data
+// source, this marker check is what to remove.
+const PLACEHOLDER_DATA_SOURCE = 'scaffold-placeholder';
+
+// The two lines `loadPilotShellSnapshot`'s placeholder always emits — drop
+// them so only a genuine appended failure line (if any) survives.
+const PLACEHOLDER_DIAGNOSTIC_TEXT = new Set([
+  'This scaffold is additive only.',
+  'Real GE-06 pilot data is not wired in this slice.',
+]);
+
+function describePilotFallbackFailure(failure: string): string {
+  if (failure.includes(NO_TAURI_RUNTIME_FAILURE)) {
+    return (
+      'This check needs the compiled Codex desktop app — it can\'t reach a backend from a plain browser tab. ' +
+      'If you opened this at localhost:1420 in a browser, open the actual Codex app window instead.'
+    );
+  }
+
+  return `Backend check failed: ${failure}. Showing fallback data instead of live data.`;
 }
 
 function mapPilotFallback(
@@ -553,53 +638,48 @@ function mapPilotFallback(
   snapshot: PilotShellSnapshot,
   failure: string,
   releaseTruth: Sd12ReleaseTruthSnapshot,
-  sd13: Sd13WorkbenchPresentations
+  sd13: Sd13WorkbenchPresentations,
+  backendHealth: Sd11BackendHealthPresentation
 ): Sd11TesterWorkbenchSurface {
   const status = createSd11WorkbenchStatus(context, releaseTruth);
+  const isPlaceholderData = snapshot.dataSource === PLACEHOLDER_DATA_SOURCE;
 
   return {
-    surfaceLabel: 'SD-11 tester workbench',
-    headline: 'Bounded tester workbench fallback over the pilot seam',
+    surfaceLabel: 'Developer diagnostics',
+    headline: 'Backend check failed — showing fallback data',
     lead:
-      'The preferred GE08 workbench could not load, so the app drops to an explicitly labeled fallback. The fallback exists to preserve truthful runtime seams and must not masquerade as full product state.',
+      'The live backend check could not complete, so this tab is showing fallback data instead of live data. The reason for the failure is shown below rather than being hidden.',
     buildLabel: status.build.label,
     channelLabel: status.channel.testerFacingLabel,
     platformLabel: status.support.platformLabel,
     supportTierLabel: status.support.tierMatrixLabel,
-    workflowName: 'GE07 pilot snapshot seam',
+    workflowName: 'Fallback data source',
     workflowState: snapshot.receiptStatus,
     dataTruthLabel:
       snapshot.dataSource === 'tauri-command'
-        ? 'Explicit fallback over a Tauri pilot seam'
-        : 'Explicit fallback placeholder',
-    fallbackNotice:
-      `GE08 authoring workbench unavailable: ${failure}. This fallback exists because the real bounded snapshot could not load and the UI must not counterfeit product truth.`,
+        ? 'Fallback data (backend reachable, but the check itself failed)'
+        : 'Fallback data (backend unavailable)',
+    fallbackNotice: describePilotFallbackFailure(failure),
     boundedScopeNotice:
-      'Bounded scope only: this fallback preserves the pilot runtime seam and visible failure context. It does not claim the broader tester workbench, GitHub feedback transport, or updater behavior are implemented.',
+      'This fallback only preserves the failure context for this one check — it does not mean the rest of the app, feedback submission, or updates are broken.',
     feedbackStatusNotice:
-      'Feedback intake remains deferred. Use the visible fallback reason, diagnostics, workflow identity, and synchronized release-truth evidence as the current evidence surface until the richer SD-11 flows land.',
+      'Automatic feedback capture from this tab is not built yet. Use the fallback reason and diagnostics below when filing a bug report.',
     updateStatusLabel: status.update.label,
-    summaryRows: [
-      {
-        label: 'Case',
-        value: snapshot.caseId,
-      },
-      {
-        label: 'Receipt status',
-        value: snapshot.receiptStatus,
-      },
-      {
-        label: 'Data source',
-        value: snapshot.dataSource,
-      },
-    ],
-    diagnostics: buildFallbackDiagnostics(snapshot.diagnostics),
+    summaryRows: isPlaceholderData
+      ? []
+      : [
+          { label: 'Case', value: snapshot.caseId },
+          { label: 'Receipt status', value: snapshot.receiptStatus },
+          { label: 'Data source', value: snapshot.dataSource },
+        ],
+    diagnostics: buildFallbackDiagnostics(snapshot.diagnostics.filter((line) => !PLACEHOLDER_DIAGNOSTIC_TEXT.has(line))),
     blockedClaims: [],
-    explanationRefs: buildFallbackExplanationRefs(snapshot.explanationRefs),
+    explanationRefs: isPlaceholderData ? [] : buildFallbackExplanationRefs(snapshot.explanationRefs),
     provenanceRefs: [],
     supportDebt: sd13.supportDebt,
     breadthClaimAudit: sd13.breadthClaimAudit,
-    notes: [snapshot.note],
+    backendHealth,
+    notes: isPlaceholderData ? [] : [snapshot.note],
     status,
   };
 }

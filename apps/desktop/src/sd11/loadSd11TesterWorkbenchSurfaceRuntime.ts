@@ -2,6 +2,7 @@ import { loadGe08AuthoringWorkbench } from '../boundary/loadGe08AuthoringWorkben
 import { loadPilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
 import { loadSd12ReleaseTruth } from '../boundary/loadSd12ReleaseTruth';
 import { loadSd13SupportStateMatrix } from '../boundary/loadSd13SupportStateMatrix';
+import { loadBackendHealth } from '../boundary/loadBackendHealth';
 import {
   loadSd11TesterWorkbenchSurface,
   type Sd11TesterWorkbenchSurface,
@@ -16,5 +17,6 @@ export async function loadSd11TesterWorkbenchSurfaceRuntime(
     loadPilotShellSnapshot,
     loadSd12ReleaseTruth,
     loadSd13SupportStateMatrix,
+    loadBackendHealth,
   });
 }

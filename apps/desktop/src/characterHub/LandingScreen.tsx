@@ -177,6 +177,19 @@ function ActionBanner(props: { title: string; art: string; onClick: () => void; 
         width: '100%',
       }}
     >
+      {/* Tints the fixed per-rule-set art with the active theme's accent color,
+          so switching themes visibly shifts the banner while keeping each
+          rule set's distinct gradient identity underneath. */}
+      <span
+        aria-hidden
+        style={{
+          backgroundColor: 'var(--color-accent)',
+          inset: 0,
+          mixBlendMode: 'color',
+          opacity: disabled ? 0 : 0.4,
+          position: 'absolute',
+        }}
+      />
       {/* Legibility scrim behind the label. */}
       <span
         aria-hidden
@@ -224,36 +237,13 @@ function ActionBanner(props: { title: string; art: string; onClick: () => void; 
 }
 
 const CAMPAIGN_MANAGER_ART = 'linear-gradient(115deg, #0a1428 0%, #1c3466 55%, #4a7ad6 130%)';
-
-function SecondaryButton(props: { label: string; onClick: () => void; disabled?: boolean }) {
-  const enabled = !props.disabled;
-  return (
-    <button
-      type="button"
-      onClick={props.onClick}
-      disabled={props.disabled}
-      style={{
-        backgroundColor: 'var(--color-surface-2)',
-        border: '1px solid var(--color-border)',
-        borderRadius: 10,
-        color: enabled ? 'var(--color-text)' : 'var(--color-text-muted)',
-        cursor: enabled ? 'pointer' : 'not-allowed',
-        fontSize: '0.95rem',
-        opacity: enabled ? 1 : 0.6,
-        padding: '0.7rem 1.4rem',
-      }}
-    >
-      {props.label}
-    </button>
-  );
-}
+const DM_TOOLKIT_ART = 'linear-gradient(115deg, #240818 0%, #5c1040 55%, #c8288a 130%)';
 
 export function LandingScreen(props: {
   selectedRuleSet: RuleSetId;
   onSelectRuleSet: (id: RuleSetId) => void;
   onCreate: () => void;
   onLoad: () => void;
-  onLoadMostRecent: () => void;
   onBrowseEquipment: () => void;
   onBrowseSpells: () => void;
   onBrowseClasses: () => void;
@@ -261,7 +251,6 @@ export function LandingScreen(props: {
   onCampaignManager: () => void;
   campaignManagerEnabled: boolean;
   onDmToolkit: () => void;
-  hasCharacters: boolean;
 }) {
   const active = RULE_SETS.find((rs) => rs.id === props.selectedRuleSet) ?? RULE_SETS[0];
 
@@ -287,11 +276,7 @@ export function LandingScreen(props: {
         disabled={!props.campaignManagerEnabled}
         disabledHint="Complete Google Drive setup under ⚙ Settings to enable"
       />
-
-      <div style={{ alignItems: 'center', alignSelf: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center', marginTop: '0.25rem' }}>
-        <SecondaryButton label="Load Most Recent Character" onClick={props.onLoadMostRecent} disabled={!props.hasCharacters} />
-        <SecondaryButton label="DM Toolkit" onClick={props.onDmToolkit} />
-      </div>
+      <ActionBanner title={'DM\nToolkit'} art={DM_TOOLKIT_ART} onClick={props.onDmToolkit} />
 
       <div style={{ alignSelf: 'center', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', justifyContent: 'center' }}>
         <button
