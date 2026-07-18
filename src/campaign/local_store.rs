@@ -374,6 +374,51 @@ mod tests {
     }
 
     #[test]
+    fn load_honors_an_external_obsidian_style_edit_to_an_asset_markdown_file() {
+        // E2.9: any of the per-asset `.md` files is a plain markdown file on
+        // disk — editing one directly in an external editor (e.g. Obsidian)
+        // and then re-loading the campaign must surface that edit, not the
+        // stale in-memory body from the original save.
+        let root = temp_root("obsidian-edit");
+        let _ = fs::remove_dir_all(&root);
+        CampaignStore::save(&sample_snapshot(), &root).expect("save should succeed");
+
+        let resource_path = root.join(RESOURCES_DIR).join("Primer.md");
+        fs::write(&resource_path, "# Primer\n\nEdited outside the app.").expect("external edit");
+
+        let reloaded = CampaignStore::load(&root).expect("load should succeed");
+        assert_eq!(reloaded.assets.resources.len(), 1);
+        assert_eq!(reloaded.assets.resources[0].body, "# Primer\n\nEdited outside the app.");
+
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn load_picks_up_a_markdown_file_created_entirely_outside_the_app() {
+        // Same principle, for a brand-new file Obsidian (or any editor)
+        // created directly in the asset directory rather than through
+        // `CampaignStore::save` — the filename (minus `.md`) becomes the
+        // asset's title.
+        let root = temp_root("obsidian-new-file");
+        let _ = fs::remove_dir_all(&root);
+        CampaignStore::save(&sample_snapshot(), &root).expect("save should succeed");
+
+        // `sample_snapshot()` has no wiki entries, so `save` never created
+        // this directory — an external editor creating it (plus a page in
+        // it) for the first time must still be picked up on load.
+        fs::create_dir_all(root.join(WIKI_DIR)).expect("create wiki dir");
+        fs::write(root.join(WIKI_DIR).join("New Page.md"), "Written directly on disk.")
+            .expect("external file write");
+
+        let reloaded = CampaignStore::load(&root).expect("load should succeed");
+        assert_eq!(reloaded.assets.wiki.len(), 1);
+        assert_eq!(reloaded.assets.wiki[0].title, "New Page");
+        assert_eq!(reloaded.assets.wiki[0].body, "Written directly on disk.");
+
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
     fn sanitize_filename_replaces_unsafe_characters() {
         assert_eq!(
             sanitize_filename("The Void / Between: The Stars?"),
