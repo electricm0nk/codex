@@ -26,8 +26,13 @@
 //! this bundle's progress doc for the current frontier.
 
 use crate::rules_core::character_input::CharacterInput;
+use crate::rules_core::feat_prereqs::{
+    compute_feat_effects, evaluate_feat_prerequisites, FeatEffects, FeatKey,
+    PrerequisiteEvaluation,
+};
 use crate::rules_core::pilot_compute::{ComputationDiagnostic, PilotBaseChassisComputation};
 use crate::rules_core::pilot_compute_corpus::{CorpusDerivedSection, CorpusPilotReceipt};
+use crate::rules_core::rules_tables::crb::feats::feat_tables;
 use crate::rules_core::skill_allocation::{allocate_skill_ranks, SkillTotals};
 use crate::rules_core::source_content::SourcePackageContent;
 use crate::rules_core::spellbook::{compute_spellbook_coverage, SpellbookCoverage};
@@ -136,6 +141,46 @@ pub struct PilotReceipt {
     /// exists yet) -- cell generation below is still correct and ready
     /// for when that lands.
     pub spellbook: SpellbookCoverage,
+    /// Epic 3's real feat prerequisite eligibility + effects
+    /// (`feat_prereqs::{evaluate_feat_prerequisites, compute_feat_effects}`),
+    /// wired in by the `contract:feat_wiring` cycle
+    /// (`adaptive-squishing-mccarthy.md`). One `ResolvedFeat` per entry in
+    /// `input.chosen.selected_feats` that resolves against
+    /// `rules_tables::crb::feats::feat_tables()` (matching
+    /// `entry.key == feat_id || entry.name == feat_id`, per that cycle's
+    /// "Feat resolution" design decision) -- an unmatched selected-feat
+    /// string is honestly skipped, never fabricated into a made-up
+    /// category. See `to_pilot_receipt`'s doc comment for the resolution
+    /// mechanism.
+    ///
+    /// **Scope boundary, deliberate**: this cycle adds NO new
+    /// `printed_sheet_cell_map` cells. `PrerequisiteEvaluation` and
+    /// `FeatEffects` don't reduce to a single `PrintedSheetCellValue`
+    /// (`Number(i16) | Blocked`) -- they carry prose (failure reasons,
+    /// descriptions) and structured provenance, not a sheet number.
+    /// Numeric feat-derived combat bonuses already flow through Epic 6's
+    /// separate `resolve_feat_damage_effect` path (`damage_total.rs`),
+    /// which is unrelated to this struct. `receipt.feats` is reachable
+    /// directly by callers, matching the same "not every epic output
+    /// becomes a sheet cell" precedent `spellbook` above already set.
+    pub feats: Vec<ResolvedFeat>,
+}
+
+/// One selected feat, resolved against the CRB feat catalog and evaluated
+/// through Epic 3's engine (`feat_prereqs::{evaluate_feat_prerequisites,
+/// compute_feat_effects}`). See `PilotReceipt.feats`'s doc comment for the
+/// resolution mechanism and this cycle's cell-map scope boundary.
+#[derive(Debug, Clone, PartialEq)]
+pub struct ResolvedFeat {
+    /// The matched catalog entry's `key` (equivalently `name` -- see
+    /// `feats.rs`: every landed record has `key == name` today), not
+    /// necessarily byte-identical to the raw `selected_feats` string that
+    /// matched it (a namespaced id like `feat:dodge` could match on
+    /// either side of the `||`, but this cycle's fixture usage always
+    /// matches on the plain catalog name).
+    pub feat_id: String,
+    pub prerequisites: PrerequisiteEvaluation,
+    pub effects: FeatEffects,
 }
 
 /// Build the boundary contract's `PilotReceipt` from the corpus-aware
@@ -159,17 +204,55 @@ pub struct PilotReceipt {
 /// `compute_spellbook_coverage(input, corpus)` to populate
 /// `PilotReceipt.spellbook`. See that field's doc comment and
 /// `spellbook.rs` for what it computes.
+///
+/// The `contract:feat_wiring` cycle (Cycle 3) populates
+/// `PilotReceipt.feats`: each entry in `input.chosen.selected_feats` is
+/// resolved against `rules_tables::crb::feats::feat_tables()` by matching
+/// `entry.key == feat_id || entry.name == feat_id` (per
+/// `adaptive-squishing-mccarthy.md`'s "Feat resolution" design decision --
+/// `selected_feats` carries no category field of its own, but the catalog
+/// already carries `key`/`name` -> `category`). A match yields a
+/// `feat_prereqs::FeatKey { feat_id: matched_entry.key, category:
+/// matched_entry.category }`, fed to both `evaluate_feat_prerequisites`
+/// and `compute_feat_effects` to build one `ResolvedFeat`. An unmatched
+/// selected-feat string (e.g. a namespaced id the catalog does not carry,
+/// or a typo) produces no `ResolvedFeat` at all -- the same honest-skip
+/// discipline `feats.rs`'s own catalog generator already applies to
+/// corpus records it cannot classify.
 pub fn to_pilot_receipt(
     receipt: &CorpusPilotReceipt,
     input: &CharacterInput,
     corpus: &SourcePackageContent,
 ) -> PilotReceipt {
+    let feats = input
+        .chosen
+        .selected_feats
+        .iter()
+        .filter_map(|feat_id| {
+            feat_tables()
+                .iter()
+                .find(|entry| entry.key == feat_id || entry.name == feat_id)
+        })
+        .map(|matched_entry| {
+            let key = FeatKey {
+                feat_id: matched_entry.key.to_string(),
+                category: matched_entry.category,
+            };
+            ResolvedFeat {
+                feat_id: matched_entry.key.to_string(),
+                prerequisites: evaluate_feat_prerequisites(&key),
+                effects: compute_feat_effects(&key),
+            }
+        })
+        .collect();
+
     PilotReceipt {
         diagnostics: receipt.base.diagnostics.clone(),
         chassis: receipt.base.clone(),
         corpus_derived: receipt.corpus_derived.clone(),
         skills: allocate_skill_ranks(input),
         spellbook: compute_spellbook_coverage(input, corpus),
+        feats,
     }
 }
 
