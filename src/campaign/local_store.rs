@@ -5,49 +5,239 @@
 //! already descoped to local-disk-only, so there's no second backend to
 //! justify trait-object indirection).
 //!
-//! This first cut proves the struct's save/load shape against a single JSON
-//! snapshot file. The real local-folder layout (a `.config/<name>.json`
-//! metadata file plus per-asset-group markdown files, matching what
-//! `campaign_drive.rs` already writes) lands in a later cycle (E2.7), which
-//! is a pure change to how `save`/`load` read and write bytes — the struct's
-//! public shape here is what backs it.
+//! The on-disk layout matches what `campaign_drive.rs`'s already-shipped
+//! `write_campaign_drive_artifacts_impl` writes (PR #320), so this module
+//! can become that command's real backing store rather than a
+//! parallel-named duplicate:
+//!
+//! ```text
+//! <campaign_dir>/
+//!   .config/<sanitized name>.json   # CampaignSnapshot minus `assets`
+//!   resources/<sanitized title>.md
+//!   adventure-log/<sanitized title>.md
+//!   maps/<sanitized title>.md
+//!   wiki/<sanitized title>.md
+//! ```
+//!
+//! Markdown asset bodies are the file contents verbatim, so any of them is
+//! directly editable in an external markdown editor (e.g. Obsidian) —
+//! `load` reconstitutes `CampaignAsset { title, body }` entries straight
+//! from whatever `.md` files it finds, honoring external edits.
 
 use std::fs;
 use std::path::Path;
 
-use super::{CampaignSnapshot, CampaignStoreError};
+use super::{
+    CampaignAsset, CampaignAssets, CampaignListing, CampaignListingError, CampaignSnapshot,
+    CampaignStoreError, CampaignSummary,
+};
 
-const SNAPSHOT_FILE: &str = "campaign.json";
+const CONFIG_DIR: &str = ".config";
+const RESOURCES_DIR: &str = "resources";
+const ADVENTURE_LOG_DIR: &str = "adventure-log";
+const MAPS_DIR: &str = "maps";
+const WIKI_DIR: &str = "wiki";
 
 pub struct CampaignStore;
 
 impl CampaignStore {
-    /// Saves a campaign snapshot under `root` (the campaign's own directory,
-    /// not the campaigns root — same per-entity-root convention as
-    /// `SavedCharacterStore::save`). Creates `root` if it does not exist.
-    pub fn save(snapshot: &CampaignSnapshot, root: &Path) -> Result<(), CampaignStoreError> {
-        fs::create_dir_all(root).map_err(|err| io_error(root, err))?;
+    /// Saves a campaign snapshot under `campaign_dir` (the campaign's own
+    /// directory, not the campaigns root — same per-entity-root convention
+    /// as `SavedCharacterStore::save`). Creates `campaign_dir` and every
+    /// asset subdirectory it needs.
+    pub fn save(snapshot: &CampaignSnapshot, campaign_dir: &Path) -> Result<(), CampaignStoreError> {
+        fs::create_dir_all(campaign_dir).map_err(|err| io_error(campaign_dir, err))?;
 
-        let json = serde_json::to_string_pretty(snapshot).map_err(|err| CampaignStoreError {
+        let config_dir = campaign_dir.join(CONFIG_DIR);
+        fs::create_dir_all(&config_dir).map_err(|err| io_error(&config_dir, err))?;
+
+        // Assets travel as markdown files, not JSON — the config file only
+        // ever carries the non-asset fields, matching what
+        // `campaign_config_json` already looked like before this module
+        // existed.
+        let mut config_only = snapshot.clone();
+        config_only.assets = CampaignAssets::default();
+        let json = serde_json::to_string_pretty(&config_only).map_err(|err| CampaignStoreError {
             message: format!("failed to serialize campaign snapshot: {err}"),
         })?;
+        let config_path = config_dir.join(format!("{}.json", sanitize_filename(&snapshot.name)));
+        fs::write(&config_path, json).map_err(|err| io_error(&config_path, err))?;
 
-        let path = root.join(SNAPSHOT_FILE);
-        fs::write(&path, json).map_err(|err| io_error(&path, err))
+        write_asset_group(&campaign_dir.join(RESOURCES_DIR), &snapshot.assets.resources)?;
+        write_asset_group(&campaign_dir.join(ADVENTURE_LOG_DIR), &snapshot.assets.adventure_log)?;
+        write_asset_group(&campaign_dir.join(MAPS_DIR), &snapshot.assets.maps)?;
+        write_asset_group(&campaign_dir.join(WIKI_DIR), &snapshot.assets.wiki)?;
+
+        Ok(())
     }
 
-    /// Loads a campaign snapshot from `root`. Returns `Err` if the snapshot
-    /// file is missing, unreadable, or fails to parse as a `CampaignSnapshot`.
-    pub fn load(root: &Path) -> Result<CampaignSnapshot, CampaignStoreError> {
-        let path = root.join(SNAPSHOT_FILE);
-        let text = fs::read_to_string(&path).map_err(|err| CampaignStoreError {
-            message: format!("{} missing or unreadable: {err}", path.display()),
+    /// Loads a campaign snapshot from `campaign_dir`, re-reading the
+    /// markdown asset files fresh every time — so an edit made outside the
+    /// app (e.g. in Obsidian) between save and load is honored.
+    pub fn load(campaign_dir: &Path) -> Result<CampaignSnapshot, CampaignStoreError> {
+        let config_dir = campaign_dir.join(CONFIG_DIR);
+        let config_entry = first_sorted_entry_with_extension(&config_dir, "json")?.ok_or_else(|| {
+            CampaignStoreError {
+                message: format!("no campaign config .json file found under {}", config_dir.display()),
+            }
         })?;
 
-        serde_json::from_str(&text).map_err(|err| CampaignStoreError {
-            message: format!("{} failed to parse as a campaign snapshot: {err}", path.display()),
+        let text = fs::read_to_string(config_entry.path())
+            .map_err(|err| io_error(&config_entry.path(), err))?;
+        let mut snapshot: CampaignSnapshot = serde_json::from_str(&text).map_err(|err| CampaignStoreError {
+            message: format!(
+                "{} failed to parse as a campaign snapshot: {err}",
+                config_entry.path().display()
+            ),
+        })?;
+
+        snapshot.assets = CampaignAssets {
+            resources: read_asset_group(&campaign_dir.join(RESOURCES_DIR))?,
+            adventure_log: read_asset_group(&campaign_dir.join(ADVENTURE_LOG_DIR))?,
+            maps: read_asset_group(&campaign_dir.join(MAPS_DIR))?,
+            wiki: read_asset_group(&campaign_dir.join(WIKI_DIR))?,
+        };
+
+        Ok(snapshot)
+    }
+
+    /// Lists every campaign under `campaigns_root`.
+    ///
+    /// A nonexistent root returns an empty listing rather than an error — a
+    /// campaign manager with no campaigns yet is not a failure. Each
+    /// subdirectory is loaded independently: one corrupt/unreadable
+    /// campaign is reported in `unreadable_entries` without failing the
+    /// rest of the listing (mirrors `SavedCharacterStore::list_all`).
+    pub fn list_all(campaigns_root: &Path) -> Result<CampaignListing, CampaignStoreError> {
+        let entries = match fs::read_dir(campaigns_root) {
+            Ok(entries) => entries,
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
+                return Ok(CampaignListing::default());
+            }
+            Err(err) => return Err(io_error(campaigns_root, err)),
+        };
+
+        let mut subdirectories: Vec<_> = entries
+            .filter_map(Result::ok)
+            .filter(|entry| entry.path().is_dir())
+            .collect();
+        subdirectories.sort_by_key(|entry| entry.file_name());
+
+        let mut campaigns = Vec::new();
+        let mut unreadable_entries = Vec::new();
+        for entry in subdirectories {
+            let folder_name = entry.file_name().to_string_lossy().into_owned();
+            match Self::load(&entry.path()) {
+                Ok(snapshot) => campaigns.push(summarize(&snapshot, folder_name)),
+                Err(err) => unreadable_entries.push(CampaignListingError {
+                    entry_name: folder_name,
+                    message: err.message,
+                }),
+            }
+        }
+
+        Ok(CampaignListing {
+            campaigns,
+            unreadable_entries,
         })
     }
+
+    /// Deletes a campaign directory outright. Deleting a campaign that does
+    /// not exist is a no-op rather than an error — the caller's desired end
+    /// state (the campaign is gone) already holds.
+    pub fn delete(campaign_dir: &Path) -> Result<(), CampaignStoreError> {
+        if !campaign_dir.exists() {
+            return Ok(());
+        }
+        fs::remove_dir_all(campaign_dir).map_err(|err| io_error(campaign_dir, err))
+    }
+}
+
+fn summarize(snapshot: &CampaignSnapshot, folder_name: String) -> CampaignSummary {
+    CampaignSummary {
+        id: snapshot.id.clone(),
+        name: snapshot.name.clone(),
+        rule_set_label: snapshot.rule_set_label.clone(),
+        updated_at: snapshot.updated_at.clone(),
+        party_size: snapshot.party_character_ids.len(),
+        folder_name,
+    }
+}
+
+/// Replaces characters that are unsafe/awkward in a filename with `_`. Keeps
+/// letters, digits, spaces, and hyphens verbatim. Moved here (rather than
+/// duplicated) from `campaign_drive.rs`, which becomes a thin adapter over
+/// this module in a later cycle.
+pub(crate) fn sanitize_filename(input: &str) -> String {
+    let cleaned: String = input
+        .chars()
+        .map(|c| if c.is_alphanumeric() || c == '-' || c == ' ' { c } else { '_' })
+        .collect();
+    let trimmed = cleaned.trim();
+    if trimmed.is_empty() {
+        "untitled".to_owned()
+    } else {
+        trimmed.to_owned()
+    }
+}
+
+fn write_asset_group(dir: &Path, assets: &[CampaignAsset]) -> Result<(), CampaignStoreError> {
+    if assets.is_empty() {
+        return Ok(());
+    }
+    fs::create_dir_all(dir).map_err(|err| io_error(dir, err))?;
+    for asset in assets {
+        let path = dir.join(format!("{}.md", sanitize_filename(&asset.title)));
+        fs::write(&path, &asset.body).map_err(|err| io_error(&path, err))?;
+    }
+    Ok(())
+}
+
+/// Reads back every `.md` file in `dir` as a `CampaignAsset`, using the
+/// filename (minus extension) as the title. A missing directory means no
+/// assets of that kind exist yet — not an error.
+fn read_asset_group(dir: &Path) -> Result<Vec<CampaignAsset>, CampaignStoreError> {
+    let entries = match fs::read_dir(dir) {
+        Ok(entries) => entries,
+        Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(Vec::new()),
+        Err(err) => return Err(io_error(dir, err)),
+    };
+
+    let mut files: Vec<_> = entries
+        .filter_map(Result::ok)
+        .filter(|entry| entry.path().extension().and_then(|ext| ext.to_str()) == Some("md"))
+        .collect();
+    files.sort_by_key(|entry| entry.file_name());
+
+    let mut assets = Vec::new();
+    for entry in files {
+        let path = entry.path();
+        let body = fs::read_to_string(&path).map_err(|err| io_error(&path, err))?;
+        let title = path
+            .file_stem()
+            .map(|stem| stem.to_string_lossy().into_owned())
+            .unwrap_or_default();
+        assets.push(CampaignAsset { title, body });
+    }
+    Ok(assets)
+}
+
+fn first_sorted_entry_with_extension(
+    dir: &Path,
+    extension: &str,
+) -> Result<Option<fs::DirEntry>, CampaignStoreError> {
+    let entries = match fs::read_dir(dir) {
+        Ok(entries) => entries,
+        Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(None),
+        Err(err) => return Err(io_error(dir, err)),
+    };
+
+    let mut matches: Vec<_> = entries
+        .filter_map(Result::ok)
+        .filter(|entry| entry.path().extension().and_then(|ext| ext.to_str()) == Some(extension))
+        .collect();
+    matches.sort_by_key(|entry| entry.file_name());
+    Ok(matches.into_iter().next())
 }
 
 fn io_error(path: &Path, err: std::io::Error) -> CampaignStoreError {
@@ -59,7 +249,7 @@ fn io_error(path: &Path, err: std::io::Error) -> CampaignStoreError {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::campaign::{CampaignAsset, CampaignAssets, CampaignMember, CURRENT_CAMPAIGN_SCHEMA_VERSION};
+    use crate::campaign::{CampaignMember, CURRENT_CAMPAIGN_SCHEMA_VERSION};
 
     fn temp_root(label: &str) -> std::path::PathBuf {
         std::env::temp_dir().join(format!(
@@ -109,19 +299,26 @@ mod tests {
     }
 
     #[test]
-    fn save_creates_the_root_directory_if_missing() {
-        let root = temp_root("creates-root");
+    fn writes_the_real_local_folder_layout_matching_campaign_drive() {
+        let root = temp_root("layout");
         let _ = fs::remove_dir_all(&root);
-        assert!(!root.exists());
 
         CampaignStore::save(&sample_snapshot(), &root).expect("save should succeed");
-        assert!(root.join(SNAPSHOT_FILE).exists());
+
+        assert!(root.join(".config").join("The Void Between.json").exists());
+        assert!(root.join("resources").join("Primer.md").exists());
+        assert_eq!(
+            fs::read_to_string(root.join("resources").join("Primer.md")).unwrap(),
+            "# Primer"
+        );
+        // Empty asset groups never get a subdirectory.
+        assert!(!root.join("adventure-log").exists());
 
         let _ = fs::remove_dir_all(&root);
     }
 
     #[test]
-    fn load_reports_an_error_for_a_missing_snapshot_file() {
+    fn load_reports_an_error_for_a_missing_config_file() {
         let root = temp_root("missing");
         let _ = fs::remove_dir_all(&root);
 
@@ -129,5 +326,48 @@ mod tests {
         assert!(result.is_err());
 
         let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn list_all_tolerates_a_missing_campaigns_root() {
+        let root = temp_root("missing-listing-root");
+        let _ = fs::remove_dir_all(&root);
+
+        let listing = CampaignStore::list_all(&root).expect("should not error on a missing root");
+        assert!(listing.campaigns.is_empty());
+        assert!(listing.unreadable_entries.is_empty());
+    }
+
+    #[test]
+    fn list_all_isolates_one_unreadable_entry_from_the_rest_of_the_listing() {
+        let campaigns_root = temp_root("listing");
+        let _ = fs::remove_dir_all(&campaigns_root);
+        fs::create_dir_all(&campaigns_root).unwrap();
+
+        CampaignStore::save(&sample_snapshot(), &campaigns_root.join("good-campaign"))
+            .expect("save should succeed");
+        fs::create_dir_all(campaigns_root.join("corrupt-campaign")).unwrap();
+        // No `.config/*.json` written for this one — an unreadable entry.
+
+        let listing = CampaignStore::list_all(&campaigns_root).expect("listing should succeed");
+        assert_eq!(listing.campaigns.len(), 1);
+        assert_eq!(listing.campaigns[0].name, "The Void Between");
+        assert_eq!(listing.unreadable_entries.len(), 1);
+        assert_eq!(listing.unreadable_entries[0].entry_name, "corrupt-campaign");
+
+        let _ = fs::remove_dir_all(&campaigns_root);
+    }
+
+    #[test]
+    fn delete_removes_the_campaign_directory_and_is_idempotent() {
+        let root = temp_root("delete");
+        let _ = fs::remove_dir_all(&root);
+        CampaignStore::save(&sample_snapshot(), &root).expect("save should succeed");
+
+        CampaignStore::delete(&root).expect("delete should succeed");
+        assert!(!root.exists());
+
+        // Deleting again (already gone) is a no-op, not an error.
+        CampaignStore::delete(&root).expect("deleting a missing dir is a no-op");
     }
 }
