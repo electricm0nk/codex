@@ -101,21 +101,36 @@ fn printed_sheet_cell_map_renders_real_values_for_a_supported_chassis() {
         *cell_value(&cells, "sheet.save.fortitude"),
         PrintedSheetCellValue::Number(receipt.chassis.total_saves.fortitude)
     );
+    // This fixture's Fighter has a genuinely supported *class chassis*
+    // (base_attack_bonus / total_saves above are real), but it has no
+    // equipped weapon/armor and no Dodge/Weapon Focus feats, so
+    // `compute_combat_baseline`'s own deterministic-posture check
+    // independently fails and pushes claim-blocking
+    // `combat.baseline_unsupported` — contract.rs's `printed_sheet_cell_map`
+    // correctly renders `Blocked` for `sheet.armor_class` /
+    // `sheet.melee_attack_bonus` here (fixed alongside SD-20 Epic 8's
+    // Finding 2; asserting these as `Number(0)` would itself be the same
+    // fabricated-zero bug that fix closed).
     assert_eq!(
         *cell_value(&cells, "sheet.armor_class"),
-        PrintedSheetCellValue::Number(receipt.chassis.baseline_armor_class)
+        PrintedSheetCellValue::Blocked
     );
     assert_eq!(
         *cell_value(&cells, "sheet.melee_attack_bonus"),
-        PrintedSheetCellValue::Number(receipt.chassis.baseline_melee_attack_bonus)
+        PrintedSheetCellValue::Blocked
     );
     assert_eq!(
         *cell_value(&cells, "sheet.ability_modifier.strength"),
         PrintedSheetCellValue::Number(receipt.chassis.ability_modifiers.strength)
     );
+    // Likewise, this fixture has no skill allocations at all, so
+    // `compute_selected_skill_modifiers`'s own deterministic-posture check
+    // independently fails and pushes claim-blocking
+    // `skill.selected_modifier.unsupported`, correctly blocking
+    // `sheet.skill.climb` here.
     assert_eq!(
         *cell_value(&cells, "sheet.skill.climb"),
-        PrintedSheetCellValue::Number(receipt.chassis.selected_skill_modifiers.climb)
+        PrintedSheetCellValue::Blocked
     );
 
     // Every cell must cite exactly one PilotReceipt field (no cell left

@@ -62,10 +62,11 @@
 //! through `PilotReceipt` today. That gap is documented here precisely,
 //! not fabricated around.
 //!
-//! **Finding 2 — `printed_sheet_cell_map`'s `Blocked` gate only checks
-//! one of at least three claim-blocking diagnostic ids that zero out
-//! chassis fields.** `contract.rs::printed_sheet_cell_map` renders
-//! `PrintedSheetCellValue::Blocked` only when the receipt carries a
+//! **Finding 2 (fixed) — `printed_sheet_cell_map`'s `Blocked` gate
+//! originally checked only one of at least three claim-blocking
+//! diagnostic ids that zero out chassis fields.** `contract.rs`'s
+//! `printed_sheet_cell_map` originally rendered
+//! `PrintedSheetCellValue::Blocked` only when the receipt carried a
 //! claim-blocking `class_chassis.unsupported` diagnostic. But
 //! `pilot_compute.rs::compute_combat_baseline` zeroes
 //! `baseline_armor_class` / `baseline_melee_attack_bonus` and pushes a
@@ -75,24 +76,39 @@
 //! shield" posture; `compute_selected_skill_modifiers` does the same for
 //! `selected_skill_modifiers` with `skill.selected_modifier.unsupported`
 //! (which additionally requires *exactly* Climb/Intimidate/Swim at rank
-//! 1 and no other skill allocation at all). Neither diagnostic id is
-//! checked by `printed_sheet_cell_map`'s `chassis_unsupported` gate, so
-//! for any character that doesn't hit that one exact posture, the
+//! 1 and no other skill allocation at all); `compute_total_saves` does
+//! the same for `total_saves` with `defense.total_save.unsupported`.
+//! Originally, none of those three diagnostic ids were checked by
+//! `printed_sheet_cell_map`'s `chassis_unsupported` gate, so for any
+//! character that didn't hit that one exact posture, the
 //! `sheet.armor_class` / `sheet.melee_attack_bonus` / `sheet.skill.*`
-//! cells silently render `Number(0)` — a fabricated zero presented as a
-//! real computed value — instead of `Blocked`. This is not a new bug
-//! introduced by this cycle: it is already visible in the existing,
-//! already-landed `tests/fixtures/wire/sd20/boundary_contract_parity.json`
-//! fixture, whose `expected_diagnostics` names both
-//! `combat.baseline_unsupported` and `skill.selected_modifier.unsupported`
-//! as claim-blocking while its `expected_output.cells` shows
-//! `sheet.armor_class` / `sheet.melee_attack_bonus` /
-//! `sheet.skill.climb` / `sheet.skill.intimidate` / `sheet.skill.swim`
-//! all as `Number(0)`. `tabletop_readiness_combat_baseline_deviation_is_silently_zeroed_not_blocked`
-//! and `tabletop_readiness_selected_skill_posture_deviation_is_silently_zeroed_not_blocked`
-//! below pin this exact behavior with a fresh, independently-built
-//! deviating character, so a future fix to `printed_sheet_cell_map`'s
-//! gate has a regression test to turn red intentionally.
+//! (and, in principle, `sheet.save.*`) cells silently rendered
+//! `Number(0)` — a fabricated zero presented as a real computed value —
+//! instead of `Blocked`. This was not a new bug introduced by this cycle:
+//! it was already visible in the existing, already-landed
+//! `tests/fixtures/wire/sd20/boundary_contract_parity.json` fixture,
+//! whose `expected_diagnostics` names both `combat.baseline_unsupported`
+//! and `skill.selected_modifier.unsupported` as claim-blocking while its
+//! `expected_output.cells` originally showed `sheet.armor_class` /
+//! `sheet.melee_attack_bonus` / `sheet.skill.climb` /
+//! `sheet.skill.intimidate` / `sheet.skill.swim` all as `Number(0)`.
+//!
+//! This has since been fixed: `printed_sheet_cell_map` now also checks
+//! `combat.baseline_unsupported`, `skill.selected_modifier.unsupported`,
+//! and `defense.total_save.unsupported`, each OR'd additively with the
+//! universal `class_chassis.unsupported` fallback (see `contract.rs`'s
+//! `COMBAT_BASELINE_UNSUPPORTED_DIAGNOSTIC_ID` /
+//! `SKILL_SELECTED_MODIFIER_UNSUPPORTED_DIAGNOSTIC_ID` /
+//! `TOTAL_SAVE_UNSUPPORTED_DIAGNOSTIC_ID` constants).
+//! `tabletop_readiness_combat_baseline_deviation_is_blocked_not_zeroed` and
+//! `tabletop_readiness_selected_skill_posture_deviation_is_blocked_not_zeroed`
+//! below (originally
+//! `..._is_silently_zeroed_not_blocked`, which pinned the bug) now assert
+//! the fixed `Blocked` rendering with a fresh, independently-built
+//! deviating character. `boundary_contract_parity.json`'s
+//! `expected_output.cells` was updated the same way (verified by actually
+//! running the engine against that fixture's own `CharacterInput`, not
+//! hand-guessed) — see `tests/sd20_contract_boundary_parity.rs`.
 //!
 //! This epic's own fixture avoids the gap in Finding 2 by construction:
 //! the fixture's `CharacterInput` deliberately matches the exact
@@ -104,8 +120,8 @@
 //! one of the 15 `printed_sheet_cell_map` cells is a real, non-Blocked,
 //! non-fabricated number for this fixture — proving the underlying
 //! chassis computation is genuinely correct for a fully-supported
-//! Fighter, while Findings 1 and 2 above document exactly what remains
-//! unresolved for SD-20 as a whole.
+//! Fighter, while Finding 1 above documents what remains unresolved for
+//! SD-20 as a whole (Finding 2 is now closed).
 //!
 //! # The "8 wire-fixture parity fixtures" gate
 //!
@@ -771,11 +787,28 @@ fn tabletop_readiness_fighter_level_1_chassis_composes_via_printed_sheet_cell_ma
 }
 
 // ---------------------------------------------------------------------
-// Gap-pinning tests (Finding 2): a character that deviates from the one
-// exact deterministic posture gets a claim-blocking diagnostic AND a
-// silently fabricated Number(0) cell, not Blocked. These tests pin the
-// *current* (buggy) behavior precisely so a future fix has a red test
-// to flip, per this file's module doc comment.
+// Fixed-behavior regression tests (Finding 2, now closed): a character
+// that deviates from the one exact deterministic posture gets a
+// claim-blocking diagnostic, and `printed_sheet_cell_map` correctly
+// renders `Blocked` for the cell(s) that diagnostic invalidates -- never a
+// silently fabricated `Number(0)`.
+//
+// These two tests originally pinned Finding 2 as a *known, unresolved
+// gap*: `contract.rs::printed_sheet_cell_map`'s `Blocked` gate checked
+// only `class_chassis.unsupported`, so a character that tripped
+// `combat.baseline_unsupported` or `skill.selected_modifier.unsupported`
+// without also tripping `class_chassis.unsupported` still rendered a
+// fabricated `Number(0)`. `printed_sheet_cell_map` now also checks
+// `combat.baseline_unsupported`, `skill.selected_modifier.unsupported`,
+// and `defense.total_save.unsupported` (the third diagnostic Finding 2
+// named, not separately exercised below since it always co-fires with
+// `class_chassis.unsupported` for the Fighter-only compute surface this
+// suite exercises), each OR'd additively with the universal
+// `class_chassis.unsupported` fallback -- see `contract.rs`'s
+// `COMBAT_BASELINE_UNSUPPORTED_DIAGNOSTIC_ID` /
+// `SKILL_SELECTED_MODIFIER_UNSUPPORTED_DIAGNOSTIC_ID` /
+// `TOTAL_SAVE_UNSUPPORTED_DIAGNOSTIC_ID` constants. These tests now assert
+// the fixed (`Blocked`) behavior instead of pinning the bug.
 // ---------------------------------------------------------------------
 
 /// A variant of the fixture's base character with `feat:dodge` (and its
@@ -795,7 +828,7 @@ fn character_missing_dodge_feat() -> CharacterInput {
 }
 
 #[test]
-fn tabletop_readiness_combat_baseline_deviation_is_silently_zeroed_not_blocked() {
+fn tabletop_readiness_combat_baseline_deviation_is_blocked_not_zeroed() {
     let input = character_missing_dodge_feat();
     let corpus = corpus_with_fighter_gear();
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
@@ -809,8 +842,10 @@ fn tabletop_readiness_combat_baseline_deviation_is_silently_zeroed_not_blocked()
         "dropping feat:dodge must trip combat.baseline_unsupported (claim_blocking: true): {:?}",
         receipt.diagnostics
     );
-    // The diagnostic fires, but the chassis field it should gate is a
-    // silent fabricated zero -- Finding 2.
+    // The underlying chassis field is still a fabricated-looking zero at
+    // the `PilotBaseChassisComputation` level (that shape has no
+    // "blocked" variant) -- it is `printed_sheet_cell_map`'s job to not
+    // present that zero as real data.
     assert_eq!(receipt.chassis.baseline_armor_class, 0);
     assert_eq!(receipt.chassis.baseline_melee_attack_bonus, 0);
 
@@ -819,22 +854,27 @@ fn tabletop_readiness_combat_baseline_deviation_is_silently_zeroed_not_blocked()
         .iter()
         .find(|cell| cell.cell_id == "sheet.armor_class")
         .expect("sheet.armor_class cell must exist");
-    // This assertion pins Finding 2's *current* behavior: contract.rs's
-    // printed_sheet_cell_map only gates on `class_chassis.unsupported`,
-    // never `combat.baseline_unsupported`, so this renders a fabricated
-    // Number(0) rather than Blocked despite the real claim-blocking
-    // diagnostic above. A future fix to printed_sheet_cell_map's gate
-    // should flip this assertion to `PrintedSheetCellValue::Blocked`.
+    let melee_attack_bonus_cell = cells
+        .iter()
+        .find(|cell| cell.cell_id == "sheet.melee_attack_bonus")
+        .expect("sheet.melee_attack_bonus cell must exist");
+    // Fixed behavior: printed_sheet_cell_map now also gates on
+    // combat.baseline_unsupported, so these cells render Blocked instead
+    // of a fabricated Number(0).
     assert_eq!(
         armor_class_cell.value,
-        PrintedSheetCellValue::Number(0),
-        "documents Finding 2: this SHOULD be Blocked given combat.baseline_unsupported is \
-         claim_blocking, but printed_sheet_cell_map's gate does not check that diagnostic id"
+        PrintedSheetCellValue::Blocked,
+        "combat.baseline_unsupported (claim_blocking: true) must block sheet.armor_class"
+    );
+    assert_eq!(
+        melee_attack_bonus_cell.value,
+        PrintedSheetCellValue::Blocked,
+        "combat.baseline_unsupported (claim_blocking: true) must block sheet.melee_attack_bonus"
     );
 }
 
 #[test]
-fn tabletop_readiness_selected_skill_posture_deviation_is_silently_zeroed_not_blocked() {
+fn tabletop_readiness_selected_skill_posture_deviation_is_blocked_not_zeroed() {
     let fixture = load_fixture();
     let mut input = character_input_from_fixture(fixture.get("input"));
     // Widen beyond the exact Climb/Intimidate/Swim rank-1 posture
@@ -867,12 +907,32 @@ fn tabletop_readiness_selected_skill_posture_deviation_is_silently_zeroed_not_bl
         .iter()
         .find(|cell| cell.cell_id == "sheet.skill.climb")
         .expect("sheet.skill.climb cell must exist");
+    let intimidate_cell = cells
+        .iter()
+        .find(|cell| cell.cell_id == "sheet.skill.intimidate")
+        .expect("sheet.skill.intimidate cell must exist");
+    let swim_cell = cells
+        .iter()
+        .find(|cell| cell.cell_id == "sheet.skill.swim")
+        .expect("sheet.skill.swim cell must exist");
+    // Fixed behavior: printed_sheet_cell_map now also gates on
+    // skill.selected_modifier.unsupported, so these cells render Blocked
+    // instead of a fabricated Number(0).
     assert_eq!(
         climb_cell.value,
-        PrintedSheetCellValue::Number(0),
-        "documents Finding 2: this SHOULD be Blocked given \
-         skill.selected_modifier.unsupported is claim_blocking, but printed_sheet_cell_map's \
-         gate does not check that diagnostic id"
+        PrintedSheetCellValue::Blocked,
+        "skill.selected_modifier.unsupported (claim_blocking: true) must block sheet.skill.climb"
+    );
+    assert_eq!(
+        intimidate_cell.value,
+        PrintedSheetCellValue::Blocked,
+        "skill.selected_modifier.unsupported (claim_blocking: true) must block \
+         sheet.skill.intimidate"
+    );
+    assert_eq!(
+        swim_cell.value,
+        PrintedSheetCellValue::Blocked,
+        "skill.selected_modifier.unsupported (claim_blocking: true) must block sheet.skill.swim"
     );
 }
 
