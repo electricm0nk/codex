@@ -115,6 +115,7 @@
 //! claim-blocking diagnostics and withheld explanations rather than fabricated values.
 
 use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
+use super::rules_tables::crb::class_tables::{ClassId, class_tables};
 
 /// Result of the GE-06 pilot deterministic compute surface, accumulating the
 /// base chassis, baseline combat, and total-save outputs proven across slices.
@@ -4573,7 +4574,22 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         compute_ability_modifiers(&input.chosen.ability_scores, &mut explanations);
 
     let (base_attack_bonus, base_saves) =
-        compute_fighter_chassis(input, &mut explanations, &mut diagnostics);
+        compute_class_chassis(input, &mut explanations, &mut diagnostics).unwrap_or_else(|| {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_chassis.unsupported".to_owned(),
+                message: format!(
+                    "base class chassis is only supported for a single-class {FIGHTER_CLASS_ID} \
+                     at levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} or a single-class \
+                     {WIZARD_CLASS_ID} at levels 1-{MAX_SUPPORTED_WIZARD_LEVEL}; chosen class \
+                     levels {:?} do not provide it (either a multiclass mix, deferred to Epic 7, \
+                     or a class this per-class dispatch does not yet recognize), so no chassis \
+                     values were computed",
+                    input.chosen.class_levels
+                ),
+                claim_blocking: true,
+            });
+            (0, BaseSaves::default())
+        });
 
     let (baseline_melee_attack_bonus, baseline_armor_class) = compute_combat_baseline(
         input,
@@ -6425,6 +6441,134 @@ fn compute_fighter_chassis(
         detail: format!(
             "Fighter level {level} base Will save from cr_classes.lst:139 \
              BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 = {}",
+            base_saves.will
+        ),
+    });
+
+    (base_attack_bonus, base_saves)
+}
+
+/// SD-21 Epic 6 (E6.25): dispatch the base-attack-bonus / base-save chassis pillar to
+/// the supported single class, or return `None` when the input is a length-2+
+/// multiclass mix (deferred to Epic 7's `compute_multiclass_base_chassis`) or a
+/// single class this dispatch does not yet recognize. Each recognized class's own
+/// `compute_<class>_chassis` function still independently checks its own level range
+/// and pushes `class_chassis.unsupported` itself when out of range, so this dispatch
+/// only needs to route by `class_id`.
+fn has_supported_class_chassis(input: &CharacterInput) -> bool {
+    supported_fighter_level(input).is_some() || supported_wizard_level(input).is_some()
+}
+
+fn compute_class_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> Option<(i16, BaseSaves)> {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return None;
+    };
+    if class_level.class_id == FIGHTER_CLASS_ID {
+        Some(compute_fighter_chassis(input, explanations, diagnostics))
+    } else if class_level.class_id == WIZARD_CLASS_ID {
+        Some(compute_wizard_chassis(input, explanations, diagnostics))
+    } else {
+        None
+    }
+}
+
+/// Compute the Wizard base-attack-bonus / base-save chassis pillar (SD-21 E6.26).
+///
+/// Composes `rules_tables::crb::class_tables::class_tables()`'s Wizard row
+/// (`BabProgression::Half`; good Will only, poor Fortitude/Reflex) rather than
+/// re-deriving the progression — that row was independently spot-checked against
+/// this file's own already-primary-source-verified Wizard formulas (see
+/// `explain_wizard_level1_prepared_spell_baseline`'s standalone
+/// `class_chassis.wizard.base_attack_bonus` / `base_save.*` explanation records, and
+/// `level_up/wizard.rs`'s SD-20 cycle, which performed the identical spot-check
+/// before composing with it: "The two sources agree at every level 1-20"). Mirrors
+/// `compute_fighter_chassis`'s generic, un-prefixed `class_chassis.base_attack_bonus`
+/// / `class_chassis.base_save.*` explanation ids — the ones actually wired into the
+/// integrated `base_attack_bonus` / `base_saves` fields — which is why they are
+/// distinct from the pre-existing, still-standalone `class_chassis.wizard.*` ids
+/// `explain_wizard_level1_prepared_spell_baseline` already grounds.
+fn compute_wizard_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> (i16, BaseSaves) {
+    let Some(level) = supported_wizard_level(input) else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_chassis.unsupported".to_owned(),
+            message: format!(
+                "base class chassis is only supported for a single-class {WIZARD_CLASS_ID} at \
+                 levels 1-{MAX_SUPPORTED_WIZARD_LEVEL}; chosen class levels {:?} do not provide \
+                 it, so no chassis values were computed",
+                input.chosen.class_levels
+            ),
+            claim_blocking: true,
+        });
+        return (0, BaseSaves::default());
+    };
+
+    let Some(row) = class_tables()
+        .into_iter()
+        .find(|row| row.class_id == ClassId::Wizard && row.level == level)
+    else {
+        // Cannot happen while MAX_SUPPORTED_WIZARD_LEVEL stays 20 and class_tables()'s
+        // own Wizard CLASS_META row's max_supported_level stays 20 (both independently
+        // confirmed identical by level_up/wizard.rs's SD-20 spot-check), but stays a
+        // named, claim-blocking fallback rather than a panic if that ever drifts.
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_chassis.unsupported".to_owned(),
+            message: format!(
+                "base class chassis has no {WIZARD_CLASS_ID} class_tables() row at level \
+                 {level}, so no chassis values were computed"
+            ),
+            claim_blocking: true,
+        });
+        return (0, BaseSaves::default());
+    };
+
+    let base_attack_bonus = row.base_attack_bonus;
+    let base_saves = BaseSaves {
+        fortitude: row.fort_save,
+        reflex: row.ref_save,
+        will: row.will_save,
+    };
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "Wizard level {level} base attack bonus from \
+             rules_tables::crb::class_tables::class_tables()'s Wizard row (1/2 BAB, PF1 Core \
+             Rulebook Wizard class table): {base_attack_bonus}"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.fortitude".to_owned(),
+        value: base_saves.fortitude,
+        detail: format!(
+            "Wizard level {level} base Fortitude save (poor) from \
+             rules_tables::crb::class_tables::class_tables()'s Wizard row: {}",
+            base_saves.fortitude
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.reflex".to_owned(),
+        value: base_saves.reflex,
+        detail: format!(
+            "Wizard level {level} base Reflex save (poor) from \
+             rules_tables::crb::class_tables::class_tables()'s Wizard row: {}",
+            base_saves.reflex
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.will".to_owned(),
+        value: base_saves.will,
+        detail: format!(
+            "Wizard level {level} base Will save (good) from \
+             rules_tables::crb::class_tables::class_tables()'s Wizard row: {}",
             base_saves.will
         ),
     });
@@ -16767,12 +16911,18 @@ fn compute_total_saves(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> BaseSaves {
-    if supported_fighter_level(input).is_none() {
+    // SD-21 E6.26: widened from a Fighter-only gate to also accept the newly
+    // dispatch-supported Wizard chassis (`has_supported_class_chassis` mirrors
+    // `compute_class_chassis`'s own single-class dispatch set) — the base saves this
+    // function folds ability modifiers into are only genuinely computed, not
+    // fabricated, for those two classes so far.
+    if !has_supported_class_chassis(input) {
         diagnostics.push(ComputationDiagnostic {
             id: "defense.total_save.unsupported".to_owned(),
             message: format!(
                 "total saving throws are only computed from the grounded {FIGHTER_CLASS_ID} \
-                 levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} base saves; chosen class levels {:?} do not \
+                 levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} or {WIZARD_CLASS_ID} levels \
+                 1-{MAX_SUPPORTED_WIZARD_LEVEL} base saves; chosen class levels {:?} do not \
                  provide them, so no total saves were computed",
                 input.chosen.class_levels
             ),
