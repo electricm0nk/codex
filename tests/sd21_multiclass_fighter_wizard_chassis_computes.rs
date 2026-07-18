@@ -201,3 +201,63 @@ fn fighter3_wizard2_base_saves_use_fractional_progression_stacking_not_a_naive_s
          3 instead of the correct 4): {computation:?}"
     );
 }
+
+/// SD-21 E7.30: reconcile per-class feature integration for a multiclass mix.
+///
+/// `explain_fighter_class_features` (Fighter's Bravery / bonus-feat grants)
+/// gates on `supported_fighter_level`, which requires a single-element
+/// `class_levels` slice -- so before this cycle, a Fighter's own class-feature
+/// explanations silently stopped firing the moment any other class joined the
+/// mix, even though E7.28/E7.29 already made that same Fighter's BAB/save
+/// chassis contribution genuinely computed. This is exactly the kind of silent
+/// grant-loss "clobbering" this criterion closes: introducing Wizard into the
+/// mix must not make Fighter's own already-earned class features vanish.
+///
+/// Fighter 4 (within a Fighter 4 / Wizard 4 mix) is past the Bravery 2
+/// threshold, so `class_feature.fighter.bravery` must fire using Fighter's own
+/// sub-level (4) within the mix, not the whole mix's length.
+#[test]
+fn fighter4_wizard4_fighter_class_features_still_fire_in_the_multiclass_mix() {
+    let input = multiclass_fighter_wizard(4, 4);
+    let computation = compute_pilot_base_chassis(&input);
+
+    let bravery = explanation(&computation, "class_feature.fighter.bravery");
+    // fighter_bravery_bonus(4) = 1 + (4 - 2) / 4 = 1 (integer division 2 / 4 = 0).
+    assert_eq!(
+        bravery.value, 1,
+        "Fighter's own Bravery class feature must still fire, using Fighter's own \
+         level (4) within the multiclass mix, not the mix's overall shape: {computation:?}"
+    );
+}
+
+/// A companion negative control: the reconciliation must not have the reverse
+/// problem either -- Fighter's per-class features firing in a multiclass mix
+/// must not duplicate or otherwise clobber the combined chassis explanations
+/// E7.28/E7.29 already ground (each keeps its own distinct, non-overlapping id
+/// namespace: `class_chassis.*` for the combined pillar, `class_feature.fighter.*`
+/// for Fighter's own features).
+#[test]
+fn fighter4_wizard4_class_feature_reconciliation_does_not_clobber_the_combined_chassis_explanations()
+ {
+    let input = multiclass_fighter_wizard(4, 4);
+    let computation = compute_pilot_base_chassis(&input);
+
+    for id in [
+        "class_chassis.base_attack_bonus",
+        "class_chassis.base_save.fortitude",
+        "class_chassis.base_save.reflex",
+        "class_chassis.base_save.will",
+    ] {
+        assert_eq!(
+            computation
+                .explanations
+                .iter()
+                .filter(|e| e.id == id)
+                .count(),
+            1,
+            "'{id}' must remain a single combined explanation entry even once Fighter's \
+             own per-class features also fire in the mix: {:?}",
+            computation.explanations
+        );
+    }
+}

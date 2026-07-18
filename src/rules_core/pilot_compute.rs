@@ -6754,6 +6754,37 @@ fn compute_wizard_chassis(
     (base_attack_bonus, base_saves)
 }
 
+/// Fighter's own level within `input.chosen.class_levels`, whether single-class
+/// or part of a supported Fighter+Wizard multiclass mix (SD-21 E7.30).
+///
+/// Unlike `supported_fighter_level` (which requires a single-element slice and
+/// stays the gate for the base-attack-bonus / base-save chassis pillar and for
+/// `compute_combat_baseline` / `compute_selected_skill_modifiers`, both still
+/// Fighter-single-class-only per Epic 6's remaining scope), this reconciles
+/// Fighter's own per-class feature explanations (Bravery, bonus-feat
+/// progression) to keep firing once another class joins the mix, using
+/// Fighter's own sub-level rather than requiring the whole mix to be
+/// single-class. Returns `None` for a multiclass mix that is not itself a
+/// supported combination (mirroring `is_supported_multiclass_mix`), so
+/// Fighter's feature explanations never surface ahead of that mix's own base
+/// chassis becoming genuinely supported -- and returns `None` when Fighter is
+/// absent from the mix entirely, so introducing another class never makes
+/// Fighter's features appear for a build that isn't actually part-Fighter.
+fn fighter_level_in_mix(input: &CharacterInput) -> Option<u8> {
+    if let Some(level) = supported_fighter_level(input) {
+        return Some(level);
+    }
+    if !is_supported_multiclass_mix(input) {
+        return None;
+    }
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == FIGHTER_CLASS_ID)
+        .map(|class_level| class_level.level)
+}
+
 /// Make the bounded Fighter milestone class features for this slice explicit rather
 /// than leaving them incidental: the level-2 bonus-feat progression seam and the
 /// level-3 armor-training seam.
@@ -6763,11 +6794,18 @@ fn compute_wizard_chassis(
 /// The level-3 armor-training seam names the concrete armor-check-penalty reduction
 /// and maximum-Dexterity increase that the bounded selected-skill and armor-class
 /// outputs already apply, so the derived-output change is legible instead of folklore.
+///
+/// SD-21 E7.30: gates on `fighter_level_in_mix` (not `supported_fighter_level`
+/// directly) so these grants keep firing, using Fighter's own sub-level, once a
+/// supported second class (Wizard) joins the mix -- reconciling Fighter's
+/// feature integration with Epic 7's multiclass dispatch instead of silently
+/// dropping Fighter's already-earned features the moment the mix stops being
+/// single-class.
 fn explain_fighter_class_features(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    let Some(level) = supported_fighter_level(input) else {
+    let Some(level) = fighter_level_in_mix(input) else {
         return;
     };
 
