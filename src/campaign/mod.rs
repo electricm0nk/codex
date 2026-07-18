@@ -7,6 +7,8 @@
 //! `CampaignAssets` types 1:1, plus a `schema_version` added from day one
 //! (per the `saved_character` precedent).
 
+pub mod local_store;
+
 use serde::{Deserialize, Serialize};
 
 /// Persisted-artifact schema version for `CampaignSnapshot`. There is no
