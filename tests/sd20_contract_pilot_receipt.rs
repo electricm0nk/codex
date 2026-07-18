@@ -83,7 +83,7 @@ fn pilot_receipt_chassis_matches_compute_pilot_base_chassis_directly() {
     let input = fighter_level_1_input();
 
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
-    let receipt = to_pilot_receipt(&corpus_receipt);
+    let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
     // (a) per-derived-stat fields: the `chassis` section is exactly what
     // calling the chassis function directly on the same input produces —
@@ -97,7 +97,7 @@ fn pilot_receipt_corpus_derived_matches_corpus_pilot_receipt_section() {
     let input = fighter_level_1_input();
 
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
-    let receipt = to_pilot_receipt(&corpus_receipt);
+    let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
     // (b) per-source-record fields with provenance: the `corpus_derived`
     // section is exactly the seam's own section, unmodified.
@@ -115,7 +115,7 @@ fn pilot_receipt_diagnostics_preserve_claim_blocking_true() {
     let input = wizard_level_1_input();
 
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
-    let receipt = to_pilot_receipt(&corpus_receipt);
+    let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
     // (c) diagnostic fields: claim-blocking diagnostics remain
     // `claim_blocking: true`, hoisted to the receipt's top level unchanged

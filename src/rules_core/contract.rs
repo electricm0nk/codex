@@ -28,6 +28,7 @@
 use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute::{ComputationDiagnostic, PilotBaseChassisComputation};
 use crate::rules_core::pilot_compute_corpus::{CorpusDerivedSection, CorpusPilotReceipt};
+use crate::rules_core::source_content::SourcePackageContent;
 
 /// The three canonical `CharacterInput` permutations the boundary
 /// contract documents in its "Inputs" section
@@ -113,7 +114,20 @@ pub struct PilotReceipt {
 /// compute seam's existing output (`compute_pilot_with_corpus` in
 /// `pilot_compute_corpus.rs`). See `PilotReceipt`'s doc comment for why
 /// this wraps rather than duplicates the existing shapes.
-pub fn to_pilot_receipt(receipt: &CorpusPilotReceipt) -> PilotReceipt {
+///
+/// `input` and `corpus` are the raw `CharacterInput` and
+/// `SourcePackageContent` that produced `receipt`. This cycle
+/// (`contract:receipt_signature_threading`, per
+/// `adaptive-squishing-mccarthy.md`) widens the signature to accept them
+/// so later cycles can call SD-20's Epic 2-7 engines (spellbook, feat
+/// prereqs, skill allocation, equipment effects, damage total), none of
+/// which are reachable from `CorpusPilotReceipt` alone. This cycle does
+/// not change behavior: `input`/`corpus` are unused by the body below.
+pub fn to_pilot_receipt(
+    receipt: &CorpusPilotReceipt,
+    _input: &CharacterInput,
+    _corpus: &SourcePackageContent,
+) -> PilotReceipt {
     PilotReceipt {
         diagnostics: receipt.base.diagnostics.clone(),
         chassis: receipt.base.clone(),

@@ -563,7 +563,7 @@ fn tabletop_readiness_fighter_level_1_chassis_composes_via_printed_sheet_cell_ma
 
     let corpus = corpus_with_fighter_gear();
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
-    let receipt = to_pilot_receipt(&corpus_receipt);
+    let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
     let expected_chassis = fixture.get("expected_output").get("chassis");
     let expected_ability_modifiers = expected_chassis.get("ability_modifiers");
@@ -832,7 +832,7 @@ fn tabletop_readiness_combat_baseline_deviation_is_blocked_not_zeroed() {
     let input = character_missing_dodge_feat();
     let corpus = corpus_with_fighter_gear();
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
-    let receipt = to_pilot_receipt(&corpus_receipt);
+    let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
     assert!(
         receipt
@@ -889,7 +889,7 @@ fn tabletop_readiness_selected_skill_posture_deviation_is_blocked_not_zeroed() {
 
     let corpus = corpus_with_fighter_gear();
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
-    let receipt = to_pilot_receipt(&corpus_receipt);
+    let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
     assert!(
         receipt

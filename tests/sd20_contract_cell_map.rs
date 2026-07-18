@@ -89,7 +89,7 @@ fn printed_sheet_cell_map_renders_real_values_for_a_supported_chassis() {
     let corpus = empty_corpus();
     let input = fighter_level_1_input();
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
-    let receipt = to_pilot_receipt(&corpus_receipt);
+    let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
     let cells = printed_sheet_cell_map(&receipt);
 
@@ -155,7 +155,7 @@ fn printed_sheet_cell_map_blocks_chassis_dependent_cells_but_not_independent_one
     // than a fabricated number."
     let input = wizard_level_1_input();
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
-    let receipt = to_pilot_receipt(&corpus_receipt);
+    let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
     assert!(receipt
         .diagnostics
         .iter()

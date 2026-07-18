@@ -355,7 +355,7 @@ fn boundary_contract_parity_fixture_round_trips_end_to_end() {
     // ... -> the existing corpus-aware compute seam -> to_pilot_receipt ...
     let corpus = empty_corpus();
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
-    let receipt = to_pilot_receipt(&corpus_receipt);
+    let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
     let expected_chassis = fixture.get("expected_output").get("chassis");
     let expected_ability_modifiers = expected_chassis.get("ability_modifiers");
