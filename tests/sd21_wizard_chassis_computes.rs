@@ -174,7 +174,13 @@ fn fighter_chassis_dispatch_is_unaffected() {
 }
 
 #[test]
-fn multiclass_inputs_stay_deferred_to_epic_7() {
+fn multiclass_inputs_are_now_dispatch_supported_by_epic_7() {
+    // Superseded, not violated, by SD-21 Epic 7's E7.28 multiclass dispatch
+    // extension (`compute_multiclass_base_chassis`): this test used to pin the
+    // pre-Epic-7 deferral of length-2+ `class_levels` inputs as expected
+    // behavior. A Wizard 3 / Fighter 1 mix is now genuinely computed, mirroring
+    // this same file's own `wizard_level3_gets_real_base_attack_bonus_and_base_saves`
+    // level-widening negative-control idiom.
     let mut input = load(WIZARD_LEVEL_3_FIXTURE);
     let mut second = input.chosen.class_levels[0].clone();
     second.class_id = "class:fighter".to_string();
@@ -184,11 +190,22 @@ fn multiclass_inputs_stay_deferred_to_epic_7() {
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
-        has_diagnostic(&computation, "class_chassis.unsupported"),
-        "a length-2 class_levels input must stay claim-blocked pending Epic 7's \
-         multiclass dispatch: {:?}",
+        !has_diagnostic(&computation, "class_chassis.unsupported"),
+        "a Wizard 3 / Fighter 1 multiclass mix is now a dispatch-supported chassis \
+         (SD-21 E7.28): {:?}",
         computation.diagnostics
     );
-    assert_eq!(computation.base_attack_bonus, 0);
-    assert_eq!(computation.base_saves, BaseSaves::default());
+    // Wizard 3 (Half BAB): 3/2 = 1. Fighter 1 (Full BAB): 1. Summed: 2.
+    assert_eq!(computation.base_attack_bonus, 2);
+    // Fort: Wizard3 poor (3/3=1) + Fighter1 good (1/2+2=2) = 3.
+    // Ref: Wizard3 poor (3/3=1) + Fighter1 poor (1/3=0) = 1.
+    // Will: Wizard3 good (3/2+2=3) + Fighter1 poor (1/3=0) = 3.
+    assert_eq!(
+        computation.base_saves,
+        BaseSaves {
+            fortitude: 3,
+            reflex: 1,
+            will: 3,
+        }
+    );
 }

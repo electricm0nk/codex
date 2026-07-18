@@ -114,7 +114,9 @@
 //! claim-blocked. Unsupported input yields
 //! claim-blocking diagnostics and withheld explanations rather than fabricated values.
 
-use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
+use super::character_input::{
+    AbilityScores, ActiveState, CharacterClassLevel, CharacterInput, SkillAllocation,
+};
 use super::rules_tables::crb::class_tables::{ClassId, class_tables};
 
 /// Result of the GE-06 pilot deterministic compute surface, accumulating the
@@ -6448,15 +6450,40 @@ fn compute_fighter_chassis(
     (base_attack_bonus, base_saves)
 }
 
-/// SD-21 Epic 6 (E6.25): dispatch the base-attack-bonus / base-save chassis pillar to
-/// the supported single class, or return `None` when the input is a length-2+
-/// multiclass mix (deferred to Epic 7's `compute_multiclass_base_chassis`) or a
-/// single class this dispatch does not yet recognize. Each recognized class's own
-/// `compute_<class>_chassis` function still independently checks its own level range
-/// and pushes `class_chassis.unsupported` itself when out of range, so this dispatch
-/// only needs to route by `class_id`.
+/// SD-21 Epic 6 (E6.25) / Epic 7 (E7.28): dispatch the base-attack-bonus /
+/// base-save chassis pillar to the supported single class, to
+/// `compute_multiclass_base_chassis` for a supported length-2+ multiclass mix, or
+/// return `None` when the input is a single class this dispatch does not yet
+/// recognize, or a multiclass mix containing an unrecognized class. Each
+/// recognized class's own `compute_<class>_chassis` function still independently
+/// checks its own level range and pushes `class_chassis.unsupported` itself when
+/// out of range, so this dispatch only needs to route by `class_id` / mix shape.
 fn has_supported_class_chassis(input: &CharacterInput) -> bool {
-    supported_fighter_level(input).is_some() || supported_wizard_level(input).is_some()
+    supported_fighter_level(input).is_some()
+        || supported_wizard_level(input).is_some()
+        || is_supported_multiclass_mix(input)
+}
+
+/// Whether `class_level` is one Epic 6 grounds a `compute_<class>_chassis` for
+/// (Fighter or Wizard), at a level within that class's own supported ceiling.
+/// The only two classes a multiclass mix can combine until a future epic grounds
+/// more per-class chassis functions.
+fn multiclass_class_level_supported(class_level: &CharacterClassLevel) -> bool {
+    (class_level.class_id == FIGHTER_CLASS_ID
+        && (1..=MAX_SUPPORTED_FIGHTER_LEVEL).contains(&class_level.level))
+        || (class_level.class_id == WIZARD_CLASS_ID
+            && (1..=MAX_SUPPORTED_WIZARD_LEVEL).contains(&class_level.level))
+}
+
+/// Whether `input` is a length-2+ `class_levels` mix every entry of which is
+/// individually a supported Fighter-or-Wizard class/level (SD-21 E7.28).
+fn is_supported_multiclass_mix(input: &CharacterInput) -> bool {
+    input.chosen.class_levels.len() >= 2
+        && input
+            .chosen
+            .class_levels
+            .iter()
+            .all(multiclass_class_level_supported)
 }
 
 fn compute_class_chassis(
@@ -6464,6 +6491,9 @@ fn compute_class_chassis(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> Option<(i16, BaseSaves)> {
+    if input.chosen.class_levels.len() >= 2 {
+        return compute_multiclass_base_chassis(input, explanations, diagnostics);
+    }
     let [class_level] = input.chosen.class_levels.as_slice() else {
         return None;
     };
@@ -6474,6 +6504,105 @@ fn compute_class_chassis(
     } else {
         None
     }
+}
+
+/// Compute the base-attack-bonus / base-save chassis pillar for a length-2+
+/// multiclass `class_levels` mix (SD-21 E7.28), or return `None` when any class
+/// in the mix is not one Epic 6 grounds a `compute_<class>_chassis` for.
+///
+/// Each class level is run through its own `compute_<class>_chassis` in
+/// isolation — a synthetic single-class `CharacterInput` clone carrying only
+/// that one `CharacterClassLevel` — so Fighter's and Wizard's existing,
+/// independently-verified chassis functions run completely unmodified. The
+/// per-class explanations/diagnostics from each isolated sub-computation are
+/// deliberately discarded (not merged into the outer `explanations` /
+/// `diagnostics`): merging them verbatim would push the same generic
+/// `class_chassis.base_attack_bonus` / `class_chassis.base_save.*` ids twice —
+/// once per class — silently clobbering one class's explanation record with
+/// the other's under a `Vec` lookup-by-id. Instead, this function pushes its
+/// own single combined explanation per field, naming both classes in the
+/// detail text.
+///
+/// Base attack bonus is a plain sum of the per-class results. Base saves use
+/// the same per-class-round-then-sum shape for now; E7.29 replaces the save
+/// combination with PF1's fractional-progression stacking rule (summing each
+/// class's un-rounded fractional save contribution before rounding down once),
+/// which is not a naive sum and diverges from this shape at some level pairs.
+fn compute_multiclass_base_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    // Every class in a supported multiclass mix (per `is_supported_multiclass_mix`)
+    // resolves its own isolated `compute_class_chassis` to `Some`, so no
+    // `class_chassis.unsupported`-style diagnostic is ever pushed here; the
+    // parameter is kept only for signature symmetry with `compute_class_chassis`.
+    _diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> Option<(i16, BaseSaves)> {
+    if !is_supported_multiclass_mix(input) {
+        return None;
+    }
+
+    let mut total_bab: i16 = 0;
+    let mut total_saves = BaseSaves::default();
+    let mut class_summaries: Vec<String> = Vec::new();
+
+    for class_level in &input.chosen.class_levels {
+        let mut isolated = input.clone();
+        isolated.chosen.class_levels = vec![class_level.clone()];
+
+        let mut isolated_explanations = Vec::new();
+        let mut isolated_diagnostics = Vec::new();
+        let (bab, saves) =
+            compute_class_chassis(&isolated, &mut isolated_explanations, &mut isolated_diagnostics)?;
+
+        total_bab += bab;
+        total_saves.fortitude += saves.fortitude;
+        total_saves.reflex += saves.reflex;
+        total_saves.will += saves.will;
+        class_summaries.push(format!(
+            "{} {}: base attack bonus {bab}, base saves fort {} / ref {} / will {}",
+            class_level.class_id, class_level.level, saves.fortitude, saves.reflex, saves.will
+        ));
+    }
+
+    let class_summary = class_summaries.join("; ");
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_attack_bonus".to_owned(),
+        value: total_bab,
+        detail: format!(
+            "Multiclass base attack bonus {total_bab}: the sum of each class's own \
+             independently-computed base attack bonus ({class_summary})"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.fortitude".to_owned(),
+        value: total_saves.fortitude,
+        detail: format!(
+            "Multiclass base Fortitude save {}: combined from each class's own base save \
+             ({class_summary})",
+            total_saves.fortitude
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.reflex".to_owned(),
+        value: total_saves.reflex,
+        detail: format!(
+            "Multiclass base Reflex save {}: combined from each class's own base save \
+             ({class_summary})",
+            total_saves.reflex
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.will".to_owned(),
+        value: total_saves.will,
+        detail: format!(
+            "Multiclass base Will save {}: combined from each class's own base save \
+             ({class_summary})",
+            total_saves.will
+        ),
+    });
+
+    Some((total_bab, total_saves))
 }
 
 /// Compute the Wizard base-attack-bonus / base-save chassis pillar (SD-21 E6.26).
