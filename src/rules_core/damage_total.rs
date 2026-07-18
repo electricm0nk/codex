@@ -104,6 +104,7 @@
 //! critical-multiplier) are now landed.
 
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
+use crate::rules_core::character_input::{ActiveState, CharacterInput};
 use crate::rules_core::equipment_effects::EquipmentEffects;
 use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
@@ -621,6 +622,101 @@ fn constant_damage_bonus(bonus: &FeatEffectBonus) -> Option<i16> {
         return None;
     }
     qualifiers[2].parse::<i16>().ok()
+}
+
+/// One equipped weapon's full damage breakdown — the wiring project's
+/// Cycle 5a aggregator (`damage:aggregate_weapons`; see
+/// `~/.claude/plans/adaptive-squishing-mccarthy.md`). Composes all six of
+/// this module's narrow `resolve_*` work-units for a single weapon into
+/// one structured record, plus the character's feat effects (which apply
+/// per-character, not per-weapon).
+///
+/// **Known, bounded limitation — hand slot.** `resolve_str_damage_modifier`
+/// takes a `WeaponHandSlot` (`Primary` vs. `OffHand`, which changes the
+/// STR-modifier fraction applied). `resolve_weapon_damage_breakdown`
+/// always resolves with `WeaponHandSlot::Primary`, because
+/// `EquipmentSelection` (the character-input record this aggregator loops
+/// over) has no hand-slot field today — there is no chosen-input signal
+/// that says "this weapon is in the off hand." A loadout with a genuine
+/// two-weapon-fighting off-hand weapon will get an inflated STR modifier
+/// from this aggregator until a hand-slot field is added to
+/// `EquipmentSelection` (a future, separate cycle's scope — not
+/// fabricated here).
+#[derive(Debug, Clone, PartialEq)]
+pub struct WeaponDamageBreakdown {
+    pub weapon_item_id: String,
+    pub base_dice: Option<DamageRollBaseDice>,
+    pub str_modifier: Option<DamageRollStrModifier>,
+    pub weapon_enhancement: Option<DamageRollWeaponEnhancement>,
+    pub critical_threat_range: Option<DamageRollCriticalThreatRange>,
+    pub critical_multiplier: Option<DamageRollCriticalMultiplier>,
+    pub feat_effects: Vec<DamageRollFeatEffect>,
+}
+
+/// The wiring project's Cycle 5a aggregator: loops `character`'s equipped
+/// items, identifies which of them are weapons, and assembles a full
+/// per-weapon `WeaponDamageBreakdown` for each.
+///
+/// **Identification mechanism:** an equipped item is a weapon when
+/// `resolve_base_damage_dice` returns `Some` for it — a `None` result IS
+/// the "not a weapon" signal (e.g. armor carries no `DAMAGE:` token), the
+/// same honest-absence contract every `resolve_*` function in this module
+/// already documents. Non-weapon equipped items are silently skipped —
+/// they never appear in the output vec at all, not represented as a
+/// weapon with `None` fields.
+///
+/// Only items whose `active_state` is `ActiveState::EquippedActive` are
+/// considered; a selected-but-inactive or absent item is not part of the
+/// current loadout's damage picture.
+///
+/// `feat_effects` is gathered **once per character**, not once per
+/// weapon: `resolve_feat_damage_effect` takes no weapon parameter because
+/// a feat like Weapon Specialization applies universally to whichever
+/// weapon it names (this bounded slice does not model per-weapon feat
+/// targeting), so the same resolved `feat_effects` vec is attached to
+/// every `WeaponDamageBreakdown` in the output.
+pub fn resolve_weapon_damage_breakdown(
+    character: &CharacterInput,
+    corpus: &SourcePackageContent,
+    equipment_effects: &EquipmentEffects,
+    str_modifier: i16,
+) -> Vec<WeaponDamageBreakdown> {
+    let feat_effects: Vec<DamageRollFeatEffect> = character
+        .chosen
+        .selected_feats
+        .iter()
+        .filter_map(|feat_key| resolve_feat_damage_effect(feat_key))
+        .collect();
+
+    character
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+        .filter_map(|selection| {
+            let weapon_item_id = selection.item_id.as_str();
+            let base_dice = resolve_base_damage_dice(weapon_item_id, corpus)?;
+
+            Some(WeaponDamageBreakdown {
+                weapon_item_id: weapon_item_id.to_string(),
+                base_dice: Some(base_dice),
+                str_modifier: resolve_str_damage_modifier(
+                    weapon_item_id,
+                    corpus,
+                    str_modifier,
+                    WeaponHandSlot::Primary,
+                ),
+                weapon_enhancement: resolve_weapon_enhancement_modifier(
+                    weapon_item_id,
+                    corpus,
+                    equipment_effects,
+                ),
+                critical_threat_range: resolve_critical_threat_range(weapon_item_id, corpus),
+                critical_multiplier: resolve_critical_multiplier(weapon_item_id, corpus),
+                feat_effects: feat_effects.clone(),
+            })
+        })
+        .collect()
 }
 
 #[cfg(test)]
