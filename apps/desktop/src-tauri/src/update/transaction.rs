@@ -649,43 +649,56 @@ fn sha256_of_file(path: &Path) -> std::io::Result<String> {
     Ok(hex_lower(&hasher.finalize()))
 }
 
+/// Real local install-state probe result returned by `is_install_eligible`.
+///
+/// Distinct from `EligibilityPolicy` (which describes a *manifest's
+/// declared* policy, e.g. `ManifestIdentity.eligibility_policy`) — this
+/// describes what is actually installed locally, in exactly the raw shape
+/// `decideEligibility` (`eligibility.ts`, TS) needs in order to compare
+/// against a separately-fetched manifest. This module deliberately does not
+/// render an eligible/ineligible verdict itself: `decideEligibility` is the
+/// single source of eligibility-decision truth (rows 5-9 combined), so this
+/// probe reports facts, not a policy judgment, to avoid two independent
+/// (and driftable) copies of that decision table.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct InstallEligibilityProbe {
+    /// `None` when there is no `installed-state.json` on disk yet (first
+    /// run, or a run that never completed `verify_relaunch_artifact`) — the
+    /// caller must not fabricate a version/hash to compare against a
+    /// manifest in that case.
+    pub installed: Option<InstalledState>,
+    /// Result of the real writability probe on `installed.managed_executable_path`.
+    /// Meaningless (and left `false`) when `installed` is `None`.
+    pub is_managed_path_writable: bool,
+}
+
 /// Tauri command shim — `is_install_eligible`.
 ///
-/// E3.13: this is now a real local-state probe (F3a's PR #61 registered the
-/// command; the body was deferred until this slice). It reads
-/// `installed-state.json` under the resolved config root and derives a
-/// genuine `EligibilityPolicy` from install-kind and managed-path
-/// writability — mirroring `eligibility.ts`'s `decideEligibility` rows 5-7.
-///
-/// This is deliberately a *local* probe only: it takes no manifest argument,
-/// so it cannot answer "is version X eligible" (that comparison is
-/// `decideEligibility`'s job on the TS side once it has both this probe's
-/// output and a fetched manifest). It answers the narrower question this
-/// slice can honestly answer without a network round-trip: is the install
-/// itself even the kind of install that self-update can ever apply to.
+/// E3.13/E3.14: this is now a real local-state probe (F3a's PR #61
+/// registered the command; the body was deferred until these slices). It
+/// reads `installed-state.json` under the resolved config root and reports
+/// the real install-kind/version/hash/writability facts `decideEligibility`
+/// needs — it does not itself decide eligible/ineligible/unknown.
 #[tauri::command]
-pub fn is_install_eligible() -> Result<EligibilityPolicy, String> {
+pub fn is_install_eligible() -> Result<InstallEligibilityProbe, String> {
     is_install_eligible_impl(&resolve_config_root())
 }
 
 /// Real body behind the `is_install_eligible` shim, injectable with a config
 /// root so tests never touch the real `$HOME/.config` tree.
-fn is_install_eligible_impl(config_dir: &Path) -> Result<EligibilityPolicy, String> {
+fn is_install_eligible_impl(config_dir: &Path) -> Result<InstallEligibilityProbe, String> {
     let installed_state_path = config_update_dir(config_dir).join(INSTALLED_STATE_FILENAME);
     let bytes = match fs::read(&installed_state_path) {
         Ok(b) => b,
         Err(_) => {
             // No installed-state record yet — either this is the first run
             // ever, or `verify_relaunch_artifact` has never promoted one.
-            // Honest ineligible verdict, not an error: the probe ran fine,
-            // it just found nothing to certify eligible.
-            return Ok(EligibilityPolicy {
-                update_eligible: false,
-                ineligible_reason: Some(
-                    "no installed-state record yet (first run, or verify_relaunch_artifact \
-                     has never promoted one)"
-                        .to_string(),
-                ),
+            // Honest "nothing to report" result, not an error: the probe ran
+            // fine, it just found no local record to report facts about.
+            return Ok(InstallEligibilityProbe {
+                installed: None,
+                is_managed_path_writable: false,
             });
         }
     };
@@ -696,38 +709,10 @@ fn is_install_eligible_impl(config_dir: &Path) -> Result<EligibilityPolicy, Stri
         )
     })?;
 
-    match installed.install_kind {
-        InstallKind::DevLocal => {
-            return Ok(EligibilityPolicy {
-                update_eligible: false,
-                ineligible_reason: Some("dev-local build is not update-eligible".to_string()),
-            });
-        }
-        InstallKind::Deb => {
-            return Ok(EligibilityPolicy {
-                update_eligible: false,
-                ineligible_reason: Some(
-                    "deb install is not update-eligible via the AppImage self-update path"
-                        .to_string(),
-                ),
-            });
-        }
-        InstallKind::AppImage => {}
-    }
-
-    if !managed_path_is_writable(&installed.managed_executable_path) {
-        return Ok(EligibilityPolicy {
-            update_eligible: false,
-            ineligible_reason: Some(format!(
-                "managed executable path {} is not writable",
-                installed.managed_executable_path.display()
-            )),
-        });
-    }
-
-    Ok(EligibilityPolicy {
-        update_eligible: true,
-        ineligible_reason: None,
+    let is_managed_path_writable = managed_path_is_writable(&installed.managed_executable_path);
+    Ok(InstallEligibilityProbe {
+        installed: Some(installed),
+        is_managed_path_writable,
     })
 }
 
@@ -1737,29 +1722,23 @@ mod verify_relaunch_artifact_tests {
     /// E3.13 — `is_install_eligible`'s real probe body: with no
     /// `installed-state.json` on disk yet (first run, or a run that never
     /// completed `verify_relaunch_artifact`), the probe must degrade to an
-    /// honest "no record yet" ineligible verdict rather than erroring or
-    /// fabricating an eligible verdict.
+    /// honest "nothing to report" result (`installed: None`) rather than
+    /// erroring or fabricating a record.
     #[test]
-    fn is_install_eligible_probe_reports_honest_no_record_when_installed_state_missing() {
+    fn is_install_eligible_probe_reports_none_when_installed_state_missing() {
         let dir = tempdir("probe-no-record");
-        let policy = is_install_eligible_impl(&dir).expect("probe body is real, not an error");
-        assert!(!policy.update_eligible, "no record yet must never read as eligible");
-        assert!(
-            policy
-                .ineligible_reason
-                .as_deref()
-                .is_some_and(|r| r.contains("no installed-state")),
-            "reason must honestly name the missing record: {:?}",
-            policy.ineligible_reason
-        );
+        let probe = is_install_eligible_impl(&dir).expect("probe body is real, not an error");
+        assert!(probe.installed.is_none(), "no record yet must report installed: None");
+        assert!(!probe.is_managed_path_writable, "writability is meaningless with no installed record");
     }
 
-    /// A real `installed-state.json` recording an `AppImage` install on a
-    /// writable managed path is genuinely update-eligible from the local
-    /// probe's point of view (it does not compare against a manifest — that
-    /// remains `decideEligibility`'s job on the TS side).
+    /// E3.14 — a real `installed-state.json` round-trips through the probe
+    /// verbatim, and the writability probe genuinely reflects the real
+    /// filesystem state next to the managed path (the probe itself renders
+    /// no eligible/ineligible verdict — that is `decideEligibility`'s job on
+    /// the TS side, fed by these raw facts).
     #[test]
-    fn is_install_eligible_probe_reports_appimage_on_writable_path_as_eligible() {
+    fn is_install_eligible_probe_reports_real_appimage_record_and_writability() {
         let dir = tempdir("probe-appimage-writable");
         let update_dir = config_update_dir(&dir);
         fs::create_dir_all(&update_dir).expect("mkdir update dir");
@@ -1781,15 +1760,17 @@ mod verify_relaunch_artifact_tests {
         write_atomic_json(&update_dir.join(INSTALLED_STATE_FILENAME), &installed)
             .expect("write installed-state.json");
 
-        let policy = is_install_eligible_impl(&dir).expect("probe body is real, not an error");
-        assert!(policy.update_eligible, "appimage on writable path must read eligible");
-        assert_eq!(policy.ineligible_reason, None);
+        let probe = is_install_eligible_impl(&dir).expect("probe body is real, not an error");
+        assert_eq!(probe.installed, Some(installed), "installed-state.json round-trips verbatim");
+        assert!(probe.is_managed_path_writable, "the managed path's parent dir is genuinely writable in a tempdir");
     }
 
-    /// A `dev-local` install must never read as update-eligible — mirrors
-    /// `eligibility.ts`'s `decideEligibility` row for `install_kind === 'dev'`.
+    /// A `dev-local` install still round-trips through the probe as real
+    /// data — the probe reports facts, it does not gate on install kind.
+    /// `decideEligibility`'s row for `install_kind === 'dev'` is what
+    /// renders this ineligible, on the TS side.
     #[test]
-    fn is_install_eligible_probe_reports_dev_local_as_ineligible() {
+    fn is_install_eligible_probe_reports_dev_local_install_kind_as_a_fact_not_a_verdict() {
         let dir = tempdir("probe-dev-local");
         let update_dir = config_update_dir(&dir);
         fs::create_dir_all(&update_dir).expect("mkdir update dir");
@@ -1811,12 +1792,11 @@ mod verify_relaunch_artifact_tests {
         write_atomic_json(&update_dir.join(INSTALLED_STATE_FILENAME), &installed)
             .expect("write installed-state.json");
 
-        let policy = is_install_eligible_impl(&dir).expect("probe body is real, not an error");
-        assert!(!policy.update_eligible, "dev-local install must never read eligible");
-        assert!(
-            policy.ineligible_reason.as_deref().is_some_and(|r| r.contains("dev-local")),
-            "reason must honestly name the dev-local install kind: {:?}",
-            policy.ineligible_reason
+        let probe = is_install_eligible_impl(&dir).expect("probe body is real, not an error");
+        assert_eq!(
+            probe.installed.map(|i| i.install_kind),
+            Some(InstallKind::DevLocal),
+            "install kind is reported honestly as a fact"
         );
     }
 

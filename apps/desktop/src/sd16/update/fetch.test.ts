@@ -416,6 +416,17 @@ async function sha256Hex(text: string): Promise<string> {
     .join('');
 }
 
+/** `ReleaseNotesFetchResult`'s own ok-expectation helper — its `failure` shape is distinct from `FetchFailure`, so it does not reuse `expectOk`. */
+function expectReleaseNotesOk(
+  result: Awaited<ReturnType<typeof fetchReleaseNotesBody>>,
+  label: string,
+): { body: string } {
+  if (!result.ok) {
+    throw new Error(`${label}: expected ok, got failure ${JSON.stringify(result.failure)}`);
+  }
+  return result.value;
+}
+
 async function verifiesReleaseNotesFetchSucceedsAndHashMatches() {
   const hash = await sha256Hex(RELEASE_NOTES_BODY);
   const result = await fetchReleaseNotesBody(RELEASE_NOTES_URL, hash, {
@@ -423,7 +434,7 @@ async function verifiesReleaseNotesFetchSucceedsAndHashMatches() {
       { url: RELEASE_NOTES_URL, responded: RELEASE_NOTES_BODY, status: 200 },
     ]),
   });
-  const value = expectOk(result, 'release notes fetch should succeed on hash match');
+  const value = expectReleaseNotesOk(result, 'release notes fetch should succeed on hash match');
   assertEqual(value.body, RELEASE_NOTES_BODY, 'release notes body preserved verbatim');
 }
 
