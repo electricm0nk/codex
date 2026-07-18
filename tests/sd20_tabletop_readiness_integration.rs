@@ -27,40 +27,65 @@
 //! exactly the kind of integration bug Epic 8 exists to catch"), not a
 //! failure of this cycle:
 //!
-//! **Finding 1 — Epics 2/3/4/5/6/7's engines are not wired into
-//! `PilotReceipt` / `printed_sheet_cell_map` at all.** `contract.rs`'s
-//! `PilotReceipt` (Epic 1) composes only `PilotBaseChassisComputation`
-//! (BAB, saves, the deterministic baseline AC/melee-attack-bonus, three
-//! hardcoded skill modifiers, ability modifiers) and `CorpusDerivedSection`
-//! (spell-school coverage identity, equipped-item identity — both from
-//! SD-19's original bounded seam, `pilot_compute_corpus.rs`). None of
-//! Epic 2's `spellbook::compute_spellbook_coverage`, Epic 3's
+//! **Finding 1 (CLOSED as of this cycle, `integration:epic_wiring_closure`
+//! / Cycle 7 of the wiring project, `adaptive-squishing-mccarthy.md`) —
+//! Epics 2/3/4/5/6/7's engines were not wired into `PilotReceipt` /
+//! `printed_sheet_cell_map` at all.** Originally (Epic 8's first closure
+//! pass): `contract.rs`'s `PilotReceipt` (Epic 1) composed only
+//! `PilotBaseChassisComputation` (BAB, saves, the deterministic baseline
+//! AC/melee-attack-bonus, three hardcoded skill modifiers, ability
+//! modifiers) and `CorpusDerivedSection` (spell-school coverage identity,
+//! equipped-item identity — both from SD-19's original bounded seam,
+//! `pilot_compute_corpus.rs`). None of Epic 2's
+//! `spellbook::compute_spellbook_coverage`, Epic 3's
 //! `feat_prereqs::{evaluate_feat_prerequisites, compute_feat_effects}`,
 //! Epic 4's `skill_allocation::allocate_skill_ranks`, Epic 5's
 //! `equipment_effects::compute_equipment_effects`, Epic 6's
 //! `damage_total::resolve_*` functions, or Epic 7's
-//! `level_up::compute_level_up_grants` is called from `contract.rs`,
+//! `level_up::compute_level_up_grants` was called from `contract.rs`,
 //! `pilot_compute_corpus.rs`, or anywhere else in the receipt-computation
-//! path (confirmed by grep across `src/` — every call site for each of
-//! these functions is either that function's own module or its own
-//! dedicated `tests/sd20_<epic>_*.rs` file). `technical-design.md` §1.3
-//! required each subsystem engine to "first extend the boundary contract
-//! and add the parity test fixture" before contributing `PilotReceipt`
-//! fields; that extension step was never taken by any of Epics 2-7. So
-//! `printed_sheet_cell_map` today literally has no cells for skill
-//! totals, equipment effects, damage rolls, feat effects, spell
-//! coverage, or Level Up grants — there is nothing for an integration
-//! test to assert against on that surface for those six epics'
-//! real output.
+//! path. `printed_sheet_cell_map` had no cells for skill totals, equipment
+//! effects, damage rolls, feat effects, spell coverage, or Level Up
+//! grants — there was nothing for an integration test to assert against
+//! on that surface for those six epics' real output.
 //!
-//! This file's `epic_probe_*` tests below call each of those six engines
-//! **directly** against data mirroring this exact fixture character, to
-//! prove the individual engines are real and correct for a level-1
-//! Fighter (satisfying the letter of the task's "every value must be
-//! REAL — computed by actually running the engine" for each domain) —
-//! while proving, by construction, that none of that output is reachable
-//! through `PilotReceipt` today. That gap is documented here precisely,
-//! not fabricated around.
+//! **This has since been fully wired**, across the 8-cycle
+//! `adaptive-squishing-mccarthy.md` wiring project (all landed on
+//! `tranche/4` before this cycle):
+//!
+//! | Cycle | What it wired | Commit SHA |
+//! |---|---|---|
+//! | 0 `contract:receipt_signature_threading` | Widened `to_pilot_receipt` to take `input`/`corpus` | `52ed2ea` |
+//! | 1 `contract:skill_wiring` | `PilotReceipt.skills: SkillTotals` (Epic 4) | `4859b77` |
+//! | 2 `contract:spellbook_wiring` | `PilotReceipt.spellbook: SpellbookCoverage` (Epic 2) | `2dbe0c8` |
+//! | 3 `contract:feat_wiring` | `PilotReceipt.feats: Vec<ResolvedFeat>` (Epic 3) | `0066599` |
+//! | 4 `contract:equipment_wiring` | `PilotReceipt.equipment_effects: EquipmentEffects` (Epic 5) | `2942875` |
+//! | 5a `damage:aggregate_weapons` | `resolve_weapon_damage_breakdown` aggregator (Epic 6, lands in `damage_total.rs`) | `89fba8c` |
+//! | 5b `contract:damage_wiring` | `PilotReceipt.weapon_damage: Vec<WeaponDamageBreakdown>` (Epic 6) | `8510151` |
+//! | 6 `contract:level_up_preview` | standalone `compute_level_up_preview` pass-through (Epic 7) | `62f7783` |
+//!
+//! This cycle (7, `integration:epic_wiring_closure`) is the closing proof:
+//! `tabletop_readiness_fighter_level_1_chassis_composes_via_printed_sheet_cell_map`
+//! below now asserts, for each of the six wired pieces, that
+//! `receipt.<field>` (produced by the real `to_pilot_receipt` call) is
+//! byte-identical (`PartialEq`, not just independently-both-exist) to
+//! that epic's own function called directly against the same fixture
+//! `CharacterInput`/corpus — proving the wired path and the direct path
+//! genuinely **agree**, not merely that both happen to exist. See that
+//! test's body for the six parity assertions and their cross-references
+//! back to each `epic_probe_*` test below (which continues to serve as
+//! the "engine is real and correct" proof; the wired-path parity
+//! assertions are the *new* "engine is reachable and agrees" proof this
+//! cycle adds).
+//!
+//! This file's `epic_probe_*` tests below still call each of those six
+//! engines **directly** against data mirroring this exact fixture
+//! character, to prove the individual engines are real and correct for a
+//! level-1 Fighter (satisfying the letter of the original task's "every
+//! value must be REAL — computed by actually running the engine" for each
+//! domain). They are no longer proving an unreachable-output gap (that gap
+//! is closed) — they now double as the ground-truth oracle the primary
+//! test's parity assertions cross-check against.
 //!
 //! **Finding 2 (fixed) — `printed_sheet_cell_map`'s `Blocked` gate
 //! originally checked only one of at least three claim-blocking
@@ -117,13 +142,48 @@
 //! equipped, no shield, Power Attack selected-but-inactive, Dodge +
 //! Weapon Focus (Longsword) feats with their canonical choice-slot
 //! selections, and *exactly* Climb/Intimidate/Swim at rank 1), so every
-//! one of the 15 `printed_sheet_cell_map` cells is a real, non-Blocked,
-//! non-fabricated number for this fixture — proving the underlying
-//! chassis computation is genuinely correct for a fully-supported
-//! Fighter, while Finding 1 above documents what remains unresolved for
-//! SD-20 as a whole (Finding 2 is now closed).
+//! one of the 15 chassis-derived `printed_sheet_cell_map` cells is a
+//! real, non-Blocked, non-fabricated number for this fixture — proving
+//! the underlying chassis computation is genuinely correct for a
+//! fully-supported Fighter (Finding 2 is closed; Finding 1 above is also
+//! now closed, as of this cycle).
 //!
-//! # The "8 wire-fixture parity fixtures" gate
+//! # Feat-id fixture quirk (resolved, kept intentionally)
+//!
+//! This fixture's `input.selected_feats` mixes 3 namespaced ids
+//! (`feat:dodge`, `feat:weapon_focus`, `feat:power_attack` — none of
+//! which match any entry in `rules_tables::crb::feats::feat_tables()`)
+//! with 3 plain catalog names (`Dodge`, `Weapon Focus`, `Power Attack` —
+//! all real matches). Cycle 3 of the wiring project
+//! (`contract:feat_wiring`) found this quirk and decided deliberately, by
+//! reading `feats.rs`'s own doc comment first: "Almost no `cr_feats.lst`
+//! record in this catalog's 4 categories carries an explicit `KEY:`
+//! token ... so `key` equals `name` for every entry here today" — i.e.
+//! the CRB feat catalog has no namespaced-id convention at all, ever; it
+//! is plain display names only (`Dodge`, not `feat:dodge`). So the
+//! namespaced ids are not an alternate-but-valid catalog format — they
+//! cannot ever match, by construction. This cycle (7) re-confirms that
+//! same reading and ratifies Cycle 3's decision: **keep the mix**, do not
+//! clean the fixture up to plain names only. Two reasons this file
+//! commits to (b), not (a): (1) `tests/sd20_contract_feat_wiring.rs`
+//! already landed a dedicated regression test
+//! (`unrecognized_feat_id_is_honestly_skipped_not_fabricated`, see that
+//! file's module doc comment) that explicitly cites this exact fixture's
+//! `selected_feats` shape as its own precedent for the honest-skip
+//! behavior — silently "cleaning up" the fixture now would orphan that
+//! cross-reference and contradict an already-landed, already-passing
+//! test's own stated rationale; (2) the mix is free,
+//! real coverage: it proves `to_pilot_receipt`'s feat-resolution loop
+//! (`entry.key == feat_id || entry.name == feat_id`) honestly skips 3
+//! unmatched ids in the *exact same* character that also has 3 correctly
+//! resolved feats, in one fixture, with no risk of dishonesty (the
+//! skipped ids are not fabricated into anything — `receipt.feats.len()`
+//! is asserted to be exactly 3 below, not 6). The alternative (removing
+//! the 3 namespaced ids) would make the fixture marginally "cleaner" but
+//! would delete this coverage and break the cross-reference above for no
+//! net gain.
+//!
+//! # The "8 wire-fixture parity fixtures" gate (now met)
 //!
 //! `SD-20-rules-engine-completeness-loop-instruction.md`'s closure
 //! definition and
@@ -131,22 +191,15 @@
 //! gate 3 both require "at least 8 wire-fixture parity JSON fixtures ...
 //! one for boundary contract, one each for spellbook / feat prereqs /
 //! skill ranks / equipment effects / damage total / Level Up grants /
-//! integration closure." Before this cycle, exactly one such fixture
-//! existed on disk (`tests/fixtures/wire/sd20/boundary_contract_parity.json`)
-//! — confirmed by listing `tests/fixtures/wire/sd20/`. Every Epic 2-7
-//! cycle's own `tests/sd20_<epic>_*.rs` test instead builds its
-//! `CharacterInput` / corpus data as inline Rust literals (confirmed by
-//! grep: no `tests/sd20_spellbook_*.rs`, `tests/sd20_feat_*.rs`,
-//! `tests/sd20_skill_allocation_*.rs`, `tests/sd20_equipment_*.rs`,
-//! `tests/sd20_damage_*.rs`, or `tests/sd20_levelup_*.rs` file reads a
-//! JSON fixture at all). This cycle lands the second on-disk fixture
-//! (`human_fighter_level_1_tabletop.json`), bringing the total to 2 of
-//! the required 8. This is a real, unresolved gap — see this cycle's
-//! final report and the progress-doc update for the explicit statement
-//! that gate 3 is NOT met and SD-20 is therefore NOT fully closed by
-//! this cycle alone. Epic 8's own file-touch partition (this file plus
-//! the one fixture) does not authorize landing the other six epics'
-//! fixtures; that is out of this slice's scope.
+//! integration closure." At Epic 8's original closure only one such
+//! fixture existed on disk. As of this cycle, `tests/fixtures/wire/sd20/`
+//! holds all 8: `boundary_contract_parity.json`,
+//! `human_fighter_level_1_tabletop.json` (this file's own fixture),
+//! `spellbook_parity.json`, `feat_prereqs_parity.json`,
+//! `skill_allocation_parity.json`, `equipment_effects_parity.json`,
+//! `damage_total_parity.json`, `level_up_parity.json` — landed
+//! incrementally by the epic cycles between Epic 8's original closure and
+//! this wiring project's own cycles. Gate 3 is met.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
@@ -159,18 +212,19 @@ use codex::rules_core::character_input::{
     EquipmentSelection, SelectedChoice, SkillAllocation,
 };
 use codex::rules_core::contract::{
-    classify_character_input, printed_sheet_cell_map, to_pilot_receipt, PrintedSheetCellValue,
+    classify_character_input, compute_level_up_preview, printed_sheet_cell_map, to_pilot_receipt,
+    PrintedSheetCellValue, ResolvedFeat,
 };
 use codex::rules_core::damage_total::{
     resolve_base_damage_dice, resolve_critical_multiplier, resolve_critical_threat_range,
-    resolve_feat_damage_effect, resolve_str_damage_modifier, resolve_weapon_enhancement_modifier,
-    WeaponHandSlot,
+    resolve_feat_damage_effect, resolve_str_damage_modifier, resolve_weapon_damage_breakdown,
+    resolve_weapon_enhancement_modifier, WeaponHandSlot,
 };
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::feat_prereqs::{compute_feat_effects, evaluate_feat_prerequisites, FeatKey};
 use codex::rules_core::level_up::compute_level_up_grants;
 use codex::rules_core::pilot_compute_corpus::{compute_pilot_with_corpus, DerivedEquipmentStats};
-use codex::rules_core::rules_tables::crb::feats::FeatCategory;
+use codex::rules_core::rules_tables::crb::feats::{feat_tables, FeatCategory};
 use codex::rules_core::skill_allocation::allocate_skill_ranks;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 use codex::rules_core::spellbook::compute_spellbook_coverage;
@@ -809,6 +863,222 @@ fn tabletop_readiness_fighter_level_1_chassis_composes_via_printed_sheet_cell_ma
         "the receipt's claim_blocking diagnostics must exactly match the fixture's \
          expected_diagnostics (empty: this fixture's posture is fully supported)"
     );
+
+    // -------------------------------------------------------------
+    // Closing proof (Cycle 7, `integration:epic_wiring_closure`): for
+    // each of the 6 newly-wired PilotReceipt fields, the wired path
+    // (`receipt.<field>`, produced above by the real `to_pilot_receipt`
+    // call) must be byte-identical to that epic's own function called
+    // directly on this exact fixture's CharacterInput/corpus -- not just
+    // that both independently exist, but that they agree. This is what
+    // closes this file's own Finding 1 (see this file's module doc
+    // comment for the full cycle-SHA history).
+    // -------------------------------------------------------------
+
+    // (1) Skills (Epic 4) -- cross-references
+    // epic_probe_skill_allocation_covers_class_cross_class_and_untrained_breadth
+    // below, which proves allocate_skill_ranks itself is real and
+    // correct; this assertion proves the wired path reaches the exact
+    // same engine, not a reinterpretation of it.
+    let direct_skills = allocate_skill_ranks(&input);
+    assert_eq!(
+        receipt.skills, direct_skills,
+        "receipt.skills must be byte-identical to a direct allocate_skill_ranks(&input) call \
+         on this fixture's CharacterInput"
+    );
+    // Real, non-vacuous values (mirrors the sheet.skill.* cell assertions
+    // above, checked here directly against the SkillTotals field so the
+    // cell-map round trip and the raw field are both pinned).
+    assert_eq!(
+        direct_skills
+            .totals
+            .get("skill:climb")
+            .expect("climb must resolve")
+            .total_modifier,
+        7
+    );
+    assert_eq!(
+        direct_skills
+            .totals
+            .get("skill:intimidate")
+            .expect("intimidate must resolve")
+            .total_modifier,
+        3
+    );
+    assert_eq!(
+        direct_skills
+            .totals
+            .get("skill:swim")
+            .expect("swim must resolve")
+            .total_modifier,
+        7
+    );
+
+    // (2) Spellbook (Epic 2) -- cross-references
+    // epic_probe_spellbook_is_honestly_empty_for_a_non_caster_fighter
+    // below. A Fighter fixture legitimately has no spells; the "closure"
+    // story here is proving the wired path is honest about that
+    // emptiness, not manufacturing a caster scenario just to get
+    // non-empty spell data (see this file's brief: forcing a caster
+    // scenario into a Fighter fixture would be dishonest).
+    let direct_spellbook = compute_spellbook_coverage(&input, &corpus);
+    assert_eq!(
+        receipt.spellbook, direct_spellbook,
+        "receipt.spellbook must be byte-identical to a direct compute_spellbook_coverage(&input, \
+         &corpus) call on this fixture's CharacterInput/corpus"
+    );
+    assert_eq!(
+        receipt.spellbook,
+        codex::rules_core::spellbook::SpellbookCoverage::default(),
+        "this Fighter fixture has no spells_selected, so the wired spellbook field must be \
+         genuinely empty, not fabricated"
+    );
+    assert!(
+        !cells
+            .iter()
+            .any(|cell| cell.cell_id.starts_with("sheet.spellbook.")),
+        "a non-caster fixture must produce zero sheet.spellbook.* cells of any kind: {:?}",
+        cells
+            .iter()
+            .filter(|cell| cell.cell_id.starts_with("sheet.spellbook."))
+            .collect::<Vec<_>>()
+    );
+
+    // (3) Feats (Epic 3) -- cross-references
+    // epic_probe_feat_prereqs_resolve_real_effects_for_this_fighters_feats
+    // below. Replicates contract.rs::to_pilot_receipt's exact resolution
+    // algorithm (scan selected_feats, match entry.key == feat_id ||
+    // entry.name == feat_id against feat_tables(), build one ResolvedFeat
+    // per match) independently in this test, then asserts the wired
+    // receipt.feats equals it -- proving the wiring composes the engine's
+    // real output, not a reinterpretation. This fixture's selected_feats
+    // deliberately mixes 3 unmatched namespaced ids with 3 matching plain
+    // names (see this file's module doc comment, "Feat-id fixture quirk"
+    // section, for why that mix is kept intentionally) -- so this
+    // assertion also proves the honest-skip behavior end to end through
+    // the wired path, not just in isolation.
+    let expected_feats: Vec<ResolvedFeat> = input
+        .chosen
+        .selected_feats
+        .iter()
+        .filter_map(|feat_id| {
+            feat_tables()
+                .iter()
+                .find(|entry| entry.key == feat_id || entry.name == feat_id)
+        })
+        .map(|matched_entry| {
+            let key = FeatKey {
+                feat_id: matched_entry.key.to_string(),
+                category: matched_entry.category,
+            };
+            ResolvedFeat {
+                feat_id: matched_entry.key.to_string(),
+                prerequisites: evaluate_feat_prerequisites(&key),
+                effects: compute_feat_effects(&key),
+            }
+        })
+        .collect();
+    assert_eq!(
+        receipt.feats, expected_feats,
+        "receipt.feats must be byte-identical to independently replaying to_pilot_receipt's own \
+         documented feat-resolution algorithm against this fixture's selected_feats"
+    );
+    assert_eq!(
+        receipt.feats.len(),
+        3,
+        "exactly 3 of this fixture's 6 selected_feats entries match the catalog (Dodge, Weapon \
+         Focus, Power Attack); the 3 namespaced ids (feat:dodge, feat:weapon_focus, \
+         feat:power_attack) must be honestly skipped, not fabricated into 6 entries"
+    );
+    let resolved_feat_ids: Vec<&str> = receipt
+        .feats
+        .iter()
+        .map(|resolved| resolved.feat_id.as_str())
+        .collect();
+    assert_eq!(resolved_feat_ids, vec!["Dodge", "Weapon Focus", "Power Attack"]);
+
+    // (4) Equipment effects (Epic 5) -- cross-references
+    // epic_probe_equipment_effects_are_real_but_not_reflected_in_corpus_derived
+    // below (whose own name records the *old*, now-superseded gap: that
+    // probe's title is a fossil of Finding 1 before this cycle closed it
+    // -- Epic 5's output IS now reflected in receipt.equipment_effects,
+    // just still not in corpus_derived.equipped_items[].derived_stats,
+    // which remains the deliberately out-of-scope SD-19 stub per the
+    // plan file's fact 2).
+    let equipped_active: Vec<EquipmentSelection> = input
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+        .cloned()
+        .collect();
+    let direct_equipment_effects = compute_equipment_effects(&equipped_active, &corpus);
+    assert_eq!(
+        receipt.equipment_effects, direct_equipment_effects,
+        "receipt.equipment_effects must be byte-identical to a direct \
+         compute_equipment_effects(&equipped_active, &corpus) call over the same \
+         EquippedActive-filtered slice"
+    );
+    assert_eq!(receipt.equipment_effects.armor_class_delta, 4);
+    assert_eq!(receipt.equipment_effects.max_dex_cap, Some(4));
+
+    // (5) Weapon damage (Epic 6) -- cross-references
+    // epic_probe_damage_total_covers_base_dice_str_enhancement_crit_and_honest_feat_absence
+    // below. Reuses the exact same equipment_effects local just computed
+    // above (matching to_pilot_receipt's own internal reuse discipline --
+    // see contract.rs's PilotReceipt.weapon_damage doc comment) and the
+    // chassis's real STR modifier.
+    let direct_weapon_damage = resolve_weapon_damage_breakdown(
+        &input,
+        &corpus,
+        &direct_equipment_effects,
+        receipt.chassis.ability_modifiers.strength,
+    );
+    assert_eq!(
+        receipt.weapon_damage, direct_weapon_damage,
+        "receipt.weapon_damage must be byte-identical to a direct \
+         resolve_weapon_damage_breakdown(...) call over the same equipment_effects and STR \
+         modifier"
+    );
+    assert_eq!(
+        receipt.weapon_damage.len(),
+        1,
+        "exactly one weapon (the Longsword) should appear; the Chain Shirt and the Masterwork \
+         weapon-quality record carry no DAMAGE: token and must be excluded"
+    );
+    // weapon_item_id is the raw `item_id` string from
+    // `equipment_selections`, not the resolved corpus key -- this
+    // fixture's equipment_selections use the legacy "item:longsword"
+    // namespace (see this file's module doc comment on
+    // `corpus_derived.equipped_items`'s normalized-name fallback
+    // resolution), so that is what appears here verbatim.
+    assert_eq!(receipt.weapon_damage[0].weapon_item_id, "item:longsword");
+
+    // (6) Level Up preview (Epic 7, standalone, not part of PilotReceipt)
+    // -- cross-references epic_probe_level_up_grants_fighter_level_1_to_2
+    // below, which Cycle 6's own `tests/sd20_contract_level_up_preview.rs`
+    // already proved agrees with compute_level_up_preview for this exact
+    // transition. This is a final confirming assertion in the closing
+    // integration test, not new discovery work.
+    let preview = compute_level_up_preview(&input, 1, 2);
+    let direct_level_up = compute_level_up_grants(&input, 1, 2);
+    assert_eq!(
+        preview, direct_level_up,
+        "compute_level_up_preview must be byte-identical to a direct \
+         compute_level_up_grants(&input, 1, 2) call for this fixture's character"
+    );
+    let bab_grant = preview
+        .automatic_features
+        .iter()
+        .find(|grant| grant.name.contains("base_attack_bonus"))
+        .expect("expected a base_attack_bonus grant for the level 1->2 transition");
+    assert_eq!(bab_grant.effects[0].value, 2, "fighter level 2 full BAB must be +2");
+    let bravery_grant = preview
+        .automatic_features
+        .iter()
+        .find(|grant| grant.name.contains("bravery"))
+        .expect("expected a bravery grant at level 2");
+    assert_eq!(bravery_grant.effects[0].value, 1);
 }
 
 // ---------------------------------------------------------------------
