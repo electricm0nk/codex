@@ -2,6 +2,7 @@ import { assertEqual, assert } from '../../testSupport/asserts';
 import {
   channelIndexUrl,
   fetchChannelIndex,
+  fetchReleaseNotesBody,
   fetchUpdateManifest,
   validateChannelIndexShape,
   validateManifestShape,
@@ -9,6 +10,7 @@ import {
   type FetchLike,
   type FetchResult,
   type ChannelIndexFile,
+  type ReleaseNotesFetchFailure,
 } from './fetch';
 
 // ---------- helpers ----------
@@ -402,6 +404,55 @@ async function verifiesManifestFetchesOnlyManifestUrl() {
   );
 }
 
+// ---------- release-notes-body fetch (E3.12) ----------
+
+const RELEASE_NOTES_URL = VALID_MANIFEST_WIRE.release_notes_url;
+const RELEASE_NOTES_BODY = '## v0.1.0\n\n- Fixed a bug.\n';
+
+async function sha256Hex(text: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+async function verifiesReleaseNotesFetchSucceedsAndHashMatches() {
+  const hash = await sha256Hex(RELEASE_NOTES_BODY);
+  const result = await fetchReleaseNotesBody(RELEASE_NOTES_URL, hash, {
+    fetchImpl: makeFetchImpl([
+      { url: RELEASE_NOTES_URL, responded: RELEASE_NOTES_BODY, status: 200 },
+    ]),
+  });
+  const value = expectOk(result, 'release notes fetch should succeed on hash match');
+  assertEqual(value.body, RELEASE_NOTES_BODY, 'release notes body preserved verbatim');
+}
+
+async function verifiesReleaseNotesFetchFailsOnHttpError() {
+  const result = await fetchReleaseNotesBody(RELEASE_NOTES_URL, 'deadbeef', {
+    fetchImpl: makeFetchImpl([
+      { url: RELEASE_NOTES_URL, responded: 'not found', status: 404 },
+    ]),
+  });
+  if (result.ok) {
+    throw new Error('expected release-notes fetch to fail on HTTP 404');
+  }
+  assertEqual(result.failure.kind, 'http-error', 'http-error surfaced honestly');
+  const failure = result.failure as Extract<ReleaseNotesFetchFailure, { kind: 'http-error' }>;
+  assertEqual(failure.status, 404, 'http-error carries the real status');
+}
+
+async function verifiesReleaseNotesFetchFailsOnHashMismatch() {
+  const result = await fetchReleaseNotesBody(RELEASE_NOTES_URL, 'deadbeef00'.repeat(7), {
+    fetchImpl: makeFetchImpl([
+      { url: RELEASE_NOTES_URL, responded: RELEASE_NOTES_BODY, status: 200 },
+    ]),
+  });
+  if (result.ok) {
+    throw new Error('expected release-notes fetch to fail on hash mismatch — never surface unverified content');
+  }
+  assertEqual(result.failure.kind, 'hash-mismatch', 'hash-mismatch surfaced honestly, not silently accepted');
+}
+
 async function main() {
   // pure-validator tests
   verifiesChannelIndexUrlShape();
@@ -427,6 +478,11 @@ async function main() {
   await verifiesManifestFetcherRejectsInvalidShape();
   await verifiesManifestFetcherRejectsEmptyUrl();
   await verifiesManifestFetchesOnlyManifestUrl();
+
+  // release-notes-body fetcher tests (E3.12)
+  await verifiesReleaseNotesFetchSucceedsAndHashMatches();
+  await verifiesReleaseNotesFetchFailsOnHttpError();
+  await verifiesReleaseNotesFetchFailsOnHashMismatch();
 }
 
 main().catch((error: unknown) => {

@@ -102,6 +102,13 @@ function emptyMountTimeState() {
   });
 }
 
+async function sha256Hex(text: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
 // ---------- runCheck: success path ----------
 
 async function verifiesRunCheckOnSuccessPopulatesLastCheckHonestly() {
@@ -148,6 +155,69 @@ async function verifiesRunCheckOnSuccessPopulatesLastCheckHonestly() {
     reason,
     'lastCheck.installDisabledReason must match what the controller itself computes',
   );
+}
+
+// ---------- runCheck: release-notes-body fetch (E3.12) ----------
+
+async function verifiesRunCheckFetchesAndVerifiesReleaseNotesOnSuccess() {
+  const body = '## v0.1.0\n\n- Real, verified release notes.\n';
+  const hash = await sha256Hex(body);
+  const notesUrl =
+    'https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/alpha/v0.1.0-abc12345/release-notes.md';
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      {
+        url: MANIFEST_URL,
+        status: 200,
+        responded: manifestText({ release_notes_url: notesUrl, release_notes_hash: hash }),
+      },
+      { url: notesUrl, status: 200, responded: body },
+    ]),
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  assertEqual(
+    deps.lastCheck.releaseNotesStatus,
+    'loaded',
+    'releaseNotesStatus reflects a real, hash-verified fetch',
+  );
+  assert(deps.releaseNotes !== null, 'deps.releaseNotes must be populated after a successful check');
+  assertEqual(deps.releaseNotes?.body, body, 'release notes body preserved verbatim');
+  assertEqual(deps.releaseNotes?.releaseVersion, '0.1.0', 'release notes tagged with the manifest version');
+  assertEqual(
+    deps.controller.releaseNotes()?.body,
+    body,
+    'controller.releaseNotes() must mirror deps.releaseNotes',
+  );
+}
+
+async function verifiesRunCheckLeavesReleaseNotesUnavailableOnHashMismatch() {
+  const notesUrl =
+    'https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/alpha/v0.1.0-abc12345/release-notes.md';
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      {
+        url: MANIFEST_URL,
+        status: 200,
+        responded: manifestText({ release_notes_url: notesUrl }), // uses SHA64 fixture hash
+      },
+      { url: notesUrl, status: 200, responded: 'body that does not match the pinned hash' },
+    ]),
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  assertEqual(
+    deps.lastCheck.releaseNotesStatus,
+    'unavailable',
+    'a hash-mismatched body must never be surfaced as loaded',
+  );
+  assertEqual(deps.releaseNotes, null, 'deps.releaseNotes stays null on hash mismatch');
 }
 
 // ---------- runCheck: index fetch network failure ----------
@@ -315,6 +385,8 @@ async function verifiesRestorePreviousVersionSurfacesFailureHonestly() {
 
 async function main() {
   await verifiesRunCheckOnSuccessPopulatesLastCheckHonestly();
+  await verifiesRunCheckFetchesAndVerifiesReleaseNotesOnSuccess();
+  await verifiesRunCheckLeavesReleaseNotesUnavailableOnHashMismatch();
   await verifiesRunCheckSurfacesRealIndexFetchFailure();
   await verifiesRunCheckSurfacesRealSchemaInvalidReason();
   await verifiesRunCheckSurfacesRealManifestFetchFailure();

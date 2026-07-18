@@ -19,6 +19,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from '../../boundary/runtime';
 import {
   fetchChannelIndex,
+  fetchReleaseNotesBody,
   fetchUpdateManifest,
   type FetchLike,
   type FetchResult,
@@ -233,10 +234,27 @@ export function createUpdateControllerDeps(
 
       if (manifestResult.ok) {
         deps.lastCheck.releaseVersion = manifestResult.value.version;
-        // This slice fetches and validates the manifest but does not fetch
-        // release-notes body content — that is a distinct, not-yet-built
-        // fetch path. Reporting anything but 'unavailable' would imply
-        // notes we never loaded.
+        // E3.12: the manifest names a release-notes body (`release_notes_url`
+        // + `release_notes_hash`) but does not carry the prose itself — fetch
+        // and hash-verify it now. A fetch/hash failure here must never
+        // fabricate notes; `releaseNotesStatus` stays 'unavailable' and
+        // `deps.releaseNotes` stays null, same as before this slice existed.
+        const notesResult = await fetchReleaseNotesBody(
+          manifestResult.value.release_notes_url,
+          manifestResult.value.release_notes_hash,
+          { fetchImpl: options.fetchImpl },
+        );
+        if (notesResult.ok) {
+          deps.releaseNotes = {
+            releaseVersion: manifestResult.value.version,
+            body: notesResult.value.body,
+          };
+          deps.lastCheck.releaseNotesStatus = 'loaded';
+        } else {
+          deps.releaseNotes = null;
+          deps.lastCheck.releaseNotesStatus = 'unavailable';
+        }
+      } else {
         deps.lastCheck.releaseNotesStatus = 'unavailable';
       }
 

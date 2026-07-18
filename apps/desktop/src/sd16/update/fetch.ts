@@ -253,6 +253,78 @@ export function validateManifestShape(
   return { ok: true, value: parsed.data };
 }
 
+// ---------- release-notes body fetch (E3.12) ----------
+//
+// The channel-index/manifest fetch above proves *identity* (schema-valid,
+// signed-shape wire contracts); it never fetches the release-notes prose
+// body itself — `release_notes_url`/`release_notes_hash` are manifest
+// fields, not fetched content. This is the distinct fetch path E3.12 adds:
+// given a manifest's `release_notes_url` + `release_notes_hash`, fetch the
+// body text and verify it hashes to the pinned value before ever handing
+// it to the UI. A body that fails to hash-match is exactly as untrustworthy
+// as one that 404s — both fail closed rather than rendering unverified
+// prose.
+
+export type ReleaseNotesFetchFailure =
+  | { kind: 'http-error'; status: number; url: string }
+  | { kind: 'hash-mismatch'; url: string; expected: string; actual: string };
+
+export type ReleaseNotesFetchResult =
+  | { ok: true; value: { body: string } }
+  | { ok: false; failure: ReleaseNotesFetchFailure };
+
+/** SHA-256 of the given text, lowercase hex. Uses the platform Web Crypto API. */
+async function defaultSha256Text(text: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+function normaliseHex(s: string): string {
+  return s.trim().toLowerCase();
+}
+
+/**
+ * Fetch the release-notes body at `releaseNotesUrl` and verify it hashes to
+ * `releaseNotesHash` (both sourced from an already schema-validated
+ * `UpdateManifestFile`). Returns a discriminated result; never throws.
+ * A hash mismatch fails closed exactly like an HTTP error — the caller must
+ * never surface a body it could not verify.
+ */
+export async function fetchReleaseNotesBody(
+  releaseNotesUrl: string,
+  releaseNotesHash: string,
+  options: { fetchImpl?: FetchLike; sha256?: (text: string) => Promise<string> } = {}
+): Promise<ReleaseNotesFetchResult> {
+  const fetchImpl = options.fetchImpl ?? defaultFetchImpl;
+  const sha256 = options.sha256 ?? defaultSha256Text;
+
+  let res: Awaited<ReturnType<FetchLike>>;
+  try {
+    res = await fetchImpl(releaseNotesUrl, { method: 'GET' });
+  } catch {
+    return { ok: false, failure: { kind: 'http-error', status: 0, url: releaseNotesUrl } };
+  }
+  if (!res.ok) {
+    return {
+      ok: false,
+      failure: { kind: 'http-error', status: res.status, url: releaseNotesUrl },
+    };
+  }
+
+  const body = await res.text();
+  const actual = await sha256(body);
+  const expected = normaliseHex(releaseNotesHash);
+  if (actual !== expected) {
+    return {
+      ok: false,
+      failure: { kind: 'hash-mismatch', url: releaseNotesUrl, expected, actual },
+    };
+  }
+  return { ok: true, value: { body } };
+}
+
 // ---------- shared HTTP + JSON + validate plumbing ----------
 
 async function fetchAndValidate<T>(
