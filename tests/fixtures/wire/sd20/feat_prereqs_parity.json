@@ -1,0 +1,39 @@
+{
+  "name": "feat_prereqs_general_parity",
+  "epic": "Epic 3 -- Feat prerequisite engine",
+  "shape": "sd20-epic-seam-v1",
+  "shape_note": "SD-20 fixture-shape decision, documented identically across all six Epic 2-7 wire-fixture parity fixtures (spellbook_parity.json, feat_prereqs_parity.json, skill_allocation_parity.json, equipment_effects_parity.json, damage_total_parity.json, level_up_parity.json): technical-design.md section 1.2 illustrates a CharacterInput -> PilotReceipt shaped fixture, but Epic 8's own integration-closure cycle (tests/sd20_tabletop_readiness_integration.rs module doc comment, Finding 1) found Epics 2-7's compute functions are never wired into PilotReceipt / printed_sheet_cell_map at all -- each epic's real seam takes and returns its own distinct type, not a CharacterInput/PilotReceipt pair. Section 1.2's illustrative format therefore does not fit Epics 2-7 as actually landed. This fixture instead captures that epic's OWN real compute function's input -> output round trip directly: {name, epic, seam_function, input, expected_output}, where input/expected_output mirror the real Rust input/output types field-by-field. A Rust enum variant is represented as its Debug-format string; a Rust Option::None is represented as JSON null. Only boundary_contract_parity.json (Epic 1) and human_fighter_level_1_tabletop.json (Epic 8) are genuinely CharacterInput -> PilotReceipt shaped, because only Epic 1's contract and Epic 8's integration test actually route through that pipeline.",
+  "seam_function": "rules_core::feat_prereqs::{evaluate_feat_prerequisites, compute_feat_effects}",
+  "input": {
+    "feats": [
+      { "feat_id": "Toughness", "category": "General" },
+      { "feat_id": "Power Attack", "category": "General" }
+    ]
+  },
+  "expected_output": {
+    "feats": [
+      {
+        "feat_id": "Toughness",
+        "note": "Toughness is a real CRB General-category catalog record (rules_tables::crb::feats::feat_tables()); a General-category lookup for it must be eligible with a real description + TableCellRef",
+        "evaluation": { "is_eligible": true, "failing_prerequisites": [], "warnings": [] },
+        "effects": {
+          "feat_id": "Toughness",
+          "description": "You have enhanced physical stamina.",
+          "table_cell": { "table": "feats", "row_key": "Toughness" }
+        }
+      },
+      {
+        "feat_id": "Power Attack",
+        "note": "Power Attack is a real CRB feat, but the catalog files it under FeatCategory::Combat, not General -- a General-category lookup for it must fail eligibility and resolve no effect",
+        "evaluation": {
+          "is_eligible": false,
+          "failing_prerequisites": [
+            "'Power Attack' is not a recognized CRB General feat in the catalog (rules_tables::crb::feats::feat_tables(), FeatCategory::General)"
+          ],
+          "warnings": []
+        },
+        "effects": { "feat_id": "Power Attack", "description": null, "table_cell": null }
+      }
+    ]
+  }
+}
