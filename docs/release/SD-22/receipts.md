@@ -435,8 +435,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open (Arcanist + Bloodrager complete; Brawler not yet started)
   evidence_tier_after: complete (criteria 10-12 for Brawler; criterion 13's spell/equipment resolution deferred to a later cycle)
   branch_tip_before: 143dea6
-  branch_tip_after: "<this cycle's commit, see git log>"
-  merge_receipt_sha: "<same as branch_tip_after>"
+  branch_tip_after: 6ddfdd1
+  merge_receipt_sha: 6ddfdd1
   cycle_artifact_path: "acg/class_brawler_cycle_receipt.md"
   red_phase_evidence: "Widening RED: parses_real_brawler_record_from_acg_classes_lst added to tests/sd17_b1_martial_class.rs, failed (Brawler out of MARTIAL_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_brawler_resolves.rs failed to compile (E0599: AcgClassId::Brawler did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
   green_phase_evidence: "widened MARTIAL_CLASS_NAMES by one name (Brawler) in src/pcgen_import/lst_parser/class.rs (not spellcasting_class.rs -- Brawler's real record carries no SPELLSTAT token, same non-caster posture as Cavalier); added rules_tables/acg/class_brawler.rs and AcgClassId::Brawler match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist+Bloodrager still resolve); widening test green (17/17 in sd17_b1_martial_class); full cargo test suite green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
