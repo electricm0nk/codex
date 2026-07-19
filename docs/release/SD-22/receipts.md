@@ -301,3 +301,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["apg/class_summoner_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Summoner record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB, good Will only, poor Fortitude+Reflex, MAXLEVEL:20, SPELLSTAT:CHA MEMORIZE:NO) -- identical good/poor save split to Oracle, same scope boundary as class_alchemist.rs/class_cavalier.rs/class_inquisitor.rs/class_oracle.rs. Summoner is a spontaneous arcane caster (TYPE:Base.PC.SpontaneousArcane.Spontaneous) rather than divine, but that distinction doesn't affect the parser's posture derivation or the chassis formulas."
+
+- cycle_id: 2026-07-19T14:00:00Z
+  epic: 3
+  criterion: apg_oracle
+  criterion_section: "§1.1 Epic 3 — APG content-source ingest (this firing's independent attempt at Oracle, criteria 7-8)"
+  row_or_kind: ingest:apg_class
+  evidence_tier_before: open (from this firing's perspective at start; branch tip f933ecf)
+  evidence_tier_after: "no change from this firing — concurrent stream (aa9b924, b160857) already landed Oracle + Summoner before this firing's push"
+  branch_tip_before: f933ecf
+  branch_tip_after: "n/a — commit discarded, never pushed; local branch reset to origin/tranche/5 (b160857)"
+  merge_receipt_sha: "n/a — no commit landed from this firing"
+  cycle_artifact_path: "n/a — this firing's Oracle receipt was discarded; see apg/class_oracle_cycle_receipt.md (written by the concurrent stream) for the landed cycle"
+  red_phase_evidence: "completed locally (widening + acceptance RED for Oracle), then discarded along with the rest of this firing's commit"
+  green_phase_evidence: "completed locally (full cargo test + clippy green), then discarded — see notes"
+  cargo_test_summary: "this firing's own local run was green before the push conflict; not the landed state (superseded by the concurrent stream's own green run)"
+  clippy_signal: "n/a — discarded work"
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Witch (class 6 of 6) is next-eligible per the concurrent stream's own Summoner receipt. Operator should confirm whether a second SD-22 loop stream is intentionally running concurrently with this hourly-firing routine -- if so, the file-touch-partition's '1 cycle at a time' default is being violated across streams, not just within one, and either the second stream should be stopped or the routine's cadence should be coordinated with it."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:107 (CLASS:Oracle) -- same record the concurrent stream used"
+  rule_set_used: Apg
+  kanban_card: "no card: no commit landed"
+  progress_file_updated: "yes"
+  artifacts_written: []
+  notes: "git push origin tranche/5 was rejected (non-fast-forward); git fetch showed origin/tranche/5 had moved past this firing's f933ecf base to aa9b924 (Oracle) then b160857 (Summoner), landed by a different, concurrently running stream. This is the loop-instruction's own documented hard stop ('two live claude processes... touch the same per-epic module file'), discovered after the fact via git state rather than avoidable in advance. Discarded this firing's local commit (git reset --hard origin/tranche/5) rather than force-pushing or merging duplicate Oracle content; no shared work was lost since the commit was never pushed. Did not additionally attempt Witch this firing to avoid racing the same concurrent stream a second time within one cycle."

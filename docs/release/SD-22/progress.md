@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: aa9b924
+snapshot_as_of: b160857
 ---
 
 # SD-22 — Progress
@@ -1016,3 +1016,50 @@ Full RED/GREEN evidence, file list, and reasoning:
 to `receipts.md`. Next-eligible for Epic 3: Witch (class 6 of 6, the
 last real APG class), or a dedicated cycle for criterion 9's shared
 spell/equipment tables.
+
+### cycle-2026-07-19T14:00:00Z (this firing) | concurrent-cycle collision on Oracle | ingest:apg_class | no card (no commit; work discarded) | CLAIM-EXISTS
+
+This scheduled hourly firing picked Oracle independently (branch tip at
+firing start: `f933ecf`, before this firing was aware `6923e54` had
+already corrected the APG roster to 6 classes or that another stream had
+picked up Oracle too) and completed the full RED→GREEN cycle locally:
+widened `SPELLCASTING_CLASS_NAMES` with `Oracle`, added
+`rules_tables/apg/class_oracle.rs` + `ApgClassId::Oracle`, added the
+widening test and `tests/sd22_apg_class_oracle_resolves.rs`, and verified
+`cargo test --locked` (every suite green) + `cargo clippy --locked
+--tests -- -D warnings` (clean) before attempting to push.
+
+`git push origin tranche/5` was rejected (non-fast-forward, `403`
+followed by "fetch first"): `git fetch` showed `origin/tranche/5` had
+moved to `b160857` — a **different, concurrent** stream had already
+landed both `aa9b924` (Oracle) and `b160857` (Summoner) on top of the
+same `f933ecf` base this firing started from. Per
+`loop-instruction.md`'s hard stop ("Two live `claude` processes are
+working on cycles that would both touch `src/rules_core/rules_tables/
+<book>/` or any per-epic module file"), this is exactly that collision —
+it had already happened by the time this firing tried to push, rather
+than being avoidable in advance (this environment's adapted concurrency
+guard relies on git state, not `ps`, per the routine's cloud-sandbox
+adaptation, and git state was clean — no divergence — when this firing's
+Step 3 checkout ran).
+
+Rather than force-push or attempt a manual merge/rebase of duplicate
+Oracle content, this firing's local commit (never pushed, so discarding
+it loses no shared work) was dropped and the local branch was reset to
+match `origin/tranche/5` (`git reset --hard origin/tranche/5`). The
+concurrent stream's Oracle (`aa9b924`) and Summoner (`b160857`) commits,
+and their own `progress.md`/`receipts.md` cycle-log entries, are left
+untouched by this entry — this entry only records this firing's own
+redundant, discarded attempt for the audit trail.
+
+No new commit lands from this firing. Per Step 1, the next-eligible
+criterion is now Witch (class 6 of 6), already identified as such by the
+concurrent stream's own Summoner cycle log entry above. This firing does
+not also attempt Witch — picking up a second criterion in the same
+firing right after detecting a live concurrency collision would risk
+racing a still-active concurrent stream a second time in one cycle,
+which is exactly what the "1 cycle at a time" default budget and the
+per-cycle atomicity rules exist to prevent. Sending a push notification:
+this is new, actionable information (evidence of a second, concurrently
+running SD-22 loop stream) that the operator should be aware of, not a
+repeat of a previously-notified condition.
