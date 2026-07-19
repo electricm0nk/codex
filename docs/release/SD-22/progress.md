@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: e134bb4
+snapshot_as_of: 87e7ec3
 ---
 
 # SD-22 — Progress
@@ -30,7 +30,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
 | E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6), Summoner (5/6), Witch (6/6); shared spell/equipment tables | **complete — criteria 6-9, Epic 3 (APG) fully closed out.** `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all six classes' BAB/save chassis land with cross-book invariant tests (criteria 6-8). Criterion 9 lands this cycle as `apg/spell_list.rs` (4-entry bootstrap sample: Bomber's Eye/Alchemist, Burst Bonds/Inquisitor, Borrow Fortune/Oracle, Ill Omen/Witch) and `apg/equipment_tables.rs` (3-entry bootstrap sample: Iron Spike, Arrow (Blunt), Knucklebone of Fickle Fortune) — bootstrap/representative coverage per the `crb/equipment_tables.rs` precedent, not exhaustive; Summoner has no active spell record anywhere in the real corpus (its dedicated block is entirely `#`-commented out) and Cavalier casts no spells, both by design not omission. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`). See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md`, `artifacts/apg/class_summoner_cycle_receipt.md`, `artifacts/apg/class_witch_cycle_receipt.md`, `artifacts/apg/spell_list_cycle_receipt.md`, `artifacts/apg/equipment_tables_cycle_receipt.md` | see `## Cycle log` |
-| E4.10-13 | 4 — ACG ingest | ingest:acg_class | Alchemist-ACG (cycle 1 of 10) | see cycle log | pending |
+| E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (cycle 1 of corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order) | **complete (criteria 10-12 for Arcanist)** — `rules_tables/acg/mod.rs` created, `RuleSetId::Acg` registered, first ACG class chassis lands with cross-book invariant tests. See `artifacts/acg/class_arcanist_cycle_receipt.md` | see `## Cycle log` |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
@@ -41,6 +41,64 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E9.31 | 9 — Closure Readiness | closure_readiness:* | Not started (fires after Epic 8, before Epic 7) | open | — |
 
 ## Open blockers
+
+### [SELF-HEALED IN-CYCLE 2026-07-19T20:18:28Z] E4.10-13 (Epic 4, "Alchemist (ACG-side)" row 1) — `corpus-source-inventory.md §2.1`'s ACG roster is wrong for this row: no `CLASS:Alchemist` record exists anywhere in `acg_classes.lst`
+
+**Same defect shape as the resolved Gunslinger/Magus blocker below.** Before
+writing any RED test for Epic 4's first cycle, verified the real
+`acg_classes.lst` directly (not `corpus-source-inventory.md §2.1`'s
+"Content shape" prose, which that file's own corrective banner already
+marks non-authoritative — but the *class roster itself*, like the
+Gunslinger/Magus case, turned out to be a routing-level defect too, not
+just illustrative prose):
+
+```
+$ grep -n "^CLASS:Alchemist" acg_classes.lst
+(0 hits)
+
+$ grep -oP "^CLASS:\K[A-Za-z-]+" acg_classes.lst | sort -u
+Arcanist
+Bloodrager
+Brawler
+Ex-Warpriest
+Hunter
+Investigator
+Shaman
+Skald
+Slayer
+Swashbuckler
+Warpriest
+```
+
+Alchemist is APG-only content (already ingested in Epic 3); ACG never
+republishes a distinct Alchemist chassis — there is no ACG-side
+Alchemist bomb/archetype chassis in the real corpus at all, contradicting
+`corpus-source-inventory.md §2.1` row 1's "Content shape" text describing
+one. Separately, `decisions.md`'s recorded ACG class order ("Alchemist →
+Arcanist → Bloodrager → Brawler → Hunter → Investigator → Shaman → Skald →
+Swashbuckler → Warpriest") both wrongly includes "Alchemist" **and**
+omits `Slayer`, which does have a real `CLASS:Slayer` record
+(`acg_classes.lst:327`) — the roster is off by one in two different ways
+that happen to cancel out to the same total count (10), which is likely
+why it wasn't caught until a cycle checked the actual `.lst` roster
+directly.
+
+**Self-healed in-cycle, not left as a standing blocker**, because — unlike
+Gunslinger/Magus, which required an operator judgment call on excluded
+book scope — this is a pure roster-correctness fact fully resolvable by
+reading the real corpus, with a clear, unambiguous corrected 10-class list
+and an obvious next-eligible class (Arcanist, the first class in both the
+real file's line order and `corpus-source-inventory.md §2.1`'s own
+existing row order). This cycle did not fabricate an Alchemist-ACG
+chassis; it proceeded directly to Arcanist and logged this entry for the
+audit trail. `corpus-source-inventory.md §2.1`, `decisions.md`'s stated
+ACG ordering, and `epic-breakdown.md`'s ACG class list still need an
+operator/doc-correction pass (mirroring commit `6923e54`'s APG roster fix)
+to formally replace "Alchemist (ACG-side)" with `Slayer` in the row list
+— left as a follow-on note; not blocking further Epic 4 per-class cycles,
+which can keep using the real corpus roster (Arcanist, Bloodrager,
+Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler,
+Warpriest) directly regardless of whether the doc text is corrected first.
 
 ### [RESOLVED 2026-07-19T09:43:58-04:00, commit `6923e54`] E3.6-9 (Epic 3, Gunslinger + Magus specifically) — `corpus-source-inventory.md` §1.1's 8-class APG roster is wrong for these 2 rows: neither class has a real record anywhere under `advanced_players_guide/`
 
@@ -1244,3 +1302,80 @@ to `receipts.md`. Next-eligible: Epic 4/Epic 5's first cycles (both remain
 blocked on their own parser-coverage gaps), or an operator decision on how
 to unblock them (widen `pcgen_import`'s allowlists for ACG classes; add a
 bare-row monster parser for Bestiary 1).
+
+### cycle-2026-07-19T20:18:28Z | Epic 4, Arcanist (cycle 1, first real ACG class) | ingest:acg_class | card see receipts.md/kanban | open → **complete (criteria 10-12)**
+
+Re-checked state before picking a criterion: `git log 87e7ec3..origin/tranche/5`
+showed no new commits — `87e7ec3` is still the tip, tree clean. With Epic 3
+(APG) fully closed out (criteria 6-9), Epic 4 (ACG) is next-eligible per
+Step 1's priority order. `epic-breakdown.md`/`decisions.md` list Epic 4's
+first class as "Alchemist (ACG-side)"; per this cycle's brief and the
+established Gunslinger/Magus precedent, verified the real record before
+writing any test rather than trusting the doc.
+
+Verified directly against `acg_classes.lst`: **zero** `CLASS:Alchemist`
+hits anywhere in the file. Full roster grep
+(`grep -oP "^CLASS:\K[A-Za-z-]+" acg_classes.lst | sort -u`) returned the
+real 10-class base roster: Arcanist, Bloodrager, Brawler, Hunter,
+Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest (plus the
+internal `Ex-Warpriest` `VISIBLE:NO` variant, correctly excluded). This is
+the identical defect shape as the resolved Gunslinger/Magus blocker:
+`corpus-source-inventory.md §2.1`'s routing table names a class with no
+real record (Alchemist is APG-only) and separately omits a class that
+does have one (`Slayer`). Logged a new `## Open blockers` entry
+(self-healed in-cycle, not left standing — see above) and proceeded
+directly to **Arcanist**, the first class with a real record.
+
+Verified `apg_classes.lst:11`'s `CLASS:Arcanist` record directly:
+`BONUS:COMBAT|BASEAB|classlevel(...)/2` (poor/half BAB — same shape as
+APG's Witch), `BONUS:SAVE|BASE.Will|classlevel(...)/2+2` (good Will only),
+`BONUS:SAVE|BASE.Fortitude,BASE.Reflex|classlevel(...)/3` (poor Fortitude
+and Reflex), `MAXLEVEL:20`, and `SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES`
+(spellbook-prepared posture, same shape as APG's Alchemist) — confirming
+Arcanist belongs in `spellcasting_class.rs`'s allowlist, not `class.rs`'s.
+
+**Widening RED**: added `parses_real_arcanist_record_from_acg_classes_lst`
+to `tests/sd17_b_spellcasting_class.rs` (real-corpus-gated on
+`PCGEN_CORPUS_ROOT`, new `real_acg_classes_lst()` helper reading
+`advanced_class_guide/acg_classes.lst`); ran against the unchanged tree —
+failed for the intended reason (`Arcanist` not yet in
+`SPELLCASTING_CLASS_NAMES`, silently skipped).
+
+**Acceptance RED**: added `tests/sd22_acg_class_arcanist_resolves.rs`;
+ran against the unchanged tree — failed to compile (`E0432`/`E0599`:
+`rules_tables::acg` module and `RuleSetId::Acg` did not exist yet) for the
+intended reason.
+
+GREEN: widened `SPELLCASTING_CLASS_NAMES` in
+`src/pcgen_import/lst_parser/spellcasting_class.rs` by exactly one name
+(`Arcanist`). Added `src/rules_core/rules_tables/acg/mod.rs` (new
+`AcgClassId` enum, book-local `ClassTableRow`, `class_chassis_resolve`,
+with the roster-correction finding recorded in the module doc comment)
+and `acg/class_arcanist.rs` (BAB/save chassis only, same scope boundary
+as every APG class module). Added `pub mod acg;` and `RuleSetId::Acg` to
+`src/rules_core/rules_tables/mod.rs`.
+
+Verification: `cargo test --locked --test sd22_acg_class_arcanist_resolves
+-- --include-ignored` 6/6 passed (including the real-corpus-gated
+grounding test). `cargo test --locked --test sd17_b_spellcasting_class --
+--include-ignored` 21/21 passed, including the new widening test. Full
+`cargo test --locked` — every suite green, 0 failed anywhere (grepped
+full output for `N failed` with `N > 0`, found none; sibling-preservation
+holds, including all six untouched APG class-chassis suites and both
+untouched APG spell/equipment suites). `cargo clippy --locked --tests --
+-D warnings` clean.
+
+With Arcanist landed, Epic 4 (ACG) has its first class chassis and
+`RuleSetId::Acg` resolution — criteria 10-12 complete for Arcanist.
+Criterion 13 (per-cycle ACG spell/equipment resolution) remains open
+(mirrors APG's criterion 9, a separate future cycle). Nine more real ACG
+classes remain (Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald,
+Slayer, Swashbuckler, Warpriest). Epic 5 (Bestiary 1) remains blocked on
+its own, separate parser gap (no parser recognizes `b1_races.lst`'s
+unprefixed bare-row monster records) — unaffected by this cycle.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/acg/class_arcanist_cycle_receipt.md`. Receipt block appended to
+`receipts.md`. Next-eligible for Epic 4: Bloodrager (class 2 of the
+corrected 10-class roster), or a dedicated cycle for criterion 13's shared
+spell/equipment tables once more classes land.

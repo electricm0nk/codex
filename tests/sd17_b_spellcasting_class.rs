@@ -826,3 +826,44 @@ fn parses_real_witch_record_from_apg_classes_lst() {
     assert_eq!(witch.casting_posture, Some(CastingPosture::Prepared));
     assert_eq!(witch.spell_stat.as_deref(), Some("INT"));
 }
+
+fn real_acg_classes_lst() -> String {
+    let corpus_root = PathBuf::from(
+        std::env::var("PCGEN_CORPUS_ROOT")
+            .expect("PCGEN_CORPUS_ROOT must point at a local pcgen/data checkout"),
+    );
+    let source =
+        corpus_root.join("pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst");
+    fs::read_to_string(&source)
+        .unwrap_or_else(|err| panic!("failed to read real acg_classes.lst at {}: {err}", source.display()))
+}
+
+// SD-22 Epic 4 widening (Arcanist ingest cycle, first ACG class): the real
+// `CLASS:Arcanist` record in `acg_classes.lst` carries
+// `SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES` — the same spellbook-prepared
+// posture as Alchemist — so it belongs in `SPELLCASTING_CLASS_NAMES` rather
+// than `MARTIAL_CLASS_NAMES`. Mirrors `parses_real_alchemist_record_from_apg_classes_lst`.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_arcanist_record_from_acg_classes_lst() {
+    let corpus = TestCorpus::new("acg_classes_arcanist");
+    corpus.write(
+        "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        &real_acg_classes_lst(),
+    );
+    let result = parse_spellcasting_class_file(&corpus.path(
+        "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+    ))
+    .expect("read real acg_classes.lst");
+
+    let arcanist = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Arcanist")
+        .expect(
+            "Arcanist should be recognized from the real acg_classes.lst once \
+             SPELLCASTING_CLASS_NAMES is widened to include it",
+        );
+    assert_eq!(arcanist.casting_posture, Some(CastingPosture::Spellbook));
+    assert_eq!(arcanist.spell_stat.as_deref(), Some("INT"));
+}

@@ -376,3 +376,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["apg/spell_list_cycle_receipt.md", "apg/equipment_tables_cycle_receipt.md"]
   notes: "Deliberately did not add a fabricated 'apg:alchemist:bomb:acid' equipment row despite corpus-source-inventory.md §1.3's illustrative example naming it -- that file's own corrective banner marks such prose non-authoritative, and no Bomb/Acid Bomb record exists in any real apg_equip_*.lst file (bombs are a Su class feature computed by formula, not a purchasable item). Kept both new resolver functions (spell_resolve, equipment_resolve) self-contained inside rules_tables/apg/ rather than wiring into the existing global equipment_id_resolve/spell_id_resolve in src/rules_core/ -- those two functions already exist and already accept a RuleSetId parameter (satisfying criterion 6's literal wording) but are hard-wired to the CRB tables regardless of rule_set; widening their dispatch logic to branch on RuleSetId::Apg is a cross-cutting change outside this cycle's file-touch partition (rules_core/equipment_resolver.rs and spell_resolver.rs are not listed as SD-22-cycle-touchable files) and is left as a follow-on if a future cycle needs the two ingest paths unified."
+
+- cycle_id: 2026-07-19T20:18:28Z
+  epic: 4
+  criterion: acg_arcanist
+  criterion_section: "§2.1 Epic 4 — ACG content-source ingest (criteria 10-12; first real ACG class)"
+  row_or_kind: ingest:acg_class
+  evidence_tier_before: open (Epic 4 not yet started; corpus-source-inventory.md's row 1 named a non-existent Alchemist-ACG class)
+  evidence_tier_after: complete (criteria 10-12 for Arcanist; criterion 13's spell/equipment resolution deferred to a later cycle)
+  branch_tip_before: 87e7ec3
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "acg/class_arcanist_cycle_receipt.md"
+  red_phase_evidence: "Widening RED: parses_real_arcanist_record_from_acg_classes_lst added to tests/sd17_b_spellcasting_class.rs, failed (Arcanist out of SPELLCASTING_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_arcanist_resolves.rs failed to compile (E0432/E0599: rules_tables::acg module and RuleSetId::Acg did not exist) (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Arcanist) in src/pcgen_import/lst_parser/spellcasting_class.rs; added rules_tables/acg/{mod.rs,class_arcanist.rs} and RuleSetId::Acg; 6/6 new acceptance tests green (including the real-corpus-gated grounding test); widening test green (21/21 in sd17_b_spellcasting_class); full cargo test suite green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_acg_class_arcanist_resolves: 6/6 passed (--include-ignored); sd17_b_spellcasting_class: 21/21 passed (--include-ignored) including the new widening test; full cargo test --locked: 0 failed across every suite; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: ["Alchemist-ACG roster defect (corpus-source-inventory.md §2.1 row 1 names a class with no real CLASS:Alchemist record in acg_classes.lst -- same shape as the resolved Gunslinger/Magus blocker) corrected in-cycle: logged to progress.md Open blockers and proceeded directly to Arcanist, the first real ACG class, rather than fabricating an Alchemist-ACG chassis or stalling"]
+  next_required_uplift: "Epic 4's next-eligible cycle is Bloodrager (class 2 of the corrected 10-class roster: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest), or a dedicated cycle for criterion 13's shared spell/equipment tables once more classes land. corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md still need an operator/doc-correction pass to formally replace 'Alchemist (ACG-side)' with Slayer in the row list, mirroring commit 6923e54's APG roster fix -- not blocking further Epic 4 cycles. Epic 5 (Bestiary 1) remains blocked on its own, separate parser gap (b1_races.lst's unprefixed bare-row monster records) -- unaffected by this cycle."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:11 (CLASS:Arcanist)"
+  rule_set_used: Acg
+  kanban_card: "t_81cf6382 (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: ["acg/class_arcanist_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Arcanist record's BONUS:COMBAT/BONUS:SAVE formula tokens (poor/half BAB -- same shape as APG's Witch -- good Will only, poor Fortitude+Reflex, MAXLEVEL:20, SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES -- spellbook posture, same shape as APG's Alchemist) -- same scope boundary as every APG class module (named per-level features out of scope, formula-derived chassis only). This is the first Epic 4 (ACG) cycle to land a commit; rules_tables/acg/ and RuleSetId::Acg are new this cycle, mirroring rules_tables/apg/'s established shape exactly."

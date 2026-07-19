@@ -6,6 +6,7 @@
 //! `SD-19-corpus-aware-compute-seam/decisions.md` §9 and
 //! `SD-22-content-source-ingest-and-dm-toolkit/decisions.md` §5.
 
+pub mod acg;
 pub mod apg;
 pub mod crb;
 
@@ -15,5 +16,6 @@ pub mod crb;
 pub enum RuleSetId {
     Crb,
     Apg,
-    // future: Um, Acg, Bestiary1, ...
+    Acg,
+    // future: Um, Bestiary1, ...
 }
