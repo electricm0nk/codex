@@ -25,7 +25,7 @@ Plus the top-level `closure-readiness-report.md` for criterion-31.
 docs/release/SD-22/artifacts/
 ├── corpus/                                          (per operator directive 2026-07-19: on-disk corpus-shape surface)
 │   ├── README.md                                    (the schema-of-record for the corpus directory)
-│   ├── apg/                                         (8 APG class stubs + the operator-supplied slot README)
+│   ├── apg/                                         (6 APG class stubs + the operator-supplied slot README)
 │   ├── acg/                                         (10 ACG class stubs + the operator-supplied slot README)
 │   ├── beastiary1/                                  (3 default subset samples + Tarrasque edge case + operator-supplied slot README)
 │   ├── spell-list/                                  (APG + ACG shared spell lists)
@@ -92,7 +92,7 @@ docs/release/SD-22/artifacts/
 └── closure-readiness-report.md                      (criterion-31's Epic 9 artifact)
 ```
 
-(Total receipt files: ~50. The numbers above match `corpus-source-inventory.md` per-class cycle counts: 8 APG classes + 10 ACG classes + default 8 Bestiary 1 subsets + per-criterion receipts for epics 1, 2, 5, 7, 8, plus criterion-31's closure-readiness-report.md.)
+(Total receipt files: ~48. The numbers above match `corpus-source-inventory.md` per-class cycle counts: 6 APG classes (corrected 2026-07-19) + 10 ACG classes + default 8 Bestiary 1 subsets + per-criterion receipts for epics 1, 2, 5, 7, 8, plus criterion-31's closure-readiness-report.md.)
 
 ## 2. Two sibling doctrine docs that Epic 9 reads
 

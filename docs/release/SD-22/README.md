@@ -87,7 +87,7 @@ The next truthful move is to derive bounded execution handoffs from `epic-breakd
 
 SD-22's `epic-breakdown.md` is the canonical artifact surface for expected output paths. Concretely:
 
-- `repos/codex/src/rules_core/rules_tables/apg/` — APG content (Advanced Player's Guide classes like Alchemist, Cavalier, Gunslinger, Inquisitor, Magus, Oracle, Summoner, Witch, plus spells, equipment, races). One Rust file per class table per cycle; the directory mirrors SD-19's `rules_tables/crb/` pattern (sibling directories per SD-19 §9).
+- `repos/codex/src/rules_core/rules_tables/apg/` — APG content (Advanced Player's Guide classes: Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch — corrected 2026-07-19; Gunslinger/Magus are Ultimate Combat/Ultimate Magic, not APG — plus spells, equipment, races). One Rust file per class table per cycle; the directory mirrors SD-19's `rules_tables/crb/` pattern (sibling directories per SD-19 §9).
 - `repos/codex/src/rules_core/rules_tables/acg/` — ACG content (Advanced Class Guide classes like Alchemist, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Swashbuckler, Warpriest, plus spells, equipment, archetypes). Same shape as APG.
 - `repos/codex/src/rules_core/rules_tables/beastiary1/` — Bestiary 1 monster data (stat blocks by CR-by-environment-by-name structure, derived from the Paizo publisher's Bestiary 1). One Rust module per monster-block subset; resolves via `RuleSetId::Bestiary1`.
 - `repos/codex/src/rules_core/encounters.rs` — DM-toolkit encounter-math + party-CR computation; consumed by SD-21's Epic 2 (Campaign Manager + Drive) campaign-shape boundary contract.

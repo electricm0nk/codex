@@ -1,13 +1,14 @@
 ---
 title: SD-22 Content-Source Ingest — Process Doctrine
-status: active (operator directive 2026-07-19)
+status: active (corrected 2026-07-19 — rewritten to match the proven pipeline; supersedes the 2026-07-19 initial version's fictional API examples)
 scope: docs/release/SD-22
 artifact_type: process-doctrine
 canonical_branch: tranche/5
 purpose: |
-  How a coding harness on a cold cloud clone ingests SD-22's content-source
-  from the operator-supplied licensed files into Rust modules + cycle artifacts.
-  Every Epic 3 / 4 / 5 / 6 cycle reads this file before RED phase.
+  How a coding harness ingests SD-22's content-source from real PCGen
+  `.lst` data into hand-transcribed Rust chassis modules + cycle
+  artifacts. Every Epic 3 / 4 / 5 / 6 cycle reads this file before RED
+  phase.
 date: 2026-07-19
 companion_to: ../corpus-source-inventory.md
 mirror_of: ~/workspace/programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/ingest.md
@@ -17,102 +18,81 @@ mirror_of: ~/workspace/programs/codex/requirements/SD-22-content-source-ingest-a
 
 This file is the **canonical ingest pipeline** for SD-22's content-source work. Every Epic 3 / 4 / 5 / 6 cycle reads `corpus-source-inventory.md` (the per-content-unit four-tuple), then this `ingest.md` (the per-cycle pipeline), then runs the pipeline's commands.
 
+**Corrected 2026-07-19.** This file's original version (authored the same day, before four real ingest cycles landed) described a fictional pipeline: a `rules_core::corpus::parse_lst` function and `SourcePackageContent`-based corpus loader that do not exist in this codebase, plus an "operator-supplied stub-swap" workflow (gitignored licensed files swapped in at cycle-launch). Four real cycles (Alchemist `9c187a7`, Cavalier `675ca65`, Inquisitor `a18e73b`, Oracle `aa9b924`) proved a simpler pipeline that needs none of that indirection, because the real corpus is already directly reachable — locally at `/home/ubuntu/workspace/repos/pcgen/data/`, and in a cloud sandbox by adding `https://github.com/PCGen/pcgen` as a second git source (`decisions.md §5`). This rewrite documents what those four cycles actually did. The `operator-supplied/` gitignored slot (§5 below) is kept as a **documented fallback only**, for a future book that genuinely isn't in the public PCGen corpus — it is not part of the default pipeline.
+
 ## 1. What "ingest" means here
 
-For a single content unit (e.g. APG class Alchemist), the ingest cycle produces four artifacts:
+For a single content unit (e.g. APG class Alchemist), the ingest cycle produces three artifacts plus one registration:
 
-1. **A Rust module** at `<rust_module_path>` (e.g. `src/rules_core/rules_tables/apg/class_alchemist.rs`).
-2. **A test fixture** at `<test_fixture_path>` (e.g. `tests/sd22_apg_class_alchemist_resolves.rs`).
-3. **A cycle artifact** at `<cycle_artifact_path>` (e.g. `docs/release/SD-22/artifacts/apg/class_alchemist_cycle_receipt.md`).
-4. **A registered `RuleSetId` variant** (e.g. `RuleSetId::Apg`) wired into the resolver chain.
+1. **A Rust module** at `<rust_module_path>` (e.g. `src/rules_core/rules_tables/apg/class_alchemist.rs`) — a small, hand-transcribed constants module. It does **not** parse the `.lst` file at runtime; the LST record is read once, at authoring time, and its BAB/save formula tokens are transcribed directly into Rust functions, with the source file + line + exact token cited in the module's doc comment (mirroring `rules_tables::crb::class_tables`'s established scope boundary and provenance convention).
+2. **A test fixture** at `<test_fixture_path>` (e.g. `tests/sd22_apg_class_alchemist_resolves.rs`) — asserts the chassis resolves correctly at a boundary level (1), a representative level, and past `MAXLEVEL`; asserts the cross-book invariant (`RuleSetId::Apg` → `Some`, every other `RuleSetId` → `None`); and carries one `#[ignore]`-gated *real-corpus grounding test*, opt-in via `PCGEN_CORPUS_ROOT`, that re-reads the real `.lst` line and asserts the hand-transcribed constants still match it (this is what keeps the module tied to the source instead of to memory).
+3. **A registered `ApgClassId` variant** (or `AcgClassId` / the Bestiary 1 equivalent) wired into the book's `class_chassis_resolve` dispatcher in `<book>/mod.rs`.
+4. **A cycle artifact** at `<cycle_artifact_path>` (e.g. `docs/release/SD-22/artifacts/apg/class_alchemist_cycle_receipt.md`) recording the RED→GREEN transition.
 
-The input is a corpus source file at `<corpus_input_path>` (e.g. `docs/release/SD-22/artifacts/corpus/apg/class_alchemist.lst`).
+The input is the real `.lst` file itself — no intermediate corpus-loader type, no stub file. `corpus-source-inventory.md`'s `corpus_input_path` column (once corrected per-row) should point directly at the real path, e.g. `pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:CLASS:Alchemist`.
 
-For SD-22's 30 ingest criteria (Epics 3+4+5+6, criteria 6-21), that means **30 cycles × ~4 artifacts = ~120 artifact files** if every cycle produces a fresh receipt; in practice the per-class cycles can collapse to "one class_table.rs + one test + one receipt," so the actual artifact count lands around 50 (per `corpus-source-inventory.md` §3 of the cycle-artifact contract).
+**Scope boundary (mirrors `rules_tables::crb::class_tables`):** only BAB/save chassis — a formula-derivable table — is transcribed per cycle. Named per-level features (Bombs, Discoveries, Mutagen, spell lists, etc.) require going back through the LST's per-level feature blocks (`apg_abilities_class.lst` and similar) in a dedicated future ingest slice; transcribing them without that would risk exactly the fabricated-data problem `AGENTS.md` and the CRB precedent both rule out. This is why `corpus-source-inventory.md`'s criterion 9 (spell/equipment resolution) stays open after a class's chassis criteria (6-8) land.
 
 ## 2. The per-cycle pipeline (RED → GREEN → REFACTOR)
 
-This is the canonical pipeline. Each step is mandatory per operator-pinned 2026-07-19 red-green TDD mandate.
+Each step is mandatory per the operator-pinned 2026-07-19 red-green TDD mandate.
 
-### 2.1 RED — write the failing test
+### 2.1 RED — verify the real record, then write the failing test
 
+```bash
+# 1. Locate the real .lst file. Locally:
+ls /home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst
+# In a cloud sandbox with only `codex` cloned, find the second git source's checkout:
+find / -maxdepth 5 -iname 'pcgen' -type d 2>/dev/null
+
+# 2. Read the real CLASS:<name> record directly — do not trust
+#    corpus-source-inventory.md's "Content shape" prose column; it is
+#    illustrative only (see that file's corrective banner).
+grep -n "^CLASS:Alchemist" .../advanced_players_guide/apg_classes.lst
+
+# 3. Confirm which of the two existing pcgen_import parsers should own
+#    this class, by checking for SPELLSTAT/MEMORIZE/SPELLBOOK tokens:
+#      - present  -> src/pcgen_import/lst_parser/spellcasting_class.rs
+#      - absent   -> src/pcgen_import/lst_parser/class.rs
+#    If the class name isn't yet in that parser's allowlist
+#    (MARTIAL_CLASS_NAMES or SPELLCASTING_CLASS_NAMES), this cycle widens
+#    it by exactly one name (see §6 below) as part of its own RED step.
+
+# 4. Write tests/sd22_<book>_class_<class>_resolves.rs, mirroring
+#    tests/sd22_apg_class_alchemist_resolves.rs's shape exactly:
+#      - <class>_level_1_chassis_resolves_via_ruleset_<book>
+#      - <class>_level_<maxlevel>_chassis_resolves_via_ruleset_<book>
+#      - <class>_chassis_is_none_for_level_beyond_maxlevel_<N>
+#      - <class>_chassis_returns_none_for_ruleset_crb  (cross-book invariant)
+#      - a #[ignore]-gated PCGEN_CORPUS_ROOT test re-reading the real line
+
+# 5. Confirm RED — fails because the ApgClassId variant / module doesn't exist yet
+cargo test --locked --test sd22_apg_class_<class>_resolves 2>&1 | tail -40
 ```
-# 1. Read the inventory row for this cycle's content unit
-corpus-source-inventory.md §1.1 (APG) / §2.1 (ACG) / §3.1 (Bestiary 1) / §4.1 (DM Toolkit)
-# 2. Identify rust_module_path, test_fixture_path, cycle_artifact_path, RuleSetId
 
-# 3. Write the test fixture (test_fixture_path) with at least these assertions:
-cargo new --lib test_fixture  # only first cycle per epic; subsequent share structure
+The `cargo test` output (a compile error citing the missing variant/module, or a missing-record panic) is RED evidence. **Persist it** to the cycle artifact's "Red-phase evidence" section. If the test fails for an *un*intended reason, that's a Bucket-B shortfall — fix the test setup, don't carry the cycle forward.
 
-cat > tests/sd22_apg_class_alchemist_resolves.rs << 'EOF'
-#[test]
-fn apg_class_alchemist_resolves_via_apg_rule_set() {
-    assert!(RuleSetId::Apg.resolve("apg:class:alchemist").is_some());
-}
-#[test]
-fn apg_class_alchemist_does_not_resolve_via_crb_rule_set() {
-    assert!(RuleSetId::Crb.resolve("apg:class:alchemist").is_none());
-}
-#[test]
-fn apg_alchemist_discovery_count_at_level_6_is_2() {
-    let table = apg::class_alchemist::table();
-    assert_eq!(table.discovery_known_at_level(6), 2);
-}
-EOF
+### 2.2 GREEN — transcribe the chassis, wire the resolver
 
-# 4. Confirm RED — test fails for the intended reason
-cargo test --locked --test sd22_apg_class_alchemist_resolves 2>&1 | tail -40
-```
+```bash
+# 1. Write the production module, transcribing the BAB/save formula
+#    tokens directly from the real line read in RED step 2. Mirror
+#    src/rules_core/rules_tables/apg/class_alchemist.rs's shape exactly:
+#      - a module doc comment citing the source file, line, and the
+#        exact BONUS:COMBAT / BONUS:SAVE / MAXLEVEL tokens
+#      - a MAX_SUPPORTED_LEVEL constant from the real MAXLEVEL token
+#      - base_attack_bonus(level) / save_bonus(level, good) functions
+#        implementing the real formula (e.g. level*3/4 for three-quarter
+#        BAB, level/2+2 for a good save, level/3 for a poor save)
+#      - a class_table() -> Vec<ClassTableRow> function
 
-The `cargo test` output is RED evidence. **Persist it** to the cycle artifact's "Red-phase evidence" section. If the test fails for an *un*intended reason (compile error in production code, missing dependency), that's a Bucket-B shortfall — fix the test setup, don't carry the cycle forward.
+# 2. If this class's name isn't yet recognized by the pcgen_import
+#    parser identified in RED step 3, widen that parser's allowlist by
+#    exactly one name (see §6) — this is a small, bounded, per-cycle
+#    widening, not a parser rewrite.
 
-### 2.2 GREEN — implement the module
-
-```
-# 1. Write the production module at rust_module_path, consuming the corpus file
-cat > src/rules_core/rules_tables/apg/class_alchemist.rs << 'EOF'
-use crate::rules_core::corpus::{SourcePackageContent, parse_lst};
-use std::collections::HashMap;
-
-#[derive(Debug, Clone)]
-pub struct AlchemistClassTable {
-    pub name: String,
-    pub bab_progression: BabProgression,
-    pub save_progression: SaveProgression,
-    pub starting_gold: u32,
-    pub hd: HitDie,
-    pub level_features: HashMap<u8, Vec<AlchemistFeature>>,
-    pub spells_per_day_by_level: HashMap<u8, SpellSlots>,
-    pub extracts_known_by_level: HashMap<u8, u8>,
-    pub discovery_count_by_level: HashMap<u8, u8>,
-    pub mutagen_bomb_mutex_at_level: HashMap<u8, bool>,
-}
-
-pub fn load_alchemist_class_table(corpus: &SourcePackageContent) -> AlchemistClassTable {
-    let raw = parse_lst(&corpus.apg_class_alchemist_lst).expect("apg:class:alchemist must parse");
-    AlchemistClassTable {
-        // ... parses the [header], [level_features], [spells] sections from the stub
-        // ... applies the discovery-count + mutagen-bomb-mutex rules
-        ..Default::default()
-    }
-}
-EOF
-
-# 2. Implement the parser if the corpus-type is non-standard (e.g., PCGen PCC format)
-# For LST (tab-separated per the stub), use a small crate or write a hand parser.
-# The parser's column-count validation lives at the entry point.
-
-# 3. Wire the RuleSetId::Apg resolver — append to src/rules_core/rules_tables/apg/mod.rs:
-pub mod class_alchemist;
-pub mod spell_list;
-pub mod equipment_tables;
-pub fn resolve_apg(key: &str, corpus: &SourcePackageContent) -> Option<ApgRecord> {
-    match key {
-        "apg:class:alchemist" => Some(ApgRecord::Alchemist(class_alchemist::load_alchemist_class_table(corpus))),
-        // ... other keys per cross-book invariants
-        _ => None,
-    }
-}
+# 3. Register the new ApgClassId variant and match arm in
+#    src/rules_core/rules_tables/apg/mod.rs's class_chassis_resolve.
 
 # 4. Confirm GREEN — full tests, clippy clean
 cargo test --locked 2>&1 | tail -20
@@ -127,147 +107,96 @@ Refactor is permitted only after a cycle's GREEN phase. A cycle that refactors f
 
 ```
 # Common refactor operations:
-#  - extract a small helper (e.g., parse_lst_section) and reuse across class parsers
-#  - move the dispute cell-lookup logic (e.g., MutagenBombMutexAtLevel) into a generic-named fn
-#  - update the cross-book-invariant table in corpus-source-inventory.md if the invariant
-#    was mis-stated (operator-pinned at end of cycle)
+#  - extract a shared helper for a formula shape reused across classes
+#    (e.g. a shared three_quarter_bab(level) free function)
+#  - update the cross-book-invariant table in corpus-source-inventory.md
+#    if the invariant was mis-stated (operator-pinned at end of cycle)
 ```
 
 ### 2.4 MINT the cycle artifact
 
-```
-# Write the cycle artifact per corpus-source-inventory.md §6 contract
+```bash
 cat > docs/release/SD-22/artifacts/apg/class_alchemist_cycle_receipt.md << 'EOF'
-# Alchemist cycle receipt — 2026-07-19T14:32:18Z
+# Alchemist cycle receipt — 2026-07-19T13:14:28Z
 
 ## Red-phase evidence
 cargo test --locked --test sd22_apg_class_alchemist_resolves 2>&1 | tail -40
-(…test fails because src/rules_core/rules_tables/apg/class_alchemist.rs does not exist yet…)
+(…fails: E0433, ApgClassId::Alchemist does not exist yet…)
 
 ## Green-phase evidence
 cargo test --locked 2>&1 | tail -20
 cargo clippy --locked --tests -- -D warnings 2>&1 | tail -20
-(…test passes, clippy clean…)
+(…all green, clippy clean…)
 
 ## Files touched
-- src/rules_core/rules_tables/apg/class_alchemist.rs (NEW; load_alchemist_class_table)
-- src/rules_core/rules_tables/apg/mod.rs (MODIFIED; pub mod class_alchemist; resolve_apg)
+- src/rules_core/rules_tables/apg/class_alchemist.rs (NEW)
+- src/rules_core/rules_tables/apg/mod.rs (MODIFIED; ApgClassId::Alchemist + match arm)
+- src/pcgen_import/lst_parser/spellcasting_class.rs (MODIFIED; SPELLCASTING_CLASS_NAMES widened by one)
+- tests/sd22_apg_class_alchemist_resolves.rs (NEW)
+- tests/sd17_b_spellcasting_class.rs (MODIFIED; real-corpus grounding test for the widening)
 
 ## Cycle metadata
-- cycle_id: 2026-07-19T14:32:18Z
-- duration: 117 seconds
-- bundle_criterion: criterion-7 (APG per-class cycles)
-- upstream reference: docs/release/SD-22/artifacts/corpus/apg/class_alchemist.lst.md (stub) -> docs/release/SD-22/artifacts/corpus/operator-supplied/apg/class_alchemist.lst (operator-supplied swap at cycle-launch)
+- cycle_id: 2026-07-19T13:14:28Z
+- bundle_criterion: criteria 6-8 (APG per-class cycles)
+- corpus_input_path: pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:CLASS:Alchemist (real corpus; decisions.md §5)
 - RuleSetId: Apg
 
 ## kanban
-- card: <hermes kanban card id, e.g. t_a824a37b>
-- audit_comment: <comment id>
+- card: no card (hermes unavailable in this session; see receipts.md / progress.md)
 EOF
-
-# Mint the kanban post-mortem card (per loop-instruction.md Step 10)
-hermes kanban --board codex-tranche-5 create \
-  "SD22 class_alchemist ingest (Epic 3 cycle) [cycle <cycle-id>]" \
-  --assignee operator --workspace scratch \
-  --initial-status done --created-by operator --priority 3 \
-  --body "<card body per loop-instruction.md Step 10 schema>"
 ```
 
-A cycle that ships without a cycle artifact is a Bucket-B shortfall — Epic 9's evaluator (criterion-31) cannot conclude criterion-7 `complete` without `apg/class_alchemist_cycle_receipt.md` existing with RED→GREEN transitions persisted.
+A cycle that ships without a cycle artifact is a Bucket-B shortfall — Epic 9's evaluator (criterion-31) cannot conclude the criterion `complete` without the receipt existing with RED→GREEN transitions persisted.
 
 ### 2.5 COMMIT + PUSH
 
-```
+```bash
 git add src/rules_core/rules_tables/apg/class_alchemist.rs \
         src/rules_core/rules_tables/apg/mod.rs \
+        src/pcgen_import/lst_parser/spellcasting_class.rs \
         tests/sd22_apg_class_alchemist_resolves.rs \
-        docs/release/SD-22/artifacts/apg/class_alchemist_cycle_receipt.md
+        tests/sd17_b_spellcasting_class.rs \
+        docs/release/SD-22/artifacts/apg/class_alchemist_cycle_receipt.md \
+        docs/release/SD-22/progress.md
 
 git -c user.name='Todd Hintzmann' \
     -c user.email='todd@hintzmann.net' \
-    commit -m "feat(sd22): APG Alchemist ingest (Epic 3 cycle, criterion-7)"
+    commit -m "feat(sd22): APG Alchemist class chassis lands (criteria 6-8)"
 
 git push origin tranche/5
 ```
 
-Commit message convention follows existing per-cycle pattern: `feat(sd22): <class-or-monster-or-table> ingest (Epic N cycle, criterion-NN)`.
-
 ## 3. Cross-book resolution (Epic 3+4+5+6 cross-cutting cycles)
 
-Cross-book-invariant cycles (Epic 3 criteria 8, Epic 4 criteria 12, Epic 5 criteria 16) assert that keys present in one book resolve `Some` for the matching `RuleSetId` and `None` for the others:
-
-```rust
-#[test]
-fn apg_alchemist_resolves_via_apg_but_none_for_crb() {
-    let corpus = load_corpus("docs/release/SD-22/artifacts/corpus/operator-supplied/");
-    assert!(RuleSetId::Apg.resolve("apg:class:alchemist", &corpus).is_some());
-    assert!(RuleSetId::Crb.resolve("apg:class:alchemist", &corpus).is_none());
-    assert!(RuleSetId::Acg.resolve("apg:class:alchemist", &corpus).is_none());
-    assert!(RuleSetId::Bestiary1.resolve("apg:class:alchemist", &corpus).is_none());
-}
-
-#[test]
-fn bestiary_goblin_resolves_via_bestiary1_only() {
-    let corpus = load_corpus("docs/release/SD-22/artifacts/corpus/operator-supplied/");
-    assert!(RuleSetId::Bestiary1.resolve("beastiary1:monster:goblin", &corpus).is_some());
-    assert!(RuleSetId::Crb.resolve("beastiary1:monster:goblin", &corpus).is_none());
-}
-```
-
-These tests **must pass** before Epic 6's happy-path integration test consumes them. `corpus-source-inventory.md` §1.3 / §2.3 / §3.2 carries the full cross-book invariants per book.
+Cross-book-invariant cycles (Epic 3 criteria 8, Epic 4 criteria 12, Epic 5 criteria 16) assert that a class chassis resolves `Some` for its own book's `RuleSetId` and `None` for every other one — see `alchemist_chassis_returns_none_for_ruleset_crb` in `tests/sd22_apg_class_alchemist_resolves.rs` for the established shape. No corpus-loader object is threaded through these tests; each book's `mod.rs` exposes its own `class_chassis_resolve(class_id, level, rule_set)` function that early-returns `None` when `rule_set` doesn't match the book.
 
 ## 4. Epic 6 — DM Toolkit happy-path integration
 
-Epic 6's criterion 21 is the load-bearing surface for Epic 9's evaluation: it consumes Epic 3+4+5 output into a campaign-shape fixture and runs the DM-toolkit encounter math against it.
+Epic 6's criterion 21 is the load-bearing surface for Epic 9's evaluation: it consumes Epic 3+4+5 output into a campaign-shape fixture and runs the DM-toolkit encounter math against it. It calls each book's `class_chassis_resolve` / the Bestiary 1 monster resolver directly — the same real, already-landed modules Epic 3/4/5 cycles produce, not a separate corpus-loader abstraction. This test is RED until Epic 3+4+5 ship at least one ingested class chassis and one ingested monster block. Epic 6's cycle picker enforces this dependency per `loop-instruction.md` Step 1.
 
-```rust
-#[test]
-fn dm_toolkit_happy_path_4_level_3_pcs_vs_1_goblin_is_easy() {
-    // Epic 6's happy-path ingestion: read APG class_Fighter (CRB), ACG class_Hunter (ACG),
-    // Beastiary 1 monster_goblin, build a PartySnapshot from the Fighter + the Hunter,
-    // and compute encounter difficulty.
-    let corpus = load_corpus("docs/release/SD-22/artifacts/corpus/operator-supplied/");
-    let party = build_party_from_classes(&["crb:class:fighter", "acg:class:hunter"], &[3, 3, 3, 3]);
-    let monsters = vec![corpus.monster("beastiary1:monster:goblin").expect("goblin")];
-    let result = encounter_difficulty(&party, &monsters);
-    assert_eq!(result.difficulty, Difficulty::Easy);
-}
-```
+## 5. Fallback: operator-supplied corpus (only if the real corpus is unreachable)
 
-The test is RED until Epic 3+4+5 ship at least one ingested `PartySnapshot` and one ingested `MonsterRef`. Epic 6's cycle picker enforces this dependency per `loop-instruction.md` Step 1.
+The default pipeline (§§1-4) reads the real PCGen corpus directly and needs no operator action beyond the one-time setup in `decisions.md §5` (local sibling repo, or a second git source in a cloud sandbox). The `docs/release/SD-22/artifacts/corpus/operator-supplied/` slot exists **only** for the rare case where a future book genuinely isn't in the public PCGen corpus (`https://github.com/PCGen/pcgen`) and no other reachable source exists. In that case, and only then:
 
-## 5. Operator-supplied swap procedure (handoff between operator and the loop)
+1. The operator places the licensed file at `docs/release/SD-22/artifacts/corpus/operator-supplied/<book>/<file>.lst` (gitignored — EULA content never commits).
+2. The cycle reads that path instead of the public corpus for that one content unit, following the same §§1-4 pipeline otherwise (still no `SourcePackageContent`/`parse_lst` — hand-transcribe from whatever file is actually there).
+3. The module's doc-comment provenance notes the operator-supplied source instead of the public corpus path.
 
-The operator populates `docs/release/SD-22/artifacts/corpus/operator-supplied/{apg,acg,beastiary1}/` with licensed files at cycle-launch time, *not* at bundle-launch. The swap is per-cycle:
+APG, ACG, and Bestiary 1 are all confirmed present in the public PCGen corpus (`decisions.md §5`), so this fallback is not expected to be needed for SD-22's current scope.
 
-```
-# Before Epic 3 cycle-N for class_alchemist (operator-side):
-cd /home/ubuntu/workspace/repos/codex
-cp /path/to/licensed/apg/class_alchemist.lst \
-   docs/release/SD-22/artifacts/corpus/operator-supplied/apg/
+## 6. Widening a `pcgen_import` parser allowlist (bounded, per-cycle)
 
-# Mark the stub as superseded (rename to .superseded so the loop won't read it)
-mv docs/release/SD-22/artifacts/corpus/apg/class_alchemist.lst.md \
-   docs/release/SD-22/artifacts/corpus/apg/class_alchemist.lst.md.superseded
+`src/pcgen_import/lst_parser/class.rs`'s `MARTIAL_CLASS_NAMES` and `spellcasting_class.rs`'s `SPELLCASTING_CLASS_NAMES` are hard allowlists (originally the 11 CRB classes only). A cycle whose class isn't yet in either list widens the correct one by **exactly one name**, per `loop-instruction.md`'s file-touch partition, and adds a small real-corpus-gated test proving the widening (mirroring `parses_real_alchemist_record_from_apg_classes_lst` / `parses_real_inquisitor_record_from_apg_classes_lst` in `tests/sd17_b_spellcasting_class.rs`). This is not a parser rewrite — the underlying tab-delimited `KEY:VAL` tokenizer is already name-agnostic; only the scope filter changes.
 
-# Run the loop's cycle
-hermes loop sd22.alchemist.cycle
+## 7. Where this pipeline lands in the bundle
 
-# After cycle: the cycle artifact is in docs/release/SD-22/artifacts/apg/class_alchemist_cycle_receipt.md
-# Postmortem: leave the operator-supplied file in place for the next cycle's reload-license-cache
-```
-
-The `.gitignore` ensures the operator-supplied files never commit accidentally. The `.superseded` stub stays in the repo as the schema-of-record reference.
-
-## 6. Where this pipeline lands in the bundle
-
-- **`corpus-source-inventory.md`** is the per-cycle "what to ingest + where to land it" reference.
+- **`corpus-source-inventory.md`** is the per-cycle "what to ingest + where to land it" reference (routing columns authoritative; "Content shape" prose illustrative only).
 - **`ingest.md`** (this file) is the per-cycle pipeline.
-- **`loop-instruction.md` Step 4-5** enforces the red-green TDD mandate + cross-references this `ingest.md`.
-- **`artifacts/corpus/`** ships the on-disk file-shape stubs (this commit, 26 files).
-- **`artifacts/corpus/operator-supplied/`** is the load-bearing slot the operator populates with licensed content (gitignored except for the README).
-- **`corpus-source-inventory.md` §6** specifies the cycle-artifact reader's contract.
+- **`loop-instruction.md`** Step 4-5 enforces the red-green TDD mandate + cross-references this `ingest.md`, and documents the §6 parser-widening pattern in its file-touch partition.
+- **`decisions.md §5`** is the corpus-sourcing decision record (corrected 2026-07-19).
+- **`artifacts/corpus/`** retains the on-disk file-shape stubs as schema documentation (not a required input to the default pipeline).
+- **`artifacts/corpus/operator-supplied/`** is the fallback-only slot per §5 above.
 
-## 7. Recorded
+## 8. Recorded
 
-Added 2026-07-19 per operator directive ("instructions on the ingest process we developed need to be explained as well"). Authored alongside the corpus-stubs seed (26 files) and the operator-supplied gitignore rule. The doctrine-of-record against which every future ingest bug is diagnosed; cycle authors writing parsers read this file before writing the parser. If the operator extends the bundle to a new book (Ultimate Combat, etc.) the same pipeline + a new `corpus/<book>/` stub directory + a new inventory section extends with no schema change.
+Corrected 2026-07-19 to match the pipeline four real ingest cycles proved (Alchemist, Cavalier, Inquisitor, Oracle), after the original same-day version's fictional `parse_lst`/`SourcePackageContent` API examples and default operator-supplied-swap workflow were found to not match the codebase.

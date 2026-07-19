@@ -195,15 +195,14 @@ A cycle that lands at row `<row>` of this file MUST mint a file at `docs/release
 ## Files touched
 - `src/...` — added/modified
 - `tests/...` — added/modified
-- `docs/release/SD-22/artifacts/corpus/operator-supplied/<book>/<file>.lst` — operator-supplied licensed file that the cycle consumed; the bundled stub `<book>.lst.md` was renamed to `<book>.lst.md.superseded` at the time of the swap. Path is `<corpus_input_path>` from `corpus-source-inventory.md` §1-3.
 
 ## Cycle metadata
 - cycle_id: <ISO-8601 timestamp>
 - duration: <N> seconds
 - bundle_criterion: <criterion-NN>
-- corpus_input_path: `<artifacts/corpus/<book>/<file>.lst>` (the canonical stub path; the operator-supplied swap at cycle-launch is at `<artifacts/corpus/operator-supplied/<book>/<file>.lst>` with the same schema)
+- corpus_input_path: `<pathfinder/paizo/roleplaying_game/<book_dir>/<file>.lst:CLASS or RACE key>` (the real public PCGen corpus record this cycle transcribed from — per `decisions.md §5`, corrected 2026-07-19; `artifacts/corpus/operator-supplied/<book>/<file>.lst` only if this cycle used the `ingest.md §5` fallback)
 - RuleSetId: <Apg | Acg | Bestiary1>
-- ingest_pipeline_version: 1 (per `./ingest.md` §6; bump if the column-count schema changes)
+- ingest_pipeline_version: 2 (per `./ingest.md §6`; corrected 2026-07-19 — direct real-corpus transcription, no corpus-loader abstraction)
 
 ## kanban
 - card: <hermes kanban card id>
