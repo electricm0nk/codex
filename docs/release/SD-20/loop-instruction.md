@@ -5,7 +5,7 @@ title: SD-20 — Rules Engine Completeness (Per-Character Tabletop-Readiness, An
 status: approved (operator review 2026-07-16; changes noted: §2 broadened to any class/any level, Q2 revised to class-selection trigger mechanic, Q3 revised to print-ready data; SD-20 launches on tranche/4 branch)
 date: 2026-07-15
 canonical_branch: tranche/4 (operator directive 2026-07-16; slash form per prior naming convention)
-companion_to: /home/ubuntu/workspace/programs/codex/requirements/SD-20-rules-engine-completeness/decisions.md
+companion_to: /home/ubuntu/workspace/decisions.md
 mirror_of: /home/workspace/SD-20-rules-engine-completeness-scope-draft.md
 kanban_board: codex-tranche-4 (operator directive 2026-07-16; new board to separate SD-20 cycles from the codex-tranche-3 chassis-lane boards; **board created 2026-07-16**; the loop's Step 10 mint uses `--board codex-tranche-4` explicitly so it works regardless of operator's default-board setting)
 ---
@@ -357,7 +357,7 @@ The operator can stop the loop at any time; a stopped loop leaves the progress d
    
    The loop's Step 1 picks the smallest unclaimed eligible criterion from the progress doc's `## SD-20 cycles` open list. Eligibility includes the dependency-graph gate (epic N's cycles only fire after epic N's prerequisites are `done`). The operator does NOT manually switch launch forms between epic 1 / epics 2-5 / epics 6-8 — the loop's own logic handles each transition.
 
-3. **What `/batch` actually does in Hermes.** Per the SD-13 loop-model excerpt (`programs/codex/requirements/SD-18-core-rules-breadth/references/sd13-loop-model-excerpt.md`), `/batch` is the form that lets a single shell invocation run multiple streams concurrently against the shared goal file, with the supervisor managing the 60-minute restart cadence across all streams. The four lanes for epics 2/3/4/5 run as four streams inside one `/loop /batch` invocation, not as four separate shells.
+3. **What `/batch` actually does in Hermes.** Per the SD-13 loop-model excerpt (`../SD-18/references/sd13-loop-model-excerpt.md`), `/batch` is the form that lets a single shell invocation run multiple streams concurrently against the shared goal file, with the supervisor managing the 60-minute restart cadence across all streams. The four lanes for epics 2/3/4/5 run as four streams inside one `/loop /batch` invocation, not as four separate shells.
 
 4. **Default ceiling: 1 cycle at a time per file.** The file-touch partition collapses any parallel attempt for the shared `contract.rs` (epic 1), shared parent modules (epics 2/3/4/5 each have their own), and integration test files (epic 8). Two cycles in parallel racing on the same file is a structural violation, not a recommendation.
 

@@ -30,7 +30,7 @@ status: approved (operator review 2026-07-15; operator directives 2026-07-17 exp
 date: 2026-07-15
 canonical_branch: tranche/5 (operator directive 2026-07-18)
 kanban_board: codex-tranche-5 (operator directive 2026-07-18)
-companion_to: /home/ubuntu/workspace/programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/decisions.md
+companion_to: /home/ubuntu/workspace/decisions.md
 mirror_of: /home/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 ---
 
@@ -38,7 +38,7 @@ This file is the body of the goal the `/loop 60m /batch /goal ./loop-instruction
 
 It is **self-sufficient**: no interactive prompts, no mid-loop questions to the operator, no shared state with anything other than the on-disk files named here. The loop runs it; the loop restarts every 60 minutes; the loop's self-restart cadence continues until every criterion `complete` or every criterion has a real blocker in `## Open blockers`. (SD-21's `loop-instruction.md` is the worked example; SD-22's `loop-instruction.md` mirrors it with Tranche-5 specifics.)
 
-The progress doc `./progress.md` (created on first cycle by the loop) carries the cycle-log + status matrix (per `governance/spec-domain-lifecycle.md`'s plan A on the SD-status transcription surface).
+The progress doc `./progress.md` (created on first cycle by the loop) carries the cycle-log + status matrix (per `../../doctrine-external/spec-domain-lifecycle.md`'s plan A on the SD-status transcription surface).
 
 ## Required reading (every cycle)
 
@@ -46,9 +46,9 @@ A cycle is a unit of post-mortem, not a unit of delivery. Every cycle begins by 
 
 1. **Scope-draft** at `./scope-draft.md` — canonical handoff; tells you *what* SD-22 ships.
 2. **Progress doc** at `./progress.md` — loop's working memory; tells you which criteria are open, which are blocked, and the cycle history.
-3. **Cycle matrix** in `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/epic-breakdown.md` — the 31 acceptance criteria mapped to 9 epics; tells you which criterion belongs to which epic.
-4. **Decision record** at `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/decisions.md` — the 4-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions, §4 Epic 9 — Closure Readiness added 2026-07-19); tells you *why* the bundle is shaped this way.
-5. **Sibling doctrines** at `governance/spec-domain-lifecycle.md`, `governance/identifier-discipline.md`, and `programs/codex/requirements/SD-21-campaign-manager-and-persistence/decisions.md §18` (the build-version scheme `<major>.<tranche-base>.<build>` amendment).
+3. **Cycle matrix** in `./epic-breakdown.md` — the 31 acceptance criteria mapped to 9 epics; tells you which criterion belongs to which epic.
+4. **Decision record** at `./decisions.md` — the 4-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions, §4 Epic 9 — Closure Readiness added 2026-07-19); tells you *why* the bundle is shaped this way.
+5. **Sibling doctrines** at `../../doctrine-external/spec-domain-lifecycle.md`, `../../doctrine-external/identifier-discipline.md`, and `../SD-21-campaign-manager-and-persistence/decisions.md §18` (the build-version scheme `<major>.<tranche-base>.<build>` amendment).
 
 ## Concurrency rules (read first, obey always)
 
@@ -79,7 +79,7 @@ The SD-22 cycle surface is concentrated in these files:
 | `apps/desktop/src/sd11/status/createSd11WorkbenchStatus.ts` | EDIT (build-label format); Epic 8 criterion 28 cycle sets `BUILD_PREFIX = 'Codex'` and template `${BUILD_PREFIX} ${buildVersion}` (matches `<major>.<tranche>.<build>` triple from the version files). | One cycle at a time. |
 | `apps/desktop/src/sd11/loadSd11TesterWorkbenchSurface.test.ts`, `apps/desktop/src/sd11/status/createSd11WorkbenchStatus.test.ts`, `apps/desktop/src/testSupport/makeSurface.ts` | EDIT (test fixtures); Epic 8 criterion 28 cycle updates assertions/fixtures from `codex@0.0.0-test` to `Codex 0.5.<build>` shape. | One cycle at a time per file. |
 | `docs/SD-22/release-closure-checklist.md` | NEW; Epic 8 criterion 29 cycle writes the four-step closure-process checklist using the `<major>.<tranche-base>.<build>` triple (per-position increment rules: build per-CI-build, tranche per-tranche-promotion, major per-main-publish). | One cycle at a time. |
-| `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/release-notes.md` | NEW; Epic 7 criterion 25 cycle generates release notes (New content, DM toolkit, Maintenance, Versioning sections). | One cycle. |
+| `release-notes.md` | NEW; Epic 7 criterion 25 cycle generates release notes (New content, DM toolkit, Maintenance, Versioning sections). | One cycle. |
 | Epic 7 sweep (closure PR, worktree cleanup, branch cleanup) | Epic 7 criterion 23 + 24 cycles run `gh pr create`, `git worktree remove --force`, `git branch -d`. Operates on integration-branch metadata, not on per-file content. | One cycle. |
 
 The chassis and corpus-aware seam files (`pilot_compute.rs`, `pilot_compute_corpus.rs`, `support_state_matrix.rs`) stay untouched by SD-22. SD-22's Epic 1 is defensive cleanup only (Epic 1 doesn't open new directories). Epic 6 (DM Toolkit) reads from `src/rules_core/rules_tables/<book>/` after Epic 3+4+5 land.
@@ -153,7 +153,7 @@ For SD-22 cycles, the change is one of:
 - **Epic 6 — DM Toolkit**: extension to encounter-difficulty and party-CR modules.
 - **Epic 9 — Closure Readiness**: read-only evaluation across `docs/release/SD-22/artifacts/` and `progress.md`; if any criterion-1-30 lacks artifact evidence, fire a self-heal cycle to fix that specific shortfall (not all shortfalls at once); append a `## Open judgments deferred to next SD` entry to `risks-and-open-questions.md` for each judgment-call observation; write `closure-readiness-report.md` once 30/30 criteria are clean. Per operator directive 2026-07-19, self-heal is open-ended until the goal is met, and judgment calls are deferred rather than remediated in-bundle.
 
-For all paths, the change must be in the appropriate epic file. The forbidden write scopes are documented in `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/risks-and-open-questions.md`.
+For all paths, the change must be in the appropriate epic file. The forbidden write scopes are documented in `risks-and-open-questions.md`.
 
 Run:
 
