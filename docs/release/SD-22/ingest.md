@@ -200,3 +200,58 @@ APG, ACG, and Bestiary 1 are all confirmed present in the public PCGen corpus (`
 ## 8. Recorded
 
 Corrected 2026-07-19 to match the pipeline four real ingest cycles proved (Alchemist, Cavalier, Inquisitor, Oracle), after the original same-day version's fictional `parse_lst`/`SourcePackageContent` API examples and default operator-supplied-swap workflow were found to not match the codebase.
+
+## 9. Per-content-type extensions (operator directive 2026-07-19)
+
+The default §1-§7 pipeline covers class chassis (`ApgClassId`/`AcgClassId`/`Bestiary1` enum + match-arm-dispatch chassis modules) and spell lists. For the additional content types the operator named (`races`/`mitems`/`spells`/`feats`/etc.), the same pipeline shape applies — the only per-content-type differences are (a) the resolver enum variant, (b) the file-shape stub location, and (c) the module name. Cross-book invariants follow the same `RuleSetId::*::resolve(key, corpus) -> Option<...>` shape as classes; product-visible per cycle.
+
+### 9.1 Races
+
+- **Module shape**: `src/rules_core/rules_tables/{apg,acg}/race_<lowercase>.rs` per race. Each module exposes `pub struct Race<...>` (size, base_speed, ability_mods, traits, favored_class_options) plus `pub fn rule_set_id(&self) -> RuleSetId` for cross-book dispatch.
+- **Resolver enum**: races share the book's `RuleSetId` (no separate `RaceSetId`); key shape: `<apg|acg>:race:<lowercase-race-name>`. Resolver chain lives in `<book>/mod.rs`'s `race_resolve`.
+- **Cross-book invariants**: see `corpus/races/{apg,acg}_races.lst.md` §"Notes."
+- **Test fixture shape**: `tests/sd22_<book>_race_resolves.rs` (batched, multi-race assertions). Mirrors §2.4 conventions: boundary + representative + cross-book + `#[ignore]`-gated real-corpus grounding.
+- **Cycle artifact path**: `docs/release/SD-22/artifacts/races/<book>_<race>_cycle_receipt.md` (per-class artifact per cycle; can batch 1-3 races per cycle artifact as documented in `corpus-source-inventory.md` §7).
+
+### 9.2 Magic items
+
+- **Module shape**: per-aisle (wondrous / weapons / armor / etc.). Aisle is too small to need a per-item Rust module; one `magic_items_<book>.rs` per book that exposes a `lookup` function keyed on `<book>:mitem:<key>` and a strong-typed return `Mitem` enum per aisle.
+- **Resolver dispatch**: aisles are subrouted under the book's existing rule-set chain (`RuleSetId::*::resolve("apg:mitem:cape-of-feathers", ...)`).
+- **Test fixture shape**: per-aisle assertion. Boundary check is "no boundary" (magic items have no level progression), so the test asserts (a) `Some(Mitem::Wondrous(_))` for the aisle's top-3 keys, (b) `None` for cross-book fall-through, (c) `#[ignore]`-gated real-corpus grounding.
+- **Cycle artifact path**: `docs/release/SD-22/artifacts/magic-items/<book>_<aisle>_cycle_receipt.md` (one per aisle group; 6 total in the per-inventory §8 plan).
+
+### 9.3 Feats
+
+- **Module shape**: `feats_<book>.rs` per book; categories (combat, item-creation, racial, convergence) are sections within one module file. Per-feat `pub struct Feat { key: FeatKey, category: FeatCategory, prereq: PrereqExpr, benefit_summary: &'static str, description_key: DescriptionKey }`.
+- **Resolver dispatch**: `<apg|acg>:feat:<lowercase-feat-name>`. Book-local lookup via `feats_<book>::lookup(key)`.
+- **Test fixture shape**: per-category assertion. Many feats have prerequisite-boolean-expression requirements (`PrereqExpr::Bab(8)` etc.); the parser must surface unparsable prereqs as `PrereqExpr::Unknown(SyntaxError)` rather than fail the cycle. Tests assert (a) one canon feat per category returns `Some`, (b) cross-book returns `None`, (c) `#[ignore]` real-corpus grounding.
+- **Cycle artifact path**: `docs/release/SD-22/artifacts/feats/<book>_<category>_cycle_receipt.md` (8 categories total in the per-inventory §9 plan).
+
+### 9.4 Archetypes
+
+- **Module shape**: per-class + per-archetype; `src/rules_core/rules_tables/{apg,acg}/archetype_<class>_<arch>.rs`. Mirrors the per-class cycle shape but with *archetype-feature-swap* semantics: at level N the archetype replaces the parent's level-N feature with its own. The module's `feature_at_level(level: u8, ctx: &FeatureContext) -> ClassFeature` returns the swap or the parent's.
+- **Cycle pacing**: per-archetype cycle (smaller scope than full-class cycles). Per the inventory §10, archetype cycles are extension-Epic 3/4 work that lands after the primary 31-criteria loop closes; archive numbering deferred until that.
+- **Test fixture shape**: per-archetype one-shot `tests/sd22_<book>_archetype_<class>_<arch>_resolves.rs`. Three assertions: parent-feature-at-level-1 doesn't show when archetype-feature-at-level-1 takes over; cross-book invariant; compat-column check (e.g. Vivisectionist rejects Chirurgeon multi-archetype).
+- **Cycle artifact path**: `docs/release/SD-22/artifacts/archetypes/<book>_<class>_<arch>_cycle_receipt.md` (~46 files across APG 22 + ACG 24; can be batched per-class).
+
+### 9.5 Monster abilities (Bestiary 1 only)
+
+- **Module shape**: `src/rules_core/rules_tables/beastiary1/monster_abilities.rs`. One `pub enum AbilityKind { Ex, Su, Sp, DamageResistance }`; per-ability `pub struct MonsterAbility { key, kind, save_dc_or_none, damage_dice_or_formula, trigger, source_class_feature_id }`.
+- **Resolver dispatch**: `beastiary1:ability:<lowercase>`. Bestiary-only — no cross-book aliases. Lookup via `monster_abilities::lookup(key)`.
+- **Test fixture shape**: per-ability-kind assertions. Cross-book check is the trivially-true `None` for non-Bestiary rulesets (ensures Bestiary-only).
+- **Cycle artifact path**: `docs/release/SD-22/artifacts/monster-abilities/<kind>_cycle_receipt.md` (4 kinds total).
+
+### 9.6 Monster templates (Bestiary 1 only)
+
+- **Module shape**: `src/rules_core/rules_tables/beastiary1/monster_templates.rs`. `pub enum TemplateFamily { Undead, Construct, DragonDisciple, Noble, /* ~50 families total */ }`; per-template `pub struct Template { key, family, cr_mod: i8, hp_mod: HpModifier, feature_swap_summary, curse_or_affliction}`.
+- **Resolver dispatch**: `beastiary1:template:<lowercase>`. Bestiary-only.
+- **Test fixture shape**: per-family assertion. The schema's CR modifier column is `i8` (-1 to +4 typical range); verify the parser surfaces unparseable values as `Template::ParseError(SyntaxError)` rather than fail the cycle.
+- **Cycle artifact path**: `docs/release/SD-22/artifacts/monster-templates/<family>_cycle_receipt.md` (4 families for current scope; extensible).
+
+### 9.7 When a content type doesn't fit the pipeline's class-shape
+
+For any content type whose struct shape doesn't fit the §1 chassis pattern (e.g. an item with internal state, or a shape that crosses multiple `RuleSetId`s without a primary owner), the operator logs `## Open judgments deferred to next SD` per Epic 9's evaluator and continues. The §"Operator-judgment-call rule" governs: don't fabricate. Don't over-extend. The next bundle picks up the deferred items.
+
+## 10. Recorded
+
+Authored 2026-07-19 per operator directive ("full coverage for every content type: races, classes, mitems, spells, feats, etc.; no stub-only ingest; expected per content type"). §9 extends §1-§7's class+spell pipeline to cover races (per-book module + book-local resolver key), magic items (per-aisle module per book), feats (per-book module with category sections), archetypes (per-class+archetype module with feature-swap semantics), monster abilities (Bestiary-only), monster templates (Bestiary-only). Cross-book invariants per stub `corpus/<content-type>/<book>_<type>.lst.md` §"Notes." Companion stub surfaces at `corpus/{races,magic-items,feats,archetypes,monster-abilities,monster-templates}/<book>_<type>.lst.md` (12 new files committed 2026-07-19).

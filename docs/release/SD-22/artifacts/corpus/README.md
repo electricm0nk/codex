@@ -16,11 +16,17 @@ This directory is the **on-disk shape** of every `corpus_input_path` named in `.
 
 | Subdir | Coverage | Files | Owner |
 |---|---|---|---|
-| `apg/` | Advanced Player's Guide | `class_alchemist.lst.md`, `class_cavalier.lst.md`, `class_inquisitor.lst.md`, `class_oracle.lst.md`, `class_summoner.lst.md`, `class_witch.lst.md` (six real APG classes; aligns 1:1 with `corpus-source-inventory.md` §1.1. Corrected 2026-07-19: Gunslinger and Magus stubs removed — verified against the real `apg_classes.lst` that neither is APG content; both are Ultimate Combat / Ultimate Magic, out of scope per `decisions.md §1`) | stub (representative content; operator replaces at cycle-launch) |
-| `acg/` | Advanced Class Guide | `class_alchemist.lst.md`, `class_arcanist.lst.md`, `class_bloodrager.lst.md`, `class_brawler.lst.md`, `class_hunter.lst.md`, `class_investigator.lst.md`, `class_shaman.lst.md`, `class_skald.lst.md`, `class_swashbuckler.lst.md`, `class_warpriest.lst.md` (ten ACG classes; aligns 1:1 with `corpus-source-inventory.md` §2.1) | stub (representative content; operator replaces at cycle-launch) |
-| `beastiary1/` | Bestiary 1 | `subset_01_sample.md`, `subset_02_sample.md`, `subset_03_sample.md` (three stub subsets — Goblin+Cobold CR-1, Orc+Gnoll CR-1/2, Skeleton+Zombie CR-1 undead). Tarrasque lives in `tarrasque_edge_case.md` for the rule-cycle table's extreme-CR coverage. The operator-pinned "default 8 subsets" at launch expands this to subsets 4 through N following the default alphabetical-by-CR-band-then-name ordering. | stub subset, plus the canonical MonsterRef shape |
-| `spell-list/` | APG + ACG shared spell lists | `apg_spell_list.lst.md`, `acg_spell_list.lst.md` | stub (canonical spell-table row shape) |
-| `equipment-table/` | APG + ACG shared equipment tables | `apg_equipment.lst.md`, `acg_equipment.lst.md` | stub (canonical equipment-row shape) |
+| `apg/` | Advanced Player's Guide (classes — 8) | `class_<class>.lst.md` (Alchemist, Cavalier, Gunslinger, Inquisitor, Magus, Oracle, Summoner, Witch) | stub (representative schema; operator swaps at cycle-launch) |
+| `acg/` | Advanced Class Guide (classes — 10) | `class_<class>.lst.md` (Alchemist, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Swashbuckler, Warpriest) | stub |
+| `beastiary1/` | Bestiary 1 (monsters) | `subset_01_sample.md`, `subset_02_sample.md`, `subset_03_sample.md` (default 3 of 8 subsets), `tarrasque_edge_case.md` (extreme-CR coverage) | stub |
+| `spell-list/` | APG + ACG shared spell lists | `apg_spell_list.lst.md`, `acg_spell_list.lst.md` | stub |
+| `equipment-table/` | APG + ACG shared equipment tables | `apg_equipment.lst.md`, `acg_equipment.lst.md` | stub |
+| `races/` | New: APG races (8) + ACG races (6) | `apg_races.lst.md`, `acg_races.lst.md` | stub (per operator directive 2026-07-19 "supported/product visible for each new race") |
+| `magic-items/` | New: APG + ACG magic items (wondrous / weapons / armor) | `apg_mitems.lst.md`, `acg_mitems.lst.md` | stub |
+| `feats/` | New: APG + ACG feats (general / item-creation / racial / convergence) | `apg_feats.lst.md`, `acg_feats.lst.md` | stub |
+| `archetypes/` | New: APG + ACG class archetypes (per-class specializations) | `apg_archetypes.lst.md`, `acg_archetypes.lst.md` | stub |
+| `monster-abilities/` | New: Bestiary 1 monster abilities (Ex / Su / Sp / damage-resistance) | `beastiary1_monster_abilities.lst.md` | stub |
+| `monster-templates/` | New: Bestiary 1 monster templates (undead / construct / dragon-disciple / noble) | `beastiary1_monster_templates.lst.md` | stub |
 | `operator-supplied/` | Licensed Paizo/PcGen LST + PCC files | **empty at seed**; the operator populates this directory at SD-22 cycle-launch with the licensed corpus files | operator-only |
 
 ## 2. Why stubs and not the real Paizo data

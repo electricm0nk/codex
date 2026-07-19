@@ -53,6 +53,25 @@ Every criterion below has an associated cycle artifact path (per `corpus-source-
 | 30 (Epic 8 per-cycle tests) | `epic_8/per_cycle_tests_cycle_receipt.md` | `cargo test --locked` + clippy output |
 | 31 (Epic 9 closure readiness) | `closure-readiness-report.md` | Artifact-evidence survey output + cycle log + open-judgments log |
 
+### Per-criterion closure gate → artifact map (extensions per operator directive 2026-07-19)
+
+The primary 31-criteria flow is above. The following content-type extensions are extension cycles that land after the primary 31-criteria loop closes; their cycle artifacts parallel the same shape and live under the per-content-type subdirectory:
+
+| Extension cycle (per book × content type) | Cycle artifact (under `docs/release/SD-22/artifacts/`) | Required sections |
+|---|---|---|
+| APG races (8 cycles, batched 1-3 per cycle) | `races/apg_<race>_cycle_receipt.md` | Red/Green + cross-book invariant |
+| ACG races (6 cycles, batched) | `races/acg_<race>_cycle_receipt.md` | Red/Green + cross-book invariant |
+| APG magic items (3 aisles) | `magic-items/apg_<aisle>_cycle_receipt.md` | Red/Green + per-aisle top-3 keys |
+| ACG magic items (3 aisles) | `magic-items/acg_<aisle>_cycle_receipt.md` | Red/Green + per-aisle top-3 keys |
+| APG feats (5 categories) | `feats/apg_<category>_cycle_receipt.md` | Red/Green + per-category canon |
+| ACG feats (3 categories) | `feats/acg_<category>_cycle_receipt.md` | Red/Green + per-category canon |
+| APG archetypes (22) | `archetypes/apg_<class>_<arch>_cycle_receipt.md` | Red/Green + feature-swap + compat column |
+| ACG archetypes (24) | `archetypes/acg_<class>_<arch>_cycle_receipt.md` | Red/Green + feature-swap + compat column |
+| Bestiary 1 monster abilities (Ex/Su/Sp/damage-resistance — 4 cycles) | `monster-abilities/<kind>_cycle_receipt.md` | Red/Green + Bestiary-only invariant |
+| Bestiary 1 monster templates (4 family cycles) | `monster-templates/<family>_cycle_receipt.md` | Red/Green + cr_modifier column validation |
+
+These extensions do not modify the 31-criteria flower's gating. Epic 9 evaluates the primary 30/30 (criteria 1-30 → criterion-31 dispatch); the extensions land on `docs/release/SD-22/artifacts/` after the bundle's primary closure and are not blocking criterion-31. If the operator wants them blocking, that's a bundle-scope decision (SD-23+ or Epic-3-extension / Epic-4-extension additions here).
+
 ### Gates (verbatim)
 
 1. **Tranche-3 baseline green**. SD-18 chassis done; SD-19 corpus-aware seam + canonical Paizo-table store done. Confirmed by `cargo test --locked` green and the shared progress doc's `## SD-19 cycles` section closed.

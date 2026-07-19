@@ -1,0 +1,65 @@
+# apg_archetypes.lst — Representative Paizo-LST shape (APG class archetypes)
+# Stub for src/rules_core/rules_tables/apg/archetype_<class>_<arch>.rs (one per class archetype).
+# Column-count contract: 7 columns per row.
+# Rust resolver key shape: `apg:archetype:<class-name>:<lowercase-arch-name>`.
+
+[header]
+class_archetyped	base_class	key	benefits_summary	feature_swap_short	description_key	compatibility_other_arch
+[/header]
+
+[archetypes-alchemist]
+Alchemist_Vivisectionist_v1	Alchemist	vivisectionist	sneak_attack_progression_no_sneak_attack_class_feature_dup	vivisectionist_at_level_2_swap_explosion_dup_to_sneak_attack_swap	description_vivisectionist_apg	vivisectionist_or_chirurgeon_or_preservationist
+Alchemist_Chirurgeon_v1	Alchemist	chirurgeon	healing_treatment_per_day_swap_bomb_during_normal_per_day	heal_with_skill_bonus_no_bomb_swap_chirurgeon_level_dup	description_chirurgeon_apg	chirurgeon_or_vivisectionist_or_preservationist
+Alchemist_Preservationist_v1	Alchemist	preservationist	preserve_incorporeal_share_with_mutagen_swap_incorporeal_mutagen	destroy_with_incorporeal_smaller_mutagen(description_preservationist_apg	preservationist_or_vivisectionist_or_chirurgeon
+[/archetypes-alchemist]
+
+[archetypes-cavalier]
+Cavalier_Order_of_the_Lion_v1	Cavalier	order_of_the_lion	challenge_ally_save_bonus_solo_vs_evil	ally_save_bonus_when_challenging_evil_align	description_order_of_the_lion_apg	order_of_the_lion_only
+Cavalier_Order_of_the_Shield_v1	Cavalier	order_of_the_shield	challenge_ally_damage_soak_threaten_rally	challenge_ally_damage_soak_threatened_align_aware	description_order_of_the_shield_apg	order_of_the_shield_only
+[/archetypes-cavalier]
+
+[archetypes-gunslinger]
+Gunslinger_Mysterious_Stranger_v1	Gunslinger	mysterious_stranger	+1_to_attack_or_damage_at_night_in_low_light_per_grit_per_dup_per_dup	damage_or_accuracy_stack_in_low_light_or_social	dup	dup_social_pursuits_dup	mysterious_stranger_only
+Gunslinger_Ghost_Channeler_v1	Gunslinger	ghost_channeler	bullets_no_misfire_ranged_incorporeal	bullets_negate_incorporeal_dmg_dup_silver_consumption	description_ghost_channeler_apg	ghost_channeler_only
+[/archetypes-gunslinger]
+
+[archetypes-inquisitor]
+Inquisitor_Tactician_v1	Inquisitor	tactician_teamwork_buff	share_teamwork_feat_with_initiator_share_per_teamwork_feat	teamwork_feat_shared_with_initiator_dup	description_tactician_apg	tactician_or_judge_or_martyr
+Inquisitor_Judge_v1	Inquisitor	judge_stature_aura	bonus_at_will_judgement_targeted_aura_chk	description_judge_apg	judge_or_tactician_or_martyr
+[/archetypes-inquisitor]
+
+[archetypes-magus]
+Magus_Bladebound_v1	Magus	bladebound_black_blade_weapon	black_blade_intelligent	black_blade_intelligent_int_with_magus	dup	description_bladebound_apg	bladebound_only
+Magus_Kensai_v1	Magus	kensai_intense_blade_empowerment	+intense_blade_stack_int_per_4_levels_max_5	+intense_blade_enhance_with_per_gained_int	description_kensai_apg	kensai_only
+Magus_Eldritch_Archer_v1	Magus	eldritch_archer_ranged_spell_combat	spell_attack_with_ranged_weapon_distance_spell_strike	arcane_strike_with_bow_distance_spell_strike	description_eldritch_archer_apg	eldritch_archer_only
+[/archetypes-magus]
+
+[archetypes-oracle]
+Oracle_Stone_Mystery_v1	Oracle	stone_mystery	acid_resistance_10_focus_bonuses_stone-based_relic_bond	relic_bond_with_stone_focus_bonus_per_4_levels	description_stone_mystery_apg	stone_mystery_only
+Oracle_Lunar_Mystery_v1	Oracle	lunar_mystery	wis_char_swap_at_night_full_rest_aura	wis_or_char_swap_at_sunrise_or_sunset_full_aura	description_lunar_mystery_apg	lunar_mystery_only
+[/archetypes-oracle]
+
+[archetypes-summoner]
+Summoner_Totemist_v1	Summoner	totemist_evolution_select_at_4_uses_daggers_at_range	daggers_from_summoner_as_imbue_wpn	flurry_of_claws_focus_bonus_per_level	description_totemist_apg	totemist_or_teleportationist
+Summoner_Packmaster_v1	Summoner	packmaster	active_evolutions_independent_size_adjust	multi_unit_packmaster_at_level	description_packmaster_apg	packmaster_or_totemist
+Summoner_Teleportationist_v1	Summoner	teleportationist	spatial_swap_with_eidolon_dimension_door_dim_door_traits	dup_teleportationist_dup	description_teleportationist_apg	teleportationist_or_packmaster
+[/archetypes-summoner]
+
+[archetypes-witch]
+Witch_Autumn_Witch_v1	Witch	autumn_witch	bane_no_swap_free_action	succor_at_will_thrice_per_day_dup_at_will	description_autumn_witch_apg	autumn_witch_only
+Witch_Hag_Witch_v1	Witch	hag_witch_resilient_to_tricks_negative_effects	heavy_resilience_to_negative_against_innocuous_targets_like_pixie	description_hag_witch_apg	hag_witch_only
+Witch_Animist_v1	Witch	animist	master_bonus_commune_via_familiar_replaces_hex_at_3	animal_boost_at_5_per_level_per_animal_dup	description_animist_apg	animist_only
+[/archetypes-witch]
+
+# Notes for the parser:
+# - APG has ~20+ class archetypes across its 8 classes. This stub ships 22 representative archetypes.
+# - One Rust module per archetype. Resolver key shape: apg:archetype:<class>:<arch-name>.
+# - Cross-book invariants:
+#     RuleSetId::Apg::resolve("apg:archetype:alchemist:vivisectionist") returns Some.
+#     RuleSetId::Crb::resolve("apg:archetype:alchemist:vivisectionist") returns None.
+#     RuleSetId::Acg::resolve("apg:archetype:alchemist:vivisectionist") returns None.
+# - Cycle shape: one cycle per archetype (smaller scope than full-class cycles).
+# - Compatibility column (`compatibility_other_arch`) names archetypes that exclude each other;
+#   parser enforces a per-class "pick N of these" check against the column.
+
+# === operator-replace point ===

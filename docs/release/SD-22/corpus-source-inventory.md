@@ -211,6 +211,105 @@ A cycle that lands at row `<row>` of this file MUST mint a file at `docs/release
 
 Without this artifact, Epic 9's evaluator cannot conclude the criterion lands and treats it as a shortfall (Bucket-C pass-through to self-heal cycle).
 
-## 7. Recorded
+## 7. Races (per-operator-directive 2026-07-19 "supported/product visible for each new race")
 
-Authored 2026-07-19 per operator directive ("requirements documents should have more artifacts and references; coding harness needs more info to go by; call out the red-green TDD mandate"). Mirror lives at `docs/release/SD-22/corpus-source-inventory.md`. Companion to `epic-breakdown.md`, `technical-design.md`, `acceptance-and-verification.md`, `risks-and-open-questions.md`. Every Epic 3/4/5/6 cycle's input-discipline: this file first, `epic-breakdown.md` second, `risks-and-open-questions.md` third.
+Races are independent content units within each book's `RuleSetId::*` namespace. They are not their own `RuleSetId` variant — that would lose the "race sourced from a specific book" semantic. Resolver key shape: `<apg|acg>:race:<lowercase-race-name>`.
+
+### 7.1 APG races
+
+| Race | rust_module_path | test_fixture_path | cycle_artifact_path | RuleSetId |
+|---|---|---|---|---|
+| Fetchling | `src/rules_core/rules_tables/apg/race_fetchling.rs` | `tests/sd22_apg_race_resolves.rs` | `races/apg_fetchling_cycle_receipt.md` | `RuleSetId::Apg` |
+| Grippli | `src/rules_core/rules_tables/apg/race_grippli.rs` | (same fixture, batched) | `races/apg_grippli_cycle_receipt.md` | `RuleSetId::Apg` |
+| Kitsune | `src/rules_core/rules_tables/apg/race_kitsune.rs` | (same) | `races/apg_kitsune_cycle_receipt.md` | `RuleSetId::Apg` |
+| Nagaji | `src/rules_core/rules_tables/apg/race_nagaji.rs` | (same) | `races/apg_nagaji_cycle_receipt.md` | `RuleSetId::Apg` |
+| Samsaran | `src/rules_core/rules_tables/apg/race_samsaran.rs` | (same) | `races/apg_samsaran_cycle_receipt.md` | `RuleSetId::Apg` |
+| Strix | `src/rules_core/rules_tables/apg/race_strix.rs` | (same) | `races/apg_strix_cycle_receipt.md` | `RuleSetId::Apg` |
+| Svirfneblin | `src/rules_core/rules_tables/apg/race_svirfneblin.rs` | (same) | `races/apg_svirfneblin_cycle_receipt.md` | `RuleSetId::Apg` |
+| Wayang | `src/rules_core/rules_tables/apg/race_wayang.rs` | (same) | `races/apg_wayang_cycle_receipt.md` | `RuleSetId::Apg` |
+
+Cycle shape: **batch one cycle per 1-3 races** (single test fixture, multi-race assertions, single artifact). Cross-book invariants from `corpus/races/apg_races.lst.md` §"Notes" apply.
+
+### 7.2 ACG races
+
+| Race | rust_module_path | cycle_artifact_path | RuleSetId |
+|---|---|---|---|
+| Dhampir | `src/rules_core/rules_tables/acg/race_dhampir.rs` | `races/acg_dhampir_cycle_receipt.md` | `RuleSetId::Acg` |
+| Duergar (fighter-specialization) | `src/rules_core/rules_tables/acg/race_duergar.rs` | `races/acg_duergar_cycle_receipt.md` | `RuleSetId::Acg` |
+| Forlorn | `src/rules_core/rules_tables/acg/race_forlorn.rs` | `races/acg_forlorn_cycle_receipt.md` | `RuleSetId::Acg` |
+| Half-orc Doom-Shifter | `src/rules_core/rules_tables/acg/race_half_orc_doom_shifter.rs` | `races/acg_half_orc_doom_cycle_receipt.md` | `RuleSetId::Acg` |
+| Skeleton (ACG heritage) | `src/rules_core/rules_tables/acg/race_skeleton.rs` | `races/acg_skeleton_cycle_receipt.md` | `RuleSetId::Acg` |
+| Undying | `src/rules_core/rules_tables/acg/race_undying.rs` | `races/acg_undying_cycle_receipt.md` | `RuleSetId::Acg` |
+
+Cycle shape: batched like APG.
+
+## 8. Magic items (mitems)
+
+Magic items are aisle-grouped (wondrous / weapons / armor / etc.) with one cycle per aisle. Resolver key shape: `<apg|acg>:mitem:<lowercase-key>`. Test fixture shape: per-aisle assertion set, batched.
+
+| Book | Aisle | stub_path | cycle_artifact_path | RuleSetId |
+|---|---|---|---|---|
+| APG | Wondrous items | `corpus/magic-items/apg_mitems.lst.md` | `magic-items/apg_wondrous_aisle_cycle_receipt.md` | `RuleSetId::Apg` |
+| APG | Weapons | (same file, `[weapons]` section) | `magic-items/apg_weapons_aisle_cycle_receipt.md` | `RuleSetId::Apg` |
+| APG | Armor | (same file, `[armor]` section) | `magic-items/apg_armor_aisle_cycle_receipt.md` | `RuleSetId::Apg` |
+| ACG | Wondrous items | `corpus/magic-items/acg_mitems.lst.md` | `magic-items/acg_wondrous_aisle_cycle_receipt.md` | `RuleSetId::Acg` |
+| ACG | Weapons | (same file, `[weapons]` section) | `magic-items/acg_weapons_aisle_cycle_receipt.md` | `RuleSetId::Acg` |
+| ACG | Armor | (same file, `[armor]` section) | `magic-items/acg_armor_aisle_cycle_receipt.md` | `RuleSetId::Acg` |
+
+The Rust module per aisle parses all items of that aisle from one .lst file; per-item Rust code lives in a single module's per-key sub-routing. Cross-book invariants from each `corpus/magic-items/*.lst.md` §"Notes" apply.
+
+## 9. Feats
+
+Feats are category-grouped (general / item-creation / racial / convergence). Resolver key shape: `<apg|acg>:feat:<lowercase-feat-name>`. Cycle shape: one cycle per category-group, batched.
+
+| Book | Category group | stub_path | cycle_artifact_path | RuleSetId |
+|---|---|---|---|---|
+| APG | General combat | `corpus/feats/apg_feats.lst.md` | `feats/apg_general_combat_cycle_receipt.md` | `RuleSetId::Apg` |
+| APG | General + metamagic + defensive + social | (same file) | `feats/apg_general_other_cycle_receipt.md` | `RuleSetId::Apg` |
+| APG | Item-creation | (same file, `[feats-item-creation]` section) | `feats/apg_item_creation_cycle_receipt.md` | `RuleSetId::Apg` |
+| APG | Racial | (same file, `[feats-racial]` section) | `feats/apg_racial_cycle_receipt.md` | `RuleSetId::Apg` |
+| APG | Convergence | (same file, `[feats-acg-convergence]` section) | `feats/apg_convergence_cycle_receipt.md` | `RuleSetId::Apg` |
+| ACG | General combat | `corpus/feats/acg_feats.lst.md` | `feats/acg_general_combat_cycle_receipt.md` | `RuleSetId::Acg` |
+| ACG | Discovery (ACG-specific) | (same file, `[feats-magic-discoveries]` section) | `feats/acg_magic_discoveries_cycle_receipt.md` | `RuleSetId::Acg` |
+| ACG | Item-creation (ACG-specific) | (same file, `[feats-item-creation-acg]` section) | `feats/acg_item_creation_cycle_receipt.md` | `RuleSetId::Acg` |
+
+## 10. Archetypes
+
+Class archetypes are per-class specializations. Resolver key shape: `<apg|acg>:archetype:<class-name>:<lowercase-arch-name>`. Cycle shape: one cycle per archetype (smaller scope; many cycles per epic).
+
+Per-operator-directive 2026-07-19, archetype cycles are the **Epic-4-and-Epic-3 secondary work**. Per `acceptance-and-verification.md` §"Per-criterion closure gate → artifact map" gate 2 (APG Epic 3 already ships the 8 class cycles), archetype cycles are not in the 31-criteria flower's primary path — they're an extension Epic after the primary 31 criteria land, so archetype cycles land under "Epic-3-extension-1" or "Epic-4-extension-1" (numbering deferred until the base 31-criteria loop closes).
+
+For each book × archetype:
+
+| Book | stub_path | per-archetype cycle_artifacts |
+|---|---|---|
+| APG (22 archetypes across 8 classes) | `corpus/archetypes/apg_archetypes.lst.md` | `archetypes/apg_<class>_<arch>_cycle_receipt.md` (22 files, batched or split) |
+| ACG (24 archetypes across 10 classes) | `corpus/archetypes/acg_archetypes.lst.md` | `archetypes/acg_<class>_<arch>_cycle_receipt.md` (24 files, batched or split) |
+
+Cross-book invariants from each `corpus/archetypes/*.lst.md` §"Notes" apply.
+
+## 11. Monster abilities (Bestiary 1 only)
+
+Monster abilities are content units under `RuleSetId::Bestiary1`. Resolver key shape: `beastiary1:ability:<lowercase-ability-name>`. Cycle shape: one cycle per ability-kind (Ex / Su / Sp / damage-resistance).
+
+| Ability kind | stub_path | cycle_artifact_path | RuleSetId |
+|---|---|---|---|
+| Ex (extraordinary) | `corpus/monster-abilities/beastiary1_monster_abilities.lst.md` | `monster-abilities/ex_cycle_receipt.md` | `RuleSetId::Bestiary1` |
+| Su (supernatural) | (same file, `[su-supernatural]` section) | `monster-abilities/su_cycle_receipt.md` | `RuleSetId::Bestiary1` |
+| Sp (spell-like) | (same file, `[sp-spell-like]` section) | `monster-abilities/sp_cycle_receipt.md` | `RuleSetId::Bestiary1` |
+| Damage-resistance + immunity | (same file, `[damage-resistances]` section) | `monster-abilities/damage_resistance_cycle_receipt.md` | `RuleSetId::Bestiary1` |
+
+## 12. Monster templates (Bestiary 1 only)
+
+Monster templates are content units under `RuleSetId::Bestiary1`. Resolver key shape: `beastiary1:template:<lowercase-template-name>`. Cycle shape: one cycle per template family (undead / construct / dragon-disciple / noble / etc.).
+
+| Template family | stub_path | cycle_artifact_path | RuleSetId |
+|---|---|---|---|
+| Undead (5 templates: skeleton, zombie, ghoul, lich, vampire, frozen_remain) | `corpus/monster-templates/beastiary1_monster_templates.lst.md` | `monster-templates/undead_cycle_receipt.md` | `RuleSetId::Bestiary1` |
+| Construct (5 templates: clockwork_construct, flesh_golem, iron_golem, stone_golem, animated_object) | (same file, `[construct-templates]` section) | `monster-templates/construct_cycle_receipt.md` | `RuleSetId::Bestiary1` |
+| Dragon-disciple (1 template: dragon_disciple) | (same file, `[dragon-disciple-template]` section) | `monster-templates/dragon_disciple_cycle_receipt.md` | `RuleSetId::Bestiary1` |
+| Noble (2 templates: giant, noble) | (same file, `[noble-templates]` section) | `monster-templates/noble_cycle_receipt.md` | `RuleSetId::Bestiary1` |
+
+## 13. Recorded
+
+Authored 2026-07-19 per operator directive ("full" coverage for every content type listed in operator message: races, classes, mitems, spells, feats, etc.; no stub-only ingest; expected per content type). Authored alongside the corpus-stub seed: 12 stub files (2 races × APG/ACG, 2 mitems × APG/ACG, 2 feats × APG/ACG, 2 archetypes × APG/ACG, 1 monster-abilities Bestiary 1, 1 monster-templates Bestiary 1), plus the per-content-type inventory sections §7-§12 in `corpus-source-inventory.md`.
