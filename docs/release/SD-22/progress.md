@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: e555f64
+snapshot_as_of: 6f08b28
 ---
 
 # SD-22 — Progress
@@ -341,3 +341,22 @@ change and mints no fabricated content. Recommending (again) that the
 three options listed under the E3.6-9 blocker get an explicit operator
 decision — the loop will otherwise NO-OP every firing indefinitely
 without one.
+
+### cycle-2026-07-19T08:56:08Z | scheduled loop firing | n/a (verification-only, no production change) | no card (NO-OP, nothing to mint) | no row transition
+
+Re-checked state; nothing has changed since the prior cycle's NO-OP:
+
+- `corpus/` still does not exist in the repo; no operator-supplied
+  reference/corpus file has appeared.
+- Re-attempted `https://www.aonprd.com/` directly (not just d20pfsrd.com) —
+  still HTTP 403 Forbidden. No SRD/OGL mirror is reachable from this
+  sandbox.
+- Epic 3/4/5 remain blocked for the identical reason; Epic 6 remains
+  transitively blocked; Epic 8's discrete criteria (27-29) remain
+  complete; Epic 9/7 remain gated behind Epic 3/4/5/6.
+
+This is the second consecutive NO-OP firing on the exact same blocker,
+which the prior cycle explicitly predicted would keep happening without
+an operator decision. Per that prediction, this firing surfaces the stall
+to the operator directly (push notification) rather than silently
+NO-OPing indefinitely. No production change, no fabricated content.
