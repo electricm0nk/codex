@@ -351,3 +351,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["apg/class_witch_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Witch record's BONUS:COMBAT/BONUS:SAVE formula tokens (half BAB -- the first poor-BAB class landed in this roster -- good Will only, poor Fortitude+Reflex, MAXLEVEL:20, SPELLSTAT:INT with no MEMORIZE:NO/SPELLBOOK:YES token). Casting posture derives to Prepared via the parser's absent-signals default, the same shape as Cleric/Druid -- same scope boundary as class_alchemist.rs/class_cavalier.rs/class_inquisitor.rs/class_oracle.rs/class_summoner.rs."
+
+- cycle_id: 2026-07-19T19:51:46Z
+  epic: 3
+  criterion: apg_spell_and_equipment_resolution
+  criterion_section: "§1.2 Epic 3 — APG shared spell and equipment tables (criterion 9)"
+  row_or_kind: ingest:apg_class
+  evidence_tier_before: open (all six class chassis complete, criterion 9 not yet started -- no apg/spell_list.rs or apg/equipment_tables.rs existed)
+  evidence_tier_after: complete (criterion 9 -- bootstrap/representative-sample coverage, not exhaustive; see next_required_uplift)
+  branch_tip_before: e134bb4
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "apg/spell_list_cycle_receipt.md, apg/equipment_tables_cycle_receipt.md"
+  red_phase_evidence: "tests/sd22_apg_spell_list_resolves.rs and tests/sd22_apg_equipment_resolves.rs both failed to compile (E0432: could not find spell_list/equipment_tables in apg) against the unchanged tree (see cycle_artifact_path:Red-phase evidence, both files)"
+  green_phase_evidence: "added rules_tables/apg/spell_list.rs (4-entry bootstrap SPELL_LIST + spell_resolve) and rules_tables/apg/equipment_tables.rs (3-entry bootstrap EQUIPMENT_TABLE + equipment_resolve), registered both in apg/mod.rs; 7/7 and 6/6 new tests green (including both real-corpus-gated grounding tests, run with PCGEN_CORPUS_ROOT set); full cargo test suite green, 0 failed anywhere; clippy clean (see cycle_artifact_path:Green-phase evidence, both files)"
+  cargo_test_summary: "sd22_apg_spell_list_resolves: 7/7 passed (--include-ignored); sd22_apg_equipment_resolves: 6/6 passed (--include-ignored); full cargo test --locked: 0 failed across every suite (grepped full output for FAILED/N-failed, none found); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Criterion 9 now has real, non-fabricated bootstrap coverage (4 spells across 4 of 5 APG caster classes; 3 equipment items across the 3 apg_equip_*.lst files), mirroring crb/equipment_tables.rs's own 'one representative item per category, exhaustive coverage is later loop work' precedent -- not exhaustive. Documented gaps for a future cycle: Summoner has zero active (non-#-commented) spell records anywhere in apg_spells.lst's dedicated Summoner block; Alchemist bombs/discoveries and other named per-level features remain out of scope per the established chassis-only scope boundary (would need apg_abilities_class.lst in a dedicated ingest slice). Epic 4 (ACG) and Epic 5 (Bestiary 1) remain blocked on their own, separate parser-coverage gaps -- unaffected by this cycle. With criteria 6-9 all complete, Epic 3 (APG) is now fully closed out; next-eligible per Step 1 is Epic 4 or Epic 5's first cycle (both still blocked), or Epic 9/Epic 6 depending on how the operator resolves those blockers."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst (Bomber's Eye L44, Burst Bonds L53, Borrow Fortune L277, Ill Omen L150) and apg_equip_general.lst/apg_equip_arms_armor.lst/apg_equip_magic_items.lst (Iron Spike, Arrow (Blunt), Knucklebone of Fickle Fortune)"
+  rule_set_used: Apg
+  kanban_card: "no card: hermes unavailable in this session"
+  progress_file_updated: "yes"
+  artifacts_written: ["apg/spell_list_cycle_receipt.md", "apg/equipment_tables_cycle_receipt.md"]
+  notes: "Deliberately did not add a fabricated 'apg:alchemist:bomb:acid' equipment row despite corpus-source-inventory.md §1.3's illustrative example naming it -- that file's own corrective banner marks such prose non-authoritative, and no Bomb/Acid Bomb record exists in any real apg_equip_*.lst file (bombs are a Su class feature computed by formula, not a purchasable item). Kept both new resolver functions (spell_resolve, equipment_resolve) self-contained inside rules_tables/apg/ rather than wiring into the existing global equipment_id_resolve/spell_id_resolve in src/rules_core/ -- those two functions already exist and already accept a RuleSetId parameter (satisfying criterion 6's literal wording) but are hard-wired to the CRB tables regardless of rule_set; widening their dispatch logic to branch on RuleSetId::Apg is a cross-cutting change outside this cycle's file-touch partition (rules_core/equipment_resolver.rs and spell_resolver.rs are not listed as SD-22-cycle-touchable files) and is left as a follow-on if a future cycle needs the two ingest paths unified."

@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 6ab616b
+snapshot_as_of: e134bb4
 ---
 
 # SD-22 — Progress
@@ -29,7 +29,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.3 | 2 — Operator Pre-Launch | prelaunch:board | `codex-tranche-5` kanban board set as SD-22 default | **complete** — `hermes kanban boards switch codex-tranche-5` ran locally 2026-07-19; persistent state file `~/.hermes/kanban/current` = `codex-tranche-5`; loop's per-invocation `hermes kanban --board codex-tranche-5` (per loop-instruction Step 10b) resolves to the same board. NB: session env `HERMES_KANBAN_BOARD=codex-tranche-4` was overriding the on-disk default until unset; not persisted in any shell init file. | n/a |
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
-| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6), Summoner (5/6), Witch (6/6) | **complete for the full 6-class roster (criteria 6-8)** — `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all six classes' BAB/save chassis land with cross-book invariant tests; criterion 9 (spell/equipment resolution) still deferred for all six — no `apg/spell_list.rs`/`apg/equipment_tables.rs` yet. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`). Epic 3's per-class chassis work is now closed out; criterion 9's shared spell/equipment tables are next-eligible for Epic 3. See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md`, `artifacts/apg/class_summoner_cycle_receipt.md`, `artifacts/apg/class_witch_cycle_receipt.md` | see `## Cycle log` |
+| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6), Summoner (5/6), Witch (6/6); shared spell/equipment tables | **complete — criteria 6-9, Epic 3 (APG) fully closed out.** `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all six classes' BAB/save chassis land with cross-book invariant tests (criteria 6-8). Criterion 9 lands this cycle as `apg/spell_list.rs` (4-entry bootstrap sample: Bomber's Eye/Alchemist, Burst Bonds/Inquisitor, Borrow Fortune/Oracle, Ill Omen/Witch) and `apg/equipment_tables.rs` (3-entry bootstrap sample: Iron Spike, Arrow (Blunt), Knucklebone of Fickle Fortune) — bootstrap/representative coverage per the `crb/equipment_tables.rs` precedent, not exhaustive; Summoner has no active spell record anywhere in the real corpus (its dedicated block is entirely `#`-commented out) and Cavalier casts no spells, both by design not omission. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`). See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md`, `artifacts/apg/class_summoner_cycle_receipt.md`, `artifacts/apg/class_witch_cycle_receipt.md`, `artifacts/apg/spell_list_cycle_receipt.md`, `artifacts/apg/equipment_tables_cycle_receipt.md` | see `## Cycle log` |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Alchemist-ACG (cycle 1 of 10) | see cycle log | pending |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
@@ -1146,3 +1146,91 @@ cycle's file set. Rebased cleanly (`git rebase origin/tranche/5`, no
 conflicts), re-pointed `snapshot_as_of` at the new parent (`6ab616b`),
 re-verified `cargo test --locked` and `cargo clippy` still green
 post-rebase, then pushed successfully as `18a963b`.
+
+### cycle-2026-07-19T19:51:46Z | Epic 3, criterion 9 (APG shared spell/equipment tables) | ingest:apg_class | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete**
+
+Re-checked state before picking a criterion: `git log 18a963b..HEAD` showed
+one new commit, `e134bb4` (`feat(sd22): per-content-type product surfaces
+(races, mitems, feats, archetypes, monster-abilities, monster-templates)`),
+landed by the operator between this firing and the prior Witch cycle.
+Inspected its diff before proceeding (not just the commit message): it adds
+12 corpus-stub files under `artifacts/corpus/{races,magic-items,feats,
+archetypes,monster-abilities,monster-templates}/`, extends
+`corpus-source-inventory.md` with routing sections §7-§12, and extends
+`ingest.md` with a §9 "Per-content-type extensions" doctrine section for
+*future* extension-epic work (explicitly scoped as landing "after the
+primary 31-criteria loop closes" per that commit's own message and
+`corpus-source-inventory.md §10`). It touches no Rust source, no tests,
+and does not add or remove any of the 31 primary criteria — it does not
+change Epic 3's eligibility or criterion 9's open status. `origin/tranche/5`
+HEAD (`e134bb4`) matched local HEAD after fetch/checkout/pull — no other
+stream landed conflicting work. Per Step 1's priority order, with criteria
+6-8 all `complete` (six-class roster landed), criterion 9 (APG shared
+spell and equipment tables) is next-eligible for Epic 3.
+
+Read `corpus-source-inventory.md §1.2` (routing: `apg/spell_list.rs` →
+`tests/sd22_apg_spell_list_resolves.rs`; `apg/equipment_tables.rs` →
+`tests/sd22_apg_equipment_resolves.rs`) and `ingest.md` before RED. Verified
+real corpus records directly (not `corpus-source-inventory.md §1.1`'s
+non-authoritative "Content shape" prose, which names Alchemist bombs as if
+they were equipment — confirmed by grep across all three
+`apg_equip_*.lst` files that no `Bomb`/`Acid Bomb` record exists anywhere;
+bombs are a `Su` class feature computed by formula, not a purchasable
+item, so this cycle does not fabricate one). Found real, active
+(non-`.MOD`, non-commented) spell records for 4 of APG's 5 caster classes
+in `apg_spells.lst`'s "Main Spell List" block: `Bomber's Eye` (line 44,
+Alchemist=1, Transmutation), `Burst Bonds` (line 53, Inquisitor=1,
+Evocation), `Borrow Fortune` (line 277, Oracle=3, Evocation), `Ill Omen`
+(line 150, Witch=1, Enchantment). Summoner's dedicated "Summoner Spells -
+APG" block (line 471 onward) is entirely `#`-commented out in the real
+corpus — confirmed by direct grep, a real corpus gap, not an omission.
+For equipment, found real verbatim `COST:`/`WT:` records: `Iron Spike`
+(`apg_equip_general.lst`, `COST:0.05`), `Arrow (Blunt)`
+(`apg_equip_arms_armor.lst`, `COST:0.1`), `Knucklebone of Fickle Fortune`
+(`apg_equip_magic_items.lst`, `COST:0`).
+
+RED: added `tests/sd22_apg_spell_list_resolves.rs` and
+`tests/sd22_apg_equipment_resolves.rs`, referencing
+`apg::spell_list::spell_resolve` / `apg::equipment_tables::equipment_resolve`
+(neither module existed yet). Ran against the unchanged tree: both failed
+to compile (`E0432: could not find spell_list/equipment_tables in apg`)
+for the intended reason.
+
+GREEN: added `src/rules_core/rules_tables/apg/spell_list.rs` (bootstrap
+4-entry `SPELL_LIST` + `spell_resolve`, gated on `RuleSetId::Apg` same as
+`class_chassis_resolve`) and `apg/equipment_tables.rs` (bootstrap 3-entry
+`EQUIPMENT_TABLE` + `equipment_resolve`, same gating pattern); registered
+both as `pub mod` in `apg/mod.rs`. Investigated the existing
+`equipment_id_resolve`/`spell_id_resolve` in `src/rules_core/` (referenced
+by criterion 6's wording) — both already accept a `RuleSetId` parameter
+but are hard-wired to the CRB tables regardless of its value; widening
+their dispatch is a cross-cutting change to files outside every SD-22
+epic's file-touch partition (`equipment_resolver.rs`/`spell_resolver.rs`
+aren't listed as cycle-touchable), so this cycle kept the new
+`spell_resolve`/`equipment_resolve` functions self-contained inside
+`apg/`, mirroring `class_chassis_resolve`'s own established shape, and did
+not touch the global resolvers — left as a follow-on note in the receipt.
+
+Verification: `cargo test --locked --test sd22_apg_spell_list_resolves --
+--include-ignored` 7/7 passed (including the real-corpus-gated grounding
+test, run with `PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data`).
+`cargo test --locked --test sd22_apg_equipment_resolves -- --include-ignored`
+6/6 passed (same grounding-test gating). Full `cargo test --locked` —
+every suite green, 0 failures anywhere (grepped full output for
+`FAILED`/`N failed` with `N > 0`, found none; sibling-preservation holds,
+including all six untouched APG class-chassis suites). `cargo clippy
+--locked --tests -- -D warnings` clean.
+
+With criterion 9 landed, Epic 3 (APG) is now **fully closed out**
+(criteria 6-9 all complete). Epic 4 (ACG) and Epic 5 (Bestiary 1) remain
+blocked on their own, separate parser-coverage gaps (no `CLASS:`
+allowlist entry for any ACG class; no parser recognizes `b1_races.lst`'s
+unprefixed bare-row monster records) — unaffected by this cycle.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/apg/spell_list_cycle_receipt.md`,
+`artifacts/apg/equipment_tables_cycle_receipt.md`. Receipt block appended
+to `receipts.md`. Next-eligible: Epic 4/Epic 5's first cycles (both remain
+blocked on their own parser-coverage gaps), or an operator decision on how
+to unblock them (widen `pcgen_import`'s allowlists for ACG classes; add a
+bare-row monster parser for Bestiary 1).
