@@ -401,3 +401,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["acg/class_arcanist_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Arcanist record's BONUS:COMBAT/BONUS:SAVE formula tokens (poor/half BAB -- same shape as APG's Witch -- good Will only, poor Fortitude+Reflex, MAXLEVEL:20, SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES -- spellbook posture, same shape as APG's Alchemist) -- same scope boundary as every APG class module (named per-level features out of scope, formula-derived chassis only). This is the first Epic 4 (ACG) cycle to land a commit; rules_tables/acg/ and RuleSetId::Acg are new this cycle, mirroring rules_tables/apg/'s established shape exactly."
+
+- cycle_id: 2026-07-19T21:15:57Z
+  epic: 4
+  criterion: acg_bloodrager
+  criterion_section: "§2.1 Epic 4 — ACG content-source ingest (criteria 10-12; second real ACG class)"
+  row_or_kind: ingest:acg_class
+  evidence_tier_before: open (Arcanist complete; Bloodrager not yet started)
+  evidence_tier_after: complete (criteria 10-12 for Bloodrager; criterion 13's spell/equipment resolution deferred to a later cycle)
+  branch_tip_before: 3f8df8a
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "acg/class_bloodrager_cycle_receipt.md"
+  red_phase_evidence: "Widening RED: parses_real_bloodrager_record_from_acg_classes_lst added to tests/sd17_b_spellcasting_class.rs, failed (Bloodrager out of SPELLCASTING_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_bloodrager_resolves.rs failed to compile (E0599: AcgClassId::Bloodrager did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Bloodrager) in src/pcgen_import/lst_parser/spellcasting_class.rs; added rules_tables/acg/class_bloodrager.rs and AcgClassId::Bloodrager match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist still resolves); widening test green (22/22 in sd17_b_spellcasting_class); full cargo test suite green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_acg_class_bloodrager_resolves: 7/7 passed (--include-ignored); sd17_b_spellcasting_class: 22/22 passed (--include-ignored) including the new widening test; full cargo test --locked: 0 failed across every suite; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 4's next-eligible cycle is Brawler (class 3 of the corrected 10-class roster: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest), or a dedicated cycle for criterion 13's shared spell/equipment tables once more classes land. corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md still need an operator/doc-correction pass to formally replace 'Alchemist (ACG-side)' with Slayer in the row list, mirroring commit 6923e54's APG roster fix -- not blocking further Epic 4 cycles. Epic 5 (Bestiary 1) remains blocked on its own, separate parser gap (b1_races.lst's unprefixed bare-row monster records) -- unaffected by this cycle."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:40 (CLASS:Bloodrager)"
+  rule_set_used: Acg
+  kanban_card: "<see progress.md cycle log for the minted card id or the no-card fallback reason>"
+  progress_file_updated: "yes"
+  artifacts_written: ["acg/class_bloodrager_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Bloodrager record's BONUS:COMBAT/BONUS:SAVE formula tokens (full BAB -- no fractional divisor, unlike Arcanist's poor/half BAB -- good Fortitude, poor Reflex+Will, MAXLEVEL:20, SPELLSTAT:CHA MEMORIZE:NO -- spontaneous posture, same shape as Oracle/Summoner) -- same scope boundary as class_arcanist.rs (named per-level features out of scope, formula-derived chassis only)."

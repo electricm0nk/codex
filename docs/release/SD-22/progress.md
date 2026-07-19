@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 87e7ec3
+snapshot_as_of: 3f8df8a
 ---
 
 # SD-22 — Progress
@@ -30,7 +30,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
 | E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6), Summoner (5/6), Witch (6/6); shared spell/equipment tables | **complete — criteria 6-9, Epic 3 (APG) fully closed out.** `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all six classes' BAB/save chassis land with cross-book invariant tests (criteria 6-8). Criterion 9 lands this cycle as `apg/spell_list.rs` (4-entry bootstrap sample: Bomber's Eye/Alchemist, Burst Bonds/Inquisitor, Borrow Fortune/Oracle, Ill Omen/Witch) and `apg/equipment_tables.rs` (3-entry bootstrap sample: Iron Spike, Arrow (Blunt), Knucklebone of Fickle Fortune) — bootstrap/representative coverage per the `crb/equipment_tables.rs` precedent, not exhaustive; Summoner has no active spell record anywhere in the real corpus (its dedicated block is entirely `#`-commented out) and Cavalier casts no spells, both by design not omission. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`). See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md`, `artifacts/apg/class_summoner_cycle_receipt.md`, `artifacts/apg/class_witch_cycle_receipt.md`, `artifacts/apg/spell_list_cycle_receipt.md`, `artifacts/apg/equipment_tables_cycle_receipt.md` | see `## Cycle log` |
-| E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (cycle 1 of corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order) | **complete (criteria 10-12 for Arcanist)** — `rules_tables/acg/mod.rs` created, `RuleSetId::Acg` registered, first ACG class chassis lands with cross-book invariant tests. See `artifacts/acg/class_arcanist_cycle_receipt.md` | see `## Cycle log` |
+| E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (1/10), Bloodrager (2/10) of the corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order) | **complete (criteria 10-12 for Arcanist + Bloodrager)** — `rules_tables/acg/mod.rs` grown to two classes, `RuleSetId::Acg` cross-book invariant tests hold for both. See `artifacts/acg/class_arcanist_cycle_receipt.md`, `artifacts/acg/class_bloodrager_cycle_receipt.md` | see `## Cycle log` |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
@@ -1378,4 +1378,72 @@ Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/acg/class_arcanist_cycle_receipt.md`. Receipt block appended to
 `receipts.md`. Next-eligible for Epic 4: Bloodrager (class 2 of the
 corrected 10-class roster), or a dedicated cycle for criterion 13's shared
+spell/equipment tables once more classes land.
+
+### cycle-2026-07-19T21:15:57Z | Epic 4, Bloodrager (cycle 2 of corrected 10-class roster) | ingest:acg_class | card see receipts.md/progress.md | open → **complete (criteria 10-12 for Bloodrager)**
+
+Re-checked state before picking a criterion: `git log 3f8df8a..origin/tranche/5`
+showed no new commits — `3f8df8a` (the prior Arcanist cycle's own commit) is
+still the tip, tree clean. Per Step 1's priority order and the prior cycle's
+own `next_required_uplift`, Bloodrager (class 2 of the corrected 10-class
+roster) is next-eligible. Re-verified the real `acg_classes.lst` roster
+directly before picking (not from memory of the prior cycle's finding):
+`grep -oP "^CLASS:\K[A-Za-z-]+" acg_classes.lst | sort -u` still returns the
+same 10-class roster (Arcanist, Bloodrager, Brawler, Hunter, Investigator,
+Shaman, Skald, Slayer, Swashbuckler, Warpriest, plus the internal
+`Ex-Warpriest` variant) — `Bloodrager` has a real `CLASS:Bloodrager` record
+at `acg_classes.lst:40`.
+
+Verified the real record directly before writing any test: `BONUS:COMBAT|
+BASEAB|classlevel("APPLIEDAS=NONEPIC")|TYPE=Base.REPLACE` (full BAB — no
+fractional divisor, unlike Arcanist's poor/half BAB),
+`BONUS:SAVE|BASE.Fortitude|classlevel(...)/2+2` (good Fortitude),
+`BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel(...)/3` (poor Reflex and Will),
+`MAXLEVEL:20`, and (line 44) `SPELLSTAT:CHA MEMORIZE:NO` (spontaneous
+casting, same posture as Sorcerer/Bard/Oracle/Summoner) — confirming
+Bloodrager belongs in `spellcasting_class.rs`'s allowlist, not `class.rs`'s.
+
+**Widening RED**: added `parses_real_bloodrager_record_from_acg_classes_lst`
+to `tests/sd17_b_spellcasting_class.rs` (real-corpus-gated on
+`PCGEN_CORPUS_ROOT`, reusing the existing `real_acg_classes_lst()` helper);
+ran against the unchanged tree — failed for the intended reason
+(`Bloodrager` not yet in `SPELLCASTING_CLASS_NAMES`, silently skipped).
+
+**Acceptance RED**: added `tests/sd22_acg_class_bloodrager_resolves.rs`
+mirroring the Arcanist test's shape (plus a cross-class regression test
+confirming Arcanist still resolves once Bloodrager lands); ran against the
+unchanged tree — failed to compile (`E0599`: `AcgClassId::Bloodrager` did
+not exist, 5 call sites) for the intended reason.
+
+GREEN: widened `SPELLCASTING_CLASS_NAMES` in
+`src/pcgen_import/lst_parser/spellcasting_class.rs` by exactly one name
+(`Bloodrager`), per the file-touch-partition's bounded-widening pattern.
+Added `src/rules_core/rules_tables/acg/class_bloodrager.rs` (BAB/save
+chassis only, same scope boundary as `class_arcanist.rs`) and
+`AcgClassId::Bloodrager` + a match arm in `acg/mod.rs`.
+
+Verification: `cargo test --locked --test sd22_acg_class_bloodrager_resolves
+-- --include-ignored` 7/7 passed (including the real-corpus-gated grounding
+test and the Arcanist-still-resolves regression check). `cargo test --locked
+--test sd17_b_spellcasting_class -- --include-ignored` 22/22 passed,
+including the new widening test. Full `cargo test --locked` — every suite
+green, 0 failed anywhere (grepped full output for `FAILED`/`error\[`/`N
+failed` with `N > 0`, found none; sibling-preservation holds, including the
+untouched Arcanist suite, all six APG class-chassis suites, and both APG
+spell/equipment suites). `cargo clippy --locked --tests -- -D warnings`
+clean.
+
+With Bloodrager landed, Epic 4 (ACG) has two of ten real classes chassis'd —
+criteria 10-12 complete for Arcanist and Bloodrager. Criterion 13 (per-cycle
+ACG spell/equipment resolution) remains open (mirrors APG's criterion 9, a
+separate future cycle). Eight more real ACG classes remain (Brawler, Hunter,
+Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest). Epic 5
+(Bestiary 1) remains blocked on its own, separate parser gap (no parser
+recognizes `b1_races.lst`'s unprefixed bare-row monster records) —
+unaffected by this cycle.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/acg/class_bloodrager_cycle_receipt.md`. Receipt block appended to
+`receipts.md`. Next-eligible for Epic 4: Brawler (class 3 of the corrected
+10-class roster), or a dedicated cycle for criterion 13's shared
 spell/equipment tables once more classes land.
