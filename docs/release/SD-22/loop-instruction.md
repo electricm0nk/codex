@@ -18,7 +18,7 @@
 > 
 > 1. Confirm `codex-tranche-5` kanban board is set as the SD-22 default (operator-pinned 2026-07-18; reused from the prior 2026-07-16 SD-21 launch that was repurposed).
 > 2. Confirm `tranche/5` branch is pushed to origin.
-> 3. Corpus generation is in-bundle per `decisions.md §5` (operator directive 2026-07-18) — no pre-supplied structured-data input file is required; each Epic 3/4/5 cycle generates its own `corpus/<book>_<unit>.json` first.
+> 3. Corpus source is real PCGen LST data (per `decisions.md §5`, corrected 2026-07-19) — already on disk at `/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/{advanced_players_guide,advanced_class_guide,bestiary}/`; a cloud sandbox that only clones `codex` adds `https://github.com/PCGen/pcgen` as a second git source to reach the same tree.
 > 4. Run `git status --porcelain | wc -l` on `tranche/5` — must return `0` before loop launch.
 > 
 > Then launch with `/loop 60m /goal ./loop-instruction.md` and the bundle runs autonomously to closure.
@@ -156,9 +156,9 @@ cargo test --locked --test sd22_<criterion> 2>&1 | tail -40
 For SD-22 cycles, the change is one of:
 
 - **Epic 1 — Identifier Cleanup**: source-code identifier audit + renames. Per the identifier-discipline doctrine. RED is `grep` finding the dirty identifier; GREEN is the rename + tests passing.
-- **Epic 3 — APG content-source ingest**: **first, generate the cycle's corpus input file `corpus/apg_<class>.json` from PF1 OGL/SRD content per the `corpus-source-inventory.md` §1.1 row's Content-shape column (per `decisions.md §5`)**; then new file `src/rules_core/rules_tables/apg/<class>.rs` with structured data per `corpus-source-inventory.md` §1.1, or edit to `apg/spell_list.rs` / `apg/equipment_tables.rs` per §1.2. Add `RuleSetId::Apg` if not yet added. **RED phase must reference §1.3 cross-book invariants** so the test asserts `Some(...)` for `RuleSetId::Apg` and `None` for the other variants.
-- **Epic 4 — ACG content-source ingest**: symmetric to APG with `acg/` directory and `RuleSetId::Acg` — **generate `corpus/acg_<class>.json` first per §2.1 (per `decisions.md §5`)**. RED phase references §2.3 cross-book invariants.
-- **Epic 5 — Bestiary 1 content-source ingest**: **generate `corpus/beastiary1_<subset>.json` first per §3.1 (per `decisions.md §5`)**; then new files in `beastiary1/` per monster-block subset. RED phase references §3.1 and §3.2 invariants.
+- **Epic 3 — APG content-source ingest**: **first, parse the real record from `apg_classes.lst` / `apg_abilities_class.lst` / `apg_equip_*.lst` (per `decisions.md §5`) using the existing `src/pcgen_import/lst_parser/*` functions**, per the `corpus-source-inventory.md` §1.1 row's routing columns (the row's *Content shape* prose is illustrative only — see that file's corrective banner; the `.lst` record is the source of truth); then new file `src/rules_core/rules_tables/apg/<class>.rs` with the transcribed structured data, citing the source `.lst` file + record key in a doc comment (mirroring `rules_tables/crb/class_tables.rs`), or edit `apg/spell_list.rs` / `apg/equipment_tables.rs` per §1.2. Add `RuleSetId::Apg` if not yet added. **RED phase must reference §1.3 cross-book invariants** so the test asserts `Some(...)` for `RuleSetId::Apg` and `None` for the other variants.
+- **Epic 4 — ACG content-source ingest**: symmetric to APG with `acg/` directory and `RuleSetId::Acg` — **parse `acg_classes.lst` / `acg_abilities_class.lst` / `acg_equip*.lst` first, per §2.1**. RED phase references §2.3 cross-book invariants.
+- **Epic 5 — Bestiary 1 content-source ingest**: **parse `b1_races.lst` / `b1_abilities_race.lst` first, per §3.1**; then new files in `beastiary1/` per monster-block subset. RED phase references §3.1 and §3.2 invariants.
 - **Epic 6 — DM Toolkit**: extension to encounter-difficulty and party-CR modules. RED phase references §4.1's five deterministic test cases. Happy-path integration consumes ingested Epic 3+4+5 output.
 - **Epic 7 — Closure Epilogue**: GREEN-only; the criterion is "PR is opened, release notes are generated, closure is closed." No cycle fixture; the cycle artifact is the closure PR + the release notes.
 - **Epic 8 — Build Version Numbering**: GREEN-only; the version fields are simple mutations with a small test fixture asserting the build-label format. Cycle artifact: version file diff + build-label test output.
@@ -262,7 +262,7 @@ clippy_signal: clean | dirty
 cycle_timing_seconds: <N>
 self_heals_applied: <list, empty if none>
 next_required_uplift: <recommendation for next iteration>
-corpus_input_path: <path to the cycle-generated corpus file, e.g. corpus/apg_alchemist.json (generated in-cycle per decisions.md §5)>
+corpus_input_path: <path to the real .lst source record, e.g. pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:CLASS:Alchemist (per decisions.md §5)>
 rule_set_used: Apg | Acg | Bestiary1
 ```
 
@@ -313,7 +313,7 @@ The cycle refuses to advance when any of the following is true. In every case th
 - The progress doc and the live matrix disagree on a row's `evidence_tier` and the disagreement is not just a stale snapshot.
 - `cargo test --tests` regresses on a row other than the one the cycle touched. Sibling-preservation is a hard rule.
 - Two live `claude` processes are working on cycles that would both touch `src/rules_core/rules_tables/<book>/` or any per-epic module file.
-- **SD-22-specific:** A cycle's corpus generation hits unresolvable source ambiguity (SRD sources conflict on a value, or SRD coverage is missing for the cycle's content unit). Per `decisions.md §5`, Epic 3/4/5 cycles generate their own `corpus/<book>_<unit>.json` as the cycle's first step — a merely *missing* corpus file is never a hard stop; only unresolvable ambiguity in the source material routes to `## Open blockers`.
+- **SD-22-specific:** A cycle's `.lst` lookup is genuinely unreachable — neither the local sibling repo (`/home/ubuntu/workspace/repos/pcgen/data/...`) nor a cloned `https://github.com/PCGen/pcgen` mirror resolves in that session's environment, or the specific record isn't present in the resolved tree. Per `decisions.md §5` (corrected 2026-07-19), real LST data already exists for APG/ACG/Bestiary 1 — this hard stop should be rare; if it fires repeatedly, that's a signal the session's environment setup (not the corpus) is the actual problem.
 
 ## What "content-source ingest closure" actually means for SD-22
 
@@ -367,7 +367,7 @@ The operator can stop the loop at any time; a stopped loop leaves the progress d
 11. **Pre-launch setup checklist (operator action, before first launch).**
     - [ ] `codex-tranche-5` kanban board set as the SD-22 default (operator-pinned 2026-07-18; reused from dead-state).
     - [ ] `tranche/5` branch pushed to origin.
-    - [ ] Corpus generation is in-bundle per `decisions.md §5` — no pre-supplied structured-data input file required; Epic 3's first cycle generates `corpus/apg_alchemist.json` itself.
+    - [ ] Corpus source is real PCGen LST data per `decisions.md §5` (corrected 2026-07-19) — already on disk locally; cloud sessions add `https://github.com/PCGen/pcgen` as a second git source.
     - [ ] Operator's interactive `hermes kanban boards current` is set to `codex-tranche-5` for operator-driven inspection.
     - [ ] `./progress.md` does not yet exist; the loop creates it on first run.
 

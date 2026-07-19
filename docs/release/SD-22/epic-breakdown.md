@@ -28,9 +28,9 @@ The TDD mandate applies on every cycle of every epic. It is the operator-pinned 
 
 - **Epic 1 — Code-Side Identifier Cleanup**: identifier renames are RED-only cycles; the red phase is `grep` finding the dirty identifier, the green phase is the rename + tests still passing. Cycle artifact: red-phase grep output + green-phase `cargo test --locked` + clippy.
 - **Epic 2 — Operator Pre-Launch**: three green-only operator-side checks; no RED phase because the failure modes are operator-blocker, not cycle. Cycle artifact: each operator check's verification command + output.
-- **Epic 3 — APG content-source ingest**: every per-class cycle **first generates its corpus input file** (`corpus/apg_<class>.json` from PF1 OGL/SRD content per `decisions.md §5`), then writes a class-specific test fixture in red, ingests the class in green, and persists the cycle artifact. Cross-book invariants in `corpus-source-inventory.md` §1.3 are part of the green acceptance.
-- **Epic 4 — ACG content-source ingest**: same shape as Epic 3 (corpus generation first, per `decisions.md §5`) with `corpus-source-inventory.md` §2 in the red-phase reading set.
-- **Epic 5 — Bestiary 1 content-source ingest**: per-monster-block-subset cycle; generates `corpus/beastiary1_<subset>.json` first (per `decisions.md §5`); test fixture has one canonical monster per subset (Goblin for subset 1, Kobold for a CR-1 band focused subset, etc.).
+- **Epic 3 — APG content-source ingest**: every per-class cycle **first parses the class's real record** from `apg_classes.lst`/`apg_abilities_class.lst`/`apg_equip_*.lst` via `src/pcgen_import/lst_parser/*` (per `decisions.md §5`, corrected 2026-07-19), then writes a class-specific test fixture in red, ingests the class in green, and persists the cycle artifact. Cross-book invariants in `corpus-source-inventory.md` §1.3 are part of the green acceptance.
+- **Epic 4 — ACG content-source ingest**: same shape as Epic 3 (LST parse first, per `decisions.md §5`) with `corpus-source-inventory.md` §2 in the red-phase reading set.
+- **Epic 5 — Bestiary 1 content-source ingest**: per-monster-block-subset cycle; parses `b1_races.lst`/`b1_abilities_race.lst` first (per `decisions.md §5`); test fixture has one canonical monster per subset (Goblin for subset 1, Kobold for a CR-1 band focused subset, etc.).
 - **Epic 6 — DM Toolkit**: tests come from `corpus-source-inventory.md` §4.1's five deterministic cases. Happy-path integration consumes Epic 3+4+5 outputs; Epic 6 doesn't ship without at least one ingested PartySnapshot + one ingested MonsterRef.
 - **Epic 7 — Closure Epilogue**: GREEN-only; the criterion is "PR is opened, release notes are generated, closure is closed." No cycle fixture; the cycle artifact is the closure PR + the release notes.
 - **Epic 8 — Build Version Numbering**: GREEN-only; the version fields are simple mutations with a small test fixture asserting the build-label format. Cycle artifact: version file diff + build-label test output.
@@ -94,7 +94,7 @@ Epic 1 lands **first**. Epic 2's pre-launch checklist validates the launch infra
 
 ### Epic 3 — APG content-source ingest (per-class cycles)
 
-**Scope doctrine (operational rule):** under SD-19 §9 source-book subdirectory pattern, APG populates `src/rules_core/rules_tables/apg/` as sibling directories to SD-19's `rules_tables/crb/`. The APG cycle's per-cycle landing shape is one APG class's table entries (per-cycle shape mirrors SD-19's per-school loop pattern). **Each per-class cycle begins by generating its corpus input file** (`corpus/apg_<class>.json`) from PF1 OGL/SRD content, per `decisions.md §5` — the `corpus-source-inventory.md` §1.1 row's Content-shape column is the generation spec. Each class table includes structured data for that class's features, spells (if any), equipment (if any), and any class-specific race interactions.
+**Scope doctrine (operational rule):** under SD-19 §9 source-book subdirectory pattern, APG populates `src/rules_core/rules_tables/apg/` as sibling directories to SD-19's `rules_tables/crb/`. The APG cycle's per-cycle landing shape is one APG class's table entries (per-cycle shape mirrors SD-19's per-school loop pattern). **Each per-class cycle begins by parsing the class's real `.lst` record** (`apg_classes.lst` for chassis, `apg_abilities_class.lst` for features) via `src/pcgen_import/lst_parser/*`, per `decisions.md §5` (corrected 2026-07-19) — the `corpus-source-inventory.md` §1.1 row's Content-shape column is illustrative only, not the source of truth (see that file's corrective banner). Each class table includes structured data for that class's features, spells (if any), equipment (if any), and any class-specific race interactions, transcribed from the `.lst` record with source provenance cited in a doc comment.
 
 6. **`src/rules_core/rules_tables/apg/mod.rs` is populated** with the APG class table index and `RuleSetId::Apg` variant registration. The CRB-side `equipment_id_resolve` and `spell_id_resolve` resolvers accept `RuleSetId::Apg` as a parameter.
 
@@ -106,7 +106,7 @@ Epic 1 lands **first**. Epic 2's pre-launch checklist validates the launch infra
 
 ### Epic 4 — ACG content-source ingest (per-class cycles)
 
-**Scope doctrine (operational rule):** same shape as Epic 3, for the ACG content. Per-class cycle shape; populates `rules_tables/acg/` as sibling directory to `rules_tables/apg/`. Each per-class cycle begins by generating its corpus input file (`corpus/acg_<class>.json`) per `decisions.md §5`, with `corpus-source-inventory.md` §2.1 as the generation spec.
+**Scope doctrine (operational rule):** same shape as Epic 3, for the ACG content. Per-class cycle shape; populates `rules_tables/acg/` as sibling directory to `rules_tables/apg/`. Each per-class cycle begins by parsing the class's real `.lst` record (`acg_classes.lst`/`acg_abilities_class.lst`/`acg_equip*.lst`) via `src/pcgen_import/lst_parser/*`, per `decisions.md §5` (corrected 2026-07-19), with `corpus-source-inventory.md` §2.1 as routing (not content) reference.
 
 10. **`src/rules_core/rules_tables/acg/mod.rs` is populated** with the ACG class table index and `RuleSetId::Acg` variant registration.
 
@@ -118,7 +118,7 @@ Epic 1 lands **first**. Epic 2's pre-launch checklist validates the launch infra
 
 ### Epic 5 — Bestiary 1 content-source ingest (per-monster-block cycles)
 
-**Scope doctrine (operational rule):** Bestiary 1 populates `src/rules_core/rules_tables/beastiary1/` per SD-19 §9. Per-monster-block cycle shape (one cycle per monster-block subset of the 300+ Bestiary 1 monsters). Each per-monster-block cycle begins by generating its corpus input file (`corpus/beastiary1_<subset>.json`) per `decisions.md §5`, with `corpus-source-inventory.md` §3.1 as the generation spec.
+**Scope doctrine (operational rule):** Bestiary 1 populates `src/rules_core/rules_tables/beastiary1/` per SD-19 §9. Per-monster-block cycle shape (one cycle per monster-block subset of the 300+ Bestiary 1 monsters). Each per-monster-block cycle begins by parsing the subset's real `.lst` records (`b1_races.lst`/`b1_abilities_race.lst`) via `src/pcgen_import/lst_parser/*`, per `decisions.md §5` (corrected 2026-07-19), with `corpus-source-inventory.md` §3.1 as routing (not content) reference.
 
 14. **`src/rules_core/rules_tables/beastiary1/mod.rs` is populated** with the Bestiary 1 monster index and `RuleSetId::Bestiary1` variant registration.
 
@@ -215,7 +215,7 @@ A single loop cycle within an epic lands one acceptance criterion (or one repres
 
 1. Picks one acceptance criterion from the epic's open list.
 2. Verifies the working tree is on `tranche/5` (no feature branches; per the no-branches convention; per operator directive 2026-07-18: SD-22 launches on `tranche/5`, not `tranche/3` or `tranche/4`).
-3. Generates the cycle's corpus input file (`corpus/<book>_<unit>.json`, content-source ingest cycles only; per `decisions.md §5`), then reads the cycle's parity test fixture (for content-source ingest cycles) or the boundary-contract test (for DM-toolkit cycles).
+3. Parses the cycle's real `.lst` record (content-source ingest cycles only; per `decisions.md §5`, corrected 2026-07-19), then reads the cycle's parity test fixture (for content-source ingest cycles) or the boundary-contract test (for DM-toolkit cycles).
 4. Implements the smallest change that satisfies the criterion.
 5. Runs `cargo test --locked` (zero regressions) and `cargo clippy --locked --tests -- -D warnings` (clean).
 6. Commits directly to `tranche/5` with a `feat(sd22): <criterion> (<row transition>)` message.

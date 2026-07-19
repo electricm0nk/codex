@@ -12,9 +12,17 @@ mirror_of: ~/workspace/programs/codex/requirements/SD-22-content-source-ingest-a
 
 # SD-22 — Corpus-Source Inventory
 
+> ## ⚠️ CORRECTIVE BANNER (added 2026-07-19 — read before using this file's "Content shape" columns)
+>
+> This file's per-row **"Content shape"** columns (§1.1, §2.1) were authored 2026-07-19 from model memory, before `decisions.md §5` was corrected the same day. They are **not verified against a real source** and are **not authoritative** — do not transcribe them into `rules_tables/<book>/*.rs` as-is.
+>
+> The real source is PCGen's published `.lst` data, ingested via the existing `src/pcgen_import/` engine (same pipeline SD-19 used for the CRB). See `decisions.md §5` for the corrected sourcing decision and the paths to the real data (local sibling repo `/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/{advanced_players_guide,advanced_class_guide,bestiary}/`, or `https://github.com/PCGen/pcgen` as a second git source in a cloud sandbox).
+>
+> This file's **routing columns remain valid and authoritative**: `rust_module_path`, `test_fixture_path`, `cycle_artifact_path`, `RuleSetId`, class/subset ordering, and the cross-book invariants (§1.3, §2.3, §3.2). Only the "Content shape" prose (the specific named features/spells/stats text) is superseded — re-derive that from the real `.lst` record per cycle instead.
+
 This file is the **load-bearing reference** for SD-22's content-source ingest cycles (Epic 3 APG, Epic 4 ACG, Epic 5 Bestiary 1) and Epic 6 DM Toolkit. Each row maps a publisher-book content unit to the four artifacts the cycle must produce: Rust module, test fixture, cycle artifact (under `docs/release/SD-22/artifacts/`), and `RuleSetId` variant. A coding harness running a cycle uses this file to know **what to ingest** and **what to assert**.
 
-**How a cycle uses this file.** Before the cycle runs, the harness reads the row for the cycle's content unit. The cycle MUST (0) generate the cycle's corpus input file (`corpus/<book>_<unit>.json`) from PF1 OGL/SRD content, using this row's *Content shape* column as the generation spec (per `decisions.md §5`, operator directive 2026-07-18), (1) write the failing test fixture named in the *test_fixture_path* column, (2) confirm the failure mode matches the cycle's input-shortfall expectation, (3) write the production code at *rust_module_path* until the fixture passes (green), (4) mint the cycle artifact named in *cycle_artifact_path* documenting the red→green transition.
+**How a cycle uses this file.** Before the cycle runs, the harness reads the row for the cycle's content unit. The cycle MUST (0) parse the real `.lst` record for this content unit via `src/pcgen_import/lst_parser/*` (per `decisions.md §5`, corrected 2026-07-19) — this row's *Content shape* column is illustrative only, per the banner above, not the generation spec — (1) write the failing test fixture named in the *test_fixture_path* column, (2) confirm the failure mode matches the cycle's input-shortfall expectation, (3) write the production code at *rust_module_path*, transcribed from the real `.lst` record with source provenance cited in a doc comment, until the fixture passes (green), (4) mint the cycle artifact named in *cycle_artifact_path* documenting the red→green transition.
 
 ## 1. APG (Advanced Player's Guide) — Epic 3
 

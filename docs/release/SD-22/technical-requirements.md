@@ -71,21 +71,34 @@ git log --oneline origin/tranche/5 -5
 # Expect: SD-21 closure PR merge commit visible (or close to it); no SD-22 commits yet
 ```
 
-## 5. Paizo content sources generated in-bundle (loop-generated per-cycle from PF1 OGL/SRD; operator directive 2026-07-18)
+## 5. Paizo content sources: real PCGen LST data via `src/pcgen_import/` (corrected 2026-07-19)
 
-SD-22's Epic 3 + Epic 4 + Epic 5 cycles depend on structured-data input from the publisher's books (APG classes + ACG classes + Bestiary 1 monsters). Per `decisions.md §5` (operator directive 2026-07-18, superseding the prior operator-supplied posture): **the loop generates these itself, per-cycle, from PF1 OGL/SRD content**. Each ingest cycle's first step generates the cycle's corpus input file (`corpus/apg_alchemist.json`, `corpus/acg_arcanist.json`, `corpus/beastiary1_subset_0.json`, etc.) using the corresponding `corpus-source-inventory.md` row's *Content shape* column as the authoritative generation spec. No operator-supplied corpus is required at launch.
+SD-22's Epic 3 + Epic 4 + Epic 5 cycles depend on structured-data input from the publisher's books (APG classes + ACG classes + Bestiary 1 monsters). An earlier version of this section (operator directive 2026-07-18) called for generating this content per-cycle from the model's own OGL/SRD memory. That framing is **superseded** (`decisions.md §5`, corrected 2026-07-19): a real cloud cycle attempting the Alchemist ingest correctly refused to fabricate class content (two SRD mirrors 403'd; no in-repo source; `AGENTS.md`'s no-fabrication rule and the `rules_tables/crb/class_tables.rs` precedent both rule it out), which surfaced that the "no corpus source exists" premise was wrong.
 
-**Verification** (per-cycle; loop-driven):
-- The cycle's generated `corpus/<book>_<unit>.json` exists on disk after the cycle's generation step, **and** the cycle's ingest test (the row's `test_fixture_path`) passes against the ingested data.
-- Per-cycle representative-sample spot-check tests assert known-good values from the published rules (fabricated-data-risk mitigation per `decisions.md §5`).
-- Only unresolvable source ambiguity (SRD conflict, missing SRD coverage for a unit) routes to Open Blockers.
+The real source is **PCGen's published `.lst` data**, ingested by the existing, already-tested engine at `src/pcgen_import/` — the same pipeline SD-19 used to populate the CRB. No new parser code and no per-cycle content generation from memory; a cycle parses the real record and transcribes it, citing the source file as provenance (mirroring `rules_tables/crb/class_tables.rs`'s own doc-comment convention).
 
-## 6. DM-toolkit canonical Paizo example data generated in Epic 6's first cycle
+**Verification**:
+```bash
+# Local sibling repo (already present on this machine):
+ls /home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst
+ls /home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst
+ls /home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst
+# Expect: all three exist and are non-empty (confirmed 2026-07-19).
 
-SD-22's Epic 6 deterministic tests require canonical Paizo encounter-math examples. Per `decisions.md §5`'s same in-bundle generation posture, the canonical encounter-table (Easy / Medium / Hard / Deadly thresholds by party size + average level) is **generated in Epic 6's first cycle** from the published PF1 encounter-building rules, alongside the five deterministic test cases pinned in `corpus-source-inventory.md` §4.1.
+# In a cloud/remote sandbox that only clones `codex`, clone the public upstream too
+# (confirmed as the local sibling repo's own `origin` remote):
+#   https://github.com/PCGen/pcgen
+# and use the identical data/pathfinder/paizo/roleplaying_game/<book>/ path inside it.
+```
+- `corpus-source-inventory.md`'s `rust_module_path`/`test_fixture_path`/`cycle_artifact_path`/`RuleSetId` routing columns remain valid; its "Content shape" prose columns do not (see that file's corrective banner) and must be re-derived from the real `.lst` record per cycle.
+- Only a genuinely unreachable LST tree (neither the local sibling repo nor a cloned public mirror resolves) routes a cycle to Open Blockers.
+
+## 6. DM-toolkit canonical Paizo example data
+
+SD-22's Epic 6 deterministic tests require canonical Paizo encounter-math examples (Easy / Medium / Hard / Deadly thresholds by party size + average level). These are published PF1 core-rules math (a formula/table, not book-specific narrative content), so they carry a materially lower fabrication-risk than named class features — but per the same corrected posture, Epic 6's first cycle should still verify its thresholds against a checkable source (the CRB's own encounter-building rules, already partially reflected in `rules_tables/crb/`) rather than asserting values from memory alone.
 
 **Verification** (informational; not gating):
-- Epic 6's first cycle lands the canonical encounter-table data with its deterministic fixtures; the fixtures assert the canonical Paizo examples.
+- Epic 6's first cycle lands the canonical encounter-table data with its deterministic fixtures, with the source of each threshold cited in the module's doc comment.
 - Suspicious or ambiguous threshold values route to the Epic 9 judgment log, not to silent acceptance.
 
 ## Cross-reference
