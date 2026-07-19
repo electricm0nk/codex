@@ -1,20 +1,40 @@
+---
+title: SD-22 — Cycle-Artifacts Index (`artifacts/`)
+status: representative-content (operator directive 2026-07-19)
+scope: docs/release/SD-22/artifacts
+artifact_type: index
+date: 2026-07-19
+canonical_branch: tranche/5
+kanban_board: codex-tranche-5
+purpose: "Every criterion 1-31 has either (a) a per-cycle receipt artifact under `artifacts/` (Epic 1-8 cycles), or (b) the on-disk source-shape artifact under `artifacts/corpus/` (Epic 3/4/5/6 ingest cycles). Both surfaces are load-bearing for Epic 9's Closure Readiness evaluation — Epic 9 cannot conclude a criterion `complete` without the corresponding artifact's RED→GREEN transition having been persisted, OR the corpus-source artifact shape existing (verified by RED-phase parser against the stub)."
+mirror_of: /home/workspace/programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/artifacts/README.md
+---
+
 # SD-22 — Cycle-Artifacts Index (`artifacts/`)
 
-Per **operator directive 2026-07-19**: every criterion 1-31 has a per-cycle receipt artifact under `artifacts/`. The receipt is the load-bearing surface for Epic 9's Closure Readiness evaluation — Epic 9 cannot conclude a criterion `complete` without the corresponding artifact's RED→GREEN transition having been persisted.
+This index documents two sibling artifact surfaces under `artifacts/`:
 
-The **canonical source-of-truth for which artifact path belongs to which criterion** is [`corpus-source-inventory.md`](../corpus-source-inventory.md) §6 ("Cycle-artifact reader's contract"). The same table is mirrored in [`acceptance-and-verification.md`](../acceptance-and-verification.md) §"Per-criterion closure gate → artifact map."
+1. **`corpus/`** (operator directive 2026-07-19) — on-disk file-shape stubs that coding harnesses read at RED-phase to know what the input source looks like. Stub files model the schemas operator-supplied files must satisfy at cycle-launch.
+2. **Per-cycle receipts (`epic_*/` + `apg/` + `acg/` + `beastiary1/` + `dm_toolkit/`)** — the RED→GREEN transition evidence every Epic 1-9 cycle writes so Epic 9's evaluator can conclude criteria `complete`.
+
+Plus the top-level `closure-readiness-report.md` for criterion-31.
 
 ## 1. Where artifacts land
 
-The repo-local artifacts directory is `docs/release/SD-22/artifacts/` (mirror of this upstream). On disk at session-end, it should contain:
-
 ```
 docs/release/SD-22/artifacts/
+├── corpus/                                          (per operator directive 2026-07-19: on-disk corpus-shape surface)
+│   ├── README.md                                    (the schema-of-record for the corpus directory)
+│   ├── apg/                                         (8 APG class stubs + the operator-supplied slot README)
+│   ├── acg/                                         (10 ACG class stubs + the operator-supplied slot README)
+│   ├── beastiary1/                                  (3 default subset samples + Tarrasque edge case + operator-supplied slot README)
+│   ├── spell-list/                                  (APG + ACG shared spell lists)
+│   ├── equipment-table/                             (APG + ACG shared equipment tables)
+│   └── operator-supplied/                           (licensed Paizo/PcGen files dropped here at cycle-launch; gitignored)
 ├── epic_1/
 │   ├── identifier_audit_red.log
 │   ├── identifier_audit_green.log
 │   └── per_rename_<old-id>_to_<new-id>_cycle_receipt.md
-│       (one MD per rename cycle; e.g. per_rename_sd22_X_to_create_X_cycle_receipt.md)
 ├── epic_2/
 │   ├── codex_tranche_5_pin_cycle_receipt.md
 │   ├── tranche_5_push_cycle_receipt.md
@@ -34,13 +54,23 @@ docs/release/SD-22/artifacts/
 │   └── equipment_tables_cycle_receipt.md
 ├── acg/
 │   ├── mod_rs_cycle_receipt.md
-│   ├── class_<class>_cycle_receipt.md (×10)
+│   ├── class_alchemist_cycle_receipt.md
+│   ├── class_arcanist_cycle_receipt.md
+│   ├── class_bloodrager_cycle_receipt.md
+│   ├── class_brawler_cycle_receipt.md
+│   ├── class_hunter_cycle_receipt.md
+│   ├── class_investigator_cycle_receipt.md
+│   ├── class_shaman_cycle_receipt.md
+│   ├── class_skald_cycle_receipt.md
+│   ├── class_swashbuckler_cycle_receipt.md
+│   ├── class_warpriest_cycle_receipt.md
 │   ├── cross_book_acg_invariants_cycle_receipt.md
 │   ├── spell_list_cycle_receipt.md
 │   └── equipment_tables_cycle_receipt.md
 ├── beastiary1/
 │   ├── mod_rs_cycle_receipt.md
-│   ├── subset_<NN>_cycle_receipt.md (one per monster-block subset)
+│   ├── subset_<NN>_cycle_receipt.md (one per monster-block subset; default 8)
+│   ├── tarrasque_edge_case_cycle_receipt.md (criterion-17's coverage)
 │   ├── cross_book_invariants_cycle_receipt.md
 │   └── dm_toolkit_consumption_cycle_receipt.md
 ├── dm_toolkit/
@@ -59,12 +89,18 @@ docs/release/SD-22/artifacts/
 │   ├── three_version_fields_cycle_receipt.md
 │   ├── build_label_format_cycle_receipt.md
 │   └── per_cycle_tests_cycle_receipt.md
-└── closure-readiness-report.md
+└── closure-readiness-report.md                      (criterion-31's Epic 9 artifact)
 ```
 
 (Total receipt files: ~50. The numbers above match `corpus-source-inventory.md` per-class cycle counts: 8 APG classes + 10 ACG classes + default 8 Bestiary 1 subsets + per-criterion receipts for epics 1, 2, 5, 7, 8, plus criterion-31's closure-readiness-report.md.)
 
-## 2. What each receipt looks like
+## 2. Two sibling doctrine docs that Epic 9 reads
+
+- **`../corpus-source-inventory.md`** — per-content-unit four-tuple (rust_module_path / test_fixture_path / cycle_artifact_path / RuleSetId).
+- **`../ingest.md`** — operator-pinned canonical process doctrine for RED → GREEN → cycle-artifact → commit pipeline (per operator directive 2026-07-19).
+- **`../loop-instruction.md` Step 4-5** — the per-cycle procedure, with cross-references to `ingest.md` for Epic 3/4/5/6 cycles.
+
+## 3. What each per-cycle receipt looks like
 
 Per `corpus-source-inventory.md` §6, every per-cycle receipt has this shape:
 
@@ -82,13 +118,15 @@ Per `corpus-source-inventory.md` §6, every per-cycle receipt has this shape:
 ## Files touched
 - `src/...` — added/modified
 - `tests/...` — added/modified
+- `docs/release/SD-22/artifacts/corpus/operator-supplied/<book>/<file>.lst` — operator-supplied licensed file that the cycle consumed; the bundled stub `<book>.lst.md` was renamed to `<book>.lst.md.superseded` at the time of the swap. Path is `<corpus_input_path>` from `corpus-source-inventory.md` §1-3.
 
 ## Cycle metadata
 - cycle_id: <ISO-8601 timestamp>
 - duration: <N> seconds
 - bundle_criterion: <criterion-NN>
-- upstream reference: <path to the cycle-generated corpus file, e.g. corpus/apg_alchemist.json (generated in-cycle per decisions.md §5)>
+- corpus_input_path: `<artifacts/corpus/<book>/<file>.lst>` (the canonical stub path; the operator-supplied swap at cycle-launch is at `<artifacts/corpus/operator-supplied/<book>/<file>.lst>` with the same schema)
 - RuleSetId: <Apg | Acg | Bestiary1>
+- ingest_pipeline_version: 1 (per `ingest.md` §6; bump if the column-count schema changes)
 
 ## kanban
 - card: <hermes kanban card id>
@@ -97,15 +135,16 @@ Per `corpus-source-inventory.md` §6, every per-cycle receipt has this shape:
 
 Receipts without RED-phase evidence are Bucket-B / Bucket-C shortfalls; Epic 9's evaluator (criterion-31) treats them as self-heal triggers.
 
-## 3. Operator / cold-cloud-clone read path
+## 4. Operator / cold-cloud-clone read path
 
 A coding harness operating on a cold cloud clone (no access to `~/workspace/`) reads this tree:
 
-1. `corpus-source-inventory.md` first (the load-bearing four-tuple: rust module / test fixture / cycle artifact / RuleSetId per content unit).
-2. `acceptance-and-verification.md` §"Per-criterion closure gate → artifact map" (the per-criterion artifact path table).
-3. This `artifacts/README.md` (the directory layout + receipt shape).
-4. The per-cycle receipts themselves (the load-bearing surfaces of Epic 9's evaluation).
+1. **`../corpus-source-inventory.md`** first (the load-bearing four-tuple: rust module / test fixture / cycle artifact / RuleSetId per content unit).
+2. **`./corpus/`** second (the actual on-disk file shapes the cycle reads as input).
+3. **`../ingest.md`** third (the operator-pinned ingest pipeline: RED → GREEN → cycle-artifact → commit + the operator-supplied swap procedure).
+4. **`../acceptance-and-verification.md` §"Per-criterion closure gate → artifact map"** (the per-criterion artifact path table).
+5. **Per-cycle receipts** — the load-bearing surfaces of Epic 9's evaluation.
 
-## 4. Recorded
+## 5. Recorded
 
-Authored 2026-07-19 per operator directive ("requirements documents should have more artifacts and references; coding harness needs more info to go by; call out the red-green TDD mandate"). The downstream `docs/release/SD-22/artifacts/README.md` is the cloud-clone-accessible mirror of this file.
+Authored 2026-07-19 per operator directive ("coding harness ran into some snags ... need to provide information how that is done, and source that content in an artifacts folder local to the repo. Any lst of pcc files that we needed have to be in that folder. references to those files need to be made in the handover"). 26 corpus files + per-receipt layouts + this README. Total +28 files (added in a single repo commit); mirror at the operator-workspace `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/artifacts/` + new `ingest.md` at the bundle root.

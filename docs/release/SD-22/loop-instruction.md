@@ -179,6 +179,8 @@ All three must be green. Capture the output. **It is the GREEN evidence.** Persi
 
 Refactoring is permitted only after GREEN. A cycle that refactors before GREEN is a Bucket-B shortfall (the cycle artifact must show RED → GREEN in that order; refactor moves are post-GREEN with cargo test --locked + clippy held green throughout).
 
+**For Epic 3/4/5/6 cycles, Step 5 is incomplete until the cycle reads `./ingest.md`.** The `ingest.md` file is the canonical process doctrine for content-source ingest — every per-class (APG/ACG) cycle, every per-monster-block-subset (Bestiary 1) cycle, and every DM-Toolkit (Epic 6) cycle binds to its pipeline. The cycle's production code is implemented per the Step 2.2 GREEN-phase commands in `ingest.md`, the cycle's cycle artifact is formatted per `ingest.md` Step 2.4, and the operator-supplied corpus swap procedure (per `artifacts/corpus/operator-supplied/README.md`) happens at cycle-launch time per `ingest.md` Step 5.
+
 ### Step 6 — Commit, push directly to `tranche/5`
 
 ```bash

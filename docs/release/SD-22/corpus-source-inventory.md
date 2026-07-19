@@ -195,13 +195,15 @@ A cycle that lands at row `<row>` of this file MUST mint a file at `docs/release
 ## Files touched
 - `src/...` — added/modified
 - `tests/...` — added/modified
+- `docs/release/SD-22/artifacts/corpus/operator-supplied/<book>/<file>.lst` — operator-supplied licensed file that the cycle consumed; the bundled stub `<book>.lst.md` was renamed to `<book>.lst.md.superseded` at the time of the swap. Path is `<corpus_input_path>` from `corpus-source-inventory.md` §1-3.
 
 ## Cycle metadata
 - cycle_id: <ISO-8601 timestamp>
 - duration: <N> seconds
 - bundle_criterion: <criterion-NN>
-- upstream reference: <path to the cycle-generated corpus file, e.g. corpus/apg_alchemist.json (generated in-cycle per decisions.md §5)>
+- corpus_input_path: `<artifacts/corpus/<book>/<file>.lst>` (the canonical stub path; the operator-supplied swap at cycle-launch is at `<artifacts/corpus/operator-supplied/<book>/<file>.lst>` with the same schema)
 - RuleSetId: <Apg | Acg | Bestiary1>
+- ingest_pipeline_version: 1 (per `./ingest.md` §6; bump if the column-count schema changes)
 
 ## kanban
 - card: <hermes kanban card id>
