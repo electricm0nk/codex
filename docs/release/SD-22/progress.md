@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 4b79f5c
+snapshot_as_of: e555f64
 ---
 
 # SD-22 — Progress
@@ -36,7 +36,8 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
 | E8.27 | 8 — Build Version | version:patch_bump | Version fields set to `0.5.95` (`package.json`, `tauri.conf.json`, `Cargo.toml`) | **complete** — see `artifacts/epic_8/three_version_fields_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
 | E8.28 | 8 — Build Version | version:build_label_format | `BUILD_PREFIX = 'Codex'` / `${BUILD_PREFIX} ${buildVersion}` format ships (inherited from SD-21 E5.26); this cycle re-anchored the format's own test fixtures from the pre-bump `Codex 0.4.94-test` literal to the current `Codex 0.5.95-test` | **complete** — see `artifacts/epic_8/build_label_format_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
-| E8.29-30 | 8 — Build Version | version:closure_checklist, version:* | Not started | open | — |
+| E8.29 | 8 — Build Version | version:closure_checklist | `docs/SD-22/release-closure-checklist.md` — four-step version-bump process, mirrors SD-21's E5.27 doc | **complete** — see `artifacts/epic_8/release_closure_checklist_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
+| E8.30 | 8 — Build Version | version:* | Per-cycle tests pass at closure — standing verification gate (not a one-shot artifact), re-verified by every cycle's own `cargo test`/`cargo clippy` run; closed out by Epic 9's criterion-31 eval | open (standing gate; re-verified this cycle: `cargo test` all green, clippy clean) | — |
 | E9.31 | 9 — Closure Readiness | closure_readiness:* | Not started (fires after Epic 8, before Epic 7) | open | — |
 
 ## Open blockers
@@ -258,3 +259,58 @@ Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/epic_8/build_label_format_cycle_receipt.md`. Receipt block
 appended to `receipts.md`. Next-eligible: Epic 8 criterion 29
 (`docs/SD-22/release-closure-checklist.md`) — untouched this cycle.
+
+### cycle-2026-07-19T07:00:00Z | Epic 8, criterion 29 (release closure checklist doc) | version:closure_checklist | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete**
+
+Re-checked the Epic 3/4/5 corpus-generation blocker first: `corpus/` still
+doesn't exist and no SRD mirror is reachable from this sandbox — nothing
+has changed since the blocker was logged, so re-attempting those epics
+would just re-log the same fabrication-risk wall. Epic 6 remains
+transitively blocked (needs ≥1 book ingested). Per Step 1's priority
+order, picked Epic 8's remaining open item: criterion 29.
+
+`node_modules` was missing at cycle start; ran `npm install` to restore it.
+
+RED: added `apps/desktop/src/sd22/releaseClosureChecklistDoc.test.ts`
+(mirrors SD-21's `sd21/releaseClosureChecklistDoc.test.ts`), asserting
+`docs/SD-22/release-closure-checklist.md` exists and names all four steps
+(three version files, workflow stamp, build-label check, `cargo check`,
+the `feat(sd22): bump version to` commit shape, the
+`<major>.<tranche-base>.<build>` triple). Failed for the intended reason:
+the doc didn't exist yet.
+
+GREEN: added `docs/SD-22/release-closure-checklist.md`, mirroring SD-21's
+doc content with `<tranche>` renamed to `<tranche-base>` (matching
+`decisions.md §2`'s terminology), the worked example updated to `0.5.95`
+(this branch's current version, landed by criteria 27/28), and the
+commit-message shape changed to `feat(sd22):`.
+
+Verification: `npm test` 48/48 green. `cargo test --locked` at repo root —
+all suites green, 0 failures (unaffected; this criterion is docs+JS-only).
+`cargo clippy --locked --tests -- -D warnings` clean.
+
+One note, not fixed this cycle: `.github/workflows/publish-tester-release.yml`'s
+stamp line still reads `VERSION="0.4.${GITHUB_RUN_NUMBER}"` — one tranche
+behind the `0.5.95` already in the three repo version files. Not in Epic
+8's file-touch-partition scope; flagged in the cycle artifact as a
+candidate Epic 9 self-heal item (mechanically verifiable drift, not a
+judgment call).
+
+Criterion 30 ("per-cycle tests pass at closure") is a standing
+verification gate re-verified by every cycle's own `cargo test`/`cargo
+clippy` run (including this one), not a one-shot artifact — left `open`
+in the status matrix pending Epic 9's criterion-31 eval closing it out.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/epic_8/release_closure_checklist_cycle_receipt.md`. Receipt
+block appended to `receipts.md`. All of Epic 8's file-touch-partition-scoped
+criteria (27, 28, 29) are now complete. Next-eligible: Epic 3/4/5 remain
+blocked; Epic 6 transitively blocked; Epic 9 (criterion 31) is now
+eligible per Step 1's priority order (fires after Epic 8's criterion-30 is
+`complete` per `epic-breakdown.md` line 179 — criterion 30 is the standing
+gate discussed above, satisfied by this cycle's own green run, so Epic 9
+could reasonably start next cycle) but Epic 9 fires "after Epic 8 lands,"
+and Epic 8's own criteria 27-29 (the three file-touch-partition-scoped
+ones) are now all `complete` — a future cycle should make the explicit
+call on whether Epic 9 is now unblocked or whether criterion 30 needs its
+own discrete landing first.

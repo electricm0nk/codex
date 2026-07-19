@@ -151,3 +151,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["epic_8/build_label_format_cycle_receipt.md"]
   notes: "Pure fixture re-sync to an already-committed version value (0.5.95 from criterion 27), not fabricated content. An initial draft of the RED test used an overly-broad regex that false-positived on an unrelated arbitrary-input fixture ('Codex 0.0.0-test'); narrowed to the specific known-stale literal before treating RED as valid."
+
+- cycle_id: 2026-07-19T07:00:00Z
+  epic: 8
+  criterion: release_closure_checklist
+  criterion_section: "§1.8 Epic 8 — Build Version Numbering (criterion 29)"
+  row_or_kind: version:closure_checklist
+  evidence_tier_before: open
+  evidence_tier_after: complete
+  branch_tip_before: e555f64
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "epic_8/release_closure_checklist_cycle_receipt.md"
+  red_phase_evidence: "src/sd22/releaseClosureChecklistDoc.test.ts asserted docs/SD-22/release-closure-checklist.md exists and covers all four steps; failed because the doc didn't exist yet (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "docs/SD-22/release-closure-checklist.md added, mirroring SD-21's E5.27 doc re-anchored to tranche-5 / 0.5.95; 48/48 JS test files green; cargo test all suites green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "npm test 48/48 green; cargo test --locked all suites green, 0 failed; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 3/4/5 remain blocked on the fabrication-risk open blocker (unchanged this cycle); Epic 8 criterion 30 is a standing verification gate (not a one-shot artifact) closed out by Epic 9's eval, not a separate cycle; .github/workflows/publish-tester-release.yml's stamp line is stale at 0.4.-prefix (flagged as a candidate Epic 9 self-heal item, out of Epic 8's file-touch-partition scope this cycle)"
+  corpus_input_path: "n/a"
+  rule_set_used: n/a
+  kanban_card: "no card: hermes unavailable from cloud sandbox"
+  progress_file_updated: "yes"
+  artifacts_written: ["epic_8/release_closure_checklist_cycle_receipt.md"]
+  notes: "Pure process-documentation mirror of an already-established SD-21 precedent, not fabricated content. All four epic 8 criteria that are gated on file-touch-partition scope (27, 28, 29) are now complete; criterion 30 is a standing gate, not a discrete artifact."
