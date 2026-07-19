@@ -209,7 +209,32 @@ SD-22 has no auto-merge. The commit is already on `tranche/5` by construction.
 
 SD-22 has no ephemeral branch to clean up. The next cycle's Step 3 checkout handles any stale working-tree state.
 
-### Step 10 — Mint the kanban card (post-mortem record)
+### Step 10a — Write the repo-resident receipt (ALWAYS; durability backbone)
+
+The repo-resident receipt file `docs/release/SD-22/receipts.md` is the **always-write**
+surface. Cloud-run cycles may not reach the kanban DB; the receipt file captures the
+cycle even when Step 10b fails.
+
+1. Render one receipt block following the schema at the top of `receipts.md`.
+2. Append it under that file's `## Cycle log` heading.
+3. Commit the receipts update alongside the production change (single commit; do not
+   split the receipt append into its own commit).
+
+```bash
+# Append block, then commit together with the production change in Step 6.
+```
+
+If `receipts.md` is unreachable for any reason, **that is a Bucket-B (post-mortem
+failure) shortfall**, not a hard stop. The cycle continues, but writes a `## Open
+blockers` entry on `progress.md` describing the receipts-file failure with the cycle
+artifact path.
+
+### Step 10b — Mint the kanban card (best-effort; primary post-mortem record)
+
+When `hermes kanban` is reachable, mint the card. When it is not (cloud-run, board
+locked, DB unreachable, etc.), record `kanban_card: "no card: <reason>"` in the
+receipt block from Step 10a and continue; the receipts file becomes the primary
+post-mortem surface for that cycle.
 
 ```bash
 hermes kanban --board codex-tranche-5 create \

@@ -54,6 +54,7 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`./scop
 | `scope-draft.md` | Canonical handoff *what* — bundle intent, 9 epics, 31 criteria | operator (mirror of upstream `scope-draft.md`) |
 | `loop-instruction.md` | Per-cycle launch *how* — eligibility, self-heal, post-mortem schema | operator (mirror of upstream `loop-instruction.md`) |
 | `progress.md` | Live cycle-by-cycle progress + status matrix | loop (created on first cycle; forward-referenced) |
+| `receipts.md` | **Durable per-cycle receipt ledger — repo-resident fallback when kanban DB is unreachable (cloud runs)** | loop (appended every cycle; see `loop-instruction.md` Step 10a) |
 | `decisions.md` | Repo-local ADRs (mirror of upstream src-STC decision record) | operator (mirror of upstream src-STC; §1/§2/§3 + §4 Epic 9 — Closure Readiness) |
 | `technical-requirements.md` | Pre-loop prerequisites | operator (mirror of upstream src-STC) |
 | `epic-breakdown.md` | Acceptance criteria 1-31 grouped across 9 epics (Epic 9 added 2026-07-19) | operator (mirror of upstream src-STC) |
