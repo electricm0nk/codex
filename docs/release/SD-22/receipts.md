@@ -426,3 +426,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["acg/class_bloodrager_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Bloodrager record's BONUS:COMBAT/BONUS:SAVE formula tokens (full BAB -- no fractional divisor, unlike Arcanist's poor/half BAB -- good Fortitude, poor Reflex+Will, MAXLEVEL:20, SPELLSTAT:CHA MEMORIZE:NO -- spontaneous posture, same shape as Oracle/Summoner) -- same scope boundary as class_arcanist.rs (named per-level features out of scope, formula-derived chassis only)."
+
+- cycle_id: 2026-07-19T22:17:13Z
+  epic: 4
+  criterion: acg_brawler
+  criterion_section: "§2.1 Epic 4 — ACG content-source ingest (criteria 10-12; third real ACG class, class 3 of 10)"
+  row_or_kind: ingest:acg_class
+  evidence_tier_before: open (Arcanist + Bloodrager complete; Brawler not yet started)
+  evidence_tier_after: complete (criteria 10-12 for Brawler; criterion 13's spell/equipment resolution deferred to a later cycle)
+  branch_tip_before: 143dea6
+  branch_tip_after: "<this cycle's commit, see git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "acg/class_brawler_cycle_receipt.md"
+  red_phase_evidence: "Widening RED: parses_real_brawler_record_from_acg_classes_lst added to tests/sd17_b1_martial_class.rs, failed (Brawler out of MARTIAL_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_brawler_resolves.rs failed to compile (E0599: AcgClassId::Brawler did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "widened MARTIAL_CLASS_NAMES by one name (Brawler) in src/pcgen_import/lst_parser/class.rs (not spellcasting_class.rs -- Brawler's real record carries no SPELLSTAT token, same non-caster posture as Cavalier); added rules_tables/acg/class_brawler.rs and AcgClassId::Brawler match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist+Bloodrager still resolve); widening test green (17/17 in sd17_b1_martial_class); full cargo test suite green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_acg_class_brawler_resolves: 7/7 passed (--include-ignored); sd17_b1_martial_class: 17/17 passed (--include-ignored) including the new widening test; full cargo test --locked: 0 failed across every suite (408 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 4's next-eligible cycle is Hunter (class 4 of the corrected 10-class roster: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest), or a dedicated cycle for criterion 13's shared spell/equipment tables once more classes land. corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md still need an operator/doc-correction pass to formally replace 'Alchemist (ACG-side)' with Slayer in the row list, mirroring commit 6923e54's APG roster fix -- not blocking further Epic 4 cycles. Epic 5 (Bestiary 1) remains blocked on its own, separate parser gap (b1_races.lst's unprefixed bare-row monster records) -- unaffected by this cycle."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:84 (CLASS:Brawler)"
+  rule_set_used: Acg
+  kanban_card: "t_41a3578f (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: ["acg/class_brawler_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Brawler record's BONUS:COMBAT/BONUS:SAVE formula tokens (full BAB -- no fractional divisor, same posture as Bloodrager -- good Fortitude+Reflex from one combined token, poor Will from a separate CL/3 token, MAXLEVEL:20, no SPELLSTAT token -- non-caster, same posture as Cavalier) -- this is the first ACG class to land in class.rs's MARTIAL_CLASS_NAMES rather than spellcasting_class.rs's SPELLCASTING_CLASS_NAMES (Arcanist and Bloodrager were both spellcasters); same scope boundary as class_arcanist.rs/class_bloodrager.rs (named per-level features out of scope, formula-derived chassis only)."

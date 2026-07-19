@@ -662,3 +662,46 @@ fn parses_real_cavalier_record_from_apg_classes_lst() {
         baseab.value
     );
 }
+
+/// SD-22 Epic 4 widening (Brawler ingest cycle, class 3 of the corrected
+/// 10-class ACG roster): the real `CLASS:Brawler` record in
+/// `acg_classes.lst` carries
+/// `BONUS:COMBAT|BASEAB|classlevel("APPLIEDAS=NONEPIC")|TYPE=Base.REPLACE`
+/// (full BAB, no fractional divisor) and no `SPELLSTAT:` line — the same
+/// non-caster posture as Cavalier — so it belongs in `MARTIAL_CLASS_NAMES`
+/// rather than `SPELLCASTING_CLASS_NAMES`. Before this cycle's widening,
+/// the real corpus record is silently skipped (out-of-scope, no
+/// diagnostic). This test is real-corpus-gated on `PCGEN_CORPUS_ROOT`,
+/// mirroring `parses_real_cavalier_record_from_apg_classes_lst` above.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_brawler_record_from_acg_classes_lst() {
+    let corpus_root = PathBuf::from(
+        std::env::var("PCGEN_CORPUS_ROOT")
+            .expect("PCGEN_CORPUS_ROOT must point at a local pcgen/data checkout"),
+    );
+    let source =
+        corpus_root.join("pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst");
+    let result = parse_class_file(&source).expect("real corpus parses");
+
+    let brawler = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Brawler")
+        .expect(
+            "Brawler should be recognized from the real acg_classes.lst once \
+             MARTIAL_CLASS_NAMES is widened to include it",
+        );
+    let baseab = brawler
+        .tokens
+        .iter()
+        .find(|token| token.key == "BONUS" && token.value.starts_with("COMBAT|BASEAB"))
+        .expect("Brawler entry should carry its BASEAB bonus token");
+    assert!(
+        baseab.value.contains("classlevel(\"APPLIEDAS=NONEPIC\")")
+            && !baseab.value.contains("*3/4")
+            && !baseab.value.contains("/2"),
+        "Brawler's real BASEAB token should be full BAB (no fractional divisor): {}",
+        baseab.value
+    );
+}
