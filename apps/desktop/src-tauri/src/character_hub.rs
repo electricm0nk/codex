@@ -896,14 +896,17 @@ mod tests {
         // compute_class_chassis's per-class dispatch), so Wizard no longer trips the
         // two chassis-wide generic diagnostics (class_chassis.unsupported,
         // defense.total_save.unsupported) that every other still-unsupported class
-        // does. combat.baseline_unsupported and skill.selected_modifier.unsupported
-        // remain because compute_combat_baseline / compute_selected_skill_modifiers
-        // still gate on Fighter only -- a known Epic 6 follow-on, not a regression.
+        // does. Epic 6b's E6b.1 cycle then widened compute_combat_baseline and
+        // compute_selected_skill_modifiers to the same has_supported_class_chassis
+        // gate, so those two also no longer trip for Wizard at any input (not just the
+        // Epic 6b reproducer's specific one) -- this request has no chosen spellbook,
+        // so class_spell.wizard.prepared_spellbook.unsupported and
+        // class_feature.wizard.school_powers_and_opposed_school_cost.unsupported
+        // (Epic 6b's E6b.2/E6b.3) correctly remain: Epic 6b's Evocation-school
+        // grounding only clears them for a genuinely populated, in-budget spellbook.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:wizard", 1),
             BTreeSet::from([
-                "combat.baseline_unsupported".to_string(),
-                "skill.selected_modifier.unsupported".to_string(),
                 "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported".to_string(),
                 "class_spell.wizard.prepared_spellbook.unsupported".to_string(),
             ])
