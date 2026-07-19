@@ -101,3 +101,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: []
   notes: "WebFetch to aonprd.com and d20pfsrd.com both 403'd; no verifiable source reachable; see progress.md Open blockers for full reasoning"
+
+- cycle_id: 2026-07-19T05:02:04Z
+  epic: 8
+  criterion: three_version_fields
+  criterion_section: "§1.8 Epic 8 — Build Version Numbering (criterion 27)"
+  row_or_kind: version:patch_bump
+  evidence_tier_before: open
+  evidence_tier_after: complete
+  branch_tip_before: 05a9ced
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "epic_8/three_version_fields_cycle_receipt.md"
+  red_phase_evidence: "src/sd22/buildVersionTriple.test.ts asserted pkg.startsWith('0.5.'); failed against 0.4.94 for the intended reason (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "package.json/tauri.conf.json/Cargo.toml bumped to 0.5.95; sd22/buildVersionTriple.test.ts green; 46/46 JS test files green; cargo test 136+ tests green; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "npm test 46/46 green; cargo test --locked all suites green, 0 failed; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: ["fixed stale sibling regression in apps/desktop/src/sd21/buildVersionTriple.test.ts (tranche-4 anchor -> tranche-5, caused by this cycle's own version bump)"]
+  next_required_uplift: "Epic 3/4/5 remain blocked on the fabrication-risk open blocker (unchanged this cycle); Epic 8 criterion 28 (build-label format) should be explicitly verified/marked complete by a future cycle rather than assumed"
+  corpus_input_path: "n/a"
+  rule_set_used: n/a
+  kanban_card: "no card: hermes unavailable from cloud sandbox"
+  progress_file_updated: "yes"
+  artifacts_written: ["epic_8/three_version_fields_cycle_receipt.md"]
+  notes: "Version bump is mechanically derivable (last committed build on this line was 94 per SD-21 commit 6ea6bfd; next monotonic build is 95; tranche moves 4->5 per decisions.md §2), not fabricated content -- distinct from the Epic 3/4/5 blocker."

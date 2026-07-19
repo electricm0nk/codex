@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: cd9e88b
+snapshot_as_of: 05a9ced
 ---
 
 # SD-22 — Progress
@@ -34,7 +34,8 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
-| E8.27-30 | 8 — Build Version | version:* | Not started | open | — |
+| E8.27 | 8 — Build Version | version:patch_bump | Version fields set to `0.5.95` (`package.json`, `tauri.conf.json`, `Cargo.toml`) | **complete** — see `artifacts/epic_8/three_version_fields_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
+| E8.28-30 | 8 — Build Version | version:build_label_format, version:closure_checklist, version:* | Not started (E8.28's `BUILD_PREFIX = 'Codex'` shape already ships via SD-21 E5.26 on this branch, but not yet explicitly re-verified/closed as an SD-22 criterion) | open | — |
 | E9.31 | 9 — Closure Readiness | closure_readiness:* | Not started (fires after Epic 8, before Epic 7) | open | — |
 
 ## Open blockers
@@ -155,3 +156,55 @@ No commit landed. Full detail and recommended paths forward in `## Open
 blockers` above. `cargo test --locked` was not re-run since no production code
 changed this cycle (last known-green baseline: 14/14, recorded in the E1+E2
 pre-flight cycle above).
+
+### cycle-2026-07-19T05:02:04Z | Epic 8, criterion 27 (three version fields) | version:patch_bump | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete**
+
+Re-checked the Epic 3 Alchemist blocker before picking a criterion: nothing has
+changed (`decisions.md §5` still frames "missing corpus file" as always
+self-healable by memory-recall from PF1 OGL/SRD content, which is still in
+tension with `AGENTS.md`'s "No fake completion" rule and the
+`crb/class_tables.rs` precedent). Epic 4 and Epic 5 would hit the identical
+wall on their first cycles (same corpus-generation instruction, same absence
+of a verifiable source), so did not re-attempt Epic 3/4/5 this cycle. Epic 6
+needs ≥1 book ingested (blocked transitively). Per Step 1's priority order,
+picked the next eligible, non-transitively-blocked criterion: Epic 8's
+criterion 27, which `loop-instruction.md`'s file-touch-partition section
+documents as independent of Epics 1-6, and which is a mechanical version bump
+with a derivable (not invented) target value.
+
+RED: added `apps/desktop/src/sd22/buildVersionTriple.test.ts` (mirrors SD-21's
+`sd21/buildVersionTriple.test.ts`), asserting the version triple starts with
+`0.5.`; failed against the pre-bump `0.4.94` tree for the intended reason.
+GREEN: bumped `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`,
+and `apps/desktop/src-tauri/Cargo.toml` from `0.4.94` to `0.5.95` (major=0 until
+first main-publish; tranche=5 for `tranche/5`; build=95, the next monotonic
+counter after SD-21's last committed build of 94 on this line per
+`decisions.md §2`). Re-ran `npm install` to re-sync `package-lock.json`'s
+embedded version (it had already drifted to a stale `0.1.0` pre-cycle).
+
+One sibling regression surfaced and was fixed in the same commit:
+`apps/desktop/src/sd21/buildVersionTriple.test.ts` (inherited onto `tranche/5`
+via the `aea478c` merge) hard-codes an assertion that the tranche stays at 4
+"until promoted" — `tranche/5` *is* that promotion, so the assertion was stale,
+not a real regression from this change. Updated its anchor from `0.4.` to
+`0.5.` with an explanatory comment rather than leave a known-broken sibling
+test on the branch (sibling-preservation + AGENTS.md's "fix the source, not
+the symptom").
+
+Verification: `npm test` 46/46 JS test files green (including the new
+`sd22/buildVersionTriple.test.ts` and the fixed `sd21/buildVersionTriple.test.ts`).
+`cargo test --locked` at repo root (independent Cargo package from
+`apps/desktop/src-tauri`) — all suites green, 0 failures. `cargo clippy --locked
+--tests -- -D warnings` clean. `cargo check` on `apps/desktop/src-tauri` itself
+fails in this sandbox on missing GTK system libs (`gdk-3.0` via pkg-config) —
+pre-existing environment limitation unrelated to this change; it got far enough
+to resolve and rewrite `Cargo.lock`'s `codex-desktop` entry to `0.5.95` before
+failing at the native-linking stage.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/epic_8/three_version_fields_cycle_receipt.md`. Receipt block appended
+to `receipts.md`. Criterion 28 (build-label format) was NOT touched or marked
+complete this cycle — `createSd11WorkbenchStatus.ts` already carries the
+`BUILD_PREFIX = 'Codex'` / `${BUILD_PREFIX} ${buildVersion}` shape from SD-21's
+E5.26, but a future cycle should explicitly verify and close it rather than
+this cycle assuming it.
