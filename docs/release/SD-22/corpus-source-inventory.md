@@ -14,7 +14,7 @@ mirror_of: ~/workspace/programs/codex/requirements/SD-22-content-source-ingest-a
 
 This file is the **load-bearing reference** for SD-22's content-source ingest cycles (Epic 3 APG, Epic 4 ACG, Epic 5 Bestiary 1) and Epic 6 DM Toolkit. Each row maps a publisher-book content unit to the four artifacts the cycle must produce: Rust module, test fixture, cycle artifact (under `docs/release/SD-22/artifacts/`), and `RuleSetId` variant. A coding harness running a cycle uses this file to know **what to ingest** and **what to assert**.
 
-**How a cycle uses this file.** Before the cycle runs, the harness reads the row for the cycle's content unit. The cycle MUST (1) write the failing test fixture named in the *test_fixture_path* column, (2) confirm the failure mode matches the cycle's input-shortfall expectation, (3) write the production code at *rust_module_path* until the fixture passes (green), (4) mint the cycle artifact named in *cycle_artifact_path* documenting the red→green transition.
+**How a cycle uses this file.** Before the cycle runs, the harness reads the row for the cycle's content unit. The cycle MUST (0) generate the cycle's corpus input file (`corpus/<book>_<unit>.json`) from PF1 OGL/SRD content, using this row's *Content shape* column as the generation spec (per `decisions.md §5`, operator directive 2026-07-18), (1) write the failing test fixture named in the *test_fixture_path* column, (2) confirm the failure mode matches the cycle's input-shortfall expectation, (3) write the production code at *rust_module_path* until the fixture passes (green), (4) mint the cycle artifact named in *cycle_artifact_path* documenting the red→green transition.
 
 ## 1. APG (Advanced Player's Guide) — Epic 3
 
@@ -190,7 +190,7 @@ A cycle that lands at row `<row>` of this file MUST mint a file at `docs/release
 - cycle_id: <ISO-8601 timestamp>
 - duration: <N> seconds
 - bundle_criterion: <criterion-NN>
-- upstream reference: <path to operator-supplied structured-data file>
+- upstream reference: <path to the cycle-generated corpus file, e.g. corpus/apg_alchemist.json (generated in-cycle per decisions.md §5)>
 - RuleSetId: <Apg | Acg | Bestiary1>
 
 ## kanban

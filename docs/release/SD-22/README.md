@@ -17,11 +17,13 @@ criteria: 31
 
 > ## ⚠️  OPERATING METHOD — REQUIRED FOR THIS BUNDLE  ⚠️
 >
-> **This bundle is operated via the `/loop 60m /batch /goal` invocation model — NOT a one-shot task.** After exiting plan mode, the coding harness is **required** to launch SD-22 as:
+> **This bundle is operated via the `/loop 60m /goal` invocation model — NOT a one-shot task.** After exiting plan mode, the coding harness is **required** to launch SD-22 as:
 >
 > ```bash
-> /loop 60m /batch /goal ~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md
+> /loop 60m /goal ~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md
 > ```
+>
+> `/batch` is deferred per operator directive 2026-07-18 — re-added only when ≥2 book corpora exist and the book lanes are genuinely parallel (see [`./decisions.md`](./decisions.md) §5).
 >
 > The full per-cycle procedure, file-touch partition, post-mortem card mint, and progress-doc update live in [`./loop-instruction.md`](./loop-instruction.md). The scope-draft ([`./scope-draft.md`](./scope-draft.md)) is the canonical handoff *what* — the loop-instruction is the *how*. See loop-instruction's leading `⚠️ OPERATING METHOD` block for the verbatim launch instruction and pre-launch checklist.
 
@@ -41,8 +43,8 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`./scop
 | Kanban board | `codex-tranche-5` (operator directive 2026-07-18) |
 | Epics / criteria | 9 epics / 31 criteria |
 | Target version | `0.5.<current_build>` |
-| Loop launch form | `/loop 60m /batch /goal ~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md` |
-| Cycle cadence | 60m restart; `/batch` for shared-file concurrency |
+| Loop launch form | `/loop 60m /goal ~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md` |
+| Cycle cadence | 60m restart; `/batch` deferred per `decisions.md` §5 |
 | Closure gate | `tranche/5 → develop` PR; identifier-cleanup-delta; release-notes generation; Epic 9 must complete before Epic 7 fires |
 
 ## 2. Files in this folder

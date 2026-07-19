@@ -87,7 +87,7 @@ Per `corpus-source-inventory.md` §6, every per-cycle receipt has this shape:
 - cycle_id: <ISO-8601 timestamp>
 - duration: <N> seconds
 - bundle_criterion: <criterion-NN>
-- upstream reference: <path to operator-supplied structured-data file>
+- upstream reference: <path to the cycle-generated corpus file, e.g. corpus/apg_alchemist.json (generated in-cycle per decisions.md §5)>
 - RuleSetId: <Apg | Acg | Bestiary1>
 
 ## kanban

@@ -12,17 +12,19 @@ kanban_board: codex-tranche-5 (operator directive 2026-07-18)
 
 > ## ⚠️  OPERATING METHOD — REQUIRED FOR THIS BUNDLE  ⚠️
 > 
-> **This bundle is operated via the `/loop 60m /batch /goal` invocation model — NOT a one-shot task.** After exiting plan mode, the coding harness is **required** to launch SD-22 as:
+> **This bundle is operated via the `/loop 60m /goal` invocation model — NOT a one-shot task.** After exiting plan mode, the coding harness is **required** to launch SD-22 as:
 > 
 > ```bash
-> /loop 60m /batch /goal ./loop-instruction.md
+> /loop 60m /goal ./loop-instruction.md
 > ```
+> 
+> `/batch` is deferred per operator directive 2026-07-18 — re-added only when ≥2 book corpora exist and the book lanes are genuinely parallel (see `decisions.md` §5).
 > 
 > The full per-cycle procedure, file-touch partition, post-mortem card mint, and progress-doc update live in the loop-instruction file body. The scope-draft (this file) is the canonical handoff *what* — the loop-instruction is the *how*. See the loop-instruction's leading `⚠️ OPERATING METHOD — REQUIRED FOR THIS BUNDLE` block for the verbatim launch instruction and pre-launch checklist.
 
 ## 0. Preamble
 
-This is the canonical handoff for SD-22. The `/loop 60m /batch /goal ./loop-instruction.md` invocation reads this file plus its sibling doctrine files and runs to closure.
+This is the canonical handoff for SD-22. The `/loop 60m /goal ./loop-instruction.md` invocation reads this file plus its sibling doctrine files and runs to closure.
 
 Working in bounded cycles against the integration branch `tranche/5` (per operator directive 2026-07-18; SD-22's branch is `tranche/5`, NOT `tranche/3` or `tranche/4` or `tranche/4-1`; SD-22 doesn't inherit from SD-21's `tranche/4-1` lane). Each cycle lands one acceptance criterion.
 

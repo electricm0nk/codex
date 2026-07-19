@@ -2,15 +2,15 @@
 
 > ## ⚠️  OPERATING METHOD — REQUIRED FOR THIS BUNDLE  ⚠️
 > 
-> **This bundle is operated via the `/loop 60m /batch /goal` invocation model — NOT a one-shot task.**
+> **This bundle is operated via the `/loop 60m /goal` invocation model — NOT a one-shot task.**
 > 
 > After exiting plan mode, the coding harness (or operator) is **required** to launch this SD-22 run as:
 > 
 > ```bash
-> /loop 60m /batch /goal ./loop-instruction.md
+> /loop 60m /goal ./loop-instruction.md
 > ```
 > 
-> The `/loop` form restarts the cycle on a 60-minute cadence; `/batch` enables concurrent streams for independent epic lanes (Epic 3 APG + Epic 4 ACG + Epic 5 Bestiary 1, when the operator hosts two streams); `/goal` is the load-bearing loop-instruction file whose body *this file* is. The supervisor manages the restart cadence; the loop runs to closure without operator intervention — every criterion `complete` or every criterion has a real blocker in `## Open blockers`.
+> The `/loop` form restarts the cycle on a 60-minute cadence; `/goal` is the load-bearing loop-instruction file whose body *this file* is. The supervisor manages the restart cadence; the loop runs to closure without operator intervention — every criterion `complete` or every criterion has a real blocker in `## Open blockers`. (`/batch` is deferred per operator directive 2026-07-18: it is re-added only when ≥2 book corpora exist on disk and the book lanes are genuinely parallel-eligible — see `decisions.md §5`.)
 > 
 > **Do not** attempt to execute this bundle's cycles as ad-hoc single-task invocations; the per-cycle procedure (file-touch partition, post-mortem card, progress-doc update, cycle log entry, criterion receipt SHA, `codex-tranche-5` mint) assumes the loop's self-restart cadence and the per-cycle atomicity rules. Ad-hoc execution will silently break the receipt-merge pattern, break the audit-trail comment chain, and break the respawn-guard pattern on `codex-tranche-5`.
 > 
@@ -18,15 +18,15 @@
 > 
 > 1. Confirm `codex-tranche-5` kanban board is set as the SD-22 default (operator-pinned 2026-07-18; reused from the prior 2026-07-16 SD-21 launch that was repurposed).
 > 2. Confirm `tranche/5` branch is pushed to origin.
-> 3. Confirm at least one structured-data input file exists for Epic 3's first cycle (e.g. APG Alchemist data at a path the operator pins).
+> 3. Corpus generation is in-bundle per `decisions.md §5` (operator directive 2026-07-18) — no pre-supplied structured-data input file is required; each Epic 3/4/5 cycle generates its own `corpus/<book>_<unit>.json` first.
 > 4. Run `git status --porcelain | wc -l` on `tranche/5` — must return `0` before loop launch.
 > 
-> Then launch with `/loop 60m /batch /goal ./loop-instruction.md` and the bundle runs autonomously to closure.
+> Then launch with `/loop 60m /goal ./loop-instruction.md` and the bundle runs autonomously to closure.
 
 ---
 
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit — Operator-Driven Loop Instruction (Tranche-5 release)
-status: approved (operator review 2026-07-15; operator directives 2026-07-17 expanded scope to APG + ACG; operator clarification 2026-07-18: "ACG, APG are the two advanced guides"; branch + board pinned 2026-07-18 to tranche/5 / codex-tranche-5; bundle marked planning-ready; /loop 60m /batch /goal launch form documented with prominent-early ⚠️ OPERATING METHOD callout per operator directive 2026-07-18)
+status: approved (operator review 2026-07-15; operator directives 2026-07-17 expanded scope to APG + ACG; operator clarification 2026-07-18: "ACG, APG are the two advanced guides"; branch + board pinned 2026-07-18 to tranche/5 / codex-tranche-5; bundle marked planning-ready; /loop 60m /goal launch form documented with prominent-early ⚠️ OPERATING METHOD callout per operator directive 2026-07-18; /batch deferred + corpus generation in-bundle per operator directives 2026-07-18, decisions.md §5)
 date: 2026-07-15
 canonical_branch: tranche/5 (operator directive 2026-07-18)
 kanban_board: codex-tranche-5 (operator directive 2026-07-18)
@@ -34,7 +34,7 @@ companion_to: /home/ubuntu/workspace/programs/codex/requirements/SD-22-content-s
 mirror_of: /home/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 ---
 
-This file is the body of the goal the `/loop 60m /batch /goal ./loop-instruction.md` invocation runs. (One launch, run to closure. `/batch` enables concurrent streams for Epic 3 APG + Epic 4 ACG + Epic 5 Bestiary 1 when the operator hosts multiple loop channels; Epic 1 (Identifier Cleanup) is single-stream by the dependency graph.)
+This file is the body of the goal the `/loop 60m /goal ./loop-instruction.md` invocation runs. (One launch, run to closure. `/batch` is deferred per `decisions.md §5` — re-added only when ≥2 book corpora exist and the book lanes (Epic 3 APG + Epic 4 ACG + Epic 5 Bestiary 1) are genuinely parallel-eligible; Epic 1 (Identifier Cleanup) is single-stream by the dependency graph regardless.)
 
 It is **self-sufficient**: no interactive prompts, no mid-loop questions to the operator, no shared state with anything other than the on-disk files named here. The loop runs it; the loop restarts every 60 minutes; the loop's self-restart cadence continues until every criterion `complete` or every criterion has a real blocker in `## Open blockers`. (SD-21's `loop-instruction.md` is the worked example; SD-22's `loop-instruction.md` mirrors it with Tranche-5 specifics.)
 
@@ -47,7 +47,7 @@ A cycle is a unit of post-mortem, not a unit of delivery. Every cycle begins by 
 1. **Scope-draft** at `./scope-draft.md` — canonical handoff; tells you *what* SD-22 ships.
 2. **Progress doc** at `./progress.md` — loop's working memory; tells you which criteria are open, which are blocked, and the cycle history.
 3. **Cycle matrix** in `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/epic-breakdown.md` — the 31 acceptance criteria mapped to 9 epics; tells you which criterion belongs to which epic.
-4. **Decision record** at `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/decisions.md` — the 4-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions, §4 Epic 9 — Closure Readiness added 2026-07-19); tells you *why* the bundle is shaped this way.
+4. **Decision record** at `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/decisions.md` — the 5-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions, §4 Epic 9 — Closure Readiness added 2026-07-19, §5 corpus generation in-bundle + /batch deferred added 2026-07-18); tells you *why* the bundle is shaped this way.
 5. **Sibling doctrines** at `governance/spec-domain-lifecycle.md`, `governance/identifier-discipline.md`, and `programs/codex/requirements/SD-21-campaign-manager-and-persistence/decisions.md §18` (the build-version scheme `<major>.<tranche-base>.<build>` amendment).
 
 ## Concurrency rules (read first, obey always)
@@ -156,9 +156,9 @@ cargo test --locked --test sd22_<criterion> 2>&1 | tail -40
 For SD-22 cycles, the change is one of:
 
 - **Epic 1 — Identifier Cleanup**: source-code identifier audit + renames. Per the identifier-discipline doctrine. RED is `grep` finding the dirty identifier; GREEN is the rename + tests passing.
-- **Epic 3 — APG content-source ingest**: new file `src/rules_core/rules_tables/apg/<class>.rs` with structured data per `corpus-source-inventory.md` §1.1, or edit to `apg/spell_list.rs` / `apg/equipment_tables.rs` per §1.2. Add `RuleSetId::Apg` if not yet added. **RED phase must reference §1.3 cross-book invariants** so the test asserts `Some(...)` for `RuleSetId::Apg` and `None` for the other variants.
-- **Epic 4 — ACG content-source ingest**: symmetric to APG with `acg/` directory and `RuleSetId::Acg`. RED phase references §2.3 cross-book invariants.
-- **Epic 5 — Bestiary 1 content-source ingest**: new files in `beastiary1/` per monster-block subset. RED phase references §3.1 and §3.2 invariants.
+- **Epic 3 — APG content-source ingest**: **first, generate the cycle's corpus input file `corpus/apg_<class>.json` from PF1 OGL/SRD content per the `corpus-source-inventory.md` §1.1 row's Content-shape column (per `decisions.md §5`)**; then new file `src/rules_core/rules_tables/apg/<class>.rs` with structured data per `corpus-source-inventory.md` §1.1, or edit to `apg/spell_list.rs` / `apg/equipment_tables.rs` per §1.2. Add `RuleSetId::Apg` if not yet added. **RED phase must reference §1.3 cross-book invariants** so the test asserts `Some(...)` for `RuleSetId::Apg` and `None` for the other variants.
+- **Epic 4 — ACG content-source ingest**: symmetric to APG with `acg/` directory and `RuleSetId::Acg` — **generate `corpus/acg_<class>.json` first per §2.1 (per `decisions.md §5`)**. RED phase references §2.3 cross-book invariants.
+- **Epic 5 — Bestiary 1 content-source ingest**: **generate `corpus/beastiary1_<subset>.json` first per §3.1 (per `decisions.md §5`)**; then new files in `beastiary1/` per monster-block subset. RED phase references §3.1 and §3.2 invariants.
 - **Epic 6 — DM Toolkit**: extension to encounter-difficulty and party-CR modules. RED phase references §4.1's five deterministic test cases. Happy-path integration consumes ingested Epic 3+4+5 output.
 - **Epic 7 — Closure Epilogue**: GREEN-only; the criterion is "PR is opened, release notes are generated, closure is closed." No cycle fixture; the cycle artifact is the closure PR + the release notes.
 - **Epic 8 — Build Version Numbering**: GREEN-only; the version fields are simple mutations with a small test fixture asserting the build-label format. Cycle artifact: version file diff + build-label test output.
@@ -237,7 +237,7 @@ clippy_signal: clean | dirty
 cycle_timing_seconds: <N>
 self_heals_applied: <list, empty if none>
 next_required_uplift: <recommendation for next iteration>
-corpus_input_path: <path to operator-supplied structured-data file, e.g. corpus/apg_alchemist.json>
+corpus_input_path: <path to the cycle-generated corpus file, e.g. corpus/apg_alchemist.json (generated in-cycle per decisions.md §5)>
 rule_set_used: Apg | Acg | Bestiary1
 ```
 
@@ -288,7 +288,7 @@ The cycle refuses to advance when any of the following is true. In every case th
 - The progress doc and the live matrix disagree on a row's `evidence_tier` and the disagreement is not just a stale snapshot.
 - `cargo test --tests` regresses on a row other than the one the cycle touched. Sibling-preservation is a hard rule.
 - Two live `claude` processes are working on cycles that would both touch `src/rules_core/rules_tables/<book>/` or any per-epic module file.
-- **SD-22-specific:** A cycle's RED test depends on a structured-data input file (Epic 3/4/5 corpus) that the operator hasn't supplied yet.
+- **SD-22-specific:** A cycle's corpus generation hits unresolvable source ambiguity (SRD sources conflict on a value, or SRD coverage is missing for the cycle's content unit). Per `decisions.md §5`, Epic 3/4/5 cycles generate their own `corpus/<book>_<unit>.json` as the cycle's first step — a merely *missing* corpus file is never a hard stop; only unresolvable ambiguity in the source material routes to `## Open blockers`.
 
 ## What "content-source ingest closure" actually means for SD-22
 
@@ -310,11 +310,11 @@ The DM toolkit is **not** locked to character sheet feature completeness. APG/AC
 
 The `/loop` form exits when the operator stops it. There is no automatic stopping condition. The loop keeps picking the next-best criterion until every criterion is `done` (closure met) or every criterion has a real blocker in `## Open blockers`.
 
-The operator can stop the loop at any time; a stopped loop leaves the progress doc in the state of the last completed cycle, with all open claims expired, and the operator can resume by relaunching `/loop 60m /batch /goal <this file>`.
+The operator can stop the loop at any time; a stopped loop leaves the progress doc in the state of the last completed cycle, with all open claims expired, and the operator can resume by relaunching `/loop 60m /goal <this file>`.
 
 ## Operating posture (for the operator launching the loop)
 
-1. **One launch command, run to closure.** Launch with `/loop 60m /batch /goal ./loop-instruction.md`. The loop runs to closure — every criterion `done` or every criterion has a real blocker in `## Open blockers` — and then exits.
+1. **One launch command, run to closure.** Launch with `/loop 60m /goal ./loop-instruction.md`. The loop runs to closure — every criterion `done` or every criterion has a real blocker in `## Open blockers` — and then exits. (`/batch` is added only when ≥2 book lanes are corpus-ready and genuinely parallel — operator directive 2026-07-18, `decisions.md §5`.)
 
 2. **Why one launch, not three windows.** The dependency graph (`epic-breakdown.md`) is the sequencing mechanism:
    - **Epic 1 (Identifier Cleanup)** is the only eligible criterion at launch — every subsequent criterion touches source that Epic 1 has cleaned up.
@@ -323,7 +323,7 @@ The operator can stop the loop at any time; a stopped loop leaves the progress d
    - **Epic 6 (DM Toolkit)** depends on at least one book ingested (Epic 3/4/5 outputs).
    - **Epics 8 (Build Version), 9 (Closure Readiness), and 7 (Closure Epilogue)** depend on Epics 1-6 all complete. Specifically: Epic 9's eval cycle runs after Epic 8's version commit lands; Epic 9 dispatches Epic 7 only when 30/30 criterion-evidence survey is clean; Epic 7 opens the `tranche/5 → develop` PR after Epic 9 dispatches.
 
-3. **What `/batch` actually does in Hermes.** Per the SD-13 loop-model excerpt, `/batch` is the form that lets a single shell invocation run multiple streams concurrently against the shared goal file. The three book lanes (Epic 3 APG + Epic 4 ACG + Epic 5 Bestiary 1) run as three streams inside one `/loop /batch` invocation (when eligible), not as three separate shells.
+3. **What `/batch` would add, and why it's deferred.** Per the SD-13 loop-model excerpt, `/batch` is the form that lets a single shell invocation run multiple streams concurrently against the shared goal file — the three book lanes (Epic 3 APG + Epic 4 ACG + Epic 5 Bestiary 1) as streams inside one invocation, not three separate shells. Per operator directive 2026-07-18 (`decisions.md §5`), SD-22 launches **without** `/batch`: at launch zero book corpora exist and Epic 1/2 are single-stream by the dependency graph. Re-add `/batch` only when ≥2 book corpora exist on disk and the book lanes are genuinely parallel-eligible under the file-touch partition.
 
 4. **Default ceiling: 1 cycle at a time per file.** Per the file-touch partition above.
 
@@ -342,7 +342,7 @@ The operator can stop the loop at any time; a stopped loop leaves the progress d
 11. **Pre-launch setup checklist (operator action, before first launch).**
     - [ ] `codex-tranche-5` kanban board set as the SD-22 default (operator-pinned 2026-07-18; reused from dead-state).
     - [ ] `tranche/5` branch pushed to origin.
-    - [ ] At least one structured-data input file for Epic 3's first cycle (e.g. APG Alchemist).
+    - [ ] Corpus generation is in-bundle per `decisions.md §5` — no pre-supplied structured-data input file required; Epic 3's first cycle generates `corpus/apg_alchemist.json` itself.
     - [ ] Operator's interactive `hermes kanban boards current` is set to `codex-tranche-5` for operator-driven inspection.
     - [ ] `./progress.md` does not yet exist; the loop creates it on first run.
 
@@ -352,8 +352,8 @@ The operator can stop the loop at any time; a stopped loop leaves the progress d
 
 ## Cross-reference
 
-- `./scope-draft.md` — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout.
-- `./decisions.md` — 4-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions, §4 Epic 9 — Closure Readiness added 2026-07-19).
+- `./scope-draft.md` — canonical handoff; carries the prominent-early `/loop /goal` OPERATING METHOD callout (`/batch` deferred per `decisions.md §5`).
+- `./decisions.md` — 5-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions, §4 Epic 9 — Closure Readiness added 2026-07-19, §5 corpus generation in-bundle + /batch deferred added 2026-07-18).
 - `./acceptance-and-verification.md` — 16 closure gates.
 - `./epic-breakdown.md` — 31 acceptance criteria grouped into 9 epics (Epic 9 — Closure Readiness added 2026-07-19).
 - `./risks-and-open-questions.md` — self-healable vs. non-self-healable split, override flags (Flag A through Flag D), open questions (Q1 through Q5).
