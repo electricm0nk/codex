@@ -45,7 +45,7 @@ mirror_of: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-sco
 
 **Cross-reference discipline.** This is **NOT implicit inheritance**. SD-22's launch handoff documents `tranche/5` / `codex-tranche-5` as its own choice; the bundle's content (APG + ACG + Bestiary 1 + DM toolkit) is genuinely different from SD-21's content (rules-engine + identifier cleanup + build version + multiclass support). The shared name `codex-tranche-5` is reused only for the kanban-board slug — the *branch* `tranche/5` is fresh, the *board* `codex-tranche-5` is reused.
 
-**Operational consequence.** SD-22's `epic-breakdown.md`, `loop-instruction.md`, and any cycle-mint command use `--board codex-tranche-5` explicitly (hard-coded). The promotion PR at SD-22 closure is `tranche/5 → develop`. The closure-flow doctrine (per `governance/spec-domain-lifecycle.md`) opens a documentation PR against `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/README.md` flipping closure-state frontmatter.
+**Operational consequence.** SD-22's `epic-breakdown.md`, `loop-instruction.md`, and any cycle-mint command use `--board codex-tranche-5` explicitly (hard-coded). The promotion PR at SD-22 closure is `tranche/5 → develop`. The closure-flow doctrine (per `../../doctrine-external/spec-domain-lifecycle.md`) opens a documentation PR against `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/README.md` flipping closure-state frontmatter.
 
 **What SD-22's launch-branch decision is NOT.** SD-22 is **not** a `tranche/4-2` dash-release (that option is reserved for future per-character-rules-engine dash releases if needed); SD-22 is **not** a brand-new trunk branch (`tranche/5` is the canonical Tranche-5 lane, the natural successor to Tranche-4 that closed at SD-20's promotion to develop); SD-22 is **not** inheriting SD-21's `tranche/4-1` (different content, different lane).
 
@@ -55,7 +55,7 @@ mirror_of: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-sco
 
 **Decision:** multiple operator-deferred shape decisions for SD-22 are recorded as scope-of-record open calls, not blocked on the bundle's first cycle:
 
-- **Closure-state frontmatter field vocabulary.** Per `governance/spec-domain-lifecycle.md` open call #1; SD-21's closure flow is the first worked example and will set the field shape. SD-22's closure flow uses the same shape (mirrors SD-21 Epic 5).
+- **Closure-state frontmatter field vocabulary.** Per `../../doctrine-external/spec-domain-lifecycle.md` open call #1; SD-21's closure flow is the first worked example and will set the field shape. SD-22's closure flow uses the same shape (mirrors SD-21 Epic 5).
 - **Audit-trail size for closure PRs.** Resolved via SD-21 Epic 5 criterion 21's closure-test-suite run as the audit trail. SD-22's closure flow mirrors.
 - **Bundle size budget.** Per SD-21's `decisions.md §20`, no bundle-size budget has been pinned. SD-22's eventual size will be whatever the operator pins (8 epics / 30 criteria across this bundle's `epic-breakdown.md`, but the budget is operator-pinned).
 - **Per-class Epic 1+2 sub-stories.** The APG 9-class ordering and ACG class ordering (which class lands first) are operator-pinned at SD-22 cycle launch — *not* in this bundle's doctrine.
@@ -66,14 +66,14 @@ mirror_of: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-sco
 
 ## Cross-reference
 
-- `../SD-21/decisions.md` §9 — documents the prior SD-22 placeholder scope ("DM toolkit + encounter builder + Bestiary 1") and the 2026-07-17 scope expansion. **Note**: the §9 entry in `SD-21/decisions.md` now correctly encodes both 2026-07-17 directives (advanced guides = APG + ACG; plus the follow-up that explicitly moves APG + ACG to SD-22); the 2026-07-18 operator clarification closed the loop on which two books are meant.
-- `../../doctrine-external/spec-domain-lifecycle.md` — sibling doctrine; governs SD-22's lifecycle posture (tranche → develop → closed). The closure-flow doctrine mirrors SD-21's pattern.
-- `../../doctrine-external/identifier-discipline.md` — sibling doctrine; governs any code-identifier work in SD-22's per-book epic cycles (Epic 7 fires first on shared files).
-- `../SD-19/` — sibling bundle; the Tranche-3 corpus-source ingest pattern SD-22 inherits from (`rules_tables/<book>/` sibling directories).
-- `../SD-20/` — sibling bundle; per-character rules-engine surface that SD-22's content-source ingest feeds into.
-- `../SD-21/` — sibling bundle; SD-21's Epic 2 (Campaign Manager + Drive) consumes the party-CR math that SD-22 will provide. SD-21 reads `rules_tables/crb/` only; SD-22 owns the other books.
-- `./scope-draft.md` (created 2026-07-18 by operator review) — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout mirroring SD-21's new pattern.
-- `./loop-instruction.md` (created 2026-07-18 by operator review) — loop body; the per-cycle procedure, file-touch partition, post-mortem card mint, and progress-doc update.
+- `~/workspace/programs/codex/requirements/SD-21-campaign-manager-and-persistence/decisions.md` §9 — documents the prior SD-22 placeholder scope ("DM toolkit + encounter builder + Bestiary 1") and the 2026-07-17 scope expansion. **Note**: the §9 entry in `SD-21/decisions.md` now correctly encodes both 2026-07-17 directives (advanced guides = APG + ACG; plus the follow-up that explicitly moves APG + ACG to SD-22); the 2026-07-18 operator clarification closed the loop on which two books are meant.
+- `~/workspace/governance/spec-domain-lifecycle.md` — sibling doctrine; governs SD-22's lifecycle posture (tranche → develop → closed). The closure-flow doctrine mirrors SD-21's pattern.
+- `~/workspace/governance/identifier-discipline.md` — sibling doctrine; governs any code-identifier work in SD-22's per-book epic cycles (Epic 7 fires first on shared files).
+- `~/workspace/programs/codex/requirements/SD-19-corpus-aware-compute-seam/` — sibling bundle; the Tranche-3 corpus-source ingest pattern SD-22 inherits from (`rules_tables/<book>/` sibling directories).
+- `~/workspace/programs/codex/requirements/SD-20-rules-engine-completeness/` — sibling bundle; per-character rules-engine surface that SD-22's content-source ingest feeds into.
+- `~/workspace/programs/codex/requirements/SD-21-campaign-manager-and-persistence/` — sibling bundle; SD-21's Epic 2 (Campaign Manager + Drive) consumes the party-CR math that SD-22 will provide. SD-21 reads `rules_tables/crb/` only; SD-22 owns the other books.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md` (created 2026-07-18 by operator review) — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout mirroring SD-21's new pattern.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md` (created 2026-07-18 by operator review) — loop body; the per-cycle procedure, file-touch partition, post-mortem card mint, and progress-doc update.
 
 ## 4. Epic 9 — Closure Readiness (eval + self-heal + dispatch); operator directive 2026-07-19
 

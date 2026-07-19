@@ -30,7 +30,7 @@ status: approved (operator review 2026-07-15; operator directives 2026-07-17 exp
 date: 2026-07-15
 canonical_branch: tranche/5 (operator directive 2026-07-18)
 kanban_board: codex-tranche-5 (operator directive 2026-07-18)
-companion_to: /home/ubuntu/workspace/decisions.md
+companion_to: /home/ubuntu/workspace/programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/decisions.md
 mirror_of: /home/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 ---
 
@@ -38,7 +38,7 @@ This file is the body of the goal the `/loop 60m /batch /goal ./loop-instruction
 
 It is **self-sufficient**: no interactive prompts, no mid-loop questions to the operator, no shared state with anything other than the on-disk files named here. The loop runs it; the loop restarts every 60 minutes; the loop's self-restart cadence continues until every criterion `complete` or every criterion has a real blocker in `## Open blockers`. (SD-21's `loop-instruction.md` is the worked example; SD-22's `loop-instruction.md` mirrors it with Tranche-5 specifics.)
 
-The progress doc `./progress.md` (created on first cycle by the loop) carries the cycle-log + status matrix (per `../../doctrine-external/spec-domain-lifecycle.md`'s plan A on the SD-status transcription surface).
+The progress doc `./progress.md` (created on first cycle by the loop) carries the cycle-log + status matrix (per `governance/spec-domain-lifecycle.md`'s plan A on the SD-status transcription surface).
 
 ## Required reading (every cycle)
 
@@ -46,9 +46,9 @@ A cycle is a unit of post-mortem, not a unit of delivery. Every cycle begins by 
 
 1. **Scope-draft** at `./scope-draft.md` — canonical handoff; tells you *what* SD-22 ships.
 2. **Progress doc** at `./progress.md` — loop's working memory; tells you which criteria are open, which are blocked, and the cycle history.
-3. **Cycle matrix** in `./epic-breakdown.md` — the 31 acceptance criteria mapped to 9 epics; tells you which criterion belongs to which epic.
-4. **Decision record** at `./decisions.md` — the 4-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions, §4 Epic 9 — Closure Readiness added 2026-07-19); tells you *why* the bundle is shaped this way.
-5. **Sibling doctrines** at `../../doctrine-external/spec-domain-lifecycle.md`, `../../doctrine-external/identifier-discipline.md`, and `../SD-21-campaign-manager-and-persistence/decisions.md §18` (the build-version scheme `<major>.<tranche-base>.<build>` amendment).
+3. **Cycle matrix** in `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/epic-breakdown.md` — the 31 acceptance criteria mapped to 9 epics; tells you which criterion belongs to which epic.
+4. **Decision record** at `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/decisions.md` — the 4-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions, §4 Epic 9 — Closure Readiness added 2026-07-19); tells you *why* the bundle is shaped this way.
+5. **Sibling doctrines** at `governance/spec-domain-lifecycle.md`, `governance/identifier-discipline.md`, and `programs/codex/requirements/SD-21-campaign-manager-and-persistence/decisions.md §18` (the build-version scheme `<major>.<tranche-base>.<build>` amendment).
 
 ## Concurrency rules (read first, obey always)
 
@@ -79,7 +79,7 @@ The SD-22 cycle surface is concentrated in these files:
 | `apps/desktop/src/sd11/status/createSd11WorkbenchStatus.ts` | EDIT (build-label format); Epic 8 criterion 28 cycle sets `BUILD_PREFIX = 'Codex'` and template `${BUILD_PREFIX} ${buildVersion}` (matches `<major>.<tranche>.<build>` triple from the version files). | One cycle at a time. |
 | `apps/desktop/src/sd11/loadSd11TesterWorkbenchSurface.test.ts`, `apps/desktop/src/sd11/status/createSd11WorkbenchStatus.test.ts`, `apps/desktop/src/testSupport/makeSurface.ts` | EDIT (test fixtures); Epic 8 criterion 28 cycle updates assertions/fixtures from `codex@0.0.0-test` to `Codex 0.5.<build>` shape. | One cycle at a time per file. |
 | `docs/SD-22/release-closure-checklist.md` | NEW; Epic 8 criterion 29 cycle writes the four-step closure-process checklist using the `<major>.<tranche-base>.<build>` triple (per-position increment rules: build per-CI-build, tranche per-tranche-promotion, major per-main-publish). | One cycle at a time. |
-| `release-notes.md` | NEW; Epic 7 criterion 25 cycle generates release notes (New content, DM toolkit, Maintenance, Versioning sections). | One cycle. |
+| `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/release-notes.md` | NEW; Epic 7 criterion 25 cycle generates release notes (New content, DM toolkit, Maintenance, Versioning sections). | One cycle. |
 | Epic 7 sweep (closure PR, worktree cleanup, branch cleanup) | Epic 7 criterion 23 + 24 cycles run `gh pr create`, `git worktree remove --force`, `git branch -d`. Operates on integration-branch metadata, not on per-file content. | One cycle. |
 
 The chassis and corpus-aware seam files (`pilot_compute.rs`, `pilot_compute_corpus.rs`, `support_state_matrix.rs`) stay untouched by SD-22. SD-22's Epic 1 is defensive cleanup only (Epic 1 doesn't open new directories). Epic 6 (DM Toolkit) reads from `src/rules_core/rules_tables/<book>/` after Epic 3+4+5 land.
@@ -132,28 +132,39 @@ git pull origin tranche/5
 git status --porcelain | wc -l   # expect 0; if non-zero, exit CLAIM-EXISTS
 ```
 
-### Step 4 — Write the failing test first
+### Step 4 — Red phase: write the failing test first
 
-Add `tests/sd22_<criterion>.rs`. Mirror the shape of the most recent sibling cycle's test file. The test must fail for the intended reason when run against `origin/tranche/5` as the base.
+**Operator-pinned 2026-07-19 red-green TDD mandate: Steps 4 and 5 are mandatory. A cycle that ships test code without running RED, or persists GREEN before RED existed, is a Bucket-B / Bucket-C shortfall (Epic 9 evaluates it as a self-heal trigger; the cycle is re-run with the red→green transition preserved in the cycle artifact).**
+
+Read first (RED-phase reading set):
+1. `corpus-source-inventory.md` — the row for this cycle's content unit. The row gives `rust_module_path`, `test_fixture_path`, `cycle_artifact_path`, and `RuleSetId`.
+2. The corresponding section of `epic-breakdown.md` — the criterion's exact wording and the prior criterion's cycle-receipt pattern.
+3. `risks-and-open-questions.md` — self-healable vs. non-self-healable rows for this epic.
+
+Then:
+
+1. Add `tests/sd22_<criterion>.rs` (or the cycle's class/monster/test-fixture-path per `corpus-source-inventory.md`). Mirror the shape of the most recent sibling cycle's test file.
+2. Confirm the test fails for the **intended reason** when run against `origin/tranche/5` as the base. A test that fails for an unrelated reason (compile error in the production code under test, missing dependencies, etc.) is a Bucket-B shortfall — fix the test setup, don't carry the cycle forward.
+3. **Persist the RED output** in the cycle artifact (`docs/release/SD-22/artifacts/<cycle_artifact_path>`) under the "Red-phase evidence" section. The handoff cannot reference RED that doesn't exist; Epic 9's evaluator reads the artifact to confirm RED→GREEN existed.
 
 ```bash
 cargo test --locked --test sd22_<criterion> 2>&1 | tail -40
 ```
 
-Capture the failing output. It is the RED evidence.
-
-### Step 5 — Implement the smallest change that makes the test pass
+### Step 5 — Green phase: implement the smallest change that makes the test pass
 
 For SD-22 cycles, the change is one of:
 
-- **Epic 1 — Identifier Cleanup**: source-code identifier audit + renames. Per the identifier-discipline doctrine.
-- **Epic 3 — APG content-source ingest**: new file `src/rules_core/rules_tables/apg/<file>.rs` with structured data, or edit to `apg/spell_list.rs` or `apg/equipment_tables.rs`. Add `RuleSetId::Apg` if not yet added.
-- **Epic 4 — ACG content-source ingest**: symmetric to APG with `acg/` directory and `RuleSetId::Acg`.
-- **Epic 5 — Bestiary 1 content-source ingest**: new files in `beastiary1/` per monster-block subset.
-- **Epic 6 — DM Toolkit**: extension to encounter-difficulty and party-CR modules.
-- **Epic 9 — Closure Readiness**: read-only evaluation across `docs/release/SD-22/artifacts/` and `progress.md`; if any criterion-1-30 lacks artifact evidence, fire a self-heal cycle to fix that specific shortfall (not all shortfalls at once); append a `## Open judgments deferred to next SD` entry to `risks-and-open-questions.md` for each judgment-call observation; write `closure-readiness-report.md` once 30/30 criteria are clean. Per operator directive 2026-07-19, self-heal is open-ended until the goal is met, and judgment calls are deferred rather than remediated in-bundle.
+- **Epic 1 — Identifier Cleanup**: source-code identifier audit + renames. Per the identifier-discipline doctrine. RED is `grep` finding the dirty identifier; GREEN is the rename + tests passing.
+- **Epic 3 — APG content-source ingest**: new file `src/rules_core/rules_tables/apg/<class>.rs` with structured data per `corpus-source-inventory.md` §1.1, or edit to `apg/spell_list.rs` / `apg/equipment_tables.rs` per §1.2. Add `RuleSetId::Apg` if not yet added. **RED phase must reference §1.3 cross-book invariants** so the test asserts `Some(...)` for `RuleSetId::Apg` and `None` for the other variants.
+- **Epic 4 — ACG content-source ingest**: symmetric to APG with `acg/` directory and `RuleSetId::Acg`. RED phase references §2.3 cross-book invariants.
+- **Epic 5 — Bestiary 1 content-source ingest**: new files in `beastiary1/` per monster-block subset. RED phase references §3.1 and §3.2 invariants.
+- **Epic 6 — DM Toolkit**: extension to encounter-difficulty and party-CR modules. RED phase references §4.1's five deterministic test cases. Happy-path integration consumes ingested Epic 3+4+5 output.
+- **Epic 7 — Closure Epilogue**: GREEN-only; the criterion is "PR is opened, release notes are generated, closure is closed." No cycle fixture; the cycle artifact is the closure PR + the release notes.
+- **Epic 8 — Build Version Numbering**: GREEN-only; the version fields are simple mutations with a small test fixture asserting the build-label format. Cycle artifact: version file diff + build-label test output.
+- **Epic 9 — Closure Readiness**: GREEN-only; the criterion is the artifact-evidence survey output. Cycle artifact: `closure-readiness-report.md` per `corpus-source-inventory.md` §6 contract.
 
-For all paths, the change must be in the appropriate epic file. The forbidden write scopes are documented in `risks-and-open-questions.md`.
+For all paths, the change must be in the appropriate epic file. The forbidden write scopes are documented in `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/risks-and-open-questions.md`.
 
 Run:
 
@@ -163,7 +174,9 @@ cargo test --locked 2>&1 | tail -20
 cargo clippy --locked --tests -- -D warnings 2>&1 | tail -20
 ```
 
-All three must be green. Capture the output. It is the GREEN evidence.
+All three must be green. Capture the output. **It is the GREEN evidence.** Persist the GREEN output in the same cycle artifact under the "Green-phase evidence" section, alongside the RED output captured in Step 4.
+
+Refactoring is permitted only after GREEN. A cycle that refactors before GREEN is a Bucket-B shortfall (the cycle artifact must show RED → GREEN in that order; refactor moves are post-GREEN with cargo test --locked + clippy held green throughout).
 
 ### Step 6 — Commit, push directly to `tranche/5`
 

@@ -95,9 +95,9 @@ SD-22's Epic 6 deterministic tests require canonical Paizo encounter-math exampl
 - `epic-breakdown.md` — 30 acceptance criteria grouped into 8 epics.
 - `risks-and-open-questions.md` — self-healable vs. non-self-healable split + open override flags (Flag A through Flag D; Open Q1 through Open Q5).
 - `technical-design.md` — content-source ingest patterns + DM-toolkit architecture.
-- `./scope-draft.md` — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout.
-- `./loop-instruction.md` — loop body.
-- `../SD-18/` — chassis grounding.
-- `../SD-19/` — corpus-aware seam + canonical Paizo-table store (CRB); SD-22's per-book ingestion pattern inherits from this.
-- `../SD-20/` — sibling bundle, parallel; per-character rules-engine.
-- `../SD-21/` — sibling bundle; SD-21's Epic 2 (Campaign Manager + Drive) consumes the party-CR math that SD-22 will provide.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md` — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md` — loop body.
+- `~/workspace/programs/codex/requirements/SD-18-core-rules-breadth/` — chassis grounding.
+- `~/workspace/programs/codex/requirements/SD-19-corpus-aware-compute-seam/` — corpus-aware seam + canonical Paizo-table store (CRB); SD-22's per-book ingestion pattern inherits from this.
+- `~/workspace/programs/codex/requirements/SD-20-rules-engine-completeness/` — sibling bundle, parallel; per-character rules-engine.
+- `~/workspace/programs/codex/requirements/SD-21-campaign-manager-and-persistence/` — sibling bundle; SD-21's Epic 2 (Campaign Manager + Drive) consumes the party-CR math that SD-22 will provide.

@@ -127,7 +127,7 @@ The happy-path integration test consumes an ingested `PartySnapshot` (mixed-clas
 
 | Epic | Authoritative for | Forbidden to fabricate |
 |---|---|---|
-| Epic 1 — Code-Side Identifier Cleanup | Identifier audits + renames in source per the identifier-discipline doctrine (`governance/identifier-discipline.md`) | Any feature work. Epic 1 only runs audits and renames; doesn't change behavior. |
+| Epic 1 — Code-Side Identifier Cleanup | Identifier audits + renames in source per the identifier-discipline doctrine (`../../doctrine-external/identifier-discipline.md`) | Any feature work. Epic 1 only runs audits and renames; doesn't change behavior. |
 | Epic 2 — Operator Pre-Launch | Board-exists / branch-pushed / clean-state verification | Any cycle work. Epic 2 is gating only. |
 | Epic 3 — APG content-source ingest | APG class tables + spells + equipment + `RuleSetId::Apg` variant | Anything outside APG content. Per-class test fixtures are not "examples" — they reflect APG's published content. |
 | Epic 4 — ACG content-source ingest | ACG class tables + spells + equipment + `RuleSetId::Acg` variant | Anything outside ACG content. |
@@ -153,15 +153,37 @@ Per-epic module placement:
 
 The existing chassis and corpus-aware seam files (`src/rules_core/pilot_compute.rs`, `pilot_compute_corpus.rs`, `support_state_matrix.rs`) stay untouched by SD-22's Epic 1 (defensive cleanup). SD-22's Epic 6 (DM Toolkit) reads from `src/rules_core/rules_tables/<book>/` after Epic 3+4+5 land.
 
-## 5. Cross-reference
+## 5. Rule-cycle table (Epic 3+4+5 vs Epic 6 — the load-bearing dependency)
+
+The rule-cycle table binds each source-book content unit (rules) to its consumer (cycles). Epic 6 (DM Toolkit) consumes Epic 3+4+5 output; without those epics the happy-path integration test cannot land.
+
+| Source (rule) | Cycle-of-record (per `corpus-source-inventory.md`) | Type | RuleSetId | Consumed by |
+|---|---|---|---|---|
+| CRB class table for Fighter | (SD-19 already ships; index in `src/rules_core/rules_tables/crb/`) | Existing rule | `RuleSetId::Crb` | SD-21's Epic 6 Wizard + Epic 7 Multiclass; SD-22's Epic 6 (read-only consumption in deterministic + happy-path tests) |
+| CRB class table for Wizard | (SD-19 ships) | Existing rule | `RuleSetId::Crb` | SD-21's Epic 6 + Epic 7; SD-22's Epic 6 |
+| CRB class tables for the 9 remaining core classes | (SD-18 ships; extended by SD-19) | Existing rule | `RuleSetId::Crb` | SD-21 Epic 6 (per-class); SD-22 Epic 6 (read-only) |
+| APG class tables (Alchemist, Cavalier, Gunslinger, Inquisitor, Magus, Oracle, Summoner, Witch — 8 classes) | SD-22 Epic 3 (per-class cycles; 8 cycles) | New rule | `RuleSetId::Apg` | SD-22 Epic 6 (deterministic + happy-path) |
+| APG spell list | SD-22 Epic 3 (criterion 9 shared spell-list cycle) | New rule | `RuleSetId::Apg` | SD-22 Epic 6 (deterministic spells/DC tests) |
+| APG equipment tables | SD-22 Epic 3 (criterion 9 shared equipment cycle) | New rule | `RuleSetId::Apg` | SD-22 Epic 6 (deterministic equipment tests) |
+| ACG class tables (Alchemist, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Swashbuckler, Warpriest — 10 classes) | SD-22 Epic 4 (per-class cycles; 10 cycles) | New rule | `RuleSetId::Acg` | SD-22 Epic 6 (read-only consumption) |
+| ACG spell list | SD-22 Epic 4 (criterion 13 shared spell-list cycle) | New rule | `RuleSetId::Acg` | SD-22 Epic 6 |
+| ACG equipment tables | SD-22 Epic 4 (criterion 13 shared equipment cycle) | New rule | `RuleSetId::Acg` | SD-22 Epic 6 |
+| Bestiary 1 monster subsets (default: 8-12 subsets, alphabetical by CR-band-then-name) | SD-22 Epic 5 (per-subset cycles; default 8 cycles) | New rule | `RuleSetId::Bestiary1` | SD-22 Epic 6 (encounter-difficulty consumption) |
+| Paizo encounter-math | (PF1 publisher-canonical; not ingested; SD-22 Epic 6 implements deterministic functions against the published rules) | External | (no RuleSetId; rules from publisher) | SD-22 Epic 6 |
+| Paizo party-strength math | (PF1 publisher-canonical; same as encounter-math) | External | (no RuleSetId) | SD-22 Epic 6 |
+| SD-21's per-character engine (PilotReceipt, CharacterSnapshot, etc.) | (SD-21 ships) | Existing output | (n/a) | SD-22 Epic 6 happy-path (consumes Epic 3+4+5 PartySnapshots + MonsterRefs to produce an `EncounterResult`) |
+
+The dependency order is strict: Epic 6 cannot start its happy-path test until at least one ingested PartySnapshot (from Epic 3 + Epic 4) and one ingested MonsterRef (from Epic 5) exist. SD-22's `loop-instruction.md` Step 1 enforces this by checking Epic 3+4+5's status matrix before Epic 6 cycles pick up — the cycle picker rejects Epic 6 cycles if their inputs aren't clean.
+
+## 6. Cross-reference
 
 - `acceptance-and-verification.md` — 16 closure gates.
 - `decisions.md` — the 3-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions).
 - `epic-breakdown.md` — 30 acceptance criteria grouped into 8 epics.
 - `risks-and-open-questions.md` — self-healable vs. non-self-healable split + open override flags (Flag A through Flag D; Open Q1 through Open Q5).
 - `technical-requirements.md` — pre-loop prerequisites.
-- `./scope-draft.md` — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout.
-- `./loop-instruction.md` — loop body.
-- `../SD-19/` — Tranche-3 corpus-source ingest pattern (source-book sibling-directory convention).
-- `../SD-20/` — per-character rules-engine surface.
-- `../SD-21/` — Tranche-4-1 sibling bundle; SD-21's Epic 2 (Campaign Manager + Drive) consumes the party-CR math that SD-22 will provide.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md` — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md` — loop body.
+- `~/workspace/programs/codex/requirements/SD-19-corpus-aware-compute-seam/` — Tranche-3 corpus-source ingest pattern (source-book sibling-directory convention).
+- `~/workspace/programs/codex/requirements/SD-20-rules-engine-completeness/` — per-character rules-engine surface.
+- `~/workspace/programs/codex/requirements/SD-21-campaign-manager-and-persistence/` — Tranche-4-1 sibling bundle; SD-21's Epic 2 (Campaign Manager + Drive) consumes the party-CR math that SD-22 will provide.

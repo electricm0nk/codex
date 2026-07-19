@@ -13,6 +13,31 @@ mirror_of: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-sco
 
 Maps the **31 acceptance criteria** for SD-22 (Code-Side Identifier Cleanup + Operator Pre-Launch + APG content-source ingest + ACG content-source ingest + Bestiary 1 content-source ingest + DM Toolkit + Build Version Numbering + Closure Readiness + Closure Epilogue) into **9 epics** inside the SD-22 bundle. Each epic has its own acceptance criteria; each epic lands via the same loop-routed-cycle pattern SD-21 used.
 
+**Red-green TDD mandate (per operator directive 2026-07-19, applies to every SD-22 cycle):**
+
+1. **Read first.** Before a cycle's RED phase begins, the coding harness must read (in this order): `corpus-source-inventory.md` (the row for this cycle's content unit), the corresponding section of `epic-breakdown.md`, and the relevant self-healable / non-self-healable rows of `risks-and-open-questions.md`.
+2. **Red.** Write or update the failing test fixture named in *test_fixture_path* before touching production code. Confirm RED by running the fixture against the unchanged production tree. Capture and persist the RED output (it's the cycle artifact's first section).
+3. **Green.** Implement the smallest change that makes the test pass. Capture the GREEN output (`cargo test --locked`, `cargo clippy --locked --tests -- -D warnings`). Persist both as the cycle's run-state.
+4. **Refactor.** Refactor only after green. Don't refactor before green.
+5. **Mint the cycle artifact.** Write `docs/release/SD-22/artifacts/<cycle_artifact_path>` per the cycle-artifact reader's contract in `corpus-source-inventory.md` §6.
+6. **Refusal.** A cycle that ships test code without first running RED, or runs RED but doesn't persist the output, or persists GREEN before RED existed, is a Bucket-B / Bucket-C shortfall. Epic 9's evaluator treats it as a self-heal trigger; the cycle MUST be re-run with the red→green transition preserved in the cycle artifact.
+
+The TDD mandate applies on every cycle of every epic. It is the operator-pinned 2026-07-19 doctrine, applied as base-level governance on top of the existing loop-discipline (file-touch partition, post-mortem kanban, progress-doc update, etc.).
+
+## Red-green TDD mandate by epic (one-call-out per epic for emphasis)
+
+- **Epic 1 — Code-Side Identifier Cleanup**: identifier renames are RED-only cycles; the red phase is `grep` finding the dirty identifier, the green phase is the rename + tests still passing. Cycle artifact: red-phase grep output + green-phase `cargo test --locked` + clippy.
+- **Epic 2 — Operator Pre-Launch**: three green-only operator-side checks; no RED phase because the failure modes are operator-blocker, not cycle. Cycle artifact: each operator check's verification command + output.
+- **Epic 3 — APG content-source ingest**: every per-class cycle writes a class-specific test fixture in red, ingests the class in green, and persists the cycle artifact. Cross-book invariants in `corpus-source-inventory.md` §1.3 are part of the green acceptance.
+- **Epic 4 — ACG content-source ingest**: same shape as Epic 3 with `corpus-source-inventory.md` §2 in the red-phase reading set.
+- **Epic 5 — Bestiary 1 content-source ingest**: per-monster-block-subset cycle; test fixture has one canonical monster per subset (Goblin for subset 1, Kobold for a CR-1 band focused subset, etc.).
+- **Epic 6 — DM Toolkit**: tests come from `corpus-source-inventory.md` §4.1's five deterministic cases. Happy-path integration consumes Epic 3+4+5 outputs; Epic 6 doesn't ship without at least one ingested PartySnapshot + one ingested MonsterRef.
+- **Epic 7 — Closure Epilogue**: GREEN-only; the criterion is "PR is opened, release notes are generated, closure is closed." No cycle fixture; the cycle artifact is the closure PR + the release notes.
+- **Epic 8 — Build Version Numbering**: GREEN-only; the version fields are simple mutations with a small test fixture asserting the build-label format. Cycle artifact: version file diff + build-label test output.
+- **Epic 9 — Closure Readiness**: GREEN-only; the criterion is the artifact-evidence survey output. Cycle artifact: `closure-readiness-report.md` per `corpus-source-inventory.md` §6 contract.
+
+## 5. Cross-reference
+
 The 9 epics follow SD-21's 7-epic layout (Code-Side Identifier Cleanup at Epic 1, governance epics first, content-source epics in the middle, closure epilogue at the end). The order mirrors SD-21's structure so an operator reading both bundles sees the same operator pattern: governance first, content next, build-version numbering, closure-readiness gate, then closure last. **Epic 9 (Closure Readiness) is the new entrant added 2026-07-19** to decouple the eval-and-self-heal step from Epic 7's actual PR and release-notes work.
 
 ## Execution lane split
@@ -49,7 +74,7 @@ Epic 1 lands **first**. Epic 2's pre-launch checklist validates the launch infra
 
 ### Epic 1 — Code-Side Identifier Cleanup (governance base requirement; fires FIRST)
 
-**Scope doctrine (operational rule):** under the identifier-discipline doctrine (`../../doctrine-external/identifier-discipline.md`), source-code identifiers must describe what the artifact does, not which release or spec domain it came from. Epic 1 is the SD-22 cycle that fires to clean up the load-bearing identifier leaks already in the codebase: Tauri command names with the `sd22_` prefix (defensive; since SD-22 doesn't ship any new Tauri commands but the codebase may have remnants from earlier sessions that should not propagate), TypeScript functions and constants with `Sd22` / `SD22_` text, `data-testid` attributes with `sd22-` prefixes, inline doc-comments citing `SD-22-Ex...` identifiers, and any `t_<hex>` kanban tokens / `AV-PAY-N` audit-IDs embedded in source.
+**Scope doctrine (operational rule):** under the identifier-discipline doctrine (`~/workspace/governance/identifier-discipline.md`), source-code identifiers must describe what the artifact does, not which release or spec domain it came from. Epic 1 is the SD-22 cycle that fires to clean up the load-bearing identifier leaks already in the codebase: Tauri command names with the `sd22_` prefix (defensive; since SD-22 doesn't ship any new Tauri commands but the codebase may have remnants from earlier sessions that should not propagate), TypeScript functions and constants with `Sd22` / `SD22_` text, `data-testid` attributes with `sd22-` prefixes, inline doc-comments citing `SD-22-Ex...` identifiers, and any `t_<hex>` kanban tokens / `AV-PAY-N` audit-IDs embedded in source.
 
 **Out of scope** for Epic 1 (recorded explicitly to prevent scope creep): directory tree renames. Those are Epic 7 follow-on work because directory rename churns every relative import, every release-channel JSON, and every electron-vite config.
 
@@ -117,7 +142,7 @@ Epic 1 lands **first**. Epic 2's pre-launch checklist validates the launch infra
 
 ### Epic 7 — Closure Epilogue (final scan + PR + worktree cleanup + release notes + version increment)
 
-**Scope doctrine (operational rule):** per `governance/spec-domain-lifecycle.md`, every closed bundle gets a final-cycle epilogue that scans all acceptance criteria, opens the develop-merge PR, cleans up worktrees and stale branches, generates release notes, and increments the version number. SD-22's Epic 7 is the second worked example after SD-21's Epic 4. SD-22's `tranche/5 → develop` promotion PR is what closure runs.
+**Scope doctrine (operational rule):** per `../../doctrine-external/spec-domain-lifecycle.md`, every closed bundle gets a final-cycle epilogue that scans all acceptance criteria, opens the develop-merge PR, cleans up worktrees and stale branches, generates release notes, and increments the version number. SD-22's Epic 7 is the second worked example after SD-21's Epic 4. SD-22's `tranche/5 → develop` promotion PR is what closure runs.
 
 22. **Final criterion scan**: walks the SD-22 progress matrix and asserts every criterion (1-30) is `Status: complete` OR has an `## Open blockers` entry.
 
@@ -218,8 +243,8 @@ A cycle is a *unit of post-mortem*, not a unit of delivered scope. One cycle, on
 - `risks-and-open-questions.md` — self-healable vs. non-self-healable split + open override flags.
 - `technical-design.md` — content-source ingest patterns + DM-toolkit architecture.
 - `technical-requirements.md` — pre-loop prerequisites.
-- `./scope-draft.md` — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout.
-- `./loop-instruction.md` — loop body.
-- `../SD-19/` — sibling bundle; the Tranche-3 corpus-source ingest pattern SD-22 inherits from.
-- `../SD-20/` — sibling bundle; per-character rules-engine surface that SD-22's content-source ingest feeds into.
-- `../SD-21/` — sibling bundle; SD-21's Epic 2 (Campaign Manager + Drive) consumes the party-CR math that SD-22 will provide.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md` — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md` — loop body.
+- `~/workspace/programs/codex/requirements/SD-19-corpus-aware-compute-seam/` — sibling bundle; the Tranche-3 corpus-source ingest pattern SD-22 inherits from.
+- `~/workspace/programs/codex/requirements/SD-20-rules-engine-completeness/` — sibling bundle; per-character rules-engine surface that SD-22's content-source ingest feeds into.
+- `~/workspace/programs/codex/requirements/SD-21-campaign-manager-and-persistence/` — sibling bundle; SD-21's Epic 2 (Campaign Manager + Drive) consumes the party-CR math that SD-22 will provide.

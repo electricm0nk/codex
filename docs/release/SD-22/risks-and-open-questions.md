@@ -23,6 +23,89 @@ This file enumerates the risks, blockers, and open questions specific to SD-22. 
 | Markdown file on disk has a stale `nonce` (from a Drive sync edge case, if SD-22 surfaces this) | `CampaignSnapshot.nonce != saved_nonce` on load | Engine surfaces "stale nonce, please save again"; doesn't trigger conflict log unless the *content* also differs |
 | Per-class Epic 3+4 ordering collision | Two cycles both try to land the same APG/ACG class table | Defer the second cycle until the first cycle's tests are green; surface as `## Open blockers` if the conflict indicates a real per-book issue |
 
+## Per-content-unit failure-mode inventory (operator directive 2026-07-19)
+
+Per Epic 9's evaluator working from `corpus-source-inventory.md`: failure modes below are concrete tables that tell a cycle's debugger exactly which column / row / rule-table cell is suspicious when a test fails or a resolver returns the wrong value. Self-heal and non-self-heal decisions are made against the inventory. Generic "rules-engine correctness violation" rows in the next section are diagnostic-aid only; the inventory below is the load-bearing surface.
+
+### Epic 3 — APG content-source ingest failure modes
+
+| Content unit | Failure mode | Where to look (column / row / rule-table cell) | Bucket |
+|---|---|---|---|
+| Alchemist | Bomb damage scale wrong | `class_alchemist::BOMB_DAMAGE_BY_LEVEL_BY_DIE` (column: damage-die per level) | self-healable (read the published book's Alchemy/Bombs table; fix the cell) |
+| Alchemist | Mutagen-bomb mutual exclusion | `class_alchemist::MUTAGEN_AND_BOMB_MUTEX_AT_LEVELS_1_THRU_20` (column: "Mutagen and Bomb active simultaneously? boolean per level") | self-healable |
+| Alchemist | Discovery choices | `class_alchemist::DISCOVERIES_BY_LEVEL: HashMap<u8, DiscoverySet>` (column: level → discoveries-known count) | self-healable |
+| Cavalier | Order choice at level 1 | `class_cavalier::ORDERS: Vec<OrderId>` (column: order list; verify every choice is mechanically distinct) | self-healable |
+| Cavalier | Challenge uses | `class_cavalier::CHALLENGE_USES_BY_LEVEL: HashMap<u8, u8>` (column: 1/day + 1/3 levels) | self-healable |
+| Gunslinger | Deeds list per level | `class_gunslinger::DEEDS_BY_LEVEL: HashMap<u8, Vec<DeedRef>>` (column: deeds-known at level, requires updating source) | self-healable |
+| Gunslinger | Grit per-day + per-encounter rule | `class_gunslinger::GRIT_POOL: HashMap<u8, (daily_max, encounter_max)>` (column: two tuples per level) | self-healable |
+| Inquisitor | Judgment uses | `class_inquisitor::JUDGMENT_USES_BY_LEVEL: HashMap<u8, u8>` (column: 1 + 1/4 levels) | self-healable |
+| Inquisitor | Inquisition domain choice | `class_inquisitor::INQUISITION_DOMAINS: Vec<DomainId>` (column: domain list) | self-healable |
+| Magus | Spell Combat legal attacks per round | `class_magus::SPELL_COMBAT_ATTACKS_PER_ROUND: u8` (column: 1 attack + spell; verify the rule, not the table) | self-healable (read PF1 Magus §Spell Combat) |
+| Magus | Arcane Pool points per level | `class_magus::ARCANE_POOL_POINTS_BY_LEVEL: HashMap<u8, u8>` | self-healable |
+| Oracle | Mystery / Curse / Revelation columns | `class_oracle::MYSTERIES`, `CURSES`, `REVELATIONS_BY_LEVEL` (three columns per row) | self-healable |
+| Summoner | Eidolon stat-block shape | `class_summoner::EIDOLON_BASE_FORM` + linked-life rule (`class_summoner::LIFE_LINK_HP_PCT`) | self-healable |
+| Summoner | Spell-known progression | `class_summoner::SPELLS_KNOWN_BY_LEVEL: HashMap<u8, u8>` (column: 1 + 1/2 levels) | self-healable |
+| Witch | Hex-per-day count | `class_witch::HEXES_PER_DAY_BY_LEVEL: HashMap<u8, u8>` (column: 1 + 1/2 levels to 8, +1 at 10, 12, 14, 16, 18, 20) | self-healable |
+| Witch | Patron spells augmented | `class_witch::PATRON_SPELLS` cross-ref table (column: witch-list spell level 1 matches patron-list spell slot X) | self-healable |
+| APG shared spell | Spell-level lookup misses | `spell_list::APG_SPELL_BY_NAME` returns `None` for a known APG spell | self-healable (re-parse the publisher's spell list) |
+| APG shared equipment | Equipment row indexing misses | `equipment_tables::APG_EQUIPMENT_BY_KEY` returns `None` for a key | self-healable |
+| Cross-book APG vs CRB | APG-only item resolves via CRB | Resolver chain `RuleSetId::Apg::resolve` returning the CRB record instead | self-healable (re-check the priority chain) |
+| Cross-book APG fail | APG-only item returns `Some` for `RuleSetId::Crb` | Resolver chain | self-healable |
+
+### Epic 4 — ACG content-source ingest failure modes
+
+| Content unit | Failure mode | Where to look | Bucket |
+|---|---|---|---|
+| Arcanist | Exploit per 2 levels | `class_arcanist::EXPLOITS_KNOWN_BY_LEVEL: HashMap<u8, u8>` | self-healable |
+| Arcanist | Spell Blending count | `class_arcanist::SPELL_BLENDING_CAPACITY_BY_LEVEL` | self-healable |
+| Bloodrager | Bloodline + per-level powers | `class_bloodrager::BLOODLINES` + `BLOODLINE_POWERS_BY_LEVEL_BY_BLOODLINE` | self-healable |
+| Brawler | Flurry attack pair | `class_brawler::FLURRY_ATTACK_PROGRESSION_BY_LEVEL` | self-healable |
+| Hunter | Animal companion shape | `class_hunter::ANIMAL_COMPANION_LINK_TO_LEVEL` | self-healable |
+| Investigator | Inspiration pool | `class_investigator::INSPIRATION_POOL: HashMap<u8, u8>` (1 + INT + level/2) | self-healable |
+| Investigator | Formula book spell list | `class_investigator::FORMULA_BOOK` (separate from arcane spell list) | self-healable |
+| Shaman | Spirit companions | `class_shaman::SPIRIT_LINK_BY_LEVEL_BY_SPIRIT` | self-healable |
+| Shaman | Wandering Spirit by level | `class_shaman::WANDERING_SPIRIT_BY_LEVEL: HashMap<u8, u8>` | self-healable |
+| Skald | Spell Kenning | `class_skald::SPELL_KENNING_SPELL_PER_DAY_BY_LEVEL` | self-healable |
+| Skald | Raging Song uses | `class_skald::RAGING_SONG_USES_BY_LEVEL: HashMap<u8, u8>` (3 + INT + level/2) | self-healable |
+| Swashbuckler | Panache uses | `class_swashbuckler::PANACHE_USES_BY_LEVEL: HashMap<u8, u8>` (1 + INT + level/2) | self-healable |
+| Swashbuckler | Deeds per level | `class_swashbuckler::DEEDS_BY_LEVEL: HashMap<u8, Vec<DeedRef>>` | self-healable |
+| Warpriest | Blessings (level 1: 2; +1 every 4 levels) | `class_warpriest::BLESSINGS_KNOWN_BY_LEVEL: HashMap<u8, u8>` | self-healable |
+| Warpriest | Sacred armor proficiencies | `class_warpriest::SACRED_ARMOR_PROFICIENCIES_BY_ITEM_KIND` | self-healable |
+| ACG shared spell | Same as APG | `spell_list::ACG_SPELL_BY_NAME` | self-healable |
+| ACG shared equipment | Same as APG | `equipment_tables::ACG_EQUIPMENT_BY_KEY` | self-healable |
+| Cross-book ACG vs APG/CRB | ACG-only item resolves via APG/CRB | Resolver chain | self-healable |
+
+### Epic 5 — Bestiary 1 content-source ingest failure modes
+
+| Monster class | Failure mode | Where to look | Bucket |
+|---|---|---|---|
+| Goblin | CR returned as 1.0 not 0.333 | `monster_subset_01::GOBLIN.cr` (column: numeric CR value) | self-healable |
+| Goblin | Initiative Dex+other = -1, +0 instead of standard | `monster_subset_01::GOBLIN.initiative` (column: derived) | self-healable |
+| Goblin | HP d6+1 wrong | `monster_subset_01::GOBLIN.hp_max` (column: derived from dice + CON) | self-healable |
+| Goblin | Attacks list misses `short sword +0 (1d6-2)` | `monster_subset_01::GOBLIN.attack_damage_die` (column: attack profile) | self-healable |
+| Kobold | Same shape, smaller CR (0.25) | `monster_subset_01::KOBOLD.*` | self-healable |
+| Subset > 1 | Missing monsters from sub-list | `monster_subset_<NN>::MONSTERS` (column: subset list) | self-healable |
+| Cross-book Bestiary 1 vs class/spell | Bestiary monster returns `Some` for `RuleSetId::Apg` | Resolver chain (monsters aren't spells or equipment) | non-self-healable (genuine bug; cycle gets a fresh PR via Epic 6's happy-path integration) |
+| Tarrasque | Encounter-difficulty Math throws on extreme CR | `dm_toolkit::encounter_difficulty` overflow handling | non-self-healable (boundary bug; row goes to `## Open blockers`) |
+
+### Epic 6 — DM Toolkit failure modes
+
+| Surface | Failure mode | Where to look | Bucket |
+|---|---|---|---|
+| encounters.rs | XP-multiplier table wrong (1 monster × 1.0, 2 monsters × 1.5, ..., 13+ × 4.0) | `encounter_difficulty::XP_MULTIPLIER_BY_MONSTER_COUNT` (column: monster count → multiplier) | self-healable |
+| encounters.rs | Party-of-N-thresholds table wrong | `encounter_difficulty::PARTY_CR_THRESHOLD_BY_PARTY_SIZE_BY_LEVEL` (column: party size × level → CR threshold) | self-healable |
+| party_cr.rs | Class-difficulty modifier | `party_challenge_rating::CLASS_DIFFICULTY_MOD_BY_CLASS` (column: class → modifier, e.g. Fighter +2, Wizard -1) | self-healable |
+| party_cr.rs | Average-PF1 averaging-vs-best-fractional-progression | `party_challenge_rating::STRATEGY_BY_PARTY` (column: party strategy → averaging rule) | non-self-healable (this is the SD-22/SD-21 Epic 7 collision; if Epic 6 ships with one rule but Epic 21 ships with the other, the operator mediates) |
+| Happy path | PartySnapshot from ingested Epic 3 class + Epic 5 monster → invalid encounter | `encounter_difficulty(<party>, <monsters>)` returns Err (no CR/level/size) | non-self-healable (Epic 6's happy-path requires Epic 3+4+5 ingestion to be correct first) |
+
+### Epic 1 — identifier cleanup failure modes
+
+| Pattern | Failure mode | Where to look | Bucket |
+|---|---|---|---|
+| `sd22_*` Tauri command names | grep finds remaining dirty identifier after cleanup | `grep -rE "sd22_\|SD22_\|Sd22" apps/desktop/src apps/desktop/src-tauri/src src/rules_core` | self-healable (residual identifier cleanup cycle) |
+| `sd22_*` test-IDs | Same as above for `data-testid` and `AV-PAY-N` | Same grep | self-healable |
+| Doc-comment `SD-22-ExN` audit IDs | Same as above in `// SD-22-Ex1: ...` style comments | Same grep | self-healable |
+
 ## Non-self-healable conditions (write to `## Open blockers`, exit FAIL)
 
 | Condition | Detection | Why not self-heal |
@@ -158,5 +241,5 @@ Each log entry has this shape:
 - `decisions.md` — the 3-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions).
 - `epic-breakdown.md` — 30 acceptance criteria grouped into 8 epics.
 - `technical-design.md` — content-source ingest patterns + DM-toolkit architecture.
-- `./scope-draft.md` — canonical handoff.
-- `./loop-instruction.md` — loop body.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md` — canonical handoff.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md` — loop body.
