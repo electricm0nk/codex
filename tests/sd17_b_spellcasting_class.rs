@@ -898,3 +898,34 @@ fn parses_real_bloodrager_record_from_acg_classes_lst() {
     assert_eq!(bloodrager.casting_posture, Some(CastingPosture::Spontaneous));
     assert_eq!(bloodrager.spell_stat.as_deref(), Some("CHA"));
 }
+
+// SD-22 Epic 4 widening (Hunter ingest cycle, fourth ACG class): the real
+// `CLASS:Hunter` record in `acg_classes.lst` carries
+// `SPELLSTAT:WIS MEMORIZE:NO` — the same spontaneous posture as
+// Bloodrager/Oracle/Summoner — so it belongs in `SPELLCASTING_CLASS_NAMES`
+// rather than `MARTIAL_CLASS_NAMES`. Mirrors
+// `parses_real_bloodrager_record_from_acg_classes_lst`.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_hunter_record_from_acg_classes_lst() {
+    let corpus = TestCorpus::new("acg_classes_hunter");
+    corpus.write(
+        "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        &real_acg_classes_lst(),
+    );
+    let result = parse_spellcasting_class_file(&corpus.path(
+        "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+    ))
+    .expect("read real acg_classes.lst");
+
+    let hunter = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Hunter")
+        .expect(
+            "Hunter should be recognized from the real acg_classes.lst once \
+             SPELLCASTING_CLASS_NAMES is widened to include it",
+        );
+    assert_eq!(hunter.casting_posture, Some(CastingPosture::Spontaneous));
+    assert_eq!(hunter.spell_stat.as_deref(), Some("WIS"));
+}

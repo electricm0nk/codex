@@ -81,8 +81,8 @@ use std::path::Path;
 
 /// The five CRB spellcasting classes named in the SD-17 Slice B-2 card
 /// body, plus `Alchemist`, `Inquisitor`, `Oracle`, `Summoner`, and
-/// `Witch` (SD-22 Epic 3 widenings), plus `Arcanist` and `Bloodrager`
-/// (SD-22 Epic 4 widenings — see module doc comment).
+/// `Witch` (SD-22 Epic 3 widenings), plus `Arcanist`, `Bloodrager`, and
+/// `Hunter` (SD-22 Epic 4 widenings — see module doc comment).
 pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
     "Cleric",
     "Druid",
@@ -96,6 +96,7 @@ pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
     "Witch",
     "Arcanist",
     "Bloodrager",
+    "Hunter",
 ];
 
 /// Casting posture recorded on each spellcasting class. The posture is
