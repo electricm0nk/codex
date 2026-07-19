@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 9c187a7
+snapshot_as_of: 675ca65
 ---
 
 # SD-22 — Progress
@@ -29,7 +29,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.3 | 2 — Operator Pre-Launch | prelaunch:board | `codex-tranche-5` kanban board set as SD-22 default | **complete** — `hermes kanban boards switch codex-tranche-5` ran locally 2026-07-19; persistent state file `~/.hermes/kanban/current` = `codex-tranche-5`; loop's per-invocation `hermes kanban --board codex-tranche-5` (per loop-instruction Step 10b) resolves to the same board. NB: session env `HERMES_KANBAN_BOARD=codex-tranche-4` was overriding the on-disk default until unset; not persisted in any shell init file. | n/a |
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
-| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (cycle 1 of 8), Cavalier (cycle 2 of 8) | **complete for Alchemist + Cavalier (criteria 6-8)** — `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, both classes' BAB/save chassis land with cross-book invariant tests; criterion 9 (spell/equipment resolution) still deferred for both — no `apg/spell_list.rs`/`apg/equipment_tables.rs` yet. Gunslinger (class 3 of 8) is next-eligible. See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md` | see `## Cycle log` |
+| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/8), Cavalier (2/8), Gunslinger (3/8, **blocked — no real record**), Inquisitor (4/8) | **complete for Alchemist + Cavalier + Inquisitor (criteria 6-8)** — `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all three classes' BAB/save chassis land with cross-book invariant tests; criterion 9 (spell/equipment resolution) still deferred for all three — no `apg/spell_list.rs`/`apg/equipment_tables.rs` yet. Gunslinger and Magus are **not real APG content** in the PCGen corpus (see `## Open blockers`) — Oracle (class 5 of 8) is next-eligible, not Magus. See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md` | see `## Cycle log` |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Alchemist-ACG (cycle 1 of 10) | see cycle log | pending |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
@@ -41,6 +41,69 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E9.31 | 9 — Closure Readiness | closure_readiness:* | Not started (fires after Epic 8, before Epic 7) | open | — |
 
 ## Open blockers
+
+### E3.6-9 (Epic 3, Gunslinger + Magus specifically) — `corpus-source-inventory.md` §1.1's 8-class APG roster is wrong for these 2 rows: neither class has a real record anywhere under `advanced_players_guide/`
+
+Discovered 2026-07-19T16:00:00Z, cycle 4 (Inquisitor), while attempting the
+next class in the operator-pinned ordering (Alchemist → Cavalier →
+**Gunslinger** → Inquisitor → **Magus** → Oracle → Summoner → Witch).
+Before writing any RED test, checked the real record — and found no
+`CLASS:Gunslinger` line anywhere in `apg_classes.lst` (`grep -n
+"Gunslinger" apg_classes.lst` → 0 hits, not even outside a `CLASS:` line).
+Searched the whole PCGen tree: `CLASS:Gunslinger` exists only in
+`ultimate_combat/uc_classes.lst`; `CLASS:Magus` exists only in
+`ultimate_magic/um_classes.lst`. Neither is APG content in the real
+corpus — they're Ultimate Combat and Ultimate Magic content respectively.
+
+`apg_classes.lst`'s actual `CLASS:` roster (every line, confirmed by
+listing them all) is exactly 6 classes: Alchemist, Cavalier, Inquisitor,
+Oracle, Summoner, Witch. That matches the real, published Pathfinder 1e
+Advanced Player's Guide's actual class list (6 base classes) — Gunslinger
+and Magus are real PF1 classes, but from different books entirely.
+
+This is **not** the same shape as the earlier (now-resolved)
+parser-allowlist blocker: this isn't "the record exists but the parser
+doesn't recognize it yet." The record does not exist under
+`advanced_players_guide/` at all. Per `loop-instruction.md`'s
+SD-22-specific hard stop ("the specific record isn't present in the
+resolved tree"), this routes straight to `## Open blockers` — there is no
+mechanical unblock available (widening a parser allowlist can't manufacture
+a `.lst` line that doesn't exist).
+
+**Also material:** `decisions.md §1` explicitly and repeatedly states
+Ultimate Combat / Ultimate Magic are **not** in SD-22's scope ("SD-22 does
+NOT own Ultimate Combat / Ultimate Magic / any other 'Ultimate'-line
+book"). So this isn't just a missing-source problem solvable by reaching
+into `ultimate_combat/` or `ultimate_magic/` for the record — doing that
+would itself violate the bundle's own recorded scope boundary. The
+`corpus-source-inventory.md` §1.1 table's 8-class APG list is the thing
+that's wrong: 2 of its 8 rows (Gunslinger, Magus) name content from
+explicitly out-of-scope books under the APG epic. This is a routing-table
+defect, not just the "Content shape" prose the file's corrective banner
+already flagged as non-authoritative — the banner said routing columns
+"remain valid and authoritative," but the class roster itself (which
+class belongs to which book) is a routing-level fact, and it's wrong here.
+
+**Not self-healing this inline.** No commit lands for Gunslinger or Magus
+specifically this cycle (Inquisitor, the next-eligible class in the
+ordering, landed instead — see cycle log below). Recommend, operator's
+call:
+1. Narrow Epic 3's class count from 8 to 6 (drop Gunslinger and Magus from
+   `corpus-source-inventory.md` §1.1 and `epic-breakdown.md`'s class list),
+   matching the real APG's actual 6-class roster, or
+2. Explicitly expand SD-22's scope to add Ultimate Combat + Ultimate Magic
+   as new source books (contradicts `decisions.md §1`'s explicit
+   exclusion; would need its own operator directive to amend that
+   decision), or
+3. Re-route Gunslinger to a future Ultimate-Combat-scoped epic and Magus
+   to a future Ultimate-Magic-scoped epic in a later bundle, leaving
+   Epic 3's own 8-class list as aspirational-but-not-APG's-job for 2 of
+   its rows.
+
+Oracle (class 5 of 8 in the existing ordering) is next-eligible for Epic 3
+regardless of which option the operator picks — Oracle, Summoner, and
+Witch all have real records in `apg_classes.lst` (confirmed: `CLASS:Oracle`
+at line 107, `CLASS:Summoner` at line 139, `CLASS:Witch` at line 172).
 
 ### E3.6-9 / E4.10-13 / E5.14-17 (Epics 3/4/5, first cycle of each) — real LST source exists, but the existing `pcgen_import` parsers do not recognize these records (new parsing code required, out of this cycle's file-touch partition)
 
@@ -734,3 +797,74 @@ Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/apg/class_cavalier_cycle_receipt.md`. Receipt block appended
 to `receipts.md`. Next-eligible for Epic 3: Gunslinger (class 3 of 8), or
 a dedicated cycle for criterion 9's shared spell/equipment tables.
+
+### cycle-2026-07-19T16:00:00Z | Epic 3, Inquisitor (cycle 3 landed; Gunslinger found blocked) | ingest:apg_class | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete (criteria 7-8 for Inquisitor)**; new blocker logged for Gunslinger/Magus
+
+Re-checked state before picking a criterion: `git log 9c187a7..HEAD` on
+`decisions.md`/`corpus-source-inventory.md`/`risks-and-open-questions.md`
+shows no new commits; `origin/tranche/5` HEAD (`675ca65`) matches this
+session's local HEAD — no other stream landed work in the interim. Per
+Step 1's priority order and the operator-pinned ordering, Gunslinger
+(class 3 of 8) was next.
+
+Before writing any RED test, verified the real `.lst` record and found
+`apg_classes.lst` has **no `CLASS:Gunslinger` line anywhere** — not just
+an unrecognized one, genuinely absent from the file. Searched the full
+PCGen tree: `CLASS:Gunslinger` lives in `ultimate_combat/uc_classes.lst`;
+`CLASS:Magus` (the class 5 of 8 after Inquisitor) lives in
+`ultimate_magic/um_classes.lst`. Neither is real APG content — both are
+from books `decisions.md §1` explicitly excludes from SD-22 scope. Full
+detail in the new `## Open blockers` entry above (E3.6-9, Gunslinger +
+Magus specifically). This is new, actionable, previously-unknown
+information — a genuine defect in `corpus-source-inventory.md` §1.1's
+class roster, not a repeat of the earlier parser-allowlist blocker — so
+this cycle sends a push notification.
+
+Per Step 1 ("pick the smallest unclaimed eligible acceptance criterion"),
+did not stall on the blocked class — picked Inquisitor (class 4 of 8),
+the next-eligible class with a real record. Verified
+`apg_classes.lst:50`'s `CLASS:Inquisitor` line directly: three-quarter
+BAB (`*3/4`, same posture as Alchemist), good Fortitude **and** Will
+(`/2+2` — a different good/poor split than Alchemist or Cavalier), poor
+Reflex only (`/3`), `MAXLEVEL:20`, and `SPELLSTAT:WIS MEMORIZE:NO`
+(spontaneous divine, same posture as Sorcerer/Bard) — confirming
+Inquisitor belongs in `spellcasting_class.rs`'s allowlist, not `class.rs`'s.
+
+**Widening RED**: added `parses_real_inquisitor_record_from_apg_classes_lst`
+to `tests/sd17_b_spellcasting_class.rs` (real-corpus-gated on
+`PCGEN_CORPUS_ROOT`); ran against the unchanged tree — failed for the
+intended reason (`Inquisitor` not yet in `SPELLCASTING_CLASS_NAMES`,
+silently skipped).
+
+**Acceptance RED**: added `tests/sd22_apg_class_inquisitor_resolves.rs`
+mirroring the Alchemist/Cavalier tests' shape; ran against the unchanged
+tree — failed to compile (`E0599`: `ApgClassId::Inquisitor` did not
+exist) for the intended reason.
+
+GREEN: widened `SPELLCASTING_CLASS_NAMES` in
+`src/pcgen_import/lst_parser/spellcasting_class.rs` by exactly one name
+(`Inquisitor`), per the file-touch-partition's bounded-widening pattern.
+Added `src/rules_core/rules_tables/apg/class_inquisitor.rs` (BAB/save
+chassis only, same scope boundary as the prior two classes) and
+`ApgClassId::Inquisitor` + a match arm in `apg/mod.rs`, plus a doc-comment
+note recording why Gunslinger/Magus are absent from this module.
+
+Verification: `cargo test --locked --test sd22_apg_class_inquisitor_resolves`
+4/4 passed (1 additional real-corpus-gated test passed separately under
+`--ignored`). `cargo test --locked --test sd17_b_spellcasting_class --
+--ignored` 4/4 passed, including the new widening test. Full `cargo test
+--locked` — every suite green, 0 failures (no `N failed` with `N > 0`
+anywhere; sibling-preservation holds). `cargo clippy --locked --tests --
+-D warnings` clean.
+
+Criterion 9 (per-cycle APG spell/equipment resolution) remains open for
+Alchemist, Cavalier, and Inquisitor alike — no `apg/spell_list.rs` or
+`apg/equipment_tables.rs` exists yet. Epic 4 (ACG) and Epic 5 (Bestiary 1)
+remain blocked on their own, separate parser gaps — unaffected by this
+cycle.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/apg/class_inquisitor_cycle_receipt.md`. Receipt block appended
+to `receipts.md`. Next-eligible for Epic 3: Oracle (class 5 of 8 in the
+existing ordering — Magus is skipped per the new blocker above), or a
+dedicated cycle for criterion 9's shared spell/equipment tables.

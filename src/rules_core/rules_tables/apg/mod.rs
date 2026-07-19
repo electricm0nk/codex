@@ -1,11 +1,18 @@
 //! APG (Advanced Player's Guide) book-level module. SD-22 Epic 3
 //! content-source ingest — sibling directory to `rules_tables::crb` per
 //! `SD-19-corpus-aware-compute-seam/decisions.md` §9. Alchemist is the
-//! first class ingested, Cavalier the second (`decisions.md §5`'s
-//! corrected real-LST-corpus sourcing, corrected 2026-07-19).
+//! first class ingested, Cavalier the second, Inquisitor the third
+//! (`decisions.md §5`'s corrected real-LST-corpus sourcing, corrected
+//! 2026-07-19). Gunslinger and Magus are skipped in the operator-pinned
+//! ordering — see `docs/release/SD-22/progress.md`'s Open Blockers: the
+//! real PCGen corpus has no `CLASS:Gunslinger` or `CLASS:Magus` record
+//! anywhere under `advanced_players_guide/`; both live in
+//! `ultimate_combat/uc_classes.lst` and `ultimate_magic/um_classes.lst`
+//! respectively, books `decisions.md §1` explicitly excludes from SD-22.
 
 pub mod class_alchemist;
 pub mod class_cavalier;
+pub mod class_inquisitor;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -23,11 +30,14 @@ pub struct ClassTableRow {
 }
 
 /// Identifies which APG class a chassis-table query targets. Grows by
-/// one variant per per-class Epic 3 cycle (Gunslinger, Inquisitor, ...).
+/// one variant per per-class Epic 3 cycle (Oracle, Summoner, Witch, ...
+/// — Gunslinger and Magus are not real APG content in the PCGen corpus,
+/// see this module's doc comment).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum ApgClassId {
     Alchemist,
     Cavalier,
+    Inquisitor,
 }
 
 /// Resolves an APG class's chassis-table row for `level`, scoped to
@@ -48,6 +58,9 @@ pub fn class_chassis_resolve(
             .into_iter()
             .find(|row| row.level == level),
         ApgClassId::Cavalier => class_cavalier::class_table()
+            .into_iter()
+            .find(|row| row.level == level),
+        ApgClassId::Inquisitor => class_inquisitor::class_table()
             .into_iter()
             .find(|row| row.level == level),
     }

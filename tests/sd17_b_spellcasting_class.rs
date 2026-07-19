@@ -702,3 +702,33 @@ fn parses_real_alchemist_record_from_apg_classes_lst() {
         "Alchemist entry should carry its tab-delimited KEY:VAL tokens"
     );
 }
+
+// SD-22 Epic 3 widening (Inquisitor ingest cycle): the real
+// `CLASS:Inquisitor` record in `apg_classes.lst` carries
+// `SPELLSTAT:WIS MEMORIZE:NO` — the same spontaneous-divine posture as
+// Sorcerer/Bard — so it belongs in `SPELLCASTING_CLASS_NAMES` rather than
+// `MARTIAL_CLASS_NAMES`. Mirrors `parses_real_alchemist_record_from_apg_classes_lst`.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_inquisitor_record_from_apg_classes_lst() {
+    let corpus = TestCorpus::new("apg_classes_inquisitor");
+    corpus.write(
+        "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        &real_apg_classes_lst(),
+    );
+    let result = parse_spellcasting_class_file(&corpus.path(
+        "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+    ))
+    .expect("read real apg_classes.lst");
+
+    let inquisitor = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Inquisitor")
+        .expect(
+            "Inquisitor should be recognized from the real apg_classes.lst once \
+             SPELLCASTING_CLASS_NAMES is widened to include it",
+        );
+    assert_eq!(inquisitor.casting_posture, Some(CastingPosture::Spontaneous));
+    assert_eq!(inquisitor.spell_stat.as_deref(), Some("WIS"));
+}

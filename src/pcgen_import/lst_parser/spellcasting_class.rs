@@ -1,5 +1,5 @@
 //! LST object-kind parser for the `CLASS:` directive (SD-17 Slice B-2;
-//! widened SD-22 Epic 3 to add `Alchemist`).
+//! widened SD-22 Epic 3 to add `Alchemist`, then `Inquisitor`).
 //!
 //! Scope: the five CRB spellcasting classes named in the original slice
 //! card body (`Cleric`, `Druid`, `Wizard`, `Sorcerer`, `Bard`), plus
@@ -7,11 +7,14 @@
 //! Alchemist's `CLASS:Alchemist` line in `apg_classes.lst` carries
 //! `SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES`, the same posture-bearing
 //! shape as the CRB spellcasting classes, so it belongs in this parser
-//! rather than the martial-class parser), plus their `Ex-<name>` mirror
-//! variants. The parser recognizes every `CLASS:<name>` line in the PCGen
-//! corpus where `<name>` is in that set, carries every tab-delimited
-//! `KEY:VAL` token pair to a canonical IR record, and preserves
-//! one-based source line numbers on every entry.
+//! rather than the martial-class parser), plus `Inquisitor` (added by
+//! SD-22 Epic 3's Inquisitor ingest cycle — the real `CLASS:Inquisitor`
+//! line carries `SPELLSTAT:WIS MEMORIZE:NO`, the same spontaneous-divine
+//! posture as Sorcerer/Bard), plus their `Ex-<name>` mirror variants. The
+//! parser recognizes every `CLASS:<name>` line in the PCGen corpus where
+//! `<name>` is in that set, carries every tab-delimited `KEY:VAL` token
+//! pair to a canonical IR record, and preserves one-based source line
+//! numbers on every entry.
 //!
 //! Out-of-scope class names (the six martial classes owned by
 //! [`crate::pcgen_import::lst_parser::class`], prestige classes, and
@@ -57,9 +60,10 @@ use std::fs;
 use std::path::Path;
 
 /// The five CRB spellcasting classes named in the SD-17 Slice B-2 card
-/// body, plus `Alchemist` (SD-22 Epic 3 widening — see module doc comment).
+/// body, plus `Alchemist` and `Inquisitor` (SD-22 Epic 3 widenings — see
+/// module doc comment).
 pub const SPELLCASTING_CLASS_NAMES: &[&str] =
-    &["Cleric", "Druid", "Wizard", "Sorcerer", "Bard", "Alchemist"];
+    &["Cleric", "Druid", "Wizard", "Sorcerer", "Bard", "Alchemist", "Inquisitor"];
 
 /// Casting posture recorded on each spellcasting class. The posture is
 /// derived from the SPELLSTAT line: presence of `MEMORIZE:NO` flips it

@@ -226,3 +226,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["apg/class_cavalier_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Cavalier record's BONUS:COMBAT/BONUS:SAVE formula tokens (full BAB, good Fortitude, poor Will+Reflex, MAXLEVEL:20) -- same scope boundary as class_alchemist.rs (named per-level features out of scope, formula-derived chassis only). Cavalier's good/poor save split differs from Alchemist's (Fort+Reflex good for Alchemist vs. only Fortitude good for Cavalier), confirmed against the real record rather than assumed from the class-archetype template."
+
+- cycle_id: 2026-07-19T16:00:00Z
+  epic: 3
+  criterion: apg_inquisitor
+  criterion_section: "§1.1 Epic 3 — APG content-source ingest (criteria 7, 8; fourth class in the operator-pinned ordering)"
+  row_or_kind: ingest:apg_class
+  evidence_tier_before: open (class 3 of 8 in ordering was Gunslinger, found blocked; Inquisitor picked as next-eligible)
+  evidence_tier_after: complete (criteria 7-8 for Inquisitor; criterion 9's spell/equipment resolution out of scope)
+  branch_tip_before: 675ca65
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "apg/class_inquisitor_cycle_receipt.md"
+  red_phase_evidence: "Widening RED: parses_real_inquisitor_record_from_apg_classes_lst added to tests/sd17_b_spellcasting_class.rs, failed (Inquisitor out of SPELLCASTING_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_apg_class_inquisitor_resolves.rs failed to compile (E0599: ApgClassId::Inquisitor did not exist) (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Inquisitor) in src/pcgen_import/lst_parser/spellcasting_class.rs; added rules_tables/apg/class_inquisitor.rs and ApgClassId::Inquisitor; 4/4 new acceptance tests green (1 real-corpus-gated test also run and green); widening test green; full cargo test suite green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_apg_class_inquisitor_resolves: 4 passed, 1 ignored (real-corpus-gated, separately run and green); sd17_b_spellcasting_class: 4/4 ignored real-corpus tests green including the new widening test; full cargo test --locked: 0 failed across every suite; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "New Open Blockers entry this cycle: apg_classes.lst has no CLASS:Gunslinger or CLASS:Magus record anywhere -- both live in ultimate_combat/uc_classes.lst and ultimate_magic/um_classes.lst respectively, which decisions.md §1 explicitly excludes from SD-22 scope. corpus-source-inventory.md §1.1's 8-class APG roster is itself wrong for those 2 rows, not just its Content-shape prose. Operator decision needed: drop Gunslinger/Magus from Epic 3's class count (6 real APG classes total), or explicitly expand SD-22 scope to include Ultimate Combat/Ultimate Magic. Epic 3's next-eligible cycle in the meantime is Oracle (class 5 of 8, next after Magus in ordering), or apg/spell_list.rs + apg/equipment_tables.rs (criterion 9). Epic 4/5 remain blocked on their own separate parser-coverage gaps, unchanged."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:50 (CLASS:Inquisitor)"
+  rule_set_used: Apg
+  kanban_card: "no card: hermes unavailable from cloud sandbox"
+  progress_file_updated: "yes"
+  artifacts_written: ["apg/class_inquisitor_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Inquisitor record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB, good Fortitude+Will, poor Reflex, MAXLEVEL:20, SPELLSTAT:WIS MEMORIZE:NO) -- same scope boundary as class_alchemist.rs/class_cavalier.rs. Also discovered and logged: Gunslinger and Magus, next in the operator-pinned 8-class ordering, have no real APG .lst record at all -- they belong to Ultimate Combat / Ultimate Magic, books explicitly out of SD-22 scope per decisions.md §1. This is a genuine inventory-doc defect (the routing table itself, not just its illustrative prose), surfaced to the operator via progress.md's Open Blockers and a push notification."
