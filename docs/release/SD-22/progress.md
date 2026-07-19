@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 4b83cc9
+snapshot_as_of: ada161e
 ---
 
 # SD-22 — Progress
@@ -515,3 +515,41 @@ does note, for the operator's eventual return, that the loop has now run
 5 consecutive hourly firings (roughly 4 hours) with zero landed criteria
 past Epic 8's three discrete items — the stall is not self-resolving and
 remains squarely an operator-decision item, not a mechanical one.
+
+### cycle-2026-07-19T12:55:40Z | scheduled loop firing | n/a (verification-only, no production change) | no card (NO-OP, nothing to mint) | no row transition
+
+Re-checked state before picking a criterion, per Step 1:
+
+- `git log 233c426..HEAD` on `decisions.md`, `risks-and-open-questions.md`,
+  `epic-breakdown.md`, and `corpus-source-inventory.md` shows no commits
+  past `9cd7708` (the §5 LST-sourcing correction, already reflected in the
+  live E3.6-9/E4.10-13/E5.14-17 blocker text) — no new operator decision
+  has landed on the three options recorded under that blocker.
+- Re-verified the blocker's own claims directly against source rather than
+  trusting the doc text: `class.rs`'s `MARTIAL_CLASS_NAMES` and
+  `spellcasting_class.rs`'s `SPELLCASTING_CLASS_NAMES` allowlists are
+  unchanged (still the 11 CRB classes only); `apg_classes.lst` still has a
+  real `CLASS:Alchemist` record (line 11); `acg_classes.lst` has zero
+  `CLASS:Alchemist` hits (ACG's own classes are separately absent from
+  both allowlists, confirming this isn't an APG-only gap); `b1_races.lst`
+  still has zero `RACE:`-prefixed lines (bare tab-delimited rows, not the
+  pointer shape `race_ability.rs` parses). The parser-coverage blocker is
+  unchanged and still accurate — extending it is real new parsing code in
+  `src/pcgen_import/`, outside every SD-22 epic's file-touch partition.
+- `origin/tranche/5` HEAD (`ada161e`) matches this session's local HEAD —
+  no other stream landed work in the interim.
+- Epic 3/4/5 remain blocked for the identical, unchanged reason; Epic 6
+  remains transitively blocked (needs ≥1 book ingested); Epic 8's three
+  file-touch-partition criteria (27-29) remain complete, criterion 30
+  remains the standing re-verification gate; Epic 9/7 remain gated behind
+  Epic 3/4/5/6.
+
+Per Step 1's own exit condition and this file's "do not repeat a NO-OP for
+a criterion whose blocker reason has not changed" instruction: the
+blocker's reason is identical to the one already recorded by the prior
+cycle (`ada161e`, cycle-2026-07-19T13:00:00Z log entry above). No new
+information to report, so — consistent with the immediately preceding
+NO-OP cycles' own precedent — this firing does not send a push
+notification. No production change, no fabricated content, no card
+minted. `snapshot_as_of` bumped to `ada161e` in this cycle's edit (the
+prior cycle's own commit had not updated it).
