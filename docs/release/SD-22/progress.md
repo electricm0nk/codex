@@ -314,3 +314,30 @@ and Epic 8's own criteria 27-29 (the three file-touch-partition-scoped
 ones) are now all `complete` — a future cycle should make the explicit
 call on whether Epic 9 is now unblocked or whether criterion 30 needs its
 own discrete landing first.
+
+### cycle-2026-07-19T08:00:00Z | scheduled loop firing | n/a (verification-only, no production change) | no card (NO-OP, nothing to mint) | no row transition
+
+Re-checked the state this cycle inherited before picking a criterion:
+
+- `corpus/` still does not exist anywhere in the repo; no operator-supplied
+  reference/corpus file has been added since the E3.6-9 blocker above was
+  logged.
+- That blocker's own text already states the identical-wall reasoning
+  applies to Epic 4 (`E4.10-13`) and Epic 5 (`E5.14-17`) first cycles, not
+  just Epic 3 — so attempting either this cycle would just re-derive the
+  same "no fake completion" conflict (`AGENTS.md`) against the same
+  unresolved `decisions.md §5` fabrication-risk trade-off, for no new
+  information.
+- Epic 6 depends on ≥1 book ingested (still none). Epic 8's discrete
+  criteria (27-29) are `complete`; E8.30 is a standing re-verification
+  gate, not a fresh unit of work. Epic 9 and Epic 7 are both gated behind
+  Epic 3/4/5/6 closing.
+
+No criterion this cycle is both unclaimed and un-blocked. Per the
+loop-instruction's own exit condition ("if every criterion is already
+complete or already has a real `## Open blockers` entry, exit NO-OP
+immediately... do not force work"), this firing lands no production
+change and mints no fabricated content. Recommending (again) that the
+three options listed under the E3.6-9 blocker get an explicit operator
+decision — the loop will otherwise NO-OP every firing indefinitely
+without one.
