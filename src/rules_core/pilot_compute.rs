@@ -17285,9 +17285,13 @@ fn unmet_selected_skill_posture_conditions(input: &CharacterInput) -> Vec<String
     let allocations = &input.chosen.skill_allocations;
     let mut unmet = Vec::new();
 
-    if supported_fighter_level(input).is_none() {
+    // SD-21 E6b.1: widened from a Fighter-only gate to the same dispatch-supported
+    // class set `compute_class_chassis` / `compute_total_saves` already recognize
+    // (`has_supported_class_chassis`), mirroring `unmet_combat_posture_conditions`.
+    if !has_supported_class_chassis(input) {
         unmet.push(format!(
-            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} chassis"
+            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} or \
+             {WIZARD_CLASS_ID} levels 1-{MAX_SUPPORTED_WIZARD_LEVEL} chassis"
         ));
     }
 
@@ -17419,9 +17423,17 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
     let chosen = &input.chosen;
     let mut unmet = Vec::new();
 
-    if supported_fighter_level(input).is_none() {
+    // SD-21 E6b.1: widened from a Fighter-only gate to the same dispatch-supported
+    // class set `compute_class_chassis` / `compute_total_saves` already recognize
+    // (`has_supported_class_chassis`) -- the combat baseline math itself (BAB +
+    // STR + Weapon Focus, with Fighter-only Weapon/Armor Training folded in via
+    // the `supported_fighter_level(input).unwrap_or(1)` fallback below, which is
+    // 0 for any non-Fighter class) is not Fighter-specific, only the class-level
+    // recognition gate was.
+    if !has_supported_class_chassis(input) {
         unmet.push(format!(
-            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} chassis"
+            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} or \
+             {WIZARD_CLASS_ID} levels 1-{MAX_SUPPORTED_WIZARD_LEVEL} chassis"
         ));
     }
 
@@ -17456,11 +17468,20 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
         unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
     }
 
-    let fighter_bonus_selection = choice_selection(input, FIGHTER_BONUS_FEAT_CHOICE_ID);
-    if fighter_bonus_selection != Some(WEAPON_FOCUS_LONGSWORD_SELECTION) {
-        unmet.push(format!(
-            "{FIGHTER_BONUS_FEAT_CHOICE_ID} selection must be {WEAPON_FOCUS_LONGSWORD_SELECTION}, got {fighter_bonus_selection:?}"
-        ));
+    // The Fighter bonus-feat choice mechanism (`choice:fighter_bonus_feat`) is a
+    // Fighter-only class feature (how a Fighter's own 1st-level bonus feat was
+    // granted); it is only required when Fighter is actually the dispatch-supported
+    // class here. A Wizard has no such class feature at all, so it must not be
+    // asked to satisfy a choice mechanism it can never have -- Weapon Focus itself
+    // is still required for every class via the unconditional `selected_feats`
+    // check immediately above.
+    if supported_fighter_level(input).is_some() {
+        let fighter_bonus_selection = choice_selection(input, FIGHTER_BONUS_FEAT_CHOICE_ID);
+        if fighter_bonus_selection != Some(WEAPON_FOCUS_LONGSWORD_SELECTION) {
+            unmet.push(format!(
+                "{FIGHTER_BONUS_FEAT_CHOICE_ID} selection must be {WEAPON_FOCUS_LONGSWORD_SELECTION}, got {fighter_bonus_selection:?}"
+            ));
+        }
     }
 
     unmet

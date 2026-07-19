@@ -29,7 +29,9 @@
 //! `supported_fighter_level` too; those stay claim-blocked for Wizard and are a
 //! remaining Epic 6 sub-feature, not this cycle's.
 
-use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use codex::rules_core::character_input::{
+    ActiveState, CharacterInput, EquipmentSelection, SkillAllocation, load_character_input_fixture,
+};
 use codex::rules_core::pilot_compute::{
     BaseSaves, ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
@@ -157,6 +159,117 @@ fn wizard_level3_still_stays_blocked_on_its_own_spell_burdens() {
     }
 }
 
+/// Builds a Wizard 3 input that also carries the exact GE-06 deterministic
+/// combat/skill posture (Longsword/Chain Shirt/Dodge/Weapon Focus/no-shield,
+/// Climb/Intimidate/Swim rank 1) on top of the unmodified Wizard fixture's own
+/// class/ability/school selections, so `compute_combat_baseline` and
+/// `compute_selected_skill_modifiers`'s posture checks (not just their class
+/// gate) are satisfiable for a non-Fighter class. This is additive test-only
+/// construction, not a mutation of the shared `WIZARD_LEVEL_3_FIXTURE` file
+/// (which stays untouched for every other SD13/SD21 test that reads it).
+fn wizard_level_3_with_ge06_combat_posture() -> CharacterInput {
+    let mut input = load(WIZARD_LEVEL_3_FIXTURE);
+    input.chosen.selected_feats.push("feat:weapon_focus".to_string());
+    input.chosen.equipment_selections.push(EquipmentSelection {
+        item_id: "item:longsword".to_string(),
+        equipped_or_active: true,
+        active_state: ActiveState::EquippedActive,
+    });
+    input.chosen.equipment_selections.push(EquipmentSelection {
+        item_id: "item:chain_shirt".to_string(),
+        equipped_or_active: true,
+        active_state: ActiveState::EquippedActive,
+    });
+    input.chosen.equipment_selections.push(EquipmentSelection {
+        item_id: "item:shield".to_string(),
+        equipped_or_active: false,
+        active_state: ActiveState::Absent,
+    });
+    input.chosen.equipment_selections.push(EquipmentSelection {
+        item_id: "power_attack".to_string(),
+        equipped_or_active: false,
+        active_state: ActiveState::SelectedInactive,
+    });
+    for skill_id in ["skill:climb", "skill:intimidate", "skill:swim"] {
+        input.chosen.skill_allocations.push(SkillAllocation {
+            skill_id: skill_id.to_string(),
+            ranks: 1,
+        });
+    }
+    input
+}
+
+#[test]
+fn wizard_level3_with_ge06_combat_posture_clears_the_combat_baseline_diagnostic() {
+    // SD-21 E6b.1: `compute_combat_baseline`'s posture check used to gate its
+    // class-level requirement on `supported_fighter_level` alone; it now
+    // accepts any `has_supported_class_chassis` class (Fighter or Wizard).
+    // The Fighter-only "granted via choice:fighter_bonus_feat" requirement is
+    // now conditioned on Fighter actually being the dispatch-supported class
+    // (a Wizard never has that class feature at all, so it must not be asked
+    // to satisfy it) -- Weapon Focus itself is still required via
+    // `selected_feats` for every class, unconditionally.
+    let input = wizard_level_3_with_ge06_combat_posture();
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        !has_diagnostic(&computation, "combat.baseline_unsupported"),
+        "a Wizard 3 with the GE-06 combat posture is now dispatch-supported for the \
+         combat baseline: {:?}",
+        computation.diagnostics
+    );
+    let melee_attack = explanation(&computation, "combat.baseline_melee_attack_bonus");
+    // Wizard base attack bonus 1 + STR modifier (-1, STR 8) + Weapon Focus (+1)
+    // + no Weapon Training (Wizard has no Fighter class feature) = 1.
+    assert_eq!(melee_attack.value, 1, "{computation:?}");
+    let armor_class = explanation(&computation, "defense.baseline_armor_class");
+    // 10 + Chain Shirt (+4) + DEX contribution (+2, DEX 14, uncapped by any
+    // Fighter armor training) + Dodge (+1) = 17.
+    assert_eq!(armor_class.value, 17, "{computation:?}");
+}
+
+#[test]
+fn wizard_level3_with_ge06_combat_posture_clears_the_selected_skill_diagnostic() {
+    // SD-21 E6b.1: `compute_selected_skill_modifiers`'s posture check is
+    // widened the same way.
+    let input = wizard_level_3_with_ge06_combat_posture();
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        !has_diagnostic(&computation, "skill.selected_modifier.unsupported"),
+        "a Wizard 3 with the GE-06 selected-skill posture is now dispatch-supported: {:?}",
+        computation.diagnostics
+    );
+    let climb = explanation(&computation, "skill.selected_modifier.climb");
+    // rank 1 + STR modifier (-1) + class-skill bonus (+3) + no armor-check
+    // penalty reduction (Wizard has no Fighter armor training, Chain Shirt
+    // ACP is -2) = 1.
+    assert_eq!(climb.value, 1, "{computation:?}");
+}
+
+#[test]
+fn wizard_level3_without_the_ge06_combat_posture_still_stays_blocked() {
+    // Negative control: E6b.1 widens the CLASS gate only. A Wizard 3 that
+    // does not also carry the exact GE-06 combat/skill posture (the
+    // unmodified fixture, with no equipment/skill selections at all) still
+    // gets a claim-blocking `combat.baseline_unsupported` /
+    // `skill.selected_modifier.unsupported` diagnostic -- this is genuine
+    // posture-gating, not a class-gate bypass.
+    let input = load(WIZARD_LEVEL_3_FIXTURE);
+    let computation = compute_pilot_base_chassis(&input);
+
+    assert!(
+        has_diagnostic(&computation, "combat.baseline_unsupported"),
+        "a Wizard 3 without the GE-06 gear/feat posture must stay blocked: {:?}",
+        computation.diagnostics
+    );
+    assert!(
+        has_diagnostic(&computation, "skill.selected_modifier.unsupported"),
+        "a Wizard 3 without the GE-06 skill posture must stay blocked: {:?}",
+        computation.diagnostics
+    );
+}
+
 #[test]
 fn fighter_chassis_dispatch_is_unaffected() {
     let input = load(FIGHTER_LEVEL_1_FIXTURE);
@@ -171,6 +284,26 @@ fn fighter_chassis_dispatch_is_unaffected() {
         base_attack.value, computation.base_attack_bonus,
         "the dispatch refactor must not change Fighter's own chassis result"
     );
+
+    // SD-21 E6b.1 regression check: widening `compute_combat_baseline` /
+    // `compute_selected_skill_modifiers`'s class gate to `has_supported_class_chassis`
+    // (and conditioning the Fighter-bonus-feat-choice requirement on Fighter actually
+    // being present) must not change Fighter's own combat baseline / selected skill
+    // values, which are still grounded exactly as before.
+    assert!(
+        !has_diagnostic(&computation, "combat.baseline_unsupported"),
+        "Fighter's own combat baseline must stay supported: {:?}",
+        computation.diagnostics
+    );
+    assert!(
+        !has_diagnostic(&computation, "skill.selected_modifier.unsupported"),
+        "Fighter's own selected skills must stay supported: {:?}",
+        computation.diagnostics
+    );
+    let melee_attack = explanation(&computation, "combat.baseline_melee_attack_bonus");
+    // Fighter 1 BAB (+1) + STR modifier (STR 16, +3) + Weapon Focus (+1), no
+    // Weapon Training below level 5 = 5.
+    assert_eq!(melee_attack.value, 5, "{computation:?}");
 }
 
 #[test]
