@@ -115,9 +115,11 @@
 //! claim-blocking diagnostics and withheld explanations rather than fabricated values.
 
 use super::character_input::{
-    AbilityScores, ActiveState, CharacterClassLevel, CharacterInput, SkillAllocation,
+    AbilityScores, ActiveState, AcquisitionMode, CharacterClassLevel, CharacterInput,
+    SkillAllocation,
 };
 use super::rules_tables::crb::class_tables::{ClassId, class_tables};
+use super::rules_tables::crb::spell_list::Pf1SchoolId;
 
 /// Result of the GE-06 pilot deterministic compute surface, accumulating the
 /// base chassis, baseline combat, and total-save outputs proven across slices.
@@ -14845,38 +14847,340 @@ fn explain_wizard_level1_prepared_spell_baseline(
         });
     }
 
-    // Still blocked (1/2): with the specialization choice and two Evocation school
-    // powers' flat magnitudes grounded above, the claim-blocker narrows to exactly
-    // what stays unimplemented: the school-power execution machinery and the
-    // opposed-school preparation cost.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported".to_owned(),
-        message: format!(
-            "Wizard level {level} remains blocked on its school-power execution and \
-             opposed-school preparation-cost burden: the Evocation intense spells flat \
-             bonus-damage magnitude and the force missile flat 3 + Int-mod uses-per-day pool are \
-             now grounded as flat numbers in dedicated explanation records, but no evocation \
-             spell-damage application, no force-missile casting execution (the 1d4 damage roll \
-             and automatic-hit targeting), and no opposed-school preparation cost (each \
-             opposed-school spell occupies two prepared slots) are implemented, so no full \
-             Wizard school-power or opposed-school support is claimed"
+    // SD-21 E6b.2/E6b.3: ground the real prepared-spellbook / daily-preparation
+    // posture (bounded to wizard levels 1-3 and the canonical Evocation
+    // specialization, `unmet_wizard_spellbook_conditions`'s own supported range),
+    // including the opposed-school double-slot-cost rule. When the posture is
+    // unmet, both diagnostics below still fire exactly as before (their message
+    // now also cites the specific unmet reason); when it is met, this replaces
+    // them with real spellbook-contents / daily-preparation / spells-per-day
+    // explanation records instead.
+    let spellbook_unmet =
+        unmet_wizard_spellbook_conditions(input, level, ability_modifiers);
+    if spellbook_unmet.is_empty() {
+        ground_wizard_prepared_spellbook(input, level, ability_modifiers, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported"
+                .to_owned(),
+            message: format!(
+                "Wizard level {level} remains blocked on its school-power execution and \
+                 opposed-school preparation-cost burden: the Evocation intense spells flat \
+                 bonus-damage magnitude and the force missile flat 3 + Int-mod uses-per-day pool \
+                 are now grounded as flat numbers in dedicated explanation records, and the \
+                 opposed-school preparation cost (each opposed-school spell occupies two \
+                 prepared slots) is grounded for real once a supported spellbook posture exists, \
+                 but no evocation spell-damage application and no force-missile casting \
+                 execution (the 1d4 damage roll and automatic-hit targeting) are implemented, so \
+                 no full Wizard school-power support is claimed; unmet spellbook posture: {}",
+                spellbook_unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.wizard.prepared_spellbook.unsupported".to_owned(),
+            message: format!(
+                "Wizard remains blocked on its prepared spellbook / spells prepared / spell slot \
+                 posture burden: {}",
+                spellbook_unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
+}
+
+/// This new grounding's own supported wizard-level ceiling (SD-21 E6b.2),
+/// independent of `MAX_SUPPORTED_WIZARD_LEVEL` (20): the base spells-per-day
+/// table below is only verified for levels 1-3 so far, mirroring every other
+/// incremental per-level widening already used throughout this file. Levels
+/// 4-20 keep the pre-existing claim-blocking diagnostics until a later cycle
+/// widens this ceiling.
+const WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 3;
+
+/// PF1 Core Rulebook Wizard "Spells per Day" table, base counts before any
+/// Intelligence bonus spells or the specialist bonus slot, for spell levels 0
+/// (cantrip) through 3rd. Verified independently against d20pfsrd.com and the
+/// Archives of Nethys aonprd.com mirror (byte-for-byte agreement): level 1
+/// "3/1/-/-", level 2 "4/2/-/-", level 3 "4/2/1/-" (the level 2/3 rows were
+/// already cited in this function's own doc comment above; level 1 is the
+/// same verified table's opening row). Returns `[None; 4]` above level
+/// `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL` -- this grounding's own bounded
+/// range, not the wider `MAX_SUPPORTED_WIZARD_LEVEL`.
+fn wizard_base_spells_per_day(level: u8) -> [Option<i16>; 4] {
+    match level {
+        1 => [Some(3), Some(1), None, None],
+        2 => [Some(4), Some(2), None, None],
+        3 => [Some(4), Some(2), Some(1), None],
+        _ => [None, None, None, None],
+    }
+}
+
+/// Bonus spells per day from a high Intelligence, PF1 Core Rulebook Table:
+/// Ability Modifiers and Bonus Spells (the same formula already grounded for
+/// Paladin/Charisma, Ranger/Wisdom, Sorcerer/Charisma, and Bard/Charisma in
+/// this file): 0 when the modifier is below the spell level, otherwise
+/// `(modifier - spell_level) / 4 + 1`. Never applies to cantrips (spell level
+/// 0), per the same rule text every other class's own bonus-spell grounding
+/// already restricts to spell level 1+.
+fn ability_bonus_spells(ability_modifier: i16, spell_level: i16) -> i16 {
+    if spell_level < 1 || ability_modifier < spell_level {
+        0
+    } else {
+        (ability_modifier - spell_level) / 4 + 1
+    }
+}
+
+/// Parses this bounded slice's own corpus-free Wizard-spellbook spell-identity
+/// convention: `<school>.<level>.<name>` (e.g. `evocation.1.magic_missile`).
+/// This compute surface has no `SourcePackageContent` corpus access (unlike
+/// Epic 2's `spellbook::compute_spellbook_coverage`, which resolves a spell's
+/// real school/level from the imported PCGen corpus), so this grounding
+/// cannot look up an arbitrary spell's school/level the way that engine does;
+/// it instead reuses the real strict-school enum (`Pf1SchoolId`, SD-19's
+/// foundation slice) rather than inventing a parallel school taxonomy, with
+/// the school/level named directly in the chosen `spell_id` -- the same
+/// "compound fact encoded in one colon/dot-segmented identifier" convention
+/// already used throughout this file (e.g. `feat:weapon_focus:weapon:longsword`).
+/// Returns `None` for any string that doesn't match the convention or names
+/// an unrecognized school.
+fn parse_wizard_spellbook_spell_id(spell_id: &str) -> Option<(Pf1SchoolId, u8)> {
+    let mut parts = spell_id.splitn(3, '.');
+    let school_token = parts.next()?;
+    let level_token = parts.next()?;
+    parts.next()?;
+    let level: u8 = level_token.parse().ok()?;
+    let mut chars = school_token.chars();
+    let first = chars.next()?;
+    let capitalized: String = first.to_uppercase().chain(chars).collect();
+    let school = Pf1SchoolId::from_corpus_str(&capitalized)?;
+    Some((school, level))
+}
+
+/// The PF1 slot cost of preparing one spell of the given school for this
+/// bounded slice's fixed canonical opposed schools (Necromancy and
+/// Transmutation, the same pair `wizard_has_canonical_specialization_selections`
+/// already requires): 2 prepared slots for an opposed-school spell, 1
+/// otherwise (PF1 Core Rulebook arcane school class feature: "he must use two
+/// of his daily spell slots of that level to prepare [an opposed-school]
+/// spell").
+fn wizard_opposed_school_slot_cost(school: Pf1SchoolId) -> i16 {
+    if matches!(school, Pf1SchoolId::Necromancy | Pf1SchoolId::Transmutation) {
+        2
+    } else {
+        1
+    }
+}
+
+/// Return the list of unmet conditions for this grounding's bounded prepared-
+/// spellbook posture. An empty list means the posture is fully supported: a
+/// canonical-specialization wizard at a supported level, with at least one
+/// spell recorded (`AcquisitionMode::Known`) and at least one prepared today
+/// (`AcquisitionMode::Prepared`), every prepared spell already recorded, and
+/// no spell level's prepared consumption (opposed-school spells costing 2
+/// slots each) exceeding that level's total slot budget (base table count +
+/// the already-grounded specialist bonus slot + the Intelligence bonus).
+///
+/// This is a genuine, but deliberately bounded, slot-consumption check: it
+/// does not separate the specialist bonus slot's own school restriction
+/// (real PF1: that slot can only hold a spell of the specialized school
+/// itself) from the generic per-level budget -- both are summed into one
+/// total. For this slice's own canonical-Evocation-only reproducer that
+/// nuance never bites (every non-opposed prepared spell here is Evocation),
+/// and is named here as a known, documented limitation rather than silently
+/// assumed away.
+fn unmet_wizard_spellbook_conditions(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    if level > WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL {
+        unmet.push(format!(
+            "prepared spellbook grounding is only supported for wizard levels \
+             1-{WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL}, got {level}"
+        ));
+        return unmet;
+    }
+    if !wizard_has_canonical_specialization_selections(input) {
+        unmet.push(
+            "prepared spellbook grounding requires the canonical Evocation specialization \
+             (opposed Necromancy/Transmutation)"
+                .to_owned(),
+        );
+        return unmet;
+    }
+
+    let wizard_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == WIZARD_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = wizard_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = wizard_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    if recorded.is_empty() {
+        unmet.push(
+            "no wizard spells recorded in the spellbook (AcquisitionMode::Known)".to_owned(),
+        );
+    }
+    if prepared.is_empty() {
+        unmet.push("no wizard spells prepared today (AcquisitionMode::Prepared)".to_owned());
+    }
+
+    for spell_id in &prepared {
+        if !recorded.contains(spell_id) {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' is not recorded in the spellbook"
+            ));
+        }
+    }
+
+    let base_spells_per_day = wizard_base_spells_per_day(level);
+    for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
+        let spell_level = spell_level as u8;
+        let Some(base_count) = base_count else {
+            if prepared
+                .iter()
+                .filter_map(|id| parse_wizard_spellbook_spell_id(id))
+                .any(|(_, l)| l == spell_level)
+            {
+                unmet.push(format!(
+                    "a prepared spell targets spell level {spell_level}, not yet accessible at \
+                     wizard level {level}"
+                ));
+            }
+            continue;
+        };
+        let specialist_bonus = if spell_level >= 1 { 1 } else { 0 };
+        let int_bonus =
+            ability_bonus_spells(ability_modifiers.intelligence, i16::from(spell_level));
+        let total_slots = base_count + specialist_bonus + int_bonus;
+        let consumed: i16 = prepared
+            .iter()
+            .filter_map(|id| parse_wizard_spellbook_spell_id(id))
+            .filter(|(_, l)| *l == spell_level)
+            .map(|(school, _)| wizard_opposed_school_slot_cost(school))
+            .sum();
+        if consumed > total_slots {
+            unmet.push(format!(
+                "spell level {spell_level} over-prepared: {consumed} slots consumed \
+                 (opposed-school spells cost 2 each) but only {total_slots} available (base \
+                 {base_count} + specialist bonus {specialist_bonus} + Intelligence bonus \
+                 {int_bonus})"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real prepared-spellbook / daily-preparation state once
+/// `unmet_wizard_spellbook_conditions` reports an empty unmet list: the
+/// recorded spellbook contents, the daily preparation selection, and the
+/// base/Intelligence-bonus/total spells-per-day counts per accessible spell
+/// level (mirroring the Paladin partial-caster base/bonus/total precedent
+/// already grounded elsewhere in this file).
+fn ground_wizard_prepared_spellbook(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let wizard_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == WIZARD_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = wizard_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = wizard_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.wizard.spellbook_contents".to_owned(),
+        value: recorded.len() as i16,
+        detail: format!(
+            "Wizard level {level} recorded spellbook contents ({} spells, \
+             AcquisitionMode::Known): {}. This grounds which spells are recorded as real, \
+             chosen input; it does not verify against any corpus that a named spell genuinely \
+             exists or genuinely belongs to the school/level its own identifier claims",
+            recorded.len(),
+            recorded.join(", ")
         ),
-        claim_blocking: true,
     });
 
-    // Still blocked (2/2): name the prepared spellbook / spells-prepared /
-    // spell-slot posture burden explicitly. Unchanged by the Scribe Scroll and
-    // specialization-choice groundings: it fabricates no spell math.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_spell.wizard.prepared_spellbook.unsupported".to_owned(),
-        message:
-            "Wizard remains blocked on its prepared spellbook / spells prepared / spell slot \
-             posture burden: spellbook content, spells prepared per day, spell slots per day, \
-             bonus spell slots from a high Intelligence, and spell save DCs are out of scope for \
-             this level-1 prepared spell baseline and no spell math is fabricated"
-                .to_owned(),
-        claim_blocking: true,
+    explanations.push(ComputationExplanation {
+        id: "class_spell.wizard.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Wizard level {level} daily preparation selection ({} spells, \
+             AcquisitionMode::Prepared, each already verified recorded in the spellbook above): \
+             {}. This grounds the prepared-vs-known distinction for real: every prepared spell \
+             is drawn from the recorded spellbook, consuming its spell level's slot budget \
+             (opposed-school spells costing 2 slots instead of 1). It computes no spell save DC \
+             and no casting execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
     });
+
+    let base_spells_per_day = wizard_base_spells_per_day(level);
+    for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = spell_level as u8;
+        let specialist_bonus = if spell_level >= 1 { 1 } else { 0 };
+        let int_bonus =
+            ability_bonus_spells(ability_modifiers.intelligence, i16::from(spell_level));
+        let total = base_count + specialist_bonus + int_bonus;
+
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.wizard.base_spells_per_day.spell_level_{spell_level}"),
+            value: *base_count,
+            detail: format!(
+                "Wizard level {level} base spells per day at spell level {spell_level}: \
+                 {base_count}, read directly from the PF1 Core Rulebook Wizard class table's \
+                 spells-per-day row (verified against the raw table rows of both primary \
+                 sources; a literal table lookup, not a derived formula)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: int_bonus,
+            detail: format!(
+                "Wizard level {level} Intelligence bonus spells per day at spell level \
+                 {spell_level}: {int_bonus} from Intelligence modifier \
+                 {} (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells)",
+                ability_modifiers.intelligence
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.wizard.total_spells_per_day.spell_level_{spell_level}"),
+            value: total,
+            detail: format!(
+                "Wizard level {level} total spells per day at spell level {spell_level}: base \
+                 {base_count} + specialist bonus slot {specialist_bonus} (Evocation-only, \
+                 already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own \
+                 flat count, decomposed here per spell level) + Intelligence bonus {int_bonus} \
+                 = {total}"
+            ),
+        });
+    }
 }
 
 /// The bounded Cleric milestone level this decomposition surface grounds, if any.
