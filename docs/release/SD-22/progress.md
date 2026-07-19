@@ -1147,7 +1147,17 @@ conflicts), re-pointed `snapshot_as_of` at the new parent (`6ab616b`),
 re-verified `cargo test --locked` and `cargo clippy` still green
 post-rebase, then pushed successfully as `18a963b`.
 
-### cycle-2026-07-19T19:51:46Z | Epic 3, criterion 9 (APG shared spell/equipment tables) | ingest:apg_class | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete**
+### cycle-2026-07-19T19:51:46Z | Epic 3, criterion 9 (APG shared spell/equipment tables) | ingest:apg_class | card `t_1d2c1dce` on `codex-tranche-5` (status=done) | open → **complete**
+
+`hermes` is reachable from this session (unlike the prior cloud-run
+cycles this progress doc's earlier entries describe) — Step 10b's kanban
+mint ran for real this cycle. Two syntax corrections against the goal
+file's documented example were needed: `--board <slug>` is a flag on
+`hermes kanban` itself (before the subcommand), not on `create`; and
+`--initial-status` only accepts `blocked`/`running`, not `done` — created
+the card with default status then used `hermes kanban complete
+t_1d2c1dce --summary "..."` to reach `done`. Card verified via `hermes
+kanban show t_1d2c1dce`.
 
 Re-checked state before picking a criterion: `git log 18a963b..HEAD` showed
 one new commit, `e134bb4` (`feat(sd22): per-content-type product surfaces
