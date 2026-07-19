@@ -732,3 +732,33 @@ fn parses_real_inquisitor_record_from_apg_classes_lst() {
     assert_eq!(inquisitor.casting_posture, Some(CastingPosture::Spontaneous));
     assert_eq!(inquisitor.spell_stat.as_deref(), Some("WIS"));
 }
+
+// SD-22 Epic 3 widening (Oracle ingest cycle): the real `CLASS:Oracle`
+// record in `apg_classes.lst` carries `SPELLSTAT:CHA MEMORIZE:NO` — the
+// same spontaneous-divine posture as Sorcerer/Bard/Inquisitor — so it
+// belongs in `SPELLCASTING_CLASS_NAMES` rather than `MARTIAL_CLASS_NAMES`.
+// Mirrors `parses_real_inquisitor_record_from_apg_classes_lst`.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_oracle_record_from_apg_classes_lst() {
+    let corpus = TestCorpus::new("apg_classes_oracle");
+    corpus.write(
+        "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        &real_apg_classes_lst(),
+    );
+    let result = parse_spellcasting_class_file(&corpus.path(
+        "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+    ))
+    .expect("read real apg_classes.lst");
+
+    let oracle = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Oracle")
+        .expect(
+            "Oracle should be recognized from the real apg_classes.lst once \
+             SPELLCASTING_CLASS_NAMES is widened to include it",
+        );
+    assert_eq!(oracle.casting_posture, Some(CastingPosture::Spontaneous));
+    assert_eq!(oracle.spell_stat.as_deref(), Some("CHA"));
+}

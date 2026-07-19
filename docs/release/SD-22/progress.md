@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 675ca65
+snapshot_as_of: f933ecf
 ---
 
 # SD-22 — Progress
@@ -29,7 +29,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.3 | 2 — Operator Pre-Launch | prelaunch:board | `codex-tranche-5` kanban board set as SD-22 default | **complete** — `hermes kanban boards switch codex-tranche-5` ran locally 2026-07-19; persistent state file `~/.hermes/kanban/current` = `codex-tranche-5`; loop's per-invocation `hermes kanban --board codex-tranche-5` (per loop-instruction Step 10b) resolves to the same board. NB: session env `HERMES_KANBAN_BOARD=codex-tranche-4` was overriding the on-disk default until unset; not persisted in any shell init file. | n/a |
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
-| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/8), Cavalier (2/8), Gunslinger (3/8, **blocked — no real record**), Inquisitor (4/8) | **complete for Alchemist + Cavalier + Inquisitor (criteria 6-8)** — `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all three classes' BAB/save chassis land with cross-book invariant tests; criterion 9 (spell/equipment resolution) still deferred for all three — no `apg/spell_list.rs`/`apg/equipment_tables.rs` yet. Gunslinger and Magus are **not real APG content** in the PCGen corpus (see `## Open blockers`) — Oracle (class 5 of 8) is next-eligible, not Magus. See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md` | see `## Cycle log` |
+| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6) | **complete for Alchemist + Cavalier + Inquisitor + Oracle (criteria 6-8)** — `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all four classes' BAB/save chassis land with cross-book invariant tests; criterion 9 (spell/equipment resolution) still deferred for all four — no `apg/spell_list.rs`/`apg/equipment_tables.rs` yet. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`) — Summoner (class 5 of 6) is next-eligible. See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md` | see `## Cycle log` |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Alchemist-ACG (cycle 1 of 10) | see cycle log | pending |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
@@ -42,7 +42,18 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 
 ## Open blockers
 
-### E3.6-9 (Epic 3, Gunslinger + Magus specifically) — `corpus-source-inventory.md` §1.1's 8-class APG roster is wrong for these 2 rows: neither class has a real record anywhere under `advanced_players_guide/`
+### [RESOLVED 2026-07-19T09:43:58-04:00, commit `6923e54`] E3.6-9 (Epic 3, Gunslinger + Magus specifically) — `corpus-source-inventory.md` §1.1's 8-class APG roster is wrong for these 2 rows: neither class has a real record anywhere under `advanced_players_guide/`
+
+**Resolution:** the operator landed option 1 of the three recommended below
+(commit `6923e54`, `docs(sd22): correct APG roster to 6 real classes`):
+narrowed Epic 3's class count from 8 to 6 real APG classes (Alchemist,
+Cavalier, Inquisitor, Oracle, Summoner, Witch), corrected everywhere the
+8-class roster appeared (`corpus-source-inventory.md`, `epic-breakdown.md`,
+`decisions.md`, `risks-and-open-questions.md` Flag A,
+`scope-draft.md`, `technical-design.md`, `acceptance-and-verification.md`).
+Gunslinger and Magus are not blocked — they are genuinely not APG's job;
+they are Ultimate Combat / Ultimate Magic content. Left below for the
+audit trail per this file's own "edit in place, don't rewrite" convention.
 
 Discovered 2026-07-19T16:00:00Z, cycle 4 (Inquisitor), while attempting the
 next class in the operator-pinned ordering (Alchemist → Cavalier →
@@ -868,3 +879,83 @@ Full RED/GREEN evidence, file list, and reasoning:
 to `receipts.md`. Next-eligible for Epic 3: Oracle (class 5 of 8 in the
 existing ordering — Magus is skipped per the new blocker above), or a
 dedicated cycle for criterion 9's shared spell/equipment tables.
+
+### cycle-2026-07-19T17:00:00Z | Epic 3, Oracle (class 4 of 6, corrected ordering) | ingest:apg_class | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete (criteria 7-8)**
+
+Re-checked state before picking a criterion: `git log 675ca65..HEAD` shows
+one new commit, `6923e54` (`docs(sd22): correct APG roster to 6 real
+classes`), landed by the operator between this firing and the prior
+Inquisitor cycle. Read the diff directly rather than trusting the commit
+message alone: it corrects `corpus-source-inventory.md`, `decisions.md`,
+`epic-breakdown.md`, `risks-and-open-questions.md` (Flag A),
+`scope-draft.md`, `technical-design.md`, and
+`acceptance-and-verification.md` to a 6-class APG roster (Alchemist,
+Cavalier, Inquisitor, Oracle, Summoner, Witch), removing Gunslinger and
+Magus everywhere. This is the operator's own option 1 from the standing
+E3.6-9 blocker's recommendation list — marked **resolved** in `## Open
+blockers` above (left in place per this file's edit-in-place convention,
+not deleted). With the blocker resolved, Oracle (class 4 of 6 in the
+corrected ordering) is next-eligible per Step 1's priority order.
+
+Verified the real `CLASS:Oracle` record directly before writing any test
+(not `corpus-source-inventory.md`'s non-authoritative prose):
+`apg_classes.lst:107` carries three-quarter BAB (`*3/4`, same posture as
+Alchemist/Inquisitor), good Will only (`/2+2`), poor Fortitude **and**
+Reflex (`/3` — a different good/poor split than any prior class landed),
+`MAXLEVEL:20`, and `SPELLSTAT:CHA MEMORIZE:NO` (spontaneous divine,
+same posture as Sorcerer/Bard/Inquisitor) — confirming Oracle belongs in
+`spellcasting_class.rs`'s allowlist, not `class.rs`'s.
+
+**Widening RED**: added `parses_real_oracle_record_from_apg_classes_lst`
+to `tests/sd17_b_spellcasting_class.rs` (real-corpus-gated on
+`PCGEN_CORPUS_ROOT`); ran against the unchanged tree — failed for the
+intended reason (`Oracle` not yet in `SPELLCASTING_CLASS_NAMES`, silently
+skipped).
+
+**Acceptance RED**: added `tests/sd22_apg_class_oracle_resolves.rs`
+mirroring the prior three classes' test shape; ran against the unchanged
+tree — failed to compile (`E0599`: `ApgClassId::Oracle` did not exist)
+for the intended reason.
+
+GREEN: widened `SPELLCASTING_CLASS_NAMES` in
+`src/pcgen_import/lst_parser/spellcasting_class.rs` by exactly one name
+(`Oracle`), per the file-touch-partition's bounded-widening pattern.
+Added `src/rules_core/rules_tables/apg/class_oracle.rs` (BAB/save chassis
+only, same scope boundary as the prior three classes) and
+`ApgClassId::Oracle` + a match arm in `apg/mod.rs`, and updated `apg/mod.rs`'s
+doc comment to record the Gunslinger/Magus exclusion as now permanent
+(per `6923e54`) rather than an ordering skip.
+
+Verification: `cargo test --locked --test sd22_apg_class_oracle_resolves
+-- --include-ignored` 5/5 passed (including the real-corpus-gated
+grounding test). `cargo test --locked --test sd17_b_spellcasting_class --
+--ignored` 5/5 passed, including the new widening test. Full `cargo test
+--locked` — every suite green, 0 failed (no `N failed` with `N > 0`
+anywhere; sibling-preservation holds). `cargo clippy --locked --tests --
+-D warnings` clean.
+
+Criterion 9 (per-cycle APG spell/equipment resolution) remains open for
+Alchemist, Cavalier, Inquisitor, and Oracle alike — no
+`apg/spell_list.rs` or `apg/equipment_tables.rs` exists yet. Epic 4 (ACG)
+and Epic 5 (Bestiary 1) remain blocked on their own, separate parser
+gaps — unaffected by this cycle.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/apg/class_oracle_cycle_receipt.md`. Receipt block appended to
+`receipts.md`. Next-eligible for Epic 3: Summoner (class 5 of 6), Witch
+(class 6 of 6), or a dedicated cycle for criterion 9's shared
+spell/equipment tables.
+
+**Concurrency note:** `git push` was rejected on the first attempt — a
+concurrent operator commit, `f933ecf` (`feat(sd22): corpus source
+surfaces...`), landed on `origin/tranche/5` after this cycle's local base
+(`6923e54`) but before this cycle's push. Inspected its diff before
+rebasing: it touches `.gitignore`, `docs/release/SD-22/README.md`,
+`acceptance-and-verification.md`, `artifacts/README.md`,
+`artifacts/corpus/**`, `corpus-source-inventory.md`, `ingest.md`, and
+`loop-instruction.md` — no overlap with this cycle's file set
+(`spellcasting_class.rs`, `apg/mod.rs`, `apg/class_oracle.rs`,
+`sd17_b_spellcasting_class.rs`, `sd22_apg_class_oracle_resolves.rs`,
+`receipts.md`, `progress.md`). Rebased cleanly (`git rebase
+origin/tranche/5`, no conflicts) and re-pointed `snapshot_as_of` at the
+new parent (`f933ecf`) before pushing.

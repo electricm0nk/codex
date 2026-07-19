@@ -251,3 +251,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["apg/class_inquisitor_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Inquisitor record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB, good Fortitude+Will, poor Reflex, MAXLEVEL:20, SPELLSTAT:WIS MEMORIZE:NO) -- same scope boundary as class_alchemist.rs/class_cavalier.rs. Also discovered and logged: Gunslinger and Magus, next in the operator-pinned 8-class ordering, have no real APG .lst record at all -- they belong to Ultimate Combat / Ultimate Magic, books explicitly out of SD-22 scope per decisions.md §1. This is a genuine inventory-doc defect (the routing table itself, not just its illustrative prose), surfaced to the operator via progress.md's Open Blockers and a push notification."
+
+- cycle_id: 2026-07-19T17:00:00Z
+  epic: 3
+  criterion: apg_oracle
+  criterion_section: "§1.1 Epic 3 — APG content-source ingest (criteria 7, 8; fourth class in the corrected 6-class ordering)"
+  row_or_kind: ingest:apg_class
+  evidence_tier_before: open (Gunslinger/Magus blocker resolved by operator commit 6923e54, narrowing the roster to 6 real classes; Oracle next-eligible)
+  evidence_tier_after: complete (criteria 7-8 for Oracle; criterion 9's spell/equipment resolution out of scope, no APG spell/equipment tables exist yet)
+  branch_tip_before: 6923e54
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "apg/class_oracle_cycle_receipt.md"
+  red_phase_evidence: "Widening RED: parses_real_oracle_record_from_apg_classes_lst added to tests/sd17_b_spellcasting_class.rs, failed (Oracle out of SPELLCASTING_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_apg_class_oracle_resolves.rs failed to compile (E0599: ApgClassId::Oracle did not exist) (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Oracle) in src/pcgen_import/lst_parser/spellcasting_class.rs; added rules_tables/apg/class_oracle.rs and ApgClassId::Oracle; 5/5 new acceptance tests green (including the real-corpus-gated test); widening test green; full cargo test suite green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_apg_class_oracle_resolves: 5/5 passed (--include-ignored); sd17_b_spellcasting_class: 5/5 ignored real-corpus tests green including the new widening test; full cargo test --locked: 0 failed across every suite; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 3's next-eligible cycle is Summoner (class 5 of 6), Witch (class 6 of 6), or apg/spell_list.rs + apg/equipment_tables.rs (criterion 9). Epic 4 (ACG) and Epic 5 (Bestiary 1) remain blocked on their own, separate parser-coverage gaps (ACG has no CLASS: allowlist entry yet; Bestiary 1's b1_races.lst uses unprefixed bare rows race_ability.rs cannot parse) — unchanged by this cycle."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:107 (CLASS:Oracle)"
+  rule_set_used: Apg
+  kanban_card: "no card: hermes unavailable from cloud sandbox"
+  progress_file_updated: "yes"
+  artifacts_written: ["apg/class_oracle_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Oracle record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB, good Will only, poor Fortitude+Reflex, MAXLEVEL:20, SPELLSTAT:CHA MEMORIZE:NO) -- same scope boundary as class_alchemist.rs/class_cavalier.rs/class_inquisitor.rs. This cycle picked up the operator's own commit 6923e54 (landed since the Inquisitor cycle), which resolved the standing Gunslinger/Magus Open Blocker by narrowing APG's roster to the 6 real classes -- confirming the fix and continuing the per-class cycle sequence with Oracle."
