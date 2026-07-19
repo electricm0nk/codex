@@ -621,3 +621,44 @@ fn parses_real_core_rulebook_classes_lst_for_all_six_martial_classes() {
         result.entries.len()
     );
 }
+
+/// SD-22 Epic 3 widening (Cavalier ingest cycle): the real `CLASS:Cavalier`
+/// record in `apg_classes.lst` carries `BONUS:COMBAT|BASEAB|classlevel(...)`
+/// (full BAB, no fractional divisor) and no `SPELLSTAT:` line — the same
+/// non-caster posture as the six original martial classes — so it belongs
+/// in `MARTIAL_CLASS_NAMES` rather than `SPELLCASTING_CLASS_NAMES`. Before
+/// this cycle's widening, the real corpus record is silently skipped
+/// (out-of-scope, no diagnostic). This test is real-corpus-gated on
+/// `PCGEN_CORPUS_ROOT`, mirroring `sd17_b_spellcasting_class.rs`'s
+/// `parses_real_alchemist_record_from_apg_classes_lst` pattern.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_cavalier_record_from_apg_classes_lst() {
+    let corpus_root = PathBuf::from(
+        std::env::var("PCGEN_CORPUS_ROOT")
+            .expect("PCGEN_CORPUS_ROOT must point at a local pcgen/data checkout"),
+    );
+    let source = corpus_root
+        .join("pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst");
+    let result = parse_class_file(&source).expect("real corpus parses");
+
+    let cavalier = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Cavalier")
+        .expect(
+            "Cavalier should be recognized from the real apg_classes.lst once \
+             MARTIAL_CLASS_NAMES is widened to include it",
+        );
+    let baseab = cavalier
+        .tokens
+        .iter()
+        .find(|token| token.key == "BONUS" && token.value.starts_with("COMBAT|BASEAB"))
+        .expect("Cavalier entry should carry its BASEAB bonus token");
+    assert!(
+        baseab.value.contains("classlevel(\"APPLIEDAS=NONEPIC\")")
+            && !baseab.value.contains("*3/4"),
+        "Cavalier's real BASEAB token should be full BAB (no fractional divisor): {}",
+        baseab.value
+    );
+}

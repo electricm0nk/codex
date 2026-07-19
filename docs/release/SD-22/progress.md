@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: e2d7194
+snapshot_as_of: 9c187a7
 ---
 
 # SD-22 — Progress
@@ -29,7 +29,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.3 | 2 — Operator Pre-Launch | prelaunch:board | `codex-tranche-5` kanban board set as SD-22 default | **complete** — `hermes kanban boards switch codex-tranche-5` ran locally 2026-07-19; persistent state file `~/.hermes/kanban/current` = `codex-tranche-5`; loop's per-invocation `hermes kanban --board codex-tranche-5` (per loop-instruction Step 10b) resolves to the same board. NB: session env `HERMES_KANBAN_BOARD=codex-tranche-4` was overriding the on-disk default until unset; not persisted in any shell init file. | n/a |
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
-| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (cycle 1 of 8) | **complete (criteria 6-8)** — `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, Alchemist BAB/save chassis lands with cross-book invariant test; criterion 9 (spell/equipment resolution) deferred — no `apg/spell_list.rs`/`apg/equipment_tables.rs` yet. See `artifacts/apg/class_alchemist_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
+| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (cycle 1 of 8), Cavalier (cycle 2 of 8) | **complete for Alchemist + Cavalier (criteria 6-8)** — `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, both classes' BAB/save chassis land with cross-book invariant tests; criterion 9 (spell/equipment resolution) still deferred for both — no `apg/spell_list.rs`/`apg/equipment_tables.rs` yet. Gunslinger (class 3 of 8) is next-eligible. See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md` | see `## Cycle log` |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Alchemist-ACG (cycle 1 of 10) | see cycle log | pending |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
@@ -666,3 +666,71 @@ Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/apg/class_alchemist_cycle_receipt.md`. Receipt block appended
 to `receipts.md`. Next-eligible for Epic 3: Cavalier (class 2 of 8), or a
 dedicated cycle for Alchemist's spell/equipment tables (criterion 9).
+
+### cycle-2026-07-19T15:00:00Z | Epic 3, Cavalier (cycle 2 of 8) | ingest:apg_class | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete (criteria 7-8)**
+
+Re-checked state before picking a criterion: `git log 9c187a7..HEAD` on
+`decisions.md`/`corpus-source-inventory.md`/`risks-and-open-questions.md`
+shows no new commits; `origin/tranche/5` HEAD (`9c187a7`) matches this
+session's local HEAD — no other stream landed work in the interim. Per
+Step 1's priority order, Epic 3 remains the next-eligible open lane
+(Epic 4/5 stay blocked on their own separate parser-coverage gaps, unchanged;
+Epic 6 stays transitively blocked). Picked up the prior cycle's own
+"next-eligible" recommendation: Cavalier (class 2 of 8), the per-class
+chassis unit, over criterion 9's shared spell/equipment tables (a
+distinct work-unit better suited to its own cycle).
+
+Verified the real record before writing any test (not the
+`corpus-source-inventory.md` "Content shape" prose, which that file's own
+corrective banner marks non-authoritative): `apg_classes.lst:42`'s
+`CLASS:Cavalier` line carries `BONUS:COMBAT|BASEAB|classlevel(...)` (full
+BAB, no fractional divisor — unlike Alchemist's three-quarter BAB),
+`BONUS:SAVE|BASE.Fortitude|classlevel(...)/2+2` (good Fortitude),
+`BONUS:SAVE|BASE.Will,BASE.Reflex|classlevel(...)/3` (poor Will *and*
+Reflex), `MAXLEVEL:20`, and no `SPELLSTAT:` line (non-caster, unlike
+Alchemist) — confirming Cavalier belongs in `lst_parser::class`'s
+martial-class allowlist, not the spellcasting-class parser.
+
+**Widening RED**: added `parses_real_cavalier_record_from_apg_classes_lst`
+to `tests/sd17_b1_martial_class.rs` (real-corpus-gated on
+`PCGEN_CORPUS_ROOT`); ran against the unchanged tree — failed for the
+intended reason (`Cavalier` not yet in `MARTIAL_CLASS_NAMES`, silently
+skipped).
+
+**Acceptance RED**: added `tests/sd22_apg_class_cavalier_resolves.rs`
+mirroring the Alchemist test's shape; ran against the unchanged tree —
+failed to compile (`E0599`: `ApgClassId::Cavalier` did not exist) for the
+intended reason.
+
+GREEN: widened `MARTIAL_CLASS_NAMES` in
+`src/pcgen_import/lst_parser/class.rs` by exactly one name (`Cavalier`),
+per the file-touch-partition's bounded-widening pattern (mirrors the
+Alchemist cycle's `SPELLCASTING_CLASS_NAMES` widening). Added
+`src/rules_core/rules_tables/apg/class_cavalier.rs` (BAB/save chassis
+only, same scope boundary as `class_alchemist.rs`) and
+`ApgClassId::Cavalier` + a match arm in `apg/mod.rs`. Lifted the
+previously Alchemist-only `ClassTableRow` struct up into `apg/mod.rs` so
+`class_chassis_resolve` has one return type across classes — a mechanical
+consequence of landing a second class, not a scope expansion.
+
+Verification: `cargo test --locked --test sd22_apg_class_cavalier_resolves`
+4/4 passed (1 additional real-corpus-gated test passed separately under
+`--ignored`). `cargo test --locked --test sd17_b1_martial_class
+-- --include-ignored` 16/16 passed, including the new widening test and
+the pre-existing real-corpus core-rulebook test (unaffected by the
+widening — Cavalier doesn't appear in `cr_classes.lst`). Full `cargo test
+--locked` — every suite green, 0 failures (no `N failed` with `N > 0`
+anywhere; sibling-preservation holds, including the untouched Alchemist
+suite). `cargo clippy --locked --tests -- -D warnings` clean.
+
+Criterion 9 (per-cycle APG spell/equipment resolution) remains open for
+both Alchemist and Cavalier — neither `apg/spell_list.rs` nor
+`apg/equipment_tables.rs` exists yet. Epic 4 (ACG) and Epic 5 (Bestiary 1)
+remain blocked on their own, separate parser gaps (no `CLASS:` allowlist
+entry for any ACG class; no parser recognizes `b1_races.lst`'s unprefixed
+bare-row monster records) — unaffected by this cycle.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/apg/class_cavalier_cycle_receipt.md`. Receipt block appended
+to `receipts.md`. Next-eligible for Epic 3: Gunslinger (class 3 of 8), or
+a dedicated cycle for criterion 9's shared spell/equipment tables.

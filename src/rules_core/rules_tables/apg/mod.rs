@@ -1,18 +1,33 @@
 //! APG (Advanced Player's Guide) book-level module. SD-22 Epic 3
 //! content-source ingest — sibling directory to `rules_tables::crb` per
 //! `SD-19-corpus-aware-compute-seam/decisions.md` §9. Alchemist is the
-//! first class ingested (`decisions.md §5`'s corrected real-LST-corpus
-//! sourcing, corrected 2026-07-19).
+//! first class ingested, Cavalier the second (`decisions.md §5`'s
+//! corrected real-LST-corpus sourcing, corrected 2026-07-19).
 
 pub mod class_alchemist;
+pub mod class_cavalier;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
+/// One APG class's chassis-table row: level, BAB, and the three saves.
+/// Shared shape across every per-class module in this directory so
+/// `class_chassis_resolve` can return a single type regardless of
+/// which class was queried.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ClassTableRow {
+    pub level: u8,
+    pub base_attack_bonus: i16,
+    pub fort_save: i16,
+    pub ref_save: i16,
+    pub will_save: i16,
+}
+
 /// Identifies which APG class a chassis-table query targets. Grows by
-/// one variant per per-class Epic 3 cycle (Cavalier, Gunslinger, ...).
+/// one variant per per-class Epic 3 cycle (Gunslinger, Inquisitor, ...).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum ApgClassId {
     Alchemist,
+    Cavalier,
 }
 
 /// Resolves an APG class's chassis-table row for `level`, scoped to
@@ -24,12 +39,15 @@ pub fn class_chassis_resolve(
     class_id: ApgClassId,
     level: u8,
     rule_set: RuleSetId,
-) -> Option<class_alchemist::ClassTableRow> {
+) -> Option<ClassTableRow> {
     if rule_set != RuleSetId::Apg {
         return None;
     }
     match class_id {
         ApgClassId::Alchemist => class_alchemist::class_table()
+            .into_iter()
+            .find(|row| row.level == level),
+        ApgClassId::Cavalier => class_cavalier::class_table()
             .into_iter()
             .find(|row| row.level == level),
     }

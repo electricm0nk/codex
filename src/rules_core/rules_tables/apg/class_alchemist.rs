@@ -27,14 +27,7 @@
 //! exactly the fabricated-data risk `class_tables.rs`'s own doc comment
 //! and `AGENTS.md` rule out.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct ClassTableRow {
-    pub level: u8,
-    pub base_attack_bonus: i16,
-    pub fort_save: i16,
-    pub ref_save: i16,
-    pub will_save: i16,
-}
+use super::ClassTableRow;
 
 /// `MAXLEVEL:20` on the real `CLASS:Alchemist` record.
 pub const MAX_SUPPORTED_LEVEL: u8 = 20;

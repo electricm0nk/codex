@@ -1,15 +1,24 @@
-//! LST object-kind parser for the `CLASS:` directive (SD-17 Slice B-1).
+//! LST object-kind parser for the `CLASS:` directive (SD-17 Slice B-1;
+//! widened SD-22 Epic 3 to add `Cavalier`).
 //!
 //! Scope: the six martial classes named in the slice card body
-//! (Fighter, Barbarian, Monk, Rogue, Ranger, Paladin). The parser
-//! recognizes every `CLASS:<name>` line in the corpus where `<name>`
-//! is one of those six (or one of their `Ex-<name>` mirror variants),
-//! carries every tab-delimited token pair to a canonical IR record,
-//! and preserves one-based source line numbers on every record.
+//! (Fighter, Barbarian, Monk, Rogue, Ranger, Paladin), plus `Cavalier`
+//! (added by SD-22 Epic 3's Cavalier ingest cycle — the real
+//! `CLASS:Cavalier` line in `apg_classes.lst` carries
+//! `BONUS:COMBAT|BASEAB|classlevel("APPLIEDAS=NONEPIC")` with no
+//! `SPELLSTAT:` line, the same non-caster posture as the six original
+//! martial classes, so it belongs in this parser rather than the
+//! spellcasting-class parser). The parser recognizes every
+//! `CLASS:<name>` line in the corpus where `<name>` is one of those
+//! seven (or one of their `Ex-<name>` mirror variants), carries every
+//! tab-delimited token pair to a canonical IR record, and preserves
+//! one-based source line numbers on every record.
 //!
-//! Non-martial classes (Bard, Cleric, Druid, Sorcerer, Wizard, ...) are
-//! out of scope for this slice and are deliberately skipped without
-//! raising diagnostics. They are owned by later B-slices.
+//! Non-martial classes (Bard, Cleric, Druid, Sorcerer, Wizard, ...) and
+//! every other APG/ACG class until its own SD-22 ingest cycle widens
+//! this array or `spellcasting_class.rs`'s, per that class's actual
+//! casting shape, are out of scope for this slice and are deliberately
+//! skipped without raising diagnostics.
 //!
 //! This module composes with the GE-03 PCC parser and the SD-17
 //! include-graph resolver rather than shadowing them. The LST file
@@ -21,9 +30,11 @@ use std::collections::HashSet;
 use std::fs;
 use std::path::Path;
 
-/// The six martial classes named in the SD-17 Slice B-1 card body.
-pub const MARTIAL_CLASS_NAMES: &[&str] =
-    &["Fighter", "Barbarian", "Monk", "Rogue", "Ranger", "Paladin"];
+/// The six martial classes named in the SD-17 Slice B-1 card body, plus
+/// `Cavalier` (SD-22 Epic 3 widening — see module doc comment).
+pub const MARTIAL_CLASS_NAMES: &[&str] = &[
+    "Fighter", "Barbarian", "Monk", "Rogue", "Ranger", "Paladin", "Cavalier",
+];
 
 /// Result of parsing one LST file for the martial-class scope.
 #[derive(Debug, Clone, PartialEq, Eq)]
