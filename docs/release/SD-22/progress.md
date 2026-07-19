@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: c641656
+snapshot_as_of: 4b83cc9
 ---
 
 # SD-22 — Progress
@@ -29,7 +29,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.3 | 2 — Operator Pre-Launch | prelaunch:board | `codex-tranche-5` kanban board set as SD-22 default | **complete** — `hermes kanban boards switch codex-tranche-5` ran locally 2026-07-19; persistent state file `~/.hermes/kanban/current` = `codex-tranche-5`; loop's per-invocation `hermes kanban --board codex-tranche-5` (per loop-instruction Step 10b) resolves to the same board. NB: session env `HERMES_KANBAN_BOARD=codex-tranche-4` was overriding the on-disk default until unset; not persisted in any shell init file. | n/a |
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
-| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (cycle 1 of 8) | **blocked** — see `## Open blockers` (no verifiable source for corpus generation) | none |
+| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (cycle 1 of 8) | **blocked** — see `## Open blockers` (real LST source confirmed reachable, but `pcgen_import`'s `CLASS:` parsers don't recognize non-CRB class names; new parser code needed, outside this cycle's file-touch partition) | none |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Alchemist-ACG (cycle 1 of 10) | see cycle log | pending |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
@@ -42,7 +42,33 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 
 ## Open blockers
 
-### E3.6-9 (Epic 3, Alchemist, cycle 3) — corpus generation would require fabricating unverifiable game content
+### E3.6-9 / E4.10-13 / E5.14-17 (Epics 3/4/5, first cycle of each) — real LST source exists, but the existing `pcgen_import` parsers do not recognize these records (new parsing code required, out of this cycle's file-touch partition)
+
+`decisions.md §5` (corrected 2026-07-19, commit `9cd7708`) resolved the *prior* blocker below: a real, reachable corpus source does exist (`/home/user/pcgen` — a live checkout of `https://github.com/PCGen/pcgen`, confirmed this cycle via `git remote -v`), and `apg_classes.lst` does contain a real `CLASS:Alchemist` record (confirmed this cycle: `apg_classes.lst:11`). So the *original* fabrication-risk framing no longer applies, and this cycle re-opened E3.6-9 to attempt it rather than re-logging the same NO-OP.
+
+Before writing any RED test, this cycle read `decisions.md §5`'s ingest-shape instructions and verified the specific claim that "no new parsing code is needed" against the actual parser source (not from memory):
+
+- `src/pcgen_import/lst_parser/class.rs`'s `CLASS:` parser (`parse_class_entries`) is hard-scoped to `MARTIAL_CLASS_NAMES = ["Fighter","Barbarian","Monk","Rogue","Ranger","Paladin"]` (class.rs:25-26). A `CLASS:Alchemist` line is silently skipped — "Out of scope: skip the line entirely. No diagnostic, no record" (class.rs:252-257). Confirmed by reading the parser's own doc comment (class.rs:1-12): scope is explicitly "the six martial classes named in the [SD-17 B-1] slice card."
+- `src/pcgen_import/lst_parser/spellcasting_class.rs` (the only other `CLASS:` parser) is hard-scoped to `SPELLCASTING_CLASS_NAMES = ["Cleric","Druid","Wizard","Sorcerer","Bard"]` (spellcasting_class.rs:47-48) — also excludes Alchemist and every other APG/ACG class.
+- Together these two parsers cover exactly the 11 classes in `rules_tables/crb/class_tables.rs`'s `CLASS_META` (the CRB roster) and nothing else. No APG class name and no ACG class name is in either allowlist. `acg_classes.lst` was checked too (`grep CLASS:Alchemist` — 0 hits, correctly: Alchemist is APG-only; ACG's own classes — Arcanist, Bloodrager, etc. — are equally absent from both allowlists).
+- The Bestiary 1 case is not better: `src/pcgen_import/lst_parser/race_ability.rs`'s `parse_lst_entry` only recognizes `RACE:`/`RACES:` *pointer* lines (an include-target string, used in PCC files) and `ABILITY:` lines — its own doc comment (race_ability.rs:19-29) scopes it to that pointer/ability shape only. `b1_races.lst`'s actual monster records (confirmed this cycle: `b1_races.lst:9-15`, e.g. `Aboleth\tSTARTFEATS:1\tSIZE:H\t...`) are bare tab-delimited rows with the race name as the unprefixed first field — no `RACE:` key prefix at all (`grep -c "RACE:" b1_races.lst` → 0). `race_ability.rs` would extract zero records from this file.
+- `src/pcgen_import/lst_parser/metadata.rs` (the fourth parser) is scoped to six unrelated directive kinds (`DEITY:`, `DOMAIN:`, `KITS:`, `LANGUAGE:`, `TEMPLATE:`, `COMPANIONMOD:` — metadata.rs:4-5) and explicitly disclaims `CLASS:`/`RACE:` (metadata.rs:22-23).
+- Also checked whether `rules_tables/crb/class_tables.rs` (the file `decisions.md §5` says this cycle's output should match "same shape as") itself calls any of these parsers at runtime: it does not. Its own doc comment (class_tables.rs:1-16) says its BAB/save cells come from `pilot_compute.rs`'s hand-implemented formula functions, not from `lst_parser`/`ir_converter` output, and that "named per-level features and exact spell-per-day cells are deliberately out of scope." So the precedent this cycle was told to mirror was never itself an LST-parser consumer for class data.
+
+**Conclusion:** `decisions.md §5`'s "no new parsing code is needed; APG/ACG/Bestiary-1 are new *inputs* to an engine that already exists" is not accurate for any of the three book epics as the parsers exist today. Making Epic 3/4/5's first cycle land would require extending `class.rs`'s and/or `spellcasting_class.rs`'s class-name allowlist (or adding a new APG/ACG-scoped class parser module) and writing a new bare-tab-delimited race/monster parser for `race_ability.rs`'s gap — i.e., real new parsing code inside `src/pcgen_import/`. That is:
+1. Outside this cycle's (and every SD-22 cycle's) file-touch partition, which scopes Epic 3/4/5 cycles to `rules_tables/<book>/*.rs` + `tests/sd22_*.rs` only — `src/pcgen_import/` is not a partition any SD-22 cycle owns.
+2. A nontrivial, multi-way design decision (which classes to add to which allowlist vs. a new parser module; whether the existing SD-17 martial/spellcasting split stays meaningful once APG/ACG classes are added; how to shape a monster-stat-block parser for the unprefixed-row format) that a single bounded autonomous cycle should not improvise per `AGENTS.md`'s Role Boundaries ("[upstream planning artifacts] define intent and constraints, not permission to improvise beyond the bounded run").
+
+**Not self-healing this inline.** No commit lands this cycle; no parser code was written. Recommend, operator's call:
+1. Scope a dedicated SD-22 (or SD-17-follow-on) cycle/criterion specifically to extend `src/pcgen_import/lst_parser/{class,spellcasting_class}.rs`'s allowlists (or add sibling APG/ACG-scoped parser modules) and to add a bare-row race/monster parser, with its own RED/GREEN tests against the SD-17 parser test suite (`tests/sd17_b_*`) so the existing 6+5-class scope doesn't regress; then re-open Epic 3/4/5's first cycles against the now-real engine, or
+2. Amend `decisions.md §5` to explicitly fold "extend `pcgen_import`'s class/race parsers to cover APG/ACG/Bestiary-1 record shapes" into Epic 3/4/5's own file-touch partition and cycle shape (since as written, no epic's partition currently owns `src/pcgen_import/`), or
+3. Explicitly re-affirm a narrower Epic 3/4/5 acceptance shape that only requires data derivable without new parsing (e.g., transcribing raw token key/value pairs already visible in the `.lst` text by simple line-splitting in the new `rules_tables/<book>/*.rs` module itself, without going through `pcgen_import`) — mirroring how `crb/class_tables.rs` itself never actually depended on the LST parser pipeline.
+
+This supersedes the corpus-generation/fabrication-risk framing below (that framing assumed no real source existed at all; a real source now exists and this cycle used it to test the actual claim in `decisions.md §5`, rather than re-deriving the same already-resolved objection). The original entry is left below for the audit trail per this file's own "edit in place, don't rewrite" convention — do not re-read it as the live blocker; the live blocker is this entry.
+
+---
+
+### [SUPERSEDED 2026-07-19 — see entry above] E3.6-9 (Epic 3, Alchemist, cycle 3) — corpus generation would require fabricating unverifiable game content
 
 `corpus-source-inventory.md` §1.1 and `decisions.md §5` direct this cycle to
 "generate `corpus/apg_alchemist.json` from PF1 OGL/SRD content" by having the
@@ -360,6 +386,51 @@ which the prior cycle explicitly predicted would keep happening without
 an operator decision. Per that prediction, this firing surfaces the stall
 to the operator directly (push notification) rather than silently
 NO-OPing indefinitely. No production change, no fabricated content.
+
+### cycle-2026-07-19T13:00:00Z | Epic 3, Alchemist (cycle 3, re-attempt after §5 correction) | ingest:apg_class | no card (blocked, no commit) | open → **blocked (new, more specific reason)**
+
+`decisions.md §5` was corrected (commit `9cd7708`, landed since the last
+cycle) to say the real corpus source is PCGen's `.lst` data via the
+existing `pcgen_import` engine, and that no new parsing code is needed.
+Since that changes the premise of the standing E3.6-9 blocker, this cycle
+re-opened Epic 3's Alchemist criterion instead of re-logging a NO-OP.
+
+Verified the corrected premise before writing any RED test: confirmed
+`/home/user/pcgen` is a real, reachable checkout of `github.com/PCGen/pcgen`
+and that `apg_classes.lst` has a real `CLASS:Alchemist` record (line 11) —
+so the *original* blocker (no verifiable source) is genuinely resolved.
+But reading the actual parser source (not `decisions.md`'s description of
+it) found the "no new parsing code needed" half of the correction does
+not hold: `lst_parser::class`'s `CLASS:` parser and `lst_parser::
+spellcasting_class`'s `CLASS:` parser are both hard-scoped by name
+allowlist to the 11 CRB classes only (silently skip anything else, no
+diagnostic); `lst_parser::race_ability`'s `RACE:`/`RACES:` parser expects
+pointer-style lines, but `b1_races.lst`'s actual monster records are
+unprefixed bare tab-delimited rows (0 matches for `RACE:` in that file);
+`lst_parser::metadata` is scoped to six unrelated directive kinds. None of
+the four existing parsers can ingest APG/ACG classes or Bestiary 1
+monsters as they're actually shaped in the corpus today. Full evidence
+(file:line citations) recorded in the `## Open blockers` entry above,
+which supersedes the prior (now-resolved) fabrication-risk entry.
+
+Did not write any `rules_tables/apg/*`, `tests/sd22_apg_*`, or
+`src/pcgen_import/*` files this cycle — extending the parsers is real new
+code outside every SD-22 epic's file-touch partition and is a multi-way
+design decision, not a mechanical unblock. No commit lands. Re-verified
+Epic 4 (`acg_classes.lst` has no `CLASS:Alchemist`, confirming ACG's own
+classes are equally outside the allowlist) and Epic 5 hit the identical
+parser-coverage wall, not per-epic-distinct issues — so did not
+separately re-attempt their first cycles this firing. Epic 6 remains
+transitively blocked. Epic 8's three file-touch-partition criteria (27-29)
+remain complete; criterion 30 remains a standing gate. Epic 9/7 remain
+gated behind Epic 3/4/5/6. `cargo test --locked` re-run at cycle start as
+a clean-tree baseline check: all suites green, 0 failures (unaffected;
+no production code touched this cycle).
+
+This is new, actionable information for the operator (a corrected,
+narrower, mechanically-specific blocker — not a repeat of the prior
+fabrication-risk stall), so this cycle sends a push notification rather
+than treating it as a duplicate of the earlier stall alert.
 
 ### cycle-2026-07-19T09:53:00Z | scheduled loop firing | n/a (verification-only, no production change) | no card (NO-OP, nothing to mint) | no row transition
 
