@@ -794,3 +794,35 @@ fn parses_real_summoner_record_from_apg_classes_lst() {
     assert_eq!(summoner.casting_posture, Some(CastingPosture::Spontaneous));
     assert_eq!(summoner.spell_stat.as_deref(), Some("CHA"));
 }
+
+// SD-22 Epic 3 widening (Witch ingest cycle, class 6 of 6 — the last real
+// APG class): the real `CLASS:Witch` record in `apg_classes.lst` carries
+// `SPELLSTAT:INT` with no `MEMORIZE:NO` and no `SPELLBOOK:YES` token — the
+// same prepared-casting shape as Cleric/Druid (absent-signals default),
+// arcane rather than divine — so it belongs in `SPELLCASTING_CLASS_NAMES`
+// rather than `MARTIAL_CLASS_NAMES`. Mirrors
+// `parses_real_summoner_record_from_apg_classes_lst`.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_witch_record_from_apg_classes_lst() {
+    let corpus = TestCorpus::new("apg_classes_witch");
+    corpus.write(
+        "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        &real_apg_classes_lst(),
+    );
+    let result = parse_spellcasting_class_file(&corpus.path(
+        "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+    ))
+    .expect("read real apg_classes.lst");
+
+    let witch = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Witch")
+        .expect(
+            "Witch should be recognized from the real apg_classes.lst once \
+             SPELLCASTING_CLASS_NAMES is widened to include it",
+        );
+    assert_eq!(witch.casting_posture, Some(CastingPosture::Prepared));
+    assert_eq!(witch.spell_stat.as_deref(), Some("INT"));
+}

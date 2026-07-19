@@ -18,7 +18,11 @@
 //! Summoner ingest cycle — the real `CLASS:Summoner` line carries
 //! `SPELLSTAT:CHA MEMORIZE:NO`, the same spontaneous posture, arcane
 //! rather than divine, which the parser's posture derivation does not
-//! distinguish), plus their `Ex-<name>` mirror variants. The
+//! distinguish), plus `Witch` (added by SD-22 Epic 3's Witch ingest
+//! cycle, the sixth and last real APG class — the real `CLASS:Witch`
+//! line carries `SPELLSTAT:INT` with no `MEMORIZE:NO` and no
+//! `SPELLBOOK:YES` token, the same absent-signals prepared-casting
+//! shape as Cleric/Druid), plus their `Ex-<name>` mirror variants. The
 //! parser recognizes every `CLASS:<name>` line in the PCGen corpus where
 //! `<name>` is in that set, carries every tab-delimited `KEY:VAL` token
 //! pair to a canonical IR record, and preserves one-based source line
@@ -68,8 +72,8 @@ use std::fs;
 use std::path::Path;
 
 /// The five CRB spellcasting classes named in the SD-17 Slice B-2 card
-/// body, plus `Alchemist`, `Inquisitor`, `Oracle`, and `Summoner`
-/// (SD-22 Epic 3 widenings — see module doc comment).
+/// body, plus `Alchemist`, `Inquisitor`, `Oracle`, `Summoner`, and
+/// `Witch` (SD-22 Epic 3 widenings — see module doc comment).
 pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
     "Cleric",
     "Druid",
@@ -80,6 +84,7 @@ pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
     "Inquisitor",
     "Oracle",
     "Summoner",
+    "Witch",
 ];
 
 /// Casting posture recorded on each spellcasting class. The posture is

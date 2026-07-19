@@ -2,8 +2,9 @@
 //! content-source ingest — sibling directory to `rules_tables::crb` per
 //! `SD-19-corpus-aware-compute-seam/decisions.md` §9. Alchemist is the
 //! first class ingested, Cavalier the second, Inquisitor the third,
-//! Oracle the fourth, Summoner the fifth (`decisions.md §5`'s corrected
-//! real-LST-corpus sourcing, corrected 2026-07-19). Gunslinger and Magus
+//! Oracle the fourth, Summoner the fifth, Witch the sixth and last
+//! (`decisions.md §5`'s corrected real-LST-corpus sourcing, corrected
+//! 2026-07-19). Gunslinger and Magus
 //! are not real
 //! APG content and are permanently excluded from this roster (corrected
 //! 2026-07-19, `corpus-source-inventory.md §1`) — the real PCGen corpus
@@ -17,6 +18,7 @@ pub mod class_cavalier;
 pub mod class_inquisitor;
 pub mod class_oracle;
 pub mod class_summoner;
+pub mod class_witch;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -33,10 +35,10 @@ pub struct ClassTableRow {
     pub will_save: i16,
 }
 
-/// Identifies which APG class a chassis-table query targets. Grows by
-/// one variant per per-class Epic 3 cycle (Witch remains — Gunslinger
-/// and Magus are not real APG content in the PCGen corpus, see this
-/// module's doc comment).
+/// Identifies which APG class a chassis-table query targets. All six
+/// real APG classes now have a variant (Gunslinger and Magus are not
+/// real APG content in the PCGen corpus, see this module's doc
+/// comment).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum ApgClassId {
     Alchemist,
@@ -44,6 +46,7 @@ pub enum ApgClassId {
     Inquisitor,
     Oracle,
     Summoner,
+    Witch,
 }
 
 /// Resolves an APG class's chassis-table row for `level`, scoped to
@@ -73,6 +76,9 @@ pub fn class_chassis_resolve(
             .into_iter()
             .find(|row| row.level == level),
         ApgClassId::Summoner => class_summoner::class_table()
+            .into_iter()
+            .find(|row| row.level == level),
+        ApgClassId::Witch => class_witch::class_table()
             .into_iter()
             .find(|row| row.level == level),
     }

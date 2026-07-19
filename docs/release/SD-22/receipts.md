@@ -326,3 +326,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: []
   notes: "git push origin tranche/5 was rejected (non-fast-forward); git fetch showed origin/tranche/5 had moved past this firing's f933ecf base to aa9b924 (Oracle) then b160857 (Summoner), landed by a different, concurrently running stream. This is the loop-instruction's own documented hard stop ('two live claude processes... touch the same per-epic module file'), discovered after the fact via git state rather than avoidable in advance. Discarded this firing's local commit (git reset --hard origin/tranche/5) rather than force-pushing or merging duplicate Oracle content; no shared work was lost since the commit was never pushed. Did not additionally attempt Witch this firing to avoid racing the same concurrent stream a second time within one cycle."
+
+- cycle_id: 2026-07-19T19:00:00Z
+  epic: 3
+  criterion: apg_witch
+  criterion_section: "§1.1 Epic 3 — APG content-source ingest (criteria 7, 8; sixth and last class in the corrected 6-class ordering)"
+  row_or_kind: ingest:apg_class
+  evidence_tier_before: open (class 6 of 6, not yet started; Summoner just landed)
+  evidence_tier_after: complete (criteria 7-8 for Witch; criterion 9's spell/equipment resolution out of scope, no APG spell/equipment tables exist yet)
+  branch_tip_before: 6f2a13e
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "apg/class_witch_cycle_receipt.md"
+  red_phase_evidence: "Widening RED: parses_real_witch_record_from_apg_classes_lst added to tests/sd17_b_spellcasting_class.rs, failed (Witch out of SPELLCASTING_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_apg_class_witch_resolves.rs failed to compile (E0599: ApgClassId::Witch did not exist) (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Witch) in src/pcgen_import/lst_parser/spellcasting_class.rs; added rules_tables/apg/class_witch.rs and ApgClassId::Witch; 5/5 new acceptance tests green (including the real-corpus-gated test); widening test green (20/20 in sd17_b_spellcasting_class); full cargo test suite green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_apg_class_witch_resolves: 5/5 passed (--include-ignored); sd17_b_spellcasting_class: 20/20 passed (--include-ignored), including the new witch widening test; full cargo test --locked: 0 failed across every suite; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "All six real APG classes now have chassis tables (Epic 3 criteria 7-8 complete for the full roster). Next-eligible: apg/spell_list.rs + apg/equipment_tables.rs (criterion 9), or Epic 4 (ACG)/Epic 5 (Bestiary 1) first cycles -- both remain blocked on their own, separate parser-coverage gaps (ACG has no CLASS: allowlist entry yet; Bestiary 1's b1_races.lst uses unprefixed bare rows race_ability.rs cannot parse) -- unchanged by this cycle. Epic 6 (DM Toolkit) can now consider itself unblocked on 'at least one book ingested' since APG chassis data exists, though criterion 9's spell/equipment gap may still limit what Epic 6 can consume."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:172 (CLASS:Witch)"
+  rule_set_used: Apg
+  kanban_card: "no card: hermes unavailable from cloud sandbox"
+  progress_file_updated: "yes"
+  artifacts_written: ["apg/class_witch_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Witch record's BONUS:COMBAT/BONUS:SAVE formula tokens (half BAB -- the first poor-BAB class landed in this roster -- good Will only, poor Fortitude+Reflex, MAXLEVEL:20, SPELLSTAT:INT with no MEMORIZE:NO/SPELLBOOK:YES token). Casting posture derives to Prepared via the parser's absent-signals default, the same shape as Cleric/Druid -- same scope boundary as class_alchemist.rs/class_cavalier.rs/class_inquisitor.rs/class_oracle.rs/class_summoner.rs."
