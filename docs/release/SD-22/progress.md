@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 6f08b28
+snapshot_as_of: 4f07d75
 ---
 
 # SD-22 — Progress
@@ -360,3 +360,37 @@ which the prior cycle explicitly predicted would keep happening without
 an operator decision. Per that prediction, this firing surfaces the stall
 to the operator directly (push notification) rather than silently
 NO-OPing indefinitely. No production change, no fabricated content.
+
+### cycle-2026-07-19T09:53:00Z | scheduled loop firing | n/a (verification-only, no production change) | no card (NO-OP, nothing to mint) | no row transition
+
+Re-checked state; nothing has changed since the prior cycle's NO-OP:
+
+- `corpus/` still does not exist in the repo.
+- `decisions.md` and `risks-and-open-questions.md` are unchanged since
+  before the blocker was first logged (`git log` shows no commits to
+  either file after `233c426`) — no operator decision has landed on the
+  three options recorded under the E3.6-9 blocker (supply a real
+  corpus/reference source; narrow Epic 3/4/5's acceptance shape to
+  formula-derivable data; or explicitly accept memory-recall fabrication
+  risk).
+- `origin/tranche/5` has no commits past this session's own last cycle
+  (`4f07d75`) — no other stream landed work in the interim.
+- Epic 3/4/5 remain blocked for the identical corpus/fabrication-risk
+  reason; Epic 6 remains transitively blocked (needs ≥1 book ingested);
+  Epic 9 is not actually eligible yet despite Epic 8's discrete criteria
+  (27-29) being complete — `epic-breakdown.md` line 208 places Epic 8
+  "after Epics 1+3+4+5+6 land," and Epic 9 evaluates criteria 1-30 as a
+  30/30-clean gate, which Epic 3/4/5/6 being blocked would fail
+  non-mechanically (the same corpus blocker, not a self-healable
+  shortfall) — dispatching Epic 9 now would just re-log the identical
+  judgment call under a different epic heading, not make progress; Epic 7
+  remains gated behind Epic 9.
+
+Third consecutive NO-OP on the same unresolved blocker. The prior cycle
+already surfaced this stall to the operator via push notification; since
+nothing new has happened since then (no operator decision, no new source,
+no new commits), this firing does not send a duplicate notification —
+repeating the same unactioned alert would be noise, not signal. No
+production change, no fabricated content. The loop will keep NO-OPing
+every firing until one of the three recorded options gets an explicit
+operator decision.
