@@ -1,6 +1,6 @@
 //! LST object-kind parser for the `CLASS:` directive (SD-17 Slice B-2;
 //! widened SD-22 Epic 3 to add `Alchemist`, then `Inquisitor`, then
-//! `Oracle`).
+//! `Oracle`, then `Summoner`).
 //!
 //! Scope: the five CRB spellcasting classes named in the original slice
 //! card body (`Cleric`, `Druid`, `Wizard`, `Sorcerer`, `Bard`), plus
@@ -14,7 +14,11 @@
 //! posture as Sorcerer/Bard), plus `Oracle` (added by SD-22 Epic 3's
 //! Oracle ingest cycle — the real `CLASS:Oracle` line carries
 //! `SPELLSTAT:CHA MEMORIZE:NO`, the same spontaneous-divine posture as
-//! Sorcerer/Bard/Inquisitor), plus their `Ex-<name>` mirror variants. The
+//! Sorcerer/Bard/Inquisitor), plus `Summoner` (added by SD-22 Epic 3's
+//! Summoner ingest cycle — the real `CLASS:Summoner` line carries
+//! `SPELLSTAT:CHA MEMORIZE:NO`, the same spontaneous posture, arcane
+//! rather than divine, which the parser's posture derivation does not
+//! distinguish), plus their `Ex-<name>` mirror variants. The
 //! parser recognizes every `CLASS:<name>` line in the PCGen corpus where
 //! `<name>` is in that set, carries every tab-delimited `KEY:VAL` token
 //! pair to a canonical IR record, and preserves one-based source line
@@ -64,8 +68,8 @@ use std::fs;
 use std::path::Path;
 
 /// The five CRB spellcasting classes named in the SD-17 Slice B-2 card
-/// body, plus `Alchemist`, `Inquisitor`, and `Oracle` (SD-22 Epic 3
-/// widenings — see module doc comment).
+/// body, plus `Alchemist`, `Inquisitor`, `Oracle`, and `Summoner`
+/// (SD-22 Epic 3 widenings — see module doc comment).
 pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
     "Cleric",
     "Druid",
@@ -75,6 +79,7 @@ pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
     "Alchemist",
     "Inquisitor",
     "Oracle",
+    "Summoner",
 ];
 
 /// Casting posture recorded on each spellcasting class. The posture is

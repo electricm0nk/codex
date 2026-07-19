@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: f933ecf
+snapshot_as_of: aa9b924
 ---
 
 # SD-22 — Progress
@@ -29,7 +29,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.3 | 2 — Operator Pre-Launch | prelaunch:board | `codex-tranche-5` kanban board set as SD-22 default | **complete** — `hermes kanban boards switch codex-tranche-5` ran locally 2026-07-19; persistent state file `~/.hermes/kanban/current` = `codex-tranche-5`; loop's per-invocation `hermes kanban --board codex-tranche-5` (per loop-instruction Step 10b) resolves to the same board. NB: session env `HERMES_KANBAN_BOARD=codex-tranche-4` was overriding the on-disk default until unset; not persisted in any shell init file. | n/a |
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
-| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6) | **complete for Alchemist + Cavalier + Inquisitor + Oracle (criteria 6-8)** — `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all four classes' BAB/save chassis land with cross-book invariant tests; criterion 9 (spell/equipment resolution) still deferred for all four — no `apg/spell_list.rs`/`apg/equipment_tables.rs` yet. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`) — Summoner (class 5 of 6) is next-eligible. See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md` | see `## Cycle log` |
+| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6), Summoner (5/6) | **complete for Alchemist + Cavalier + Inquisitor + Oracle + Summoner (criteria 6-8)** — `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all five classes' BAB/save chassis land with cross-book invariant tests; criterion 9 (spell/equipment resolution) still deferred for all five — no `apg/spell_list.rs`/`apg/equipment_tables.rs` yet. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`) — Witch (class 6 of 6) is next-eligible, the last real APG class. See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md`, `artifacts/apg/class_summoner_cycle_receipt.md` | see `## Cycle log` |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Alchemist-ACG (cycle 1 of 10) | see cycle log | pending |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
@@ -959,3 +959,60 @@ rebasing: it touches `.gitignore`, `docs/release/SD-22/README.md`,
 `receipts.md`, `progress.md`). Rebased cleanly (`git rebase
 origin/tranche/5`, no conflicts) and re-pointed `snapshot_as_of` at the
 new parent (`f933ecf`) before pushing.
+
+### cycle-2026-07-19T18:00:00Z | Epic 3, Summoner (class 5 of 6) | ingest:apg_class | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete (criteria 7-8)**
+
+Re-checked state before picking a criterion: `git log aa9b924..origin/tranche/5`
+showed no new commits — `aa9b924` (the prior Oracle cycle's own commit) is
+still the tip. Per Step 1's priority order and the corrected 6-class
+ordering (Alchemist, Cavalier, Inquisitor, Oracle all `complete`),
+Summoner (class 5 of 6) is next-eligible.
+
+Verified the real `CLASS:Summoner` record directly before writing any
+test (not `corpus-source-inventory.md`'s non-authoritative prose):
+`apg_classes.lst:139` carries three-quarter BAB (`*3/4`, same posture as
+Alchemist/Inquisitor/Oracle), good Will only (`/2+2`), poor Fortitude
+**and** Reflex (`/3` — the identical good/poor split to Oracle),
+`MAXLEVEL:20`, and `SPELLSTAT:CHA MEMORIZE:NO` (spontaneous casting,
+arcane rather than divine per `TYPE:Base.PC.SpontaneousArcane.Spontaneous`
+— a distinction that doesn't affect the parser's posture derivation or
+the chassis formulas) — confirming Summoner belongs in
+`spellcasting_class.rs`'s allowlist, not `class.rs`'s.
+
+**Widening RED**: added `parses_real_summoner_record_from_apg_classes_lst`
+to `tests/sd17_b_spellcasting_class.rs` (real-corpus-gated on
+`PCGEN_CORPUS_ROOT`); ran against the unchanged tree — failed for the
+intended reason (`Summoner` not yet in `SPELLCASTING_CLASS_NAMES`,
+silently skipped).
+
+**Acceptance RED**: added `tests/sd22_apg_class_summoner_resolves.rs`
+mirroring the prior four classes' test shape; ran against the unchanged
+tree — failed to compile (`E0599`: `ApgClassId::Summoner` did not exist)
+for the intended reason.
+
+GREEN: widened `SPELLCASTING_CLASS_NAMES` in
+`src/pcgen_import/lst_parser/spellcasting_class.rs` by exactly one name
+(`Summoner`), per the file-touch-partition's bounded-widening pattern.
+Added `src/rules_core/rules_tables/apg/class_summoner.rs` (BAB/save
+chassis only, same scope boundary as the prior four classes) and
+`ApgClassId::Summoner` + a match arm in `apg/mod.rs`.
+
+Verification: `cargo test --locked --test sd22_apg_class_summoner_resolves
+-- --include-ignored` 5/5 passed (including the real-corpus-gated
+grounding test). `cargo test --locked --test sd17_b_spellcasting_class --
+--ignored` 6/6 passed, including the new widening test. Full `cargo test
+--locked` — every suite green, 0 failed (no `N failed` with `N > 0`
+anywhere; sibling-preservation holds). `cargo clippy --locked --tests --
+-D warnings` clean.
+
+Criterion 9 (per-cycle APG spell/equipment resolution) remains open for
+all five landed classes — no `apg/spell_list.rs` or
+`apg/equipment_tables.rs` exists yet. Epic 4 (ACG) and Epic 5
+(Bestiary 1) remain blocked on their own, separate parser gaps —
+unaffected by this cycle.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/apg/class_summoner_cycle_receipt.md`. Receipt block appended
+to `receipts.md`. Next-eligible for Epic 3: Witch (class 6 of 6, the
+last real APG class), or a dedicated cycle for criterion 9's shared
+spell/equipment tables.
