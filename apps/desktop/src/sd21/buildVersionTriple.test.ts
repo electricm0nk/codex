@@ -50,9 +50,11 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: tranche stays 4 (tranche/4-1 is a dash release off Tranche 4) and
-  // major stays 0 until first main-publish, per the 2026-07-18 verification.
-  assert(pkg.startsWith('0.4.'), `version "${pkg}" must keep major=0, tranche=4 until promoted`);
+  // Anchor: this branch has been promoted past tranche/4-1 to tranche/5
+  // (SD-22 E8.27), so major stays 0 but tranche moves to 5 per
+  // docs/release/SD-22/decisions.md §2. The tranche-4 anchor this test
+  // originally asserted only held until that promotion landed.
+  assert(pkg.startsWith('0.5.'), `version "${pkg}" must keep major=0, tranche=5 on tranche/5`);
 }
 
 function verifiesWorkflowStampMatchesTripleShapeNotLegacyScheme() {

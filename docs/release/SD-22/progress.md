@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: cd9e88b
+snapshot_as_of: c641656
 ---
 
 # SD-22 — Progress
@@ -34,7 +34,10 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
-| E8.27-30 | 8 — Build Version | version:* | Not started | open | — |
+| E8.27 | 8 — Build Version | version:patch_bump | Version fields set to `0.5.95` (`package.json`, `tauri.conf.json`, `Cargo.toml`) | **complete** — see `artifacts/epic_8/three_version_fields_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
+| E8.28 | 8 — Build Version | version:build_label_format | `BUILD_PREFIX = 'Codex'` / `${BUILD_PREFIX} ${buildVersion}` format ships (inherited from SD-21 E5.26); this cycle re-anchored the format's own test fixtures from the pre-bump `Codex 0.4.94-test` literal to the current `Codex 0.5.95-test` | **complete** — see `artifacts/epic_8/build_label_format_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
+| E8.29 | 8 — Build Version | version:closure_checklist | `docs/SD-22/release-closure-checklist.md` — four-step version-bump process, mirrors SD-21's E5.27 doc | **complete** — see `artifacts/epic_8/release_closure_checklist_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
+| E8.30 | 8 — Build Version | version:* | Per-cycle tests pass at closure — standing verification gate (not a one-shot artifact), re-verified by every cycle's own `cargo test`/`cargo clippy` run; closed out by Epic 9's criterion-31 eval | open (standing gate; re-verified this cycle: `cargo test` all green, clippy clean) | — |
 | E9.31 | 9 — Closure Readiness | closure_readiness:* | Not started (fires after Epic 8, before Epic 7) | open | — |
 
 ## Open blockers
@@ -155,3 +158,289 @@ No commit landed. Full detail and recommended paths forward in `## Open
 blockers` above. `cargo test --locked` was not re-run since no production code
 changed this cycle (last known-green baseline: 14/14, recorded in the E1+E2
 pre-flight cycle above).
+
+### cycle-2026-07-19T05:02:04Z | Epic 8, criterion 27 (three version fields) | version:patch_bump | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete**
+
+Re-checked the Epic 3 Alchemist blocker before picking a criterion: nothing has
+changed (`decisions.md §5` still frames "missing corpus file" as always
+self-healable by memory-recall from PF1 OGL/SRD content, which is still in
+tension with `AGENTS.md`'s "No fake completion" rule and the
+`crb/class_tables.rs` precedent). Epic 4 and Epic 5 would hit the identical
+wall on their first cycles (same corpus-generation instruction, same absence
+of a verifiable source), so did not re-attempt Epic 3/4/5 this cycle. Epic 6
+needs ≥1 book ingested (blocked transitively). Per Step 1's priority order,
+picked the next eligible, non-transitively-blocked criterion: Epic 8's
+criterion 27, which `loop-instruction.md`'s file-touch-partition section
+documents as independent of Epics 1-6, and which is a mechanical version bump
+with a derivable (not invented) target value.
+
+RED: added `apps/desktop/src/sd22/buildVersionTriple.test.ts` (mirrors SD-21's
+`sd21/buildVersionTriple.test.ts`), asserting the version triple starts with
+`0.5.`; failed against the pre-bump `0.4.94` tree for the intended reason.
+GREEN: bumped `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`,
+and `apps/desktop/src-tauri/Cargo.toml` from `0.4.94` to `0.5.95` (major=0 until
+first main-publish; tranche=5 for `tranche/5`; build=95, the next monotonic
+counter after SD-21's last committed build of 94 on this line per
+`decisions.md §2`). Re-ran `npm install` to re-sync `package-lock.json`'s
+embedded version (it had already drifted to a stale `0.1.0` pre-cycle).
+
+One sibling regression surfaced and was fixed in the same commit:
+`apps/desktop/src/sd21/buildVersionTriple.test.ts` (inherited onto `tranche/5`
+via the `aea478c` merge) hard-codes an assertion that the tranche stays at 4
+"until promoted" — `tranche/5` *is* that promotion, so the assertion was stale,
+not a real regression from this change. Updated its anchor from `0.4.` to
+`0.5.` with an explanatory comment rather than leave a known-broken sibling
+test on the branch (sibling-preservation + AGENTS.md's "fix the source, not
+the symptom").
+
+Verification: `npm test` 46/46 JS test files green (including the new
+`sd22/buildVersionTriple.test.ts` and the fixed `sd21/buildVersionTriple.test.ts`).
+`cargo test --locked` at repo root (independent Cargo package from
+`apps/desktop/src-tauri`) — all suites green, 0 failures. `cargo clippy --locked
+--tests -- -D warnings` clean. `cargo check` on `apps/desktop/src-tauri` itself
+fails in this sandbox on missing GTK system libs (`gdk-3.0` via pkg-config) —
+pre-existing environment limitation unrelated to this change; it got far enough
+to resolve and rewrite `Cargo.lock`'s `codex-desktop` entry to `0.5.95` before
+failing at the native-linking stage.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/epic_8/three_version_fields_cycle_receipt.md`. Receipt block appended
+to `receipts.md`. Criterion 28 (build-label format) was NOT touched or marked
+complete this cycle — `createSd11WorkbenchStatus.ts` already carries the
+`BUILD_PREFIX = 'Codex'` / `${BUILD_PREFIX} ${buildVersion}` shape from SD-21's
+E5.26, but a future cycle should explicitly verify and close it rather than
+this cycle assuming it.
+
+### cycle-2026-07-19T06:15:00Z | Epic 8, criterion 28 (build-label format fixtures) | version:build_label_format | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete**
+
+Re-checked the Epic 3/4/5 corpus-generation blocker first: `corpus/` still
+doesn't exist and no SRD mirror is reachable from this sandbox, so nothing
+has changed and re-attempting those epics would just re-log the same
+blocker. Epic 6 remains transitively blocked (needs ≥1 book ingested). Per
+Step 1's priority order, picked Epic 8's remaining open item: criterion 28,
+which the prior cycle's receipt explicitly flagged as verified-but-not-closed
+(the `Codex ${buildVersion}` format already ships via SD-21 E5.26, but its
+own test fixtures still hard-coded the pre-bump `Codex 0.4.94-test` literal).
+
+`node_modules` was missing at cycle start (all 46 JS test files failed for
+an environment reason); ran `npm install` to restore it, confirming a clean
+46/46 baseline before touching anything.
+
+RED: added `apps/desktop/src/sd22/buildLabelFixtureFreshness.test.ts`,
+scanning the three fixture files named in `loop-instruction.md`'s file-touch
+partition for the pre-bump literal and asserting each carries
+`Codex <current package.json version>-test` instead. Ran against the
+pre-edit fixtures (re-verified via `git stash`) — failed for the intended
+reason: `"...loadSd11TesterWorkbenchSurface.test.ts still carries the
+pre-bump build-label fixture \"Codex 0.4.94-test\""`. (An earlier draft used
+a blanket regex that false-positived on an unrelated arbitrary-input fixture,
+`'Codex 0.0.0-test'`, used by `createSd11WorkbenchStatus.test.ts`'s
+`verifiesLinuxAlphaStatusTruth` case; narrowed to the specific known-stale
+literal before trusting RED.)
+
+GREEN: re-anchored `sd11/loadSd11TesterWorkbenchSurface.test.ts`,
+`sd11/status/createSd11WorkbenchStatus.test.ts`, and `testSupport/makeSurface.ts`
+from `Codex 0.4.94-test` to `Codex 0.5.95-test`. One sibling regression
+surfaced from `makeSurface.ts` being the shared fixture factory: four
+consumer test files (`sd11/feedback/bug/composeBugReport.test.ts`,
+`sd11/feedback/enhancement/composeEnhancementRequest.test.ts`,
+`sd11/feedback/evidence/captureFeedbackEvidence.test.ts`,
+`sd15/buildSd15OperatorTriageDraft.test.ts`) independently hard-coded the
+same stale literal in their own assertions and broke as a direct,
+mechanical consequence of this cycle's edit — fixed in the same commit per
+sibling-preservation + AGENTS.md's "fix the source, not the symptom," even
+though they're outside Epic 8's file-touch partition.
+
+Verification: `npm test` 47/47 green. `cargo test --locked` at repo root —
+all suites green, 0 failures (unaffected; this criterion is JS-only).
+`cargo clippy --locked --tests -- -D warnings` clean.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/epic_8/build_label_format_cycle_receipt.md`. Receipt block
+appended to `receipts.md`. Next-eligible: Epic 8 criterion 29
+(`docs/SD-22/release-closure-checklist.md`) — untouched this cycle.
+
+### cycle-2026-07-19T07:00:00Z | Epic 8, criterion 29 (release closure checklist doc) | version:closure_checklist | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete**
+
+Re-checked the Epic 3/4/5 corpus-generation blocker first: `corpus/` still
+doesn't exist and no SRD mirror is reachable from this sandbox — nothing
+has changed since the blocker was logged, so re-attempting those epics
+would just re-log the same fabrication-risk wall. Epic 6 remains
+transitively blocked (needs ≥1 book ingested). Per Step 1's priority
+order, picked Epic 8's remaining open item: criterion 29.
+
+`node_modules` was missing at cycle start; ran `npm install` to restore it.
+
+RED: added `apps/desktop/src/sd22/releaseClosureChecklistDoc.test.ts`
+(mirrors SD-21's `sd21/releaseClosureChecklistDoc.test.ts`), asserting
+`docs/SD-22/release-closure-checklist.md` exists and names all four steps
+(three version files, workflow stamp, build-label check, `cargo check`,
+the `feat(sd22): bump version to` commit shape, the
+`<major>.<tranche-base>.<build>` triple). Failed for the intended reason:
+the doc didn't exist yet.
+
+GREEN: added `docs/SD-22/release-closure-checklist.md`, mirroring SD-21's
+doc content with `<tranche>` renamed to `<tranche-base>` (matching
+`decisions.md §2`'s terminology), the worked example updated to `0.5.95`
+(this branch's current version, landed by criteria 27/28), and the
+commit-message shape changed to `feat(sd22):`.
+
+Verification: `npm test` 48/48 green. `cargo test --locked` at repo root —
+all suites green, 0 failures (unaffected; this criterion is docs+JS-only).
+`cargo clippy --locked --tests -- -D warnings` clean.
+
+One note, not fixed this cycle: `.github/workflows/publish-tester-release.yml`'s
+stamp line still reads `VERSION="0.4.${GITHUB_RUN_NUMBER}"` — one tranche
+behind the `0.5.95` already in the three repo version files. Not in Epic
+8's file-touch-partition scope; flagged in the cycle artifact as a
+candidate Epic 9 self-heal item (mechanically verifiable drift, not a
+judgment call).
+
+Criterion 30 ("per-cycle tests pass at closure") is a standing
+verification gate re-verified by every cycle's own `cargo test`/`cargo
+clippy` run (including this one), not a one-shot artifact — left `open`
+in the status matrix pending Epic 9's criterion-31 eval closing it out.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/epic_8/release_closure_checklist_cycle_receipt.md`. Receipt
+block appended to `receipts.md`. All of Epic 8's file-touch-partition-scoped
+criteria (27, 28, 29) are now complete. Next-eligible: Epic 3/4/5 remain
+blocked; Epic 6 transitively blocked; Epic 9 (criterion 31) is now
+eligible per Step 1's priority order (fires after Epic 8's criterion-30 is
+`complete` per `epic-breakdown.md` line 179 — criterion 30 is the standing
+gate discussed above, satisfied by this cycle's own green run, so Epic 9
+could reasonably start next cycle) but Epic 9 fires "after Epic 8 lands,"
+and Epic 8's own criteria 27-29 (the three file-touch-partition-scoped
+ones) are now all `complete` — a future cycle should make the explicit
+call on whether Epic 9 is now unblocked or whether criterion 30 needs its
+own discrete landing first.
+
+### cycle-2026-07-19T08:00:00Z | scheduled loop firing | n/a (verification-only, no production change) | no card (NO-OP, nothing to mint) | no row transition
+
+Re-checked the state this cycle inherited before picking a criterion:
+
+- `corpus/` still does not exist anywhere in the repo; no operator-supplied
+  reference/corpus file has been added since the E3.6-9 blocker above was
+  logged.
+- That blocker's own text already states the identical-wall reasoning
+  applies to Epic 4 (`E4.10-13`) and Epic 5 (`E5.14-17`) first cycles, not
+  just Epic 3 — so attempting either this cycle would just re-derive the
+  same "no fake completion" conflict (`AGENTS.md`) against the same
+  unresolved `decisions.md §5` fabrication-risk trade-off, for no new
+  information.
+- Epic 6 depends on ≥1 book ingested (still none). Epic 8's discrete
+  criteria (27-29) are `complete`; E8.30 is a standing re-verification
+  gate, not a fresh unit of work. Epic 9 and Epic 7 are both gated behind
+  Epic 3/4/5/6 closing.
+
+No criterion this cycle is both unclaimed and un-blocked. Per the
+loop-instruction's own exit condition ("if every criterion is already
+complete or already has a real `## Open blockers` entry, exit NO-OP
+immediately... do not force work"), this firing lands no production
+change and mints no fabricated content. Recommending (again) that the
+three options listed under the E3.6-9 blocker get an explicit operator
+decision — the loop will otherwise NO-OP every firing indefinitely
+without one.
+
+### cycle-2026-07-19T08:56:08Z | scheduled loop firing | n/a (verification-only, no production change) | no card (NO-OP, nothing to mint) | no row transition
+
+Re-checked state; nothing has changed since the prior cycle's NO-OP:
+
+- `corpus/` still does not exist in the repo; no operator-supplied
+  reference/corpus file has appeared.
+- Re-attempted `https://www.aonprd.com/` directly (not just d20pfsrd.com) —
+  still HTTP 403 Forbidden. No SRD/OGL mirror is reachable from this
+  sandbox.
+- Epic 3/4/5 remain blocked for the identical reason; Epic 6 remains
+  transitively blocked; Epic 8's discrete criteria (27-29) remain
+  complete; Epic 9/7 remain gated behind Epic 3/4/5/6.
+
+This is the second consecutive NO-OP firing on the exact same blocker,
+which the prior cycle explicitly predicted would keep happening without
+an operator decision. Per that prediction, this firing surfaces the stall
+to the operator directly (push notification) rather than silently
+NO-OPing indefinitely. No production change, no fabricated content.
+
+### cycle-2026-07-19T09:53:00Z | scheduled loop firing | n/a (verification-only, no production change) | no card (NO-OP, nothing to mint) | no row transition
+
+Re-checked state; nothing has changed since the prior cycle's NO-OP:
+
+- `corpus/` still does not exist in the repo.
+- `decisions.md` and `risks-and-open-questions.md` are unchanged since
+  before the blocker was first logged (`git log` shows no commits to
+  either file after `233c426`) — no operator decision has landed on the
+  three options recorded under the E3.6-9 blocker (supply a real
+  corpus/reference source; narrow Epic 3/4/5's acceptance shape to
+  formula-derivable data; or explicitly accept memory-recall fabrication
+  risk).
+- `origin/tranche/5` has no commits past this session's own last cycle
+  (`4f07d75`) — no other stream landed work in the interim.
+- Epic 3/4/5 remain blocked for the identical corpus/fabrication-risk
+  reason; Epic 6 remains transitively blocked (needs ≥1 book ingested);
+  Epic 9 is not actually eligible yet despite Epic 8's discrete criteria
+  (27-29) being complete — `epic-breakdown.md` line 208 places Epic 8
+  "after Epics 1+3+4+5+6 land," and Epic 9 evaluates criteria 1-30 as a
+  30/30-clean gate, which Epic 3/4/5/6 being blocked would fail
+  non-mechanically (the same corpus blocker, not a self-healable
+  shortfall) — dispatching Epic 9 now would just re-log the identical
+  judgment call under a different epic heading, not make progress; Epic 7
+  remains gated behind Epic 9.
+
+Third consecutive NO-OP on the same unresolved blocker. The prior cycle
+already surfaced this stall to the operator via push notification; since
+nothing new has happened since then (no operator decision, no new source,
+no new commits), this firing does not send a duplicate notification —
+repeating the same unactioned alert would be noise, not signal. No
+production change, no fabricated content. The loop will keep NO-OPing
+every firing until one of the three recorded options gets an explicit
+operator decision.
+
+### cycle-2026-07-19T10:55:05Z | scheduled loop firing | n/a (verification-only, no production change) | no card (NO-OP, nothing to mint) | no row transition
+
+Re-checked state; nothing has changed since the prior cycle's NO-OP:
+
+- `corpus/` still does not exist in the repo.
+- `git log` on `decisions.md` and `risks-and-open-questions.md` still shows
+  no commits after `233c426` — no operator decision has landed on the
+  three options recorded under the E3.6-9 blocker.
+- `origin/tranche/5` HEAD matches this session's local HEAD (`3c3cf81`,
+  the prior cycle's own commit) — no other stream landed work in the
+  interim.
+- Epic 3/4/5 remain blocked for the identical corpus/fabrication-risk
+  reason; Epic 6 remains transitively blocked; Epic 9/7 remain gated
+  behind Epic 3/4/5/6.
+
+Fourth consecutive NO-OP on the same unresolved blocker. No new
+information since the last notified cycle, so — per that cycle's own
+precedent — this firing does not send another push notification;
+repeating an unactioned alert with nothing new to report would be noise.
+No production change, no fabricated content.
+
+### cycle-2026-07-19T11:54:17Z | scheduled loop firing | n/a (verification-only, no production change) | no card (NO-OP, nothing to mint) | no row transition
+
+Re-checked state; nothing has changed since the prior cycle's NO-OP:
+
+- `corpus/` still does not exist in the repo.
+- `git log 233c426..HEAD` on `decisions.md`, `risks-and-open-questions.md`,
+  `epic-breakdown.md`, `scope-draft.md`, and `corpus-source-inventory.md`
+  shows zero commits to any of them — no operator decision has landed on
+  the three options recorded under the E3.6-9 blocker.
+- `origin/tranche/5` HEAD matches this session's local HEAD (`c641656`,
+  the prior cycle's own commit) — no other stream landed work in the
+  interim.
+- Re-tried `WebFetch` to `https://www.aonprd.com/` directly — still
+  HTTP 403 Forbidden. No SRD/OGL mirror is reachable from this sandbox.
+- `docs/release/SD-22/artifacts/` holds only `README.md` and `epic_8/` —
+  no new Epic 3/4/5/6/9 artifacts have appeared.
+- Epic 3/4/5 remain blocked for the identical corpus/fabrication-risk
+  reason; Epic 6 remains transitively blocked; Epic 9/7 remain gated
+  behind Epic 3/4/5/6.
+
+Fifth consecutive NO-OP on the same unresolved blocker. No new
+information since the last notified cycle (cycle 2, `4f07d75`), so this
+firing does not send another push notification — same reasoning as
+cycles 3 and 4. No production change, no fabricated content. This cycle
+does note, for the operator's eventual return, that the loop has now run
+5 consecutive hourly firings (roughly 4 hours) with zero landed criteria
+past Epic 8's three discrete items — the stall is not self-resolving and
+remains squarely an operator-decision item, not a mechanical one.
