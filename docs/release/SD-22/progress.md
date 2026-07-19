@@ -1380,7 +1380,7 @@ Full RED/GREEN evidence, file list, and reasoning:
 corrected 10-class roster), or a dedicated cycle for criterion 13's shared
 spell/equipment tables once more classes land.
 
-### cycle-2026-07-19T21:15:57Z | Epic 4, Bloodrager (cycle 2 of corrected 10-class roster) | ingest:acg_class | card see receipts.md/progress.md | open → **complete (criteria 10-12 for Bloodrager)**
+### cycle-2026-07-19T21:15:57Z | Epic 4, Bloodrager (cycle 2 of corrected 10-class roster) | ingest:acg_class | card `t_5cc43e43` on `codex-tranche-5` (status=done) | open → **complete (criteria 10-12 for Bloodrager)**
 
 Re-checked state before picking a criterion: `git log 3f8df8a..origin/tranche/5`
 showed no new commits — `3f8df8a` (the prior Arcanist cycle's own commit) is
