@@ -1134,3 +1134,15 @@ Full RED/GREEN evidence, file list, and reasoning:
 `receipts.md`. Next-eligible: Epic 3 criterion 9 (`apg/spell_list.rs` +
 `apg/equipment_tables.rs`), or Epic 4/Epic 5's first cycles (both remain
 blocked on their own parser-coverage gaps, unchanged by this cycle).
+
+**Concurrency note:** `git push` was rejected on the first attempt — a
+concurrent operator commit, `6ab616b` (`docs(sd22): make corpus-sourcing
+genuinely self-serve; document the Oracle collision's real cause`),
+landed on `origin/tranche/5` after this cycle's local base (`6f2a13e`)
+but before this cycle's push. Inspected its diff before rebasing: it
+touches only `decisions.md` and `loop-instruction.md` (self-serve corpus
+cloning + a retrospective lesson-learned note) — no overlap with this
+cycle's file set. Rebased cleanly (`git rebase origin/tranche/5`, no
+conflicts), re-pointed `snapshot_as_of` at the new parent (`6ab616b`),
+re-verified `cargo test --locked` and `cargo clippy` still green
+post-rebase, then pushed successfully as `18a963b`.
