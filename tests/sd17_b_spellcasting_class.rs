@@ -762,3 +762,35 @@ fn parses_real_oracle_record_from_apg_classes_lst() {
     assert_eq!(oracle.casting_posture, Some(CastingPosture::Spontaneous));
     assert_eq!(oracle.spell_stat.as_deref(), Some("CHA"));
 }
+
+// SD-22 Epic 3 widening (Summoner ingest cycle): the real `CLASS:Summoner`
+// record in `apg_classes.lst` carries `SPELLSTAT:CHA MEMORIZE:NO` — the
+// same spontaneous posture as Sorcerer/Bard/Inquisitor/Oracle (arcane
+// rather than divine, but that distinction doesn't affect the parser's
+// posture derivation) — so it belongs in `SPELLCASTING_CLASS_NAMES`
+// rather than `MARTIAL_CLASS_NAMES`. Mirrors
+// `parses_real_oracle_record_from_apg_classes_lst`.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_summoner_record_from_apg_classes_lst() {
+    let corpus = TestCorpus::new("apg_classes_summoner");
+    corpus.write(
+        "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        &real_apg_classes_lst(),
+    );
+    let result = parse_spellcasting_class_file(&corpus.path(
+        "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+    ))
+    .expect("read real apg_classes.lst");
+
+    let summoner = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Summoner")
+        .expect(
+            "Summoner should be recognized from the real apg_classes.lst once \
+             SPELLCASTING_CLASS_NAMES is widened to include it",
+        );
+    assert_eq!(summoner.casting_posture, Some(CastingPosture::Spontaneous));
+    assert_eq!(summoner.spell_stat.as_deref(), Some("CHA"));
+}

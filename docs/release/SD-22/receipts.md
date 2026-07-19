@@ -276,3 +276,53 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["apg/class_oracle_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Oracle record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB, good Will only, poor Fortitude+Reflex, MAXLEVEL:20, SPELLSTAT:CHA MEMORIZE:NO) -- same scope boundary as class_alchemist.rs/class_cavalier.rs/class_inquisitor.rs. This cycle picked up the operator's own commit 6923e54 (landed since the Inquisitor cycle), which resolved the standing Gunslinger/Magus Open Blocker by narrowing APG's roster to the 6 real classes -- confirming the fix and continuing the per-class cycle sequence with Oracle."
+
+- cycle_id: 2026-07-19T18:00:00Z
+  epic: 3
+  criterion: apg_summoner
+  criterion_section: "§1.1 Epic 3 — APG content-source ingest (criteria 7, 8; fifth class in the corrected 6-class ordering)"
+  row_or_kind: ingest:apg_class
+  evidence_tier_before: open (class 5 of 6, not yet started; Oracle just landed)
+  evidence_tier_after: complete (criteria 7-8 for Summoner; criterion 9's spell/equipment resolution out of scope, no APG spell/equipment tables exist yet)
+  branch_tip_before: aa9b924
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "apg/class_summoner_cycle_receipt.md"
+  red_phase_evidence: "Widening RED: parses_real_summoner_record_from_apg_classes_lst added to tests/sd17_b_spellcasting_class.rs, failed (Summoner out of SPELLCASTING_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_apg_class_summoner_resolves.rs failed to compile (E0599: ApgClassId::Summoner did not exist) (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Summoner) in src/pcgen_import/lst_parser/spellcasting_class.rs; added rules_tables/apg/class_summoner.rs and ApgClassId::Summoner; 5/5 new acceptance tests green (including the real-corpus-gated test); widening test green; full cargo test suite green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_apg_class_summoner_resolves: 5/5 passed (--include-ignored); sd17_b_spellcasting_class: 6/6 ignored real-corpus tests green including the new widening test; full cargo test --locked: 0 failed across every suite; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 3's next-eligible cycle is Witch (class 6 of 6, the last real APG class), or apg/spell_list.rs + apg/equipment_tables.rs (criterion 9). Epic 4 (ACG) and Epic 5 (Bestiary 1) remain blocked on their own, separate parser-coverage gaps (ACG has no CLASS: allowlist entry yet; Bestiary 1's b1_races.lst uses unprefixed bare rows race_ability.rs cannot parse) — unchanged by this cycle."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:139 (CLASS:Summoner)"
+  rule_set_used: Apg
+  kanban_card: "no card: hermes unavailable from cloud sandbox"
+  progress_file_updated: "yes"
+  artifacts_written: ["apg/class_summoner_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Summoner record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB, good Will only, poor Fortitude+Reflex, MAXLEVEL:20, SPELLSTAT:CHA MEMORIZE:NO) -- identical good/poor save split to Oracle, same scope boundary as class_alchemist.rs/class_cavalier.rs/class_inquisitor.rs/class_oracle.rs. Summoner is a spontaneous arcane caster (TYPE:Base.PC.SpontaneousArcane.Spontaneous) rather than divine, but that distinction doesn't affect the parser's posture derivation or the chassis formulas."
+
+- cycle_id: 2026-07-19T14:00:00Z
+  epic: 3
+  criterion: apg_oracle
+  criterion_section: "§1.1 Epic 3 — APG content-source ingest (this firing's independent attempt at Oracle, criteria 7-8)"
+  row_or_kind: ingest:apg_class
+  evidence_tier_before: open (from this firing's perspective at start; branch tip f933ecf)
+  evidence_tier_after: "no change from this firing — concurrent stream (aa9b924, b160857) already landed Oracle + Summoner before this firing's push"
+  branch_tip_before: f933ecf
+  branch_tip_after: "n/a — commit discarded, never pushed; local branch reset to origin/tranche/5 (b160857)"
+  merge_receipt_sha: "n/a — no commit landed from this firing"
+  cycle_artifact_path: "n/a — this firing's Oracle receipt was discarded; see apg/class_oracle_cycle_receipt.md (written by the concurrent stream) for the landed cycle"
+  red_phase_evidence: "completed locally (widening + acceptance RED for Oracle), then discarded along with the rest of this firing's commit"
+  green_phase_evidence: "completed locally (full cargo test + clippy green), then discarded — see notes"
+  cargo_test_summary: "this firing's own local run was green before the push conflict; not the landed state (superseded by the concurrent stream's own green run)"
+  clippy_signal: "n/a — discarded work"
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Witch (class 6 of 6) is next-eligible per the concurrent stream's own Summoner receipt. Operator should confirm whether a second SD-22 loop stream is intentionally running concurrently with this hourly-firing routine -- if so, the file-touch-partition's '1 cycle at a time' default is being violated across streams, not just within one, and either the second stream should be stopped or the routine's cadence should be coordinated with it."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:107 (CLASS:Oracle) -- same record the concurrent stream used"
+  rule_set_used: Apg
+  kanban_card: "no card: no commit landed"
+  progress_file_updated: "yes"
+  artifacts_written: []
+  notes: "git push origin tranche/5 was rejected (non-fast-forward); git fetch showed origin/tranche/5 had moved past this firing's f933ecf base to aa9b924 (Oracle) then b160857 (Summoner), landed by a different, concurrently running stream. This is the loop-instruction's own documented hard stop ('two live claude processes... touch the same per-epic module file'), discovered after the fact via git state rather than avoidable in advance. Discarded this firing's local commit (git reset --hard origin/tranche/5) rather than force-pushing or merging duplicate Oracle content; no shared work was lost since the commit was never pushed. Did not additionally attempt Witch this firing to avoid racing the same concurrent stream a second time within one cycle."
