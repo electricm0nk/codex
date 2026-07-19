@@ -162,7 +162,7 @@ The rule-cycle table binds each source-book content unit (rules) to its consumer
 | CRB class table for Fighter | (SD-19 already ships; index in `src/rules_core/rules_tables/crb/`) | Existing rule | `RuleSetId::Crb` | SD-21's Epic 6 Wizard + Epic 7 Multiclass; SD-22's Epic 6 (read-only consumption in deterministic + happy-path tests) |
 | CRB class table for Wizard | (SD-19 ships) | Existing rule | `RuleSetId::Crb` | SD-21's Epic 6 + Epic 7; SD-22's Epic 6 |
 | CRB class tables for the 9 remaining core classes | (SD-18 ships; extended by SD-19) | Existing rule | `RuleSetId::Crb` | SD-21 Epic 6 (per-class); SD-22 Epic 6 (read-only) |
-| APG class tables (Alchemist, Cavalier, Gunslinger, Inquisitor, Magus, Oracle, Summoner, Witch — 8 classes) | SD-22 Epic 3 (per-class cycles; 8 cycles) | New rule | `RuleSetId::Apg` | SD-22 Epic 6 (deterministic + happy-path) |
+| APG class tables (Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch — 6 classes; corrected 2026-07-19, Gunslinger/Magus are Ultimate Combat/Ultimate Magic) | SD-22 Epic 3 (per-class cycles; 6 cycles) | New rule | `RuleSetId::Apg` | SD-22 Epic 6 (deterministic + happy-path) |
 | APG spell list | SD-22 Epic 3 (criterion 9 shared spell-list cycle) | New rule | `RuleSetId::Apg` | SD-22 Epic 6 (deterministic spells/DC tests) |
 | APG equipment tables | SD-22 Epic 3 (criterion 9 shared equipment cycle) | New rule | `RuleSetId::Apg` | SD-22 Epic 6 (deterministic equipment tests) |
 | ACG class tables (Alchemist, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Swashbuckler, Warpriest — 10 classes) | SD-22 Epic 4 (per-class cycles; 10 cycles) | New rule | `RuleSetId::Acg` | SD-22 Epic 6 (read-only consumption) |

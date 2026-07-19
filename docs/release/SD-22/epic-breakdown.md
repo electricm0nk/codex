@@ -102,7 +102,7 @@ Epic 1 lands **first**. Epic 2's pre-launch checklist validates the launch infra
 
 8. **Cross-book resolution tests for APG** assert that APG-only items return `Some` for `RuleSetId::Apg` queries but `None` for `RuleSetId::Crb` queries, and vice-versa. Per the SD-21 §12 doctrine (cross-book fallback at the resolver layer), the priority order is **APG → CRB → ACG**.
 
-9. **Per-cycle tests for APG spell and equipment resolution** assert representative samples resolve to the expected table cell. APG content includes classes (Alchemist, Cavalier, Gunslinger, Inquisitor, Magus, Oracle, Summoner, Witch), spells (Alchemist extracts, Cavalier challenges, etc.), and equipment (Alchemist bombs, etc.).
+9. **Per-cycle tests for APG spell and equipment resolution** assert representative samples resolve to the expected table cell. APG content includes classes (Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch — corrected 2026-07-19: Gunslinger and Magus are Ultimate Combat / Ultimate Magic content, not APG; `apg_classes.lst` has no `CLASS:Gunslinger` or `CLASS:Magus` record, confirmed by a real Epic 3 cycle, and both Ultimate-line books are explicitly out of scope per `decisions.md §1`), spells (Alchemist extracts, Cavalier challenges, etc.), and equipment (Alchemist bombs, etc.).
 
 ### Epic 4 — ACG content-source ingest (per-class cycles)
 

@@ -44,7 +44,7 @@ SD-22's gating epic. Three pre-flight checks the operator runs once before the l
 
 ### 1.3 Epic 3 — APG content-source ingest (per-class cycles)
 
-Per-class cycle shape (one cycle per APG class). APG populates `src/rules_core/rules_tables/apg/` per SD-19 §9 source-book subdirectory pattern. APG classes: Alchemist, Cavalier, Gunslinger, Inquisitor, Magus, Oracle, Summoner, Witch (plus any APG printing additions). Each cycle lands one class table plus its spell/equipment integration. The `RuleSetId::Apg` variant ships; cross-book resolution tests assert APG-only items return `Some` for `RuleSetId::Apg` queries and `None` for `RuleSetId::Crb` queries. Detailed acceptance criteria 6-9 in `epic-breakdown.md` §"Epic 3 — APG content-source ingest."
+Per-class cycle shape (one cycle per APG class). APG populates `src/rules_core/rules_tables/apg/` per SD-19 §9 source-book subdirectory pattern. APG classes: Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch (corrected 2026-07-19 — Gunslinger and Magus are Ultimate Combat / Ultimate Magic content, not APG; see `corpus-source-inventory.md §1`). Each cycle lands one class table plus its spell/equipment integration. The `RuleSetId::Apg` variant ships; cross-book resolution tests assert APG-only items return `Some` for `RuleSetId::Apg` queries and `None` for `RuleSetId::Crb` queries. Detailed acceptance criteria 6-9 in `epic-breakdown.md` §"Epic 3 — APG content-source ingest."
 
 ### 1.4 Epic 4 — ACG content-source ingest (per-class cycles)
 

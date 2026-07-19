@@ -37,6 +37,8 @@ Per Epic 9's evaluator working from `corpus-source-inventory.md`: failure modes 
 
 ### Epic 3 — APG content-source ingest failure modes
 
+**Corrected 2026-07-19:** Gunslinger and Magus rows removed — a real Epic 3 cycle verified `apg_classes.lst` has no `CLASS:Gunslinger` or `CLASS:Magus` record; both are Ultimate Combat / Ultimate Magic content (out of scope per `decisions.md §1`), not APG. See `corpus-source-inventory.md §1`'s corrective note.
+
 | Content unit | Failure mode | Where to look (column / row / rule-table cell) | Bucket |
 |---|---|---|---|
 | Alchemist | Bomb damage scale wrong | `class_alchemist::BOMB_DAMAGE_BY_LEVEL_BY_DIE` (column: damage-die per level) | self-healable (read the published book's Alchemy/Bombs table; fix the cell) |
@@ -44,12 +46,8 @@ Per Epic 9's evaluator working from `corpus-source-inventory.md`: failure modes 
 | Alchemist | Discovery choices | `class_alchemist::DISCOVERIES_BY_LEVEL: HashMap<u8, DiscoverySet>` (column: level → discoveries-known count) | self-healable |
 | Cavalier | Order choice at level 1 | `class_cavalier::ORDERS: Vec<OrderId>` (column: order list; verify every choice is mechanically distinct) | self-healable |
 | Cavalier | Challenge uses | `class_cavalier::CHALLENGE_USES_BY_LEVEL: HashMap<u8, u8>` (column: 1/day + 1/3 levels) | self-healable |
-| Gunslinger | Deeds list per level | `class_gunslinger::DEEDS_BY_LEVEL: HashMap<u8, Vec<DeedRef>>` (column: deeds-known at level, requires updating source) | self-healable |
-| Gunslinger | Grit per-day + per-encounter rule | `class_gunslinger::GRIT_POOL: HashMap<u8, (daily_max, encounter_max)>` (column: two tuples per level) | self-healable |
 | Inquisitor | Judgment uses | `class_inquisitor::JUDGMENT_USES_BY_LEVEL: HashMap<u8, u8>` (column: 1 + 1/4 levels) | self-healable |
 | Inquisitor | Inquisition domain choice | `class_inquisitor::INQUISITION_DOMAINS: Vec<DomainId>` (column: domain list) | self-healable |
-| Magus | Spell Combat legal attacks per round | `class_magus::SPELL_COMBAT_ATTACKS_PER_ROUND: u8` (column: 1 attack + spell; verify the rule, not the table) | self-healable (read PF1 Magus §Spell Combat) |
-| Magus | Arcane Pool points per level | `class_magus::ARCANE_POOL_POINTS_BY_LEVEL: HashMap<u8, u8>` | self-healable |
 | Oracle | Mystery / Curse / Revelation columns | `class_oracle::MYSTERIES`, `CURSES`, `REVELATIONS_BY_LEVEL` (three columns per row) | self-healable |
 | Summoner | Eidolon stat-block shape | `class_summoner::EIDOLON_BASE_FORM` + linked-life rule (`class_summoner::LIFE_LINK_HP_PCT`) | self-healable |
 | Summoner | Spell-known progression | `class_summoner::SPELLS_KNOWN_BY_LEVEL: HashMap<u8, u8>` (column: 1 + 1/2 levels) | self-healable |
@@ -128,9 +126,9 @@ Per Epic 9's evaluator working from `corpus-source-inventory.md`: failure modes 
 
 ## Override flags (durable; patched when operator accepts a default)
 
-### Flag A — APG 9-class per-cycle ordering
+### Flag A — APG 6-class per-cycle ordering
 
-**Default chosen**: alphabetical by class name (Alchemist → Cavalier → Gunslinger → Inquisitor → Magus → Oracle → Summoner → Witch). One cycle per class.
+**Default chosen**: alphabetical by class name (Alchemist → Cavalier → Inquisitor → Oracle → Summoner → Witch). One cycle per class. (Corrected 2026-07-19: Gunslinger and Magus removed — Ultimate Combat / Ultimate Magic content, not APG; see `corpus-source-inventory.md §1`.)
 
 **Override alternatives:**
 - *Bestiary-style ordering* (by level progression: low-level classes first, high-level last)
