@@ -76,3 +76,28 @@ referencing the prior block's `cycle_id`. Edit in place to keep the diff auditab
 (One block per cycle appended below this line in YAML-frontmatter-free blockquote form.
 Schema above is the canonical shape; cycles do NOT need to repeat the schema fields
 that are already self-evident from the cycle_artifact_path.)
+
+- cycle_id: 2026-07-19T04:00:00Z
+  epic: 3
+  criterion: apg_alchemist
+  criterion_section: "§1.1 Epic 3 — APG content-source ingest (Alchemist)"
+  row_or_kind: ingest:apg_class
+  evidence_tier_before: open
+  evidence_tier_after: blocked
+  branch_tip_before: cd9e88b
+  branch_tip_after: cd9e88b
+  merge_receipt_sha: "n/a — no commit landed"
+  cycle_artifact_path: "n/a — blocked before RED phase; see progress.md ## Open blockers"
+  red_phase_evidence: "not started"
+  green_phase_evidence: "not started"
+  cargo_test_summary: "not re-run; no production code touched (last known-green: 14/14)"
+  clippy_signal: "n/a"
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "operator decision needed: supply a real corpus/reference source, narrow Epic 3/4/5 acceptance shape to formula-derivable data only (mirroring crb/class_tables.rs), or explicitly re-affirm memory-recalled content is acceptable outside this bundle's own self-referential docs"
+  corpus_input_path: "n/a — not generated (fabrication-risk hard stop)"
+  rule_set_used: Apg
+  kanban_card: "no card: hermes unavailable from cloud sandbox"
+  progress_file_updated: "yes"
+  artifacts_written: []
+  notes: "WebFetch to aonprd.com and d20pfsrd.com both 403'd; no verifiable source reachable; see progress.md Open blockers for full reasoning"

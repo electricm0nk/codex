@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 3c9fa6a
+snapshot_as_of: cd9e88b
 ---
 
 # SD-22 — Progress
@@ -29,7 +29,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.3 | 2 — Operator Pre-Launch | prelaunch:board | `codex-tranche-5` kanban board set as SD-22 default | **complete** — `hermes kanban boards switch codex-tranche-5` ran locally 2026-07-19; persistent state file `~/.hermes/kanban/current` = `codex-tranche-5`; loop's per-invocation `hermes kanban --board codex-tranche-5` (per loop-instruction Step 10b) resolves to the same board. NB: session env `HERMES_KANBAN_BOARD=codex-tranche-4` was overriding the on-disk default until unset; not persisted in any shell init file. | n/a |
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
-| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (cycle 1 of 8) | see cycle log | pending |
+| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (cycle 1 of 8) | **blocked** — see `## Open blockers` (no verifiable source for corpus generation) | none |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Alchemist-ACG (cycle 1 of 10) | see cycle log | pending |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
@@ -39,7 +39,63 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 
 ## Open blockers
 
-(none — E2.3 resolved by operator-local `hermes kanban boards switch codex-tranche-5` 2026-07-19; see cycle log.)
+### E3.6-9 (Epic 3, Alchemist, cycle 3) — corpus generation would require fabricating unverifiable game content
+
+`corpus-source-inventory.md` §1.1 and `decisions.md §5` direct this cycle to
+"generate `corpus/apg_alchemist.json` from PF1 OGL/SRD content" by having the
+model recall and transcribe the APG Alchemist class table (bomb list,
+discoveries, spell progression, etc.) from memory, with no in-repo source file
+and no operator-supplied corpus. Before writing anything, this cycle tried to
+ground that content against a real source:
+
+- `WebFetch` to `aonprd.com` (Archives of Nethys) → **HTTP 403**
+- `WebFetch` to `d20pfsrd.com` → **HTTP 403**
+
+Neither OGL/SRD mirror is reachable from this sandbox, and no corpus or
+reference file exists in-repo (`corpus/` doesn't exist; `docs/release/SD-22/artifacts/`
+holds only its README). That leaves one path to close this criterion: transcribe
+the Alchemist's bombs/discoveries/spell-list content purely from the model's own
+training-data recall and commit it to `tranche/5` as if it were verified SRD
+data.
+
+This repo already has a documented precedent against exactly that move.
+`src/rules_core/rules_tables/crb/class_tables.rs`'s header comment (SD-19)
+explicitly scoped CRB's class tables down to BAB/save formulas and left out
+named per-level features and spell-per-day cells for this reason, in its own
+words: *"hand-transcribing exhaustive per-level feature text without a
+verifiable in-repo source would be exactly the fabricated-data risk `AGENTS.md`
+rules out."* `AGENTS.md`'s non-negotiable rules (`## Non-Negotiable Rules`,
+esp. "No fake completion" and "Fix the source, not the symptom") apply
+repo-wide and aren't something a bundle-local planning doc can waive for
+itself — per `AGENTS.md`'s own "Role Boundaries": upstream planning artifacts
+"define intent and constraints, not permission to improvise beyond the
+bounded run."
+
+`decisions.md §5` / `risks-and-open-questions.md` frame "missing corpus file"
+as always self-healable by in-cycle generation from memory. That framing is
+what's in tension with `AGENTS.md` here — a missing *file* is self-healable;
+a missing *verifiable source* for detailed rules-text content is not the same
+problem, and self-healing it by fabricating the content is the thing
+`AGENTS.md` and the CRB precedent both rule out.
+
+**Not self-healing this inline.** No commit lands this cycle. Recommend one of,
+operator's call:
+1. Supply a real corpus/reference file (e.g. a licensed text dump or a
+   reachable SRD mirror) so the cycle has something verifiable to transcribe
+   against, or
+2. Narrow Epic 3/4/5's acceptance shape to formula-derivable data only
+   (BAB/saves/simple numeric progressions), mirroring the CRB precedent, and
+   drop the named-item/named-feature resolution requirements from
+   `corpus-source-inventory.md` §1.1/§1.3, or
+3. Explicitly re-affirm (outside this bundle's own self-referential docs) that
+   memory-recalled OGL content is acceptable here, accepting the fabrication
+   risk knowingly.
+
+Logged as a real `## Open blockers` entry per the loop-instruction's hard-stop
+clause (unresolvable source ambiguity), rather than force a cycle forward.
+E1.1, E1.2, E2.3, E2.4, E2.5 remain **complete** (see cycle log above) — this
+blocker is scoped to Epic 3 onward (and, by the same content shape, Epic 4 and
+Epic 5, which will hit the identical wall on their first cycles).
 
 ## Cycle log
 
@@ -80,3 +136,22 @@ Between cycles, the operator landed a doctrine amendment on top of cloud cycle 1
 No Epic 3/4/5 cycles have started yet (correct per dependency graph: Epic 1 vacuous
 done, Epic 2 fully done as of this entry). Loop is ready for the first ingest cycle
 on next restart.
+
+### cycle-2026-07-19T04:00:00Z | Epic 3, Alchemist (cycle 1 of 8) | ingest:apg_class | no card (blocked, no commit) | open → **blocked**
+
+Attempted Step 4's RED-phase reading for the Alchemist cycle. `corpus-source-inventory.md`
+§1.1 and `decisions.md §5` call for generating `corpus/apg_alchemist.json` from
+"PF1 OGL/SRD content" in-cycle since no corpus file exists yet. Tried to ground
+that against a real source before writing anything: `WebFetch` to `aonprd.com`
+and to `d20pfsrd.com` both returned HTTP 403 (unreachable from this sandbox).
+With no in-repo corpus/reference file either, the only way to produce the
+content this criterion wants (bomb list, discoveries, spell progression, named
+class features) is to transcribe it from the model's own training-data recall
+and commit it as if it were verified SRD data — which is the exact fabrication
+risk `src/rules_core/rules_tables/crb/class_tables.rs`'s own SD-19 doc comment
+says it deliberately avoided, citing `AGENTS.md`. Did not write `corpus/`,
+`src/rules_core/rules_tables/apg/`, or any `tests/sd22_apg_*` files this cycle.
+No commit landed. Full detail and recommended paths forward in `## Open
+blockers` above. `cargo test --locked` was not re-run since no production code
+changed this cycle (last known-green baseline: 14/14, recorded in the E1+E2
+pre-flight cycle above).
