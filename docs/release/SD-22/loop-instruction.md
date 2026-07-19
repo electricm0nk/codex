@@ -18,7 +18,7 @@
 > 
 > 1. Confirm `codex-tranche-5` kanban board is set as the SD-22 default (operator-pinned 2026-07-18; reused from the prior 2026-07-16 SD-21 launch that was repurposed).
 > 2. Confirm `tranche/5` branch is pushed to origin.
-> 3. Corpus source is real PCGen LST data (per `decisions.md §5`, corrected 2026-07-19) — already on disk at `/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/{advanced_players_guide,advanced_class_guide,bestiary}/`; a cloud sandbox that only clones `codex` adds `https://github.com/PCGen/pcgen` as a second git source to reach the same tree.
+> 3. Corpus source is real PCGen LST data (per `decisions.md §5`, corrected 2026-07-19). **Self-serve, no operator/orchestrator setup required:** first check for `/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/` (present on this machine and any local session). If absent (e.g. a cold cloud sandbox that only has `codex` checked out), run `git clone --depth 1 https://github.com/PCGen/pcgen /tmp/pcgen-corpus` yourself via Bash and use `/tmp/pcgen-corpus/data/pathfinder/paizo/roleplaying_game/` instead — do not wait for a pre-configured second git source on the routine; a bare clone of `codex` alone is a valid, sufficient starting point.
 > 4. Run `git status --porcelain | wc -l` on `tranche/5` — must return `0` before loop launch.
 > 
 > Then launch with `/loop 60m /goal ./loop-instruction.md` and the bundle runs autonomously to closure.
@@ -100,6 +100,8 @@ Epic 7's file-touch set is metadata-only (closure PR, worktree, branch, release 
 Default: **1 cycle at a time.** Reason: the file-touch partition collapses any parallel attempt into a serial one for shared `src/rules_core/rules_tables/<book>/` directories (Epic 3 + 4 + 5 each own their directory), Epic 6's `encounters.rs` and `party_cr.rs` modules, and Epic 8's three version files. Two cycles in parallel means two cycles racing on the same fixture file.
 
 To run more than one cycle in parallel you must show that the second cycle touches a disjoint file set. That's possible when one cycle is in Epic 3 (APG directory) and the other is in Epic 4 (ACG directory), since the two directories are disjoint. Epic 3 and Epic 5 are also disjoint (Epic 3 writes `apg/`, Epic 5 writes `beastiary1/`). Epic 6 and Epic 8 are disjoint from Epic 3+4+5 (Epic 6 writes `encounters.rs` + `party_cr.rs`, Epic 8 writes version files). Epic 1 is single-stream (defensive cleanup runs first).
+
+**Lesson learned (cloud launch retrospective, 2026-07-19):** the file-touch partition's collision *handling* worked correctly in practice — a firing that lost a race on Oracle detected the divergence at push time and discarded its own redundant local commit rather than force-pushing (`fd25acb`). But the collision only happened because the orchestrator fired a manual `RemoteTrigger run` while a previous firing (or the routine's own hourly cron) was still in flight, with no way to check "is a cycle already running" before firing another. If cloud dispatch is used again: track the last-triggered session's completion (poll for its commit, or check the routine's own state) before triggering the next one, rather than firing on a fixed local cadence blind to the remote session's actual progress.
 
 ## Per-cycle procedure (the steps, in order)
 
@@ -370,7 +372,7 @@ The operator can stop the loop at any time; a stopped loop leaves the progress d
 11. **Pre-launch setup checklist (operator action, before first launch).**
     - [ ] `codex-tranche-5` kanban board set as the SD-22 default (operator-pinned 2026-07-18; reused from dead-state).
     - [ ] `tranche/5` branch pushed to origin.
-    - [ ] Corpus source is real PCGen LST data per `decisions.md §5` (corrected 2026-07-19) — already on disk locally; cloud sessions add `https://github.com/PCGen/pcgen` as a second git source.
+    - [ ] Corpus source is real PCGen LST data per `decisions.md §5` (corrected 2026-07-19) — already on disk locally; a cloud session with no local checkout self-clones `https://github.com/PCGen/pcgen` via Bash (no operator/orchestrator setup needed — see the pre-launch checklist item 3 above).
     - [ ] Operator's interactive `hermes kanban boards current` is set to `codex-tranche-5` for operator-driven inspection.
     - [ ] `./progress.md` does not yet exist; the loop creates it on first run.
 
