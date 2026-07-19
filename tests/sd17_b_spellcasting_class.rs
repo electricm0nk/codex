@@ -657,3 +657,48 @@ fn gracefully_handles_empty_input() {
     assert_eq!(result.diagnostics.len(), 0);
     assert_eq!(result.source_path, "empty.lst");
 }
+
+// SD-22 Epic 3 widening: Alchemist added to SPELLCASTING_CLASS_NAMES
+// (module doc comment explains why: APG's CLASS:Alchemist line carries
+// SPELLSTAT/MEMORIZE/SPELLBOOK tokens, the same posture-bearing shape as
+// the five original CRB spellcasting classes).
+
+fn real_apg_classes_lst() -> String {
+    let corpus_root = PathBuf::from(
+        std::env::var("PCGEN_CORPUS_ROOT")
+            .expect("PCGEN_CORPUS_ROOT must point at a local pcgen/data checkout"),
+    );
+    let source =
+        corpus_root.join("pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst");
+    fs::read_to_string(&source)
+        .unwrap_or_else(|err| panic!("failed to read real apg_classes.lst at {}: {err}", source.display()))
+}
+
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_alchemist_record_from_apg_classes_lst() {
+    // End-to-end: parse the real `apg_classes.lst` and confirm Alchemist
+    // lands with spellbook-prepared posture (SPELLSTAT:INT MEMORIZE:YES
+    // SPELLBOOK:YES on the real corpus line), now that SD-22 Epic 3 has
+    // widened SPELLCASTING_CLASS_NAMES to include it.
+    let corpus = TestCorpus::new("apg_classes");
+    corpus.write(
+        "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+        &real_apg_classes_lst(),
+    );
+    let result = parse_spellcasting_class_file(&corpus.path(
+        "data/pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst",
+    ))
+    .expect("read real apg_classes.lst");
+
+    let alchemist = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Alchemist")
+        .expect("Alchemist parsed from real apg_classes.lst");
+    assert_eq!(alchemist.casting_posture, Some(CastingPosture::Spellbook));
+    assert!(
+        !alchemist.tokens.is_empty(),
+        "Alchemist entry should carry its tab-delimited KEY:VAL tokens"
+    );
+}

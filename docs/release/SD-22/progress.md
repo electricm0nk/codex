@@ -515,3 +515,56 @@ does note, for the operator's eventual return, that the loop has now run
 5 consecutive hourly firings (roughly 4 hours) with zero landed criteria
 past Epic 8's three discrete items — the stall is not self-resolving and
 remains squarely an operator-decision item, not a mechanical one.
+
+### cycle-2026-07-19T13:xx:xxZ | operator-side: pcgen_import parser widening (unblocks Epic 3 Alchemist) | fix:pcgen_import_allowlist | no card (operator-driven local session, not a loop firing) | E3.6-9's blocker → **narrowed, not yet closed**
+
+Responding to the `ada161e` cycle's finding (the two existing `CLASS:`
+parsers are name-allowlisted and neither `MARTIAL_CLASS_NAMES` nor
+`SPELLCASTING_CLASS_NAMES` includes any APG/ACG class), the operator
+session widened `SPELLCASTING_CLASS_NAMES` in
+`src/pcgen_import/lst_parser/spellcasting_class.rs` to add `"Alchemist"`
+— chosen over `class.rs`'s martial-class list because the real
+`apg_classes.lst:11` `CLASS:Alchemist` line carries
+`SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES`, the same posture-bearing
+shape as the five original CRB spellcasting classes.
+
+Added a new gated real-corpus test,
+`parses_real_alchemist_record_from_apg_classes_lst` in
+`tests/sd17_b_spellcasting_class.rs`, mirroring the file's existing
+`PCGEN_CORPUS_ROOT`-gated pattern: parses the real `apg_classes.lst` and
+asserts Alchemist is now recognized with `CastingPosture::Spellbook`.
+Ran and confirmed green against `PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data`.
+Full `cargo test --locked` (0 failures across every suite) and
+`cargo clippy --locked --tests -- -D warnings` (clean) both re-run and
+green after the change — no regression on any existing class (the
+`treats_class_lines_for_non_spellcasting_class_names_as_out_of_scope`
+test does not use Alchemist as its out-of-scope example, so this
+widening doesn't collide with an existing negative assertion).
+
+`docs/release/SD-22/loop-instruction.md`'s file-touch partition is
+amended to document this as an intended, bounded widening pattern:
+Epic 3/4 per-class cycles may add exactly one class name to
+`MARTIAL_CLASS_NAMES` or `SPELLCASTING_CLASS_NAMES` (never both at once,
+never a broader rewrite) when — and only when — that specific class's
+real record isn't yet recognized, with a small real-corpus test
+accompanying the widening. This is not a general license to redesign
+`src/pcgen_import`; it mirrors the SD-17 doc comments' own stated design
+("owned by later B-slices").
+
+**What this does NOT do:** does not write `rules_tables/apg/*`, does not
+add `RuleSetId::Apg`, does not write the Epic 3 Alchemist acceptance
+test (`tests/sd22_apg_class_alchemist_resolves.rs`). Epic 3's Alchemist
+criterion (E3.6-9) is **not yet complete** — the corpus is now reachable
+and the class name is now recognized, but the actual ingest cycle
+(RED → GREEN per loop-instruction Step 4-5, populating
+`rules_tables/apg/class_alchemist.rs`, and the cross-book invariant
+tests) is still open work for the next loop firing. Re-triggering the
+cloud routine now that this blocker is narrowed.
+
+Bestiary 1's parser gap (bare tab-delimited monster rows in
+`b1_races.lst`, no `RACE:` prefix — a different, larger gap than the
+class-name allowlist) is **not** addressed by this fix and remains open;
+Epic 5's first cycle will hit it and should route to `## Open blockers`
+again with that specific finding, which is expected and correct (not a
+regression — a new parser module for that record shape is out of scope
+for this narrow fix).

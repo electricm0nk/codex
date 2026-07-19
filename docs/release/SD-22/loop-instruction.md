@@ -70,6 +70,7 @@ The SD-22 cycle surface is concentrated in these files:
 | `src/rules_core/rules_tables/beastiary1/monster_<subset>.rs` | NEW; one per monster-block subset. Epic 5's per-monster-block cycles. | One cycle per file. |
 | `src/rules_core/encounters.rs` | NEW; DM-toolkit encounter-difficulty computation. Epic 6's criterion 18 cycle. | One cycle at a time. |
 | `src/rules_core/party_cr.rs` | NEW; DM-toolkit party-challenge-rating computation. Epic 6's criterion 19 cycle. | One cycle at a time. |
+| `src/pcgen_import/lst_parser/class.rs`, `src/pcgen_import/lst_parser/spellcasting_class.rs` | EDIT (rare); a per-class Epic 3/4 cycle widens `MARTIAL_CLASS_NAMES` or `SPELLCASTING_CLASS_NAMES` by exactly one name, ONLY when that class's `.lst` record isn't yet recognized (per `decisions.md §5`, corrected 2026-07-19 — mirrors the SD-17 doc comments' own "owned by later B-slices" design). Not a general-purpose parser rewrite; adding a name plus a small real-corpus test per widening. | One cycle at a time; one class-name addition per cycle. |
 | `tests/sd22_<book>_<class_or_subset>_resolves.rs` | Per-class or per-monster-block acceptance tests. | One cycle per file. |
 | `tests/sd22_dm_toolkit_deterministic.rs` | DM-toolkit deterministic tests against canonical Paizo examples. Epic 6's criterion 20 cycle. | One cycle at a time. |
 | `tests/sd22_dm_toolkit_happy_path_integration.rs` | DM-toolkit happy-path integration test consuming ingested content. Epic 6's criterion 21 cycle. | One cycle at a time. |
