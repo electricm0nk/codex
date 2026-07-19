@@ -184,7 +184,11 @@ pub struct LoadSavedCharacterResponse {
 #[serde(tag = "kind")]
 pub enum CreateCharacterResponse {
     Saved {
-        summary: CharacterSummaryDto,
+        // Boxed solely to close the `clippy::large_enum_variant` gap against the
+        // `Blocked` variant (SD-21 Epic 4 closure, criterion E4.24) — `Box<T>`
+        // serializes identically to `T` via serde, so the wire shape to the TS
+        // boundary is unchanged.
+        summary: Box<CharacterSummaryDto>,
         snapshot: PilotSnapshotDto,
         corpus_derived: CorpusDerivedDto,
     },
@@ -479,7 +483,7 @@ pub fn create_character(
     SavedCharacterStore::save(&envelope, &root).map_err(|err| err.message)?;
 
     Ok(CreateCharacterResponse::Saved {
-        summary: summarize_envelope(&envelope),
+        summary: Box::new(summarize_envelope(&envelope)),
         snapshot: map_snapshot_dto(snapshot),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
