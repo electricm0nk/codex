@@ -31,7 +31,7 @@
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
+    BaseSaves, ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 
 const WIZARD_FIXTURE: &str =
@@ -142,30 +142,62 @@ fn wizard_level1_grounds_base_save_progression() {
     }
 }
 
-// ----- The grounded records are standalone: not wired into any integrated total -----
+// ----- The grounded records were standalone until SD-21 E6.26 wired them in for real -----
 
 #[test]
-fn wizard_level1_base_attack_and_saves_are_not_wired_into_integrated_totals() {
+fn wizard_level1_base_attack_and_saves_are_now_wired_into_integrated_totals() {
+    // SUPERSEDED, NOT VIOLATED (SD-21 Epic 6, criterion 26, 2026-07-18): at the time
+    // this file's slice landed, `compute_pilot_base_chassis` dispatched only to
+    // `compute_fighter_chassis`, so this test pinned the-then-live bug (any non-Fighter
+    // class fabricated a `base_attack_bonus: 0` / absent generic explanation) as a
+    // negative control. `compute_pilot_base_chassis` now dispatches per-class via
+    // `compute_class_chassis`, and a new `compute_wizard_chassis` composes
+    // `rules_tables::crb::class_tables::class_tables()`'s already-verified Wizard row
+    // to wire `base_attack_bonus` / `base_saves` for real — mirroring the identical
+    // "superseded, not violated" idiom this file's own
+    // `wizard_level_2/3/4/5_was_later_widened_into_the_supported_tranche` negative
+    // controls already use for the level-range widening. The standalone
+    // `class_chassis.wizard.*` records this file grounds stay exactly as they were:
+    // this slice adds a second, generic-id (`class_chassis.base_attack_bonus`, no
+    // `.wizard.` infix, mirroring Fighter's own historical un-prefixed naming) record
+    // that IS the one wired into the integrated fields, so both coexist without
+    // conflict.
     let input = load(WIZARD_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
-    // The grounded standalone records exist...
+    // The grounded standalone records still exist...
     assert!(has_explanation(&computation, BASE_ATTACK_ID));
     assert!(has_explanation(&computation, BASE_SAVE_FORTITUDE_ID));
     assert!(has_explanation(&computation, BASE_SAVE_REFLEX_ID));
     assert!(has_explanation(&computation, BASE_SAVE_WILL_ID));
 
-    // ...but the integrated Fighter-shaped chassis compute path (still unsupported for
-    // Wizard) is untouched: no fabricated base_attack_bonus field, and no supported
-    // Fighter-style base-attack chassis explanation leaks in.
+    // ...and the integrated chassis compute path is now genuinely wired for Wizard too:
+    // at level 1 the 1/2-BAB formula still floors to +0 (coincidentally the same
+    // number the old fabricated zero pinned), but it is now a real, dispatch-supported
+    // value with its own generic explanation record backing it, not a fabricated
+    // absence.
     assert_eq!(
         computation.base_attack_bonus, 0,
-        "the standalone wizard base-attack explanation must not be wired into the integrated \
-         base_attack_bonus field"
+        "Wizard level 1 base attack bonus (1/2 BAB, classlevel / 2) is genuinely +0 at level 1"
+    );
+    let base_attack = explanation(&computation, "class_chassis.base_attack_bonus");
+    assert_eq!(base_attack.value, 0);
+    assert_eq!(
+        computation.base_saves,
+        BaseSaves {
+            fortitude: 0,
+            reflex: 0,
+            will: 2,
+        },
+        "Wizard level 1 base saves (poor Fort/Ref, good Will) are now genuinely computed"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "wizard baseline must not surface a supported Fighter base-attack chassis explanation"
+        !computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "class_chassis.unsupported"),
+        "a single-class Wizard is now a dispatch-supported chassis: {:?}",
+        computation.diagnostics
     );
 }
 

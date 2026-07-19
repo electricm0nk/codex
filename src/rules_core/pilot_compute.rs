@@ -114,7 +114,12 @@
 //! claim-blocked. Unsupported input yields
 //! claim-blocking diagnostics and withheld explanations rather than fabricated values.
 
-use super::character_input::{AbilityScores, ActiveState, CharacterInput, SkillAllocation};
+use super::character_input::{
+    AbilityScores, ActiveState, AcquisitionMode, CharacterClassLevel, CharacterInput,
+    SkillAllocation,
+};
+use super::rules_tables::crb::class_tables::{ClassId, class_tables};
+use super::rules_tables::crb::spell_list::Pf1SchoolId;
 
 /// Result of the GE-06 pilot deterministic compute surface, accumulating the
 /// base chassis, baseline combat, and total-save outputs proven across slices.
@@ -4573,7 +4578,22 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         compute_ability_modifiers(&input.chosen.ability_scores, &mut explanations);
 
     let (base_attack_bonus, base_saves) =
-        compute_fighter_chassis(input, &mut explanations, &mut diagnostics);
+        compute_class_chassis(input, &mut explanations, &mut diagnostics).unwrap_or_else(|| {
+            diagnostics.push(ComputationDiagnostic {
+                id: "class_chassis.unsupported".to_owned(),
+                message: format!(
+                    "base class chassis is only supported for a single-class {FIGHTER_CLASS_ID} \
+                     at levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} or a single-class \
+                     {WIZARD_CLASS_ID} at levels 1-{MAX_SUPPORTED_WIZARD_LEVEL}; chosen class \
+                     levels {:?} do not provide it (either a multiclass mix, deferred to Epic 7, \
+                     or a class this per-class dispatch does not yet recognize), so no chassis \
+                     values were computed",
+                    input.chosen.class_levels
+                ),
+                claim_blocking: true,
+            });
+            (0, BaseSaves::default())
+        });
 
     let (baseline_melee_attack_bonus, baseline_armor_class) = compute_combat_baseline(
         input,
@@ -6432,6 +6452,341 @@ fn compute_fighter_chassis(
     (base_attack_bonus, base_saves)
 }
 
+/// SD-21 Epic 6 (E6.25) / Epic 7 (E7.28): dispatch the base-attack-bonus /
+/// base-save chassis pillar to the supported single class, to
+/// `compute_multiclass_base_chassis` for a supported length-2+ multiclass mix, or
+/// return `None` when the input is a single class this dispatch does not yet
+/// recognize, or a multiclass mix containing an unrecognized class. Each
+/// recognized class's own `compute_<class>_chassis` function still independently
+/// checks its own level range and pushes `class_chassis.unsupported` itself when
+/// out of range, so this dispatch only needs to route by `class_id` / mix shape.
+fn has_supported_class_chassis(input: &CharacterInput) -> bool {
+    supported_fighter_level(input).is_some()
+        || supported_wizard_level(input).is_some()
+        || is_supported_multiclass_mix(input)
+}
+
+/// Whether `class_level` is one Epic 6 grounds a `compute_<class>_chassis` for
+/// (Fighter or Wizard), at a level within that class's own supported ceiling.
+/// The only two classes a multiclass mix can combine until a future epic grounds
+/// more per-class chassis functions.
+fn multiclass_class_level_supported(class_level: &CharacterClassLevel) -> bool {
+    (class_level.class_id == FIGHTER_CLASS_ID
+        && (1..=MAX_SUPPORTED_FIGHTER_LEVEL).contains(&class_level.level))
+        || (class_level.class_id == WIZARD_CLASS_ID
+            && (1..=MAX_SUPPORTED_WIZARD_LEVEL).contains(&class_level.level))
+}
+
+/// Whether `input` is a length-2+ `class_levels` mix every entry of which is
+/// individually a supported Fighter-or-Wizard class/level (SD-21 E7.28).
+fn is_supported_multiclass_mix(input: &CharacterInput) -> bool {
+    input.chosen.class_levels.len() >= 2
+        && input
+            .chosen
+            .class_levels
+            .iter()
+            .all(multiclass_class_level_supported)
+}
+
+fn compute_class_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> Option<(i16, BaseSaves)> {
+    if input.chosen.class_levels.len() >= 2 {
+        return compute_multiclass_base_chassis(input, explanations, diagnostics);
+    }
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return None;
+    };
+    if class_level.class_id == FIGHTER_CLASS_ID {
+        Some(compute_fighter_chassis(input, explanations, diagnostics))
+    } else if class_level.class_id == WIZARD_CLASS_ID {
+        Some(compute_wizard_chassis(input, explanations, diagnostics))
+    } else {
+        None
+    }
+}
+
+/// Compute the base-attack-bonus / base-save chassis pillar for a length-2+
+/// multiclass `class_levels` mix (SD-21 E7.28), or return `None` when any class
+/// in the mix is not one Epic 6 grounds a `compute_<class>_chassis` for.
+///
+/// Each class level is run through its own `compute_<class>_chassis` in
+/// isolation — a synthetic single-class `CharacterInput` clone carrying only
+/// that one `CharacterClassLevel` — so Fighter's and Wizard's existing,
+/// independently-verified chassis functions run completely unmodified. The
+/// per-class explanations/diagnostics from each isolated sub-computation are
+/// deliberately discarded (not merged into the outer `explanations` /
+/// `diagnostics`): merging them verbatim would push the same generic
+/// `class_chassis.base_attack_bonus` / `class_chassis.base_save.*` ids twice —
+/// once per class — silently clobbering one class's explanation record with
+/// the other's under a `Vec` lookup-by-id. Instead, this function pushes its
+/// own single combined explanation per field, naming both classes in the
+/// detail text.
+///
+/// Base attack bonus is a plain sum of the per-class results. Base saves use
+/// the same per-class-round-then-sum shape for now; E7.29 replaces the save
+/// combination with PF1's fractional-progression stacking rule (summing each
+/// class's un-rounded fractional save contribution before rounding down once),
+/// which is not a naive sum and diverges from this shape at some level pairs.
+fn compute_multiclass_base_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    // Every class in a supported multiclass mix (per `is_supported_multiclass_mix`)
+    // resolves its own isolated `compute_class_chassis` to `Some`, so no
+    // `class_chassis.unsupported`-style diagnostic is ever pushed here; the
+    // parameter is kept only for signature symmetry with `compute_class_chassis`.
+    _diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> Option<(i16, BaseSaves)> {
+    if !is_supported_multiclass_mix(input) {
+        return None;
+    }
+
+    let mut total_bab: i16 = 0;
+    let mut fort_fraction = 0.0_f64;
+    let mut ref_fraction = 0.0_f64;
+    let mut will_fraction = 0.0_f64;
+    let mut class_summaries: Vec<String> = Vec::new();
+
+    for class_level in &input.chosen.class_levels {
+        let mut isolated = input.clone();
+        isolated.chosen.class_levels = vec![class_level.clone()];
+
+        let mut isolated_explanations = Vec::new();
+        let mut isolated_diagnostics = Vec::new();
+        let (bab, _isolated_saves) =
+            compute_class_chassis(&isolated, &mut isolated_explanations, &mut isolated_diagnostics)?;
+        total_bab += bab;
+
+        // SD-21 E7.29: PF1's multiclass base-save rule sums each class's
+        // *un-rounded* fractional save contribution before rounding down once
+        // for the total -- it is not a naive per-class-round-then-sum (which
+        // would round each class's contribution down separately first, losing
+        // any fractional remainder that would otherwise carry into the next
+        // integer once combined with another class's remainder). The
+        // good/poor classification per save mirrors `class_tables.rs`'s
+        // `GoodSaves` rows for Fighter (`:77`, good Fortitude only) and Wizard
+        // (`:83`, good Will only) -- the only two classes a multiclass mix can
+        // combine until a future epic grounds more per-class chassis
+        // functions.
+        let (fort_good, ref_good, will_good) = multiclass_good_saves(&class_level.class_id)?;
+        fort_fraction += fractional_save_value(class_level.level, fort_good);
+        ref_fraction += fractional_save_value(class_level.level, ref_good);
+        will_fraction += fractional_save_value(class_level.level, will_good);
+
+        class_summaries.push(format!(
+            "{} {}: base attack bonus {bab}",
+            class_level.class_id, class_level.level
+        ));
+    }
+
+    let total_saves = BaseSaves {
+        fortitude: fort_fraction.floor() as i16,
+        reflex: ref_fraction.floor() as i16,
+        will: will_fraction.floor() as i16,
+    };
+
+    let class_summary = class_summaries.join("; ");
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_attack_bonus".to_owned(),
+        value: total_bab,
+        detail: format!(
+            "Multiclass base attack bonus {total_bab}: the sum of each class's own \
+             independently-computed base attack bonus ({class_summary})"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.fortitude".to_owned(),
+        value: total_saves.fortitude,
+        detail: format!(
+            "Multiclass base Fortitude save {}: PF1's sum-fractions-then-round-down-once rule, \
+             fractional total {fort_fraction:.3} across ({class_summary})",
+            total_saves.fortitude
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.reflex".to_owned(),
+        value: total_saves.reflex,
+        detail: format!(
+            "Multiclass base Reflex save {}: PF1's sum-fractions-then-round-down-once rule, \
+             fractional total {ref_fraction:.3} across ({class_summary})",
+            total_saves.reflex
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.will".to_owned(),
+        value: total_saves.will,
+        detail: format!(
+            "Multiclass base Will save {}: PF1's sum-fractions-then-round-down-once rule, \
+             fractional total {will_fraction:.3} across ({class_summary})",
+            total_saves.will
+        ),
+    });
+
+    Some((total_bab, total_saves))
+}
+
+/// PF1's per-class base-save fractional value at a class level, before
+/// rounding (SD-21 E7.29). A "good" save's fractional formula is
+/// `level/2 + 2`; a "poor" save's is `level/3` -- the same formulas
+/// `compute_fighter_chassis` and `class_tables.rs`'s `save_bonus` already
+/// apply, just evaluated as a real number instead of floored per-class. The
+/// canonical multiclass rule sums these fractional values across every class
+/// in the mix and rounds down only once for the total.
+fn fractional_save_value(level: u8, good: bool) -> f64 {
+    let level = f64::from(level);
+    if good { level / 2.0 + 2.0 } else { level / 3.0 }
+}
+
+/// Whether `class_id` grounds a "good" progression for Fortitude, Reflex, and
+/// Will respectively (SD-21 E7.29), mirroring `class_tables.rs`'s `GoodSaves`
+/// rows for Fighter (`:77`, good Fortitude only) and Wizard (`:83`, good Will
+/// only) -- the only two classes a multiclass mix can combine until a future
+/// epic grounds more per-class chassis functions. Returns `None` for any other
+/// class id.
+fn multiclass_good_saves(class_id: &str) -> Option<(bool, bool, bool)> {
+    if class_id == FIGHTER_CLASS_ID {
+        Some((true, false, false))
+    } else if class_id == WIZARD_CLASS_ID {
+        Some((false, false, true))
+    } else {
+        None
+    }
+}
+
+/// Compute the Wizard base-attack-bonus / base-save chassis pillar (SD-21 E6.26).
+///
+/// Composes `rules_tables::crb::class_tables::class_tables()`'s Wizard row
+/// (`BabProgression::Half`; good Will only, poor Fortitude/Reflex) rather than
+/// re-deriving the progression — that row was independently spot-checked against
+/// this file's own already-primary-source-verified Wizard formulas (see
+/// `explain_wizard_level1_prepared_spell_baseline`'s standalone
+/// `class_chassis.wizard.base_attack_bonus` / `base_save.*` explanation records, and
+/// `level_up/wizard.rs`'s SD-20 cycle, which performed the identical spot-check
+/// before composing with it: "The two sources agree at every level 1-20"). Mirrors
+/// `compute_fighter_chassis`'s generic, un-prefixed `class_chassis.base_attack_bonus`
+/// / `class_chassis.base_save.*` explanation ids — the ones actually wired into the
+/// integrated `base_attack_bonus` / `base_saves` fields — which is why they are
+/// distinct from the pre-existing, still-standalone `class_chassis.wizard.*` ids
+/// `explain_wizard_level1_prepared_spell_baseline` already grounds.
+fn compute_wizard_chassis(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> (i16, BaseSaves) {
+    let Some(level) = supported_wizard_level(input) else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_chassis.unsupported".to_owned(),
+            message: format!(
+                "base class chassis is only supported for a single-class {WIZARD_CLASS_ID} at \
+                 levels 1-{MAX_SUPPORTED_WIZARD_LEVEL}; chosen class levels {:?} do not provide \
+                 it, so no chassis values were computed",
+                input.chosen.class_levels
+            ),
+            claim_blocking: true,
+        });
+        return (0, BaseSaves::default());
+    };
+
+    let Some(row) = class_tables()
+        .into_iter()
+        .find(|row| row.class_id == ClassId::Wizard && row.level == level)
+    else {
+        // Cannot happen while MAX_SUPPORTED_WIZARD_LEVEL stays 20 and class_tables()'s
+        // own Wizard CLASS_META row's max_supported_level stays 20 (both independently
+        // confirmed identical by level_up/wizard.rs's SD-20 spot-check), but stays a
+        // named, claim-blocking fallback rather than a panic if that ever drifts.
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_chassis.unsupported".to_owned(),
+            message: format!(
+                "base class chassis has no {WIZARD_CLASS_ID} class_tables() row at level \
+                 {level}, so no chassis values were computed"
+            ),
+            claim_blocking: true,
+        });
+        return (0, BaseSaves::default());
+    };
+
+    let base_attack_bonus = row.base_attack_bonus;
+    let base_saves = BaseSaves {
+        fortitude: row.fort_save,
+        reflex: row.ref_save,
+        will: row.will_save,
+    };
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "Wizard level {level} base attack bonus from \
+             rules_tables::crb::class_tables::class_tables()'s Wizard row (1/2 BAB, PF1 Core \
+             Rulebook Wizard class table): {base_attack_bonus}"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.fortitude".to_owned(),
+        value: base_saves.fortitude,
+        detail: format!(
+            "Wizard level {level} base Fortitude save (poor) from \
+             rules_tables::crb::class_tables::class_tables()'s Wizard row: {}",
+            base_saves.fortitude
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.reflex".to_owned(),
+        value: base_saves.reflex,
+        detail: format!(
+            "Wizard level {level} base Reflex save (poor) from \
+             rules_tables::crb::class_tables::class_tables()'s Wizard row: {}",
+            base_saves.reflex
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.will".to_owned(),
+        value: base_saves.will,
+        detail: format!(
+            "Wizard level {level} base Will save (good) from \
+             rules_tables::crb::class_tables::class_tables()'s Wizard row: {}",
+            base_saves.will
+        ),
+    });
+
+    (base_attack_bonus, base_saves)
+}
+
+/// Fighter's own level within `input.chosen.class_levels`, whether single-class
+/// or part of a supported Fighter+Wizard multiclass mix (SD-21 E7.30).
+///
+/// Unlike `supported_fighter_level` (which requires a single-element slice and
+/// stays the gate for the base-attack-bonus / base-save chassis pillar and for
+/// `compute_combat_baseline` / `compute_selected_skill_modifiers`, both still
+/// Fighter-single-class-only per Epic 6's remaining scope), this reconciles
+/// Fighter's own per-class feature explanations (Bravery, bonus-feat
+/// progression) to keep firing once another class joins the mix, using
+/// Fighter's own sub-level rather than requiring the whole mix to be
+/// single-class. Returns `None` for a multiclass mix that is not itself a
+/// supported combination (mirroring `is_supported_multiclass_mix`), so
+/// Fighter's feature explanations never surface ahead of that mix's own base
+/// chassis becoming genuinely supported -- and returns `None` when Fighter is
+/// absent from the mix entirely, so introducing another class never makes
+/// Fighter's features appear for a build that isn't actually part-Fighter.
+fn fighter_level_in_mix(input: &CharacterInput) -> Option<u8> {
+    if let Some(level) = supported_fighter_level(input) {
+        return Some(level);
+    }
+    if !is_supported_multiclass_mix(input) {
+        return None;
+    }
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .find(|class_level| class_level.class_id == FIGHTER_CLASS_ID)
+        .map(|class_level| class_level.level)
+}
+
 /// Make the bounded Fighter milestone class features for this slice explicit rather
 /// than leaving them incidental: the level-2 bonus-feat progression seam and the
 /// level-3 armor-training seam.
@@ -6441,11 +6796,18 @@ fn compute_fighter_chassis(
 /// The level-3 armor-training seam names the concrete armor-check-penalty reduction
 /// and maximum-Dexterity increase that the bounded selected-skill and armor-class
 /// outputs already apply, so the derived-output change is legible instead of folklore.
+///
+/// SD-21 E7.30: gates on `fighter_level_in_mix` (not `supported_fighter_level`
+/// directly) so these grants keep firing, using Fighter's own sub-level, once a
+/// supported second class (Wizard) joins the mix -- reconciling Fighter's
+/// feature integration with Epic 7's multiclass dispatch instead of silently
+/// dropping Fighter's already-earned features the moment the mix stops being
+/// single-class.
 fn explain_fighter_class_features(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
-    let Some(level) = supported_fighter_level(input) else {
+    let Some(level) = fighter_level_in_mix(input) else {
         return;
     };
 
@@ -14485,38 +14847,340 @@ fn explain_wizard_level1_prepared_spell_baseline(
         });
     }
 
-    // Still blocked (1/2): with the specialization choice and two Evocation school
-    // powers' flat magnitudes grounded above, the claim-blocker narrows to exactly
-    // what stays unimplemented: the school-power execution machinery and the
-    // opposed-school preparation cost.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported".to_owned(),
-        message: format!(
-            "Wizard level {level} remains blocked on its school-power execution and \
-             opposed-school preparation-cost burden: the Evocation intense spells flat \
-             bonus-damage magnitude and the force missile flat 3 + Int-mod uses-per-day pool are \
-             now grounded as flat numbers in dedicated explanation records, but no evocation \
-             spell-damage application, no force-missile casting execution (the 1d4 damage roll \
-             and automatic-hit targeting), and no opposed-school preparation cost (each \
-             opposed-school spell occupies two prepared slots) are implemented, so no full \
-             Wizard school-power or opposed-school support is claimed"
+    // SD-21 E6b.2/E6b.3: ground the real prepared-spellbook / daily-preparation
+    // posture (bounded to wizard levels 1-3 and the canonical Evocation
+    // specialization, `unmet_wizard_spellbook_conditions`'s own supported range),
+    // including the opposed-school double-slot-cost rule. When the posture is
+    // unmet, both diagnostics below still fire exactly as before (their message
+    // now also cites the specific unmet reason); when it is met, this replaces
+    // them with real spellbook-contents / daily-preparation / spells-per-day
+    // explanation records instead.
+    let spellbook_unmet =
+        unmet_wizard_spellbook_conditions(input, level, ability_modifiers);
+    if spellbook_unmet.is_empty() {
+        ground_wizard_prepared_spellbook(input, level, ability_modifiers, explanations);
+    } else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported"
+                .to_owned(),
+            message: format!(
+                "Wizard level {level} remains blocked on its school-power execution and \
+                 opposed-school preparation-cost burden: the Evocation intense spells flat \
+                 bonus-damage magnitude and the force missile flat 3 + Int-mod uses-per-day pool \
+                 are now grounded as flat numbers in dedicated explanation records, and the \
+                 opposed-school preparation cost (each opposed-school spell occupies two \
+                 prepared slots) is grounded for real once a supported spellbook posture exists, \
+                 but no evocation spell-damage application and no force-missile casting \
+                 execution (the 1d4 damage roll and automatic-hit targeting) are implemented, so \
+                 no full Wizard school-power support is claimed; unmet spellbook posture: {}",
+                spellbook_unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_spell.wizard.prepared_spellbook.unsupported".to_owned(),
+            message: format!(
+                "Wizard remains blocked on its prepared spellbook / spells prepared / spell slot \
+                 posture burden: {}",
+                spellbook_unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+    }
+}
+
+/// This new grounding's own supported wizard-level ceiling (SD-21 E6b.2),
+/// independent of `MAX_SUPPORTED_WIZARD_LEVEL` (20): the base spells-per-day
+/// table below is only verified for levels 1-3 so far, mirroring every other
+/// incremental per-level widening already used throughout this file. Levels
+/// 4-20 keep the pre-existing claim-blocking diagnostics until a later cycle
+/// widens this ceiling.
+const WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL: u8 = 3;
+
+/// PF1 Core Rulebook Wizard "Spells per Day" table, base counts before any
+/// Intelligence bonus spells or the specialist bonus slot, for spell levels 0
+/// (cantrip) through 3rd. Verified independently against d20pfsrd.com and the
+/// Archives of Nethys aonprd.com mirror (byte-for-byte agreement): level 1
+/// "3/1/-/-", level 2 "4/2/-/-", level 3 "4/2/1/-" (the level 2/3 rows were
+/// already cited in this function's own doc comment above; level 1 is the
+/// same verified table's opening row). Returns `[None; 4]` above level
+/// `WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL` -- this grounding's own bounded
+/// range, not the wider `MAX_SUPPORTED_WIZARD_LEVEL`.
+fn wizard_base_spells_per_day(level: u8) -> [Option<i16>; 4] {
+    match level {
+        1 => [Some(3), Some(1), None, None],
+        2 => [Some(4), Some(2), None, None],
+        3 => [Some(4), Some(2), Some(1), None],
+        _ => [None, None, None, None],
+    }
+}
+
+/// Bonus spells per day from a high Intelligence, PF1 Core Rulebook Table:
+/// Ability Modifiers and Bonus Spells (the same formula already grounded for
+/// Paladin/Charisma, Ranger/Wisdom, Sorcerer/Charisma, and Bard/Charisma in
+/// this file): 0 when the modifier is below the spell level, otherwise
+/// `(modifier - spell_level) / 4 + 1`. Never applies to cantrips (spell level
+/// 0), per the same rule text every other class's own bonus-spell grounding
+/// already restricts to spell level 1+.
+fn ability_bonus_spells(ability_modifier: i16, spell_level: i16) -> i16 {
+    if spell_level < 1 || ability_modifier < spell_level {
+        0
+    } else {
+        (ability_modifier - spell_level) / 4 + 1
+    }
+}
+
+/// Parses this bounded slice's own corpus-free Wizard-spellbook spell-identity
+/// convention: `<school>.<level>.<name>` (e.g. `evocation.1.magic_missile`).
+/// This compute surface has no `SourcePackageContent` corpus access (unlike
+/// Epic 2's `spellbook::compute_spellbook_coverage`, which resolves a spell's
+/// real school/level from the imported PCGen corpus), so this grounding
+/// cannot look up an arbitrary spell's school/level the way that engine does;
+/// it instead reuses the real strict-school enum (`Pf1SchoolId`, SD-19's
+/// foundation slice) rather than inventing a parallel school taxonomy, with
+/// the school/level named directly in the chosen `spell_id` -- the same
+/// "compound fact encoded in one colon/dot-segmented identifier" convention
+/// already used throughout this file (e.g. `feat:weapon_focus:weapon:longsword`).
+/// Returns `None` for any string that doesn't match the convention or names
+/// an unrecognized school.
+fn parse_wizard_spellbook_spell_id(spell_id: &str) -> Option<(Pf1SchoolId, u8)> {
+    let mut parts = spell_id.splitn(3, '.');
+    let school_token = parts.next()?;
+    let level_token = parts.next()?;
+    parts.next()?;
+    let level: u8 = level_token.parse().ok()?;
+    let mut chars = school_token.chars();
+    let first = chars.next()?;
+    let capitalized: String = first.to_uppercase().chain(chars).collect();
+    let school = Pf1SchoolId::from_corpus_str(&capitalized)?;
+    Some((school, level))
+}
+
+/// The PF1 slot cost of preparing one spell of the given school for this
+/// bounded slice's fixed canonical opposed schools (Necromancy and
+/// Transmutation, the same pair `wizard_has_canonical_specialization_selections`
+/// already requires): 2 prepared slots for an opposed-school spell, 1
+/// otherwise (PF1 Core Rulebook arcane school class feature: "he must use two
+/// of his daily spell slots of that level to prepare [an opposed-school]
+/// spell").
+fn wizard_opposed_school_slot_cost(school: Pf1SchoolId) -> i16 {
+    if matches!(school, Pf1SchoolId::Necromancy | Pf1SchoolId::Transmutation) {
+        2
+    } else {
+        1
+    }
+}
+
+/// Return the list of unmet conditions for this grounding's bounded prepared-
+/// spellbook posture. An empty list means the posture is fully supported: a
+/// canonical-specialization wizard at a supported level, with at least one
+/// spell recorded (`AcquisitionMode::Known`) and at least one prepared today
+/// (`AcquisitionMode::Prepared`), every prepared spell already recorded, and
+/// no spell level's prepared consumption (opposed-school spells costing 2
+/// slots each) exceeding that level's total slot budget (base table count +
+/// the already-grounded specialist bonus slot + the Intelligence bonus).
+///
+/// This is a genuine, but deliberately bounded, slot-consumption check: it
+/// does not separate the specialist bonus slot's own school restriction
+/// (real PF1: that slot can only hold a spell of the specialized school
+/// itself) from the generic per-level budget -- both are summed into one
+/// total. For this slice's own canonical-Evocation-only reproducer that
+/// nuance never bites (every non-opposed prepared spell here is Evocation),
+/// and is named here as a known, documented limitation rather than silently
+/// assumed away.
+fn unmet_wizard_spellbook_conditions(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Vec<String> {
+    let mut unmet = Vec::new();
+
+    if level > WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL {
+        unmet.push(format!(
+            "prepared spellbook grounding is only supported for wizard levels \
+             1-{WIZARD_SPELLBOOK_SUPPORTED_MAX_LEVEL}, got {level}"
+        ));
+        return unmet;
+    }
+    if !wizard_has_canonical_specialization_selections(input) {
+        unmet.push(
+            "prepared spellbook grounding requires the canonical Evocation specialization \
+             (opposed Necromancy/Transmutation)"
+                .to_owned(),
+        );
+        return unmet;
+    }
+
+    let wizard_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == WIZARD_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = wizard_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = wizard_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    if recorded.is_empty() {
+        unmet.push(
+            "no wizard spells recorded in the spellbook (AcquisitionMode::Known)".to_owned(),
+        );
+    }
+    if prepared.is_empty() {
+        unmet.push("no wizard spells prepared today (AcquisitionMode::Prepared)".to_owned());
+    }
+
+    for spell_id in &prepared {
+        if !recorded.contains(spell_id) {
+            unmet.push(format!(
+                "prepared spell '{spell_id}' is not recorded in the spellbook"
+            ));
+        }
+    }
+
+    let base_spells_per_day = wizard_base_spells_per_day(level);
+    for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
+        let spell_level = spell_level as u8;
+        let Some(base_count) = base_count else {
+            if prepared
+                .iter()
+                .filter_map(|id| parse_wizard_spellbook_spell_id(id))
+                .any(|(_, l)| l == spell_level)
+            {
+                unmet.push(format!(
+                    "a prepared spell targets spell level {spell_level}, not yet accessible at \
+                     wizard level {level}"
+                ));
+            }
+            continue;
+        };
+        let specialist_bonus = if spell_level >= 1 { 1 } else { 0 };
+        let int_bonus =
+            ability_bonus_spells(ability_modifiers.intelligence, i16::from(spell_level));
+        let total_slots = base_count + specialist_bonus + int_bonus;
+        let consumed: i16 = prepared
+            .iter()
+            .filter_map(|id| parse_wizard_spellbook_spell_id(id))
+            .filter(|(_, l)| *l == spell_level)
+            .map(|(school, _)| wizard_opposed_school_slot_cost(school))
+            .sum();
+        if consumed > total_slots {
+            unmet.push(format!(
+                "spell level {spell_level} over-prepared: {consumed} slots consumed \
+                 (opposed-school spells cost 2 each) but only {total_slots} available (base \
+                 {base_count} + specialist bonus {specialist_bonus} + Intelligence bonus \
+                 {int_bonus})"
+            ));
+        }
+    }
+
+    unmet
+}
+
+/// Ground the real prepared-spellbook / daily-preparation state once
+/// `unmet_wizard_spellbook_conditions` reports an empty unmet list: the
+/// recorded spellbook contents, the daily preparation selection, and the
+/// base/Intelligence-bonus/total spells-per-day counts per accessible spell
+/// level (mirroring the Paladin partial-caster base/bonus/total precedent
+/// already grounded elsewhere in this file).
+fn ground_wizard_prepared_spellbook(
+    input: &CharacterInput,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    let wizard_spells = |mode: AcquisitionMode| {
+        input
+            .chosen
+            .spells_selected
+            .iter()
+            .filter(move |s| s.source_class_id == WIZARD_CLASS_ID && s.acquisition_mode == mode)
+    };
+    let recorded: Vec<&str> = wizard_spells(AcquisitionMode::Known)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+    let prepared: Vec<&str> = wizard_spells(AcquisitionMode::Prepared)
+        .map(|s| s.spell_id.as_str())
+        .collect();
+
+    explanations.push(ComputationExplanation {
+        id: "class_spell.wizard.spellbook_contents".to_owned(),
+        value: recorded.len() as i16,
+        detail: format!(
+            "Wizard level {level} recorded spellbook contents ({} spells, \
+             AcquisitionMode::Known): {}. This grounds which spells are recorded as real, \
+             chosen input; it does not verify against any corpus that a named spell genuinely \
+             exists or genuinely belongs to the school/level its own identifier claims",
+            recorded.len(),
+            recorded.join(", ")
         ),
-        claim_blocking: true,
     });
 
-    // Still blocked (2/2): name the prepared spellbook / spells-prepared /
-    // spell-slot posture burden explicitly. Unchanged by the Scribe Scroll and
-    // specialization-choice groundings: it fabricates no spell math.
-    diagnostics.push(ComputationDiagnostic {
-        id: "class_spell.wizard.prepared_spellbook.unsupported".to_owned(),
-        message:
-            "Wizard remains blocked on its prepared spellbook / spells prepared / spell slot \
-             posture burden: spellbook content, spells prepared per day, spell slots per day, \
-             bonus spell slots from a high Intelligence, and spell save DCs are out of scope for \
-             this level-1 prepared spell baseline and no spell math is fabricated"
-                .to_owned(),
-        claim_blocking: true,
+    explanations.push(ComputationExplanation {
+        id: "class_spell.wizard.daily_preparation".to_owned(),
+        value: prepared.len() as i16,
+        detail: format!(
+            "Wizard level {level} daily preparation selection ({} spells, \
+             AcquisitionMode::Prepared, each already verified recorded in the spellbook above): \
+             {}. This grounds the prepared-vs-known distinction for real: every prepared spell \
+             is drawn from the recorded spellbook, consuming its spell level's slot budget \
+             (opposed-school spells costing 2 slots instead of 1). It computes no spell save DC \
+             and no casting execution",
+            prepared.len(),
+            prepared.join(", ")
+        ),
     });
+
+    let base_spells_per_day = wizard_base_spells_per_day(level);
+    for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
+        let Some(base_count) = base_count else {
+            continue;
+        };
+        let spell_level = spell_level as u8;
+        let specialist_bonus = if spell_level >= 1 { 1 } else { 0 };
+        let int_bonus =
+            ability_bonus_spells(ability_modifiers.intelligence, i16::from(spell_level));
+        let total = base_count + specialist_bonus + int_bonus;
+
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.wizard.base_spells_per_day.spell_level_{spell_level}"),
+            value: *base_count,
+            detail: format!(
+                "Wizard level {level} base spells per day at spell level {spell_level}: \
+                 {base_count}, read directly from the PF1 Core Rulebook Wizard class table's \
+                 spells-per-day row (verified against the raw table rows of both primary \
+                 sources; a literal table lookup, not a derived formula)"
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!(
+                "class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_{spell_level}"
+            ),
+            value: int_bonus,
+            detail: format!(
+                "Wizard level {level} Intelligence bonus spells per day at spell level \
+                 {spell_level}: {int_bonus} from Intelligence modifier \
+                 {} (PF1 Core Rulebook Table: Ability Modifiers and Bonus Spells)",
+                ability_modifiers.intelligence
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: format!("class_spell.wizard.total_spells_per_day.spell_level_{spell_level}"),
+            value: total,
+            detail: format!(
+                "Wizard level {level} total spells per day at spell level {spell_level}: base \
+                 {base_count} + specialist bonus slot {specialist_bonus} (Evocation-only, \
+                 already grounded above as `class_chassis.wizard.specialist_bonus_slot`'s own \
+                 flat count, decomposed here per spell level) + Intelligence bonus {int_bonus} \
+                 = {total}"
+            ),
+        });
+    }
 }
 
 /// The bounded Cleric milestone level this decomposition surface grounds, if any.
@@ -16767,12 +17431,18 @@ fn compute_total_saves(
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> BaseSaves {
-    if supported_fighter_level(input).is_none() {
+    // SD-21 E6.26: widened from a Fighter-only gate to also accept the newly
+    // dispatch-supported Wizard chassis (`has_supported_class_chassis` mirrors
+    // `compute_class_chassis`'s own single-class dispatch set) — the base saves this
+    // function folds ability modifiers into are only genuinely computed, not
+    // fabricated, for those two classes so far.
+    if !has_supported_class_chassis(input) {
         diagnostics.push(ComputationDiagnostic {
             id: "defense.total_save.unsupported".to_owned(),
             message: format!(
                 "total saving throws are only computed from the grounded {FIGHTER_CLASS_ID} \
-                 levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} base saves; chosen class levels {:?} do not \
+                 levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} or {WIZARD_CLASS_ID} levels \
+                 1-{MAX_SUPPORTED_WIZARD_LEVEL} base saves; chosen class levels {:?} do not \
                  provide them, so no total saves were computed",
                 input.chosen.class_levels
             ),
@@ -16919,9 +17589,13 @@ fn unmet_selected_skill_posture_conditions(input: &CharacterInput) -> Vec<String
     let allocations = &input.chosen.skill_allocations;
     let mut unmet = Vec::new();
 
-    if supported_fighter_level(input).is_none() {
+    // SD-21 E6b.1: widened from a Fighter-only gate to the same dispatch-supported
+    // class set `compute_class_chassis` / `compute_total_saves` already recognize
+    // (`has_supported_class_chassis`), mirroring `unmet_combat_posture_conditions`.
+    if !has_supported_class_chassis(input) {
         unmet.push(format!(
-            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} chassis"
+            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} or \
+             {WIZARD_CLASS_ID} levels 1-{MAX_SUPPORTED_WIZARD_LEVEL} chassis"
         ));
     }
 
@@ -17053,9 +17727,17 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
     let chosen = &input.chosen;
     let mut unmet = Vec::new();
 
-    if supported_fighter_level(input).is_none() {
+    // SD-21 E6b.1: widened from a Fighter-only gate to the same dispatch-supported
+    // class set `compute_class_chassis` / `compute_total_saves` already recognize
+    // (`has_supported_class_chassis`) -- the combat baseline math itself (BAB +
+    // STR + Weapon Focus, with Fighter-only Weapon/Armor Training folded in via
+    // the `supported_fighter_level(input).unwrap_or(1)` fallback below, which is
+    // 0 for any non-Fighter class) is not Fighter-specific, only the class-level
+    // recognition gate was.
+    if !has_supported_class_chassis(input) {
         unmet.push(format!(
-            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} chassis"
+            "missing supported {FIGHTER_CLASS_ID} levels 1-{MAX_SUPPORTED_FIGHTER_LEVEL} or \
+             {WIZARD_CLASS_ID} levels 1-{MAX_SUPPORTED_WIZARD_LEVEL} chassis"
         ));
     }
 
@@ -17090,11 +17772,20 @@ fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<String> {
         unmet.push(format!("missing selected feat {WEAPON_FOCUS_FEAT_ID}"));
     }
 
-    let fighter_bonus_selection = choice_selection(input, FIGHTER_BONUS_FEAT_CHOICE_ID);
-    if fighter_bonus_selection != Some(WEAPON_FOCUS_LONGSWORD_SELECTION) {
-        unmet.push(format!(
-            "{FIGHTER_BONUS_FEAT_CHOICE_ID} selection must be {WEAPON_FOCUS_LONGSWORD_SELECTION}, got {fighter_bonus_selection:?}"
-        ));
+    // The Fighter bonus-feat choice mechanism (`choice:fighter_bonus_feat`) is a
+    // Fighter-only class feature (how a Fighter's own 1st-level bonus feat was
+    // granted); it is only required when Fighter is actually the dispatch-supported
+    // class here. A Wizard has no such class feature at all, so it must not be
+    // asked to satisfy a choice mechanism it can never have -- Weapon Focus itself
+    // is still required for every class via the unconditional `selected_feats`
+    // check immediately above.
+    if supported_fighter_level(input).is_some() {
+        let fighter_bonus_selection = choice_selection(input, FIGHTER_BONUS_FEAT_CHOICE_ID);
+        if fighter_bonus_selection != Some(WEAPON_FOCUS_LONGSWORD_SELECTION) {
+            unmet.push(format!(
+                "{FIGHTER_BONUS_FEAT_CHOICE_ID} selection must be {WEAPON_FOCUS_LONGSWORD_SELECTION}, got {fighter_bonus_selection:?}"
+            ));
+        }
     }
 
     unmet

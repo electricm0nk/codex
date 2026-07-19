@@ -1,8 +1,8 @@
 import { assert, assertEqual } from '../../testSupport/asserts';
 import type { FetchLike } from './fetch';
 import {
-  createSd16UpdateControllerDeps,
-  loadSd16MountTimeState,
+  createUpdateControllerDeps,
+  loadMountTimeState,
   restorePreviousVersion,
   type InvokeLike,
 } from './controllerAdapter';
@@ -97,16 +97,23 @@ function makeFetchImpl(stubs: Stub[]): FetchLike {
 }
 
 function emptyMountTimeState() {
-  return loadSd16MountTimeState({
+  return loadMountTimeState({
     invokeImpl: (async () => ({ kind: 'no-pending-update' })) as InvokeLike,
   });
+}
+
+async function sha256Hex(text: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
 }
 
 // ---------- runCheck: success path ----------
 
 async function verifiesRunCheckOnSuccessPopulatesLastCheckHonestly() {
   const mountTimeState = await emptyMountTimeState();
-  const deps = createSd16UpdateControllerDeps(mountTimeState, 'alpha', {
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
     fetchImpl: makeFetchImpl([
       { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
       { url: MANIFEST_URL, status: 200, responded: manifestText() },
@@ -134,7 +141,7 @@ async function verifiesRunCheckOnSuccessPopulatesLastCheckHonestly() {
     'disabledReason must not be the old canned unwired-controller string',
   );
 
-  // Regression: Sd16LastCheckPanel reads lastCheck.eligibilityResult /
+  // Regression: LastCheckPanel reads lastCheck.eligibilityResult /
   // installDisabledReason directly rather than calling the controller — these
   // must be kept in sync by runCheck itself, or the panel shows a stale
   // pre-check placeholder forever after a real, completed check.
@@ -150,11 +157,345 @@ async function verifiesRunCheckOnSuccessPopulatesLastCheckHonestly() {
   );
 }
 
+// ---------- runCheck: release-notes-body fetch (E3.12) ----------
+
+async function verifiesRunCheckFetchesAndVerifiesReleaseNotesOnSuccess() {
+  const body = '## v0.1.0\n\n- Real, verified release notes.\n';
+  const hash = await sha256Hex(body);
+  const notesUrl =
+    'https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/alpha/v0.1.0-abc12345/release-notes.md';
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      {
+        url: MANIFEST_URL,
+        status: 200,
+        responded: manifestText({ release_notes_url: notesUrl, release_notes_hash: hash }),
+      },
+      { url: notesUrl, status: 200, responded: body },
+    ]),
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  assertEqual(
+    deps.lastCheck.releaseNotesStatus,
+    'loaded',
+    'releaseNotesStatus reflects a real, hash-verified fetch',
+  );
+  assert(deps.releaseNotes !== null, 'deps.releaseNotes must be populated after a successful check');
+  assertEqual(deps.releaseNotes?.body, body, 'release notes body preserved verbatim');
+  assertEqual(deps.releaseNotes?.releaseVersion, '0.1.0', 'release notes tagged with the manifest version');
+  assertEqual(
+    deps.controller.releaseNotes()?.body,
+    body,
+    'controller.releaseNotes() must mirror deps.releaseNotes',
+  );
+}
+
+async function verifiesRunCheckLeavesReleaseNotesUnavailableOnHashMismatch() {
+  const notesUrl =
+    'https://raw.githubusercontent.com/electricm0nk/codex/update-index/manifests/alpha/v0.1.0-abc12345/release-notes.md';
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      {
+        url: MANIFEST_URL,
+        status: 200,
+        responded: manifestText({ release_notes_url: notesUrl }), // uses SHA64 fixture hash
+      },
+      { url: notesUrl, status: 200, responded: 'body that does not match the pinned hash' },
+    ]),
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  assertEqual(
+    deps.lastCheck.releaseNotesStatus,
+    'unavailable',
+    'a hash-mismatched body must never be surfaced as loaded',
+  );
+  assertEqual(deps.releaseNotes, null, 'deps.releaseNotes stays null on hash mismatch');
+}
+
+// ---------- computeDecision: real decideEligibility rewiring (E3.14) ----------
+
+async function verifiesEligibleWhenRealLocalProbeIsOlderThanFetchedManifest() {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      {
+        url: MANIFEST_URL,
+        status: 200,
+        responded: manifestText({
+          version: '0.2.0',
+          linux_appimage: { ...VALID_MANIFEST_WIRE.linux_appimage, sha256: 'a'.repeat(64) },
+        }),
+      },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        return {
+          installed: {
+            managedExecutablePath: '/opt/codex/codex.AppImage',
+            installKind: 'app-image',
+            channel: 'alpha',
+            version: '0.1.0',
+            sourceCommit: 'deadbeef',
+            releaseTag: 'alpha/v0.1.0',
+            manifestHash: 'manifest-hash',
+            artifactSha256: 'b'.repeat(64),
+            installedAt: '2026-07-03T00:00:00Z',
+            updateEligible: true,
+            ineligibleReason: null,
+          },
+          isManagedPathWritable: true,
+        };
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+  assertEqual(
+    eligibility,
+    'eligible',
+    'a real, older local AppImage install plus a real, newer fetched manifest must resolve eligible via decideEligibility',
+  );
+  assertEqual(
+    deps.lastCheck.eligibilityResult,
+    'eligible',
+    'lastCheck.eligibilityResult must mirror the controller-computed verdict',
+  );
+}
+
+async function verifiesIneligibleWhenRealLocalProbeReportsDevLocalInstall() {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      { url: MANIFEST_URL, status: 200, responded: manifestText({ version: '0.2.0' }) },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        return {
+          installed: {
+            managedExecutablePath: '/home/dev/codex/target/debug/codex-desktop',
+            installKind: 'dev-local',
+            channel: 'alpha',
+            version: '0.1.0',
+            sourceCommit: 'deadbeef',
+            releaseTag: 'alpha/v0.1.0',
+            manifestHash: 'manifest-hash',
+            artifactSha256: SHA64,
+            installedAt: '2026-07-03T00:00:00Z',
+            updateEligible: false,
+            ineligibleReason: 'dev-local build is not update-eligible',
+          },
+          isManagedPathWritable: true,
+        };
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+  assertEqual(eligibility, 'ineligible', 'a real dev-local local install must resolve ineligible via decideEligibility');
+  const reason = deps.controller.disabledReason(deps.installed, deps.lastCheck);
+  assert((reason ?? '').length > 0, 'a real, non-empty ineligible reason must be surfaced');
+}
+
+async function verifiesUnknownHonestlyWhenNoLocalInstalledStateRecordExists() {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      { url: MANIFEST_URL, status: 200, responded: manifestText() },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        return { installed: null, isManagedPathWritable: false };
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+  assertEqual(eligibility, 'unknown', 'no local installed-state record must stay honestly unknown, never fabricated');
+  const reason = deps.controller.disabledReason(deps.installed, deps.lastCheck);
+  assert(
+    (reason ?? '').includes('installed-state'),
+    `reason must honestly name the missing local record, got: ${reason}`,
+  );
+}
+
+async function verifiesUnknownHonestlyWhenLocalProbeInvokeFails() {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      { url: MANIFEST_URL, status: 200, responded: manifestText() },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        throw new Error('installed-state.json is unreadable: corrupt JSON');
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+  assertEqual(eligibility, 'unknown', 'a failed local probe must stay honestly unknown, never fabricated');
+  const reason = deps.controller.disabledReason(deps.installed, deps.lastCheck);
+  assert(
+    (reason ?? '').includes('corrupt JSON'),
+    `reason must surface the real probe failure verbatim, got: ${reason}`,
+  );
+}
+
+// ---------- E3.15: additional per-probe/per-decision outcome coverage ----------
+
+async function verifiesIneligibleWhenRealLocalProbeReportsUnwritableManagedPath() {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      { url: MANIFEST_URL, status: 200, responded: manifestText({ version: '0.2.0' }) },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        return {
+          installed: {
+            managedExecutablePath: '/opt/codex/codex.AppImage',
+            installKind: 'app-image',
+            channel: 'alpha',
+            version: '0.1.0',
+            sourceCommit: 'deadbeef',
+            releaseTag: 'alpha/v0.1.0',
+            manifestHash: 'manifest-hash',
+            artifactSha256: 'b'.repeat(64),
+            installedAt: '2026-07-03T00:00:00Z',
+            updateEligible: false,
+            ineligibleReason: null,
+          },
+          isManagedPathWritable: false,
+        };
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+  assertEqual(eligibility, 'ineligible', 'an unwritable managed path must resolve ineligible via decideEligibility');
+  const reason = deps.controller.disabledReason(deps.installed, deps.lastCheck);
+  assert((reason ?? '').includes('not writable'), `reason must name the writability gate, got: ${reason}`);
+}
+
+async function verifiesIneligibleWhenRealLocalProbeReportsDebInstall() {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      { url: MANIFEST_URL, status: 200, responded: manifestText({ version: '0.2.0' }) },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        return {
+          installed: {
+            managedExecutablePath: '/usr/bin/codex-desktop',
+            installKind: 'deb',
+            channel: 'alpha',
+            version: '0.1.0',
+            sourceCommit: 'deadbeef',
+            releaseTag: 'alpha/v0.1.0',
+            manifestHash: 'manifest-hash',
+            artifactSha256: SHA64,
+            installedAt: '2026-07-03T00:00:00Z',
+            updateEligible: false,
+            ineligibleReason: 'deb install is not update-eligible via the AppImage self-update path',
+          },
+          isManagedPathWritable: true,
+        };
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+  assertEqual(
+    eligibility,
+    'ineligible',
+    'a deb install (mapped onto the tarball bucket) must resolve ineligible via decideEligibility',
+  );
+}
+
+async function verifiesIneligibleWhenFetchedManifestMatchesAlreadyInstalledVersion() {
+  const mountTimeState = await emptyMountTimeState();
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      {
+        url: MANIFEST_URL,
+        status: 200,
+        responded: manifestText({
+          version: '0.1.0',
+          linux_appimage: { ...VALID_MANIFEST_WIRE.linux_appimage, sha256: 'c'.repeat(64) },
+        }),
+      },
+    ]),
+    invokeImpl: (async (cmd: string) => {
+      if (cmd === 'is_install_eligible') {
+        return {
+          installed: {
+            managedExecutablePath: '/opt/codex/codex.AppImage',
+            installKind: 'app-image',
+            channel: 'alpha',
+            version: '0.1.0',
+            sourceCommit: 'deadbeef',
+            releaseTag: 'alpha/v0.1.0',
+            manifestHash: 'manifest-hash',
+            artifactSha256: 'c'.repeat(64),
+            installedAt: '2026-07-03T00:00:00Z',
+            updateEligible: true,
+            ineligibleReason: null,
+          },
+          isManagedPathWritable: true,
+        };
+      }
+      throw new Error(`unexpected invoke ${cmd}`);
+    }) as InvokeLike,
+  });
+
+  await deps.controller.runCheck('alpha');
+
+  const eligibility = deps.controller.computeEligibility(deps.installed, deps.lastCheck);
+  assertEqual(
+    eligibility,
+    'ineligible',
+    'a fetched manifest identical to what is already installed must resolve ineligible, never eligible',
+  );
+}
+
 // ---------- runCheck: index fetch network failure ----------
 
 async function verifiesRunCheckSurfacesRealIndexFetchFailure() {
   const mountTimeState = await emptyMountTimeState();
-  const deps = createSd16UpdateControllerDeps(mountTimeState, 'alpha', {
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
     fetchImpl: makeFetchImpl([{ url: CHANNEL_INDEX_URL, status: 404, responded: 'not found' }]),
   });
 
@@ -179,7 +520,7 @@ async function verifiesRunCheckSurfacesRealIndexFetchFailure() {
 
 async function verifiesRunCheckSurfacesRealSchemaInvalidReason() {
   const mountTimeState = await emptyMountTimeState();
-  const deps = createSd16UpdateControllerDeps(mountTimeState, 'alpha', {
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
     fetchImpl: makeFetchImpl([
       { url: CHANNEL_INDEX_URL, status: 200, responded: channelText({ schema_version: 'v9' }) },
     ]),
@@ -199,7 +540,7 @@ async function verifiesRunCheckSurfacesRealSchemaInvalidReason() {
 
 async function verifiesRunCheckSurfacesRealManifestFetchFailure() {
   const mountTimeState = await emptyMountTimeState();
-  const deps = createSd16UpdateControllerDeps(mountTimeState, 'alpha', {
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
     fetchImpl: makeFetchImpl([
       { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
       { url: MANIFEST_URL, status: 500, responded: 'server error' },
@@ -221,7 +562,7 @@ async function verifiesRunCheckSurfacesRealManifestFetchFailure() {
 
 async function verifiesEligibilityUnknownBeforeAnyCheck() {
   const mountTimeState = await emptyMountTimeState();
-  const deps = createSd16UpdateControllerDeps(mountTimeState, 'alpha');
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha');
   assertEqual(
     deps.controller.computeEligibility(deps.installed, deps.lastCheck),
     'unknown',
@@ -234,7 +575,7 @@ async function verifiesEligibilityUnknownBeforeAnyCheck() {
 // ---------- mount-time verify_relaunch_artifact mapping ----------
 
 async function verifiesNoPendingUpdateMapsToEmptyState() {
-  const state = await loadSd16MountTimeState({
+  const state = await loadMountTimeState({
     invokeImpl: (async () => ({ kind: 'no-pending-update' })) as InvokeLike,
   });
   assertEqual(state.installed.version, 'unknown', 'no installed record yet');
@@ -243,7 +584,7 @@ async function verifiesNoPendingUpdateMapsToEmptyState() {
 }
 
 async function verifiesVerificationFailedOffersRestoreHonestly() {
-  const state = await loadSd16MountTimeState({
+  const state = await loadMountTimeState({
     invokeImpl: (async () => ({
       kind: 'verification-failed',
       expected: SHA64,
@@ -260,7 +601,7 @@ async function verifiesVerificationFailedOffersRestoreHonestly() {
 }
 
 async function verifiesPromotedMapsKnownFieldsOnlyWithoutFabricating() {
-  const state = await loadSd16MountTimeState({
+  const state = await loadMountTimeState({
     invokeImpl: (async () => ({
       kind: 'promoted',
       installedStatePath: '/home/ubuntu/.config/codex/update/installed-state.json',
@@ -315,9 +656,18 @@ async function verifiesRestorePreviousVersionSurfacesFailureHonestly() {
 
 async function main() {
   await verifiesRunCheckOnSuccessPopulatesLastCheckHonestly();
+  await verifiesRunCheckFetchesAndVerifiesReleaseNotesOnSuccess();
+  await verifiesRunCheckLeavesReleaseNotesUnavailableOnHashMismatch();
   await verifiesRunCheckSurfacesRealIndexFetchFailure();
   await verifiesRunCheckSurfacesRealSchemaInvalidReason();
   await verifiesRunCheckSurfacesRealManifestFetchFailure();
+  await verifiesEligibleWhenRealLocalProbeIsOlderThanFetchedManifest();
+  await verifiesIneligibleWhenRealLocalProbeReportsDevLocalInstall();
+  await verifiesUnknownHonestlyWhenNoLocalInstalledStateRecordExists();
+  await verifiesUnknownHonestlyWhenLocalProbeInvokeFails();
+  await verifiesIneligibleWhenRealLocalProbeReportsUnwritableManagedPath();
+  await verifiesIneligibleWhenRealLocalProbeReportsDebInstall();
+  await verifiesIneligibleWhenFetchedManifestMatchesAlreadyInstalledVersion();
   await verifiesEligibilityUnknownBeforeAnyCheck();
   await verifiesNoPendingUpdateMapsToEmptyState();
   await verifiesVerificationFailedOffersRestoreHonestly();

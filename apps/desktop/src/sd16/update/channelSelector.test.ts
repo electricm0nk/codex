@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Sd16ChannelSelector } from './ChannelSelector';
-import { SD16_UPDATE_CHANNEL_OPTIONS } from './updateModel';
+import { ChannelSelector } from './ChannelSelector';
+import { UPDATE_CHANNEL_OPTIONS } from './updateModel';
 import { assert, assertEqual } from '../../testSupport/asserts';
 
 function render(props: {
@@ -9,7 +9,7 @@ function render(props: {
   disabled?: boolean;
 }): string {
   return renderToStaticMarkup(
-    Sd16ChannelSelector({
+    ChannelSelector({
       selected: props.selected,
       onChange: props.onChange ?? (() => undefined),
       disabled: props.disabled ?? false,
@@ -55,8 +55,8 @@ function testDefaultOptionsRenderInPinnedOrder() {
   );
   assertEqual(
     optionSignatures.join(','),
-    SD16_UPDATE_CHANNEL_OPTIONS.map((c) => `${c}:${c}`).join(','),
-    'AV-UI-1: rendered order matches the pinned SD16_UPDATE_CHANNEL_OPTIONS array',
+    UPDATE_CHANNEL_OPTIONS.map((c) => `${c}:${c}`).join(','),
+    'AV-UI-1: rendered order matches the pinned UPDATE_CHANNEL_OPTIONS array',
   );
 }
 

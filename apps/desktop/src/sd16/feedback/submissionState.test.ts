@@ -1,5 +1,5 @@
 /**
- * AV-PAY-5 — the shell must never claim submission without proof.
+ * The shell must never claim submission without proof.
  *
  * Self-executing tsx test (auto-discovered by scripts/run-tests.mjs). Uses the
  * shared testSupport/asserts helpers (the repo idiom; node builtins are not in
@@ -41,7 +41,7 @@ function assertStateEqual(actual: SubmissionState, expected: SubmissionState, me
   );
 }
 
-// AV-PAY-5 (positive): idle → opening → awaiting-issue-url → confirmed, the
+// Positive case: idle → opening → awaiting-issue-url → confirmed, the
 // ONLY path that reaches confirmed, driven by BROWSER_OPENED with a real URL.
 function happyPathReachesConfirmedViaBrowserOpened() {
   let s: SubmissionState = { kind: 'idle' };
@@ -53,7 +53,7 @@ function happyPathReachesConfirmedViaBrowserOpened() {
   assertStateEqual(s, { kind: 'confirmed', url: CONFIRMED_URL }, 'BROWSER_OPENED from awaiting');
 }
 
-// AV-PAY-5 (negative): from awaiting-issue-url, no event other than a
+// Negative case: from awaiting-issue-url, no event other than a
 // non-empty BROWSER_OPENED may reach confirmed.
 function noPathToConfirmedWithoutBrowserOpened() {
   let s: SubmissionState = { kind: 'idle' };
@@ -74,7 +74,7 @@ function noPathToConfirmedWithoutBrowserOpened() {
   }
 }
 
-// AV-PAY-5 (negative): an empty URL is not proof — it lands in failed(empty-url).
+// Negative case: an empty URL is not proof — it lands in failed(empty-url).
 function browserOpenedWithEmptyUrlLandsInFailed() {
   const s = reduceSubmissionState(
     { kind: 'awaiting-issue-url', title: 'x' },
@@ -83,7 +83,7 @@ function browserOpenedWithEmptyUrlLandsInFailed() {
   assertStateEqual(s, { kind: 'failed', reason: 'empty-url' }, 'empty-url BROWSER_OPENED');
 }
 
-// AV-PAY-5 (negative): a browser failure from opening lands in failed.
+// Negative case: a browser failure from opening lands in failed.
 function browserFailedFromOpeningLandsInFailed() {
   const s = reduceSubmissionState(
     { kind: 'opening', title: 'x' },
@@ -92,7 +92,7 @@ function browserFailedFromOpeningLandsInFailed() {
   assertStateEqual(s, { kind: 'failed', reason: 'os-shell-error' }, 'BROWSER_FAILED from opening');
 }
 
-// AV-PAY-5 (negative): a browser failure from awaiting lands in failed.
+// Negative case: a browser failure from awaiting lands in failed.
 function browserFailedFromAwaitingLandsInFailed() {
   const s = reduceSubmissionState(
     { kind: 'awaiting-issue-url', title: 'x' },
@@ -101,7 +101,7 @@ function browserFailedFromAwaitingLandsInFailed() {
   assertStateEqual(s, { kind: 'failed', reason: 'os-shell-error' }, 'BROWSER_FAILED from awaiting');
 }
 
-// AV-PAY-5 (positive): RESET from any state returns the reducer to idle.
+// Positive case: RESET from any state returns the reducer to idle.
 function resetFromAnyStateReturnsToIdle() {
   const states: SubmissionState[] = [
     { kind: 'idle' },
@@ -119,7 +119,7 @@ function resetFromAnyStateReturnsToIdle() {
   }
 }
 
-// AV-PAY-5 (negative): the submit gate is false on every non-confirmed state
+// Negative case: the submit gate is false on every non-confirmed state
 // AND on confirmed carrying an empty URL.
 function canClaimSubmittedIsFalseOnEveryNonClaimableState() {
   const falseStates: SubmissionState[] = [
@@ -134,7 +134,7 @@ function canClaimSubmittedIsFalseOnEveryNonClaimableState() {
   }
 }
 
-// AV-PAY-5 (positive): the submit gate is true ONLY on confirmed(non-empty url).
+// Positive case: the submit gate is true ONLY on confirmed(non-empty url).
 function canClaimSubmittedIsTrueOnlyOnConfirmedWithNonEmptyUrl() {
   assertEqual(
     canClaimSubmitted({ kind: 'confirmed', url: CONFIRMED_URL }),

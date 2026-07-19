@@ -1,5 +1,5 @@
 /**
- * SD-16-E6 shared update-UI model.
+ * Shared update-UI model.
  *
  * This module is the contract surface consumed by the F3c shell-update-UI
  * slice. It declares the type shapes the UI renders against, plus the
@@ -7,8 +7,8 @@
  * fetch/index parser and F3b eligibility/diagnostics rules) have not yet
  * landed on `origin/develop`.
  *
- * The F1 closure
- * (`programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/artifacts/SD16-E6-execution-readiness-closure-2026-07-03.md`)
+ * The F1 closure (see the execution-readiness closure record in
+ * `programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/`)
  * places F3a (fetch + validate) and F3b (eligibility + diagnostics model)
  * as sibling slices that F3c wires into the shell. F3c is therefore the
  * last of the three to land on `develop`; the UI must be reviewable on
@@ -20,7 +20,7 @@
  *      fields, eight last_check fields, five pending/rollback fields) are
  *      exact. AV-* ids in the canonical map enforce them.
  *   2. **Lazy runtime.** Runtime values cross the slice boundary through
- *      `Sd16UpdateController`, an opaque controller object F3a and F3b
+ *      `UpdateController`, an opaque controller object F3a and F3b
  *      will produce and F3c will receive. The UI never reaches into a
  *      fetcher directly; the controller is the seam.
  *   3. **Deterministic defaults.** Until the controller is wired by the
@@ -41,55 +41,55 @@ import type { CSSProperties } from 'react';
  * reviewer's eye: the order is the **release-promotion order**, not the
  * release-stability order.
  */
-export const SD16_UPDATE_CHANNEL_OPTIONS = ['alpha', 'beta', 'stable'] as const;
+export const UPDATE_CHANNEL_OPTIONS = ['alpha', 'beta', 'stable'] as const;
 
-export type Sd16UpdateChannelLabel = (typeof SD16_UPDATE_CHANNEL_OPTIONS)[number];
+export type UpdateChannelLabel = (typeof UPDATE_CHANNEL_OPTIONS)[number];
 
 /**
  * Eligibility verdict surfaced by F3b's rules engine. The UI must treat
  * anything that is not `eligible` as Install-disabled.
  */
-export type Sd16EligibilityResult = 'eligible' | 'ineligible' | 'unknown';
+export type EligibilityResult = 'eligible' | 'ineligible' | 'unknown';
 
 /**
  * Categorical install provenance reported by the shell runtime. The
  * eligibility table from the F1 closure matches on these values.
  */
-export type Sd16InstallKind =
+export type InstallKind =
   | 'appimage'
   | 'tarball'
   | 'dev'
   | 'unknown';
 
-export interface Sd16InstalledState {
-  channel: Sd16UpdateChannelLabel;
+export interface InstalledState {
+  channel: UpdateChannelLabel;
   version: string;
   sourceCommit: string | null;
   artifactSha256: string | null;
-  installKind: Sd16InstallKind;
+  installKind: InstallKind;
   managedExecutablePath: string | null;
   updateEligible: boolean;
   ineligibleReason: string | null;
 }
 
-export type Sd16LastCheckFetchStatus =
+export type LastCheckFetchStatus =
   | 'not-loaded'
   | 'in-progress'
   | 'ok'
   | 'failed';
 
-export interface Sd16LastCheckState {
-  selectedChannel: Sd16UpdateChannelLabel;
+export interface LastCheckState {
+  selectedChannel: UpdateChannelLabel;
   indexUrl: string;
-  indexStatus: Sd16LastCheckFetchStatus;
-  manifestStatus: Sd16LastCheckFetchStatus;
+  indexStatus: LastCheckFetchStatus;
+  manifestStatus: LastCheckFetchStatus;
   releaseVersion: string | null;
   releaseNotesStatus: 'not-loaded' | 'loaded' | 'unavailable';
-  eligibilityResult: Sd16EligibilityResult;
+  eligibilityResult: EligibilityResult;
   installDisabledReason: string | null;
 }
 
-export interface Sd16PendingRollbackState {
+export interface PendingRollbackState {
   pendingUpdateState: 'idle' | 'pending-relaunch' | 'unknown';
   previousVersionAvailable: boolean;
   rollbackState: 'none' | 'available' | 'unknown';
@@ -105,7 +105,7 @@ export interface Sd16PendingRollbackState {
  * not feature-rich. If `body` is null the UI surfaces an explicit
  * "no release notes available" placeholder rather than an empty pane.
  */
-export interface Sd16ReleaseNotes {
+export interface ReleaseNotes {
   releaseVersion: string;
   body: string | null;
 }
@@ -119,29 +119,29 @@ export interface Sd16ReleaseNotes {
  * Tests and downstream integration both pass their own implementation
  * through this interface. The UI never reaches past this boundary.
  */
-export interface Sd16UpdateController {
+export interface UpdateController {
   /** Run a bounded Check against the selected channel. */
-  runCheck(channel: Sd16UpdateChannelLabel): Promise<void>;
+  runCheck(channel: UpdateChannelLabel): Promise<void>;
   /** Compute current eligibility verdict for the selected channel. */
   computeEligibility(
-    installed: Sd16InstalledState,
-    lastCheck: Sd16LastCheckState,
-  ): Sd16EligibilityResult;
+    installed: InstalledState,
+    lastCheck: LastCheckState,
+  ): EligibilityResult;
   /** The human-readable disabled reason pinned by F3b's decision table. */
   disabledReason(
-    installed: Sd16InstalledState,
-    lastCheck: Sd16LastCheckState,
+    installed: InstalledState,
+    lastCheck: LastCheckState,
   ): string | null;
   /** Resolved release notes after a successful check, or null. */
-  releaseNotes(): Sd16ReleaseNotes | null;
+  releaseNotes(): ReleaseNotes | null;
 }
 
-export interface Sd16UpdateControllerDeps {
-  installed: Sd16InstalledState;
-  lastCheck: Sd16LastCheckState;
-  pendingRollback: Sd16PendingRollbackState;
-  releaseNotes: Sd16ReleaseNotes | null;
-  controller: Sd16UpdateController;
+export interface UpdateControllerDeps {
+  installed: InstalledState;
+  lastCheck: LastCheckState;
+  pendingRollback: PendingRollbackState;
+  releaseNotes: ReleaseNotes | null;
+  controller: UpdateController;
 }
 
 /**
@@ -152,40 +152,40 @@ export interface Sd16UpdateControllerDeps {
  * reason so AV-UI-5 always passes and the Install button stays
  * disabled for honest reasons rather than fabricated eligibility.
  */
-export const SD16_UNWIRED_CONTROLLER: Sd16UpdateController = {
-  async runCheck(_channel: Sd16UpdateChannelLabel): Promise<void> {
+export const UNWIRED_CONTROLLER: UpdateController = {
+  async runCheck(_channel: UpdateChannelLabel): Promise<void> {
     return;
   },
   computeEligibility(
-    _installed: Sd16InstalledState,
-    _lastCheck: Sd16LastCheckState,
-  ): Sd16EligibilityResult {
+    _installed: InstalledState,
+    _lastCheck: LastCheckState,
+  ): EligibilityResult {
     return 'unknown';
   },
   disabledReason(
-    _installed: Sd16InstalledState,
-    _lastCheck: Sd16LastCheckState,
+    _installed: InstalledState,
+    _lastCheck: LastCheckState,
   ): string | null {
     return 'update controller not wired (F3a/F3b pending)';
   },
-  releaseNotes(): Sd16ReleaseNotes | null {
+  releaseNotes(): ReleaseNotes | null {
     return null;
   },
 };
 
-export function buildUnwiredUpdateDeps(): Sd16UpdateControllerDeps {
+export function buildUnwiredUpdateDeps(): UpdateControllerDeps {
   return {
     installed: emptyInstalledState(),
     lastCheck: emptyLastCheckState(),
     pendingRollback: emptyPendingRollbackState(),
     releaseNotes: null,
-    controller: SD16_UNWIRED_CONTROLLER,
+    controller: UNWIRED_CONTROLLER,
   };
 }
 
 export function emptyInstalledState(
-  channel: Sd16UpdateChannelLabel = 'alpha',
-): Sd16InstalledState {
+  channel: UpdateChannelLabel = 'alpha',
+): InstalledState {
   return {
     channel,
     version: 'unknown',
@@ -199,8 +199,8 @@ export function emptyInstalledState(
 }
 
 export function emptyLastCheckState(
-  channel: Sd16UpdateChannelLabel = 'alpha',
-): Sd16LastCheckState {
+  channel: UpdateChannelLabel = 'alpha',
+): LastCheckState {
   return {
     selectedChannel: channel,
     indexUrl: '',
@@ -213,7 +213,7 @@ export function emptyLastCheckState(
   };
 }
 
-export function emptyPendingRollbackState(): Sd16PendingRollbackState {
+export function emptyPendingRollbackState(): PendingRollbackState {
   return {
     pendingUpdateState: 'unknown',
     previousVersionAvailable: false,
@@ -228,7 +228,7 @@ export function emptyPendingRollbackState(): Sd16PendingRollbackState {
  * reviewable without pulling in a CSS-in-JS dependency this slice is
  * forbidden from introducing.
  */
-export const SD16_UI_CONTAINER_STYLE: CSSProperties = {
+export const UI_CONTAINER_STYLE: CSSProperties = {
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif',
   fontSize: '14px',
@@ -239,7 +239,7 @@ export const SD16_UI_CONTAINER_STYLE: CSSProperties = {
   padding: '16px',
 };
 
-export const SD16_UI_PANEL_STYLE: CSSProperties = {
+export const UI_PANEL_STYLE: CSSProperties = {
   border: '1px solid #d0d7de',
   borderRadius: '6px',
   padding: '12px',
@@ -247,7 +247,7 @@ export const SD16_UI_PANEL_STYLE: CSSProperties = {
   backgroundColor: '#ffffff',
 };
 
-export const SD16_UI_PANEL_TITLE_STYLE: CSSProperties = {
+export const UI_PANEL_TITLE_STYLE: CSSProperties = {
   fontSize: '13px',
   fontWeight: 600,
   textTransform: 'uppercase',
@@ -256,14 +256,14 @@ export const SD16_UI_PANEL_TITLE_STYLE: CSSProperties = {
   margin: '0 0 8px 0',
 };
 
-export const SD16_UI_FIELD_LABEL_STYLE: CSSProperties = {
+export const UI_FIELD_LABEL_STYLE: CSSProperties = {
   display: 'inline-block',
   width: '180px',
   color: '#57606a',
   fontVariantNumeric: 'tabular-nums',
 };
 
-export const SD16_UI_BADGE_DISABLED_STYLE: CSSProperties = {
+export const UI_BADGE_DISABLED_STYLE: CSSProperties = {
   display: 'inline-block',
   padding: '2px 8px',
   borderRadius: '999px',
@@ -275,7 +275,7 @@ export const SD16_UI_BADGE_DISABLED_STYLE: CSSProperties = {
   marginLeft: '8px',
 };
 
-export const SD16_UI_BUTTON_BASE_STYLE: CSSProperties = {
+export const UI_BUTTON_BASE_STYLE: CSSProperties = {
   padding: '6px 14px',
   borderRadius: '6px',
   fontSize: '14px',
@@ -284,22 +284,22 @@ export const SD16_UI_BUTTON_BASE_STYLE: CSSProperties = {
   border: '1px solid #1f2328',
 };
 
-export const SD16_UI_BUTTON_DISABLED_STYLE: CSSProperties = {
-  ...SD16_UI_BUTTON_BASE_STYLE,
+export const UI_BUTTON_DISABLED_STYLE: CSSProperties = {
+  ...UI_BUTTON_BASE_STYLE,
   backgroundColor: '#eaeef2',
   color: '#57606a',
   border: '1px solid #d0d7de',
   cursor: 'not-allowed',
 };
 
-export const SD16_UI_BUTTON_ENABLED_STYLE: CSSProperties = {
-  ...SD16_UI_BUTTON_BASE_STYLE,
+export const UI_BUTTON_ENABLED_STYLE: CSSProperties = {
+  ...UI_BUTTON_BASE_STYLE,
   backgroundColor: '#1f883d',
   color: '#ffffff',
   border: '1px solid #1a7f37',
 };
 
-export const SD16_UI_NOTES_BLOCK_STYLE: CSSProperties = {
+export const UI_NOTES_BLOCK_STYLE: CSSProperties = {
   whiteSpace: 'pre-wrap',
   fontFamily:
     'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',

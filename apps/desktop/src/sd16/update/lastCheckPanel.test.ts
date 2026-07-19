@@ -1,10 +1,10 @@
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Sd16LastCheckPanel, LAST_CHECK_PANEL_ID } from './lastCheckPanel';
+import { LastCheckPanel, LAST_CHECK_PANEL_ID } from './lastCheckPanel';
 import {
   buildUnwiredUpdateDeps,
   emptyLastCheckState,
-  type Sd16UpdateControllerDeps,
-  type Sd16LastCheckState,
+  type UpdateControllerDeps,
+  type LastCheckState,
 } from './updateModel';
 import { assert, assertEqual } from '../../testSupport/asserts';
 
@@ -14,8 +14,8 @@ function assertContains(actual: string, needle: string, message: string) {
   }
 }
 
-function render(deps: Sd16UpdateControllerDeps): string {
-  return renderToStaticMarkup(Sd16LastCheckPanel({ deps }));
+function render(deps: UpdateControllerDeps): string {
+  return renderToStaticMarkup(LastCheckPanel({ deps }));
 }
 
 function testPanelRendersWithCanonicalId() {
@@ -49,7 +49,7 @@ function testAllEightLastCheckFieldsExposed() {
 }
 
 function testFieldValuesReflectSuppliedState() {
-  const lastCheck: Sd16LastCheckState = {
+  const lastCheck: LastCheckState = {
     ...emptyLastCheckState(),
     selectedChannel: 'beta',
     indexUrl:
@@ -61,7 +61,7 @@ function testFieldValuesReflectSuppliedState() {
     eligibilityResult: 'ineligible',
     installDisabledReason: 'installed version is at or above manifest version',
   };
-  const deps: Sd16UpdateControllerDeps = {
+  const deps: UpdateControllerDeps = {
     ...buildUnwiredUpdateDeps(),
     lastCheck,
   };

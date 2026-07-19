@@ -1,8 +1,8 @@
 /**
- * SD-16 F4 — browser-handoff wiring for defect/enhancement submission.
+ * Browser-handoff wiring for defect/enhancement submission.
  *
- * Drives the AV-PAY-5 submission reducer against the real Rust boundary:
- * the `sd16_browser_handoff` Tauri command builds + re-validates the
+ * Drives the defect-submission reducer against the real Rust boundary:
+ * the `handoff_defect_report_to_browser` Tauri command builds + re-validates the
  * prefilled GitHub "new issue" URL and performs the OS-level browser open
  * (tauri-plugin-opener). This module owns the event choreography the
  * reducer's contract demands:
@@ -111,7 +111,7 @@ export async function runBrowserHandoff(
 
   let response: IssueUrlResponseWire;
   try {
-    response = (await invokeImpl('sd16_browser_handoff', {
+    response = (await invokeImpl('handoff_defect_report_to_browser', {
       req: {
         owner: GITHUB_ISSUE_OWNER,
         repo: GITHUB_ISSUE_REPO,

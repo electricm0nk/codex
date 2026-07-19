@@ -1,4 +1,4 @@
-// SD16-E8-F3 — controlledDefectPayload tests.
+// controlledDefectPayload tests.
 //
 // Covers positive fixture (every required field present) and negative
 // fixtures (each forbidden token class is rejected; missing required

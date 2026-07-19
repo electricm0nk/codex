@@ -1,6 +1,6 @@
 import { fetchChannelIndex, fetchUpdateManifest } from '../sd16/update/fetch';
 import type {
-  Sd16UpdateManifestFile,
+  UpdateManifestFile,
   FetchFailure,
 } from '../sd16/update/fetch';
 import { compareVersions } from '../sd16/update/eligibility';
@@ -90,7 +90,7 @@ function renderFetchFailure(failure: FetchFailure): string {
 }
 
 function translateManifest(
-  manifest: Sd16UpdateManifestFile,
+  manifest: UpdateManifestFile,
   request: Sd11UpdateActionRequest
 ): Sd11UpdateManifestView {
   // Map the canonical schema-valid update manifest into the consumer-side

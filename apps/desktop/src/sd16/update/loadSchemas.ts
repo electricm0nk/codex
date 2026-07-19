@@ -1,4 +1,4 @@
-// SD16-E3-F3b-BACKFILL — schema loader.
+// Schema loader.
 //
 // Loads the two JSON Schema documents authored by the F3a slice:
 //   - `schemas/update/channel-index.schema.json`

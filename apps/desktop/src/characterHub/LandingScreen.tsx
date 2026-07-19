@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import type { CampaignManagerAccessGate } from '../campaign/campaignManagerAccessGate';
 
 /**
  * Rule-set landing screen (Pathbuilder-style): a rule-set selector followed by
@@ -249,7 +250,7 @@ export function LandingScreen(props: {
   onBrowseClasses: () => void;
   onBrowseRaces: () => void;
   onCampaignManager: () => void;
-  campaignManagerEnabled: boolean;
+  campaignManagerGate: CampaignManagerAccessGate;
   onDmToolkit: () => void;
 }) {
   const active = RULE_SETS.find((rs) => rs.id === props.selectedRuleSet) ?? RULE_SETS[0];
@@ -273,8 +274,8 @@ export function LandingScreen(props: {
         title={'Campaign\nManager'}
         art={CAMPAIGN_MANAGER_ART}
         onClick={props.onCampaignManager}
-        disabled={!props.campaignManagerEnabled}
-        disabledHint="Complete Google Drive setup under ⚙ Settings to enable"
+        disabled={!props.campaignManagerGate.enabled}
+        disabledHint={props.campaignManagerGate.disabledHint}
       />
       <ActionBanner title={'DM\nToolkit'} art={DM_TOOLKIT_ART} onClick={props.onDmToolkit} />
 

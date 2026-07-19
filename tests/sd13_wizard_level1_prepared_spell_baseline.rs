@@ -156,19 +156,27 @@ fn wizard_level1_leaves_direct_prepared_spell_baseline_recognition_evidence() {
         recognition.detail
     );
 
-    // It is recognition only: it must carry no fabricated mechanical value (+0) and must
-    // not fabricate a Fighter-style computed chassis.
+    // It is recognition only: it must carry no fabricated mechanical value (+0).
     assert_eq!(
         recognition.value, 0,
         "wizard prepared spell baseline recognition must carry no fabricated value (+0)"
     );
+    // SUPERSEDED, NOT VIOLATED (SD-21 Epic 6, criterion 26, 2026-07-18): at slice time
+    // `compute_pilot_base_chassis` dispatched only to `compute_fighter_chassis`, so
+    // Wizard's `base_attack_bonus` field and generic `class_chassis.base_attack_bonus`
+    // explanation were fabricated absences, not a real +0. A per-class dispatch
+    // (`compute_class_chassis`) plus a new `compute_wizard_chassis` now compute this
+    // pillar for real from `rules_tables::crb::class_tables::class_tables()`'s
+    // Wizard row; at level 1 the 1/2-BAB formula still floors to the same +0 this
+    // negative control originally pinned, but it is now a genuinely computed value.
     assert_eq!(
         computation.base_attack_bonus, 0,
-        "prepared spell baseline must not fabricate a base attack bonus"
+        "Wizard level 1 base attack bonus (1/2 BAB, classlevel / 2) is genuinely +0 at level 1"
     );
     assert!(
-        !has_explanation(&computation, "class_chassis.base_attack_bonus"),
-        "prepared spell baseline must not surface a supported Fighter base-attack chassis explanation"
+        has_explanation(&computation, "class_chassis.base_attack_bonus"),
+        "wizard is now a dispatch-supported class chassis and must surface the generic \
+         base-attack chassis explanation"
     );
 
     // Ability modifiers remain class-independent and still compute (INT 17 -> +3).

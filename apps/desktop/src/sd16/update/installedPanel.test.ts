@@ -1,11 +1,11 @@
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Sd16InstalledPanel, INSTALLED_PANEL_ID } from './installedPanel';
+import { InstalledPanel, INSTALLED_PANEL_ID } from './installedPanel';
 import {
   buildUnwiredUpdateDeps,
   emptyInstalledState,
-  type Sd16UpdateControllerDeps,
+  type UpdateControllerDeps,
 } from './updateModel';
-import type { Sd16InstallKind } from './updateModel';
+import type { InstallKind } from './updateModel';
 import { assert, assertEqual } from '../../testSupport/asserts';
 
 function assertContains(actual: string, needle: string, message: string) {
@@ -14,8 +14,8 @@ function assertContains(actual: string, needle: string, message: string) {
   }
 }
 
-function render(deps: Sd16UpdateControllerDeps): string {
-  return renderToStaticMarkup(Sd16InstalledPanel({ deps }));
+function render(deps: UpdateControllerDeps): string {
+  return renderToStaticMarkup(InstalledPanel({ deps }));
 }
 
 function testPanelRendersWithCanonicalId() {
@@ -49,7 +49,7 @@ function testAllEightInstalledFieldsExposed() {
 }
 
 function testFieldValuesReflectSuppliedState() {
-  const deps: Sd16UpdateControllerDeps = {
+  const deps: UpdateControllerDeps = {
     ...buildUnwiredUpdateDeps(),
     installed: {
       channel: 'beta',
@@ -57,7 +57,7 @@ function testFieldValuesReflectSuppliedState() {
       sourceCommit: 'abcdef1234567890',
       artifactSha256:
         '0000000000000000000000000000000000000000000000000000000000000000',
-      installKind: 'appimage' as Sd16InstallKind,
+      installKind: 'appimage' as InstallKind,
       managedExecutablePath: '/opt/codex/codex.AppImage',
       updateEligible: true,
       ineligibleReason: null,
@@ -85,7 +85,7 @@ function testFieldValuesReflectSuppliedState() {
 }
 
 function testNullFieldsFallBackToUnknown() {
-  const deps: Sd16UpdateControllerDeps = {
+  const deps: UpdateControllerDeps = {
     ...buildUnwiredUpdateDeps(),
     installed: emptyInstalledState(),
   };

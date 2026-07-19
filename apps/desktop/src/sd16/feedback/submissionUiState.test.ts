@@ -1,5 +1,5 @@
 /**
- * AV-PAY-5 — React-agnostic adapter over the submission reducer state.
+ * React-agnostic adapter over the submission reducer state.
  *
  * Self-executing tsx test (auto-discovered by scripts/run-tests.mjs). Uses the
  * shared testSupport/asserts helpers plus a local structural deep-equal.

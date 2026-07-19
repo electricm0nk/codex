@@ -5,8 +5,8 @@ import type {
 import type { Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot } from '../boundary/loadGe08AuthoringWorkbench';
 import type { PilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
 import type {
-  Sd13SupportStateMatrixSnapshot,
-  Sd13SupportStateRow,
+  SupportStateMatrixSnapshot,
+  SupportStateRow,
 } from '../boundary/loadSd13SupportStateMatrix';
 import type { BackendHealthSnapshot } from '../boundary/loadBackendHealth';
 import {
@@ -40,14 +40,14 @@ export interface Sd11WorkbenchDependencies {
     request: Sd12ReleaseTruthRequest
   ) => Promise<Sd12ReleaseTruthSnapshot>;
   /**
-   * Read-only SD-13 support-state bridge. Optional so SD-11 callers that predate
+   * Read-only support-state bridge. Optional so SD-11 callers that predate
    * this slice remain valid; when absent, the support/debt section reports an
    * explicit unavailable notice instead of fabricating support labels.
    */
-  loadSd13SupportStateMatrix?: () => Promise<Sd13SupportStateMatrixSnapshot>;
+  loadSupportStateMatrix?: () => Promise<SupportStateMatrixSnapshot>;
   /**
    * Rust backend version/commit check. Optional for the same back-compat
-   * reason as `loadSd13SupportStateMatrix`; when absent or it fails, the
+   * reason as `loadSupportStateMatrix`; when absent or it fails, the
    * backend health card reports unreachable rather than fabricating a version.
    */
   loadBackendHealth?: () => Promise<BackendHealthSnapshot>;
@@ -61,9 +61,9 @@ export interface Sd11BackendHealthPresentation {
 }
 
 /**
- * One read-only SD-13 support/debt row projected for tester presentation.
+ * One read-only support/debt row projected for tester presentation.
  *
- * Every field mirrors the SD-13 matrix truth verbatim. `hasDebtNote` is a pure
+ * Every field mirrors the support-state matrix truth verbatim. `hasDebtNote` is a pure
  * convenience flag derived from the presence of a blocker/lossiness note; it does
  * not alter, hide, or promote any state.
  */
@@ -88,7 +88,7 @@ export interface Sd11SupportDebtStateCount {
 }
 
 /**
- * Bounded SD-13 support/debt presentation structure derived from the matrix.
+ * Bounded support/debt presentation structure derived from the matrix.
  *
  * This is intentionally separate from feedback evidence capture and from
  * update/support-tier status. It is read-only truth presentation only.
@@ -104,9 +104,9 @@ export interface Sd11SupportDebtPresentation {
 }
 
 /**
- * One row of the bounded SD13-E7-F13 breadth-claim / evidence-refresh audit.
+ * One row of the bounded breadth-claim / evidence-refresh audit.
  *
- * Every field mirrors the projected SD-13 truth verbatim. `refreshConfirmed` and
+ * Every field mirrors the projected support-state truth verbatim. `refreshConfirmed` and
  * `positiveBreadthClaim` are derived read-only flags over that truth; they never
  * mutate, hide, or promote a row. Grounding and evidence context are preserved so
  * the audit stays subordinate to the support/debt row truth it reads.
@@ -135,7 +135,7 @@ export interface Sd11BreadthClaimFreshnessCount {
 }
 
 /**
- * Bounded SD-13 breadth-claim / evidence-refresh audit derived from the projected
+ * Bounded breadth-claim / evidence-refresh audit derived from the projected
  * matrix. It is intentionally separate from, and subordinate to, the support/debt
  * presentation: it reports whether the current breadth claim surface is
  * refresh-backed or refresh-required, and never promotes an unsupported or
@@ -181,13 +181,13 @@ export interface Sd11TesterWorkbenchSurface {
   explanationRefs: Sd11WorkbenchReference[];
   provenanceRefs: Sd11WorkbenchReference[];
   /**
-   * SD-13 support/debt presentation. Optional in the type so SD-11 surface
+   * Support/debt presentation. Optional in the type so SD-11 surface
    * literals that predate this slice stay valid; the live loader always
    * populates it.
    */
   supportDebt?: Sd11SupportDebtPresentation;
   /**
-   * SD13-E7-F13 breadth-claim / evidence-refresh audit. Optional for the same
+   * Breadth-claim / evidence-refresh audit. Optional for the same
    * back-compat reason; the live loader always populates it. It is subordinate to
    * `supportDebt` and never promotes a row.
    */
@@ -208,7 +208,7 @@ const SUPPORT_DEBT_LEAD =
   'just because the app otherwise looks healthy. This view is read-only: it does not capture evidence, ' +
   'submit issues, or change update behavior.';
 
-function mapSupportDebtRow(row: Sd13SupportStateRow): Sd11SupportDebtRow {
+function mapSupportDebtRow(row: SupportStateRow): Sd11SupportDebtRow {
   return {
     rowId: row.rowId,
     subjectType: row.subjectType,
@@ -248,7 +248,7 @@ function buildSupportDebtStateCounts(rows: Sd11SupportDebtRow[]): Sd11SupportDeb
 }
 
 function buildSupportDebtPresentation(
-  snapshot: Sd13SupportStateMatrixSnapshot
+  snapshot: SupportStateMatrixSnapshot
 ): Sd11SupportDebtPresentation {
   const rows = snapshot.rows.map(mapSupportDebtRow);
   return {
@@ -286,7 +286,7 @@ const BREADTH_CLAIM_AUDIT_LEAD =
 /**
  * Whether a projected freshness token asserts a completed refresh checkpoint.
  *
- * No token in the current SD-13 seed does, so this is `false` today. It is the
+ * No token in the current seed does, so this is `false` today. It is the
  * single place that decision lives, so a later slice that introduces a genuinely
  * refresh-confirmed posture only edits here rather than scattering the rule.
  */
@@ -294,7 +294,7 @@ function isRefreshConfirmedFreshness(_evidenceFreshness: string): boolean {
   return false;
 }
 
-function mapBreadthClaimAuditRow(row: Sd13SupportStateRow): Sd11BreadthClaimAuditRow {
+function mapBreadthClaimAuditRow(row: SupportStateRow): Sd11BreadthClaimAuditRow {
   const refreshConfirmed = isRefreshConfirmedFreshness(row.evidenceFreshness);
   return {
     rowId: row.rowId,
@@ -341,7 +341,7 @@ function buildBreadthClaimFreshnessCounts(
 }
 
 function buildBreadthClaimAudit(
-  snapshot: Sd13SupportStateMatrixSnapshot
+  snapshot: SupportStateMatrixSnapshot
 ): Sd11BreadthClaimAuditPresentation {
   const rows = snapshot.rows.map(mapBreadthClaimAuditRow);
   const refreshBacked = rows.length > 0 && rows.every((row) => row.refreshConfirmed);
@@ -470,7 +470,7 @@ export async function loadSd11TesterWorkbenchSurface(
       },
     };
   });
-  const sd13Promise = loadSd13Presentations(dependencies);
+  const supportStatePromise = loadSupportStatePresentations(dependencies);
   const backendHealthPromise = loadBackendHealthPresentation(dependencies);
 
   try {
@@ -478,7 +478,7 @@ export async function loadSd11TesterWorkbenchSurface(
       dependencies.loadGe08AuthoringWorkbench(DEFAULT_REQUEST),
       releaseTruthPromise,
     ]);
-    return mapGe08Snapshot(context, snapshot, releaseTruth, await sd13Promise, await backendHealthPromise);
+    return mapGe08Snapshot(context, snapshot, releaseTruth, await supportStatePromise, await backendHealthPromise);
   } catch (cause: unknown) {
     const [fallbackSnapshot, releaseTruth] = await Promise.all([
       dependencies.loadPilotShellSnapshot(),
@@ -489,35 +489,35 @@ export async function loadSd11TesterWorkbenchSurface(
       fallbackSnapshot,
       formatError(cause),
       releaseTruth,
-      await sd13Promise,
+      await supportStatePromise,
       await backendHealthPromise
     );
   }
 }
 
 /**
- * The two read-only SD-13 presentations the workbench derives from one snapshot:
- * the existing support/debt truth and the SD13-E7-F13 breadth-claim audit that is
+ * The two read-only presentations the workbench derives from one support-state
+ * snapshot: the existing support/debt truth and the breadth-claim audit that is
  * subordinate to it.
  */
-interface Sd13WorkbenchPresentations {
+interface SupportStateWorkbenchPresentations {
   supportDebt: Sd11SupportDebtPresentation;
   breadthClaimAudit: Sd11BreadthClaimAuditPresentation;
 }
 
 /**
- * Load the SD-13 support/debt presentation and the subordinate breadth-claim audit
+ * Load the support/debt presentation and the subordinate breadth-claim audit
  * from a single read-only snapshot. The dependency is optional so existing SD-11
  * callers that predate this slice keep compiling; when it is absent or fails, both
  * sections render explicit unavailable notices rather than inventing local support
  * or freshness labels. The snapshot is fetched once so both derivations read the
  * exact same projected truth.
  */
-async function loadSd13Presentations(
+async function loadSupportStatePresentations(
   dependencies: Sd11WorkbenchDependencies
-): Promise<Sd13WorkbenchPresentations> {
-  if (!dependencies.loadSd13SupportStateMatrix) {
-    const reason = 'no SD-13 support-state bridge was provided to the workbench';
+): Promise<SupportStateWorkbenchPresentations> {
+  if (!dependencies.loadSupportStateMatrix) {
+    const reason = 'no support-state bridge was provided to the workbench';
     return {
       supportDebt: buildUnavailableSupportDebt(reason),
       breadthClaimAudit: buildUnavailableBreadthClaimAudit(reason),
@@ -525,7 +525,7 @@ async function loadSd13Presentations(
   }
 
   try {
-    const snapshot = await dependencies.loadSd13SupportStateMatrix();
+    const snapshot = await dependencies.loadSupportStateMatrix();
     return {
       supportDebt: buildSupportDebtPresentation(snapshot),
       breadthClaimAudit: buildBreadthClaimAudit(snapshot),
@@ -552,7 +552,7 @@ function mapGe08Snapshot(
   context: Sd11WorkbenchRuntimeContext,
   snapshot: Ge08AuthoringWorkbenchSnapshot,
   releaseTruth: Sd12ReleaseTruthSnapshot,
-  sd13: Sd13WorkbenchPresentations,
+  supportState: SupportStateWorkbenchPresentations,
   backendHealth: Sd11BackendHealthPresentation
 ): Sd11TesterWorkbenchSurface {
   const status = createSd11WorkbenchStatus(context, releaseTruth);
@@ -597,8 +597,8 @@ function mapGe08Snapshot(
     blockedClaims: snapshot.preview.blockedClaims,
     explanationRefs: buildGe08ExplanationRefs(snapshot.preview.explanationRefs),
     provenanceRefs: buildGe08ProvenanceRefs(snapshot.preview.provenanceRefs),
-    supportDebt: sd13.supportDebt,
-    breadthClaimAudit: sd13.breadthClaimAudit,
+    supportDebt: supportState.supportDebt,
+    breadthClaimAudit: supportState.breadthClaimAudit,
     backendHealth,
     notes: [snapshot.note],
     status,
@@ -638,7 +638,7 @@ function mapPilotFallback(
   snapshot: PilotShellSnapshot,
   failure: string,
   releaseTruth: Sd12ReleaseTruthSnapshot,
-  sd13: Sd13WorkbenchPresentations,
+  supportState: SupportStateWorkbenchPresentations,
   backendHealth: Sd11BackendHealthPresentation
 ): Sd11TesterWorkbenchSurface {
   const status = createSd11WorkbenchStatus(context, releaseTruth);
@@ -676,8 +676,8 @@ function mapPilotFallback(
     blockedClaims: [],
     explanationRefs: isPlaceholderData ? [] : buildFallbackExplanationRefs(snapshot.explanationRefs),
     provenanceRefs: [],
-    supportDebt: sd13.supportDebt,
-    breadthClaimAudit: sd13.breadthClaimAudit,
+    supportDebt: supportState.supportDebt,
+    breadthClaimAudit: supportState.breadthClaimAudit,
     backendHealth,
     notes: isPlaceholderData ? [] : [snapshot.note],
     status,

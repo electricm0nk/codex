@@ -14,12 +14,15 @@ mod update;
 
 use serde::Serialize;
 
-use campaign_drive::write_campaign_drive_artifacts;
+use campaign_drive::{
+    drive_delete_campaign, drive_list_campaigns, drive_load_campaign, drive_save_campaign,
+    write_campaign_drive_artifacts,
+};
 use character_hub::{
     create_character, delete_character_portrait, list_saved_characters, load_character_portrait,
     load_saved_character, save_character_portrait,
 };
-use sd13_support_state_matrix::{load_sd13_support_state_matrix_snapshot, Sd13SupportStateMatrixSnapshot};
+use sd13_support_state_matrix::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use sd19_class_catalog::list_class_catalog;
 use sd19_equipment_catalog::list_equipment_catalog;
 use sd19_race_catalog::list_race_catalog;
@@ -72,8 +75,8 @@ fn load_ge08_authoring_workbench_snapshot(
 /// Read-only SD-13 support-state/debt bridge for the SD-11 tester workbench.
 /// Returns the seeded SD-13 matrix truth verbatim; no filtering or promotion.
 #[tauri::command]
-fn load_sd13_support_state_matrix() -> Sd13SupportStateMatrixSnapshot {
-    load_sd13_support_state_matrix_snapshot()
+fn load_support_state_matrix() -> SupportStateMatrixSnapshot {
+    build_support_state_matrix_snapshot()
 }
 
 /// Identifies which build of the Rust backend is actually running. `version`
@@ -110,9 +113,9 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             load_pilot_shell_snapshot,
             load_ge08_authoring_workbench_snapshot,
-            load_sd13_support_state_matrix,
+            load_support_state_matrix,
             load_backend_health,
-            sd16_browser_handoff::sd16_browser_handoff,
+            sd16_browser_handoff::handoff_defect_report_to_browser,
             is_install_eligible,
             perform_install,
             perform_restore_previous,
@@ -124,6 +127,10 @@ fn main() {
             load_character_portrait,
             delete_character_portrait,
             write_campaign_drive_artifacts,
+            drive_list_campaigns,
+            drive_load_campaign,
+            drive_save_campaign,
+            drive_delete_campaign,
             list_equipment_catalog,
             list_spell_catalog,
             list_class_catalog,

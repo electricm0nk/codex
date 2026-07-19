@@ -3,7 +3,7 @@ import { compareVersions, decideEligibility } from './eligibility';
 import type { EligibilityInput } from './eligibility';
 
 /**
- * Exercises the SD16-E6 eligibility decision table verbatim (F1 closure). Each
+ * Exercises the eligibility decision table verbatim (F1 closure). Each
  * row asserts both the `result` and the exact `install_disabled_reason` string,
  * and the ordering guarantee (first match wins) is asserted explicitly.
  */

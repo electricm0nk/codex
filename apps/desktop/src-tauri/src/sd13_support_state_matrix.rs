@@ -27,7 +27,7 @@ use codex::rules_core::support_state_matrix::{
 /// Every field mirrors upstream truth; nothing here is recomputed or promoted.
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Sd13SupportStateRow {
+pub struct SupportStateRowPresentation {
     /// Stable upstream row identity (e.g. `class.fighter.levels_2_10`).
     pub row_id: String,
     /// `race`, `class`, or `interaction`.
@@ -60,9 +60,9 @@ pub struct Sd13SupportStateRow {
 /// The top-level read-only snapshot handed to the desktop boundary.
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Sd13SupportStateMatrixSnapshot {
+pub struct SupportStateMatrixSnapshot {
     /// One row per seeded SD-13 matrix row, in upstream order, unfiltered.
-    pub rows: Vec<Sd13SupportStateRow>,
+    pub rows: Vec<SupportStateRowPresentation>,
     /// Machine identity of the upstream truth surface this snapshot mirrors.
     pub data_source: String,
     /// Human-readable posture note about the read-only nature of this snapshot.
@@ -157,8 +157,8 @@ fn tester_facing_state_label(state: SupportState) -> &'static str {
     }
 }
 
-fn present_row(row: &SupportStateRow) -> Sd13SupportStateRow {
-    Sd13SupportStateRow {
+fn present_row(row: &SupportStateRow) -> SupportStateRowPresentation {
+    SupportStateRowPresentation {
         row_id: row.row_id.to_string(),
         subject_type: subject_type_token(row.subject_type).to_string(),
         subject_id: row.subject_id.to_string(),
@@ -178,11 +178,11 @@ fn present_row(row: &SupportStateRow) -> Sd13SupportStateRow {
 ///
 /// Every seeded row is preserved in order with no filtering, suppression, or
 /// aggregation. This is the single source of truth for the desktop command.
-pub fn load_sd13_support_state_matrix_snapshot() -> Sd13SupportStateMatrixSnapshot {
+pub fn build_support_state_matrix_snapshot() -> SupportStateMatrixSnapshot {
     let matrix = seeded_sd13_e1_f1_current_truth();
     let rows = matrix.rows.iter().map(present_row).collect();
 
-    Sd13SupportStateMatrixSnapshot {
+    SupportStateMatrixSnapshot {
         rows,
         data_source: "rules_core::support_state_matrix::seeded_sd13_e1_f1_current_truth"
             .to_string(),
@@ -196,14 +196,14 @@ pub fn load_sd13_support_state_matrix_snapshot() -> Sd13SupportStateMatrixSnapsh
 mod tests {
     use super::*;
 
-    fn snapshot() -> Sd13SupportStateMatrixSnapshot {
-        load_sd13_support_state_matrix_snapshot()
+    fn snapshot() -> SupportStateMatrixSnapshot {
+        build_support_state_matrix_snapshot()
     }
 
     fn row<'a>(
-        snapshot: &'a Sd13SupportStateMatrixSnapshot,
+        snapshot: &'a SupportStateMatrixSnapshot,
         row_id: &str,
-    ) -> &'a Sd13SupportStateRow {
+    ) -> &'a SupportStateRowPresentation {
         snapshot
             .rows
             .iter()
@@ -270,7 +270,7 @@ mod tests {
         // preserves a non-empty note, so a future regression that reintroduces
         // an unblocked-but-unexplained row is still caught.
         let snapshot = snapshot();
-        let blocked: Vec<&Sd13SupportStateRow> = snapshot
+        let blocked: Vec<&SupportStateRowPresentation> = snapshot
             .rows
             .iter()
             .filter(|r| r.support_state == "blocked")

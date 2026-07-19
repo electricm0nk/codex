@@ -1,12 +1,12 @@
 import type { CSSProperties } from 'react';
 import {
-  SD16_UPDATE_CHANNEL_OPTIONS,
-  type Sd16UpdateChannelLabel,
+  UPDATE_CHANNEL_OPTIONS,
+  type UpdateChannelLabel,
 } from './updateModel';
 
-export interface Sd16ChannelSelectorProps {
-  selected: Sd16UpdateChannelLabel;
-  onChange: (channel: Sd16UpdateChannelLabel) => void;
+export interface ChannelSelectorProps {
+  selected: UpdateChannelLabel;
+  onChange: (channel: UpdateChannelLabel) => void;
   disabled?: boolean;
 }
 
@@ -23,25 +23,25 @@ const SELECT_STYLE: CSSProperties = {
  * be exactly `["alpha","beta","stable"]` in that order — the release
  * promotion order, not the stability order.
  */
-export function Sd16ChannelSelector({
+export function ChannelSelector({
   selected,
   onChange,
   disabled = false,
-}: Sd16ChannelSelectorProps) {
+}: ChannelSelectorProps) {
   return (
-    <label data-testid="sd16-channel-selector-label">
+    <label data-testid="channel-selector-label">
       <span>Channel: </span>
       <select
         id="channel-selector"
-        data-testid="sd16-channel-selector"
+        data-testid="channel-selector"
         value={selected}
         disabled={disabled}
         onChange={(event) =>
-          onChange(event.currentTarget.value as Sd16UpdateChannelLabel)
+          onChange(event.currentTarget.value as UpdateChannelLabel)
         }
         style={SELECT_STYLE}
       >
-        {SD16_UPDATE_CHANNEL_OPTIONS.map((channel) => (
+        {UPDATE_CHANNEL_OPTIONS.map((channel) => (
           <option key={channel} value={channel}>
             {channel}
           </option>

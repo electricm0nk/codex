@@ -1,5 +1,5 @@
 /**
- * SD-16 defect-submission state machine (AV-PAY-5).
+ * Defect-submission state machine for the shell's feedback flow.
  *
  * Pure reducer — no React, no DOM, no IPC. The single load-bearing rule the
  * shell must honour: it may NEVER claim submission without proof. `confirmed`

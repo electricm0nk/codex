@@ -184,7 +184,11 @@ pub struct LoadSavedCharacterResponse {
 #[serde(tag = "kind")]
 pub enum CreateCharacterResponse {
     Saved {
-        summary: CharacterSummaryDto,
+        // Boxed solely to close the `clippy::large_enum_variant` gap against the
+        // `Blocked` variant (SD-21 Epic 4 closure, criterion E4.24) — `Box<T>`
+        // serializes identically to `T` via serde, so the wire shape to the TS
+        // boundary is unchanged.
+        summary: Box<CharacterSummaryDto>,
         snapshot: PilotSnapshotDto,
         corpus_derived: CorpusDerivedDto,
     },
@@ -285,7 +289,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
                 },
             ],
             selected_choices,
-            spells_selected: sd19_demo_spells_selected(),
+            spells_selected: demo_spells_selected(),
         },
         selection_provenance: Vec::new(),
     }
@@ -300,7 +304,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
 /// spells. `source_class_id` is left generic (`"class:demo"`) for the same
 /// reason: no class-appropriateness check consumes this field yet (see
 /// `SpellSelection.source_class_id`'s own doc comment).
-fn sd19_demo_spells_selected() -> Vec<SpellSelection> {
+fn demo_spells_selected() -> Vec<SpellSelection> {
     vec![
         SpellSelection {
             spell_id: "Alarm".to_owned(),
@@ -479,7 +483,7 @@ pub fn create_character(
     SavedCharacterStore::save(&envelope, &root).map_err(|err| err.message)?;
 
     Ok(CreateCharacterResponse::Saved {
-        summary: summarize_envelope(&envelope),
+        summary: Box::new(summarize_envelope(&envelope)),
         snapshot: map_snapshot_dto(snapshot),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
@@ -892,11 +896,23 @@ mod tests {
             ])
         );
 
+        // SD-21 Epic 6 gave Wizard a real compute_wizard_chassis (BAB + saves, via
+        // compute_class_chassis's per-class dispatch), so Wizard no longer trips the
+        // two chassis-wide generic diagnostics (class_chassis.unsupported,
+        // defense.total_save.unsupported) that every other still-unsupported class
+        // does. Epic 6b's E6b.1 cycle then widened compute_combat_baseline and
+        // compute_selected_skill_modifiers to the same has_supported_class_chassis
+        // gate, so those two also no longer trip for Wizard at any input (not just the
+        // Epic 6b reproducer's specific one) -- this request has no chosen spellbook,
+        // so class_spell.wizard.prepared_spellbook.unsupported and
+        // class_feature.wizard.school_powers_and_opposed_school_cost.unsupported
+        // (Epic 6b's E6b.2/E6b.3) correctly remain: Epic 6b's Evocation-school
+        // grounding only clears them for a genuinely populated, in-budget spellbook.
         assert_eq!(
             claim_blocking_diagnostic_ids("race:human", "class:wizard", 1),
-            generic_plus(&[
-                "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported",
-                "class_spell.wizard.prepared_spellbook.unsupported",
+            BTreeSet::from([
+                "class_feature.wizard.school_powers_and_opposed_school_cost.unsupported".to_string(),
+                "class_spell.wizard.prepared_spellbook.unsupported".to_string(),
             ])
         );
 

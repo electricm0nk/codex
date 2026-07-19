@@ -12,6 +12,7 @@ import { ClassCatalogScreen } from '../classCatalog/ClassCatalogScreen';
 import { RaceCatalogScreen } from '../raceCatalog/RaceCatalogScreen';
 import { StubScreen } from './StubScreen';
 import { isGoogleDriveConfigured } from '../settings/googleDrive';
+import { computeCampaignManagerAccessGate } from '../campaign/campaignManagerAccessGate';
 import { CampaignManagerScreen } from '../campaign/CampaignManagerScreen';
 import { CreateCampaignScreen } from '../campaign/CreateCampaignScreen';
 import { EditCampaignScreen } from '../campaign/EditCampaignScreen';
@@ -67,7 +68,7 @@ export function CharacterHubPage() {
         onBrowseClasses={() => setMode('classCatalog')}
         onBrowseRaces={() => setMode('raceCatalog')}
         onCampaignManager={() => setMode('campaign-list')}
-        campaignManagerEnabled={isGoogleDriveConfigured()}
+        campaignManagerGate={computeCampaignManagerAccessGate(isGoogleDriveConfigured())}
         onDmToolkit={() => setMode('dm-toolkit')}
       />
     );

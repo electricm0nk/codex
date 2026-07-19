@@ -28,14 +28,14 @@ import {
   type BrowserHandoffOutcome,
 } from './sd16/feedback/browserHandoff';
 import { CharacterHubPage } from './characterHub/CharacterHubPage';
-import { Sd16UpdateUi } from './sd16/update/Ui';
+import { UpdateUi } from './sd16/update/Ui';
 import {
-  createSd16UpdateControllerDeps,
-  loadSd16MountTimeState,
+  createUpdateControllerDeps,
+  loadMountTimeState,
   restorePreviousVersion,
-  type Sd16MountTimeState,
+  type MountTimeState,
 } from './sd16/update/controllerAdapter';
-import type { Sd16UpdateControllerDeps } from './sd16/update/updateModel';
+import type { UpdateControllerDeps } from './sd16/update/updateModel';
 import { SettingsModal, type SettingsTab } from './settings/SettingsModal';
 import { AppearancePanel } from './settings/AppearancePanel';
 import { GoogleDrivePanel } from './settings/GoogleDrivePanel';
@@ -330,7 +330,7 @@ function BugReportComposer(props: { surface: Sd11TesterWorkbenchSurface }) {
     return composeBugReport({ title, payload });
   }, [props.surface, title, observedBehavior, expectedBehavior, reproductionSteps]);
 
-  // Submittable drafts go through the governed browser handoff (SD-16 F4):
+  // Submittable drafts go through the governed browser handoff (F4):
   // the Rust boundary builds + validates a prefilled GitHub issue URL and
   // opens it in the OS browser. No secret-bearing auth is ever improvised,
   // and no submission is claimed — filing completes in the browser.
@@ -538,7 +538,7 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
     return composeEnhancementRequest({ title, payload });
   }, [props.surface, title, testerGoal, currentFriction, requestedCapability, affectedSurface]);
 
-  // Submittable drafts go through the governed browser handoff (SD-16 F4):
+  // Submittable drafts go through the governed browser handoff (F4):
   // the Rust boundary builds + validates a prefilled GitHub issue URL and
   // opens it in the OS browser. No secret-bearing auth is ever improvised,
   // and no submission is claimed — filing completes in the browser.
@@ -743,18 +743,18 @@ function EnhancementRequestComposer(props: { surface: Sd11TesterWorkbenchSurface
  * state via the real, already-tested `verify_relaunch_artifact` command
  * before rendering, so the page never opens with a stale placeholder state.
  */
-function Sd16UpdateSection() {
+function UpdateSection() {
   const [mounted, setMounted] = useState<{
-    deps: Sd16UpdateControllerDeps;
-    restoreOffer: Sd16MountTimeState['restoreOffer'];
+    deps: UpdateControllerDeps;
+    restoreOffer: MountTimeState['restoreOffer'];
   } | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const refresh = useMemo(
     () => async () => {
-      const mountTimeState = await loadSd16MountTimeState();
+      const mountTimeState = await loadMountTimeState();
       setMounted({
-        deps: createSd16UpdateControllerDeps(mountTimeState),
+        deps: createUpdateControllerDeps(mountTimeState),
         restoreOffer: mountTimeState.restoreOffer,
       });
     },
@@ -781,7 +781,7 @@ function Sd16UpdateSection() {
   }
 
   return (
-    <Sd16UpdateUi
+    <UpdateUi
       initialDeps={mounted.deps}
       restoreOffer={
         mounted.restoreOffer
@@ -1138,7 +1138,7 @@ export default function App() {
         panels={{
           appearance: <AppearancePanel mode={themeMode} onModeChange={setThemeMode} />,
           'google-drive': <GoogleDrivePanel />,
-          update: <Sd16UpdateSection />,
+          update: <UpdateSection />,
           bug: surface ? (
             <BugReportComposer surface={surface} />
           ) : (

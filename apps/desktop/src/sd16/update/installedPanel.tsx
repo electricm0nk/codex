@@ -1,21 +1,21 @@
-import type { Sd16UpdateControllerDeps } from './updateModel';
+import type { UpdateControllerDeps } from './updateModel';
 import {
-  SD16_UI_FIELD_LABEL_STYLE,
-  SD16_UI_PANEL_STYLE,
-  SD16_UI_PANEL_TITLE_STYLE,
+  UI_FIELD_LABEL_STYLE,
+  UI_PANEL_STYLE,
+  UI_PANEL_TITLE_STYLE,
 } from './updateModel';
 
 export const INSTALLED_PANEL_ID = 'installed-panel';
 
-export function Sd16InstalledPanel({ deps }: { deps: Sd16UpdateControllerDeps }) {
+export function InstalledPanel({ deps }: { deps: UpdateControllerDeps }) {
   const { installed } = deps;
   return (
     <section
       id={INSTALLED_PANEL_ID}
-      data-testid="sd16-installed-panel"
-      style={SD16_UI_PANEL_STYLE}
+      data-testid="installed-panel"
+      style={UI_PANEL_STYLE}
     >
-      <h2 style={SD16_UI_PANEL_TITLE_STYLE}>Installed</h2>
+      <h2 style={UI_PANEL_TITLE_STYLE}>Installed</h2>
       <dl style={{ margin: 0, padding: 0 }}>
         {row('Channel', installed.channel)}
         {row('Version', installed.version)}
@@ -37,7 +37,7 @@ function row(label: string, value: string) {
       style={{ display: 'flex', margin: '2px 0' }}
       data-installed-row={label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
     >
-      <dt style={{ ...SD16_UI_FIELD_LABEL_STYLE, fontWeight: 500 }}>{label}</dt>
+      <dt style={{ ...UI_FIELD_LABEL_STYLE, fontWeight: 500 }}>{label}</dt>
       <dd
         style={{
           margin: 0,

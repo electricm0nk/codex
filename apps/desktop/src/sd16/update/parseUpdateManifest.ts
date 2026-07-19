@@ -1,4 +1,4 @@
-// SD16-E3-F3b-BACKFILL — update manifest parser.
+// Update manifest parser.
 //
 // Validates a raw JSON text string against the canonical
 // `update-manifest.schema.json` using the same module-level ajv
@@ -39,7 +39,7 @@ export interface LinuxAppImageArtifact {
   size_bytes: number;
 }
 
-// SD16-F-WINDOWS: parallel to LinuxAppImageArtifact, for the Windows MSI
+// Parallel to LinuxAppImageArtifact, for the Windows MSI
 // the publish-tester-release-windows job produces. Optional because
 // schema 1.0.0 manifests and Linux-only builds do not set it. Same
 // required-key shape as LinuxAppImageArtifact so the discovery path can
@@ -51,7 +51,7 @@ export interface WindowsMsiArtifact {
   size_bytes: number;
 }
 
-// SD16-F-WINDOWS: parallel to LinuxAppImageArtifact + WindowsMsiArtifact,
+// Parallel to LinuxAppImageArtifact + WindowsMsiArtifact,
 // for the macOS DMG the publish-tester-release-macos job produces.
 // Optional and same-shape; optional because schema 1.0.0 manifests and
 // Linux-only / Windows-only builds do not set it. Three-platform

@@ -1,24 +1,31 @@
 /**
- * Character Hub Phase 3 — real `Sd16UpdateController` adapter.
+ * Character Hub Phase 3 — real `UpdateController` adapter.
  *
  * Bridges the sd16/update UI to the parts of the update system that are
- * genuinely real today: `fetch.ts`'s discovery fetch/validate, `eligibility.ts`'s
- * pure decision table, and the two Tauri commands that have real, tested
- * bodies (`verify_relaunch_artifact`, `perform_restore_previous`).
+ * genuinely real today: `fetch.ts`'s discovery fetch/validate,
+ * `eligibility.ts`'s pure decision table, and the Tauri commands that have
+ * real, tested bodies (`verify_relaunch_artifact`, `perform_restore_previous`,
+ * and — as of E3.13/E3.14 — `is_install_eligible`).
  *
- * `is_install_eligible` and `perform_install` remain honest stubs (deferred
- * to a future slice — see the Phase 3 plan), so this module never calls
- * them and never fabricates local install-eligibility truth it cannot
- * verify: whenever a real fetch check succeeds but no trustworthy local
- * installed-state exists, eligibility stays `'unknown'` with an honest
- * reason rather than guessing install-kind, writability, or a version
- * comparison.
+ * `is_install_eligible` reports real local install-state facts (install
+ * kind, version, artifact hash, managed-path writability) without itself
+ * rendering a verdict; this module calls it during `runCheck` and feeds the
+ * result into `decideEligibility`, so a successful fetch check now resolves
+ * to a genuine `eligible`/`ineligible` verdict whenever a local
+ * installed-state record exists, instead of the permanent `'unknown'` this
+ * module used to return. When no local record exists yet (first run, or a
+ * run that never completed `verify_relaunch_artifact`), or the probe itself
+ * fails, eligibility still degrades honestly to `'unknown'` with a reason
+ * naming exactly why — never a fabricated verdict. `perform_install` remains
+ * an honest deferred stub (it needs an HTTP client this crate does not
+ * carry yet), so this module never calls it.
  */
 
 import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from '../../boundary/runtime';
 import {
   fetchChannelIndex,
+  fetchReleaseNotesBody,
   fetchUpdateManifest,
   type FetchLike,
   type FetchResult,
@@ -29,12 +36,12 @@ import {
   emptyInstalledState,
   emptyLastCheckState,
   emptyPendingRollbackState,
-  type Sd16EligibilityResult,
-  type Sd16InstalledState,
-  type Sd16PendingRollbackState,
-  type Sd16UpdateChannelLabel,
-  type Sd16UpdateController,
-  type Sd16UpdateControllerDeps,
+  type EligibilityResult,
+  type InstalledState,
+  type PendingRollbackState,
+  type UpdateChannelLabel,
+  type UpdateController,
+  type UpdateControllerDeps,
 } from './updateModel';
 
 // ---------- Tauri invoke indirection ----------
@@ -58,6 +65,53 @@ async function callInvoke<T>(
     return null;
   }
   return invoke<T>(cmd, args);
+}
+
+// ---------- is_install_eligible probe wire shape + mapping ----------
+
+/**
+ * Wire shape of `is_install_eligible`'s `Ok` response — mirrors Rust's
+ * `InstallEligibilityProbe` (camelCase per the module-wide wire convention).
+ * `installed` is `null` when there is no `installed-state.json` on disk yet;
+ * `decideEligibility` must never be called with a fabricated version/hash
+ * in that case.
+ */
+interface RustInstalledStateWire {
+  managedExecutablePath: string;
+  installKind: 'app-image' | 'deb' | 'dev-local';
+  channel: string;
+  version: string;
+  sourceCommit: string;
+  releaseTag: string;
+  manifestHash: string;
+  artifactSha256: string;
+  installedAt: string;
+  updateEligible: boolean;
+  ineligibleReason: string | null;
+}
+
+interface RustInstallEligibilityProbe {
+  installed: RustInstalledStateWire | null;
+  isManagedPathWritable: boolean;
+}
+
+/**
+ * Maps the Rust `InstallKind` wire enum (kebab-case) onto
+ * `decideEligibility`'s `install_kind` union. `deb` has no direct TS
+ * analogue — it maps onto `'tarball'`, the existing "not self-updatable via
+ * the AppImage path" bucket `decideEligibility` already gates on.
+ */
+function mapRustInstallKind(
+  kind: RustInstalledStateWire['installKind'],
+): EligibilityInput['installedState']['install_kind'] {
+  switch (kind) {
+    case 'app-image':
+      return 'appimage';
+    case 'dev-local':
+      return 'dev';
+    case 'deb':
+      return 'tarball';
+  }
 }
 
 // ---------- fetch-result -> eligibility-input classification ----------
@@ -120,46 +174,76 @@ function emptyFetchOutcomes(): EligibilityInput['fetchOutcomes'] {
   };
 }
 
-const LOCAL_STATE_UNAVAILABLE_REASON =
-  'local installed-state is not available yet — is_install_eligible / perform_install remain deferred; real install-kind, writability, and version comparison cannot be verified';
+const NO_LOCAL_PROBE_YET_REASON =
+  'local install-state probe has not run yet for this check';
+const NO_LOCAL_RECORD_REASON =
+  'no local installed-state record yet — is_install_eligible has nothing to compare the fetched manifest against';
 
 /**
- * Build a real `Sd16UpdateControllerDeps`. `mountTimeState` supplies the
- * `installed`/`pendingRollback` fields (from `loadSd16MountTimeState`); this
+ * Build a real `UpdateControllerDeps`. `mountTimeState` supplies the
+ * `installed`/`pendingRollback` fields (from `loadMountTimeState`); this
  * function owns `lastCheck`/`releaseNotes`/`controller`, whose methods
  * mutate `lastCheck`/`releaseNotes` on the returned object in place — the
  * contract `Ui.tsx` already expects (see its `handleCheck` comment).
  */
-export function createSd16UpdateControllerDeps(
-  mountTimeState: Pick<Sd16MountTimeState, 'installed' | 'pendingRollback'>,
-  defaultChannel: Sd16UpdateChannelLabel = 'alpha',
-  options: { fetchImpl?: FetchLike } = {},
-): Sd16UpdateControllerDeps {
-  const deps: Sd16UpdateControllerDeps = {
+export function createUpdateControllerDeps(
+  mountTimeState: Pick<MountTimeState, 'installed' | 'pendingRollback'>,
+  defaultChannel: UpdateChannelLabel = 'alpha',
+  options: { fetchImpl?: FetchLike; invokeImpl?: InvokeLike } = {},
+): UpdateControllerDeps {
+  const deps: UpdateControllerDeps = {
     installed: mountTimeState.installed,
     lastCheck: emptyLastCheckState(defaultChannel),
     pendingRollback: mountTimeState.pendingRollback,
     releaseNotes: null,
-    controller: undefined as unknown as Sd16UpdateController,
+    controller: undefined as unknown as UpdateController,
   };
 
   let hasRun = false;
-  let checkedChannel: Sd16UpdateChannelLabel | null = null;
+  let checkedChannel: UpdateChannelLabel | null = null;
   let fetchOutcomes = emptyFetchOutcomes();
+  let lastManifest: { version: string; artifactSha256: string } | null = null;
+  let localProbe: RustInstallEligibilityProbe | null = null;
+  let localProbeError: string | null = null;
 
-  function computeDecision(currentChannel: Sd16UpdateChannelLabel): {
-    result: Sd16EligibilityResult;
+  function computeDecision(currentChannel: UpdateChannelLabel): {
+    result: EligibilityResult;
     reason: string;
   } {
     if (!hasRun || checkedChannel !== currentChannel) {
       return { result: 'unknown', reason: 'check has not been run yet for this channel' };
     }
     if (fetchOutcomes.indexStatus === 'ok' && fetchOutcomes.manifestStatus === 'ok') {
-      // The real check succeeded, but nothing in this slice can honestly
-      // resolve local install-kind/writability/version — decideEligibility's
-      // remaining rows all read installedState, which we do not have real
-      // data for, so we must not call it with placeholder values here.
-      return { result: 'unknown', reason: LOCAL_STATE_UNAVAILABLE_REASON };
+      // E3.14: the real check succeeded — resolve the real verdict via
+      // decideEligibility, fed by the real is_install_eligible probe result
+      // `runCheck` already fetched. Every branch below degrades honestly to
+      // 'unknown' rather than fabricating eligible/ineligible when a piece
+      // of real data is missing.
+      if (localProbeError !== null) {
+        return { result: 'unknown', reason: `local install-state probe failed: ${localProbeError}` };
+      }
+      if (localProbe === null) {
+        return { result: 'unknown', reason: NO_LOCAL_PROBE_YET_REASON };
+      }
+      if (localProbe.installed === null) {
+        return { result: 'unknown', reason: NO_LOCAL_RECORD_REASON };
+      }
+      if (!lastManifest) {
+        return { result: 'unknown', reason: NO_LOCAL_PROBE_YET_REASON };
+      }
+      const decision = decideEligibility({
+        selectedChannel: currentChannel,
+        manifest: { version: lastManifest.version, artifact_sha256: lastManifest.artifactSha256 },
+        installedState: {
+          version: localProbe.installed.version,
+          artifact_sha256: localProbe.installed.artifactSha256,
+          install_kind: mapRustInstallKind(localProbe.installed.installKind),
+          managed_executable_path: localProbe.installed.managedExecutablePath,
+          isManagedPathWritable: localProbe.isManagedPathWritable,
+        },
+        fetchOutcomes,
+      });
+      return { result: decision.result, reason: decision.install_disabled_reason ?? 'ineligible' };
     }
     // The fetch itself did not fully succeed — decideEligibility's first
     // four rows resolve this purely from fetchOutcomes, never touching
@@ -180,20 +264,20 @@ export function createSd16UpdateControllerDeps(
   }
 
   /**
-   * `Sd16LastCheckPanel` reads `lastCheck.eligibilityResult`/`installDisabledReason`
+   * `LastCheckPanel` reads `lastCheck.eligibilityResult`/`installDisabledReason`
    * directly (it does not call the controller), so `runCheck` must keep these
    * two fields in sync with the same decision `computeEligibility`/
    * `disabledReason` would return — otherwise the panel shows a stale
    * pre-check placeholder forever after a real check completes.
    */
-  function syncLastCheckEligibility(channel: Sd16UpdateChannelLabel): void {
+  function syncLastCheckEligibility(channel: UpdateChannelLabel): void {
     const decision = computeDecision(channel);
     deps.lastCheck.eligibilityResult = decision.result;
     deps.lastCheck.installDisabledReason = decision.reason;
   }
 
   deps.controller = {
-    async runCheck(channel: Sd16UpdateChannelLabel): Promise<void> {
+    async runCheck(channel: UpdateChannelLabel): Promise<void> {
       deps.lastCheck.selectedChannel = channel;
       deps.lastCheck.indexUrl = `https://raw.githubusercontent.com/electricm0nk/codex/update-index/channels/${channel}.json`;
       deps.lastCheck.indexStatus = 'in-progress';
@@ -201,6 +285,9 @@ export function createSd16UpdateControllerDeps(
       deps.lastCheck.releaseVersion = null;
       deps.lastCheck.releaseNotesStatus = 'not-loaded';
       fetchOutcomes = emptyFetchOutcomes();
+      lastManifest = null;
+      localProbe = null;
+      localProbeError = null;
 
       const indexResult = await fetchChannelIndex(channel, { fetchImpl: options.fetchImpl });
       const indexClass = classifyFetchResult(indexResult);
@@ -233,10 +320,45 @@ export function createSd16UpdateControllerDeps(
 
       if (manifestResult.ok) {
         deps.lastCheck.releaseVersion = manifestResult.value.version;
-        // This slice fetches and validates the manifest but does not fetch
-        // release-notes body content — that is a distinct, not-yet-built
-        // fetch path. Reporting anything but 'unavailable' would imply
-        // notes we never loaded.
+        lastManifest = {
+          version: manifestResult.value.version,
+          artifactSha256: manifestResult.value.linux_appimage.sha256,
+        };
+        // E3.12: the manifest names a release-notes body (`release_notes_url`
+        // + `release_notes_hash`) but does not carry the prose itself — fetch
+        // and hash-verify it now. A fetch/hash failure here must never
+        // fabricate notes; `releaseNotesStatus` stays 'unavailable' and
+        // `deps.releaseNotes` stays null, same as before this slice existed.
+        const notesResult = await fetchReleaseNotesBody(
+          manifestResult.value.release_notes_url,
+          manifestResult.value.release_notes_hash,
+          { fetchImpl: options.fetchImpl },
+        );
+        if (notesResult.ok) {
+          deps.releaseNotes = {
+            releaseVersion: manifestResult.value.version,
+            body: notesResult.value.body,
+          };
+          deps.lastCheck.releaseNotesStatus = 'loaded';
+        } else {
+          deps.releaseNotes = null;
+          deps.lastCheck.releaseNotesStatus = 'unavailable';
+        }
+
+        // E3.14: real local install-state probe. A failure here must never
+        // fabricate eligibility — `computeDecision` degrades honestly to
+        // 'unknown' whenever `localProbeError` is set or `localProbe` stays
+        // null.
+        try {
+          localProbe = await callInvoke<RustInstallEligibilityProbe>(
+            'is_install_eligible',
+            options.invokeImpl,
+          );
+        } catch (cause) {
+          localProbe = null;
+          localProbeError = formatError(cause);
+        }
+      } else {
         deps.lastCheck.releaseNotesStatus = 'unavailable';
       }
 
@@ -260,15 +382,15 @@ export function createSd16UpdateControllerDeps(
 
 // ---------- mount-time state: verify_relaunch_artifact ----------
 
-export interface Sd16RestoreOfferState {
+export interface RestoreOfferState {
   priorVersion: string;
   restoreAvailable: boolean;
 }
 
-export interface Sd16MountTimeState {
-  installed: Sd16InstalledState;
-  pendingRollback: Sd16PendingRollbackState;
-  restoreOffer: Sd16RestoreOfferState | null;
+export interface MountTimeState {
+  installed: InstalledState;
+  pendingRollback: PendingRollbackState;
+  restoreOffer: RestoreOfferState | null;
 }
 
 /**
@@ -277,9 +399,9 @@ export interface Sd16MountTimeState {
  * where a pending relaunch verification is checked and, on success,
  * promoted into `installed-state.json` server-side.
  */
-export async function loadSd16MountTimeState(
+export async function loadMountTimeState(
   options: { invokeImpl?: InvokeLike } = {},
-): Promise<Sd16MountTimeState> {
+): Promise<MountTimeState> {
   let outcome: ReloadVerifyOutcome;
   try {
     outcome =
@@ -322,8 +444,15 @@ export async function loadSd16MountTimeState(
           // writes `InstallKind::AppImage`.
           installKind: 'appimage',
           updateEligible: false,
+          // This mount-time snapshot is synthesized client-side from the
+          // narrow `ReloadVerifyOutcome::Promoted` payload (just a version
+          // string) — it does not itself call `is_install_eligible` (that
+          // now has a real body, but this specific field is not its
+          // output). `runCheck`'s eligibility path (via `computeDecision`)
+          // does call the real probe against the freshly-written
+          // installed-state.json this promotion just wrote.
           ineligibleReason:
-            'local eligibility probe not available yet (is_install_eligible deferred)',
+            'eligibility for a freshly-promoted install is determined by the next Check, not this mount-time snapshot',
         },
         pendingRollback: emptyPendingRollbackState(),
         restoreOffer: null,
@@ -333,7 +462,7 @@ export async function loadSd16MountTimeState(
 
 // ---------- restore action: perform_restore_previous ----------
 
-export type Sd16RollbackOutcome =
+export type RollbackOutcome =
   | { kind: 'promoted'; restoredVersion: string }
   | { kind: 'auto-restored'; restoredVersion: string }
   | { kind: 'rollback-failed'; reason: string }
@@ -349,7 +478,7 @@ interface RustRollbackOutcome {
 /** Call the real, already-tested `perform_restore_previous` Tauri command. */
 export async function restorePreviousVersion(
   options: { invokeImpl?: InvokeLike } = {},
-): Promise<Sd16RollbackOutcome> {
+): Promise<RollbackOutcome> {
   let raw: RustRollbackOutcome;
   try {
     raw =
