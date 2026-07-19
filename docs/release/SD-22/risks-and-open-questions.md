@@ -22,6 +22,13 @@ This file enumerates the risks, blockers, and open questions specific to SD-22. 
 | A cycle's RED test fails because the parser is mis-parsing a publisher's structured-data file | Per-file parse error on the cycle's `<book>/class_<class>.rs` load | Surface the file path and parse error in the load result; route to Open Blockers if the parse is unfixable per-cycle |
 | Markdown file on disk has a stale `nonce` (from a Drive sync edge case, if SD-22 surfaces this) | `CampaignSnapshot.nonce != saved_nonce` on load | Engine surfaces "stale nonce, please save again"; doesn't trigger conflict log unless the *content* also differs |
 | Per-class Epic 3+4 ordering collision | Two cycles both try to land the same APG/ACG class table | Defer the second cycle until the first cycle's tests are green; surface as `## Open blockers` if the conflict indicates a real per-book issue |
+| Corpus input file missing at cycle start (Epic 3/4/5) | `corpus/<book>_<unit>.json` absent when the ingest cycle begins | **Generate it in-cycle** from PF1 OGL/SRD content, using the cycle's `corpus-source-inventory.md` row's Content-shape column as the generation spec (per `decisions.md §5`, operator directive 2026-07-18). A missing corpus file is never a blocker by itself; only unresolvable source ambiguity routes to `## Open blockers` |
+
+## SRD-generation divergence risk (operator directive 2026-07-18; per decisions.md §5)
+
+**Risk:** SD-22's corpus files are generated in-cycle from PF1 OGL/SRD content rather than operator-supplied from the printed books (per `decisions.md §5`). SRD-generated data may **diverge from the printed book** — a wrong table cell, a mis-transcribed progression, an SRD-side errata difference — and a passing unit test does not by itself prove fidelity to the printed page.
+
+**Mitigation:** (a) every ingest cycle carries per-cycle representative-sample assertions against known-good values from the published rules (the per-content-unit failure-mode inventory below names the exact cells to check); (b) entries that look suspicious but pass their tests are logged to §"Open judgments deferred to next SD" for the Epic 9 judgment log — never silently accepted; (c) Epic 9's evaluator treats a cycle whose receipt shows no representative-sample assertion as a Bucket-B shortfall.
 
 ## Per-content-unit failure-mode inventory (operator directive 2026-07-19)
 

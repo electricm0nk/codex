@@ -182,7 +182,7 @@ The dependency order is strict: Epic 6 cannot start its happy-path test until at
 - `epic-breakdown.md` — 30 acceptance criteria grouped into 8 epics.
 - `risks-and-open-questions.md` — self-healable vs. non-self-healable split + open override flags (Flag A through Flag D; Open Q1 through Open Q5).
 - `technical-requirements.md` — pre-loop prerequisites.
-- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md` — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md` — canonical handoff; carries the prominent-early `/loop /goal` OPERATING METHOD callout (`/batch` deferred per `decisions.md §5`).
 - `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md` — loop body.
 - `~/workspace/programs/codex/requirements/SD-19-corpus-aware-compute-seam/` — Tranche-3 corpus-source ingest pattern (source-book sibling-directory convention).
 - `~/workspace/programs/codex/requirements/SD-20-rules-engine-completeness/` — per-character rules-engine surface.

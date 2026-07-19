@@ -71,31 +71,31 @@ git log --oneline origin/tranche/5 -5
 # Expect: SD-21 closure PR merge commit visible (or close to it); no SD-22 commits yet
 ```
 
-## 5. Paizo content sources available (operator-supplied or licensed corpus)
+## 5. Paizo content sources generated in-bundle (loop-generated per-cycle from PF1 OGL/SRD; operator directive 2026-07-18)
 
-SD-22's Epic 3 + Epic 4 + Epic 5 cycles depend on having structured-data input from the publisher's books (APG classes + ACG classes + Bestiary 1 monsters). The loop doesn't pull these from a web service; the operator supplies the structured-data source (PDF + manual structured input, or a licensed corpus bundle already extracted per the SD-19 §3.4/§3.5 pattern).
+SD-22's Epic 3 + Epic 4 + Epic 5 cycles depend on structured-data input from the publisher's books (APG classes + ACG classes + Bestiary 1 monsters). Per `decisions.md §5` (operator directive 2026-07-18, superseding the prior operator-supplied posture): **the loop generates these itself, per-cycle, from PF1 OGL/SRD content**. Each ingest cycle's first step generates the cycle's corpus input file (`corpus/apg_alchemist.json`, `corpus/acg_arcanist.json`, `corpus/beastiary1_subset_0.json`, etc.) using the corresponding `corpus-source-inventory.md` row's *Content shape* column as the authoritative generation spec. No operator-supplied corpus is required at launch.
 
-**Verification** (operator-driven; one-shot):
-- Operator provides structured-data files for: (a) at least the first APG class (Alchemist) before Epic 3 cycle 1 fires; (b) at least the first ACG class (Arcanist) before Epic 4 cycle 1 fires; (c) at least the first Bestiary 1 monster-block subset before Epic 5 cycle 1 fires.
-- The structured-data files live at a path the operator pins (e.g. `corpus/apg_alchemist.json`, `corpus/acg_arcanist.json`, `corpus/beastiary1_subset_0.json`).
-- Without these, the corresponding cycle fails RED and routes to Open Blockers.
+**Verification** (per-cycle; loop-driven):
+- The cycle's generated `corpus/<book>_<unit>.json` exists on disk after the cycle's generation step, **and** the cycle's ingest test (the row's `test_fixture_path`) passes against the ingested data.
+- Per-cycle representative-sample spot-check tests assert known-good values from the published rules (fabricated-data-risk mitigation per `decisions.md §5`).
+- Only unresolvable source ambiguity (SRD conflict, missing SRD coverage for a unit) routes to Open Blockers.
 
-## 6. (Optional) DM-toolkit canonical Paizo example data on disk
+## 6. DM-toolkit canonical Paizo example data generated in Epic 6's first cycle
 
-SD-22's Epic 6 deterministic tests require canonical Paizo encounter-math examples. Operator pins at cycle launch whether these are pulled from a licensed source or hand-written from the published rules.
+SD-22's Epic 6 deterministic tests require canonical Paizo encounter-math examples. Per `decisions.md §5`'s same in-bundle generation posture, the canonical encounter-table (Easy / Medium / Hard / Deadly thresholds by party size + average level) is **generated in Epic 6's first cycle** from the published PF1 encounter-building rules, alongside the five deterministic test cases pinned in `corpus-source-inventory.md` §4.1.
 
 **Verification** (informational; not gating):
-- Operator provides at minimum the canonical Paizo encounter-table (Easy / Medium / Hard / Deadly thresholds by party size + average level).
-- Without these, Epic 6's deterministic tests cycle down to manual operator review.
+- Epic 6's first cycle lands the canonical encounter-table data with its deterministic fixtures; the fixtures assert the canonical Paizo examples.
+- Suspicious or ambiguous threshold values route to the Epic 9 judgment log, not to silent acceptance.
 
 ## Cross-reference
 
 - `acceptance-and-verification.md` — 16 closure gates including SD-22's gates 1-9 (Tranche baseline, APG/ACG/Bestiary 1 ingest, cross-book resolution, DM Toolkit, MD interop, promotion PR).
-- `decisions.md` — the 3-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions).
+- `decisions.md` — the 5-item decision record (§1 scope, §2 tranche/5 + codex-tranche-5, §3 deferred shape decisions, §4 Epic 9 — Closure Readiness, §5 corpus generation in-bundle + `/batch` deferred).
 - `epic-breakdown.md` — 30 acceptance criteria grouped into 8 epics.
 - `risks-and-open-questions.md` — self-healable vs. non-self-healable split + open override flags (Flag A through Flag D; Open Q1 through Open Q5).
 - `technical-design.md` — content-source ingest patterns + DM-toolkit architecture.
-- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md` — canonical handoff; carries the prominent-early `/loop /batch /goal` OPERATING METHOD callout.
+- `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md` — canonical handoff; carries the prominent-early `/loop /goal` OPERATING METHOD callout (`/batch` deferred per `decisions.md §5`).
 - `~/workspace/SD-22-content-source-ingest-and-dm-toolkit-loop-instruction.md` — loop body.
 - `~/workspace/programs/codex/requirements/SD-18-core-rules-breadth/` — chassis grounding.
 - `~/workspace/programs/codex/requirements/SD-19-corpus-aware-compute-seam/` — corpus-aware seam + canonical Paizo-table store (CRB); SD-22's per-book ingestion pattern inherits from this.
