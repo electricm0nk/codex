@@ -460,8 +460,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open (Arcanist + Bloodrager + Brawler complete; Hunter not yet started)
   evidence_tier_after: complete (criteria 10-12 for Hunter; criterion 13's spell/equipment resolution deferred to a later cycle)
   branch_tip_before: 3e10397
-  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
-  merge_receipt_sha: "<same as branch_tip_after>"
+  branch_tip_after: 4c8e6a4
+  merge_receipt_sha: 4c8e6a4
   cycle_artifact_path: "acg/class_hunter_cycle_receipt.md"
   red_phase_evidence: "Widening RED: parses_real_hunter_record_from_acg_classes_lst added to tests/sd17_b_spellcasting_class.rs, failed (Hunter out of SPELLCASTING_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_hunter_resolves.rs failed to compile (E0599: AcgClassId::Hunter did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
   green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Hunter) in src/pcgen_import/lst_parser/spellcasting_class.rs (not class.rs -- Hunter's real record carries SPELLSTAT:WIS MEMORIZE:NO, same spontaneous-caster posture as Bloodrager/Oracle/Summoner); added rules_tables/acg/class_hunter.rs and AcgClassId::Hunter match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist+Bloodrager+Brawler still resolve); widening test green (23/23 in sd17_b_spellcasting_class); full cargo test suite green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
@@ -472,7 +472,7 @@ that are already self-evident from the cycle_artifact_path.)
   next_required_uplift: "Epic 4's next-eligible cycle is Investigator (class 5 of the corrected 10-class roster: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest), or a dedicated cycle for criterion 13's shared spell/equipment tables once more classes land. corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md still need an operator/doc-correction pass to formally replace 'Alchemist (ACG-side)' with Slayer in the row list, mirroring commit 6923e54's APG roster fix -- not blocking further Epic 4 cycles. Epic 5 (Bestiary 1) remains blocked on its own, separate parser gap (b1_races.lst's unprefixed bare-row monster records) -- unaffected by this cycle."
   corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:108 (CLASS:Hunter)"
   rule_set_used: Acg
-  kanban_card: "<see progress.md cycle log for the minted card id or the no-card fallback reason>"
+  kanban_card: "t_3e37745a (codex-tranche-5, status=done)"
   progress_file_updated: "yes"
   artifacts_written: ["acg/class_hunter_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Hunter record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB -- same posture as APG's Alchemist/Inquisitor/Oracle/Summoner -- good Fortitude+Reflex from one combined token, poor Will, MAXLEVEL:20, SPELLSTAT:WIS MEMORIZE:NO -- spontaneous divine posture, same shape as Bloodrager/Oracle/Summoner) -- confirming Hunter belongs in spellcasting_class.rs's SPELLCASTING_CLASS_NAMES rather than class.rs's MARTIAL_CLASS_NAMES (which Brawler widened last cycle); same scope boundary as class_arcanist.rs/class_bloodrager.rs/class_brawler.rs (named per-level features out of scope, formula-derived chassis only)."

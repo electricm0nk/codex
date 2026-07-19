@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: <pending this cycle's commit, see git log>
+snapshot_as_of: 4c8e6a4
 ---
 
 # SD-22 — Progress
@@ -1529,7 +1529,7 @@ Full RED/GREEN evidence, file list, and reasoning:
 corrected 10-class roster), or a dedicated cycle for criterion 13's shared
 spell/equipment tables once more classes land.
 
-### cycle-2026-07-19T23:16:42Z | Epic 4, Hunter (class 4 of corrected 10-class roster) | ingest:acg_class | card see receipts.md/kanban | open → **complete (criteria 10-12 for Hunter)**
+### cycle-2026-07-19T23:16:42Z | Epic 4, Hunter (class 4 of corrected 10-class roster) | ingest:acg_class | card `t_3e37745a` on `codex-tranche-5` (status=done) | open → **complete (criteria 10-12 for Hunter)**
 
 Re-checked state before picking a criterion: `git fetch origin tranche/5` and
 `git status --porcelain | wc -l` returned 0; `origin/tranche/5` HEAD
