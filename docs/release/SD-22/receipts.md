@@ -176,3 +176,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["epic_8/release_closure_checklist_cycle_receipt.md"]
   notes: "Pure process-documentation mirror of an already-established SD-21 precedent, not fabricated content. All four epic 8 criteria that are gated on file-touch-partition scope (27, 28, 29) are now complete; criterion 30 is a standing gate, not a discrete artifact."
+
+- cycle_id: 2026-07-19T14:00:00Z
+  epic: 3
+  criterion: apg_alchemist
+  criterion_section: "§1.1 Epic 3 — APG content-source ingest (criteria 6, 7, 8)"
+  row_or_kind: ingest:apg_class
+  evidence_tier_before: blocked
+  evidence_tier_after: complete (criteria 6-8; criterion 9's spell/equipment resolution deferred to a later cycle)
+  branch_tip_before: e2d7194
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "apg/class_alchemist_cycle_receipt.md"
+  red_phase_evidence: "tests/sd22_apg_class_alchemist_resolves.rs asserted class_chassis_resolve(...) against RuleSetId::Apg/Crb; failed to compile (E0432/E0599: rules_tables::apg and RuleSetId::Apg did not exist yet) for the intended reason (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "added rules_tables/apg/{mod.rs,class_alchemist.rs} and RuleSetId::Apg; 4/4 new tests green (1 real-corpus-gated test also run and green under PCGEN_CORPUS_ROOT); full cargo test suite green, 0 failed; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_apg_class_alchemist_resolves: 4 passed, 1 ignored (real-corpus-gated, separately run and green); full cargo test --locked: 0 failed across every suite; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 3's next-eligible cycle is Cavalier (class 2 of 8), or apg/spell_list.rs + apg/equipment_tables.rs (criterion 9) for Alchemist's bomb/extract data; Epic 4 (ACG) and Epic 5 (Bestiary 1) remain blocked on their own parser-coverage gaps (ACG has no CLASS: allowlist entry yet; Bestiary 1's b1_races.lst uses unprefixed bare rows race_ability.rs cannot parse) — unchanged by this cycle, since this cycle only widened the class-chassis surface for Alchemist specifically"
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_classes.lst:11 (CLASS:Alchemist)"
+  rule_set_used: Apg
+  kanban_card: "no card: hermes unavailable from cloud sandbox"
+  progress_file_updated: "yes"
+  artifacts_written: ["apg/class_alchemist_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Alchemist record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB, good Fort+Reflex, poor Will, MAXLEVEL:20) -- same scope boundary as rules_tables/crb/class_tables.rs (named per-level features out of scope, formula-derived chassis only). This is the first Epic 3 cycle to land a commit; it builds on the operator-side parser-allowlist widening (commit d1b2f80) that unblocked E3.6-9."

@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: ada161e
+snapshot_as_of: e2d7194
 ---
 
 # SD-22 — Progress
@@ -29,7 +29,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.3 | 2 — Operator Pre-Launch | prelaunch:board | `codex-tranche-5` kanban board set as SD-22 default | **complete** — `hermes kanban boards switch codex-tranche-5` ran locally 2026-07-19; persistent state file `~/.hermes/kanban/current` = `codex-tranche-5`; loop's per-invocation `hermes kanban --board codex-tranche-5` (per loop-instruction Step 10b) resolves to the same board. NB: session env `HERMES_KANBAN_BOARD=codex-tranche-4` was overriding the on-disk default until unset; not persisted in any shell init file. | n/a |
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
-| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (cycle 1 of 8) | **blocked** — see `## Open blockers` (real LST source confirmed reachable, but `pcgen_import`'s `CLASS:` parsers don't recognize non-CRB class names; new parser code needed, outside this cycle's file-touch partition) | none |
+| E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (cycle 1 of 8) | **complete (criteria 6-8)** — `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, Alchemist BAB/save chassis lands with cross-book invariant test; criterion 9 (spell/equipment resolution) deferred — no `apg/spell_list.rs`/`apg/equipment_tables.rs` yet. See `artifacts/apg/class_alchemist_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Alchemist-ACG (cycle 1 of 10) | see cycle log | pending |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
@@ -606,3 +606,63 @@ Epic 5's first cycle will hit it and should route to `## Open blockers`
 again with that specific finding, which is expected and correct (not a
 regression — a new parser module for that record shape is out of scope
 for this narrow fix).
+
+### cycle-2026-07-19T14:00:00Z | Epic 3, Alchemist (cycle 1 of 8) | ingest:apg_class | no card (hermes unavailable; logged here + `receipts.md`) | blocked → **complete (criteria 6-8)**
+
+Picked up the open work the operator-side widening cycle (`d1b2f80`,
+merged via `e2d7194`) explicitly left for the next firing: the parser
+allowlist gap was narrowed (Alchemist now recognized by
+`spellcasting_class.rs`), but `rules_tables/apg/` didn't exist yet and
+`RuleSetId::Apg` wasn't registered. Re-verified the premise first: `git
+log` on `decisions.md`/`corpus-source-inventory.md` shows no new commits
+since `9cd7708`; `apg_classes.lst:11`'s real `CLASS:Alchemist` record
+still carries `BONUS:COMBAT|BASEAB|classlevel(...)*3/4`,
+`BONUS:SAVE|BASE.Will|classlevel(...)/3`, and
+`BONUS:SAVE|BASE.Fortitude,BASE.Reflex|classlevel(...)/2+2`, with
+`MAXLEVEL:20` — confirmed via direct `grep`, not from the doc's prose
+(which the corpus-source-inventory.md corrective banner already flags as
+non-authoritative).
+
+RED: added `tests/sd22_apg_class_alchemist_resolves.rs` asserting
+`class_chassis_resolve(ApgClassId::Alchemist, level, RuleSetId::Apg)`
+resolves the expected BAB/save cells at levels 1 and 20, returns `None`
+past the real record's `MAXLEVEL:20`, and returns `None` for
+`RuleSetId::Crb` (the Epic 3 cross-book invariant per
+`corpus-source-inventory.md` §1.3). Ran against the unchanged tree: failed
+to compile (`E0432`/`E0599` — `rules_tables::apg` and `RuleSetId::Apg`
+didn't exist) for the intended reason.
+
+GREEN: added `src/rules_core/rules_tables/apg/mod.rs` (`ApgClassId` enum,
+`class_chassis_resolve`) and `class_alchemist.rs` (the BAB/save table,
+scope-bounded to formula-derived chassis data only — same boundary
+`rules_tables/crb/class_tables.rs` already established; named per-level
+features like Bombs/Discoveries/Mutagen are out of scope for this cycle,
+same fabrication-risk rationale). Added `RuleSetId::Apg` to
+`rules_tables/mod.rs`. Also added and ran (real-corpus-gated on
+`PCGEN_CORPUS_ROOT=/home/user/pcgen/data`) a grounding test that
+re-parses the real `CLASS:Alchemist` line and asserts the exact
+`BASEAB`/`SAVE` bonus-formula tokens the hand-transcribed constants are
+derived from — both the default 4-test run and the `--ignored` real-corpus
+run are green.
+
+Verification: `cargo test --locked --test sd22_apg_class_alchemist_resolves`
+4/4 passed (1 additional real-corpus-gated test passed separately under
+`--ignored`). Full `cargo test --locked` — every suite green, 0 failures
+(grep across the full run output for any `N failed` with `N > 0` found
+none — sibling-preservation holds). `cargo clippy --locked --tests -- -D
+warnings` clean.
+
+Criterion 9 (per-cycle APG spell/equipment resolution) is **not** closed
+this cycle — Alchemist's bombs/extracts require `apg/spell_list.rs` /
+`apg/equipment_tables.rs`, which don't exist yet; a future cycle should
+land those explicitly rather than this cycle assuming they're covered.
+Epic 4 (ACG) and Epic 5 (Bestiary 1) remain blocked on their own,
+separate parser gaps (no `CLASS:` allowlist entry for any ACG class; no
+parser recognizes `b1_races.lst`'s unprefixed bare-row monster records) —
+unaffected by this cycle, since this cycle only widened the *chassis*
+surface for one already-allowlisted class.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/apg/class_alchemist_cycle_receipt.md`. Receipt block appended
+to `receipts.md`. Next-eligible for Epic 3: Cavalier (class 2 of 8), or a
+dedicated cycle for Alchemist's spell/equipment tables (criterion 9).
