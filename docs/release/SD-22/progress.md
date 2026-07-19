@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 05a9ced
+snapshot_as_of: 4b79f5c
 ---
 
 # SD-22 — Progress
@@ -35,7 +35,8 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
 | E8.27 | 8 — Build Version | version:patch_bump | Version fields set to `0.5.95` (`package.json`, `tauri.conf.json`, `Cargo.toml`) | **complete** — see `artifacts/epic_8/three_version_fields_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
-| E8.28-30 | 8 — Build Version | version:build_label_format, version:closure_checklist, version:* | Not started (E8.28's `BUILD_PREFIX = 'Codex'` shape already ships via SD-21 E5.26 on this branch, but not yet explicitly re-verified/closed as an SD-22 criterion) | open | — |
+| E8.28 | 8 — Build Version | version:build_label_format | `BUILD_PREFIX = 'Codex'` / `${BUILD_PREFIX} ${buildVersion}` format ships (inherited from SD-21 E5.26); this cycle re-anchored the format's own test fixtures from the pre-bump `Codex 0.4.94-test` literal to the current `Codex 0.5.95-test` | **complete** — see `artifacts/epic_8/build_label_format_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
+| E8.29-30 | 8 — Build Version | version:closure_checklist, version:* | Not started | open | — |
 | E9.31 | 9 — Closure Readiness | closure_readiness:* | Not started (fires after Epic 8, before Epic 7) | open | — |
 
 ## Open blockers
@@ -208,3 +209,52 @@ complete this cycle — `createSd11WorkbenchStatus.ts` already carries the
 `BUILD_PREFIX = 'Codex'` / `${BUILD_PREFIX} ${buildVersion}` shape from SD-21's
 E5.26, but a future cycle should explicitly verify and close it rather than
 this cycle assuming it.
+
+### cycle-2026-07-19T06:15:00Z | Epic 8, criterion 28 (build-label format fixtures) | version:build_label_format | no card (hermes unavailable; logged here + `receipts.md`) | open → **complete**
+
+Re-checked the Epic 3/4/5 corpus-generation blocker first: `corpus/` still
+doesn't exist and no SRD mirror is reachable from this sandbox, so nothing
+has changed and re-attempting those epics would just re-log the same
+blocker. Epic 6 remains transitively blocked (needs ≥1 book ingested). Per
+Step 1's priority order, picked Epic 8's remaining open item: criterion 28,
+which the prior cycle's receipt explicitly flagged as verified-but-not-closed
+(the `Codex ${buildVersion}` format already ships via SD-21 E5.26, but its
+own test fixtures still hard-coded the pre-bump `Codex 0.4.94-test` literal).
+
+`node_modules` was missing at cycle start (all 46 JS test files failed for
+an environment reason); ran `npm install` to restore it, confirming a clean
+46/46 baseline before touching anything.
+
+RED: added `apps/desktop/src/sd22/buildLabelFixtureFreshness.test.ts`,
+scanning the three fixture files named in `loop-instruction.md`'s file-touch
+partition for the pre-bump literal and asserting each carries
+`Codex <current package.json version>-test` instead. Ran against the
+pre-edit fixtures (re-verified via `git stash`) — failed for the intended
+reason: `"...loadSd11TesterWorkbenchSurface.test.ts still carries the
+pre-bump build-label fixture \"Codex 0.4.94-test\""`. (An earlier draft used
+a blanket regex that false-positived on an unrelated arbitrary-input fixture,
+`'Codex 0.0.0-test'`, used by `createSd11WorkbenchStatus.test.ts`'s
+`verifiesLinuxAlphaStatusTruth` case; narrowed to the specific known-stale
+literal before trusting RED.)
+
+GREEN: re-anchored `sd11/loadSd11TesterWorkbenchSurface.test.ts`,
+`sd11/status/createSd11WorkbenchStatus.test.ts`, and `testSupport/makeSurface.ts`
+from `Codex 0.4.94-test` to `Codex 0.5.95-test`. One sibling regression
+surfaced from `makeSurface.ts` being the shared fixture factory: four
+consumer test files (`sd11/feedback/bug/composeBugReport.test.ts`,
+`sd11/feedback/enhancement/composeEnhancementRequest.test.ts`,
+`sd11/feedback/evidence/captureFeedbackEvidence.test.ts`,
+`sd15/buildSd15OperatorTriageDraft.test.ts`) independently hard-coded the
+same stale literal in their own assertions and broke as a direct,
+mechanical consequence of this cycle's edit — fixed in the same commit per
+sibling-preservation + AGENTS.md's "fix the source, not the symptom," even
+though they're outside Epic 8's file-touch partition.
+
+Verification: `npm test` 47/47 green. `cargo test --locked` at repo root —
+all suites green, 0 failures (unaffected; this criterion is JS-only).
+`cargo clippy --locked --tests -- -D warnings` clean.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/epic_8/build_label_format_cycle_receipt.md`. Receipt block
+appended to `receipts.md`. Next-eligible: Epic 8 criterion 29
+(`docs/SD-22/release-closure-checklist.md`) — untouched this cycle.

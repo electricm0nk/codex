@@ -126,3 +126,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["epic_8/three_version_fields_cycle_receipt.md"]
   notes: "Version bump is mechanically derivable (last committed build on this line was 94 per SD-21 commit 6ea6bfd; next monotonic build is 95; tranche moves 4->5 per decisions.md §2), not fabricated content -- distinct from the Epic 3/4/5 blocker."
+
+- cycle_id: 2026-07-19T06:15:00Z
+  epic: 8
+  criterion: build_label_format
+  criterion_section: "§1.8 Epic 8 — Build Version Numbering (criterion 28)"
+  row_or_kind: version:build_label_format
+  evidence_tier_before: open
+  evidence_tier_after: complete
+  branch_tip_before: 4b79f5c
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "epic_8/build_label_format_cycle_receipt.md"
+  red_phase_evidence: "src/sd22/buildLabelFixtureFreshness.test.ts asserted the three partitioned fixture files carry 'Codex <package.json version>-test'; failed against the pre-bump 'Codex 0.4.94-test' literal for the intended reason (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "loadSd11TesterWorkbenchSurface.test.ts, createSd11WorkbenchStatus.test.ts, and makeSurface.ts re-anchored to 'Codex 0.5.95-test'; 4 sibling-regression consumers of makeSurface.ts fixed in the same commit; 47/47 JS test files green; cargo test 136+ tests green; clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "npm test 47/47 green; cargo test --locked all suites green, 0 failed; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: ["fixed 4 sibling-regression test files that hard-coded makeSurface.ts's stale build-label literal (composeBugReport.test.ts, composeEnhancementRequest.test.ts, captureFeedbackEvidence.test.ts, buildSd15OperatorTriageDraft.test.ts)", "restored missing node_modules via npm install (absent at cycle start; all 46 JS test files failed for an environment reason, not a code reason)"]
+  next_required_uplift: "Epic 3/4/5 remain blocked on the fabrication-risk open blocker (unchanged this cycle, re-verified: no corpus/ dir, no reachable SRD mirror); Epic 8 criterion 29 (release-closure-checklist.md) is next-eligible in Epic 8; Epic 6 remains transitively blocked pending ≥1 book ingested"
+  corpus_input_path: "n/a"
+  rule_set_used: n/a
+  kanban_card: "no card: hermes unavailable from cloud sandbox"
+  progress_file_updated: "yes"
+  artifacts_written: ["epic_8/build_label_format_cycle_receipt.md"]
+  notes: "Pure fixture re-sync to an already-committed version value (0.5.95 from criterion 27), not fabricated content. An initial draft of the RED test used an overly-broad regex that false-positived on an unrelated arbitrary-input fixture ('Codex 0.0.0-test'); narrowed to the specific known-stale literal before treating RED as valid."
