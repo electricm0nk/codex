@@ -188,3 +188,6 @@ same cycle.** After the self-heals:
 matrix and cycle log are updated to record Epic 7 (criteria 22-26, Closure Epilogue)
 as now unblocked and next-eligible. The loop's normal cycle-pickup path handles Epic
 7 from its next firing.
+
+Commit: `6a84d6e` on `tranche/5`. Kanban card: `t_783bda76` on `codex-tranche-5`
+(status=done), row_or_kind `closure_readiness:dispatch`.

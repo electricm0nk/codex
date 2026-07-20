@@ -961,8 +961,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open
   evidence_tier_after: complete
   branch_tip_before: d5db4fd
-  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
-  merge_receipt_sha: "<same as branch_tip_after>"
+  branch_tip_after: 6a84d6e
+  merge_receipt_sha: 6a84d6e
   cycle_artifact_path: "docs/release/SD-22/closure-readiness-report.md"
   red_phase_evidence: "n/a -- GREEN-only per epic-breakdown.md's Red-green TDD mandate by epic (\"Epic 9: GREEN-only; the criterion is the artifact-evidence survey output\"); the audit itself has no red state to drive"
   green_phase_evidence: "surveyed all 30 prior criteria's status-matrix claims against docs/release/SD-22/artifacts/ per corpus-source-inventory.md §6's contract; found and self-healed 4 shortfalls (missing Epic 1/2 artifact -- backfilled with live-re-run verification; acg/class_warpriest_cycle_receipt.md missing ## kanban -- backfilled from receipts.md's own recorded card t_71902daa; three epic_8 artifacts missing ## Cycle metadata / ## kanban -- backfilled from receipts.md's recorded values; .github/workflows/publish-tester-release.yml's stale 0.4. version stamp, previously self-flagged by the release_closure_checklist cycle -- bumped to 0.5.); logged 2 judgment calls to risks-and-open-questions.md instead of self-healing them (Epic 1's grep-pattern doc-comment citations of the bundle's own tests/sd22_*.rs naming convention; Epic 5's 8-of-12 subset closure call); closed out E8.30's standing gate; dispatched Epic 7 -- see cycle_artifact_path for full detail"
@@ -973,7 +973,7 @@ that are already self-evident from the cycle_artifact_path.)
   next_required_uplift: "Epic 7 (Closure Epilogue, criteria 22-26) is now unblocked/next-eligible -- the loop's next firing should pick it up per Step 1's priority order. Two judgment calls remain logged in risks-and-open-questions.md for the next SD's audit (not blocking): Epic 1's grep-pattern exception clause, and Epic 5's 8-of-12 subset closure decision."
   corpus_input_path: "n/a (audit/evidence-survey cycle, not content-source ingest)"
   rule_set_used: n/a
-  kanban_card: "<see follow-up backfill commit>"
+  kanban_card: "t_783bda76 (codex-tranche-5, status=done)"
   progress_file_updated: "yes"
   artifacts_written: ["closure-readiness-report.md", "epic_1_2/prelaunch_and_identifier_audit_cycle_receipt.md"]
   notes: "Solo cycle. Verified tranche/5 clean and in sync with origin (d5db4fd) before starting, and re-fetched immediately before the commit/push step to check for the mid-cycle unrelated apps/desktop UI merge the launch brief warned might land -- none landed this cycle. All self-heals were docs/CI-yaml only; no src/ production code touched, consistent with epic-breakdown.md's 'Epic 9 does not change source-code behavior' boundary. Full cargo test + clippy re-run clean after the self-heal commit to confirm no regression."
