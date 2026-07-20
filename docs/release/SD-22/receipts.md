@@ -776,3 +776,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["beastiary1/subset_02_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream working Epic 4 criterion 13 (ACG shared spell/equipment tables, src/rules_core/rules_tables/acg/). File-touch set (rules_tables/beastiary1/, tests/sd22_beastiary1_subset_02_resolves.rs, tests/sd17_b_monster_stat_block.rs) disjoint from the sibling's acg/ files per loop-instruction.md. Did all RED/GREEN/verification work before touching progress.md/receipts.md; fetched+synced with the sibling's already-pushed production commit (f9fee4b) before this cycle's own commit -- no rebase conflicts, disjoint file sets. corpus-source-inventory.md §3.1 corrected for both subset 01 and subset 02 rows in this cycle's commit, mirroring how subset 01's own cycle corrected its own row."
+
+- cycle_id: 2026-07-20T06:14:48Z
+  epic: 6
+  criterion: dm_toolkit_happy_path_integration
+  criterion_section: "§4 Epic 6 — DM Toolkit (happy-path integration, criterion 21)"
+  row_or_kind: dm:encounter
+  evidence_tier_before: complete (criteria 18-20)
+  evidence_tier_after: complete (criteria 18-21, Epic 6 fully closed out)
+  branch_tip_before: 1c8e375
+  branch_tip_after: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
+  merge_receipt_sha: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
+  cycle_artifact_path: "dm_toolkit/happy_path_integration_cycle_receipt.md"
+  red_phase_evidence: "cargo test --locked --test sd22_dm_toolkit_happy_path_integration against the pre-cycle tree failed with 'error: no test target named `sd22_dm_toolkit_happy_path_integration` in default-run packages' -- the file genuinely did not exist yet -- see cycle_artifact_path:Red-phase evidence"
+  green_phase_evidence: "wrote tests/sd22_dm_toolkit_happy_path_integration.rs with two tests: a party of 1 level-1 PC vs. the real ingested Ghoul (Epic 5 subset 01, resolved via beastiary1::monster_resolve) asserting Difficulty::Medium (APL 1, EL 1), and a party of 4 level-3 PCs vs. the real ingested Darkmantle (Epic 5 subset 02) asserting Difficulty::Easy (APL 3, EL 1). No production-code change needed: MonsterStatBlock::challenge_rating is a public f32 field and MonsterRef::new already takes a public f32 argument, so the two Epic 5/Epic 6 types reconcile via a direct field read. sd22_dm_toolkit_happy_path_integration 2/2 passed, full cargo test --locked 0 failed across 422 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
+  cargo_test_summary: "sd22_dm_toolkit_happy_path_integration: 2/2 passed; full cargo test --locked: 0 failed (422 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 2400
+  self_heals_applied: []
+  next_required_uplift: "Epic 6 (DM Toolkit) is now fully complete (criteria 18-21). Epic 5 (Bestiary 1) still has more monster-block subsets to land for acceptance-and-verification.md's default-8-12-subsets closure-breadth expectation, but that no longer blocks Epic 6. Next up per the loop's cycle-priority order: continued Epic 5 subset breadth, or Epic 8 (Build Version Numbering)."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:200 (Ghoul, Epic 5 subset 01) and b1_races.lst:91 (Darkmantle, Epic 5 subset 02) -- consumed via the already-landed beastiary1 resolver, not newly parsed"
+  rule_set_used: Bestiary1
+  kanban_card: "t_15c0a7f5 (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: ["dm_toolkit/happy_path_integration_cycle_receipt.md"]
+  notes: "Ran in parallel with a sibling stream working Epic 5 (Bestiary 1 subset 03, src/rules_core/rules_tables/beastiary1/). File-touch set (tests/sd22_dm_toolkit_happy_path_integration.rs, docs/release/SD-22/artifacts/dm_toolkit/) disjoint from the sibling's beastiary1/ production files per loop-instruction.md; this cycle only reads beastiary1/mod.rs, never writes it. Did all RED/GREEN/verification work before touching progress.md/receipts.md. Investigated the loop-instruction.md-anticipated MonsterRef/MonsterStatBlock type mismatch directly and found it resolves via a direct field read, not a production-code gap -- documented in the cycle artifact rather than silently skipped."
