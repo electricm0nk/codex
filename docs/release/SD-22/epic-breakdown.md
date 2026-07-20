@@ -152,7 +152,7 @@ Epic 1 lands **first**. Epic 2's pre-launch checklist validates the launch infra
 
 25. **Generate release notes**: produces `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/release-notes.md` with sections: "New content" (from Epics 3+4+5), "DM toolkit" (from Epic 6), "Maintenance" (from Epic 1), "Versioning" (from Epic 8).
 
-26. **Increment the version** *(tranche promotion only)*: reads the current `<major>.<tranche-base>.<build>` triple from the three version files (Epic 8's locks the values), increments only the **tranche** position by `1` and resets build to `0` on tranche promotion (`0.5.<last_build>` → `1.0.0` if SD-22's release is the first main-publish; or `0.5.<last_build>` → `0.6.0` if there's a Tranche-6 follow-on). The *concrete* `0.5.<current_build>` value lands in **Epic 8** (Build Version Numbering) as a separate, focused cycle.
+26. **Increment the version** *(tranche promotion only)*: reads the current `<major>.<tranche-base>.<build>` triple from the three version files (Epic 8's locks the values). **Corrected 2026-07-20** (an Epic 7 cycle initially misread this criterion and bumped the tranche-base position at SD-22's own closure, landing `0.5.95` → `0.6.0` in error; reverted to `0.5.96`): the tranche-base position increments only when an actual tranche promotion happens — i.e. when a **new `tranche/N` branch is cut for the next bundle** and that bundle's own launch/pre-flight epic (its Epic 8 equivalent) sets the new tranche digit, mirroring how `tranche/5`'s own `0.5.x` values were set by SD-21's closure epilogue when *its* tranche promoted. A bundle's own closure epilogue, while still running on its own unchanged tranche branch, only increments the **build** position and resets nothing (`0.5.<last_build>` → `0.5.<last_build + 1>`). The *concrete* `0.5.<current_build>` value lands in **Epic 8** (Build Version Numbering) as a separate, focused cycle.
 
 ### Epic 8 — Build Version Numbering (`<major>.<tranche-base>.<build>` + build-label format)
 
@@ -190,7 +190,7 @@ Epic 1 lands **first**. Epic 2's pre-launch checklist validates the launch infra
 - Does not run the closure test suite. That's Epic 7's pre-PR gate.
 - Does not open the `tranche/5 → develop` PR. That's Epic 7's `gh pr create`.
 - Does not generate release notes. That's Epic 7.
-- Does not increment the version on tranche promotion (`0.5.<last_build>` → `0.6.0`). That's Epic 7.
+- Does not increment the version. That's Epic 7 (per criterion 26's 2026-07-20 correction: a real tranche promotion, e.g. `0.5.<last_build>` → `0.6.0`, only fires when a new `tranche/N` branch is cut for the next bundle; a bundle's own closure on its own unchanged tranche branch only bumps the build position, e.g. `0.5.95` → `0.5.96`).
 - Does not include Epic 8's outputs in the eval-cycle-count. Epic 8's outputs are reviewed by Epic 9's first cycle but Epic 8 isn't itself a 1-30 criterion; it's a precondition.
 
 **Numerics.** Epic 9 carries 1 criterion (criterion-31). Total criteria across the bundle: 31. Total epics: 9.

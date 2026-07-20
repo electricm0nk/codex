@@ -1,5 +1,14 @@
 # Epic 7 — Criteria 22-26 — Closure Epilogue
 
+> **CORRECTION (2026-07-20, operator-caught):** criterion 26 below bumped
+> the version files' tranche-base position (`0.5.95` → `0.6.0`), which was
+> wrong — `tranche/5` is still the active branch; the tranche digit only
+> advances when a new `tranche/N` branch is cut for the next bundle. This
+> was reverted to a build-only increment (`0.5.95` → `0.5.96`). This
+> artifact is left unmodified below as an accurate record of what this
+> cycle actually did at the time; see `progress.md`'s
+> `## Cycle log` → "cycle-2026-07-20 (correction)" entry for the fix.
+
 - cycle_id: 2026-07-20T00:00:00Z (this cycle)
 - criterion_section: `epic-breakdown.md` Epic 7 — Closure Epilogue (criteria 22-26)
 - row_or_kind: closure:*

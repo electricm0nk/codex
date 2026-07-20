@@ -21,8 +21,11 @@ function readPackageJsonVersion(): string {
   return doc.version;
 }
 
-// The exact pre-bump literal these fixtures carried before E7.26's tranche
-// promotion moved the three version files from 0.5.95 to 0.6.0. Some files
+// The exact pre-bump literal these fixtures carried before E7.26's build-number
+// increment moved the three version files from 0.5.95 to 0.5.96 (tranche stays
+// at 5 — tranche/5 is still the active branch; the tranche digit only moves
+// when a new tranche/N branch is cut for the next bundle, corrected after an
+// earlier erroneous 0.5.95 -> 0.6.0 bump was caught and reverted). Some files
 // also carry unrelated arbitrary version placeholders (e.g. '0.0.0-test')
 // for isolated formatter tests — those aren't "the current build" fixture
 // and must not be flagged here.

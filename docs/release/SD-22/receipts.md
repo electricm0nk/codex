@@ -1002,3 +1002,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["epic_7/closure_epilogue_cycle_receipt.md", "release-notes.md"]
   notes: "Solo cycle, final cycle of SD-22. Verified tranche/5 clean and in sync with origin (b25879b) before starting. Closure PR opened: https://github.com/electricm0nk/codex/pull/325 (tranche/5 -> develop, not merged -- operator/orchestrator action). All 31 SD-22 acceptance criteria are now complete."
+
+- cycle_id: 2026-07-20T00:00:00Z-correction
+  epic: 7
+  criterion: version_bump_correction
+  criterion_section: "Epic 7 criterion 26 correction -- operator-caught error"
+  row_or_kind: version:patch_bump
+  evidence_tier_before: complete (version incorrectly bumped to 0.6.0)
+  evidence_tier_after: complete (corrected to 0.5.96)
+  branch_tip_before: d20859a
+  branch_tip_after: PENDING (this cycle's own commit)
+  merge_receipt_sha: PENDING (this cycle's own commit)
+  cycle_artifact_path: "n/a -- correction banner added to epic_7/closure_epilogue_cycle_receipt.md; full detail in progress.md's cycle log entry 'cycle-2026-07-20 (correction)'"
+  red_phase_evidence: "n/a -- correction cycle, not a RED/GREEN production cycle"
+  green_phase_evidence: "npm test failed 2/48 (buildVersionTriple.test.ts x2) immediately after reverting the version files but before fixing the hard-anchored 0.6. test assertions -- confirmed the sibling-preservation gap was real, not assumed. After fixing both test files and the CI workflow stamp, npm test 48/48 passed."
+  cargo_test_summary: "cargo test --locked: 428 test-result:ok blocks, 0 failed. cargo clippy --locked --tests -- -D warnings: clean. npm test (apps/desktop): 48/48 files passed."
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: ["reverted apps/desktop/{package.json,src-tauri/tauri.conf.json,src-tauri/Cargo.toml} from 0.6.0 to 0.5.96 (build-only increment, tranche stays at 5 per operator correction)", "fixed package-lock.json and Cargo.lock's codex/codex-desktop version fields, which the original Epic 7 cycle had missed entirely (still at stale 0.5.95)", "re-corrected 7 JS test/fixture files' Codex 0.6.0-test literals back to Codex 0.5.96-test", "reverted apps/desktop/src/sd21/buildVersionTriple.test.ts and apps/desktop/src/sd22/buildVersionTriple.test.ts's hard-anchored 0.6. assertions to 0.5. -- the sd22 file's original Epic-8-authored assertion (confirmed via git show against its pre-Epic-7 blob) was already correct at 0.5.; Epic 7 had overwritten a correct test to match its own incorrect bump", "reverted .github/workflows/publish-tester-release.yml's CI stamp from 0.6.${GITHUB_RUN_NUMBER} back to 0.5.${GITHUB_RUN_NUMBER} (Epic 9's earlier correct self-heal value)", "corrected epic-breakdown.md criterion 26 + its 'What Epic 9 is NOT' cross-reference, and decisions.md's matching cross-reference, to state explicitly that a bundle's own closure only bumps the build position; the tranche-base bump belongs to the next bundle's launch when a new tranche/N branch is cut"]
+  next_required_uplift: "Update PR #325's description via gh pr edit to reflect 0.5.96 instead of 0.6.0 before merge."
+  corpus_input_path: n/a
+  rule_set_used: n/a
+  kanban_card: "t_1e4ff252 (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: []
+  notes: "Operator caught the error directly: 'version should not have been bumped to 0.6.0, we are still on tranche 5. In this case, only the final value is incremented.' tranche/5 is still the active branch -- the tranche-base position only advances when a new tranche/N branch is cut for the next bundle (mirroring how tranche/5 itself inherited 0.5.x from SD-21's own closure epilogue promoting off tranche/4-1), not automatically at a bundle's own closure while still on its own unchanged tranche branch. Historical receipts.md blocks and the original epic_7/closure_epilogue_cycle_receipt.md artifact are left unmodified as an accurate record of what that cycle actually did at the time, per this bundle's established 'don't rewrite history, append a correction' convention."

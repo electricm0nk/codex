@@ -92,7 +92,7 @@ mirror_of: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-sco
 - Does not run the closure test suite (`cargo test --workspace`). That's Epic 7's run-the-test-suite pre-PR gate.
 - Does not open the `tranche/5 → develop` PR. That's Epic 7's `gh pr create`.
 - Does not generate release notes. That's Epic 7.
-- Does not increment the version on tranche promotion (`0.5.<last_build>` → `0.6.0`). That's Epic 7 (mirrors SD-21 Epic 4).
+- Does not increment the version. That's Epic 7 (mirrors SD-21 Epic 4; per `epic-breakdown.md` criterion 26's 2026-07-20 correction, a real tranche promotion — e.g. `0.5.<last_build>` → `0.6.0` — only fires when a new `tranche/N` branch is cut for the next bundle, not at a bundle's own closure on its own unchanged tranche branch, which only bumps the build position).
 
 **Numeric consequences.** Total criteria count moves from 30 to 31. Epic 9 carries 1 criterion (criterion-31). Epic 7's five criteria (22-26) are unchanged; Epic 8's four criteria (27-30) are unchanged. The only new number is criterion-31 in Epic 9.
 

@@ -1,6 +1,6 @@
 ---
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit — Release Notes
-release_version: 0.6.0
+release_version: 0.5.96
 canonical_branch: tranche/5
 date: 2026-07-20
 companion_to: ./progress.md, ./epic-breakdown.md, ./decisions.md, ./closure-readiness-report.md
@@ -92,9 +92,10 @@ across all branches. This cycle set the concrete per-build value to
 build-label format's test fixtures to match; and committed the four-step
 closure-process checklist at `docs/SD-22/release-closure-checklist.md`.
 
-**This cycle's tranche-promotion bump (Epic 7, criterion 26):** on closure,
-the version increments the tranche-base position and resets build to `0`:
-`0.5.95` → `0.6.0` (major stays `0` — there is no first-main-publish signal
-for this release yet). This is a distinct event from Epic 8's per-build
-value above; Epic 8 owns the concrete per-build number, Epic 7 owns the
-tranche-promotion increment.
+**Correction (post-closure):** Epic 7's criterion-26 cycle initially bumped
+the tranche-base position (`0.5.95` → `0.6.0`), on the assumption that
+closure always advances the tranche digit. That was wrong for this bundle:
+`tranche/5` is still the active branch — the tranche digit only advances
+when a new `tranche/N` branch is cut for the next bundle, not automatically
+at a bundle's own closure. The bump was reverted; only the build position
+incremented: `0.5.95` → `0.5.96`.

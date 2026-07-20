@@ -51,19 +51,22 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
   // Anchor: this branch was promoted from tranche/4-1 to tranche/5 (SD-22
-  // E8.27) and then tranche-promoted again to tranche-base 6 (SD-22 E7.26,
-  // ../SD-22/decisions.md §2 + ../SD-21/decisions.md §18's tranche-promotion
-  // rule: increment tranche, reset build to 0). Each anchor here only holds
+  // E8.27) and stays at tranche-base 5 while tranche/5 remains the active
+  // branch — the tranche digit only advances when a new tranche/N branch is
+  // cut for the next bundle, not automatically at a bundle's own closure
+  // (../SD-22/decisions.md §2 + ../SD-21/decisions.md §18's tranche-promotion
+  // rule; SD-22's Epic 7 closure-epilogue cycle initially bumped this to
+  // tranche=6 in error and it was reverted). Each anchor here only holds
   // until the next tranche promotion lands — update alongside the version
   // bump, not as a follow-on fix.
-  assert(pkg.startsWith('0.6.'), `version "${pkg}" must keep major=0, tranche=6 on tranche/5 post-promotion`);
+  assert(pkg.startsWith('0.5.'), `version "${pkg}" must keep major=0, tranche=5 on tranche/5`);
 }
 
 function verifiesWorkflowStampMatchesTripleShapeNotLegacyScheme() {
   const stamp = readWorkflowStampVersion();
   assert(
-    stamp.startsWith('0.6.'),
-    `workflow stamp "${stamp}" must use the current 0.6.<build> shape, not a stale or legacy scheme`
+    stamp.startsWith('0.5.'),
+    `workflow stamp "${stamp}" must use the current 0.5.<build> shape, not a stale or legacy scheme`
   );
 }
 
