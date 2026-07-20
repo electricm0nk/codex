@@ -1,13 +1,14 @@
 /**
- * Google Drive connection config — the gate for the Campaign Manager.
+ * Local campaign-folder config — the gate for the Campaign Manager.
  *
- * There is no real Google OAuth or Drive API integration yet (that's
- * backend work: an OAuth flow, token storage, and Drive API calls from
- * Rust). This captures the two pieces of information that integration will
- * need (the account and the destination folder) and treats "both filled in"
- * as "setup completed" so the rest of the UI has a real gate to build
- * against. Persisted to localStorage today, same as other not-yet-backed
- * settings in this app.
+ * By design, this app never talks to Google's (or anyone's) cloud API — no
+ * OAuth, no token storage, no network calls. "Drive folder" just means a
+ * local path (typically a Drive/Dropbox/Syncthing desktop-sync-client
+ * mirror, or any plain folder). Campaigns write real files there (see
+ * campaignModel.ts's `syncCampaignDriveArtifacts`); sharing a campaign means
+ * handing someone that folder or its files directly. `accountEmail` is
+ * reference metadata only (whose folder this is) — it is never used to
+ * authenticate or contact anyone. Persisted to localStorage.
  */
 
 export interface GoogleDriveConfig {

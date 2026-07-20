@@ -50,16 +50,23 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: tranche stays 4 (tranche/4-1 is a dash release off Tranche 4) and
-  // major stays 0 until first main-publish, per the 2026-07-18 verification.
-  assert(pkg.startsWith('0.4.'), `version "${pkg}" must keep major=0, tranche=4 until promoted`);
+  // Anchor: this branch was promoted from tranche/4-1 to tranche/5 (SD-22
+  // E8.27) and stays at tranche-base 5 while tranche/5 remains the active
+  // branch — the tranche digit only advances when a new tranche/N branch is
+  // cut for the next bundle, not automatically at a bundle's own closure
+  // (../SD-22/decisions.md §2 + ../SD-21/decisions.md §18's tranche-promotion
+  // rule; SD-22's Epic 7 closure-epilogue cycle initially bumped this to
+  // tranche=6 in error and it was reverted). Each anchor here only holds
+  // until the next tranche promotion lands — update alongside the version
+  // bump, not as a follow-on fix.
+  assert(pkg.startsWith('0.5.'), `version "${pkg}" must keep major=0, tranche=5 on tranche/5`);
 }
 
 function verifiesWorkflowStampMatchesTripleShapeNotLegacyScheme() {
   const stamp = readWorkflowStampVersion();
   assert(
-    stamp.startsWith('0.4.'),
-    `workflow stamp "${stamp}" must use the new 0.4.<build> shape, not the legacy 0.0.<run> scheme`
+    stamp.startsWith('0.5.'),
+    `workflow stamp "${stamp}" must use the current 0.5.<build> shape, not a stale or legacy scheme`
   );
 }
 

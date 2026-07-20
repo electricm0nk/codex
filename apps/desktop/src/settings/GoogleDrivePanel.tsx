@@ -22,11 +22,11 @@ const inputStyle = {
 } as const;
 
 /**
- * Google Drive setup — the gate the Campaign Manager checks before it's
- * enabled. There's no real OAuth/Drive API integration yet; this captures
- * the account + destination folder and treats both being filled in as
- * "setup completed," which is enough to build the rest of the Campaign
- * Manager flow against a real (if locally-persisted) gate.
+ * Local campaign-folder setup — the gate the Campaign Manager checks before
+ * it's enabled. By design this is local-only: no OAuth, no cloud API, no
+ * network calls, ever. The folder is a real local path (see
+ * settings/googleDrive.ts) that campaigns write real files to; sharing
+ * means handing someone that folder or its files directly.
  */
 export function GoogleDrivePanel(props: { onChange?: () => void }) {
   const stored = getGoogleDriveConfig();
@@ -96,7 +96,7 @@ export function GoogleDrivePanel(props: { onChange?: () => void }) {
 
       <SettingRow
         name="Google account"
-        description="The account campaign folders and invites will be sent from."
+        description="Reference only — whose campaign folder this is. Never used to sign in or send anything."
         control={
           <input
             type="email"
@@ -179,9 +179,9 @@ export function GoogleDrivePanel(props: { onChange?: () => void }) {
       </div>
 
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', lineHeight: 1.6, marginTop: '1.25rem' }}>
-        This does not yet perform real Google OAuth or talk to the Drive API — that requires backend work (an OAuth
-        flow, token storage, and Drive API calls). Saving here only records the account and folder so the rest of
-        the Campaign Manager has a real setup gate to build against.
+        Codex runs entirely on your machine — there's no cloud sync, no account sign-in, and no network calls.
+        "Drive folder" just means a local folder (point it at a Drive/Dropbox/Syncthing-synced folder if you want
+        campaigns to sync between devices that way). To share a campaign, hand someone its folder or files directly.
       </p>
 
       <div style={{ borderTop: '1px solid var(--color-border)', marginTop: '1.75rem', paddingTop: '1.5rem' }}>

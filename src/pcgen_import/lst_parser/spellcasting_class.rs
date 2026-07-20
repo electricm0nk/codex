@@ -1,20 +1,75 @@
-//! LST object-kind parser for the `CLASS:` directive (SD-17 Slice B-2).
+//! LST object-kind parser for the `CLASS:` directive (SD-17 Slice B-2;
+//! widened SD-22 Epic 3 to add `Alchemist`, then `Inquisitor`, then
+//! `Oracle`, then `Summoner`; widened SD-22 Epic 4 to add `Warpriest`,
+//! the tenth and last real ACG class).
 //!
-//! Scope: the five spellcasting classes named in the slice card body
-//! (`Cleric`, `Druid`, `Wizard`, `Sorcerer`, `Bard`) plus their
-//! `Ex-<name>` mirror variants. The parser recognizes every
-//! `CLASS:<name>` line in the PCGen corpus where `<name>` is in that set,
-//! carries every tab-delimited `KEY:VAL` token pair to a canonical IR
-//! record, and preserves one-based source line numbers on every entry.
+//! Scope: the five CRB spellcasting classes named in the original slice
+//! card body (`Cleric`, `Druid`, `Wizard`, `Sorcerer`, `Bard`), plus
+//! `Alchemist` (added by SD-22 Epic 3's Alchemist ingest cycle — the
+//! Alchemist's `CLASS:Alchemist` line in `apg_classes.lst` carries
+//! `SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES`, the same posture-bearing
+//! shape as the CRB spellcasting classes, so it belongs in this parser
+//! rather than the martial-class parser), plus `Inquisitor` (added by
+//! SD-22 Epic 3's Inquisitor ingest cycle — the real `CLASS:Inquisitor`
+//! line carries `SPELLSTAT:WIS MEMORIZE:NO`, the same spontaneous-divine
+//! posture as Sorcerer/Bard), plus `Oracle` (added by SD-22 Epic 3's
+//! Oracle ingest cycle — the real `CLASS:Oracle` line carries
+//! `SPELLSTAT:CHA MEMORIZE:NO`, the same spontaneous-divine posture as
+//! Sorcerer/Bard/Inquisitor), plus `Summoner` (added by SD-22 Epic 3's
+//! Summoner ingest cycle — the real `CLASS:Summoner` line carries
+//! `SPELLSTAT:CHA MEMORIZE:NO`, the same spontaneous posture, arcane
+//! rather than divine, which the parser's posture derivation does not
+//! distinguish), plus `Witch` (added by SD-22 Epic 3's Witch ingest
+//! cycle, the sixth and last real APG class — the real `CLASS:Witch`
+//! line carries `SPELLSTAT:INT` with no `MEMORIZE:NO` and no
+//! `SPELLBOOK:YES` token, the same absent-signals prepared-casting
+//! shape as Cleric/Druid), plus `Arcanist` (added by SD-22 Epic 4's
+//! Arcanist ingest cycle, the first real ACG class — the real
+//! `CLASS:Arcanist` line in `acg_classes.lst` carries
+//! `SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES`, the same spellbook-prepared
+//! posture as Alchemist), plus `Bloodrager` (added by SD-22 Epic 4's
+//! Bloodrager ingest cycle, the second real ACG class — the real
+//! `CLASS:Bloodrager` line carries `SPELLSTAT:CHA MEMORIZE:NO`, the same
+//! spontaneous posture as Sorcerer/Bard/Oracle/Summoner), plus `Hunter`
+//! (added by SD-22 Epic 4's Hunter ingest cycle, the fourth real ACG
+//! class — the real `CLASS:Hunter` line carries `SPELLSTAT:WIS
+//! MEMORIZE:NO`, the same spontaneous posture), plus `Investigator`
+//! (added by SD-22 Epic 4's Investigator ingest cycle, the fifth real
+//! ACG class — the real `CLASS:Investigator` line carries
+//! `SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES`, the same spellbook-prepared
+//! posture as Alchemist/Arcanist), plus `Shaman` (added by SD-22 Epic 4's
+//! Shaman ingest cycle, the sixth real ACG class — the real
+//! `CLASS:Shaman` line carries `SPELLSTAT:WIS MEMORIZE:YES` with no
+//! `SPELLBOOK:YES` and no `MEMORIZE:NO`, the same standard-prepared
+//! posture as Witch), plus `Skald` (added by SD-22 Epic 4's Skald ingest
+//! cycle, the seventh real ACG class — the real `CLASS:Skald` line
+//! carries `SPELLSTAT:CHA MEMORIZE:NO SPELLBOOK:YES`; `MEMORIZE:NO`
+//! takes precedence over `SPELLBOOK:YES` in this parser's posture
+//! derivation, so Skald resolves as spontaneous — the same posture as
+//! Bard, whose spell list Skald's own `SPELLLIST:1|Bard` token borrows
+//! from), plus `Warpriest` (added by SD-22 Epic 4's Warpriest ingest
+//! cycle, the tenth and last real ACG class — the real `CLASS:Warpriest`
+//! line carries `SPELLSTAT:WIS` with no `MEMORIZE:NO` and no
+//! `SPELLBOOK:YES` token, the same standard-prepared posture as
+//! Shaman/Witch; the corpus's separate `CLASS:Ex-Warpriest` `VISIBLE:NO`
+//! record is an internal fallen-Warpriest variant, not player-facing
+//! content, and is deliberately **not** added to this array). The
+//! parser recognizes every `CLASS:<name>` line in the PCGen corpus where
+//! `<name>` is in that set, carries every tab-delimited `KEY:VAL` token
+//! pair to a canonical IR record, and preserves one-based source line
+//! numbers on every entry.
 //!
 //! Out-of-scope class names (the six martial classes owned by
 //! [`crate::pcgen_import::lst_parser::class`], prestige classes, and
-//! unrelated classes owned by other future slices) are skipped silently —
-//! the parser does not raise a diagnostic for them. The same diagnostic
-//! is reused by the umbrella [`crate::pcgen_import::lst_parser::mod`]
-//! only via this slice's own enum (the umbrella already exposes
-//! `LstDiagnosticKind` for `metadata`; this slice surfaces its own
-//! kind enum to keep the parallel-slices partition honest).
+//! unrelated classes owned by other future slices — this includes every
+//! other APG/ACG class until its own SD-22 ingest cycle widens this
+//! array or `class.rs`'s, per that class's actual casting shape) are
+//! skipped silently — the parser does not raise a diagnostic for them.
+//! The same diagnostic is reused by the umbrella
+//! [`crate::pcgen_import::lst_parser::mod`] only via this slice's own
+//! enum (the umbrella already exposes `LstDiagnosticKind` for
+//! `metadata`; this slice surfaces its own kind enum to keep the
+//! parallel-slices partition honest).
 //!
 //! Spellcasting sub-shapes recognized on top of the martial-class
 //! surface:
@@ -47,9 +102,32 @@ use std::collections::HashSet;
 use std::fs;
 use std::path::Path;
 
-/// The five spellcasting classes named in the SD-17 Slice B-2 card body.
-pub const SPELLCASTING_CLASS_NAMES: &[&str] =
-    &["Cleric", "Druid", "Wizard", "Sorcerer", "Bard"];
+/// The five CRB spellcasting classes named in the SD-17 Slice B-2 card
+/// body, plus `Alchemist`, `Inquisitor`, `Oracle`, `Summoner`, and
+/// `Witch` (SD-22 Epic 3 widenings), plus `Arcanist`, `Bloodrager`,
+/// `Hunter`, `Investigator`, `Shaman`, `Skald`, and `Warpriest` (SD-22
+/// Epic 4 widenings — see module doc comment). `Warpriest` is the tenth
+/// and last real ACG class; the corpus's `Ex-Warpriest` `VISIBLE:NO`
+/// variant is deliberately excluded (internal, not player-facing).
+pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
+    "Cleric",
+    "Druid",
+    "Wizard",
+    "Sorcerer",
+    "Bard",
+    "Alchemist",
+    "Inquisitor",
+    "Oracle",
+    "Summoner",
+    "Witch",
+    "Arcanist",
+    "Bloodrager",
+    "Hunter",
+    "Investigator",
+    "Shaman",
+    "Skald",
+    "Warpriest",
+];
 
 /// Casting posture recorded on each spellcasting class. The posture is
 /// derived from the SPELLSTAT line: presence of `MEMORIZE:NO` flips it
