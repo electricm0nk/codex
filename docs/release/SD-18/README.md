@@ -7,9 +7,9 @@ owner: god-emporer (architect), tech-priest (pre-loop gate slice), operator (loo
 parent: programs/codex/assumptions/tranche-3-starting-assumptions-2026-07-10.md
 epic: corpus-driven breadth for codex rules engine; operator-driven loop-routed execution.
 related_bundles:
-  - programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/
-  - programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/
-  - programs/codex/requirements/tranche-2-7-pcgen-corpus-ingestion/
+  - docs/release/SD-13/ (relocated 2026-07-20 from programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/)
+  - docs/release/SD-17/ (relocated 2026-07-20 from programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/)
+  - programs/codex/requirements/tranche-2-7-pcgen-corpus-ingestion/ (does not exist in this repo clone)
 execution_mode: operator-driven claude-code loop on breadth (churn); pre-loop tech-priest card on the consumer-side composition gate.
 canonical_handoff_doc: /home/ubuntu/workspace/SD-18-core-rules-breadth-scope-draft.md
 objective: support + product-visible (per operator directive, 2026-07-12).

@@ -7,7 +7,7 @@ name: Tranche 3 CI
 #   - All slice branches target tranche/3, NEVER develop (the devops/tranche-branch-
 #     governance refusal).
 #   - Slice PRs into tranche/3 must contain a tranche manifest entry referencing
-#     programs/codex/requirements/<GE-or-SD> and a release-notes lane (or carry
+#     docs/release/<GE-or-SD> and a release-notes lane (or carry
 #     an explicit skip-reason).
 #   - On every push to tranche/3 itself, run the test + typecheck lanes that
 #     the publish lane relies on, so a tranche branch that fails the basic gates
@@ -120,9 +120,9 @@ jobs:
             BASE="HEAD~1"
           fi
           changed="$(git diff --name-only --diff-filter=ACMRT "${BASE}...HEAD" -- \
-            'programs/codex/requirements/**/manifest.yaml' \
+            'docs/release/**/manifest.yaml' \
             'docs/release/**/release-notes.md' \
-            'programs/codex/requirements/**/tranche-*/manifest.yaml' || true)"
+            'docs/release/**/tranche-*/manifest.yaml' || true)"
           if [ -z "${changed}" ]; then
             echo "manifests_changed=false" >> "$GITHUB_OUTPUT"
             echo "No tranche manifest or release-notes touched in this PR."

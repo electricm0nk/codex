@@ -160,7 +160,7 @@ jobs:
         env:
           LANE: ${{ steps.lane.outputs.lane }}
           NOTES_FILE: docs/release/SD-16/release-notes.md
-          MANIFEST_FILE: programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-manifest.json
+          MANIFEST_FILE: docs/release/SD-16/tranche-manifest.json
         run: |
           # The checker exits non-zero when blocked; capture both the
           # stdout report and the rc without tripping set -e.

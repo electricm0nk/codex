@@ -13,9 +13,9 @@ doctrine_refs:
   - programs/codex/doctrine/quality-gate-policy.md
   - ~/workspace/sd13-class-uplift-loop-prompt.md (matured SD-13 model; see §6 for inheritance)
 related_bundles:
-  - programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/
-  - programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/
-  - programs/codex/requirements/tranche-2-7-pcgen-corpus-ingestion/
+  - docs/release/SD-13/ (relocated 2026-07-20 from programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/)
+  - docs/release/SD-17/ (relocated 2026-07-20 from programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/)
+  - programs/codex/requirements/tranche-2-7-pcgen-corpus-ingestion/ (does not exist in this repo clone)
 technical_design_doc: /home/ubuntu/workspace/programs/codex/requirements/SD-18-core-rules-breadth/technical-design.md
 corpus_root: /home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/core_rulebook.pcc
 code_root: /home/ubuntu/workspace/repos/codex

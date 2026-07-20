@@ -12,7 +12,7 @@
 //! The relocation is structural, not behavioral: the variants, the
 //! convenience constructors, and the lifetime parameter are byte-identical
 //! to the in-converter version Slice C landed. See
-//! `programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/artifacts/sd17-d-record-aggregate-merge-receipt-2026-07-12.md`
+//! `docs/release/SD-17/artifacts/sd17-d-record-aggregate-merge-receipt-2026-07-12.md`
 //! for the slice merge receipt.
 
 pub mod class;

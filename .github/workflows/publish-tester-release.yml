@@ -790,9 +790,9 @@ jobs:
       # === Channel-index preparation + push (moved from linux publish job) ===
 
       - name: Assert channel-index gate preconditions
-        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml') == ''
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') == ''
         run: |
-          echo "::error::channel-index: no tranche manifest matched programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml — the channel-index steps would be silently skipped and the update-index branch would never move. Failing loudly instead."
+          echo "::error::channel-index: no tranche manifest matched docs/release/SD-16/tranche-*/manifest.yaml — the channel-index steps would be silently skipped and the update-index branch would never move. Failing loudly instead."
           exit 1
 
       - name: Emit alpha channel index
@@ -813,7 +813,7 @@ jobs:
             --published-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
       - name: Prepare channel index payload
-        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml') != ''
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') != ''
         id: channel_index_prep
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -830,7 +830,7 @@ jobs:
           fi
 
           TRANCHE_ID=""
-          FOUND="$(find programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-* -maxdepth 2 -name 'manifest.yaml' 2>/dev/null | while read -r f; do
+          FOUND="$(find docs/release/SD-16/tranche-* -maxdepth 2 -name 'manifest.yaml' 2>/dev/null | while read -r f; do
             PB="$(awk -F': *' '/^promotion_branch:/{gsub(/["'"'"' ]/,"",$2); print $2; exit}' "$f")"
             if [ "${PB}" = "${GITHUB_REF_NAME}" ]; then
               echo "$f"
@@ -841,7 +841,7 @@ jobs:
             TRANCHE_ID="$(awk -F': *' '/^tranche_id:/{gsub(/["'"'"' ]/,"",$2); print $2; exit}' "${FOUND}")"
           fi
           if [ -z "${TRANCHE_ID}" ]; then
-            echo "::error::channel-index: no tranche manifest found for promotion_branch=${GITHUB_REF_NAME} (looked in programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml)"
+            echo "::error::channel-index: no tranche manifest found for promotion_branch=${GITHUB_REF_NAME} (looked in docs/release/SD-16/tranche-*/manifest.yaml)"
             exit 1
           fi
 
@@ -902,7 +902,7 @@ jobs:
           echo "channel-index: prepared channels/${CHANNEL}.json (channel=${CHANNEL}, tag=${TAG}, tranche=${TRANCHE_ID}, published_at=${PUBLISHED_AT}, mirror_url=${MIRROR_URL})"
 
       - name: Update channel index on update-index branch
-        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-*/manifest.yaml') != ''
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') != ''
         run: |
           set -euo pipefail
 

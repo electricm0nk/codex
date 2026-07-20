@@ -271,9 +271,8 @@ impl SupportStateMatrix {
 
 /// SD-13 roster/matrix authority that names the roster member and its current
 /// posture. Cited by `Observed`-tier rows that have no runtime evidence yet.
-const SD13_ROSTER_MATRIX_DOC: &str = "programs/codex/requirements/\
-SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/\
-core-roster-and-support-state-matrix.md";
+const SD13_ROSTER_MATRIX_DOC: &str =
+    "docs/release/SD-13/artifacts/core-roster-and-support-state-matrix.md";
 
 /// The combined grounding reference for the Human race row, citing both the live
 /// compute seam (named Human ability-bonus and bonus-feat explanation records plus

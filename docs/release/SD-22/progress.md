@@ -3409,3 +3409,48 @@ Verification: `cargo test --locked` 428/428 green, `cargo clippy
 files passed. Both rewritten `release-notes.md` files independently
 verified against `tools/release/check_release_manifest.py`'s exact
 `REQUIRED_NOTES_SECTIONS` regex — all 7 sections present in both.
+
+### cycle-2026-07-20 (correction, round 2) | full programs/ elimination | doc:structure | operator-requested | complete
+
+The operator reframed the ask more sharply: `programs/` should not
+exist in this repo at all — everything rehomes under `docs/`. This
+superseded the "What didn't move" call above.
+
+**Round 1** (this file's own earlier entries) moved SD-16/21/22's
+`release-notes.md` to `docs/release/SD-N/` (with a full CI/schema/
+script/workflow update pass) and left SD-13/16/17's legacy artifacts in
+`programs/codex/requirements/` as "frozen historical record — no
+functional benefit to moving."
+
+**Round 2** moved everything else: SD-13's `artifacts/` (9 files,
+including a nested `race-bounded-semantics/` subdir) and SD-17's
+`artifacts/` (8 files) to `docs/release/SD-13/` and `docs/release/SD-17/`
+respectively (new directories — neither bundle predates `docs/release/`
+enough to have one); SD-16's `tranche-2.5/manifest.yaml` to
+`docs/release/SD-16/tranche-2.5/manifest.yaml`. Unlike the artifacts,
+the manifest.yaml turned out to be genuinely load-bearing — a live
+`hashFiles`/`find` glob in `publish-tester-release.yml`'s channel-index
+steps (6 occurrences) actually consumes it to advance the `update-index`
+branch; fixed all 6, plus `tranche-3-ci.yml`'s path-filter glob, plus
+`_lib-gates.sh`'s/`promotion-gates.yml`'s separate (already-broken,
+mismatched-filename) `tranche-manifest.json` constant for consistency.
+
+Doc-comment/const citations fixed in `src/rules_core/support_state_matrix.rs`
+(a real `const &str` grounding-reference value, not just a comment —
+verified no test asserts its exact literal value, only a filename
+substring), `src/pcgen_import/ir_converter.rs`, `src/pcgen_import/
+lst_parser/mod.rs`, `src/rules_core/source_content.rs`, `tests/
+sd17_e_source_ir_shape.rs`, `tests/sd17_c_ir_convert.rs`. Root `README.md`
+and `docs/release/SD-18/`'s README + scope-draft artifact updated to
+point at the new locations. Left every moved artifact's own *internal*
+historical cross-references (merge receipts, execution handoffs, and
+classification docs dated 2026-07-06/07/12 citing their own sibling
+files by the old path) untouched — frozen historical record, consistent
+with this session's established convention.
+
+`programs/` now contains zero files (only empty directory husks, which
+`git` doesn't track and don't need explicit removal).
+
+Verification: `cargo test --locked` 428/428 green, `cargo clippy
+--locked --tests -- -D warnings` clean, `npm test` (apps/desktop) 48/48
+files passed.
