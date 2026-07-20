@@ -1,6 +1,7 @@
 //! LST object-kind parser for the `CLASS:` directive (SD-17 Slice B-2;
 //! widened SD-22 Epic 3 to add `Alchemist`, then `Inquisitor`, then
-//! `Oracle`, then `Summoner`).
+//! `Oracle`, then `Summoner`; widened SD-22 Epic 4 to add `Warpriest`,
+//! the tenth and last real ACG class).
 //!
 //! Scope: the five CRB spellcasting classes named in the original slice
 //! card body (`Cleric`, `Druid`, `Wizard`, `Sorcerer`, `Bard`), plus
@@ -46,8 +47,13 @@
 //! takes precedence over `SPELLBOOK:YES` in this parser's posture
 //! derivation, so Skald resolves as spontaneous — the same posture as
 //! Bard, whose spell list Skald's own `SPELLLIST:1|Bard` token borrows
-//! from), plus their
-//! `Ex-<name>` mirror variants. The
+//! from), plus `Warpriest` (added by SD-22 Epic 4's Warpriest ingest
+//! cycle, the tenth and last real ACG class — the real `CLASS:Warpriest`
+//! line carries `SPELLSTAT:WIS` with no `MEMORIZE:NO` and no
+//! `SPELLBOOK:YES` token, the same standard-prepared posture as
+//! Shaman/Witch; the corpus's separate `CLASS:Ex-Warpriest` `VISIBLE:NO`
+//! record is an internal fallen-Warpriest variant, not player-facing
+//! content, and is deliberately **not** added to this array). The
 //! parser recognizes every `CLASS:<name>` line in the PCGen corpus where
 //! `<name>` is in that set, carries every tab-delimited `KEY:VAL` token
 //! pair to a canonical IR record, and preserves one-based source line
@@ -99,8 +105,10 @@ use std::path::Path;
 /// The five CRB spellcasting classes named in the SD-17 Slice B-2 card
 /// body, plus `Alchemist`, `Inquisitor`, `Oracle`, `Summoner`, and
 /// `Witch` (SD-22 Epic 3 widenings), plus `Arcanist`, `Bloodrager`,
-/// `Hunter`, `Investigator`, `Shaman`, and `Skald` (SD-22 Epic 4
-/// widenings — see module doc comment).
+/// `Hunter`, `Investigator`, `Shaman`, `Skald`, and `Warpriest` (SD-22
+/// Epic 4 widenings — see module doc comment). `Warpriest` is the tenth
+/// and last real ACG class; the corpus's `Ex-Warpriest` `VISIBLE:NO`
+/// variant is deliberately excluded (internal, not player-facing).
 pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
     "Cleric",
     "Druid",
@@ -118,6 +126,7 @@ pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
     "Investigator",
     "Shaman",
     "Skald",
+    "Warpriest",
 ];
 
 /// Casting posture recorded on each spellcasting class. The posture is

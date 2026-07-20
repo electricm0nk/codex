@@ -19,9 +19,13 @@
 //! real record) while wrongly including "Alchemist" — the same
 //! roster-defect shape as the resolved Gunslinger/Magus blocker. See
 //! `docs/release/SD-22/progress.md`'s `## Open blockers` for the full
-//! record. This module's roster starts at Arcanist, the first class
-//! with a real record, and will grow to the corrected 10-class list as
-//! subsequent Epic 4 cycles land.
+//! record. This module's roster started at Arcanist, the first class
+//! with a real record, and — with Warpriest's ingest cycle — has now
+//! grown to the full, corrected 10-class list: Arcanist, Bloodrager,
+//! Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler,
+//! Warpriest. Epic 4's class-roster criteria (10-12) are complete for
+//! all ten classes. Criterion 13 (shared ACG spell/equipment tables,
+//! mirroring APG's criterion 9) remains open as Epic 4's last piece.
 
 pub mod class_arcanist;
 pub mod class_bloodrager;
@@ -32,6 +36,7 @@ pub mod class_shaman;
 pub mod class_skald;
 pub mod class_slayer;
 pub mod class_swashbuckler;
+pub mod class_warpriest;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -51,11 +56,11 @@ pub struct ClassTableRow {
 }
 
 /// Identifies which ACG class a chassis-table query targets. Arcanist,
-/// Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, and
-/// Swashbuckler are the first nine real ACG classes landed; the roster
-/// grows as the next Epic 4 cycle ingests the remaining real class
-/// (Warpriest — see this module's doc comment for the roster
-/// correction).
+/// Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer,
+/// Swashbuckler, and Warpriest are all ten real ACG classes — the full,
+/// corrected roster (see this module's doc comment for the roster
+/// correction). Criterion 13 (shared ACG spell/equipment tables) remains
+/// open as Epic 4's last piece.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum AcgClassId {
     Arcanist,
@@ -67,6 +72,7 @@ pub enum AcgClassId {
     Skald,
     Slayer,
     Swashbuckler,
+    Warpriest,
 }
 
 /// Resolves an ACG class's chassis-table row for `level`, scoped to
@@ -109,6 +115,9 @@ pub fn class_chassis_resolve(
             .into_iter()
             .find(|row| row.level == level),
         AcgClassId::Swashbuckler => class_swashbuckler::class_table()
+            .into_iter()
+            .find(|row| row.level == level),
+        AcgClassId::Warpriest => class_warpriest::class_table()
             .into_iter()
             .find(|row| row.level == level),
     }

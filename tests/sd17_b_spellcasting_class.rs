@@ -1025,3 +1025,55 @@ fn parses_real_skald_record_from_acg_classes_lst() {
     assert_eq!(skald.casting_posture, Some(CastingPosture::Spontaneous));
     assert_eq!(skald.spell_stat.as_deref(), Some("CHA"));
 }
+
+// SD-22 Epic 4 widening (Warpriest ingest cycle, tenth and last real ACG
+// class): the real `CLASS:Warpriest` record in `acg_classes.lst` carries
+// `SPELLSTAT:WIS` with no `SPELLBOOK:YES` and no `MEMORIZE:NO` — the same
+// standard-prepared posture as Shaman/Witch — so it belongs in
+// `SPELLCASTING_CLASS_NAMES` rather than `MARTIAL_CLASS_NAMES`. (Widening
+// this array also widens `SpellcastingClassParseState::new`'s
+// `Ex-{name}` scope mirror by construction, so the real, separate
+// `CLASS:Ex-Warpriest` `VISIBLE:NO` record is *also* recognized as a
+// distinct parsed entry — but it carries no `SPELLSTAT:` line at all, so
+// it gets no `casting_posture`/`spell_stat`, and no `AcgClassId` variant
+// exists for it — Epic 4's Warpriest chassis cycle deliberately did not
+// give it a chassis.) Mirrors `parses_real_shaman_record_from_acg_classes_lst`.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_warpriest_record_from_acg_classes_lst() {
+    let corpus = TestCorpus::new("acg_classes_warpriest");
+    corpus.write(
+        "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        &real_acg_classes_lst(),
+    );
+    let result = parse_spellcasting_class_file(&corpus.path(
+        "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+    ))
+    .expect("read real acg_classes.lst");
+
+    let warpriest = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Warpriest")
+        .expect(
+            "Warpriest should be recognized from the real acg_classes.lst once \
+             SPELLCASTING_CLASS_NAMES is widened to include it",
+        );
+    assert_eq!(warpriest.casting_posture, Some(CastingPosture::Prepared));
+    assert_eq!(warpriest.spell_stat.as_deref(), Some("WIS"));
+
+    // The parser's `Ex-{name}` scope mirror (built into
+    // `SpellcastingClassParseState::new`, pre-dating this cycle) also
+    // recognizes `CLASS:Ex-Warpriest` as a distinct parsed entry — but
+    // the real record carries no `SPELLSTAT:` line at all, so it gets no
+    // casting posture or spell stat, and no `AcgClassId` chassis exists
+    // for it (Epic 4's Warpriest cycle only chassis'd the real,
+    // player-facing `Warpriest` class).
+    let ex_warpriest = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Ex-Warpriest")
+        .expect("Ex-Warpriest is parsed as a distinct entry via the Ex-{name} scope mirror");
+    assert_eq!(ex_warpriest.casting_posture, None);
+    assert_eq!(ex_warpriest.spell_stat, None);
+}
