@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: PENDING_COMMIT_SHA
+snapshot_as_of: 4e62989
 ---
 
 # SD-22 — Progress
@@ -2006,7 +2006,7 @@ Full RED/GREEN evidence, file list, and reasoning:
 corrected 10-class roster), or a dedicated cycle for criterion 13's
 shared spell/equipment tables once more classes land.
 
-### cycle-2026-07-20T03:00:00Z | Epic 6, `party_challenge_rating` (criterion 19, DM Toolkit's second cycle) | dm:party_cr | card PENDING_CARD_ID on `codex-tranche-5` (status=done) | open → **complete (criterion 19)**
+### cycle-2026-07-20T03:00:00Z | Epic 6, `party_challenge_rating` (criterion 19, DM Toolkit's second cycle) | dm:party_cr | card `t_c2a36a5e` on `codex-tranche-5` (status=done) | open → **complete (criterion 19)**
 
 Ran in parallel with a sibling stream working Epic 4 (ACG, Slayer); this
 cycle's file-touch set (`src/rules_core/party_cr.rs`,

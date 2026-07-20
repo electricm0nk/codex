@@ -610,8 +610,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open (criterion 18 complete; criteria 19-21 open)
   evidence_tier_after: complete (criterion 19 only; criteria 20-21 remain open)
   branch_tip_before: 9eb6152
-  branch_tip_after: PENDING_COMMIT_SHA
-  merge_receipt_sha: PENDING_COMMIT_SHA
+  branch_tip_after: 4e62989
+  merge_receipt_sha: 4e62989
   cycle_artifact_path: "dm_toolkit/party_cr_cycle_receipt.md"
   red_phase_evidence: "in-file #[cfg(test)] mod tests inside src/rules_core/party_cr.rs itself (tests/sd22_dm_toolkit_deterministic.rs is reserved for criterion 20's own cycle per loop-instruction.md's file-touch partition); party_challenge_rating temporarily stubbed to a constant 99.0, 6/6 tests failed for the intended reason (see cycle_artifact_path:Red-phase evidence)"
   green_phase_evidence: "implemented party_challenge_rating grounded in the PF1 Core Rulebook's Gamemastering chapter, Designing Encounters -> Step 1 -- Determine APL rule (average level, rounded, +1/-1 party-size adjustment), verified against legacy.aonprd.com/corerulebook/gamemastering.html; reuses encounters.rs's CharacterSnapshot type; 6/6 in-file tests green; full cargo test suite green, 0 failed anywhere (413 test-result:ok blocks); clippy clean, no findings (see cycle_artifact_path:Green-phase evidence)"
@@ -622,7 +622,7 @@ that are already self-evident from the cycle_artifact_path.)
   next_required_uplift: "Epic 6's next-eligible cycle is criterion 20 (deterministic tests in tests/sd22_dm_toolkit_deterministic.rs), which should reconcile both now-documented corpus-source-inventory.md §4.1 discrepancies: case 2's Hard-vs-grounded-Deadly (from criterion 18's cycle) and case 3's ~3.5-vs-grounded-3.0 (this cycle). Criterion 21 (happy-path integration) remains blocked until Epic 3+4+5 all land -- Epic 5 remains blocked on its own separate parser gap."
   corpus_input_path: "n/a -- not a PCGen .lst ingest cycle; grounded instead in legacy.aonprd.com/corerulebook/gamemastering.html (PF1 Core Rulebook, Gamemastering chapter, Designing Encounters -> Step 1 -- Determine APL), verified 2026-07-20"
   rule_set_used: n/a
-  kanban_card: "PENDING_CARD_ID (codex-tranche-5, status=done)"
+  kanban_card: "t_c2a36a5e (codex-tranche-5, status=done)"
   progress_file_updated: "yes"
   artifacts_written: ["dm_toolkit/party_cr_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream on Epic 4 (ACG, Slayer); file-touch set (party_cr.rs, mod.rs's one-line registration) disjoint from acg/ per loop-instruction.md. Both agents shared this checkout (not separate worktrees); the sibling's Slayer-cycle commits (37bf596, 9eb6152) landed while this cycle was still doing its own RED/GREEN/verification work, so this cycle's progress.md/receipts.md edits are made directly on top of that already-synced base (git fetch confirmed local HEAD == origin/tranche/5 before any doc edit). Found and documented a second real discrepancy against corpus-source-inventory.md §4.1 (case 3's stated ~3.5 vs. the verified-rulebook-grounded 3.0) rather than force-fitting the formula to match the unverified fixture table, mirroring criterion 18's own precedent for case 2 and this bundle's Gunslinger/Magus and ACG-Alchemist roster-correction precedent."
