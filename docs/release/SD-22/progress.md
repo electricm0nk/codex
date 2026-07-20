@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: PENDING_SHA_CRITERION20
+snapshot_as_of: c7b80ec
 ---
 
 # SD-22 — Progress
@@ -30,7 +30,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
 | E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6), Summoner (5/6), Witch (6/6); shared spell/equipment tables | **complete — criteria 6-9, Epic 3 (APG) fully closed out.** `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all six classes' BAB/save chassis land with cross-book invariant tests (criteria 6-8). Criterion 9 lands this cycle as `apg/spell_list.rs` (4-entry bootstrap sample: Bomber's Eye/Alchemist, Burst Bonds/Inquisitor, Borrow Fortune/Oracle, Ill Omen/Witch) and `apg/equipment_tables.rs` (3-entry bootstrap sample: Iron Spike, Arrow (Blunt), Knucklebone of Fickle Fortune) — bootstrap/representative coverage per the `crb/equipment_tables.rs` precedent, not exhaustive; Summoner has no active spell record anywhere in the real corpus (its dedicated block is entirely `#`-commented out) and Cavalier casts no spells, both by design not omission. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`). See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md`, `artifacts/apg/class_summoner_cycle_receipt.md`, `artifacts/apg/class_witch_cycle_receipt.md`, `artifacts/apg/spell_list_cycle_receipt.md`, `artifacts/apg/equipment_tables_cycle_receipt.md` | see `## Cycle log` |
-| E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (1/10), Bloodrager (2/10), Brawler (3/10), Hunter (4/10), Investigator (5/10), Shaman (6/10), Skald (7/10), Slayer (8/10) of the corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order) | **complete (criteria 10-12 for Arcanist + Bloodrager + Brawler + Hunter + Investigator + Shaman + Skald + Slayer)** — `rules_tables/acg/mod.rs` grown to eight classes, `RuleSetId::Acg` cross-book invariant tests hold for all eight. Slayer is the third ACG martial (non-caster) class (widened `class.rs`'s `MARTIAL_CLASS_NAMES`, same allowlist as Cavalier/Brawler); the real `CLASS:Slayer` record carries no `SPELLSTAT:`/`MEMORIZE:`/`SPELLBOOK:` token, full BAB, good Fortitude+Reflex (one combined token), poor Will, `MAXLEVEL:20`. See `artifacts/acg/class_arcanist_cycle_receipt.md`, `artifacts/acg/class_bloodrager_cycle_receipt.md`, `artifacts/acg/class_brawler_cycle_receipt.md`, `artifacts/acg/class_hunter_cycle_receipt.md`, `artifacts/acg/class_investigator_cycle_receipt.md`, `artifacts/acg/class_shaman_cycle_receipt.md`, `artifacts/acg/class_skald_cycle_receipt.md`, `artifacts/acg/class_slayer_cycle_receipt.md` | see `## Cycle log` |
+| E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (1/10), Bloodrager (2/10), Brawler (3/10), Hunter (4/10), Investigator (5/10), Shaman (6/10), Skald (7/10), Slayer (8/10), Swashbuckler (9/10) of the corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order) | **complete (criteria 10-12 for Arcanist + Bloodrager + Brawler + Hunter + Investigator + Shaman + Skald + Slayer + Swashbuckler)** — `rules_tables/acg/mod.rs` grown to nine classes, `RuleSetId::Acg` cross-book invariant tests hold for all nine. Swashbuckler is the fourth ACG martial (non-caster) class (widened `class.rs`'s `MARTIAL_CLASS_NAMES`, same allowlist as Cavalier/Brawler/Slayer); the real `CLASS:Swashbuckler` record carries no `SPELLSTAT:`/`MEMORIZE:`/`SPELLBOOK:` token, full BAB, poor Fortitude, good Reflex (its only good save, unlike Slayer's combined Fortitude+Reflex), poor Will, `MAXLEVEL:20`. One real class remains (Warpriest — 10/10). See `artifacts/acg/class_arcanist_cycle_receipt.md`, `artifacts/acg/class_bloodrager_cycle_receipt.md`, `artifacts/acg/class_brawler_cycle_receipt.md`, `artifacts/acg/class_hunter_cycle_receipt.md`, `artifacts/acg/class_investigator_cycle_receipt.md`, `artifacts/acg/class_shaman_cycle_receipt.md`, `artifacts/acg/class_skald_cycle_receipt.md`, `artifacts/acg/class_slayer_cycle_receipt.md`, `artifacts/acg/class_swashbuckler_cycle_receipt.md` | see `## Cycle log` |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | `Encounter::new` lands (criterion 18); `party_cr.rs` (19) lands; deterministic tests (20) land this cycle; happy-path integration (21) still open, blocked on Epic 3+4+5 all landing | **complete (criteria 18-20)** — `src/rules_core/encounters.rs` lands `CharacterSnapshot`, `MonsterRef`, `Difficulty`, `EncounterResult`, and `Encounter::new`, grounded in the real PF1 Core Rulebook "Gamemastering" chapter (Table: Encounter Design, Table: CR Equivalencies, Table: Experience Point Awards CR 1-10). `src/rules_core/party_cr.rs` lands `party_challenge_rating`, grounded in the same chapter's "Designing Encounters" → "Step 1 — Determine APL" rule (reuses `encounters.rs`'s `CharacterSnapshot`). `tests/sd22_dm_toolkit_deterministic.rs` (criterion 20) lands 5 acceptance-level tests covering both modules against `corpus-source-inventory.md` §4.1's five canonical cases; this cycle independently re-verified (fresh fetch of `legacy.aonprd.com/corerulebook/gamemastering.html`, not trusting the prior cycles' claims) and confirmed both previously-flagged discrepancies were real doc errors, not code bugs — corrected §4.1's fixture table (case 2: "Hard" → "Deadly"; case 3: "~3.5" → "3.0") rather than bending the already-correct code. See `artifacts/dm_toolkit/encounters_cycle_receipt.md`, `artifacts/dm_toolkit/party_cr_cycle_receipt.md`, and `artifacts/dm_toolkit/deterministic_tests_cycle_receipt.md`. | see `## Cycle log` |
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
@@ -2176,3 +2176,91 @@ block appended to `receipts.md`. Epic 6's only remaining criterion is 21
 Epic 5 (Bestiary 1) remains blocked on its own separate parser gap
 (`b1_races.lst`'s unprefixed bare-row monster records). Both §4.1
 discrepancies flagged by criteria 18 and 19 are now fully reconciled.
+
+### cycle-2026-07-20T03:17:19Z | Epic 4, Swashbuckler (cycle 9 of 10) | ingest:acg_class | card `t_1d251219` on `codex-tranche-5` (status=done) | open → **complete (criteria 10-12 for Swashbuckler)**
+
+Ran in parallel with a sibling stream working Epic 6 criterion 20
+(`tests/sd22_dm_toolkit_deterministic.rs`, and `corpus-source-inventory.md`
+reconciliation edits); this cycle's file-touch set (`acg/`,
+`tests/sd22_acg_class_swashbuckler_resolves.rs`,
+`tests/sd17_b1_martial_class.rs`'s widening test,
+`src/pcgen_import/lst_parser/class.rs`'s `MARTIAL_CLASS_NAMES`) is
+disjoint from Epic 6's `tests/sd22_dm_toolkit_deterministic.rs` +
+`corpus-source-inventory.md` per `loop-instruction.md`'s file-touch
+partition. Did all RED/GREEN/verification work before touching this file
+or `receipts.md`. The sibling's own uncommitted work
+(`tests/sd22_dm_toolkit_deterministic.rs`, `corpus-source-inventory.md`,
+`docs/release/SD-22/artifacts/dm_toolkit/deterministic_tests_cycle_receipt.md`)
+was present unstaged in the shared working tree throughout this cycle and
+was left completely untouched — this cycle's own `git add` is scoped
+strictly to its own files by explicit path.
+
+Confirmed Swashbuckler is the next-eligible Epic 4 criterion per the prior
+cycle's own recorded pointer (Slayer cycle's "Next-eligible for Epic 4:
+Swashbuckler, class 9 of the corrected 10-class roster"). Verified the
+real `CLASS:Swashbuckler` record directly before writing any test
+(`acg_classes.lst:347`): `HD:10`, `MAXLEVEL:20`,
+`BONUS:COMBAT|BASEAB|classlevel("APPLIEDAS=NONEPIC")|TYPE=Base.REPLACE`
+(full BAB), three separate single-save `BONUS:SAVE` tokens — poor
+Fortitude (`/3`), good Reflex (`/2+2`, the class's only good save, unlike
+Slayer's combined Fortitude+Reflex token), poor Will (`/3`) — and no
+`SPELLSTAT:`/`MEMORIZE:`/`SPELLBOOK:` token anywhere in the block,
+confirming non-caster posture (belongs in `class.rs`'s
+`MARTIAL_CLASS_NAMES`, not `spellcasting_class.rs`'s
+`SPELLCASTING_CLASS_NAMES`).
+
+**Widening RED**: added `parses_real_swashbuckler_record_from_acg_classes_lst`
+to `tests/sd17_b1_martial_class.rs` (real-corpus-gated on
+`PCGEN_CORPUS_ROOT`, mirroring `parses_real_slayer_record_from_acg_classes_lst`);
+ran against the unchanged tree — failed for the intended reason
+(`Swashbuckler` not yet in `MARTIAL_CLASS_NAMES`, silently skipped).
+
+**Acceptance RED**: added `tests/sd22_acg_class_swashbuckler_resolves.rs`
+mirroring the Arcanist/Bloodrager/Brawler/Hunter/Investigator/Shaman/Skald/Slayer
+tests' shape (plus a cross-class regression test confirming all eight
+prior classes still resolve); ran against the unchanged tree — failed to
+compile (`E0599`: `AcgClassId::Swashbuckler` did not exist, 5 call sites)
+for the intended reason.
+
+GREEN: widened `MARTIAL_CLASS_NAMES` in `src/pcgen_import/lst_parser/
+class.rs` by exactly one name (`Swashbuckler`). Added `src/rules_core/
+rules_tables/acg/class_swashbuckler.rs` (BAB/save chassis only, same scope
+boundary as `class_arcanist.rs`/`class_bloodrager.rs`/`class_brawler.rs`/
+`class_hunter.rs`/`class_investigator.rs`/`class_shaman.rs`/
+`class_skald.rs`/`class_slayer.rs`) and `AcgClassId::Swashbuckler` + a
+match arm in `acg/mod.rs`.
+
+Verification: `cargo test --locked --test sd22_acg_class_swashbuckler_resolves
+-- --include-ignored` 7/7 passed (including the real-corpus-gated
+grounding test and the Arcanist+Bloodrager+Brawler+Hunter+Investigator+
+Shaman+Skald+Slayer-still-resolve regression check). `cargo test --locked
+--test sd17_b1_martial_class -- --include-ignored` 19/19 passed, including
+the new widening test and every pre-existing martial-class test
+(Fighter/Barbarian/Monk/Rogue/Ranger/Paladin/Cavalier/Brawler/Slayer all
+unaffected). Full `cargo test --locked` — 415 `test result: ok` blocks
+across every suite, 0 failed anywhere (grepped full output for
+`FAILED`/`error\[`/`N failed` with `N > 0`, found none; sibling-preservation
+holds, including the untouched Arcanist, Bloodrager, Brawler, Hunter,
+Investigator, Shaman, Skald, and Slayer suites, all six APG class-chassis
+suites, both APG spell/equipment suites, and the concurrently in-flight
+Epic 6 `tests/sd22_dm_toolkit_deterministic.rs` suite from the sibling
+stream). `cargo clippy --locked --tests -- -D warnings` clean (exit code
+0).
+
+With Swashbuckler landed, Epic 4 (ACG) has nine of ten real classes
+chassis'd — criteria 10-12 complete for Arcanist, Bloodrager, Brawler,
+Hunter, Investigator, Shaman, Skald, Slayer, and Swashbuckler. Criterion 13
+(per-cycle ACG spell/equipment resolution) remains open (mirrors APG's
+criterion 9, a separate future cycle). One more real ACG class remains
+(Warpriest — note the real corpus also carries an internal `Ex-Warpriest`
+`VISIBLE:NO` variant, confirm which is player-facing before that cycle
+starts). Epic 5 (Bestiary 1) remains blocked on its own, separate parser
+gap (no parser recognizes `b1_races.lst`'s unprefixed bare-row monster
+records) — unaffected by this cycle.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/acg/class_swashbuckler_cycle_receipt.md`. Receipt block
+appended to `receipts.md`. Next-eligible for Epic 4: Warpriest (class 10
+of the corrected 10-class roster, the last real ACG class), or a
+dedicated cycle for criterion 13's shared spell/equipment tables once all
+classes land.
