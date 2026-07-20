@@ -585,8 +585,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open (seven of ten real classes landed: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald)
   evidence_tier_after: complete (criteria 10-12 for Slayer; eight of ten real classes landed)
   branch_tip_before: 018dd3a
-  branch_tip_after: PENDING_COMMIT_SHA
-  merge_receipt_sha: PENDING_COMMIT_SHA
+  branch_tip_after: 37bf596
+  merge_receipt_sha: 37bf596
   cycle_artifact_path: "acg/class_slayer_cycle_receipt.md"
   red_phase_evidence: "Widening RED: parses_real_slayer_record_from_acg_classes_lst added to tests/sd17_b1_martial_class.rs, failed (Slayer out of MARTIAL_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_slayer_resolves.rs failed to compile (E0599: AcgClassId::Slayer did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
   green_phase_evidence: "widened MARTIAL_CLASS_NAMES by one name (Slayer) in src/pcgen_import/lst_parser/class.rs -- the real CLASS:Slayer record carries no SPELLSTAT:/MEMORIZE:/SPELLBOOK: token anywhere in its block, the same non-caster posture as Cavalier/Brawler; added rules_tables/acg/class_slayer.rs and AcgClassId::Slayer match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist+Bloodrager+Brawler+Hunter+Investigator+Shaman+Skald still resolve); widening test green (18/18 in sd17_b1_martial_class); full cargo test suite green, 0 failed (413 test-result:ok blocks); clippy clean (see cycle_artifact_path:Green-phase evidence)"
