@@ -53,11 +53,19 @@
 //! continues CR 2 alphabetically after subset 03's "Cave Fisher". Ships
 //! the next five real, unambiguous, non-parenthetical CR-2 monsters:
 //! Choker, Crocodile, Dark Creeper, Iron Cobra, Morlock.
+//!
+//! **Subset 05** (documented in full in
+//! `docs/release/SD-22/artifacts/beastiary1/subset_05_cycle_receipt.md`
+//! and in `tests/sd22_beastiary1_subset_05_resolves.rs`'s header):
+//! continues CR 2 alphabetically after subset 04's "Morlock". Ships the
+//! next five real, unambiguous, non-parenthetical CR-2 monsters: Rat
+//! Swarm, Sahuagin, Shark, Shocker Lizard, Skum.
 
 pub mod monster_subset_01;
 pub mod monster_subset_02;
 pub mod monster_subset_03;
 pub mod monster_subset_04;
+pub mod monster_subset_05;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -112,6 +120,11 @@ pub enum MonsterId {
     DarkCreeper,
     IronCobra,
     Morlock,
+    RatSwarm,
+    Sahuagin,
+    Shark,
+    ShockerLizard,
+    Skum,
 }
 
 /// Resolves a Bestiary 1 monster's chassis data, scoped to
@@ -143,6 +156,11 @@ pub fn monster_resolve(monster_id: MonsterId, rule_set: RuleSetId) -> Option<Mon
         MonsterId::DarkCreeper => monster_subset_04::dark_creeper(),
         MonsterId::IronCobra => monster_subset_04::iron_cobra(),
         MonsterId::Morlock => monster_subset_04::morlock(),
+        MonsterId::RatSwarm => monster_subset_05::rat_swarm(),
+        MonsterId::Sahuagin => monster_subset_05::sahuagin(),
+        MonsterId::Shark => monster_subset_05::shark(),
+        MonsterId::ShockerLizard => monster_subset_05::shocker_lizard(),
+        MonsterId::Skum => monster_subset_05::skum(),
     })
 }
 
@@ -170,6 +188,11 @@ pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStat
         "beastiary1:monster:dark_creeper" => MonsterId::DarkCreeper,
         "beastiary1:monster:iron_cobra" => MonsterId::IronCobra,
         "beastiary1:monster:morlock" => MonsterId::Morlock,
+        "beastiary1:monster:rat_swarm" => MonsterId::RatSwarm,
+        "beastiary1:monster:sahuagin" => MonsterId::Sahuagin,
+        "beastiary1:monster:shark" => MonsterId::Shark,
+        "beastiary1:monster:shocker_lizard" => MonsterId::ShockerLizard,
+        "beastiary1:monster:skum" => MonsterId::Skum,
         _ => return None,
     };
     monster_resolve(monster_id, rule_set)

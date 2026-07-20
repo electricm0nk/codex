@@ -302,3 +302,81 @@ fn parses_real_subset_04_cr_2_monster_records_from_b1_races_lst() {
     assert!(morlock.natural_attacks.iter().any(|a| a.name == "Bite (Primary)" && a.damage_dice == "1d4"));
     assert!(morlock.natural_attacks.iter().any(|a| a.name == "Bite (With Weapon Attack)" && a.damage_dice == "1d4"));
 }
+
+/// Grounding test for subset 05's roster (see
+/// `docs/release/SD-22/artifacts/beastiary1/subset_05_cycle_receipt.md`).
+/// Subset 05 continues CR 2, alphabetically after subset 04's "Morlock".
+/// No parser widening was needed. This subset introduces two new shapes
+/// not previously exercised: Shark's row has no `Walk` pair in its
+/// `MOVE:` token at all (`speed_ft` parses to `None`), and Sahuagin/Skum
+/// each carry two separate `NATURALATTACKS:` tab fields that accumulate
+/// into one combined list.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_subset_05_cr_2_monster_records_from_b1_races_lst() {
+    let text = real_b1_races_lst();
+    let records = parse_monster_stat_block_entries("b1_races.lst", &text);
+
+    let find = |name: &str| {
+        records
+            .iter()
+            .find(|r| r.name == name)
+            .unwrap_or_else(|| panic!("expected a parsed record named {name:?} from the real b1_races.lst"))
+    };
+
+    let rat_swarm = find("Rat Swarm");
+    assert_eq!(rat_swarm.challenge_rating.as_f32(), 2.0);
+    assert_eq!(rat_swarm.size.as_deref(), Some("T"));
+    assert_eq!(rat_swarm.speed_ft, Some(15), "walk speed, not the climb/swim speed");
+    assert_eq!(rat_swarm.race_type.as_deref(), Some("Animal"));
+    assert_eq!(rat_swarm.race_subtype.as_deref(), Some("Swarm"));
+    assert_eq!(rat_swarm.source_page.as_deref(), Some("p.232"));
+    assert!(rat_swarm.natural_attacks.iter().any(|a| a.name == "Swarm" && a.damage_dice == "1d6"));
+
+    let sahuagin = find("Sahuagin");
+    assert_eq!(sahuagin.challenge_rating.as_f32(), 2.0);
+    assert_eq!(sahuagin.speed_ft, Some(30), "walk speed, not the swim speed");
+    assert_eq!(sahuagin.race_type.as_deref(), Some("Monstrous Humanoid"));
+    assert_eq!(sahuagin.race_subtype.as_deref(), Some("Aquatic"));
+    assert_eq!(sahuagin.source_page.as_deref(), Some("p.239"));
+    assert_eq!(
+        sahuagin.natural_attacks.len(),
+        3,
+        "two NATURALATTACKS: tab fields (Claws, and a pipe-separated Bite pair) accumulate to 3 entries"
+    );
+    assert!(sahuagin.natural_attacks.iter().any(|a| a.name == "Claws" && a.damage_dice == "1d4"));
+    assert!(sahuagin.natural_attacks.iter().any(|a| a.name == "Bite (w/o weapon)" && a.damage_dice == "1d4"));
+    assert!(sahuagin.natural_attacks.iter().any(|a| a.name == "Bite (with weapon)" && a.damage_dice == "1d4"));
+
+    let shark = find("Shark");
+    assert_eq!(shark.challenge_rating.as_f32(), 2.0);
+    assert_eq!(shark.speed_ft, None, "no Walk pair on the real row -- MOVE:Swim,60 only");
+    assert_eq!(shark.race_type.as_deref(), Some("Animal"));
+    assert_eq!(shark.race_subtype.as_deref(), Some("Aquatic"));
+    assert_eq!(shark.source_page.as_deref(), Some("p.247"));
+    assert!(shark.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "1d8"));
+
+    let shocker_lizard = find("Shocker Lizard");
+    assert_eq!(shocker_lizard.challenge_rating.as_f32(), 2.0);
+    assert_eq!(shocker_lizard.speed_ft, Some(40), "walk speed, not the climb/swim speed");
+    assert_eq!(shocker_lizard.race_type.as_deref(), Some("Magical Beast"));
+    assert_eq!(shocker_lizard.race_subtype, None);
+    assert_eq!(shocker_lizard.source_page.as_deref(), Some("p.248"));
+    assert!(shocker_lizard.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "1d4"));
+
+    let skum = find("Skum");
+    assert_eq!(skum.challenge_rating.as_f32(), 2.0);
+    assert_eq!(skum.speed_ft, Some(20), "walk speed, not the swim speed");
+    assert_eq!(skum.race_type.as_deref(), Some("Monstrous Humanoid"));
+    assert_eq!(skum.race_subtype.as_deref(), Some("Aquatic"));
+    assert_eq!(skum.source_page.as_deref(), Some("p.253"));
+    assert_eq!(
+        skum.natural_attacks.len(),
+        4,
+        "two NATURALATTACKS: tab fields, each a pipe-separated pair, accumulate to 4 entries"
+    );
+    assert!(skum.natural_attacks.iter().any(|a| a.name == "Bite (w/o weapon)" && a.damage_dice == "1d6"));
+    assert!(skum.natural_attacks.iter().any(|a| a.name == "Bite (w/weapon)" && a.damage_dice == "1d6"));
+    assert!(skum.natural_attacks.iter().any(|a| a.name == "Claw (w/o weapon)" && a.damage_dice == "1d4"));
+    assert!(skum.natural_attacks.iter().any(|a| a.name == "Claw (w/weapon)" && a.damage_dice == "1d4"));
+}
