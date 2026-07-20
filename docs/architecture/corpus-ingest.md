@@ -1,0 +1,301 @@
+# Corpus Ingest
+
+> Scope: how real PCGen corpus files (`.pcc` entry files + `.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
+> Last verified: 2026-07-20 against ef9012bf5de8
+> Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
+
+## Purpose
+
+`src/pcgen_import/` turns real PCGen corpus text — `.pcc` campaign entry
+files and the `.lst` object-data files they include — into the canonical
+source-IR envelope (`src/rules_core/source_content.rs`) that the rules
+engine consumes. The corpus itself is never vendored into this repo: it
+is an external checkout of PCGen data, located by the `PCGEN_CORPUS_ROOT`
+environment variable at test time. Every corpus-gated test skips gracefully
+(or hard-skips via `#[ignore]`) rather than failing when the corpus isn't
+present — see [testing.md](./testing.md) §"Corpus-gated tests" for the full
+catalog of patterns and which one to copy for a new test.
+
+Parsing and semantic conversion are deliberately separate stages, per
+`src/pcgen_import/mod.rs`'s module doc comment. Nothing in this module
+interprets PF1 rule semantics (BONUS trees, pipe-delimited qualifiers,
+spell-slot math); it only recognizes directive shapes and carries their
+tokens forward with source provenance.
+
+## Pipeline stages
+
+The pipeline runs in one direction, each stage consuming the previous
+stage's output type:
+
+```
+pcc.rs                  parse_pcc_entry            -> PccEntryFile
+include_resolver.rs      resolve_pcc_includes_from  -> IncludeResolution
+lst_parser/<kind>.rs     parse_<kind>_entries        -> per-kind parse result
+ir_converter.rs          convert_to_ir / convert_*   -> SourceContentRecord<'a>
+source_content_payload.rs SourceContentPayload<'a>   (payload enum, referenced above)
+rules_core::source_content SourcePackageContent<'a>  (corpus-rooted aggregate)
+```
+
+### Stage 1 — `pcc.rs`: structural include edges
+
+`src/pcgen_import/pcc.rs`'s `parse_pcc_entry(source_path, input_text)`
+walks a `.pcc` file line by line and recognizes exactly one construct:
+`PCC:` include directives. Every other line (`CLASS:`, `RACE:`,
+`SKILL:`, ...) is ignored at this stage — no LST semantics are
+interpreted here. The result is a `PccEntryFile` carrying:
+
+- `includes: Vec<PccIncludeEdge>` — one entry per `PCC:` directive, with
+  `source_path`, one-based `line_number`, verbatim `raw_directive`, and
+  the parsed `target` text.
+- `diagnostics: Vec<PccDiagnostic>` — a `PccDiagnosticKind::MalformedInclude`
+  record for a `PCC:` line with no target, rather than a silently
+  dropped line.
+
+### Stage 2 — `include_resolver.rs`: deterministic include graph
+
+`src/pcgen_import/include_resolver.rs` composes `pcc::parse_pcc_entry`
+(it does not shadow it) and resolves the raw include-directive text into
+an actual filesystem graph. `resolve_pcc_includes_from(corpus_root,
+source_pcc_path)` performs a deterministic DFS over `PCC:` edges,
+resolving PCGen's `@/` and `*/` path conventions against `corpus_root`
+(see `resolve_pcgen_path`), and returns an `IncludeResolution` with:
+
+- `pcc_files: Vec<ResolvedPccFile>` — every PCC file visited, in DFS
+  preorder.
+- `pcc_edges: Vec<ResolvedPccEdge>` — directed include edges with
+  resolved absolute `target_path`.
+- `lst_files: Vec<ResolvedLstFile>` — flat LST references discovered on
+  non-`PCC:` lines (any line of the form `<KIND>:<path>.lst`), each
+  tagged with its directive `kind` (e.g. `CLASS`, `RACE`, `SPELL`,
+  `DATACONTROL`) and the line that emitted it.
+- `diagnostics: Vec<IncludeDiagnostic>` — `IncludeDiagnosticKind`
+  variants `MalformedInclude` (propagated from the B-family PCC parser),
+  `MissingTarget` (an include or LST reference resolves to a
+  non-existent file), `CycleDetected` (a `PCC:` include points back to a
+  file already on the active DFS stack — the diagnostic message includes
+  the full cycle path), and `ReadFailed` (a PCC file could not be read).
+
+Downstream parsers (Stage 3) discover which `.lst` files to parse from
+`IncludeResolution::lst_files`; this module does not parse LST content
+itself.
+
+### Stage 3 — `lst_parser/`: per-kind LST parsers
+
+`src/pcgen_import/lst_parser/mod.rs` partitions LST parsing by object
+kind, one module per kind:
+
+- `class.rs` — `parse_class_entries` recognizes `CLASS:<name>` lines for
+  a fixed allowlist, `MARTIAL_CLASS_NAMES` (Fighter, Barbarian, Monk,
+  Rogue, Ranger, Paladin, Cavalier, Brawler, Slayer, Swashbuckler, plus
+  each name's `Ex-<name>` mirror). A class name outside the allowlist is
+  skipped silently (no diagnostic) — it belongs to a different parser or
+  a future widening. Output is `ClassEntry` (tokens plus `###Block:`
+  `ClassFeatureBlock`/`ClassLevelLine` feature data), aggregated into a
+  `ClassParseResult`.
+- `spellcasting_class.rs` — the same allowlist pattern via
+  `SPELLCASTING_CLASS_NAMES` (Cleric, Druid, Wizard, Sorcerer, Bard,
+  Alchemist, Inquisitor, Oracle, Summoner, Witch, Arcanist, Bloodrager,
+  Hunter, Investigator, Shaman, Skald, Warpriest). `parse_spellcasting_class_entries`
+  additionally derives a `CastingPosture` (Prepared / Spontaneous /
+  Spellbook) from `SPELLSTAT:`/`MEMORIZE:`/`SPELLBOOK:` tokens and
+  harvests progression-curve and domain-selection `###Block:` rows into
+  `SpellcastingClassEntry`. Both allowlists widen one class at a time as
+  SD-22 ingest cycles verify each class's real `CLASS:` line shape
+  against the corpus — putting a class on the wrong allowlist (martial
+  vs. spellcasting) is a correctness bug the module doc comments call
+  out per class.
+- `race_ability.rs` — `parse_lst_entry` recognizes `RACE:`/`RACES:`
+  pointer lines and `ABILITY:` declarations (pointer or full
+  pipe-delimited form), producing `LstEntryFile` with `race_pointers:
+  Vec<RaceDeclaration>` and `ability_declarations: Vec<AbilityDeclaration>`.
+- `spell.rs` — row-shaped `SPELL:` parsing (`LstSpellRecord`), tolerant
+  of both "tight TSV" and "aligned TSV" corpus layouts via a known-tag
+  scan (`KNOWN_TAGS`) rather than fixed column indices.
+- `equipment.rs` — `EQUIP:`/`EQUIPMOD:` row parsing (`EquipmentRecord`),
+  including flattened `BONUS:` chains (`BonusToken`) so a chain with
+  many pipe-delimited qualifiers still parses in O(n) without recursion.
+- `metadata.rs` — the six flat metadata kinds (`MetadataKind::{Deity,
+  Domain, Kits, Language, Template, CompanionMod}`), each occurrence
+  becoming one `LstRecord`.
+- `monster_stat_block.rs` — a bare tab-delimited row parser
+  (`parse_monster_stat_block_entries`), written for SD-22 Epic 5's
+  Bestiary 1 ingest because `race_ability.rs`'s `RACE:`/`ABILITY:`-only
+  recognizer extracts zero records from `b1_races.lst` (monster rows
+  there have no directive prefix — the name is the unprefixed first tab
+  field). A row qualifies only if it carries a `CR:` token (rows
+  without one, like the bare `Skeleton`/`Zombie` template-shim rows, are
+  skipped without a diagnostic) and is not a `.MOD`/`.COPY=` override
+  row. **This parser is not wired into `ir_converter.rs` or
+  `SourceContentPayload`** — there is no `MonsterStatBlockRecord`
+  variant on either enum, and its only caller in the repo is the
+  parser's own test suite (`tests/sd17_b_monster_stat_block.rs`). Its
+  output is read and hand-transcribed into `rules_tables` book modules
+  rather than flowing through the canonical-IR projection path
+  automatically (see [rules-data-tables.md](./rules-data-tables.md)'s
+  hand-transcription convention).
+
+Every per-kind parser's outputs are reachable through one kind-tagged
+union: `ParsedLstRecord<'a>` (`src/pcgen_import/lst_parser/mod.rs`,
+canonical home; re-exported from `src/pcgen_import/mod.rs` and from
+`ir_converter.rs` for backward compatibility). Its seven variants —
+`Class`, `SpellcastingClass`, `Race`, `Ability`, `Spell`, `Equipment`,
+`Metadata` — each borrow (`&'a ...`) the corresponding B-family entry
+type. `monster_stat_block.rs`'s `MonsterStatBlockRecord` has no
+`ParsedLstRecord` variant, consistent with it sitting outside the
+canonical-IR pipeline.
+
+### Stage 4 — `ir_converter.rs`: canonical projection
+
+`src/pcgen_import/ir_converter.rs` is the canonical projection path. Its
+public entry point, `convert_to_ir(parsed_record: &ParsedLstRecord<'a>,
+_schema: &IRSchema) -> SourceContentRecord<'a>`, is a total,
+enum-discriminated trampoline over seven per-family converters
+(`convert_class_entry`, `convert_spellcasting_class_entry`,
+`convert_race_declaration`, `convert_ability_declaration`,
+`convert_spell_record`, `convert_equipment_record`,
+`convert_metadata_record`) — every `ParsedLstRecord` variant has exactly
+one canonical envelope shape; there is no rejection path at this stage.
+Per-document converters (`convert_class_parse_result`,
+`convert_lst_entry_file`, `convert_spell_file`, ...) and corpus-rooted
+`convert_package_from_*` builders wrap the per-record converters to
+consume a whole B-family parse-result container in one O(n) pass,
+accumulating a `SourcePackageContent` plus a forwarded-diagnostics
+vector.
+
+`IRSchema::canonical_v1()` describes (not enforces) the directive-token
+vocabulary the schema recognizes; `IRSchema::recognizes` is advisory,
+not a filter the converter itself applies.
+
+`IRDiagnostic` (converter-side; distinct from the canonical
+`SourceContentDiagnostic`) is reshaped by `IRDiagnostic::to_canonical`:
+codes prefixed `IR_FORWARDED_*` (a diagnostic forwarded verbatim from a
+B-family parser) map to `SourceContentSeverity::Error` +
+`SourceContentDiagnosticKind::MalformedRecord`; every other
+converter-originated code maps to `SourceContentSeverity::Info` +
+`SourceContentDiagnosticKind::PartialTranslation`.
+
+### Stage 5 — `source_content_payload.rs`: the payload enum
+
+`SourceContentPayload<'a>` (`src/pcgen_import/source_content_payload.rs`)
+is the typed, kind-tagged union of borrowed B-family entries
+(`Class(&'a ClassEntry)`, `SpellcastingClass(&'a SpellcastingClassEntry)`,
+`Race(&'a RaceDeclaration)`, `Ability(&'a AbilityDeclaration)`,
+`Spell(&'a LstSpellRecord)`, `Equipment(&'a EquipmentRecord)`,
+`Metadata(&'a LstRecord)`) that lives behind every
+`SourceContentRecord`.
+
+Its own doc comment explains why it lives in `pcgen_import` rather than
+in `rules_core::source_content`, where the rest of the canonical
+envelope lives: the variants reference parser entry types from
+`pcgen_import::lst_parser::*`. If the enum lived in
+`rules_core::source_content` instead, the import graph would cycle —
+`pcgen_import::ir_converter` already constructs `SourceContentRecord`
+and would need to import from `rules_core::source_content`, which would
+in turn need parser types from `pcgen_import`. Keeping the payload enum
+beside the parser surface keeps the dependency one-directional:
+`rules_core::source_content` re-exports the enum
+(`pub use crate::pcgen_import::source_content_payload::SourceContentPayload;`),
+and the only thing crossing the boundary is the finished envelope
+`pcgen_import::ir_converter` builds. The module also carries the total,
+mechanical `MetadataKind` <-> `MetadataKindInner` mapping
+(`b6_metadata_kind_to_canonical` and its inverse) for the same reason.
+
+### Stage 6 — `rules_core::source_content`: the canonical envelope
+
+`src/rules_core/source_content.rs` defines the rest of the envelope that
+the rules engine eventually consumes:
+
+- `SourceRef { lst_file: String, line: u32 }` — the provenance anchor
+  every record and diagnostic carries.
+- `SourceContentKind` — a tag mirroring the seven payload variants, with
+  `Metadata(MetadataKindInner)` distinguishing the six metadata kinds
+  under one shared payload variant.
+- `SourceContentRecord<'a> { source_ref, kind, payload }` — one record
+  per LST directive.
+- `SourceContentDiagnostic { severity, kind, message, source_ref }` —
+  the projection-side diagnostic surface (distinct from converter-side
+  `IRDiagnostic`).
+- `SourcePackageContent<'a> { package_id, source_ref, records, diagnostics }`
+  — the corpus-rooted aggregate; `records_by_kind` returns a
+  deterministically ordered (sorted by `(lst_file, line)`, ties broken by
+  insertion order via a stable sort) filtered `Vec`.
+- `SourceContentLoadResult<'a> { content: Option<SourcePackageContent<'a>>, diagnostics }`
+  — the top-level load result; `content` is `None` only when projection
+  hit a blocking error.
+
+## Zero-copy / borrowed design
+
+Every `SourceContentPayload` variant is a borrow, never an owned clone
+of the underlying parser entry — `SourceContentRecord<'a>` and
+`SourcePackageContent<'a>` are lifetime-parameterized over the B-family
+parse-result container that produced them. Per-record conversion
+(Stage 4) is O(1); per-document conversion is O(n) in record count; the
+whole pipeline never clones a parsed entry on the hot path. Consumers
+that need to own a projected record clone the underlying entry
+explicitly — the canonical-IR surface itself never does.
+
+For contributors, this means: the B-family parse-result container (e.g.
+`ClassParseResult`, `LstEntryFile`) must outlive every
+`SourceContentRecord`/`SourcePackageContent` built from it. Code that
+tries to return a `SourcePackageContent<'a>` from a function that owns
+the parse result locally will not compile — the parse result has to be
+kept alive by the caller for as long as the projected records are used.
+
+## Diagnostics posture during ingest
+
+Diagnostics accumulate at every stage rather than aborting the parse.
+The canonical `SourceContentDiagnosticKind` (`src/rules_core/source_content.rs`)
+has four variants, each with a fixed severity via its constructor:
+`MalformedRecord` (`SourceContentDiagnostic::malformed`, `Error` — a
+malformed-record diagnostic forwarded from a B-family parser; the
+consumer must treat the record as absent), `LossyMapping`
+(`::lossy_mapping`, `Warning` — part of the content was preserved as a
+raw token string rather than a structured form), `UnsupportedToken`
+(`::unsupported_token`, `Warning` — a directive/value token the corpus
+supports but the source-IR does not currently recognize), and
+`PartialTranslation` (`::partial_translation`, `Info` — known fields
+are populated; unknown fields remain on the underlying entry but are
+not surfaced in the canonical shape).
+
+Every diagnostic carries a `SourceRef`, so a diagnostic can always be
+traced back to the exact LST file and line that produced it — including
+container-level diagnostics with no specific line, which anchor to
+`line == 0` as the canonical placeholder (see
+`IRDiagnostic::to_canonical`'s doc comment).
+
+## Adding support for a new record kind
+
+To add a seventh (or eighth) B-family record kind end to end, touch, in
+order:
+
+1. `src/pcgen_import/lst_parser/<new_kind>.rs` — new parser module,
+   producing a parse-result struct and an entry struct with source
+   provenance (`source_path`/`line_number` or a container-level
+   equivalent), following the existing per-kind modules' shape.
+2. `src/pcgen_import/lst_parser/mod.rs` — register `pub mod <new_kind>;`,
+   re-export the new entry type, add a `ParsedLstRecord::<NewKind>(&'a NewKindEntry)`
+   variant and a `from_<new_kind>` convenience constructor.
+3. `src/pcgen_import/source_content_payload.rs` — add a matching
+   `SourceContentPayload::<NewKind>(&'a NewKindEntry)` variant, and wire
+   it into `kind_token()` and `source_slice()`.
+4. `src/rules_core/source_content.rs` — add the matching
+   `SourceContentKind::<NewKind>` variant, and wire it into `token()`
+   and `source_slice()`.
+5. `src/pcgen_import/ir_converter.rs` — add a `convert_<new_kind>_entry`
+   per-family converter, wire it into `convert_to_ir`'s match, and add a
+   `forward_<new_kind>_diagnostics` helper plus a per-document/
+   corpus-rooted converter if the new kind's parser groups records into
+   a document container.
+6. If the new kind needs its own include-graph discovery convention
+   (a new PCC directive prefix), extend
+   `src/pcgen_import/include_resolver.rs`'s LST-reference recognizer —
+   otherwise the existing generic `<KIND>:<path>.lst` scan already
+   covers it.
+
+See [rules-data-tables.md](./rules-data-tables.md) for what happens
+downstream once a corpus record is projected: transcribing its values
+into the hand-authored `rules_tables` book modules. See
+[rules-engine.md](./rules-engine.md) for how the rules engine consumes
+`SourcePackageContent` once corpus content is wired into compute, and
+[testing.md](./testing.md) for the corpus-gated test conventions beyond
+the graceful-skip pattern shown above.
