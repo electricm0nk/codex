@@ -21,6 +21,19 @@ import {
 import { composeCreateCharacterRequest } from './composeCreateCharacterRequest';
 import { createCharacterRuntime } from './characterHubRuntime';
 import type { CreateCharacterOutcomeSurface } from './buildCreateCharacterOutcomeSurface';
+import {
+  ABILITY_SCORE_METHOD_OPTIONS,
+  POINT_BUY_DEFAULT_POOL,
+  POINT_BUY_DEFAULT_SCORE,
+  POINT_BUY_MAX_SCORE,
+  POINT_BUY_MIN_SCORE,
+  POINT_BUY_POOL_PRESETS,
+  abilityScoreMethodOption,
+  generateAbilityScorePool,
+  pointBuyCost,
+  rollStraightAbilityScores,
+  type AbilityScoreMethodId,
+} from './abilityScoreMethods';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -112,6 +125,25 @@ const ZERO_ALLOCATION: Allocation = {
   charisma: 0,
 };
 
+type PoolAssignment = Record<AbilityKey, number | null>;
+const EMPTY_POOL_ASSIGNMENT: PoolAssignment = {
+  strength: null,
+  dexterity: null,
+  constitution: null,
+  intelligence: null,
+  wisdom: null,
+  charisma: null,
+};
+
+const POINT_BUY_BASE_SCORES: Record<AbilityKey, number> = {
+  strength: POINT_BUY_DEFAULT_SCORE,
+  dexterity: POINT_BUY_DEFAULT_SCORE,
+  constitution: POINT_BUY_DEFAULT_SCORE,
+  intelligence: POINT_BUY_DEFAULT_SCORE,
+  wisdom: POINT_BUY_DEFAULT_SCORE,
+  charisma: POINT_BUY_DEFAULT_SCORE,
+};
+
 function rollHeight(body: BodyProfile): number {
   return body.baseHeightInches + rollDice(body.heightModDice.count, body.heightModDice.sides);
 }
@@ -127,6 +159,10 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
   const [classId, setClassId] = useState(CLASS_OPTIONS[0].id);
   const [abilityScores, setAbilityScores] = useState({ ...DEFAULT_ABILITY_SCORES });
   const [allocation, setAllocation] = useState<Allocation>({ ...ZERO_ALLOCATION });
+  const [method, setMethod] = useState<AbilityScoreMethodId>('manual');
+  const [pool, setPool] = useState<number[]>([]);
+  const [poolAssignment, setPoolAssignment] = useState<PoolAssignment>({ ...EMPTY_POOL_ASSIGNMENT });
+  const [pointBuyPool, setPointBuyPool] = useState(POINT_BUY_DEFAULT_POOL);
   const [alignment, setAlignment] = useState<string>(ALIGNMENT_OPTIONS[4]); // True Neutral
   const [deity, setDeity] = useState('');
   const [sex, setSex] = useState<Sex>('male');
@@ -146,11 +182,68 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
   const allocatedPoints = ABILITY_KEYS.reduce((sum, key) => sum + allocation[key], 0);
   const remainingPoints = selectedRace.floatingBonusPoints - allocatedPoints;
 
+  const methodOption = abilityScoreMethodOption(method);
+  const pointBuySpent = ABILITY_KEYS.reduce((sum, key) => sum + pointBuyCost(abilityScores[key]), 0);
+  const pointBuyRemaining = pointBuyPool - pointBuySpent;
+  const unassignedPoolSlots = methodOption.kind === 'pool' ? ABILITY_KEYS.filter((key) => poolAssignment[key] == null).length : 0;
+
+  /** The raw score feeding `calculatedScore`/submission — from `abilityScores` for every
+   * kind except `pool`, where the source of truth is the generated pool + per-ability assignment. */
+  function rawScore(key: AbilityKey): number {
+    if (methodOption.kind === 'pool') {
+      const index = poolAssignment[key];
+      return index == null ? 0 : (pool[index] ?? 0);
+    }
+    return abilityScores[key];
+  }
+
   function calculatedScore(key: AbilityKey): number {
-    return abilityScores[key] + (selectedRace.abilityAdjustments[key] ?? 0) + allocation[key] + ageEffectForAbility(age, key);
+    return rawScore(key) + (selectedRace.abilityAdjustments[key] ?? 0) + allocation[key] + ageEffectForAbility(age, key);
   }
 
   const maxHp = maxHitPointsAtLevelOne(selectedClass.hitDie, calculatedScore('constitution'));
+
+  function handleMethodChange(nextMethod: AbilityScoreMethodId) {
+    setMethod(nextMethod);
+    const nextOption = abilityScoreMethodOption(nextMethod);
+    if (nextOption.kind === 'pool') {
+      setPool(generateAbilityScorePool(nextMethod));
+      setPoolAssignment({ ...EMPTY_POOL_ASSIGNMENT });
+    } else if (nextOption.kind === 'straight') {
+      setAbilityScores(rollStraightAbilityScores());
+    } else if (nextOption.kind === 'pointBuy') {
+      setAbilityScores({ ...POINT_BUY_BASE_SCORES });
+      setPointBuyPool(POINT_BUY_DEFAULT_POOL);
+    }
+  }
+
+  function handleReroll() {
+    if (methodOption.kind === 'pool') {
+      setPool(generateAbilityScorePool(method));
+      setPoolAssignment({ ...EMPTY_POOL_ASSIGNMENT });
+    } else if (methodOption.kind === 'straight') {
+      setAbilityScores(rollStraightAbilityScores());
+    }
+  }
+
+  function assignPoolValue(key: AbilityKey, index: number | null) {
+    setPoolAssignment((prev) => ({ ...prev, [key]: index }));
+  }
+
+  function adjustPointBuyScore(key: AbilityKey, delta: 1 | -1) {
+    setAbilityScores((prev) => {
+      const current = prev[key];
+      const next = current + delta;
+      if (next < POINT_BUY_MIN_SCORE || next > POINT_BUY_MAX_SCORE) {
+        return prev;
+      }
+      const spent = ABILITY_KEYS.reduce((sum, k) => sum + pointBuyCost(k === key ? next : prev[k]), 0);
+      if (spent > pointBuyPool) {
+        return prev;
+      }
+      return { ...prev, [key]: next };
+    });
+  }
 
   function reroll(nextRace: RaceOption, nextSex: Sex) {
     setHeightInches(rollHeight(nextRace.body[nextSex]));
@@ -198,11 +291,23 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    if (unassignedPoolSlots > 0) {
+      setError(`Assign all six generated scores to abilities before creating (${unassignedPoolSlots} remaining).`);
+      return;
+    }
+    if (methodOption.kind === 'pointBuy' && pointBuyRemaining < 0) {
+      setError(`Point buy is over budget by ${-pointBuyRemaining} points — lower a score or raise the pool before creating.`);
+      return;
+    }
     setSubmitting(true);
     setError(null);
     try {
+      const finalAbilityScores = ABILITY_KEYS.reduce(
+        (scores, key) => ({ ...scores, [key]: rawScore(key) }),
+        {} as Record<AbilityKey, number>
+      );
       const request = composeCreateCharacterRequest(
-        { displayLabel, raceId, classId, level: FIXED_LEVEL, abilityScores, abilityBonusTarget: deriveAbilityBonusTarget() },
+        { displayLabel, raceId, classId, level: FIXED_LEVEL, abilityScores: finalAbilityScores, abilityBonusTarget: deriveAbilityBonusTarget() },
         { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
       );
       const result = await createCharacterRuntime(request);
@@ -359,7 +464,87 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
             padding: '1rem',
           }}
         >
-          <p style={{ ...LABEL_STYLE, marginBottom: '0.75rem' }}>Ability scores</p>
+          <p style={{ ...LABEL_STYLE, marginBottom: '0.35rem' }}>Ability scores</p>
+
+          <div style={{ marginBottom: '0.5rem' }}>
+            <label style={LABEL_STYLE} htmlFor="ability-score-method">
+              Generation method
+            </label>
+            <div style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
+              <select
+                id="ability-score-method"
+                style={{ ...INPUT_STYLE, flex: 1 }}
+                value={method}
+                onChange={(event) => handleMethodChange(event.target.value as AbilityScoreMethodId)}
+              >
+                {ABILITY_SCORE_METHOD_OPTIONS.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {methodOption.kind === 'pool' && method !== 'eliteArray' ? (
+                <DiceButton label="Reroll all six scores" onClick={handleReroll} />
+              ) : null}
+              {methodOption.kind === 'straight' ? <DiceButton label="Reroll all six scores" onClick={handleReroll} /> : null}
+            </div>
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.35rem 0 0' }}>{methodOption.description}</p>
+            {methodOption.kind === 'pool' ? (
+              <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginTop: '0.5rem' }}>
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', textTransform: 'uppercase' }}>Rolled:</span>
+                {pool.map((value, index) => {
+                  const assigned = ABILITY_KEYS.some((key) => poolAssignment[key] === index);
+                  return (
+                    <span
+                      key={index}
+                      style={{
+                        backgroundColor: assigned ? 'var(--color-surface-2)' : 'var(--color-accent)',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: 6,
+                        color: assigned ? 'var(--color-text-muted)' : 'var(--color-on-accent)',
+                        fontSize: '0.85rem',
+                        fontWeight: 700,
+                        opacity: assigned ? 0.6 : 1,
+                        padding: '0.15rem 0.5rem',
+                        textDecoration: assigned ? 'line-through' : 'none',
+                      }}
+                    >
+                      {value}
+                    </span>
+                  );
+                })}
+              </div>
+            ) : null}
+          </div>
+
+          {methodOption.kind === 'pointBuy' ? (
+            <div style={{ alignItems: 'center', display: 'flex', gap: '0.4rem', marginBottom: '0.5rem' }}>
+              <select
+                style={{ ...INPUT_STYLE, flex: 1 }}
+                value=""
+                onChange={(event) => {
+                  if (event.target.value) {
+                    setPointBuyPool(Number(event.target.value));
+                  }
+                }}
+              >
+                <option value="">Pool presets…</option>
+                {POINT_BUY_POOL_PRESETS.map((preset) => (
+                  <option key={preset.points} value={preset.points}>
+                    {preset.label}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="number"
+                aria-label="Point buy pool"
+                style={{ ...INPUT_STYLE, flex: '0 0 72px' }}
+                value={pointBuyPool}
+                onChange={(event) => setPointBuyPool(Number(event.target.value))}
+              />
+            </div>
+          ) : null}
+
           <div
             style={{
               alignItems: 'center',
@@ -386,13 +571,65 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
               <label style={{ fontSize: '0.75rem', fontWeight: 700 }} htmlFor={`ability-${key}`}>
                 {ABILITY_ABBREVIATIONS[key]}
               </label>
-              <input
-                id={`ability-${key}`}
-                type="number"
-                style={{ ...INPUT_STYLE, padding: '0.35rem 0.5rem' }}
-                value={abilityScores[key]}
-                onChange={(event) => setAbilityScores((prev) => ({ ...prev, [key]: Number(event.target.value) }))}
-              />
+              {methodOption.kind === 'manual' ? (
+                <input
+                  id={`ability-${key}`}
+                  type="number"
+                  style={{ ...INPUT_STYLE, padding: '0.35rem 0.5rem' }}
+                  value={abilityScores[key]}
+                  onChange={(event) => setAbilityScores((prev) => ({ ...prev, [key]: Number(event.target.value) }))}
+                />
+              ) : methodOption.kind === 'straight' ? (
+                <ReadOnlyBox value={String(abilityScores[key])} />
+              ) : methodOption.kind === 'pool' ? (
+                <select
+                  id={`ability-${key}`}
+                  style={{ ...INPUT_STYLE, padding: '0.35rem 0.5rem' }}
+                  value={poolAssignment[key] ?? ''}
+                  onChange={(event) => assignPoolValue(key, event.target.value === '' ? null : Number(event.target.value))}
+                >
+                  <option value="">— choose —</option>
+                  {pool.map((value, index) => {
+                    const takenByOther = ABILITY_KEYS.some((otherKey) => otherKey !== key && poolAssignment[otherKey] === index);
+                    if (takenByOther) {
+                      return null;
+                    }
+                    return (
+                      <option key={index} value={index}>
+                        {value}
+                      </option>
+                    );
+                  })}
+                </select>
+              ) : (
+                <div style={{ alignItems: 'center', display: 'flex', gap: '0.35rem' }}>
+                  <button
+                    type="button"
+                    aria-label={`Decrease ${key}`}
+                    onClick={() => adjustPointBuyScore(key, -1)}
+                    disabled={abilityScores[key] <= POINT_BUY_MIN_SCORE}
+                    style={stepButtonStyle(abilityScores[key] > POINT_BUY_MIN_SCORE)}
+                  >
+                    −
+                  </button>
+                  <span style={{ flex: 1, fontWeight: 700, textAlign: 'center' }}>{abilityScores[key]}</span>
+                  <button
+                    type="button"
+                    aria-label={`Increase ${key}`}
+                    onClick={() => adjustPointBuyScore(key, 1)}
+                    disabled={
+                      abilityScores[key] >= POINT_BUY_MAX_SCORE ||
+                      pointBuyCost(abilityScores[key] + 1) - pointBuyCost(abilityScores[key]) > pointBuyRemaining
+                    }
+                    style={stepButtonStyle(
+                      abilityScores[key] < POINT_BUY_MAX_SCORE &&
+                        pointBuyCost(abilityScores[key] + 1) - pointBuyCost(abilityScores[key]) <= pointBuyRemaining
+                    )}
+                  >
+                    +
+                  </button>
+                </div>
+              )}
               <div style={{ alignItems: 'center', display: 'flex', gap: '0.35rem', justifyContent: 'center' }}>
                 {selectedRace.floatingBonusPoints > 0 ? (
                   <button
@@ -450,6 +687,32 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
                 {remainingPoints} remaining
               </span>
             </div>
+          ) : null}
+
+          {methodOption.kind === 'pointBuy' ? (
+            <div
+              style={{
+                alignItems: 'center',
+                backgroundColor: 'var(--color-surface-2)',
+                border: `1px solid ${pointBuyRemaining >= 0 ? 'var(--color-accent)' : 'var(--color-error-border)'}`,
+                borderRadius: 8,
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: '0.75rem',
+                padding: '0.6rem 0.75rem',
+              }}
+            >
+              <span style={{ fontSize: '0.85rem' }}>Point buy</span>
+              <span style={{ color: pointBuyRemaining >= 0 ? 'var(--color-accent)' : 'var(--color-error)', fontWeight: 800 }}>
+                {pointBuyRemaining} of {pointBuyPool} remaining
+              </span>
+            </div>
+          ) : null}
+
+          {methodOption.kind === 'pool' && unassignedPoolSlots > 0 ? (
+            <p style={{ color: 'var(--color-warn)', fontSize: '0.78rem', margin: '0.75rem 0 0' }}>
+              Assign all six generated scores to abilities ({unassignedPoolSlots} remaining).
+            </p>
           ) : null}
         </div>
       </div>

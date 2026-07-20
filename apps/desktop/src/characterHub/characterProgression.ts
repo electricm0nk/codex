@@ -178,6 +178,19 @@ export function buildNextEntries(heldClasses: HeldClass[]): LevelEntry[] {
   return heldClasses.map((held) => makeLevelEntry(held.classId, held.classLabel, held.level + 1, totalLevel + 1));
 }
 
+/**
+ * What taking the next character level in `classId` would grant, whether it's
+ * a class the character already holds (levels up by one) or a brand-new class
+ * (starts at class level 1) — either way at the next total character level.
+ */
+export function previewLevelUp(heldClasses: HeldClass[], classId: string): LevelEntry {
+  const totalLevel = heldClasses.reduce((sum, held) => sum + held.level, 0);
+  const held = heldClasses.find((entry) => entry.classId === classId);
+  const option = CLASS_OPTIONS.find((entry) => entry.id === classId);
+  const classLabel = held?.classLabel ?? option?.label ?? 'Adventurer';
+  return makeLevelEntry(classId, classLabel, (held?.level ?? 0) + 1, totalLevel + 1);
+}
+
 function parseOneClass(segment: string): HeldClass {
   const parts = segment.split(':');
   const level = Number(parts[parts.length - 1]) || 1;

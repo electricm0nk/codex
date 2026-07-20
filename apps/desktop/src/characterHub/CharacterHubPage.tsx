@@ -168,6 +168,7 @@ export function CharacterHubPage() {
           setSheetReturnMode('load');
           setMode('sheet');
         }}
+        onRefresh={reload}
       />
     );
   }

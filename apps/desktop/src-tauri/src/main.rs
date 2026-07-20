@@ -19,8 +19,8 @@ use campaign_drive::{
     write_campaign_drive_artifacts,
 };
 use character_hub::{
-    create_character, delete_character_portrait, list_saved_characters, load_character_portrait,
-    load_saved_character, save_character_portrait,
+    clone_character, create_character, delete_character_portrait, export_character_json,
+    list_saved_characters, load_character_portrait, load_saved_character, save_character_portrait,
 };
 use sd13_support_state_matrix::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use sd19_class_catalog::list_class_catalog;
@@ -121,11 +121,13 @@ fn main() {
             perform_restore_previous,
             verify_relaunch_artifact,
             create_character,
+            clone_character,
             list_saved_characters,
             load_saved_character,
             save_character_portrait,
             load_character_portrait,
             delete_character_portrait,
+            export_character_json,
             write_campaign_drive_artifacts,
             drive_list_campaigns,
             drive_load_campaign,
