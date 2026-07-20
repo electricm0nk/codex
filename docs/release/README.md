@@ -25,7 +25,7 @@ Each subfolder is a release bundle's repo-local handoff package. Layout is unifo
 ## Folders
 
 - `template/` — `template.md` is the canonical shape every new `SD-NN/README.md` follows. Copy it when minting a new release folder.
-- `SD-22/` — PLANNING bundle, awaiting cycle launch (operator directive 2026-07-18; branch `tranche/5`, board `codex-tranche-5`; 9 epics / 31 criteria including Epic 9 — Closure Readiness added 2026-07-19).
+- `SD-22/` — CLOSED bundle (all 31 criteria complete 2026-07-20; branch `tranche/5`, board `codex-tranche-5`; merged to `develop` as PR #325, commit `f5e2b62`; version `0.5.96`).
 - `SD-21/` — CLOSED bundle (operator directive 2026-07-17; branch `tranche/4-1`; 7 epics / 30 criteria; snapshot as of 9206ad0).
 - `SD-20/` — CLOSED bundle (per-character rules engine; landed on `tranche/4` then promoted to `develop`; closure cycle 7 `integration:epic_wiring_closure` 2026-07-17).
 - `SD-19/` — CLOSED bundle (corpus-aware compute seam; landed on `tranche/3`).
@@ -35,6 +35,7 @@ Each subfolder is a release bundle's repo-local handoff package. Layout is unifo
 
 - The strategic/intake authority for every bundle lives at `/home/workspace/programs/codex/requirements/<bundle-id>/` in the operator's workspace. The repo-local copy here is the cold-cloud-clone surface — the same doctrine, with the operator's home-directory paths rewritten to repo-relative paths where required. See [`../doctrine-external/spec-domain-lifecycle.md`](../doctrine-external/spec-domain-lifecycle.md) for the lifecycle shape.
 - The operator's loop-instruction files at `~/workspace/SD-NN-...-loop-instruction.md` remain the launch strings (because `/loop /batch /goal` resolves them as absolute paths). They mirror the repo-local copies here as a one-way sync from the operator's editor of record.
+- **Do not confuse `/home/workspace/programs/codex/requirements/` above (operator-workspace-only, doesn't exist in a git clone) with this repo's own `programs/codex/requirements/` directory (git-tracked, real, at the repo root).** They share a path suffix but serve completely different purposes: the operator-workspace one is the planning-doc intake authority described here; this repo's own `programs/codex/requirements/<bundle-slug>/` is reserved *exclusively* for `release-notes.md`, a regex-locked CI/schema contract (`^programs/codex/requirements/[^/]+/release-notes\.md$`) consumed by `tools/release/`, `scripts/release/`, and the `publish-tester-release.yml` workflow. A bundle's `release-notes.md` belongs there, never under `docs/release/SD-NN/` — corrected 2026-07-20 after SD-22's release notes initially landed in the wrong place.
 
 ## How a release script uses this subtree
 

@@ -96,6 +96,6 @@ SD-22's `epic-breakdown.md` is the canonical artifact surface for expected outpu
 - `docs/SD-22/apg-ingest-plan.md` — operator-named (epic-cycle ordering and per-class schedule).
 - `docs/SD-22/acg-ingest-plan.md` — operator-named (epic-cycle ordering and per-class schedule).
 - `docs/SD-22/beastiary1-ingest-plan.md` — operator-named (epic-cycle ordering and per-monster-block schedule).
-- `docs/SD-22/release-closure-checklist.md` — the per-position bump-process checklist (mirroring SD-21's Epic 5 criterion 27 with the `<major>.<tranche-base>.<build>` triple).
+- `docs/release/SD-22/release-closure-checklist.md` — the per-position bump-process checklist (mirroring SD-21's Epic 5 criterion 27 with the `<major>.<tranche-base>.<build>` triple). This planning-stage entry originally said `docs/SD-22/` (a stray one-level-too-shallow path, unlike SD-20's deliberately-placed `boundary-contract.md`); corrected 2026-07-20 as part of a repo-wide docs-structure cleanup, along with SD-21's matching file.
 
 **Not in expected artifacts:** `repos/codex/src/rules_core/rules_tables/ultimate_combat/` and `repos/codex/src/rules_core/rules_tables/ultimate_magic/` directories. Per operator's 2026-07-18 clarification, Ultimate-line books are NOT in SD-22's scope. Prior-turn `decisions.md §1` references to "Ultimate Combat + Ultimate Magic" as the two advanced guides were operator-corrected and are superseded.

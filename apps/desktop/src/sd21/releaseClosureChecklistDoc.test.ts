@@ -3,20 +3,22 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert } from '../testSupport/asserts';
 
-// SD-21 E5.27: docs/SD-21/release-closure-checklist.md must exist and spell
-// out the four-step version-bump process so a future closure cycle (or a
-// human operator) has a single authoritative place to follow, rather than
+// SD-21 E5.27: docs/release/SD-21/release-closure-checklist.md must exist and
+// spell out the four-step version-bump process so a future closure cycle (or
+// a human operator) has a single authoritative place to follow, rather than
 // re-deriving the steps from scratch each release.
+// Relocated 2026-07-20 from docs/SD-21/ (a stray one-level-too-shallow path)
+// into docs/release/SD-21/, the canonical per-bundle doc home.
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..');
-const docPath = join(repoRoot, 'docs', 'SD-21', 'release-closure-checklist.md');
+const docPath = join(repoRoot, 'docs', 'release', 'SD-21', 'release-closure-checklist.md');
 
 function verifiesChecklistDocCoversAllFourSteps() {
   let text: string;
   try {
     text = readFileSync(docPath, 'utf8');
   } catch {
-    throw new Error(`expected docs/SD-21/release-closure-checklist.md to exist at ${docPath}`);
+    throw new Error(`expected docs/release/SD-21/release-closure-checklist.md to exist at ${docPath}`);
   }
 
   assert(text.includes('package.json'), 'checklist must name package.json in the version-bump step');
