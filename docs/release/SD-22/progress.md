@@ -2,12 +2,12 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: PENDING (this cycle's own commit; backfilled in the same-day follow-up commit per this bundle's established pattern)
+snapshot_as_of: 214ddf9
 ---
 
 # SD-22 — Progress
 
-## SD-22 STATUS: CLOSURE PR OPENED — Epic 7 (criteria 22-26) complete, 31/31 criteria complete; closure PR `tranche/5 → develop` opened, awaiting operator merge
+## SD-22 STATUS: CLOSURE PR OPENED — Epic 7 (criteria 22-26) complete, 31/31 criteria complete; closure PR https://github.com/electricm0nk/codex/pull/325 (`tranche/5 → develop`) opened, awaiting operator merge
 
 Loop launched 2026-07-19 per `decisions.md §5` amendments (corpus generation in-bundle,
 `/batch` deferred). Running from a remote execution session — `hermes` CLI is not
@@ -3224,7 +3224,7 @@ Kanban card + commit SHA backfilled into this entry and `receipts.md` in a
 same-day follow-up commit, per the established backfill pattern from prior
 cycles (subsets 03-08, the ACG class cycles).
 
-### cycle-2026-07-20T00:00:00Z | Epic 7, criteria 22-26 (Closure Epilogue — final cycle of SD-22) | closure:* | commit PENDING (backfilled), card PENDING (backfilled) | E7.22-26 open (next-eligible) → **complete**
+### cycle-2026-07-20T00:00:00Z | Epic 7, criteria 22-26 (Closure Epilogue — final cycle of SD-22) | closure:* | commit `214ddf9`, card `t_3345e05c` | E7.22-26 open (next-eligible) → **complete**
 
 Verified `tranche/5` clean and in sync with origin (`b25879b`) before
 starting. Per `loop-instruction.md`'s Step 1 priority order, Epic 7 fires
@@ -3303,8 +3303,11 @@ warnings` — clean. `npm test` (apps/desktop) — 48/48 test files passed
 Full RED/GREEN evidence (GREEN-only per Epic 7's own scope-doctrine — "PR
 is opened, release notes are generated, closure is closed"), file list,
 and reasoning: `artifacts/epic_7/closure_epilogue_cycle_receipt.md`.
-Receipt block appended to `receipts.md`. Kanban card minted on
-`codex-tranche-5`. **All 31 SD-22 acceptance criteria are now `complete`.**
-Commit SHA, kanban card ID, and the PR URL/number backfilled into this
-entry and `receipts.md` in a same-day follow-up commit, per the
-established backfill pattern used throughout this bundle.
+Receipt block appended to `receipts.md`. Kanban card `t_3345e05c` minted
+on `codex-tranche-5` (status=done). **Closure PR opened:
+https://github.com/electricm0nk/codex/pull/325 (`tranche/5 → develop`,
+not merged — operator/orchestrator action).** **All 31 SD-22 acceptance
+criteria are now `complete`.** Commit `214ddf9` is this cycle's production
+commit; this backfill (commit SHA + card ID + PR URL into this entry and
+`receipts.md`) lands as a same-day follow-up commit, per the established
+backfill pattern used throughout this bundle.

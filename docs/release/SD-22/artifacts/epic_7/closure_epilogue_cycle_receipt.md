@@ -172,8 +172,7 @@ by the JS-only fixes and re-confirmed green regardless.
 
 ## kanban
 
-- card: see `receipts.md`'s matching block (`cycle_id: 2026-07-20T00:00:00Z`)
-  for the minted `codex-tranche-5` card ID.
+- card: `t_3345e05c` (`codex-tranche-5`, status=done)
 
 ## What this criterion does NOT cover
 

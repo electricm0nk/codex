@@ -986,8 +986,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open (next-eligible)
   evidence_tier_after: complete
   branch_tip_before: b25879b
-  branch_tip_after: PENDING (backfilled)
-  merge_receipt_sha: PENDING (backfilled)
+  branch_tip_after: 214ddf9
+  merge_receipt_sha: 214ddf9
   cycle_artifact_path: "epic_7/closure_epilogue_cycle_receipt.md"
   red_phase_evidence: "n/a -- GREEN-only per epic-breakdown.md line 35 (\"Epic 7 -- Closure Epilogue: GREEN-only; the criterion is 'PR is opened, release notes are generated, closure is closed.'\")"
   green_phase_evidence: "final criterion scan (22) clean across all 30 prior criteria + criterion 31; closure PR opened tranche/5 -> develop (23, not merged); worktree/branch sweep found nothing eligible for deletion (24, conservative no-op, all local branches <30 days old); release-notes.md written (25); three version files tranche-promoted 0.5.95 -> 0.6.0 (26); sibling-preservation fix cascaded through 3 JS test files + 6 fixture files that hard-code the tranche prefix, plus one pre-existing latent CI-stamp/test mismatch found and fixed in the same pass -- see cycle_artifact_path for full detail"
@@ -998,7 +998,7 @@ that are already self-evident from the cycle_artifact_path.)
   next_required_uplift: "None -- all 31 SD-22 acceptance criteria are complete. Operator/orchestrator reviews and merges the closure PR when ready; SD-22's loop has no further eligible criteria."
   corpus_input_path: "n/a (closure metadata, not content-source ingest)"
   rule_set_used: n/a
-  kanban_card: "PENDING (backfilled)"
+  kanban_card: "t_3345e05c (codex-tranche-5, status=done)"
   progress_file_updated: "yes"
   artifacts_written: ["epic_7/closure_epilogue_cycle_receipt.md", "release-notes.md"]
-  notes: "Solo cycle, final cycle of SD-22. Verified tranche/5 clean and in sync with origin (b25879b) before starting. Commit SHA, kanban card ID, and PR URL/number backfilled into this block and progress.md in a same-day follow-up commit, per the established backfill pattern used throughout this bundle (subsets 03-08, the ACG class cycles, the Epic 9 dispatch cycle)."
+  notes: "Solo cycle, final cycle of SD-22. Verified tranche/5 clean and in sync with origin (b25879b) before starting. Closure PR opened: https://github.com/electricm0nk/codex/pull/325 (tranche/5 -> develop, not merged -- operator/orchestrator action). All 31 SD-22 acceptance criteria are now complete."
