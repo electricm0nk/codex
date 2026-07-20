@@ -960,3 +960,35 @@ fn parses_real_investigator_record_from_acg_classes_lst() {
     assert_eq!(investigator.casting_posture, Some(CastingPosture::Spellbook));
     assert_eq!(investigator.spell_stat.as_deref(), Some("INT"));
 }
+
+// SD-22 Epic 4 widening (Shaman ingest cycle, sixth ACG class): the real
+// `CLASS:Shaman` record in `acg_classes.lst` carries
+// `SPELLSTAT:WIS MEMORIZE:YES` with no `SPELLBOOK:YES` and no
+// `MEMORIZE:NO` — the same standard-prepared posture as Witch (APG) — so
+// it belongs in `SPELLCASTING_CLASS_NAMES` rather than
+// `MARTIAL_CLASS_NAMES`. Mirrors
+// `parses_real_investigator_record_from_acg_classes_lst`.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_shaman_record_from_acg_classes_lst() {
+    let corpus = TestCorpus::new("acg_classes_shaman");
+    corpus.write(
+        "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        &real_acg_classes_lst(),
+    );
+    let result = parse_spellcasting_class_file(&corpus.path(
+        "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+    ))
+    .expect("read real acg_classes.lst");
+
+    let shaman = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Shaman")
+        .expect(
+            "Shaman should be recognized from the real acg_classes.lst once \
+             SPELLCASTING_CLASS_NAMES is widened to include it",
+        );
+    assert_eq!(shaman.casting_posture, Some(CastingPosture::Prepared));
+    assert_eq!(shaman.spell_stat.as_deref(), Some("WIS"));
+}
