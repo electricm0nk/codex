@@ -835,8 +835,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: complete (criteria 14-17, subset 01 + subset 02 + subset 03)
   evidence_tier_after: complete (criteria 14-17, re-verified against a fourth subset: Choker, Crocodile, Dark Creeper, Iron Cobra, Morlock)
   branch_tip_before: a5c8e5e
-  branch_tip_after: PENDING_COMMIT_SHA
-  merge_receipt_sha: PENDING_COMMIT_SHA
+  branch_tip_after: 9ba9cbf
+  merge_receipt_sha: 9ba9cbf0e8d3d5e88041c11948e7fafd13e2ef3e
   cycle_artifact_path: "beastiary1/subset_04_cycle_receipt.md"
   red_phase_evidence: "cargo test --locked --test sd22_beastiary1_subset_04_resolves against the pre-cycle tree failed to compile with error[E0599]: no variant, associated function, or constant named `Choker`/`Crocodile`/`DarkCreeper`/`IronCobra`/`Morlock` found for enum `MonsterId` (14 call sites) -- see cycle_artifact_path:Red-phase evidence"
   green_phase_evidence: "wrote src/rules_core/rules_tables/beastiary1/monster_subset_04.rs (Choker/Crocodile/Dark Creeper/Iron Cobra/Morlock chassis, transcribed from b1_races.lst:70,83,89,249,297) and wired it into beastiary1/mod.rs (pub mod monster_subset_04, five new MonsterId variants, match arms) -- diff is purely additive, no existing lines changed. No parser widening needed -- monster_stat_block.rs's existing recognition surface already covers every field these five monsters use, including Choker/Crocodile/Dark Creeper's empty natural_attacks (no NATURALATTACKS: token on their real rows) and Morlock's pipe-separated two-attack NATURALATTACKS: token. Added a real-corpus-gated grounding test to tests/sd17_b_monster_stat_block.rs. sd22_beastiary1_subset_04_resolves 6/6 passed, sd17_b_monster_stat_block --ignored 4/4 passed, full cargo test --locked 0 failed across 424 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
@@ -847,7 +847,7 @@ that are already self-evident from the cycle_artifact_path.)
   next_required_uplift: "Bestiary 1 subset 05 (continued CR-2 breadth: Rat Swarm, Sahuagin, Shark, Shocker Lizard, Skum, Vargouille, Wolverine, Worg, Yellow Musk Creeper remain unused real, non-parenthetical CR-2 names -- 9 left, enough for one more full subset with 4 left over -- or a small/mixed subset picking up the leftover Squid/Troglodyte from CR 1)."
   corpus_input_path: "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:70,83,89,249,297 (Choker, Crocodile, Dark Creeper, Iron Cobra, Morlock real CR:2 records; per decisions.md §5)"
   rule_set_used: Bestiary1
-  kanban_card: "PENDING_KANBAN_CARD"
+  kanban_card: "t_e6c2d82f (codex-tranche-5, status=done)"
   progress_file_updated: "yes"
   artifacts_written: ["beastiary1/subset_04_cycle_receipt.md"]
   notes: "Solo cycle (no parallel sibling this run) -- Epic 3, 4, and 6 are all fully closed; Epic 5 is the only currently-eligible lane. Verified tranche/5 clean and in sync with origin (a5c8e5e) before starting. Enumerated all 34 real CR:2 monster stat-block rows in b1_races.lst directly, excluded the 15 parenthetical sub-variant names per the established exclusion rule and the 5 names already used in subset 03, and picked the next 5 alphabetically. Did all RED/GREEN/verification work before touching progress.md/receipts.md."

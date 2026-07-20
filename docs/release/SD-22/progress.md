@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 0111b2b
+snapshot_as_of: 9ba9cbf
 ---
 
 # SD-22 — Progress
@@ -2727,7 +2727,7 @@ Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/beastiary1/subset_03_cycle_receipt.md`. Receipt block
 appended to `receipts.md`.
 
-### cycle-2026-07-20T07:20:20Z | Epic 5, subset 04 (fourth monster-block subset, continued CR 2) | ingest:beastiary1_subset | card PENDING_KANBAN_CARD on `codex-tranche-5` (status=done), commit PENDING_COMMIT_SHA | complete (subset 01 + subset 02 + subset 03) → **complete (subset 01 + subset 02 + subset 03 + subset 04)**
+### cycle-2026-07-20T07:20:20Z | Epic 5, subset 04 (fourth monster-block subset, continued CR 2) | ingest:beastiary1_subset | card `t_e6c2d82f` on `codex-tranche-5` (status=done), commit `9ba9cbf` | complete (subset 01 + subset 02 + subset 03) → **complete (subset 01 + subset 02 + subset 03 + subset 04)**
 
 Ran solo this cycle (no parallel sibling) — Epic 3, Epic 4, and Epic 6
 are all fully closed, and Epic 5 is the only currently-eligible lane per
