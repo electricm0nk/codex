@@ -634,9 +634,9 @@ that are already self-evident from the cycle_artifact_path.)
   row_or_kind: ingest:acg_class
   evidence_tier_before: open (eight of ten real classes landed: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer)
   evidence_tier_after: complete (criteria 10-12 for Swashbuckler; nine of ten real classes landed)
-  branch_tip_before: 6114d54
-  branch_tip_after: PENDING_BACKFILL_SWASHBUCKLER_SHA
-  merge_receipt_sha: PENDING_BACKFILL_SWASHBUCKLER_SHA
+  branch_tip_before: c7b80ec
+  branch_tip_after: 559ff51
+  merge_receipt_sha: 559ff51044d78b99049d5ce413cb9f9b229906f5
   cycle_artifact_path: "acg/class_swashbuckler_cycle_receipt.md"
   red_phase_evidence: "Widening RED: parses_real_swashbuckler_record_from_acg_classes_lst added to tests/sd17_b1_martial_class.rs, failed (Swashbuckler out of MARTIAL_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_swashbuckler_resolves.rs failed to compile (E0599: AcgClassId::Swashbuckler did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
   green_phase_evidence: "widened MARTIAL_CLASS_NAMES by one name (Swashbuckler) in src/pcgen_import/lst_parser/class.rs -- the real CLASS:Swashbuckler record carries no SPELLSTAT:/MEMORIZE:/SPELLBOOK: token anywhere in its block, the same non-caster posture as Cavalier/Brawler/Slayer; added rules_tables/acg/class_swashbuckler.rs and AcgClassId::Swashbuckler match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist+Bloodrager+Brawler+Hunter+Investigator+Shaman+Skald+Slayer still resolve); widening test green (19/19 in sd17_b1_martial_class); full cargo test suite green, 0 failed (415 test-result:ok blocks); clippy clean (see cycle_artifact_path:Green-phase evidence)"
@@ -660,8 +660,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open (criteria 18-19 complete; criteria 20-21 open)
   evidence_tier_after: complete (criterion 20 only; criterion 21 remains open)
   branch_tip_before: 6114d54
-  branch_tip_after: PENDING_SHA_CRITERION20
-  merge_receipt_sha: PENDING_SHA_CRITERION20
+  branch_tip_after: c7b80ec
+  merge_receipt_sha: c7b80ec828cc74af58bdfe7cb55af1a1d875a50d
   cycle_artifact_path: "dm_toolkit/deterministic_tests_cycle_receipt.md"
   red_phase_evidence: "cargo test --locked --test sd22_dm_toolkit_deterministic against the pre-cycle tree failed with 'error: no test target named sd22_dm_toolkit_deterministic' (file genuinely didn't exist yet); a throwaway scratch test asserting the ORIGINAL uncorrected §4.1 case-2/case-3 values (Hard, 3.5) against the already-shipped encounters.rs/party_cr.rs code failed for the intended reason (computed Deadly/3.0 vs. asserted Hard/3.5), confirming the reconciliation before any doc edit (see cycle_artifact_path:Red-phase evidence)"
   green_phase_evidence: "no production-code bug found in encounters.rs or party_cr.rs -- both already grounded correctly. Added tests/sd22_dm_toolkit_deterministic.rs (5 acceptance-level tests covering both modules) asserting the corrected values; corrected corpus-source-inventory.md §4.1's fixture table (case 2: Hard -> Deadly; case 3: ~3.5 -> 3.0) with a corrective banner citing this cycle's independent re-verification. 5/5 new tests green; full cargo test suite green, 0 failed anywhere (415 test-result:ok blocks); clippy clean (see cycle_artifact_path:Green-phase evidence)"
@@ -672,7 +672,7 @@ that are already self-evident from the cycle_artifact_path.)
   next_required_uplift: "Epic 6's remaining criterion is 21 (happy-path integration test), which remains blocked until Epic 3+4+5 all land -- Epic 5 (Bestiary 1) remains blocked on its own separate parser gap (b1_races.lst's unprefixed bare-row monster records). Both §4.1 discrepancies flagged by criteria 18 and 19 are now fully reconciled: the fixture-table prose was wrong, not the code."
   corpus_input_path: "n/a -- not a PCGen .lst ingest cycle; grounded instead in legacy.aonprd.com/corerulebook/gamemastering.html (PF1 Core Rulebook, Gamemastering chapter), re-verified fresh 2026-07-20 by this cycle independently of criteria 18/19's own citations"
   rule_set_used: n/a
-  kanban_card: PENDING_CARD_CRITERION20
+  kanban_card: "t_221b03be (codex-tranche-5, status=done)"
   progress_file_updated: "yes"
   artifacts_written: ["dm_toolkit/deterministic_tests_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream on Epic 4 (ACG, Swashbuckler); file-touch set (tests/sd22_dm_toolkit_deterministic.rs, corpus-source-inventory.md) disjoint from acg/ per loop-instruction.md. Sibling's uncommitted Swashbuckler-cycle work (src/pcgen_import/lst_parser/class.rs, src/rules_core/rules_tables/acg/mod.rs, src/rules_core/rules_tables/acg/class_swashbuckler.rs, tests/sd17_b1_martial_class.rs, tests/sd22_acg_class_swashbuckler_resolves.rs) was present unstaged in the shared working tree throughout this cycle and was left untouched -- this cycle's own git add is scoped strictly to its own files. Independently re-verified both discrepancies criteria 18 and 19 flagged (case 2 Hard-vs-Deadly, case 3 3.5-vs-3.0) against a fresh fetch of the same public PRD mirror rather than trusting the prior cycles' claims, confirmed both corrections are accurate, and closed the reconciliation loop by correcting the fixture doc rather than the already-correct code."

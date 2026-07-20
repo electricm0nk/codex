@@ -112,7 +112,7 @@ spell/equipment suites, and the concurrently in-flight Epic 6
 
 ## kanban
 
-- card: see progress.md / receipts.md for the minted card ID (this section backfilled after Step 10b).
+- card: `t_1d251219` on `codex-tranche-5` (status=done).
 
 ## Next-eligible
 
