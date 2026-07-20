@@ -67,19 +67,26 @@ jump straight to the doc that owns the surface you're touching:
 
 ## §Maintenance contract
 
-**Rules.** These docs describe current state only. An edit **replaces** an
-outdated statement — it never appends a history note, a changelog line, or
-"as of SD-NN" phrasing. Every factual claim about code cites a
-backticked, repo-relative path.
+**Rules.** These docs describe current state only. An edit **replaces** an outdated statement — it never appends a history note, a changelog line, or "as of SD-NN" phrasing. Obsolete statements are REMOVED, not annotated as deprecated. Every factual claim about code cites a backticked, repo-relative path.
 
-**Update-on-closure procedure.** At every SD closure, before opening the
-`tranche/N` → `develop` PR:
+**Update-on-PR procedure.** Before **any** PR that opens against the integration target (`develop` for closure; intra-tranche for hotfix or partial-promotion PRs):
 
-1. Run `git diff develop...tranche/N --stat -- src apps schemas scripts tools .github` to see everything that changed.
+1. Run `git diff <target>...HEAD --stat -- src apps schemas scripts tools .github docs/release docs/architecture` to see everything that changed since the integration target. Every PR is preceded by a truth-up cycle, regardless of whether the diff has architecture impact — empty updates still write a receipt as the audit trail.
 2. Map each changed path to a doc using the index table's "Source dirs" column above.
-3. Update every doc whose source dirs were touched — edit the affected statement in place.
-4. Always re-check [status.md](./status.md) — stub graduations (a stub becoming real, tested behavior) are the most common change this doc set needs to reflect, and they are easy to miss if you only diff the doc that first named the stub.
+3. Update every doc whose source dirs were touched — edit the affected statement in place; remove obsolete statements rather than appending "as of SD-NN" phrasing.
+4. Always re-check [status.md](./status.md) — stub graduations (a stub becoming real, tested behavior) and regressions (real behavior reverting to stub) are the most common change this doc set needs to reflect, and they are easy to miss if you only diff the doc that first named the stub.
 5. Refresh the `Last verified` line of every doc you actually re-verified against the new commit.
+
+**Epic Closure pipeline.** Truth-up is sub-step 2 of 5 in the bundle's Epic Closure. The pipeline is sequential; no sub-step is skipped or conditional:
+
+1. All acceptance criteria done? If not, self-heal and run more loops. Repeat until done.
+2. Architecture docs updated? If not, run the truth-up script (`~/.hermes/profiles/god-emporer/skills/devops/architecture-truth-up/scripts/architecture_truth_up.py`). It edits in place, removes obsolete content, refreshes headers, runs the verification one-liners, appends a YAML receipt to `<bundle>/receipts.md`. Repeat until verification one-liners pass and the receipt is in `receipts.md`.
+3. Graphify run? If not, run the graphify-update script (`~/.hermes/profiles/god-emporer/skills/devops/graphify-update/scripts/update_graphify.py`). The script invokes graphify against the codex repo, captures stdout/stderr/exit-code, appends a `graphify:update` receipt — **success OR failure, do not refuse on graphify non-zero exit**. Operator decides retry-vs-proceed.
+4. PR open? If not, open it. (PR creation is a bash-level command in the loop-instruction, not a separate skill.)
+5. Merge conflicts resolved? If any, fix them via the merge-conflict-resolution skill (`~/.hermes/profiles/god-emporer/skills/devops/merge-conflict-resolution/scripts/resolve_merge_conflicts.py`). Otherwise proceed.
+6. Stop the loop.
+
+Skills owned by this pipeline: `architecture-truth-up` (sub-step 2), `graphify-update` (sub-step 3), `merge-conflict-resolution` (sub-step 5). The truth-up skill is the load-bearing reference for this sub-step; the other two skills carry their own doctrine.
 
 **Three always-ask questions:**
 
