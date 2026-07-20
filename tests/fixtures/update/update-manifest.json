@@ -6,8 +6,8 @@
   "tranche_id": "STC-CODEX-SD-16",
   "source_branch": "develop",
   "source_commit": "d94edcbfc2f3a6f428895eb9c3e504fc7a363ade",
-  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
-  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/develop/programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_path": "docs/release/SD-16/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/develop/docs/release/SD-16/release-notes.md",
   "release_notes_hash": "0000000000000000000000000000000000000000000000000000000000000000",
   "linux_appimage": {
     "name": "codex_0.0.0-alpha.20260704.1_amd64.AppImage",

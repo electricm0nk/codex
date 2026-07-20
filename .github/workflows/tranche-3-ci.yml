@@ -121,7 +121,7 @@ jobs:
           fi
           changed="$(git diff --name-only --diff-filter=ACMRT "${BASE}...HEAD" -- \
             'programs/codex/requirements/**/manifest.yaml' \
-            'programs/codex/requirements/**/release-notes.md' \
+            'docs/release/**/release-notes.md' \
             'programs/codex/requirements/**/tranche-*/manifest.yaml' || true)"
           if [ -z "${changed}" ]; then
             echo "manifests_changed=false" >> "$GITHUB_OUTPUT"

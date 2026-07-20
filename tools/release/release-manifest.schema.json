@@ -14,13 +14,13 @@
     },
     "tranche_id": {
       "type": "string",
-      "description": "Identifier of the governing tranche (e.g. 'tranche-2.5'). Must match a directory under programs/codex/requirements/.",
+      "description": "Identifier of the governing tranche (e.g. 'tranche-2.5'). Must match a directory under docs/release/ (relocated 2026-07-20 from programs/codex/requirements/).",
       "pattern": "^tranche-[0-9]+(\\.[0-9]+)+$"
     },
     "release_notes_path": {
       "type": "string",
-      "description": "Repo-relative path to the canonical tranche release-notes.md file. Must begin with 'programs/codex/requirements/' and end with 'release-notes.md'. The referenced file MUST exist on the merged branch and contain every required section (Summary, User-Visible Changes, Defects Fixed, Operational Notes, Verification Evidence, Known Issues, Update Eligibility).",
-      "pattern": "^programs/codex/requirements/.+/release-notes\\.md$"
+      "description": "Repo-relative path to the canonical tranche release-notes.md file. Must begin with 'docs/release/' and end with 'release-notes.md'. The referenced file MUST exist on the merged branch and contain every required section (Summary, User-Visible Changes, Defects Fixed, Operational Notes, Verification Evidence, Known Issues, Update Eligibility). Relocated 2026-07-20 from programs/codex/requirements/; manifests published before that date reference the old path and are not retroactively updated.",
+      "pattern": "^docs/release/.+/release-notes\\.md$"
     },
     "channel": {
       "type": "string",
@@ -29,7 +29,7 @@
     },
     "spec_domain_id": {
       "type": "string",
-      "description": "Optional explicit SD-NN reference for the spec domain this release primarily delivers. Must match the dirname under programs/codex/requirements/ that release_notes_path points into.",
+      "description": "Optional explicit SD-NN reference for the spec domain this release primarily delivers. Must match the dirname under docs/release/ that release_notes_path points into.",
       "pattern": "^SD-[0-9]+$"
     },
     "platform_artifacts": {

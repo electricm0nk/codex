@@ -65,10 +65,7 @@ def _valid_release_notes() -> str:
 VALID_MANIFEST = {
     "schema_version": "v1",
     "tranche_id": "tranche-2.5",
-    "release_notes_path": (
-        "programs/codex/requirements/"
-        "sd-16-feedback-loop-and-self-update-hardening/release-notes.md"
-    ),
+    "release_notes_path": "docs/release/SD-16/release-notes.md",
     "channel": "alpha",
     "spec_domain_id": "SD-16",
     "platform_artifacts": [

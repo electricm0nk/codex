@@ -72,7 +72,7 @@ def _valid_manifest_yaml(tranche_id: str = "2.5") -> str:
         tranche_id: "{tranche_id}"
         channel: "alpha"
         promotion_branch: "develop"
-        release_notes_path: "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md"
+        release_notes_path: "docs/release/SD-16/release-notes.md"
         """
     )
 

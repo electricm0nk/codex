@@ -31,7 +31,8 @@ Doctrine reminders (per F2 handoff §AV rows owned):
               `tranche_id == 'STC-CODEX-SD-16'`; this writer emits
               exactly that value.
   - AV-SCH-6  release_notes_path is locked to
-              `programs/codex/requirements/<SD>/release-notes.md`.
+              `docs/release/<SD>/release-notes.md` (relocated 2026-07-20
+              from programs/codex/requirements/<SD>/release-notes.md).
               Writer refuses to emit a manifest whose notes path is
               outside that prefix.
 
@@ -56,7 +57,7 @@ from typing import Any, NoReturn
 SCHEMA_VERSION = "1.1.0"
 TRANCHE_ID = "STC-CODEX-SD-16"
 ALLOWED_CHANNELS = ("alpha", "beta", "stable")
-RELEASE_NOTES_PATH_PATTERN = re.compile(r"^programs/codex/requirements/[^/]+/release-notes\.md$")
+RELEASE_NOTES_PATH_PATTERN = re.compile(r"^docs/release/[^/]+/release-notes\.md$")
 SOURCE_COMMIT_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 TAG_PATTERN = re.compile(r"^(alpha|beta|stable)/.+$")
 WINDOWS_MSI_OPTIONALS = ("windows_msi_name", "windows_msi_path", "windows_msi_url")
@@ -191,7 +192,7 @@ def _build_manifest(args: argparse.Namespace) -> dict[str, Any]:
     if not RELEASE_NOTES_PATH_PATTERN.match(args.release_notes_path):
         _fail(
             f"release_notes_path {args.release_notes_path!r} does not match "
-            "^programs/codex/requirements/<SD>/release-notes.md$"
+            "^docs/release/<SD>/release-notes.md$"
         )
 
     # source_commit pattern (40 lowercase hex).

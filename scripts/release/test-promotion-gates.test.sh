@@ -169,7 +169,7 @@ GOOD_MANIFEST="$TMP/tranche-manifest.json"
 cat > "$GOOD_MANIFEST" << 'EOF'
 {
   "tranche_id": "codex-tranche-2-5",
-  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md"
+  "release_notes_path": "docs/release/SD-16/release-notes.md"
 }
 EOF
 
@@ -259,7 +259,7 @@ assert_rc zero "$RC" "alpha exits zero when all gates pass"
 assert_contains "STATUS=ready" "$OUT" "alpha prints STATUS=ready"
 assert_not_contains "FAIL: " "$OUT" "alpha prints no FAIL lines on success"
 assert_contains "tranche_id: codex-tranche-2-5" "$OUT" "alpha body has tranche_id (AV-BR-6)"
-assert_contains "release_notes_path: programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md" "$OUT" "alpha body has release_notes_path (AV-BR-6)"
+assert_contains "release_notes_path: docs/release/SD-16/release-notes.md" "$OUT" "alpha body has release_notes_path (AV-BR-6)"
 assert_contains "alpha_release_url: https://github.com/electricm0nk/codex/releases/tag/alpha%2F0.5.0-abc1234" "$OUT" "alpha body has alpha_release_url (AV-BR-6)"
 assert_contains "verification_evidence: $EVIDENCE_FILE" "$OUT" "alpha body has verification_evidence (AV-BR-6)"
 assert_contains "known_issues:" "$OUT" "alpha body has known_issues (AV-BR-6)"
@@ -327,7 +327,7 @@ assert_contains "STATUS=ready" "$OUT" "beta prints STATUS=ready"
 assert_not_contains "FAIL: " "$OUT" "beta prints no FAIL lines on success"
 assert_not_contains "G_NO_STABLE_BLOCKERS" "$OUT" "beta-only [blocker] does not trip G_NO_STABLE_BLOCKERS"
 assert_contains "tranche_id: codex-tranche-2-5" "$OUT" "beta body has tranche_id (AV-BR-6)"
-assert_contains "release_notes_path: programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md" "$OUT" "beta body has release_notes_path (AV-BR-6)"
+assert_contains "release_notes_path: docs/release/SD-16/release-notes.md" "$OUT" "beta body has release_notes_path (AV-BR-6)"
 assert_contains "alpha_release_url:" "$OUT" "beta body has alpha_release_url key (AV-BR-6)"
 assert_contains "verification_evidence: https://ci.example/runs/1" "$OUT" "beta body has verification_evidence (AV-BR-6)"
 assert_contains "known_issues:" "$OUT" "beta body has known_issues (AV-BR-6)"

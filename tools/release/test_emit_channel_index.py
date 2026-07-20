@@ -34,10 +34,7 @@ VALID_MANIFEST = {
     "tranche_id": "STC-CODEX-SD-16",
     "source_branch": "develop",
     "source_commit": "a" * 40,
-    "release_notes_path": (
-        "programs/codex/requirements/"
-        "SD-16-feedback-loop-and-self-update-hardening/release-notes.md"
-    ),
+    "release_notes_path": "docs/release/SD-16/release-notes.md",
     "release_notes_url": "https://github.com/electricm0nk/codex/releases/tag/alpha/v0.0.0-abcdef12",
     "release_notes_hash": "b" * 64,
     "linux_appimage": {

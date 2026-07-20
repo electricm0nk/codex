@@ -53,7 +53,7 @@
           {
             "context": "Tranche 2.7 CI / tranche-manifest-coverage",
             "integration_id": null,
-            "_note": "Manifest + release-notes validator. Fires from the tranche-2-7 ci workflow (no path filter). Runs tools/release/check_release_manifest.py against any touched manifest.yaml or release-notes.md under programs/codex/requirements/... . The .github/workflows/tranche-2-7-ci.yml file (parallel to tranche-3-ci.yml) has not been authored yet; this is contingent on the workflow existing first."
+            "_note": "Manifest + release-notes validator. Fires from the tranche-2-7 ci workflow (no path filter). Runs tools/release/check_release_manifest.py against any touched manifest.yaml under programs/codex/requirements/... or release-notes.md under docs/release/... (relocated 2026-07-20). The .github/workflows/tranche-2-7-ci.yml file (parallel to tranche-3-ci.yml) has not been authored yet; this is contingent on the workflow existing first."
           }
         ],
         "do_enforcement_for_required_status_checks": true

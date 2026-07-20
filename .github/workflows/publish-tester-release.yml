@@ -210,7 +210,7 @@ jobs:
 
       - name: Validate tranche release notes
         run: |
-          python scripts/tranche/validate-tranche-notes.py --release-notes-path programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md
+          python scripts/tranche/validate-tranche-notes.py --release-notes-path docs/release/SD-16/release-notes.md
 
       # SD16-F-WINDOWS: the version stamp moved out of this job into the
       # top-level `stamp` job to keep the linux and windows publish jobs
@@ -295,7 +295,7 @@ jobs:
             --version "${VERSION}" \
             --source-branch "${GITHUB_REF_NAME}" \
             --source-commit "${GITHUB_SHA}" \
-            --release-notes-path "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md" \
+            --release-notes-path "docs/release/SD-16/release-notes.md" \
             --appimage-name "${APPIMAGE_NAME}" \
             --appimage-path "${APPIMAGE_PATH}" \
             --appimage-url "${APPIMAGE_URL}" \
@@ -359,7 +359,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p release-staging
-          cp programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md \
+          cp docs/release/SD-16/release-notes.md \
              release-staging/release-notes.md
 
       # SD16-F-WINDOWS: the platform publish jobs no longer `gh release
@@ -716,9 +716,9 @@ jobs:
           # release-notes on disk for sha256; it was uploaded as part of
           # platform-linux artifact.
           if [ -f release-staging/release-notes.md ]; then
-            mkdir -p "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening"
+            mkdir -p "docs/release/SD-16"
             cp release-staging/release-notes.md \
-               "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md"
+               "docs/release/SD-16/release-notes.md"
           fi
 
           RELEASE_NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}"
@@ -731,7 +731,7 @@ jobs:
             --version "${{ needs.stamp.outputs.version }}" \
             --source-branch "${GITHUB_REF_NAME}" \
             --source-commit "${GITHUB_SHA}" \
-            --release-notes-path "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md" \
+            --release-notes-path "docs/release/SD-16/release-notes.md" \
             --workflow ".github/workflows/publish-tester-release.yml" \
             --run-id "${GITHUB_RUN_ID}" \
             --run-attempt "${GITHUB_RUN_ATTEMPT}" \
@@ -772,7 +772,7 @@ jobs:
           # keeps the doc copy identical across runs.
           NOTES_FILE="release-notes.md"
           if [ ! -f "$NOTES_FILE" ]; then
-            cp ../programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md "$NOTES_FILE"
+            cp ../docs/release/SD-16/release-notes.md "$NOTES_FILE"
           fi
 
           # Build the file glob: every artifact we have staged.
