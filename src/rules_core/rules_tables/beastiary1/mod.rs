@@ -71,6 +71,14 @@
 //! five monsters. This subset combines both remainders into one
 //! six-monster subset that fully exhausts CR 1 and CR 2, so subset 07
 //! can start CR 3 cleanly.
+//!
+//! **CR-band move for subset 07** (documented in full in
+//! `docs/release/SD-22/artifacts/beastiary1/subset_07_cycle_receipt.md`
+//! and in `tests/sd22_beastiary1_subset_07_resolves.rs`'s header): CR 1
+//! and CR 2 are both fully exhausted after subset 06, so subset 07 moves
+//! to CR 3. Ships the first five real, unambiguous, non-parenthetical
+//! CR-3 monsters in alphabetical order: Ankheg, Assassin Vine, Centaur,
+//! Cockatrice, Derro.
 
 pub mod monster_subset_01;
 pub mod monster_subset_02;
@@ -78,6 +86,7 @@ pub mod monster_subset_03;
 pub mod monster_subset_04;
 pub mod monster_subset_05;
 pub mod monster_subset_06;
+pub mod monster_subset_07;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -143,6 +152,11 @@ pub enum MonsterId {
     Wolverine,
     Worg,
     YellowMuskCreeper,
+    Ankheg,
+    AssassinVine,
+    Centaur,
+    Cockatrice,
+    Derro,
 }
 
 /// Resolves a Bestiary 1 monster's chassis data, scoped to
@@ -185,6 +199,11 @@ pub fn monster_resolve(monster_id: MonsterId, rule_set: RuleSetId) -> Option<Mon
         MonsterId::Wolverine => monster_subset_06::wolverine(),
         MonsterId::Worg => monster_subset_06::worg(),
         MonsterId::YellowMuskCreeper => monster_subset_06::yellow_musk_creeper(),
+        MonsterId::Ankheg => monster_subset_07::ankheg(),
+        MonsterId::AssassinVine => monster_subset_07::assassin_vine(),
+        MonsterId::Centaur => monster_subset_07::centaur(),
+        MonsterId::Cockatrice => monster_subset_07::cockatrice(),
+        MonsterId::Derro => monster_subset_07::derro(),
     })
 }
 
@@ -223,6 +242,11 @@ pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStat
         "beastiary1:monster:wolverine" => MonsterId::Wolverine,
         "beastiary1:monster:worg" => MonsterId::Worg,
         "beastiary1:monster:yellow_musk_creeper" => MonsterId::YellowMuskCreeper,
+        "beastiary1:monster:ankheg" => MonsterId::Ankheg,
+        "beastiary1:monster:assassin_vine" => MonsterId::AssassinVine,
+        "beastiary1:monster:centaur" => MonsterId::Centaur,
+        "beastiary1:monster:cockatrice" => MonsterId::Cockatrice,
+        "beastiary1:monster:derro" => MonsterId::Derro,
         _ => return None,
     };
     monster_resolve(monster_id, rule_set)

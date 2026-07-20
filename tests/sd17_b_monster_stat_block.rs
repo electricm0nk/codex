@@ -474,3 +474,62 @@ fn parses_real_subset_06_cr_1_and_cr_2_monster_records_from_b1_races_lst() {
     assert_eq!(yellow_musk_creeper.source_page.as_deref(), Some("p.285"));
     assert!(yellow_musk_creeper.natural_attacks.iter().any(|a| a.name == "Tendril" && a.damage_dice == "1d4"));
 }
+
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_subset_07_cr_3_monster_records_from_b1_races_lst() {
+    let text = real_b1_races_lst();
+    let records = parse_monster_stat_block_entries("b1_races.lst", &text);
+
+    let find = |name: &str| {
+        records
+            .iter()
+            .find(|r| r.name == name)
+            .unwrap_or_else(|| panic!("expected a parsed record named {name:?} from the real b1_races.lst"))
+    };
+
+    let ankheg = find("Ankheg");
+    assert_eq!(ankheg.challenge_rating.as_f32(), 3.0);
+    assert_eq!(ankheg.size.as_deref(), Some("L"));
+    assert_eq!(ankheg.speed_ft, Some(30), "MOVE:Walk,30,Burrow,20 -- walk speed, not burrow");
+    assert_eq!(ankheg.race_type.as_deref(), Some("Magical Beast"));
+    assert_eq!(ankheg.race_subtype, None);
+    assert_eq!(ankheg.source_page.as_deref(), Some("p.15"));
+    assert!(ankheg.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+
+    let assassin_vine = find("Assassin Vine");
+    assert_eq!(assassin_vine.challenge_rating.as_f32(), 3.0);
+    assert_eq!(assassin_vine.size.as_deref(), Some("L"));
+    assert_eq!(assassin_vine.speed_ft, Some(5));
+    assert_eq!(assassin_vine.race_type.as_deref(), Some("Plant"));
+    assert_eq!(assassin_vine.race_subtype, None);
+    assert_eq!(assassin_vine.source_page.as_deref(), Some("p.22"));
+    assert!(assassin_vine.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+
+    let centaur = find("Centaur");
+    assert_eq!(centaur.challenge_rating.as_f32(), 3.0);
+    assert_eq!(centaur.size.as_deref(), Some("L"));
+    assert_eq!(centaur.speed_ft, Some(50));
+    assert_eq!(centaur.race_type.as_deref(), Some("Monstrous Humanoid"));
+    assert_eq!(centaur.race_subtype, None);
+    assert_eq!(centaur.source_page.as_deref(), Some("p.42"));
+    assert!(centaur.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+
+    let cockatrice = find("Cockatrice");
+    assert_eq!(cockatrice.challenge_rating.as_f32(), 3.0);
+    assert_eq!(cockatrice.size.as_deref(), Some("S"));
+    assert_eq!(cockatrice.speed_ft, Some(20), "MOVE:Walk,20,Fly,60 -- walk speed, not fly");
+    assert_eq!(cockatrice.race_type.as_deref(), Some("Magical Beast"));
+    assert_eq!(cockatrice.race_subtype, None);
+    assert_eq!(cockatrice.source_page.as_deref(), Some("p.48"));
+    assert!(cockatrice.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+
+    let derro = find("Derro");
+    assert_eq!(derro.challenge_rating.as_f32(), 3.0);
+    assert_eq!(derro.size.as_deref(), Some("S"));
+    assert_eq!(derro.speed_ft, Some(20));
+    assert_eq!(derro.race_type.as_deref(), Some("Humanoid"));
+    assert_eq!(derro.race_subtype.as_deref(), Some("Derro"));
+    assert_eq!(derro.source_page.as_deref(), Some("p.70"));
+    assert!(derro.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row -- fights with weapons");
+}

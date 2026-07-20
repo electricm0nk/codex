@@ -902,3 +902,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["beastiary1/subset_06_cycle_receipt.md"]
   notes: "Solo cycle (no parallel sibling this run) -- Epic 3, 4, and 6 are all fully closed; Epic 5 is the only currently-eligible lane. Verified tranche/5 clean and in sync with origin (6c679fe) before starting. Independently re-enumerated all real CR:1 (27 rows) and CR:2 (34 rows) monster stat-block rows in b1_races.lst directly against the live corpus file: only 2 unused non-parenthetical CR:1 names (Squid, Troglodyte) and only 4 unused non-parenthetical CR:2 names (Vargouille, Wolverine, Worg, Yellow Musk Creeper) remained -- neither remainder alone reached five monsters, so this cycle combined both remainders into one six-monster band-exhaustion cleanup subset rather than ship an undersized subset or strand the leftovers further. Did all RED/GREEN/verification work before touching progress.md/receipts.md.""
+
+- cycle_id: 2026-07-20T09:36:30Z
+  epic: 5
+  criterion: beastiary1_subset_07
+  criterion_section: "§3.1 Epic 5 — Bestiary 1 content-source ingest (subset 07, seventh monster-block subset, CR-band move to CR 3)"
+  row_or_kind: ingest:beastiary1_subset
+  evidence_tier_before: complete (criteria 14-17, subset 01 + subset 02 + subset 03 + subset 04 + subset 05 + subset 06)
+  evidence_tier_after: complete (criteria 14-17, re-verified against a seventh subset: Ankheg, Assassin Vine, Centaur, Cockatrice, Derro -- CR 1 and CR 2 both exhausted, CR 3 begun, 36 monsters total)
+  branch_tip_before: f2ff23a
+  branch_tip_after: "<pending backfill after push>"
+  merge_receipt_sha: "<pending backfill after push>"
+  cycle_artifact_path: "beastiary1/subset_07_cycle_receipt.md"
+  red_phase_evidence: "cargo test --locked --test sd22_beastiary1_subset_07_resolves against the pre-cycle tree failed to compile with error[E0599]: no variant, associated function, or constant named `Ankheg`/`AssassinVine`/`Centaur`/`Cockatrice`/`Derro` found for enum `MonsterId` (13 call sites) -- see cycle_artifact_path:Red-phase evidence"
+  green_phase_evidence: "wrote src/rules_core/rules_tables/beastiary1/monster_subset_07.rs (Ankheg/Assassin Vine/Centaur/Cockatrice/Derro chassis, transcribed from b1_races.lst:18,29,60,73,104) and wired it into beastiary1/mod.rs (pub mod monster_subset_07, five new MonsterId variants, match arms, key_resolve entries) -- diff is purely additive, no existing lines changed. No parser widening needed. All five real rows carry no NATURALATTACKS: token at all (fight via ABILITY:Internal cross-reference or, for Derro, weapons instead) -- same shape subset 04's Choker/Crocodile/Dark Creeper and subset 06's Vargouille/Wolverine/Worg already proved; transcribed as empty lists, not invented attacks. Added a real-corpus-gated grounding test to tests/sd17_b_monster_stat_block.rs. sd22_beastiary1_subset_07_resolves 6/6 passed, sd17_b_monster_stat_block --ignored 7/7 passed, full cargo test --locked 0 failed across 427 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
+  cargo_test_summary: "sd22_beastiary1_subset_07_resolves: 6/6 passed; sd17_b_monster_stat_block (PCGEN_CORPUS_ROOT-gated): 7/7 passed; full cargo test --locked: 0 failed (427 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 2100
+  self_heals_applied: []
+  next_required_uplift: "Bestiary 1 subset 08 -- 15 unused non-parenthetical CR-3 names remain (Doppelganger, Dryad, Ettercap, Gelatinous Cube, Hell Hound, Lion, Ogre, Pegasus, Rust Monster, Shadow, Unicorn, Violet Fungus, Wasp Swarm, Wight, Yeth Hound), enough for two more full five-monster subsets before CR 4."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:18,29,60,73,104 (Ankheg, Assassin Vine, Centaur, Cockatrice, Derro real CR:3 records; per decisions.md §5)"
+  rule_set_used: Bestiary1
+  kanban_card: "t_35de73cd (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: ["beastiary1/subset_07_cycle_receipt.md"]
+  notes: "Solo cycle (no parallel sibling this run) -- Epic 3, 4, and 6 are all fully closed; Epic 5 is the only currently-eligible lane. Verified tranche/5 clean and in sync with origin (f2ff23a) before starting. Independently re-enumerated all 44 real CR:3 monster stat-block rows in b1_races.lst directly against the live corpus file, excluded parenthetical sub-variant names and .MOD-suffixed override rows, leaving 20 clean CR:3 species names, none colliding with the 31 monsters already used in subsets 01-06. Picked the first 5 alphabetically. Did all RED/GREEN/verification work before touching progress.md/receipts.md."
