@@ -18,6 +18,7 @@
 pub mod class;
 pub mod equipment;
 pub mod metadata;
+pub mod monster_stat_block;
 pub mod race_ability;
 pub mod spell;
 pub mod spellcasting_class;
