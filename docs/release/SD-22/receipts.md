@@ -911,8 +911,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: complete (criteria 14-17, subset 01 + subset 02 + subset 03 + subset 04 + subset 05 + subset 06)
   evidence_tier_after: complete (criteria 14-17, re-verified against a seventh subset: Ankheg, Assassin Vine, Centaur, Cockatrice, Derro -- CR 1 and CR 2 both exhausted, CR 3 begun, 36 monsters total)
   branch_tip_before: f2ff23a
-  branch_tip_after: "<pending backfill after push>"
-  merge_receipt_sha: "<pending backfill after push>"
+  branch_tip_after: 0fce49a
+  merge_receipt_sha: 0fce49ab9be0d1b15cbe7361b8e68729b2e7a864
   cycle_artifact_path: "beastiary1/subset_07_cycle_receipt.md"
   red_phase_evidence: "cargo test --locked --test sd22_beastiary1_subset_07_resolves against the pre-cycle tree failed to compile with error[E0599]: no variant, associated function, or constant named `Ankheg`/`AssassinVine`/`Centaur`/`Cockatrice`/`Derro` found for enum `MonsterId` (13 call sites) -- see cycle_artifact_path:Red-phase evidence"
   green_phase_evidence: "wrote src/rules_core/rules_tables/beastiary1/monster_subset_07.rs (Ankheg/Assassin Vine/Centaur/Cockatrice/Derro chassis, transcribed from b1_races.lst:18,29,60,73,104) and wired it into beastiary1/mod.rs (pub mod monster_subset_07, five new MonsterId variants, match arms, key_resolve entries) -- diff is purely additive, no existing lines changed. No parser widening needed. All five real rows carry no NATURALATTACKS: token at all (fight via ABILITY:Internal cross-reference or, for Derro, weapons instead) -- same shape subset 04's Choker/Crocodile/Dark Creeper and subset 06's Vargouille/Wolverine/Worg already proved; transcribed as empty lists, not invented attacks. Added a real-corpus-gated grounding test to tests/sd17_b_monster_stat_block.rs. sd22_beastiary1_subset_07_resolves 6/6 passed, sd17_b_monster_stat_block --ignored 7/7 passed, full cargo test --locked 0 failed across 427 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
