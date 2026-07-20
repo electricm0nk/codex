@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: (pending; backfilled in next commit per the established subset 03-07 pattern)
+snapshot_as_of: 762f658
 ---
 
 # SD-22 — Progress
@@ -3051,7 +3051,7 @@ appended to `receipts.md`, commit SHA `0fce49a` and kanban card
 same follow-up commit, per the established backfill pattern from
 subsets 03/04/05/06.
 
-### cycle-2026-07-20T09:50:25Z | Epic 5, Bestiary 1 subset 08 (CR 3, continued) | ingest:beastiary1_subset | card pending (see receipts.md; backfilled next commit) | complete (criteria 14-17) → **complete (criteria 14-17, re-verified against an eighth subset)**
+### cycle-2026-07-20T09:50:25Z | Epic 5, Bestiary 1 subset 08 (CR 3, continued) | ingest:beastiary1_subset | card `t_52d046b8` (codex-tranche-5, status=done) | complete (criteria 14-17) → **complete (criteria 14-17, re-verified against an eighth subset)**
 
 Solo cycle (no parallel sibling this run) — Epic 3, 4, and 6 are all
 fully closed; Epic 5 was the only currently-eligible lane. Verified
@@ -3124,7 +3124,7 @@ five-monster subsets before CR 4.
 
 Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/beastiary1/subset_08_cycle_receipt.md`. Receipt block
-appended to `receipts.md` (commit SHA and kanban card id to be
-backfilled into both `receipts.md` and this doc in a small follow-up
-commit once known, per the established backfill pattern from subsets
-03-07).
+appended to `receipts.md`, commit SHA `762f658` and kanban card
+`t_52d046b8` backfilled into both `receipts.md` and this doc in this
+same follow-up commit, per the established backfill pattern from
+subsets 03/04/05/06/07.
