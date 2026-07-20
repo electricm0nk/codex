@@ -79,6 +79,16 @@
 //! to CR 3. Ships the first five real, unambiguous, non-parenthetical
 //! CR-3 monsters in alphabetical order: Ankheg, Assassin Vine, Centaur,
 //! Cockatrice, Derro.
+//!
+//! **Subset 08** (documented in full in
+//! `docs/release/SD-22/artifacts/beastiary1/subset_08_cycle_receipt.md`
+//! and in `tests/sd22_beastiary1_subset_08_resolves.rs`'s header):
+//! continues CR 3 alphabetically after subset 07's "Derro". Of the 20
+//! clean, non-parenthetical CR-3 species names in the real corpus, this
+//! subset ships the next five: Doppelganger, Dryad, Ettercap, Gelatinous
+//! Cube, Hell Hound. This brings Epic 5 to 8 of a default 8-12 subsets
+//! (41 monsters total) — see `docs/release/SD-22/progress.md`'s cycle
+//! log for this cycle's closure-readiness assessment.
 
 pub mod monster_subset_01;
 pub mod monster_subset_02;
@@ -87,6 +97,7 @@ pub mod monster_subset_04;
 pub mod monster_subset_05;
 pub mod monster_subset_06;
 pub mod monster_subset_07;
+pub mod monster_subset_08;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -157,6 +168,11 @@ pub enum MonsterId {
     Centaur,
     Cockatrice,
     Derro,
+    Doppelganger,
+    Dryad,
+    Ettercap,
+    GelatinousCube,
+    HellHound,
 }
 
 /// Resolves a Bestiary 1 monster's chassis data, scoped to
@@ -204,6 +220,11 @@ pub fn monster_resolve(monster_id: MonsterId, rule_set: RuleSetId) -> Option<Mon
         MonsterId::Centaur => monster_subset_07::centaur(),
         MonsterId::Cockatrice => monster_subset_07::cockatrice(),
         MonsterId::Derro => monster_subset_07::derro(),
+        MonsterId::Doppelganger => monster_subset_08::doppelganger(),
+        MonsterId::Dryad => monster_subset_08::dryad(),
+        MonsterId::Ettercap => monster_subset_08::ettercap(),
+        MonsterId::GelatinousCube => monster_subset_08::gelatinous_cube(),
+        MonsterId::HellHound => monster_subset_08::hell_hound(),
     })
 }
 
@@ -247,6 +268,11 @@ pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStat
         "beastiary1:monster:centaur" => MonsterId::Centaur,
         "beastiary1:monster:cockatrice" => MonsterId::Cockatrice,
         "beastiary1:monster:derro" => MonsterId::Derro,
+        "beastiary1:monster:doppelganger" => MonsterId::Doppelganger,
+        "beastiary1:monster:dryad" => MonsterId::Dryad,
+        "beastiary1:monster:ettercap" => MonsterId::Ettercap,
+        "beastiary1:monster:gelatinous_cube" => MonsterId::GelatinousCube,
+        "beastiary1:monster:hell_hound" => MonsterId::HellHound,
         _ => return None,
     };
     monster_resolve(monster_id, rule_set)
