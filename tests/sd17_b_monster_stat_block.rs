@@ -168,3 +168,74 @@ fn parses_real_subset_02_cr_1_monster_records_from_b1_races_lst() {
     let rat_swarm = find("Rat Swarm");
     assert_eq!(rat_swarm.challenge_rating.as_f32(), 2.0, "Rat Swarm is CR 2, not CR 1");
 }
+
+/// Grounding test for subset 03's roster (see
+/// `docs/release/SD-22/artifacts/beastiary1/subset_03_cycle_receipt.md`).
+/// Subset 03 moves to CR 2 (CR 1 is exhausted after subsets 01+02 leave
+/// only Squid/Troglodyte, too few for a five-monster subset). No parser
+/// widening was needed — every field these five monsters use already
+/// falls inside `monster_stat_block`'s existing recognition surface —
+/// but this test proves that against the real corpus file directly, the
+/// same way subset 01's and subset 02's grounding tests did.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_subset_03_cr_2_monster_records_from_b1_races_lst() {
+    let text = real_b1_races_lst();
+    let records = parse_monster_stat_block_entries("b1_races.lst", &text);
+
+    let find = |name: &str| {
+        records
+            .iter()
+            .find(|r| r.name == name)
+            .unwrap_or_else(|| panic!("expected a parsed record named {name:?} from the real b1_races.lst"))
+    };
+
+    let bat_swarm = find("Bat Swarm");
+    assert_eq!(bat_swarm.challenge_rating.as_f32(), 2.0);
+    assert_eq!(bat_swarm.size.as_deref(), Some("D"));
+    assert_eq!(bat_swarm.speed_ft, Some(5), "walk speed, not the fly speed");
+    assert_eq!(bat_swarm.race_type.as_deref(), Some("Animal"));
+    assert_eq!(bat_swarm.race_subtype.as_deref(), Some("Swarm"));
+    assert_eq!(bat_swarm.source_page.as_deref(), Some("p.30"));
+    assert!(bat_swarm.natural_attacks.iter().any(|a| a.name == "Swarm" && a.damage_dice == "1d6"));
+
+    let boar = find("Boar");
+    assert_eq!(boar.challenge_rating.as_f32(), 2.0);
+    assert_eq!(boar.speed_ft, Some(40));
+    assert_eq!(boar.race_type.as_deref(), Some("Animal"));
+    assert_eq!(boar.source_page.as_deref(), Some("p.36"));
+    assert!(boar.natural_attacks.is_empty(), "Gore is an ABILITY:Internal cross-reference, not a NATURALATTACKS: token");
+
+    let boggard = find("Boggard");
+    assert_eq!(boggard.challenge_rating.as_f32(), 2.0);
+    assert_eq!(boggard.speed_ft, Some(20), "walk speed, not the swim speed");
+    assert_eq!(boggard.race_type.as_deref(), Some("Humanoid"));
+    assert_eq!(boggard.race_subtype.as_deref(), Some("Boggard"));
+    assert_eq!(boggard.source_page.as_deref(), Some("p.37"));
+    assert!(boggard.natural_attacks.iter().any(|a| a.name == "Tongue"));
+
+    let bugbear = find("Bugbear");
+    assert_eq!(bugbear.challenge_rating.as_f32(), 2.0);
+    assert_eq!(bugbear.speed_ft, Some(30));
+    assert_eq!(bugbear.race_type.as_deref(), Some("Humanoid"));
+    assert_eq!(bugbear.race_subtype.as_deref(), Some("Goblinoid"));
+    assert_eq!(bugbear.source_page.as_deref(), Some("p.38"));
+    assert!(bugbear.natural_attacks.is_empty());
+
+    let cave_fisher = find("Cave Fisher");
+    assert_eq!(cave_fisher.challenge_rating.as_f32(), 2.0);
+    assert_eq!(cave_fisher.speed_ft, Some(20), "walk speed, not the climb speed");
+    assert_eq!(cave_fisher.race_type.as_deref(), Some("Vermin"));
+    assert_eq!(cave_fisher.source_page.as_deref(), Some("p.41"));
+    assert!(cave_fisher.natural_attacks.iter().any(|a| a.name == "Filament"));
+
+    // Confirms the CR-band-move note: Squid and Troglodyte ARE real,
+    // standalone, unused CR:1 records (the two that made CR 1
+    // "insufficient, not absent" for a five-monster subset), but this
+    // cycle intentionally did not use them — they remain available for a
+    // future small/mixed subset.
+    let squid = find("Squid");
+    assert_eq!(squid.challenge_rating.as_f32(), 1.0, "Squid is CR 1 and was left unused this cycle");
+    let troglodyte = find("Troglodyte");
+    assert_eq!(troglodyte.challenge_rating.as_f32(), 1.0, "Troglodyte is CR 1 and was left unused this cycle");
+}

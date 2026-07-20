@@ -801,3 +801,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["dm_toolkit/happy_path_integration_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream working Epic 5 (Bestiary 1 subset 03, src/rules_core/rules_tables/beastiary1/). File-touch set (tests/sd22_dm_toolkit_happy_path_integration.rs, docs/release/SD-22/artifacts/dm_toolkit/) disjoint from the sibling's beastiary1/ production files per loop-instruction.md; this cycle only reads beastiary1/mod.rs, never writes it. Did all RED/GREEN/verification work before touching progress.md/receipts.md. Investigated the loop-instruction.md-anticipated MonsterRef/MonsterStatBlock type mismatch directly and found it resolves via a direct field read, not a production-code gap -- documented in the cycle artifact rather than silently skipped."
+
+- cycle_id: 2026-07-20T06:19:56Z
+  epic: 5
+  criterion: beastiary1_subset_03
+  criterion_section: "§3.1 Epic 5 — Bestiary 1 content-source ingest (subset 03, third monster-block subset)"
+  row_or_kind: ingest:beastiary1_subset
+  evidence_tier_before: complete (criteria 14-17, subset 01 + subset 02)
+  evidence_tier_after: complete (criteria 14-17, re-verified against a third subset: Bat Swarm, Boar, Boggard, Bugbear, Cave Fisher)
+  branch_tip_before: a0376d1
+  branch_tip_after: PENDING (see this cycle's log entry for the final commit SHA)
+  merge_receipt_sha: PENDING (see this cycle's log entry for the final commit SHA)
+  cycle_artifact_path: "beastiary1/subset_03_cycle_receipt.md"
+  red_phase_evidence: "cargo test --locked --test sd22_beastiary1_subset_03_resolves against the pre-cycle tree failed to compile with error[E0599]: no variant, associated function, or constant named `BatSwarm`/`Boar`/`Boggard`/`Bugbear`/`CaveFisher` found for enum `MonsterId` (11 call sites) -- see cycle_artifact_path:Red-phase evidence"
+  green_phase_evidence: "wrote src/rules_core/rules_tables/beastiary1/monster_subset_03.rs (Bat Swarm/Boar/Boggard/Bugbear/Cave Fisher chassis, transcribed from b1_races.lst:41,49,51,52,59) and wired it into beastiary1/mod.rs (pub mod monster_subset_03, five new MonsterId variants, match arms) -- diff is purely additive, no existing lines changed. No parser widening needed -- monster_stat_block.rs's existing recognition surface already covers every field these five monsters use, including Boar/Bugbear's empty natural_attacks (no NATURALATTACKS: token on their real rows). Added a real-corpus-gated grounding test to tests/sd17_b_monster_stat_block.rs. sd22_beastiary1_subset_03_resolves 6/6 passed, sd17_b_monster_stat_block --ignored 3/3 passed, full cargo test --locked 0 failed across 423 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
+  cargo_test_summary: "sd22_beastiary1_subset_03_resolves: 6/6 passed; sd17_b_monster_stat_block (PCGEN_CORPUS_ROOT-gated): 3/3 passed; full cargo test --locked: 0 failed (423 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 3200
+  self_heals_applied: []
+  next_required_uplift: "Bestiary 1 subset 04 (next CR-2 monster-block subset). Squid and Troglodyte remain unused real, standalone CR-1 monster names available for a future small/mixed subset."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:41,49,51,52,59 (Bat Swarm, Boar, Boggard, Bugbear, Cave Fisher real CR:2 records; per decisions.md §5)"
+  rule_set_used: Bestiary1
+  kanban_card: "t_2e3bfce1 (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: ["beastiary1/subset_03_cycle_receipt.md"]
+  notes: "Ran in parallel with a sibling stream working Epic 6 criterion 21 (tests/sd22_dm_toolkit_happy_path_integration.rs, reading from but not modifying beastiary1/). File-touch set (rules_tables/beastiary1/monster_subset_03.rs, its test, tests/sd17_b_monster_stat_block.rs) disjoint from the sibling's own touched files; the mod.rs edit is additive-only (new pub mod line, new enum variants, new match arms). Confirmed via git fetch that origin/tranche/5 (a0376d1, the sibling's already-landed and self-backfilled commit) matched local HEAD before this cycle's own commit -- no rebase was needed. Did all RED/GREEN/verification work before touching progress.md/receipts.md. CR 1 was found exhausted for a five-monster subset (only Squid/Troglodyte unused among real, non-parenthetical CR-1 names) -- moved to CR 2 per loop-instruction.md's explicit guidance, verified directly against the real corpus rather than assumed."

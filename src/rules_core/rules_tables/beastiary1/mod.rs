@@ -37,9 +37,19 @@
 //! this cycle verified directly: Darkmantle, Horse, Hyena, Octopus,
 //! Spider Swarm (alphabetical, excluding parenthetical sub-variant names
 //! the same way subset 01 did).
+//!
+//! **CR-band move for subset 03** (documented in full in
+//! `docs/release/SD-22/artifacts/beastiary1/subset_03_cycle_receipt.md`
+//! and in `tests/sd22_beastiary1_subset_03_resolves.rs`'s header): CR 1
+//! is exhausted after subsets 01+02 (only Squid and Troglodyte remain
+//! unused among real, non-parenthetical CR:1 monster names — not enough
+//! for a five-monster subset), so subset 03 moves to CR 2. Ships the
+//! first five real, unambiguous, non-parenthetical CR-2 monsters in
+//! alphabetical order: Bat Swarm, Boar, Boggard, Bugbear, Cave Fisher.
 
 pub mod monster_subset_01;
 pub mod monster_subset_02;
+pub mod monster_subset_03;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -84,6 +94,11 @@ pub enum MonsterId {
     Hyena,
     Octopus,
     SpiderSwarm,
+    BatSwarm,
+    Boar,
+    Boggard,
+    Bugbear,
+    CaveFisher,
 }
 
 /// Resolves a Bestiary 1 monster's chassis data, scoped to
@@ -105,6 +120,11 @@ pub fn monster_resolve(monster_id: MonsterId, rule_set: RuleSetId) -> Option<Mon
         MonsterId::Hyena => monster_subset_02::hyena(),
         MonsterId::Octopus => monster_subset_02::octopus(),
         MonsterId::SpiderSwarm => monster_subset_02::spider_swarm(),
+        MonsterId::BatSwarm => monster_subset_03::bat_swarm(),
+        MonsterId::Boar => monster_subset_03::boar(),
+        MonsterId::Boggard => monster_subset_03::boggard(),
+        MonsterId::Bugbear => monster_subset_03::bugbear(),
+        MonsterId::CaveFisher => monster_subset_03::cave_fisher(),
     })
 }
 
@@ -122,6 +142,11 @@ pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStat
         "beastiary1:monster:hyena" => MonsterId::Hyena,
         "beastiary1:monster:octopus" => MonsterId::Octopus,
         "beastiary1:monster:spider_swarm" => MonsterId::SpiderSwarm,
+        "beastiary1:monster:bat_swarm" => MonsterId::BatSwarm,
+        "beastiary1:monster:boar" => MonsterId::Boar,
+        "beastiary1:monster:boggard" => MonsterId::Boggard,
+        "beastiary1:monster:bugbear" => MonsterId::Bugbear,
+        "beastiary1:monster:cave_fisher" => MonsterId::CaveFisher,
         _ => return None,
     };
     monster_resolve(monster_id, rule_set)
