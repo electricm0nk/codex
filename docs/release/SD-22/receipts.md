@@ -760,8 +760,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: complete (criteria 14-17 for subset 01 only)
   evidence_tier_after: complete (criteria 14-17, re-verified against subset 01 + subset 02)
   branch_tip_before: 4192f6e
-  branch_tip_after: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
-  merge_receipt_sha: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
+  branch_tip_after: b84c57c
+  merge_receipt_sha: b84c57c12cd1d40cb40bc5c68b349afc1794d3cc
   cycle_artifact_path: "beastiary1/subset_02_cycle_receipt.md"
   red_phase_evidence: "cargo test --locked --test sd22_beastiary1_subset_02_resolves against the pre-cycle tree failed to compile with error[E0599]: no variant, associated function, or constant named `Darkmantle`/`Horse`/`Hyena`/`Octopus`/`SpiderSwarm` found for enum `MonsterId` (10 call sites) -- see cycle_artifact_path:Red-phase evidence"
   green_phase_evidence: "wrote src/rules_core/rules_tables/beastiary1/monster_subset_02.rs (Darkmantle/Horse/Hyena/Octopus/Spider Swarm chassis, transcribed from b1_races.lst:91,235,242,314,379) and wired it into beastiary1/mod.rs (pub mod monster_subset_02, five new MonsterId variants, match arms). No parser widening needed -- monster_stat_block.rs's existing recognition surface already covers every field these five monsters use. Added a real-corpus-gated grounding test to tests/sd17_b_monster_stat_block.rs anyway. sd22_beastiary1_subset_02_resolves 6/6 passed, sd17_b_monster_stat_block --ignored 2/2 passed, full cargo test --locked 0 failed across 421 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"

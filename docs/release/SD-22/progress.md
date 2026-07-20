@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: PENDING_THIS_CYCLE_COMMIT_SHA
+snapshot_as_of: b84c57c
 ---
 
 # SD-22 — Progress
@@ -2486,7 +2486,7 @@ Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/acg/equipment_tables_cycle_receipt.md`. Receipt block appended
 to `receipts.md`.
 
-### cycle-2026-07-20 | Epic 5, subset 02 (second monster-block subset) | ingest:beastiary1_subset | card TBD on `codex-tranche-5` | complete (subset 01) → **complete (subset 01 + subset 02)**
+### cycle-2026-07-20 | Epic 5, subset 02 (second monster-block subset) | ingest:beastiary1_subset | card `t_a981f157` on `codex-tranche-5` (status=done), commit `b84c57c` | complete (subset 01) → **complete (subset 01 + subset 02)**
 
 Confirmed subset 02 is next-eligible for Epic 5 against the live
 `progress.md` before starting: the subset-01 cycle's own log entry ends
