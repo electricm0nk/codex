@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: PENDING-shaman-cycle-commit
+snapshot_as_of: 0d93e05
 ---
 
 # SD-22 — Progress
@@ -1683,7 +1683,7 @@ appended to `receipts.md`. Next-eligible: Shaman (class 6 of the
 corrected 10-class roster), or a dedicated cycle for criterion 13's
 shared spell/equipment tables once more classes land.
 
-### cycle-2026-07-20T01:17:01Z | Epic 4, Shaman (class 6 of corrected 10-class roster) | ingest:acg_class | card pending (Step 10b attempted; backfilled below) | open → **complete (criteria 10-12 for Shaman)**
+### cycle-2026-07-20T01:17:01Z | Epic 4, Shaman (class 6 of corrected 10-class roster) | ingest:acg_class | card `t_05ab0c9b` on `codex-tranche-5` (status=done) | open → **complete (criteria 10-12 for Shaman)**
 
 Re-checked state before picking a criterion: `git fetch origin tranche/5` and
 `git status --porcelain | wc -l` returned 0; `origin/tranche/5` HEAD

@@ -510,8 +510,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open (Arcanist + Bloodrager + Brawler + Hunter + Investigator complete; Shaman not yet started)
   evidence_tier_after: complete (criteria 10-12 for Shaman; criterion 13's spell/equipment resolution deferred to a later cycle)
   branch_tip_before: 63e93c9
-  branch_tip_after: PENDING-shaman-cycle-commit
-  merge_receipt_sha: PENDING-shaman-cycle-commit
+  branch_tip_after: 0d93e05
+  merge_receipt_sha: 0d93e05
   cycle_artifact_path: "acg/class_shaman_cycle_receipt.md"
   red_phase_evidence: "Widening RED: parses_real_shaman_record_from_acg_classes_lst added to tests/sd17_b_spellcasting_class.rs, failed (Shaman out of SPELLCASTING_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_shaman_resolves.rs failed to compile (E0599: AcgClassId::Shaman did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
   green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Shaman) in src/pcgen_import/lst_parser/spellcasting_class.rs (not class.rs -- Shaman's real record carries SPELLSTAT:WIS MEMORIZE:YES with no SPELLBOOK:YES and no MEMORIZE:NO, same standard-prepared posture as APG's Witch); added rules_tables/acg/class_shaman.rs and AcgClassId::Shaman match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist+Bloodrager+Brawler+Hunter+Investigator still resolve); widening test green (25/25 in sd17_b_spellcasting_class); full cargo test suite green, 0 failed (411 test-result:ok blocks); clippy clean (see cycle_artifact_path:Green-phase evidence)"
@@ -522,7 +522,7 @@ that are already self-evident from the cycle_artifact_path.)
   next_required_uplift: "Epic 4's next-eligible cycle is Skald (class 7 of the corrected 10-class roster: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest), or a dedicated cycle for criterion 13's shared spell/equipment tables once more classes land. corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md still need an operator/doc-correction pass to formally replace 'Alchemist (ACG-side)' with Slayer in the row list, mirroring commit 6923e54's APG roster fix -- not blocking further Epic 4 cycles. Epic 5 (Bestiary 1) remains blocked on its own, separate parser gap (b1_races.lst's unprefixed bare-row monster records) -- unaffected by this cycle."
   corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:221 (CLASS:Shaman)"
   rule_set_used: Acg
-  kanban_card: "PENDING (Step 10b attempted post-commit; backfilled below)"
+  kanban_card: "t_05ab0c9b (codex-tranche-5, status=done)"
   progress_file_updated: "yes"
   artifacts_written: ["acg/class_shaman_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Shaman record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB -- same posture as ACG's Hunter/Investigator and APG's Alchemist/Inquisitor/Oracle/Summoner -- good Will from its own single-save token, poor Fortitude+Reflex from one combined token (BASE.Fortitude,BASE.Reflex -- same pairing shape as Brawler's/Hunter's combined token, but poor instead of good), MAXLEVEL:20, SPELLSTAT:WIS MEMORIZE:YES with no SPELLBOOK:YES and no MEMORIZE:NO -- standard-prepared posture, same shape as APG's Witch) -- confirming Shaman belongs in spellcasting_class.rs's SPELLCASTING_CLASS_NAMES rather than class.rs's MARTIAL_CLASS_NAMES; same scope boundary as class_arcanist.rs/class_bloodrager.rs/class_brawler.rs/class_hunter.rs/class_investigator.rs (named per-level features out of scope, formula-derived chassis only)."
