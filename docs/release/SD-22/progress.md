@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: PENDING (see this cycle's log entry for the final commit SHA)
+snapshot_as_of: 2fa172c
 ---
 
 # SD-22 — Progress
@@ -2572,7 +2572,7 @@ Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/beastiary1/subset_02_cycle_receipt.md`. Receipt block appended
 to `receipts.md`.
 
-### cycle-2026-07-20T06:14:48Z | Epic 6, criterion 21 (DM Toolkit happy-path integration, fourth and last Epic 6 cycle) | dm:encounter | card `t_15c0a7f5` on `codex-tranche-5` (status=done), commit PENDING | complete (criteria 18-20) → **complete (criteria 18-21, Epic 6 fully closed out)**
+### cycle-2026-07-20T06:14:48Z | Epic 6, criterion 21 (DM Toolkit happy-path integration, fourth and last Epic 6 cycle) | dm:encounter | card `t_15c0a7f5` on `codex-tranche-5` (status=done), commit `2fa172c` | complete (criteria 18-20) → **complete (criteria 18-21, Epic 6 fully closed out)**
 
 Confirmed criterion 21 is next-eligible against the live `progress.md`
 before starting: Epic 3 (APG), Epic 4 (ACG), and Epic 5 (Bestiary 1, two

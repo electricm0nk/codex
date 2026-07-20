@@ -785,8 +785,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: complete (criteria 18-20)
   evidence_tier_after: complete (criteria 18-21, Epic 6 fully closed out)
   branch_tip_before: 1c8e375
-  branch_tip_after: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
-  merge_receipt_sha: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
+  branch_tip_after: 2fa172c
+  merge_receipt_sha: 2fa172c64803172aaab15f8729c7a6851d750b5c
   cycle_artifact_path: "dm_toolkit/happy_path_integration_cycle_receipt.md"
   red_phase_evidence: "cargo test --locked --test sd22_dm_toolkit_happy_path_integration against the pre-cycle tree failed with 'error: no test target named `sd22_dm_toolkit_happy_path_integration` in default-run packages' -- the file genuinely did not exist yet -- see cycle_artifact_path:Red-phase evidence"
   green_phase_evidence: "wrote tests/sd22_dm_toolkit_happy_path_integration.rs with two tests: a party of 1 level-1 PC vs. the real ingested Ghoul (Epic 5 subset 01, resolved via beastiary1::monster_resolve) asserting Difficulty::Medium (APL 1, EL 1), and a party of 4 level-3 PCs vs. the real ingested Darkmantle (Epic 5 subset 02) asserting Difficulty::Easy (APL 3, EL 1). No production-code change needed: MonsterStatBlock::challenge_rating is a public f32 field and MonsterRef::new already takes a public f32 argument, so the two Epic 5/Epic 6 types reconcile via a direct field read. sd22_dm_toolkit_happy_path_integration 2/2 passed, full cargo test --locked 0 failed across 422 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
