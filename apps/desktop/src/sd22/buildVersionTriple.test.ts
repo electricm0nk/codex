@@ -38,10 +38,11 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: tranche moves to 5 (tranche/5 is SD-22's active branch) and major
-  // stays 0 until first main-publish, per decisions.md §2's build-version
-  // responsibility note.
-  assert(pkg.startsWith('0.5.'), `version "${pkg}" must move to major=0, tranche=5 on tranche/5`);
+  // Anchor: tranche-base moved to 6 on SD-22's closure-epilogue tranche
+  // promotion (Epic 7, criterion 26; build resets to 0 on promotion) and
+  // major stays 0 until first main-publish, per decisions.md §2 and
+  // ../SD-21/decisions.md §18's tranche-promotion rule.
+  assert(pkg.startsWith('0.6.'), `version "${pkg}" must move to major=0, tranche=6 on tranche/5 post-promotion`);
 }
 
 verifiesAllThreeVersionFilesAgreeAndFollowTripleShape();

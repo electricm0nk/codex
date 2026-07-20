@@ -21,11 +21,12 @@ function readPackageJsonVersion(): string {
   return doc.version;
 }
 
-// The exact pre-bump literal these fixtures carried before E8.27 moved the
-// three version files to 0.5.95. Some files also carry unrelated arbitrary
-// version placeholders (e.g. '0.0.0-test') for isolated formatter tests —
-// those aren't "the current build" fixture and must not be flagged here.
-const STALE_LABEL = 'Codex 0.4.94-test';
+// The exact pre-bump literal these fixtures carried before E7.26's tranche
+// promotion moved the three version files from 0.5.95 to 0.6.0. Some files
+// also carry unrelated arbitrary version placeholders (e.g. '0.0.0-test')
+// for isolated formatter tests — those aren't "the current build" fixture
+// and must not be flagged here.
+const STALE_LABEL = 'Codex 0.5.95-test';
 
 function verifiesFixturesCarryCurrentTrancheBuildLabel() {
   const pkgVersion = readPackageJsonVersion();
