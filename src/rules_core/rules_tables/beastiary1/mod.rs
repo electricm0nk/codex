@@ -60,12 +60,24 @@
 //! continues CR 2 alphabetically after subset 04's "Morlock". Ships the
 //! next five real, unambiguous, non-parenthetical CR-2 monsters: Rat
 //! Swarm, Sahuagin, Shark, Shocker Lizard, Skum.
+//!
+//! **Subset 06** (documented in full in
+//! `docs/release/SD-22/artifacts/beastiary1/subset_06_cycle_receipt.md`
+//! and in `tests/sd22_beastiary1_subset_06_resolves.rs`'s header): a
+//! band-exhaustion cleanup subset, not a straight CR-band continuation.
+//! Only 2 unused non-parenthetical CR-1 names (Squid, Troglodyte) and
+//! only 4 unused non-parenthetical CR-2 names (Vargouille, Wolverine,
+//! Worg, Yellow Musk Creeper) remained — neither remainder alone reached
+//! five monsters. This subset combines both remainders into one
+//! six-monster subset that fully exhausts CR 1 and CR 2, so subset 07
+//! can start CR 3 cleanly.
 
 pub mod monster_subset_01;
 pub mod monster_subset_02;
 pub mod monster_subset_03;
 pub mod monster_subset_04;
 pub mod monster_subset_05;
+pub mod monster_subset_06;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -125,6 +137,12 @@ pub enum MonsterId {
     Shark,
     ShockerLizard,
     Skum,
+    Squid,
+    Troglodyte,
+    Vargouille,
+    Wolverine,
+    Worg,
+    YellowMuskCreeper,
 }
 
 /// Resolves a Bestiary 1 monster's chassis data, scoped to
@@ -161,6 +179,12 @@ pub fn monster_resolve(monster_id: MonsterId, rule_set: RuleSetId) -> Option<Mon
         MonsterId::Shark => monster_subset_05::shark(),
         MonsterId::ShockerLizard => monster_subset_05::shocker_lizard(),
         MonsterId::Skum => monster_subset_05::skum(),
+        MonsterId::Squid => monster_subset_06::squid(),
+        MonsterId::Troglodyte => monster_subset_06::troglodyte(),
+        MonsterId::Vargouille => monster_subset_06::vargouille(),
+        MonsterId::Wolverine => monster_subset_06::wolverine(),
+        MonsterId::Worg => monster_subset_06::worg(),
+        MonsterId::YellowMuskCreeper => monster_subset_06::yellow_musk_creeper(),
     })
 }
 
@@ -193,6 +217,12 @@ pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStat
         "beastiary1:monster:shark" => MonsterId::Shark,
         "beastiary1:monster:shocker_lizard" => MonsterId::ShockerLizard,
         "beastiary1:monster:skum" => MonsterId::Skum,
+        "beastiary1:monster:squid" => MonsterId::Squid,
+        "beastiary1:monster:troglodyte" => MonsterId::Troglodyte,
+        "beastiary1:monster:vargouille" => MonsterId::Vargouille,
+        "beastiary1:monster:wolverine" => MonsterId::Wolverine,
+        "beastiary1:monster:worg" => MonsterId::Worg,
+        "beastiary1:monster:yellow_musk_creeper" => MonsterId::YellowMuskCreeper,
         _ => return None,
     };
     monster_resolve(monster_id, rule_set)

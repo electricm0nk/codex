@@ -877,3 +877,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["beastiary1/subset_05_cycle_receipt.md"]
   notes: "Solo cycle (no parallel sibling this run) -- Epic 3, 4, and 6 are all fully closed; Epic 5 is the only currently-eligible lane. Verified tranche/5 clean and in sync with origin (af3e7aa) before starting. Independently re-enumerated all 34 real CR:2 monster stat-block rows in b1_races.lst directly against the live corpus file, excluded the 15 parenthetical sub-variant names and the 10 names already used in subsets 03+04, and picked the next 5 alphabetically. Did all RED/GREEN/verification work before touching progress.md/receipts.md."
+
+- cycle_id: 2026-07-20T09:21:36Z
+  epic: 5
+  criterion: beastiary1_subset_06
+  criterion_section: "§3.1 Epic 5 — Bestiary 1 content-source ingest (subset 06, sixth monster-block subset, band-exhaustion cleanup)"
+  row_or_kind: ingest:beastiary1_subset
+  evidence_tier_before: complete (criteria 14-17, subset 01 + subset 02 + subset 03 + subset 04 + subset 05)
+  evidence_tier_after: complete (criteria 14-17, re-verified against a sixth subset: Squid, Troglodyte, Vargouille, Wolverine, Worg, Yellow Musk Creeper -- CR 1 and CR 2 both now fully exhausted)
+  branch_tip_before: 6c679fe
+  branch_tip_after: "PENDING (backfilled by follow-up commit after this cycle's own commit lands)"
+  merge_receipt_sha: "PENDING (backfilled by follow-up commit after this cycle's own commit lands)"
+  cycle_artifact_path: "beastiary1/subset_06_cycle_receipt.md"
+  red_phase_evidence: "cargo test --locked --test sd22_beastiary1_subset_06_resolves against the pre-cycle tree failed to compile with error[E0599]: no variant, associated function, or constant named `YellowMuskCreeper`/`Troglodyte`/`Vargouille`/`Wolverine`/`Worg` found for enum `MonsterId` (14 call sites) -- see cycle_artifact_path:Red-phase evidence"
+  green_phase_evidence: "wrote src/rules_core/rules_tables/beastiary1/monster_subset_06.rs (Squid/Troglodyte/Vargouille/Wolverine/Worg/Yellow Musk Creeper chassis, transcribed from b1_races.lst:380,390,401,416,418,430) and wired it into beastiary1/mod.rs (pub mod monster_subset_06, six new MonsterId variants, match arms, key_resolve entries) -- diff is purely additive, no existing lines changed. No parser widening needed. Two shapes exercised, both with precedent from prior subsets: Squid and Vargouille's rows carry no Walk pair in MOVE: (same shape as subset 05's Shark; transcribed as speed_ft: 0), and Troglodyte carries two separate NATURALATTACKS: tab fields accumulating to 4 entries (same shape as subset 05's Sahuagin/Skum), while Vargouille/Wolverine/Worg carry no NATURALATTACKS: token at all (same shape as subset 04's Choker/Crocodile/Dark Creeper). Added a real-corpus-gated grounding test to tests/sd17_b_monster_stat_block.rs. sd22_beastiary1_subset_06_resolves 6/6 passed, sd17_b_monster_stat_block --ignored 6/6 passed, full cargo test --locked 0 failed across 426 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
+  cargo_test_summary: "sd22_beastiary1_subset_06_resolves: 6/6 passed; sd17_b_monster_stat_block (PCGEN_CORPUS_ROOT-gated): 6/6 passed; full cargo test --locked: 0 failed (426 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 2100
+  self_heals_applied: []
+  next_required_uplift: "Bestiary 1 subset 07 -- CR 1 and CR 2 are both now fully exhausted (no unused, non-parenthetical, standalone monster names remain in either band); subset 07 should move to CR 3, verified directly against the real corpus (34 CR:3 rows exist per this cycle's own enumeration -- see the b1_races.lst CR:3 grep output cited in the cycle artifact)."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:380,390,401,416,418,430 (Squid, Troglodyte, Vargouille, Wolverine, Worg, Yellow Musk Creeper real CR:1/CR:2 records; per decisions.md §5)"
+  rule_set_used: Bestiary1
+  kanban_card: "PENDING (backfilled by follow-up commit after hermes kanban mint)"
+  progress_file_updated: "yes"
+  artifacts_written: ["beastiary1/subset_06_cycle_receipt.md"]
+  notes: "Solo cycle (no parallel sibling this run) -- Epic 3, 4, and 6 are all fully closed; Epic 5 is the only currently-eligible lane. Verified tranche/5 clean and in sync with origin (6c679fe) before starting. Independently re-enumerated all real CR:1 (27 rows) and CR:2 (34 rows) monster stat-block rows in b1_races.lst directly against the live corpus file: only 2 unused non-parenthetical CR:1 names (Squid, Troglodyte) and only 4 unused non-parenthetical CR:2 names (Vargouille, Wolverine, Worg, Yellow Musk Creeper) remained -- neither remainder alone reached five monsters, so this cycle combined both remainders into one six-monster band-exhaustion cleanup subset rather than ship an undersized subset or strand the leftovers further. Did all RED/GREEN/verification work before touching progress.md/receipts.md.""

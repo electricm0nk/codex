@@ -380,3 +380,97 @@ fn parses_real_subset_05_cr_2_monster_records_from_b1_races_lst() {
     assert!(skum.natural_attacks.iter().any(|a| a.name == "Claw (w/o weapon)" && a.damage_dice == "1d4"));
     assert!(skum.natural_attacks.iter().any(|a| a.name == "Claw (w/weapon)" && a.damage_dice == "1d4"));
 }
+
+/// Grounding test for subset 06's roster (see
+/// `docs/release/SD-22/artifacts/beastiary1/subset_06_cycle_receipt.md`).
+/// Subset 06 is a band-exhaustion cleanup subset: the last two unused
+/// non-parenthetical CR-1 names (Squid, Troglodyte) plus the last four
+/// unused non-parenthetical CR-2 names (Vargouille, Wolverine, Worg,
+/// Yellow Musk Creeper). No parser widening was needed. Squid and
+/// Vargouille both exercise the "no Walk pair in MOVE:" shape subset
+/// 05's Shark already proved; Troglodyte exercises the "two
+/// NATURALATTACKS: tab fields accumulate" shape subset 05's
+/// Sahuagin/Skum already proved; Vargouille/Wolverine/Worg exercise the
+/// "no NATURALATTACKS: token at all" shape subset 04's
+/// Choker/Crocodile/Dark Creeper already proved.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_subset_06_cr_1_and_cr_2_monster_records_from_b1_races_lst() {
+    let text = real_b1_races_lst();
+    let records = parse_monster_stat_block_entries("b1_races.lst", &text);
+
+    let find = |name: &str| {
+        records
+            .iter()
+            .find(|r| r.name == name)
+            .unwrap_or_else(|| panic!("expected a parsed record named {name:?} from the real b1_races.lst"))
+    };
+
+    let squid = find("Squid");
+    assert_eq!(squid.challenge_rating.as_f32(), 1.0);
+    assert_eq!(squid.size.as_deref(), Some("M"));
+    assert_eq!(squid.speed_ft, None, "no Walk pair on the real row -- MOVE:Swim,60,Jet,240 only");
+    assert_eq!(squid.race_type.as_deref(), Some("Animal"));
+    assert_eq!(squid.race_subtype.as_deref(), Some("Aquatic"));
+    assert_eq!(squid.source_page.as_deref(), Some("p.259"));
+    assert!(squid.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "1d3"));
+    assert!(squid.natural_attacks.iter().any(|a| a.name == "Tentacles" && a.damage_dice == "1d4"));
+
+    let troglodyte = find("Troglodyte");
+    assert_eq!(troglodyte.challenge_rating.as_f32(), 1.0);
+    assert_eq!(troglodyte.speed_ft, Some(30));
+    assert_eq!(troglodyte.race_type.as_deref(), Some("Humanoid"));
+    assert_eq!(troglodyte.race_subtype.as_deref(), Some("Reptilian"));
+    assert_eq!(troglodyte.source_page.as_deref(), Some("p.267"));
+    assert_eq!(
+        troglodyte.natural_attacks.len(),
+        4,
+        "two NATURALATTACKS: tab fields, each a pipe-separated pair, accumulate to 4 entries"
+    );
+    assert!(troglodyte.natural_attacks.iter().any(|a| a.name == "Claw" && a.damage_dice == "1d4"));
+    assert!(
+        troglodyte
+            .natural_attacks
+            .iter()
+            .any(|a| a.name == "Claw (with weapon attack)" && a.damage_dice == "1d4")
+    );
+    assert!(troglodyte.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "1d4"));
+    assert!(
+        troglodyte
+            .natural_attacks
+            .iter()
+            .any(|a| a.name == "Bite (with weapon attack)" && a.damage_dice == "1d4")
+    );
+
+    let vargouille = find("Vargouille");
+    assert_eq!(vargouille.challenge_rating.as_f32(), 2.0);
+    assert_eq!(vargouille.speed_ft, None, "no Walk pair on the real row -- MOVE:Fly,30 only");
+    assert_eq!(vargouille.race_type.as_deref(), Some("Outsider"));
+    assert_eq!(vargouille.race_subtype.as_deref(), Some("Evil|Extraplanar"));
+    assert_eq!(vargouille.source_page.as_deref(), Some("p.272"));
+    assert!(vargouille.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+
+    let wolverine = find("Wolverine");
+    assert_eq!(wolverine.challenge_rating.as_f32(), 2.0);
+    assert_eq!(wolverine.speed_ft, Some(30), "walk speed, not the burrow/climb speed");
+    assert_eq!(wolverine.race_type.as_deref(), Some("Animal"));
+    assert_eq!(wolverine.race_subtype, None);
+    assert_eq!(wolverine.source_page.as_deref(), Some("p.279"));
+    assert!(wolverine.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+
+    let worg = find("Worg");
+    assert_eq!(worg.challenge_rating.as_f32(), 2.0);
+    assert_eq!(worg.speed_ft, Some(50));
+    assert_eq!(worg.race_type.as_deref(), Some("Magical Beast"));
+    assert_eq!(worg.race_subtype, None);
+    assert_eq!(worg.source_page.as_deref(), Some("p.280"));
+    assert!(worg.natural_attacks.is_empty(), "no NATURALATTACKS: token on the real row");
+
+    let yellow_musk_creeper = find("Yellow Musk Creeper");
+    assert_eq!(yellow_musk_creeper.challenge_rating.as_f32(), 2.0);
+    assert_eq!(yellow_musk_creeper.speed_ft, Some(5));
+    assert_eq!(yellow_musk_creeper.race_type.as_deref(), Some("Plant"));
+    assert_eq!(yellow_musk_creeper.race_subtype, None);
+    assert_eq!(yellow_musk_creeper.source_page.as_deref(), Some("p.285"));
+    assert!(yellow_musk_creeper.natural_attacks.iter().any(|a| a.name == "Tendril" && a.damage_dice == "1d4"));
+}
