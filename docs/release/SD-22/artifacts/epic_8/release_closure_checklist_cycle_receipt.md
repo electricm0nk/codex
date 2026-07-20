@@ -91,6 +91,30 @@ creep. Flagging it here as a candidate self-heal item for Epic 9's
 closure-readiness eval, since it's a real, mechanically-verifiable drift
 (not a judgment call) once Epic 9 runs.
 
+**[SELF-HEALED — Epic 9 closure-readiness eval, 2026-07-20]** Epic 9's
+survey cycle re-confirmed this drift was still live (`grep -n 'VERSION='
+.github/workflows/publish-tester-release.yml` still showed
+`VERSION="0.4.${GITHUB_RUN_NUMBER}"`, unchanged since this note was
+written) and bumped the leading tranche-base digit `0.4.` → `0.5.` in that
+one line, plus a short `SD22-E9:` doc-comment note explaining the bump.
+Mechanical, single-line, previously-flagged drift — no judgment call. See
+`docs/release/SD-22/closure-readiness-report.md` for the full self-heal
+log.
+
+## Cycle metadata
+
+- cycle_id: 2026-07-19T07:00:00Z
+- duration: n/a (not recorded at cycle time; `cycle_timing_seconds: 0` in `receipts.md`)
+- bundle_criterion: criterion-29
+- corpus_input_path: n/a (process documentation, not content-source ingest)
+- RuleSetId: n/a
+- ingest_pipeline_version: n/a (Epic 8 is a docs-only cycle, not an LST-ingest cycle)
+
+## kanban
+
+- card: no card: hermes unavailable from cloud sandbox (per `receipts.md`'s
+  matching block, `cycle_id: 2026-07-19T07:00:00Z`).
+
 ## What this criterion does NOT cover
 
 Criterion 30 ("per-cycle tests pass at closure": full `cargo test --locked`

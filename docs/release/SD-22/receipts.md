@@ -952,3 +952,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["beastiary1/subset_08_cycle_receipt.md"]
   notes: "Solo cycle (no parallel sibling this run) -- Epic 3, 4, and 6 are all fully closed; Epic 5 is the only currently-eligible lane. Verified tranche/5 clean and in sync with origin (e0435a6) before starting. Independently re-enumerated all 20 clean, non-parenthetical CR:3 monster stat-block names in b1_races.lst directly against the live corpus file, confirmed the same 20-name total subset 07's cycle found, and picked the next 5 alphabetically after subset 07's 'Derro' (Doppelganger, Dryad, Ettercap, Gelatinous Cube, Hell Hound), excluding the parenthetical 'Hell Hound (Nessian)' sub-variant. Did all RED/GREEN/verification work before touching progress.md/receipts.md. Assessed (per this cycle's launch brief) whether Epic 5 has now met the acceptance-and-verification.md 'default 8-12' subset closure target at 8 subsets -- recorded the assessment in the cycle artifact and here rather than unilaterally declaring Epic 5 closed."
+
+- cycle_id: 2026-07-20T00:00:00Z
+  epic: 9
+  criterion: closure_readiness_eval
+  criterion_section: "§9 Epic 9 — Closure Readiness (criterion 31)"
+  row_or_kind: closure_readiness:dispatch
+  evidence_tier_before: open
+  evidence_tier_after: complete
+  branch_tip_before: d5db4fd
+  branch_tip_after: "<see commit landed this cycle, immediately following this receipt in git log>"
+  merge_receipt_sha: "<same as branch_tip_after>"
+  cycle_artifact_path: "docs/release/SD-22/closure-readiness-report.md"
+  red_phase_evidence: "n/a -- GREEN-only per epic-breakdown.md's Red-green TDD mandate by epic (\"Epic 9: GREEN-only; the criterion is the artifact-evidence survey output\"); the audit itself has no red state to drive"
+  green_phase_evidence: "surveyed all 30 prior criteria's status-matrix claims against docs/release/SD-22/artifacts/ per corpus-source-inventory.md §6's contract; found and self-healed 4 shortfalls (missing Epic 1/2 artifact -- backfilled with live-re-run verification; acg/class_warpriest_cycle_receipt.md missing ## kanban -- backfilled from receipts.md's own recorded card t_71902daa; three epic_8 artifacts missing ## Cycle metadata / ## kanban -- backfilled from receipts.md's recorded values; .github/workflows/publish-tester-release.yml's stale 0.4. version stamp, previously self-flagged by the release_closure_checklist cycle -- bumped to 0.5.); logged 2 judgment calls to risks-and-open-questions.md instead of self-healing them (Epic 1's grep-pattern doc-comment citations of the bundle's own tests/sd22_*.rs naming convention; Epic 5's 8-of-12 subset closure call); closed out E8.30's standing gate; dispatched Epic 7 -- see cycle_artifact_path for full detail"
+  cargo_test_summary: "cargo test --locked: 154+ tests, 0 failed across every suite (unit + all tests/sd22_*.rs integration suites); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: ["backfilled docs/release/SD-22/artifacts/epic_1_2/prelaunch_and_identifier_audit_cycle_receipt.md (criteria 1-5 had no discrete artifact file)", "added ## kanban section to artifacts/acg/class_warpriest_cycle_receipt.md (card t_71902daa, already minted per receipts.md, not fabricated)", "added ## Cycle metadata and ## kanban sections to artifacts/epic_8/{three_version_fields,build_label_format,release_closure_checklist}_cycle_receipt.md", "bumped .github/workflows/publish-tester-release.yml's stale VERSION=\"0.4.${GITHUB_RUN_NUMBER}\" to \"0.5.${GITHUB_RUN_NUMBER}\" (previously self-flagged drift, now fixed)"]
+  next_required_uplift: "Epic 7 (Closure Epilogue, criteria 22-26) is now unblocked/next-eligible -- the loop's next firing should pick it up per Step 1's priority order. Two judgment calls remain logged in risks-and-open-questions.md for the next SD's audit (not blocking): Epic 1's grep-pattern exception clause, and Epic 5's 8-of-12 subset closure decision."
+  corpus_input_path: "n/a (audit/evidence-survey cycle, not content-source ingest)"
+  rule_set_used: n/a
+  kanban_card: "<see follow-up backfill commit>"
+  progress_file_updated: "yes"
+  artifacts_written: ["closure-readiness-report.md", "epic_1_2/prelaunch_and_identifier_audit_cycle_receipt.md"]
+  notes: "Solo cycle. Verified tranche/5 clean and in sync with origin (d5db4fd) before starting, and re-fetched immediately before the commit/push step to check for the mid-cycle unrelated apps/desktop UI merge the launch brief warned might land -- none landed this cycle. All self-heals were docs/CI-yaml only; no src/ production code touched, consistent with epic-breakdown.md's 'Epic 9 does not change source-code behavior' boundary. Full cargo test + clippy re-run clean after the self-heal commit to confirm no regression."

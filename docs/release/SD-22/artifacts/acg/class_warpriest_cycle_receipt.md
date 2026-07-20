@@ -161,6 +161,14 @@ compilable state). Doc-tests: 0 run, 0 failed (clean).
 - corpus_input_path: pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:364:CLASS:Warpriest (real corpus; decisions.md §5)
 - RuleSetId: Acg
 
+## kanban
+
+- card: `t_71902daa` on `codex-tranche-5` (status=done) — per `receipts.md`'s
+  matching block (`cycle_id: 2026-07-20T`, criterion `acg_warpriest`);
+  backfilled by the Epic 9 closure-readiness eval (2026-07-20), no card
+  fabricated — the ID matches the already-minted, already-`done` card
+  `receipts.md` records for this cycle.
+
 ## Next-eligible
 
 Epic 4's class roster (criteria 10-12) is now fully complete (10/10 real

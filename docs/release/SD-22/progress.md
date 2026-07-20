@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 762f658
+snapshot_as_of: PENDING-BACKFILL (this cycle's commit; see `## Cycle log`'s closure-readiness entry — SHA backfilled in a same-day follow-up commit per the established pattern)
 ---
 
 # SD-22 — Progress
@@ -33,12 +33,12 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (1/10), Bloodrager (2/10), Brawler (3/10), Hunter (4/10), Investigator (5/10), Shaman (6/10), Skald (7/10), Slayer (8/10), Swashbuckler (9/10), Warpriest (10/10) of the corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order; shared spell/equipment tables (criterion 13) | **complete — criteria 10-13, Epic 4 (ACG) fully closed out.** `rules_tables/acg/mod.rs` grown to all ten classes, `RuleSetId::Acg` cross-book invariant tests hold for all ten (criteria 10-12). Warpriest is a divine caster with `SPELLSTAT:WIS` standard-prepared casting (widened `SPELLCASTING_CLASS_NAMES`, same posture as Shaman/Witch); real `CLASS:Warpriest` record (`acg_classes.lst:364`) carries three-quarter BAB, good Fortitude, good Will, poor Reflex, `MAXLEVEL:20`. The distinct internal `CLASS:Ex-Warpriest` record (line 413, `VISIBLE:NO`, no `SPELLSTAT:`) is a fallen-Warpriest NPC variant and deliberately not chassis'd. Criterion 13 lands this cycle as `acg/spell_list.rs` (4-entry bootstrap sample: Blade Lash/Bloodrager, Air Geyser/Bloodrager, Beastspeak/Shaman, Anti-Incorporeal Shell/Shaman) and `acg/equipment_tables.rs` (3-entry bootstrap sample: Marlinspike, Headsman's Blade, Ring of Eloquence) — bootstrap/representative coverage per the `apg/spell_list.rs`+`apg/equipment_tables.rs` precedent, not exhaustive; Arcanist, Hunter, Investigator (only a `.MOD` cross-reference onto APG's own `Bomber's Eye`, not a full definition), Skald, and Warpriest have no active ACG-specific spell record anywhere in the real corpus — a real gap in the source data (those classes draw from other books' spell lists), not an omission, same posture as APG's Summoner gap. See `artifacts/acg/class_arcanist_cycle_receipt.md`, `artifacts/acg/class_bloodrager_cycle_receipt.md`, `artifacts/acg/class_brawler_cycle_receipt.md`, `artifacts/acg/class_hunter_cycle_receipt.md`, `artifacts/acg/class_investigator_cycle_receipt.md`, `artifacts/acg/class_shaman_cycle_receipt.md`, `artifacts/acg/class_skald_cycle_receipt.md`, `artifacts/acg/class_slayer_cycle_receipt.md`, `artifacts/acg/class_swashbuckler_cycle_receipt.md`, `artifacts/acg/class_warpriest_cycle_receipt.md`, `artifacts/acg/spell_list_cycle_receipt.md`, `artifacts/acg/equipment_tables_cycle_receipt.md` | see `## Cycle log` |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Ghoul/Gnoll/Goblin Dog/Lizardfolk/Wolf) + Subset 02 (CR 1: Darkmantle/Horse/Hyena/Octopus/Spider Swarm) + Subset 03 (CR 2, CR-band move: Bat Swarm/Boar/Boggard/Bugbear/Cave Fisher) + Subset 04 (CR 2, continued: Choker/Crocodile/Dark Creeper/Iron Cobra/Morlock) + Subset 05 (CR 2, continued: Rat Swarm/Sahuagin/Shark/Shocker Lizard/Skum) + Subset 06 (band-exhaustion cleanup, CR 1 + CR 2: Squid/Troglodyte/Vargouille/Wolverine/Worg/Yellow Musk Creeper) + Subset 07 (CR 3, CR-band move: Ankheg/Assassin Vine/Centaur/Cockatrice/Derro) + Subset 08 (CR 3, continued: Doppelganger/Dryad/Ettercap/Gelatinous Cube/Hell Hound); see cycle log for why the illustrative sample lists were corrected/added | **complete (criteria 14-17, re-verified against an eighth subset) — subset count now meets the "default 8-12" floor per `acceptance-and-verification.md` line 101; closeability assessment below, closure call deferred to operator/orchestrator** — parser gap RESOLVED via `src/pcgen_import/lst_parser/monster_stat_block.rs` (bare tab-delimited monster stat-block rows); `rules_tables/beastiary1/mod.rs` + `monster_subset_01.rs` through `monster_subset_08.rs` land, `RuleSetId::Bestiary1` registered, cross-book invariant tests hold for all eight subsets, no parser widening needed for subset 08 — continues CR 3 alphabetically after subset 07's "Derro," shipping the next five real, non-parenthetical CR-3 monsters: Doppelganger, Dryad, Ettercap, Gelatinous Cube, Hell Hound (`Hell Hound (Nessian)` excluded as a parenthetical, higher-CR sub-variant, same rule every prior subset used). Criterion 17 (DM-toolkit consumption, "at least one" monster block) already satisfied by subset 01; now **41 monsters total across 8 of a default 8-12 subsets**; 10 unused CR-3 names remain for subset 09+ if the operator/orchestrator elects to continue past the floor. See `artifacts/beastiary1/subset_01_cycle_receipt.md` through `artifacts/beastiary1/subset_08_cycle_receipt.md`. | see `## Cycle log` |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | `Encounter::new` lands (criterion 18); `party_cr.rs` (19) lands; deterministic tests (20) land; happy-path integration (21) lands this cycle — **Epic 6 now fully complete** | **complete (criteria 18-21, Epic 6 fully closed out)** — `src/rules_core/encounters.rs` lands `CharacterSnapshot`, `MonsterRef`, `Difficulty`, `EncounterResult`, and `Encounter::new`, grounded in the real PF1 Core Rulebook "Gamemastering" chapter (Table: Encounter Design, Table: CR Equivalencies, Table: Experience Point Awards CR 1-10). `src/rules_core/party_cr.rs` lands `party_challenge_rating`, grounded in the same chapter's "Designing Encounters" → "Step 1 — Determine APL" rule (reuses `encounters.rs`'s `CharacterSnapshot`). `tests/sd22_dm_toolkit_deterministic.rs` (criterion 20) lands 5 acceptance-level tests covering both modules against `corpus-source-inventory.md` §4.1's five canonical cases, with both previously-flagged §4.1 discrepancies corrected (case 2: "Hard" → "Deadly"; case 3: "~3.5" → "3.0") rather than the already-correct code being bent to match. Criterion 21 lands this cycle as `tests/sd22_dm_toolkit_happy_path_integration.rs` — two tests consuming real ingested Epic 5 monster blocks (Ghoul from subset 01, Darkmantle from subset 02) via `beastiary1::monster_resolve`, fed into `Encounter::new` alongside a `CharacterSnapshot` party, asserting the grounded canonical result (`Difficulty::Medium` for 1 level-1 PC vs. the real Ghoul; `Difficulty::Easy` for 4 level-3 PCs vs. the real Darkmantle). Investigated the anticipated `MonsterRef`-vs-`MonsterStatBlock` type-shape gap directly: it resolves via a plain public-field read (`MonsterRef::new(stat_block.challenge_rating)`), not a production-code change — no source outside the new test file was touched. See `artifacts/dm_toolkit/encounters_cycle_receipt.md`, `artifacts/dm_toolkit/party_cr_cycle_receipt.md`, `artifacts/dm_toolkit/deterministic_tests_cycle_receipt.md`, and `artifacts/dm_toolkit/happy_path_integration_cycle_receipt.md`. | see `## Cycle log` |
-| E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
-| E8.27 | 8 — Build Version | version:patch_bump | Version fields set to `0.5.95` (`package.json`, `tauri.conf.json`, `Cargo.toml`) | **complete** — see `artifacts/epic_8/three_version_fields_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
-| E8.28 | 8 — Build Version | version:build_label_format | `BUILD_PREFIX = 'Codex'` / `${BUILD_PREFIX} ${buildVersion}` format ships (inherited from SD-21 E5.26); this cycle re-anchored the format's own test fixtures from the pre-bump `Codex 0.4.94-test` literal to the current `Codex 0.5.95-test` | **complete** — see `artifacts/epic_8/build_label_format_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
-| E8.29 | 8 — Build Version | version:closure_checklist | `docs/SD-22/release-closure-checklist.md` — four-step version-bump process, mirrors SD-21's E5.27 doc | **complete** — see `artifacts/epic_8/release_closure_checklist_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
-| E8.30 | 8 — Build Version | version:* | Per-cycle tests pass at closure — standing verification gate (not a one-shot artifact), re-verified by every cycle's own `cargo test`/`cargo clippy` run; closed out by Epic 9's criterion-31 eval | open (standing gate; re-verified this cycle: `cargo test` all green, clippy clean) | — |
-| E9.31 | 9 — Closure Readiness | closure_readiness:* | Not started (fires after Epic 8, before Epic 7) | open | — |
+| E7.22-26 | 7 — Closure Epilogue | closure:* | Not started; **now unblocked/next-eligible** — Epic 9's criterion-31 (this cycle) surveyed criteria 1-30, self-healed every mechanical shortfall found, and dispatched Epic 7. See `closure-readiness-report.md`. | open (next-eligible) | — |
+| E8.27 | 8 — Build Version | version:patch_bump | Version fields set to `0.5.95` (`package.json`, `tauri.conf.json`, `Cargo.toml`) | **complete** — see `artifacts/epic_8/three_version_fields_cycle_receipt.md` (Epic 9 self-heal this cycle: added the missing `## Cycle metadata` + `## kanban` sections) | (this cycle's commit, see `## Cycle log`) |
+| E8.28 | 8 — Build Version | version:build_label_format | `BUILD_PREFIX = 'Codex'` / `${BUILD_PREFIX} ${buildVersion}` format ships (inherited from SD-21 E5.26); this cycle re-anchored the format's own test fixtures from the pre-bump `Codex 0.4.94-test` literal to the current `Codex 0.5.95-test` | **complete** — see `artifacts/epic_8/build_label_format_cycle_receipt.md` (Epic 9 self-heal this cycle: added the missing `## Cycle metadata` + `## kanban` sections) | (this cycle's commit, see `## Cycle log`) |
+| E8.29 | 8 — Build Version | version:closure_checklist | `docs/SD-22/release-closure-checklist.md` — four-step version-bump process, mirrors SD-21's E5.27 doc | **complete** — see `artifacts/epic_8/release_closure_checklist_cycle_receipt.md` (Epic 9 self-heal this cycle: added the missing `## Cycle metadata` + `## kanban` sections, and fixed the CI workflow drift the artifact itself had flagged) | (this cycle's commit, see `## Cycle log`) |
+| E8.30 | 8 — Build Version | version:* | Per-cycle tests pass at closure — standing verification gate (not a one-shot artifact), re-verified by every cycle's own `cargo test`/`cargo clippy` run; closed out by Epic 9's criterion-31 eval | **complete** — closed out this cycle by Epic 9's eval: `cargo test --locked` 154+ tests, 0 failed across every suite; `cargo clippy --locked --tests -- -D warnings` clean, re-verified at HEAD after this cycle's self-heal commit | (this cycle's commit, see `## Cycle log`) |
+| E9.31 | 9 — Closure Readiness | closure_readiness:dispatch | Epic 9's evaluator surveyed criteria 1-30 against real artifact evidence, self-healed every mechanically-resolvable shortfall found (Epic 1/2's missing artifact backfilled; ACG Warpriest's missing `## kanban` section; Epic 8's three artifacts' missing `## Cycle metadata`/`## kanban` sections; a stale `0.4.` CI version-stamp drift in `.github/workflows/publish-tester-release.yml`), and deferred 2 judgment calls to `risks-and-open-questions.md` §"Open judgments deferred to next SD" (Epic 1's grep-pattern doc-comment false-positive shape; Epic 5's 8-of-12 subset closure call) without self-healing them. All 25 currently-eligible criteria (1-21, 27-30) are `complete` with clean evidence; the remaining 5 (22-26, Epic 7) are correctly `open`/not-yet-eligible by the bundle's own structure, not a shortfall. | **complete** — see `closure-readiness-report.md` for the full survey, self-heal log, and dispatch decision | (this cycle's commit, see `## Cycle log`) |
 
 ## Open blockers
 
@@ -3128,3 +3128,98 @@ appended to `receipts.md`, commit SHA `762f658` and kanban card
 `t_52d046b8` backfilled into both `receipts.md` and this doc in this
 same follow-up commit, per the established backfill pattern from
 subsets 03/04/05/06/07.
+
+### cycle-2026-07-20T00:00:00Z | Epic 9, criterion 31 (Closure Readiness eval — first and only Epic 9 cycle) | closure_readiness:dispatch | card: see `## Cycle log` backfill note below | open → **complete**; E7.22-26 open → **open (next-eligible)**; E8.30 open → **complete**
+
+Verified `tranche/5` clean and in sync with origin (`d5db4fd`) before
+starting; re-fetched immediately before writing/committing to check for a
+mid-cycle unrelated merge (per this cycle's launch brief) — none landed,
+origin stayed at `d5db4fd` throughout.
+
+Per `epic-breakdown.md`'s Epic 9 section and `decisions.md §4`, this is a
+GREEN-only evidence-survey cycle (no RED phase): every criterion 1-30's
+claimed status in this doc's status matrix was checked against real
+artifact-evidence files under `docs/release/SD-22/artifacts/`, per
+`corpus-source-inventory.md §6`'s contract (a `complete` claim needs a
+findable artifact carrying Red-phase evidence, Green-phase evidence, Files
+touched, and Cycle metadata sections — a `complete` claim without one is a
+shortfall, not met).
+
+**Survey result:** Epic 3 (8 artifacts), Epic 4 (12 artifacts, minus one
+gap — see below), Epic 5 (8 artifacts), and Epic 6 (4 artifacts) were all
+clean — every file carried all four required sections. Four genuine,
+mechanically-resolvable shortfalls were found and self-healed in this same
+cycle (no separate self-heal cycle needed):
+
+1. **Epic 1 + Epic 2 (criteria 1-5) had no discrete artifact file** — the
+   verification work was real (documented inline in this doc's own
+   `cycle-2026-07-19T00:00:00Z`/`cycle-2026-07-19T03:50:00Z` entries) but
+   never surfaced as a file under `artifacts/`. Self-healed: wrote
+   `artifacts/epic_1_2/prelaunch_and_identifier_audit_cycle_receipt.md`,
+   **re-running every verification command live** rather than only
+   reformatting 2026-07-19 prose (fresh `grep` for the identifier audit —
+   24 hits, all doc-comment citations of the bundle's own
+   `tests/sd22_*.rs` test-file names, zero hits in every actual
+   identifier-discipline leak category; fresh `hermes kanban boards
+   current` → `codex-tranche-5`, 24/24 done; fresh `git ls-remote origin
+   tranche/5` matching local HEAD; fresh `ps` showing exactly one `claude`
+   process).
+2. **`artifacts/acg/class_warpriest_cycle_receipt.md` was missing its
+   `## kanban` section** (every sibling ACG artifact has one). Cross-
+   referenced `receipts.md`'s matching block and found the card was
+   already minted (`t_71902daa`, `status=done`) — backfilled the section
+   with that already-recorded ID, not a fabricated one.
+3. **Epic 8's three artifacts** (`three_version_fields`,
+   `build_label_format`, `release_closure_checklist`) each had Red-phase,
+   Green-phase, and Files-touched sections but used a bullet list under the
+   title instead of a `## Cycle metadata` section, and none had a
+   `## kanban` section. Self-healed all three, cross-referencing
+   `receipts.md`'s matching YAML blocks for the exact `kanban_card: "no
+   card: hermes unavailable from cloud sandbox"` value already on record.
+4. **CI workflow drift, previously flagged but not yet fixed**:
+   `.github/workflows/publish-tester-release.yml`'s "Stamp build version"
+   step still read `VERSION="0.4.${GITHUB_RUN_NUMBER}"`, one tranche
+   behind the `0.5.95` the three repo version files have carried since
+   criterion 27 landed — the `release_closure_checklist_cycle_receipt.md`
+   artifact's own "Note: the workflow stamp line is stale, and this cycle
+   does not fix it" section explicitly flagged this as "a candidate
+   self-heal item for Epic 9's closure-readiness eval... a real,
+   mechanically-verifiable drift (not a judgment call)". Re-confirmed live
+   (still `0.4.` at cycle start) and bumped it to `0.5.` with a short
+   `SD22-E9:` doc-comment explaining the fix — this workflow only fires on
+   push to `develop`/`main`, i.e. once SD-22's closure PR merges, so an
+   unfixed `0.4.` prefix would have silently published a
+   tranche-regressed version number on SD-22's first tester release.
+
+**Two judgment calls found, deferred (not self-healed)**, logged to
+`risks-and-open-questions.md` §"Open judgments deferred to next SD":
+Judgment-1 (Epic 1's grep pattern flags the bundle's own approved
+`tests/sd22_*.rs` doc-comment citations — a scope-of-record call, not a
+mechanical fix) and Judgment-2 (Epic 5 landed 8 of a stated "default 8-12"
+subset range — a closure-boundary call for the operator/orchestrator, not
+an evidence shortfall; this was already self-flagged, not self-resolved,
+by the subset-08 cycle itself).
+
+**E8.30** (the standing "tests pass at closure" gate) was re-verified and
+closed out this cycle: `cargo test --locked` — 154+ tests, 0 failed across
+every suite (unit tests + all `tests/sd22_*.rs` integration suites);
+`cargo clippy --locked --tests -- -D warnings` — clean. Re-run again after
+this cycle's own self-heal commit (docs + one CI-yaml line only, no `src/`
+change) to confirm nothing regressed.
+
+**Dispatch decision:** all 25 currently-eligible criteria (1-21, 27-30) are
+now `complete` with clean, verified artifact evidence; the remaining 5
+(22-26, Epic 7) are correctly `open`/not-yet-eligible by the bundle's own
+structure (Epic 7 fires only after this criterion dispatches it) — not a
+shortfall. **Criterion 31 → complete.** Epic 9 dispatches Epic 7: this
+row transition, plus the `E7.22-26` row above now reading
+"next-eligible," is the dispatch mechanism per this bundle's no-PR-per-
+cycle convention (`loop-instruction.md`'s "kanban card transition from
+pending to ready" language is conceptual here). The loop's next firing
+should pick up Epic 7 (criteria 22-26) per Step 1's priority order.
+
+Full survey methodology, per-criterion evidence table, self-heal detail,
+and judgment-call detail: `docs/release/SD-22/closure-readiness-report.md`.
+Kanban card + commit SHA backfilled into this entry and `receipts.md` in a
+same-day follow-up commit, per the established backfill pattern from prior
+cycles (subsets 03-08, the ACG class cycles).

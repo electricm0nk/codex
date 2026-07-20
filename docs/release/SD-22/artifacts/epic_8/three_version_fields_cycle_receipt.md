@@ -110,6 +110,20 @@ Finished `dev` profile [unoptimized + debuginfo] target(s) in 15.13s
 - `apps/desktop/src/sd22/buildVersionTriple.test.ts` (new; RED→GREEN test for this criterion)
 - `apps/desktop/src/sd21/buildVersionTriple.test.ts` (sibling-regression fix; anchor `0.4.` → `0.5.`)
 
+## Cycle metadata
+
+- cycle_id: 2026-07-19T05:02:04Z
+- duration: n/a (not recorded at cycle time; `cycle_timing_seconds: 0` in `receipts.md`)
+- bundle_criterion: criterion-27
+- corpus_input_path: n/a (version metadata, not content-source ingest)
+- RuleSetId: n/a
+- ingest_pipeline_version: n/a (Epic 8 is a mechanical version bump, not an LST-ingest cycle)
+
+## kanban
+
+- card: no card: hermes unavailable from cloud sandbox (per `receipts.md`'s
+  matching block, `cycle_id: 2026-07-19T05:02:04Z`).
+
 ## What this criterion does NOT cover
 
 Criterion 28 (build-label format) is not touched this cycle beyond

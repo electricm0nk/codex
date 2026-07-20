@@ -111,6 +111,20 @@ fixture.
 - `apps/desktop/src/sd11/feedback/evidence/captureFeedbackEvidence.test.ts` (sibling-regression fix)
 - `apps/desktop/src/sd15/buildSd15OperatorTriageDraft.test.ts` (sibling-regression fix)
 
+## Cycle metadata
+
+- cycle_id: 2026-07-19T06:15:00Z
+- duration: n/a (not recorded at cycle time; `cycle_timing_seconds: 0` in `receipts.md`)
+- bundle_criterion: criterion-28
+- corpus_input_path: n/a (version metadata, not content-source ingest)
+- RuleSetId: n/a
+- ingest_pipeline_version: n/a (Epic 8 is a mechanical fixture re-anchor, not an LST-ingest cycle)
+
+## kanban
+
+- card: no card: hermes unavailable from cloud sandbox (per `receipts.md`'s
+  matching block, `cycle_id: 2026-07-19T06:15:00Z`).
+
 ## What this criterion does NOT cover
 
 `docs/SD-22/release-closure-checklist.md` (criterion 29) is untouched —

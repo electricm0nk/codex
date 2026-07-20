@@ -54,12 +54,18 @@ jobs:
       # is unavailable) instead of stamping independently. This keeps the
       # release tag, the AppImage identity, the MSI identity, and the
       # update-manifest `version` field all consistent across platforms.
+      #
+      # SD22-E9: tranche-base position bumped 0.4 -> 0.5 (self-healed by the
+      # Epic 9 closure-readiness eval). tranche/5 (SD-22) is the current
+      # active tranche lane's repo version files (0.5.<build>); this stamp
+      # had drifted one tranche behind since SD-21's tranche/4-1 lane. Bump
+      # the leading digit alongside the next tranche promotion.
       - name: Stamp build version
         id: stamp_version
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.4.${GITHUB_RUN_NUMBER}"
+          VERSION="0.5.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];
