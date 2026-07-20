@@ -1,6 +1,6 @@
 //! LST object-kind parser for the `CLASS:` directive (SD-17 Slice B-1;
 //! widened SD-22 Epic 3 to add `Cavalier`; widened SD-22 Epic 4 to add
-//! `Brawler`).
+//! `Brawler`; widened SD-22 Epic 4 again to add `Slayer`).
 //!
 //! Scope: the six martial classes named in the slice card body
 //! (Fighter, Barbarian, Monk, Rogue, Ranger, Paladin), plus `Cavalier`
@@ -11,9 +11,12 @@
 //! martial classes, so it belongs in this parser rather than the
 //! spellcasting-class parser), plus `Brawler` (added by SD-22 Epic 4's
 //! Brawler ingest cycle — the real `CLASS:Brawler` line in
-//! `acg_classes.lst` carries the same full-BAB, no-`SPELLSTAT:` posture).
+//! `acg_classes.lst` carries the same full-BAB, no-`SPELLSTAT:` posture),
+//! plus `Slayer` (added by SD-22 Epic 4's Slayer ingest cycle — the real
+//! `CLASS:Slayer` line in `acg_classes.lst` carries the identical
+//! full-BAB, no-`SPELLSTAT:` posture).
 //! The parser recognizes every `CLASS:<name>` line in the corpus where
-//! `<name>` is one of those eight (or one of their `Ex-<name>` mirror
+//! `<name>` is one of those nine (or one of their `Ex-<name>` mirror
 //! variants), carries every tab-delimited token pair to a canonical IR
 //! record, and preserves one-based source line numbers on every record.
 //!
@@ -34,10 +37,10 @@ use std::fs;
 use std::path::Path;
 
 /// The six martial classes named in the SD-17 Slice B-1 card body, plus
-/// `Cavalier` (SD-22 Epic 3 widening) and `Brawler` (SD-22 Epic 4
-/// widening) — see module doc comment.
+/// `Cavalier` (SD-22 Epic 3 widening), `Brawler` (SD-22 Epic 4 widening),
+/// and `Slayer` (SD-22 Epic 4 widening) — see module doc comment.
 pub const MARTIAL_CLASS_NAMES: &[&str] = &[
-    "Fighter", "Barbarian", "Monk", "Rogue", "Ranger", "Paladin", "Cavalier", "Brawler",
+    "Fighter", "Barbarian", "Monk", "Rogue", "Ranger", "Paladin", "Cavalier", "Brawler", "Slayer",
 ];
 
 /// Result of parsing one LST file for the martial-class scope.

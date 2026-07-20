@@ -576,3 +576,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["dm_toolkit/encounters_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream on Epic 4 (ACG); file-touch set (encounters.rs, mod.rs's one-line registration) disjoint from acg/ per loop-instruction.md. Found and documented a real discrepancy between corpus-source-inventory.md §4.1 case 2's stated Hard expectation and the verified-rulebook-grounded computation (Deadly) rather than force-fitting the formula to match the unverified fixture table, mirroring this bundle's Gunslinger/Magus and ACG-Alchemist roster-correction precedent."
+
+- cycle_id: 2026-07-20T03:30:00Z
+  epic: 4
+  criterion: acg_slayer
+  criterion_section: "§2.1 Epic 4 — ACG content-source ingest (Slayer, class 8 of 10)"
+  row_or_kind: ingest:acg_class
+  evidence_tier_before: open (seven of ten real classes landed: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald)
+  evidence_tier_after: complete (criteria 10-12 for Slayer; eight of ten real classes landed)
+  branch_tip_before: 018dd3a
+  branch_tip_after: PENDING_COMMIT_SHA
+  merge_receipt_sha: PENDING_COMMIT_SHA
+  cycle_artifact_path: "acg/class_slayer_cycle_receipt.md"
+  red_phase_evidence: "Widening RED: parses_real_slayer_record_from_acg_classes_lst added to tests/sd17_b1_martial_class.rs, failed (Slayer out of MARTIAL_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_slayer_resolves.rs failed to compile (E0599: AcgClassId::Slayer did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "widened MARTIAL_CLASS_NAMES by one name (Slayer) in src/pcgen_import/lst_parser/class.rs -- the real CLASS:Slayer record carries no SPELLSTAT:/MEMORIZE:/SPELLBOOK: token anywhere in its block, the same non-caster posture as Cavalier/Brawler; added rules_tables/acg/class_slayer.rs and AcgClassId::Slayer match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist+Bloodrager+Brawler+Hunter+Investigator+Shaman+Skald still resolve); widening test green (18/18 in sd17_b1_martial_class); full cargo test suite green, 0 failed (413 test-result:ok blocks); clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_acg_class_slayer_resolves: 7/7 passed (--include-ignored); sd17_b1_martial_class: 18/18 passed (--include-ignored) including the new widening test; full cargo test --locked: 0 failed across every suite (413 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 4's next-eligible cycle is Swashbuckler (class 9 of the corrected 10-class roster: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest), or a dedicated cycle for criterion 13's shared spell/equipment tables once more classes land. corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md still need an operator/doc-correction pass to formally replace 'Alchemist (ACG-side)' with Slayer in the row list, mirroring commit 6923e54's APG roster fix -- not blocking further Epic 4 cycles. Epic 5 (Bestiary 1) remains blocked on its own, separate parser gap (b1_races.lst's unprefixed bare-row monster records) -- unaffected by this cycle. This cycle ran in parallel with a sibling stream on Epic 6 (party_cr.rs, criterion 19); file-touch sets are disjoint per loop-instruction.md."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:327 (CLASS:Slayer)"
+  rule_set_used: Acg
+  kanban_card: "t_8eb18bde (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: ["acg/class_slayer_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Slayer record's BONUS:COMBAT/BONUS:SAVE formula tokens (full BAB -- same posture as Bloodrager/Brawler -- good Fortitude+Reflex from one combined token BASE.Fortitude,BASE.Reflex/2+2, poor Will from BASE.Will/3, MAXLEVEL:20, no SPELLSTAT/MEMORIZE/SPELLBOOK token anywhere in the block) -- confirming Slayer belongs in class.rs's MARTIAL_CLASS_NAMES rather than spellcasting_class.rs's SPELLCASTING_CLASS_NAMES; same scope boundary as class_arcanist.rs/class_bloodrager.rs/class_brawler.rs/class_hunter.rs/class_investigator.rs/class_shaman.rs/class_skald.rs (named per-level features -- Studied Target, Track, Slayer Talents, Sneak Attack, Stalker, Quarry -- out of scope, formula-derived chassis only). Ran in parallel with a sibling stream working Epic 6 criterion 19 (party_cr.rs); confirmed both file-touch sets disjoint before starting, and confirmed the sibling's uncommitted work (src/rules_core/mod.rs, src/rules_core/party_cr.rs) was left untouched and unstaged in this cycle's own commit."
