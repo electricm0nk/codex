@@ -485,8 +485,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open (Arcanist + Bloodrager + Brawler + Hunter complete; Investigator not yet started)
   evidence_tier_after: complete (criteria 10-12 for Investigator; criterion 13's spell/equipment resolution deferred to a later cycle)
   branch_tip_before: d032466
-  branch_tip_after: "<this cycle's commit, see git log>"
-  merge_receipt_sha: "<same as branch_tip_after>"
+  branch_tip_after: 5f9a5bb
+  merge_receipt_sha: 5f9a5bb
   cycle_artifact_path: "acg/class_investigator_cycle_receipt.md"
   red_phase_evidence: "Widening RED: parses_real_investigator_record_from_acg_classes_lst added to tests/sd17_b_spellcasting_class.rs, failed (Investigator out of SPELLCASTING_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_investigator_resolves.rs failed to compile (E0599: AcgClassId::Investigator did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
   green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Investigator) in src/pcgen_import/lst_parser/spellcasting_class.rs (not class.rs -- Investigator's real record carries SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES, same spellbook-prepared posture as Alchemist/Arcanist); added rules_tables/acg/class_investigator.rs and AcgClassId::Investigator match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist+Bloodrager+Brawler+Hunter still resolve); widening test green (24/24 in sd17_b_spellcasting_class); full cargo test suite green, 0 failed (410 test-result:ok blocks); clippy clean (see cycle_artifact_path:Green-phase evidence)"
@@ -497,7 +497,7 @@ that are already self-evident from the cycle_artifact_path.)
   next_required_uplift: "Epic 4's next-eligible cycle is Shaman (class 6 of the corrected 10-class roster: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest), or a dedicated cycle for criterion 13's shared spell/equipment tables once more classes land. corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md still need an operator/doc-correction pass to formally replace 'Alchemist (ACG-side)' with Slayer in the row list, mirroring commit 6923e54's APG roster fix -- not blocking further Epic 4 cycles. Epic 5 (Bestiary 1) remains blocked on its own, separate parser gap (b1_races.lst's unprefixed bare-row monster records) -- unaffected by this cycle."
   corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:168 (CLASS:Investigator)"
   rule_set_used: Acg
-  kanban_card: "<see progress.md cycle log / backfilled after Step 10b>"
+  kanban_card: "t_a80b480d (codex-tranche-5, status=done)"
   progress_file_updated: "yes"
   artifacts_written: ["acg/class_investigator_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Investigator record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB -- same posture as ACG's Hunter and APG's Alchemist/Inquisitor/Oracle/Summoner -- poor Fortitude from its own single-save token, good Will+Reflex from one combined token (BASE.Will,BASE.Reflex -- reverse pairing from Brawler's/Hunter's BASE.Fortitude,BASE.Reflex), MAXLEVEL:20, SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES -- spellbook-prepared posture, same shape as Alchemist/Arcanist) -- confirming Investigator belongs in spellcasting_class.rs's SPELLCASTING_CLASS_NAMES rather than class.rs's MARTIAL_CLASS_NAMES; same scope boundary as class_arcanist.rs/class_bloodrager.rs/class_brawler.rs/class_hunter.rs (named per-level features out of scope, formula-derived chassis only)."

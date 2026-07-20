@@ -1603,7 +1603,7 @@ Full RED/GREEN evidence, file list, and reasoning:
 corrected 10-class roster), or a dedicated cycle for criterion 13's shared
 spell/equipment tables once more classes land.
 
-### cycle-2026-07-20T00:16:35Z | Epic 4, Investigator (class 5 of corrected 10-class roster) | ingest:acg_class | card see receipts.md/kanban | open → **complete (criteria 10-12 for Investigator)**
+### cycle-2026-07-20T00:16:35Z | Epic 4, Investigator (class 5 of corrected 10-class roster) | ingest:acg_class | card `t_a80b480d` on `codex-tranche-5` (status=done) | open → **complete (criteria 10-12 for Investigator)**
 
 Re-checked state before picking a criterion: `git fetch origin tranche/5` and
 `git status --porcelain | wc -l` returned 0; `origin/tranche/5` HEAD
