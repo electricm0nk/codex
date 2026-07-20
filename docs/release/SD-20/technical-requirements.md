@@ -53,7 +53,7 @@ SD-20 is not SD-19's reachability work; SD-19 closes that. SD-20 starts from "sp
 SD-20 owns the boundary contract between engine and GUI. Before epic 1 (boundary contract + wire-fixture parity tests) lands, the contract shape must be sketched at minimum (the closure gate for epic 1 enumerates what goes in the contract; see `epic-breakdown.md`). This is a "have the conversation before the slice" prerequisite, not a "do a capability slice first" prerequisite.
 
 **Verification** (operator-driven; one-shot):
-- `docs/SD-20/boundary-contract.md` draft exists at the SD-20 bundle's `artifacts/` boundary-contract section, OR will be created as part of epic 1's slice work.
+- `docs/release/SD-20/boundary-contract.md` draft exists at the SD-20 bundle's `artifacts/` boundary-contract section, OR will be created as part of epic 1's slice work.
 
 ## Cross-reference
 

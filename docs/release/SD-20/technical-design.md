@@ -15,7 +15,7 @@ The engine-side boundary contract names every `CharacterInput` shape the engine 
 
 ### 1.1 Contract shape
 
-The contract lives at `docs/SD-20/boundary-contract.md` (created as an artifact of epic 1's capability slice). It has three sections:
+The contract lives at `docs/release/SD-20/boundary-contract.md` (created as an artifact of epic 1's capability slice). It has three sections:
 
 **Inputs (what the engine accepts):** A `CharacterInput` for each canonical permutation:
 - Brand-new character (`CharacterInput` with minimal fields, all defaults)

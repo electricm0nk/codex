@@ -40,7 +40,7 @@ When the operator doesn't answer a clarifying question within the time limit, th
 
 ### Flag A — Boundary contract shape
 
-**Default chosen**: contract landed as a markdown artifact at `docs/SD-20/boundary-contract.md` with three sections (CharacterInput shapes, PilotReceipt fields, printed-sheet cell map). The contract is the authority for what the engine produces and what the GUI renders; subsystem engines produce into it, never around it.
+**Default chosen**: contract landed as a markdown artifact at `docs/release/SD-20/boundary-contract.md` with three sections (CharacterInput shapes, PilotReceipt fields, printed-sheet cell map). The contract is the authority for what the engine produces and what the GUI renders; subsystem engines produce into it, never around it.
 
 **Override alternatives**:
 - *Contract as Rust types in code*, generated or hand-written, with the GUI consuming them via FFI/JSON serialization rather than via a markdown document. Lower drift risk, but requires codegen tooling or hand-written type definitions to be the source of truth in two places (Rust + a separate spec).
@@ -86,7 +86,7 @@ These are SD-20-shaped design calls where the operator has pinned (Q1) or hasn't
 
 The technical-design §3 ("per-epic authority surface") implies a hard rule: an epic may not invent a new `PilotReceipt` field; it must extend the boundary contract. The question is whether to enforce this hard (compile-time check or contract-validation step before epic merge) or soft (parity test catches it at integration). Hard is safer; soft is more pragmatic and matches SD-19's style.
 
-**Pinned to soft enforcement** per operator directive 2026-07-16. The boundary contract remains a markdown artifact (`docs/SD-20/boundary-contract.md`) plus the wire-fixture parity test fixtures (`tests/fixtures/wire/sd20/*.json`). No compile-time check, no codegen, no contract-validation binary. Drift surfaces as either compile errors when one epic reads a field another writes inconsistently, or as parity-test failures when the contract doc and the actual `PilotReceipt` shape diverge. This matches SD-19's posture (no codegen, prose + tests). Recorded as `decisions.md` §10.
+**Pinned to soft enforcement** per operator directive 2026-07-16. The boundary contract remains a markdown artifact (`docs/release/SD-20/boundary-contract.md`) plus the wire-fixture parity test fixtures (`tests/fixtures/wire/sd20/*.json`). No compile-time check, no codegen, no contract-validation binary. Drift surfaces as either compile errors when one epic reads a field another writes inconsistently, or as parity-test failures when the contract doc and the actual `PilotReceipt` shape diverge. This matches SD-19's posture (no codegen, prose + tests). Recorded as `decisions.md` §10.
 
 ### Q2 — Does Level Up grant interaction with multiclass need a special shape? (PINNED: yes, class-selection trigger; Level Up is the same mechanic as level-0-to-1)
 

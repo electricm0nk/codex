@@ -16,11 +16,9 @@ boundary_contract: ../../SD-20/boundary-contract.md
 
 # SD-20 — Rules Engine Completeness — Release Package (CLOSED)
 
-This folder is the repo-local surface for the **closed** SD-20 bundle. SD-20 shipped the per-character rules-engine surface, the closure of Epic 2-7's wiring project. Boundary contract at [`../../SD-20/boundary-contract.md`](../../SD-20/boundary-contract.md) (Epic 1 cycle 4) is the canonical API every post-SD-20 epic adds onto.
+This folder is the repo-local surface for the **closed** SD-20 bundle. SD-20 shipped the per-character rules-engine surface, the closure of Epic 2-7's wiring project. Boundary contract at [`boundary-contract.md`](./boundary-contract.md) (Epic 1 cycle 4) is the canonical API every post-SD-20 epic adds onto.
 
-> ## Why the boundary contract is at `docs/SD-20/` (not here)
->
-> Boundary contracts are *code-shaped* artifacts, referenced from Rust test fixtures and the GUI cell-map. Keeping the contract at `docs/SD-20/boundary-contract.md` (where Epic 1 cycle 4 landed it) lets codebase cross-references resolve without redirect.
+> **Relocated 2026-07-20** (operator directive, repo-wide docs-structure consolidation): the boundary contract used to live at `docs/SD-20/boundary-contract.md`, kept outside `docs/release/` on the reasoning that "code-shaped artifacts... let codebase cross-references resolve without redirect." That reasoning didn't hold up under a full consolidation pass — nothing about referencing `docs/release/SD-20/boundary-contract.md` from Rust doc comments is actually harder than referencing the old path. It now lives in this folder like every other SD-20 doc.
 
 ## 1. Bundle snapshot
 
@@ -40,7 +38,7 @@ This folder is the repo-local surface for the **closed** SD-20 bundle. SD-20 shi
 ## 3. Authoritative pointers (operator workspace; not bundled here)
 
 - **Upstream strategic/intake authority:** `/home/ubuntu/workspace/programs/codex/requirements/SD-20-rules-engine-completeness/`.
-- **Boundary contract:** [`docs/SD-20/boundary-contract.md`](../../SD-20/boundary-contract.md) (code-adjacent surface; outside `docs/release/`).
+- **Boundary contract:** [`boundary-contract.md`](./boundary-contract.md) (relocated 2026-07-20 into this folder; previously code-adjacent at `docs/SD-20/`).
 
 ## 4. Relationship to other release folders
 

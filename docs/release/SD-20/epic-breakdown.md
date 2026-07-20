@@ -47,7 +47,7 @@ Campaign manager + Drive persistence + APG + ACG ingestion are NOT epics inside 
 
 ### Epic 1 — Boundary contract + wire-fixture parity tests
 
-1. **The `docs/SD-20/boundary-contract.md` artifact exists** and names every `CharacterInput` shape the engine accepts, every `PilotReceipt` field the engine returns, and every printed-sheet cell the GUI renders.
+1. **The `docs/release/SD-20/boundary-contract.md` artifact exists** and names every `CharacterInput` shape the engine accepts, every `PilotReceipt` field the engine returns, and every printed-sheet cell the GUI renders.
 2. **The `tests/fixtures/wire/sd20/` directory contains at minimum eight golden JSON fixtures** — one for the boundary contract itself, one each for spellbook, feat prereqs, skill ranks, equipment effects, damage total, Level Up grants, and integration closure. Each fixture is a complete `CharacterInput` paired with the exact `PilotReceipt` the engine must produce.
 3. **Both the engine and the GUI consume the same fixture files**; if either side diverges from the file, tests fail. The wire-fixture parity tests are the single dovetail mechanism between engine and GUI.
 
