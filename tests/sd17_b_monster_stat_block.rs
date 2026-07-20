@@ -103,3 +103,68 @@ fn parses_real_cr_1_monster_records_from_b1_races_lst() {
     assert!(records.iter().all(|r| r.name != "Kobold"));
     assert!(records.iter().all(|r| r.name != "Orc"));
 }
+
+/// Grounding test for subset 02's roster (see
+/// `docs/release/SD-22/artifacts/beastiary1/subset_02_cycle_receipt.md`).
+/// No parser widening was needed for subset 02 — every field these five
+/// monsters use already falls inside `monster_stat_block`'s existing
+/// recognition surface — but this test proves that against the real
+/// corpus file directly, the same way subset 01's grounding test did.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_subset_02_cr_1_monster_records_from_b1_races_lst() {
+    let text = real_b1_races_lst();
+    let records = parse_monster_stat_block_entries("b1_races.lst", &text);
+
+    let find = |name: &str| {
+        records
+            .iter()
+            .find(|r| r.name == name)
+            .unwrap_or_else(|| panic!("expected a parsed record named {name:?} from the real b1_races.lst"))
+    };
+
+    let darkmantle = find("Darkmantle");
+    assert_eq!(darkmantle.challenge_rating.as_f32(), 1.0);
+    assert_eq!(darkmantle.size.as_deref(), Some("S"));
+    assert_eq!(darkmantle.speed_ft, Some(20));
+    assert_eq!(darkmantle.race_type.as_deref(), Some("Magical Beast"));
+    assert_eq!(darkmantle.source_page.as_deref(), Some("p.55"));
+    assert!(darkmantle.natural_attacks.iter().any(|a| a.name == "Slam" && a.damage_dice == "1d4"));
+
+    let horse = find("Horse");
+    assert_eq!(horse.challenge_rating.as_f32(), 1.0);
+    assert_eq!(horse.speed_ft, Some(50));
+    assert_eq!(horse.race_type.as_deref(), Some("Animal"));
+    assert_eq!(horse.source_page.as_deref(), Some("p.177"));
+
+    let hyena = find("Hyena");
+    assert_eq!(hyena.challenge_rating.as_f32(), 1.0);
+    assert_eq!(hyena.speed_ft, Some(50));
+    assert_eq!(hyena.race_type.as_deref(), Some("Animal"));
+    assert_eq!(hyena.source_page.as_deref(), Some("p.179"));
+
+    let octopus = find("Octopus");
+    assert_eq!(octopus.challenge_rating.as_f32(), 1.0);
+    assert_eq!(octopus.speed_ft, Some(20), "walk speed, not the swim speed");
+    assert_eq!(octopus.race_type.as_deref(), Some("Animal"));
+    assert_eq!(octopus.race_subtype.as_deref(), Some("Aquatic"));
+    assert!(octopus.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "1d3"));
+    assert!(octopus.natural_attacks.iter().any(|a| a.name == "Tentacle"));
+
+    let spider_swarm = find("Spider Swarm");
+    assert_eq!(spider_swarm.challenge_rating.as_f32(), 1.0);
+    assert_eq!(spider_swarm.speed_ft, Some(20), "walk speed, not the climb speed");
+    assert_eq!(spider_swarm.race_type.as_deref(), Some("Vermin"));
+    assert_eq!(spider_swarm.race_subtype.as_deref(), Some("Swarm"));
+    assert!(spider_swarm.natural_attacks.iter().any(|a| a.name == "Swarm" && a.damage_dice == "1d6"));
+
+    // Confirms the roster-correction note: Hobgoblin is NOT parsed as a
+    // standalone monster stat-block record from this file (it exists
+    // only as a `.MOD` override in `b1_races_pc.lst`, same shape as
+    // subset 01's Goblin/Kobold/Orc). Rat Swarm DOES parse as a real,
+    // standalone record here — but at CR 2, not CR 1, so it belongs to a
+    // later CR-band subset, not subset 02.
+    assert!(records.iter().all(|r| r.name != "Hobgoblin"));
+    let rat_swarm = find("Rat Swarm");
+    assert_eq!(rat_swarm.challenge_rating.as_f32(), 2.0, "Rat Swarm is CR 2, not CR 1");
+}

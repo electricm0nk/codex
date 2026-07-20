@@ -751,3 +751,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["acg/spell_list_cycle_receipt.md", "acg/equipment_tables_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream working Epic 5 (Bestiary 1 subset 02, src/rules_core/rules_tables/beastiary1/). File-touch set (acg/, tests/sd22_acg_spell_list_resolves.rs, tests/sd22_acg_equipment_resolves.rs) disjoint from the sibling's beastiary1/ files per loop-instruction.md. Confirmed via direct grep of the whole advanced_class_guide/ tree that Arcanist, Hunter, Investigator (only a .MOD cross-reference, not a full definition), Skald, and Warpriest have no active ACG-specific spell record -- same real-gap shape as APG's Summoner gap, documented rather than fabricated. Confirmed acg_equip.lst is a single file (unlike APG's three-file split) disambiguated by TYPE: token before picking the three representative rows."
+
+- cycle_id: 2026-07-20T00:00:00Z
+  epic: 5
+  criterion: beastiary1_subset_02
+  criterion_section: "§3.1 Epic 5 — Bestiary 1 content-source ingest (subset 02, second monster-block subset)"
+  row_or_kind: ingest:beastiary1_subset
+  evidence_tier_before: complete (criteria 14-17 for subset 01 only)
+  evidence_tier_after: complete (criteria 14-17, re-verified against subset 01 + subset 02)
+  branch_tip_before: 4192f6e
+  branch_tip_after: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
+  merge_receipt_sha: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
+  cycle_artifact_path: "beastiary1/subset_02_cycle_receipt.md"
+  red_phase_evidence: "cargo test --locked --test sd22_beastiary1_subset_02_resolves against the pre-cycle tree failed to compile with error[E0599]: no variant, associated function, or constant named `Darkmantle`/`Horse`/`Hyena`/`Octopus`/`SpiderSwarm` found for enum `MonsterId` (10 call sites) -- see cycle_artifact_path:Red-phase evidence"
+  green_phase_evidence: "wrote src/rules_core/rules_tables/beastiary1/monster_subset_02.rs (Darkmantle/Horse/Hyena/Octopus/Spider Swarm chassis, transcribed from b1_races.lst:91,235,242,314,379) and wired it into beastiary1/mod.rs (pub mod monster_subset_02, five new MonsterId variants, match arms). No parser widening needed -- monster_stat_block.rs's existing recognition surface already covers every field these five monsters use. Added a real-corpus-gated grounding test to tests/sd17_b_monster_stat_block.rs anyway. sd22_beastiary1_subset_02_resolves 6/6 passed, sd17_b_monster_stat_block --ignored 2/2 passed, full cargo test --locked 0 failed across 421 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
+  cargo_test_summary: "sd22_beastiary1_subset_02_resolves: 6/6 passed; sd17_b_monster_stat_block (PCGEN_CORPUS_ROOT-gated): 2/2 passed; full cargo test --locked: 0 failed (421 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 3000
+  self_heals_applied: ["subset_02 sample-monster roster corrected from corpus-source-inventory.md §3.1's illustrative 'Gnoll, Hobgoblin, Lizardfolk, Rat Swarm' (Gnoll/Lizardfolk already used in subset 01; Hobgoblin has no standalone stat-block row, .MOD-only; Rat Swarm is real but CR 2 not CR 1) to the real CR-1 roster this cycle verified directly: Darkmantle, Horse, Hyena, Octopus, Spider Swarm", "mid-cycle self-correction: an initial grounding-test assertion claiming Rat Swarm does not parse at all was itself wrong (it does parse, at CR 2) -- caught by the real-corpus-gated test failing, corrected in every doc comment before landing rather than shipped as an unverified claim"]
+  next_required_uplift: "Bestiary 1 subset 03 (next CR-1 or next-CR-band monster-block subset), or hand off to Epic 6 criterion 21's happy-path integration test now that Epic 3+4+5 all have at least one landed content unit (Epic 3 and Epic 4 both closed out this same cycle window)"
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:91,235,242,314,379 (Darkmantle, Horse, Hyena, Octopus, Spider Swarm real CR:1 records; per decisions.md §5)"
+  rule_set_used: Bestiary1
+  kanban_card: "t_a981f157 (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: ["beastiary1/subset_02_cycle_receipt.md"]
+  notes: "Ran in parallel with a sibling stream working Epic 4 criterion 13 (ACG shared spell/equipment tables, src/rules_core/rules_tables/acg/). File-touch set (rules_tables/beastiary1/, tests/sd22_beastiary1_subset_02_resolves.rs, tests/sd17_b_monster_stat_block.rs) disjoint from the sibling's acg/ files per loop-instruction.md. Did all RED/GREEN/verification work before touching progress.md/receipts.md; fetched+synced with the sibling's already-pushed production commit (f9fee4b) before this cycle's own commit -- no rebase conflicts, disjoint file sets. corpus-source-inventory.md §3.1 corrected for both subset 01 and subset 02 rows in this cycle's commit, mirroring how subset 01's own cycle corrected its own row."

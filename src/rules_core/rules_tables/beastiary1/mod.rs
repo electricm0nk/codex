@@ -23,8 +23,23 @@
 //! `race_ability.rs`'s `RACE:`/`ABILITY:`-only parser left for Epic 5's
 //! first cycle (`docs/release/SD-22/progress.md`'s "new parsing code
 //! required" blocker, resolved this cycle).
+//!
+//! **Roster correction for subset 02** (documented in full in
+//! `docs/release/SD-22/artifacts/beastiary1/subset_02_cycle_receipt.md`
+//! and in `tests/sd22_beastiary1_subset_02_resolves.rs`'s header):
+//! `corpus-source-inventory.md` §3.1's illustrative subset-02 sample list
+//! ("Gnoll, Hobgoblin, Lizardfolk, Rat Swarm") is wrong three ways —
+//! Gnoll and Lizardfolk were already ingested in subset 01; Hobgoblin has
+//! no standalone stat-block row in the real corpus at all (a `.MOD`-only
+//! override, same shape as subset 01's Goblin/Kobold/Orc); Rat Swarm does
+//! have a real standalone row (`b1_races.lst:334`) but its real CR is 2,
+//! not 1. Subset 02 ships the real, unused, unambiguous CR-1 monsters
+//! this cycle verified directly: Darkmantle, Horse, Hyena, Octopus,
+//! Spider Swarm (alphabetical, excluding parenthetical sub-variant names
+//! the same way subset 01 did).
 
 pub mod monster_subset_01;
+pub mod monster_subset_02;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -55,7 +70,8 @@ pub struct MonsterStatBlock {
 }
 
 /// Identifies which Bestiary 1 monster a chassis query targets. Subset
-/// 01's corrected five-monster roster (see this module's doc comment).
+/// 01's and subset 02's corrected rosters (see this module's doc
+/// comment).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum MonsterId {
     Ghoul,
@@ -63,6 +79,11 @@ pub enum MonsterId {
     GoblinDog,
     Lizardfolk,
     Wolf,
+    Darkmantle,
+    Horse,
+    Hyena,
+    Octopus,
+    SpiderSwarm,
 }
 
 /// Resolves a Bestiary 1 monster's chassis data, scoped to
@@ -79,6 +100,11 @@ pub fn monster_resolve(monster_id: MonsterId, rule_set: RuleSetId) -> Option<Mon
         MonsterId::GoblinDog => monster_subset_01::goblin_dog(),
         MonsterId::Lizardfolk => monster_subset_01::lizardfolk(),
         MonsterId::Wolf => monster_subset_01::wolf(),
+        MonsterId::Darkmantle => monster_subset_02::darkmantle(),
+        MonsterId::Horse => monster_subset_02::horse(),
+        MonsterId::Hyena => monster_subset_02::hyena(),
+        MonsterId::Octopus => monster_subset_02::octopus(),
+        MonsterId::SpiderSwarm => monster_subset_02::spider_swarm(),
     })
 }
 
@@ -91,6 +117,11 @@ pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStat
         "beastiary1:monster:goblin_dog" => MonsterId::GoblinDog,
         "beastiary1:monster:lizardfolk" => MonsterId::Lizardfolk,
         "beastiary1:monster:wolf" => MonsterId::Wolf,
+        "beastiary1:monster:darkmantle" => MonsterId::Darkmantle,
+        "beastiary1:monster:horse" => MonsterId::Horse,
+        "beastiary1:monster:hyena" => MonsterId::Hyena,
+        "beastiary1:monster:octopus" => MonsterId::Octopus,
+        "beastiary1:monster:spider_swarm" => MonsterId::SpiderSwarm,
         _ => return None,
     };
     monster_resolve(monster_id, rule_set)

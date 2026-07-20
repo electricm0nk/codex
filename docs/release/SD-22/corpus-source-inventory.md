@@ -98,8 +98,8 @@ Bestiary 1 populates `src/rules_core/rules_tables/beastiary1/` with one monster-
 
 | Subset # | CR band | Sample monsters | rust_module_path | test_fixture_path | cycle_artifact_path | RuleSetId |
 |---|---|---|---|---|---|---|
-| 1 | CR 1 | Goblin, Kobold, Orc, Skeleton, Zombie | `src/rules_core/rules_tables/beastiary1/monster_subset_01.rs` | `tests/sd22_beastiary1_subset_01_resolves.rs` | `beastiary1/subset_01_cycle_receipt.md` | `RuleSetId::Bestiary1` |
-| 2 | CR 1 | Gnoll, Hobgoblin, Lizardfolk, Rat Swarm | (same shape, `_02.rs`) | (same shape) | (same shape) | `RuleSetId::Bestiary1` |
+| 1 | CR 1 | ~~Goblin, Kobold, Orc, Skeleton, Zombie~~ **Corrected 2026-07-20:** Ghoul, Gnoll, Goblin Dog, Lizardfolk, Wolf (none of the original five is a real, standalone CR-1 monster stat-block row — see `beastiary1/subset_01_cycle_receipt.md`) | `src/rules_core/rules_tables/beastiary1/monster_subset_01.rs` | `tests/sd22_beastiary1_subset_01_resolves.rs` | `beastiary1/subset_01_cycle_receipt.md` | `RuleSetId::Bestiary1` |
+| 2 | CR 1 | ~~Gnoll, Hobgoblin, Lizardfolk, Rat Swarm~~ **Corrected 2026-07-20:** Darkmantle, Horse, Hyena, Octopus, Spider Swarm (Gnoll/Lizardfolk already used in subset 01; Hobgoblin has no standalone stat-block row in `b1_races.lst` — `.MOD`-only, same shape as subset 01's Goblin/Kobold/Orc; Rat Swarm is a real row but CR 2, not CR 1 — see `beastiary1/subset_02_cycle_receipt.md`) | `src/rules_core/rules_tables/beastiary1/monster_subset_02.rs` | `tests/sd22_beastiary1_subset_02_resolves.rs` | `beastiary1/subset_02_cycle_receipt.md` | `RuleSetId::Bestiary1` |
 | ... | (one per subset) | ... | ... | ... | ... | ... |
 | N | CR 30 | Tarrasque, Cosmic-tier | (last subset) | (last subset) | (last subset) | `RuleSetId::Bestiary1` |
 

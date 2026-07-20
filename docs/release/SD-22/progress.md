@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: f9fee4b
+snapshot_as_of: PENDING_THIS_CYCLE_COMMIT_SHA
 ---
 
 # SD-22 — Progress
@@ -31,7 +31,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
 | E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6), Summoner (5/6), Witch (6/6); shared spell/equipment tables | **complete — criteria 6-9, Epic 3 (APG) fully closed out.** `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all six classes' BAB/save chassis land with cross-book invariant tests (criteria 6-8). Criterion 9 lands this cycle as `apg/spell_list.rs` (4-entry bootstrap sample: Bomber's Eye/Alchemist, Burst Bonds/Inquisitor, Borrow Fortune/Oracle, Ill Omen/Witch) and `apg/equipment_tables.rs` (3-entry bootstrap sample: Iron Spike, Arrow (Blunt), Knucklebone of Fickle Fortune) — bootstrap/representative coverage per the `crb/equipment_tables.rs` precedent, not exhaustive; Summoner has no active spell record anywhere in the real corpus (its dedicated block is entirely `#`-commented out) and Cavalier casts no spells, both by design not omission. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`). See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md`, `artifacts/apg/class_summoner_cycle_receipt.md`, `artifacts/apg/class_witch_cycle_receipt.md`, `artifacts/apg/spell_list_cycle_receipt.md`, `artifacts/apg/equipment_tables_cycle_receipt.md` | see `## Cycle log` |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (1/10), Bloodrager (2/10), Brawler (3/10), Hunter (4/10), Investigator (5/10), Shaman (6/10), Skald (7/10), Slayer (8/10), Swashbuckler (9/10), Warpriest (10/10) of the corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order; shared spell/equipment tables (criterion 13) | **complete — criteria 10-13, Epic 4 (ACG) fully closed out.** `rules_tables/acg/mod.rs` grown to all ten classes, `RuleSetId::Acg` cross-book invariant tests hold for all ten (criteria 10-12). Warpriest is a divine caster with `SPELLSTAT:WIS` standard-prepared casting (widened `SPELLCASTING_CLASS_NAMES`, same posture as Shaman/Witch); real `CLASS:Warpriest` record (`acg_classes.lst:364`) carries three-quarter BAB, good Fortitude, good Will, poor Reflex, `MAXLEVEL:20`. The distinct internal `CLASS:Ex-Warpriest` record (line 413, `VISIBLE:NO`, no `SPELLSTAT:`) is a fallen-Warpriest NPC variant and deliberately not chassis'd. Criterion 13 lands this cycle as `acg/spell_list.rs` (4-entry bootstrap sample: Blade Lash/Bloodrager, Air Geyser/Bloodrager, Beastspeak/Shaman, Anti-Incorporeal Shell/Shaman) and `acg/equipment_tables.rs` (3-entry bootstrap sample: Marlinspike, Headsman's Blade, Ring of Eloquence) — bootstrap/representative coverage per the `apg/spell_list.rs`+`apg/equipment_tables.rs` precedent, not exhaustive; Arcanist, Hunter, Investigator (only a `.MOD` cross-reference onto APG's own `Bomber's Eye`, not a full definition), Skald, and Warpriest have no active ACG-specific spell record anywhere in the real corpus — a real gap in the source data (those classes draw from other books' spell lists), not an omission, same posture as APG's Summoner gap. See `artifacts/acg/class_arcanist_cycle_receipt.md`, `artifacts/acg/class_bloodrager_cycle_receipt.md`, `artifacts/acg/class_brawler_cycle_receipt.md`, `artifacts/acg/class_hunter_cycle_receipt.md`, `artifacts/acg/class_investigator_cycle_receipt.md`, `artifacts/acg/class_shaman_cycle_receipt.md`, `artifacts/acg/class_skald_cycle_receipt.md`, `artifacts/acg/class_slayer_cycle_receipt.md`, `artifacts/acg/class_swashbuckler_cycle_receipt.md`, `artifacts/acg/class_warpriest_cycle_receipt.md`, `artifacts/acg/spell_list_cycle_receipt.md`, `artifacts/acg/equipment_tables_cycle_receipt.md` | see `## Cycle log` |
-| E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 — corrected roster (CR 1: Ghoul/Gnoll/Goblin Dog/Lizardfolk/Wolf; see cycle log for why the illustrative "Goblin/Kobold/Orc/Skeleton/Zombie" list was corrected) | **complete (criteria 14-17)** — parser gap RESOLVED this cycle via a new sibling parser, `src/pcgen_import/lst_parser/monster_stat_block.rs` (bare tab-delimited monster stat-block rows); `rules_tables/beastiary1/mod.rs` + `monster_subset_01.rs` land, `RuleSetId::Bestiary1` registered, cross-book invariant tests hold. See `artifacts/beastiary1/subset_01_cycle_receipt.md`. | see `## Cycle log` |
+| E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Ghoul/Gnoll/Goblin Dog/Lizardfolk/Wolf) + Subset 02 (CR 1: Darkmantle/Horse/Hyena/Octopus/Spider Swarm); see cycle log for why the illustrative sample lists for both subsets were corrected | **complete (criteria 14-17, re-verified against a second subset)** — parser gap RESOLVED via `src/pcgen_import/lst_parser/monster_stat_block.rs` (bare tab-delimited monster stat-block rows); `rules_tables/beastiary1/mod.rs` + `monster_subset_01.rs` + `monster_subset_02.rs` land, `RuleSetId::Bestiary1` registered, cross-book invariant tests hold for both subsets, no parser widening needed for subset 02. Criterion 17 (DM-toolkit consumption, "at least one" monster block) already satisfied by subset 01; subset 02 adds breadth toward Epic 6 criterion 21's happy-path integration. See `artifacts/beastiary1/subset_01_cycle_receipt.md`, `artifacts/beastiary1/subset_02_cycle_receipt.md`. | see `## Cycle log` |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | `Encounter::new` lands (criterion 18); `party_cr.rs` (19) lands; deterministic tests (20) land this cycle; happy-path integration (21) still open, blocked on Epic 3+4+5 all landing | **complete (criteria 18-20)** — `src/rules_core/encounters.rs` lands `CharacterSnapshot`, `MonsterRef`, `Difficulty`, `EncounterResult`, and `Encounter::new`, grounded in the real PF1 Core Rulebook "Gamemastering" chapter (Table: Encounter Design, Table: CR Equivalencies, Table: Experience Point Awards CR 1-10). `src/rules_core/party_cr.rs` lands `party_challenge_rating`, grounded in the same chapter's "Designing Encounters" → "Step 1 — Determine APL" rule (reuses `encounters.rs`'s `CharacterSnapshot`). `tests/sd22_dm_toolkit_deterministic.rs` (criterion 20) lands 5 acceptance-level tests covering both modules against `corpus-source-inventory.md` §4.1's five canonical cases; this cycle independently re-verified (fresh fetch of `legacy.aonprd.com/corerulebook/gamemastering.html`, not trusting the prior cycles' claims) and confirmed both previously-flagged discrepancies were real doc errors, not code bugs — corrected §4.1's fixture table (case 2: "Hard" → "Deadly"; case 3: "~3.5" → "3.0") rather than bending the already-correct code. See `artifacts/dm_toolkit/encounters_cycle_receipt.md`, `artifacts/dm_toolkit/party_cr_cycle_receipt.md`, and `artifacts/dm_toolkit/deterministic_tests_cycle_receipt.md`. | see `## Cycle log` |
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
 | E8.27 | 8 — Build Version | version:patch_bump | Version fields set to `0.5.95` (`package.json`, `tauri.conf.json`, `Cargo.toml`) | **complete** — see `artifacts/epic_8/three_version_fields_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
@@ -2484,4 +2484,90 @@ and Epic 4 are now both closed inputs for that integration test.
 Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/acg/spell_list_cycle_receipt.md`,
 `artifacts/acg/equipment_tables_cycle_receipt.md`. Receipt block appended
+to `receipts.md`.
+
+### cycle-2026-07-20 | Epic 5, subset 02 (second monster-block subset) | ingest:beastiary1_subset | card TBD on `codex-tranche-5` | complete (subset 01) → **complete (subset 01 + subset 02)**
+
+Confirmed subset 02 is next-eligible for Epic 5 against the live
+`progress.md` before starting: the subset-01 cycle's own log entry ends
+with "Subset 02 (next CR-1 monster-block subset) is next-eligible for
+Epic 5." Verified `tranche/5` clean and in sync with origin
+(`git fetch origin tranche/5` — local HEAD `4192f6e` matched
+`origin/tranche/5`) before starting. Ran in parallel with a sibling
+stream working Epic 4 criterion 13 (ACG shared spell/equipment tables,
+`src/rules_core/rules_tables/acg/`); this cycle's file-touch set
+(`rules_tables/beastiary1/`, `tests/sd22_beastiary1_subset_02_resolves.rs`,
+`tests/sd17_b_monster_stat_block.rs`) is disjoint per
+`loop-instruction.md`'s file-touch partition. Did all RED/GREEN/verification
+work before touching this file or `receipts.md`; the sibling's own
+production commit (`f9fee4b`) landed and was fetched+merged cleanly
+before this cycle's own commit (no rebase conflicts — disjoint file
+sets).
+
+**Roster correction, discovered before writing any GREEN code:**
+`corpus-source-inventory.md` §3.1's illustrative subset-02 sample list is
+"Gnoll, Hobgoblin, Lizardfolk, Rat Swarm." Verified each name directly
+against the real `b1_races.lst`: Gnoll and Lizardfolk were already
+ingested in subset 01 (re-shipping them would duplicate an existing
+record); Hobgoblin has no standalone monster stat-block row in the file
+at all (`.MOD`-only override in `b1_races_pc.lst`, same defect shape as
+subset 01's Goblin/Kobold/Orc); Rat Swarm **does** have a real standalone
+row (`b1_races.lst:334`) but its real `CR:` token is `2`, not `1` — this
+was initially missed by a loose `grep` and caught mid-cycle by the
+real-corpus-gated grounding test failing (`assertion failed:
+records.iter().all(|r| r.name != "Rat Swarm")`), then corrected in every
+doc comment before landing rather than shipped as an unverified claim.
+Enumerated every real CR:1 monster stat-block row in `b1_races.lst`
+directly, excluded the five names already used in subset 01, excluded
+parenthetical sub-variant names (e.g. "Ghoul (Ghast)", "Frog (Giant)")
+the same way subset 01 did, and landed the five real, unambiguous,
+directly-transcribable CR-1 monsters that remained, alphabetical:
+**Darkmantle** (line 91), **Horse** (line 235), **Hyena** (line 242),
+**Octopus** (line 314), **Spider Swarm** (line 379). Corrected
+`corpus-source-inventory.md` §3.1's subset-01 and subset-02 rows in the
+same commit (mirroring how subset 01's own cycle corrected its own row).
+
+**RED:** added `tests/sd22_beastiary1_subset_02_resolves.rs`, mirroring
+subset 01's acceptance-test shape plus a sibling-preservation check that
+subset 01's five monsters still resolve unchanged. Ran against the
+unchanged tree — failed to compile (`E0599`: `MonsterId::Darkmantle` /
+`Horse` / `Hyena` / `Octopus` / `SpiderSwarm` did not exist, 10 call
+sites) for the intended reason.
+
+**GREEN:** added `src/rules_core/rules_tables/beastiary1/monster_subset_02.rs`
+(the five monsters' chassis, each function's doc comment citing the exact
+source line and tokens transcribed) and wired it into
+`beastiary1/mod.rs`: `pub mod monster_subset_02;`, five new `MonsterId`
+variants, match arms in `monster_resolve`/`monster_key_resolve`. No
+parser widening was needed — every field subset 02 uses (`SIZE:`, `MOVE:`
+walk speed, `CR:`, `RACETYPE:`, `RACESUBTYPE:`, `SOURCEPAGE:`,
+`NATURALATTACKS:`, including the pipe-separated multi-attack shape
+Octopus uses) already falls inside `monster_stat_block.rs`'s existing
+recognition surface. Added a real-corpus-gated grounding test for all
+five monsters to `tests/sd17_b_monster_stat_block.rs` anyway, proving
+that against the real corpus file directly rather than assuming it.
+
+Verification: `cargo test --locked --test sd22_beastiary1_subset_02_resolves`
+6/6 passed. `PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data
+cargo test --locked --test sd17_b_monster_stat_block -- --ignored` 2/2
+passed (subset 01's grounding test + the new subset 02 one). Full `cargo
+test --locked` — 421 `test result: ok` blocks across every suite, 0
+failed anywhere (grepped full output for `test result:` lines not
+containing `0 failed`, found none; sibling-preservation holds, including
+subset 01's own four tests, all ten ACG class-chassis suites, both new
+ACG spell/equipment suites, and every APG suite). `cargo clippy --locked
+--tests -- -D warnings` clean (exit code 0).
+
+With this cycle, Epic 5 (Bestiary 1) has landed two of its many
+monster-block subsets (subset 01: 5 monsters; subset 02: 5 more, 10
+total). Criteria 14-17 remain satisfied (criterion 17's "at least one"
+DM-toolkit-consumable monster block was already met by subset 01);
+subset 02 adds roster breadth ahead of Epic 6 criterion 21's happy-path
+integration test, which still needs Epic 3+4+5 all landed (now true) to
+become eligible. Next-eligible for Epic 5: subset 03 (the next CR-1 or
+next-CR-band monster-block subset), or a hand-off to Epic 6 criterion 21
+now that Epic 3+4+5 all have at least one landed content unit.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/beastiary1/subset_02_cycle_receipt.md`. Receipt block appended
 to `receipts.md`.
