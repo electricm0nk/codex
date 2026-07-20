@@ -29,10 +29,12 @@ const FIELD_STYLE: CSSProperties = { marginBottom: '1rem' };
  * plus party building — selecting from saved characters to add or remove
  * them from the campaign's party.
  *
- * Real design: characters would sync from the campaign's Google Drive
- * folder as validated codex-format JSON files. That sync and validation
- * don't exist yet, so this lists the app's own saved characters (the same
- * source Load Character uses) as the stand-in pool to build a party from.
+ * By design there's no automatic character sync — this app never talks to
+ * a network. Building a party from another player's character means they
+ * hand you their saved-character files directly (or you both point your
+ * saved-characters folder at the same synced location). Until then, this
+ * lists the app's own saved characters (the same source Load Character
+ * uses) as the pool to build a party from.
  */
 export function EditCampaignScreen(props: { campaignId: string; onCancel: () => void; onSaved: () => void }) {
   const [campaign, setCampaign] = useState<Campaign | null>(() => getCampaign(props.campaignId));
