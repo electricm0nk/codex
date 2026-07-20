@@ -87,29 +87,41 @@ For SD-NN, the release version triple is `<major>.<tranche-base>.<build>`:
 
 SD-NN's first concrete value is `<major>.<tranche-base>.<current_build_at_launch>`.
 
-## 6. Architecture-docs closure obligation
+## 6. Architecture-docs closure obligation (Epic Closure sub-step)
 
 The living architecture documentation at `../../architecture/` (repo-relative) is
-part of this bundle's closure gate. Before the `tranche/N → develop` closure PR
-is opened, the closure epilogue MUST:
+part of this bundle's closure gate. The Epic Closure pipeline is sequential — every
+sub-step fires regardless of diff content:
 
-1. Review the bundle's merged diff against the architecture docs:
-   `git diff develop...tranche/N --stat -- src apps schemas scripts tools .github`.
-2. Map every changed path to its topic doc via the "source dirs" column of
-   `../../architecture/README.md`'s index table, and update every touched doc so
-   it describes the post-merge current state. Edits REPLACE outdated statements —
-   never append history, changelogs, or "as of SD-NN" phrasing.
-3. ALWAYS re-check `../../architecture/status.md` — stub graduations and newly
-   landed capabilities are the most common change a bundle ships.
-4. Refresh the `Last verified:` header line of every doc actually re-verified
-   (date + short SHA of the closure tip).
-5. Run the verification one-liners embedded in
-   `../../architecture/README.md` §Maintenance contract (cited-path existence
-   check + relative-link check) and fix anything they flag.
+1. **All acceptance criteria done?** If not, self-heal and run more loops.
+2. **Architecture docs updated?** If not, run the truth-up script at
+   `~/.hermes/profiles/god-emporer/skills/devops/architecture-truth-up/scripts/architecture_truth_up.py`
+   with `--integration-target <target> --receipts-md <this-folder>/receipts.md --bundle <SD-NN>`.
+   The script edits touched docs in place, removes obsolete statements, refreshes
+   `Last verified:` headers, runs the maintenance contract's two verification
+   one-liners, and appends a YAML receipt to `receipts.md`. Empty diffs still
+   write a receipt — the receipt IS the audit evidence that the gate fired.
+3. **Graphify run?** If not, run the graphify-update script at
+   `~/.hermes/profiles/god-emporer/skills/devops/graphify-update/scripts/update_graphify.py`
+   with `--integration-target <target> --receipts-md <this-folder>/receipts.md --bundle <SD-NN>`.
+   The script invokes graphify against the codex repo, captures stdout/stderr/exit-code,
+   and appends a `graphify:update` receipt to `receipts.md`. Graphify non-zero exit does
+   NOT refuse the closure pipeline — the failure receipt is the audit trail; operator
+   decides retry-vs-proceed.
+4. **PR open?** If not, open it. (PR creation is a bash-level command in the loop-instruction.)
+5. **Merge conflicts resolved?** If any, fix them via the merge-conflict-resolution script at
+   `~/.hermes/profiles/god-emporer/skills/devops/merge-conflict-resolution/scripts/resolve_merge_conflicts.py`.
+   The script runs `git pull --rebase origin <target>` (pre-flight mode) or queries the GitHub
+   API for the PR's `mergeable` state (post-pr mode). On conflicts, the script emits a
+   `merge_conflict:*` receipt and exits non-zero — the loop self-heals, operator resolves
+   manually, loop re-runs until clean.
+6. **Stop the loop.**
 
 The full rules and procedure live in `../../architecture/README.md`
-§Maintenance contract. This obligation blocks the develop PR the same way the
-release-notes and version-increment obligations do.
+§Maintenance contract. Skills: `architecture-truth-up` (sub-step 2), `graphify-update`
+(sub-step 3), `merge-conflict-resolution` (sub-step 5). The receipt block in
+`<this-folder>/receipts.md` is the durable audit trail; without it, the bundle
+did not run through the closure pipeline in a verifiable way.
 
 ## 7. Initial-package construction (operator-only, before launch)
 
