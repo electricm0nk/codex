@@ -29,6 +29,7 @@ pub mod class_brawler;
 pub mod class_hunter;
 pub mod class_investigator;
 pub mod class_shaman;
+pub mod class_skald;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -48,9 +49,9 @@ pub struct ClassTableRow {
 }
 
 /// Identifies which ACG class a chassis-table query targets. Arcanist,
-/// Bloodrager, Brawler, Hunter, Investigator, and Shaman are the first
-/// six real ACG classes landed; the roster grows as subsequent Epic 4
-/// cycles ingest the remaining 4 real classes (Skald, Slayer,
+/// Bloodrager, Brawler, Hunter, Investigator, Shaman, and Skald are the
+/// first seven real ACG classes landed; the roster grows as subsequent
+/// Epic 4 cycles ingest the remaining 3 real classes (Slayer,
 /// Swashbuckler, Warpriest — see this module's doc comment for the
 /// roster correction).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -61,6 +62,7 @@ pub enum AcgClassId {
     Hunter,
     Investigator,
     Shaman,
+    Skald,
 }
 
 /// Resolves an ACG class's chassis-table row for `level`, scoped to
@@ -94,6 +96,9 @@ pub fn class_chassis_resolve(
             .into_iter()
             .find(|row| row.level == level),
         AcgClassId::Shaman => class_shaman::class_table()
+            .into_iter()
+            .find(|row| row.level == level),
+        AcgClassId::Skald => class_skald::class_table()
             .into_iter()
             .find(|row| row.level == level),
     }

@@ -36,7 +36,17 @@
 //! (added by SD-22 Epic 4's Investigator ingest cycle, the fifth real
 //! ACG class — the real `CLASS:Investigator` line carries
 //! `SPELLSTAT:INT MEMORIZE:YES SPELLBOOK:YES`, the same spellbook-prepared
-//! posture as Alchemist/Arcanist), plus their
+//! posture as Alchemist/Arcanist), plus `Shaman` (added by SD-22 Epic 4's
+//! Shaman ingest cycle, the sixth real ACG class — the real
+//! `CLASS:Shaman` line carries `SPELLSTAT:WIS MEMORIZE:YES` with no
+//! `SPELLBOOK:YES` and no `MEMORIZE:NO`, the same standard-prepared
+//! posture as Witch), plus `Skald` (added by SD-22 Epic 4's Skald ingest
+//! cycle, the seventh real ACG class — the real `CLASS:Skald` line
+//! carries `SPELLSTAT:CHA MEMORIZE:NO SPELLBOOK:YES`; `MEMORIZE:NO`
+//! takes precedence over `SPELLBOOK:YES` in this parser's posture
+//! derivation, so Skald resolves as spontaneous — the same posture as
+//! Bard, whose spell list Skald's own `SPELLLIST:1|Bard` token borrows
+//! from), plus their
 //! `Ex-<name>` mirror variants. The
 //! parser recognizes every `CLASS:<name>` line in the PCGen corpus where
 //! `<name>` is in that set, carries every tab-delimited `KEY:VAL` token
@@ -89,8 +99,8 @@ use std::path::Path;
 /// The five CRB spellcasting classes named in the SD-17 Slice B-2 card
 /// body, plus `Alchemist`, `Inquisitor`, `Oracle`, `Summoner`, and
 /// `Witch` (SD-22 Epic 3 widenings), plus `Arcanist`, `Bloodrager`,
-/// `Hunter`, `Investigator`, and `Shaman` (SD-22 Epic 4 widenings — see
-/// module doc comment).
+/// `Hunter`, `Investigator`, `Shaman`, and `Skald` (SD-22 Epic 4
+/// widenings — see module doc comment).
 pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
     "Cleric",
     "Druid",
@@ -107,6 +117,7 @@ pub const SPELLCASTING_CLASS_NAMES: &[&str] = &[
     "Hunter",
     "Investigator",
     "Shaman",
+    "Skald",
 ];
 
 /// Casting posture recorded on each spellcasting class. The posture is

@@ -526,3 +526,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["acg/class_shaman_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Shaman record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB -- same posture as ACG's Hunter/Investigator and APG's Alchemist/Inquisitor/Oracle/Summoner -- good Will from its own single-save token, poor Fortitude+Reflex from one combined token (BASE.Fortitude,BASE.Reflex -- same pairing shape as Brawler's/Hunter's combined token, but poor instead of good), MAXLEVEL:20, SPELLSTAT:WIS MEMORIZE:YES with no SPELLBOOK:YES and no MEMORIZE:NO -- standard-prepared posture, same shape as APG's Witch) -- confirming Shaman belongs in spellcasting_class.rs's SPELLCASTING_CLASS_NAMES rather than class.rs's MARTIAL_CLASS_NAMES; same scope boundary as class_arcanist.rs/class_bloodrager.rs/class_brawler.rs/class_hunter.rs/class_investigator.rs (named per-level features out of scope, formula-derived chassis only)."
+
+- cycle_id: 2026-07-20T02:20:00Z
+  epic: 4
+  criterion: acg_skald
+  criterion_section: "§2.1 Epic 4 — ACG content-source ingest (criteria 10-12; seventh real ACG class, class 7 of 10)"
+  row_or_kind: ingest:acg_class
+  evidence_tier_before: open (Arcanist + Bloodrager + Brawler + Hunter + Investigator + Shaman complete; Skald not yet started)
+  evidence_tier_after: complete (criteria 10-12 for Skald; criterion 13's spell/equipment resolution deferred to a later cycle)
+  branch_tip_before: 1c5b590
+  branch_tip_after: PENDING_BACKFILL
+  merge_receipt_sha: PENDING_BACKFILL
+  cycle_artifact_path: "acg/class_skald_cycle_receipt.md"
+  red_phase_evidence: "Widening RED: parses_real_skald_record_from_acg_classes_lst added to tests/sd17_b_spellcasting_class.rs, failed (Skald out of SPELLCASTING_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_skald_resolves.rs failed to compile (E0599: AcgClassId::Skald did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Skald) in src/pcgen_import/lst_parser/spellcasting_class.rs (not class.rs -- Skald's real record carries SPELLSTAT:CHA MEMORIZE:NO SPELLBOOK:YES; MEMORIZE:NO takes precedence over SPELLBOOK:YES in the parser's posture derivation, so Skald resolves as spontaneous, same posture as Bard, whose spell list Skald's own SPELLLIST:1|Bard token borrows from); added rules_tables/acg/class_skald.rs and AcgClassId::Skald match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist+Bloodrager+Brawler+Hunter+Investigator+Shaman still resolve); widening test green (26/26 in sd17_b_spellcasting_class); full cargo test suite green, 0 failed (412 test-result:ok blocks); clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_acg_class_skald_resolves: 7/7 passed (--include-ignored); sd17_b_spellcasting_class: 26/26 passed (--include-ignored) including the new widening test; full cargo test --locked: 0 failed across every suite (412 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 4's next-eligible cycle is Slayer (class 8 of the corrected 10-class roster: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest), or a dedicated cycle for criterion 13's shared spell/equipment tables once more classes land. corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md still need an operator/doc-correction pass to formally replace 'Alchemist (ACG-side)' with Slayer in the row list, mirroring commit 6923e54's APG roster fix -- not blocking further Epic 4 cycles. Epic 5 (Bestiary 1) remains blocked on its own, separate parser gap (b1_races.lst's unprefixed bare-row monster records) -- unaffected by this cycle."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:274 (CLASS:Skald)"
+  rule_set_used: Acg
+  kanban_card: "PENDING_BACKFILL"
+  progress_file_updated: "yes"
+  artifacts_written: ["acg/class_skald_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Skald record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB -- same posture as ACG's Hunter/Investigator/Shaman and APG's Alchemist/Inquisitor/Oracle/Summoner -- good Will+Fortitude from one combined token (BASE.Will,BASE.Fortitude -- mirror-image pairing from Shaman's good-Will/poor-Fortitude+Reflex shape), poor Reflex from its own single-save token, MAXLEVEL:20, SPELLSTAT:CHA MEMORIZE:NO SPELLBOOK:YES -- MEMORIZE:NO wins over SPELLBOOK:YES in the parser's derivation order, so posture is spontaneous, same shape as Bard whose spell list Skald borrows via SPELLLIST:1|Bard) -- confirming Skald belongs in spellcasting_class.rs's SPELLCASTING_CLASS_NAMES rather than class.rs's MARTIAL_CLASS_NAMES; same scope boundary as class_arcanist.rs/class_bloodrager.rs/class_brawler.rs/class_hunter.rs/class_investigator.rs/class_shaman.rs (named per-level features out of scope, formula-derived chassis only)."

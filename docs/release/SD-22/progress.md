@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 0d93e05
+snapshot_as_of: PENDING_BACKFILL
 ---
 
 # SD-22 — Progress
@@ -30,7 +30,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E2.4 | 2 — Operator Pre-Launch | prelaunch:branch | `tranche/5` pushed to origin | **complete** — `git ls-remote origin tranche/5` = `233c426...` matches local HEAD | 233c426 |
 | E2.5 | 2 — Operator Pre-Launch | prelaunch:no_inflight | No other `claude` processes touching `rules_tables/<book>/` | **complete** — `ps -eo pid,etime,stat,cmd \| grep claude` shows only this session's own process | n/a |
 | E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6), Summoner (5/6), Witch (6/6); shared spell/equipment tables | **complete — criteria 6-9, Epic 3 (APG) fully closed out.** `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all six classes' BAB/save chassis land with cross-book invariant tests (criteria 6-8). Criterion 9 lands this cycle as `apg/spell_list.rs` (4-entry bootstrap sample: Bomber's Eye/Alchemist, Burst Bonds/Inquisitor, Borrow Fortune/Oracle, Ill Omen/Witch) and `apg/equipment_tables.rs` (3-entry bootstrap sample: Iron Spike, Arrow (Blunt), Knucklebone of Fickle Fortune) — bootstrap/representative coverage per the `crb/equipment_tables.rs` precedent, not exhaustive; Summoner has no active spell record anywhere in the real corpus (its dedicated block is entirely `#`-commented out) and Cavalier casts no spells, both by design not omission. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`). See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md`, `artifacts/apg/class_summoner_cycle_receipt.md`, `artifacts/apg/class_witch_cycle_receipt.md`, `artifacts/apg/spell_list_cycle_receipt.md`, `artifacts/apg/equipment_tables_cycle_receipt.md` | see `## Cycle log` |
-| E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (1/10), Bloodrager (2/10), Brawler (3/10), Hunter (4/10), Investigator (5/10), Shaman (6/10) of the corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order) | **complete (criteria 10-12 for Arcanist + Bloodrager + Brawler + Hunter + Investigator + Shaman)** — `rules_tables/acg/mod.rs` grown to six classes, `RuleSetId::Acg` cross-book invariant tests hold for all six. Shaman is the fifth ACG spellcasting class (widened `spellcasting_class.rs`'s `SPELLCASTING_CLASS_NAMES`, same allowlist as Arcanist/Bloodrager/Hunter/Investigator; Brawler alone used `class.rs`'s `MARTIAL_CLASS_NAMES`). See `artifacts/acg/class_arcanist_cycle_receipt.md`, `artifacts/acg/class_bloodrager_cycle_receipt.md`, `artifacts/acg/class_brawler_cycle_receipt.md`, `artifacts/acg/class_hunter_cycle_receipt.md`, `artifacts/acg/class_investigator_cycle_receipt.md`, `artifacts/acg/class_shaman_cycle_receipt.md` | see `## Cycle log` |
+| E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (1/10), Bloodrager (2/10), Brawler (3/10), Hunter (4/10), Investigator (5/10), Shaman (6/10), Skald (7/10) of the corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order) | **complete (criteria 10-12 for Arcanist + Bloodrager + Brawler + Hunter + Investigator + Shaman + Skald)** — `rules_tables/acg/mod.rs` grown to seven classes, `RuleSetId::Acg` cross-book invariant tests hold for all seven. Skald is the sixth ACG spellcasting class (widened `spellcasting_class.rs`'s `SPELLCASTING_CLASS_NAMES`, same allowlist as Arcanist/Bloodrager/Hunter/Investigator/Shaman; Brawler alone used `class.rs`'s `MARTIAL_CLASS_NAMES`). Skald's real record carries both `MEMORIZE:NO` and `SPELLBOOK:YES`; the parser's derivation order resolves that to spontaneous posture. See `artifacts/acg/class_arcanist_cycle_receipt.md`, `artifacts/acg/class_bloodrager_cycle_receipt.md`, `artifacts/acg/class_brawler_cycle_receipt.md`, `artifacts/acg/class_hunter_cycle_receipt.md`, `artifacts/acg/class_investigator_cycle_receipt.md`, `artifacts/acg/class_shaman_cycle_receipt.md`, `artifacts/acg/class_skald_cycle_receipt.md` | see `## Cycle log` |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
 | E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
@@ -1761,5 +1761,86 @@ monster records) — unaffected by this cycle.
 Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/acg/class_shaman_cycle_receipt.md`. Receipt block appended to
 `receipts.md`. Next-eligible: Skald (class 7 of the corrected 10-class
+roster), or a dedicated cycle for criterion 13's shared spell/equipment
+tables once more classes land.
+
+### cycle-2026-07-20T02:20:00Z | Epic 4, Skald (class 7 of corrected 10-class roster) | ingest:acg_class | card: see backfill note below | open → **complete (criteria 10-12 for Skald)**
+
+Re-checked state before picking a criterion: `git status --porcelain | wc -l`
+returned 0 at cycle start; local HEAD (`1c5b590`, the prior cycle's own
+backfill commit) matched what `git log` showed as the branch tip going in.
+Per Step 1's priority order and the prior cycle's own `next_required_uplift`,
+Skald (class 7 of the corrected 10-class roster) is next-eligible.
+Re-verified the real `acg_classes.lst` roster directly before picking (not
+from memory of the prior cycle's finding): `grep -oP "^CLASS:\K[A-Za-z-]+"
+acg_classes.lst | sort -u` still returns the same 10-class roster (Arcanist,
+Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer,
+Swashbuckler, Warpriest, plus the internal `Ex-Warpriest` variant) — `Skald`
+has a real `CLASS:Skald` record at `acg_classes.lst:274`.
+
+Verified the real record directly before writing any test: `BONUS:COMBAT|
+BASEAB|classlevel("APPLIEDAS=NONEPIC")*3/4|TYPE=Base.REPLACE|PREVAREQ:
+UseAlternateBABProgression,0` (three-quarter BAB — same posture as ACG's
+Hunter/Investigator/Shaman), `BONUS:SAVE|BASE.Reflex|classlevel(
+"APPLIEDAS=NONEPIC")/3|PREVAREQ:UseAlternateSaveProgression,0` (poor
+Reflex, its own single-save token), `BONUS:SAVE|BASE.Will,BASE.Fortitude|
+classlevel("APPLIEDAS=NONEPIC")/2+2|PREVAREQ:UseAlternateSaveProgression,0`
+(good Will and Fortitude, one combined token — the mirror-image pairing
+from Shaman's good-Will/poor-Fortitude+Reflex shape), `MAXLEVEL:20`, and
+(a separate `CLASS:Skald` line further down the block) `SPELLSTAT:CHA
+MEMORIZE:NO SPELLBOOK:YES` — both `MEMORIZE:NO` and `SPELLBOOK:YES` are
+present on the same line; read `extract_spellcasting_signals` in
+`spellcasting_class.rs` directly to confirm precedence (`memorize_no` is
+checked before `spellbook_yes`), so the posture resolves to spontaneous,
+the same posture as Bard, whose spell list Skald's own `SPELLLIST:1|Bard`
+token borrows from — confirming Skald belongs in `spellcasting_class.rs`'s
+`SPELLCASTING_CLASS_NAMES` allowlist, not `class.rs`'s
+`MARTIAL_CLASS_NAMES`.
+
+**Widening RED**: added `parses_real_skald_record_from_acg_classes_lst` to
+`tests/sd17_b_spellcasting_class.rs` (real-corpus-gated on
+`PCGEN_CORPUS_ROOT`, reusing the existing `real_acg_classes_lst()`
+helper); ran against the unchanged tree — failed for the intended reason
+(`Skald` not yet in `SPELLCASTING_CLASS_NAMES`, silently skipped).
+
+**Acceptance RED**: added `tests/sd22_acg_class_skald_resolves.rs`
+mirroring the Arcanist/Bloodrager/Brawler/Hunter/Investigator/Shaman
+tests' shape (plus a cross-class regression test confirming Arcanist,
+Bloodrager, Brawler, Hunter, Investigator, and Shaman all still resolve);
+ran against the unchanged tree — failed to compile (`E0599`:
+`AcgClassId::Skald` did not exist, 5 call sites) for the intended reason.
+
+GREEN: widened `SPELLCASTING_CLASS_NAMES` in `src/pcgen_import/
+lst_parser/spellcasting_class.rs` by exactly one name (`Skald`). Added
+`src/rules_core/rules_tables/acg/class_skald.rs` (BAB/save chassis only,
+same scope boundary as `class_arcanist.rs`/`class_bloodrager.rs`/
+`class_brawler.rs`/`class_hunter.rs`/`class_investigator.rs`/
+`class_shaman.rs`) and `AcgClassId::Skald` + a match arm in `acg/mod.rs`.
+
+Verification: `cargo test --locked --test sd22_acg_class_skald_resolves
+-- --include-ignored` 7/7 passed (including the real-corpus-gated
+grounding test and the Arcanist+Bloodrager+Brawler+Hunter+Investigator+
+Shaman-still-resolve regression check). `cargo test --locked --test
+sd17_b_spellcasting_class -- --include-ignored` 26/26 passed, including
+the new widening test. Full `cargo test --locked` — 412 `test result: ok`
+blocks across every suite, 0 failed anywhere (grepped full output for
+`FAILED`/`error\[`/`N failed` with `N > 0`, found none; sibling-preservation
+holds, including the untouched Arcanist, Bloodrager, Brawler, Hunter,
+Investigator, and Shaman suites, all six APG class-chassis suites, and
+both APG spell/equipment suites). `cargo clippy --locked --tests --
+-D warnings` clean (exit code 0).
+
+With Skald landed, Epic 4 (ACG) has seven of ten real classes chassis'd —
+criteria 10-12 complete for Arcanist, Bloodrager, Brawler, Hunter,
+Investigator, Shaman, and Skald. Criterion 13 (per-cycle ACG spell/equipment
+resolution) remains open (mirrors APG's criterion 9, a separate future
+cycle). Three more real ACG classes remain (Slayer, Swashbuckler,
+Warpriest). Epic 5 (Bestiary 1) remains blocked on its own, separate
+parser gap (no parser recognizes `b1_races.lst`'s unprefixed bare-row
+monster records) — unaffected by this cycle.
+
+Full RED/GREEN evidence, file list, and reasoning:
+`artifacts/acg/class_skald_cycle_receipt.md`. Receipt block appended to
+`receipts.md`. Next-eligible: Slayer (class 8 of the corrected 10-class
 roster), or a dedicated cycle for criterion 13's shared spell/equipment
 tables once more classes land.

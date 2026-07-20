@@ -992,3 +992,36 @@ fn parses_real_shaman_record_from_acg_classes_lst() {
     assert_eq!(shaman.casting_posture, Some(CastingPosture::Prepared));
     assert_eq!(shaman.spell_stat.as_deref(), Some("WIS"));
 }
+
+// SD-22 Epic 4 widening (Skald ingest cycle, seventh ACG class): the real
+// `CLASS:Skald` record in `acg_classes.lst` carries
+// `SPELLSTAT:CHA MEMORIZE:NO SPELLBOOK:YES` — `MEMORIZE:NO` takes
+// precedence over `SPELLBOOK:YES` in `extract_spellcasting_signals`'s
+// derivation order, so Skald's posture is spontaneous (same shape as
+// Bard, whose spell list Skald's own `SPELLLIST:1|Bard` token borrows
+// from) rather than spellbook-prepared. Mirrors
+// `parses_real_shaman_record_from_acg_classes_lst`.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_skald_record_from_acg_classes_lst() {
+    let corpus = TestCorpus::new("acg_classes_skald");
+    corpus.write(
+        "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+        &real_acg_classes_lst(),
+    );
+    let result = parse_spellcasting_class_file(&corpus.path(
+        "data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst",
+    ))
+    .expect("read real acg_classes.lst");
+
+    let skald = result
+        .entries
+        .iter()
+        .find(|entry| entry.class_name == "Skald")
+        .expect(
+            "Skald should be recognized from the real acg_classes.lst once \
+             SPELLCASTING_CLASS_NAMES is widened to include it",
+        );
+    assert_eq!(skald.casting_posture, Some(CastingPosture::Spontaneous));
+    assert_eq!(skald.spell_stat.as_deref(), Some("CHA"));
+}
