@@ -1,7 +1,6 @@
 import { useState, type CSSProperties, type FormEvent } from 'react';
 import { RULE_SETS } from '../characterHub/LandingScreen';
 import { createCampaign, syncCampaignDriveArtifacts } from './campaignModel';
-import { getGoogleDriveConfig } from '../settings/googleDrive';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -47,12 +46,14 @@ export function CreateCampaignScreen(props: { onCancel: () => void; onCreated: (
     event.preventDefault();
     setSubmitting(true);
     try {
-      const drive = getGoogleDriveConfig();
       const cleanedEmails = memberEmails.map((email) => email.trim()).filter(Boolean);
-      const { campaign } = createCampaign(
-        { name: name.trim(), ruleSetId: selectedRuleSet.id, ruleSetLabel: selectedRuleSet.name, description: description.trim(), memberEmails: cleanedEmails },
-        drive?.driveFolderPath ?? null
-      );
+      const { campaign } = createCampaign({
+        name: name.trim(),
+        ruleSetId: selectedRuleSet.id,
+        ruleSetLabel: selectedRuleSet.name,
+        description: description.trim(),
+        memberEmails: cleanedEmails,
+      });
 
       const result = await syncCampaignDriveArtifacts(campaign.id);
       setDriveActionSummary(

@@ -21,10 +21,11 @@ import { formatHeldClasses } from '../characterHub/characterProgression';
  * header, a left party-member list, and a tabbed bottom panel for the
  * campaign's shared assets (Party Resources / Adventure Log / Maps / Wiki).
  *
- * Real design: these tabs hold markdown files synced to the campaign's
- * Google Drive folder. That sync doesn't exist yet — entries are persisted
- * locally (campaignModel.ts) so the full create/edit/delete flow works now
- * and can be pointed at real Drive files later without reshaping the UI.
+ * These tabs hold markdown assets. localStorage (campaignModel.ts) is the
+ * source of truth — every change here also gets mirrored to real `.md`
+ * files under the campaign's local folder (see `syncCampaignDriveArtifacts`)
+ * so the campaign stays inspectable/shareable as plain files, but there is
+ * no network sync: by design, this app never talks to a cloud API.
  */
 
 const panel: CSSProperties = {

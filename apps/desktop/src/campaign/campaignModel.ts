@@ -5,16 +5,18 @@
  * maps/wiki assets are the source of truth in localStorage (this module) —
  * that part works fully offline and needs no Drive connection.
  *
- * Real Google OAuth / Drive API access does not exist yet (see
- * settings/googleDrive.ts) — the "Drive folder" is really just a local path
- * (typically a Drive-desktop-sync-client mirror). What IS real: `syncCampaignDriveArtifacts`
- * below writes an actual folder per campaign at `<driveFolderPath>/<name>/`,
- * with `.config/<name>.json` and markdown files for resources/adventure-log/
- * maps/wiki, via the `write_campaign_drive_artifacts` Tauri command
- * (apps/desktop/src-tauri/src/campaign_drive.rs). This is a write-through
- * mirror of the localStorage data, not itself the source of truth — if the
- * write fails (no folder configured, disk error), the campaign still exists
- * and works entirely from localStorage.
+ * By design, this app never talks to a cloud API (see settings/googleDrive.ts)
+ * — the "Drive folder" is just a local path (typically a Drive/Dropbox/Syncthing
+ * desktop-sync-client mirror, or any plain folder). Sharing a campaign means
+ * handing someone the folder or its `.json`/`.md` files directly; the app
+ * itself does no network calls, OAuth, or invite delivery.
+ * `syncCampaignDriveArtifacts` below writes an actual folder per campaign at
+ * `<driveFolderPath>/<name>/`, with `.config/<name>.json` and markdown files
+ * for resources/adventure-log/maps/wiki, via the `write_campaign_drive_artifacts`
+ * Tauri command (apps/desktop/src-tauri/src/campaign_drive.rs). This is a
+ * write-through mirror of the localStorage data, not itself the source of
+ * truth — if the write fails (no folder configured, disk error), the campaign
+ * still exists and works entirely from localStorage.
  */
 
 import { getGoogleDriveConfig } from '../settings/googleDrive';
@@ -87,12 +89,13 @@ export interface CreateCampaignInput {
 }
 
 /**
- * Creates the campaign record and reports what the real Drive integration
- * would additionally do: create `<driveFolderPath>/<name>/`, write
- * `.config/<name>.json`, and send share invites to each member. That part
- * is simulated (returned as a description), not performed.
+ * Creates the campaign record. Call `syncCampaignDriveArtifacts` afterward
+ * to actually write its folder to disk — this function only touches
+ * localStorage. `members[].invited` records intent, not delivery: nothing
+ * here (or anywhere in this app) sends an email or notification. Sharing a
+ * campaign means handing someone its files directly.
  */
-export function createCampaign(input: CreateCampaignInput, driveFolderPath: string | null): { campaign: Campaign; driveActionSummary: string } {
+export function createCampaign(input: CreateCampaignInput): { campaign: Campaign } {
   const now = new Date().toISOString();
   const campaign: Campaign = {
     id: crypto.randomUUID(),
@@ -106,13 +109,7 @@ export function createCampaign(input: CreateCampaignInput, driveFolderPath: stri
     updatedAt: now,
   };
   saveCampaigns([...getCampaigns(), campaign]);
-
-  const folderPath = driveFolderPath ? `${driveFolderPath}/${input.name}` : input.name;
-  const driveActionSummary = input.memberEmails.length
-    ? `Would create Drive folder "${folderPath}", write .config/${input.name}.json, and invite: ${input.memberEmails.join(', ')}.`
-    : `Would create Drive folder "${folderPath}" and write .config/${input.name}.json.`;
-
-  return { campaign, driveActionSummary };
+  return { campaign };
 }
 
 export function updateCampaign(id: string, changes: Partial<Omit<Campaign, 'id' | 'createdAt'>>): Campaign | null {
