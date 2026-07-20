@@ -735,8 +735,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open (Epic 4's sole remaining item after all 10 classes landed)
   evidence_tier_after: complete -- acg/spell_list.rs + acg/equipment_tables.rs land; Epic 4 (ACG) is now fully complete (criteria 10-13)
   branch_tip_before: 4192f6e
-  branch_tip_after: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
-  merge_receipt_sha: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
+  branch_tip_after: f9fee4b
+  merge_receipt_sha: f9fee4b
   cycle_artifact_path: "acg/spell_list_cycle_receipt.md, acg/equipment_tables_cycle_receipt.md"
   red_phase_evidence: "cargo test --locked --test sd22_acg_spell_list_resolves and --test sd22_acg_equipment_resolves both failed to compile with error[E0432]: unresolved import (acg::spell_list / acg::equipment_tables did not exist yet) -- see cycle_artifact_path:Red-phase evidence"
   green_phase_evidence: "wrote src/rules_core/rules_tables/acg/{spell_list.rs,equipment_tables.rs} (bootstrap 4-entry spell sample from acg_spells.lst's New Spells block: Blade Lash/Bloodrager=1, Air Geyser/Bloodrager=3, Beastspeak/Shaman=2, Anti-Incorporeal Shell/Shaman=4; bootstrap 3-entry equipment sample from the single acg_equip.lst file: Marlinspike/General, Headsman's Blade/ArmsArmor, Ring of Eloquence/MagicItems), registered both modules in acg/mod.rs. sd22_acg_spell_list_resolves 8/8 passed (--include-ignored), sd22_acg_equipment_resolves 7/7 passed (--include-ignored), full cargo test --locked 0 failed across 421 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
