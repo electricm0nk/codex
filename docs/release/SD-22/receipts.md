@@ -726,3 +726,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["acg/class_warpriest_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream attempting to unblock Epic 5 (Bestiary 1). File-touch set (acg/, tests/sd22_acg_class_warpriest_resolves.rs, spellcasting_class.rs) disjoint from the sibling's race_ability.rs/monster_stat_block.rs/beastiary1/ files per loop-instruction.md. This cycle's own production commit (7971017) landed and pushed cleanly, but the cycle's orchestrating session was interrupted before this receipts.md append and the progress.md status-matrix update completed -- backfilled retroactively by the orchestrating session on 2026-07-20 after independently re-verifying the full test suite (418/418 green), clippy (clean), and the existing kanban card (t_71902daa, already minted and marked done by the original cycle) against the live repo state. No code or test changes were made during this backfill; it is a documentation-only correction."
+
+- cycle_id: 2026-07-20T05:15:52Z
+  epic: 4
+  criterion: acg_spell_equipment_tables
+  criterion_section: "§2.2 Epic 4 — ACG shared spell and equipment tables (criterion 13, Epic 4's last item, mirrors APG's criterion 9)"
+  row_or_kind: ingest:acg_class
+  evidence_tier_before: open (Epic 4's sole remaining item after all 10 classes landed)
+  evidence_tier_after: complete -- acg/spell_list.rs + acg/equipment_tables.rs land; Epic 4 (ACG) is now fully complete (criteria 10-13)
+  branch_tip_before: 4192f6e
+  branch_tip_after: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
+  merge_receipt_sha: PENDING (see progress.md cycle log entry for this cycle's final commit SHA)
+  cycle_artifact_path: "acg/spell_list_cycle_receipt.md, acg/equipment_tables_cycle_receipt.md"
+  red_phase_evidence: "cargo test --locked --test sd22_acg_spell_list_resolves and --test sd22_acg_equipment_resolves both failed to compile with error[E0432]: unresolved import (acg::spell_list / acg::equipment_tables did not exist yet) -- see cycle_artifact_path:Red-phase evidence"
+  green_phase_evidence: "wrote src/rules_core/rules_tables/acg/{spell_list.rs,equipment_tables.rs} (bootstrap 4-entry spell sample from acg_spells.lst's New Spells block: Blade Lash/Bloodrager=1, Air Geyser/Bloodrager=3, Beastspeak/Shaman=2, Anti-Incorporeal Shell/Shaman=4; bootstrap 3-entry equipment sample from the single acg_equip.lst file: Marlinspike/General, Headsman's Blade/ArmsArmor, Ring of Eloquence/MagicItems), registered both modules in acg/mod.rs. sd22_acg_spell_list_resolves 8/8 passed (--include-ignored), sd22_acg_equipment_resolves 7/7 passed (--include-ignored), full cargo test --locked 0 failed across 421 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
+  cargo_test_summary: "sd22_acg_spell_list_resolves: 8/8 passed; sd22_acg_equipment_resolves: 7/7 passed; full cargo test --locked: 0 failed (421 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 3000
+  self_heals_applied: []
+  next_required_uplift: "Epic 4 (ACG) is now fully complete (criteria 10-13), same closure shape as Epic 3 (APG). corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md ACG roster doc-correction pass (Alchemist->Slayer) still pending but non-blocking, same as noted by the Warpriest cycle. Epic 5 (Bestiary 1) subset 02 and Epic 6 criterion 21 (happy-path integration) remain the loop's next-eligible work."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst:14,21,25,27 (Air Geyser, Anti-Incorporeal Shell, Beastspeak, Blade Lash) + acg_equip.lst:179,262,271 (Marlinspike, Headsman's Blade, Ring of Eloquence)"
+  rule_set_used: Acg
+  kanban_card: "t_eb79098c (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: ["acg/spell_list_cycle_receipt.md", "acg/equipment_tables_cycle_receipt.md"]
+  notes: "Ran in parallel with a sibling stream working Epic 5 (Bestiary 1 subset 02, src/rules_core/rules_tables/beastiary1/). File-touch set (acg/, tests/sd22_acg_spell_list_resolves.rs, tests/sd22_acg_equipment_resolves.rs) disjoint from the sibling's beastiary1/ files per loop-instruction.md. Confirmed via direct grep of the whole advanced_class_guide/ tree that Arcanist, Hunter, Investigator (only a .MOD cross-reference, not a full definition), Skald, and Warpriest have no active ACG-specific spell record -- same real-gap shape as APG's Summoner gap, documented rather than fabricated. Confirmed acg_equip.lst is a single file (unlike APG's three-file split) disambiguated by TYPE: token before picking the three representative rows."

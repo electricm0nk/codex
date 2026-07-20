@@ -25,7 +25,8 @@
 //! Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler,
 //! Warpriest. Epic 4's class-roster criteria (10-12) are complete for
 //! all ten classes. Criterion 13 (shared ACG spell/equipment tables,
-//! mirroring APG's criterion 9) remains open as Epic 4's last piece.
+//! mirroring APG's criterion 9) lands this cycle as `spell_list.rs` and
+//! `equipment_tables.rs` — Epic 4 (ACG) is now fully complete.
 
 pub mod class_arcanist;
 pub mod class_bloodrager;
@@ -37,6 +38,8 @@ pub mod class_skald;
 pub mod class_slayer;
 pub mod class_swashbuckler;
 pub mod class_warpriest;
+pub mod equipment_tables;
+pub mod spell_list;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
