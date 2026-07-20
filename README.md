@@ -2,35 +2,18 @@
 
 Codex is a Rust + Tauri replacement effort for PCGen. PCGen is the heritage application and oracle substrate; Codex is the new program and implementation surface.
 
+**Architecture and design documentation** for anyone — human or agent — working in this repo lives at [`docs/architecture/`](docs/architecture/README.md). Start there for the system map, module boundaries, design conventions, and the current real-vs-stubbed capability status.
+
 ## Current state
 
 **Current truthful posture:** Codex is a **developer proof harness plus a buildable desktop workbench surface**, not a finished end-user product.
 
-### Verified live on 2026-06-28
-
-From the live repo and desktop workspace:
-
-- root `cargo test` passes
-- focused GE-06 proof tests pass
-- focused GE-08 proof tests pass
-- `npm run typecheck` passes under `apps/desktop`
-- `npm run build` passes under `apps/desktop`
-- `npm run tauri:check` passes under `apps/desktop`
-- `npx tauri build --debug` succeeds and produces a debug desktop binary
-
-### What is real today
-
-- **GE-03 import foothold** under `src/pcgen_import/` with a real PCC entry-file parser
-- **GE-06 bounded pilot proof** under `src/rules_core/` and `tests/ge06_*`
-- **GE-08 bounded homebrew/workbench proof** under `src/homebrew_authoring/`, `tests/ge08_*`, and `apps/desktop/`
-- **Tauri desktop shell surface** under `apps/desktop/`
-
-### What is not true yet
-
-- this is not a general character builder
-- this is not broad PCGen parity
-- this is not public-release-ready product software
-- this README does not grant implementation authority by itself; use the bounded handoff or source STC for scoped work
+The maintained, closure-updated statement of what is real vs stubbed today is
+[`docs/architecture/status.md`](docs/architecture/status.md) — it supersedes any
+snapshot list this README used to carry. The full verification command set is
+[`docs/architecture/testing.md`](docs/architecture/testing.md). This README does
+not grant implementation authority by itself; use the bounded handoff or source
+STC for scoped work.
 
 ## Repository layout
 
