@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: PENDING_BACKFILL
+snapshot_as_of: 694533e
 ---
 
 # SD-22 — Progress
@@ -1764,7 +1764,7 @@ Full RED/GREEN evidence, file list, and reasoning:
 roster), or a dedicated cycle for criterion 13's shared spell/equipment
 tables once more classes land.
 
-### cycle-2026-07-20T02:20:00Z | Epic 4, Skald (class 7 of corrected 10-class roster) | ingest:acg_class | card: see backfill note below | open → **complete (criteria 10-12 for Skald)**
+### cycle-2026-07-20T02:20:00Z | Epic 4, Skald (class 7 of corrected 10-class roster) | ingest:acg_class | card `t_31d72140` on `codex-tranche-5` (status=done) | open → **complete (criteria 10-12 for Skald)**
 
 Re-checked state before picking a criterion: `git status --porcelain | wc -l`
 returned 0 at cycle start; local HEAD (`1c5b590`, the prior cycle's own
