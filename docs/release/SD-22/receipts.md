@@ -560,8 +560,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: open (Epic 6 not started; blocked on ≥1 book ingested -- Epic 3 APG fully complete satisfies this)
   evidence_tier_after: complete (criterion 18 only; criteria 19-21 remain open)
   branch_tip_before: 0244642
-  branch_tip_after: "(this cycle's own commit, backfilled below)"
-  merge_receipt_sha: "(this cycle's own commit, backfilled below)"
+  branch_tip_after: ab09a6c
+  merge_receipt_sha: ab09a6c
   cycle_artifact_path: "dm_toolkit/encounters_cycle_receipt.md"
   red_phase_evidence: "in-file #[cfg(test)] mod tests inside src/rules_core/encounters.rs itself (tests/sd22_dm_toolkit_deterministic.rs is reserved for criterion 20's own cycle per loop-instruction.md's file-touch partition); Encounter::new temporarily stubbed to a constant wrong value, 4/6 tests failed for the intended reason (see cycle_artifact_path:Red-phase evidence)"
   green_phase_evidence: "implemented CharacterSnapshot/MonsterRef/Difficulty/EncounterResult/Encounter::new grounded in the PF1 Core Rulebook's Table: Encounter Design + Table: CR Equivalencies + Table: Experience Point Awards (CR 1-10), verified against legacy.aonprd.com/corerulebook/gamemastering.html; 6/6 in-file tests green; full cargo test suite green, 0 failed anywhere; clippy clean after fixing one real new_ret_no_self finding with a documented #[allow] (see cycle_artifact_path:Green-phase evidence)"
@@ -572,7 +572,7 @@ that are already self-evident from the cycle_artifact_path.)
   next_required_uplift: "Epic 6's next-eligible cycle is criterion 19 (party_cr.rs, party_challenge_rating), per Step 2's ordering (Encounter::new first, party_challenge_rating second, deterministic tests third, happy-path integration fourth). Criterion 20's dedicated cycle should also reconcile the documented discrepancy against corpus-source-inventory.md §4.1 case 2's stated Hard expectation (this cycle's grounded math computes Deadly for that case -- see cycle_artifact_path)."
   corpus_input_path: "n/a -- not a PCGen .lst ingest cycle; grounded instead in legacy.aonprd.com/corerulebook/gamemastering.html (PF1 Core Rulebook, Gamemastering chapter), verified 2026-07-20"
   rule_set_used: n/a
-  kanban_card: "(pending mint, backfilled below)"
+  kanban_card: "t_65e7741c (codex-tranche-5, status=done)"
   progress_file_updated: "yes"
   artifacts_written: ["dm_toolkit/encounters_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream on Epic 4 (ACG); file-touch set (encounters.rs, mod.rs's one-line registration) disjoint from acg/ per loop-instruction.md. Found and documented a real discrepancy between corpus-source-inventory.md §4.1 case 2's stated Hard expectation and the verified-rulebook-grounded computation (Deadly) rather than force-fitting the formula to match the unverified fixture table, mirroring this bundle's Gunslinger/Magus and ACG-Alchemist roster-correction precedent."

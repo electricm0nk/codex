@@ -1845,7 +1845,7 @@ Full RED/GREEN evidence, file list, and reasoning:
 roster), or a dedicated cycle for criterion 13's shared spell/equipment
 tables once more classes land.
 
-### cycle-2026-07-20T01:50:52Z | Epic 6, `Encounter::new` (criterion 18, DM Toolkit's first cycle) | dm:encounter | card `(pending mint, see backfill)` on `codex-tranche-5` | open → **complete (criterion 18)**
+### cycle-2026-07-20T01:50:52Z | Epic 6, `Encounter::new` (criterion 18, DM Toolkit's first cycle) | dm:encounter | card `t_65e7741c` on `codex-tranche-5` (status=done) | open → **complete (criterion 18)**
 
 Ran in parallel with a sibling stream working Epic 4 (ACG); this cycle's
 file-touch set (`src/rules_core/encounters.rs`, `src/rules_core/mod.rs`'s
