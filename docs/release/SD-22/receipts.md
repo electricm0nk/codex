@@ -626,3 +626,53 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["dm_toolkit/party_cr_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream on Epic 4 (ACG, Slayer); file-touch set (party_cr.rs, mod.rs's one-line registration) disjoint from acg/ per loop-instruction.md. Both agents shared this checkout (not separate worktrees); the sibling's Slayer-cycle commits (37bf596, 9eb6152) landed while this cycle was still doing its own RED/GREEN/verification work, so this cycle's progress.md/receipts.md edits are made directly on top of that already-synced base (git fetch confirmed local HEAD == origin/tranche/5 before any doc edit). Found and documented a second real discrepancy against corpus-source-inventory.md §4.1 (case 3's stated ~3.5 vs. the verified-rulebook-grounded 3.0) rather than force-fitting the formula to match the unverified fixture table, mirroring criterion 18's own precedent for case 2 and this bundle's Gunslinger/Magus and ACG-Alchemist roster-correction precedent."
+
+- cycle_id: 2026-07-20T03:17:19Z
+  epic: 4
+  criterion: acg_swashbuckler
+  criterion_section: "§2.1 Epic 4 — ACG content-source ingest (Swashbuckler, class 9 of 10)"
+  row_or_kind: ingest:acg_class
+  evidence_tier_before: open (eight of ten real classes landed: Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer)
+  evidence_tier_after: complete (criteria 10-12 for Swashbuckler; nine of ten real classes landed)
+  branch_tip_before: 6114d54
+  branch_tip_after: PENDING_BACKFILL_SWASHBUCKLER_SHA
+  merge_receipt_sha: PENDING_BACKFILL_SWASHBUCKLER_SHA
+  cycle_artifact_path: "acg/class_swashbuckler_cycle_receipt.md"
+  red_phase_evidence: "Widening RED: parses_real_swashbuckler_record_from_acg_classes_lst added to tests/sd17_b1_martial_class.rs, failed (Swashbuckler out of MARTIAL_CLASS_NAMES scope, silently skipped). Acceptance RED: tests/sd22_acg_class_swashbuckler_resolves.rs failed to compile (E0599: AcgClassId::Swashbuckler did not exist, 5 call sites) (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "widened MARTIAL_CLASS_NAMES by one name (Swashbuckler) in src/pcgen_import/lst_parser/class.rs -- the real CLASS:Swashbuckler record carries no SPELLSTAT:/MEMORIZE:/SPELLBOOK: token anywhere in its block, the same non-caster posture as Cavalier/Brawler/Slayer; added rules_tables/acg/class_swashbuckler.rs and AcgClassId::Swashbuckler match arm; 7/7 new acceptance tests green (including the real-corpus-gated grounding test and a cross-class regression check that Arcanist+Bloodrager+Brawler+Hunter+Investigator+Shaman+Skald+Slayer still resolve); widening test green (19/19 in sd17_b1_martial_class); full cargo test suite green, 0 failed (415 test-result:ok blocks); clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_acg_class_swashbuckler_resolves: 7/7 passed (--include-ignored); sd17_b1_martial_class: 19/19 passed (--include-ignored) including the new widening test; full cargo test --locked: 0 failed across every suite (415 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 4's next-eligible cycle is Warpriest (class 10 of the corrected 10-class roster -- the last real ACG class; note the real acg_classes.lst also carries an internal Ex-Warpriest VISIBLE:NO variant, confirm which is player-facing before that cycle starts), or a dedicated cycle for criterion 13's shared spell/equipment tables once all classes land. corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md still need an operator/doc-correction pass to formally replace 'Alchemist (ACG-side)' with Slayer in the row list, mirroring commit 6923e54's APG roster fix -- not blocking further Epic 4 cycles. Epic 5 (Bestiary 1) remains blocked on its own, separate parser gap (b1_races.lst's unprefixed bare-row monster records) -- unaffected by this cycle."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:347 (CLASS:Swashbuckler)"
+  rule_set_used: Acg
+  kanban_card: "t_1d251219 (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: ["acg/class_swashbuckler_cycle_receipt.md"]
+  notes: "BAB/save chassis read directly off the real CLASS:Swashbuckler record's BONUS:COMBAT/BONUS:SAVE formula tokens (full BAB -- same posture as Bloodrager/Brawler/Slayer -- poor Fortitude from its own single-save token BASE.Fortitude/3, good Reflex from its own single-save token BASE.Reflex/2+2 -- this class's only good save, unlike Slayer's combined Fortitude+Reflex token -- poor Will from BASE.Will/3, MAXLEVEL:20, no SPELLSTAT/MEMORIZE/SPELLBOOK token anywhere in the block) -- confirming Swashbuckler belongs in class.rs's MARTIAL_CLASS_NAMES rather than spellcasting_class.rs's SPELLCASTING_CLASS_NAMES; same scope boundary as class_arcanist.rs/class_bloodrager.rs/class_brawler.rs/class_hunter.rs/class_investigator.rs/class_shaman.rs/class_skald.rs/class_slayer.rs (named per-level features -- Panache, Swashbuckler's Finesse, Dodging Panache, Derring-Do, Opportune Parry and Riposte -- out of scope, formula-derived chassis only). Ran in parallel with a sibling stream working Epic 6 criterion 20 (tests/sd22_dm_toolkit_deterministic.rs); confirmed both file-touch sets disjoint before starting; full suite green including the sibling's already-landed deterministic-test suite."
+
+- cycle_id: 2026-07-20T03:17:34Z
+  epic: 6
+  criterion: dm_toolkit_deterministic_tests
+  criterion_section: "§4 Epic 6 — DM Toolkit (criterion 20, DM-toolkit deterministic tests, DM Toolkit's third cycle)"
+  row_or_kind: dm:encounter
+  evidence_tier_before: open (criteria 18-19 complete; criteria 20-21 open)
+  evidence_tier_after: complete (criterion 20 only; criterion 21 remains open)
+  branch_tip_before: 6114d54
+  branch_tip_after: PENDING_SHA_CRITERION20
+  merge_receipt_sha: PENDING_SHA_CRITERION20
+  cycle_artifact_path: "dm_toolkit/deterministic_tests_cycle_receipt.md"
+  red_phase_evidence: "cargo test --locked --test sd22_dm_toolkit_deterministic against the pre-cycle tree failed with 'error: no test target named sd22_dm_toolkit_deterministic' (file genuinely didn't exist yet); a throwaway scratch test asserting the ORIGINAL uncorrected §4.1 case-2/case-3 values (Hard, 3.5) against the already-shipped encounters.rs/party_cr.rs code failed for the intended reason (computed Deadly/3.0 vs. asserted Hard/3.5), confirming the reconciliation before any doc edit (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "no production-code bug found in encounters.rs or party_cr.rs -- both already grounded correctly. Added tests/sd22_dm_toolkit_deterministic.rs (5 acceptance-level tests covering both modules) asserting the corrected values; corrected corpus-source-inventory.md §4.1's fixture table (case 2: Hard -> Deadly; case 3: ~3.5 -> 3.0) with a corrective banner citing this cycle's independent re-verification. 5/5 new tests green; full cargo test suite green, 0 failed anywhere (415 test-result:ok blocks); clippy clean (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "sd22_dm_toolkit_deterministic: 5/5 passed; full cargo test --locked: 0 failed across every suite (415 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 6's remaining criterion is 21 (happy-path integration test), which remains blocked until Epic 3+4+5 all land -- Epic 5 (Bestiary 1) remains blocked on its own separate parser gap (b1_races.lst's unprefixed bare-row monster records). Both §4.1 discrepancies flagged by criteria 18 and 19 are now fully reconciled: the fixture-table prose was wrong, not the code."
+  corpus_input_path: "n/a -- not a PCGen .lst ingest cycle; grounded instead in legacy.aonprd.com/corerulebook/gamemastering.html (PF1 Core Rulebook, Gamemastering chapter), re-verified fresh 2026-07-20 by this cycle independently of criteria 18/19's own citations"
+  rule_set_used: n/a
+  kanban_card: PENDING_CARD_CRITERION20
+  progress_file_updated: "yes"
+  artifacts_written: ["dm_toolkit/deterministic_tests_cycle_receipt.md"]
+  notes: "Ran in parallel with a sibling stream on Epic 4 (ACG, Swashbuckler); file-touch set (tests/sd22_dm_toolkit_deterministic.rs, corpus-source-inventory.md) disjoint from acg/ per loop-instruction.md. Sibling's uncommitted Swashbuckler-cycle work (src/pcgen_import/lst_parser/class.rs, src/rules_core/rules_tables/acg/mod.rs, src/rules_core/rules_tables/acg/class_swashbuckler.rs, tests/sd17_b1_martial_class.rs, tests/sd22_acg_class_swashbuckler_resolves.rs) was present unstaged in the shared working tree throughout this cycle and was left untouched -- this cycle's own git add is scoped strictly to its own files. Independently re-verified both discrepancies criteria 18 and 19 flagged (case 2 Hard-vs-Deadly, case 3 3.5-vs-3.0) against a fresh fetch of the same public PRD mirror rather than trusting the prior cycles' claims, confirmed both corrections are accurate, and closed the reconciliation loop by correcting the fixture doc rather than the already-correct code."

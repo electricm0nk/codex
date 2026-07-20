@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 4e62989
+snapshot_as_of: PENDING_SHA_CRITERION20
 ---
 
 # SD-22 — Progress
@@ -32,7 +32,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6), Summoner (5/6), Witch (6/6); shared spell/equipment tables | **complete — criteria 6-9, Epic 3 (APG) fully closed out.** `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all six classes' BAB/save chassis land with cross-book invariant tests (criteria 6-8). Criterion 9 lands this cycle as `apg/spell_list.rs` (4-entry bootstrap sample: Bomber's Eye/Alchemist, Burst Bonds/Inquisitor, Borrow Fortune/Oracle, Ill Omen/Witch) and `apg/equipment_tables.rs` (3-entry bootstrap sample: Iron Spike, Arrow (Blunt), Knucklebone of Fickle Fortune) — bootstrap/representative coverage per the `crb/equipment_tables.rs` precedent, not exhaustive; Summoner has no active spell record anywhere in the real corpus (its dedicated block is entirely `#`-commented out) and Cavalier casts no spells, both by design not omission. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`). See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md`, `artifacts/apg/class_summoner_cycle_receipt.md`, `artifacts/apg/class_witch_cycle_receipt.md`, `artifacts/apg/spell_list_cycle_receipt.md`, `artifacts/apg/equipment_tables_cycle_receipt.md` | see `## Cycle log` |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (1/10), Bloodrager (2/10), Brawler (3/10), Hunter (4/10), Investigator (5/10), Shaman (6/10), Skald (7/10), Slayer (8/10) of the corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order) | **complete (criteria 10-12 for Arcanist + Bloodrager + Brawler + Hunter + Investigator + Shaman + Skald + Slayer)** — `rules_tables/acg/mod.rs` grown to eight classes, `RuleSetId::Acg` cross-book invariant tests hold for all eight. Slayer is the third ACG martial (non-caster) class (widened `class.rs`'s `MARTIAL_CLASS_NAMES`, same allowlist as Cavalier/Brawler); the real `CLASS:Slayer` record carries no `SPELLSTAT:`/`MEMORIZE:`/`SPELLBOOK:` token, full BAB, good Fortitude+Reflex (one combined token), poor Will, `MAXLEVEL:20`. See `artifacts/acg/class_arcanist_cycle_receipt.md`, `artifacts/acg/class_bloodrager_cycle_receipt.md`, `artifacts/acg/class_brawler_cycle_receipt.md`, `artifacts/acg/class_hunter_cycle_receipt.md`, `artifacts/acg/class_investigator_cycle_receipt.md`, `artifacts/acg/class_shaman_cycle_receipt.md`, `artifacts/acg/class_skald_cycle_receipt.md`, `artifacts/acg/class_slayer_cycle_receipt.md` | see `## Cycle log` |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
-| E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | `Encounter::new` lands (criterion 18); `party_cr.rs` (19) lands this cycle; deterministic tests (20), happy-path integration (21) still open | **complete (criteria 18-19)** — `src/rules_core/encounters.rs` lands `CharacterSnapshot`, `MonsterRef`, `Difficulty`, `EncounterResult`, and `Encounter::new`, grounded in the real PF1 Core Rulebook "Gamemastering" chapter (Table: Encounter Design, Table: CR Equivalencies, Table: Experience Point Awards CR 1-10, verified against `legacy.aonprd.com/corerulebook/gamemastering.html`). `src/rules_core/party_cr.rs` lands `party_challenge_rating`, grounded in the same chapter's "Designing Encounters" → "Step 1 — Determine APL" rule (reuses `encounters.rs`'s `CharacterSnapshot`). See `artifacts/dm_toolkit/encounters_cycle_receipt.md` and `artifacts/dm_toolkit/party_cr_cycle_receipt.md` for the full derivations, including documented discrepancies against `corpus-source-inventory.md` §4.1 case 2's stated "Hard" expectation (grounded math computes Deadly) and case 3's stated "~3.5" expectation (grounded math computes 3.0); both flagged for criterion 20's cycle to reconcile, not force-fit. | see `## Cycle log` |
+| E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | `Encounter::new` lands (criterion 18); `party_cr.rs` (19) lands; deterministic tests (20) land this cycle; happy-path integration (21) still open, blocked on Epic 3+4+5 all landing | **complete (criteria 18-20)** — `src/rules_core/encounters.rs` lands `CharacterSnapshot`, `MonsterRef`, `Difficulty`, `EncounterResult`, and `Encounter::new`, grounded in the real PF1 Core Rulebook "Gamemastering" chapter (Table: Encounter Design, Table: CR Equivalencies, Table: Experience Point Awards CR 1-10). `src/rules_core/party_cr.rs` lands `party_challenge_rating`, grounded in the same chapter's "Designing Encounters" → "Step 1 — Determine APL" rule (reuses `encounters.rs`'s `CharacterSnapshot`). `tests/sd22_dm_toolkit_deterministic.rs` (criterion 20) lands 5 acceptance-level tests covering both modules against `corpus-source-inventory.md` §4.1's five canonical cases; this cycle independently re-verified (fresh fetch of `legacy.aonprd.com/corerulebook/gamemastering.html`, not trusting the prior cycles' claims) and confirmed both previously-flagged discrepancies were real doc errors, not code bugs — corrected §4.1's fixture table (case 2: "Hard" → "Deadly"; case 3: "~3.5" → "3.0") rather than bending the already-correct code. See `artifacts/dm_toolkit/encounters_cycle_receipt.md`, `artifacts/dm_toolkit/party_cr_cycle_receipt.md`, and `artifacts/dm_toolkit/deterministic_tests_cycle_receipt.md`. | see `## Cycle log` |
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
 | E8.27 | 8 — Build Version | version:patch_bump | Version fields set to `0.5.95` (`package.json`, `tauri.conf.json`, `Cargo.toml`) | **complete** — see `artifacts/epic_8/three_version_fields_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
 | E8.28 | 8 — Build Version | version:build_label_format | `BUILD_PREFIX = 'Codex'` / `${BUILD_PREFIX} ${buildVersion}` format ships (inherited from SD-21 E5.26); this cycle re-anchored the format's own test fixtures from the pre-bump `Codex 0.4.94-test` literal to the current `Codex 0.5.95-test` | **complete** — see `artifacts/epic_8/build_label_format_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
@@ -2092,3 +2092,87 @@ both now-documented §4.1 discrepancies — case 2's Hard-vs-Deadly and case
 3's 3.5-vs-3.0), or criterion 21 (happy-path integration, blocked until
 Epic 3+4+5 all land — Epic 5 remains blocked on its own separate parser
 gap).
+
+### cycle-2026-07-20T03:17:34Z | Epic 6, DM-toolkit deterministic tests (criterion 20, DM Toolkit's third cycle) | dm:encounter | card `t_1a8c7f3d` on `codex-tranche-5` (status=done) | open → **complete (criterion 20)**
+
+Ran in parallel with a sibling stream working Epic 4 (ACG, Swashbuckler,
+class 9 of 10); this cycle's file-touch set
+(`tests/sd22_dm_toolkit_deterministic.rs`,
+`docs/release/SD-22/corpus-source-inventory.md`) is disjoint from Epic 4's
+`rules_tables/acg/` per `loop-instruction.md`'s file-touch partition.
+Confirmed the sibling's uncommitted work (`src/pcgen_import/lst_parser/class.rs`,
+`src/rules_core/rules_tables/acg/mod.rs`,
+`src/rules_core/rules_tables/acg/class_swashbuckler.rs`,
+`tests/sd17_b1_martial_class.rs`,
+`tests/sd22_acg_class_swashbuckler_resolves.rs`) present unstaged in the
+shared working tree at cycle start and left it completely untouched
+throughout — this cycle's own `git add` is scoped strictly to its own
+files by explicit path.
+
+Read first per Step 4: `corpus-source-inventory.md` §4 (DM Toolkit routing
++ §4.1's five canonical deterministic test cases), `epic-breakdown.md`
+criterion 20's exact wording, `decisions.md`,
+`risks-and-open-questions.md`, and both prior Epic 6 cycles' receipts
+(`artifacts/dm_toolkit/encounters_cycle_receipt.md`,
+`artifacts/dm_toolkit/party_cr_cycle_receipt.md`) — each of which
+independently flagged a discrepancy between `corpus-source-inventory.md`
+§4.1's stated expected values (case 2: "Hard"; case 3: "~3.5") and their
+own grounded PF1 math (Deadly; 3.0), and left both for this criterion's
+cycle to reconcile rather than force-fitting either module's code.
+
+**Independent re-verification, not inherited trust.** Rather than take the
+two prior cycles' citations at face value, this cycle re-fetched
+`https://legacy.aonprd.com/corerulebook/gamemastering.html` fresh and
+re-read Table: Encounter Design, Table: CR Equivalencies, Table:
+Experience Point Awards (CR 1-10), and "Designing Encounters" → "Step 1 —
+Determine APL" directly. All four citations matched both prior receipts'
+claims exactly (same table values, same rule text, same worked example).
+Re-derived both cases independently from the raw table text: case 2 (4
+level-3 PCs vs. 4 CR-3 monsters) — APL 3, four CR-3 monsters combine to
+CR+4=7 per Table: CR Equivalencies (cross-checked via the XP-sum method:
+4×800=3,200 XP = the CR-7 threshold, same answer), EL−APL=+4, beyond even
+Epic (APL+3) on Table: Encounter Design ⇒ **Deadly**, not the stated
+"Hard". Case 3 (party CR of 4 level-3 PCs) — 4 PCs is within the
+rulebook's unadjusted "four or five PCs" band, average level 12/4 = 3.0
+exactly, and the APL rule has no step that can produce a fractional result
+for any input ⇒ **3.0**, not the stated "~3.5". Both re-derivations
+independently confirmed the exact conclusions criteria 18 and 19 each
+reached on their own.
+
+RED: two pieces of evidence, neither requiring a stub of already-correct
+production code. (1) `cargo test --locked --test sd22_dm_toolkit_deterministic`
+against the pre-cycle tree failed with `error: no test target named
+sd22_dm_toolkit_deterministic` — the file genuinely didn't exist yet
+(criteria 18/19 each deliberately used in-file tests instead, reserving
+this acceptance-level file for this cycle per `loop-instruction.md`'s
+file-touch partition). (2) A throwaway scratch test (not committed;
+removed after capture) asserting the *original*, uncorrected §4.1 values
+(`Hard`, `3.5`) against the already-shipped `encounters.rs`/`party_cr.rs`
+code failed for the intended reason — computed `Deadly`/`3.0` vs. the
+asserted `Hard`/`3.5` — confirming at the acceptance layer, independently,
+that the doc's prose was wrong and the code was already right.
+
+GREEN: no bug found in either module — neither `encounters.rs` nor
+`party_cr.rs` changed. Added `tests/sd22_dm_toolkit_deterministic.rs` (5
+acceptance-level tests covering both modules against all five §4.1 cases,
+using the corrected values for cases 2 and 3). Corrected
+`corpus-source-inventory.md` §4.1's fixture table (case 2: "Hard" →
+"Deadly", fixture slug renamed to
+`encounters_4_level_3_pcs_vs_4_cr_3_monsters_is_deadly`; case 3: "~3.5" →
+"3.0", fixture slug renamed to `party_cr_of_4_level_3_pcs_equals_3`), with
+a corrective banner above §4.1 documenting the correction and its
+evidence chain.
+
+Verification: `cargo test --locked --test sd22_dm_toolkit_deterministic`
+5/5 green. Full `cargo test --locked` — 415 `test result: ok` blocks, 0
+failed anywhere (sibling-preservation holds, including the in-flight
+uncommitted ACG Swashbuckler work present in the shared tree). `cargo
+clippy --locked --tests -- -D warnings` clean.
+
+Full RED/GREEN evidence, independent re-verification detail, and file
+list: `artifacts/dm_toolkit/deterministic_tests_cycle_receipt.md`. Receipt
+block appended to `receipts.md`. Epic 6's only remaining criterion is 21
+(happy-path integration), which stays blocked until Epic 3+4+5 all land —
+Epic 5 (Bestiary 1) remains blocked on its own separate parser gap
+(`b1_races.lst`'s unprefixed bare-row monster records). Both §4.1
+discrepancies flagged by criteria 18 and 19 are now fully reconciled.

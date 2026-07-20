@@ -144,6 +144,29 @@ The DM Toolkit consumes Epic 3+4+5 output. Two Rust modules, three test fixtures
 
 ### 4.1 DM Toolkit deterministic test fixture shape
 
+> **Corrected 2026-07-20 (criterion 20's cycle) — cases 2 and 3 below were
+> wrong.** This table's "Expected" column for cases 2 and 3 was authored
+> 2026-07-19 from model memory, before either was checked against a real
+> source. Criterion 18's cycle (`artifacts/dm_toolkit/encounters_cycle_receipt.md`)
+> and criterion 19's cycle (`artifacts/dm_toolkit/party_cr_cycle_receipt.md`)
+> each independently found their respective case didn't hold up against the
+> Pathfinder RPG Core Rulebook's "Gamemastering" chapter (Table: Encounter
+> Design, Table: CR Equivalencies, Table: Experience Point Awards, and
+> "Designing Encounters" → "Step 1 — Determine APL"), and flagged the
+> mismatch for this cycle to reconcile rather than force-fitting the code.
+> Criterion 20's cycle independently re-verified both citations against
+> `https://legacy.aonprd.com/corerulebook/gamemastering.html` directly
+> (fresh fetch, not trusting the prior cycles' claims) and confirmed both
+> corrections below are accurate: case 2's expected difficulty is `Deadly`,
+> not `Hard` (APL 3, group EL 3+4=7 per Table: CR Equivalencies, EL−APL=+4,
+> beyond even Epic/APL+3 on Table: Encounter Design); case 3's expected
+> party CR is `3.0`, not `~3.5` (4 PCs is within the unadjusted "four or
+> five PCs" band, average level 12/4 = 3.0 exactly, and the rulebook's APL
+> rule has no step that can ever produce a fractional result). The table
+> below reflects the corrected, verified values — `encounters.rs` and
+> `party_cr.rs`'s already-shipped code was correct against the real rules
+> the whole time; this table's prose was the thing that was wrong.
+
 Each deterministic test fixture is a single function that takes an enum-coded test case and asserts on the result:
 
 ```rust
@@ -161,8 +184,8 @@ The five canonical Paizo deterministic test cases per Epic 6 criterion 20:
 | # | Fixture slug | Party | Monsters | Expected |
 |---|---|---|---|---|
 | 1 | `encounters_4_level_3_pcs_vs_1_cr_2_monster_is_easy` | 4× level-3 PCs | 1× CR-2 monster | Easy |
-| 2 | `encounters_4_level_3_pcs_vs_4_cr_3_monsters_is_hard` | 4× level-3 PCs | 4× CR-3 monsters | Hard |
-| 3 | `party_cr_of_4_level_3_pcs_equals_3_5` | 4× level-3 PCs (one each class) | (none) | CR ≈ 3.5 |
+| 2 | `encounters_4_level_3_pcs_vs_4_cr_3_monsters_is_deadly` | 4× level-3 PCs | 4× CR-3 monsters | **Deadly** (corrected 2026-07-20 from the originally-stated "Hard"; see the corrective note above §4.1) |
+| 3 | `party_cr_of_4_level_3_pcs_equals_3` | 4× level-3 PCs (one each class) | (none) | **CR = 3.0** (corrected 2026-07-20 from the originally-stated "≈3.5"; see the corrective note above §4.1) |
 | 4 | `encounters_empty_monsters_returns_easy` | 4× level-3 PCs | none | Easy (no threat) |
 | 5 | `encounters_1_level_1_pc_vs_1_cr_1_monster_returns_valid_difficulty` | 1× level-1 PC | 1× CR-1 monster | Easy/Medium/Hard/Deadly |
 
