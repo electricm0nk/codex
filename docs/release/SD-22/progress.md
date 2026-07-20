@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: 214ddf9
+snapshot_as_of: 31965e5
 ---
 
 # SD-22 — Progress

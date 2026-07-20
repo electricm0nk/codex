@@ -1011,8 +1011,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: complete (version incorrectly bumped to 0.6.0)
   evidence_tier_after: complete (corrected to 0.5.96)
   branch_tip_before: d20859a
-  branch_tip_after: PENDING (this cycle's own commit)
-  merge_receipt_sha: PENDING (this cycle's own commit)
+  branch_tip_after: 31965e5
+  merge_receipt_sha: 31965e5
   cycle_artifact_path: "n/a -- correction banner added to epic_7/closure_epilogue_cycle_receipt.md; full detail in progress.md's cycle log entry 'cycle-2026-07-20 (correction)'"
   red_phase_evidence: "n/a -- correction cycle, not a RED/GREEN production cycle"
   green_phase_evidence: "npm test failed 2/48 (buildVersionTriple.test.ts x2) immediately after reverting the version files but before fixing the hard-anchored 0.6. test assertions -- confirmed the sibling-preservation gap was real, not assumed. After fixing both test files and the CI workflow stamp, npm test 48/48 passed."
