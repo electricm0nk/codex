@@ -125,5 +125,5 @@ against the live corpus checkout, not from memory or any prior cycle's summary):
 
 ## kanban
 
-- card: see `receipts.md` / `progress.md` for the minted card ID (backfilled after `hermes kanban` mint)
+- card: `t_0a667602` (codex-tranche-5, status=done)
 - audit_comment: n/a

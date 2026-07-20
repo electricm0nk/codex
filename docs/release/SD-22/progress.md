@@ -2,7 +2,7 @@
 title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit + Closure Readiness — Progress
 mirrors: /home/ubuntu/workspace/SD-22-content-source-ingest-and-dm-toolkit-scope-draft.md
 created: 2026-07-19
-snapshot_as_of: PENDING (backfilled by follow-up commit after this cycle's own commit lands)
+snapshot_as_of: 09bfe2e
 ---
 
 # SD-22 — Progress
@@ -2882,7 +2882,7 @@ Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/beastiary1/subset_05_cycle_receipt.md`. Receipt block
 appended to `receipts.md`.
 
-### cycle-2026-07-20T09:21:36Z | Epic 5, subset 06 (sixth monster-block subset, band-exhaustion cleanup) | ingest:beastiary1_subset | card PENDING (backfilled after `hermes kanban` mint), commit PENDING (backfilled after push) | complete (subset 01 + subset 02 + subset 03 + subset 04 + subset 05) → **complete (subset 01 + subset 02 + subset 03 + subset 04 + subset 05 + subset 06)**
+### cycle-2026-07-20T09:21:36Z | Epic 5, subset 06 (sixth monster-block subset, band-exhaustion cleanup) | ingest:beastiary1_subset | card `t_0a667602` on `codex-tranche-5` (status=done), commit `09bfe2e` | complete (subset 01 + subset 02 + subset 03 + subset 04 + subset 05) → **complete (subset 01 + subset 02 + subset 03 + subset 04 + subset 05 + subset 06)**
 
 Ran solo this cycle (no parallel sibling) — Epic 3, Epic 4, and Epic 6
 are all fully closed, and Epic 5 is the only currently-eligible lane per
@@ -2963,7 +2963,7 @@ multiple content units each.
 
 Full RED/GREEN evidence, file list, and reasoning:
 `artifacts/beastiary1/subset_06_cycle_receipt.md`. Receipt block
-appended to `receipts.md` (commit SHA and kanban card ID to be
-backfilled in a follow-up commit once this cycle's own commit lands and
-`hermes kanban` mints the card, per the established backfill pattern
-from subsets 03/04/05).
+appended to `receipts.md`, commit SHA `09bfe2e` and kanban card
+`t_0a667602` backfilled into both `receipts.md` and this doc in this
+same follow-up commit, per the established backfill pattern from
+subsets 03/04/05.
