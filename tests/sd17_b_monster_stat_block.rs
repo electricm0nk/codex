@@ -239,3 +239,66 @@ fn parses_real_subset_03_cr_2_monster_records_from_b1_races_lst() {
     let troglodyte = find("Troglodyte");
     assert_eq!(troglodyte.challenge_rating.as_f32(), 1.0, "Troglodyte is CR 1 and was left unused this cycle");
 }
+
+/// Grounding test for subset 04's roster (see
+/// `docs/release/SD-22/artifacts/beastiary1/subset_04_cycle_receipt.md`).
+/// Subset 04 continues CR 2, alphabetically after subset 03's "Cave
+/// Fisher". No parser widening was needed — every field these five
+/// monsters use already falls inside `monster_stat_block`'s existing
+/// recognition surface, including Morlock's pipe-separated two-attack
+/// `NATURALATTACKS:` token — but this test proves that against the real
+/// corpus file directly, the same way subsets 01-03's grounding tests
+/// did.
+#[test]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/path/to/pcgen/data"]
+fn parses_real_subset_04_cr_2_monster_records_from_b1_races_lst() {
+    let text = real_b1_races_lst();
+    let records = parse_monster_stat_block_entries("b1_races.lst", &text);
+
+    let find = |name: &str| {
+        records
+            .iter()
+            .find(|r| r.name == name)
+            .unwrap_or_else(|| panic!("expected a parsed record named {name:?} from the real b1_races.lst"))
+    };
+
+    let choker = find("Choker");
+    assert_eq!(choker.challenge_rating.as_f32(), 2.0);
+    assert_eq!(choker.size.as_deref(), Some("S"));
+    assert_eq!(choker.speed_ft, Some(20), "walk speed, not the climb speed");
+    assert_eq!(choker.race_type.as_deref(), Some("Aberration"));
+    assert_eq!(choker.source_page.as_deref(), Some("p.45"));
+    assert!(choker.natural_attacks.is_empty(), "Tentacle is an ABILITY:Internal cross-reference, not a NATURALATTACKS: token");
+
+    let crocodile = find("Crocodile");
+    assert_eq!(crocodile.challenge_rating.as_f32(), 2.0);
+    assert_eq!(crocodile.size.as_deref(), Some("L"));
+    assert_eq!(crocodile.speed_ft, Some(20), "walk speed, not the swim speed");
+    assert_eq!(crocodile.race_type.as_deref(), Some("Animal"));
+    assert_eq!(crocodile.source_page.as_deref(), Some("p.51"));
+    assert!(crocodile.natural_attacks.is_empty());
+
+    let dark_creeper = find("Dark Creeper");
+    assert_eq!(dark_creeper.challenge_rating.as_f32(), 2.0);
+    assert_eq!(dark_creeper.speed_ft, Some(30));
+    assert_eq!(dark_creeper.race_type.as_deref(), Some("Humanoid"));
+    assert_eq!(dark_creeper.race_subtype.as_deref(), Some("Dark Folk"));
+    assert_eq!(dark_creeper.source_page.as_deref(), Some("p.53"));
+    assert!(dark_creeper.natural_attacks.is_empty());
+
+    let iron_cobra = find("Iron Cobra");
+    assert_eq!(iron_cobra.challenge_rating.as_f32(), 2.0);
+    assert_eq!(iron_cobra.speed_ft, Some(40));
+    assert_eq!(iron_cobra.race_type.as_deref(), Some("Construct"));
+    assert_eq!(iron_cobra.source_page.as_deref(), Some("p.182"));
+    assert!(iron_cobra.natural_attacks.iter().any(|a| a.name == "Bite" && a.damage_dice == "1d6"));
+
+    let morlock = find("Morlock");
+    assert_eq!(morlock.challenge_rating.as_f32(), 2.0);
+    assert_eq!(morlock.speed_ft, Some(40), "walk speed, not the climb speed");
+    assert_eq!(morlock.race_type.as_deref(), Some("Monstrous Humanoid"));
+    assert_eq!(morlock.source_page.as_deref(), Some("p.209"));
+    assert_eq!(morlock.natural_attacks.len(), 2, "pipe-separated two-attack NATURALATTACKS: token");
+    assert!(morlock.natural_attacks.iter().any(|a| a.name == "Bite (Primary)" && a.damage_dice == "1d4"));
+    assert!(morlock.natural_attacks.iter().any(|a| a.name == "Bite (With Weapon Attack)" && a.damage_dice == "1d4"));
+}

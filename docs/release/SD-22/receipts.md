@@ -826,3 +826,29 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["beastiary1/subset_03_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream working Epic 6 criterion 21 (tests/sd22_dm_toolkit_happy_path_integration.rs, reading from but not modifying beastiary1/). File-touch set (rules_tables/beastiary1/monster_subset_03.rs, its test, tests/sd17_b_monster_stat_block.rs) disjoint from the sibling's own touched files; the mod.rs edit is additive-only (new pub mod line, new enum variants, new match arms). Confirmed via git fetch that origin/tranche/5 (a0376d1, the sibling's already-landed and self-backfilled commit) matched local HEAD before this cycle's own commit -- no rebase was needed. Did all RED/GREEN/verification work before touching progress.md/receipts.md. CR 1 was found exhausted for a five-monster subset (only Squid/Troglodyte unused among real, non-parenthetical CR-1 names) -- moved to CR 2 per loop-instruction.md's explicit guidance, verified directly against the real corpus rather than assumed."
+
+- cycle_id: 2026-07-20T07:20:20Z
+  epic: 5
+  criterion: beastiary1_subset_04
+  criterion_section: "§3.1 Epic 5 — Bestiary 1 content-source ingest (subset 04, fourth monster-block subset)"
+  row_or_kind: ingest:beastiary1_subset
+  evidence_tier_before: complete (criteria 14-17, subset 01 + subset 02 + subset 03)
+  evidence_tier_after: complete (criteria 14-17, re-verified against a fourth subset: Choker, Crocodile, Dark Creeper, Iron Cobra, Morlock)
+  branch_tip_before: a5c8e5e
+  branch_tip_after: PENDING_COMMIT_SHA
+  merge_receipt_sha: PENDING_COMMIT_SHA
+  cycle_artifact_path: "beastiary1/subset_04_cycle_receipt.md"
+  red_phase_evidence: "cargo test --locked --test sd22_beastiary1_subset_04_resolves against the pre-cycle tree failed to compile with error[E0599]: no variant, associated function, or constant named `Choker`/`Crocodile`/`DarkCreeper`/`IronCobra`/`Morlock` found for enum `MonsterId` (14 call sites) -- see cycle_artifact_path:Red-phase evidence"
+  green_phase_evidence: "wrote src/rules_core/rules_tables/beastiary1/monster_subset_04.rs (Choker/Crocodile/Dark Creeper/Iron Cobra/Morlock chassis, transcribed from b1_races.lst:70,83,89,249,297) and wired it into beastiary1/mod.rs (pub mod monster_subset_04, five new MonsterId variants, match arms) -- diff is purely additive, no existing lines changed. No parser widening needed -- monster_stat_block.rs's existing recognition surface already covers every field these five monsters use, including Choker/Crocodile/Dark Creeper's empty natural_attacks (no NATURALATTACKS: token on their real rows) and Morlock's pipe-separated two-attack NATURALATTACKS: token. Added a real-corpus-gated grounding test to tests/sd17_b_monster_stat_block.rs. sd22_beastiary1_subset_04_resolves 6/6 passed, sd17_b_monster_stat_block --ignored 4/4 passed, full cargo test --locked 0 failed across 424 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
+  cargo_test_summary: "sd22_beastiary1_subset_04_resolves: 6/6 passed; sd17_b_monster_stat_block (PCGEN_CORPUS_ROOT-gated): 4/4 passed; full cargo test --locked: 0 failed (424 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 2800
+  self_heals_applied: []
+  next_required_uplift: "Bestiary 1 subset 05 (continued CR-2 breadth: Rat Swarm, Sahuagin, Shark, Shocker Lizard, Skum, Vargouille, Wolverine, Worg, Yellow Musk Creeper remain unused real, non-parenthetical CR-2 names -- 9 left, enough for one more full subset with 4 left over -- or a small/mixed subset picking up the leftover Squid/Troglodyte from CR 1)."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst:70,83,89,249,297 (Choker, Crocodile, Dark Creeper, Iron Cobra, Morlock real CR:2 records; per decisions.md §5)"
+  rule_set_used: Bestiary1
+  kanban_card: "PENDING_KANBAN_CARD"
+  progress_file_updated: "yes"
+  artifacts_written: ["beastiary1/subset_04_cycle_receipt.md"]
+  notes: "Solo cycle (no parallel sibling this run) -- Epic 3, 4, and 6 are all fully closed; Epic 5 is the only currently-eligible lane. Verified tranche/5 clean and in sync with origin (a5c8e5e) before starting. Enumerated all 34 real CR:2 monster stat-block rows in b1_races.lst directly, excluded the 15 parenthetical sub-variant names per the established exclusion rule and the 5 names already used in subset 03, and picked the next 5 alphabetically. Did all RED/GREEN/verification work before touching progress.md/receipts.md."
+  notes: "Ran in parallel with a sibling stream working Epic 6 criterion 21 (tests/sd22_dm_toolkit_happy_path_integration.rs, reading from but not modifying beastiary1/). File-touch set (rules_tables/beastiary1/monster_subset_03.rs, its test, tests/sd17_b_monster_stat_block.rs) disjoint from the sibling's own touched files; the mod.rs edit is additive-only (new pub mod line, new enum variants, new match arms). Confirmed via git fetch that origin/tranche/5 (a0376d1, the sibling's already-landed and self-backfilled commit) matched local HEAD before this cycle's own commit -- no rebase was needed. Did all RED/GREEN/verification work before touching progress.md/receipts.md. CR 1 was found exhausted for a five-monster subset (only Squid/Troglodyte unused among real, non-parenthetical CR-1 names) -- moved to CR 2 per loop-instruction.md's explicit guidance, verified directly against the real corpus rather than assumed."

@@ -46,10 +46,18 @@
 //! for a five-monster subset), so subset 03 moves to CR 2. Ships the
 //! first five real, unambiguous, non-parenthetical CR-2 monsters in
 //! alphabetical order: Bat Swarm, Boar, Boggard, Bugbear, Cave Fisher.
+//!
+//! **Subset 04** (documented in full in
+//! `docs/release/SD-22/artifacts/beastiary1/subset_04_cycle_receipt.md`
+//! and in `tests/sd22_beastiary1_subset_04_resolves.rs`'s header):
+//! continues CR 2 alphabetically after subset 03's "Cave Fisher". Ships
+//! the next five real, unambiguous, non-parenthetical CR-2 monsters:
+//! Choker, Crocodile, Dark Creeper, Iron Cobra, Morlock.
 
 pub mod monster_subset_01;
 pub mod monster_subset_02;
 pub mod monster_subset_03;
+pub mod monster_subset_04;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -99,6 +107,11 @@ pub enum MonsterId {
     Boggard,
     Bugbear,
     CaveFisher,
+    Choker,
+    Crocodile,
+    DarkCreeper,
+    IronCobra,
+    Morlock,
 }
 
 /// Resolves a Bestiary 1 monster's chassis data, scoped to
@@ -125,6 +138,11 @@ pub fn monster_resolve(monster_id: MonsterId, rule_set: RuleSetId) -> Option<Mon
         MonsterId::Boggard => monster_subset_03::boggard(),
         MonsterId::Bugbear => monster_subset_03::bugbear(),
         MonsterId::CaveFisher => monster_subset_03::cave_fisher(),
+        MonsterId::Choker => monster_subset_04::choker(),
+        MonsterId::Crocodile => monster_subset_04::crocodile(),
+        MonsterId::DarkCreeper => monster_subset_04::dark_creeper(),
+        MonsterId::IronCobra => monster_subset_04::iron_cobra(),
+        MonsterId::Morlock => monster_subset_04::morlock(),
     })
 }
 
@@ -147,6 +165,11 @@ pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStat
         "beastiary1:monster:boggard" => MonsterId::Boggard,
         "beastiary1:monster:bugbear" => MonsterId::Bugbear,
         "beastiary1:monster:cave_fisher" => MonsterId::CaveFisher,
+        "beastiary1:monster:choker" => MonsterId::Choker,
+        "beastiary1:monster:crocodile" => MonsterId::Crocodile,
+        "beastiary1:monster:dark_creeper" => MonsterId::DarkCreeper,
+        "beastiary1:monster:iron_cobra" => MonsterId::IronCobra,
+        "beastiary1:monster:morlock" => MonsterId::Morlock,
         _ => return None,
     };
     monster_resolve(monster_id, rule_set)
