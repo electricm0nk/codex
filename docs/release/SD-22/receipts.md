@@ -551,3 +551,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["acg/class_skald_cycle_receipt.md"]
   notes: "BAB/save chassis read directly off the real CLASS:Skald record's BONUS:COMBAT/BONUS:SAVE formula tokens (three-quarter BAB -- same posture as ACG's Hunter/Investigator/Shaman and APG's Alchemist/Inquisitor/Oracle/Summoner -- good Will+Fortitude from one combined token (BASE.Will,BASE.Fortitude -- mirror-image pairing from Shaman's good-Will/poor-Fortitude+Reflex shape), poor Reflex from its own single-save token, MAXLEVEL:20, SPELLSTAT:CHA MEMORIZE:NO SPELLBOOK:YES -- MEMORIZE:NO wins over SPELLBOOK:YES in the parser's derivation order, so posture is spontaneous, same shape as Bard whose spell list Skald borrows via SPELLLIST:1|Bard) -- confirming Skald belongs in spellcasting_class.rs's SPELLCASTING_CLASS_NAMES rather than class.rs's MARTIAL_CLASS_NAMES; same scope boundary as class_arcanist.rs/class_bloodrager.rs/class_brawler.rs/class_hunter.rs/class_investigator.rs/class_shaman.rs (named per-level features out of scope, formula-derived chassis only)."
+
+- cycle_id: 2026-07-20T01:50:52Z
+  epic: 6
+  criterion: dm_encounter
+  criterion_section: "§4 Epic 6 — DM Toolkit (criterion 18, Encounter::new, DM Toolkit's first cycle)"
+  row_or_kind: dm:encounter
+  evidence_tier_before: open (Epic 6 not started; blocked on ≥1 book ingested -- Epic 3 APG fully complete satisfies this)
+  evidence_tier_after: complete (criterion 18 only; criteria 19-21 remain open)
+  branch_tip_before: 0244642
+  branch_tip_after: "(this cycle's own commit, backfilled below)"
+  merge_receipt_sha: "(this cycle's own commit, backfilled below)"
+  cycle_artifact_path: "dm_toolkit/encounters_cycle_receipt.md"
+  red_phase_evidence: "in-file #[cfg(test)] mod tests inside src/rules_core/encounters.rs itself (tests/sd22_dm_toolkit_deterministic.rs is reserved for criterion 20's own cycle per loop-instruction.md's file-touch partition); Encounter::new temporarily stubbed to a constant wrong value, 4/6 tests failed for the intended reason (see cycle_artifact_path:Red-phase evidence)"
+  green_phase_evidence: "implemented CharacterSnapshot/MonsterRef/Difficulty/EncounterResult/Encounter::new grounded in the PF1 Core Rulebook's Table: Encounter Design + Table: CR Equivalencies + Table: Experience Point Awards (CR 1-10), verified against legacy.aonprd.com/corerulebook/gamemastering.html; 6/6 in-file tests green; full cargo test suite green, 0 failed anywhere; clippy clean after fixing one real new_ret_no_self finding with a documented #[allow] (see cycle_artifact_path:Green-phase evidence)"
+  cargo_test_summary: "cargo test --locked --lib rules_core::encounters: 6/6 passed; full cargo test --locked: 0 failed across every suite; cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 6's next-eligible cycle is criterion 19 (party_cr.rs, party_challenge_rating), per Step 2's ordering (Encounter::new first, party_challenge_rating second, deterministic tests third, happy-path integration fourth). Criterion 20's dedicated cycle should also reconcile the documented discrepancy against corpus-source-inventory.md §4.1 case 2's stated Hard expectation (this cycle's grounded math computes Deadly for that case -- see cycle_artifact_path)."
+  corpus_input_path: "n/a -- not a PCGen .lst ingest cycle; grounded instead in legacy.aonprd.com/corerulebook/gamemastering.html (PF1 Core Rulebook, Gamemastering chapter), verified 2026-07-20"
+  rule_set_used: n/a
+  kanban_card: "(pending mint, backfilled below)"
+  progress_file_updated: "yes"
+  artifacts_written: ["dm_toolkit/encounters_cycle_receipt.md"]
+  notes: "Ran in parallel with a sibling stream on Epic 4 (ACG); file-touch set (encounters.rs, mod.rs's one-line registration) disjoint from acg/ per loop-instruction.md. Found and documented a real discrepancy between corpus-source-inventory.md §4.1 case 2's stated Hard expectation and the verified-rulebook-grounded computation (Deadly) rather than force-fitting the formula to match the unverified fixture table, mirroring this bundle's Gunslinger/Magus and ACG-Alchemist roster-correction precedent."

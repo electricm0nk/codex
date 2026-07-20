@@ -32,7 +32,7 @@ SD-22's own progress doc. Loop's claim protocol and per-cycle history live here 
 | E3.6-9 | 3 — APG ingest | ingest:apg_class | Alchemist (1/6), Cavalier (2/6), Inquisitor (3/6), Oracle (4/6), Summoner (5/6), Witch (6/6); shared spell/equipment tables | **complete — criteria 6-9, Epic 3 (APG) fully closed out.** `rules_tables/apg/mod.rs` populated, `RuleSetId::Apg` registered, all six classes' BAB/save chassis land with cross-book invariant tests (criteria 6-8). Criterion 9 lands this cycle as `apg/spell_list.rs` (4-entry bootstrap sample: Bomber's Eye/Alchemist, Burst Bonds/Inquisitor, Borrow Fortune/Oracle, Ill Omen/Witch) and `apg/equipment_tables.rs` (3-entry bootstrap sample: Iron Spike, Arrow (Blunt), Knucklebone of Fickle Fortune) — bootstrap/representative coverage per the `crb/equipment_tables.rs` precedent, not exhaustive; Summoner has no active spell record anywhere in the real corpus (its dedicated block is entirely `#`-commented out) and Cavalier casts no spells, both by design not omission. Gunslinger and Magus are permanently excluded (roster corrected to 6 real classes, commit `6923e54`). See `artifacts/apg/class_alchemist_cycle_receipt.md`, `artifacts/apg/class_cavalier_cycle_receipt.md`, `artifacts/apg/class_inquisitor_cycle_receipt.md`, `artifacts/apg/class_oracle_cycle_receipt.md`, `artifacts/apg/class_summoner_cycle_receipt.md`, `artifacts/apg/class_witch_cycle_receipt.md`, `artifacts/apg/spell_list_cycle_receipt.md`, `artifacts/apg/equipment_tables_cycle_receipt.md` | see `## Cycle log` |
 | E4.10-13 | 4 — ACG ingest | ingest:acg_class | Arcanist (1/10), Bloodrager (2/10), Brawler (3/10), Hunter (4/10), Investigator (5/10), Shaman (6/10), Skald (7/10) of the corrected 10-class roster; "Alchemist-ACG" dropped — no real `CLASS:Alchemist` record in `acg_classes.lst`, same roster-defect shape as Gunslinger/Magus; `Slayer` added — has a real record, was missing from `decisions.md`'s stated order) | **complete (criteria 10-12 for Arcanist + Bloodrager + Brawler + Hunter + Investigator + Shaman + Skald)** — `rules_tables/acg/mod.rs` grown to seven classes, `RuleSetId::Acg` cross-book invariant tests hold for all seven. Skald is the sixth ACG spellcasting class (widened `spellcasting_class.rs`'s `SPELLCASTING_CLASS_NAMES`, same allowlist as Arcanist/Bloodrager/Hunter/Investigator/Shaman; Brawler alone used `class.rs`'s `MARTIAL_CLASS_NAMES`). Skald's real record carries both `MEMORIZE:NO` and `SPELLBOOK:YES`; the parser's derivation order resolves that to spontaneous posture. See `artifacts/acg/class_arcanist_cycle_receipt.md`, `artifacts/acg/class_bloodrager_cycle_receipt.md`, `artifacts/acg/class_brawler_cycle_receipt.md`, `artifacts/acg/class_hunter_cycle_receipt.md`, `artifacts/acg/class_investigator_cycle_receipt.md`, `artifacts/acg/class_shaman_cycle_receipt.md`, `artifacts/acg/class_skald_cycle_receipt.md` | see `## Cycle log` |
 | E5.14-17 | 5 — Bestiary 1 ingest | ingest:beastiary1_subset | Subset 01 (CR 1: Goblin/Kobold/Orc/Skeleton/Zombie) | see cycle log | pending |
-| E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | Not started (requires ≥1 book ingested) | open | — |
+| E6.18-21 | 6 — DM Toolkit | dm:encounter, dm:party_cr | `Encounter::new` lands (criterion 18); `party_cr.rs` (19), deterministic tests (20), happy-path integration (21) still open | **complete (criterion 18 only)** — `src/rules_core/encounters.rs` lands `CharacterSnapshot`, `MonsterRef`, `Difficulty`, `EncounterResult`, and `Encounter::new`, grounded in the real PF1 Core Rulebook "Gamemastering" chapter (Table: Encounter Design, Table: CR Equivalencies, Table: Experience Point Awards CR 1-10, verified against `legacy.aonprd.com/corerulebook/gamemastering.html`). See `artifacts/dm_toolkit/encounters_cycle_receipt.md` for the full derivation, including a documented discrepancy against `corpus-source-inventory.md` §4.1 case 2's stated "Hard" expectation (grounded math computes Deadly; flagged for criterion 20's cycle to reconcile, not force-fit). | see `## Cycle log` |
 | E7.22-26 | 7 — Closure Epilogue | closure:* | Not started (fires last) | open | — |
 | E8.27 | 8 — Build Version | version:patch_bump | Version fields set to `0.5.95` (`package.json`, `tauri.conf.json`, `Cargo.toml`) | **complete** — see `artifacts/epic_8/three_version_fields_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
 | E8.28 | 8 — Build Version | version:build_label_format | `BUILD_PREFIX = 'Codex'` / `${BUILD_PREFIX} ${buildVersion}` format ships (inherited from SD-21 E5.26); this cycle re-anchored the format's own test fixtures from the pre-bump `Codex 0.4.94-test` literal to the current `Codex 0.5.95-test` | **complete** — see `artifacts/epic_8/build_label_format_cycle_receipt.md` | (this cycle's commit, see `## Cycle log`) |
@@ -1844,3 +1844,73 @@ Full RED/GREEN evidence, file list, and reasoning:
 `receipts.md`. Next-eligible: Slayer (class 8 of the corrected 10-class
 roster), or a dedicated cycle for criterion 13's shared spell/equipment
 tables once more classes land.
+
+### cycle-2026-07-20T01:50:52Z | Epic 6, `Encounter::new` (criterion 18, DM Toolkit's first cycle) | dm:encounter | card `(pending mint, see backfill)` on `codex-tranche-5` | open → **complete (criterion 18)**
+
+Ran in parallel with a sibling stream working Epic 4 (ACG); this cycle's
+file-touch set (`src/rules_core/encounters.rs`, `src/rules_core/mod.rs`'s
+one-line module registration) is disjoint from Epic 4's `rules_tables/acg/`
+per `loop-instruction.md`'s file-touch partition ("Epic 6 ... disjoint from
+Epic 3+4+5"). Confirmed Epic 3 (APG) fully complete before starting, since
+Epic 6 requires ≥1 book ingested — satisfied.
+
+Read first per Step 4: `corpus-source-inventory.md` §4 (DM Toolkit routing
++ §4.1's five canonical deterministic test cases), `epic-breakdown.md`
+criterion 18's exact wording (`Encounter::new(party: &[CharacterSnapshot],
+monsters: &[MonsterRef]) -> EncounterResult`), `decisions.md`,
+`risks-and-open-questions.md`.
+
+**Source grounding before writing any code**: this cycle's environment
+could reach `legacy.aonprd.com` (unlike the sandbox that hit HTTP 403 on
+`aonprd.com`/`d20pfsrd.com` during the Epic 3 Alchemist cycle-1 blocker).
+Verified, quoted verbatim from that source: Table: Encounter Design
+(Easy=APL-1, Average=APL, Challenging=APL+1, Hard=APL+2, Epic=APL+3); Table:
+CR Equivalencies (1 creature=CR, 2=CR+2, 3=CR+3, 4=CR+4, 6=CR+5, 8=CR+6,
+12=CR+7, 16=CR+8); Table: Experience Point Awards CR 1-10 (400, 600, 800,
+1200, 1600, 2400, 3200, 4800, 6400, 9600). Did not proceed on memory alone
+per `AGENTS.md`'s no-fabrication rule and this bundle's own established
+precedent for unverified planning content (Gunslinger/Magus, ACG Alchemist).
+
+RED: added an in-file `#[cfg(test)] mod tests` inside
+`src/rules_core/encounters.rs` itself (not `tests/sd22_dm_toolkit_
+deterministic.rs`, which `loop-instruction.md`'s file-touch partition
+reserves for Epic 6's **criterion 20** cycle — a separate, later cycle from
+this one). Confirmed RED by temporarily stubbing `Encounter::new` to
+return a constant wrong value: 4 of 6 tests failed for the intended reason
+(computed value diverged from the stub's hard-coded constant); full output
+captured in `artifacts/dm_toolkit/encounters_cycle_receipt.md`.
+
+GREEN: implemented `CharacterSnapshot`, `MonsterRef`, `Difficulty`,
+`EncounterResult`, and `Encounter::new` using the three verified tables
+above — a mixed-CR group's combined Encounter Level is computed by summing
+each monster's per-creature XP and reconverting the total back to CR (the
+rulebook's own cited "alternative method" for non-identical-CR groups),
+which reduces to the CR Equivalencies table exactly for identical-CR
+groups. The bundle's own four-tier `Difficulty` (Easy/Medium/Hard/Deadly)
+collapses the rulebook's five official tiers by merging Challenging
+(APL+1) and Hard (APL+2) into this module's single `Hard` tier — documented
+in the module's doc comment.
+
+**A discrepancy found, not force-fit**: `corpus-source-inventory.md` §4.1
+case 2 ("4 level-3 PCs vs 4 CR-3 monsters") states expected `Hard`; the
+grounded formula computes `Deadly` (APL 3, group EL 7 via 4×800=3,200 XP =
+the CR-7 threshold, EL−APL=+4, beyond even Epic's APL+3). Followed the
+verified rulebook math rather than bending the formula to match an
+unverified fixture-table entry, per this bundle's own precedent (the
+Gunslinger/Magus and ACG-Alchemist roster corrections). Flagged in the
+cycle artifact for criterion 20's dedicated cycle to reconcile.
+
+Verification: `cargo test --locked --lib rules_core::encounters` 6/6
+green. Full `cargo test --locked` — every suite green, 0 failed anywhere
+(sibling-preservation holds, including the in-flight Epic 4 ACG suites
+landing concurrently on the same branch). `cargo clippy --locked --tests
+-- -D warnings` — one real finding (`clippy::new_ret_no_self` on
+`Encounter::new`, since criterion 18's own literal signature returns
+`EncounterResult` not `Self`) fixed with a documented
+`#[allow(clippy::new_ret_no_self)]`; clean after the fix.
+
+Full RED/GREEN evidence, source citations, and the discrepancy write-up:
+`artifacts/dm_toolkit/encounters_cycle_receipt.md`. Receipt block appended
+to `receipts.md`. Next-eligible for Epic 6: criterion 19 (`party_cr.rs`),
+per Step 2's ordering ("`Encounter::new` first, `party_challenge_rating`
+second, deterministic tests third, happy-path integration fourth").
