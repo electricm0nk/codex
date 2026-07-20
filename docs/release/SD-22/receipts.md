@@ -701,3 +701,28 @@ that are already self-evident from the cycle_artifact_path.)
   progress_file_updated: "yes"
   artifacts_written: ["beastiary1/subset_01_cycle_receipt.md"]
   notes: "Ran in parallel with a sibling stream working Epic 4's final class (ACG Warpriest, src/rules_core/rules_tables/acg/). File-touch set (src/pcgen_import/lst_parser/{mod.rs,monster_stat_block.rs}, src/rules_core/rules_tables/{mod.rs,beastiary1/}, tests/sd17_b_monster_stat_block.rs, tests/sd22_beastiary1_subset_01_resolves.rs) disjoint from the sibling's acg/ + spellcasting_class.rs files, which were present modified/untracked in the shared working tree throughout this cycle and were left untouched -- this cycle's own git add is scoped strictly to its own files. One transient hazard observed and resolved: src/rules_core/rules_tables/mod.rs (a tracked file this cycle needed to edit) was briefly seen reverted to its pre-edit HEAD state mid-cycle, consistent with a concurrent git stash/pop cycle in the sibling's own workflow touching all tracked files in the shared tree; re-applied the edit and verified it held stable via git diff before proceeding. Rebase-before-push procedure per this cycle's own instructions still pending at receipt-write time (progress.md/receipts.md commit step)."
+
+- cycle_id: 2026-07-20T04:25:03Z
+  epic: 4
+  criterion: acg_warpriest
+  criterion_section: "§2.1 Epic 4 — ACG content-source ingest (criteria 10-12, class 10 of 10, full roster complete)"
+  row_or_kind: ingest:acg_class
+  evidence_tier_before: complete (criteria 10-12 for 9/10 classes)
+  evidence_tier_after: complete (criteria 10-12 for the full 10-class roster)
+  branch_tip_before: f40864e
+  branch_tip_after: 7971017
+  merge_receipt_sha: 7971017
+  cycle_artifact_path: "acg/class_warpriest_cycle_receipt.md"
+  red_phase_evidence: "widening test parses_real_warpriest_record_from_acg_classes_lst failed (Warpriest not yet in SPELLCASTING_CLASS_NAMES); acceptance test tests/sd22_acg_class_warpriest_resolves.rs failed to compile (E0599, AcgClassId::Warpriest did not exist, 5 call sites) -- see cycle_artifact_path:Red-phase evidence"
+  green_phase_evidence: "widened SPELLCASTING_CLASS_NAMES by one name (Warpriest); added src/rules_core/rules_tables/acg/class_warpriest.rs (BAB/save chassis transcribed from the real CLASS:Warpriest record at acg_classes.lst:364 -- three-quarter BAB, good Fortitude, good Will, poor Reflex, MAXLEVEL:20, SPELLSTAT:WIS standard-prepared casting) and AcgClassId::Warpriest + match arm in acg/mod.rs; confirmed the real CLASS:Ex-Warpriest record (line 413, VISIBLE:NO, no SPELLSTAT:) is a distinct internal NPC fallen-Warpriest variant and deliberately not chassis'd -- see cycle_artifact_path:Green-phase evidence"
+  cargo_test_summary: "sd22_acg_class_warpriest_resolves: 8/8 passed (--include-ignored); sd17_b_spellcasting_class: 27/27 passed (--include-ignored); full cargo test --locked: 0 failed across every suite (418 test-result:ok blocks); cargo clippy --locked --tests -- -D warnings clean"
+  clippy_signal: clean
+  cycle_timing_seconds: 0
+  self_heals_applied: []
+  next_required_uplift: "Epic 4 (ACG) class-roster criteria (10-12) are now complete for all 10 real classes. Criterion 13 (shared ACG spell/equipment tables, mirroring APG's criterion 9) is Epic 4's sole remaining item -- next-eligible for a future cycle. corpus-source-inventory.md §2.1, decisions.md, and epic-breakdown.md still need an operator/doc-correction pass to formally record the final 10-class roster (Alchemist replaced by Slayer), mirroring commit 6923e54's APG roster fix -- not blocking closure."
+  corpus_input_path: "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_classes.lst:364 (CLASS:Warpriest)"
+  rule_set_used: Acg
+  kanban_card: "t_71902daa (codex-tranche-5, status=done)"
+  progress_file_updated: "yes"
+  artifacts_written: ["acg/class_warpriest_cycle_receipt.md"]
+  notes: "Ran in parallel with a sibling stream attempting to unblock Epic 5 (Bestiary 1). File-touch set (acg/, tests/sd22_acg_class_warpriest_resolves.rs, spellcasting_class.rs) disjoint from the sibling's race_ability.rs/monster_stat_block.rs/beastiary1/ files per loop-instruction.md. This cycle's own production commit (7971017) landed and pushed cleanly, but the cycle's orchestrating session was interrupted before this receipts.md append and the progress.md status-matrix update completed -- backfilled retroactively by the orchestrating session on 2026-07-20 after independently re-verifying the full test suite (418/418 green), clippy (clean), and the existing kanban card (t_71902daa, already minted and marked done by the original cycle) against the live repo state. No code or test changes were made during this backfill; it is a documentation-only correction."
