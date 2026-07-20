@@ -2,7 +2,7 @@
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
 > Last verified: 2026-07-20 against ef9012bf5de8
-> Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
+> Maintenance: pre-PR truth-up cycle per [README.md](./README.md) §Maintenance contract — fires before every PR via the architecture-truth-up skill
 
 ## Posture
 
@@ -37,7 +37,7 @@ level: a stub says so rather than pretending to work.
 | Campaign manager (local) | Create/edit/list campaigns and their assets, backed by `CampaignStore` on disk; nonce-based conflict detection with local-wins + preserved-conflict-copy resolution | [persistence.md](./persistence.md) |
 | Update eligibility / restore / verify | `is_install_eligible`, `perform_restore_previous`, `verify_relaunch_artifact` — all real, tested Tauri commands | [update-and-feedback.md](./update-and-feedback.md) |
 | Feedback composers + browser handoff | Bug/enhancement draft composition, evidence capture/redaction, and the governed GitHub-issue browser handoff | [update-and-feedback.md](./update-and-feedback.md) |
-| Release pipeline | Multi-platform publish, dual manifest validation, channel-index push, branch-promotion gates — the machinery is real and has shipped releases, but the three most recent publish runs from `develop` (2026-07-19/20) failed at the `test` job's frontend-typecheck step, so nothing is currently shipping (see [testing.md](./testing.md)) | [release-pipeline.md](./release-pipeline.md) |
+| Release pipeline | Multi-platform publish, dual manifest validation, channel-index push, branch-promotion gates — the machinery is real and has shipped releases; the `test` job's frontend-typecheck step passes cleanly (see [testing.md](./testing.md)) | [release-pipeline.md](./release-pipeline.md) |
 | Support-state matrix | 34-row typed truth ledger, read-only bridged to the desktop tester workbench | [support-state-matrix.md](./support-state-matrix.md) |
 | IPC bridge liveness | `load_backend_health` returns the real crate version and compile-time git SHA; reaching it at all proves the Tauri bridge is alive | [desktop-app.md](./desktop-app.md) |
 | Homebrew authoring workbench | The Guard Stance proof package's validate/persist/preview round trip, read-only bridged to the desktop tester workbench | [homebrew-and-oracle.md](./homebrew-and-oracle.md) |

@@ -1,7 +1,7 @@
 # Testing
 
 > Scope: the full verification command set for this repo, test conventions, the fixture grammar, and how to run corpus-gated tests — this file doubles as the "how do I verify my change" runbook.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-20 against 1a0b9d2943e2
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Quick reference: what to run for a given change
@@ -44,22 +44,12 @@ cd apps/desktop/src-tauri && cargo test --locked
 ```
 cd apps/desktop && npm run typecheck
 ```
-Runs `tsc --noEmit` (`apps/desktop/package.json` `scripts.typecheck`).
-**Currently red on a clean checkout**: after a fresh `npm ci`, `tsc --noEmit`
-exits non-zero — `@types/node` is not a declared dependency
-(`apps/desktop/package.json` lists no `@types/node`), so the
-`node:fs`/`node:path`/`node:url` imports in
-`apps/desktop/src/sd16/feedback/docCommentHygiene.test.ts` and the
-`apps/desktop/src/sd21/` / `apps/desktop/src/sd22/` doc-guard test files
-fail type resolution (TS2307),
-and `apps/desktop/src/sd16/update/fetch.ts` /
-`apps/desktop/src/sd16/update/index.ts` carry duplicate-identifier
-declarations (TS2440/TS2300). No CI workflow typechecks `tranche/5` pushes
-(see [release-pipeline.md](./release-pipeline.md)), but the same red state
-is already blocking publishes from `develop`: the three most recent
-`publish-tester-release.yml` runs (2026-07-19 through 2026-07-20) all failed
-at the `test` job's `Typecheck frontend` step, so every downstream publish
-job was skipped and no release shipped from those pushes.
+Runs `tsc --noEmit` (`apps/desktop/package.json` `scripts.typecheck`) and
+passes cleanly on a fresh `npm ci`. `@types/node` is a declared
+devDependency so the `node:fs`/`node:path`/`node:url` imports in the
+doc-guard test files resolve; `apps/desktop/src/sd16/update/fetch.ts` and
+`apps/desktop/src/sd16/update/index.ts` re-export their shared types
+without duplicate declarations.
 
 ```
 cd apps/desktop && npm test
