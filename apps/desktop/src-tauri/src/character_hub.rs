@@ -489,6 +489,76 @@ pub fn create_character(
     })
 }
 
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CloneCharacterRequest {
+    pub character_id: String,
+    pub new_character_id: String,
+    pub new_display_label: String,
+    pub saved_at: String,
+}
+
+/// Duplicates a saved character's full `CharacterInput` (race, classes,
+/// ability scores, feats, skills, equipment, spells) under a new id and
+/// display label, recomputing and saving it exactly like `create_character`.
+/// Never persists an unproven build — a source that no longer computes
+/// (e.g. after an engine change) returns `Blocked` rather than saving a copy.
+#[tauri::command]
+pub fn clone_character(
+    app: tauri::AppHandle,
+    request: CloneCharacterRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let source_root = resolve_character_root(&app, &request.character_id)?;
+    let source_envelope = SavedCharacterStore::load(&source_root).map_err(|err| err.message)?;
+
+    let mut character_input = source_envelope.character_input.clone();
+    character_input.case_id = Some(request.new_character_id.clone());
+
+    let receipt = build_pilot_headless_receipt(&character_input);
+    if receipt.status != HeadlessReceiptStatus::Computed {
+        return Ok(CreateCharacterResponse::Blocked {
+            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
+        });
+    }
+
+    let view_model = PilotViewModel::from_receipt(&receipt);
+    let snapshot = view_model
+        .snapshot
+        .as_ref()
+        .expect("Computed status guarantees a snapshot");
+
+    let corpus_receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
+
+    let envelope = SavedCharacterEnvelope {
+        character_id: request.new_character_id.clone(),
+        revision_id: format!("{}.rev.1", request.new_character_id),
+        revision_kind: SavedCharacterRevisionKind::Authoritative,
+        saved_at: request.saved_at.clone(),
+        schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+        app_or_runtime_version: app.package_info().version.to_string(),
+        content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+        game_system: GAME_SYSTEM_ID.to_owned(),
+        latest_authoritative_revision_ref: format!("{}.rev.1", request.new_character_id),
+        display_label: request.new_display_label.clone(),
+        character_input,
+    };
+
+    let new_root = resolve_character_root(&app, &request.new_character_id)?;
+    SavedCharacterStore::save(&envelope, &new_root).map_err(|err| err.message)?;
+
+    // Best-effort: carry the portrait over too, if the source has one.
+    let source_portrait = source_root.join(PORTRAIT_FILE_NAME);
+    if source_portrait.exists() {
+        let _ = std::fs::copy(&source_portrait, new_root.join(PORTRAIT_FILE_NAME));
+    }
+
+    Ok(CreateCharacterResponse::Saved {
+        summary: Box::new(summarize_envelope(&envelope)),
+        snapshot: map_snapshot_dto(snapshot),
+        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+    })
+}
+
 const DEFAULT_CHARACTER_SEED_MARKER: &str = ".default_character_seeded";
 const DEFAULT_CHARACTER_ID: &str = "00000000-0000-0000-0000-000000000001";
 const DEFAULT_CHARACTER_SAVED_AT: &str = "2026-01-01T00:00:00.000Z";
@@ -654,6 +724,25 @@ pub fn save_character_portrait(
 
     let path = root.join(PORTRAIT_FILE_NAME);
     std::fs::write(&path, &bytes).map_err(|err| format!("{}: {err}", path.display()))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ExportCharacterJsonRequest {
+    /// Destination path chosen by the frontend via the dialog plugin's
+    /// `save()` picker — this command never resolves its own path.
+    pub file_path: String,
+    pub contents: String,
+}
+
+/// Writes arbitrary JSON text (the character export payload) to a path the
+/// user picked themselves. Unlike the other character-hub commands, the
+/// destination is outside the app's own data directory, so it's taken as-is
+/// rather than resolved from a character id.
+#[tauri::command]
+pub fn export_character_json(request: ExportCharacterJsonRequest) -> Result<(), String> {
+    let path = PathBuf::from(&request.file_path);
+    std::fs::write(&path, request.contents.as_bytes()).map_err(|err| format!("{}: {err}", path.display()))
 }
 
 #[derive(Debug, Clone, Deserialize)]

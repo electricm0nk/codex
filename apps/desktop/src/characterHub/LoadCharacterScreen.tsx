@@ -1,18 +1,27 @@
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
+import { save } from '@tauri-apps/plugin-dialog';
 import type { CharacterHubListSurface, CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import { loadSavedCharacterDetail, type LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { hasTauriRuntime } from '../boundary/runtime';
+import { exportCharacterJson } from '../boundary/exportCharacterJson';
+import { cloneCharacter } from '../boundary/cloneCharacter';
+import { loadCharacterPortrait } from '../boundary/characterPortrait';
 import { buildPreviewDetail } from './previewData';
 import { formatHeldClasses } from './characterProgression';
 
 /**
  * Load Character screen, patterned after Pathbuilder's loader: a selectable
- * character list on the left, a stat-block detail pane on the right, and a
- * bottom action bar (Load / Delete / Export / Import / Cancel).
+ * character list on the left, a stat-block detail pane (portrait + summary +
+ * computed stats) on the right, and a bottom action bar
+ * (Load / Delete / Export / Clone / Import / Cancel).
  *
  * Storage is the database (no folders). Delete and Import are presented as
- * stubs until their persistence commands land; Load and Export operate on the
- * real bounded detail returned by the desktop runtime.
+ * stubs until their persistence commands land; Load, Export, and Clone
+ * operate on the real bounded detail returned by the desktop runtime.
+ * Export prompts for a save location via the native file dialog (falls back
+ * to the clipboard outside the Tauri runtime, e.g. the browser preview).
+ * Clone duplicates the full saved build (including its portrait) under a
+ * new id via the `clone_character` command, then refreshes the list.
  */
 
 const barButton = (variant: 'primary' | 'default' | 'danger', enabled: boolean): CSSProperties => ({
@@ -40,8 +49,13 @@ function StatLine(props: { label: string; children: React.ReactNode }) {
   );
 }
 
-function DetailPane(props: { row: CharacterHubListRowSurface | null; detail: LoadSavedCharacterResponse | null; detailError: string | null }) {
-  const { row, detail, detailError } = props;
+function DetailPane(props: {
+  row: CharacterHubListRowSurface | null;
+  detail: LoadSavedCharacterResponse | null;
+  detailError: string | null;
+  portraitUrl: string | null;
+}) {
+  const { row, detail, detailError, portraitUrl } = props;
 
   if (!row) {
     return (
@@ -51,28 +65,39 @@ function DetailPane(props: { row: CharacterHubListRowSurface | null; detail: Loa
 
   return (
     <div>
-      <div style={{ alignItems: 'baseline', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
-        <h2 style={{ margin: 0 }}>{row.displayLabel}</h2>
-        <span style={{ color: 'var(--color-text-secondary)', fontWeight: 700 }}>{formatHeldClasses(row.classSummary)}</span>
+      <div style={{ display: 'flex', gap: '1rem' }}>
+        {portraitUrl ? (
+          <img
+            src={portraitUrl}
+            alt={`${row.displayLabel} portrait`}
+            style={{ borderRadius: 8, flexShrink: 0, height: 96, objectFit: 'cover', width: 96 }}
+          />
+        ) : null}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ alignItems: 'baseline', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+            <h2 style={{ margin: 0 }}>{row.displayLabel}</h2>
+            <span style={{ color: 'var(--color-text-secondary)', fontWeight: 700 }}>{formatHeldClasses(row.classSummary)}</span>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', margin: '0.6rem 0' }}>
+            {[row.raceLabel, row.gameSystemLabel].map((tag) => (
+              <span
+                key={tag}
+                style={{
+                  backgroundColor: 'var(--color-surface-2)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 6,
+                  color: 'var(--color-text-secondary)',
+                  fontSize: '0.78rem',
+                  padding: '0.15rem 0.5rem',
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: 0 }}>Last modified: {row.savedAtLabel}</p>
+        </div>
       </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', margin: '0.6rem 0' }}>
-        {[row.raceLabel, row.gameSystemLabel].map((tag) => (
-          <span
-            key={tag}
-            style={{
-              backgroundColor: 'var(--color-surface-2)',
-              border: '1px solid var(--color-border)',
-              borderRadius: 6,
-              color: 'var(--color-text-secondary)',
-              fontSize: '0.78rem',
-              padding: '0.15rem 0.5rem',
-            }}
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 0.75rem' }}>Last modified: {row.savedAtLabel}</p>
 
       <hr style={{ border: 'none', borderTop: '1px solid var(--color-border)', margin: '0.75rem 0' }} />
 
@@ -119,14 +144,39 @@ export function LoadCharacterScreen(props: {
   error: string | null;
   onCancel: () => void;
   onOpenSheet: (row: CharacterHubListRowSurface, detail: LoadSavedCharacterResponse | null) => void;
+  onRefresh: () => void;
 }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<LoadSavedCharacterResponse | null>(null);
   const [detailError, setDetailError] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
+  const [portraitUrl, setPortraitUrl] = useState<string | null>(null);
+  const [cloning, setCloning] = useState(false);
 
   const rows = props.surface?.rows ?? [];
   const selectedRow = rows.find((row) => row.characterId === selectedId) ?? null;
+
+  useEffect(() => {
+    if (!selectedId || !hasTauriRuntime()) {
+      setPortraitUrl(null);
+      return;
+    }
+    let cancelled = false;
+    loadCharacterPortrait(selectedId)
+      .then((url) => {
+        if (!cancelled) {
+          setPortraitUrl(url);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setPortraitUrl(null);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedId]);
 
   function selectRow(characterId: string) {
     setSelectedId(characterId);
@@ -165,11 +215,62 @@ export function LoadCharacterScreen(props: {
       return;
     }
     const payload = JSON.stringify({ summary: selectedRow, detail }, null, 2);
+
+    // Without the Tauri runtime (e.g. the browser preview) there's no native
+    // save dialog to show — fall back to the clipboard so export still does
+    // something useful.
+    if (!hasTauriRuntime()) {
+      try {
+        await navigator.clipboard.writeText(payload);
+        setStatus(`Copied ${selectedRow.displayLabel} as JSON to the clipboard.`);
+      } catch {
+        setStatus('Could not access the clipboard to export.');
+      }
+      return;
+    }
+
+    const safeName = selectedRow.displayLabel.replace(/[^a-z0-9-_ ]/gi, '').trim() || 'character';
     try {
-      await navigator.clipboard.writeText(payload);
-      setStatus(`Copied ${selectedRow.displayLabel} as JSON to the clipboard.`);
-    } catch {
-      setStatus('Could not access the clipboard to export.');
+      const filePath = await save({
+        defaultPath: `${safeName}.json`,
+        filters: [{ name: 'Character JSON', extensions: ['json'] }],
+      });
+      if (!filePath) {
+        return;
+      }
+      await exportCharacterJson(filePath, payload);
+      setStatus(`Exported ${selectedRow.displayLabel} to ${filePath}.`);
+    } catch (cause: unknown) {
+      setStatus(cause instanceof Error ? cause.message : 'Could not export the character.');
+    }
+  }
+
+  async function handleClone() {
+    if (!selectedRow) {
+      return;
+    }
+    if (!hasTauriRuntime()) {
+      setStatus('Cloning requires the desktop runtime.');
+      return;
+    }
+    setCloning(true);
+    try {
+      const outcome = await cloneCharacter({
+        characterId: selectedRow.characterId,
+        newCharacterId: crypto.randomUUID(),
+        newDisplayLabel: `${selectedRow.displayLabel} (Copy)`,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Saved') {
+        setStatus(`Cloned ${selectedRow.displayLabel} as "${outcome.summary.displayLabel}".`);
+        props.onRefresh();
+      } else {
+        setStatus('Clone failed: the copy no longer computes cleanly, so nothing was saved.');
+      }
+    } catch (cause: unknown) {
+      setStatus(cause instanceof Error ? cause.message : 'Could not clone the character.');
+    } finally {
+      setCloning(false);
     }
   }
 
@@ -226,7 +327,7 @@ export function LoadCharacterScreen(props: {
 
         {/* Detail pane */}
         <div style={{ border: '1px solid var(--color-border)', borderRadius: 12, flex: 1, overflowY: 'auto', padding: '1.25rem' }}>
-          <DetailPane row={selectedRow} detail={detail} detailError={detailError} />
+          <DetailPane row={selectedRow} detail={detail} detailError={detailError} portraitUrl={portraitUrl} />
         </div>
       </div>
 
@@ -247,6 +348,9 @@ export function LoadCharacterScreen(props: {
         </button>
         <button type="button" onClick={handleExport} disabled={!selectedId} style={barButton('default', Boolean(selectedId))}>
           Export
+        </button>
+        <button type="button" onClick={handleClone} disabled={!selectedId || cloning} style={barButton('default', Boolean(selectedId) && !cloning)}>
+          {cloning ? 'Cloning…' : 'Clone'}
         </button>
         <button
           type="button"

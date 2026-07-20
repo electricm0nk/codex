@@ -12,11 +12,15 @@ import {
   parseHeldClasses,
   totalCharacterLevel,
   totalSkillPoints,
+  type HeldClass,
   type LevelEntry,
   type WeaponProficiency,
 } from './characterProgression';
-import { RACE_OPTIONS } from './characterHubModel';
+import { AGE_OPTIONS, ALIGNMENT_OPTIONS, RACE_OPTIONS } from './characterHubModel';
 import { PortraitUpload } from './PortraitUpload';
+import { LevelUpDialog } from './LevelUpDialog';
+import { SkillAllocationDialog } from './SkillAllocationDialog';
+import { DEFAULT_SKILL_ALLOCATION, SKILLS, isClassSkill, skillModifier, skillRankCost, totalSkillPointsAvailable } from './skillsModel';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -99,47 +103,6 @@ const ABILITY_COLUMNS: ReadonlyArray<{ key: keyof AbilityScoresDto; label: strin
   { key: 'intelligence', label: 'INT' },
   { key: 'wisdom', label: 'WIS' },
   { key: 'charisma', label: 'CHA' },
-];
-
-// The Pathfinder 1e skill list with governing abilities. The ability modifier
-// seeds a plausible untrained value in the scaffold; ranks and class-skill
-// bonuses are not yet computed.
-const SKILLS: ReadonlyArray<{ name: string; ability: keyof AbilityScoresDto }> = [
-  { name: 'Acrobatics', ability: 'dexterity' },
-  { name: 'Appraise', ability: 'intelligence' },
-  { name: 'Bluff', ability: 'charisma' },
-  { name: 'Climb', ability: 'strength' },
-  { name: 'Craft', ability: 'intelligence' },
-  { name: 'Diplomacy', ability: 'charisma' },
-  { name: 'Disable Device', ability: 'dexterity' },
-  { name: 'Disguise', ability: 'charisma' },
-  { name: 'Escape Artist', ability: 'dexterity' },
-  { name: 'Fly', ability: 'dexterity' },
-  { name: 'Handle Animal', ability: 'charisma' },
-  { name: 'Heal', ability: 'wisdom' },
-  { name: 'Intimidate', ability: 'charisma' },
-  { name: 'Knowledge (Arcana)', ability: 'intelligence' },
-  { name: 'Knowledge (Dungeoneering)', ability: 'intelligence' },
-  { name: 'Knowledge (Engineering)', ability: 'intelligence' },
-  { name: 'Knowledge (Geography)', ability: 'intelligence' },
-  { name: 'Knowledge (History)', ability: 'intelligence' },
-  { name: 'Knowledge (Local)', ability: 'intelligence' },
-  { name: 'Knowledge (Nature)', ability: 'intelligence' },
-  { name: 'Knowledge (Nobility)', ability: 'intelligence' },
-  { name: 'Knowledge (Planes)', ability: 'intelligence' },
-  { name: 'Knowledge (Religion)', ability: 'intelligence' },
-  { name: 'Linguistics', ability: 'intelligence' },
-  { name: 'Perception', ability: 'wisdom' },
-  { name: 'Perform', ability: 'charisma' },
-  { name: 'Profession', ability: 'wisdom' },
-  { name: 'Ride', ability: 'dexterity' },
-  { name: 'Sense Motive', ability: 'wisdom' },
-  { name: 'Sleight of Hand', ability: 'dexterity' },
-  { name: 'Spellcraft', ability: 'intelligence' },
-  { name: 'Stealth', ability: 'dexterity' },
-  { name: 'Survival', ability: 'wisdom' },
-  { name: 'Swim', ability: 'strength' },
-  { name: 'Use Magic Device', ability: 'charisma' },
 ];
 
 /** A titled stat panel. */
@@ -265,19 +228,84 @@ function AttackPanel(props: { baseAttackBonus: number; cmb: number; cmd: number 
   );
 }
 
-function SkillsPanel(props: { abilities: AbilityScoresDto }) {
+/** Automatic PF1 languages: every character knows Common; a positive Int modifier grants that many bonus language slots. */
+function spokenLanguages(intelligenceModifier: number): string[] {
+  const languages = ['Common'];
+  if (intelligenceModifier > 0) {
+    languages.push(`+${intelligenceModifier} bonus language slot${intelligenceModifier > 1 ? 's' : ''} (not yet selectable)`);
+  }
+  return languages;
+}
+
+function SkillsPanel(props: {
+  abilities: AbilityScoresDto;
+  heldClasses: HeldClass[];
+  isHuman: boolean;
+  allocation: Record<string, number>;
+  realModifiers?: { climb: number; intimidate: number; swim: number };
+  onOpenDialog: () => void;
+}) {
+  const REAL_MODIFIER_BY_SKILL: Record<string, number | undefined> = {
+    Climb: props.realModifiers?.climb,
+    Intimidate: props.realModifiers?.intimidate,
+    Swim: props.realModifiers?.swim,
+  };
+
+  const spent = SKILLS.reduce(
+    (sum, skill) => sum + (props.allocation[skill.name] ?? 0) * skillRankCost(isClassSkill(props.heldClasses, skill.name)),
+    0
+  );
+  const remaining = totalSkillPointsAvailable(props.heldClasses, props.abilities.intelligence, props.isHuman) - spent;
+
   return (
     <StatBox title="Skills">
+      <button
+        type="button"
+        onClick={props.onOpenDialog}
+        title="Manage skill allocation"
+        style={{
+          alignItems: 'center',
+          backgroundColor: remaining > 0 ? 'var(--color-surface-2)' : 'transparent',
+          border: `1px solid ${remaining > 0 ? 'var(--color-accent)' : 'var(--color-border)'}`,
+          borderRadius: 6,
+          cursor: 'pointer',
+          display: 'flex',
+          fontSize: '0.75rem',
+          justifyContent: 'space-between',
+          marginBottom: '0.5rem',
+          padding: '0.35rem 0.55rem',
+          width: '100%',
+        }}
+      >
+        <span style={{ color: 'var(--color-text-secondary)' }}>Manage skill allocation</span>
+        {remaining > 0 ? (
+          <span style={{ color: 'var(--color-accent)', fontWeight: 800 }}>{remaining} unallocated</span>
+        ) : (
+          <span style={{ color: 'var(--color-text-muted)' }}>fully allocated</span>
+        )}
+      </button>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
-        {SKILLS.map((skill) => (
-          <div key={skill.name} style={{ alignItems: 'center', display: 'flex', fontSize: '0.85rem', gap: '0.4rem' }}>
-            <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{fmt(props.abilities[skill.ability])}</span>
-            <span>{skill.name}</span>
-          </div>
-        ))}
+        {SKILLS.map((skill) => {
+          const classSkill = isClassSkill(props.heldClasses, skill.name);
+          const ranks = props.allocation[skill.name] ?? 0;
+          const abilityMod = props.abilities[skill.ability];
+          const real = REAL_MODIFIER_BY_SKILL[skill.name];
+          const total = real ?? skillModifier(abilityMod, ranks, classSkill);
+          return (
+            <div key={skill.name} style={{ alignItems: 'center', display: 'flex', fontSize: '0.85rem', gap: '0.4rem' }}>
+              <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{fmt(total)}</span>
+              <span style={{ color: classSkill ? 'var(--color-text)' : 'var(--color-text-secondary)' }}>{skill.name}</span>
+              {ranks > 0 ? <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem' }}>({ranks})</span> : null}
+            </div>
+          );
+        })}
       </div>
-      <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.5rem 0 0' }}>
-        Scaffold — skill ranks and class-skill bonuses are not yet computed.
+      <hr style={{ border: 'none', borderTop: '1px solid var(--color-border)', margin: '0.6rem 0' }} />
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.03em', margin: '0 0 0.3rem', textTransform: 'uppercase' }}>
+        Languages
+      </p>
+      <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', margin: 0 }}>
+        {spokenLanguages(props.abilities.intelligence).join(', ')}
       </p>
     </StatBox>
   );
@@ -288,37 +316,131 @@ function SkillsPanel(props: { abilities: AbilityScoresDto }) {
 const TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Details', 'Feats', 'Actions', 'Bio', 'Overrides'] as const;
 type Tab = (typeof TABS)[number];
 
-/** Character bio / physical details panel across the top of the right column. */
-function DetailsPanel(props: { vision: string; size: string }) {
-  const fields: ReadonlyArray<{ label: string; value: string }> = [
-    { label: 'Alignment', value: '—' },
-    { label: 'Deity', value: '—' },
-    { label: 'Sex', value: '—' },
-    { label: 'Age', value: '—' },
-    { label: 'Height', value: '—' },
-    { label: 'Weight', value: '—' },
-    { label: 'Hair', value: '—' },
-    { label: 'Eyes', value: '—' },
-    { label: 'Vision', value: props.vision },
-    { label: 'Size', value: props.size },
-  ];
+export interface BioFields {
+  alignment: string;
+  deity: string;
+  sex: string;
+  age: string;
+  height: string;
+  weight: string;
+  hair: string;
+  eyes: string;
+}
+
+export const BLANK_BIO_FIELDS: BioFields = {
+  alignment: '',
+  deity: '',
+  sex: '',
+  age: '',
+  height: '',
+  weight: '',
+  hair: '',
+  eyes: '',
+};
+
+const bioFieldLabelStyle: CSSProperties = {
+  color: 'var(--color-text-muted)',
+  fontSize: '0.62rem',
+  letterSpacing: '0.03em',
+  margin: '0 0 0.2rem',
+  textTransform: 'uppercase',
+};
+
+const bioFieldInputStyle: CSSProperties = {
+  backgroundColor: 'var(--color-surface-2)',
+  border: '1px solid var(--color-border)',
+  borderRadius: 6,
+  boxSizing: 'border-box',
+  color: 'var(--color-text)',
+  fontSize: '0.85rem',
+  fontWeight: 600,
+  padding: '0.3rem 0.4rem',
+  width: '100%',
+};
+
+function BioField(props: { label: string; children: ReactNode }) {
+  return (
+    <div>
+      <p style={bioFieldLabelStyle}>{props.label}</p>
+      {props.children}
+    </div>
+  );
+}
+
+/** Calculated, non-editable value shown alongside the editable bio fields. */
+function CalculatedBioField(props: { label: string; value: string }) {
+  return (
+    <div>
+      <p style={bioFieldLabelStyle}>{props.label}</p>
+      <p style={{ fontWeight: 600, margin: 0 }}>{props.value}</p>
+    </div>
+  );
+}
+
+/**
+ * Character bio / physical details panel across the top of the right column.
+ * Alignment/Deity/Sex/Age/Height/Weight/Hair/Eyes are the character's own
+ * choices, so they're editable here; Vision and Size are derived from race
+ * and rendered read-only. Edits are session-local — there is no persisted
+ * schema slot for these fields yet (see BLANK_BIO_FIELDS' call site), so
+ * they are lost on close/reopen until a future cycle wires storage.
+ */
+function DetailsPanel(props: { vision: string; size: string; bio: BioFields; onBioChange: (patch: Partial<BioFields>) => void }) {
+  const { bio, onBioChange } = props;
   return (
     <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
         Character Details
       </p>
       <div style={{ display: 'grid', gap: '0.75rem 1.25rem', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))' }}>
-        {fields.map((field) => (
-          <div key={field.label}>
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.62rem', letterSpacing: '0.03em', margin: 0, textTransform: 'uppercase' }}>
-              {field.label}
-            </p>
-            <p style={{ fontWeight: 600, margin: '0.1rem 0 0' }}>{field.value}</p>
-          </div>
-        ))}
+        <BioField label="Alignment">
+          <select style={bioFieldInputStyle} value={bio.alignment} onChange={(event) => onBioChange({ alignment: event.target.value })}>
+            <option value="">—</option>
+            {ALIGNMENT_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </BioField>
+        <BioField label="Deity">
+          <input style={bioFieldInputStyle} value={bio.deity} onChange={(event) => onBioChange({ deity: event.target.value })} />
+        </BioField>
+        <BioField label="Sex">
+          <select style={bioFieldInputStyle} value={bio.sex} onChange={(event) => onBioChange({ sex: event.target.value })}>
+            <option value="">—</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </BioField>
+        <BioField label="Age">
+          <select style={bioFieldInputStyle} value={bio.age} onChange={(event) => onBioChange({ age: event.target.value })}>
+            <option value="">—</option>
+            {AGE_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </BioField>
+        <BioField label="Height">
+          <input style={bioFieldInputStyle} value={bio.height} onChange={(event) => onBioChange({ height: event.target.value })} />
+        </BioField>
+        <BioField label="Weight">
+          <input style={bioFieldInputStyle} value={bio.weight} onChange={(event) => onBioChange({ weight: event.target.value })} />
+        </BioField>
+        <BioField label="Hair">
+          <input style={bioFieldInputStyle} value={bio.hair} onChange={(event) => onBioChange({ hair: event.target.value })} />
+        </BioField>
+        <BioField label="Eyes">
+          <input style={bioFieldInputStyle} value={bio.eyes} onChange={(event) => onBioChange({ eyes: event.target.value })} />
+        </BioField>
+        <CalculatedBioField label="Vision" value={props.vision} />
+        <CalculatedBioField label="Size" value={props.size} />
       </div>
       <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.6rem 0 0' }}>
-        Bio fields are captured on the create screen; persisting them is not yet wired.
+        Vision and Size are calculated from race and aren't editable. The other fields aren't saved to the
+        character file yet — edits here only last for this session.
       </p>
     </div>
   );
@@ -465,6 +587,14 @@ export function CharacterSheet(props: {
   const [tab, setTab] = useState<Tab>('Weapons');
   const [menuOpen, setMenuOpen] = useState(false);
   const [leftCollapsed, setLeftCollapsed] = useState(false);
+  const [levelUpOpen, setLevelUpOpen] = useState(false);
+  const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
+  const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>({ ...DEFAULT_SKILL_ALLOCATION });
+  const [skillDialogOpen, setSkillDialogOpen] = useState(false);
+
+  function updateBio(patch: Partial<BioFields>) {
+    setBio((prev) => ({ ...prev, ...patch }));
+  }
 
   const snapshot = props.detail?.snapshot ?? null;
   const abilities = snapshot?.abilityModifiers ?? ZERO_ABILITIES;
@@ -476,7 +606,6 @@ export function CharacterSheet(props: {
 
   const heldClasses = parseHeldClasses(props.row.classSummary);
   const classLabel = formatHeldClasses(props.row.classSummary); // e.g. "Fighter 3 / Wizard 1"
-  const classNames = heldClasses.map((held) => held.classLabel).join(' / ');
   const level = totalCharacterLevel(props.row.classSummary);
   const casterLvl = casterLevel(props.row.classSummary);
   const isHuman = props.row.raceLabel.toLowerCase() === 'human';
@@ -628,9 +757,36 @@ export function CharacterSheet(props: {
 
               {/* Level / XP */}
               <div style={{ ...panel, display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', padding: '0.4rem' }}>
-                <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', textAlign: 'center' }}>
+                <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', position: 'relative', textAlign: 'center' }}>
                   <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Level</p>
                   <p style={{ fontWeight: 800, margin: 0 }}>{level}</p>
+                  <button
+                    type="button"
+                    onClick={() => setLevelUpOpen(true)}
+                    title="Level up"
+                    aria-label="Level up"
+                    style={{
+                      alignItems: 'center',
+                      background: 'var(--color-accent)',
+                      border: 'none',
+                      borderRadius: '50%',
+                      color: 'var(--color-on-accent)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      fontSize: '0.7rem',
+                      fontWeight: 800,
+                      height: 16,
+                      justifyContent: 'center',
+                      lineHeight: 1,
+                      padding: 0,
+                      position: 'absolute',
+                      right: 4,
+                      top: 4,
+                      width: 16,
+                    }}
+                  >
+                    +
+                  </button>
                 </div>
                 <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', textAlign: 'center' }}>
                   <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Caster Level</p>
@@ -638,9 +794,21 @@ export function CharacterSheet(props: {
                 </div>
               </div>
 
+              <LevelUpDialog
+                open={levelUpOpen}
+                onClose={() => setLevelUpOpen(false)}
+                heldClasses={heldClasses}
+                intelligenceModifier={abilities.intelligence}
+                isHuman={isHuman}
+                onAccept={() => {
+                  // Backend wiring (persisting the new level onto the saved
+                  // character) is a separate follow-on — accepting is a no-op today.
+                }}
+              />
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <NavCard label="Race" value={props.row.raceLabel} />
-                <NavCard label="Class" value={classNames} />
+                <NavCard label="Class" value={classLabel} />
               </div>
 
               {/* Current levels — each level taken and what it granted */}
@@ -737,10 +905,28 @@ export function CharacterSheet(props: {
 
         {/* RIGHT: character details, then skills beneath */}
         <div style={{ flex: '0 0 300px', minWidth: 0 }}>
-          <DetailsPanel vision={vision} size={size} />
-          <SkillsPanel abilities={abilities} />
+          <DetailsPanel vision={vision} size={size} bio={bio} onBioChange={updateBio} />
+          <SkillsPanel
+            abilities={abilities}
+            heldClasses={heldClasses}
+            isHuman={isHuman}
+            allocation={skillAllocation}
+            realModifiers={snapshot?.selectedSkillModifiers}
+            onOpenDialog={() => setSkillDialogOpen(true)}
+          />
         </div>
       </div>
+
+      <SkillAllocationDialog
+        open={skillDialogOpen}
+        onClose={() => setSkillDialogOpen(false)}
+        heldClasses={heldClasses}
+        characterLevel={level}
+        abilities={abilities}
+        totalPoints={totalSkillPointsAvailable(heldClasses, abilities.intelligence, isHuman)}
+        allocation={skillAllocation}
+        onAccept={setSkillAllocation}
+      />
     </div>
   );
 }
