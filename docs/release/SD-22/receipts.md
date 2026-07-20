@@ -810,8 +810,8 @@ that are already self-evident from the cycle_artifact_path.)
   evidence_tier_before: complete (criteria 14-17, subset 01 + subset 02)
   evidence_tier_after: complete (criteria 14-17, re-verified against a third subset: Bat Swarm, Boar, Boggard, Bugbear, Cave Fisher)
   branch_tip_before: a0376d1
-  branch_tip_after: PENDING (see this cycle's log entry for the final commit SHA)
-  merge_receipt_sha: PENDING (see this cycle's log entry for the final commit SHA)
+  branch_tip_after: 0111b2b
+  merge_receipt_sha: 0111b2bc3de23cb3373efa24dc7e6bd77da37150
   cycle_artifact_path: "beastiary1/subset_03_cycle_receipt.md"
   red_phase_evidence: "cargo test --locked --test sd22_beastiary1_subset_03_resolves against the pre-cycle tree failed to compile with error[E0599]: no variant, associated function, or constant named `BatSwarm`/`Boar`/`Boggard`/`Bugbear`/`CaveFisher` found for enum `MonsterId` (11 call sites) -- see cycle_artifact_path:Red-phase evidence"
   green_phase_evidence: "wrote src/rules_core/rules_tables/beastiary1/monster_subset_03.rs (Bat Swarm/Boar/Boggard/Bugbear/Cave Fisher chassis, transcribed from b1_races.lst:41,49,51,52,59) and wired it into beastiary1/mod.rs (pub mod monster_subset_03, five new MonsterId variants, match arms) -- diff is purely additive, no existing lines changed. No parser widening needed -- monster_stat_block.rs's existing recognition surface already covers every field these five monsters use, including Boar/Bugbear's empty natural_attacks (no NATURALATTACKS: token on their real rows). Added a real-corpus-gated grounding test to tests/sd17_b_monster_stat_block.rs. sd22_beastiary1_subset_03_resolves 6/6 passed, sd17_b_monster_stat_block --ignored 3/3 passed, full cargo test --locked 0 failed across 423 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
