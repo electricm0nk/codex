@@ -684,9 +684,9 @@ that are already self-evident from the cycle_artifact_path.)
   row_or_kind: ingest:beastiary1_subset
   evidence_tier_before: blocked ("new parsing code required" -- race_ability.rs's RACE:/RACES:/ABILITY:-only parser extracts zero records from b1_races.lst's bare tab-delimited monster rows)
   evidence_tier_after: complete (criteria 14-17) -- parser gap resolved in-cycle; subset 01 lands
-  branch_tip_before: f40864e
-  branch_tip_after: "(this commit; see progress.md backfill)"
-  merge_receipt_sha: "(this commit; see progress.md backfill)"
+  branch_tip_before: 7971017
+  branch_tip_after: cb4b779
+  merge_receipt_sha: cb4b779b43dca7dd5d3bc6479370454c349d29c1
   cycle_artifact_path: "beastiary1/subset_01_cycle_receipt.md"
   red_phase_evidence: "cargo test --locked --test sd22_beastiary1_subset_01_resolves and --test sd17_b_monster_stat_block both failed to compile with error[E0583]: file not found for module `beastiary1` (RuleSetId::Bestiary1 + pub mod beastiary1 declared first to make the gap concrete; the module file and the new monster_stat_block parser didn't exist yet) -- see cycle_artifact_path:Red-phase evidence"
   green_phase_evidence: "wrote src/pcgen_import/lst_parser/monster_stat_block.rs (new bare-tab-delimited monster stat-block parser, sibling to race_ability.rs), src/rules_core/rules_tables/beastiary1/{mod.rs,monster_subset_01.rs}. All 4 acceptance tests green, the real-corpus-gated parser-gap test green (PCGEN_CORPUS_ROOT), 6/6 internal parser unit tests green, full cargo test --locked 0 failed across 418 test-result:ok blocks, clippy clean -- see cycle_artifact_path:Green-phase evidence"
