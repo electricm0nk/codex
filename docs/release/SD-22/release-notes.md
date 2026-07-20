@@ -45,5 +45,5 @@ Tranche 5 lands content-source ingest for two Pathfinder 1e source books (Advanc
 
 ## Update Eligibility
 
-- No changes to the update/install mechanism in this tranche — eligibility follows the same Linux AppImage mechanism established in SD-16 (`programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md`).
+- No changes to the update/install mechanism in this tranche — eligibility follows the same Linux AppImage mechanism established in SD-16 (`docs/release/SD-16/release-notes.md`).
 - This release introduces no update-critical UI or install-path changes; existing eligible installs Check/Install through the same governed channel-index flow.

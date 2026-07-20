@@ -42,18 +42,19 @@ codex/
     homebrew_authoring/  # GE-08 bounded package/preview surfaces
   tests/                 # bounded proof harness
   apps/desktop/          # React + Tauri desktop shell/workbench surface
-  docs/release/          # per-bundle (SD-NN) planning + execution docs — see below
-  programs/codex/requirements/  # release-notes.md only, per bundle — see below
+  docs/release/          # per-bundle (SD-NN) planning + execution docs, including release-notes.md — see below
+  programs/codex/requirements/  # legacy pre-SD-18 bundles only (frozen) — see below
   AGENTS.md              # repo-root conduct surface for coding harnesses
   README.md              # first-contact onboarding surface
 ```
 
 ### Documentation structure
 
-Each "SD-NN" (spec-domain) work bundle's documentation has exactly two homes, serving different purposes — don't mix them:
+Every "SD-NN" (spec-domain) work bundle's documentation, including its CI-contracted `release-notes.md`, lives in one place:
 
-- **`docs/release/SD-NN/`** — the canonical home for a bundle's full planning and execution documentation: `scope-draft.md`, `decisions.md`, `epic-breakdown.md`, `loop-instruction.md`, `progress.md`, `receipts.md`, per-cycle `artifacts/`, and any other bundle-specific doc. One folder per bundle, named exactly `SD-NN`. Copy `docs/release/template/template.md` when starting a new bundle; see `docs/release/README.md` for the full layout rule.
-- **`programs/codex/requirements/<SD-slug>/release-notes.md`** — reserved *exclusively* for a bundle's `release-notes.md`. This is not a planning-doc location; it's a regex-locked CI/schema contract (`^programs/codex/requirements/[^/]+/release-notes\.md$`) consumed by `tools/release/`, `scripts/release/`, and the `publish-tester-release.yml` workflow, plus the desktop app's auto-update pipeline. Required section headers: `Summary`, `User-Visible Changes`, `Defects Fixed`, `Operational Notes`, `Verification Evidence`, `Known Issues`, `Update Eligibility` (enforced by `tools/release/check_release_manifest.py`). Nothing else should be added under `programs/codex/requirements/` for new bundles. (SD-13/16/17 predate the `docs/release/` convention and keep their legacy `artifacts/` here as frozen historical record — not a pattern to follow for new bundles.)
+- **`docs/release/SD-NN/`** — the canonical home for a bundle's full planning and execution documentation: `scope-draft.md`, `decisions.md`, `epic-breakdown.md`, `loop-instruction.md`, `progress.md`, `receipts.md`, per-cycle `artifacts/`, and `release-notes.md`. One folder per bundle, named exactly `SD-NN`. Copy `docs/release/template/template.md` when starting a new bundle; see `docs/release/README.md` for the full layout rule.
+- **`docs/release/SD-NN/release-notes.md` is also a regex-locked CI/schema contract** (`^docs/release/[^/]+/release-notes\.md$`, relocated 2026-07-20 from `programs/codex/requirements/<SD-slug>/`) consumed by `tools/release/`, `scripts/release/`, `publish-tester-release.yml`, and the desktop app's auto-update pipeline. Required section headers: `Summary`, `User-Visible Changes`, `Defects Fixed`, `Operational Notes`, `Verification Evidence`, `Known Issues`, `Update Eligibility` (enforced by `tools/release/check_release_manifest.py`). Note: ~25 already-published `update-manifest.json` files on the live `update-index` branch still reference the pre-2026-07-20 `programs/codex/requirements/` path with a locked content hash — those are not retroactively rewritten (a CI-only-write surface), so their "view release notes" binding is permanently stale by design.
+- **`programs/codex/requirements/`** now holds only SD-13/16/17's legacy `artifacts/` — pre-`docs/release/`-convention bundles, kept as frozen historical record. Nothing new should be added here.
 - **`docs/doctrine-external/`** — a deliberate stub mirror of operator-side governance docs (`spec-domain-lifecycle.md`, `identifier-discipline.md`) so relative links from `docs/release/SD-NN/*.md` resolve in a cold clone. Not for new content.
 - **This repo's own `programs/codex/requirements/`** is distinct from the operator's separate, out-of-repo `/home/workspace/programs/codex/requirements/` planning-intake path referenced in `docs/release/README.md` — they share a path suffix but are not the same directory. See that file's Cross-reference section for the full distinction.
 

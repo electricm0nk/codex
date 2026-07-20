@@ -113,7 +113,7 @@ These extensions do not modify the 31-criteria flower's gating. Epic 9 evaluates
 The closure posture is reviewable entirely from these surfaces:
 
 - `~/workspace/SD-18-core-rules-breadth-progress.md` — shared progress doc; SD-22 appends under its own `## SD-22 cycles` section.
-- `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/release-notes.md` — generated release notes (repo-relative; this is the repo's own `programs/codex/requirements/`, a CI/schema-contracted location — not the operator's separate out-of-repo `~/workspace/programs/codex/requirements/`. Corrected 2026-07-20; see `docs/release/README.md`'s Cross-reference section for the distinction).
+- `docs/release/SD-22/release-notes.md` — generated release notes; a CI/schema-contracted location. Corrected twice on 2026-07-20 (first to `programs/codex/requirements/SD-22-content-source-ingest-and-dm-toolkit/`, then relocated here for good by a full docs-structure consolidation — see `docs/release/README.md`'s Cross-reference section for the full history).
 - `docs/release/SD-22/release-closure-checklist.md` — per-position bump-process checklist (relocated 2026-07-20 from a stray `docs/SD-22/` path).
 - `git log --oneline tranche/5 -N` — the SD-22 commit history.
 - `codex-tranche-5` board — SD-22 cards populated, every epic-card `status=done`, with audit comments per codex-tranche-2-5 respawn-guard pattern.

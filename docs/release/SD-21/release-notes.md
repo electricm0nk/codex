@@ -74,4 +74,4 @@ Generated as part of Epic 4 (Closure Epilogue), criterion E4.22. Sourced from `~
 ## Update Eligibility
 
 - This release directly fixes update eligibility reporting (see Defects Fixed above): `is_install_eligible` and `computeDecision` now reflect genuine fetched/probed install state instead of permanently reporting `'unknown'`/stub values.
-- Install target and mechanism are otherwise unchanged from SD-16's established Linux AppImage flow (`programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md`).
+- Install target and mechanism are otherwise unchanged from SD-16's established Linux AppImage flow (`docs/release/SD-16/release-notes.md`).
