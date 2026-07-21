@@ -23,7 +23,7 @@ import { formatHeldClasses } from '../characterHub/characterProgression';
  *
  * These tabs hold markdown assets. localStorage (campaignModel.ts) is the
  * source of truth — every change here also gets mirrored to real `.md`
- * files under the campaign's local folder (see `syncCampaignDriveArtifacts`)
+ * files under the campaign's local folder (see `writeCampaignLocalFolderArtifacts`)
  * so the campaign stays inspectable/shareable as plain files, but there is
  * no network sync: by design, this app never talks to a cloud API.
  */

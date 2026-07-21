@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { RULE_SETS } from '../characterHub/LandingScreen';
-import { getCampaign, syncCampaignDriveArtifacts, updateCampaign, type Campaign } from './campaignModel';
+import { getCampaign, writeCampaignLocalFolderArtifacts, updateCampaign, type Campaign } from './campaignModel';
 import { loadCharacterHubListSurfaceRuntime } from '../characterHub/characterHubRuntime';
 import type { CharacterHubListRowSurface } from '../characterHub/buildCharacterHubListSurface';
 import { formatHeldClasses } from '../characterHub/characterProgression';
@@ -108,21 +108,18 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
       ruleSetId: selectedRuleSet.id,
       ruleSetLabel: selectedRuleSet.name,
       description: description.trim(),
-      members: cleanedEmails.map((email) => ({
-        email,
-        invited: campaign.members.find((member) => member.email === email)?.invited ?? true,
-      })),
+      members: cleanedEmails.map((email) => ({ email })),
       partyCharacterIds: partyIds,
     });
     if (updated) {
       setCampaign(updated);
     }
     setStatus('Saving…');
-    const result = await syncCampaignDriveArtifacts(campaign.id);
+    const result = await writeCampaignLocalFolderArtifacts(campaign.id);
     setStatus(
       result.ok
         ? `Saved. Wrote .config/${name.trim()}.json to ${result.campaignFolderPath}.`
-        : `Saved, but the Drive folder could not be written: ${result.error}`
+        : `Saved, but the local folder could not be written: ${result.error}`
     );
     props.onSaved();
   }
