@@ -7,9 +7,9 @@
 # Canonical repo-relative release-notes path. The PR body always records this
 # doctrine path (AV-BR-6); RELEASE_NOTES_PATH only overrides which file the
 # validator reads (used by the headless test fixtures).
-RELEASE_NOTES_REPO_PATH="programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md"
+RELEASE_NOTES_REPO_PATH="docs/release/SD-16/release-notes.md"
 TRANCHE_ID="codex-tranche-2-5"
-DEFAULT_TRANCHE_MANIFEST_PATH="programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/tranche-manifest.json"
+DEFAULT_TRANCHE_MANIFEST_PATH="docs/release/SD-16/tranche-manifest.json"
 
 # Required release-notes section headers, in doctrine order.
 REQUIRED_NOTE_SECTIONS=(

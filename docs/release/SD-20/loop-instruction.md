@@ -92,7 +92,7 @@ The SD-20 cycle surface is concentrated in these files:
 | File | Purpose | Cycles that may touch it |
 |---|---|---|
 | `src/rules_core/contract.rs` | NEW; the `CharacterInput` / `PilotReceipt` types and printed-sheet cell map. Touched only by epic 1's cycles (definition) — other epics read but don't edit. | One cycle at a time (epic 1's cycles). |
-| `docs/SD-20/boundary-contract.md` | NEW; the boundary contract artifact. Epic 1's cycles only. | One cycle at a time. |
+| `docs/release/SD-20/boundary-contract.md` | NEW; the boundary contract artifact. Epic 1's cycles only. | One cycle at a time. |
 | `tests/fixtures/wire/sd20/<file>.json` | NEW directory; golden JSON fixtures. Per-epic cycles add their fixture on first cycle of that epic. | One cycle per file (the file's owning criterion). |
 | `src/rules_core/spellbook.rs` | NEW; the spellbook engine epic's parent module. Epic 2's cycles only. | One cycle at a time. |
 | `src/rules_core/spellbook/<school>.rs` | NEW directory; per-school contribution functions (9 files). Epic 2's cycles only — one file per cycle. | One cycle per file (the file's owning school). |
@@ -172,7 +172,7 @@ Capture the failing output. It is the RED evidence.
 For SD-20 cycles, the change is one of:
 
 - **Epic 1 extension to the boundary contract types** in `src/rules_core/contract.rs`. Add fields, fix structure, document cross-references.
-- **Epic 1 extension to the boundary contract artifact** at `docs/SD-20/boundary-contract.md`. Three sections (CharacterInput shapes, PilotReceipt fields, printed-sheet cell map).
+- **Epic 1 extension to the boundary contract artifact** at `docs/release/SD-20/boundary-contract.md`. Three sections (CharacterInput shapes, PilotReceipt fields, printed-sheet cell map).
 - **Epic 1 new wire-fixture parity test** at `tests/fixtures/wire/sd20/<criterion>.json`. JSON format per `technical-design.md` §1.2.
 - **Epic 2 spellbook engine extension** in `src/rules_core/spellbook.rs` or `src/rules_core/spellbook/<school>.rs`.
 - **Epic 3 feat prerequisite engine extension** in `src/rules_core/feat_prereqs.rs` or `src/rules_core/feat_prereqs/<category>.rs`.
@@ -204,7 +204,7 @@ git add src/rules_core/contract.rs \
         src/rules_core/equipment_effects.rs \
         src/rules_core/damage_total.rs \
         src/rules_core/level_up.rs \
-        docs/SD-20/boundary-contract.md \
+        docs/release/SD-20/boundary-contract.md \
         tests/sd20_<criterion>.rs \
         tests/fixtures/wire/sd20/<file>.json
 git -c user.name='Todd Hintzmann' \

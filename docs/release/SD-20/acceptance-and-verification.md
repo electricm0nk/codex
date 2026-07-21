@@ -13,7 +13,7 @@ SD-20 closes when every closure gate below is met AND a `tranche/4 → develop` 
 
 1. **Foundation closed**: Tranche-3's three bundles (SD-18 chassis, SD-19 corpus-aware seam + canonical Paizo-table store, SD-19 §3.4/§3.5 acceptance criteria) all show `done` in the shared progress doc `~/workspace/SD-18-core-rules-breadth-progress.md`.
 
-2. **Boundary contract lands**: A `boundary-contract.md` artifact exists in `docs/SD-20/` (or equivalent) and names every `CharacterInput` shape, every `PilotReceipt` field, and every printed-sheet cell. Epic-1's capability slice landed as a single atomic commit per SD-19 §1 pattern; `cargo test --locked` is green with zero SD-18/SD-19 regressions.
+2. **Boundary contract lands**: A `boundary-contract.md` artifact exists in `docs/release/SD-20/` (or equivalent) and names every `CharacterInput` shape, every `PilotReceipt` field, and every printed-sheet cell. Epic-1's capability slice landed as a single atomic commit per SD-19 §1 pattern; `cargo test --locked` is green with zero SD-18/SD-19 regressions.
 
 3. **Wire-fixture parity tests land**: At least one golden JSON fixture per epic (8 fixtures minimum, one for boundary contract, one each for spellbook / feat prereqs / skill ranks / equipment effects / damage total / Level Up grants / integration closure). Each fixture is a complete `CharacterInput` paired with the exact `PilotReceipt` the engine must produce. Both the engine's RED tests and the GUI's render tests read the same fixtures.
 
@@ -39,7 +39,7 @@ The closure posture is reviewable entirely from these surfaces:
 
 - `~/workspace/SD-18-core-rules-breadth-progress.md` (shared progress doc) — SD-18 §X (chassis done), SD-19 §Y (corpus reachability done), SD-20 §Z (per-epic done with commit SHAs and card IDs).
 - `./decisions.md` — the decision record; future sessions reconstruct the bundle shape from this alone.
-- The boundary contract artifact at `docs/SD-20/boundary-contract.md`.
+- The boundary contract artifact at `docs/release/SD-20/boundary-contract.md`.
 - The wire-fixture parity test fixtures at `tests/fixtures/wire/sd20/`.
 - **git log --oneline tranche/4 -N** — the merge history into the integration branch.
 - `codex-tranche-4` board — post-loop populated ledger, every SD-20 epic-card `status=done`, with merge receipts and audit-grade context per codex-tranche-2-5's respawn-guard pattern (audit comment at merge time, receipt comment naming the disk-truth).

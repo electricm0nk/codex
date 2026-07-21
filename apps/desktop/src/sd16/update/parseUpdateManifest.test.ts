@@ -24,8 +24,8 @@ const UPDATE_MANIFEST_JSON = `{
   "tranche_id": "STC-CODEX-SD-16",
   "source_branch": "develop",
   "source_commit": "d94edcbfc2f3a6f428895eb9c3e504fc7a363ade",
-  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
-  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/develop/programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_path": "docs/release/SD-16/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/develop/docs/release/SD-16/release-notes.md",
   "release_notes_hash": "0000000000000000000000000000000000000000000000000000000000000000",
   "linux_appimage": {
     "name": "codex_0.0.0-alpha.20260704.1_amd64.AppImage",
@@ -101,7 +101,7 @@ export function test_av_sch_2_update_manifest_positive(): void {
   if (result.ok) {
     assertEqual(result.data.tranche_id, 'STC-CODEX-SD-16', 'AV-SCH-5: tranche_id must be canonical');
     assert(
-      /^programs\/codex\/requirements\/[^/]+\/release-notes\.md$/.test(result.data.release_notes_path),
+      /^docs\/release\/[^/]+\/release-notes\.md$/.test(result.data.release_notes_path),
       'AV-SCH-6: release_notes_path must match the canonical regex',
     );
     assert(result.data.linux_appimage.size_bytes >= 1, 'linux_appimage.size_bytes must be >= 1');
@@ -150,7 +150,7 @@ export function test_av_sch_5_manifest_tranche_id_and_path_locked_at_parse(): vo
     );
     assertEqual(
       result.data.release_notes_path,
-      'programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md',
+      'docs/release/SD-16/release-notes.md',
       `release_notes_path must be canonical (got ${result.data.release_notes_path})`,
     );
   }
@@ -192,8 +192,8 @@ const WINDOWS_MSI_MANIFEST_JSON = `{
   "tranche_id": "STC-CODEX-SD-16",
   "source_branch": "develop",
   "source_commit": "d94edcbfc2f3a6f428895eb9c3e504fc7a363ade",
-  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
-  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/develop/programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_path": "docs/release/SD-16/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/develop/docs/release/SD-16/release-notes.md",
   "release_notes_hash": "0000000000000000000000000000000000000000000000000000000000000000",
   "linux_appimage": {
     "name": "codex_0.0.0-alpha.20260711.1_amd64.AppImage",
@@ -233,8 +233,8 @@ const MACOS_DMG_MANIFEST_JSON = `{
   "tranche_id": "STC-CODEX-SD-16",
   "source_branch": "develop",
   "source_commit": "d94edcbfc2f3a6f428895eb9c3e504fc7a363ade",
-  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
-  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/develop/programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_path": "docs/release/SD-16/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/develop/docs/release/SD-16/release-notes.md",
   "release_notes_hash": "0000000000000000000000000000000000000000000000000000000000000000",
   "linux_appimage": {
     "name": "codex_0.0.0-alpha.20260711.1_amd64.AppImage",

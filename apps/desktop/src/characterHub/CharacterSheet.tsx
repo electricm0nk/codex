@@ -2,6 +2,14 @@ import { useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import type { AbilityScoresDto, CorpusDerivedDto } from '../boundary/loadCreateCharacter';
+import { levelUpCharacter } from '../boundary/levelUpCharacter';
+import { addEquipmentSelection } from '../boundary/addEquipmentSelection';
+import { addSpellSelection } from '../boundary/addSpellSelection';
+import { listEquipment } from '../boundary/listEquipment';
+import { listSpells } from '../boundary/listSpells';
+import { toCharacterMutationRefresh } from './characterSheetRefresh';
+import { mapEquipmentCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
+import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import {
   buildLevelEntries,
   buildNextEntries,
@@ -54,6 +62,26 @@ const panel: CSSProperties = {
   border: '1px solid var(--color-border)',
   borderRadius: 10,
 };
+
+/** Shared style for the tab-content "Add …" affordances (Add Weapon / Add Armor / Add Spell / Print). */
+const addItemButtonStyle: CSSProperties = {
+  backgroundColor: 'var(--color-surface)',
+  border: '1px solid var(--color-border)',
+  borderRadius: 8,
+  color: 'var(--color-text)',
+  cursor: 'pointer',
+  padding: '0.5rem 1.5rem',
+};
+
+/**
+ * `EquipmentCategory` has no separate weapon-vs-armor variant (see
+ * `sd19_equipment_catalog.rs`'s `EquipmentCategory` enum) — "ArmsArmor" is
+ * one combined category covering both. Judgment call: both the Add Weapon
+ * and Add Armor pickers narrow to this same category server-side and let
+ * the user disambiguate by name in the search box, rather than blocking on
+ * a category taxonomy the corpus doesn't expose yet.
+ */
+const WEAPONS_AND_ARMOR_CATEGORY = 'ArmsArmor';
 
 function NavCard(props: { label: string; value: string }) {
   return (
@@ -448,7 +476,7 @@ function DetailsPanel(props: { vision: string; size: string; bio: BioFields; onB
 
 const WEAPON_COLUMNS = ['Weapon', 'Attack', 'Damage', 'Critical', 'Type', 'Range'] as const;
 
-function WeaponsTab(props: { proficiency: WeaponProficiency }) {
+function WeaponsTab(props: { proficiency: WeaponProficiency; onAddWeapon: () => void }) {
   const categories: ReadonlyArray<{ label: string; proficient: boolean }> = [
     { label: 'Simple', proficient: props.proficiency.simple },
     { label: 'Martial', proficient: props.proficiency.martial },
@@ -472,10 +500,10 @@ function WeaponsTab(props: { proficiency: WeaponProficiency }) {
       </p>
 
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 8, color: 'var(--color-text)', cursor: 'pointer', padding: '0.5rem 1.5rem' }}>
+        <button type="button" onClick={props.onAddWeapon} style={addItemButtonStyle}>
           Add Weapon
         </button>
-        <button type="button" style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 8, color: 'var(--color-text)', cursor: 'pointer', padding: '0.5rem 1.5rem' }}>
+        <button type="button" style={addItemButtonStyle}>
           Print
         </button>
       </div>
@@ -511,32 +539,36 @@ function WeaponsTab(props: { proficiency: WeaponProficiency }) {
  * here; this is a reachability proof, not a spellbook or slot tracker
  * (spell slots, DCs, and prepared/known posture remain out of scope).
  */
-function SpellsTab(props: { corpusDerived: CorpusDerivedDto | undefined }) {
+function SpellsTab(props: { corpusDerived: CorpusDerivedDto | undefined; onAddSpell: () => void }) {
   const schools = props.corpusDerived?.schoolCoverage ?? [];
-  if (schools.length === 0) {
-    return (
-      <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
-        No corpus-reachable spells selected yet.
-      </p>
-    );
-  }
   return (
     <div>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
         Corpus-derived spell-school reachability — proves each spell resolves against the real
         PF1 corpus; does not compute slots, DCs, or prepared/known posture.
       </p>
-      {schools.map((school) => (
-        <div key={school.school} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-          <span style={{ fontWeight: 700 }}>{school.school}</span>
-          <span style={{ color: 'var(--color-text-muted)', marginLeft: '0.5rem' }}>
-            {school.spells.join(', ')}
-          </span>
-          {school.grounded ? (
-            <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
-          ) : null}
-        </div>
-      ))}
+      <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
+        <button type="button" onClick={props.onAddSpell} style={addItemButtonStyle}>
+          Add Spell
+        </button>
+      </div>
+      {schools.length === 0 ? (
+        <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
+          No corpus-reachable spells selected yet.
+        </p>
+      ) : (
+        schools.map((school) => (
+          <div key={school.school} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+            <span style={{ fontWeight: 700 }}>{school.school}</span>
+            <span style={{ color: 'var(--color-text-muted)', marginLeft: '0.5rem' }}>
+              {school.spells.join(', ')}
+            </span>
+            {school.grounded ? (
+              <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
+            ) : null}
+          </div>
+        ))
+      )}
     </div>
   );
 }
@@ -547,32 +579,36 @@ function SpellsTab(props: { corpusDerived: CorpusDerivedDto | undefined }) {
  * as `SpellsTab`: derived stats (armor bonus, attack bonus, etc.) are a
  * documented capability-slice non-goal and are not yet populated.
  */
-function GearTab(props: { corpusDerived: CorpusDerivedDto | undefined }) {
+function GearTab(props: { corpusDerived: CorpusDerivedDto | undefined; onAddArmor: () => void }) {
   const items = props.corpusDerived?.equippedItems ?? [];
-  if (items.length === 0) {
-    return (
-      <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
-        No corpus-reachable equipment selected yet.
-      </p>
-    );
-  }
   return (
     <div>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
         Corpus-derived equipment reachability — proves each item resolves against the real PF1
         corpus; derived combat stats are not yet computed.
       </p>
-      {items.map((item) => (
-        <div key={item.itemId} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-          <span style={{ fontWeight: 700 }}>{item.equipmentRecordName}</span>
-          <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>
-            ({item.itemId})
-          </span>
-          {item.grounded ? (
-            <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
-          ) : null}
-        </div>
-      ))}
+      <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
+        <button type="button" onClick={props.onAddArmor} style={addItemButtonStyle}>
+          Add Armor
+        </button>
+      </div>
+      {items.length === 0 ? (
+        <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
+          No corpus-reachable equipment selected yet.
+        </p>
+      ) : (
+        items.map((item) => (
+          <div key={item.itemId} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+            <span style={{ fontWeight: 700 }}>{item.equipmentRecordName}</span>
+            <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>
+              ({item.itemId})
+            </span>
+            {item.grounded ? (
+              <span style={{ color: 'var(--color-accent)', fontSize: '0.7rem', marginLeft: '0.5rem' }}>✓ grounded</span>
+            ) : null}
+          </div>
+        ))
+      )}
     </div>
   );
 }
@@ -583,14 +619,105 @@ export function CharacterSheet(props: {
   row: CharacterHubListRowSurface;
   detail: LoadSavedCharacterResponse | null;
   onClose: () => void;
+  /**
+   * Called with the fresh detail after a saved-character mutation (level-up,
+   * add-equipment, or add-spell) succeeds. `CharacterSheet` is a controlled/
+   * presentational component — it does not own a copy of `detail` — so the
+   * parent is responsible for updating whatever state it passed in as
+   * `detail` (and, since the Level box/class panel/Progression rail derive
+   * from `row.classSummary` rather than `detail`, for rebuilding `row` from
+   * the refreshed `detail.summary` too).
+   */
+  onDetailRefreshed: (detail: LoadSavedCharacterResponse) => void;
 }) {
   const [tab, setTab] = useState<Tab>('Weapons');
   const [menuOpen, setMenuOpen] = useState(false);
   const [leftCollapsed, setLeftCollapsed] = useState(false);
   const [levelUpOpen, setLevelUpOpen] = useState(false);
+  // Covers every saved-character mutation this sheet can trigger (level-up,
+  // add-equipment, add-spell) — one error slot, not three near-duplicates,
+  // since only one mutation can be in flight from this sheet at a time.
+  const [mutationError, setMutationError] = useState<string | null>(null);
+  const [itemPickerOpen, setItemPickerOpen] = useState<'weapon' | 'armor' | 'spell' | null>(null);
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
   const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>({ ...DEFAULT_SKILL_ALLOCATION });
   const [skillDialogOpen, setSkillDialogOpen] = useState(false);
+
+  async function handleLevelUpAccept(classId: string) {
+    setMutationError(null);
+    try {
+      const outcome = await levelUpCharacter({
+        characterId: props.row.characterId,
+        classId,
+        savedAt: new Date().toISOString(),
+      });
+      const refresh = toCharacterMutationRefresh(outcome);
+      if (refresh.kind === 'blocked') {
+        setMutationError(refresh.message);
+        return;
+      }
+      props.onDetailRefreshed(refresh.detail);
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  async function handleAddEquipment(entry: ItemPickerEntry) {
+    setMutationError(null);
+    try {
+      // The user picking an item from the catalog to add to their loadout
+      // is, by construction, actively equipping it — `EquippedActive` is
+      // the only choice that matches that action without asking the user
+      // to make an extra decision the picker's scope doesn't cover.
+      const outcome = await addEquipmentSelection({
+        characterId: props.row.characterId,
+        itemId: entry.key,
+        activeState: 'EquippedActive',
+        savedAt: new Date().toISOString(),
+      });
+      const refresh = toCharacterMutationRefresh(outcome);
+      if (refresh.kind === 'blocked') {
+        setMutationError(refresh.message);
+        return;
+      }
+      props.onDetailRefreshed(refresh.detail);
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  async function handleAddSpell(entry: ItemPickerEntry) {
+    setMutationError(null);
+    // `add_spell_selection` requires a `sourceClassId`; the picker's scope
+    // is "search, filter, pick a spell" (no class chooser), so this defaults
+    // to the character's first held class — see `heldClasses` below, parsed
+    // from the same `classSummary` the Level box already reads.
+    const primaryClassId = heldClasses[0]?.classId;
+    if (!primaryClassId) {
+      setMutationError('This character has no class to learn the spell from yet.');
+      return;
+    }
+    try {
+      const outcome = await addSpellSelection({
+        characterId: props.row.characterId,
+        spellId: entry.key,
+        sourceClassId: primaryClassId,
+        // "Known" is the closest default to "the character now has access
+        // to this spell" without picking a prepared-caster's daily list —
+        // out of scope for a search-and-select picker.
+        acquisitionMode: 'Known',
+        savedAt: new Date().toISOString(),
+      });
+      const refresh = toCharacterMutationRefresh(outcome);
+      if (refresh.kind === 'blocked') {
+        setMutationError(refresh.message);
+        return;
+      }
+      props.onDetailRefreshed(refresh.detail);
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
 
   function updateBio(patch: Partial<BioFields>) {
     setBio((prev) => ({ ...prev, ...patch }));
@@ -643,6 +770,31 @@ export function CharacterSheet(props: {
     { label: 'Clone', onSelect: () => {} },
     { label: 'Print', onSelect: () => window.print() },
   ];
+
+  // One generic `ItemPickerModal` backs all three "Add …" affordances — the
+  // Add Weapon / Add Armor pickers both narrow the equipment catalog to the
+  // combined "ArmsArmor" category (see `WEAPONS_AND_ARMOR_CATEGORY`'s doc
+  // comment) and the Add Spell picker narrows the spell catalog by nothing
+  // server-side, relying on the modal's own search box.
+  const itemPickerConfig =
+    itemPickerOpen === 'weapon' || itemPickerOpen === 'armor'
+      ? {
+          title: itemPickerOpen === 'weapon' ? 'Add Weapon' : 'Add Armor',
+          searchPlaceholder: 'Search arms & armor…',
+          loadEntries: () =>
+            listEquipment({ nameContains: null, category: WEAPONS_AND_ARMOR_CATEGORY }).then((response) =>
+              mapEquipmentCatalogEntries(response.entries)
+            ),
+          onSelect: handleAddEquipment,
+        }
+      : itemPickerOpen === 'spell'
+        ? {
+            title: 'Add Spell',
+            searchPlaceholder: 'Search spells…',
+            loadEntries: () => listSpells({ nameContains: null, school: null }).then((response) => mapSpellCatalogEntries(response.entries)),
+            onSelect: handleAddSpell,
+          }
+        : null;
 
   return (
     <div style={{ marginLeft: 'calc(50% - 50vw)', marginTop: '-3rem', width: '100vw' }}>
@@ -794,16 +946,30 @@ export function CharacterSheet(props: {
                 </div>
               </div>
 
+              {mutationError ? (
+                <p
+                  role="alert"
+                  style={{
+                    backgroundColor: 'var(--color-surface-2)',
+                    border: '1px solid var(--color-danger, #c0392b)',
+                    borderRadius: 6,
+                    color: 'var(--color-danger, #c0392b)',
+                    fontSize: '0.75rem',
+                    margin: '0 0 0.5rem',
+                    padding: '0.4rem 0.55rem',
+                  }}
+                >
+                  {mutationError}
+                </p>
+              ) : null}
+
               <LevelUpDialog
                 open={levelUpOpen}
                 onClose={() => setLevelUpOpen(false)}
                 heldClasses={heldClasses}
                 intelligenceModifier={abilities.intelligence}
                 isHuman={isHuman}
-                onAccept={() => {
-                  // Backend wiring (persisting the new level onto the saved
-                  // character) is a separate follow-on — accepting is a no-op today.
-                }}
+                onAccept={handleLevelUpAccept}
               />
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -891,11 +1057,11 @@ export function CharacterSheet(props: {
 
             <div style={{ ...panel, minHeight: 200, padding: '1.25rem' }}>
               {tab === 'Weapons' ? (
-                <WeaponsTab proficiency={weaponProficiency} />
+                <WeaponsTab proficiency={weaponProficiency} onAddWeapon={() => setItemPickerOpen('weapon')} />
               ) : tab === 'Spells' ? (
-                <SpellsTab corpusDerived={props.detail?.corpusDerived} />
+                <SpellsTab corpusDerived={props.detail?.corpusDerived} onAddSpell={() => setItemPickerOpen('spell')} />
               ) : tab === 'Gear' ? (
-                <GearTab corpusDerived={props.detail?.corpusDerived} />
+                <GearTab corpusDerived={props.detail?.corpusDerived} onAddArmor={() => setItemPickerOpen('armor')} />
               ) : (
                 <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>{tab} — coming soon.</p>
               )}
@@ -926,6 +1092,15 @@ export function CharacterSheet(props: {
         totalPoints={totalSkillPointsAvailable(heldClasses, abilities.intelligence, isHuman)}
         allocation={skillAllocation}
         onAccept={setSkillAllocation}
+      />
+
+      <ItemPickerModal
+        open={itemPickerConfig !== null}
+        title={itemPickerConfig?.title ?? ''}
+        searchPlaceholder={itemPickerConfig?.searchPlaceholder ?? ''}
+        loadEntries={itemPickerConfig?.loadEntries ?? (() => Promise.resolve([]))}
+        onClose={() => setItemPickerOpen(null)}
+        onSelect={(entry) => itemPickerConfig?.onSelect(entry)}
       />
     </div>
   );

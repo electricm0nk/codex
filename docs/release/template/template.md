@@ -2,13 +2,13 @@
 title: SD-NN — <Bundle Title> — Release Package
 status: <planning | running | closed>
 bundle_id: SD-NN
+slug: <bundle-slug>
 scope: docs/release/SD-NN
 artifact_type: release-index
 canonical_branch: <tranche/N>
 kanban_board: <codex-tranche-N>
 target_version: <major>.<tranche-base>.<build>
-companion_to: ../../../../programs/codex/requirements/SD-NN-<slug>/decisions.md
-mirror_of: ~/workspace/SD-NN-<slug>-{scope-draft,loop-instruction,progress}.md
+canonical_source: docs/release/SD-NN (this folder)
 date: <ISO-8601>
 ---
 
@@ -19,52 +19,58 @@ date: <ISO-8601>
 > **This bundle is operated via the `/loop 60m /batch /goal` invocation model — NOT a one-shot task.** After exiting plan mode, the coding harness is **required** to launch SD-NN as:
 >
 > ```bash
-> /loop 60m /batch /goal ~/workspace/SD-NN-<slug>-loop-instruction.md
+> /loop 60m /batch /goal ./loop-instruction.md
 > ```
 >
-> The full per-cycle procedure, file-touch partition, post-mortem card mint, and progress-doc update live in the loop-instruction file body. The scope-draft is the canonical handoff *what* — the loop-instruction is the *how*. See `loop-instruction.md`'s leading `⚠️ OPERATING METHOD` block for the verbatim launch instruction and pre-launch checklist.
+> The `/loop` invocation uses a repo-relative path — the harness reads `./loop-instruction.md` from inside this folder. The full per-cycle procedure, file-touch partition, post-mortem card mint, and progress-doc update live in `loop-instruction.md`'s body. The scope-draft ([`./scope-draft.md`](./scope-draft.md)) is the canonical handoff *what*; the loop-instruction is the *how*.
 
-This folder is the repo-local surface for SD-NN. The strategic/intake authority (`/home/workspace/programs/codex/requirements/SD-NN-<slug>/`) lives upstream in the operator's workspace. A cloud-harness cold clone of the repo reads this folder to find SD-NN's handoff without `~/workspace/` access.
+This folder is the canonical surface for SD-NN. Everything the bundle needs is in this folder and the in-repo doc tree (sibling release folders, `../../doctrine-external/`, `../../architecture/`). The operator's workspace is referenced only at initial-package construction time; once the package lands here, the harness reads the repo-local copy and the workspace copy is no longer consulted.
 
 ## 0. Preamble
 
-The bundle's intent, scope, and acceptance-evidence obligations live in `scope-draft.md` (this folder). The per-cycle launch form, eligibility checks, and self-heal mechanics live in `loop-instruction.md`. This README is the index.
+The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-draft.md`](./scope-draft.md). The per-cycle launch form, eligibility checks, and self-heal mechanics live in [`loop-instruction.md`](./loop-instruction.md). This README is the index.
 
 ## 1. Bundle snapshot
 
 | Field | Value |
 |---|---|
 | Bundle ID | SD-NN |
-| Slug | `<slug>` |
-| Canonical branch | `<tranche/N>` (operator directive <date>) |
-| Kanban board | `<codex-tranche-N>` (operator directive <date>) |
+| Slug | `<bundle-slug>` |
+| Canonical branch | `<tranche/N>` (operator directive `<date>`) |
+| Kanban board | `<codex-tranche-N>` (operator directive `<date>`) |
 | Epics / criteria | `<N epics>` / `<N criteria>` |
 | Target version | `<major>.<tranche-base>.<build>` |
-| Loop launch form | `/loop 60m /batch /goal ~/workspace/SD-NN-<slug>-loop-instruction.md` |
+| Loop launch form | `/loop 60m /batch /goal ./loop-instruction.md` (repo-relative) |
 | Cycle cadence | 60m restart; `/batch` for shared-file concurrency |
-| Closure gate | `tranche/N → develop` PR; docs/epic-1-cleanup-delta; release-notes generation |
+| Closure gate | `tranche/N → develop` PR; release-notes generation; architecture-docs refresh (§6) |
 
 ## 2. Files in this folder
 
 | File | Job | Owner |
 |---|---|---|
-| `scope-draft.md` | Canonical handoff *what* — bundle intent, epics, criteria | operator (mirror of upstream `scope-draft.md`) |
-| `loop-instruction.md` | Per-cycle launch *how* — eligibility, self-heal, post-mortem schema | operator (mirror of upstream `loop-instruction.md`) |
-| `progress.md` | Live cycle-by-cycle progress + status matrix | loop (created on first cycle; not present in planning) |
-| `decisions.md` | Repo-local ADRs (vs. upstream `programs/codex/doctrine/decisions/` which is program-level) | operator (mirror of upstream src-STC decision record) |
-| `technical-requirements.md` | Pre-loop prerequisites + normative requirements | operator (mirror of upstream src-STC) |
-| `epic-breakdown.md` | Acceptance criteria 1-N grouped across epics | operator (mirror of upstream src-STC) |
-| `acceptance-and-verification.md` | Closure gates + verification commands | operator (mirror of upstream src-STC) |
-| `risks-and-open-questions.md` | Self-healable vs. non-self-healable split; open override flags | operator (mirror of upstream src-STC) |
-| `technical-design.md` | Architectural surface; engine/API shapes; cross-book resolution patterns | operator (mirror of upstream src-STC) |
-| `artifacts/` | Per-cycle evidence: parity fixtures, receipt comments, TRACI snapshots | loop (populated per cycle) |
+| `scope-draft.md` | Canonical handoff *what* — bundle intent, epics, criteria | operator |
+| `loop-instruction.md` | Per-cycle launch *how* — eligibility, self-heal, post-mortem schema | operator |
+| `progress.md` | Live cycle-by-cycle progress + status matrix | loop (created on first cycle) |
+| `decisions.md` | Bundle-specific ADRs | operator |
+| `technical-requirements.md` | Pre-loop prerequisites + normative requirements | operator |
+| `epic-breakdown.md` | Acceptance criteria 1-N grouped across epics | operator |
+| `acceptance-and-verification.md` | Closure gates + verification commands + per-criterion artifact map | operator |
+| `risks-and-open-questions.md` | Self-healable vs. non-self-healable split; open override flags | operator |
+| `technical-design.md` | Architectural surface; engine/API shapes; cross-book resolution patterns | operator |
+| `content-unit-inventory.md` | Per-content-unit N-tuple (rust module / test fixture / cycle artifact / CommandName-or-ComponentName) | operator |
+| `artifacts/` | Per-cycle evidence: parity fixtures, receipt comments, cycle receipts | loop (populated per cycle) |
+| `artifacts/README.md` | Cycle-artifacts index (Epic-N subdirectories + closure-readiness-report) | operator-authored at package-construction time |
+| `references/` | Doctrine pointers, skill pointers, sibling bundle pointers | operator |
+| `references/README.md` | Doctrine / skill / sibling-bundle reference index | operator |
 
-## 3. Authoritative pointers (operator workspace; not bundled here)
+## 3. In-repo cross-references
 
-- **Upstream strategic/intake authority:** `/home/workspace/programs/codex/requirements/SD-NN-<slug>/` (operator's workspace; required reading).
-- **Operator's editor-of-record loop-instruction:** `~/workspace/SD-NN-<slug>-loop-instruction.md` (mirror of `loop-instruction.md`; launch string).
-- **Operator's editor-of-record scope-draft:** `~/workspace/SD-NN-<slug>-scope-draft.md` (mirror of `scope-draft.md`; canonical handoff).
-- **Operator's live progress doc:** `~/workspace/SD-NN-<slug>-progress.md` (mirror of `progress.md`; the loop's claim protocol routes here).
+Every reference below is repo-relative. No `~/workspace/...` or `programs/codex/requirements/...` paths — those live at initial-package-construction time only and are not load-bearing for the harness reading this folder.
+
+- **Sibling release folders** — `../SD-MM/` for any other in-flight or historical bundle.
+- **Repo-local doctrine mirrors** — `../../doctrine-external/identifier-discipline.md`, `../../doctrine-external/spec-domain-lifecycle.md`, `../../governance/no-stub-mvp-doctrine.md`, `../../governance/wired-integration-stubs-registry.md`.
+- **Architecture docs** — `../../architecture/` (topic-by-topic; the closure epilogue §6 obligation re-verifies every touched topic).
+- **Repo-local conduct surface** — `../../AGENTS.md` (Non-Negotiable Rules), `../../CLAUDE.md` (lightweight activation surface).
 
 ## 4. Relationship to other release folders
 
@@ -80,3 +86,49 @@ For SD-NN, the release version triple is `<major>.<tranche-base>.<build>`:
 - **`build`** — monotonic counter across all builds across all branches (never resets).
 
 SD-NN's first concrete value is `<major>.<tranche-base>.<current_build_at_launch>`.
+
+## 6. Architecture-docs closure obligation (Epic Closure sub-step)
+
+The living architecture documentation at `../../architecture/` (repo-relative) is
+part of this bundle's closure gate. The Epic Closure pipeline is sequential — every
+sub-step fires regardless of diff content:
+
+1. **All acceptance criteria done?** If not, self-heal and run more loops.
+2. **Architecture docs updated?** If not, run the truth-up script at
+   `~/.hermes/profiles/god-emporer/skills/devops/architecture-truth-up/scripts/architecture_truth_up.py`
+   with `--integration-target <target> --receipts-md <this-folder>/receipts.md --bundle <SD-NN>`.
+   The script edits touched docs in place, removes obsolete statements, refreshes
+   `Last verified:` headers, runs the maintenance contract's two verification
+   one-liners, and appends a YAML receipt to `receipts.md`. Empty diffs still
+   write a receipt — the receipt IS the audit evidence that the gate fired.
+3. **Graphify run?** If not, run the graphify-update script at
+   `~/.hermes/profiles/god-emporer/skills/devops/graphify-update/scripts/update_graphify.py`
+   with `--integration-target <target> --receipts-md <this-folder>/receipts.md --bundle <SD-NN>`.
+   The script invokes graphify against the codex repo, captures stdout/stderr/exit-code,
+   and appends a `graphify:update` receipt to `receipts.md`. Graphify non-zero exit does
+   NOT refuse the closure pipeline — the failure receipt is the audit trail; operator
+   decides retry-vs-proceed.
+4. **PR open?** If not, open it. (PR creation is a bash-level command in the loop-instruction.)
+5. **Merge conflicts resolved?** If any, fix them via the merge-conflict-resolution script at
+   `~/.hermes/profiles/god-emporer/skills/devops/merge-conflict-resolution/scripts/resolve_merge_conflicts.py`.
+   The script runs `git pull --rebase origin <target>` (pre-flight mode) or queries the GitHub
+   API for the PR's `mergeable` state (post-pr mode). On conflicts, the script emits a
+   `merge_conflict:*` receipt and exits non-zero — the loop self-heals, operator resolves
+   manually, loop re-runs until clean.
+6. **Stop the loop.**
+
+The full rules and procedure live in `../../architecture/README.md`
+§Maintenance contract. Skills: `architecture-truth-up` (sub-step 2), `graphify-update`
+(sub-step 3), `merge-conflict-resolution` (sub-step 5). The receipt block in
+`<this-folder>/receipts.md` is the durable audit trail; without it, the bundle
+did not run through the closure pipeline in a verifiable way.
+
+## 7. Initial-package construction (operator-only, before launch)
+
+Before this folder exists, the operator constructs the STC package from initial requirements at `~/workspace/programs/codex/requirements/SD-N-<slug>/`. The promotion skill (`release-package-promotion`, see `~/.hermes/profiles/god-emporer/skills/devops/release-package-promotion/SKILL.md`) takes the finished package and copies it into this folder deterministically. The workspace copy is not consulted again after the promotion.
+
+Required canonical files (the promotion skill refuses to copy if any are missing):
+
+- `README.md`, `scope-draft.md`, `loop-instruction.md`, `progress.md`
+- `epic-breakdown.md`, `decisions.md`, `risks-and-open-questions.md`, `acceptance-and-verification.md`
+- `content-unit-inventory.md`, `artifacts/`, `artifacts/README.md`, `references/`, `references/README.md`

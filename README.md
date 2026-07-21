@@ -2,35 +2,18 @@
 
 Codex is a Rust + Tauri replacement effort for PCGen. PCGen is the heritage application and oracle substrate; Codex is the new program and implementation surface.
 
+**Architecture and design documentation** for anyone — human or agent — working in this repo lives at [`docs/architecture/`](docs/architecture/README.md). Start there for the system map, module boundaries, design conventions, and the current real-vs-stubbed capability status.
+
 ## Current state
 
 **Current truthful posture:** Codex is a **developer proof harness plus a buildable desktop workbench surface**, not a finished end-user product.
 
-### Verified live on 2026-06-28
-
-From the live repo and desktop workspace:
-
-- root `cargo test` passes
-- focused GE-06 proof tests pass
-- focused GE-08 proof tests pass
-- `npm run typecheck` passes under `apps/desktop`
-- `npm run build` passes under `apps/desktop`
-- `npm run tauri:check` passes under `apps/desktop`
-- `npx tauri build --debug` succeeds and produces a debug desktop binary
-
-### What is real today
-
-- **GE-03 import foothold** under `src/pcgen_import/` with a real PCC entry-file parser
-- **GE-06 bounded pilot proof** under `src/rules_core/` and `tests/ge06_*`
-- **GE-08 bounded homebrew/workbench proof** under `src/homebrew_authoring/`, `tests/ge08_*`, and `apps/desktop/`
-- **Tauri desktop shell surface** under `apps/desktop/`
-
-### What is not true yet
-
-- this is not a general character builder
-- this is not broad PCGen parity
-- this is not public-release-ready product software
-- this README does not grant implementation authority by itself; use the bounded handoff or source STC for scoped work
+The maintained, closure-updated statement of what is real vs stubbed today is
+[`docs/architecture/status.md`](docs/architecture/status.md) — it supersedes any
+snapshot list this README used to carry. The full verification command set is
+[`docs/architecture/testing.md`](docs/architecture/testing.md). This README does
+not grant implementation authority by itself; use the bounded handoff or source
+STC for scoped work.
 
 ## Repository layout
 
@@ -42,9 +25,20 @@ codex/
     homebrew_authoring/  # GE-08 bounded package/preview surfaces
   tests/                 # bounded proof harness
   apps/desktop/          # React + Tauri desktop shell/workbench surface
+  docs/release/          # every SD-NN bundle's full docs, including release-notes.md — see below
   AGENTS.md              # repo-root conduct surface for coding harnesses
   README.md              # first-contact onboarding surface
 ```
+
+### Documentation structure
+
+`programs/` does not exist in this repo (removed 2026-07-20). Every "SD-NN" (spec-domain) work bundle's documentation — including SD-13/16/17's legacy pre-`docs/release/`-convention artifacts and every bundle's CI-contracted `release-notes.md` — lives in one place:
+
+- **`docs/release/SD-NN/`** — the canonical home for a bundle's full planning and execution documentation: `scope-draft.md`, `decisions.md`, `epic-breakdown.md`, `loop-instruction.md`, `progress.md`, `receipts.md`, per-cycle `artifacts/`, and `release-notes.md`. One folder per bundle, named exactly `SD-NN`. Copy `docs/release/template/template.md` when starting a new bundle; see `docs/release/README.md` for the full layout rule.
+- **`docs/release/SD-NN/release-notes.md` is also a regex-locked CI/schema contract** (`^docs/release/[^/]+/release-notes\.md$`) consumed by `tools/release/`, `scripts/release/`, `publish-tester-release.yml`, and the desktop app's auto-update pipeline. Required section headers: `Summary`, `User-Visible Changes`, `Defects Fixed`, `Operational Notes`, `Verification Evidence`, `Known Issues`, `Update Eligibility` (enforced by `tools/release/check_release_manifest.py`). Note: ~25 already-published `update-manifest.json` files on the live `update-index` branch still reference the pre-2026-07-20 `programs/codex/requirements/` path with a locked content hash — those are not retroactively rewritten (a CI-only-write surface), so their "view release notes" binding is permanently stale by design.
+- **`docs/release/SD-13/`, `SD-16/`, `SD-17/`** hold only the legacy `artifacts/` (and, for SD-16, `tranche-2.5/manifest.yaml`) that used to live under `programs/codex/requirements/` — relocated 2026-07-20, kept as-is otherwise (no retroactive full 10-file mirror for these pre-`docs/release/`-convention bundles).
+- **`docs/doctrine-external/`** — a deliberate stub mirror of operator-side governance docs (`spec-domain-lifecycle.md`, `identifier-discipline.md`) so relative links from `docs/release/SD-NN/*.md` resolve in a cold clone. Not for new content.
+- **The operator's separate, out-of-repo `/home/workspace/programs/codex/requirements/` planning-intake path** referenced in `docs/release/README.md` is unrelated to this repo's directory structure — it lives entirely on the operator's machine, outside any git clone. See that file's Cross-reference section for the full distinction.
 
 ## Getting started
 
@@ -254,7 +248,7 @@ Expected working behavior after the fix:
 ## Onboarding and contribution rules
 
 - read `AGENTS.md` before taking implementation work
-- treat this repo as the implementation surface and `programs/codex` as the wider planning/control plane
+- treat this repo as the implementation surface and `docs/release/SD-NN/` as the per-bundle planning/control plane (see "Documentation structure" above)
 - do not implement from a spec domain or README alone; use a bounded handoff or source STC
 - prefer the smallest compliant change and verify it with real commands
 
@@ -262,10 +256,12 @@ Expected working behavior after the fix:
 
 The broader program-level governance and demo/onboarding packet live in the lab
 workspace outside this repository. Only the artifacts a bounded slice needs are
-mirrored here; currently that is:
+mirrored here, under `docs/release/SD-NN/` — every bundle, current-convention
+(SD-18 onward) and legacy (SD-13, SD-16, SD-17) alike:
 
 ```text
-programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/
+docs/release/SD-22/  # current-convention example
+docs/release/SD-13/  # legacy example (artifacts/ only, relocated 2026-07-20 from programs/codex/requirements/)
 ```
 
 Those surfaces are the planning and onboarding control plane. This repo is the implementation and proof surface.

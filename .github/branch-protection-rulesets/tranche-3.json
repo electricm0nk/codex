@@ -53,7 +53,7 @@
           {
             "context": "Tranche 3 CI / tranche-manifest-coverage",
             "integration_id": null,
-            "_note": "Manifest + release-notes validator. Fires from both push and pull_request triggers under .github/workflows/tranche-3-ci.yml (the job is no longer gated to pull_request-only). Runs tools/release/check_release_manifest.py against any touched manifest.yaml or release-notes.md under programs/codex/requirements/... ."
+            "_note": "Manifest + release-notes validator. Fires from both push and pull_request triggers under .github/workflows/tranche-3-ci.yml (the job is no longer gated to pull_request-only). Runs tools/release/check_release_manifest.py against any touched manifest.yaml or release-notes.md under docs/release/... (relocated 2026-07-20; programs/codex/requirements/ no longer holds any of this)."
           }
         ],
         "do_enforcement_for_required_status_checks": true

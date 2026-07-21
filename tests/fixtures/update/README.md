@@ -4,9 +4,9 @@ This directory holds the byte-faithful fixture set consumed by BOTH the
 Python release-tooling lane (via `python -m jsonschema -i`) and the
 TypeScript shell-parser lane (via `parseChannelIndex.ts` /
 `parseUpdateManifest.ts`). The single source-of-truth for the fixture
-contract is the F3b slice of
-`programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/`
-(F1 closure, F2 execution handoff).
+contract is the F3b slice of the SD-16 bundle (F1 closure, F2 execution
+handoff; the bundle's repo-local surface lives at `docs/release/SD-16/`,
+relocated 2026-07-20 from `programs/codex/requirements/`).
 
 ## Files and AV mapping
 
@@ -18,7 +18,7 @@ contract is the F3b slice of
 | `alpha.full-manifest.json`                       | NEGATIVE    | AV-SCH-4 | smuggles manifest fields onto channel-index; rejected by `additionalProperties: false` |
 | `channel-index.bad-tag.json`                     | NEGATIVE    | AV-SCH-7 | channel=alpha, tag=beta/...; rejected by allOf cross-field rule (tag prefix != channel) |
 | `update-manifest.json`                           | positive    | AV-SCH-2 | valid update-manifest with all canonical fields |
-| `release-manifest.bad-path.json`                 | NEGATIVE    | AV-SCH-6 | release_notes_path outside `programs/codex/requirements/[^/]+/release-notes\.md`; rejected by pattern |
+| `release-manifest.bad-path.json`                 | NEGATIVE    | AV-SCH-6 | release_notes_path outside `docs/release/[^/]+/release-notes\.md`; rejected by pattern |
 | `update-manifest.missing-signature-allowed.json` | positive    | AV-SCH-3 | valid update-manifest with `signature:null`; exercises AV-SCH-3's null-allowed contract |
 
 ## Duplication discipline

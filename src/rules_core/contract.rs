@@ -5,7 +5,7 @@
 //! API surface every other SD-20 epic produces into: the `CharacterInput`
 //! shapes the engine accepts, the `PilotReceipt` shape it returns, and
 //! the printed-sheet cell map the GUI renders from. This module is the
-//! contract's code-level home; `docs/SD-20/boundary-contract.md` is its
+//! contract's code-level home; `docs/release/SD-20/boundary-contract.md` is its
 //! prose artifact.
 //!
 //! This is Epic 1's first cycle (`CharacterInput` types land first, per

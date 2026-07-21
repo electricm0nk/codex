@@ -13,7 +13,7 @@ Doctrine reminders (per F2 handoff §AV rows owned):
               Schema-side half is enforced here; the release-notes side
               lives in scripts/tranche/validate-tranche-notes.py (E1-F3).
   - AV-SCH-6  negative fixture: release_notes_path outside the
-              programs/codex/requirements/<SD>/ path MUST fail validation.
+              docs/release/<SD>/ path MUST fail validation.
 
 Exit codes:
   0   manifest satisfies the schema

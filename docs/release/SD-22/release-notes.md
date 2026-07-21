@@ -1,101 +1,49 @@
----
-title: SD-22 — Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit — Release Notes
-release_version: 0.5.96
-canonical_branch: tranche/5
-date: 2026-07-20
-companion_to: ./progress.md, ./epic-breakdown.md, ./decisions.md, ./closure-readiness-report.md
----
+# Release Notes: SD-22 Content-Source Ingest (APG + ACG + Bestiary 1) + DM Toolkit
 
-# SD-22 — Release Notes
+## Summary
 
-Tranche-5 release: content-source ingest for two Pathfinder 1e source books
-(Advanced Player's Guide, Advanced Class Guide) plus Bestiary 1 monster data,
-a new DM toolkit (encounter difficulty + party challenge rating), a
-code-side identifier-cleanup pass, and the closure infrastructure that ships
-this release.
+Tranche 5 lands content-source ingest for two Pathfinder 1e source books (Advanced Player's Guide, Advanced Class Guide) plus Bestiary 1 monster data, a new DM toolkit (encounter difficulty + party challenge rating), a code-side identifier-cleanup pass, and the closure-readiness infrastructure that gates this release. All content is transcribed directly from the real public PCGen `.lst` corpus, not fabricated — every class chassis and monster stat block cites its exact source file and line.
 
-## New content
+## User-Visible Changes
 
-**Advanced Player's Guide (APG) — 6 classes (Epic 3, criteria 6-9).**
-`src/rules_core/rules_tables/apg/` ships BAB/save chassis for all six real
-APG base classes — Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch
-— each transcribed directly from the real `apg_classes.lst` /
-`apg_abilities_class.lst` PCGen records, with cross-book resolution tests
-confirming `RuleSetId::Apg` queries resolve correctly and fall through to
-CRB where appropriate. Bootstrap spell (`apg/spell_list.rs`) and equipment
-(`apg/equipment_tables.rs`) sample tables ship alongside the class chassis.
-(Gunslinger and Magus were correctly excluded — they are Ultimate
-Combat / Ultimate Magic content, not APG, per the real corpus roster.)
+- Add Advanced Player's Guide (APG) support: 6 real base classes (Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch) with BAB/save chassis, plus bootstrap spell and equipment tables, resolvable via `RuleSetId::Apg`.
+- Add Advanced Class Guide (ACG) support: 10 real base classes (Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest) with BAB/save chassis, plus bootstrap spell and equipment tables, resolvable via `RuleSetId::Acg`.
+- Add Bestiary 1 monster data: 8 monster-block subsets (41 monsters) spanning CR 1 through CR 3, resolvable via `RuleSetId::Bestiary1`.
+- Add a DM toolkit: `Encounter::new` (encounter-difficulty rating) and `party_challenge_rating` (party CR), both grounded in the PF1 Core Rulebook's "Gamemastering" chapter and consuming real ingested monster data end-to-end.
+- This release is engine/data-layer content — no desktop-app UI surfaces this content directly yet; it establishes the data these classes/monsters/toolkit functions will be wired into in a future tranche.
 
-**Advanced Class Guide (ACG) — 10 classes (Epic 4, criteria 10-13).**
-`src/rules_core/rules_tables/acg/` ships the full real ACG roster — Arcanist,
-Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer,
-Swashbuckler, Warpriest — each with the same real-`.lst`-sourced BAB/save
-chassis and `RuleSetId::Acg` cross-book resolution tests. Bootstrap spell
-and equipment tables ship in `acg/spell_list.rs` / `acg/equipment_tables.rs`.
-("Alchemist" was correctly dropped from the ACG roster — no ACG-side
-Alchemist record exists in the real corpus — and `Slayer` was added, which
-does have a real record but was missing from the original planning roster.)
+## Defects Fixed
 
-**Bestiary 1 — 8 subsets, 41 monsters (Epic 5, criteria 14-17).**
-`src/rules_core/rules_tables/beastiary1/` ships 8 monster-block subsets
-(`monster_subset_01.rs` through `monster_subset_08.rs`), covering CR 1
-through CR 3 alphabetically within each CR band — 41 monsters total,
-meeting the acceptance floor of 8-12 subsets. A new bare-tab-delimited
-monster-stat-block parser (`src/pcgen_import/lst_parser/monster_stat_block.rs`)
-was added to read the real `b1_races.lst` records, which use an unprefixed
-row shape the existing `RACE:`/`ABILITY:` parser didn't cover.
-`RuleSetId::Bestiary1` cross-book resolution tests hold for all eight
-subsets.
+- The original planning roster for APG incorrectly listed Gunslinger and Magus as APG classes; corrected to the real 6-class roster (they are Ultimate Combat / Ultimate Magic content) before any chassis work was fabricated against them.
+- The original planning roster for ACG incorrectly listed "Alchemist (ACG-side)," which has no real record in the corpus; corrected to the real 10-class roster, adding Slayer (which does have a real record but was missing from the original plan).
+- Bestiary 1's planning-doc illustrative monster samples were wrong for every subset attempted (duplicate names across subsets, names with no real standalone stat block, wrong CR band); each subset's roster was independently re-verified against the real corpus before landing.
+- The build-version scheme's closure-epilogue step initially bumped the tranche-base version digit (`0.5.95` → `0.6.0`) on the mistaken assumption that a bundle's own closure always advances the tranche digit. Corrected: the tranche digit only advances when a new `tranche/N` branch is cut for the next bundle; this bundle's closure only incremented the build position (`0.5.95` → `0.5.96`).
+- Two PF1 encounter-difficulty/party-CR canonical test-fixture values in the bundle's own planning docs were independently found and corrected against the real Core Rulebook rules (a "Hard" encounter case was actually "Deadly"; a "~3.5" party-CR case was actually exactly "3.0" — APL always rounds to a whole number).
 
-## DM toolkit
+## Operational Notes
 
-Epic 6 (criteria 18-21) ships a new DM-facing toolkit grounded in the PF1
-Core Rulebook's "Gamemastering" chapter:
+- Corpus source: real public PCGen `.lst` data (`advanced_players_guide/`, `advanced_class_guide/`, `bestiary/`), not synthetic or hand-invented content. Every landed class/monster cites its exact source file and line in code doc comments and in the per-cycle artifacts under `docs/release/SD-22/artifacts/`.
+- A new parser (`src/pcgen_import/lst_parser/monster_stat_block.rs`) was added to read Bestiary 1's bare tab-delimited monster records, which the pre-existing `RACE:`/`ABILITY:`-prefixed parser didn't cover.
+- Bestiary 1 landed 8 of a stated 8-12 target subset range (41 monsters) — the acceptance floor, not the ceiling; more subsets can land in a follow-on tranche without any structural change.
+- Build version scheme: `<major>.<tranche-base>.<build>`, currently `0.5.96` on `tranche/5`.
+- Full per-cycle audit trail (RED/GREEN test evidence, kanban card IDs, source citations) lives in `docs/release/SD-22/receipts.md` and `docs/release/SD-22/artifacts/`.
 
-- **`src/rules_core/encounters.rs`** — `Encounter::new`, `CharacterSnapshot`,
-  `MonsterRef`, `Difficulty`, and `EncounterResult`, implementing the
-  Table: Encounter Design / Table: CR Equivalencies / Table: Experience
-  Point Awards rules (criterion 18).
-- **`src/rules_core/party_cr.rs`** — `party_challenge_rating`, implementing
-  the "Designing Encounters → Step 1 — Determine APL" rule (criterion 19).
-- **Deterministic tests** (`tests/sd22_dm_toolkit_deterministic.rs`) — five
-  acceptance-level tests covering both modules against the canonical Paizo
-  examples (criterion 20).
-- **Happy-path integration test**
-  (`tests/sd22_dm_toolkit_happy_path_integration.rs`) — consumes real
-  ingested Bestiary 1 monster blocks (Ghoul, Darkmantle) through
-  `Encounter::new`, confirming the toolkit works end-to-end against Epic 5's
-  real ingested content, not synthetic fixtures (criterion 21).
+## Verification Evidence
 
-## Maintenance
+- `cargo test --locked`: 428 `test result: ok` blocks, 0 failures, across every suite (sibling-preservation held for every prior SD's tests throughout the loop).
+- `cargo clippy --locked --tests -- -D warnings`: clean.
+- `npm test` (apps/desktop): 48/48 test files passed.
+- Closure-readiness eval (Epic 9): full artifact-evidence survey across all 30 prior acceptance criteria, 4 mechanical shortfalls self-healed, 2 judgment calls deferred to `docs/release/SD-22/risks-and-open-questions.md`. Report: `docs/release/SD-22/closure-readiness-report.md`.
+- Closure PR: [electricm0nk/codex#325](https://github.com/electricm0nk/codex/pull/325), `tranche/5 → develop`, merged as commit `f5e2b62`.
+- Kanban board `codex-tranche-5`: every cycle minted a card recording its own RED/GREEN evidence and corpus citation.
 
-Epic 1 (criteria 1-2) ran a source-code identifier audit
-(`grep -rE "sd22_|SD22_|Sd22|SD-22-[A-Z][0-9]"` across `apps/desktop/`,
-`apps/desktop/src-tauri/`, `src/rules_core/`) before any Epic 3 content
-landed, confirming zero identifier-discipline leaks (Tauri command names,
-TypeScript symbols, `data-testid` attributes, or embedded kanban/audit
-tokens) carrying SD-22-specific scratch naming. The audit was vacuous — no
-renames were required — and was re-verified live at Epic 9's closure-
-readiness eval with the same clean result.
+## Known Issues
 
-## Versioning
+- Bestiary 1 has 8 of the stated 8-12 target subsets (41 of an eventual larger monster roster) — a deliberate floor, not a defect, deferred as an open judgment call rather than pushed to the ceiling this tranche.
+- Epic 1's identifier-audit grep pattern flags the bundle's own approved `tests/sd22_*.rs` test-file names as doc-comment citations in later cycles' code comments — zero real identifier-discipline leaks, but the criterion's exception clause doesn't formally cover this shape (deferred judgment call, not a defect).
+- None of this tranche's content (APG/ACG classes, Bestiary 1 monsters, DM toolkit) is wired into any desktop-app UI surface yet — it is available at the `src/rules_core/` engine layer only.
 
-Epic 8 (criteria 27-29) established the three-position
-`<major>.<tranche-base>.<build>` build-version scheme on this branch:
-`major` increments only on first publish to `main`; `tranche-base` tracks
-the active tranche (`5` for this release); `build` is a monotonic counter
-across all branches. This cycle set the concrete per-build value to
-`0.5.95` across `apps/desktop/package.json`,
-`apps/desktop/src-tauri/tauri.conf.json`, and
-`apps/desktop/src-tauri/Cargo.toml`; updated the `Codex ${buildVersion}`
-build-label format's test fixtures to match; and committed the four-step
-closure-process checklist at `docs/SD-22/release-closure-checklist.md`.
+## Update Eligibility
 
-**Correction (post-closure):** Epic 7's criterion-26 cycle initially bumped
-the tranche-base position (`0.5.95` → `0.6.0`), on the assumption that
-closure always advances the tranche digit. That was wrong for this bundle:
-`tranche/5` is still the active branch — the tranche digit only advances
-when a new `tranche/N` branch is cut for the next bundle, not automatically
-at a bundle's own closure. The bump was reverted; only the build position
-incremented: `0.5.95` → `0.5.96`.
+- No changes to the update/install mechanism in this tranche — eligibility follows the same Linux AppImage mechanism established in SD-16 (`docs/release/SD-16/release-notes.md`).
+- This release introduces no update-critical UI or install-path changes; existing eligible installs Check/Install through the same governed channel-index flow.

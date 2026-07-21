@@ -65,8 +65,8 @@
     },
     "release_notes_path": {
       "type": "string",
-      "description": "Repo-relative path to the tranche release-notes.md. Locked to the canonical programs/codex/requirements/<stc-id>/release-notes.md path (AV-SCH-6).",
-      "pattern": "^programs/codex/requirements/[^/]+/release-notes\\.md$"
+      "description": "Repo-relative path to the tranche release-notes.md. Locked to the canonical docs/release/<SD-NN>/release-notes.md path (AV-SCH-6). Relocated 2026-07-20 from programs/codex/requirements/<stc-id>/release-notes.md as part of a repo-wide docs-structure consolidation; manifests published before that date reference the old path and are not retroactively updated.",
+      "pattern": "^docs/release/[^/]+/release-notes\\.md$"
     },
     "release_notes_url": {
       "type": "string",

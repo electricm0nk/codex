@@ -97,7 +97,7 @@ const VALID_MANIFEST_WIRE = {
   source_branch: 'develop',
   source_commit: SHA40,
   release_notes_path:
-    'programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md',
+    'docs/release/SD-16/release-notes.md',
   release_notes_url:
     'https://github.com/electricm0nk/codex/releases/tag/alpha-v0.1.0-abc12345',
   release_notes_hash: SHA64,

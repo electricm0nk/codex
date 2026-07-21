@@ -150,7 +150,7 @@ class TmpRepo(unittest.TestCase):
 
 class CheckReleaseManifestAgainstDevSchemaTests(TmpRepo):
     def test_dev_schema_manifest_passes(self):
-        notes_rel = "programs/codex/requirements/sd-16-fixture/release-notes.md"
+        notes_rel = "docs/release/sd-16-fixture/release-notes.md"
         notes_path = self.workdir / notes_rel
         self._write(notes_path, _valid_release_notes())
 
@@ -165,10 +165,10 @@ class CheckReleaseManifestAgainstDevSchemaTests(TmpRepo):
         self.assertIn("PASS", res.stdout)
 
     def test_missing_release_notes_file_fails(self):
-        notes_rel = "programs/codex/requirements/sd-16-fixture/release-notes.md"
+        notes_rel = "docs/release/sd-16-fixture/release-notes.md"
         # Spec-domain directory exists on disk, but the release-notes file
         # itself is never written or committed.
-        (self.workdir / "programs" / "codex" / "requirements" / "sd-16-fixture").mkdir(
+        (self.workdir / "docs" / "release" / "sd-16-fixture").mkdir(
             parents=True, exist_ok=True
         )
 

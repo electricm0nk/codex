@@ -2,7 +2,7 @@
 //!
 //! Every test in this file exercises a clause of the canonical
 //! contract published in
-//! `programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/artifacts/canonical-source-ir-contract-2026-07-12.md`.
+//! `docs/release/SD-17/artifacts/canonical-source-ir-contract-2026-07-12.md`.
 //! The slice-E converter entry point is `convert_to_ir` in
 //! `codex::pcgen_import::ir_converter`, which projects a parsed
 //! LST record (via `ParsedLstRecord<'a>`) into a canonical

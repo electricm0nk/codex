@@ -15,9 +15,7 @@ export type {
   ChannelLabel,
   EligibilityDecision,
   EligibilityInput,
-  EligibilityResult,
   FetchStatus,
-  InstallKind,
 } from './eligibility';
 
 export {

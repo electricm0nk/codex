@@ -106,13 +106,13 @@ def _coherence_check(repo_root: Path, manifest: dict, manifest_path: Path) -> li
     spec_domain = manifest.get("spec_domain_id")
 
     m = re.match(
-        r"^programs/codex/requirements/(?P<specdir>[^/]+)/release-notes\.md$",
+        r"^docs/release/(?P<specdir>[^/]+)/release-notes\.md$",
         notes_rel,
     )
     if not m:
         errors.append(
             f"{manifest_path}: release_notes_path does not match required layout "
-            "(expected programs/codex/requirements/<spec-dir>/release-notes.md)"
+            "(expected docs/release/<spec-dir>/release-notes.md)"
         )
         return errors
     spec_dir = m.group("specdir")
@@ -125,7 +125,7 @@ def _coherence_check(repo_root: Path, manifest: dict, manifest_path: Path) -> li
                 f"notes directory '{spec_dir}'"
             )
 
-    sd_dir_abs = repo_root / "programs" / "codex" / "requirements" / spec_dir
+    sd_dir_abs = repo_root / "docs" / "release" / spec_dir
     if not sd_dir_abs.is_dir():
         errors.append(
             f"{manifest_path}: spec domain directory does not exist on branch: {sd_dir_abs}"

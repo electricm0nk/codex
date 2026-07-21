@@ -80,8 +80,8 @@ test_writer_emits_valid_manifest() {
   trap "rm -rf '${tmpdir}'" EXIT
 
   # Stage a fake release-notes.md so the writer can compute the hash.
-  mkdir -p "${tmpdir}/programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening"
-  cat > "${tmpdir}/programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md" <<'NOTES_EOF'
+  mkdir -p "${tmpdir}/docs/release/SD-16"
+  cat > "${tmpdir}/docs/release/SD-16/release-notes.md" <<'NOTES_EOF'
 ## Summary
 
 - _placeholder._
@@ -125,7 +125,7 @@ NOTES_EOF
     --version "0.0.0" \
     --source-branch "develop" \
     --source-commit "0000000000000000000000000000000000000000" \
-    --release-notes-path "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md" \
+    --release-notes-path "docs/release/SD-16/release-notes.md" \
     --appimage-name "codex_0.0.0_amd64.AppImage" \
     --appimage-path "${tmpdir}/release-staging/codex_0.0.0_amd64.AppImage" \
     --appimage-url "https://github.com/electricm0nk/codex/releases/download/alpha-v0.0.0-deadbeef/codex_0.0.0_amd64.AppImage" \

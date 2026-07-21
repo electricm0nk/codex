@@ -50,9 +50,7 @@ import { parseUpdateManifest, type UpdateManifestFile } from './parseUpdateManif
 // integration, the SD-11 boundary) consume these re-exported aliases so
 // the schema contract has exactly one TS surface.
 
-export type ChannelLabel = ChannelLabel;
-export type ChannelIndexFile = ChannelIndexFile;
-export type UpdateManifestFile = UpdateManifestFile;
+export type { ChannelLabel, ChannelIndexFile, UpdateManifestFile };
 
 // ---------- discriminated results ----------
 

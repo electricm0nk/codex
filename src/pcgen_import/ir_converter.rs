@@ -26,9 +26,9 @@
 //! parse-result containers into `SourceContentDiagnostic`s.
 //!
 //! The authoritative specification is
-//! `programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/artifacts/canonical-ir-contract-2026-07-12.md` (Slice C,
+//! `docs/release/SD-17/artifacts/canonical-ir-contract-2026-07-12.md` (Slice C,
 //! IR-conversion surface); the source-IR shape is authoritative at
-//! `programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/artifacts/canonical-source-ir-contract-2026-07-12.md`
+//! `docs/release/SD-17/artifacts/canonical-source-ir-contract-2026-07-12.md`
 //! (Slice E, canonical envelope).
 //!
 //! ## Public API (post-Slice-E)

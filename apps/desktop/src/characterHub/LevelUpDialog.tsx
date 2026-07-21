@@ -9,8 +9,9 @@ import { previewLevelUp, totalSkillPoints, type HeldClass } from './characterPro
  * before committing. Patterned after ThemeBrowserModal's portal-based overlay
  * shell so it matches the rest of the app's modal conventions.
  *
- * Accepting is a stub today — no backend command exists yet to persist a
- * level-up onto the saved character. That wiring is a separate follow-on.
+ * Accepting calls `onAccept(classId)` and closes; the caller (see
+ * `CharacterSheet`) is responsible for persisting the level-up via the
+ * `level_up_character` Tauri command and refreshing the sheet on success.
  */
 
 export function LevelUpDialog(props: {

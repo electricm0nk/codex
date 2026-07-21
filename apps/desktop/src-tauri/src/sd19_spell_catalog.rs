@@ -54,6 +54,58 @@ pub fn list_spell_catalog() -> SpellCatalogResponse {
     build_spell_catalog()
 }
 
+/// Filter criteria for `list_spells`. Every field is optional and
+/// `None`/empty matches everything — an all-`None` filter is equivalent to
+/// the unfiltered `list_spell_catalog` response. Kept deliberately narrow
+/// (substring name match, exact school match) rather than an exhaustive
+/// query DSL; widen only if a real caller needs more.
+#[derive(Debug, Clone, Default, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SpellCatalogFilter {
+    /// Case-insensitive substring match against `key` (the spell's corpus
+    /// identity/name — see `SpellCatalogEntryDto::key`'s doc comment).
+    pub name_contains: Option<String>,
+    /// Exact match against the `Pf1SchoolId` variant name verbatim (e.g.
+    /// "Evocation"), as projected onto `SpellCatalogEntryDto::school`.
+    pub school: Option<String>,
+}
+
+/// Narrows the full catalog to the entries matching `filter`. A thin,
+/// testable wrapper behind the `list_spells` Tauri command below, mirroring
+/// `build_spell_catalog`'s own command/pure-fn split.
+pub fn filter_spell_catalog(filter: &SpellCatalogFilter) -> SpellCatalogResponse {
+    let name_needle = filter
+        .name_contains
+        .as_ref()
+        .filter(|needle| !needle.is_empty())
+        .map(|needle| needle.to_lowercase());
+
+    let entries = build_spell_catalog()
+        .entries
+        .into_iter()
+        .filter(|entry| match &name_needle {
+            Some(needle) => entry.key.to_lowercase().contains(needle.as_str()),
+            None => true,
+        })
+        .filter(|entry| match &filter.school {
+            Some(school) => &entry.school == school,
+            None => true,
+        })
+        .collect();
+
+    SpellCatalogResponse { entries }
+}
+
+/// Returns the CRB spell catalog narrowed by `filter` — see
+/// `SpellCatalogFilter`'s own doc comment for the supported fields.
+/// Distinct from `list_spell_catalog` (kept unfiltered so the existing
+/// `loadSpellCatalog` desktop boundary caller is untouched this cycle); this
+/// command is the new, additive filtered surface Criterion 19 asks for.
+#[tauri::command]
+pub fn list_spells(filter: SpellCatalogFilter) -> SpellCatalogResponse {
+    filter_spell_catalog(&filter)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -87,6 +139,64 @@ mod tests {
         for entry in &response.entries {
             assert!(!entry.key.is_empty());
             assert!(!entry.description.is_empty());
+        }
+    }
+
+    #[test]
+    fn filter_spell_catalog_with_no_filter_fields_returns_the_full_catalog() {
+        let response = filter_spell_catalog(&SpellCatalogFilter::default());
+        assert_eq!(response.entries.len(), build_spell_catalog().entries.len());
+    }
+
+    #[test]
+    fn filter_spell_catalog_matches_name_contains_case_insensitively() {
+        let response = filter_spell_catalog(&SpellCatalogFilter {
+            name_contains: Some("fireball".to_owned()),
+            school: None,
+        });
+
+        assert!(
+            !response.entries.is_empty(),
+            "the real CRB corpus has a Fireball record"
+        );
+        assert!(response.entries.len() < build_spell_catalog().entries.len());
+        for entry in &response.entries {
+            assert!(
+                entry.key.to_lowercase().contains("fireball"),
+                "entry {:?} does not contain 'fireball'",
+                entry.key
+            );
+        }
+    }
+
+    #[test]
+    fn filter_spell_catalog_matches_school_exactly() {
+        let response = filter_spell_catalog(&SpellCatalogFilter {
+            name_contains: None,
+            school: Some("Evocation".to_owned()),
+        });
+
+        assert_eq!(response.entries.len(), 87);
+        for entry in &response.entries {
+            assert_eq!(entry.school, "Evocation");
+        }
+    }
+
+    #[test]
+    fn filter_spell_catalog_combines_name_and_school_filters() {
+        let response = filter_spell_catalog(&SpellCatalogFilter {
+            name_contains: Some("flame".to_owned()),
+            school: Some("Evocation".to_owned()),
+        });
+
+        assert!(
+            !response.entries.is_empty(),
+            "the real CRB corpus has Evocation spells with 'flame' in the name (e.g. Flame \
+             Blade, Flame Strike)"
+        );
+        for entry in &response.entries {
+            assert_eq!(entry.school, "Evocation");
+            assert!(entry.key.to_lowercase().contains("flame"));
         }
     }
 }

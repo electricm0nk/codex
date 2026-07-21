@@ -13,7 +13,7 @@
 //! `pilot_compute_corpus.rs`) — composing with the existing
 //! `PilotBaseChassisComputation` / `CorpusPilotReceipt` shapes rather than
 //! duplicating them from scratch, per `pilot_compute_corpus.rs`'s own doc
-//! comment and `docs/SD-20/boundary-contract.md` §2's stub note.
+//! comment and `docs/release/SD-20/boundary-contract.md` §2's stub note.
 //!
 //! This cycle does not touch the printed-sheet cell map or add a
 //! wire-fixture JSON (later Epic-1 work-units per Step 2).

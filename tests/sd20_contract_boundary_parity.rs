@@ -17,7 +17,7 @@
 //! This crate has no `serde`/`serde_json` dependency (`Cargo.toml` has an
 //! empty `[dependencies]` table), and adding one is out of this cycle's
 //! file-touch partition (Epic 1 cycles touch `src/rules_core/contract.rs`,
-//! `docs/SD-20/boundary-contract.md`, and `tests/fixtures/wire/sd20/*.json`
+//! `docs/release/SD-20/boundary-contract.md`, and `tests/fixtures/wire/sd20/*.json`
 //! plus `tests/sd20_<criterion>.rs` only — not `Cargo.toml`). So this test
 //! file carries a small self-contained JSON reader (object/array/string/
 //! number/bool/null) built on `std` alone, used only to parse this

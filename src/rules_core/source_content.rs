@@ -10,7 +10,7 @@
 //! # Authoritative contract
 //!
 //! The authoritative specification is
-//! `programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/artifacts/canonical-source-ir-contract-2026-07-12.md`.
+//! `docs/release/SD-17/artifacts/canonical-source-ir-contract-2026-07-12.md`.
 //! Every field, lossy mapping, and intentional non-translation
 //! listed in that document is reflected here. If this
 //! implementation and the contract disagree, the contract wins;

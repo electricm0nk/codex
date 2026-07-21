@@ -19,14 +19,16 @@ use campaign_drive::{
     write_campaign_drive_artifacts,
 };
 use character_hub::{
-    clone_character, create_character, delete_character_portrait, export_character_json,
-    list_saved_characters, load_character_portrait, load_saved_character, save_character_portrait,
+    add_equipment_selection, add_spell_selection, clone_character, create_character,
+    delete_character, delete_character_portrait, export_character, export_character_json,
+    import_character, level_up_character, list_saved_characters, load_character_portrait,
+    load_saved_character, save_character_portrait,
 };
 use sd13_support_state_matrix::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use sd19_class_catalog::list_class_catalog;
-use sd19_equipment_catalog::list_equipment_catalog;
+use sd19_equipment_catalog::{list_equipment, list_equipment_catalog};
 use sd19_race_catalog::list_race_catalog;
-use sd19_spell_catalog::list_spell_catalog;
+use sd19_spell_catalog::{list_spell_catalog, list_spells};
 use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
 };
@@ -122,12 +124,18 @@ fn main() {
             verify_relaunch_artifact,
             create_character,
             clone_character,
+            level_up_character,
+            add_equipment_selection,
+            add_spell_selection,
             list_saved_characters,
             load_saved_character,
             save_character_portrait,
             load_character_portrait,
             delete_character_portrait,
+            delete_character,
             export_character_json,
+            export_character,
+            import_character,
             write_campaign_drive_artifacts,
             drive_list_campaigns,
             drive_load_campaign,
@@ -135,6 +143,8 @@ fn main() {
             drive_delete_campaign,
             list_equipment_catalog,
             list_spell_catalog,
+            list_equipment,
+            list_spells,
             list_class_catalog,
             list_race_catalog
         ])

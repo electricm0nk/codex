@@ -8,7 +8,7 @@
 //! `IRNode`). The 45 acceptance tests below were rewritten in lock-step
 //! with the converter's Slice E surface change. They exercise the
 //! same contract published in
-//! `programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/artifacts/canonical-ir-contract-2026-07-12.md`
+//! `docs/release/SD-17/artifacts/canonical-ir-contract-2026-07-12.md`
 //! plus the new canonical source-IR contract artifact
 //! `canonical-source-ir-contract-2026-07-12.md`. Every test that
 //! previously destructured `IRNode::Class(p)` now destructures

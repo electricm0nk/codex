@@ -5,7 +5,7 @@
  * OAuth, no token storage, no network calls. "Drive folder" just means a
  * local path (typically a Drive/Dropbox/Syncthing desktop-sync-client
  * mirror, or any plain folder). Campaigns write real files there (see
- * campaignModel.ts's `syncCampaignDriveArtifacts`); sharing a campaign means
+ * campaignModel.ts's `writeCampaignLocalFolderArtifacts`); sharing a campaign means
  * handing someone that folder or its files directly. `accountEmail` is
  * reference metadata only (whose folder this is) — it is never used to
  * authenticate or contact anyone. Persisted to localStorage.

@@ -1,6 +1,6 @@
 import { useState, type CSSProperties, type FormEvent } from 'react';
 import { RULE_SETS } from '../characterHub/LandingScreen';
-import { createCampaign, syncCampaignDriveArtifacts } from './campaignModel';
+import { createCampaign } from './campaignModel';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -26,7 +26,7 @@ export function CreateCampaignScreen(props: { onCancel: () => void; onCreated: (
   const [description, setDescription] = useState('');
   const [memberEmails, setMemberEmails] = useState<string[]>(['']);
   const [submitting, setSubmitting] = useState(false);
-  const [driveActionSummary, setDriveActionSummary] = useState<string | null>(null);
+  const [folderStatusMessage, setFolderStatusMessage] = useState<string | null>(null);
 
   const selectedRuleSet = RULE_SETS.find((ruleSet) => ruleSet.id === ruleSetId) ?? RULE_SETS[0];
 
@@ -47,7 +47,7 @@ export function CreateCampaignScreen(props: { onCancel: () => void; onCreated: (
     setSubmitting(true);
     try {
       const cleanedEmails = memberEmails.map((email) => email.trim()).filter(Boolean);
-      const { campaign } = createCampaign({
+      const { campaign, syncResult } = await createCampaign({
         name: name.trim(),
         ruleSetId: selectedRuleSet.id,
         ruleSetLabel: selectedRuleSet.name,
@@ -55,11 +55,10 @@ export function CreateCampaignScreen(props: { onCancel: () => void; onCreated: (
         memberEmails: cleanedEmails,
       });
 
-      const result = await syncCampaignDriveArtifacts(campaign.id);
-      setDriveActionSummary(
-        result.ok
-          ? `Campaign folder created at ${result.campaignFolderPath}.`
-          : `Campaign saved, but the Drive folder could not be written: ${result.error}`
+      setFolderStatusMessage(
+        syncResult.ok
+          ? `Campaign folder created at ${syncResult.campaignFolderPath}.`
+          : `Campaign saved, but the local folder could not be written: ${syncResult.error}`
       );
       props.onCreated(campaign.id);
     } finally {
@@ -182,8 +181,8 @@ export function CreateCampaignScreen(props: { onCancel: () => void; onCreated: (
           {submitting ? 'Creating…' : 'Create campaign'}
         </button>
 
-        {driveActionSummary ? (
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', lineHeight: 1.6, marginTop: '0.9rem' }}>{driveActionSummary}</p>
+        {folderStatusMessage ? (
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', lineHeight: 1.6, marginTop: '0.9rem' }}>{folderStatusMessage}</p>
         ) : null}
       </form>
     </section>

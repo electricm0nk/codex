@@ -6,7 +6,7 @@
   "tranche_id": "STC-CODEX-SD-16",
   "source_branch": "develop",
   "source_commit": "0000000000000000000000000000000000000000",
-  "release_notes_path": "programs/codex/requirements/SD-16-feedback-loop-and-self-update-hardening/release-notes.md",
+  "release_notes_path": "docs/release/SD-16/release-notes.md",
   "release_notes_url": "https://github.com/electricm0nk/codex/releases/tag/alpha/v0.0.0-deadbeef",
   "release_notes_hash": "f6ea1e33cea6aff4faf52ac4646ee03fd3079d5e403b460f264c01eda70554ed",
   "linux_appimage": {

@@ -27,7 +27,7 @@ on:
       - 'apps/desktop/src/sd16/**'
       - 'apps/desktop/src/sd17/**'
       - 'release-manifest.json'
-      - 'programs/codex/requirements/**/release-notes.md'
+      - 'docs/release/**/release-notes.md'
       - '.github/workflows/publish-tester-release.yml'
       - '.github/workflows/check-release-manifest.yml'
 

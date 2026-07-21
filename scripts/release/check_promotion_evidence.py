@@ -72,10 +72,7 @@ from pathlib import Path
 # Canonical repo-relative release-notes path (release notes live in the
 # spec-domain artifacts directory; the AV-BR-6 body always records this
 # path so reviewers know where to look).
-RELEASE_NOTES_REPO_PATH = (
-    "programs/codex/requirements/"
-    "SD-16-feedback-loop-and-self-update-hardening/release-notes.md"
-)
+RELEASE_NOTES_REPO_PATH = "docs/release/SD-16/release-notes.md"
 
 # Tranche identifier (must appear in the manifest AND the PR body).
 TRANCHE_ID = "codex-tranche-2-5"
@@ -949,8 +946,8 @@ def _t_manifest_wrong_notes_path() -> None:
 def _t_pr_body_beta_keys_present() -> None:
     body = (
         "tranche_id: codex-tranche-2-5\n"
-        "release_notes_path: programs/codex/requirements/"
-        "SD-16-feedback-loop-and-self-update-hardening/release-notes.md\n"
+        "release_notes_path: docs/release/"
+        "SD-16/release-notes.md\n"
         "alpha_release_url: https://github.com/x/y/releases/tag/alpha%2F0.0.1\n"
         "verification_evidence: https://ci.example/runs/1\n"
         "known_issues:\n- none\n"
@@ -964,8 +961,8 @@ def _t_pr_body_beta_keys_present() -> None:
 def _t_pr_body_beta_keys_missing_alpha_url() -> None:
     body = (
         "tranche_id: codex-tranche-2-5\n"
-        "release_notes_path: programs/codex/requirements/"
-        "SD-16-feedback-loop-and-self-update-hardening/release-notes.md\n"
+        "release_notes_path: docs/release/"
+        "SD-16/release-notes.md\n"
         # alpha_release_url intentionally missing.
         "verification_evidence: https://ci.example/runs/1\n"
         "known_issues:\n- none\n"
@@ -978,8 +975,8 @@ def _t_pr_body_beta_keys_missing_alpha_url() -> None:
 def _t_pr_body_stable_keys_present() -> None:
     body = (
         "tranche_id: codex-tranche-2-5\n"
-        "release_notes_path: programs/codex/requirements/"
-        "SD-16-feedback-loop-and-self-update-hardening/release-notes.md\n"
+        "release_notes_path: docs/release/"
+        "SD-16/release-notes.md\n"
         "beta_release_url: https://github.com/x/y/releases/tag/beta%2F0.0.1\n"
         "provenance_url: https://github.com/x/y/releases/download/"
         "beta%2F0.0.1/provenance.json\n"
@@ -1101,8 +1098,8 @@ def _t_lane_evaluation_beta_ready_minimal() -> None:
     }
     body = (
         "tranche_id: codex-tranche-2-5\n"
-        "release_notes_path: programs/codex/requirements/"
-        "SD-16-feedback-loop-and-self-update-hardening/release-notes.md\n"
+        "release_notes_path: docs/release/"
+        "SD-16/release-notes.md\n"
         "alpha_release_url: https://github.com/x/y/releases/tag/"
         "alpha%2F0.0.1\n"
         "verification_evidence: https://ci.example/runs/1\n"
@@ -1145,8 +1142,8 @@ def _t_lane_evaluation_beta_blocked_when_shell_evidence_empty() -> None:
     }
     body = (
         "tranche_id: codex-tranche-2-5\n"
-        "release_notes_path: programs/codex/requirements/"
-        "SD-16-feedback-loop-and-self-update-hardening/release-notes.md\n"
+        "release_notes_path: docs/release/"
+        "SD-16/release-notes.md\n"
         "alpha_release_url: https://github.com/x/y/releases/tag/"
         "alpha%2F0.0.1\n"
         "verification_evidence: https://ci.example/runs/1\n"
@@ -1188,8 +1185,8 @@ def _t_lane_evaluation_stable_ready_minimal() -> None:
     }
     body = (
         "tranche_id: codex-tranche-2-5\n"
-        "release_notes_path: programs/codex/requirements/"
-        "SD-16-feedback-loop-and-self-update-hardening/release-notes.md\n"
+        "release_notes_path: docs/release/"
+        "SD-16/release-notes.md\n"
         "beta_release_url: https://github.com/x/y/releases/tag/"
         "beta%2F0.0.1\n"
         "provenance_url: https://github.com/x/y/releases/download/"
@@ -1236,8 +1233,8 @@ def _t_lane_evaluation_stable_blocked_on_stable_blocker() -> None:
     }
     body = (
         "tranche_id: codex-tranche-2-5\n"
-        "release_notes_path: programs/codex/requirements/"
-        "SD-16-feedback-loop-and-self-update-hardening/release-notes.md\n"
+        "release_notes_path: docs/release/"
+        "SD-16/release-notes.md\n"
         "beta_release_url: https://github.com/x/y/releases/tag/beta%2F0.0.1\n"
         "provenance_url: https://github.com/x/y/releases/download/beta%2F0.0.1/"
         "provenance.json\n"
@@ -1282,8 +1279,8 @@ def _t_merge_loader_problems_replaces_gate() -> None:
     }
     body_ok = (
         "tranche_id: codex-tranche-2-5\n"
-        "release_notes_path: programs/codex/requirements/"
-        "SD-16-feedback-loop-and-self-update-hardening/release-notes.md\n"
+        "release_notes_path: docs/release/"
+        "SD-16/release-notes.md\n"
         "alpha_release_url: https://github.com/x/y/releases/tag/"
         "alpha%2F0.0.1\n"
         "verification_evidence: https://ci.example/runs/1\n"
