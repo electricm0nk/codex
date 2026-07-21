@@ -1,7 +1,7 @@
 # Cycle recomputeCharacter — Epic 7 (Tauri command-surface repair) / Criterion 7.2
 
-- **Card ID:** t_placeholder7 (placeholder — backfilled once the real kanban card ID is known)
-- **Commit SHA:** (recorded in the same-cycle commit that adds this file; see `git log` for the commit touching `apps/desktop/src-tauri/src/characterHub/` + `apps/desktop/src-tauri/src/main.rs`)
+- **Card ID:** `t_46fdf2a7` (`codex-tranche-5`, `done`)
+- **Commit SHA:** `db7d4e4` (feat) + `4500e41` (self-heal fixup)
 - **Files touched:**
   - `apps/desktop/src-tauri/src/characterHub/recomputeCharacter.rs` (new — command implementation + inline `#[cfg(test)]` unit tests)
   - `apps/desktop/src-tauri/src/characterHub/mod.rs` (modified — this cycle's push-time rebase found Criterion 7.1's `appendToCharacter-cycle` had already created this file first; widened it to declare this cycle's sibling submodule too: `#[allow(non_snake_case)] pub mod recomputeCharacter;`, matching 7.1's own established convention — module identifier literally camelCase with a per-declaration lint allowance, no `#[path=...]` needed since the file is already named `recomputeCharacter.rs`)
