@@ -24,12 +24,12 @@
 
 Verify before the loop's first launch — each item below is a hard precondition. The loop refuses to dispatch a cycle if any item fails:
 
-1. **`codex-tranche-5` kanban board is reachable.** Run `hermes kanban list-boards`; confirm `codex-tranche-5` is in the list.
+1. **`codex-tranche-5` kanban board is reachable.** Run `hermes kanban boards`; confirm `codex-tranche-5` is in the list. (Corrected 2026-07-21: `list-boards` is not a valid subcommand.)
 2. **`tranche/5-2` branch is on origin.** Per operator directive 2026-07-21, another agent creates `tranche/5-2`; the operator verifies it exists and is pushed.
 3. **SD-23 closure PR merged to develop.** Per duracon 2026-07-21 09:24:59, SD-23 is the SD-24 launch-gate dependency. Run `git log origin/develop --oneline | head -5` and confirm the SD-23 closure commit is HEAD of develop. If not, the loop does NOT start.
 4. **Classic PAT present at `~/.config/gh/.claude_gh_token`** (per the kanban dispatcher's respawn-guard footgun doctrine in duracon 2026-07-04 12:41:37).
 5. **Working tree clean:** `git status --porcelain` returns empty on `tranche/5-2`.
-6. **Doctrines loaded:** `wired-integration-discipline` and `identifier-discipline` skills are in the loop's skill list. Verify with `hermes skills --profile god-emporer --list` (or whatever the operator's skill-loader equivalent is).
+6. **Doctrines loaded:** `wired-integration-discipline` and `identifier-discipline` are not installed as invocable skills (checked hermes skills registry, repo `.claude/skills/`, global `~/.claude/skills/` — 2026-07-21). The operative gate is the embedded dual-audit grep commands in §2.3 step 4, backed by `../../governance/no-stub-mvp-doctrine.md`. See `./missing_skills.md` for the gap, tracked for the operator to address outside this bundle's run.
 7. **Build counter captured in `decisions.md` §3** from develop's `Cargo.toml` workspace version.
 8. **Artifact directories verified:** `artifacts/{epic_1,epic_2,epic_3,epic_4,epic_5,epic_6,epic_7,epic_8}/` exist and are empty. The first cycle of each epic writes its receipt there.
 
@@ -75,8 +75,10 @@ A cycle is eligible when ALL of:
    git pull --rebase origin tranche/5-2
    git status --porcelain | wc -l   # expect 0; if non-zero, exit CLAIM-EXISTS
    ```
-4. **Run the dual-audit gate** (per the operator-pinned 2026-07-20 directive — both skills load together):
+4. **Run the dual-audit gate** (per the operator-pinned 2026-07-20 directive — both skills load together). `BASE_BRANCH` is defined once, before either grep block (corrected 2026-07-21 — it was previously referenced before definition):
    ```bash
+   BASE_BRANCH=$(git merge-base HEAD origin/develop)
+
    # Identifier audit (skill: identifier-discipline) — bundle-tag leaks in diff
    git diff --unified=0 "${BASE_BRANCH}...HEAD" \
      -- 'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' \
@@ -85,7 +87,6 @@ A cycle is eligible when ALL of:
      || echo 'OK_NO_BUNDLE_TAGS'
 
    # Wired-integration four-check audit (skill: wired-integration-discipline) — forbidden patterns in shipping code
-   BASE_BRANCH=$(git merge-base HEAD origin/develop)
    git diff --unified=0 "${BASE_BRANCH}...HEAD" \
      -- 'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' \
      ':!**/__tests__/**' ':!**/*.test.ts' ':!**/*.test.tsx' ':!**/*.test.rs' \

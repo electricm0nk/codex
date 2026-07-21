@@ -57,6 +57,8 @@ mirror_of: ./scope-draft.md
 
 **Build counter inheritance (operator directive 2026-07-17 applied symmetrically):** SD-24's first concrete value lands as `0.5.<current_build>` (major `0` until first main-publish, tranche `5` because `tranche/5-2` carries tranche-base `5`, build is the next monotonic counter value after the last committed build on `develop`).
 
+**Build counter captured 2026-07-21 (pre-launch checklist item 7):** develop's committed build is `0.5.97` (source of truth: `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` — NOT root `Cargo.toml`, which stays pinned at `0.1.0` and is not the version-stamped surface). SD-24's first concrete build value is therefore **`0.5.98`**, landed by Epic 8 criterion 8.4.
+
 ## 4. Multiclass scope is restricted to Fighter + Wizard only (operator directive 2026-07-21)
 
 **Decision (operator-pinned 2026-07-21):** SD-24's multiclass-real-and-full Epic 5 ships **Fighter + Wizard** only, advancing both characters from level 1 to level 10.
