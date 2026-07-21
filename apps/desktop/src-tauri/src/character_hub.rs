@@ -27,7 +27,7 @@ use codex::rules_core::pilot_compute::{build_pilot_headless_receipt, HeadlessRec
 use codex::rules_core::pilot_compute_corpus::{compute_pilot_with_corpus, CorpusDerivedSection};
 use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotViewModel};
 
-use crate::sd19_corpus::corpus_fixture_bundle;
+use crate::corpus_fixtures::corpus_fixture_bundle;
 use codex::saved_character::local_store::SavedCharacterStore;
 use codex::saved_character::{
     SavedCharacterEnvelope, SavedCharacterRevisionKind, SavedCharacterSummary,

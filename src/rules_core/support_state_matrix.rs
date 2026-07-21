@@ -848,69 +848,69 @@ const SD13_ELF_LEVEL1_TEST: &str = "tests/sd13_elf_race_semantics_recognition.rs
 /// Abjuration spell in `cr_spells.lst` (73 records) resolves via
 /// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
 /// .school_coverage[Abjuration]` through `compute_pilot_with_corpus`.
-const SD19_ABJURATION_SCHOOL_TEST: &str = "tests/sd19_school_abjuration.rs";
+const ABJURATION_SCHOOL_TEST: &str = "tests/sd19_school_abjuration.rs";
 
 /// SD-19 §2.4 Conjuration school-reachability proof: every real-corpus
 /// Conjuration spell in `cr_spells.lst` (116 records) resolves via
 /// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
 /// .school_coverage[Conjuration]` through `compute_pilot_with_corpus`.
-const SD19_CONJURATION_SCHOOL_TEST: &str = "tests/sd19_school_conjuration.rs";
+const CONJURATION_SCHOOL_TEST: &str = "tests/sd19_school_conjuration.rs";
 
 /// SD-19 §2.4 Divination school-reachability proof: every real-corpus
 /// Divination spell in `cr_spells.lst` (50 records) resolves via
 /// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
 /// .school_coverage[Divination]` through `compute_pilot_with_corpus`.
-const SD19_DIVINATION_SCHOOL_TEST: &str = "tests/sd19_school_divination.rs";
+const DIVINATION_SCHOOL_TEST: &str = "tests/sd19_school_divination.rs";
 
 /// SD-19 §2.4 Enchantment school-reachability proof: every real-corpus
 /// Enchantment spell in `cr_spells.lst` (60 records) resolves via
 /// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
 /// .school_coverage[Enchantment]` through `compute_pilot_with_corpus`.
-const SD19_ENCHANTMENT_SCHOOL_TEST: &str = "tests/sd19_school_enchantment.rs";
+const ENCHANTMENT_SCHOOL_TEST: &str = "tests/sd19_school_enchantment.rs";
 
 /// SD-19 §2.4 Evocation school-reachability proof: every real-corpus
 /// Evocation spell in `cr_spells.lst` (87 records) resolves via
 /// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
 /// .school_coverage[Evocation]` through `compute_pilot_with_corpus`.
-const SD19_EVOCATION_SCHOOL_TEST: &str = "tests/sd19_school_evocation.rs";
+const EVOCATION_SCHOOL_TEST: &str = "tests/sd19_school_evocation.rs";
 
 /// SD-19 §2.4 Illusion school-reachability proof: every real-corpus
 /// Illusion spell in `cr_spells.lst` (47 records) resolves via
 /// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
 /// .school_coverage[Illusion]` through `compute_pilot_with_corpus`.
-const SD19_ILLUSION_SCHOOL_TEST: &str = "tests/sd19_school_illusion.rs";
+const ILLUSION_SCHOOL_TEST: &str = "tests/sd19_school_illusion.rs";
 
 /// SD-19 §2.4 Necromancy school-reachability proof: every real-corpus
 /// Necromancy spell in `cr_spells.lst` (62 records) resolves via
 /// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
 /// .school_coverage[Necromancy]` through `compute_pilot_with_corpus`.
-const SD19_NECROMANCY_SCHOOL_TEST: &str = "tests/sd19_school_necromancy.rs";
+const NECROMANCY_SCHOOL_TEST: &str = "tests/sd19_school_necromancy.rs";
 
 /// SD-19 §2.4 Transmutation school-reachability proof: every real-corpus
 /// Transmutation spell in `cr_spells.lst` (152 records) resolves via
 /// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
 /// .school_coverage[Transmutation]` through `compute_pilot_with_corpus`.
-const SD19_TRANSMUTATION_SCHOOL_TEST: &str = "tests/sd19_school_transmutation.rs";
+const TRANSMUTATION_SCHOOL_TEST: &str = "tests/sd19_school_transmutation.rs";
 
 /// SD-19 §2.4 Universal school-reachability proof: every real-corpus
 /// Universal spell in `cr_spells.lst` (5 records) resolves via
 /// `spell_id_resolve` and reaches `CorpusPilotReceipt.corpus_derived
 /// .school_coverage[Universal]` through `compute_pilot_with_corpus`.
-const SD19_UNIVERSAL_SCHOOL_TEST: &str = "tests/sd19_school_universal.rs";
+const UNIVERSAL_SCHOOL_TEST: &str = "tests/sd19_school_universal.rs";
 
 /// SD-19 §2.5 arms_armor equipment-reachability proof: a representative
 /// sample of real-corpus `cr_equip_arms_armor.lst` records (Longsword,
 /// Banded Mail, Armor Spikes) resolves via `equipment_id_resolve` and
 /// reaches `CorpusPilotReceipt.corpus_derived.equipped_items` through
 /// `compute_pilot_with_corpus`.
-const SD19_ARMS_ARMOR_EQUIPMENT_TEST: &str = "tests/sd19_equipment_arms_armor.rs";
+const ARMS_ARMOR_EQUIPMENT_TEST: &str = "tests/sd19_equipment_arms_armor.rs";
 
 /// SD-19 §2.5 general equipment-reachability proof: a representative
 /// sample of real-corpus `cr_equip_general.lst` records (Backpack, Torch,
 /// Waterskin) resolves via `equipment_id_resolve` and reaches
 /// `CorpusPilotReceipt.corpus_derived.equipped_items` through
 /// `compute_pilot_with_corpus`.
-const SD19_GENERAL_EQUIPMENT_TEST: &str = "tests/sd19_equipment_general.rs";
+const GENERAL_EQUIPMENT_TEST: &str = "tests/sd19_equipment_general.rs";
 
 /// SD-19 §2.5 magic_items equipment-reachability proof: a representative
 /// sample of real-corpus `cr_equip_magic_items.lst` records (Amulet of
@@ -918,7 +918,7 @@ const SD19_GENERAL_EQUIPMENT_TEST: &str = "tests/sd19_equipment_general.rs";
 /// resolves via `equipment_id_resolve` and reaches
 /// `CorpusPilotReceipt.corpus_derived.equipped_items` through
 /// `compute_pilot_with_corpus`.
-const SD19_MAGIC_ITEMS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_magic_items.rs";
+const MAGIC_ITEMS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_magic_items.rs";
 
 /// SD-19 §2.5 equipmods equipment-reachability proof: a representative
 /// sample of real-corpus `cr_equipmods.lst` records (Masterwork (Weapon),
@@ -926,7 +926,7 @@ const SD19_MAGIC_ITEMS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_magic_items.
 /// `CorpusPilotReceipt.corpus_derived.equipped_items` through
 /// `compute_pilot_with_corpus`. This is the last §2.5 category, closing
 /// the full §2.5 sweep.
-const SD19_EQUIPMODS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_equipmods.rs";
+const EQUIPMODS_EQUIPMENT_TEST: &str = "tests/sd19_equipment_equipmods.rs";
 
 /// The deterministic seeded SD-13 current-truth matrix for the E1-F1 slice,
 /// widened by SD-19 §2.4/§2.5 per-cycle school/equipment rows.
@@ -6952,7 +6952,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_ABJURATION_SCHOOL_TEST,
+                grounding_ref: ABJURATION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 73 real-corpus Abjuration spells resolve via \
                     spell_id_resolve and appear in school_coverage[Abjuration].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
@@ -6964,7 +6964,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     (apps/desktop/src/characterHub/CharacterSheet.tsx's SpellsTab, wired through \
                     compute_pilot_with_corpus via the create_character/load_saved_character \
                     Tauri commands and a bundled corpus-fixture set in \
-                    apps/desktop/src-tauri/src/sd19_corpus.rs), satisfying the loop \
+                    apps/desktop/src-tauri/src/corpus_fixtures.rs), satisfying the loop \
                     instruction's own definition of Supported/Product-visible \
                     (operator-driven UI surfacing, 2026-07-16)",
                 next_required_uplift: "none for reachability; the remaining structural gaps \
@@ -6986,7 +6986,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_CONJURATION_SCHOOL_TEST,
+                grounding_ref: CONJURATION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 116 real-corpus Conjuration spells resolve via \
                     spell_id_resolve and appear in school_coverage[Conjuration].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
@@ -7020,7 +7020,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_DIVINATION_SCHOOL_TEST,
+                grounding_ref: DIVINATION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 50 real-corpus Divination spells resolve via \
                     spell_id_resolve and appear in school_coverage[Divination].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
@@ -7054,7 +7054,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_ENCHANTMENT_SCHOOL_TEST,
+                grounding_ref: ENCHANTMENT_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 60 real-corpus Enchantment spells resolve via \
                     spell_id_resolve and appear in school_coverage[Enchantment].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
@@ -7088,7 +7088,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_EVOCATION_SCHOOL_TEST,
+                grounding_ref: EVOCATION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 87 real-corpus Evocation spells resolve via \
                     spell_id_resolve and appear in school_coverage[Evocation].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
@@ -7122,7 +7122,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_ILLUSION_SCHOOL_TEST,
+                grounding_ref: ILLUSION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 47 real-corpus Illusion spells resolve via \
                     spell_id_resolve and appear in school_coverage[Illusion].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
@@ -7134,7 +7134,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                     (apps/desktop/src/characterHub/CharacterSheet.tsx's SpellsTab, wired through \
                     compute_pilot_with_corpus via the create_character/load_saved_character \
                     Tauri commands and a bundled corpus-fixture set in \
-                    apps/desktop/src-tauri/src/sd19_corpus.rs), satisfying the loop \
+                    apps/desktop/src-tauri/src/corpus_fixtures.rs), satisfying the loop \
                     instruction's own definition of Supported/Product-visible \
                     (operator-driven UI surfacing, 2026-07-16)",
                 next_required_uplift: "none for reachability; the remaining structural gaps \
@@ -7156,7 +7156,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_NECROMANCY_SCHOOL_TEST,
+                grounding_ref: NECROMANCY_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 62 real-corpus Necromancy spells resolve via \
                     spell_id_resolve and appear in school_coverage[Necromancy].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
@@ -7190,7 +7190,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_TRANSMUTATION_SCHOOL_TEST,
+                grounding_ref: TRANSMUTATION_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 152 real-corpus Transmutation spells resolve via \
                     spell_id_resolve and appear in school_coverage[Transmutation].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
@@ -7224,7 +7224,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_UNIVERSAL_SCHOOL_TEST,
+                grounding_ref: UNIVERSAL_SCHOOL_TEST,
                 blocker_or_lossiness_note: "all 5 real-corpus Universal spells resolve via \
                     spell_id_resolve and appear in school_coverage[Universal].spells when \
                     selected, and the row's table_cell grounds through the foundation slice's \
@@ -7261,7 +7261,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_ARMS_ARMOR_EQUIPMENT_TEST,
+                grounding_ref: ARMS_ARMOR_EQUIPMENT_TEST,
                 blocker_or_lossiness_note: "all 310 real-corpus arms_armor records \
                     resolve via equipment_id_resolve, appear in equipped_items, and \
                     ground through the CRB table store (rules_tables::crb::\
@@ -7302,7 +7302,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_GENERAL_EQUIPMENT_TEST,
+                grounding_ref: GENERAL_EQUIPMENT_TEST,
                 blocker_or_lossiness_note: "all 453 real-corpus general records resolve \
                     via equipment_id_resolve, appear in equipped_items, and ground \
                     through the CRB table store (rules_tables::crb::equipment_data::\
@@ -7337,7 +7337,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_MAGIC_ITEMS_EQUIPMENT_TEST,
+                grounding_ref: MAGIC_ITEMS_EQUIPMENT_TEST,
                 blocker_or_lossiness_note: "all 1556 real-corpus magic_items records \
                     resolve via equipment_id_resolve, appear in equipped_items, and \
                     ground through the CRB table store (rules_tables::crb::\
@@ -7378,7 +7378,7 @@ pub fn seeded_sd13_e1_f1_current_truth() -> SupportStateMatrix {
                 support_state: SupportState::Supported,
                 evidence_tier: EvidenceTier::ProductVisible,
                 evidence_freshness: EvidenceFreshness::RefreshableFromLiveProof,
-                grounding_ref: SD19_EQUIPMODS_EQUIPMENT_TEST,
+                grounding_ref: EQUIPMODS_EQUIPMENT_TEST,
                 blocker_or_lossiness_note: "344 of cr_equipmods.lst's 658 raw records \
                     are independently addressable and all 344 resolve via \
                     equipment_id_resolve, appear in equipped_items, and ground through \

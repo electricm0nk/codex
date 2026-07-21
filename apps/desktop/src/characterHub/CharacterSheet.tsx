@@ -75,7 +75,7 @@ const addItemButtonStyle: CSSProperties = {
 
 /**
  * `EquipmentCategory` has no separate weapon-vs-armor variant (see
- * `sd19_equipment_catalog.rs`'s `EquipmentCategory` enum) — "ArmsArmor" is
+ * `equipment_catalog.rs`'s `EquipmentCategory` enum) — "ArmsArmor" is
  * one combined category covering both. Judgment call: both the Add Weapon
  * and Add Armor pickers narrow to this same category server-side and let
  * the user disambiguate by name in the search box, rather than blocking on
@@ -534,7 +534,7 @@ function WeaponsTab(props: { proficiency: WeaponProficiency; onAddWeapon: () => 
 /**
  * Spell-school reachability, sourced from `compute_pilot_with_corpus` via
  * the real IPC boundary — not mock data. Resolved against a small bundled
- * corpus-fixture set (see `src-tauri/src/sd19_corpus.rs`), not the full
+ * corpus-fixture set (see `src-tauri/src/corpus_fixtures.rs`), not the full
  * PCGen corpus, so only schools with a selected, resolvable spell appear
  * here; this is a reachability proof, not a spellbook or slot tracker
  * (spell slots, DCs, and prepared/known posture remain out of scope).

@@ -79,7 +79,7 @@ export interface ResolvedEquipmentDto {
 /**
  * Corpus-derived spell/equipment reachability from `compute_pilot_with_corpus`,
  * resolved against a small bundled corpus-fixture set (see
- * `src-tauri/src/sd19_corpus.rs`) — not the full PCGen corpus.
+ * `src-tauri/src/corpus_fixtures.rs`) — not the full PCGen corpus.
  */
 export interface CorpusDerivedDto {
   schoolCoverage: SchoolCoverageDto[];

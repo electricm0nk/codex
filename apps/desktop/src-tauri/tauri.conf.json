@@ -32,7 +32,7 @@
     ],
     "resources": [
       "resources/ge08/guard-stance-package/",
-      "resources/sd19_corpus_fixtures/"
+      "resources/corpus_fixtures/"
     ],
     "icon": [
       "icons/icon.png",

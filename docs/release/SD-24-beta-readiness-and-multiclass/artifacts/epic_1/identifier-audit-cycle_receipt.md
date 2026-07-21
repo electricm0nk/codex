@@ -1,0 +1,37 @@
+# Cycle identifier-audit-cycle — Epic 1 (Identifier Cleanup) / Criterion 1.1 + 1.2
+
+- **Card ID:** t_a1b2c3d4 (placeholder; backfilled with the real `codex-tranche-5` card ID once minted — see step 10 of this cycle's report)
+- **Commit SHA:** (recorded post-commit; see git log for `feat(sd24): repo-wide identifier-discipline audit + remediation`)
+- **Files touched:**
+  - Renamed (content-preserving `git mv` + internal identifier renames):
+    - `apps/desktop/src-tauri/src/sd16_browser_handoff.rs` → `browser_handoff.rs`
+    - `apps/desktop/src-tauri/src/sd19_class_catalog.rs` → `class_catalog.rs`
+    - `apps/desktop/src-tauri/src/sd19_corpus.rs` → `corpus_fixtures.rs`
+    - `apps/desktop/src-tauri/src/sd19_equipment_catalog.rs` → `equipment_catalog.rs`
+    - `apps/desktop/src-tauri/src/sd19_race_catalog.rs` → `race_catalog.rs`
+    - `apps/desktop/src-tauri/src/sd19_spell_catalog.rs` → `spell_catalog.rs`
+    - `apps/desktop/src-tauri/resources/sd19_corpus_fixtures/*` → `apps/desktop/src-tauri/resources/corpus_fixtures/*` (4 fixture files)
+  - Edited (call-site/doc-comment/const updates):
+    - `apps/desktop/src-tauri/src/main.rs` (mod/use declarations + invoke_handler entry)
+    - `apps/desktop/src-tauri/src/character_hub.rs` (`use crate::corpus_fixtures::...`)
+    - `apps/desktop/src-tauri/tauri.conf.json` (bundled resource path)
+    - `apps/desktop/src/boundary/loadCreateCharacter.ts` (doc-comment citation)
+    - `apps/desktop/src/characterHub/CharacterSheet.tsx` (2 doc-comment citations)
+    - `src/rules_core/support_state_matrix.rs` (13 `SD19_*_TEST` consts → un-prefixed; 2 doc-string file citations)
+  - Added:
+    - `tests/sd24_identifier_discipline_audit.rs` (new standing regression test)
+
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS` (diff-scoped gate against `${BASE_BRANCH}...HEAD`) **and** `0 hits` (literal criterion 1.1 full-tree command: `git grep -nE '\b(sd(16|19|22|23|24)_|SD(16|19|22|23|24)_|Sd(16|19|22|23|24)|t_[0-9a-f]{8,})\b' apps/desktop/ apps/desktop/src-tauri/ src/`) **and** `CLEAN` (corrected boundary-fixed pattern, all legitimate `tests/` citations excluded — see Notes)
+- **Wired-integration audit result:** `OK_NO_TOKENS`
+- **Acceptance criterion (verbatim, `epic-breakdown.md`):**
+  - 1.1 — "Source-code identifier audit (in scope: `apps/desktop/`, `apps/desktop/src-tauri/`, `src/`)... RED: `git grep -nE '\b(sd(16|19|22|23|24)_|SD(16|19|22|23|24)_|Sd(16|19|22|23|24)|t_[0-9a-f]{8,})\b' apps/desktop/ apps/desktop/src-tauri/ src/` returns ≥1 hit. GREEN: the renames land; the same `git grep` returns 0 hits (or only test-fixture / audit-trail exemptions)."
+  - 1.2 — "Per-cycle tests pass after every rename... GREEN: `cargo test --locked --tests 2>&1 | tail -20` returns 0 failures; the rename is consistent across the surface."
+- **Status:** complete
+- **Notes:**
+  - **Judgment call / DISCOVERED — the criterion's own literal audit command under-detects.** The literal command (`\b...\b`, trailing word-boundary) returned **0 hits** against the *pre-remediation* repo, because `\b` does not match between `_` and a following word character — so `sd19_class_catalog` (an identifier) never matches `sd(19)_\b`, only a bare standalone `sd19_` token would. A corrected pattern (same alternation, trailing `\b` dropped) run against the same pre-remediation tree found **85 raw hits / ~50 real hits after excluding legitimate `tests/...` filename citations** — six real production Rust module names (`sd16_browser_handoff`, `sd19_class_catalog`, `sd19_corpus`, `sd19_equipment_catalog`, `sd19_race_catalog`, `sd19_spell_catalog`), a bundled Tauri resource directory (`resources/sd19_corpus_fixtures/`), and thirteen `SD19_*_TEST` module-level constants in `support_state_matrix.rs`. These are genuine identifier-discipline violations by the doctrine's own definition (bundle-tag-prefixed production identifiers), not exemptable doc-comment citations, so this cycle remediated all of them rather than reporting a false "clean" pass. The corrected pattern is now encoded permanently in `tests/sd24_identifier_discipline_audit.rs` (with its own doc comment explaining the fix) so this class of leak cannot silently reappear. The canonical command text in `epic-breakdown.md`/`loop-instruction.md` was left unedited — hardening those governance docs is outside this cycle's granted write scope (repo-wide audit under `apps/desktop/`, `apps/desktop/src-tauri/`, `src/`) — see the `## DISCOVERED` entry in `progress.md` recommending governance harden the canonical pattern.
+  - Renamed six modules is a bigger blast radius than a typical single-file Epic-1 cycle, but is squarely Epic 1's own stated purpose ("audit and remove bundle-tag identifier leaks") — not scope creep. Every rename is Rust-compiler-verified (a missed call site fails to build) and additionally covered by the pre-existing per-module `#[cfg(test)]` suites, which all still pass post-rename.
+  - Legitimate exemptions left untouched (per SD-22's own identifier-audit precedent, `docs/release/SD-22/artifacts/epic_1_2/prelaunch_and_identifier_audit_cycle_receipt.md`): doc-comment/const-string citations of real sibling files under `tests/` (e.g. `tests/sd19_seam_shapes_correctness.rs`, `tests/sd22_acg_class_arcanist_resolves.rs`, the `SD19_*_TEST` consts' own string *values* which cite real `tests/sd19_school_*.rs` filenames — only the **constant names** were renamed, not the test-file-path strings they hold, since those strings correctly name real files in the `tests/` directory that are themselves out of this criterion's scope).
+  - `sd13_support_state_matrix` (module name) and `sd13_*` files under `tests/` were left untouched — SD-13 is outside this bundle's `sd(16|19|22|23|24)` tag range by explicit criterion text.
+- **Discovery forwards:**
+  - `2026-07-21T00:00:00Z | epic-1 | criterion-1.1 | governance-pattern-bug | The canonical identifier-discipline grep in epic-breakdown.md/loop-instruction.md has a trailing-\b boundary bug that silently fails to match any bundle-tag identifier followed by more word characters (e.g. sd19_class_catalog), only matching bare standalone tokens. A corrected pattern (drop the trailing \b) is now load-bearing in tests/sd24_identifier_discipline_audit.rs. | suggested: governance/identifier-discipline.md hardening, or a follow-up doc fix in a later SD-24 epic`
+- **Next-cycle plan:** Epic 1 is now `complete` (1.1 and 1.2 both green). Next dispatch per the deterministic seed is Epic 2 (Operator Pre-Launch, criteria 2.1–2.5).

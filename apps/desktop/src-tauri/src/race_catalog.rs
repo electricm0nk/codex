@@ -8,8 +8,8 @@
 //! every real race-trait row the engine knows about, not what one character
 //! has selected. Built to satisfy the operator's full "UI-surfacing" bar for
 //! the SD-19 `race.*` matrix rows — literal display of every trait of every
-//! race, not just a per-character sample. Mirrors `sd19_class_catalog.rs` /
-//! `sd19_equipment_catalog.rs` / `sd19_spell_catalog.rs` exactly.
+//! race, not just a per-character sample. Mirrors `class_catalog.rs` /
+//! `equipment_catalog.rs` / `spell_catalog.rs` exactly.
 
 use serde::{Deserialize, Serialize};
 
@@ -43,7 +43,7 @@ fn map_catalog_entry(
 }
 
 /// Build the full catalog response. A thin, testable wrapper behind the
-/// Tauri command below (mirroring `sd19_class_catalog`'s own
+/// Tauri command below (mirroring `class_catalog`'s own
 /// command/pure-fn split).
 pub fn build_race_catalog() -> RaceCatalogResponse {
     RaceCatalogResponse {

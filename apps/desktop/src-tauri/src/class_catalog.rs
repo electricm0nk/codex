@@ -8,7 +8,7 @@
 //! character has selected. Built to satisfy the operator's full
 //! "UI-surfacing" bar for the SD-19 `class.*` matrix rows — literal display
 //! of every level of every class, not just a per-character sample. Mirrors
-//! `sd19_equipment_catalog.rs` / `sd19_spell_catalog.rs` exactly.
+//! `equipment_catalog.rs` / `spell_catalog.rs` exactly.
 
 use serde::{Deserialize, Serialize};
 
@@ -46,8 +46,8 @@ fn map_catalog_entry(
 }
 
 /// Build the full catalog response. A thin, testable wrapper behind the
-/// Tauri command below (mirroring `sd19_equipment_catalog`'s and
-/// `sd19_spell_catalog`'s own command/pure-fn split).
+/// Tauri command below (mirroring `equipment_catalog`'s and
+/// `spell_catalog`'s own command/pure-fn split).
 pub fn build_class_catalog() -> ClassCatalogResponse {
     ClassCatalogResponse {
         entries: class_tables().iter().map(map_catalog_entry).collect(),
