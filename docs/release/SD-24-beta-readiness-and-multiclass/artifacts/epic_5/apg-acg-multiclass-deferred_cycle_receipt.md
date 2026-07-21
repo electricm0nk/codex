@@ -1,7 +1,7 @@
 # Cycle apg-acg-multiclass-deferred — Epic 5 / Criterion 5.5
 
-- **Card ID:** t_5c5ed550 (placeholder pending kanban mint — see step 10)
-- **Commit SHA:** (filled in after commit — see progress.md)
+- **Card ID:** t_2dbe8a8f (`codex-tranche-5`, status `done`; created `blocked`/`scratch` — `--initial-status done` and `--workspace done-receipt` are not accepted by the current CLI, corrected inline, then `hermes kanban complete`)
+- **Commit SHA:** `bb7dd74`
 - **Files touched:** `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_5/apg-acg-multiclass-deferred.md` (new), `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_5/apg-acg-multiclass-deferred_cycle_receipt.md` (this file, new), `docs/release/SD-24-beta-readiness-and-multiclass/progress.md` (Status matrix, TODO→DONE, Cycle log, DISCOVERED).
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS (before and after; no source-code files touched this cycle)
 - **Wired-integration audit result:** OK_NO_TOKENS (before and after; no source-code files touched this cycle)
