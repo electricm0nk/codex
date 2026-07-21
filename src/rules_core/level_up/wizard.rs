@@ -140,6 +140,11 @@ use crate::rules_core::rules_tables::crb::class_tables::{class_tables, ClassId, 
 use crate::rules_core::rules_tables::RuleSetId;
 
 const WIZARD_CLASS_ID: &str = "class:wizard";
+/// SD-24 Epic 5 (criterion 5.1): the only class `pilot_compute.rs`'s own
+/// `is_supported_multiclass_mix` recognizes alongside Wizard. Used only to
+/// widen this module's entry gate to a supported Fighter+Wizard mix -- this
+/// module still never reads Fighter's own explanations or grants.
+const FIGHTER_CLASS_ID: &str = "class:fighter";
 const HUMAN_RACE_ID: &str = "race:human";
 /// PF1's universal character-level cap. `class_tables.rs`'s
 /// `ClassTableRow` carries no "Special" column at all, so this constant
@@ -173,12 +178,26 @@ const CLASS_TABLE_COVERED_EXPLANATION_IDS: [&str; 4] = [
     "class_chassis.wizard.base_save.will",
 ];
 
-/// Composes a Wizard `LevelUpPlan` for the transition from `from_level`
-/// to `to_level`. Bounded to single-class Human Wizard inputs, mirroring
-/// `pilot_compute.rs`'s own `supported_wizard_level` gate (the source
-/// this module reads from carries the identical bound, so widening this
-/// gate independently would only ever surface an empty chassis snapshot,
-/// not real data).
+/// Composes a Wizard `LevelUpPlan` for the transition from `from_level` to
+/// `to_level` -- both of which are Wizard's OWN sub-level within
+/// `character.chosen.class_levels` (identical to the character's total level
+/// for a solo Wizard; strictly Wizard's own level count for a Fighter+Wizard
+/// mix, per this function's own doc comment below). Bounded to Human Wizard
+/// inputs, mirroring `pilot_compute.rs`'s own `supported_wizard_level` gate
+/// (the source this module reads from carries the identical bound, so
+/// widening this gate independently would only ever surface an empty chassis
+/// snapshot, not real data).
+///
+/// SD-24 Epic 5 (criterion 5.1): widened from single-class-Wizard-only to
+/// also accept a length-2 Fighter+Wizard mix (mirroring `pilot_compute.rs`'s
+/// own `is_supported_multiclass_mix` / `wizard_level_in_mix` widening for the
+/// identical combination), since the function body already reads
+/// `from_level`/`to_level` from the caller rather than deriving them from
+/// `character.chosen.class_levels`'s own level number -- the caller supplies
+/// Wizard's own sub-level pair for the mix case exactly as it always has for
+/// the solo case, so no other change was needed to compose real data:
+/// `append_class_table_grants`/`append_class_feature_grants` were already
+/// decoupled from the mix shape.
 pub fn compute_wizard_level_up_grants(
     character: &CharacterInput,
     from_level: u8,
@@ -186,12 +205,9 @@ pub fn compute_wizard_level_up_grants(
 ) -> LevelUpPlan {
     let mut plan = LevelUpPlan::default();
 
-    let is_single_class_human_wizard = character.chosen.race_id == HUMAN_RACE_ID
-        && matches!(
-            character.chosen.class_levels.as_slice(),
-            [class_level] if class_level.class_id == WIZARD_CLASS_ID
-        );
-    if !is_single_class_human_wizard {
+    let is_supported_wizard_participant = character.chosen.race_id == HUMAN_RACE_ID
+        && is_wizard_or_supported_fighter_wizard_mix(&character.chosen.class_levels);
+    if !is_supported_wizard_participant {
         return plan;
     }
 
@@ -201,6 +217,23 @@ pub fn compute_wizard_level_up_grants(
     plan.capstone_threshold = to_level >= WIZARD_CHARACTER_LEVEL_CAP;
 
     plan
+}
+
+/// True when `class_levels` is either a solo Wizard build, or a length-2
+/// Fighter+Wizard multiclass mix (SD-24 Epic 5, criterion 5.1) -- the only
+/// multiclass combination `pilot_compute.rs`'s own `is_supported_multiclass_mix`
+/// recognizes. Any other shape (a different second class, or 3+ classes)
+/// returns `false`, keeping this module's honest boundary identical to
+/// `pilot_compute.rs`'s own.
+fn is_wizard_or_supported_fighter_wizard_mix(class_levels: &[CharacterClassLevel]) -> bool {
+    match class_levels {
+        [class_level] => class_level.class_id == WIZARD_CLASS_ID,
+        [a, b] => {
+            let ids = [a.class_id.as_str(), b.class_id.as_str()];
+            ids.contains(&FIGHTER_CLASS_ID) && ids.contains(&WIZARD_CLASS_ID)
+        }
+        _ => false,
+    }
 }
 
 fn class_table_row(level: u8) -> Option<ClassTableRow> {
