@@ -26,7 +26,7 @@ A closure gate is a verification step that must pass before SD-23 can be marked 
 | 12 | Tier-3 tests (TypeScript/TSX) pass under `pnpm test` (or the repo's actual test runner — confirm at SD-23 launch). |
 | 13 | `tranche/5-1` rebases cleanly on develop HEAD before promotion PR opens. |
 | 14 | Promotion PR opens against develop with all 30 cycles' commits included; CI passes; merge is clean. |
-| 15 | `decisions.md` final entry records the build counter at promotion (`0.5.<last_build> → 0.6.0` per Epic 7). |
+| 15 | `decisions.md` final entry records the build counter at promotion (`0.5.<last_build> → 0.5.<last_build + 1>` per Epic 7, corrected 2026-07-21 — `tranche/5-1` is a dash-release within tranche 5, not a new tranche cut, so the tranche-base digit does not advance). |
 | 16 | `risks-and-open-questions.md` final review: R1-R5 mitigation status recorded; OQ1-OQ2 resolution status recorded; D1-D4 deferred status confirmed. |
 
 ## Per-criterion artifact map

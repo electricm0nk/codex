@@ -246,7 +246,7 @@
 4. **PR open.** Open the `tranche/5-1 → develop` promotion PR. PR creation is a bash-level command in the loop-instruction, not a separate skill.
 5. **Merge conflicts resolved.** Run `resolve_merge_conflicts.py` per the merge-conflict-resolution skill (mode `pre-flight` or `post-pr`). On conflicts, the script emits a `merge_conflict:*` receipt and exits non-zero — the loop self-heals, operator resolves manually, loop re-runs until `outcome: clean`.
 6. **`tranche/5-1 → develop` promotion PR merge.** CI passes; merge is clean.
-7. **Build counter advances on promotion.** Per Decision §3, build counter advances `0.5.<last_build> → 0.6.0` on promotion. Tranche base advances 5 → 6 (the next working tranche starts at 6).
+7. **Build counter advances on promotion.** Per `decisions.md` §3 (corrected 2026-07-21): build counter advances `0.5.<last_build> → 0.5.<last_build + 1>` on promotion. Tranche base stays `5` — `tranche/5-1` is a dash-release within tranche 5, not a new tranche cut, so this closure does not advance the tranche-base digit (see `[[sd22-tranche-version-bump-correction]]`).
 8. **Decisions + risks final review.** Final-entry sections in `decisions.md` and `risks-and-open-questions.md` record the bundle's closure state.
 9. **Progress log complete.** Every cycle's post-mortem entry exists with commit SHA + kanban card id + audit result.
 10. **Bundle marked closed on the board.** All SD-23 kanban cards in `complete` state on `codex-tranche-5`.
@@ -292,9 +292,9 @@
 
 ### Criterion 30 — Build counter advances on promotion
 
-- **Acceptance:** Per Decision §3, build counter advances `0.5.<last_build> → 0.6.0` on promotion. Tranche base advances 5 → 6 (the next working tranche starts at 6).
-- **Test contract:** `Cargo.toml` workspace version updated post-merge; captured in `decisions.md` §3 final entry.
-- **Files touched:** `Cargo.toml` (workspace version).
+- **Acceptance:** Per `decisions.md` §3 (corrected 2026-07-21), build counter advances `0.5.<last_build> → 0.5.<last_build + 1>` on promotion. Tranche base stays `5` — `tranche/5-1` is a dash-release within tranche 5, not a new tranche cut, so it does not advance the tranche-base digit.
+- **Test contract:** `apps/desktop/src-tauri/Cargo.toml` version updated post-merge; captured in `decisions.md` §3 final entry.
+- **Files touched:** `apps/desktop/src-tauri/Cargo.toml` (build version; not root `Cargo.toml`, which has no `[workspace]` section — see `decisions.md` §3).
 - **Audit-exclusion:** None.
 
 ### Criterion 31 — `decisions.md` and `risks-and-open-questions.md` final review
