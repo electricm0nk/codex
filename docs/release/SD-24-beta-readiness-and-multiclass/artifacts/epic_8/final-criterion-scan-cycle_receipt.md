@@ -1,6 +1,6 @@
 # Cycle final-criterion-scan-cycle — Closure Epilogue / Criterion 8.1
 
-- **Card ID:** t_00000000 (placeholder — backfilled after mint)
+- **Card ID:** t_1f45ffa9 (`codex-tranche-5`, status `done`)
 - **Commit SHA:** `280ae57`
 - **Files touched:** `docs/release/SD-24-beta-readiness-and-multiclass/progress.md` (Status-matrix SHA backfill + 8.1 row flip + Cycle-log entry + TODO→DONE), this receipt. No production/test source touched (adversarial verification-only cycle).
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
