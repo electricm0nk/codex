@@ -23,32 +23,32 @@ use codex::rules_core::rules_tables::apg::spell_list::{Pf1SchoolId, spell_resolv
 fn bombers_eye_resolves_via_ruleset_apg() {
     let entry = spell_resolve("Bomber's Eye", RuleSetId::Apg)
         .expect("Bomber's Eye (Alchemist=1) should resolve via RuleSetId::Apg");
-    assert_eq!(entry.school, Pf1SchoolId::Transmutation);
-    assert_eq!(entry.level, 1, "apg_spells.lst:44 CLASSES:Alchemist=1");
+    assert_eq!(entry.school, Some(Pf1SchoolId::Transmutation));
+    assert_eq!(entry.level, Some(1), "apg_spells.lst:44 CLASSES:Alchemist=1");
 }
 
 #[test]
 fn burst_bonds_resolves_via_ruleset_apg() {
     let entry = spell_resolve("Burst Bonds", RuleSetId::Apg)
         .expect("Burst Bonds (Inquisitor=1) should resolve via RuleSetId::Apg");
-    assert_eq!(entry.school, Pf1SchoolId::Evocation);
-    assert_eq!(entry.level, 1, "apg_spells.lst:53 CLASSES:Inquisitor=1");
+    assert_eq!(entry.school, Some(Pf1SchoolId::Evocation));
+    assert_eq!(entry.level, Some(1), "apg_spells.lst:53 CLASSES:Inquisitor=1");
 }
 
 #[test]
 fn borrow_fortune_resolves_via_ruleset_apg() {
     let entry = spell_resolve("Borrow Fortune", RuleSetId::Apg)
         .expect("Borrow Fortune (Oracle=3) should resolve via RuleSetId::Apg");
-    assert_eq!(entry.school, Pf1SchoolId::Evocation);
-    assert_eq!(entry.level, 3, "apg_spells.lst:277 CLASSES:Oracle=3");
+    assert_eq!(entry.school, Some(Pf1SchoolId::Evocation));
+    assert_eq!(entry.level, Some(3), "apg_spells.lst:277 CLASSES:Oracle=3");
 }
 
 #[test]
 fn ill_omen_resolves_via_ruleset_apg() {
     let entry = spell_resolve("Ill Omen", RuleSetId::Apg)
         .expect("Ill Omen (Witch=1) should resolve via RuleSetId::Apg");
-    assert_eq!(entry.school, Pf1SchoolId::Enchantment);
-    assert_eq!(entry.level, 1, "apg_spells.lst:150 CLASSES:Witch=1");
+    assert_eq!(entry.school, Some(Pf1SchoolId::Enchantment));
+    assert_eq!(entry.level, Some(1), "apg_spells.lst:150 CLASSES:Witch=1");
 }
 
 #[test]

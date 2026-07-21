@@ -54,17 +54,26 @@ fn crb_equipment_is_fully_record_ingested() {
     );
 }
 
-/// The audit's headline finding for criterion 6.1 stood for APG and ACG:
-/// `EquipmentTableEntry` (independent per-book types, same shape) still has
-/// no `weight` field and no `description` field populated at all in those
-/// two books. CRB's own copy of the type gained both fields, populated to
-/// the corpus's honest ceiling, in SD-24 criteria 6.3/6.4 (this cycle) --
-/// see `equipment_table_entry_weight_and_description_field_coverage_for_crb`
+/// `EquipmentTableEntry` (ACG) still has no `weight` field populated and
+/// no `description` field populated at all -- not "populated for some
+/// rows and empty for others," but structurally absent-of-content in the
+/// only book left with zero coverage in both fields. `has_cost` is real
+/// (computed from `cost_gp.is_some()`), never fabricated.
+///
+/// **CRB and APG are no longer part of this canary**, as of two SD-24
+/// criteria 6.3/6.4 cycles landing concurrently: CRB's own copy of the
+/// type gained both fields, populated to the corpus's honest ceiling
+/// (see `equipment_table_entry_weight_and_description_field_coverage_for_crb`
 /// below and `tests/sd24_equipment_field_completion.rs` for the exact
-/// per-field counts. `has_cost` is real (computed from `cost_gp.is_some()`),
-/// never fabricated, in every book.
+/// per-field counts). APG's own copy gained real `weight: Option<f64>`
+/// and `description: Option<&'static str>` fields -- `weight` is
+/// populated for 319/338 real records (see
+/// `apg_equipment_gained_weight_field_and_is_fully_record_ingested`
+/// below); `description` remains `None` for all 338 (the real APG
+/// equipment corpus carries zero `DESC:` tokens on any equipment row --
+/// a genuine corpus limitation, not a parsing gap).
 #[test]
-fn equipment_table_entry_has_zero_weight_and_description_field_coverage_in_apg_and_acg() {
+fn equipment_table_entry_has_zero_weight_and_description_field_coverage_in_acg() {
     macro_rules! assert_zero_weight_and_description {
         ($report:expr) => {
             let report = $report;
@@ -86,7 +95,6 @@ fn equipment_table_entry_has_zero_weight_and_description_field_coverage_in_apg_a
             );
         };
     }
-    assert_zero_weight_and_description!(apg::equipment_tables::field_coverage_report());
     assert_zero_weight_and_description!(acg::equipment_tables::field_coverage_report());
 }
 
@@ -110,17 +118,35 @@ fn equipment_table_entry_weight_and_description_field_coverage_for_crb() {
 }
 
 /// APG's equipment corpus (`apg_equip_general.lst` + `apg_equip_arms_armor.lst`
-/// + `apg_equip_magic_items.lst`, 94 + 76 + 171 = 341 real active records)
-/// is still at its SD-22 Epic 3 bootstrap sample (3 records, one per
-/// category) -- a genuine, large record-coverage gap for criterion 6.2's
-/// remediation backlog.
+/// + `apg_equip_magic_items.lst`) is **fully record-ingested** as of the
+/// criterion 6.2/6.3/6.4 cycle -- 338 real, active records (corrected
+/// from the criterion 6.1 audit's originally-documented 341: each of the
+/// three corpus files carries exactly one `SOURCELONG:` header line the
+/// audit's grep-based count double-counted as a record; see
+/// `rules_tables::apg::equipment_data`'s module doc comment). `weight` is
+/// real per-row (319/338 -- the corpus's own `WT:` token, `None` for the
+/// 19 records with no `WT:` token at all). `description` is `None` for
+/// every record -- the real APG equipment corpus has no `DESC:` token on
+/// any equipment row (confirmed by direct inspection), a genuine corpus
+/// limitation criterion 6.4 cannot close from this corpus alone.
 #[test]
-fn apg_equipment_is_bootstrap_only_far_below_full_corpus() {
+fn apg_equipment_gained_weight_field_and_is_fully_record_ingested() {
     let report = apg::equipment_tables::field_coverage_report();
-    assert_eq!(report.total_records, 3, "APG equipment bootstrap sample (one per category)");
     assert_eq!(
-        report.records_expected, 341,
-        "documented real APG equipment corpus count (94+76+171 active, non-.MOD records)"
+        report.records_expected, 338,
+        "corrected real APG equipment corpus count (93+75+170 active, non-.MOD, \
+         non-SOURCELONG-header records)"
+    );
+    assert_eq!(
+        report.total_records, report.records_expected,
+        "APG equipment record coverage should be 100% (fully ingested as of criterion 6.2)"
+    );
+    assert_eq!(report.has_weight, 319, "319/338 real records carry a WT: token");
+    assert_eq!(
+        report.has_description, 0,
+        "the real APG equipment corpus has no DESC: token on any equipment row -- if this \
+         now fails, a description source has been found and criterion 6.4 should already be \
+         underway"
     );
 }
 
@@ -170,17 +196,43 @@ fn crb_spell_list_is_fully_record_complete_with_full_text_coverage() {
     );
 }
 
-/// APG's (`apg_spells.lst`, 300 real active records) and ACG's
-/// (`acg_spells.lst`, 145 real active records) spell lists are both still
-/// at their SD-22 bootstrap sample (5 records each) -- large
-/// record-coverage gaps, same shape as their equipment tables above.
+/// APG's spell list (`apg_spells.lst`) is **fully record-ingested** as of
+/// the criterion 6.2/6.5 cycle -- 297 real, deduplicated-by-name records
+/// (corrected from the criterion 6.1 audit's originally-documented 298:
+/// the real corpus has one genuine duplicate `Resounding Blow` base
+/// record the audit's dedup methodology missed; see
+/// `rules_tables::apg::spell_list`'s module doc comment). 261 of 297
+/// records carry full SRD/PRD text sourced from a matching `<Name>.MOD`
+/// corpus record (`full_text_verified`), a real majority -- criterion
+/// 6.5 is not 100% closed for APG (41 records have no `SCHOOL:`/
+/// `CLASSES:` token at all -- mostly Summoner eidolon spells with no
+/// leveled spell-list entry in the real rules -- and not every present
+/// record has a matching `.MOD` full-text record either), but this is
+/// real, substantial, sourced progress, not a bootstrap sample.
 #[test]
-fn apg_and_acg_spell_lists_are_bootstrap_only_far_below_full_corpus() {
+fn apg_spell_list_is_fully_record_ingested_with_majority_full_text_coverage() {
     let apg_report = apg::spell_list::spell_coverage_report();
-    assert_eq!(apg_report.total_records, 4, "APG spell list bootstrap sample");
-    assert_eq!(apg_report.records_expected, 298, "documented real apg_spells.lst active record count");
-    assert_eq!(apg_report.full_text_verified, 0);
+    assert_eq!(
+        apg_report.records_expected, 297,
+        "corrected real apg_spells.lst deduplicated-by-name active record count"
+    );
+    assert_eq!(
+        apg_report.total_records, apg_report.records_expected,
+        "APG spell list record coverage should be 100% (fully ingested as of criterion 6.2)"
+    );
+    assert_eq!(apg_report.has_description, 281, "281/297 records have a sourced description");
+    assert_eq!(
+        apg_report.full_text_verified, 261,
+        "261/297 records carry full SRD/PRD text sourced from a matching .MOD record -- if \
+         this now fails, criterion 6.5's APG full-text ingest has regressed"
+    );
+}
 
+/// ACG's spell list (`acg_spells.lst`, 145 real active records) is still
+/// at its SD-22 bootstrap sample (4 records) -- a large record-coverage
+/// gap, same shape APG's equipment/spell tables had before this cycle.
+#[test]
+fn acg_spell_list_is_bootstrap_only_far_below_full_corpus() {
     let acg_report = acg::spell_list::spell_coverage_report();
     assert_eq!(acg_report.total_records, 4, "ACG spell list bootstrap sample");
     assert_eq!(acg_report.records_expected, 145, "documented real acg_spells.lst active record count");

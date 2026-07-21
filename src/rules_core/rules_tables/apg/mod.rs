@@ -19,6 +19,7 @@ pub mod class_inquisitor;
 pub mod class_oracle;
 pub mod class_summoner;
 pub mod class_witch;
+pub mod equipment_data;
 pub mod equipment_tables;
 pub mod spell_list;
 
