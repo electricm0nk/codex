@@ -50,7 +50,7 @@
 - **PCGen library build** (SD-26's job). SD-25 ships the runner scaffolding only.
 - **JSON cache build for 26 books** (SD-26).
 - **Book-stub-manifest entries** (SD-26; Stubs Registry `book_stub` kind).
-- **Equipment corpus extension** beyond PF1 core rules + APG + ACG + Bestiary 1 (deferred).
+- **Equipment corpus extension** beyond PF1 core rules + APG + ACG + Bestiary 1 (deferred). Unaffected by Epic 7's new equipment/spell corpus intake (added 2026-07-21) — that intake stays inside the existing 4-book scope; it backfills SD-24's within-scope gaps (CRB/APG description ceilings, APG spell-text ceiling, Bestiary 1 never dispatched), not new books.
 - **Storage-tier structural convergence** (deferred per SD-24's storage-tier deferral).
 - **Hub-of-Hubs multi-system implementations** beyond the trait + StubAdapter (SD-26 / later).
 - **Inline mocks / "Would …" strings outside bundle's file-touch** (next Wired Integration Cleanup epic).
@@ -61,6 +61,7 @@
 - **PCGen Gradle interaction.** `gradlew` requires Java; first invocation may need a JVM warm-up cycle.
 - **Operator-tempo ceiling.** Discovery-dominant bundles require operator attention to manage `## DISCOVERED` priority-bump tags. If operator is unavailable for >10 entries, the loop pauses.
 - **Oracle-parity assertion gap.** SD-25's PCGen runner scaffolds the script + normalize pipeline but does not yet assert parity (that's the comparator in SD-26). Until then, SD-25's runner is "produce one oracle output" not "claim parity."
+- **Web-sourced content risk (Epic 7's equipment/spell corpus intake, added 2026-07-21).** d20pfsrd.com / aonprd.com content is not machine-verified the way the ingested PCGen LST corpus is (checksum-free, page structure can drift, a same-named cross-book/cross-edition item is a real false-match risk). Mitigated by the identity-match-before-write rule and per-record source-URL citation already specified in `epic-breakdown.md`'s Epic 7 criterion — not a reason to skip the pass, but cycles should not treat a web fetch as ground truth the way an LST token is.
 
 ## 7. Cross-reference
 

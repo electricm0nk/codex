@@ -86,6 +86,8 @@ The bulk of SD-25's actual work. The cycle picker reads `## DISCOVERED` for UI-e
 
 Criterion 7.1 = "Per-class residue intake" (reads SD-24's `per-class-coverage-matrix.md`). Criteria 7.2..7.M = per-feature cycles, dynamically spawned as `## DISCOVERED` entries from the intake.
 
+**Added 2026-07-21 (SD-24 closure findings):** Epic 7 also intakes SD-24's `progress.md ## Open blockers` directly — two real, corpus-data-limited equipment/spell coverage gaps (CRB equipment description 61.2%, APG equipment description 0%, APG spell full text 87.9%) — plus a plain scope gap SD-24's own orchestrator left out entirely (Bestiary 1 equipment + spells were never dispatched, despite being in SD-24's own declared book scope). Recommended resolution for the three real ceilings: a second-source web content pass against **d20pfsrd.com** / **aonprd.com** (Archives of Nethys) before accepting the ceiling or fabricating text, with identity-match verification and source-URL citation per record. See `epic-breakdown.md`'s Epic 7 "Equipment/spell corpus intake" criterion for the full recommendation and per-item numbers.
+
 ### 1.8 Epic 8 — Closure Epilogue (final scan + architecture-truth-up + graphify-update + release-notes + version increment; fires LAST)
 
 Standard part-of-handoff doctrine: scans every prior criterion, runs the architecture-truth-up + graphify-update sub-steps (the latter with graceful failure), generates release notes (Haiku), bumps the version (Haiku), opens the `tranche/5-3 → develop` PR, runs the merge-conflict-resolution script per the template.

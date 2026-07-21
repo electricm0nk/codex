@@ -45,6 +45,7 @@ Plus E1 + E2 (canonical governance + gating), E7 (deferred per-class residue), E
 | E5 Corpus Ingest Diagnostic | no | Sonnet | Single Tauri command + panel |
 | E6 UI-Eval Defects | no | Sonnet | Dynamic queue; serial cycles |
 | E7 Per-class residue | no | Sonnet | Dynamic queue; serial cycles |
+| E7 Equipment/spell corpus intake (added 2026-07-21) | yes (CRB-description, APG-description, APG-spell-text, Bestiary-1) | Sonnet | SD-24 carry-forward; disjoint file-touch per item; `isolation: worktree` |
 | E8 Closure Epilogue | no | Haiku (8.3, 8.4); Sonnet (8.1, 8.5); Opus (8.2 + final adversarial-verify) | Per-criterion tiering override |
 
 **Per-`parallel: yes` row:** orchestrator script invokes the cycle with `isolation: 'worktree'` so concurrent cycles don't step on each other's working-directory state.

@@ -104,6 +104,25 @@ Reads SD-24 Epic 4's `per-class-coverage-matrix.md`. Emits per-feature `## DISCO
 
 One class-feature → one cycle → one receipt at `./artifacts/epic_7/<feature-id>_cycle_receipt.md`.
 
+### Criterion 7.N — Equipment/spell corpus intake (SD-24 carry-forward, added 2026-07-21)
+
+Reads SD-24's `progress.md ## Open blockers` and `## TODO` remainder directly (not just the per-class-coverage-matrix). SD-24 closed with three real, corpus-data-limited gaps inside its own declared scope (PF1 core rules + APG + ACG + Bestiary 1) — these are backlog intake, not new book-scope (the "equipment corpus extension beyond PF1 core rules + APG + ACG + Bestiary 1" deferral in `risks-and-open-questions.md §5` is unaffected and stays deferred):
+
+1. **6.4 description field, CRB** — 1156/2977 equipment rows (mostly equipmods + slot-type markers) have no `DESC:` token in the ingested PCGen LST corpus. Ceiling: 61.2% (1821/2977).
+2. **6.4 description field, APG** — 0/338 equipment rows have a `DESC:` token at all; the LST corpus carries zero prose for APG equipment.
+3. **6.5 full spell text, APG** — 36/297 spells have no matching `.MOD` full-text record or no `SCHOOL:`/`CLASSES:` token on the base record.
+4. **Bestiary 1 equipment + spells** — never ingested in SD-24 (no `beastiary1/equipment_tables.rs` module exists at all; ~7 real equipment records unclaimed per SD-24's `equipment-coverage-matrix.md`). This one is a plain scope gap (SD-24's own orchestrator omitted Bestiary 1 from its equipment fan-out), not a corpus-data ceiling — do not expect the same "unreachable" shape as 1-3 above; it should mechanically reach whatever ceiling the LST corpus supports, the same way CRB/APG/ACG did.
+
+**Recommended resolution (operator directive 2026-07-21):** where the ingested PCGen LST corpus (`~/workspace/repos/pcgen/data/...`) genuinely lacks the data — no `DESC:` token, no `.MOD` full-text record — run a second-source web content pass against **d20pfsrd.com** and/or **aonprd.com** (Archives of Nethys) instead of accepting the ceiling or fabricating text. Both are standard PF1 SRD/OGL reference sources.
+
+- Match by identity first: cross-check name + level/school (spells) or name + category/cost (equipment) against the LST record before writing anything — a same-named item across books, or a 3.5e/PF2e cousin, is a false match.
+- Cite the source URL in the cycle receipt for every web-sourced field, the same way corpus-sourced fields cite their LST token.
+- Respect each site's terms of use (reasonable request pacing; no bulk-scraping the whole site — fetch only the specific pages needed for the identified gap records).
+- If a record can't be confidently identity-matched on either site, leave the field `None` and keep the corpus ceiling rather than guess — this is the same no-fabrication rule SD-24's cycles already applied to the LST-only approach.
+- This does not relax criterion 6.4/6.5's wording — it's an additional legitimate source, alongside the three operator options SD-24's Open Blockers already named (accept ceiling / license a second source / reword the criterion). A successful web-sourced pass can retroactively close SD-24's two Open Blockers.
+
+**Concurrency:** CRB-description, APG-description, APG-spell-text, and Bestiary-1 ingestion are 4 disjoint file-touch cycles — `parallel: yes`, same `isolation: 'worktree'` pattern as SD-24's own Epic 6.
+
 ## Epic 8 — Closure Epilogue (fires LAST; subagent tiering per-criterion)
 
 ### Criterion 8.1 — Final criterion scan (criteria 1–N)
@@ -143,8 +162,8 @@ One class-feature → one cycle → one receipt at `./artifacts/epic_7/<feature-
 | E4 PCGen Runner | 4 | 0 | 3 parallel + 1 serial |
 | E5 Corpus Ingest Diagnostic | 1 | 0 | serial |
 | E6 UI-Eval Defects | 1 cycle-shape + dynamic | ~5–10 defects | serial |
-| E7 Per-class residue | 1 intake + dynamic | ~3–5 per-class features | serial |
+| E7 Per-class residue + equipment/spell corpus intake | 2 intake + dynamic | ~3–5 per-class features | 4 of the corpus-intake cycles parallel; rest serial |
 | E8 Closure Epilogue | 5 | 0 | serial; sub-step tiering (Haiku/Sonnet/Opus) |
-| **Total** | **23** | **~8–15 dynamic** | per-`parallel` row gets `isolation: worktree` |
+| **Total** | **24** | **~8–15 dynamic** | per-`parallel` row gets `isolation: worktree` |
 
 Dynamic criteria grow as the operator's UI-eval session + per-class residue intake produce findings. The orchestrator script handles dynamic entries via `## DISCOVERED` priority-bump mechanism; the closure gate covers both declarative and dynamic criteria.
