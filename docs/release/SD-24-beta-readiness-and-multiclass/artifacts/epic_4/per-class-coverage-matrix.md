@@ -49,6 +49,32 @@ Fighter and Wizard are also the two classes Epic 5's multiclass work is scoped t
 
 **Per-class detail:** `./apg_alchemist_coverage.md`, `./apg_cavalier_coverage.md`, `./apg_inquisitor_coverage.md`, `./apg_oracle_coverage.md`, `./apg_summoner_coverage.md`, `./apg_witch_coverage.md` (per `content-unit-inventory.md` §3.1's cycle-artifact-path column).
 
-## ACG (criterion 4.3) — pending
+## ACG (criterion 4.3) — complete
 
-Not yet audited. The next Epic-4 ACG cycle appends its section here.
+**Audited:** 2026-07-21. **Source of truth:** live code (`src/rules_core/rules_tables/acg/mod.rs`'s `coverage_report()`, exercised by `tests/sd24_acg_class_coverage_audit.rs`) plus the real PCGen corpus checkout at `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/advanced_class_guide/` (commit `7f818006e371188e5717fd18d74d18a420747fc6`, 2026-06-17).
+
+**Roster:** Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest — the ten real ACG classes (the full, corrected roster; see `rules_tables::acg` module doc comment, corrected 2026-07-19 in SD-22). Criterion 4.3's own header text in `epic-breakdown.md` lists "Alchemist-side" as one of the ten and omits "Slayer" — both stale: there is no real `CLASS:Alchemist` record in `acg_classes.lst` (Alchemist is APG-only content), and Slayer does have a real record. This audit covers the real roster, not the header's stale list.
+
+| Class | Book | Chassis rows wired / expected | Named class features wired / expected | `pilot_compute.rs` integrated | `level_up::<class>` module exists | Gap priority |
+|---|---|---|---|---|---|---|
+| Arcanist | ACG | 20 / 20 | 0 / 9 | No | No | P1 |
+| Bloodrager | ACG | 20 / 20 | 0 / 19 | No | No | P1 |
+| Brawler | ACG | 20 / 20 | 0 / 14 | No | No | P1 |
+| Hunter | ACG | 20 / 20 | 0 / 21 | No | No | P1 |
+| Investigator | ACG | 20 / 20 | 0 / 95 | No | No | P1 |
+| Shaman | ACG | 20 / 20 | 0 / 10 | No | No | P1 |
+| Skald | ACG | 20 / 20 | 0 / 20 | No | No | P1 |
+| Slayer | ACG | 20 / 20 | 0 / 15 | No | No | P1 |
+| Swashbuckler | ACG | 20 / 20 | 0 / 29 | No | No | P1 |
+| Warpriest | ACG | 20 / 20 | 0 / 18 | No | No | P1 |
+
+**Findings:**
+
+1. **Chassis (BAB + saves): fully wired and independently verified correct for every class.** All ten classes' `class_table()` outputs were cross-checked against `acg_classes.lst`'s real `BONUS:COMBAT|BASEAB` and `BONUS:SAVE` tokens during this audit — no defects found. This chassis coverage was already SD-22 Epic 4 work; this cycle's contribution is turning the audit claim into executable, regression-tested code (`AcgClassId::ALL`, `class_coverage`, `coverage_report`), mirroring `rules_tables::apg`'s own SD-24 criterion-4.2 additions exactly.
+2. **Named class features (Arcane Reservoir/Exploit, Bloodline, Martial Flexibility, Hunter's Trick, Studied Combat/Strike, Spirit, Raging Song, Sneak Attack/Slayer Talents, Panache/Deeds, Blessings/Fervor, ...): zero wired for any class.** This was already true and documented per-class (see e.g. `class_arcanist.rs`'s own doc comment, SD-22) — this cycle's contribution is (a) a reproducible corpus count of the expected feature-slot surface per class (`KEY:<Class> ~ ...` records in `acg_abilities_class.lst`; methodology and exact grep documented in `AcgClassCoverage`'s doc comment in `rules_tables::acg::mod`), and (b) a canary test (`zero_named_class_features_are_wired_for_any_acg_class_yet`) that fails loudly the moment any class's count changes.
+3. **`pilot_compute.rs`'s live chassis dispatch (`compute_class_chassis`) does not recognize any ACG class.** Confirmed both by inspection and empirically: `tests/sd24_acg_class_coverage_audit.rs`'s `acg_classes_trip_the_honest_class_chassis_unsupported_diagnostic` test drives a real, minimal `CharacterInput` for each of the ten classes through `compute_pilot_base_chassis` and confirms it returns the honest, claim-blocking `class_chassis.unsupported` diagnostic with `base_attack_bonus: 0` — never a fabricated chassis number. Same behavior as every non-Fighter/Wizard CRB class and every APG class — the live pilot compute seam is presently Fighter/Wizard-only across every book.
+4. **No `level_up::<class>` module exists for any ACG class.** `src/rules_core/level_up/` (the SD-20 Epic 7 per-level automatic-feature-grant model) contains only the 11 CRB classes.
+
+**Conclusion feeding criterion 4.5:** ACG classes are *not* fully wired (chassis-only; zero named features; zero live-compute integration; zero level-up grant modules) — the identical shape criterion 4.2 found for APG. This is the exact condition `loop-instruction.md §4.2`'s hard-stop row anticipates ("Epic 4 finds APG/ACG classes are *not* fully wired → Multiclass Epic 5 scope is restricted to Fighter + Wizard only … defer APG/ACG-class multiclass to a follow-on bundle"). No blocker is raised here — this is the expected, already-decided outcome; criterion 4.5 records the deferral formally, jointly for APG and ACG.
+
+**Per-class detail:** `./acg_arcanist_coverage.md`, `./acg_bloodrager_coverage.md`, `./acg_brawler_coverage.md`, `./acg_hunter_coverage.md`, `./acg_investigator_coverage.md`, `./acg_shaman_coverage.md`, `./acg_skald_coverage.md`, `./acg_slayer_coverage.md`, `./acg_swashbuckler_coverage.md`, `./acg_warpriest_coverage.md` (per `content-unit-inventory.md` §3.1's cycle-artifact-path column).
