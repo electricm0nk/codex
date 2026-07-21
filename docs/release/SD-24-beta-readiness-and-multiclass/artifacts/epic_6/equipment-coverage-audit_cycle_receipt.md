@@ -1,7 +1,7 @@
 # Cycle equipment-coverage-audit-cycle — Epic 6 (Equipment/Armor/Spells Content Completion) / Criterion 6.1
 
-- **Card ID:** t_placeholder6a1
-- **Commit SHA:** (filled in after commit — see `progress.md` Cycle log for the landed SHA)
+- **Card ID:** t_5c240f6b (`codex-tranche-5`, status `done`; created `blocked`/`scratch` per the already-documented CLI drift — `--initial-status done` and `--workspace done-receipt` are not accepted by the current `hermes kanban create` CLI, corrected inline, then `hermes kanban complete`)
+- **Commit SHA:** `b8b9d40` (feat commit) + `f037d80` (progress.md update)
 - **Files touched:**
   - `src/rules_core/rules_tables/crb/equipment_tables.rs` (added `EquipmentFieldCoverage` + `field_coverage_report()`)
   - `src/rules_core/rules_tables/apg/equipment_tables.rs` (same)
