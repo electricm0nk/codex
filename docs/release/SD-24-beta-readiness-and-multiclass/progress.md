@@ -22,11 +22,11 @@ This file is the bundle's runtime state. The loop's `progress.md` is the canonic
 |---|---|---|---|---|
 | 1.1 Source-code identifier audit | complete | identifier-audit-cycle | 3c3882a | Corrected-pattern audit found + remediated 6 sd16_/sd19_ modules, a resource dir, 13 SD19_* consts; see ## DISCOVERED |
 | 1.2 Per-cycle tests pass | complete | identifier-audit-cycle | 3c3882a | cargo test --locked --tests (root) + cargo test --locked (src-tauri) both 0 failures |
-| 2.1 board reachable | complete | operator-pre-launch-cycle | (see Cycle log) | `hermes kanban boards` shows codex-tranche-5 |
-| 2.2 branch pushed | complete | operator-pre-launch-cycle | (see Cycle log) | ls-remote resolves, matches local HEAD |
-| 2.3 SD-23 closure PR merged | complete | operator-pre-launch-cycle | (see Cycle log) | Tier-1 launch gate CONFIRMED: 09e43c3 (PR #329) is HEAD of origin/develop |
-| 2.4 working tree clean | complete | operator-pre-launch-cycle | (see Cycle log) | git status --porcelain empty |
-| 2.5 doctrines loaded | complete | operator-pre-launch-cycle | (see Cycle log) | gap re-confirmed non-blocking per ./missing_skills.md; dual-audit grep gate is the operative check and is clean |
+| 2.1 board reachable | complete | operator-pre-launch-cycle | d6cddac | `hermes kanban boards` shows codex-tranche-5 |
+| 2.2 branch pushed | complete | operator-pre-launch-cycle | d6cddac | ls-remote resolves, matches local HEAD |
+| 2.3 SD-23 closure PR merged | complete | operator-pre-launch-cycle | d6cddac | Tier-1 launch gate CONFIRMED: 09e43c3 (PR #329) is HEAD of origin/develop |
+| 2.4 working tree clean | complete | operator-pre-launch-cycle | d6cddac | git status --porcelain empty |
+| 2.5 doctrines loaded | complete | operator-pre-launch-cycle | d6cddac | gap re-confirmed non-blocking per ./missing_skills.md; dual-audit grep gate is the operative check and is clean |
 | 3.1 Wired-Integration Audit | not-started | — | — | — |
 | 3.2 forbidden tokens remediation | not-started | — | — | — |
 | 3.3 noop handlers remediation | not-started | — | — | — |
@@ -92,7 +92,7 @@ This file is the bundle's runtime state. The loop's `progress.md` is the canonic
 - **cycle_id:** operator-pre-launch-cycle (2026-07-21)
   **criterion:** 2.1 + 2.2 + 2.3 + 2.4 + 2.5 (Epic 2, Operator Pre-Launch)
   **summary:** Re-verified all 5 items of `loop-instruction.md §1`'s pre-launch checklist plus `acceptance-and-verification.md`'s Epic-2 verification commands, live, right now (this is a re-confirmation gate mid-bundle, not the original first-launch check). Results: (2.1) `hermes kanban boards` lists `codex-tranche-5` (done=43) — PASS. (2.2) `git ls-remote origin tranche/5-2` resolves to `e433a63...`, matching local HEAD after a no-op fetch+rebase — PASS. (2.3, **Tier-1 launch gate**) `git fetch origin develop` then `git log origin/develop --oneline | head -5` shows `09e43c3` (SD-23 closure, PR #329) as the literal HEAD of `origin/develop` — **CONFIRMED, bundle is NOT blocked** — PASS. (2.4) `git status --porcelain` empty — PASS. (2.5) re-checked `hermes skills list`: `identifier-discipline` / `wired-integration-discipline` / `kanban-claude-code-execution-receipt` are still not installed as invocable skills — this reconfirms the gap already tracked non-blocking in `./missing_skills.md` (2026-07-21); the operative gate (the embedded dual-audit grep in `loop-instruction.md §2.3` step 4) was re-run against the diff since `merge-base HEAD origin/develop` and is clean (`OK_NO_BUNDLE_TAGS` / `OK_NO_TOKENS`) — PASS with known caveat. Also cross-checked pre-launch item 7 (build counter): `develop`'s `package.json`/`tauri.conf.json` both still `0.5.97`, no drift from `decisions.md §3`'s captured value. No production/test files touched (verification-only cycle); no TDD RED/GREEN applicable.
-  **commit:** (this cycle's commit, see git log)
+  **commit:** `d6cddac`
   **receipt:** `./artifacts/epic_2/operator-pre-launch-cycle_receipt.md`
   **discovered:** 0 new entries (a minor stale-CLI-form nit in `acceptance-and-verification.md` line 22 — `hermes skills --profile god-emporer --list` errors; correct form is `hermes skills list` — noted in the receipt's Notes but not filed as a fresh `## DISCOVERED` entry since it doesn't change any criterion's disposition)
   **next:** Epic 3 (Wired-Integration Audit + Remediation, criterion 3.1 — read-only sweep) is next in the deterministic seed.
