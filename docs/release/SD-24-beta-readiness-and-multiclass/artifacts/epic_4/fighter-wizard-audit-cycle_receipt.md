@@ -1,7 +1,7 @@
 # Cycle fighter-wizard-audit-cycle — Epic 4 / Criterion 4.1
 
 - **Card ID:** t_00000000 (placeholder — backfilled after kanban card mint)
-- **Commit SHA:** (backfilled after commit — see progress.md Cycle log)
+- **Commit SHA:** `66f9be8`
 - **Files touched:**
   - `src/rules_core/rules_tables/crb/class_tables.rs` (read-only audit — no defect found)
   - `src/rules_core/level_up/fighter.rs` (read-only audit — no defect found)
