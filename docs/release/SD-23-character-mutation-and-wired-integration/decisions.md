@@ -101,3 +101,13 @@ Append-only decision log. Each entry: number, decision, operator directive that 
 - **Operator directive:** 2026-07-21, confirmed via AskUserQuestion at the Epic 7 pre-PR checkpoint (choice: "Auto-merge on green CI" over "Open PR, then stop and wait for you").
 - **Rationale offered:** matches `loop-instruction.md`'s own designed Epic 7 pipeline (sub-step 6, "CI passes; merge is clean") and the SD-22 precedent, which merged its own promotion PR autonomously under the same loop pattern with no operator objection.
 - **Scope:** applies to this bundle's promotion PR only. Does not create a standing "always auto-merge" rule for other bundles or other repos without asking again.
+
+## 16. Closure — final entry (Criterion 31, 2026-07-21)
+
+- **Bundle status:** CLOSED. All 33 acceptance criteria complete across 16 execution cycles (1-16) plus this closure-docs pass.
+- **Promotion:** PR #327 (`tranche/5-1 → develop`, 45 commits) merged `2026-07-21T12:41:25Z`, merge commit `1b20cb5`. Follow-up PR #328 (build-counter advance) merged `2026-07-21T12:55:20Z`, merge commit `b31258f`.
+- **Build counter at closure:** `0.5.97` (§3, corrected — tranche-base stays `5`; `tranche/5-1` was a dash-release within tranche 5, not a new tranche cut).
+- **Assignee/lifecycle correction (§10) held for the rest of the bundle** after cycle 5: every SD-23 card from cycle 6 onward used `--assignee operator` and the implement→verify→commit→create→comment→complete lifecycle, with zero further daemon interference (one self-caught assignee slip in cycle 11, corrected same-cycle before any exposure).
+- **Audit false positive (§14)** on `ItemPickerModal.tsx`'s `placeholder` attribute remained the only standing Check-1 exception through closure; no other stub/mock/fake-success pattern was found in any cycle's diff.
+- **Real gaps found and fixed during closure, not deferred:** the architecture-truth-up cited-path checker's self-inflicted false positive (README.md's own illustrative example, fixed at the root — commit `d4b7523`); the export/import round-trip shape mismatch flagged in Epic 6 and fixed with a genuine end-to-end proof rather than left broken.
+- **Open item for future bundles:** `graphify-out/graph.json` has never been bootstrapped for this repo (`[[risks-and-open-questions.md]]`'s closure review); a future bundle or manual operator session should run `/graphify` once so subsequent `graphify:update` cycles can actually cluster.

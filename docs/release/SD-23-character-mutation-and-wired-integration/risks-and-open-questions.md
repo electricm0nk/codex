@@ -91,3 +91,21 @@ Append-only log. Each entry: number, type (risk / open-question / deferred), sum
 - **Summary:** `characterHubRuntime.ts:17-18` browser-preview fallback (`return buildPreviewListSurface()` when `!hasTauriRuntime()`) is a permanent exception per Stubs Registry entry #0001. No remediation cycle.
 - **Owner:** Doctrine (registry entry).
 - **Recorded:** 2026-07-20.
+
+## Closure — final review (Criterion 31, 2026-07-21)
+
+**R1 (storage tier referential integrity):** Still latent, as designed — Epic 6 shipped `delete_character`/`import_character` on the file store without touching the campaign/character referential-integrity question; genuinely out of SD-23's Option-A scope. Not mitigated further this bundle; unchanged status for the future convergence bundle.
+**R2 (stat-field promotion deferred):** Confirmed still deferred. Epic 5's picker adds identity-only equipment/spell entries; combat-stat promotion remains a follow-on bundle's work.
+**R3 (tranche/5 mid-execution at launch):** Resolved — SD-22 closed before SD-23 cycles fired (verified at pre-launch, cycles 1-2). No longer a live risk.
+**R4 (codebase-wide stub audit may surface debt):** Resolved favorably — Epic 3's audit surfaced zero accidental stubs beyond the one pre-registered exception (#0001). No expansion needed.
+**R5 (file-touch contention with SD-22 closure):** Resolved — SD-22's closure PR was fully merged before any SD-23 cycle touched shared files; no collision occurred.
+
+**OQ1 (`CampaignMember.members` optional?):** Resolved in Epic 4 (cycle 4) exactly as OQ1 anticipated — `members: []` is a valid empty campaign; the `invited` field was deleted, `email`-only shape shipped.
+**OQ2 (multiclass validation for `level_up_character`?):** Resolved as anticipated — Epic 5 (cycles 5-6) shipped `level_up_character` and `apply_level_up` without multiclass-gating validation, matching the level-up brief's "no-op by design" resolution. A real multiclass "dip" test (`apply_level_up_adds_a_new_class_level_entry_for_an_unheld_class`) confirms the add-new-class path works, still without feature-gate validation.
+
+**D1 (storage-tiers convergence, database):** Confirmed still deferred. No SD-23 work touched this.
+**D2 (stat-field promotion):** Confirmed still deferred, same as R2.
+**D3 (auto-granting spells/feats at level-up):** Confirmed still deferred. `level_up_character` takes only the level; no spell/feat auto-grant logic shipped.
+**D4 (browser-preview fallback permanent exception):** Confirmed still the only Stubs Registry entry; unchanged, no remediation needed.
+
+**New item surfaced during closure, not in the original R/OQ/D set:** Epic 7's graphify-update cycle (Criterion 27) found this repo has no bootstrapped `graphify-out/graph.json` — `graphify cluster-only` cannot run until one exists, and building one requires an interactive `/graphify` session (LLM-assisted extraction), out of scope for an automated closure cycle. Non-blocking per doctrine (failure receipt is the audit trail), but flagged here as a standing gap for a future bundle or manual operator action. See `artifacts/epic_7/graphify_update_cycle_receipt.md`.

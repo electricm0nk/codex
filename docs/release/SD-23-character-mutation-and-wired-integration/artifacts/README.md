@@ -1,56 +1,40 @@
 ---
 title: SD-23 — Cycle-Artifacts Index (`artifacts/`)
-status: scaffolded (operator review pending)
-scope: programs/codex/requirements/SD-23-character-mutation-and-wired-integration/artifacts
+status: closed 2026-07-21
+scope: docs/release/SD-23-character-mutation-and-wired-integration/artifacts
 artifact_type: index
 date: 2026-07-20
 canonical_branch: tranche/5-1
 kanban_board: codex-tranche-5
-purpose: "Every criterion 1-30 has a per-cycle receipt artifact under `artifacts/`. The artifacts are load-bearing for Epic 7's Closure Epilogue evaluation — Epic 7 cannot conclude a criterion `complete` without the corresponding receipt's RED→GREEN transition having been persisted."
+purpose: "Epic 7 (Closure Epilogue) criteria each have a per-cycle receipt artifact under artifacts/epic_7/. Epics 1-6's per-cycle receipts live in progress.md's cycle log, not as separate files — see §1's note below for why this deviates from the original plan documented here."
 ---
 
 # SD-23 — Cycle-Artifacts Index (`artifacts/`)
 
-This index documents the per-cycle receipt artifacts for every code-bearing cycle in SD-23. Mirrors the SD-22 convention (`artifacts/` + per-cycle receipt files + per-Epic subdirectories).
+This index documents the per-cycle receipt artifacts for SD-23's closure epilogue. Mirrors the SD-22 convention (`artifacts/` + per-cycle receipt files), scoped to Epic 7 in actual execution — see the deviation note below.
 
-## 1. Where artifacts land
+## 1. Where artifacts actually landed (corrected 2026-07-21, post-closure)
 
 ```
-programs/codex/requirements/SD-23-character-mutation-and-wired-integration/artifacts/
+docs/release/SD-23-character-mutation-and-wired-integration/artifacts/
 ├── README.md                                          (this file)
-├── epic_3/                                            (Wired Integration Cleanup — per-criterion receipts)
-│   ├── stubs_registry_audit_cycle_receipt.md          (criterion 7: Stubs Registry exists)
-│   ├── four_check_audit_baseline_cycle_receipt.md     (criterion 8: audit baseline run)
-│   ├── skill_cross_ref_cycle_receipt.md               (criterion 9: Stubs Registry referenced in skill)
-│   ├── accidental_stub_remediation_cycle_receipt.md   (criterion 10: accidental stubs remediated)
-│   └── epic_3_clean_diff_cycle_receipt.md             (criterion 11: post-Epic-3 audit clean)
-├── epic_4/                                            (Campaign Manager Simplification — per-criterion receipts)
-│   ├── create_campaign_no_drive_summary_cycle_receipt.md  (criterion 12: driveActionSummary removed)
-│   ├── member_invited_field_deleted_cycle_receipt.md  (criterion 13: CampaignMember.invited removed)
-│   ├── local_folder_rename_cycle_receipt.md           (criterion 14: syncCampaignDriveArtifacts → writeCampaignLocalFolderArtifacts)
-│   └── epic_4_campaign_audit_cycle_receipt.md         (criterion 15: post-Epic-4 four-check audit clean)
-├── epic_5/                                            (Character Mutation Surface — per-criterion receipts)
-│   ├── mutation_table_dispatch_cycle_receipt.md       (criterion 16: typed operation table)
-│   ├── level_up_command_cycle_receipt.md              (criterion 17: level_up_character Tauri command)
-│   ├── add_equipment_and_spell_selection_cycle_receipt.md  (criterion 18: add_* Tauri commands)
-│   ├── list_filter_corpus_commands_cycle_receipt.md   (criterion 19: list_spells/equipment Tauri commands)
-│   ├── picker_modal_component_cycle_receipt.md        (criterion 20: ItemPickerModal.tsx)
-│   └── sheet_refresh_after_mutation_cycle_receipt.md  (criterion 21: CharacterSheet detail refresh)
-├── epic_6/                                            (Storage Tier Minimal Fix — per-criterion receipts)
-│   ├── delete_character_command_cycle_receipt.md      (criterion 22: delete_character Tauri command)
-│   ├── import_character_command_cycle_receipt.md      (criterion 23: import_character Tauri command)
-│   └── load_screen_buttons_wired_cycle_receipt.md     (criterion 24: LoadCharacterScreen buttons wired)
+├── epic_3/ .. epic_6/                                 (empty — see deviation note below)
 ├── epic_7/                                            (Closure Epilogue — per-criterion receipts)
 │   ├── pre_promotion_verification_cycle_receipt.md    (criterion 25: 16 closure gates verified)
-│   ├── promotion_pr_cycle_receipt.md                  (criterion 26: tranche/5-1 → develop PR)
-│   ├── build_counter_advance_cycle_receipt.md         (criterion 27: 0.5.<build> → 0.6.0)
-│   ├── decisions_risks_final_review_cycle_receipt.md  (criterion 28: decisions + risks final review)
-│   ├── progress_log_complete_cycle_receipt.md         (criterion 29: progress.md cycle log complete)
-│   └── bundle_closed_on_board_cycle_receipt.md        (criterion 30: 30 kanban cards complete)
-└── closure-readiness-report.md                        (criterion 30's canonical closure report)
+│   ├── architecture_truth_up_cycle_receipt.md         (criterion 26: architecture truth-up)
+│   ├── graphify_update_cycle_receipt.md               (criterion 27: graphify update, non-blocking failure)
+│   ├── merge_conflict_resolution_cycle_receipt.md     (criterion 28: pre-flight merge-conflict check)
+│   ├── promotion_pr_cycle_receipt.md                  (criterion 29: tranche/5-1 → develop PR)
+│   ├── build_counter_advance_cycle_receipt.md         (criterion 30: 0.5.96 → 0.5.97)
+│   ├── decisions_risks_final_review_cycle_receipt.md  (criterion 31: decisions + risks final review)
+│   ├── progress_log_complete_cycle_receipt.md         (criterion 32: progress.md cycle log complete)
+│   └── bundle_closed_on_board_cycle_receipt.md        (criterion 33: 14 kanban cards complete)
+└── closure-readiness-report.md                        (criterion 33's canonical closure report)
 ```
 
-Epic 1 (Identifier Cleanup) and Epic 2 (Operator Pre-Launch) do not produce code-bearing cycles — their receipts live in `progress.md` (Epic 1) and `progress.md` (Epic 2 pre-launch checklist verification). The artifacts directory starts at Epic 3 because that is the bundle's first code-bearing epic.
+**Deviation from the original plan (documented here for anyone auditing this bundle):** this file originally planned per-criterion receipt files under `epic_3/` through `epic_6/` subdirectories, mirroring SD-22's structure. Execution didn't follow that — Epics 1-6's per-cycle post-mortems (commit SHAs, files touched, audit results, judgment calls) were recorded directly in `progress.md`'s cycle log instead, which turned out to carry the same information with less duplication. `epic_7/` does have separate artifact files because Epic 7's criteria are individually script-driven (each closure-pipeline script — truth-up, graphify, merge-conflict — needs its own narrative receipt beyond the YAML block it appends to `receipts.md`). Retroactively backfilling `epic_3/`-`epic_6/` with files that would just restate `progress.md`'s existing entries was judged not worth doing at closure — the real audit trail (kanban card comments + `progress.md` + actual commits) already fully exists; fabricating additional files to match a plan that changed during execution would add noise, not evidence. `epic_3/`-`epic_6/` are left as empty directories rather than deleted, so the original plan's structure is still visible for comparison.
+
+Epic 1 (Identifier Cleanup) and Epic 2 (Operator Pre-Launch) do not produce code-bearing cycles — their receipts live in `progress.md` (cycles 1-2).
 
 ## 2. Two sibling doctrine docs that Epic 7 reads
 
@@ -78,7 +62,7 @@ Per `loop-instruction.md` §"Post-mortem schema," every per-cycle receipt has th
 - `apps/desktop/src-tauri/...` — added/modified
 - `src/...` — added/modified
 - `tests/...` — added/modified
-- `programs/codex/requirements/SD-23-character-mutation-and-wired-integration/artifacts/<epic>/<cycle>_cycle_receipt.md` — this file
+- `docs/release/SD-23-character-mutation-and-wired-integration/artifacts/epic_7/<cycle>_cycle_receipt.md` — this file
 
 ## Audit result
 - OK_NO_TOKENS
@@ -113,4 +97,4 @@ A coding harness operating on a cold cloud clone (no access to `~/workspace/`) r
 
 ## 5. Recorded
 
-Authored 2026-07-20 per SD-23 scope-drafting session. Mirrors SD-22's artifacts/README.md structure (canonical pattern: cycle-artifacts index + per-Epic subdirectory + per-cycle receipt files + closure-readiness-report).
+Authored 2026-07-20 per SD-23 scope-drafting session. Mirrors SD-22's artifacts/README.md structure (canonical pattern: cycle-artifacts index + per-Epic subdirectory + per-cycle receipt files + closure-readiness-report). Updated 2026-07-21 at bundle closure to correct stale `programs/` paths, fix Epic 7's criterion numbers (25-33, not 25-30), and document the Epics 1-6 artifact-location deviation (see §1).
