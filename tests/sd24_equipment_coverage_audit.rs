@@ -54,49 +54,15 @@ fn crb_equipment_is_fully_record_ingested() {
     );
 }
 
-/// `EquipmentTableEntry` (ACG) still has no `weight` field populated and
-/// no `description` field populated at all -- not "populated for some
-/// rows and empty for others," but structurally absent-of-content in the
-/// only book left with zero coverage in both fields. `has_cost` is real
-/// (computed from `cost_gp.is_some()`), never fabricated.
-///
-/// **CRB and APG are no longer part of this canary**, as of two SD-24
-/// criteria 6.3/6.4 cycles landing concurrently: CRB's own copy of the
-/// type gained both fields, populated to the corpus's honest ceiling
-/// (see `equipment_table_entry_weight_and_description_field_coverage_for_crb`
-/// below and `tests/sd24_equipment_field_completion.rs` for the exact
-/// per-field counts). APG's own copy gained real `weight: Option<f64>`
-/// and `description: Option<&'static str>` fields -- `weight` is
-/// populated for 319/338 real records (see
-/// `apg_equipment_gained_weight_field_and_is_fully_record_ingested`
-/// below); `description` remains `None` for all 338 (the real APG
-/// equipment corpus carries zero `DESC:` tokens on any equipment row --
-/// a genuine corpus limitation, not a parsing gap).
-#[test]
-fn equipment_table_entry_has_zero_weight_and_description_field_coverage_in_acg() {
-    macro_rules! assert_zero_weight_and_description {
-        ($report:expr) => {
-            let report = $report;
-            assert_eq!(
-                report.has_weight, 0,
-                "EquipmentTableEntry has no weight field populated in this book today -- if \
-                 this now fails, the book gained weight coverage and criterion 6.3 should \
-                 already be underway for it"
-            );
-            assert_eq!(
-                report.has_description, 0,
-                "EquipmentTableEntry has no description field populated in this book today -- \
-                 if this now fails, the book gained description coverage and criterion 6.4 \
-                 should already be underway for it"
-            );
-            assert!(
-                report.total_records > 0,
-                "every book's equipment table should have at least one real record"
-            );
-        };
-    }
-    assert_zero_weight_and_description!(acg::equipment_tables::field_coverage_report());
-}
+/// The criterion 6.1 "zero weight/description coverage" canary is now
+/// retired: CRB, APG, and ACG have all gained real `weight`/`description`
+/// coverage across three concurrent SD-24 criteria 6.3/6.4 cycles
+/// (`crb-field-completion-cycle`, `apg-field-completion-cycle`,
+/// `acg-field-completion-cycle`). Each book's own dedicated test below
+/// (`equipment_table_entry_weight_and_description_field_coverage_for_crb`,
+/// `apg_equipment_gained_weight_field_and_is_fully_record_ingested`,
+/// `equipment_table_entry_weight_and_description_field_coverage_for_acg`)
+/// asserts its real, book-specific ceiling instead.
 
 /// SD-24 criteria 6.3/6.4 (this cycle, CRB-only file-touch scope): CRB's
 /// `EquipmentTableEntry` gained real `weight_lbs`/`description` fields,
@@ -150,15 +116,45 @@ fn apg_equipment_gained_weight_field_and_is_fully_record_ingested() {
     );
 }
 
-/// ACG's equipment corpus (single `acg_equip.lst`, 221 real active records)
-/// is likewise still at its SD-22 Epic 4 bootstrap sample (3 records).
+/// ACG's equipment corpus (`acg_equip.lst`'s 221 `TYPE:`-disambiguated
+/// General/Arms-Armor/Magic-Items records + `acg_equipmods.lst`'s 48
+/// `KEY:`-bearing modifier records = 269 total) is now **fully
+/// record-ingested** (SD-24 criteria 6.2-6.4, `acg-field-completion-cycle`)
+/// -- widened from criterion 6.1's original 221-only scope (which did not
+/// count `acg_equipmods.lst` at all, unlike CRB's own four-category
+/// treatment; see `progress.md`'s `## DISCOVERED`).
 #[test]
-fn acg_equipment_is_bootstrap_only_far_below_full_corpus() {
+fn acg_equipment_is_fully_record_ingested() {
     let report = acg::equipment_tables::field_coverage_report();
-    assert_eq!(report.total_records, 3, "ACG equipment bootstrap sample (one per category)");
     assert_eq!(
-        report.records_expected, 221,
-        "documented real ACG equipment corpus count (acg_equip.lst active records)"
+        report.records_expected,
+        221 + 48,
+        "documented real ACG equipment corpus count (acg_equip.lst 221 + acg_equipmods.lst 48)"
+    );
+    assert_eq!(
+        report.total_records, report.records_expected,
+        "ACG equipment record coverage should be 100% (fully ingested this cycle)"
+    );
+}
+
+/// SD-24 criteria 6.3/6.4 (this cycle, ACG scope): ACG's `EquipmentTableEntry`
+/// gained real `weight_lbs`/`description` fields. Unlike CRB (whose corpus
+/// has no `DESC:` token convention for most equipment), ACG's `SPROP:`
+/// token is the sourcing basis for `description` (see `equipment_tables.rs`'s
+/// own doc comment) and covers the large majority of records, so coverage
+/// here is high but still honestly partial where the corpus itself has no
+/// `WT:`/`SPROP:` token (e.g. every `acg_equipmods.lst` record has no
+/// `WT:` token at all).
+#[test]
+fn equipment_table_entry_weight_and_description_field_coverage_for_acg() {
+    let report = acg::equipment_tables::field_coverage_report();
+    assert!(
+        report.has_weight > 0 && report.has_weight < report.total_records,
+        "ACG weight coverage should be real and partial (not fabricated to 100%, not still 0)"
+    );
+    assert!(
+        report.has_description > 0 && report.has_description < report.total_records,
+        "ACG description coverage should be real and partial (not fabricated to 100%, not still 0)"
     );
 }
 
@@ -228,13 +224,34 @@ fn apg_spell_list_is_fully_record_ingested_with_majority_full_text_coverage() {
     );
 }
 
-/// ACG's spell list (`acg_spells.lst`, 145 real active records) is still
-/// at its SD-22 bootstrap sample (4 records) -- a large record-coverage
-/// gap, same shape APG's equipment/spell tables had before this cycle.
+/// ACG's spell list (`acg_spells.lst`) is now **fully record-complete with
+/// full-text coverage** (SD-24 criteria 6.2/6.5, `acg-field-completion-cycle`).
+/// Criterion 6.1's original "145" figure double-counted the file's own
+/// `SOURCELONG:` header line as a spell (see `spell_list.rs`'s doc comment
+/// for the correction, the same measurement-error shape CRB's own "675"
+/// figure had); the real, level-and-school-bearing count is 144. Unlike
+/// CRB, ACG's base (non-`.MOD`) spell record already carries the full
+/// corpus text, so `full_text_verified` reaches 144/144 without a
+/// second-pass `.MOD`-record lookup.
 #[test]
-fn acg_spell_list_is_bootstrap_only_far_below_full_corpus() {
+fn acg_spell_list_is_fully_record_complete_with_full_text_coverage() {
     let acg_report = acg::spell_list::spell_coverage_report();
-    assert_eq!(acg_report.total_records, 4, "ACG spell list bootstrap sample");
-    assert_eq!(acg_report.records_expected, 145, "documented real acg_spells.lst active record count");
-    assert_eq!(acg_report.full_text_verified, 0);
+    assert_eq!(
+        acg_report.records_expected, 144,
+        "real, level-and-school-bearing acg_spells.lst record count (corrected from the \
+         original 145 measurement-error figure)"
+    );
+    assert_eq!(acg_report.total_records, 144, "current ACG spell list ingest count");
+    assert_eq!(
+        acg_report.records_expected, acg_report.total_records,
+        "ACG spell record coverage should be 100% (fully ingested this cycle)"
+    );
+    assert_eq!(
+        acg_report.has_description, acg_report.total_records,
+        "every present SpellListEntry has a non-empty description"
+    );
+    assert_eq!(
+        acg_report.full_text_verified, acg_report.total_records,
+        "every present ACG spell should carry the corpus's fullest available text"
+    );
 }

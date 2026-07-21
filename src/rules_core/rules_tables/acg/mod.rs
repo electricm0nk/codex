@@ -38,6 +38,7 @@ pub mod class_skald;
 pub mod class_slayer;
 pub mod class_swashbuckler;
 pub mod class_warpriest;
+pub mod equipment_data;
 pub mod equipment_tables;
 pub mod spell_list;
 
