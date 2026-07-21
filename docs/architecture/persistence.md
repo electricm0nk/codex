@@ -1,7 +1,7 @@
 # Persistence
 
 > Scope: how saved characters and campaigns are typed, stored on disk, and reached from the desktop shell.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-21 against deeff110a104
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This covers the two local-store boundaries under `src/`: `src/saved_character/`
@@ -146,10 +146,29 @@ conflict.
 
 `apps/desktop/src-tauri/src/character_hub.rs` wraps `SavedCharacterStore`
 behind Tauri commands (`create_character`, `clone_character`,
-`list_saved_characters`, `load_saved_character`, plus the portrait commands
-below); `apps/desktop/src-tauri/src/campaign_drive.rs` wraps `CampaignStore`
-behind `write_campaign_drive_artifacts`, `drive_list_campaigns`,
+`list_saved_characters`, `load_saved_character`, `level_up_character`,
+`add_equipment_selection`, `add_spell_selection`, `delete_character`,
+`export_character`, `export_character_json`, `import_character`, plus the
+portrait commands below); its `characterHub/` submodule (SD-24 Epic 7) adds
+three more mutation-adjacent commands over the same store —
+`append_to_character` (batch equipment append, corpus-validated),
+`recompute_character` (load + recompute, never mutates or re-saves), and
+`re_save_character` (re-saves under a freshly minted `{id}.rev.N` revision,
+refusing on an `expectedRevisionId` mismatch). `apps/desktop/src-tauri/src/campaign_drive.rs`
+wraps `CampaignStore` behind `write_campaign_drive_artifacts`, `drive_list_campaigns`,
 `drive_load_campaign`, `drive_save_campaign`, and `drive_delete_campaign`.
+See [desktop-app.md](./desktop-app.md) for the full command inventory,
+including which of these commands have no frontend caller yet.
+
+**Revision-id advancement is inconsistent by design today.** `level_up_character`,
+`add_equipment_selection`, and `add_spell_selection` all route through the
+shared `mutate_saved_character_at_root` load → mutate → recompute → re-save
+tail, but none of them advance `revision_id` — every mutation keeps whatever
+`revision_id` was already on disk. Only the new `re_save_character` command
+computes a fresh `{id}.rev.N` (`N` derived from the on-disk revision); every
+other write path that persists a `SavedCharacterEnvelope` (`create_character`,
+`clone_character`, `seed_default_character_if_needed`, `import_character`)
+still hardcodes `revision_id: "{id}.rev.1"` at construction time.
 `campaign_drive.rs`'s own module doc comment describes itself as "the thin
 Tauri-command adapter over the headless `codex::campaign` crate ... it
 deserializes the frontend's already-JSON campaign payloads into a typed

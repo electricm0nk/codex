@@ -1,7 +1,7 @@
 # Testing
 
 > Scope: the full verification command set for this repo, test conventions, the fixture grammar, and how to run corpus-gated tests — this file doubles as the "how do I verify my change" runbook.
-> Last verified: 2026-07-20 against 1a0b9d2943e2
+> Last verified: 2026-07-21 against deeff110a104
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Quick reference: what to run for a given change
@@ -25,7 +25,7 @@ None of the standalone scripts below are wired into `npm test` or `cargo test` �
 ```
 cargo test --locked
 ```
-Runs the workspace's default test targets: unit tests inside `src/` plus every integration test file under `tests/*.rs`. As of this verification there are **426** files matching `tests/*.rs` (`ls tests/*.rs | wc -l`). Files are named by originating slice — `ge06_*`, `ge08_*`, `sd13_*`, `sd17_*`, `sd19_*`, `sd20_*`, `sd22_*`, `golden_case_*`, `pcc_*`, `character_*` — one behavior per file (see [Test conventions](#test-conventions)). The crate itself (`Cargo.toml:1-4`, name `codex`) has no `[workspace]` table, so this is a single standalone crate, not a Cargo workspace.
+Runs the workspace's default test targets: unit tests inside `src/` plus every integration test file under `tests/*.rs`. As of this verification there are **441** files matching `tests/*.rs` (`ls tests/*.rs | wc -l`). Files are named by originating slice — `ge06_*`, `ge08_*`, `sd13_*`, `sd17_*`, `sd19_*`, `sd20_*`, `sd22_*`, `sd24_*`, `golden_case_*`, `pcc_*`, `character_*` — one behavior per file (see [Test conventions](#test-conventions)). The crate itself (`Cargo.toml:1-4`, name `codex`) has no `[workspace]` table, so this is a single standalone crate, not a Cargo workspace. The `sd24_*` files are SD-24's own standing regression suite: identifier-discipline and wired-integration four-check audits scoped to specific production files, the Fighter+Wizard multiclass dispatch/deterministic/integration proofs, and the equipment/spell-coverage audits (see [status.md](./status.md) and [rules-engine.md](./rules-engine.md)).
 
 ```
 cargo clippy --locked --tests -- -D warnings
@@ -37,7 +37,7 @@ Lints the crate including its test targets, failing the build on any warning. Ve
 ```
 cd apps/desktop/src-tauri && cargo test --locked
 ```
-`apps/desktop/src-tauri` is a separate crate (`apps/desktop/src-tauri/Cargo.toml`, name `codex-desktop`) that depends on the root crate via a path dependency (`codex = { path = "../../.." }`). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs` files — 12 source files currently carry one: `sd13_support_state_matrix.rs`, `sd19_spell_catalog.rs`, `sd19_corpus.rs`, `sd19_race_catalog.rs`, `sd19_equipment_catalog.rs`, `main.rs`, `character_hub.rs`, `sd16_browser_handoff.rs`, `campaign_drive.rs`, `ge08_workbench.rs`, `sd19_class_catalog.rs`, `update/transaction.rs` (confirmed via `grep -rl "#\[cfg(test)\]" apps/desktop/src-tauri/src/`).
+`apps/desktop/src-tauri` is a separate crate (`apps/desktop/src-tauri/Cargo.toml`, name `codex-desktop`) that depends on the root crate via a path dependency (`codex = { path = "../../.." }`). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs` files — 15 source files currently carry one: `sd13_support_state_matrix.rs`, `spell_catalog.rs`, `corpus_fixtures.rs`, `race_catalog.rs`, `equipment_catalog.rs`, `main.rs`, `character_hub.rs`, `browser_handoff.rs`, `campaign_drive.rs`, `ge08_workbench.rs`, `class_catalog.rs`, `update/transaction.rs`, `characterHub/appendToCharacter.rs`, `characterHub/recomputeCharacter.rs`, `characterHub/reSaveCharacter.rs` (confirmed via `grep -rl "#\[cfg(test)\]" apps/desktop/src-tauri/src/`). SD-24 criterion 1.1 renamed the six `sd16_*`/`sd19_*`-prefixed files in this list to their current bare names (e.g. `sd19_spell_catalog.rs` → `spell_catalog.rs`, `sd16_browser_handoff.rs` → `browser_handoff.rs`); the command names they register (`list_spell_catalog`, `handoff_defect_report_to_browser`, etc.) did not change.
 
 ### Desktop frontend (TypeScript)
 

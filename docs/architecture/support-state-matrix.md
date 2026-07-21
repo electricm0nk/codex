@@ -1,7 +1,7 @@
 # Support-state matrix
 
 > Scope: The typed control-plane carrier that records what the rules engine currently, honestly supports — documentary truth, not computed mechanics.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-21 against deeff110a104
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## What the matrix is

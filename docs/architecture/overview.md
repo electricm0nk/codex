@@ -1,7 +1,7 @@
 # Architecture overview
 
 > Scope: what Codex is, its three top-level planes, and how a character's data flows from raw PCGen corpus text to a rendered sheet cell.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-21 against deeff110a104
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## What Codex is
@@ -158,8 +158,11 @@ shaped the way it is:
   and `compute_pilot_with_corpus` (`src/rules_core/pilot_compute_corpus.rs`),
   surfaced as `src/rules_core/pilot_view_model.rs`'s `PilotSnapshot`. No
   frontend code, and no `apps/desktop/src-tauri/` command, calls a
-  per-domain engine directly (the `sd19_*` catalog commands expose static
-  `rules_tables` rows read-only, without computing anything).
+  per-domain engine directly (the catalog commands — backed by
+  `class_catalog.rs`, `race_catalog.rs`, `spell_catalog.rs`,
+  `equipment_catalog.rs`, renamed off their originating `sd19_*` prefixes by
+  SD-24 criterion 1.1 — expose static `rules_tables` rows read-only, without
+  computing anything).
   `src/rules_core/contract.rs`'s `PilotReceipt`/`printed_sheet_cell_map` is
   the machine-checked boundary-contract proof surface, exercised by
   `tests/sd20_contract_*.rs` — the desktop bridge does not consume it.

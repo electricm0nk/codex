@@ -1,7 +1,7 @@
 # Rules Data Tables
 
 > Scope: the hand-transcribed, per-book Paizo table store rules-core queries for class chassis, race traits, feats, spells, equipment, and monster stat blocks.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-21 against deeff110a104
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -30,7 +30,9 @@ pub mod crb;
 ```
 
 - **`crb/`** (Core Rulebook) — the fully-populated book:
-  `class_tables.rs` (per-class BAB/save chassis, `ClassId` enum),
+  `class_tables.rs` (per-class BAB/save chassis, `ClassId` enum,
+  `good_saves_for` — the good-Fortitude/Reflex/Will classification SD-24
+  Epic 5's multiclass dispatch reads directly, see [rules-engine.md](./rules-engine.md)),
   `race_tables.rs` (per-race trait dimensions, `RaceId` enum),
   `feats.rs` + `feat_data/{general,combat,item_creation,metamagic}.rs`
   (185-feat catalog split by `FeatCategory`), `spell_list.rs`, and
@@ -40,14 +42,20 @@ pub mod crb;
   `class_oracle.rs`, `class_summoner.rs`, `class_witch.rs` — all six
   real APG classes; `mod.rs`'s doc comment notes Gunslinger and Magus
   are deliberately excluded because they are not real APG corpus
-  content), plus a shared `spell_list.rs` and `equipment_tables.rs`.
-- **`acg/`** (Advanced Class Guide) — the same shape: `mod.rs` plus ten
-  per-class files (`class_arcanist.rs`, `class_bloodrager.rs`,
+  content), plus a shared `spell_list.rs`, `equipment_tables.rs`, and a
+  single `equipment_data.rs` (SD-24 Epic 6; one flat file rather than
+  CRB/ACG's `equipment_data/` directory split).
+- **`acg/`** (Advanced Class Guide) — the same class-file shape: `mod.rs`
+  plus ten per-class files (`class_arcanist.rs`, `class_bloodrager.rs`,
   `class_brawler.rs`, `class_hunter.rs`, `class_investigator.rs`,
   `class_shaman.rs`, `class_skald.rs`, `class_slayer.rs`,
   `class_swashbuckler.rs`, `class_warpriest.rs` — the full, corrected
   10-class roster per `mod.rs`'s roster-correction note), plus
-  `spell_list.rs` and `equipment_tables.rs`.
+  `spell_list.rs`, `equipment_tables.rs`, and — mirroring CRB's own split
+  (SD-24 Epic 6) — `equipment_data/{arms_armor,general,magic_items,equipmods}.rs`,
+  the last of which ingests `acg_equipmods.lst` into a new
+  `EquipmentCategory::Equipmods` variant that criterion 6.1's original
+  scope had not counted at all.
 - **`beastiary1/`** (Bestiary 1) — `mod.rs` plus eight
   `monster_subset_01.rs` .. `monster_subset_08.rs` files, five (or six,
   for subset 06) monsters each, 41 monsters total as of this
@@ -142,6 +150,36 @@ rather than hand-transcribed line-by-line, specifically to avoid
 transcription error at that scale; its category derivation rule (the
 `TYPE:` facet) and excluded-record list are documented in the same doc
 comment.
+
+## Equipment/spell content completeness (SD-24 Epic 6)
+
+`EquipmentTableEntry` (defined once per book, in each book's own
+`equipment_tables.rs`) carries the same core shape across CRB/APG/ACG —
+`key`, `category`, `name`, `cost_gp: Option<f64>`, a per-record weight field
+(`weight_lbs` for CRB and ACG, `weight` for APG — the field name itself was
+not reconciled across books this cycle), and `description: Option<&'static str>`
+— but the fields' *population* ceiling differs by book because it is bounded
+by what the real PCGen corpus actually carries, not by transcription effort:
+
+| Book | Equipment records | Weight populated | Description populated | Description source |
+|---|---|---|---|---|
+| CRB | 2977/2977 (100%) | 2011/2977 (67.5%, honest "where applicable" ceiling) | 1821/2977 (61.2% — real corpus ceiling, not fabricated; see [status.md](./status.md) Open blockers) | corpus `DESC:` token |
+| APG | 338/338 (100%) | 319/338 (94.4%, 19 real corpus gaps) | 0/338 (0% — APG's corpus has zero `DESC:` tokens on any equipment row; see [status.md](./status.md) Open blockers) | n/a |
+| ACG | 269/269 (100%; 221 `acg_equip.lst` + 48 `acg_equipmods.lst`) | 135/269 (50.2%; Equipmods genuinely 0/48) | 264/269 (98.1%) | corpus `SPROP:` token (ACG also has zero `DESC:` tokens, but its `SPROP:` — "Special Property" — token is a near-universal convention here; a trailing `\|<conditional-tag>` qualifier is stripped) |
+
+Spell records carry an equivalent `description`/full-text field. CRB reaches
+652/652 (100%, sourced from the fullest available corpus text — a matching
+`.MOD` record's text where one exists, 623/652, else the base record's own
+text); ACG reaches 144/144 (100%, its base record already carries full text
+natively — the reverse of CRB's `.MOD`-record convention); APG reaches
+261/297 (87.9%) — 41/297 lack a `SCHOOL:`/`CLASSES:` token at all, a real
+corpus gap that caps it below 100%.
+
+Record-count coverage (the count of rows ingested at all, independent of
+which fields are populated) is 100% for equipment and spells across CRB,
+APG, and ACG; Bestiary 1's own equipment corpus (7 records) has no ingested
+module yet. See [status.md](./status.md) for the full stub/gap ledger and
+the specific `## Open blockers`-equivalent ceilings.
 
 ## Adding a new book
 

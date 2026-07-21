@@ -1,7 +1,7 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-07-21 against deeff110a104
 > Maintenance: pre-PR truth-up cycle per [README.md](./README.md) §Maintenance contract — fires before every PR via the architecture-truth-up skill
 
 ## Posture
@@ -42,6 +42,8 @@ level: a stub says so rather than pretending to work.
 | IPC bridge liveness | `load_backend_health` returns the real crate version and compile-time git SHA; reaching it at all proves the Tauri bridge is alive | [desktop-app.md](./desktop-app.md) |
 | Homebrew authoring workbench | The Guard Stance proof package's validate/persist/preview round trip, read-only bridged to the desktop tester workbench | [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
 | Encounter difficulty / party CR compute | `Encounter::new` and `party_challenge_rating` are real, grounded compute — but see the DM Toolkit UI row below | [rules-engine.md](./rules-engine.md) |
+| Fighter+Wizard multiclass base-chassis dispatch | `compute_multiclass_base_chassis` grounds BAB/save stacking + per-class named-feature explanations for any Fighter+Wizard split, total level 1-10, deterministically proven at every level and both transition directions (SD-24 Epic 5) — but this grounds the base-chassis layer only, not a full `Computed` receipt end-to-end (see the Class/level compute coverage row below) | [rules-engine.md](./rules-engine.md) §"Multiclass base-chassis dispatch" |
+| CRB/APG/ACG equipment + spell record ingestion | 100% record coverage (equipment and spells) across all three books; `weight`/`description` fields added to every book's `EquipmentTableEntry` and populated to each book's real, honest corpus ceiling (SD-24 Epic 6) — ceilings vary by book and are not all 100% (CRB `description` 61.2%, APG `description` 0% — both real corpus gaps, tracked as open operator decisions in `docs/release/SD-24-beta-readiness-and-multiclass/progress.md` §Open blockers, not silently accepted) | [rules-data-tables.md](./rules-data-tables.md) §"Equipment/spell content completeness" |
 
 ## Stubbed / partially wired / deferred today
 
@@ -55,6 +57,7 @@ against the cited source, not carried over from a sibling doc unchecked.
 | `perform_install` | Always returns `Err("...not wired: downloading the AppImage artifact requires an HTTP client...")`; its TS caller `installAction.ts::performInstall` has zero production call sites — `Ui.tsx`'s `handleInstall` is a documented no-op. Doubly inert. | `apps/desktop/src-tauri/src/update/transaction.rs:763-771`; `apps/desktop/src/sd16/update/Ui.tsx:110-117` |
 | `perform_retention_sweep` | Real, tested body (`perform_retention_sweep_impl`), but not in `main.rs`'s `generate_handler!` list — unreachable from the frontend. | `apps/desktop/src-tauri/src/update/transaction.rs:817`; `apps/desktop/src-tauri/src/main.rs:113-140` |
 | `drive_list_campaigns` / `drive_load_campaign` / `drive_save_campaign` / `drive_delete_campaign` | Registered in `generate_handler!` and unit-tested, but no frontend file invokes any of them (confirmed: zero grep hits across `apps/desktop/src`). `campaignModel.ts` uses `localStorage` as the real source of truth; only `write_campaign_drive_artifacts` (one-way mirror) is called. | `apps/desktop/src-tauri/src/main.rs:132-135`; `apps/desktop/src/campaign/campaignModel.ts` |
+| `append_to_character` / `recompute_character` / `re_save_character` | Registered in `generate_handler!` and unit-tested (SD-24 Epic 7, criteria 7.1-7.3), but no `boundary/*.ts` wrapper and zero `invoke()` call sites exist anywhere in `apps/desktop/src` — same "registered-but-unreachable" shape as the `drive_*` row above. Epic 7's cycles were file-touch-scoped to `src-tauri` only, so frontend wiring never landed. | `apps/desktop/src-tauri/src/characterHub/appendToCharacter.rs`, `apps/desktop/src-tauri/src/characterHub/recomputeCharacter.rs`, `apps/desktop/src-tauri/src/characterHub/reSaveCharacter.rs`; `apps/desktop/src-tauri/src/main.rs` (registration) |
 | Level-up acceptance | `LevelUpDialog`'s `onAccept` in `CharacterSheet.tsx` is an empty closure with a comment: "accepting is a no-op today." Nothing is persisted or recomputed. | `apps/desktop/src/characterHub/CharacterSheet.tsx:803-806` |
 | Skill-allocation acceptance | `SkillAllocationDialog`'s own header comment: "Accepting only updates in-memory state (`onAccept`) — there is no backend [persistence]." Wired to a plain `useState` setter, lost on sheet close. | `apps/desktop/src/characterHub/SkillAllocationDialog.tsx` (header comment) |
 | Character-sheet bio fields | Alignment/deity/sex/age/height/weight/hair/eyes are explicitly session-local; no persisted schema slot exists yet. | `apps/desktop/src/characterHub/CharacterSheet.tsx` (`DetailsPanel`) |
