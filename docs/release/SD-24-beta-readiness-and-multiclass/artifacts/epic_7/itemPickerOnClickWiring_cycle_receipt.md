@@ -1,7 +1,7 @@
 # Cycle itemPickerOnClickWiring-cycle — Epic 7 / Criterion 7.4
 
-- **Card ID:** t_pending4c7f (placeholder — backfilled after kanban card mint)
-- **Commit SHA:** (recorded after commit — see progress.md cycle log for the final SHA)
+- **Card ID:** `t_7dd7a1b9` (`codex-tranche-5`, `done`; created via `hermes kanban create` without `--initial-status done`/`--workspace done-receipt` — both flags rejected by the current CLI, same drift `appendToCharacter_cycle_receipt.md`/`recomputeCharacter_cycle_receipt.md`/`reSaveCharacter_cycle_receipt.md` already documented — then completed via `hermes kanban complete t_7dd7a1b9`)
+- **Commit SHA:** `3ac287d169c5e44791643aaadbdb0ec8f8a4f007`
 - **Files touched:**
   - `apps/desktop/src/characterHub/CharacterSheet.tsx` (extracted `buildItemPickerConfig` pure dispatch function; render body now calls it instead of an inline ternary chain)
   - `apps/desktop/src/characterHub/buildItemPickerConfig.test.ts` (new — 5 test functions / 9 assertions)
