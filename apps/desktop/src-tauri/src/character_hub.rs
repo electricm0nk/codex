@@ -452,12 +452,10 @@ fn summarize_envelope(envelope: &SavedCharacterEnvelope) -> CharacterSummaryDto 
 /// `CreateCharacterResponse::Saved`/`Blocked`, matching every other
 /// character-hub command's response shape).
 ///
-/// This table documents the full three-operation surface even though only
-/// `LevelUpCharacter` is wired to a callable `#[tauri::command]` this
-/// cycle (`level_up_character`) — `AddEquipmentSelection` and
-/// `AddSpellSelection` land in a later cycle of this same epic. Per the
-/// Wired Integration doctrine (`governance/no-stub-mvp-doctrine.md`), an
-/// operation that is not yet wired is not exposed behind any real command:
+/// This table documents the full three-operation surface. As of this cycle
+/// all three rows are wired to callable `#[tauri::command]`s
+/// (`level_up_character`, `add_equipment_selection`, `add_spell_selection`).
+/// Per the Wired Integration doctrine (`governance/no-stub-mvp-doctrine.md`),
 /// the `wired` flag below is descriptive metadata this table's own
 /// dispatch-shape test asserts against, not a runtime dispatcher a caller
 /// can reach.
@@ -500,14 +498,14 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
         name: "add_equipment_selection",
         description: "Appends an entry to chosen.equipment_selections, then \
             recomputes and re-saves.",
-        wired: false,
+        wired: true,
     },
     SavedCharacterMutationOpDescriptor {
         op: SavedCharacterMutationOp::AddSpellSelection,
         name: "add_spell_selection",
         description: "Appends an entry to chosen.spells_selected, then \
             recomputes and re-saves.",
-        wired: false,
+        wired: true,
     },
 ];
 
@@ -767,28 +765,22 @@ pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
     }
 }
 
-/// `level_up_character`'s real implementation
-/// (`SavedCharacterMutationOp::LevelUpCharacter` in the operation table
-/// above): load -> mutate -> recompute -> re-save -> return envelope.
-/// Split out from the `#[tauri::command]` wrapper below so it is
-/// unit-testable against a real `SavedCharacterStore` fixture without an
-/// `AppHandle` — the same "pure function under a thin command wrapper"
-/// split this module already uses for `compose_character_input`.
-///
-/// Mirrors `create_character`/`clone_character`'s "never persist an
-/// unproven build" invariant: if the leveled-up build does not reach
-/// `Computed` (e.g. leveling past the range the compute engine currently
-/// supports), the saved character on disk is left exactly as it was and
-/// `Blocked` is returned with the real diagnostics — the mutation is never
-/// silently applied on disk when the recompute fails.
-fn level_up_character_at_root(
+/// Shared load -> recompute -> re-save -> return-envelope tail for every
+/// `mutate_saved_character` operation: applies `mutate` to the loaded
+/// envelope's `CharacterInput`, recomputes via the real engine, and either
+/// re-saves and returns `Saved` or leaves the on-disk envelope untouched and
+/// returns `Blocked`. Never persists an unproven build — mirrors
+/// `create_character`/`clone_character`'s own invariant. `mutate` receives
+/// only the `CharacterInput`, so it cannot smuggle in a different `saved_at`
+/// or bypass the recompute gate.
+fn mutate_saved_character_at_root(
     root: &Path,
-    class_id: &str,
     saved_at: &str,
+    mutate: impl FnOnce(&mut CharacterInput),
 ) -> Result<CreateCharacterResponse, String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
 
-    apply_level_up(&mut envelope.character_input, class_id);
+    mutate(&mut envelope.character_input);
 
     let receipt = build_pilot_headless_receipt(&envelope.character_input);
     if receipt.status != HeadlessReceiptStatus::Computed {
@@ -817,6 +809,30 @@ fn level_up_character_at_root(
     })
 }
 
+/// `level_up_character`'s real implementation
+/// (`SavedCharacterMutationOp::LevelUpCharacter` in the operation table
+/// above): load -> mutate -> recompute -> re-save -> return envelope.
+/// Split out from the `#[tauri::command]` wrapper below so it is
+/// unit-testable against a real `SavedCharacterStore` fixture without an
+/// `AppHandle` — the same "pure function under a thin command wrapper"
+/// split this module already uses for `compose_character_input`.
+///
+/// Mirrors `create_character`/`clone_character`'s "never persist an
+/// unproven build" invariant: if the leveled-up build does not reach
+/// `Computed` (e.g. leveling past the range the compute engine currently
+/// supports), the saved character on disk is left exactly as it was and
+/// `Blocked` is returned with the real diagnostics — the mutation is never
+/// silently applied on disk when the recompute fails.
+fn level_up_character_at_root(
+    root: &Path,
+    class_id: &str,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_level_up(character_input, class_id);
+    })
+}
+
 /// Loads the saved character, increments/adds the requested class's
 /// level, recomputes via the real engine, and re-saves — see
 /// `level_up_character_at_root` for the full semantics.
@@ -827,6 +843,164 @@ pub fn level_up_character(
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
     level_up_character_at_root(&root, &request.class_id, &request.saved_at)
+}
+
+/// The wire-level projection of `ActiveState` for the `add_equipment_selection`
+/// request. A separate DTO (rather than deriving `Deserialize` on
+/// `ActiveState` itself) because the `codex` crate has zero dependencies —
+/// see this module's own top-of-file note.
+#[derive(Debug, Clone, Copy, Deserialize)]
+pub enum ActiveStateDto {
+    EquippedActive,
+    Absent,
+    SelectedInactive,
+}
+
+impl From<ActiveStateDto> for ActiveState {
+    fn from(dto: ActiveStateDto) -> Self {
+        match dto {
+            ActiveStateDto::EquippedActive => ActiveState::EquippedActive,
+            ActiveStateDto::Absent => ActiveState::Absent,
+            ActiveStateDto::SelectedInactive => ActiveState::SelectedInactive,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AddEquipmentSelectionRequest {
+    pub character_id: String,
+    pub item_id: String,
+    pub active_state: ActiveStateDto,
+    pub saved_at: String,
+}
+
+/// Appends one entry to `chosen.equipment_selections`. `equipped_or_active`
+/// is derived from `active_state` (matching `EquipmentSelection`'s own doc
+/// comment: the flag is a backward-compatible projection of the state, not
+/// an independent choice) — true only for `ActiveState::EquippedActive`.
+/// Every other field is untouched.
+pub fn apply_add_equipment_selection(
+    character_input: &mut CharacterInput,
+    item_id: &str,
+    active_state: ActiveState,
+) {
+    character_input.chosen.equipment_selections.push(EquipmentSelection {
+        item_id: item_id.to_owned(),
+        equipped_or_active: active_state == ActiveState::EquippedActive,
+        active_state,
+    });
+}
+
+/// `add_equipment_selection`'s real implementation
+/// (`SavedCharacterMutationOp::AddEquipmentSelection` in the operation table
+/// above) — see `mutate_saved_character_at_root` for the shared
+/// load -> mutate -> recompute -> re-save -> return-envelope semantics.
+fn add_equipment_selection_at_root(
+    root: &Path,
+    item_id: &str,
+    active_state: ActiveState,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_add_equipment_selection(character_input, item_id, active_state);
+    })
+}
+
+/// Loads the saved character, appends the requested equipment selection,
+/// recomputes via the real engine, and re-saves — see
+/// `add_equipment_selection_at_root` for the full semantics.
+#[tauri::command]
+pub fn add_equipment_selection(
+    app: tauri::AppHandle,
+    request: AddEquipmentSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    add_equipment_selection_at_root(
+        &root,
+        &request.item_id,
+        request.active_state.into(),
+        &request.saved_at,
+    )
+}
+
+/// The wire-level projection of `AcquisitionMode` for the
+/// `add_spell_selection` request. A separate DTO for the same reason as
+/// `ActiveStateDto` above.
+#[derive(Debug, Clone, Copy, Deserialize)]
+pub enum AcquisitionModeDto {
+    Known,
+    Prepared,
+    Granted,
+}
+
+impl From<AcquisitionModeDto> for AcquisitionMode {
+    fn from(dto: AcquisitionModeDto) -> Self {
+        match dto {
+            AcquisitionModeDto::Known => AcquisitionMode::Known,
+            AcquisitionModeDto::Prepared => AcquisitionMode::Prepared,
+            AcquisitionModeDto::Granted => AcquisitionMode::Granted,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AddSpellSelectionRequest {
+    pub character_id: String,
+    pub spell_id: String,
+    pub source_class_id: String,
+    pub acquisition_mode: AcquisitionModeDto,
+    pub saved_at: String,
+}
+
+/// Appends one entry to `chosen.spells_selected`. Every other field is
+/// untouched.
+pub fn apply_add_spell_selection(
+    character_input: &mut CharacterInput,
+    spell_id: &str,
+    source_class_id: &str,
+    acquisition_mode: AcquisitionMode,
+) {
+    character_input.chosen.spells_selected.push(SpellSelection {
+        spell_id: spell_id.to_owned(),
+        source_class_id: source_class_id.to_owned(),
+        acquisition_mode,
+    });
+}
+
+/// `add_spell_selection`'s real implementation
+/// (`SavedCharacterMutationOp::AddSpellSelection` in the operation table
+/// above) — see `mutate_saved_character_at_root` for the shared
+/// load -> mutate -> recompute -> re-save -> return-envelope semantics.
+fn add_spell_selection_at_root(
+    root: &Path,
+    spell_id: &str,
+    source_class_id: &str,
+    acquisition_mode: AcquisitionMode,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_add_spell_selection(character_input, spell_id, source_class_id, acquisition_mode);
+    })
+}
+
+/// Loads the saved character, appends the requested spell selection,
+/// recomputes via the real engine, and re-saves — see
+/// `add_spell_selection_at_root` for the full semantics.
+#[tauri::command]
+pub fn add_spell_selection(
+    app: tauri::AppHandle,
+    request: AddSpellSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    add_spell_selection_at_root(
+        &root,
+        &request.spell_id,
+        &request.source_class_id,
+        request.acquisition_mode.into(),
+        &request.saved_at,
+    )
 }
 
 fn resolve_characters_root(app: &tauri::AppHandle) -> Result<PathBuf, String> {
@@ -1230,7 +1404,7 @@ mod tests {
     // ----- `mutate_saved_character` operation table (Criterion 16) -----
 
     #[test]
-    fn saved_character_mutation_operations_table_documents_three_ops_with_one_wired() {
+    fn saved_character_mutation_operations_table_documents_three_ops_all_wired() {
         let names: Vec<&str> = SAVED_CHARACTER_MUTATION_OPERATIONS
             .iter()
             .map(|descriptor| descriptor.name)
@@ -1252,15 +1426,13 @@ mod tests {
             .collect();
         assert_eq!(
             wired,
-            vec!["level_up_character"],
-            "only level_up_character is callable through a real Tauri command this cycle"
+            vec![
+                "level_up_character",
+                "add_equipment_selection",
+                "add_spell_selection",
+            ],
+            "all three ops are callable through real Tauri commands as of this cycle"
         );
-
-        let wired_op = SAVED_CHARACTER_MUTATION_OPERATIONS
-            .iter()
-            .find(|descriptor| descriptor.wired)
-            .expect("exactly one wired op");
-        assert_eq!(wired_op.op, SavedCharacterMutationOp::LevelUpCharacter);
 
         for descriptor in SAVED_CHARACTER_MUTATION_OPERATIONS.iter() {
             assert!(
@@ -1269,6 +1441,195 @@ mod tests {
                 descriptor.name
             );
         }
+    }
+
+    // ----- `add_equipment_selection` (Criterion 18) -----
+
+    #[test]
+    fn apply_add_equipment_selection_appends_to_equipment_selections() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        let starting_len = input.chosen.equipment_selections.len();
+
+        apply_add_equipment_selection(&mut input, "item:dagger", ActiveState::EquippedActive);
+
+        assert_eq!(input.chosen.equipment_selections.len(), starting_len + 1);
+        let added = input
+            .chosen
+            .equipment_selections
+            .last()
+            .expect("an entry was just pushed");
+        assert_eq!(added.item_id, "item:dagger");
+        assert_eq!(added.active_state, ActiveState::EquippedActive);
+        assert!(added.equipped_or_active);
+    }
+
+    /// The single most important regression guard for Criterion 18's
+    /// equipment half: proves the real load -> mutate -> recompute ->
+    /// re-save -> return round trip against a real `SavedCharacterStore`
+    /// fixture on disk, mirroring `level_up_character_at_root`'s own golden
+    /// path test.
+    #[test]
+    fn add_equipment_selection_at_root_appends_and_persists_when_computed() {
+        let root = tempdir("add-equipment-golden-path");
+        let envelope = level_up_test_envelope("race:human", 1);
+        let starting_len = envelope.character_input.chosen.equipment_selections.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = add_equipment_selection_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::EquippedActive,
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("add equipment selection call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "Human Fighter level 1 with an added equipment selection must still \
+                     reach Computed, got diagnostics: {diagnostics:?}"
+                );
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections.len(),
+            starting_len + 1,
+            "the on-disk envelope must reflect the appended equipment selection"
+        );
+        let added = reloaded
+            .character_input
+            .chosen
+            .equipment_selections
+            .last()
+            .expect("an entry was just pushed");
+        assert_eq!(added.item_id, "item:dagger");
+        assert_eq!(added.active_state, ActiveState::EquippedActive);
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:00:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// `add_equipment_selection_at_root`'s error path when there is nothing
+    /// saved at `root` yet — must fail honestly rather than silently
+    /// creating a character out of thin air.
+    #[test]
+    fn add_equipment_selection_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("add-equipment-missing-character");
+
+        let result = add_equipment_selection_at_root(
+            &root,
+            "item:dagger",
+            ActiveState::EquippedActive,
+            "2026-07-21T00:00:00Z",
+        );
+
+        assert!(
+            result.is_err(),
+            "adding an equipment selection to a nonexistent saved character must fail"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- `add_spell_selection` (Criterion 18) -----
+
+    #[test]
+    fn apply_add_spell_selection_appends_to_spells_selected() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        let starting_len = input.chosen.spells_selected.len();
+
+        apply_add_spell_selection(
+            &mut input,
+            "Mage Armor",
+            "class:wizard",
+            AcquisitionMode::Known,
+        );
+
+        assert_eq!(input.chosen.spells_selected.len(), starting_len + 1);
+        let added = input
+            .chosen
+            .spells_selected
+            .last()
+            .expect("an entry was just pushed");
+        assert_eq!(added.spell_id, "Mage Armor");
+        assert_eq!(added.source_class_id, "class:wizard");
+        assert_eq!(added.acquisition_mode, AcquisitionMode::Known);
+    }
+
+    /// The single most important regression guard for Criterion 18's spell
+    /// half: proves the real load -> mutate -> recompute -> re-save ->
+    /// return round trip against a real `SavedCharacterStore` fixture on
+    /// disk, mirroring `level_up_character_at_root`'s own golden path test.
+    #[test]
+    fn add_spell_selection_at_root_appends_and_persists_when_computed() {
+        let root = tempdir("add-spell-golden-path");
+        let envelope = level_up_test_envelope("race:human", 1);
+        let starting_len = envelope.character_input.chosen.spells_selected.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = add_spell_selection_at_root(
+            &root,
+            "Mage Armor",
+            "class:wizard",
+            AcquisitionMode::Known,
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("add spell selection call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "Human Fighter level 1 with an added spell selection must still \
+                     reach Computed, got diagnostics: {diagnostics:?}"
+                );
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.spells_selected.len(),
+            starting_len + 1,
+            "the on-disk envelope must reflect the appended spell selection"
+        );
+        let added = reloaded
+            .character_input
+            .chosen
+            .spells_selected
+            .last()
+            .expect("an entry was just pushed");
+        assert_eq!(added.spell_id, "Mage Armor");
+        assert_eq!(added.source_class_id, "class:wizard");
+        assert_eq!(added.acquisition_mode, AcquisitionMode::Known);
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:00:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// `add_spell_selection_at_root`'s error path when there is nothing
+    /// saved at `root` yet — must fail honestly rather than silently
+    /// creating a character out of thin air.
+    #[test]
+    fn add_spell_selection_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("add-spell-missing-character");
+
+        let result = add_spell_selection_at_root(
+            &root,
+            "Mage Armor",
+            "class:wizard",
+            AcquisitionMode::Known,
+            "2026-07-21T00:00:00Z",
+        );
+
+        assert!(
+            result.is_err(),
+            "adding a spell selection to a nonexistent saved character must fail"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
     }
 
     // ----- `level_up_character` (Criterion 17) -----

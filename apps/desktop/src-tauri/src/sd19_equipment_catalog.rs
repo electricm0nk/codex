@@ -54,6 +54,57 @@ pub fn list_equipment_catalog() -> EquipmentCatalogResponse {
     build_equipment_catalog()
 }
 
+/// Filter criteria for `list_equipment`. Every field is optional and
+/// `None`/empty matches everything — an all-`None` filter is equivalent to
+/// the unfiltered `list_equipment_catalog` response. Kept deliberately
+/// narrow (substring name match, exact category match) rather than an
+/// exhaustive query DSL; widen only if a real caller needs more.
+#[derive(Debug, Clone, Default, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EquipmentCatalogFilter {
+    /// Case-insensitive substring match against `name`.
+    pub name_contains: Option<String>,
+    /// Exact match against the `EquipmentCategory` variant name verbatim
+    /// (e.g. "ArmsArmor"), as projected onto `EquipmentCatalogEntryDto::category`.
+    pub category: Option<String>,
+}
+
+/// Narrows the full catalog to the entries matching `filter`. A thin,
+/// testable wrapper behind the `list_equipment` Tauri command below,
+/// mirroring `build_equipment_catalog`'s own command/pure-fn split.
+pub fn filter_equipment_catalog(filter: &EquipmentCatalogFilter) -> EquipmentCatalogResponse {
+    let name_needle = filter
+        .name_contains
+        .as_ref()
+        .filter(|needle| !needle.is_empty())
+        .map(|needle| needle.to_lowercase());
+
+    let entries = build_equipment_catalog()
+        .entries
+        .into_iter()
+        .filter(|entry| match &name_needle {
+            Some(needle) => entry.name.to_lowercase().contains(needle.as_str()),
+            None => true,
+        })
+        .filter(|entry| match &filter.category {
+            Some(category) => &entry.category == category,
+            None => true,
+        })
+        .collect();
+
+    EquipmentCatalogResponse { entries }
+}
+
+/// Returns the CRB equipment catalog narrowed by `filter` — see
+/// `EquipmentCatalogFilter`'s own doc comment for the supported fields.
+/// Distinct from `list_equipment_catalog` (kept unfiltered so the existing
+/// `loadEquipmentCatalog` desktop boundary caller is untouched this cycle);
+/// this command is the new, additive filtered surface Criterion 19 asks for.
+#[tauri::command]
+pub fn list_equipment(filter: EquipmentCatalogFilter) -> EquipmentCatalogResponse {
+    filter_equipment_catalog(&filter)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -82,6 +133,63 @@ mod tests {
         for entry in &response.entries {
             assert!(!entry.key.is_empty());
             assert!(!entry.name.is_empty());
+        }
+    }
+
+    #[test]
+    fn filter_equipment_catalog_with_no_filter_fields_returns_the_full_catalog() {
+        let response = filter_equipment_catalog(&EquipmentCatalogFilter::default());
+        assert_eq!(response.entries.len(), build_equipment_catalog().entries.len());
+    }
+
+    #[test]
+    fn filter_equipment_catalog_matches_name_contains_case_insensitively() {
+        let response = filter_equipment_catalog(&EquipmentCatalogFilter {
+            name_contains: Some("dagger".to_owned()),
+            category: None,
+        });
+
+        assert!(
+            !response.entries.is_empty(),
+            "the real CRB corpus has known Dagger records"
+        );
+        assert!(response.entries.len() < build_equipment_catalog().entries.len());
+        for entry in &response.entries {
+            assert!(
+                entry.name.to_lowercase().contains("dagger"),
+                "entry {:?} does not contain 'dagger'",
+                entry.name
+            );
+        }
+    }
+
+    #[test]
+    fn filter_equipment_catalog_matches_category_exactly() {
+        let response = filter_equipment_catalog(&EquipmentCatalogFilter {
+            name_contains: None,
+            category: Some("ArmsArmor".to_owned()),
+        });
+
+        assert_eq!(response.entries.len(), 310);
+        for entry in &response.entries {
+            assert_eq!(entry.category, "ArmsArmor");
+        }
+    }
+
+    #[test]
+    fn filter_equipment_catalog_combines_name_and_category_filters() {
+        let response = filter_equipment_catalog(&EquipmentCatalogFilter {
+            name_contains: Some("shield".to_owned()),
+            category: Some("MagicItems".to_owned()),
+        });
+
+        assert!(
+            !response.entries.is_empty(),
+            "the real CRB corpus has known Shield-named magic items (e.g. Ring of Force Shield)"
+        );
+        for entry in &response.entries {
+            assert_eq!(entry.category, "MagicItems");
+            assert!(entry.name.to_lowercase().contains("shield"));
         }
     }
 }
