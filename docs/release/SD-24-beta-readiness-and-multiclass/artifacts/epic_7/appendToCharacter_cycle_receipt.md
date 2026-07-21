@@ -1,6 +1,6 @@
 # Cycle appendToCharacter-cycle — Epic 7 (Tauri Command-Surface Repair) / Criterion 7.1
 
-- **Card ID:** t_pending7f1a (placeholder — backfill with the real `codex-tranche-5` card ID per §2.3 step 10)
+- **Card ID:** `t_2b226e17` (`codex-tranche-5`, status `done`; created via `hermes kanban create` without `--initial-status done`/`--workspace done-receipt` — both flags rejected by the current CLI, same drift `equipment-coverage-audit_cycle_receipt.md` already documented — then completed via `hermes kanban complete t_2b226e17`)
 - **Commit SHA:** `ed6406f`
 - **Files touched:**
   - `apps/desktop/src-tauri/src/characterHub/mod.rs` (new)
