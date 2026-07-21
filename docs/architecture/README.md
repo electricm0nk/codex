@@ -107,13 +107,13 @@ grep -rhoE '\]\(\./[^)]+\.md' docs/architecture/*.md | sed 's/](\.\///' | sort -
 The relative-link check prints nothing when the doc set is internally
 consistent. All citations in [release-pipeline.md](./release-pipeline.md)
 and [desktop-app.md](./desktop-app.md) are written in full repo-relative
-form, so the cited-path check has nothing to flag there. The one
-expected, permanent exception is this very sentence: it names
-`src/testSupport/makeSurface.ts` in deliberately abbreviated form (the real
-path is `apps/desktop/src/testSupport/makeSurface.ts`) purely to illustrate
-what an abbreviated citation looks like — that hit is not a doc defect. Any
-other hit from the cited-path check is a real citation that needs to be
-written in full repo-relative form.
+form, so the cited-path check has nothing to flag there. An abbreviated
+citation — e.g. `<src-dir>/testSupport/makeSurface.ts` instead of the real
+`apps/desktop/src/testSupport/makeSurface.ts` — is written with a
+placeholder segment (`<...>`) precisely so the cited-path check's own
+exclusion pattern skips it, rather than as a bare path the checker would
+have to be told by hand to ignore. Any hit from the cited-path check is a
+real citation that needs to be written in full repo-relative form.
 
 **Out-of-repo mirror note.** The authoritative SD-lifecycle doctrine —
 governing what a "closure" is and when this contract applies — lives in the
