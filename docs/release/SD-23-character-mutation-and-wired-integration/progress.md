@@ -130,3 +130,12 @@ Build counter at SD-23 launch (filled by pre-launch checklist step 7):
 - **Acceptance criterion:** Criterion 27 — `update_graphify.py` runs, appends a `graphify:update` receipt (success or failure both count); non-zero exit does not refuse the closure pipeline.
 - **Status:** complete
 - **Notes:** `graphify cluster-only` exited 1. Root cause investigated, not just recorded blindly: this repo has never had a base `graph.json` built (`graphify --help`'s subcommand list confirms no CLI subcommand builds one from scratch — bootstrapping is normally an interactive `/graphify` slash-command session, LLM-assisted, out of scope for an automated cycle to trigger). Per doctrine this is non-blocking — the failure receipt is the audit trail — so the cycle recorded it honestly and moved on rather than attempting an out-of-scope fix. Flagged as an open item for the operator (not an SD-23 blocker): bootstrapping `graphify-out/graph.json` once would let future runs succeed.
+
+### Cycle 14 — Closure Epilogue / Criterion 28 (merge-conflict resolution, pre-flight)
+- **Card ID:** t_bd6a884c
+- **Commit SHAs:** `15a61b7` (receipt), `685ac4a` (artifact receipt)
+- **Files touched:** `docs/release/SD-23-character-mutation-and-wired-integration/receipts.md` (append), `docs/release/SD-23-character-mutation-and-wired-integration/artifacts/epic_7/merge_conflict_resolution_cycle_receipt.md` (new)
+- **Audit result:** N/A — doc-only cycle
+- **Acceptance criterion:** Criterion 28 — `resolve_merge_conflicts.py --mode pre-flight` runs, emits a `merge_conflict:*` receipt with `outcome: clean | conflicts_found`; `clean` is the gate to proceed to promotion.
+- **Status:** complete — `outcome: clean`, 0 conflicts
+- **Notes:** Safety-checked before running: `git pull --rebase origin develop` mutates the branch for real, not a simulation, so re-confirmed via `git fetch` that `origin/develop` HEAD (`f36c211`) still equals the merge-base with `tranche/5-1` before running — a guaranteed no-op, no surprise conflict risk. Result: branch tip unchanged (`cf897f69`) before and after, local/remote confirmed still in sync post-rebase. `tranche/5-1` is now confirmed clean and rebased on current develop HEAD, ready for the promotion PR.
