@@ -202,12 +202,18 @@ pub enum CreateCharacterResponse {
 
 /// Build a `CharacterInput` for the requested race/class/level. Race, class,
 /// and ability scores are the caller's real choices; the feat/skill/
-/// equipment loadout is fixed — no class-specific diagnostic in the compute
-/// seam reads those selections, so widening them would not change which
-/// combinations reach `Computed`. Human additionally receives its own
-/// canonical choice-slot values — the ability-bonus target is the caller's
-/// real choice (`request.ability_bonus_target`); every other race omits the
-/// Human-only slots.
+/// equipment loadout is fixed — `unmet_combat_posture_conditions`
+/// (`pilot_compute.rs`) requires this exact equipment/feat posture verbatim
+/// to reach `Computed`, so widening it would not change which combinations
+/// reach `Computed`. Human additionally receives its own canonical
+/// choice-slot values — the ability-bonus target is the caller's real
+/// choice (`request.ability_bonus_target`); every other race omits the
+/// Human-only slots. Unlike feats/skills/equipment, `spells_selected` is
+/// *not* fixed to any hardcoded placeholder (SD-24 Criterion 7.5): no
+/// `Computed`-status gate reads it, `CreateCharacterRequest` collects no
+/// spell choices from the caller, and a freshly composed character starts
+/// with an empty spellbook that only grows through the real wired
+/// `add_spell_selection` / `appendToCharacter` command surface.
 pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInput {
     let mut selected_choices = vec![
         SelectedChoice {
@@ -290,34 +296,24 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
                 },
             ],
             selected_choices,
-            spells_selected: demo_spells_selected(),
+            // SD-24 Criterion 7.5: previously hardcoded to a fixed two-spell
+            // "demo" loadout (`demo_spells_selected()`, `class:demo`
+            // `Alarm`/`Blur`) regardless of the requested race/class/level —
+            // `CreateCharacterRequest` carries no spell selections at all, so
+            // that loadout could only ever be a fabricated default, never a
+            // real caller choice. `unmet_combat_posture_conditions` (the
+            // Fighter/Wizard chassis gate `compose_character_input`'s
+            // `Computed`-status reachability depends on) never reads
+            // `spells_selected`, so a freshly composed character reaching
+            // `Computed` never required those two spells to exist. A real
+            // character's spells now come exclusively from the wired
+            // `add_spell_selection` / `appendToCharacter` command surface
+            // (SD-23 / SD-24 Epic 7) after creation, not from a baked-in
+            // placeholder at creation time.
+            spells_selected: Vec::new(),
         },
         selection_provenance: Vec::new(),
     }
-}
-
-/// Fixed SD-19 demo spell selections for the fixed loadout, mirroring the
-/// existing fixed equipment loadout above. Only Human Fighter levels 1-3
-/// reach `Computed` status today, so this loadout is necessarily a
-/// Fighter's — these two spells are a reachability-demonstration sample
-/// (proving `compute_pilot_with_corpus` resolves real corpus data end to
-/// end in the live UI), not a claim that Fighters cast Abjuration/Illusion
-/// spells. `source_class_id` is left generic (`"class:demo"`) for the same
-/// reason: no class-appropriateness check consumes this field yet (see
-/// `SpellSelection.source_class_id`'s own doc comment).
-fn demo_spells_selected() -> Vec<SpellSelection> {
-    vec![
-        SpellSelection {
-            spell_id: "Alarm".to_owned(),
-            source_class_id: "class:demo".to_owned(),
-            acquisition_mode: AcquisitionMode::Granted,
-        },
-        SpellSelection {
-            spell_id: "Blur".to_owned(),
-            source_class_id: "class:demo".to_owned(),
-            acquisition_mode: AcquisitionMode::Granted,
-        },
-    ]
 }
 
 /// Join the OS app-data directory with the characters-root subdirectory.
@@ -1713,6 +1709,26 @@ mod tests {
             .map(|choice| choice.selection_id.as_str());
 
         assert_eq!(selection, Some("ability:dexterity"));
+    }
+
+    /// SD-24 Criterion 7.5's own RED sentinel: `compose_character_input`
+    /// (the composer behind `create_character` / `seed_default_character_if_needed`)
+    /// must not fabricate a demo spell loadout for a freshly composed
+    /// character — `CreateCharacterRequest` carries no spell selections at
+    /// all, so any non-empty `spells_selected` on the composed input can
+    /// only be a hardcoded default, not a real caller choice. A real
+    /// character's spells come from the wired `add_spell_selection` /
+    /// `appendToCharacter` command surface (SD-23/SD-24 Epic 7) after
+    /// creation, not from a baked-in placeholder at creation time.
+    #[test]
+    fn compose_character_input_does_not_fabricate_a_default_spell_loadout() {
+        let input = compose_character_input(&request_for("race:human", 1));
+
+        assert!(
+            input.chosen.spells_selected.is_empty(),
+            "compose_character_input must not hardcode a demo spell loadout; got {:?}",
+            input.chosen.spells_selected
+        );
     }
 
     #[test]
