@@ -1,7 +1,7 @@
 # Cycle loadoutHardcodingRemoval — Epic 7 (Unwired Workflows + Tauri Surface) / Criterion 7.5
 
-- **Card ID:** t_pending5cy (placeholder — backfilled after kanban card mint in step 10)
-- **Commit SHA:** (recorded after commit — see progress.md cycle log entry for this cycle's final SHA)
+- **Card ID:** `t_83d8634f` (`codex-tranche-5`, status `done`; created via `hermes kanban create` without `--initial-status done`/`--workspace done-receipt` — both flags rejected by the current CLI, same drift `appendToCharacter_cycle_receipt.md`/`recomputeCharacter_cycle_receipt.md`/`reSaveCharacter_cycle_receipt.md`/`itemPickerOnClickWiring_cycle_receipt.md` already documented — then completed via `hermes kanban complete t_83d8634f`)
+- **Commit SHA:** `9c819a174ab340e4ecf737da3d023bfda88e7d96`
 - **Files touched:** `apps/desktop/src-tauri/src/character_hub.rs`
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
 - **Wired-integration audit result:** OK_NO_TOKENS modulo the single pre-existing `Plant Growth`/"hack" false positive already documented by every Epic 6/7 cycle since it landed (spell-description prose, not a real forbidden token) — unchanged count before and after this cycle's own diff; verified this cycle's own touched file (`character_hub.rs`) alone produces zero grep hits.
