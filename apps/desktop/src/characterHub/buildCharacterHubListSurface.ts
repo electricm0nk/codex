@@ -33,7 +33,13 @@ function formatRaceLabel(raceId: string): string {
   return withoutPrefix.charAt(0).toUpperCase() + withoutPrefix.slice(1);
 }
 
-function toRowSurface(summary: CharacterSummaryDto): CharacterHubListRowSurface {
+/**
+ * Maps one saved-character summary to its UI-ready row surface. Exported
+ * (beyond this module's own list-building use) so a post-mutation refresh —
+ * e.g. after `level_up_character` — can rebuild a single row from the fresh
+ * summary a mutation response carries, without re-fetching the whole list.
+ */
+export function toRowSurface(summary: CharacterSummaryDto): CharacterHubListRowSurface {
   return {
     characterId: summary.characterId,
     displayLabel: summary.displayLabel,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { loadCharacterHubListSurfaceRuntime } from './characterHubRuntime';
-import type { CharacterHubListSurface, CharacterHubListRowSurface } from './buildCharacterHubListSurface';
+import { toRowSurface, type CharacterHubListSurface, type CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { CreateCharacterForm } from './CreateCharacterForm';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
@@ -154,7 +154,20 @@ export function CharacterHubPage() {
   }
 
   if (mode === 'sheet' && sheet) {
-    return <CharacterSheet row={sheet.row} detail={sheet.detail} onClose={() => setMode(sheetReturnMode)} />;
+    return (
+      <CharacterSheet
+        row={sheet.row}
+        detail={sheet.detail}
+        onClose={() => setMode(sheetReturnMode)}
+        onDetailRefreshed={(detail) =>
+          // The Level box/class panel/Progression rail derive from
+          // `row.classSummary`, not `detail` — rebuild `row` from the
+          // refreshed detail's summary too, so both stay in sync without a
+          // close-and-reopen or a full list re-fetch.
+          setSheet((current) => (current ? { row: toRowSurface(detail.summary), detail } : current))
+        }
+      />
+    );
   }
 
   if (mode === 'load') {

@@ -2,6 +2,8 @@ import { useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import type { AbilityScoresDto, CorpusDerivedDto } from '../boundary/loadCreateCharacter';
+import { levelUpCharacter } from '../boundary/levelUpCharacter';
+import { toCharacterMutationRefresh } from './characterSheetRefresh';
 import {
   buildLevelEntries,
   buildNextEntries,
@@ -583,14 +585,45 @@ export function CharacterSheet(props: {
   row: CharacterHubListRowSurface;
   detail: LoadSavedCharacterResponse | null;
   onClose: () => void;
+  /**
+   * Called with the fresh detail after a saved-character mutation (today:
+   * level-up; a follow-on cycle's add-equipment/add-spell picker will reuse
+   * the same callback) succeeds. `CharacterSheet` is a controlled/
+   * presentational component — it does not own a copy of `detail` — so the
+   * parent is responsible for updating whatever state it passed in as
+   * `detail` (and, since the Level box/class panel/Progression rail derive
+   * from `row.classSummary` rather than `detail`, for rebuilding `row` from
+   * the refreshed `detail.summary` too).
+   */
+  onDetailRefreshed: (detail: LoadSavedCharacterResponse) => void;
 }) {
   const [tab, setTab] = useState<Tab>('Weapons');
   const [menuOpen, setMenuOpen] = useState(false);
   const [leftCollapsed, setLeftCollapsed] = useState(false);
   const [levelUpOpen, setLevelUpOpen] = useState(false);
+  const [levelUpError, setLevelUpError] = useState<string | null>(null);
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
   const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>({ ...DEFAULT_SKILL_ALLOCATION });
   const [skillDialogOpen, setSkillDialogOpen] = useState(false);
+
+  async function handleLevelUpAccept(classId: string) {
+    setLevelUpError(null);
+    try {
+      const outcome = await levelUpCharacter({
+        characterId: props.row.characterId,
+        classId,
+        savedAt: new Date().toISOString(),
+      });
+      const refresh = toCharacterMutationRefresh(outcome);
+      if (refresh.kind === 'blocked') {
+        setLevelUpError(refresh.message);
+        return;
+      }
+      props.onDetailRefreshed(refresh.detail);
+    } catch (cause: unknown) {
+      setLevelUpError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
 
   function updateBio(patch: Partial<BioFields>) {
     setBio((prev) => ({ ...prev, ...patch }));
@@ -794,16 +827,30 @@ export function CharacterSheet(props: {
                 </div>
               </div>
 
+              {levelUpError ? (
+                <p
+                  role="alert"
+                  style={{
+                    backgroundColor: 'var(--color-surface-2)',
+                    border: '1px solid var(--color-danger, #c0392b)',
+                    borderRadius: 6,
+                    color: 'var(--color-danger, #c0392b)',
+                    fontSize: '0.75rem',
+                    margin: '0 0 0.5rem',
+                    padding: '0.4rem 0.55rem',
+                  }}
+                >
+                  {levelUpError}
+                </p>
+              ) : null}
+
               <LevelUpDialog
                 open={levelUpOpen}
                 onClose={() => setLevelUpOpen(false)}
                 heldClasses={heldClasses}
                 intelligenceModifier={abilities.intelligence}
                 isHuman={isHuman}
-                onAccept={() => {
-                  // Backend wiring (persisting the new level onto the saved
-                  // character) is a separate follow-on — accepting is a no-op today.
-                }}
+                onAccept={handleLevelUpAccept}
               />
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
