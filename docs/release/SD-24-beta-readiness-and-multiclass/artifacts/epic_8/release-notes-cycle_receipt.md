@@ -1,6 +1,6 @@
 # Cycle release-notes-cycle — Epic 8 / Criterion 8.3
 
-- **Card ID:** t_TBD (pending hermes creation)
+- **Card ID:** t_3b47a9fa
 - **Commit SHA:** 3ecced2
 - **Files touched:** `docs/release/SD-24-beta-readiness-and-multiclass/release-notes.md`, `tests/sd24_release_notes_structure.rs`
 
