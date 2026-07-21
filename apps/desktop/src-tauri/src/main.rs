@@ -20,8 +20,9 @@ use campaign_drive::{
 };
 use character_hub::{
     add_equipment_selection, add_spell_selection, clone_character, create_character,
-    delete_character_portrait, export_character_json, level_up_character, list_saved_characters,
-    load_character_portrait, load_saved_character, save_character_portrait,
+    delete_character, delete_character_portrait, export_character_json, import_character,
+    level_up_character, list_saved_characters, load_character_portrait, load_saved_character,
+    save_character_portrait,
 };
 use sd13_support_state_matrix::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use sd19_class_catalog::list_class_catalog;
@@ -131,7 +132,9 @@ fn main() {
             save_character_portrait,
             load_character_portrait,
             delete_character_portrait,
+            delete_character,
             export_character_json,
+            import_character,
             write_campaign_drive_artifacts,
             drive_list_campaigns,
             drive_load_campaign,

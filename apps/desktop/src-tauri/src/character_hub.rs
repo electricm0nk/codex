@@ -17,6 +17,7 @@ use std::path::{Path, PathBuf};
 use base64::Engine as _;
 use serde::{Deserialize, Serialize};
 use tauri::Manager;
+use uuid::Uuid;
 
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
@@ -1121,6 +1122,330 @@ pub fn delete_character_portrait(
     Ok(())
 }
 
+// ----- `delete_character` (Storage Tier Minimal Fix, Criterion 22) -----
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DeleteCharacterRequest {
+    pub character_id: String,
+}
+
+/// The wire response for `delete_character`. Unlike every other
+/// character-hub command, a failure is carried inside the payload
+/// (`ok: false`, `error: Some(..)`) rather than raised as a rejected Tauri
+/// IPC call — this matches the criterion's literal `{ ok, error? }` return
+/// contract, so the Load Character screen can show an inline status message
+/// without a try/catch.
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DeleteCharacterResponse {
+    pub ok: bool,
+    pub error: Option<String>,
+}
+
+/// Removes the saved character's on-disk directory tree at `root`.
+///
+/// Deleting a character that has no saved directory (already deleted, or
+/// never existed) is a deliberate `ok: true` — see
+/// `SavedCharacterStore::delete`'s own doc comment for the idempotent-delete
+/// rationale (mirrors this module's existing `delete_character_portrait`
+/// idiom of not erroring when there is nothing to remove). Any other
+/// failure (I/O error, permissions) is surfaced honestly as `ok: false`
+/// with a real message, never silently swallowed.
+///
+/// Split from the `#[tauri::command]` wrapper below so it is unit-testable
+/// against a real `SavedCharacterStore` fixture without an `AppHandle` —
+/// mirrors every other `_at_root` function in this module.
+fn delete_character_at_root(root: &Path) -> DeleteCharacterResponse {
+    match SavedCharacterStore::delete(root) {
+        Ok(()) => DeleteCharacterResponse { ok: true, error: None },
+        Err(err) => DeleteCharacterResponse {
+            ok: false,
+            error: Some(err.message),
+        },
+    }
+}
+
+/// Resolves the character's root directory and deletes it — see
+/// `delete_character_at_root` for the full semantics.
+#[tauri::command]
+pub fn delete_character(
+    app: tauri::AppHandle,
+    request: DeleteCharacterRequest,
+) -> DeleteCharacterResponse {
+    let root = match resolve_character_root(&app, &request.character_id) {
+        Ok(root) => root,
+        Err(err) => return DeleteCharacterResponse {
+            ok: false,
+            error: Some(err),
+        },
+    };
+    delete_character_at_root(&root)
+}
+
+// ----- `import_character` (Storage Tier Minimal Fix, Criterion 23) -----
+//
+// Manual re-projection of `CharacterInput`'s full shape into
+// `Deserialize`-only DTOs, for the same reason as this module's top-of-file
+// note: the `codex` crate has zero dependencies, so `CharacterInput` itself
+// is not `Deserialize`. Field names and wire values (e.g. `ActiveStateDto`'s
+// `"EquippedActive"`/`"Absent"`/`"SelectedInactive"`,
+// `AcquisitionModeDto`'s `"Known"`/`"Prepared"`/`"Granted"`) reuse the exact
+// DTOs already established for `add_equipment_selection`/
+// `add_spell_selection`, so the import JSON shape is consistent with the
+// rest of this module's wire contract rather than a parallel invention.
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterClassLevelDto {
+    pub class_id: String,
+    pub level: u8,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SkillAllocationDto {
+    pub skill_id: String,
+    pub ranks: u8,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EquipmentSelectionImportDto {
+    pub item_id: String,
+    pub active_state: ActiveStateDto,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SelectedChoiceDto {
+    pub choice_set_id: String,
+    pub selection_id: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SpellSelectionImportDto {
+    pub spell_id: String,
+    pub source_class_id: String,
+    pub acquisition_mode: AcquisitionModeDto,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ChosenCharacterStateDto {
+    pub race_id: String,
+    pub class_levels: Vec<CharacterClassLevelDto>,
+    pub ability_scores: AbilityScoresDto,
+    #[serde(default)]
+    pub selected_feats: Vec<String>,
+    #[serde(default)]
+    pub skill_allocations: Vec<SkillAllocationDto>,
+    #[serde(default)]
+    pub equipment_selections: Vec<EquipmentSelectionImportDto>,
+    #[serde(default)]
+    pub selected_choices: Vec<SelectedChoiceDto>,
+    #[serde(default)]
+    pub spells_selected: Vec<SpellSelectionImportDto>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CharacterInputDto {
+    pub source_package_id: String,
+    pub chosen: ChosenCharacterStateDto,
+}
+
+/// The on-disk/exported shape `import_character` expects: a `displayLabel`
+/// + `characterInput` (the fields needed to rebuild a real `CharacterInput`)
+/// — the same two fields a full `SavedCharacterEnvelope` export carries.
+/// Every other envelope field (`characterId`, `revisionId`, `savedAt`, ...)
+/// is intentionally NOT part of this DTO: importing always mints a fresh
+/// identity/revision/timestamp rather than trusting the source file's own
+/// claimed identity (mirrors `clone_character`'s own "never blindly trust
+/// source identity" stance). `serde` ignores any extra fields the source
+/// JSON carries, so a real full-envelope export file is tolerated rather
+/// than rejected for having "extra" fields.
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ImportedCharacterFileDto {
+    pub display_label: String,
+    pub character_input: CharacterInputDto,
+}
+
+fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) -> CharacterInput {
+    CharacterInput {
+        case_id: Some(fresh_character_id.to_owned()),
+        source_package_id: dto.source_package_id,
+        chosen: ChosenCharacterState {
+            race_id: dto.chosen.race_id,
+            class_levels: dto
+                .chosen
+                .class_levels
+                .into_iter()
+                .map(|class_level| CharacterClassLevel {
+                    class_id: class_level.class_id,
+                    level: class_level.level,
+                })
+                .collect(),
+            ability_scores: AbilityScores {
+                strength: dto.chosen.ability_scores.strength,
+                dexterity: dto.chosen.ability_scores.dexterity,
+                constitution: dto.chosen.ability_scores.constitution,
+                intelligence: dto.chosen.ability_scores.intelligence,
+                wisdom: dto.chosen.ability_scores.wisdom,
+                charisma: dto.chosen.ability_scores.charisma,
+            },
+            selected_feats: dto.chosen.selected_feats,
+            skill_allocations: dto
+                .chosen
+                .skill_allocations
+                .into_iter()
+                .map(|skill| SkillAllocation {
+                    skill_id: skill.skill_id,
+                    ranks: skill.ranks,
+                })
+                .collect(),
+            equipment_selections: dto
+                .chosen
+                .equipment_selections
+                .into_iter()
+                .map(|equipment| EquipmentSelection {
+                    item_id: equipment.item_id,
+                    equipped_or_active: matches!(
+                        equipment.active_state,
+                        ActiveStateDto::EquippedActive
+                    ),
+                    active_state: equipment.active_state.into(),
+                })
+                .collect(),
+            selected_choices: dto
+                .chosen
+                .selected_choices
+                .into_iter()
+                .map(|choice| SelectedChoice {
+                    choice_set_id: choice.choice_set_id,
+                    selection_id: choice.selection_id,
+                })
+                .collect(),
+            spells_selected: dto
+                .chosen
+                .spells_selected
+                .into_iter()
+                .map(|spell| SpellSelection {
+                    spell_id: spell.spell_id,
+                    source_class_id: spell.source_class_id,
+                    acquisition_mode: spell.acquisition_mode.into(),
+                })
+                .collect(),
+        },
+        selection_provenance: Vec::new(),
+    }
+}
+
+/// Parses `contents` as an `ImportedCharacterFileDto`, converts it to a real
+/// `CharacterInput` under `fresh_character_id`, recomputes via the real
+/// engine, and — mirroring `create_character`/`clone_character`/
+/// `level_up_character_at_root`'s own "never persist an unproven build"
+/// invariant — only saves and returns `Saved` if the import reaches
+/// `Computed`; a structurally valid import the engine cannot compute
+/// returns `Blocked` with real diagnostics rather than silently writing a
+/// broken build. Malformed or schema-invalid JSON (parse failure) is a
+/// distinct failure mode from `Blocked` and is surfaced as a real `Err`,
+/// never papered over as an empty/successful import.
+///
+/// Split from the `#[tauri::command]` wrapper below so it is unit-testable
+/// against a real `SavedCharacterStore` fixture without an `AppHandle` or a
+/// real file on disk — mirrors every other `_at_root`/`_from_*` function in
+/// this module.
+fn import_character_from_json(
+    contents: &str,
+    root: &Path,
+    fresh_character_id: &str,
+    saved_at: &str,
+    app_version: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let parsed: ImportedCharacterFileDto = serde_json::from_str(contents)
+        .map_err(|err| format!("invalid character import JSON: {err}"))?;
+
+    let character_input = character_input_from_dto(parsed.character_input, fresh_character_id);
+
+    let receipt = build_pilot_headless_receipt(&character_input);
+    if receipt.status != HeadlessReceiptStatus::Computed {
+        return Ok(CreateCharacterResponse::Blocked {
+            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
+        });
+    }
+
+    let view_model = PilotViewModel::from_receipt(&receipt);
+    let snapshot = view_model
+        .snapshot
+        .as_ref()
+        .expect("Computed status guarantees a snapshot");
+
+    let corpus_receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
+
+    let envelope = SavedCharacterEnvelope {
+        character_id: fresh_character_id.to_owned(),
+        revision_id: format!("{fresh_character_id}.rev.1"),
+        revision_kind: SavedCharacterRevisionKind::Authoritative,
+        saved_at: saved_at.to_owned(),
+        schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+        app_or_runtime_version: app_version.to_owned(),
+        content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+        game_system: GAME_SYSTEM_ID.to_owned(),
+        latest_authoritative_revision_ref: format!("{fresh_character_id}.rev.1"),
+        display_label: parsed.display_label,
+        character_input,
+    };
+
+    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+
+    Ok(CreateCharacterResponse::Saved {
+        summary: Box::new(summarize_envelope(&envelope)),
+        snapshot: map_snapshot_dto(snapshot),
+        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+    })
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ImportCharacterRequest {
+    /// Path to a JSON file shaped like `ImportedCharacterFileDto` (a real
+    /// `displayLabel` + `characterInput`; extra full-envelope fields are
+    /// tolerated and ignored). This command reads the file itself — the
+    /// caller (the file-open dialog) only needs to supply the path, mirroring
+    /// how `export_character_json`'s `file_path` names a destination it
+    /// writes to directly.
+    pub file_path: String,
+    pub saved_at: String,
+}
+
+/// Reads `file_path`, mints a fresh `character_id` (a v4 UUID, matching the
+/// shape the frontend's own `crypto.randomUUID()` ids already use for
+/// `create_character`), and imports it — see `import_character_from_json`
+/// for the full parse -> recompute -> save semantics.
+#[tauri::command]
+pub fn import_character(
+    app: tauri::AppHandle,
+    request: ImportCharacterRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let contents = std::fs::read_to_string(&request.file_path)
+        .map_err(|err| format!("{}: {err}", request.file_path))?;
+
+    let fresh_character_id = Uuid::new_v4().to_string();
+    let root = resolve_character_root(&app, &fresh_character_id)?;
+    let app_version = app.package_info().version.to_string();
+
+    import_character_from_json(
+        &contents,
+        &root,
+        &fresh_character_id,
+        &request.saved_at,
+        &app_version,
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1783,5 +2108,264 @@ mod tests {
         assert!(result.is_err(), "leveling up a nonexistent saved character must fail");
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- `delete_character` (Criterion 22) -----
+
+    #[test]
+    fn delete_character_at_root_removes_the_directory_for_a_saved_character() {
+        let root = tempdir("delete-golden-path");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        assert!(root.exists(), "precondition: the character root must exist");
+
+        let response = delete_character_at_root(&root);
+
+        assert!(response.ok, "delete should report ok: true, got error: {:?}", response.error);
+        assert!(response.error.is_none());
+        assert!(!root.exists(), "the character root must be gone after delete");
+    }
+
+    /// Builds a path guaranteed not to exist yet (unlike `tempdir`, which
+    /// pre-creates its directory) — mirrors the root `codex` crate's own
+    /// `list_all_returns_empty_listing_for_nonexistent_root` idiom.
+    fn nonexistent_path(label: &str) -> PathBuf {
+        let unique = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system time should be after unix epoch")
+            .as_nanos();
+        std::env::temp_dir().join(format!(
+            "codex-character-hub-{label}-{}-{unique}",
+            std::process::id()
+        ))
+    }
+
+    #[test]
+    fn delete_character_at_root_is_ok_when_nothing_is_saved_yet() {
+        let root = nonexistent_path("delete-missing-character");
+        assert!(!root.exists(), "precondition: nothing saved at this root");
+
+        let response = delete_character_at_root(&root);
+
+        assert!(
+            response.ok,
+            "deleting an already-nonexistent character must be an idempotent success, got error: {:?}",
+            response.error
+        );
+        assert!(response.error.is_none());
+    }
+
+    // ----- `import_character` (Criterion 23) -----
+
+    /// A known fixture shaped like a full saved-character export (extra
+    /// envelope fields `characterId`/`revisionId`/`savedAt` included, to
+    /// prove they are tolerated and ignored — importing always mints a
+    /// fresh identity). The `characterInput` payload mirrors
+    /// `compose_character_input`'s own Human Fighter level 1 golden-path
+    /// shape, which the existing
+    /// `compose_character_input_reaches_computed_status_for_supported_fighter_levels_1_to_3`
+    /// test already proves reaches `Computed`.
+    const HUMAN_FIGHTER_IMPORT_FIXTURE_JSON: &str = r#"{
+        "characterId": "source-character-id-should-be-ignored",
+        "revisionId": "source-character-id-should-be-ignored.rev.1",
+        "savedAt": "2020-01-01T00:00:00Z",
+        "displayLabel": "Imported Aldric",
+        "characterInput": {
+            "sourcePackageId": "pf1.core_rulebook",
+            "chosen": {
+                "raceId": "race:human",
+                "classLevels": [{"classId": "class:fighter", "level": 1}],
+                "abilityScores": {
+                    "strength": 16,
+                    "dexterity": 14,
+                    "constitution": 14,
+                    "intelligence": 10,
+                    "wisdom": 12,
+                    "charisma": 8
+                },
+                "selectedFeats": ["feat:power_attack", "feat:dodge", "feat:weapon_focus"],
+                "skillAllocations": [
+                    {"skillId": "skill:climb", "ranks": 1},
+                    {"skillId": "skill:intimidate", "ranks": 1},
+                    {"skillId": "skill:swim", "ranks": 1}
+                ],
+                "equipmentSelections": [
+                    {"itemId": "item:longsword", "activeState": "EquippedActive"},
+                    {"itemId": "item:chain_shirt", "activeState": "EquippedActive"},
+                    {"itemId": "item:shield", "activeState": "Absent"},
+                    {"itemId": "power_attack", "activeState": "SelectedInactive"}
+                ],
+                "selectedChoices": [
+                    {"choiceSetId": "choice:level_1_character_feat", "selectionId": "feat:power_attack"},
+                    {"choiceSetId": "choice:fighter_bonus_feat", "selectionId": "feat:weapon_focus:weapon:longsword"},
+                    {"choiceSetId": "choice:human_bonus_feat", "selectionId": "feat:dodge"},
+                    {"choiceSetId": "choice:human_ability_bonus", "selectionId": "ability:strength"}
+                ],
+                "spellsSelected": [
+                    {"spellId": "Alarm", "sourceClassId": "class:demo", "acquisitionMode": "Granted"},
+                    {"spellId": "Blur", "sourceClassId": "class:demo", "acquisitionMode": "Granted"}
+                ]
+            }
+        }
+    }"#;
+
+    /// The single most important regression guard for Criterion 23: proves
+    /// the real parse -> mint-fresh-id -> recompute -> save -> return round
+    /// trip against a real `SavedCharacterStore` fixture on disk, not a
+    /// mock. Also proves the source JSON's own `characterId` is ignored in
+    /// favor of a freshly minted one.
+    #[test]
+    fn import_character_from_json_saves_a_fresh_character_when_computed() {
+        let root = tempdir("import-golden-path");
+        let fresh_id = "char-import-fresh-id";
+
+        let response = import_character_from_json(
+            HUMAN_FIGHTER_IMPORT_FIXTURE_JSON,
+            &root,
+            fresh_id,
+            "2026-07-21T00:00:00Z",
+            "codex-dev-test",
+        )
+        .expect("import call should not error for well-formed JSON");
+
+        match response {
+            CreateCharacterResponse::Saved { summary, .. } => {
+                assert_eq!(summary.character_id, fresh_id);
+                assert_eq!(summary.display_label, "Imported Aldric");
+                assert_eq!(summary.class_summary, "class:fighter:1");
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "the Human Fighter level 1 import fixture must reach Computed, got \
+                     diagnostics: {diagnostics:?}"
+                );
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_id, fresh_id,
+            "the saved envelope must carry the freshly minted id, not the source JSON's own \
+             (ignored) characterId"
+        );
+        assert_ne!(
+            reloaded.character_id, "source-character-id-should-be-ignored",
+            "the source JSON's own characterId must never be trusted"
+        );
+        assert_eq!(reloaded.display_label, "Imported Aldric");
+        assert_eq!(reloaded.character_input.chosen.race_id, "race:human");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections.len(),
+            4,
+            "the full equipment_selections payload must round-trip"
+        );
+        assert_eq!(
+            reloaded.character_input.chosen.spells_selected.len(),
+            2,
+            "the full spells_selected payload must round-trip"
+        );
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:00:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Malformed JSON is a distinct failure mode from a structurally valid
+    /// but non-computing import: it must be a real `Err`, not a silently
+    /// empty/successful import and not a `Blocked` response (which implies
+    /// the JSON was at least well-formed enough to reach the compute
+    /// engine).
+    #[test]
+    fn import_character_from_json_rejects_malformed_json() {
+        let root = nonexistent_path("import-malformed-json");
+
+        let result = import_character_from_json(
+            "{ this is not valid json",
+            &root,
+            "char-import-malformed",
+            "2026-07-21T00:00:00Z",
+            "codex-dev-test",
+        );
+
+        assert!(result.is_err(), "malformed JSON must be rejected as a real error");
+        assert!(
+            !root.exists(),
+            "no character directory may be created for a malformed import"
+        );
+    }
+
+    /// JSON that parses but is missing a required `CharacterInput` field
+    /// (schema-invalid, not merely malformed) must also be rejected, not
+    /// half-imported with a default/garbage value.
+    #[test]
+    fn import_character_from_json_rejects_json_missing_a_required_field() {
+        let root = nonexistent_path("import-missing-field");
+        // Missing "chosen" entirely, and "sourcePackageId" too.
+        let incomplete_json = r#"{"displayLabel": "Incomplete", "characterInput": {}}"#;
+
+        let result = import_character_from_json(
+            incomplete_json,
+            &root,
+            "char-import-incomplete",
+            "2026-07-21T00:00:00Z",
+            "codex-dev-test",
+        );
+
+        assert!(
+            result.is_err(),
+            "JSON missing required CharacterInput fields must be rejected"
+        );
+        assert!(!root.exists());
+    }
+
+    /// Mirrors `create_character`/`clone_character`/`level_up_character_at_root`'s
+    /// "never persist an unproven build" invariant: a structurally valid
+    /// import that the compute engine cannot reach `Computed` for must
+    /// return `Blocked` with real diagnostics and must not write anything to
+    /// disk.
+    #[test]
+    fn import_character_from_json_returns_blocked_without_saving_when_the_import_does_not_compute() {
+        let root = nonexistent_path("import-blocked-path");
+        // A Paladin build is outside the compute engine's currently
+        // supported set (see claim_blocking_diagnostic_ids_match_the_catalogued_support_shape_per_class
+        // above), so this must come back Blocked, not Saved.
+        let unsupported_class_json = r#"{
+            "displayLabel": "Unsupported Import",
+            "characterInput": {
+                "sourcePackageId": "pf1.core_rulebook",
+                "chosen": {
+                    "raceId": "race:human",
+                    "classLevels": [{"classId": "class:paladin", "level": 1}],
+                    "abilityScores": {
+                        "strength": 16, "dexterity": 14, "constitution": 14,
+                        "intelligence": 10, "wisdom": 12, "charisma": 8
+                    },
+                    "selectedFeats": [],
+                    "skillAllocations": [],
+                    "equipmentSelections": [],
+                    "selectedChoices": [],
+                    "spellsSelected": []
+                }
+            }
+        }"#;
+
+        let response = import_character_from_json(
+            unsupported_class_json,
+            &root,
+            "char-import-blocked",
+            "2026-07-21T00:00:00Z",
+            "codex-dev-test",
+        )
+        .expect("import call should not error even when the build is Blocked");
+
+        match response {
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                assert!(!diagnostics.is_empty(), "a Blocked response should carry real diagnostics");
+            }
+            CreateCharacterResponse::Saved { .. } => {
+                panic!("a Human Paladin level 1 import is outside supported range and must not reach Computed");
+            }
+        }
+
+        assert!(!root.exists(), "a Blocked import must never be persisted");
     }
 }

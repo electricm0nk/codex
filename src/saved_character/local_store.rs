@@ -162,6 +162,21 @@ impl SavedCharacterStore {
             unreadable_entries,
         })
     }
+
+    /// Delete a saved-character bundle by removing its root directory tree.
+    ///
+    /// Deleting a root that does not exist is treated as an idempotent
+    /// success — the caller's postcondition ("nothing saved at this root")
+    /// already holds, mirroring `list_all`'s own not-found handling above.
+    /// Any other I/O failure (permissions, a path component that is a file
+    /// rather than a directory, etc.) is a real error and is not swallowed.
+    pub fn delete(root: &Path) -> Result<(), SavedCharacterStoreError> {
+        match fs::remove_dir_all(root) {
+            Ok(()) => Ok(()),
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(()),
+            Err(err) => Err(io_error(root, err)),
+        }
+    }
 }
 
 fn summarize(envelope: &SavedCharacterEnvelope) -> SavedCharacterSummary {
