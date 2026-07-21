@@ -31,3 +31,12 @@ Build counter at SD-23 launch (filled by pre-launch checklist step 7):
 - **Acceptance criterion:** Criterion 5 — all 7 pre-launch checklist items in `loop-instruction.md` verified true. Criterion 6 — `progress.md` §"Build counter inheritance" filled with develop HEAD's build version.
 - **Status:** complete
 - **Notes:** All 7 checklist items re-verified and logged in the card's receipt comment (see t_3f101a42). Item 1 (SD-22 closure at HEAD) again satisfied in intent, not literally — same judgment call as cycle 1, not re-litigated. Item 3's correct subcommand is `hermes kanban boards`, not `list-boards`. Criterion 6 was already satisfied by cycle 1's capture; this cycle re-confirms it as its own criterion per the epic-breakdown's split. `codex-tranche-5` board now shows done=28 after this cycle's card completes.
+
+### Cycle 3 — Wired Integration Cleanup / Criteria 7-11
+- **Card ID:** t_246f2fb7
+- **Commit SHA:** f026880 (unchanged — no remediation needed, no new commits)
+- **Files touched:** None
+- **Audit result:** OK_NO_TOKENS / OK_NO_NOOP_HANDLERS / OK_NO_MOCK_LEAKS / OK_NO_WOULD_STRINGS
+- **Acceptance criterion:** Criteria 7-11 — Stubs Registry exists with an operator-granted entry; four-check audit clean on a known-clean slice; skill cross-references the registry; any surfaced stubs remediated; Epic 3 closure-gate re-run clean.
+- **Status:** complete
+- **Notes:** `governance/wired-integration-stubs-registry.md` already had entry #0001 (browser-preview fallback, permanent exception) from bundle authoring — no new registry work needed. `wired-integration-discipline/SKILL.md` already cross-references the registry (4 hits). Audit surfaced zero stubs in the diff, so Criterion 10 had nothing to remediate. Epic 3 unblocks Epics 4, 5, and 6, which can now proceed in any order (all depend only on Epic 3).
