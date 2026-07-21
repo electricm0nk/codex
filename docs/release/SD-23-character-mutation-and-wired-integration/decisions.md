@@ -64,12 +64,14 @@ Append-only decision log. Each entry: number, decision, operator directive that 
 
 ## 10. Default-assignee rule for SD-23 cards
 
-- **Decision:** All SD-23 kanban cards minted with explicit `--assignee` profile.
+- **Decision (SUPERSEDED 2026-07-20, see correction below):** All SD-23 kanban cards minted with explicit `--assignee` profile.
 - **Operator directive:** Standing memory (`default-assignee footgun` Honcho duracon).
-- **Application:**
+- **Original application:**
   - CODE lanes (Epic 5, Epic 6) → `--assignee tech-priest`.
   - OPS lanes (Epic 7 closure epilogue) → `--assignee god-emporer`.
   - Never `--assignee default`. Never `--assignee vanderspeigle`.
+- **Correction (2026-07-20, cycle 5 incident):** `tech-priest` (and every other named hermes profile — confirmed via `ps aux`: ruby, servitor, default, god-emporer, gunny, shepherd, tech-priest all run a standing `gateway run` daemon) has a live, always-on daemon that auto-claims any `ready`-status card assigned to it and spawns an independent worker to execute it — twice, on the same card, racing the orchestrating session's own already-completed implementation. `operator` is the one assignee value with `ON DISK: no` in `hermes kanban assignees` — no daemon, matching SD-22's precedent (all 27+ of its cards used `--assignee operator`). **All SD-23 cards from cycle 5 onward use `--assignee operator`.** The "never default, never vanderspeigle" guard still applies; `operator` is not `default`.
+- **Card lifecycle correction (2026-07-20):** Cards are receipts of already-completed work, not work orders. The corrected sequence per cycle is: implement + verify + commit FIRST, then `create` the card, then immediately `comment` (the receipt) and `complete` it — no `claim` step, no window left in `ready` status where any daemon (even under `operator`, defensively) could act on it.
 
 ## 11. Workspace-routing for SD-23 artifacts
 
