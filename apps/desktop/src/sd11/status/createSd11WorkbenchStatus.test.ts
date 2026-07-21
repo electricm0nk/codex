@@ -11,7 +11,7 @@ function noOfficialReleaseTruth() {
     truth: {
       kind: 'no-official-release' as const,
       reason: 'Feature/local builds are not governed tester release units.',
-      buildLabel: 'Codex 0.5.96-test',
+      buildLabel: 'Codex 0.5.97-test',
       version: '0.0.0-test',
     },
     updateAction: {
@@ -25,7 +25,7 @@ function noOfficialReleaseTruth() {
       manualReason: null,
       replacementTarget: null,
       recoveryDirection: null,
-      checkedBuildLabel: 'Codex 0.5.96-test',
+      checkedBuildLabel: 'Codex 0.5.97-test',
       checkedVersion: '0.0.0-test',
       operatorPromotionPathReference: null,
       evidenceNotes: [],
