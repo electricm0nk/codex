@@ -1,7 +1,7 @@
 # Cycle multiclass-dispatch-four-check-audit — Epic 5 (Multiclass Stacking Real and Full) / Criterion 5.4
 
-- **Card ID:** t_placeholder00 (backfilled after kanban card mint)
-- **Commit SHA:** (backfilled after commit)
+- **Card ID:** `t_0cca4c3d` (kanban board `codex-tranche-5`, status `done`)
+- **Commit SHA:** `79162c1`
 - **Files touched:**
   - `tests/sd24_multiclass_dispatch_audit.rs` (new)
   - `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_5/multiclass-dispatch-four-check-audit_cycle_receipt.md` (new, this file)
