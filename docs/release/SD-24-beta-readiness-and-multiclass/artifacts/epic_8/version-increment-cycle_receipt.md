@@ -1,6 +1,6 @@
 # Cycle version-increment — Epic 8 / Criterion 8.4
 
-- **Card ID:** t_pending (placeholder — backfilled after kanban card creation)
+- **Card ID:** t_24fcb38f
 - **Commit SHA:** e841156
 - **Files touched:** 
   - `tests/sd24_version_increment.rs` (new test file)
