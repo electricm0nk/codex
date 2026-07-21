@@ -101,12 +101,24 @@ fn git_grep_shipping_trees(pattern: &str) -> Vec<String> {
 
 /// Check 1 (zero-tolerance half): `STUB`, `MOCK`, `not yet implemented`,
 /// `todo`, `fixme`, `hack` — none of these carry a legitimate non-stub
-/// meaning in shipping source, so no exclusion filter is warranted.
+/// meaning in shipping source, so no exclusion filter is warranted --
+/// with one narrow, named exception (SD-24 criterion 6.5): the real PF1
+/// SRD/PRD full text of the `Plant Growth` spell ("creatures must hack or
+/// force a way through") uses "hack" as an ordinary English verb, not a
+/// stub marker. Matched by the record's own distinctive corpus phrase so
+/// no *different* future stub can silently ride along under the same
+/// exclusion -- any other `hack`/`STUB`/`MOCK`/etc. hit still fails.
 #[test]
 fn no_zero_tolerance_forbidden_tokens_in_shipping_source() {
     let hits = git_grep_shipping_trees(
         r"\b(STUB|MOCK|not yet implemented|todo|fixme|hack)\b",
     );
+    let is_plant_growth_full_spell_text =
+        |line: &str| line.contains("creatures must hack or force a way through");
+    let hits: Vec<String> = hits
+        .into_iter()
+        .filter(|line| !is_plant_growth_full_spell_text(line))
+        .collect();
     assert!(
         hits.is_empty(),
         "wired-integration audit found zero-tolerance forbidden tokens in \

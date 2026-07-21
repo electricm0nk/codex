@@ -54,27 +54,31 @@ fn crb_equipment_is_fully_record_ingested() {
     );
 }
 
-/// The audit's headline finding for criterion 6.1: `EquipmentTableEntry`
-/// (CRB, APG, and ACG all share the same shape) has no `weight` field and
-/// no `description` field at all -- not "populated for some rows and
-/// empty for others," but structurally absent from the type. `has_cost`
-/// is real (computed from `cost_gp.is_some()`), never fabricated.
+/// The audit's headline finding for criterion 6.1 stood for APG and ACG:
+/// `EquipmentTableEntry` (independent per-book types, same shape) still has
+/// no `weight` field and no `description` field populated at all in those
+/// two books. CRB's own copy of the type gained both fields, populated to
+/// the corpus's honest ceiling, in SD-24 criteria 6.3/6.4 (this cycle) --
+/// see `equipment_table_entry_weight_and_description_field_coverage_for_crb`
+/// below and `tests/sd24_equipment_field_completion.rs` for the exact
+/// per-field counts. `has_cost` is real (computed from `cost_gp.is_some()`),
+/// never fabricated, in every book.
 #[test]
-fn equipment_table_entry_has_zero_weight_and_description_field_coverage_in_every_book() {
+fn equipment_table_entry_has_zero_weight_and_description_field_coverage_in_apg_and_acg() {
     macro_rules! assert_zero_weight_and_description {
         ($report:expr) => {
             let report = $report;
             assert_eq!(
                 report.has_weight, 0,
-                "EquipmentTableEntry has no weight field in any book today -- if this now \
-                 fails, a book gained a weight field and criterion 6.3 should already be \
-                 underway"
+                "EquipmentTableEntry has no weight field populated in this book today -- if \
+                 this now fails, the book gained weight coverage and criterion 6.3 should \
+                 already be underway for it"
             );
             assert_eq!(
                 report.has_description, 0,
-                "EquipmentTableEntry has no description field in any book today -- if this \
-                 now fails, a book gained a description field and criterion 6.4 should \
-                 already be underway"
+                "EquipmentTableEntry has no description field populated in this book today -- \
+                 if this now fails, the book gained description coverage and criterion 6.4 \
+                 should already be underway for it"
             );
             assert!(
                 report.total_records > 0,
@@ -82,9 +86,27 @@ fn equipment_table_entry_has_zero_weight_and_description_field_coverage_in_every
             );
         };
     }
-    assert_zero_weight_and_description!(crb::equipment_tables::field_coverage_report());
     assert_zero_weight_and_description!(apg::equipment_tables::field_coverage_report());
     assert_zero_weight_and_description!(acg::equipment_tables::field_coverage_report());
+}
+
+/// SD-24 criteria 6.3/6.4 (this cycle, CRB-only file-touch scope): CRB's
+/// `EquipmentTableEntry` gained real `weight_lbs`/`description` fields,
+/// populated to the honest ceiling the real corpus supports (never
+/// fabricated -- a `None` here is a genuine corpus `WT:`/`DESC:`-token
+/// absence). See `tests/sd24_equipment_field_completion.rs` for the exact
+/// counts this canary intentionally does not repeat.
+#[test]
+fn equipment_table_entry_weight_and_description_field_coverage_for_crb() {
+    let report = crb::equipment_tables::field_coverage_report();
+    assert!(
+        report.has_weight > 0 && report.has_weight < report.total_records,
+        "CRB weight coverage should be real and partial (not fabricated to 100%, not still 0)"
+    );
+    assert!(
+        report.has_description > 0 && report.has_description < report.total_records,
+        "CRB description coverage should be real and partial (not fabricated to 100%, not still 0)"
+    );
 }
 
 /// APG's equipment corpus (`apg_equip_general.lst` + `apg_equip_arms_armor.lst`
@@ -114,30 +136,37 @@ fn acg_equipment_is_bootstrap_only_far_below_full_corpus() {
     );
 }
 
-/// CRB's spell list (`cr_spells.lst`) carries 652 of 675 real active
-/// records -- a real, if modest, record-coverage gap. Every present
-/// record's `description` field is populated (real per-`SpellListEntry`
-/// text), but it is always the corpus's short `DESC:` summary line, never
-/// the full SRD/PRD spell text (which for many spells lives in a
-/// separate `.MOD` record's own, longer `DESC:` token, e.g. `Alarm.MOD`
-/// vs. base `Alarm`) -- `full_text_verified` is 0 for every present
-/// record today, the exact gap criterion 6.5 exists to close.
+/// CRB's spell list (`cr_spells.lst`) carries 652 of 652 real,
+/// level-and-school-bearing spell records -- criterion 6.1's original
+/// "675 real / 96.6%" figure was a measurement error (see
+/// `SpellFieldCoverage::records_expected`'s doc comment for the
+/// correction), not a genuine record-coverage gap; this cycle's re-audit
+/// found CRB spell record coverage was already 100%. SD-24 criterion 6.5
+/// (this cycle) additionally replaced every present record's truncated
+/// first-sentence `description` with the fullest text the real corpus
+/// provides -- `full_text_verified` is now 652/652, not the pre-cycle 0.
 #[test]
-fn crb_spell_list_has_a_record_gap_and_zero_full_text_coverage() {
+fn crb_spell_list_is_fully_record_complete_with_full_text_coverage() {
     let report = crb::spell_list::spell_coverage_report();
     assert_eq!(
-        report.records_expected, 675,
-        "documented real cr_spells.lst active (non-.MOD, non-comment) record count"
+        report.records_expected, 652,
+        "real, level-and-school-bearing cr_spells.lst record count (corrected from the \
+         original 675 measurement-error figure)"
     );
     assert_eq!(report.total_records, 652, "current CRB spell list ingest count");
     assert_eq!(
-        report.has_description, report.total_records,
-        "every present SpellListEntry has a non-empty description (the short summary)"
+        report.records_expected, report.total_records,
+        "CRB spell record coverage should be 100% (already fully ingested, criterion 6.1's \
+         original gap claim was a counting error)"
     );
     assert_eq!(
-        report.full_text_verified, 0,
-        "no present spell has full SRD/PRD text ingested yet -- if this now fails, criterion \
-         6.5 has already landed full text for at least one spell and this canary is stale"
+        report.has_description, report.total_records,
+        "every present SpellListEntry has a non-empty description"
+    );
+    assert_eq!(
+        report.full_text_verified, report.total_records,
+        "every present spell should now carry the corpus's fullest available text -- if this \
+         now regresses, criterion 6.5's full-text ingestion was lost"
     );
 }
 
