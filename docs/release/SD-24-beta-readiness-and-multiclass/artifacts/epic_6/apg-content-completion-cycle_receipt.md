@@ -1,7 +1,7 @@
 # Cycle apg-content-completion-cycle — Epic 6 / Criteria 6.2, 6.3, 6.4, 6.5
 
-- **Card ID:** t_ac0e6f21 (placeholder — backfilled with the real kanban card ID in this same commit or a follow-up)
-- **Commit SHA:** (filled in after commit — see progress.md `## Cycle log` entry for the final SHA)
+- **Card ID:** t_df1879e7 (`codex-tranche-5`, `done`)
+- **Commit SHA:** `4c5eb7f`
 - **Files touched:**
   - `src/rules_core/rules_tables/apg/equipment_tables.rs` — added `weight: Option<f64>` and `description: Option<&'static str>` fields to `EquipmentTableEntry`; rewired `EQUIPMENT_TABLE`/`field_coverage_report()` onto the new full-corpus data module.
   - `src/rules_core/rules_tables/apg/equipment_data.rs` (**new**) — full 338-record APG equipment ingest (all three `apg_equip_*.lst` files), generated from the real PCGen corpus.
