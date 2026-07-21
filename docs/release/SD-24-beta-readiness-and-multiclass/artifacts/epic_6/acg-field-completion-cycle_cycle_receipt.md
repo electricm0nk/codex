@@ -1,6 +1,6 @@
 # Cycle acg-field-completion-cycle — Epic 6 / Criteria 6.2, 6.3, 6.4, 6.5 (ACG)
 
-- **Card ID:** `t_a3c9e1f4` (`codex-tranche-5`, `done`) — placeholder pending step 8/9 backfill if the real hermes card ID differs.
+- **Card ID:** `t_b65766f4` (`codex-tranche-5`, `done`)
 - **Commit SHA:** `f657005` (feat, includes the rebase-conflict resolution merging this cycle's ACG additions with the concurrently-landed `apg-field-completion-cycle`'s own edits to the shared `tests/sd24_equipment_coverage_audit.rs`)
 - **Files touched:**
   - `src/rules_core/rules_tables/acg/equipment_tables.rs` (rewritten: full corpus coverage, `weight_lbs`/`description` fields, `Equipmods` category, aggregated `equipment_tables()`)
