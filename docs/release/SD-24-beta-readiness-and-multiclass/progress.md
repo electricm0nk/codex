@@ -20,8 +20,8 @@ This file is the bundle's runtime state. The loop's `progress.md` is the canonic
 
 | Criterion | State | Cycle ID | Commit SHA | Notes |
 |---|---|---|---|---|
-| 1.1 Source-code identifier audit | not-started | — | — | Epic 1 fires FIRST |
-| 1.2 Per-cycle tests pass | not-started | — | — | — |
+| 1.1 Source-code identifier audit | complete | identifier-audit-cycle | 3c3882a | Corrected-pattern audit found + remediated 6 sd16_/sd19_ modules, a resource dir, 13 SD19_* consts; see ## DISCOVERED |
+| 1.2 Per-cycle tests pass | complete | identifier-audit-cycle | 3c3882a | cargo test --locked --tests (root) + cargo test --locked (src-tauri) both 0 failures |
 | 2.1 board reachable | not-started | — | — | — |
 | 2.2 branch pushed | not-started | — | — | — |
 | 2.3 SD-23 closure PR merged | not-started | — | — | Tier-1 launch gate |
@@ -58,8 +58,6 @@ This file is the bundle's runtime state. The loop's `progress.md` is the canonic
 
 ## TODO (deterministic seed; populated by cycle 0 of Epic 2)
 
-- 1.1 (Epic 1, Identifier audit; only eligible at loop launch)
-- 1.2 (Epic 1, Per-cycle tests pass)
 - 2.1, 2.2, 2.3, 2.4, 2.5 (Epic 2, gating epic)
 - 3.1, 3.2, 3.3, 3.4 (Epic 3, audit + remediation)
 - 4.1, 4.2, 4.3, 4.4, 4.5 (Epic 4, per-class audit)
@@ -70,15 +68,22 @@ This file is the bundle's runtime state. The loop's `progress.md` is the canonic
 
 ## DONE
 
-(empty — populated by completed cycles)
+- 1.1 Source-code identifier audit — cycle `identifier-audit-cycle`, commit `3c3882a`, receipt `./artifacts/epic_1/identifier-audit-cycle_receipt.md`
+- 1.2 Per-cycle tests pass — cycle `identifier-audit-cycle`, commit `3c3882a`, receipt `./artifacts/epic_1/identifier-audit-cycle_receipt.md`
 
 ## DISCOVERED
 
-(empty — populated by cycles that find work outside the deterministic list)
+- `2026-07-21T00:00:00Z` | epic-1 | criterion-1.1 | governance-pattern-bug | The canonical identifier-discipline grep in `epic-breakdown.md`/`loop-instruction.md §2.3 step 4` (`` \b(sd(16|19|22|23|24)_|SD(16|19|22|23|24)_|Sd(16|19|22|23|24)|t_[0-9a-f]{8,})\b `` ) has a trailing-`\b` boundary bug: `\b` never matches between an underscore and a following word character, so the pattern silently fails to catch any bundle-tag identifier that is followed by more identifier characters (e.g. `sd19_class_catalog`) and only matches a bare standalone token like `sd24_` on its own. Live proof: the literal command returned 0 hits against the pre-remediation repo while 6 production Rust modules, a bundled Tauri resource directory, and 13 constants were genuinely bundle-tag-prefixed. A corrected pattern (drop the trailing `\b`) is now load-bearing in `tests/sd24_identifier_discipline_audit.rs`. | suggested: harden `governance/identifier-discipline.md`'s canonical pattern (or `epic-breakdown.md`/`loop-instruction.md`'s embedded command) in a follow-up governance-doc cycle — out of this cycle's granted write scope.
 
 ## Cycle log
 
-(empty — populated by completed cycles)
+- **cycle_id:** identifier-audit-cycle (2026-07-21T00:00:00Z)
+  **criterion:** 1.1 + 1.2 (Epic 1)
+  **summary:** Ran the repo-wide identifier-discipline scan per criterion 1.1's own verbatim command; discovered the command's trailing-\b regex has a boundary bug that produces a false-clean 0-hit result. Ran a corrected (boundary-fixed) pattern instead, which found real bundle-tag leaks: 6 production Rust modules (`sd16_browser_handoff`, `sd19_class_catalog`, `sd19_corpus`, `sd19_equipment_catalog`, `sd19_race_catalog`, `sd19_spell_catalog`), a bundled Tauri resource directory (`resources/sd19_corpus_fixtures/`), and 13 `SD19_*_TEST` constants in `support_state_matrix.rs`. Remediated all of them (renamed files/modules/consts/resource dir, updated every call site, doc-comment citation, and `tauri.conf.json` path). Added `tests/sd24_identifier_discipline_audit.rs` as a standing regression test using the corrected pattern. RED→GREEN demonstrated live via `git stash`: stashed the remediation, confirmed the new test fails listing the real pre-remediation leaks, restored the remediation, confirmed the test (and the full `cargo test --locked --tests` root suite, and `cargo test --locked` in `apps/desktop/src-tauri`) all pass with 0 failures. Both dual-audit gates (`identifier-discipline`, `wired-integration-discipline`) are clean on the final diff.
+  **commit:** `3c3882a`
+  **receipt:** `./artifacts/epic_1/identifier-audit-cycle_receipt.md`
+  **discovered:** 1 entry (governance-pattern-bug, see `## DISCOVERED`)
+  **next:** Epic 2 (Operator Pre-Launch, criteria 2.1–2.5) is next in the deterministic seed.
 
 ## Open blockers
 
