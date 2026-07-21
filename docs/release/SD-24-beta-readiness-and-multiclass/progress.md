@@ -34,9 +34,9 @@ This file is the bundle's runtime state. The loop's `progress.md` is the canonic
 | 4.1 per-class audit CRB | complete (Fighter+Wizard scope) | fighter-wizard-audit-cycle | 66f9be8 | Fighter: 0 gaps. Wizard: 1 gap found + fixed (`class_spell.wizard.*` dropped from LevelUpPlan); see ## DISCOVERED for remaining 9-class follow-on |
 | 4.2 per-class audit APG | complete | apg-class-audit | f25dc7b | All 6 real APG classes: chassis 20/20 wired + verified correct; 0 named features wired for any class; pilot_compute.rs integrates none; no level_up module for any; see per-class-coverage-matrix.md APG section + ## DISCOVERED |
 | 4.3 per-class audit ACG | complete | acg-class-audit | 2e074ce | All 10 real ACG classes (Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest — corrected roster): chassis 20/20 wired + verified correct; 0 named features wired for any class; pilot_compute.rs integrates none; no level_up module for any; see per-class-coverage-matrix.md ACG section + ## DISCOVERED |
-| 4.4 remediation plan | not-started | — | — | — |
-| 4.5 APG/ACG multiclass deferral | not-started | — | — | — |
-| 5.1 F+W multiclass dispatch | not-started | — | — | gated on 4.x |
+| 4.4 remediation plan | complete | remediation-and-deferral-cycle | (pending) | Enumerated all class gaps from 4.1-4.3 with fix cycle-ids (Wizard: remediated in-cycle by 4.1; 16 APG/ACG classes: no cycle-id assigned, deferred); see `./artifacts/epic_4/remediation-plan.md` |
+| 4.5 APG/ACG multiclass deferral | complete | remediation-and-deferral-cycle | (pending) | Formal decision record: APG/ACG-class multiclass deferred to follow-on bundle (Fighter+Wizard-only Epic 5 unaffected); see `./artifacts/epic_4/apg-acg-multiclass-deferred.md` and `risks-and-open-questions.md §5` |
+| 5.1 F+W multiclass dispatch | not-started | — | — | gated on 4.x — dependency now satisfied (Epic 4 fully complete) |
 | 5.2 30 character-advancement cycles | not-started | — | — | gated on 5.1 |
 | 5.3 integration test | not-started | — | — | gated on 5.2 |
 | 5.4 multiclass four-check audit | not-started | — | — | gated on 5.3 |
@@ -58,7 +58,6 @@ This file is the bundle's runtime state. The loop's `progress.md` is the canonic
 
 ## TODO (deterministic seed; populated by cycle 0 of Epic 2)
 
-- 4.4, 4.5 (Epic 4, per-class audit)
 - 5.1, 5.2, 5.3, 5.4, 5.5 (Epic 5, multiclass F+W)
 - 6.1, 6.2, 6.3, 6.4, 6.5 (Epic 6, equipment 100%)
 - 7.1, 7.2, 7.3, 7.4, 7.5 (Epic 7, unwired workflows + Tauri surface)
@@ -80,6 +79,8 @@ This file is the bundle's runtime state. The loop's `progress.md` is the canonic
 - 4.1 per-class audit CRB (Fighter+Wizard scope — this cycle's granted file-touch set per `loop-instruction.md §2.4`) — cycle `fighter-wizard-audit-cycle`, receipt `./artifacts/epic_4/fighter-wizard-audit-cycle_receipt.md`
 - 4.2 per-class audit APG (all 6 real APG classes: chassis fully wired + verified correct; 0 named features wired; 0 live pilot_compute integration; 0 level_up modules) — cycle `apg-class-audit`, receipt `./artifacts/epic_4/apg-class-audit_cycle_receipt.md`
 - 4.3 per-class audit ACG (all 10 real ACG classes, corrected roster: chassis fully wired + verified correct; 0 named features wired; 0 live pilot_compute integration; 0 level_up modules) — cycle `acg-class-audit`, receipt `./artifacts/epic_4/acg-class-audit_cycle_receipt.md`
+- 4.4 remediation plan enumeration (per-class `class_features_wired`/`expected` gap list with fix cycle-id, consuming 4.1-4.3) — cycle `remediation-and-deferral-cycle`, receipt `./artifacts/epic_4/remediation-and-deferral-cycle_receipt.md`, artifact `./artifacts/epic_4/remediation-plan.md`
+- 4.5 APG/ACG-class multiclass scope decision (formal deferral record: Epic 5 Fighter+Wizard-only, unaffected; APG/ACG multiclass deferred to follow-on bundle) — cycle `remediation-and-deferral-cycle`, receipt `./artifacts/epic_4/remediation-and-deferral-cycle_receipt.md`, artifact `./artifacts/epic_4/apg-acg-multiclass-deferred.md`
 
 ## DISCOVERED
 
@@ -143,6 +144,14 @@ This file is the bundle's runtime state. The loop's `progress.md` is the canonic
   **receipt:** `./artifacts/epic_4/acg-class-audit_cycle_receipt.md`
   **discovered:** 4 entries (epic-4-path-correction, roster-correction, mid-cycle-course-correction, epic-4-follow-on — see `## DISCOVERED`)
   **next:** All of Epic 4's per-class audits (4.1 CRB Fighter+Wizard scope, 4.2 APG, 4.3 ACG) are now landed. Criterion 4.4 (remediation plan enumeration) and 4.5 (APG/ACG multiclass deferral decision) can now consume the full coverage-matrix output.
+
+- **cycle_id:** remediation-and-deferral-cycle (2026-07-21)
+  **criterion:** 4.4 + 4.5 (Epic 4, Remediation Plan + APG/ACG Multiclass Deferral)
+  **summary:** Documentation-only planning cycle consuming the audit findings already landed by 4.1 (`fighter-wizard-audit-cycle`, `66f9be8`), 4.2 (`apg-class-audit`, `f25dc7b`), and 4.3 (`acg-class-audit`, `2e074ce`); per `acceptance-and-verification.md` rows 26-27 both criteria's verification is "n/a (planning artifact)" so no code/tests/TDD RED-GREEN cycle applies. **4.4:** wrote `./artifacts/epic_4/remediation-plan.md` enumerating, per class, `class_features_wired` vs `class_features_expected` and the fix cycle-id: Fighter 10/10 (no gap); Wizard 12/12 after the in-cycle fix (`class_spell.wizard.*` family, remediated by `fighter-wizard-audit-cycle`, no carry-forward); the 9 unaudited CRB classes (out of this bundle's granted file-touch scope) forwarded as a LOW-priority, non-gating follow-on; all 6 APG classes (0/24, 0/16, 0/19, 0/19, 0/17, 0/7) and all 10 ACG classes (0/9, 0/19, 0/14, 0/21, 0/95, 0/10, 0/20, 0/15, 0/29, 0/18) have zero fix cycle-id assigned in SD-24 — deferred per criterion 4.5. **4.5:** wrote `./artifacts/epic_4/apg-acg-multiclass-deferred.md`, the formal decision record confirming (with 4.2/4.3's audit evidence) that all 16 real APG/ACG classes are chassis-only (fully wired BAB/saves, 0 named features, 0 live `pilot_compute.rs` integration, 0 `level_up` modules) — the exact precondition `loop-instruction.md §4.2`'s hard-stop row anticipated — so Epic 5's Fighter+Wizard-only multiclass scope (operator directive 2026-07-21, `decisions.md §4`) stands confirmed and unblocked (Fighter+Wizard's own 4.1 coverage is complete and gap-free). Formalized the pre-existing generic `risks-and-open-questions.md §5` APG/ACG-multiclass deferral bullet with this cycle's concrete evidence and cross-references to both new artifacts, closing `§2`'s corresponding anticipated-hard-stop row. Dual-audit gate: `OK_NO_BUNDLE_TAGS`/`OK_NO_TOKENS`, both before and after — no source-code files touched this cycle (planning/docs only).
+  **commit:** (this cycle's commit, see git log)
+  **receipt:** `./artifacts/epic_4/remediation-and-deferral-cycle_receipt.md`
+  **discovered:** 0 new entries (consolidates existing `epic-4-follow-on`/`epic-4-path-correction` entries already in `## DISCOVERED`; no new plan-vs-reality gaps found)
+  **next:** Epic 4 (all 5 criteria) is now fully complete. Next dispatch per `## TODO` deterministic order: Epic 5 criterion 5.1 (Fighter+Wizard multiclass dispatch), whose Epic-4 coverage-matrix dependency is now fully satisfied and formally closed.
 
 ## Open blockers
 
