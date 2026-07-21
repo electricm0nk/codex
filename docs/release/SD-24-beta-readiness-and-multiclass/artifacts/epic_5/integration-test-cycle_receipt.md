@@ -1,7 +1,7 @@
 # Cycle integration-test-cycle — Epic 5 (Multiclass Stacking Real and Full) / Criterion 5.3
 
-- **Card ID:** t_5c3f9a12 (placeholder; backfilled with real kanban card ID after minting)
-- **Commit SHA:** (recorded after commit; see progress.md `## Cycle log` entry for this cycle)
+- **Card ID:** t_75b0fb36 (kanban board `codex-tranche-5`, status `done`)
+- **Commit SHA:** `b503c47`
 - **Files touched:**
   - `src/rules_core/rules_tables/crb/class_tables.rs` (production; new `pub fn good_saves_for`)
   - `src/rules_core/pilot_compute.rs` (production; `multiclass_good_saves` now delegates to `class_tables::good_saves_for` instead of a hand-maintained duplicate)
