@@ -20,3 +20,21 @@ Per-cycle post-mortems for the bundle's 33 acceptance criteria live in `progress
 ## Receipts
 
 (Append new YAML blocks below this line, most recent at the bottom.)
+
+- cycle_id: 2026-07-21T03:31:09Z
+  row_or_kind: architecture:truth_up
+  bundle: SD-23
+  branch: d4b752381a5bf0cd55349d9c83cf758e33a15a48
+  integration_target: develop
+  branch_tip_before: d4b75238
+  branch_tip_after: d4b75238
+  diff_path_count: 438
+  docs_touched: []
+  stub_graduations: []
+  stub_regressions: []
+  obsolete_removals: 0
+  cited_path_check: pass
+  relative_link_check: pass
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: no architecture impact — diff is outside architecture scope
