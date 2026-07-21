@@ -1,7 +1,7 @@
 # Cycle remediation-and-deferral-cycle — Epic 4 / Criteria 4.4 + 4.5
 
-- **Card ID:** t_00000000 (placeholder — backfilled after kanban card creation)
-- **Commit SHA:** (backfilled after commit)
+- **Card ID:** t_2c636181 (`codex-tranche-5`, status `done`)
+- **Commit SHA:** `ac3b130` (cycle land)
 - **Files touched:** `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_4/remediation-plan.md` (new), `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_4/apg-acg-multiclass-deferred.md` (new), `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_4/remediation-and-deferral-cycle_receipt.md` (this file, new), `docs/release/SD-24-beta-readiness-and-multiclass/risks-and-open-questions.md` (§5 Deferrals entry formalized with criterion 4.5 cross-reference), `docs/release/SD-24-beta-readiness-and-multiclass/progress.md` (Status matrix, TODO→DONE, Cycle log).
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS (before and after; no source-code files touched this cycle)
 - **Wired-integration audit result:** OK_NO_TOKENS (before and after; no source-code files touched this cycle)
