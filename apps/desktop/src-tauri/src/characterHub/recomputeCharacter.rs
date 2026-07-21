@@ -59,7 +59,7 @@ pub struct BaseSavesDto {
 /// fields on `PilotSnapshot` (the engine currently surfaces caster-level
 /// arithmetic as `ComputationExplanation` records, not a summary field), so
 /// this DTO carries every derived stat the engine does expose today rather
-/// than inventing placeholder fields for ones it does not.
+/// than inventing invented/fabricated fields for ones it does not.
 #[derive(Debug, Clone, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CharacterSnapshotDto {
