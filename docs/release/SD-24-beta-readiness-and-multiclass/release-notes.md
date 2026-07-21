@@ -120,8 +120,8 @@ SD-24 delivers **multiclass character advancement** (Fighter + Wizard, levels 1-
 ### Test Results (Final Suite Run)
 
 **Root crate (`cargo test --locked --tests`):**
-- **439 test binaries:** `sd24_*` test files covering all 8 epics, plus pre-existing regressions.
-- **Result:** 3992 passed, 0 failed.
+- **444 test binaries:** `sd24_*` test files covering all 8 epics, plus pre-existing regressions.
+- **Result:** 4018 passed, 0 failed, 48 ignored.
 - **Standing regression coverage:** 
   - Multiclass dispatch: 4 deterministic test files (16 Fighter+Wizard split/level tests), 1 integration test, 1 four-check audit regression guard.
   - Equipment coverage: 6 field-completion test files per corpus.

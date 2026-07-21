@@ -35,9 +35,11 @@ Re-ran both tests after implementation: `release_notes_has_all_required_sections
 - Identifier audit: `OK_NO_BUNDLE_TAGS` (no bundle-tag leaks in the new test file or release notes).
 - Wired-integration audit: pre-existing 4 benign finds from prior cycles (Epic 6 spell/equipment completion: "placeholder" doc comments, "hack" in Plant Growth real spell text), zero new violations from this cycle.
 
-**Regression test suite:**
-- Root `cargo test --locked --tests`: 441 test binaries, 3994 passed (3992 prior + 2 new), 0 failed.
+**Regression test suite (refreshed at release-notes finalize pass):**
+- Root `cargo test --locked --tests`: 444 test binaries, 4018 passed (3994 prior + 24 new since receipt draft; 48 ignored pre-existing), 0 failed.
 - Tauri `cargo test --locked`: 113 passed, 0 failed (unaffected).
+
+**Note on test-count drift:** The release notes and the receipt's "Regression test suite" line were authored against the test counts at their respective commit times (release-notes.md at 439/3992; this receipt at 441/3994). Both have been refreshed at this release-notes finalize cycle to the current 444/4018 truth, so a reader of the closure PR sees a single, current count. Receipt retains its prior figure inline as provenance for the two tests this cycle's structural-validation suite added.
 
 ## Notes
 
