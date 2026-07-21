@@ -850,7 +850,7 @@ pub fn level_up_character(
 /// request. A separate DTO (rather than deriving `Deserialize` on
 /// `ActiveState` itself) because the `codex` crate has zero dependencies —
 /// see this module's own top-of-file note.
-#[derive(Debug, Clone, Copy, Deserialize)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum ActiveStateDto {
     EquippedActive,
     Absent,
@@ -863,6 +863,19 @@ impl From<ActiveStateDto> for ActiveState {
             ActiveStateDto::EquippedActive => ActiveState::EquippedActive,
             ActiveStateDto::Absent => ActiveState::Absent,
             ActiveStateDto::SelectedInactive => ActiveState::SelectedInactive,
+        }
+    }
+}
+
+/// Reverse of the above — needed by `export_character`'s
+/// `CharacterInput -> CharacterInputDto` projection (Criterion 24's
+/// round-trip fix).
+impl From<ActiveState> for ActiveStateDto {
+    fn from(state: ActiveState) -> Self {
+        match state {
+            ActiveState::EquippedActive => ActiveStateDto::EquippedActive,
+            ActiveState::Absent => ActiveStateDto::Absent,
+            ActiveState::SelectedInactive => ActiveStateDto::SelectedInactive,
         }
     }
 }
@@ -928,7 +941,7 @@ pub fn add_equipment_selection(
 /// The wire-level projection of `AcquisitionMode` for the
 /// `add_spell_selection` request. A separate DTO for the same reason as
 /// `ActiveStateDto` above.
-#[derive(Debug, Clone, Copy, Deserialize)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum AcquisitionModeDto {
     Known,
     Prepared,
@@ -941,6 +954,19 @@ impl From<AcquisitionModeDto> for AcquisitionMode {
             AcquisitionModeDto::Known => AcquisitionMode::Known,
             AcquisitionModeDto::Prepared => AcquisitionMode::Prepared,
             AcquisitionModeDto::Granted => AcquisitionMode::Granted,
+        }
+    }
+}
+
+/// Reverse of the above — needed by `export_character`'s
+/// `CharacterInput -> CharacterInputDto` projection (Criterion 24's
+/// round-trip fix).
+impl From<AcquisitionMode> for AcquisitionModeDto {
+    fn from(mode: AcquisitionMode) -> Self {
+        match mode {
+            AcquisitionMode::Known => AcquisitionModeDto::Known,
+            AcquisitionMode::Prepared => AcquisitionModeDto::Prepared,
+            AcquisitionMode::Granted => AcquisitionModeDto::Granted,
         }
     }
 }
@@ -1183,47 +1209,53 @@ pub fn delete_character(
     delete_character_at_root(&root)
 }
 
-// ----- `import_character` (Storage Tier Minimal Fix, Criterion 23) -----
+// ----- `import_character` / `export_character` (Storage Tier Minimal Fix,
+// Criteria 23-24) -----
 //
-// Manual re-projection of `CharacterInput`'s full shape into
-// `Deserialize`-only DTOs, for the same reason as this module's top-of-file
-// note: the `codex` crate has zero dependencies, so `CharacterInput` itself
-// is not `Deserialize`. Field names and wire values (e.g. `ActiveStateDto`'s
-// `"EquippedActive"`/`"Absent"`/`"SelectedInactive"`,
-// `AcquisitionModeDto`'s `"Known"`/`"Prepared"`/`"Granted"`) reuse the exact
-// DTOs already established for `add_equipment_selection`/
-// `add_spell_selection`, so the import JSON shape is consistent with the
-// rest of this module's wire contract rather than a parallel invention.
+// Manual re-projection of `CharacterInput`'s full shape into DTOs, for the
+// same reason as this module's top-of-file note: the `codex` crate has zero
+// dependencies, so `CharacterInput` itself is neither `Serialize` nor
+// `Deserialize`. These DTOs derive both: `import_character` deserializes an
+// `ImportedCharacterFileDto` from the picked file's JSON, and
+// `export_character` serializes one back out — the exact same wire shape in
+// both directions, so a file this module exports is always a file it can
+// import (Criterion 24's export/import round-trip fix). Field names and wire
+// values (e.g. `ActiveStateDto`'s `"EquippedActive"`/`"Absent"`/
+// `"SelectedInactive"`, `AcquisitionModeDto`'s `"Known"`/`"Prepared"`/
+// `"Granted"`) reuse the exact DTOs already established for
+// `add_equipment_selection`/`add_spell_selection`, so the import/export JSON
+// shape is consistent with the rest of this module's wire contract rather
+// than a parallel invention.
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CharacterClassLevelDto {
     pub class_id: String,
     pub level: u8,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SkillAllocationDto {
     pub skill_id: String,
     pub ranks: u8,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct EquipmentSelectionImportDto {
     pub item_id: String,
     pub active_state: ActiveStateDto,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SelectedChoiceDto {
     pub choice_set_id: String,
     pub selection_id: String,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellSelectionImportDto {
     pub spell_id: String,
@@ -1231,7 +1263,7 @@ pub struct SpellSelectionImportDto {
     pub acquisition_mode: AcquisitionModeDto,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ChosenCharacterStateDto {
     pub race_id: String,
@@ -1249,24 +1281,25 @@ pub struct ChosenCharacterStateDto {
     pub spells_selected: Vec<SpellSelectionImportDto>,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CharacterInputDto {
     pub source_package_id: String,
     pub chosen: ChosenCharacterStateDto,
 }
 
-/// The on-disk/exported shape `import_character` expects: a `displayLabel`
-/// + `characterInput` (the fields needed to rebuild a real `CharacterInput`)
-/// — the same two fields a full `SavedCharacterEnvelope` export carries.
-/// Every other envelope field (`characterId`, `revisionId`, `savedAt`, ...)
-/// is intentionally NOT part of this DTO: importing always mints a fresh
-/// identity/revision/timestamp rather than trusting the source file's own
-/// claimed identity (mirrors `clone_character`'s own "never blindly trust
-/// source identity" stance). `serde` ignores any extra fields the source
-/// JSON carries, so a real full-envelope export file is tolerated rather
-/// than rejected for having "extra" fields.
-#[derive(Debug, Clone, Deserialize)]
+/// The on-disk/exported shape `import_character` expects (and
+/// `export_character` produces): a `displayLabel` + `characterInput` (the
+/// fields needed to rebuild a real `CharacterInput`) — the same two fields a
+/// full `SavedCharacterEnvelope` export carries. Every other envelope field
+/// (`characterId`, `revisionId`, `savedAt`, ...) is intentionally NOT part of
+/// this DTO: importing always mints a fresh identity/revision/timestamp
+/// rather than trusting the source file's own claimed identity (mirrors
+/// `clone_character`'s own "never blindly trust source identity" stance).
+/// `serde` ignores any extra fields the source JSON carries on import, so a
+/// real full-envelope export file is tolerated rather than rejected for
+/// having "extra" fields.
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ImportedCharacterFileDto {
     pub display_label: String,
@@ -1340,6 +1373,77 @@ fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) ->
                 .collect(),
         },
         selection_provenance: Vec::new(),
+    }
+}
+
+/// Reverse of `character_input_from_dto` — projects a real `CharacterInput`
+/// into the wire DTO `export_character` serializes. `case_id` and
+/// `selection_provenance` are intentionally NOT carried into the DTO: they
+/// have no field in `CharacterInputDto` (mirroring `character_input_from_dto`
+/// always minting its own `case_id` and discarding `selection_provenance` on
+/// import), so a round trip through export -> import always ends with a
+/// fresh identity, never the source character's own.
+fn character_input_to_dto(input: &CharacterInput) -> CharacterInputDto {
+    CharacterInputDto {
+        source_package_id: input.source_package_id.clone(),
+        chosen: ChosenCharacterStateDto {
+            race_id: input.chosen.race_id.clone(),
+            class_levels: input
+                .chosen
+                .class_levels
+                .iter()
+                .map(|class_level| CharacterClassLevelDto {
+                    class_id: class_level.class_id.clone(),
+                    level: class_level.level,
+                })
+                .collect(),
+            ability_scores: AbilityScoresDto {
+                strength: input.chosen.ability_scores.strength,
+                dexterity: input.chosen.ability_scores.dexterity,
+                constitution: input.chosen.ability_scores.constitution,
+                intelligence: input.chosen.ability_scores.intelligence,
+                wisdom: input.chosen.ability_scores.wisdom,
+                charisma: input.chosen.ability_scores.charisma,
+            },
+            selected_feats: input.chosen.selected_feats.clone(),
+            skill_allocations: input
+                .chosen
+                .skill_allocations
+                .iter()
+                .map(|skill| SkillAllocationDto {
+                    skill_id: skill.skill_id.clone(),
+                    ranks: skill.ranks,
+                })
+                .collect(),
+            equipment_selections: input
+                .chosen
+                .equipment_selections
+                .iter()
+                .map(|equipment| EquipmentSelectionImportDto {
+                    item_id: equipment.item_id.clone(),
+                    active_state: equipment.active_state.into(),
+                })
+                .collect(),
+            selected_choices: input
+                .chosen
+                .selected_choices
+                .iter()
+                .map(|choice| SelectedChoiceDto {
+                    choice_set_id: choice.choice_set_id.clone(),
+                    selection_id: choice.selection_id.clone(),
+                })
+                .collect(),
+            spells_selected: input
+                .chosen
+                .spells_selected
+                .iter()
+                .map(|spell| SpellSelectionImportDto {
+                    spell_id: spell.spell_id.clone(),
+                    source_class_id: spell.source_class_id.clone(),
+                    acquisition_mode: spell.acquisition_mode.into(),
+                })
+                .collect(),
+        },
     }
 }
 
@@ -1444,6 +1548,55 @@ pub fn import_character(
         &request.saved_at,
         &app_version,
     )
+}
+
+// ----- `export_character` (Storage Tier Minimal Fix, Criterion 24) -----
+
+/// Loads the saved character at `root` and serializes it into the exact
+/// `ImportedCharacterFileDto` shape `import_character_from_json` parses —
+/// this is what makes Export -> Import a real round trip rather than the
+/// old lossy `{summary, detail}` export payload (see this module's own
+/// history: the Load Character screen used to build its export payload from
+/// computed summary/snapshot data, which carries no raw `CharacterInput` and
+/// so could never be re-imported).
+///
+/// Split from the `#[tauri::command]` wrapper below so it is unit-testable
+/// against a real `SavedCharacterStore` fixture without an `AppHandle` —
+/// mirrors every other `_at_root`/`_from_*`/`_to_*` function in this module.
+fn export_character_to_json(root: &Path) -> Result<String, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+
+    let dto = ImportedCharacterFileDto {
+        display_label: envelope.display_label,
+        character_input: character_input_to_dto(&envelope.character_input),
+    };
+
+    serde_json::to_string_pretty(&dto).map_err(|err| format!("failed to serialize character for export: {err}"))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ExportCharacterRequest {
+    pub character_id: String,
+    /// Destination path chosen by the frontend via the dialog plugin's
+    /// `save()` picker, mirroring `export_character_json`'s own `file_path`
+    /// (this command writes directly, same as that one).
+    pub file_path: String,
+}
+
+/// Resolves the character's root directory, serializes its real saved build
+/// into the `ImportedCharacterFileDto` shape, and writes it to `file_path` —
+/// see `export_character_to_json` for the full semantics. Unlike
+/// `export_character_json` (which writes whatever `contents` string the
+/// caller already built), this command builds the export payload itself
+/// from the real on-disk envelope, so what it writes is always importable.
+#[tauri::command]
+pub fn export_character(app: tauri::AppHandle, request: ExportCharacterRequest) -> Result<(), String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let contents = export_character_to_json(&root)?;
+
+    let path = PathBuf::from(&request.file_path);
+    std::fs::write(&path, contents.as_bytes()).map_err(|err| format!("{}: {err}", path.display()))
 }
 
 #[cfg(test)]
@@ -2367,5 +2520,89 @@ mod tests {
         }
 
         assert!(!root.exists(), "a Blocked import must never be persisted");
+    }
+
+    // ----- `export_character` (Criterion 24) -----
+
+    /// The single most important regression guard for Criterion 24: proves
+    /// the real save -> export -> re-import round trip against two real
+    /// `SavedCharacterStore` fixtures on disk, not mocks or a hand-built
+    /// `{summary, detail}` payload. `level_up_test_envelope`'s Human Fighter
+    /// build carries a non-trivial `chosen` (feats, skills, all four
+    /// equipment active-state variants, selected choices, and spells), so
+    /// this exercises every field `character_input_to_dto`/
+    /// `character_input_from_dto` touch, not just the trivial ones.
+    #[test]
+    fn export_character_to_json_round_trips_through_import_character_from_json() {
+        let source_root = tempdir("export-round-trip-source");
+        let source_envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&source_envelope, &source_root).expect("seed save should succeed");
+
+        let exported_json = export_character_to_json(&source_root).expect("export should succeed for a real saved character");
+
+        // The exported file is exactly what `import_character` expects:
+        // parsing it back out and rebuilding a `CharacterInput` (mirroring
+        // what `import_character_from_json` does internally) must produce a
+        // `CharacterInput` equal to the source in every field the DTO
+        // carries — proving the export DTO and import DTO are structurally
+        // compatible by construction, not merely by convention.
+        let reparsed: ImportedCharacterFileDto =
+            serde_json::from_str(&exported_json).expect("exported JSON must itself be valid ImportedCharacterFileDto JSON");
+        assert_eq!(reparsed.display_label, source_envelope.display_label);
+        let rebuilt_input = character_input_from_dto(reparsed.character_input, "irrelevant-for-this-comparison");
+        assert_eq!(
+            rebuilt_input.source_package_id,
+            source_envelope.character_input.source_package_id
+        );
+        assert_eq!(rebuilt_input.chosen, source_envelope.character_input.chosen, "the full `chosen` payload — race, class levels, ability scores, feats, skills, equipment, choices, and spells — must round-trip through export -> import byte-for-byte");
+
+        // Now prove the real end-to-end command path: importing the exported
+        // JSON via `import_character_from_json` (the same function
+        // `import_character` calls) reaches `Computed` and saves a fresh
+        // character whose on-disk `chosen` matches the source.
+        let dest_root = tempdir("export-round-trip-dest");
+        let response = import_character_from_json(
+            &exported_json,
+            &dest_root,
+            "char-export-round-trip-fresh-id",
+            "2026-07-22T00:00:00Z",
+            "codex-dev-test",
+        )
+        .expect("importing a real export must not error");
+
+        match response {
+            CreateCharacterResponse::Saved { summary, .. } => {
+                assert_eq!(summary.character_id, "char-export-round-trip-fresh-id");
+                assert_eq!(summary.display_label, source_envelope.display_label);
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("a real exported Human Fighter level 1 build must reach Computed on re-import, got diagnostics: {diagnostics:?}");
+            }
+        }
+
+        let reimported = SavedCharacterStore::load(&dest_root).expect("reimported character should reload");
+        assert_eq!(
+            reimported.character_input.chosen, source_envelope.character_input.chosen,
+            "the character reloaded after export -> import must carry the exact same chosen build as the original"
+        );
+        assert_ne!(
+            reimported.character_id, source_envelope.character_id,
+            "import always mints a fresh identity, never reuses the exported character's own id"
+        );
+
+        std::fs::remove_dir_all(&source_root).ok();
+        std::fs::remove_dir_all(&dest_root).ok();
+    }
+
+    /// `export_character_to_json`'s error path when there is nothing saved
+    /// at `root` yet — must fail honestly (via `SavedCharacterStore::load`'s
+    /// own error) rather than fabricating an empty export.
+    #[test]
+    fn export_character_to_json_fails_honestly_when_nothing_is_saved_yet() {
+        let root = nonexistent_path("export-missing-character");
+
+        let result = export_character_to_json(&root);
+
+        assert!(result.is_err(), "exporting a nonexistent saved character must fail");
     }
 }
