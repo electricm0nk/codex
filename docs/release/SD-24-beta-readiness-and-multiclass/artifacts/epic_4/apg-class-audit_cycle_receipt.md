@@ -1,7 +1,7 @@
 # Cycle apg-class-audit — Epic 4 (Per-Class Coverage Audit + Plan) / Criterion 4.2
 
-- **Card ID:** t_placeholder1 (kanban card minted at step 10; will be backfilled here or in a follow-up commit once known)
-- **Commit SHA:** (backfilled after this commit lands — see progress.md Cycle log entry for the hash)
+- **Card ID:** t_84c2a91b
+- **Commit SHA:** f25dc7b (feat commit) + f5f6f46 (progress.md update)
 - **Files touched:**
   - `src/rules_core/rules_tables/apg/mod.rs` (added `ApgClassId::ALL`/`name()`, `ApgClassCoverage`, `class_coverage`, `coverage_report`)
   - `tests/sd24_apg_class_coverage_audit.rs` (new)
