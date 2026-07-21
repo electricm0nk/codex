@@ -1,7 +1,7 @@
 # Cycle reSaveCharacter-cycle — Epic 7 (Tauri Command-Surface Repair) / Criterion 7.3
 
 - **Card ID:** `t_PENDING` (placeholder — backfilled in a follow-up commit once the real `hermes kanban` card ID is known, per `loop-instruction.md §3`)
-- **Commit SHA:** `PENDING` (backfilled once committed)
+- **Commit SHA:** `8457a65`
 - **Files touched:**
   - `apps/desktop/src-tauri/src/characterHub/reSaveCharacter.rs` (new)
   - `apps/desktop/src-tauri/src/characterHub/mod.rs` (1-line addition: `pub mod reSaveCharacter;` + doc-comment update)
