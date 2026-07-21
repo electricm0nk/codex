@@ -1,7 +1,7 @@
 # Cycle fighter-wizard-multiclass-deterministic-cycle — Epic 5 (Multiclass) / Criterion 5.2
 
-- **Card ID:** t_placeh01 (placeholder; backfilled with the real kanban card ID in a follow-up commit)
-- **Commit SHA:** (recorded post-commit; see `progress.md` cycle log entry for this cycle)
+- **Card ID:** t_8faa4b35 (backfilled; created `blocked` since `hermes kanban create --initial-status` only accepts `blocked|running`, then `hermes kanban complete t_8faa4b35`)
+- **Commit SHA:** `e8e97c2` (feat: test surface), `48678b0` (progress.md)
 - **Files touched:** `tests/sd24_multiclass_deterministic.rs` (new), `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_5/multiclass-fixture.md` (new), this receipt.
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
 - **Wired-integration audit result:** OK_NO_TOKENS
