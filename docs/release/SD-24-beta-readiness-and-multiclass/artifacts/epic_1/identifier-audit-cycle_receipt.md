@@ -1,7 +1,7 @@
 # Cycle identifier-audit-cycle — Epic 1 (Identifier Cleanup) / Criterion 1.1 + 1.2
 
-- **Card ID:** t_a1b2c3d4 (placeholder; backfilled with the real `codex-tranche-5` card ID once minted — see step 10 of this cycle's report)
-- **Commit SHA:** (recorded post-commit; see git log for `feat(sd24): repo-wide identifier-discipline audit + remediation`)
+- **Card ID:** t_5b8f0c08 (`codex-tranche-5`, status `done`)
+- **Commit SHA:** `3c3882a` (remediation), `c1e9643` (progress.md update)
 - **Files touched:**
   - Renamed (content-preserving `git mv` + internal identifier renames):
     - `apps/desktop/src-tauri/src/sd16_browser_handoff.rs` → `browser_handoff.rs`
