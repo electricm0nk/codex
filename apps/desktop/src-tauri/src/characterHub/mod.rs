@@ -3,11 +3,13 @@
 //! `character_hub.rs` already carries the character-create/load/list/
 //! level-up/single-item-append surface. This submodule is the home for the
 //! *iterative mutation* commands `technical-design.md` §3.2 specifies
-//! (`appendToCharacter`, `recomputeCharacter`, and — in a follow-on cycle —
-//! `reSaveCharacter`), kept in their own module rather than growing the
-//! already-large `character_hub.rs` further.
+//! (`appendToCharacter`, `recomputeCharacter`, `reSaveCharacter`), kept in
+//! their own module rather than growing the already-large `character_hub.rs`
+//! further.
 
 #[allow(non_snake_case)]
 pub mod appendToCharacter;
 #[allow(non_snake_case)]
 pub mod recomputeCharacter;
+#[allow(non_snake_case)]
+pub mod reSaveCharacter;
