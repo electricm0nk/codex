@@ -20,7 +20,8 @@ use campaign_drive::{
 };
 use character_hub::{
     clone_character, create_character, delete_character_portrait, export_character_json,
-    list_saved_characters, load_character_portrait, load_saved_character, save_character_portrait,
+    level_up_character, list_saved_characters, load_character_portrait, load_saved_character,
+    save_character_portrait,
 };
 use sd13_support_state_matrix::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use sd19_class_catalog::list_class_catalog;
@@ -122,6 +123,7 @@ fn main() {
             verify_relaunch_artifact,
             create_character,
             clone_character,
+            level_up_character,
             list_saved_characters,
             load_saved_character,
             save_character_portrait,

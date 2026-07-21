@@ -441,6 +441,76 @@ fn summarize_envelope(envelope: &SavedCharacterEnvelope) -> CharacterSummaryDto 
     }
 }
 
+// ----- `mutate_saved_character` operation table -----
+
+/// The character-mutation surface this module documents. Every operation
+/// shares the same `load -> mutate -> recompute -> re-save -> return
+/// envelope` semantics: load the saved envelope via
+/// `SavedCharacterStore::load`, apply one bounded mutation to its
+/// `CharacterInput`, recompute via `compute_pilot_with_corpus`, re-save via
+/// `SavedCharacterStore::save`, and return the updated envelope (as a
+/// `CreateCharacterResponse::Saved`/`Blocked`, matching every other
+/// character-hub command's response shape).
+///
+/// This table documents the full three-operation surface even though only
+/// `LevelUpCharacter` is wired to a callable `#[tauri::command]` this
+/// cycle (`level_up_character`) — `AddEquipmentSelection` and
+/// `AddSpellSelection` land in a later cycle of this same epic. Per the
+/// Wired Integration doctrine (`governance/no-stub-mvp-doctrine.md`), an
+/// operation that is not yet wired is not exposed behind any real command:
+/// the `wired` flag below is descriptive metadata this table's own
+/// dispatch-shape test asserts against, not a runtime dispatcher a caller
+/// can reach.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SavedCharacterMutationOp {
+    LevelUpCharacter,
+    AddEquipmentSelection,
+    AddSpellSelection,
+}
+
+/// One row of the `mutate_saved_character` operation table.
+#[derive(Debug, Clone, Copy)]
+pub struct SavedCharacterMutationOpDescriptor {
+    pub op: SavedCharacterMutationOp,
+    /// The operation name, matching its `#[tauri::command]` function name
+    /// once wired.
+    pub name: &'static str,
+    /// The mutation this operation applies to the loaded `CharacterInput`,
+    /// on top of the load -> mutate -> recompute -> re-save ->
+    /// return-envelope semantics every row shares.
+    pub description: &'static str,
+    /// Whether this operation is reachable through a real, callable Tauri
+    /// command in this build (registered in `main.rs`'s
+    /// `invoke_handler!`). `false` means the row is documented here but
+    /// intentionally not yet registered.
+    pub wired: bool,
+}
+
+pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescriptor; 3] = [
+    SavedCharacterMutationOpDescriptor {
+        op: SavedCharacterMutationOp::LevelUpCharacter,
+        name: "level_up_character",
+        description: "Increments the requested class's level (or adds it \
+            at level 1 if the character has none yet), then recomputes and \
+            re-saves.",
+        wired: true,
+    },
+    SavedCharacterMutationOpDescriptor {
+        op: SavedCharacterMutationOp::AddEquipmentSelection,
+        name: "add_equipment_selection",
+        description: "Appends an entry to chosen.equipment_selections, then \
+            recomputes and re-saves.",
+        wired: false,
+    },
+    SavedCharacterMutationOpDescriptor {
+        op: SavedCharacterMutationOp::AddSpellSelection,
+        name: "add_spell_selection",
+        description: "Appends an entry to chosen.spells_selected, then \
+            recomputes and re-saves.",
+        wired: false,
+    },
+];
+
 // ----- Tauri commands -----
 
 #[tauri::command]
@@ -668,6 +738,95 @@ pub fn load_saved_character(
         diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
         corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
     })
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpCharacterRequest {
+    pub character_id: String,
+    pub class_id: String,
+    pub saved_at: String,
+}
+
+/// Increments `class_id`'s level by 1 on the given `CharacterInput`, or
+/// adds a new level-1 entry for `class_id` if the character has none yet
+/// (the multiclass "dip" case). Every other field is untouched.
+pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
+    if let Some(class_level) = character_input
+        .chosen
+        .class_levels
+        .iter_mut()
+        .find(|class_level| class_level.class_id == class_id)
+    {
+        class_level.level = class_level.level.saturating_add(1);
+    } else {
+        character_input.chosen.class_levels.push(CharacterClassLevel {
+            class_id: class_id.to_owned(),
+            level: 1,
+        });
+    }
+}
+
+/// `level_up_character`'s real implementation
+/// (`SavedCharacterMutationOp::LevelUpCharacter` in the operation table
+/// above): load -> mutate -> recompute -> re-save -> return envelope.
+/// Split out from the `#[tauri::command]` wrapper below so it is
+/// unit-testable against a real `SavedCharacterStore` fixture without an
+/// `AppHandle` — the same "pure function under a thin command wrapper"
+/// split this module already uses for `compose_character_input`.
+///
+/// Mirrors `create_character`/`clone_character`'s "never persist an
+/// unproven build" invariant: if the leveled-up build does not reach
+/// `Computed` (e.g. leveling past the range the compute engine currently
+/// supports), the saved character on disk is left exactly as it was and
+/// `Blocked` is returned with the real diagnostics — the mutation is never
+/// silently applied on disk when the recompute fails.
+fn level_up_character_at_root(
+    root: &Path,
+    class_id: &str,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+
+    apply_level_up(&mut envelope.character_input, class_id);
+
+    let receipt = build_pilot_headless_receipt(&envelope.character_input);
+    if receipt.status != HeadlessReceiptStatus::Computed {
+        return Ok(CreateCharacterResponse::Blocked {
+            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
+        });
+    }
+
+    let view_model = PilotViewModel::from_receipt(&receipt);
+    let snapshot = view_model
+        .snapshot
+        .as_ref()
+        .expect("Computed status guarantees a snapshot");
+
+    let corpus_receipt =
+        compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
+
+    envelope.saved_at = saved_at.to_owned();
+
+    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+
+    Ok(CreateCharacterResponse::Saved {
+        summary: Box::new(summarize_envelope(&envelope)),
+        snapshot: map_snapshot_dto(snapshot),
+        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+    })
+}
+
+/// Loads the saved character, increments/adds the requested class's
+/// level, recomputes via the real engine, and re-saves — see
+/// `level_up_character_at_root` for the full semantics.
+#[tauri::command]
+pub fn level_up_character(
+    app: tauri::AppHandle,
+    request: LevelUpCharacterRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    level_up_character_at_root(&root, &request.class_id, &request.saved_at)
 }
 
 fn resolve_characters_root(app: &tauri::AppHandle) -> Result<PathBuf, String> {
@@ -1066,5 +1225,202 @@ mod tests {
         let app_data_dir = Path::new("/tmp/example-app-data");
         let root = characters_root_from_app_data_dir(app_data_dir);
         assert_eq!(root, PathBuf::from("/tmp/example-app-data/characters"));
+    }
+
+    // ----- `mutate_saved_character` operation table (Criterion 16) -----
+
+    #[test]
+    fn saved_character_mutation_operations_table_documents_three_ops_with_one_wired() {
+        let names: Vec<&str> = SAVED_CHARACTER_MUTATION_OPERATIONS
+            .iter()
+            .map(|descriptor| descriptor.name)
+            .collect();
+        assert_eq!(
+            names,
+            vec![
+                "level_up_character",
+                "add_equipment_selection",
+                "add_spell_selection",
+            ],
+            "the table must enumerate exactly these three ops, in this order"
+        );
+
+        let wired: Vec<&str> = SAVED_CHARACTER_MUTATION_OPERATIONS
+            .iter()
+            .filter(|descriptor| descriptor.wired)
+            .map(|descriptor| descriptor.name)
+            .collect();
+        assert_eq!(
+            wired,
+            vec!["level_up_character"],
+            "only level_up_character is callable through a real Tauri command this cycle"
+        );
+
+        let wired_op = SAVED_CHARACTER_MUTATION_OPERATIONS
+            .iter()
+            .find(|descriptor| descriptor.wired)
+            .expect("exactly one wired op");
+        assert_eq!(wired_op.op, SavedCharacterMutationOp::LevelUpCharacter);
+
+        for descriptor in SAVED_CHARACTER_MUTATION_OPERATIONS.iter() {
+            assert!(
+                !descriptor.description.is_empty(),
+                "{} must document its mutation semantics",
+                descriptor.name
+            );
+        }
+    }
+
+    // ----- `level_up_character` (Criterion 17) -----
+
+    fn tempdir(label: &str) -> PathBuf {
+        let unique = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system time should be after unix epoch")
+            .as_nanos();
+        let path = std::env::temp_dir().join(format!(
+            "codex-character-hub-level-up-{label}-{}-{unique}",
+            std::process::id()
+        ));
+        std::fs::create_dir_all(&path).expect("temp dir should be creatable");
+        path
+    }
+
+    const LEVEL_UP_TEST_SAVED_AT: &str = "2026-07-08T00:00:00Z";
+
+    fn level_up_test_envelope(race_id: &str, level: u8) -> SavedCharacterEnvelope {
+        let character_input = compose_character_input(&request_for(race_id, level));
+        SavedCharacterEnvelope {
+            character_id: "char-level-up-test".to_owned(),
+            revision_id: "char-level-up-test.rev.1".to_owned(),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: LEVEL_UP_TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: "char-level-up-test.rev.1".to_owned(),
+            display_label: "Level Up Test Character".to_owned(),
+            character_input,
+        }
+    }
+
+    #[test]
+    fn apply_level_up_increments_existing_class_level() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+
+        apply_level_up(&mut input, FIGHTER_CLASS_ID);
+
+        assert_eq!(input.chosen.class_levels.len(), 1);
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        assert_eq!(input.chosen.class_levels[0].level, 2);
+    }
+
+    #[test]
+    fn apply_level_up_adds_a_new_class_level_entry_for_an_unheld_class() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+
+        apply_level_up(&mut input, "class:wizard");
+
+        assert_eq!(input.chosen.class_levels.len(), 2);
+        assert_eq!(input.chosen.class_levels[0].class_id, FIGHTER_CLASS_ID);
+        assert_eq!(
+            input.chosen.class_levels[0].level, 1,
+            "the existing class level must be untouched"
+        );
+        assert_eq!(input.chosen.class_levels[1].class_id, "class:wizard");
+        assert_eq!(input.chosen.class_levels[1].level, 1);
+    }
+
+    /// The single most important regression guard for Criterion 17: proves
+    /// the real load -> mutate -> recompute -> re-save -> return round trip
+    /// against a real `SavedCharacterStore` fixture on disk, not a mock.
+    #[test]
+    fn level_up_character_at_root_increments_level_and_persists_when_computed() {
+        let root = tempdir("golden-path");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T00:00:00Z")
+            .expect("level up call should not error");
+
+        match response {
+            CreateCharacterResponse::Saved { summary, .. } => {
+                assert_eq!(summary.class_summary, "class:fighter:2");
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!(
+                    "Human Fighter level 1 -> 2 must reach Computed, got diagnostics: {diagnostics:?}"
+                );
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(reloaded.character_input.chosen.class_levels.len(), 1);
+        assert_eq!(
+            reloaded.character_input.chosen.class_levels[0].level, 2,
+            "the on-disk envelope must reflect the leveled-up build"
+        );
+        assert_eq!(reloaded.saved_at, "2026-07-21T00:00:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Mirrors `create_character`/`clone_character`'s "never persist an
+    /// unproven build" invariant: leveling past the engine's currently
+    /// supported range must return `Blocked` and must not touch the file
+    /// on disk at all.
+    #[test]
+    fn level_up_character_at_root_does_not_persist_when_leveled_up_build_is_blocked() {
+        let root = tempdir("blocked-path");
+        // Level 20 is the top of the compute engine's supported Fighter range
+        // (`MAX_SUPPORTED_FIGHTER_LEVEL` in `pilot_compute.rs`); leveling to 21 must
+        // fall back to Blocked.
+        let envelope = level_up_test_envelope("race:human", 20);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response = level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T00:00:00Z")
+            .expect("level up call should not error even when the build is Blocked");
+
+        match response {
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                assert!(
+                    !diagnostics.is_empty(),
+                    "a Blocked response should carry real diagnostics"
+                );
+            }
+            CreateCharacterResponse::Saved { .. } => {
+                panic!(
+                    "Human Fighter level 20 -> 21 is outside the compute engine's supported \
+                     range and must not reach Computed"
+                );
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.class_levels[0].level, 20,
+            "a Blocked leveled-up build must never be persisted"
+        );
+        assert_eq!(
+            reloaded.saved_at, LEVEL_UP_TEST_SAVED_AT,
+            "saved_at must be unchanged when the mutation is not persisted"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// `level_up_character_at_root`'s error path when there is nothing saved
+    /// at `root` yet — must fail honestly (via `SavedCharacterStore::load`'s
+    /// own error) rather than silently creating a character out of thin air.
+    #[test]
+    fn level_up_character_at_root_fails_honestly_when_nothing_is_saved_yet() {
+        let root = tempdir("missing-character");
+
+        let result = level_up_character_at_root(&root, FIGHTER_CLASS_ID, "2026-07-21T00:00:00Z");
+
+        assert!(result.is_err(), "leveling up a nonexistent saved character must fail");
+
+        std::fs::remove_dir_all(&root).ok();
     }
 }
