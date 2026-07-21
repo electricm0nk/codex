@@ -1,7 +1,7 @@
 # Cycle architecture-truth-up-cycle — Epic 8 (Closure Epilogue) / Criterion 8.2
 
-- **Card ID:** t_a1b2c3d4 (placeholder — backfilled after kanban mint, see step 8 below)
-- **Commit SHA:** (recorded post-commit in progress.md; see this receipt's own commit)
+- **Card ID:** t_f2e765a2 (`codex-tranche-5`, status `done`)
+- **Commit SHA:** `3215e17` (pushed to `origin/tranche/5-2`)
 - **Files touched:** `docs/architecture/README.md`, `docs/architecture/overview.md`,
   `docs/architecture/desktop-app.md`, `docs/architecture/status.md`,
   `docs/architecture/rules-data-tables.md`, `docs/architecture/rules-engine.md`,
