@@ -1,7 +1,7 @@
 # Cycle acg-class-audit — Epic 4 (Per-Class Coverage Audit + Plan) / Criterion 4.3
 
-- **Card ID:** t_ac6c1a3d (placeholder — backfilled once step 10's real kanban ID is known)
-- **Commit SHA:** (recorded in the same-cycle commit that adds this file)
+- **Card ID:** `t_3fd42108`
+- **Commit SHA:** `2e074ce` (feat commit) + `1901230` (progress.md update)
 - **Files touched:**
   - `src/rules_core/rules_tables/acg/mod.rs` (added `AcgClassId::ALL`/`name()`, `AcgClassCoverage`, `class_coverage`, `coverage_report`)
   - `tests/sd24_acg_class_coverage_audit.rs` (new)
