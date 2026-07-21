@@ -58,15 +58,35 @@
 //! fabricate an Arcane Bond grant. Also ungrounded and not surfaced: the
 //! two Evocation school powers' execution machinery (the spell-damage
 //! application for Intense Spells, the casting execution for Force
-//! Missile) and the opposed-school preparation cost, all still named by
-//! `pilot_compute.rs`'s own live
+//! Missile), still named by `pilot_compute.rs`'s own live
 //! `class_feature.wizard.school_powers_and_opposed_school_cost.unsupported`
-//! diagnostic (grepped and confirmed still claim-blocking), and the
-//! entire prepared spellbook / spells-prepared / spell-slot posture
-//! (spellbook content, spell slots per day, bonus slots from a high
-//! Intelligence, spell save DCs), still named by `pilot_compute.rs`'s
-//! own live `class_spell.wizard.prepared_spellbook.unsupported`
-//! diagnostic. `capstone_threshold` still flags the transition crossing
+//! diagnostic whenever the prepared-spellbook posture below is unmet.
+//!
+//! **SD-24 Epic 4 correction (criterion 4.1 per-class coverage audit):**
+//! this doc comment previously claimed the entire prepared spellbook /
+//! spells-prepared / spell-slot posture was permanently ungrounded,
+//! citing `pilot_compute.rs`'s `class_spell.wizard.prepared_spellbook.
+//! unsupported` diagnostic as though it always fired. That was true when
+//! this module first landed (SD-20 Epic 7) but went stale once SD-21
+//! E6b.2's `ground_wizard_prepared_spellbook` landed a real, bounded
+//! (wizard levels 1-3, canonical Evocation specialization) grounding of
+//! the spellbook contents, daily preparation selection, and per-spell-
+//! level base/Intelligence-bonus/total spells-per-day counts
+//! (`class_spell.wizard.spellbook_contents`, `.daily_preparation`,
+//! `.base_spells_per_day.spell_level_N`,
+//! `.intelligence_bonus_spells_per_day.spell_level_N`,
+//! `.total_spells_per_day.spell_level_N`) — this module's own explanation
+//! filter was never updated to include that prefix, so every one of
+//! those real facts was silently dropped from the `LevelUpPlan` even
+//! once the posture was fully met. This audit cycle adds
+//! `WIZARD_SPELL_EXPLANATION_PREFIX` to close that gap; see
+//! `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_4/class_wizard_coverage.md`.
+//! The posture remains unmet (and the diagnostic above still fires)
+//! outside its own bounded range (levels 4+, non-canonical
+//! specialization, an empty/inconsistent spellbook, or over-preparation
+//! beyond the per-level slot budget) — that boundary is
+//! `pilot_compute.rs`'s own, not fabricated wider by this module.
+//! `capstone_threshold` still flags the transition crossing
 //! PF1's universal character-level cap (every class reaches level 20),
 //! but no separate named "capstone" grant is fabricated for it —
 //! `class_tables.rs`'s `ClassTableRow` carries no "Special" column at
@@ -77,21 +97,25 @@
 //! A level transition's automatic feature grants are computed as a pure
 //! **value-change diff** between the chassis snapshot at `from_level`
 //! and at `to_level` (the identical technique every prior Epic 7 cycle
-//! uses). Unlike Sorcerer's spontaneous per-spell-level records (which
-//! are wholly ABSENT below their own access-ladder threshold, requiring
-//! the from-side-miss idiom to surface a newly ACCESSIBLE spell level),
-//! every one of Wizard's class-specific pillars is a single flat record
-//! that is present at every supported level once its own gate is
-//! satisfied (the specialization-choice gate is level-independent — it
-//! depends only on the character's chosen selections, not on level) and
-//! simply changes VALUE directly: the recognition / Scribe Scroll /
-//! specialization-choice records are flat +0 (never diff), while the
-//! specialist bonus slot and Intense Spells bonus damage are numeric
-//! records whose value rises at specific level thresholds (verified
-//! against `pilot_compute.rs`'s own already-grounded formulas, not
-//! re-derived here). No from-side-miss branch is exercised by this
-//! module — a plain `Some(from_value) != Some(to_value)` comparison
-//! correctly captures every real change.
+//! uses), via a plain `Some(from_value) != Some(to_value)` comparison
+//! (`from_value` is `None` whenever the id is absent at `from_level`).
+//! The `class_chassis.wizard.*` pillars are single flat records present
+//! at every supported level once their own gate is satisfied (the
+//! recognition / Scribe Scroll / specialization-choice records are flat
+//! +0 and never diff once granted; the specialist bonus slot and Intense
+//! Spells bonus damage are numeric records whose value rises at specific
+//! level thresholds, verified against `pilot_compute.rs`'s own already-
+//! grounded formulas, not re-derived here). The `class_spell.wizard.*`
+//! pillars (this audit cycle's addition, see above) DO exercise the
+//! from-side-miss idiom for real, mirroring Sorcerer's own spontaneous
+//! per-spell-level records: they are wholly ABSENT whenever
+//! `unmet_wizard_spellbook_conditions` reports any unmet condition at
+//! that level (including "not yet accessible at this level" for a
+//! prepared spell targeting a spell level the character hasn't reached
+//! yet), so a transition that crosses the posture from unmet to met (or
+//! that unlocks a new accessible spell level within an already-met
+//! posture) surfaces every affected record as newly granted, exactly as
+//! Sorcerer's per-spell-level access-ladder crossing does.
 //!
 //! `resource_pool_change` stays genuinely empty for every Wizard
 //! level-up transition: Wizard has no flat daily-use resource pool at
@@ -125,6 +149,15 @@ const WIZARD_CHARACTER_LEVEL_CAP: u8 = 20;
 
 const WIZARD_RECOGNITION_ID: &str = "class_chassis.spell_baseline.wizard";
 const WIZARD_EXPLANATION_PREFIX: &str = "class_chassis.wizard.";
+/// SD-24 Epic 4 (criterion 4.1 per-class coverage audit) finding: the
+/// SD-21 E6b.2 `ground_wizard_prepared_spellbook` grounding (spellbook
+/// contents, daily preparation, and per-spell-level base/Intelligence-
+/// bonus/total spells-per-day) predates this prefix and was never added
+/// to it, so every real `class_spell.wizard.*` explanation was silently
+/// dropped from the `LevelUpPlan` even once a wizard's prepared-
+/// spellbook posture was fully met. Added by this audit cycle —
+/// see `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_4/class_wizard_coverage.md`.
+const WIZARD_SPELL_EXPLANATION_PREFIX: &str = "class_spell.wizard.";
 
 /// Explanation ids that `append_class_table_grants` already covers from
 /// `class_tables()` (the more authoritative, class-generic source per
@@ -262,7 +295,8 @@ fn append_class_feature_grants(
 
     for to_explanation in &to_explanations {
         let is_wizard_pillar = to_explanation.id == WIZARD_RECOGNITION_ID
-            || to_explanation.id.starts_with(WIZARD_EXPLANATION_PREFIX);
+            || to_explanation.id.starts_with(WIZARD_EXPLANATION_PREFIX)
+            || to_explanation.id.starts_with(WIZARD_SPELL_EXPLANATION_PREFIX);
         let is_covered_elsewhere =
             CLASS_TABLE_COVERED_EXPLANATION_IDS.contains(&to_explanation.id.as_str());
         if !is_wizard_pillar || is_covered_elsewhere {
@@ -308,6 +342,7 @@ fn append_class_feature_grants(
 /// Epic 7 cycle's own `friendly_name` helper.
 fn friendly_name(id: &str) -> String {
     id.trim_start_matches(WIZARD_EXPLANATION_PREFIX)
+        .trim_start_matches(WIZARD_SPELL_EXPLANATION_PREFIX)
         .trim_start_matches("class_chassis.spell_baseline.")
         .replace(['_', '.'], " ")
 }

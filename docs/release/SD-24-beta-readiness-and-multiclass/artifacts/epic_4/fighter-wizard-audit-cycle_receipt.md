@@ -1,0 +1,24 @@
+# Cycle fighter-wizard-audit-cycle — Epic 4 / Criterion 4.1
+
+- **Card ID:** t_00000000 (placeholder — backfilled after kanban card mint)
+- **Commit SHA:** (backfilled after commit — see progress.md Cycle log)
+- **Files touched:**
+  - `src/rules_core/rules_tables/crb/class_tables.rs` (read-only audit — no defect found)
+  - `src/rules_core/level_up/fighter.rs` (read-only audit — no defect found)
+  - `src/rules_core/level_up/wizard.rs` (audit + remediation — `class_spell.wizard.*` explanation gap fixed)
+  - `tests/sd24_wizard_level_up_spell_coverage.rs` (new, RED → GREEN)
+  - `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_4/class_fighter_coverage.md` (new)
+  - `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_4/class_wizard_coverage.md` (new)
+  - `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_4/per-class-coverage-matrix.md` (new)
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS (before and after)
+- **Wired-integration audit result:** OK_NO_TOKENS (before and after)
+- **Acceptance criterion (verbatim, epic-breakdown.md):** "Criterion 4.1 — Per-class audit: CRB classes (Fighter, Wizard, Cleric, Rogue, Sorcerer, Barbarian, Bard, Druid, Monk, Paladin, Ranger). Cycle artifact: `./artifacts/epic_4/per-class-coverage-matrix.md`. Files touched: per-class `class_*.rs` files in `src/rules_core/rules_tables/crb/` for read-only audit."
+- **Scope note:** this cycle's granted file-touch set (per `loop-instruction.md` §2.4's own partition table, which names only `class_fighter.rs`/`class_wizard.rs` for Epic 4, not all 11 CRB classes) bounds the actual audit to Fighter + Wizard — the two classes Epic 5's multiclass work is scoped to (operator directive 2026-07-21). See `## DISCOVERED` below for the remaining 9-class follow-on.
+- **Status:** complete (for the Fighter+Wizard scope this cycle was granted)
+- **Notes:**
+  - Plan-vs-reality correction: `content-unit-inventory.md` §3.1 names `src/rules_core/rules_tables/<book>/class_<name>.rs` as the per-class wired-feature-count location. No such file exists for any class. Real per-class wiring is `rules_tables/crb/class_tables.rs` (generic BAB/save, shared) + `level_up/<class>.rs` (class-specific `LevelUpPlan` composer). Audit scored against the real modules; see `progress.md` `## DISCOVERED`.
+  - **Fighter:** 0 gaps. Every `pilot_compute.rs`-grounded Fighter class-feature pillar (Bravery, 10 Bonus Feat slots, 4 Armor Training ranks, Weapon Training + 3 chosen groups, Armor Mastery, Weapon Mastery) is already surfaced in `level_up/fighter.rs`'s `LevelUpPlan`. No code change.
+  - **Wizard:** 1 genuine gap found and remediated. `level_up/wizard.rs`'s explanation filter (`WIZARD_EXPLANATION_PREFIX = "class_chassis.wizard."`) predates SD-21 E6b.2's `ground_wizard_prepared_spellbook` grounding and was never widened to also capture the `class_spell.wizard.*` family (spellbook contents, daily preparation, base/Intelligence-bonus/total spells-per-day per spell level 0-3) — every one of those real, already-computed facts was silently dropped from the `LevelUpPlan` whenever a wizard's bounded prepared-spellbook posture (levels 1-3, canonical Evocation specialization) was fully met. Fixed by adding `WIZARD_SPELL_EXPLANATION_PREFIX = "class_spell.wizard."` to the filter (and to `friendly_name`'s prefix-trim chain). The module's stale doc comment (claiming this posture was permanently ungrounded) was also corrected to describe the current bounded-grounding state.
+- **Discovery forwards:**
+  - `2026-07-21T00:00:00Z | epic_4 | 4.1 | LOW | Fighter+Wizard audited per this cycle's granted file scope; the other 9 CRB classes (Cleric, Rogue, Sorcerer, Barbarian, Bard, Druid, Monk, Paladin, Ranger) each have a landed `level_up/<class>.rs` module from SD-20 Epic 7 that has not yet had this same class_spell.*-vs-class_feature.*-prefix audit applied — plausible the same class of bug (a later pilot_compute.rs grounding landing after the level_up module and never being added to its explanation filter) recurs elsewhere. Not gating Epic 5 (Fighter+Wizard-only multiclass scope). | suggested: follow-on Epic 4 cycle, one file at a time per the file-touch partition`
+- **Next-cycle plan:** Epic 4's Fighter+Wizard audit (the pair Epic 5 actually depends on) is done. Next dispatch per the deterministic seed: criterion 4.2 (APG classes) or 4.3 (ACG classes) per `## TODO` priority order, or Epic 5 criterion 5.1 (Fighter+Wizard multiclass dispatch) since its own coverage-matrix dependency (Fighter+Wizard) is now satisfied by this cycle.
