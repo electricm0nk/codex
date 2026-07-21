@@ -139,3 +139,19 @@ Build counter at SD-23 launch (filled by pre-launch checklist step 7):
 - **Acceptance criterion:** Criterion 28 — `resolve_merge_conflicts.py --mode pre-flight` runs, emits a `merge_conflict:*` receipt with `outcome: clean | conflicts_found`; `clean` is the gate to proceed to promotion.
 - **Status:** complete — `outcome: clean`, 0 conflicts
 - **Notes:** Safety-checked before running: `git pull --rebase origin develop` mutates the branch for real, not a simulation, so re-confirmed via `git fetch` that `origin/develop` HEAD (`f36c211`) still equals the merge-base with `tranche/5-1` before running — a guaranteed no-op, no surprise conflict risk. Result: branch tip unchanged (`cf897f69`) before and after, local/remote confirmed still in sync post-rebase. `tranche/5-1` is now confirmed clean and rebased on current develop HEAD, ready for the promotion PR.
+
+### Cycle 15 — Closure Epilogue / Criterion 29 (promotion PR)
+- **Commit SHA:** `1b20cb5` (merge commit)
+- **Files touched:** none directly this cycle beyond opening the PR; `docs/release/SD-23-character-mutation-and-wired-integration/artifacts/epic_7/promotion_pr_cycle_receipt.md` (new, landed in the cycle 16 follow-up commit alongside the rest of Epic 7's closure docs)
+- **Audit result:** N/A — PR/merge cycle
+- **Acceptance criterion:** Criterion 29 — Promotion PR opens against develop with all SD-23 cycles' commits; CI passes; merge is clean.
+- **Status:** complete
+- **Notes:** Opened PR #327 (`tranche/5-1 → develop`, 45 commits). Armed a Monitor to watch CI asynchronously rather than polling. **Real correction landed mid-cycle:** the operator caught that `decisions.md` §3's build-counter target (`0.6.0`) repeated the exact SD-22 tranche-version-bump mistake — `tranche/5-1` is a dash-release within tranche 5, not a new tranche cut, so the tranche-base digit should not advance. Fixed at the doc level (commit `34f2756`, pushed onto the PR before merge) and the memory `sd22-tranche-version-bump-correction` strengthened since this is a second occurrence — this time baked into the bundle's own planning docs before execution began, not introduced during a cycle. Operator then confirmed CI was green and instructed the merge directly; verified CI status via `gh pr view` before merging (matching the earlier-confirmed "auto-merge on green CI" policy from `decisions.md` §15) rather than merging blind. Merged cleanly, no conflicts.
+
+### Cycle 16 — Closure Epilogue / Criterion 30 (build counter advance) + closure docs (Criteria 29, 31-33)
+- **Commit SHAs:** `37ab66d` (version bump, PR #328, merge commit `b31258f`); closure-docs commit SHA recorded at the bottom of this entry once committed
+- **Files touched:** `apps/desktop/package.json`, `apps/desktop/package-lock.json`, `apps/desktop/src-tauri/{Cargo.toml,Cargo.lock,tauri.conf.json}`, 8 build-label fixture files, plus this bundle's closure artifacts/decisions/risks/progress files
+- **Audit result:** N/A — version-bump + doc cycle; `cargo test --workspace` (429 binaries) and `npm test` (59/59) both green after the bump
+- **Acceptance criterion:** Criterion 30 — build counter advances per `decisions.md` §3 (corrected); `Cargo.toml` workspace version updated post-merge.
+- **Status:** complete — `0.5.96 → 0.5.97`, tranche-base unchanged at `5`
+- **Notes:** Since `tranche/5-1` (Criterion 29) had already merged, this bump landed via a small follow-up branch (`chore/sd23-version-bump-0.5.97`) off `develop` directly, since `develop` requires PRs (branch protection blocks direct pushes even with 0 required approvals). Followed `docs/release/SD-22/release-closure-checklist.md`'s documented four-step process exactly (version files → build-label fixture refresh → `cargo check`/`npm install --package-lock-only` to refresh lockfiles → commit). Full detail in `artifacts/epic_7/build_counter_advance_cycle_receipt.md`.
