@@ -94,3 +94,10 @@ Append-only decision log. Each entry: number, decision, operator directive that 
 - **Discovered:** the branch-wide audit (base `f36c211...HEAD`) surfaced this hit during cycle 9's (Rust-only) verification. Confirmed via `git diff 885bbf9^..885bbf9` that the hit was already present in cycle 8's own commit (Epic 5 closure) — cycle 8's audit run that cycle reported `OK_NO_TOKENS`, which was a verification miss on my part, not a real absence of the string.
 - **Disposition:** not a doctrine violation — `ItemPickerModal.tsx` has no stub, mock, or fake-success behavior (independently re-verified in cycle 8's review: real fetch, real filter, real select/confirm). Not registered in the Stubs Registry because it isn't a stub; this is a check-calibration note, not an exception grant.
 - **Going forward:** every subsequent four-check audit run in this bundle will re-surface this same line. Treat a Check-1 hit that is *only* `apps/desktop/src/characterHub/ItemPickerModal.tsx:127: placeholder={props.searchPlaceholder}` (or its line-number-shifted equivalent as the file changes) as this known false positive — verify no *other* hits are present, don't block a cycle on this one alone. Any other Check-1 hit is real and blocking as normal.
+
+## 15. Promotion PR merge: auto-merge on green CI (operator-confirmed 2026-07-21)
+
+- **Decision:** Criterion 29's promotion PR (`tranche/5-1 → develop`) auto-merges once CI passes — no separate manual approval gate for the merge itself.
+- **Operator directive:** 2026-07-21, confirmed via AskUserQuestion at the Epic 7 pre-PR checkpoint (choice: "Auto-merge on green CI" over "Open PR, then stop and wait for you").
+- **Rationale offered:** matches `loop-instruction.md`'s own designed Epic 7 pipeline (sub-step 6, "CI passes; merge is clean") and the SD-22 precedent, which merged its own promotion PR autonomously under the same loop pattern with no operator objection.
+- **Scope:** applies to this bundle's promotion PR only. Does not create a standing "always auto-merge" rule for other bundles or other repos without asking again.
