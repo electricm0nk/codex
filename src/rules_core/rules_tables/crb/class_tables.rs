@@ -111,6 +111,26 @@ fn save_bonus(level: u8, good: bool) -> i16 {
     }
 }
 
+/// This table's own good/poor Fortitude/Reflex/Will classification for
+/// `class_id` (Fortitude, Reflex, Will), the classification `save_bonus`
+/// applies to build each `ClassTableRow`'s already-floored per-class save
+/// cells. Exposed so callers that need the *un-rounded* fractional pre-floor
+/// value per class (SD-21 E7.29's multiclass rule: sum every class's own
+/// fractional save contribution, then floor once for the total) can read
+/// the classification from this table's own ingested `CLASS_META`, rather
+/// than re-declaring it a second time elsewhere in the codebase (SD-24
+/// Epic 5 criterion 5.3). Returns `None` for a `class_id` this table does
+/// not carry a row for.
+pub fn good_saves_for(class_id: ClassId) -> Option<(bool, bool, bool)> {
+    CLASS_META.iter().find(|meta| meta.class_id == class_id).map(|meta| {
+        (
+            meta.good_saves.fortitude,
+            meta.good_saves.reflex,
+            meta.good_saves.will,
+        )
+    })
+}
+
 /// Builds the CRB class table: one row per class per level, from level 1
 /// through that class's `max_supported_level`.
 pub fn class_tables() -> Vec<ClassTableRow> {

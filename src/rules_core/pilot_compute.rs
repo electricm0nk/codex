@@ -118,7 +118,7 @@ use super::character_input::{
     AbilityScores, ActiveState, AcquisitionMode, CharacterClassLevel, CharacterInput,
     SkillAllocation,
 };
-use super::rules_tables::crb::class_tables::{ClassId, class_tables};
+use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::spell_list::Pf1SchoolId;
 
 /// Result of the GE-06 pilot deterministic compute surface, accumulating the
@@ -6641,19 +6641,21 @@ fn fractional_save_value(level: u8, good: bool) -> f64 {
 }
 
 /// Whether `class_id` grounds a "good" progression for Fortitude, Reflex, and
-/// Will respectively (SD-21 E7.29), mirroring `class_tables.rs`'s `GoodSaves`
-/// rows for Fighter (`:77`, good Fortitude only) and Wizard (`:83`, good Will
-/// only) -- the only two classes a multiclass mix can combine until a future
-/// epic grounds more per-class chassis functions. Returns `None` for any other
-/// class id.
+/// Will respectively (SD-21 E7.29) -- the only two classes a multiclass mix
+/// can combine until a future epic grounds more per-class chassis functions.
+/// Reads `class_tables.rs`'s own ingested `good_saves_for` classification
+/// directly (SD-24 Epic 5 criterion 5.3) rather than re-declaring a second,
+/// independently-maintained copy that could silently drift from it. Returns
+/// `None` for any other class id.
 fn multiclass_good_saves(class_id: &str) -> Option<(bool, bool, bool)> {
-    if class_id == FIGHTER_CLASS_ID {
-        Some((true, false, false))
+    let table_class_id = if class_id == FIGHTER_CLASS_ID {
+        ClassId::Fighter
     } else if class_id == WIZARD_CLASS_ID {
-        Some((false, false, true))
+        ClassId::Wizard
     } else {
-        None
-    }
+        return None;
+    };
+    good_saves_for(table_class_id)
 }
 
 /// Compute the Wizard base-attack-bonus / base-save chassis pillar (SD-21 E6.26).
