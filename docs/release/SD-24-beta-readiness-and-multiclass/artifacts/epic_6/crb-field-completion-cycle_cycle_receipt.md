@@ -1,7 +1,7 @@
 # Cycle crb-field-completion-cycle — Epic 6 / Criteria 6.2, 6.3, 6.4, 6.5 (CRB)
 
-- **Card ID:** t_00000000 (placeholder; backfilled after step 8's kanban mint)
-- **Commit SHA:** (filled in after commit)
+- **Card ID:** `t_0d4f6f29` (`codex-tranche-5`, `done`)
+- **Commit SHA:** `96d085f` (feat) + `688b3e1` (progress.md)
 - **Files touched:**
   - `src/rules_core/rules_tables/crb/equipment_tables.rs`
   - `src/rules_core/rules_tables/crb/equipment_data/{general,arms_armor,magic_items,equipmods}.rs`
