@@ -93,6 +93,35 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
     },
 ];
 
+/// SD-24 Epic 6 criterion 6.1 — spell field-coverage audit row. Mirrors
+/// `rules_tables::crb::spell_list::SpellFieldCoverage`'s shape.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct SpellFieldCoverage {
+    /// Records currently in `SPELL_LIST`.
+    pub total_records: u32,
+    /// Real, active (non-`.MOD`, non-comment) record count in
+    /// `acg_spells.lst` (145 distinct spell names).
+    pub records_expected: u32,
+    /// Records with a non-empty `description` -- always equals
+    /// `total_records` (non-optional field).
+    pub has_description: u32,
+    /// Records whose ingested `description` is the full SRD/PRD spell
+    /// text rather than a short summary. Always 0 today, same finding as
+    /// `crb::spell_list::SpellFieldCoverage::full_text_verified`.
+    pub full_text_verified: u32,
+}
+
+/// Computes this book's spell field-coverage audit row.
+pub fn spell_coverage_report() -> SpellFieldCoverage {
+    let total = SPELL_LIST.len() as u32;
+    SpellFieldCoverage {
+        total_records: total,
+        records_expected: 145,
+        has_description: total,
+        full_text_verified: 0,
+    }
+}
+
 /// Resolves an ACG spell by name, scoped to `RuleSetId::Acg`. Returns
 /// `None` for any other rule set (cross-book invariant, mirrors
 /// `acg::class_chassis_resolve`), and `None` when the key isn't in the

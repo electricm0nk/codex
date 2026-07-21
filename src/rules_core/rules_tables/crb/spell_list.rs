@@ -66,6 +66,45 @@ pub struct SpellListEntry {
     pub description: &'static str,
 }
 
+/// SD-24 Epic 6 criterion 6.1 — spell field-coverage audit row. Every
+/// field is computed from `SPELL_LIST`'s real content or a documented
+/// corpus record count (never a hand-guessed or invented number). See
+/// `tests/sd24_equipment_coverage_audit.rs` for the standing regression
+/// coverage.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct SpellFieldCoverage {
+    /// Records currently in `SPELL_LIST`.
+    pub total_records: u32,
+    /// Real, active (non-`.MOD`, non-comment) record count in
+    /// `cr_spells.lst` (675 distinct spell names).
+    pub records_expected: u32,
+    /// Records with a non-empty `description`. `description` is a
+    /// non-optional `&'static str` field, so this always equals
+    /// `total_records` -- there is no per-row "missing description" case
+    /// with the current schema.
+    pub has_description: u32,
+    /// Records whose ingested `description` is the *full* SRD/PRD spell
+    /// text (duration, saving throw, full effect, etc.), not just the
+    /// corpus's short `DESC:` summary line. Always 0 today: every
+    /// `SPELL_LIST` entry copies only the base record's short `DESC:`
+    /// token, never the longer text carried on the corpus's separate
+    /// `<Name>.MOD` record (e.g. `Alarm` vs. `Alarm.MOD` in
+    /// `cr_spells.lst`) -- the exact gap criterion 6.5 exists to close.
+    pub full_text_verified: u32,
+}
+
+/// Computes this book's spell field-coverage audit row. See
+/// `SpellFieldCoverage`'s own field doc comments for methodology.
+pub fn spell_coverage_report() -> SpellFieldCoverage {
+    let total = SPELL_LIST.len() as u32;
+    SpellFieldCoverage {
+        total_records: total,
+        records_expected: 675,
+        has_description: total,
+        full_text_verified: 0,
+    }
+}
+
 /// Full CRB spell list: every real corpus record from
 /// `pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst`
 /// (652 records, all 9 PF1 strict schools). Generated programmatically

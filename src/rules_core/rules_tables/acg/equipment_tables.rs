@@ -60,6 +60,39 @@ pub const EQUIPMENT_TABLE: &[EquipmentTableEntry] = &[
     },
 ];
 
+/// SD-24 Epic 6 criterion 6.1 — equipment field-coverage audit row.
+/// Mirrors `rules_tables::crb::equipment_tables::EquipmentFieldCoverage`'s
+/// shape. Every field is computed from `EQUIPMENT_TABLE`'s real content
+/// or a documented corpus record count.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EquipmentFieldCoverage {
+    /// Records currently in `EQUIPMENT_TABLE`.
+    pub total_records: u32,
+    /// Real, active (non-`.MOD`) record count in the single `acg_equip.lst`.
+    pub records_expected: u32,
+    /// Records with `cost_gp.is_some()`.
+    pub has_cost: u32,
+    /// Records with a `weight` field populated. Always 0: `EquipmentTableEntry`
+    /// has no `weight` field at all today -- see criterion 6.3.
+    pub has_weight: u32,
+    /// Records with a `description` field populated. Always 0:
+    /// `EquipmentTableEntry` has no `description` field at all today --
+    /// see criterion 6.4.
+    pub has_description: u32,
+}
+
+/// Computes this book's equipment field-coverage audit row. See
+/// `EquipmentFieldCoverage`'s own field doc comments for methodology.
+pub fn field_coverage_report() -> EquipmentFieldCoverage {
+    EquipmentFieldCoverage {
+        total_records: EQUIPMENT_TABLE.len() as u32,
+        records_expected: 221,
+        has_cost: EQUIPMENT_TABLE.iter().filter(|entry| entry.cost_gp.is_some()).count() as u32,
+        has_weight: 0,
+        has_description: 0,
+    }
+}
+
 /// Resolves an ACG equipment item by name, scoped to `RuleSetId::Acg`.
 /// Returns `None` for any other rule set (cross-book invariant, mirrors
 /// `acg::class_chassis_resolve`), and `None` when the key isn't in the

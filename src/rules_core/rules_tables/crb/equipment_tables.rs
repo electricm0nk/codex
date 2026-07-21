@@ -53,6 +53,50 @@ pub struct EquipmentTableEntry {
 /// `equipment_data/`'s own doc comment for the generation method — not
 /// hand-authored, so there is no fabrication/transcription risk at this
 /// scale). Built once and cached for the process lifetime.
+/// SD-24 Epic 6 criterion 6.1 — equipment field-coverage audit row. Every
+/// field is computed from `equipment_tables()`'s real content or a
+/// documented corpus record count (never a hand-guessed or invented
+/// number). See `tests/sd24_equipment_coverage_audit.rs` for the standing
+/// regression coverage and `docs/release/SD-24-beta-readiness-and-multiclass/artifacts/epic_6/equipment-coverage-matrix.md`
+/// for the narrative writeup.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EquipmentFieldCoverage {
+    /// Records currently in `equipment_tables()`.
+    pub total_records: u32,
+    /// Real, active (non-`.MOD`) record count across
+    /// `cr_equip_arms_armor.lst` (310) + `cr_equip_general.lst` (453) +
+    /// `cr_equip_magic_items.lst` (1556) + `cr_equipmods.lst` (658),
+    /// post SD-17's `KEY:`-based merge-dedup fix -- each per-category
+    /// module under `equipment_data/` already documents its own count in
+    /// its module doc comment; this is their sum.
+    pub records_expected: u32,
+    /// Records with `cost_gp.is_some()` -- a real per-row count, not a
+    /// judgment about whether `None` is a genuine gap (some `None`s are
+    /// correct, e.g. a sub-component record with no independent price).
+    pub has_cost: u32,
+    /// Records with a `weight` field populated. Always 0: `EquipmentTableEntry`
+    /// has no `weight` field at all today (a schema-level gap, not a
+    /// per-row data gap) -- see criterion 6.3.
+    pub has_weight: u32,
+    /// Records with a `description` field populated. Always 0:
+    /// `EquipmentTableEntry` has no `description` field at all today (a
+    /// schema-level gap, not a per-row data gap) -- see criterion 6.4.
+    pub has_description: u32,
+}
+
+/// Computes this book's equipment field-coverage audit row. See
+/// `EquipmentFieldCoverage`'s own field doc comments for methodology.
+pub fn field_coverage_report() -> EquipmentFieldCoverage {
+    let table = equipment_tables();
+    EquipmentFieldCoverage {
+        total_records: table.len() as u32,
+        records_expected: 310 + 453 + 1556 + 658,
+        has_cost: table.iter().filter(|entry| entry.cost_gp.is_some()).count() as u32,
+        has_weight: 0,
+        has_description: 0,
+    }
+}
+
 pub fn equipment_tables() -> &'static [EquipmentTableEntry] {
     static TABLES: std::sync::OnceLock<Vec<EquipmentTableEntry>> = std::sync::OnceLock::new();
     TABLES.get_or_init(|| {
