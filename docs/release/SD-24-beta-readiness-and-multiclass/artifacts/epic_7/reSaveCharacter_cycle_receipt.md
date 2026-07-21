@@ -1,6 +1,6 @@
 # Cycle reSaveCharacter-cycle — Epic 7 (Tauri Command-Surface Repair) / Criterion 7.3
 
-- **Card ID:** `t_PENDING` (placeholder — backfilled in a follow-up commit once the real `hermes kanban` card ID is known, per `loop-instruction.md §3`)
+- **Card ID:** `t_170452c4` (`codex-tranche-5`, status `done`; created via `hermes kanban create` without `--initial-status done`/`--workspace done-receipt` — both flags rejected by the current CLI, same drift `appendToCharacter_cycle_receipt.md`/`recomputeCharacter_cycle_receipt.md` already documented — then completed via `hermes kanban complete t_170452c4`)
 - **Commit SHA:** `8457a65`
 - **Files touched:**
   - `apps/desktop/src-tauri/src/characterHub/reSaveCharacter.rs` (new)
