@@ -1,6 +1,6 @@
 # Cycle fighter-wizard-multiclass-dispatch-cycle — Epic 5 (Multiclass Stacking Real and Full) / Criterion 5.1
 
-- **Card ID:** t_5c0184e5 (placeholder pending real kanban ID — backfilled after step 9)
+- **Card ID:** `t_a6b5b079` (codex-tranche-5, status `done`)
 - **Commit SHA:** `0068818be9dbd2cefe932c90de22872bfe55c503`
 - **Files touched:**
   - `src/rules_core/pilot_compute.rs`
