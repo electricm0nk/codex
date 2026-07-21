@@ -1,7 +1,7 @@
 # Cycle appendToCharacter-cycle — Epic 7 (Tauri Command-Surface Repair) / Criterion 7.1
 
 - **Card ID:** t_pending7f1a (placeholder — backfill with the real `codex-tranche-5` card ID per §2.3 step 10)
-- **Commit SHA:** *(fill in after commit — see this cycle's report)*
+- **Commit SHA:** `ed6406f`
 - **Files touched:**
   - `apps/desktop/src-tauri/src/characterHub/mod.rs` (new)
   - `apps/desktop/src-tauri/src/characterHub/appendToCharacter.rs` (new)
