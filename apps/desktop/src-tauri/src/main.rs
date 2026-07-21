@@ -3,6 +3,8 @@
 mod browser_handoff;
 mod campaign_drive;
 mod character_hub;
+#[allow(non_snake_case)]
+mod characterHub;
 mod class_catalog;
 mod corpus_fixtures;
 mod equipment_catalog;
@@ -24,6 +26,7 @@ use character_hub::{
     import_character, level_up_character, list_saved_characters, load_character_portrait,
     load_saved_character, save_character_portrait,
 };
+use characterHub::appendToCharacter::append_to_character;
 use class_catalog::list_class_catalog;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use race_catalog::list_race_catalog;
@@ -127,6 +130,7 @@ fn main() {
             level_up_character,
             add_equipment_selection,
             add_spell_selection,
+            append_to_character,
             list_saved_characters,
             load_saved_character,
             save_character_portrait,

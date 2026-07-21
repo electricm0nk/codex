@@ -774,7 +774,11 @@ pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
 /// `create_character`/`clone_character`'s own invariant. `mutate` receives
 /// only the `CharacterInput`, so it cannot smuggle in a different `saved_at`
 /// or bypass the recompute gate.
-fn mutate_saved_character_at_root(
+/// `pub(crate)` (rather than private) so the `characterHub` submodule's
+/// commands (e.g. `appendToCharacter` — SD-24 Epic 7, Criterion 7.1) can
+/// reuse this module's own load -> mutate -> recompute -> re-save ->
+/// return-envelope invariant instead of re-deriving it a second time.
+pub(crate) fn mutate_saved_character_at_root(
     root: &Path,
     saved_at: &str,
     mutate: impl FnOnce(&mut CharacterInput),
@@ -1038,7 +1042,14 @@ fn resolve_characters_root(app: &tauri::AppHandle) -> Result<PathBuf, String> {
     Ok(characters_root_from_app_data_dir(&app_data_dir))
 }
 
-fn resolve_character_root(app: &tauri::AppHandle, character_id: &str) -> Result<PathBuf, String> {
+/// `pub(crate)` (rather than private) so the `characterHub` submodule's
+/// commands (e.g. `appendToCharacter` — SD-24 Epic 7, Criterion 7.1) can
+/// resolve the same on-disk character root this module's own commands use,
+/// without re-deriving the app-data-dir resolution a second time.
+pub(crate) fn resolve_character_root(
+    app: &tauri::AppHandle,
+    character_id: &str,
+) -> Result<PathBuf, String> {
     Ok(resolve_characters_root(app)?.join(character_id))
 }
 
