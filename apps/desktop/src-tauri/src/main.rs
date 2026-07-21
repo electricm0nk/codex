@@ -27,6 +27,7 @@ use character_hub::{
     load_saved_character, save_character_portrait,
 };
 use characterHub::appendToCharacter::append_to_character;
+use characterHub::recomputeCharacter::recompute_character;
 use class_catalog::list_class_catalog;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use race_catalog::list_race_catalog;
@@ -128,6 +129,7 @@ fn main() {
             create_character,
             clone_character,
             level_up_character,
+            recompute_character,
             add_equipment_selection,
             add_spell_selection,
             append_to_character,
