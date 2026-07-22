@@ -2,13 +2,13 @@
 //!
 //! Exposes the GE05-E2-F1 golden-case fixture schema, the GE06-E3-F1 selected
 //! parity-dimension adapter, the Oracle-Harness comparator (SD-26 Criterion
-//! 2.1), the normalization-rule engine (SD-26 Criterion 2.2), and the
-//! Rust-side PCGen runner wrapper (SD-26 Criterion 2.4). Parity-report
-//! rendering (SD-26 Criterion 2.3) remains out of scope and lands in a later
-//! SD-26 Epic 2 cycle.
+//! 2.1), the normalization-rule engine (SD-26 Criterion 2.2), the parity
+//! report writer (SD-26 Criterion 2.3), and the Rust-side PCGen runner
+//! wrapper (SD-26 Criterion 2.4).
 
 pub mod comparator;
 pub mod golden_fixture;
 pub mod normalization;
+pub mod parity_report;
 pub mod pcgen_runner;
 pub mod selected_parity_dimensions;
