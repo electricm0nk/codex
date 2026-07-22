@@ -7,6 +7,7 @@ mod character_hub;
 mod characterHub;
 mod class_catalog;
 mod corpus_fixtures;
+mod corpus_ingest_diagnostic;
 mod equipment_catalog;
 mod ge08_workbench;
 mod pf1_adapter;
@@ -33,6 +34,7 @@ use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
 use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
+use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use race_catalog::list_race_catalog;
 use spell_catalog::{list_spell_catalog, list_spells};
@@ -157,7 +159,8 @@ fn main() {
             list_equipment,
             list_spells,
             list_class_catalog,
-            list_race_catalog
+            list_race_catalog,
+            corpus_ingest_diagnostic
         ])
         .run(tauri::generate_context!())
         .expect("error while running codex");
