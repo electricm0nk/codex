@@ -79,6 +79,43 @@
 //! such record, so there is nothing to compose here. These are documented,
 //! bounded scope notes, not blockers on this cycle's `LevelUpPlan`: every
 //! other field lands for real.
+//!
+//! **SD-25 Epic 7 residue audit (criterion 7.3): verified NO DEFECT found.**
+//! SD-24 criterion 4.1 found and fixed a bug in `level_up/wizard.rs`: its
+//! explanation-id filter admitted only `class_chassis.wizard.` (plus one
+//! named recognition id), so once a later `pilot_compute.rs` grounding
+//! landed a real `class_spell.wizard.*` explanation family — AFTER
+//! `wizard.rs` was authored — every one of those real facts was silently
+//! dropped from `LevelUpPlan` because the filter was never widened to
+//! admit the new prefix. SD-24 never audited the other 9 CRB classes for
+//! the same bug shape (`progress.md`'s `## DISCOVERED` register A6
+//! carry-forward). This cycle audits Rogue against that exact pattern:
+//! grepped every `rogue`-containing explanation id `pilot_compute.rs`
+//! grounds (357 mentions, all identity/rule-text prose or the two
+//! families below — confirmed exhaustively, not sampled) and found only
+//! two live prefixes, `class_chassis.rogue.*` and `class_feature.rogue.*`
+//! — the exact two `append_class_feature_grants`'s `is_rogue_class_feature_id`
+//! already admits (see below). No `class_spell.rogue.*` family exists:
+//! Rogue is a non-caster in the PF1 Core Rulebook, so unlike Wizard,
+//! Sorcerer, Bard, Cleric, Druid, Paladin, and Ranger, there is no spell
+//! grounding to have ever landed a third prefix behind an unwidened
+//! filter. `tests/sd25_rogue_level_up_explanation_filter_audit.rs` proves
+//! this two ways: (1) every `rogue`-containing explanation id from
+//! `compute_pilot_base_chassis`, swept across all 20 supported levels, is
+//! asserted to start with one of the two admitted prefixes; (2) every
+//! real (non-"correctly absent", non-class-table-covered) explanation
+//! that newly becomes granted across all 19 level-up transitions is
+//! asserted to surface as a real grant in this module's own
+//! `compute_rogue_level_up_grants` output. That test file's own doc
+//! comment records that temporarily narrowing the filter to admit only
+//! `class_chassis.rogue.` (dropping `class_feature.rogue.` — the exact
+//! Wizard bug shape, applied to Rogue's second prefix) was confirmed live
+//! to make check (2) fail (Evasion, Trap Sense, Uncanny Dodge, Improved
+//! Uncanny Dodge, and Master Strike all vanish from the plan) before
+//! being reverted — proof the audit test is load-bearing, not a
+//! rubber-stamp. **No code change to this module's filter was needed or
+//! made**; this is a real, verified negative finding, not a skipped
+//! check. See `docs/release/SD-25-ui-evaluation-defect-closure/artifacts/epic_7/rogue-residue-audit-cycle_receipt.md`.
 
 use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan};
