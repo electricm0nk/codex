@@ -1,7 +1,7 @@
 # Cycle corpus-intake-apg-description — Epic 7 (Equipment/spell corpus intake) / Criterion 7.N (item 2: "APG equipment description field")
 
-- **Card ID:** t_apgdesc01 (kanban card minted at end of cycle; see below)
-- **Commit SHA:** (recorded at push time — see `progress.md`)
+- **Card ID:** `t_6c30955f`
+- **Commit SHA:** `23fffa109bc16093ea43570d717adf420c77fd05` (source+test); `1b41ad2` (progress.md update)
 - **Files touched:**
   - `src/rules_core/rules_tables/apg/equipment_data.rs` (populated `description` on 331/338 records; updated module doc comment)
   - `src/rules_core/rules_tables/apg/equipment_tables.rs` (updated `description`/`has_description` doc comments to match the new ceiling; no struct/logic change)
