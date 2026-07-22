@@ -1,7 +1,7 @@
 # Cycle corpus-intake-apg-spell-text — Epic 7 (Equipment/spell corpus intake) / Criterion 7.N (item 3: "APG full spell text")
 
-- **Card ID:** `t_PENDING` (filled after kanban card creation, see Notes)
-- **Commit SHA:** `PENDING` (filled after commit)
+- **Card ID:** `t_c38ac9ed`
+- **Commit SHA:** `a412d33effe88d707a9e358992d576a6c3c51d10`
 - **Files touched:**
   - `src/rules_core/rules_tables/apg/spell_list.rs` (raised `full_text: true` coverage from 261/297 to 284/297; `description` (`has_description`) from 281/297 to 285/297; updated module doc comment with full per-record sourcing)
   - `tests/sd24_equipment_coverage_audit.rs` (updated `apg_spell_list_is_fully_record_ingested_with_majority_full_text_coverage`'s `has_description` assertion from 281 to 285 and `full_text_verified` from 261 to 284, with updated doc comment)
