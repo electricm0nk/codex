@@ -47,3 +47,28 @@ Per explicit instruction, **this cycle does not commit on criterion 1.1's behalf
 - **Status:** **BLOCKED** (not complete) — real blocker, not a false negative. `git status --porcelain | wc -l` = `5` ≠ `0` on `tranche/5-3`.
 - **Discovery forwards:** the orchestrator (or operator) needs to either (a) commit the 1.1-adjacent `decisions.md §13` / `loop-instruction-template.md §2.1` process-lesson edits under 1.1's own attribution once confirmed content-final, and (b) batch-commit the accumulated Epic 2 receipts (2.1–2.4), before re-running this criterion's check.
 - **Next-cycle plan:** do not proceed to criterion 2.5 until 2.4 is re-verified `0` after the above commits land. Re-run `git status --porcelain | wc -l` on `tranche/5-3` after remediation.
+
+## Reconciliation note (added 2026-07-22, paper-trail-only — historical finding above is unchanged)
+
+The **BLOCKED** finding above was true and correct at the time this cycle ran (2026-07-21 21:29) — the tree genuinely had 5 dirty entries as documented. It was remediated shortly after by commit `84c46f8` (batch-committed the 1.1-adjacent process-lesson edits and the accumulated Epic 2 receipts), and `progress.md`'s own 2.4 row has read **complete** since that commit.
+
+This note exists because the remediation never propagated back to this receipt file or to kanban card `t_2da006d4`, both of which continued to read `BLOCKED` — a paper-trail gap first flagged by criterion 8.1's final scan (`artifacts/epic_8/final-scan-cycle_receipt.md`) and its adversarial re-verification, and closed out here.
+
+Re-verified today via `git status --porcelain` on `tranche/5-3` (post-rebase onto `origin/tranche/5-3` at commit `3e2298b`):
+
+```
+$ git status --porcelain
+?? graphify-out/.graphify_analysis.json
+?? graphify-out/.graphify_labels.json
+?? graphify-out/.graphify_root
+?? graphify-out/.graphify_semantic_marker
+?? graphify-out/2026-07-22/
+?? graphify-out/GRAPH_REPORT.md
+?? graphify-out/cache/
+?? graphify-out/graph.json
+?? graphify-out/manifest.json
+```
+
+Zero tracked-file dirty state (no ` M`/`A `/`D ` entries). The only entries present are all under `graphify-out/`, a pre-existing, untracked, never-gitignored tool-cache directory that has recurred across every epic of this SD-25 bundle (per every prior cycle that encountered it) and is unrelated to this criterion's git-tracked-cleanliness concern. Criterion 2.4's underlying condition — no real (tracked) dirty state on `tranche/5-3` — is confirmed true as of this date.
+
+- **Reconciliation status:** confirmed **complete** (matches `progress.md`'s existing row). Kanban card `t_2da006d4` transitioned `blocked` → unblocked → `done` to match. See `artifacts/epic_8/tree-clean-reconciliation_cycle_receipt.md` for the dedicated reconciliation-cycle receipt.
