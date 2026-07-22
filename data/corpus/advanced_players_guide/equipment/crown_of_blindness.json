@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Crown of Blindness",
+    "category": "MagicItems",
+    "name": "Crown of Blindness",
+    "cost_gp": 0.0,
+    "weight": 1.0,
+    "description": "A cursed silver circlet that forces a DC 14 Fortitude save or permanently blinds the wearer, requiring curse-removal magic to reverse."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/cursedItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  }
+}

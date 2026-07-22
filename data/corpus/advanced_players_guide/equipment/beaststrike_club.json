@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Beaststrike Club",
+    "category": "ArmsArmor",
+    "name": "Beaststrike Club",
+    "cost_gp": 0.0,
+    "weight": 3.0,
+    "description": "A +1 club that a wild shape user can expend a daily use to transform into a natural weapon form (bite, claw, gore, slam, sting, or talon), counting as both a natural and a manufactured weapon."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+weight",
+    "citation_precision": "exact_item_page"
+  }
+}

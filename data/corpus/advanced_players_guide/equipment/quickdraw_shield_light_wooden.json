@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Quickdraw Shield (Light/Wooden)",
+    "category": "ArmsArmor",
+    "name": "Quickdraw Shield, Light Wooden",
+    "cost_gp": 53.0,
+    "weight": 6.0,
+    "description": "A light wooden shield fitted with straps letting a wielder with base attack bonus +1 or higher ready or stow it as a swift action; Quick Draw allows it as a free action."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

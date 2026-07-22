@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Lance (Shieldsplitter)",
+    "category": "ArmsArmor",
+    "name": "Shieldsplitter Lance",
+    "cost_gp": 10.0,
+    "weight": 10.0,
+    "description": "A +1 keen lance that can penetrate shields, dealing shield damage on a hit and bypassing hardness during sunder attempts against a shielded opponent."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  }
+}

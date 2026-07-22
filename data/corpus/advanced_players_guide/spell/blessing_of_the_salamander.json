@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Blessing of the Salamander",
+    "school": "Transmutation",
+    "level": 4,
+    "description": "When you cast this on a creature, its skin turns slick and clammy and it is able to regenerate damage each round. While under the effects of the spell, the creature gains fast healing 5, fire resistance 20 and a +2 competence bonus to its Combat Maneuver Defense.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1867,
+    "record_key": "Blessing of the Salamander"
+  }
+}

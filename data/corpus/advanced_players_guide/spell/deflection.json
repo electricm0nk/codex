@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Deflection",
+    "school": "Abjuration",
+    "level": 7,
+    "description": "You surround yourself in a whirling barrier of force that sends any attack that misses you hurling back toward its source.  This applies to any melee or ranged attack directed against you so long as it uses an attack roll to determine whether or not it strikes you. If an attack misses you, the attacker must make a second attack roll against its own Armor Class, using all of the applicable modifiers of the original attack and if it hits, the attacker takes the attack's damage and suffers all the other consequences of getting struck with that attack. You cannot deflect attacks that miss you for any reason besides a failed attack roll (such as concealment). Similarly, you cannot deflect attacks that actually do strike you but simply fail to do any harm.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1454,
+    "record_key": "Deflection"
+  }
+}

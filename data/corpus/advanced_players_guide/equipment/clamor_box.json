@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Clamor Box",
+    "category": "MagicItems",
+    "name": "Clamor Box",
+    "cost_gp": 2000.0,
+    "weight": 2.0,
+    "description": "A tin music box that, after a configurable delay of 1 to 20 minutes, produces sounds as loud as a crowd of forty people (battle, fire, massacre, or riot)."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

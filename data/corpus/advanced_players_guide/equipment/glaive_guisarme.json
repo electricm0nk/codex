@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Glaive-Guisarme",
+    "category": "ArmsArmor",
+    "name": "Glaive-Guisarme",
+    "cost_gp": 12.0,
+    "weight": 10.0,
+    "description": "A polearm combining a glaive's blade with a hook, imposing an extra Ride penalty on mounted opponents struck by it."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

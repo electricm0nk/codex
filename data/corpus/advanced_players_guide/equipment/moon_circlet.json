@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Moon Circlet",
+    "category": "MagicItems",
+    "name": "Moon Circlet",
+    "cost_gp": 20000.0,
+    "weight": null,
+    "description": "A silver circlet that grants darkvision and adjusts an arcane caster's effective caster level based on the current lunar phase."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

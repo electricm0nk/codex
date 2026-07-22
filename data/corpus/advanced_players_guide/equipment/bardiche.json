@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Bardiche",
+    "category": "ArmsArmor",
+    "name": "Bardiche",
+    "cost_gp": 13.0,
+    "weight": 14.0,
+    "description": "A polearm with a long, heavy cutting blade mounted on a pole."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

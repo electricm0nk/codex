@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Swarmsuit",
+    "category": "General",
+    "name": "Swarmsuit",
+    "cost_gp": 20.0,
+    "weight": 10.0,
+    "description": "Heavy, overlapping layers of clothing and a veiled wide-brimmed hat that grant damage reduction against swarms of Fine or Diminutive creatures, at the cost of halved speed."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

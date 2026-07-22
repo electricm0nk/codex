@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Tent (Pavilion)",
+    "category": "General",
+    "name": "Pavilion",
+    "cost_gp": 100.0,
+    "weight": 50.0,
+    "description": "A large pavilion tent holding ten Medium creatures and taking 90 minutes to assemble; roomy enough for a small fire inside."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "The Moaning Diamond",
+    "category": "MagicItems",
+    "name": "The Moaning Diamond",
+    "cost_gp": 0.0,
+    "weight": 4.0,
+    "description": "An uncut diamond that produces a constant moaning sound; three times per day its bearer can reshape earth and stone as if by stone shape, affecting a large volume of material."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

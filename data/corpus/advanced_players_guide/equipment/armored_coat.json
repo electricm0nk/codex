@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Armored Coat",
+    "category": "ArmsArmor",
+    "name": "Armored Coat",
+    "cost_gp": 50.0,
+    "weight": 20.0,
+    "description": "A sturdy leather coat reinforced with metal plates sewn into the lining; can be donned or removed as a move action, and layers over other armor for better AC at the cost of worse armor check penalties."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Confess",
+    "school": "Enchantment",
+    "level": 2,
+    "description": "You ask the target creature a single question. On the subject's next action, it must answer truthfully in the same language as the question or take 1d6 points of damage per two caster levels (maximum 5d6) and be sickened for 2d4 rounds. A successful Will save negates the sickening effect and halves the damage. A creature that is unable to answer still takes damage.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1899,
+    "record_key": "Confess"
+  }
+}

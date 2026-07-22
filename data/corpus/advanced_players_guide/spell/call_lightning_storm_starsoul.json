@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Call Lightning Storm (Starsoul)",
+    "school": null,
+    "level": null,
+    "description": "This spell functions like call lightning, except that each bolt deals 5d6 points of Fire damage [or 5d10 if created outdoors at night], and you may call a maximum of 15 bolts.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1075,
+    "record_key": "Call Lightning Storm (Starsoul)"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Antiplague (Vial)",
+    "category": "General",
+    "name": "Antiplague (Vial)",
+    "cost_gp": 50.0,
+    "weight": 0.0,
+    "description": "A foul-tasting, milky tonic granting a +5 alchemical bonus on Fortitude saves against disease for 1 hour; a creature already infected may reroll its save that day using the better result."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

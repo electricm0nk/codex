@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Battlement Shield",
+    "category": "ArmsArmor",
+    "name": "Battlement Shield",
+    "cost_gp": 16180.0,
+    "weight": 45.0,
+    "description": "A +2 tower shield that can transform, once per day, into a 10-by-10-by-1-foot masonry wall with battlements."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Slipstream",
+    "school": "Conjuration",
+    "level": 2,
+    "description": "You create a low-cresting wave of water that carries the target along the surface of water or the ground. When moving across level ground, the target's speed increases by 10 feet.  If going downhill, speed increases by 20 feet instead, but slipstream provides no movement bonus when going uphill.  While swimming, the slipstream increases the target's swim speed by 20 feet-if the target does not have a swim speed, this spell grants a swim speed of 20 ft.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1566,
+    "record_key": "Slipstream"
+  }
+}

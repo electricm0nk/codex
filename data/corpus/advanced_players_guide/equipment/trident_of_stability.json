@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Trident of Stability",
+    "category": "ArmsArmor",
+    "name": "Trident of Stability",
+    "cost_gp": 15.0,
+    "weight": 4.0,
+    "description": "A +1 trident fitted with a footrest bar that functions as an immovable rod when stepped on, granting a large CMD bonus and halting falls."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  }
+}

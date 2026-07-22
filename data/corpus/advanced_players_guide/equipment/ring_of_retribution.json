@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Ring of Retribution",
+    "category": "MagicItems",
+    "name": "Ring of Retribution",
+    "cost_gp": 15000.0,
+    "weight": null,
+    "description": "A ring that, once per day, detonates in a 30-foot radius dealing 10d6 points of fire damage."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

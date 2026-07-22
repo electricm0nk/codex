@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Fire of Vengeance",
+    "school": "Evocation",
+    "level": 4,
+    "description": "After casting this spell, the next creature you attack using your smite evil class ability is engulfed in holy flames that flare up when the target attacks someone other than you. If at any time during the duration of your smite evil effect the target makes an attack that does not include you, it takes 3d8 points of fire damage. Once triggered in this manner, or when your smite evil ability expires, the spell ends.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1949,
+    "record_key": "Fire of Vengeance"
+  }
+}

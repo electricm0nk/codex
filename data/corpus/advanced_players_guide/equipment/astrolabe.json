@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Astrolabe",
+    "category": "General",
+    "name": "Astrolabe",
+    "cost_gp": 100.0,
+    "weight": 6.0,
+    "description": "A flat disc with two smaller discs mounted on a central axis; lets its user determine the date and time at night in about a minute, and grants a +2 circumstance bonus on Knowledge (geography), Survival navigation, and Profession (sailor) checks."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

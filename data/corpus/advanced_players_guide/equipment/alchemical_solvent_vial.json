@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Alchemical Solvent (Vial)",
+    "category": "General",
+    "name": "Alchemical Solvent (Vial)",
+    "cost_gp": 20.0,
+    "weight": 0.5,
+    "description": "A bubbling purple gel that eats through adhesives over a 5-foot square, destroying normal adhesives in 1 round and powerful adhesives in 1d4+1 rounds; has no effect on magical adhesives."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

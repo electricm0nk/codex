@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Timely Inspiration",
+    "school": "Divination",
+    "level": 1,
+    "description": "A word of arcane-empowered inspiration can snatch victory from seeming defeat. Cast this spell when a creature fails an attack roll or skill check. The target gains a +1 competence bonus per five caster levels (maximum +3 bonus) on the attack roll or skill check retroactively. If the bonus is enough to make the failure a success, the roll succeeds.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 2089,
+    "record_key": "Timely Inspiration"
+  }
+}

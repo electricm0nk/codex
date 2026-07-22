@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Rally Point",
+    "school": "Enchantment",
+    "level": 1,
+    "description": "You create a spot that has the power to briefly hearten any good creature who comes into contact with it. A good creature who enters this square (even if simply as part of its normal move) gains a +2 morale bonus on attacks, saving throws, and 2 temporary hit points per caster level for 1 round. Nongood creatures gain no benefit from this spell.  A creature cannot benefit more than once from the same casting of this spell.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 2031,
+    "record_key": "Rally Point"
+  }
+}

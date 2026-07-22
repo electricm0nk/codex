@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Lucerne Hammer",
+    "category": "ArmsArmor",
+    "name": "Lucerne Hammer",
+    "cost_gp": 15.0,
+    "weight": 12.0,
+    "description": "A polearm with a pronged hammer head for crushing blows and a spiked head for piercing, granting a +2 bonus on combat maneuver checks to sunder armor."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Book of the Loremaster",
+    "category": "MagicItems",
+    "name": "Book of the Loremaster",
+    "cost_gp": 15000.0,
+    "weight": 2.0,
+    "description": "A digest-sized book that grants a bard a +5 competence bonus, up to three times daily, when taking 10 or 20 on a Knowledge check."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

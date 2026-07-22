@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Shifting Sand",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "You cause an earthen or sandy surface to shift and churn within the area. The shifting sand obliterates tracks and is considered difficult terrain. Acrobatics checks in the area take a penalty equal to your caster level (maximum +10). Creatures entering or beginning their turn in the shifting sand must make a Reflex save each round or become entangled until the beginning of their next turn. If they attempt to move while entangled, they must make a second Reflex save or fall prone. Creatures with the stability racial trait (like dwarves) may apply it as a bonus on their saving throws.  As a move action, you may move the area of shifting sand up to 10 feet in any direction. Creatures that are entangled or prone in the spell's area are carried along with the shifting sand in the same direction if possible. This movement does not provoke attacks of opportunity. Unattended Medium or smaller objects may also be carried along or shallowly buried by the shifting sand.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1686,
+    "record_key": "Shifting Sand"
+  }
+}

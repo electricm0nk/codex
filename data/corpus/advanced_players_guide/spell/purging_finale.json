@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Purging Finale",
+    "school": "Conjuration",
+    "level": 3,
+    "description": "You must have a bardic performance in effect to cast this spell. With a flourish, you immediately end your bardic performance, removing one of the following conditions on a creature within range affected by your bardic performance: cowering, dazzled, exhausted, paralyzed, shaken, or stunned.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 2028,
+    "record_key": "Purging Finale"
+  }
+}

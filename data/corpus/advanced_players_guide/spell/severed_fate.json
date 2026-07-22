@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Severed Fate",
+    "school": "Enchantment",
+    "level": 2,
+    "description": "You curse the target, preventing it from drawing upon the powers of destiny. The target is shaken and cannot use hero points for the duration of the spell. This effect can be removed by dispel magic, remove curse, or other similar effects.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedNewRules.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+school+level",
+    "citation_precision": "exact_item_page"
+  }
+}

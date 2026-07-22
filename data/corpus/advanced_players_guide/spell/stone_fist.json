@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Stone Fist",
+    "school": "Transmutation",
+    "level": 1,
+    "description": "This spell transforms your hands into living stone. While this spell is in effect, your unarmed strikes do not provoke attacks of opportunity and deal 1d6 points of lethal bludgeoning damage (1d4 if you are Small). In addition, your unarmed strikes ignore the hardness of any object with a hardness less than 8.  Stone to flesh immediately dispels stone fist. Should you be the target of transmute rock to mud, this spell immediately ends and you take 4d6 points of damage.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1700,
+    "record_key": "Stone Fist"
+  }
+}

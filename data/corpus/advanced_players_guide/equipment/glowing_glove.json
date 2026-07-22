@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Glowing Glove",
+    "category": "MagicItems",
+    "name": "Glowing Glove",
+    "cost_gp": 2000.0,
+    "weight": null,
+    "description": "A white leather glove that creates luminous handprints, glowing in any chosen color and lasting a day, on surfaces it touches."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

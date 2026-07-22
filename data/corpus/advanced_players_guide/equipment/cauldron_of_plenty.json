@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Cauldron of Plenty",
+    "category": "MagicItems",
+    "name": "Cauldron of Plenty",
+    "cost_gp": 15000.0,
+    "weight": 25.0,
+    "description": "An enchanted iron pot that can produce nourishing food for 36 people daily, or a heroes' feast for 12 people weekly."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

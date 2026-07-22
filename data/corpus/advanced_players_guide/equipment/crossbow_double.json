@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Crossbow (Double)",
+    "category": "ArmsArmor",
+    "name": "Crossbow, [NAME]",
+    "cost_gp": 300.0,
+    "weight": 18.0,
+    "description": "A heavy crossbow that fires a pair of iron-tipped bolts with a single trigger pull; imposes a -4 penalty if proficient (-8 if not), and only the first bolt can score a critical hit or sneak attack."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

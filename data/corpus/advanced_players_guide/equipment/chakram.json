@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Chakram",
+    "category": "ArmsArmor",
+    "name": "Chakram",
+    "cost_gp": 1.0,
+    "weight": 1.0,
+    "description": "A flat, open-centered metal discus with a sharpened edge; using it in melee imposes a -1 penalty and risks a DC 15 Reflex save to avoid cutting yourself."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

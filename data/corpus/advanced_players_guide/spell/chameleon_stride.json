@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Chameleon Stride",
+    "school": "Illusion",
+    "level": 2,
+    "description": "You fade into the background, and while you are not truly invisible, you are hard to pinpoint due to your translucent state.  While under the effects of this spell, you gain a +4 bonus on Stealth checks and have concealment from creatures more than 5 feet away (attacks have a 20%% miss chance).",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1893,
+    "record_key": "Chameleon Stride"
+  }
+}

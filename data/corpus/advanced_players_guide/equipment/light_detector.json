@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Light Detector",
+    "category": "General",
+    "name": "Light Detector",
+    "cost_gp": 1.0,
+    "weight": 0.0,
+    "description": "A hand-sized metal plate covered in light-sensitive paste that darkens at different rates depending on ambient light level, used to detect recent illumination."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Life Bubble",
+    "school": "Abjuration",
+    "level": 3,
+    "description": "You surround the touched creatures with a constant and moveable 1-inch shell of tolerable living conditions. This shell enables the subjects to breathe freely, even underwater or in a vacuum, as well as making them immune to harmful gases and vapors, including inhaled diseases and poisons and spells like cloudkill and stinking cloud. In addition, the shell protects subjects from extremes of temperature (per endure elements) as well as extremes of pressure.  Life bubble does not provide protection from negative or positive energy (such as found on the Negative and Positive Energy planes), the ability to see in conditions of poor visibility (such as in smoke or fog), nor the ability to move or act normally in conditions that impede movement (such as underwater).  When you cast this spell it has a total duration of 2 hours per caster level. You can divide this duration up in any manner you wish, not necessarily equally, between up to 1 creature per caster level.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 2000,
+    "record_key": "Life Bubble"
+  }
+}

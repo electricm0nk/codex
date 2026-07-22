@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Hunter's Howl",
+    "school": "Necromancy",
+    "level": 1,
+    "description": "With a single primal howl, you strike fear in your opponents.  Until the end of the spell's duration, you treat those affected by it as if they were your favored enemy, gaining a +2 bonus on weapon attack and damage rolls against them, and a +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against them. If an affected creature is already one of your favored enemies, it is shaken instead. This is a mindaffecting fear effect.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1982,
+    "record_key": "Hunter's Howl"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Planar Ally (Agathions Only)",
+    "school": null,
+    "level": null,
+    "description": null,
+    "full_text": false
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1041,
+    "record_key": "Planar Ally (Agathions Only)"
+  }
+}

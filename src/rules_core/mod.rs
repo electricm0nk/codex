@@ -1,5 +1,6 @@
 //! Headless rules-core surfaces.
 
+pub mod cache_gen;
 pub mod character_input;
 pub mod composed_input;
 pub mod contract;

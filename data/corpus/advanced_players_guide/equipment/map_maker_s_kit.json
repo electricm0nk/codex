@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Map Maker's Kit",
+    "category": "General",
+    "name": "Map Maker's Kit",
+    "cost_gp": 10.0,
+    "weight": 2.0,
+    "description": "A small kit with a gridded slate and colored chalk, granting a +2 circumstance bonus on Survival checks to avoid getting lost while mapping."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

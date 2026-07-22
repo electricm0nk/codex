@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Buoy (Superior)",
+    "category": "General",
+    "name": "Buoy (Superior)",
+    "cost_gp": 10.0,
+    "weight": 30.0,
+    "description": "A spherical or ovoid hollow metal float, typically copper, connected to a length of chain and a metal anchor rather than twine and a stone."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Rod (Bouncing/Normal)",
+    "category": "MagicItems",
+    "name": "Metamagic Rod of [NAME]",
+    "cost_gp": 11000.0,
+    "weight": 5.0,
+    "description": "A metamagic rod letting its wielder cast up to three spells per day that bounce, as though using the Bouncing Spell feat."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

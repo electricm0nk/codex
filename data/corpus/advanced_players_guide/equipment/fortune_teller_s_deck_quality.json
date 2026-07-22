@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Fortune-Teller's Deck (Quality)",
+    "category": "General",
+    "name": "Fortune-Teller's Deck (Quality)",
+    "cost_gp": 25.0,
+    "weight": 1.0,
+    "description": "A quality deck of fortune-telling cards on painted wooden plaques, suitable as an augury spell focus and granting a +1 circumstance bonus on related Profession checks."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Armor of Insults",
+    "category": "ArmsArmor",
+    "name": "Armor of Insults",
+    "cost_gp": 25.0,
+    "weight": 20.0,
+    "description": "A +1 studded leather that can force hostile creatures within 60 feet to attack its wearer for several rounds unless they succeed at a Will save."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  }
+}

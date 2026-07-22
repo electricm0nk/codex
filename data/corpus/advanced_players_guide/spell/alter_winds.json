@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Alter Winds",
+    "school": "Transmutation",
+    "level": 1,
+    "description": "You subtly enhance or diminish the effects of natural winds within the spell's area, which is an immobile emanation around a point touched by you as the spell is cast. Within the area, natural (but not magical) wind effects are either increased or decreased by one step in intensity (Core Rulebook 439). The maximum wind force you can affect with this spell is based on your caster level, as shown on the table below. Alter winds has no effect on magical wind effects.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1601,
+    "record_key": "Alter Winds"
+  }
+}

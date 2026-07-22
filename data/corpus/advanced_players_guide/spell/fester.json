@@ -1,0 +1,19 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "data": {
+    "key": "Fester",
+    "school": "Necromancy",
+    "level": 2,
+    "description": "Necrotic energy permeates the target, blocking healing abilities. The subject gains spell resistance equal to 12 + your caster level against effects that restore hit points or grant temporary hit points. In addition, any healing provided by effects that ignore spell resistance (such as fast healing, regeneration, and some spells) is halved. If the target succeeds on a Fortitude saving throw, fester lasts only 1 round.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic/all-spells/f/fester/",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+school+level",
+    "citation_precision": "exact_item_page"
+  }
+}
