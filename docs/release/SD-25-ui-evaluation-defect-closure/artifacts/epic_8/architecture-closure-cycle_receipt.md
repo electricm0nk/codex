@@ -1,7 +1,7 @@
 # Cycle 8.2 — Closure Epilogue / Criterion 8.2 (Architecture closure pipeline)
 
-- **Card ID:** <pending — minted after push>
-- **Commit SHA:** <pending — backfilled after push>
+- **Card ID:** t_feac3495
+- **Commit SHA:** d7c1aee (truth-up commit; this receipt's own card-ID/SHA backfill lands in the immediately following commit, same as prior cycles)
 - **Files touched:**
   - `docs/architecture/README.md` — index Source-dirs (`support_state_matrix_bridge.rs`, `testerWorkbench/feedback/`), desktop-app scope adds adapter seam, provenance-note example refreshed off the now-renamed `sd13_*` file, `Last verified`.
   - `docs/architecture/status.md` — corpus-completeness row (real SD-25 numbers), four new "Real today" rows (adapter seam, corpus-ingest diagnostic, PCGen runner, recompute), stub-graduation edits (Sheet ☰ Menu, recompute reachable, oracle-parity comparator now has a runner half), Bestiary 1 equipment.
