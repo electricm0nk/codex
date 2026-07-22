@@ -24,7 +24,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 | 4.3 pcgen_runner_smoke.rs | complete | 4.3 | `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` | flat `tests/pcgen_runner_smoke.rs` (drift from grant's nested `tests/oracle_validation/` path — crate has no nested-integration-test convention); unignored test verifies 4.1's real script; `#[ignore]`-gated pipeline test manually verified passing end-to-end against 4.2's script (both the in-flight copy and, after 4.2 landed concurrently, the real committed script); see artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md |
 | 4.4 verification cycle | complete | pcgen-runner-verification | `80ce33d` | card `t_1817068a`; unignored 4.3's pipeline smoke test, parameterized normalizer call from the real pilot fixtures (case_id/source_package_id/legacy_route read at test time, not hardcoded); real end-to-end run verified: all 9 mandatory dimensions populated, zero diagnostics; Epic 4 fully closed; see artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md |
 | 5.1 corpus_ingest_diagnostic | complete | corpus-ingest-diagnostic | `f2c4a3e258ab7f94ebdede4e54131200bab416a0` | real per-book counts from rules_tables' own APIs (crb/apg/acg/beastiary1) + git-derived last_ingested_at; see artifacts/epic_5/corpus-ingest-diagnostic-cycle_receipt.md |
-| 6.1 UI-eval defect cycle shape | not-started | — | — | — |
+| 6.1 UI-eval defect cycle shape | complete | 6.1 | `<pending-this-commit>` | shape documented in `## DISCOVERED` header comment below + `artifacts/epic_6/defect-cycle-shape_receipt.md`; vacuously satisfied (zero real defects exist as of 2026-07-21 — operator has not yet run a UI-eval session) |
 | 6.2..6.N per-defect | dynamic-pending | — | — | spawned dynamically; not directly dispatchable until spawned |
 | 7.1 residue intake | not-started | — | — | — |
 | 7.2..7.M per-feature | dynamic-pending | — | — | spawned dynamically; not directly dispatchable until spawned |
@@ -39,7 +39,8 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 
 ## TODO (deterministic seed)
 
-- 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
+- 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
+- 6.2..6.N: not directly dispatchable — spawned only when the operator's UI-eval session logs a `## DISCOVERED` row (see Epic 6 shape below). None pending as of 2026-07-21.
 
 ## DONE
 
@@ -59,9 +60,19 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - 4.2 pcgen-normalize-output.py — commit `a9b28da` (receipt commits `0395d40`/`1002c2c`/`b2cf6f0`) — card `t_265eb8be` — receipt `artifacts/epic_4/pcgen-normalize-cycle_receipt.md`
 - 4.3 pcgen_runner_smoke.rs — commit `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` (receipt commit `41bd637`) — card `t_fdf81197` — receipt `artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md`
 - 4.4 verification cycle — commit `80ce33d` — card `t_1817068a` — receipt `artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md`
+- 6.1 UI-eval defect cycle shape — commit `<pending-this-commit>` — receipt `artifacts/epic_6/defect-cycle-shape_receipt.md`
 
 ## DISCOVERED
 
+> **Epic 6 per-defect UI-eval cycle shape (established by criterion 6.1, 2026-07-21):**
+>
+> 1. **Intake:** the operator's UI-evaluation session logs a defect as one row appended to this `## DISCOVERED` list, in the form:
+>    `- <ISO-8601 timestamp> — origin: <ui-eval session/ref> — priority: <tag, e.g. none | [P0-bump]> — <description> — suggested criterion: `6.<next>``
+> 2. **Dispatch:** the dispatcher picks the row → spawns exactly one cycle for it (criterion `6.<next>`, dynamic) → RED (a failing test reproducing the defect) → GREEN (the fix) → dual-audit (identifier-discipline + wired-integration four-check, scoped to that cycle's diff) → one cycle receipt at `artifacts/epic_6/<defect-id>_cycle_receipt.md` (schema: `artifacts/README.md`).
+> 3. **Closure gate:** Epic 6 is closed when every row logged under this heading has either a `complete` cycle receipt (linked from `## DONE`) or an explicit `## Open blockers` entry. An **empty** `## DISCOVERED` list for Epic 6 satisfies this gate vacuously — there is nothing to close.
+> 4. **Queue cap:** per `loop-instruction.md §8` (inherited from SD-24), more than 10 unprocessed Epic-6 rows under this heading is NON-self-healable — stop and surface rather than keep dispatching.
+>
+> **Vacuous-satisfaction note (criterion 6.1, 2026-07-21):** as of this cycle, the operator has not yet run a UI-evaluation session, so zero real defects have been discovered and zero rows exist below this comment for Epic 6. This is expected, not a blocker: Epic 6's closure gate ("every UI-discovered defect has either a complete cycle receipt or an `## Open blockers` entry") holds trivially over the empty set. No defect was fabricated to exercise the shape — criteria 6.2..6.N remain `dynamic-pending` until the operator's session produces real rows, at which point each new row is processed per the shape above.
 - Criterion 3.4 wired real (non-test) call sites to `Pf1Adapter` via each command file's own `resolve_rule_system_adapter` (`Box::new(Pf1Adapter)` for `"pf1"`), confirmed by `cargo build -p codex-desktop` dropping from 7 dead-code warnings to 5 pre-cycle vs. post-cycle. The two `#[allow(dead_code)]` annotations on `Pf1Adapter`'s struct/inherent-impl in `pf1_adapter.rs` are now cosmetically stale (the struct is genuinely used; the attribute is merely inert, not causing a warning either way) but were **not** removed — `pf1_adapter.rs` is outside criterion 3.4's file-touch grant (`cycles/3_4.md` names only the three command files + conditionally `main.rs`). Small, bounded, cosmetic-only; a future cycle that already has `pf1_adapter.rs` in its own grant (or an explicit housekeeping cycle) can drop the two annotations. Not blocking.
 - 3.4's own carry-forward note (register A3, from `cycles/3_4.md`) is reconfirmed still true post-cycle: `grep -rn` across `apps/desktop/src/` for any of the three command names still returns nothing — zero frontend callers exist yet. Criterion 3.5 owns closing that gap. **Resolved by 3.5** (see below).
 - Criterion 3.5: `revisionId` never crosses the wire to the frontend (`CharacterSummaryDto` / `LoadSavedCharacterResponse` in `character_hub.rs` never expose it, even though every mutate-op advances it server-side). This blocks any honest UI caller of `re_save_character` (which needs `expectedRevisionId` for its write-conflict guard) — register A3 was closed via `recompute_character` instead, which needs no such value. A follow-on cycle touching `character_hub.rs`'s response DTOs should add `revisionId` so `re_save_character` can eventually get a real frontend caller too. See `artifacts/epic_3/ui-adapter-aware-cycle_receipt.md`'s own `## DISCOVERED` section for the full note.
