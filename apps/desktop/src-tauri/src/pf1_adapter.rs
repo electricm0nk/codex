@@ -16,24 +16,20 @@
 //!
 //! `Pf1Adapter` (the zero-sized struct below) is the type this criterion's
 //! own doc (`cycles/3_2.md`) names as the destination for
-//! `impl RuleSystemAdapter for Pf1Adapter` once criterion 3.1's
-//! `RuleSystemAdapter` trait lands. As of this cycle's own dispatch, 3.1
-//! (parallel: yes, isolation: worktree — a sibling cycle, not a
-//! prerequisite this cycle blocks on per `cycles/3_2.md`'s own "Gated on:
-//! E2 complete" line) had not yet landed on `tranche/5-3`, and this
-//! criterion's file-touch grant does not include
-//! `rule_system_adapter.rs` — creating that file is 3.1's own grant, not
-//! this cycle's. Adding `impl RuleSystemAdapter for Pf1Adapter` here would
-//! either duplicate the trait definition (a real doctrine violation: two
-//! competing definitions of the same trait) or fail to compile until 3.1
-//! lands, breaking every other in-flight cycle on this branch. So
-//! `Pf1Adapter::level_up` below is a real, wired, tested inherent method
-//! (not a stub — it delegates to `level_up_character_at_root`, which this
-//! module also owns) exposed under the exact method name the trait surface
-//! (`cycles/3_1.md`) uses, ready for a one-line
-//! `impl RuleSystemAdapter for Pf1Adapter { fn level_up(...) { self.level_up(...) } }`
-//! once 3.1 lands — tracked as a `## DISCOVERED` follow-up in this cycle's
-//! own receipt rather than silently left unresolved.
+//! `impl RuleSystemAdapter for Pf1Adapter`. Criterion 3.1's
+//! `RuleSystemAdapter` trait (`rule_system_adapter.rs`) had not landed on
+//! `tranche/5-3` as of this cycle's own dispatch (parallel: yes, isolation:
+//! worktree — a sibling cycle, not a prerequisite this cycle blocks on per
+//! `cycles/3_2.md`'s own "Gated on: E2 complete" line) — `Pf1Adapter::level_up`
+//! was written first as a real, wired, tested inherent method under the
+//! trait surface's method name, ready to receive the `impl` once 3.1
+//! landed. 3.1 landed mid-cycle (a later rebase during this cycle's own
+//! push picked it up); the `impl RuleSystemAdapter for Pf1Adapter` block
+//! below was then added in the same cycle rather than deferred, using
+//! `compute_level_up_grants_for_class` (this cycle's own register-A2 fix,
+//! `src/rules_core/level_up.rs`) as `level_up`'s real per-delta dispatch —
+//! the fix and its production call site land together, not in two
+//! separate cycles.
 //!
 //! ## Carry-forward register A5 (operator-confirmed, `decisions.md §11`)
 //!
@@ -54,16 +50,27 @@ use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
-use codex::rules_core::pilot_compute::{build_pilot_headless_receipt, HeadlessReceiptStatus};
+use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
+use codex::rules_core::pilot_compute::{
+    build_pilot_headless_receipt, compute_pilot_base_chassis, HeadlessReceiptStatus,
+    PilotBaseChassisComputation,
+};
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::saved_character::local_store::SavedCharacterStore;
 
 use crate::character_hub::{
-    map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto, summarize_envelope,
-    CreateCharacterRequest, CreateCharacterResponse, HUMAN_RACE_ID, SOURCE_PACKAGE_ID,
+    map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto, map_summary_dto,
+    summarize_envelope, CreateCharacterRequest, CreateCharacterResponse,
+    ListSavedCharactersResponse, LoadSavedCharacterResponse, HUMAN_RACE_ID, SOURCE_PACKAGE_ID,
 };
+use crate::characterHub::appendToCharacter::{
+    append_to_character_at_root, AppendToCharacterResponse, ItemToAppendDto,
+};
+use crate::characterHub::recomputeCharacter::{recompute_character_at_root, RecomputeCharacterResponse};
+use crate::characterHub::reSaveCharacter::{re_save_character_at_root, ReSaveCharacterResponse};
 use crate::corpus_fixtures::corpus_fixture_bundle;
+use crate::rule_system_adapter::{ClassLevelDelta, RuleSystemAdapter};
 
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
@@ -94,6 +101,89 @@ impl Pf1Adapter {
         saved_at: &str,
     ) -> Result<CreateCharacterResponse, String> {
         level_up_character_at_root(root, class_id, saved_at)
+    }
+}
+
+impl RuleSystemAdapter for Pf1Adapter {
+    fn rule_system_id(&self) -> &'static str {
+        "pf1"
+    }
+
+    fn chassis_resolve(&self, input: &CharacterInput) -> PilotBaseChassisComputation {
+        compute_pilot_base_chassis(input)
+    }
+
+    /// Dispatches each `ClassLevelDelta` through `compute_level_up_grants_for_class`
+    /// (this cycle's own register-A2 fix) and merges the resulting plans —
+    /// so a multi-delta call (e.g. a Fighter+Wizard mix leveling both sides
+    /// in one request) produces the union of every class's real grants,
+    /// never the top-level `compute_level_up_grants`'s multiclass-gap empty
+    /// default this criterion's carry-forward note describes.
+    fn level_up(&self, character: &CharacterInput, deltas: &[ClassLevelDelta]) -> LevelUpPlan {
+        let mut plan = LevelUpPlan::default();
+        for delta in deltas {
+            let sub = compute_level_up_grants_for_class(
+                character,
+                &delta.class_id,
+                delta.from_level,
+                delta.to_level,
+            );
+            plan.automatic_features.extend(sub.automatic_features);
+            plan.pick_from_lists.extend(sub.pick_from_lists);
+            plan.resource_pool_change.pools.extend(sub.resource_pool_change.pools);
+            plan.prerequisites_added.extend(sub.prerequisites_added);
+            plan.capstone_threshold = plan.capstone_threshold || sub.capstone_threshold;
+        }
+        plan
+    }
+
+    fn save_character(
+        &self,
+        root: &Path,
+        expected_revision_id: &str,
+        saved_at: &str,
+    ) -> Result<ReSaveCharacterResponse, String> {
+        re_save_character_at_root(root, expected_revision_id, saved_at)
+    }
+
+    fn append_to_character(
+        &self,
+        root: &Path,
+        items_to_append: &[ItemToAppendDto],
+        saved_at: &str,
+    ) -> Result<AppendToCharacterResponse, String> {
+        append_to_character_at_root(root, items_to_append, saved_at)
+    }
+
+    fn recompute(&self, root: &Path, character_id: &str) -> RecomputeCharacterResponse {
+        recompute_character_at_root(root, character_id)
+    }
+
+    fn list_saved_characters(
+        &self,
+        characters_root: &Path,
+    ) -> Result<ListSavedCharactersResponse, String> {
+        let listing = SavedCharacterStore::list_all(characters_root).map_err(|err| err.message)?;
+        Ok(ListSavedCharactersResponse {
+            characters: listing.characters.iter().map(map_summary_dto).collect(),
+            unreadable_count: listing.unreadable_entries.len(),
+        })
+    }
+
+    fn load_saved_character(&self, root: &Path) -> Result<LoadSavedCharacterResponse, String> {
+        let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+
+        let receipt = build_pilot_headless_receipt(&envelope.character_input);
+        let view_model = PilotViewModel::from_receipt(&receipt);
+        let corpus_receipt =
+            compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
+
+        Ok(LoadSavedCharacterResponse {
+            summary: summarize_envelope(&envelope),
+            snapshot: view_model.snapshot.as_ref().map(map_snapshot_dto),
+            diagnostics: map_diagnostics_dto(&receipt.computation.diagnostics),
+            corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        })
     }
 }
 
@@ -618,5 +708,87 @@ mod tests {
         assert_eq!(reloaded.revision_id, format!("{character_id}.rev.2"));
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// `impl RuleSystemAdapter for Pf1Adapter` — proves `Pf1Adapter` genuinely
+    /// implements the full seven-method trait surface (criterion 3.1's
+    /// `rule_system_adapter.rs`) with real, wired behavior end to end, the
+    /// same way `rule_system_adapter.rs`'s own `TestPf1Delegate` test proved
+    /// the trait was *implementable* — this proves the *real* extracted
+    /// `Pf1Adapter` type is the implementation, not a parallel test-only one.
+    #[test]
+    fn pf1_adapter_implements_rule_system_adapter_end_to_end() {
+        let adapter: Box<dyn RuleSystemAdapter> = Box::new(Pf1Adapter);
+        assert_eq!(adapter.rule_system_id(), "pf1");
+
+        let character_id = "pf1-adapter-trait-impl";
+        let characters_root = tempdir("trait-impl-root");
+        let root = characters_root.join(character_id);
+        let envelope = seed_envelope(character_id, 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        // chassis_resolve: real compute over a real CharacterInput.
+        let chassis = adapter.chassis_resolve(&envelope.character_input);
+        assert_eq!(chassis.base_attack_bonus, 1, "human fighter level 1 chassis");
+
+        // level_up: register A2's multiclass-safe dispatch, exercised via a
+        // single-delta call here (the multiclass case is proven directly in
+        // `src/rules_core/level_up.rs`'s own tests).
+        let deltas = [ClassLevelDelta {
+            class_id: FIGHTER_CLASS_ID.to_owned(),
+            from_level: 1,
+            to_level: 2,
+        }];
+        let plan = adapter.level_up(&envelope.character_input, &deltas);
+        assert!(
+            !plan.automatic_features.is_empty(),
+            "Fighter 1 -> 2 should grant at least one automatic feature"
+        );
+
+        // list_saved_characters / load_saved_character: real disk I/O,
+        // reusing `character_hub`'s own mapping instead of re-deriving it.
+        let listing = adapter
+            .list_saved_characters(&characters_root)
+            .expect("list_saved_characters should succeed");
+        assert!(listing.characters.iter().any(|c| c.character_id == character_id));
+
+        let loaded = adapter
+            .load_saved_character(&root)
+            .expect("load_saved_character should succeed");
+        assert_eq!(loaded.summary.character_id, character_id);
+        assert!(loaded.snapshot.is_some());
+
+        // append_to_character: real corpus-validated batch append.
+        let append_result = adapter
+            .append_to_character(
+                &root,
+                &[ItemToAppendDto {
+                    item_id: "Dagger (Base)".to_owned(),
+                    active_state: crate::character_hub::ActiveStateDto::EquippedActive,
+                }],
+                "2026-07-21T01:00:00Z",
+            )
+            .expect("append_to_character should not error");
+        assert!(append_result.success, "appending a real item should succeed: {:?}", append_result.error);
+
+        // recompute: real read-and-recompute, no mutation.
+        let recomputed = adapter.recompute(&root, character_id);
+        assert!(recomputed.success, "recompute should succeed: {:?}", recomputed.error);
+
+        // save_character: real re-save via the revision-conflict-checked path.
+        let reloaded_after_append =
+            SavedCharacterStore::load(&root).expect("reload after append should succeed");
+        let saved = adapter
+            .save_character(&root, &reloaded_after_append.revision_id, "2026-07-21T02:00:00Z")
+            .expect("save_character should not error");
+        assert!(saved.success, "save_character should succeed: {:?}", saved.error);
+
+        let conflict = adapter
+            .save_character(&root, "stale-revision-not-on-disk", "2026-07-21T03:00:00Z")
+            .expect("save_character should not error even on a conflict rejection");
+        assert!(!conflict.success);
+        assert_eq!(conflict.error.as_deref(), Some("revision_conflict"));
+
+        std::fs::remove_dir_all(&characters_root).ok();
     }
 }

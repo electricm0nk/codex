@@ -323,7 +323,11 @@ pub(crate) fn map_diagnostics_dto(
         .collect()
 }
 
-fn map_summary_dto(summary: &SavedCharacterSummary) -> CharacterSummaryDto {
+// `pub(crate)` — `pf1_adapter.rs`'s `impl RuleSystemAdapter for Pf1Adapter`
+// (criterion 3.1's trait, landed after this cycle's own dispatch began;
+// wired here rather than left as a `## DISCOVERED` follow-up) reuses this
+// mapping for `list_saved_characters` rather than re-deriving it.
+pub(crate) fn map_summary_dto(summary: &SavedCharacterSummary) -> CharacterSummaryDto {
     CharacterSummaryDto {
         character_id: summary.character_id.clone(),
         display_label: summary.display_label.clone(),

@@ -471,15 +471,29 @@ mod tests {
         );
 
         // save_character: real re-save via the revision-conflict-checked path.
+        // Reads the on-disk revision_id fresh rather than reusing the
+        // pre-append `envelope.revision_id`: SD-25 Criterion 3.2 (register
+        // A5, landed in this branch's history after this test was first
+        // written) folded revision-advancing into
+        // `mutate_saved_character_at_root`, so `append_to_character` above
+        // already advanced the on-disk revision past the seed's `.rev.1`.
+        let post_append_revision_id = SavedCharacterStore::load(&root)
+            .expect("reload after append should succeed")
+            .revision_id;
         let saved = adapter
-            .save_character(&root, &envelope.revision_id, "2026-07-21T02:00:00Z")
+            .save_character(&root, &post_append_revision_id, "2026-07-21T02:00:00Z")
             .expect("save_character should not error");
         assert!(
             saved.success,
             "save_character with the correct expected_revision_id should succeed: {:?}",
             saved.error
         );
-        assert_eq!(saved.revision_id.as_deref(), Some("adapter-trait-test-char.rev.2"));
+        assert_eq!(
+            saved.revision_id.as_deref(),
+            Some("adapter-trait-test-char.rev.3"),
+            "rev.1 (seed) -> rev.2 (append_to_character's own revision-advance, register A5) \
+             -> rev.3 (this save_character call)"
+        );
 
         // save_character: the revision-conflict guard is real, not bypassed.
         let conflict = adapter
