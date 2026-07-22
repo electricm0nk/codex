@@ -22,7 +22,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 | 4.1 pcgen-run-character.sh | complete | 4.1 | `4c5d8d8` | drives real `./gradlew run --args=...` batch-export against a genuine `.pcg` (no mock); see artifacts/epic_4/pcgen-run-script-cycle_receipt.md |
 | 4.2 pcgen-normalize-output.py | complete | pcgen-normalize | `a9b28da` | verified against genuine real captured PCGen XML (pf_Paladin.pcg run via 4.1's script, not just a hand-written sample); see artifacts/epic_4/pcgen-normalize-cycle_receipt.md |
 | 4.3 pcgen_runner_smoke.rs | complete | 4.3 | `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` | flat `tests/pcgen_runner_smoke.rs` (drift from grant's nested `tests/oracle_validation/` path — crate has no nested-integration-test convention); unignored test verifies 4.1's real script; `#[ignore]`-gated pipeline test manually verified passing end-to-end against 4.2's script (both the in-flight copy and, after 4.2 landed concurrently, the real committed script); see artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md |
-| 4.4 verification cycle | complete | pcgen-runner-verification | `80ce33d` | unignored 4.3's pipeline smoke test, parameterized normalizer call from the real pilot fixtures (case_id/source_package_id/legacy_route read at test time, not hardcoded); real end-to-end run verified: all 9 mandatory dimensions populated, zero diagnostics; Epic 4 fully closed; see artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md |
+| 4.4 verification cycle | complete | pcgen-runner-verification | `80ce33d` | card `t_1817068a`; unignored 4.3's pipeline smoke test, parameterized normalizer call from the real pilot fixtures (case_id/source_package_id/legacy_route read at test time, not hardcoded); real end-to-end run verified: all 9 mandatory dimensions populated, zero diagnostics; Epic 4 fully closed; see artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md |
 | 5.1 corpus_ingest_diagnostic | complete | corpus-ingest-diagnostic | `f2c4a3e258ab7f94ebdede4e54131200bab416a0` | real per-book counts from rules_tables' own APIs (crb/apg/acg/beastiary1) + git-derived last_ingested_at; see artifacts/epic_5/corpus-ingest-diagnostic-cycle_receipt.md |
 | 6.1 UI-eval defect cycle shape | not-started | — | — | — |
 | 6.2..6.N per-defect | dynamic-pending | — | — | spawned dynamically; not directly dispatchable until spawned |
@@ -58,7 +58,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - 4.1 pcgen-run-character.sh — commit `4c5d8d8` (receipt commit `83063f8`) — card `t_dbbbdb9f` — receipt `artifacts/epic_4/pcgen-run-script-cycle_receipt.md`
 - 4.2 pcgen-normalize-output.py — commit `a9b28da` (receipt commits `0395d40`/`1002c2c`/`b2cf6f0`) — card `t_265eb8be` — receipt `artifacts/epic_4/pcgen-normalize-cycle_receipt.md`
 - 4.3 pcgen_runner_smoke.rs — commit `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` (receipt commit `41bd637`) — card `t_fdf81197` — receipt `artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md`
-- 4.4 verification cycle — commit `80ce33d` — card (backfilled after kanban mint) — receipt `artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md`
+- 4.4 verification cycle — commit `80ce33d` — card `t_1817068a` — receipt `artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md`
 
 ## DISCOVERED
 

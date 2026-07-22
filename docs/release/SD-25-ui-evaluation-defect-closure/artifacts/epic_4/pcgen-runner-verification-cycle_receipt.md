@@ -1,7 +1,7 @@
 # Cycle 4.4 — PCGen Runner Scaffolding / Criterion 4.4
 
-- **Card ID:** (backfilled after kanban mint — see progress.md / commit history)
-- **Commit SHA:** (this cycle's commit — see `git log -1 -- tests/pcgen_runner_smoke.rs` after push)
+- **Card ID:** t_1817068a
+- **Commit SHA:** `80ce33d` (test + receipt); `c5a1017` (progress.md)
 - **Files touched:** `tests/pcgen_runner_smoke.rs` (modified — 4.3's own file, permitted by this criterion's file-touch grant: "removing a 4.3 `#[ignore]` gate; small fixes to 4.1/4.2/4.3's own files if verification exposes defects")
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS (scoped to `tests/pcgen_runner_smoke.rs`, this cycle's sole touched path)
 - **Wired-integration audit result:** OK_NO_TOKENS (scoped to `tests/pcgen_runner_smoke.rs`; note the wired-integration glob set in `loop-instruction.md §6` doesn't even include `tests/**/*.rs`, so this file is outside its literal scope regardless — ran it anyway for completeness)
