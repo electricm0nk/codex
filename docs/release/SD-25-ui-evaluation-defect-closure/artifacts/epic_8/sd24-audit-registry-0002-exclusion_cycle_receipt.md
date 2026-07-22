@@ -1,7 +1,7 @@
 # Cycle sd24-audit-registry-0002-exclusion — Epic 8 Closure Epilogue / Precursor (standing test fix)
 
-- **Card ID:** (see kanban section below)
-- **Commit SHA:** (see report — filled after commit)
+- **Card ID:** t_6ffc2b84
+- **Commit SHA:** `42f972bd027f436debee000a162b38b76d742711`
 - **Files touched:**
   - `tests/sd24_wired_integration_audit.rs`
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
