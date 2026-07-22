@@ -1,6 +1,6 @@
 # Cycle SD-25-E7-DOC-BATCH — Epic 7 / Criterion 7.P (SD-24 Documentation-Staleness Batch)
 
-- **Card ID:** [pending hermes kanban mint]
+- **Card ID:** t_b8c34aba
 - **Commit SHA:** 4d4d18e
 - **Files touched:**
   - `../SD-24-beta-readiness-and-multiclass/content-unit-inventory.md` (B1, B2, B3, B9)

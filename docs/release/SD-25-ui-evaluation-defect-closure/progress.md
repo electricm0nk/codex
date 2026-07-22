@@ -62,7 +62,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - 4.4 verification cycle — commit `80ce33d` — card `t_1817068a` — receipt `artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md`
 - 6.1 UI-eval defect cycle shape — commit `bec34ec97b51ed3fdc2b4374eda429514d92575a` — card `t_6c03eb36` — receipt `artifacts/epic_6/defect-cycle-shape_receipt.md`
 - 7.1 residue intake — commit `78f776d` (progress.md content carried forward by concurrent commit `49a5437`) — card `t_2504ae02` — receipt `artifacts/epic_7/residue-intake-cycle_receipt.md`
-- 7.P SD-24 documentation-staleness batch — commit `4d4d18e` — [pending hermes kanban mint] — receipt `artifacts/epic_7/sd24-doc-batch-cycle_receipt.md`
+- 7.P SD-24 documentation-staleness batch — commit `4d4d18e` (doc corrections) + `df87efc` (receipt + progress) — card `t_b8c34aba` — receipt `artifacts/epic_7/sd24-doc-batch-cycle_receipt.md`
 
 ## DISCOVERED
 
