@@ -1,4 +1,4 @@
-# SD-25 — Epic Breakdown (8 epics / ~24 acceptance criteria)
+# SD-25 — Epic Breakdown (8 epics / 25 declarative acceptance criteria + dynamic)
 
 > **Operating method:** see `./scope-draft.md` — `scripts/workflow-dispatch.sh` (Workflow orchestrator). Bundle fires on `tranche/5-3`, kanban board `codex-tranche-5`. Cycle dispatch model is deterministic-seeded-then-dynamic (per SD-24 doctrine inherited through the template).
 
@@ -40,7 +40,7 @@ E1 Identifier Cleanup is the governance base; it fires FIRST. E2 Operator Pre-La
 - **GREEN:** after the move, existing tests still pass; the trait's Pf1 implementation lives at `pf1_adapter.rs`.
 - **Concurrency:** `parallel: yes`.
 - **SD-24 carry-forward (`sd24-carry-forward-register.md` A2):** the `level_up` method must not silently inherit `level_up::compute_level_up_grants`'s top-level-dispatcher gap — it currently returns an honestly-empty `LevelUpPlan::default()` for any multiclass mix (including Fighter+Wizard) because it never routes to the per-class functions for a mix. Widen the signature to accept explicit per-class from/to sub-levels, or add a dedicated multiclass entry point, as part of this extraction.
-- **SD-24 carry-forward (register A5):** `mutate_saved_character_at_root` and everything routed through it preserve whatever `revision_id` was already on disk instead of advancing it — only the new `reSaveCharacter` command advances the counter. Confirm with the operator whether to fold revision-advancing into `mutate_saved_character_at_root` itself as part of this extraction (a behavior change, not a pure move) or leave it for a later cycle.
+- **SD-24 carry-forward (register A5) — operator-confirmed 2026-07-21 (`decisions.md §11`):** `mutate_saved_character_at_root` and everything routed through it preserve whatever `revision_id` was already on disk instead of advancing it — only the new `reSaveCharacter` command advances the counter. Fold revision-advancing into `mutate_saved_character_at_root` itself as part of this extraction (a behavior change, operator-approved, not deferred).
 
 ### Criterion 3.3 — StubAdapter future-system stub
 
@@ -141,6 +141,15 @@ Reads SD-24's `progress.md ## Open blockers` and `## TODO` remainder directly (n
 
 **Concurrency:** CRB-description, APG-description, APG-spell-text, and Bestiary-1 ingestion are 4 disjoint file-touch cycles — `parallel: yes`, same `isolation: 'worktree'` pattern as SD-24's own Epic 6.
 
+### Criterion 7.P — SD-24 documentation-staleness batch (register §B; added 2026-07-21)
+
+- **Cycle doc:** `./cycles/7_P.md`
+- **Subagent tier:** Haiku (mechanical doc corrections; housekeeping doctrine).
+- **Concurrency:** `parallel: no` — one batched docs-only cycle; none of the items conflict on files.
+- **Scope:** the carry-forward register's §B items **B1–B4, B6–B7, B9–B11, B14** — every "the plan doc names a path/count/roster that doesn't match reality" correction from SD-24's run. B5, B8, B12 were already corrected in-cycle during SD-24 (register-only entries); B13 is open question Q6 (`risks-and-open-questions.md §4`, default: no action).
+- **Files:** `../SD-24-beta-readiness-and-multiclass/content-unit-inventory.md`, `technical-design.md`, `epic-breakdown.md`, `acceptance-and-verification.md` — SD-24's historical planning docs, corrected in place with a dated correction note per item so the historical record shows both the original claim and the live-verified truth.
+- **GREEN:** each of the 10 items' stale path/count/roster is corrected exactly as the register row specifies; no product code touched; receipt lists each item → correction applied.
+
 **Full carry-forward register:** `./sd24-carry-forward-register.md` — all 41 of SD-24's `## DISCOVERED` entries plus its 4 `## TODO` remainders, each with a disposition (real follow-on / documentation-only / already-fixed / process lesson) and, where applicable, an SD-25 epic/criterion assignment. This section and Epic 3's 3.2/3.4/3.5 carry only the items with real dispatchable work; the register has full custody of everything else, including 14 documentation-staleness corrections (batchable in one cycle) and 3 process/tooling lessons for `scripts/workflow-dispatch.sh`'s own authoring.
 
 ## Epic 8 — Closure Epilogue (fires LAST; subagent tiering per-criterion)
@@ -172,7 +181,7 @@ Reads SD-24's `progress.md ## Open blockers` and `## TODO` remainder directly (n
 
 ---
 
-## Quick reference — 8 epics / ~25 criteria
+## Quick reference — 8 epics / 26 declarative criteria
 
 | Epic | Declarative criteria | Dynamic criteria | Concurrency |
 |---|---|---|---|
@@ -182,8 +191,8 @@ Reads SD-24's `progress.md ## Open blockers` and `## TODO` remainder directly (n
 | E4 PCGen Runner | 4 | 0 | 3 parallel + 1 serial |
 | E5 Corpus Ingest Diagnostic | 1 | 0 | serial |
 | E6 UI-Eval Defects | 1 cycle-shape + dynamic | ~5–10 defects | serial |
-| E7 Per-class residue + equipment/spell corpus intake + GE-07 snapshot | 3 intake + dynamic | ~3–5 per-class features | 4 of the corpus-intake cycles parallel; rest serial |
+| E7 Per-class residue + equipment/spell corpus intake + GE-07 snapshot + SD-24 doc batch | 4 intake + dynamic | ~3–5 per-class features | 4 of the corpus-intake cycles parallel; rest serial |
 | E8 Closure Epilogue | 5 | 0 | serial; sub-step tiering (Haiku/Sonnet/Opus) |
-| **Total** | **25** | **~8–15 dynamic** | per-`parallel` row gets `isolation: worktree` |
+| **Total** | **26** | **~8–15 dynamic** | per-`parallel` row gets `isolation: worktree` |
 
 Dynamic criteria grow as the operator's UI-eval session + per-class residue intake produce findings. The orchestrator script handles dynamic entries via `## DISCOVERED` priority-bump mechanism; the closure gate covers both declarative and dynamic criteria. Full carry-forward custody from SD-24's 41 `## DISCOVERED` entries + 4 `## TODO` remainders: `./sd24-carry-forward-register.md`.

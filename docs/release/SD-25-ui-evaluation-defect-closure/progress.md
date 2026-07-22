@@ -25,9 +25,12 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 | 4.4 verification cycle | not-started | — | — | parallel: no |
 | 5.1 corpus_ingest_diagnostic | not-started | — | — | serial |
 | 6.1 UI-eval defect cycle shape | not-started | — | — | — |
-| 6.2..6.N per-defect | not-started | — | — | spawned dynamically |
+| 6.2..6.N per-defect | dynamic-pending | — | — | spawned dynamically; not directly dispatchable until spawned |
 | 7.1 residue intake | not-started | — | — | — |
-| 7.2..7.M per-feature | not-started | — | — | spawned dynamically |
+| 7.2..7.M per-feature | dynamic-pending | — | — | spawned dynamically; not directly dispatchable until spawned |
+| 7.N equipment/spell corpus intake | not-started | — | — | SD-24 carry-forward (register A8, A10–A17); 4 cycles (CRB-desc, APG-desc, APG-spell-text, Bestiary-1); parallel: yes, isolation: worktree |
+| 7.O GE-07 pilot-shell-snapshot real implementation | not-started | — | — | SD-24 carry-forward (register A1); BLOCKED on open question Q5 (`risks-and-open-questions.md §4`) — dispatch the design-decision request only until answered |
+| 7.P SD-24 documentation-staleness batch | not-started | — | — | SD-24 carry-forward (register §B: B1–B4, B6–B7, B9–B11, B14); docs-only, one batched cycle; Haiku |
 | 8.1 Final criterion scan | not-started | — | — | fires LAST; Sonnet |
 | 8.2 Architecture closure pipeline | not-started | — | — | fires LAST; Opus |
 | 8.3 Release notes | not-started | — | — | fires LAST; Haiku |
@@ -36,7 +39,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 
 ## TODO (deterministic seed)
 
-- 1.1, 2.1–2.5, 3.1–3.5, 4.1–4.4, 5.1, 6.1, 7.1, 8.1–8.5
+- 1.1, 2.1–2.5, 3.1–3.5, 4.1–4.4, 5.1, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
 
 ## DONE
 
