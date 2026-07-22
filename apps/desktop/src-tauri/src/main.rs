@@ -13,6 +13,7 @@ mod pf1_adapter;
 mod race_catalog;
 mod rule_system_adapter;
 mod spell_catalog;
+mod stub_adapter;
 mod support_state_matrix_bridge;
 mod update;
 
