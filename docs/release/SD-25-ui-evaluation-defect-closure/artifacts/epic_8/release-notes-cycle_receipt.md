@@ -1,7 +1,7 @@
 # Cycle 8.3 — Epic 8 Closure Epilogue / Criterion 8.3
 
-- **Card ID:** (pending hermes kanban creation)
-- **Commit SHA:** (pending push)
+- **Card ID:** t_be354109
+- **Commit SHA:** cfd8227b3be0f93966f8173167e245fd997aee4a
 - **Files touched:**
   - `./release-notes.md` — populated with all 7 required sections (Summary, User-Visible Changes, Defects Fixed, Operational Notes, Verification Evidence, Known Issues, Update Eligibility).
   - `./progress.md` — updated criterion 8.3 row to `complete`.
