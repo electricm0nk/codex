@@ -17,7 +17,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 | 3.1 RuleSystemAdapter trait | complete | 3.1 | `490332d` | trait + inline dyn-dispatch test wired to real functions; see artifacts/epic_3/rule-system-adapter-trait-cycle_receipt.md |
 | 3.2 Pf1Adapter extraction | complete | pf1-adapter-extraction | `dccfcb87673e2980b09fc9ba50f7bf68b7945f19` | Pf1Adapter extracted from character_hub.rs; register A5 (revision_id fold-in) + A2 (multiclass level-up dispatch) resolved; impl RuleSystemAdapter for Pf1Adapter completed after 3.1 landed mid-cycle; see artifacts/epic_3/pf1-adapter-extraction-cycle_receipt.md |
 | 3.3 StubAdapter | complete | 3.3 | `c41aedc` | StubAdapter implements full RuleSystemAdapter surface; wired-integration-stubs-registry.md entry 0002 landed same commit; see artifacts/epic_3/stub-adapter-cycle_receipt.md |
-| 3.4 Tauri command routing | not-started | — | — | parallel: no |
+| 3.4 Tauri command routing | complete | 3.4 | `49097b4` | appendToCharacter/recomputeCharacter/reSaveCharacter accept rule_system_id and dispatch through RuleSystemAdapter (Pf1Adapter for "pf1", StubAdapter otherwise); wired-integration-stubs-registry.md entry 0002 widened same commit; see artifacts/epic_3/command-routing-cycle_receipt.md |
 | 3.5 UI panel adapter-aware | not-started | — | — | parallel: yes |
 | 4.1 pcgen-run-character.sh | not-started | — | — | parallel: yes |
 | 4.2 pcgen-normalize-output.py | not-started | — | — | parallel: yes |
@@ -39,7 +39,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 
 ## TODO (deterministic seed)
 
-- 3.4–3.5, 4.1–4.4, 5.1, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
+- 3.5, 4.1–4.4, 5.1, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
 
 ## DONE
 
@@ -52,10 +52,12 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - 3.1 RuleSystemAdapter trait — commit `490332d` — receipt `artifacts/epic_3/rule-system-adapter-trait-cycle_receipt.md`
 - 3.2 Pf1Adapter extraction — commit `dccfcb87673e2980b09fc9ba50f7bf68b7945f19` (extraction+A5+A2: `4fe7703`; RuleSystemAdapter impl: `dccfcb8`) — receipt `artifacts/epic_3/pf1-adapter-extraction-cycle_receipt.md`
 - 3.3 StubAdapter — commit `c41aedc` — receipt `artifacts/epic_3/stub-adapter-cycle_receipt.md`
+- 3.4 Tauri command routing — commit `49097b4` — receipt `artifacts/epic_3/command-routing-cycle_receipt.md`
 
 ## DISCOVERED
 
-- Once criterion 3.4 (Tauri command-surface routing) wires a real `#[tauri::command]` call site to `Pf1Adapter`, remove the two `#[allow(dead_code)]` annotations on `Pf1Adapter`'s struct/inherent-impl in `pf1_adapter.rs` (their only caller today is `#[cfg(test)]`). Small, bounded, not blocking. See `artifacts/epic_3/pf1-adapter-extraction-cycle_receipt.md`.
+- Criterion 3.4 wired real (non-test) call sites to `Pf1Adapter` via each command file's own `resolve_rule_system_adapter` (`Box::new(Pf1Adapter)` for `"pf1"`), confirmed by `cargo build -p codex-desktop` dropping from 7 dead-code warnings to 5 pre-cycle vs. post-cycle. The two `#[allow(dead_code)]` annotations on `Pf1Adapter`'s struct/inherent-impl in `pf1_adapter.rs` are now cosmetically stale (the struct is genuinely used; the attribute is merely inert, not causing a warning either way) but were **not** removed — `pf1_adapter.rs` is outside criterion 3.4's file-touch grant (`cycles/3_4.md` names only the three command files + conditionally `main.rs`). Small, bounded, cosmetic-only; a future cycle that already has `pf1_adapter.rs` in its own grant (or an explicit housekeeping cycle) can drop the two annotations. Not blocking.
+- 3.4's own carry-forward note (register A3, from `cycles/3_4.md`) is reconfirmed still true post-cycle: `grep -rn` across `apps/desktop/src/` for any of the three command names still returns nothing — zero frontend callers exist yet. Criterion 3.5 owns closing that gap.
 
 ## Cycle log
 
