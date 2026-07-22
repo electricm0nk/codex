@@ -1,8 +1,11 @@
-//! Oracle-validation and parity-harness surface (GE-05).
+//! Oracle-validation and parity-harness surface (GE-05 / SD-26 Epic 2).
 //!
-//! This module currently exposes only the GE05-E2-F1 golden-case fixture schema.
-//! Comparator, normalization, parity-report, and PCGen-runner behavior are
-//! intentionally out of scope for this slice and live in later GE-05 slices.
+//! Exposes the GE05-E2-F1 golden-case fixture schema, the GE06-E3-F1 selected
+//! parity-dimension adapter, and (as of SD-26 Criterion 2.1) the
+//! Oracle-Harness comparator. Normalization-rule authoring, parity-report
+//! rendering, and the PCGen runner (SD-26 Criteria 2.2-2.4) remain out of
+//! scope and land in later SD-26 Epic 2 cycles.
 
+pub mod comparator;
 pub mod golden_fixture;
 pub mod selected_parity_dimensions;
