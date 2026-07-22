@@ -125,7 +125,7 @@ Build counter at SD-23 launch (filled by pre-launch checklist step 7):
 ### Cycle 13 — Closure Epilogue / Criterion 27 (graphify update)
 - **Card ID:** t_6a94faea
 - **Commit SHAs:** `a5b22d4` (receipt + captured log), `874a662` (artifact receipt)
-- **Files touched:** `docs/release/SD-23-character-mutation-and-wired-integration/receipts.md` (append), `graphify-out/.truth-up-run-2026-07-21T03:38:33Z.log` (new), `docs/release/SD-23-character-mutation-and-wired-integration/artifacts/epic_7/graphify_update_cycle_receipt.md` (new)
+- **Files touched:** `docs/release/SD-23-character-mutation-and-wired-integration/receipts.md` (append), `graphify-out/.truth-up-run-2026-07-21T03-38-33Z.log` (new), `docs/release/SD-23-character-mutation-and-wired-integration/artifacts/epic_7/graphify_update_cycle_receipt.md` (new)
 - **Audit result:** N/A — doc-only cycle, no code diff
 - **Acceptance criterion:** Criterion 27 — `update_graphify.py` runs, appends a `graphify:update` receipt (success or failure both count); non-zero exit does not refuse the closure pipeline.
 - **Status:** complete
