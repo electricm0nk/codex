@@ -87,7 +87,7 @@ jobs:
           echo "Stamped build version ${VERSION}"
 
       - name: Upload stamped sources
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: stamped-sources
           path: |
@@ -180,7 +180,7 @@ jobs:
       # stamp job holds the authoritative 0.0.${GITHUB_RUN_NUMBER} value;
       # both publish jobs consume ${{ needs.stamp.outputs.version }}.
       - name: Download stamped sources
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: stamped-sources
 
@@ -373,7 +373,7 @@ jobs:
       # create + channel-index push` sequence that ran BEFORE the windows
       # and macos jobs and therefore could not see their artifacts.
       - name: Upload linux platform artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: platform-linux
           path: |
@@ -406,7 +406,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Download stamped sources
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: stamped-sources
 
@@ -455,7 +455,7 @@ jobs:
           echo "dmg_url=TBD" >> "$GITHUB_OUTPUT"
 
       - name: Upload macos platform artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: platform-macos
           path: |
@@ -483,7 +483,7 @@ jobs:
 
       # Same source of truth as the linux + macos jobs: the `stamp` job's output.
       - name: Download stamped sources
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: stamped-sources
 
@@ -561,7 +561,7 @@ jobs:
           echo "nsis_name=${NSIS_NAME}" >> "$GITHUB_OUTPUT"
 
       - name: Upload windows platform artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: platform-windows
           path: |
@@ -604,17 +604,17 @@ jobs:
       # depending on which platform jobs succeeded; we do `continue-on-error`
       # so a single platform's missing-artifact doesn't fail the whole job.
       - name: Download platform-linux artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: platform-linux
         continue-on-error: true
       - name: Download platform-macos artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: platform-macos
         continue-on-error: true
       - name: Download platform-windows artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: platform-windows
         continue-on-error: true

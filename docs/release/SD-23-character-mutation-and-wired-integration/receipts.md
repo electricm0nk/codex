@@ -48,7 +48,7 @@ Per-cycle post-mortems for the bundle's 33 acceptance criteria live in `progress
   graphify_exit_code: 1
   outcome: failed
   wall_clock_seconds: 0.5
-  log_path: graphify-out/.truth-up-run-2026-07-21T03:38:33Z.log
+  log_path: graphify-out/.truth-up-run-2026-07-21T03-38-33Z.log
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)

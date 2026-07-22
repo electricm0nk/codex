@@ -8,12 +8,12 @@
 [graphify-update] graphify CLI: /home/ubuntu/.local/bin/graphify
 [graphify-update] invocation: /home/ubuntu/.local/bin/graphify cluster-only /home/ubuntu/workspace/repos/codex --budget 500000 --exclude node_modules,target,dist,build,.git,out,dist-ssr,.next,coverage
 [graphify-update] graphify exit=1, elapsed=0.5s, outcome=failed
-[graphify-update] log written: graphify-out/.truth-up-run-2026-07-21T03:38:33Z.log
+[graphify-update] log written: graphify-out/.truth-up-run-2026-07-21T03-38-33Z.log
 [graphify-update] appended receipt to receipts.md
 [graphify-update] graphify update complete (with failure receipt; pipeline continues per operator directive)
 ```
 
-Captured log (`graphify-out/.truth-up-run-2026-07-21T03:38:33Z.log`):
+Captured log (`graphify-out/.truth-up-run-2026-07-21T03-38-33Z.log`):
 ```
 error: no graph found at /home/ubuntu/workspace/repos/codex/graphify-out/graph.json — run /graphify first
 ```
