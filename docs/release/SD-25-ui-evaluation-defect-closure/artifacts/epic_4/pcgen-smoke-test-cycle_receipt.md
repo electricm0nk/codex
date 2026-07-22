@@ -1,6 +1,6 @@
 # Cycle 4.3 — PCGen Runner Scaffolding / Criterion 4.3
 
-- **Card ID:** t_TBD (backfilled after kanban mint; see report)
+- **Card ID:** t_fdf81197
 - **Commit SHA:** `93003f67cd2dc5ebe72b8e040ee3511b5bb27021`
 - **Files touched:** `tests/pcgen_runner_smoke.rs` (new)
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS (scoped to `tests/pcgen_runner_smoke.rs`; the unscoped whole-tranche `BASE_BRANCH...HEAD` diff surfaces pre-existing `sd13_`/`SD11`/`SD12`-named identifiers from prior, already-landed cycles — not this cycle's diff — so the audit was scoped to this cycle's own touched path per the dispatch brief's "final diff scoped to the paths you touched" instruction)
