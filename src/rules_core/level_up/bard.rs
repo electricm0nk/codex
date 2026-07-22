@@ -65,6 +65,18 @@ use crate::rules_core::rules_tables::RuleSetId;
 
 const BARD_CLASS_ID: &str = "class:bard";
 const HUMAN_RACE_ID: &str = "race:human";
+/// SD-25 Epic 7 (criterion 7.6 per-class residue audit) finding: the exact
+/// Wizard SD-24 bug shape (see `wizard.rs`'s own `WIZARD_RECOGNITION_ID` doc
+/// comment) reproduced here. `pilot_compute.rs`'s
+/// `explain_bard_level1_spell_baseline` pushes this id as a bounded +0
+/// recognition record onto `.explanations`, but its own second segment
+/// (`spell_baseline`) never matched either of this module's two admitted
+/// prefixes (`"class_chassis.bard."` / `"class_feature.bard."`), so it was
+/// silently dropped from the `LevelUpPlan` even on the very first Bard
+/// level (0 -> 1). Added by this audit cycle, mirroring `wizard.rs`'s
+/// `WIZARD_RECOGNITION_ID` and `sorcerer.rs`'s `SORCERER_RECOGNITION_ID`,
+/// both of which already carry the identical whitelist entry.
+const BARD_RECOGNITION_ID: &str = "class_chassis.spell_baseline.bard";
 /// PF1 Core Rulebook Bard capstone: Deadly Performance, granted at 20th
 /// level (verified against `pilot_compute.rs`'s own
 /// `BARD_DEADLY_PERFORMANCE_LEVEL` gate and its doc comment naming
@@ -215,7 +227,8 @@ fn append_class_feature_grants(
     let to_explanations = bard_chassis_explanations(character, to_level);
 
     for to_explanation in &to_explanations {
-        let is_bard_class_feature_id = to_explanation.id.starts_with("class_chassis.bard.")
+        let is_bard_class_feature_id = to_explanation.id == BARD_RECOGNITION_ID
+            || to_explanation.id.starts_with("class_chassis.bard.")
             || to_explanation.id.starts_with("class_feature.bard.");
         let is_covered_elsewhere = to_explanation.id
             == BARDIC_PERFORMANCE_ROUNDS_PER_DAY_EXPLANATION_ID
@@ -286,5 +299,6 @@ fn append_class_feature_grants(
 fn friendly_name(id: &str) -> String {
     id.trim_start_matches("class_chassis.bard.")
         .trim_start_matches("class_feature.bard.")
+        .trim_start_matches("class_chassis.spell_baseline.")
         .replace(['_', '.'], " ")
 }
