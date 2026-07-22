@@ -1,6 +1,6 @@
 # Cycle epic2-2.2-normalization — Epic 2 Oracle-Harness Comparator / Criterion 2.2
 
-- **Card ID:** t_pending (see report; kanban card minted post-hoc as a done-receipt — not a live claim)
+- **Card ID:** t_e9af0b3c (receipt only, minted post-hoc as a done-receipt — not a live claim)
 - **Commit SHA:** a87bc0d
 - **Files touched:**
   - `src/oracle_validation/normalization.rs` (new)
