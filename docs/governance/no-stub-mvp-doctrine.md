@@ -7,7 +7,7 @@ scope: universal
 status: active
 review_state: accepted
 last_reviewed_at: 2026-07-20
-canonical_source: ~/workspace/repos/codex/governance/no-stub-mvp-doctrine.md (this file)
+canonical_source: ~/workspace/repos/codex/docs/governance/no-stub-mvp-doctrine.md (this file)
 workspace_citation: ~/workspace/governance/doctrine/no-stub-mvp-doctrine.md
 supersedes: (none — first issuance)
 upstream_targets:
