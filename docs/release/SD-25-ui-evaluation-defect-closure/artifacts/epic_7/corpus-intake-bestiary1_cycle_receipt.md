@@ -1,7 +1,7 @@
 # Cycle 7.N (bestiary1) — Epic 7 (Equipment/spell corpus intake) / Criterion 7.N item 4
 
-- **Card ID:** `t_<pending-backfill>` (kanban card minted at push time; SHA/card-ID self-reference backfill follows the established pattern from criteria 6.1/7.O/7.1/7.N-crb-description/7.N-apg-description receipts if a follow-up commit is needed)
-- **Commit SHA:** `<pending-commit>` (see this cycle's actual commit list in the PR/branch history for the final SHA after push)
+- **Card ID:** `t_83e4b64b`
+- **Commit SHA:** `9824776` (pushed to `tranche/5-3`; full SHA `982477681e4846c767e3e58ba341553147e0dae6`; this receipt's own card-ID backfill lands in a small follow-up commit, per the established self-reference-backfill pattern used by criteria 6.1/7.O/7.1/7.N-crb-description/7.N-apg-description)
 - **Files touched:**
   - NEW `src/rules_core/rules_tables/beastiary1/equipment_tables.rs`
   - NEW `src/rules_core/rules_tables/beastiary1/equipment_data.rs`
