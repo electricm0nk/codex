@@ -1,7 +1,7 @@
 # Cycle paladin-residue-audit — Epic 7 (Deferred Per-Class Work & Coverage Backlog) / Criterion 7.9
 
-- **Card ID:** `<pending — see kanban section of this receipt / progress.md log>`
-- **Commit SHA:** `<pending — see push section of this receipt / progress.md log>`
+- **Card ID:** `t_ae5fc015`
+- **Commit SHA:** `d74dee2` (functional fix + test), `6c366c7` (progress.md)
 - **Files touched:**
   - `src/rules_core/level_up/paladin.rs` (functional fix: added `PALADIN_HYBRID_BASELINE_RECOGNITION_ID` whitelist entry to `append_class_feature_grants`'s filter, plus a matching `friendly_name` trim and a corrective doc-comment addendum — see Notes)
   - NEW `tests/sd25_paladin_level_up_explanation_coverage.rs` (the RED→GREEN audit test)
