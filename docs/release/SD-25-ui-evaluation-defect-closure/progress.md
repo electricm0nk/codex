@@ -22,7 +22,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 | 4.1 pcgen-run-character.sh | complete | 4.1 | `4c5d8d8` | drives real `./gradlew run --args=...` batch-export against a genuine `.pcg` (no mock); see artifacts/epic_4/pcgen-run-script-cycle_receipt.md |
 | 4.2 pcgen-normalize-output.py | complete | pcgen-normalize | `a9b28da` | verified against genuine real captured PCGen XML (pf_Paladin.pcg run via 4.1's script, not just a hand-written sample); see artifacts/epic_4/pcgen-normalize-cycle_receipt.md |
 | 4.3 pcgen_runner_smoke.rs | complete | 4.3 | `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` | flat `tests/pcgen_runner_smoke.rs` (drift from grant's nested `tests/oracle_validation/` path — crate has no nested-integration-test convention); unignored test verifies 4.1's real script; `#[ignore]`-gated pipeline test manually verified passing end-to-end against 4.2's script (both the in-flight copy and, after 4.2 landed concurrently, the real committed script); see artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md |
-| 4.4 verification cycle | not-started | — | — | parallel: no |
+| 4.4 verification cycle | complete | pcgen-runner-verification | `80ce33d` | unignored 4.3's pipeline smoke test, parameterized normalizer call from the real pilot fixtures (case_id/source_package_id/legacy_route read at test time, not hardcoded); real end-to-end run verified: all 9 mandatory dimensions populated, zero diagnostics; Epic 4 fully closed; see artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md |
 | 5.1 corpus_ingest_diagnostic | complete | corpus-ingest-diagnostic | `f2c4a3e258ab7f94ebdede4e54131200bab416a0` | real per-book counts from rules_tables' own APIs (crb/apg/acg/beastiary1) + git-derived last_ingested_at; see artifacts/epic_5/corpus-ingest-diagnostic-cycle_receipt.md |
 | 6.1 UI-eval defect cycle shape | not-started | — | — | — |
 | 6.2..6.N per-defect | dynamic-pending | — | — | spawned dynamically; not directly dispatchable until spawned |
@@ -39,7 +39,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 
 ## TODO (deterministic seed)
 
-- 4.4, 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
+- 6.1, 7.1, 7.N (×4 corpus-intake cycles), 7.O (design-decision request first; register A1), 7.P (SD-24 doc batch; register §B), 8.1–8.5
 
 ## DONE
 
@@ -58,6 +58,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - 4.1 pcgen-run-character.sh — commit `4c5d8d8` (receipt commit `83063f8`) — card `t_dbbbdb9f` — receipt `artifacts/epic_4/pcgen-run-script-cycle_receipt.md`
 - 4.2 pcgen-normalize-output.py — commit `a9b28da` (receipt commits `0395d40`/`1002c2c`/`b2cf6f0`) — card `t_265eb8be` — receipt `artifacts/epic_4/pcgen-normalize-cycle_receipt.md`
 - 4.3 pcgen_runner_smoke.rs — commit `93003f67cd2dc5ebe72b8e040ee3511b5bb27021` (receipt commit `41bd637`) — card `t_fdf81197` — receipt `artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md`
+- 4.4 verification cycle — commit `80ce33d` — card (backfilled after kanban mint) — receipt `artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md`
 
 ## DISCOVERED
 
@@ -71,6 +72,7 @@ This file is the bundle's runtime state. The orchestrator's `progress.md` is the
 - Criterion 4.2: reconfirms 4.1's pilot-`.pcg` gap (still open) but closes the loop one step further — chained 4.1's real script against `pf_Paladin.pcg` end-to-end and fed the genuine captured XML export through `pcgen-normalize-output.py`; all 9 `SelectedDimension`-shaped outputs matched the raw XML exactly with zero diagnostics. This is real PCGen runtime output (not the pilot character, but not hand-written either), so criterion 4.2 itself is proven against real captured data ahead of 4.4. 4.4 (or a follow-on cycle) still needs a real pilot-case `.pcg` for the golden-fixture comparison to be about the actual SD-25 pilot character specifically. See `artifacts/epic_4/pcgen-normalize-cycle_receipt.md`.
 - Criterion 4.3: `cycles/4_3.md`'s file-touch grant path (`tests/oracle_validation/pcgen_runner_smoke.rs`) is unusable as literally written — this crate's Cargo integration-test discovery only auto-compiles `.rs` files directly under `tests/`, never files in an un-marked subdirectory; a file at that exact path would never run under `cargo test`. Corrected to the crate's real flat `tests/<name>.rs` convention (`tests/pcgen_runner_smoke.rs`). Future cycles authoring new Rust integration tests in this bundle should use the flat convention directly rather than copying a nested path from grant text. See `artifacts/epic_4/pcgen-smoke-test-cycle_receipt.md`.
 - Criterion 4.3: while this cycle was mid-push-retry, criterion 4.2 (`scripts/pcgen-normalize-output.py`) landed on `tranche/5-3` concurrently. Re-running the `#[ignore]`-gated pipeline test against the now-real, committed 4.2 script confirms it passes end-to-end for real (not just against the temporary pre-landing copy used for this cycle's own verification). 4.4 can remove the `#[ignore]` immediately — its only remaining real blocker is the pilot-`.pcg` gap noted above (4.1's discovery).
+- Criterion 4.4: closed the pilot-`.pcg` gap by explicit re-scope (4.3's second authorized option) rather than hand-authoring a new `.pcg` (forbidden by 4.4's "no new production files" grant): the live PCGen run still uses the `pf_Paladin.pcg` substitute, but the normalizer invocation is now parameterized from the real pilot fixtures' `case_id`/`source_package_id`/`legacy_route` fields (read at test time) and the output is asserted identity-comparable against the golden fixture, consistent with the golden fixture's own `codex_output_state=unresolved`/`current_claim_status=not_yet_grounded` non-parity disclaimer. A future cycle (SD-26 oracle-harness work or a dedicated Epic 4 follow-on) should hand-author or GUI-build a genuine `pf1-crb-human-fighter-level1.pcg` so the pipeline can eventually run the literal pilot character. Also flagged: the golden fixture's `source_package=core_rulebook`/`source_system=pathfinder-1e` split-naming differs from the deterministic-input fixture's dotted `source_package_id=pf1.core_rulebook` — non-blocking, future fixture-schema reconciliation. See `artifacts/epic_4/pcgen-runner-verification-cycle_receipt.md`.
 
 ## Cycle log
 
