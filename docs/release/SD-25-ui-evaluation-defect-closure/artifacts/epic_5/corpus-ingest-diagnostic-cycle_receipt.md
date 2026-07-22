@@ -1,7 +1,7 @@
 # Cycle corpus-ingest-diagnostic — Epic 5 (Corpus Ingest Diagnostic) / Criterion 5.1
 
-- **Card ID:** (filled in after kanban mint — see below)
-- **Commit SHA:** (filled in after commit — see below)
+- **Card ID:** t_c56d5a33
+- **Commit SHA:** `f2c4a3e258ab7f94ebdede4e54131200bab416a0` (implementation); `a6071ad` (progress.md update)
 - **Files touched:**
   - NEW `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`
   - NEW `apps/desktop/src/characterHub/CorpusIngestDiagnosticPanel.tsx`
