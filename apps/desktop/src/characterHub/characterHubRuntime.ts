@@ -18,7 +18,7 @@ import type { RuleSetId } from './LandingScreen';
  * `resolve_rule_system_adapter` dispatch seam understands (SD-25 Criterion
  * 3.4: `"pf1"` resolves to the real `Pf1Adapter`; any other id resolves to
  * the governed `StubAdapter` seam — see
- * `governance/wired-integration-stubs-registry.md` entry 0002 — which
+ * `docs/governance/wired-integration-stubs-registry.md` entry 0002 — which
  * honestly errors rather than silently falling through to PF1 logic).
  * Pathfinder 1e is the only rule set with a real adapter today, so every
  * other `RuleSetId` intentionally passes through unchanged rather than

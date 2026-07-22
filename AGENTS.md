@@ -57,8 +57,8 @@ If those fields are missing, stop. Planning-ready is not execution-ready.
 
 6. **No stubs in shipping code. Wired Integration doctrine applies.**
    - Code paths that ship must actually do what they claim to do. No empty event handlers on user-facing affordances, no "would have done" return strings, no fixture-only data in production paths, no `success: true` from operations that did not actually do the work.
-   - Full doctrine: `./governance/no-stub-mvp-doctrine.md`. Companion skill: `wired-integration-discipline`.
-   - Stubs are the exception, not the rule. Operator-granted exceptions live in `./governance/wired-integration-stubs-registry.md`.
+   - Full doctrine: `./docs/governance/no-stub-mvp-doctrine.md`. Companion skill: `wired-integration-discipline`.
+   - Stubs are the exception, not the rule. Operator-granted exceptions live in `./docs/governance/wired-integration-stubs-registry.md`.
    - Every code-bearing cycle runs the four-check audit defined in the skill before marking `complete`. Audit output is captured in the cycle receipt at `programs/codex/requirements/SD-N-<slug>/artifacts/<epic>/<cycle>_cycle_receipt.md`.
    - The doctrine applies to every SD-N bundle launching on or after 2026-07-20. Earlier bundles' stubs are remediated in their next bundle's Wired Integration Cleanup epic.
 

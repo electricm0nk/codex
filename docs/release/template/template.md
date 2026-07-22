@@ -16,13 +16,7 @@ date: <ISO-8601>
 
 > ## ⚠️  OPERATING METHOD — REQUIRED FOR THIS BUNDLE  ⚠️
 >
-> **This bundle is operated via the `/loop 60m /batch /goal` invocation model — NOT a one-shot task.** After exiting plan mode, the coding harness is **required** to launch SD-NN as:
->
-> ```bash
-> /loop 60m /batch /goal ./loop-instruction.md
-> ```
->
-> The `/loop` invocation uses a repo-relative path — the harness reads `./loop-instruction.md` from inside this folder. The full per-cycle procedure, file-touch partition, post-mortem card mint, and progress-doc update live in `loop-instruction.md`'s body. The scope-draft ([`./scope-draft.md`](./scope-draft.md)) is the canonical handoff *what*; the loop-instruction is the *how*.
+> **This bundle is operated via `Workflow`-orchestrated dispatch, invoked from a live session — NOT `/loop /batch` and NOT a one-shot task.** `/loop /batch` cannot run unattended (`/batch` requires a human to type it per invocation). The full per-cycle procedure, orchestration mode, concurrency map, and dual-audit gate live in `loop-instruction.md`'s body, authored from `../../governance/loop-instruction-template.md`. The scope-draft ([`./scope-draft.md`](./scope-draft.md)) is the canonical handoff *what*; the loop-instruction is the *how*.
 
 This folder is the canonical surface for SD-NN. Everything the bundle needs is in this folder and the in-repo doc tree (sibling release folders, `../../doctrine-external/`, `../../architecture/`). The operator's workspace is referenced only at initial-package construction time; once the package lands here, the harness reads the repo-local copy and the workspace copy is no longer consulted.
 
@@ -40,8 +34,8 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-
 | Kanban board | `<codex-tranche-N>` (operator directive `<date>`) |
 | Epics / criteria | `<N epics>` / `<N criteria>` |
 | Target version | `<major>.<tranche-base>.<build>` |
-| Loop launch form | `/loop 60m /batch /goal ./loop-instruction.md` (repo-relative) |
-| Cycle cadence | 60m restart; `/batch` for shared-file concurrency |
+| Dispatch mechanism | `Workflow` tool, invoked from a live session, per `loop-instruction.md §2` |
+| Cadence | N/A — dispatch is a live `Workflow` session, not a timer loop |
 | Closure gate | `tranche/N → develop` PR; release-notes generation; architecture-docs refresh (§6) |
 
 ## 2. Files in this folder
@@ -132,3 +126,7 @@ Required canonical files (the promotion skill refuses to copy if any are missing
 - `README.md`, `scope-draft.md`, `loop-instruction.md`, `progress.md`
 - `epic-breakdown.md`, `decisions.md`, `risks-and-open-questions.md`, `acceptance-and-verification.md`
 - `content-unit-inventory.md`, `artifacts/`, `artifacts/README.md`, `references/`, `references/README.md`
+
+## 8. Cross-reference
+
+- `../../governance/loop-instruction-template.md` — the per-cycle dispatch procedure `loop-instruction.md` is authored from. Distinct scope: this template covers the release-folder's file index and bundle-snapshot table; that one covers the per-cycle dispatch procedure. Both must agree on the dispatch mechanism (`Workflow` tool, not `/loop /batch`) — if one changes, check the other.

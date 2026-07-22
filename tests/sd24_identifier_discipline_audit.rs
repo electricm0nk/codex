@@ -102,7 +102,7 @@ fn no_bundle_tag_identifier_leaks_in_shipping_source() {
         real_leaks.is_empty(),
         "identifier-discipline audit found bundle-tag leaks in shipping \
          source (apps/desktop/, apps/desktop/src-tauri/, src/) -- rename \
-         these identifiers per governance/identifier-discipline.md (skill:\n\
+         these identifiers per docs/doctrine-external/identifier-discipline.md (skill:\n\
          `identifier-discipline`) before Criterion 1.1 can pass:\n{}",
         real_leaks.join("\n")
     );

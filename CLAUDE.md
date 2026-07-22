@@ -19,7 +19,7 @@ The primary durable conduct file is `./AGENTS.md`.
 - Stay inside the granted write scope.
 - Do not claim completion without concrete verification.
 - If scope, authority, or required reads are unclear, stop and surface the missing truth.
-- Code paths that ship must actually do what they claim to do. No stubs, no fixture-only data in production paths, no empty event handlers on user-facing affordances. Full doctrine at `./governance/no-stub-mvp-doctrine.md`; companion skill `wired-integration-discipline`.
+- Code paths that ship must actually do what they claim to do. No stubs, no fixture-only data in production paths, no empty event handlers on user-facing affordances. Full doctrine at `./docs/governance/no-stub-mvp-doctrine.md`; companion skill `wired-integration-discipline`.
 
 ## Practical default
 
