@@ -242,14 +242,21 @@ fn crb_spell_list_is_fully_record_complete_with_full_text_coverage() {
 /// (corrected from the criterion 6.1 audit's originally-documented 298:
 /// the real corpus has one genuine duplicate `Resounding Blow` base
 /// record the audit's dedup methodology missed; see
-/// `rules_tables::apg::spell_list`'s module doc comment). 261 of 297
-/// records carry full SRD/PRD text sourced from a matching `<Name>.MOD`
-/// corpus record (`full_text_verified`), a real majority -- criterion
-/// 6.5 is not 100% closed for APG (41 records have no `SCHOOL:`/
-/// `CLASSES:` token at all -- mostly Summoner eidolon spells with no
-/// leveled spell-list entry in the real rules -- and not every present
-/// record has a matching `.MOD` full-text record either), but this is
-/// real, substantial, sourced progress, not a bootstrap sample.
+/// `rules_tables::apg::spell_list`'s module doc comment). 284 of 297
+/// records now carry full SRD/PRD text (`full_text_verified`), raised
+/// from criterion 6.5's original 261 by SD-25 criterion 7.N's
+/// "apg-spell-text" pass -- 13 recovered from an ingest miss on a
+/// same-line-concatenated `.MOD` pair the corpus itself already carried
+/// (`Fiery Body`/`Fester (Mass)`, `Transmute Potion to Poison`/
+/// `Transmogrify`, plus the `Summon Monster I`-`IX` family's own
+/// same-line double-`DESC:` full paragraph), 3 from a same-book
+/// `PRESPELL`-fallback extension (`Threefold Aspect`'s 3 sub-forms), and
+/// 7 from a `d20pfsrd.com`/`legacy.aonprd.com` web second-source pass
+/// (see `rules_tables::apg::spell_list`'s module doc comment for the
+/// full per-record sourcing and the rejected edition-cousin false match).
+/// The remaining 13/297 gap is the documented cross-book `.COPY=`
+/// variant scope boundary plus the corpus-typo `Wall of Thorms` -- not a
+/// "just look harder" gap.
 #[test]
 fn apg_spell_list_is_fully_record_ingested_with_majority_full_text_coverage() {
     let apg_report = apg::spell_list::spell_coverage_report();
@@ -261,11 +268,17 @@ fn apg_spell_list_is_fully_record_ingested_with_majority_full_text_coverage() {
         apg_report.total_records, apg_report.records_expected,
         "APG spell list record coverage should be 100% (fully ingested as of criterion 6.2)"
     );
-    assert_eq!(apg_report.has_description, 281, "281/297 records have a sourced description");
     assert_eq!(
-        apg_report.full_text_verified, 261,
-        "261/297 records carry full SRD/PRD text sourced from a matching .MOD record -- if \
-         this now fails, criterion 6.5's APG full-text ingest has regressed"
+        apg_report.has_description, 285,
+        "285/297 records have a sourced description (raised from 281 by SD-25 criterion \
+         7.N's apg-spell-text pass)"
+    );
+    assert_eq!(
+        apg_report.full_text_verified, 284,
+        "284/297 records carry full SRD/PRD text (raised from 261 by SD-25 criterion 7.N's \
+         apg-spell-text pass -- if this now regresses, that pass's ingest-bug fixes and web \
+         second-source sourcing were lost; if it exceeds 284 without a matching receipt \
+         update, verify the new value is genuinely sourced, not fabricated)"
     );
 }
 
