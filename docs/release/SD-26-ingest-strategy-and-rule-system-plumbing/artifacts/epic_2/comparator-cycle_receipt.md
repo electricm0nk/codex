@@ -1,7 +1,7 @@
 # Cycle epic2-2.1-comparator — Epic 2 Oracle-Harness Comparator / Criterion 2.1
 
 - **Card ID:** t_6ffcc5109c6fb18e (receipt only, minted post-hoc as a done-receipt — not a live claim)
-- **Commit SHA:** <filled in after push — see commit log>
+- **Commit SHA:** 744cd71
 - **Files touched:**
   - `src/oracle_validation/comparator.rs` (new)
   - `src/oracle_validation/mod.rs` (registers `pub mod comparator;`, updates module doc)
